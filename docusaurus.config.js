@@ -49,12 +49,15 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Conduktor Docs',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
         },
-        items: [{ to: '/docs', label: 'Docs', position: 'left' }],
+        items: [
+          { to: '/platform', label: 'Platform', position: 'left' },
+          { to: '/testing', label: 'Testing', position: 'left' },
+          { to: '/desktop', label: 'Desktop', position: 'left' },
+        ],
       },
       footer: {
         style: 'dark',
@@ -75,7 +78,11 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      colorMode: {
+        disableSwitch: true,
+      },
     }),
+  clientModules: [require.resolve('./_document.js')],
 }
 
 module.exports = config
