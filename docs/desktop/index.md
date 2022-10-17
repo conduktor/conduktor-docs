@@ -1,4 +1,8 @@
-# Conduktor Documentation
+---
+sidebar_position: 1
+---
+
+# Introduction
 
 Welcome to our documentation website. We hope you enjoy it!
 
