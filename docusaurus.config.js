@@ -34,6 +34,10 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          routeBasePath: 'platform',
+          path: './docs/platform',
+          lastVersion: 'current',
+          onlyIncludeVersions: ['current'],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/conduktor/conduktor-docs/',
@@ -50,7 +54,7 @@ const config = {
     ({
       navbar: {
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Conduktor Docs logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -83,6 +87,26 @@ const config = {
       },
     }),
   clientModules: [require.resolve('./_document.js')],
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'testing',
+        path: './docs/testing',
+        routeBasePath: 'testing',
+        sidebarPath: require.resolve('./sidebars.js'),
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'desktop',
+        path: './docs/desktop',
+        routeBasePath: 'desktop',
+        sidebarPath: require.resolve('./sidebars.js'),
+      },
+    ],
+  ],
 }
 
 module.exports = config
