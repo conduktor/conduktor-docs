@@ -8,17 +8,13 @@ sidebar_position: 1
 
 Connecting to Kafka under Docker is the same as connecting to a normal Kafka cluster. If your cluster is accessible from the network, and the advertised hosts are setup correctly, we will be able to connect to your cluster.
 
-Read more about Kafka Listeners here:
-
-{% embed url="https://rmoff.net/2018/08/02/kafka-listeners-explained" %}
+Read more about Kafka Listeners [here](https://rmoff.net/2018/08/02/kafka-listeners-explained).
 
 ## Kafka on Docker on Localhost
 
 ### Method 1 \(recommended\)
 
-To run Kafka on Docker on Localhost properly, we recommend you use this project:
-
-{% embed url="https://github.com/simplesteph/kafka-stack-docker-compose" %}
+To run Kafka on Docker on Localhost properly, we recommend you use [this project](https://github.com/simplesteph/kafka-stack-docker-compose).
 
 The README should tell you how to get started.
 
@@ -32,9 +28,7 @@ Then, you can connect to Kafka on `127.0.0.1:9092` using Conduktor!
 
 ### Method 2
 
-We can leverage this project from lenses.io
-
-{% embed url="https://github.com/lensesio/fast-data-dev" %}
+We can leverage this project from [lenses.io](https://github.com/lensesio/fast-data-dev)
 
 Please read the README file to see how to launch this properly.
 

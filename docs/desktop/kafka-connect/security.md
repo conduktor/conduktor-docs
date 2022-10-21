@@ -18,6 +18,4 @@ If your Kafka Connect instance is running on HTTPS with a **self-signed** certif
 
 Check this dedicated page for more details:
 
-{% content-ref url="../../sign-in-section/login-troubleshooting/certificates-faq.md" %}
-[certificates-faq.md](../../sign-in-section/login-troubleshooting/certificates-faq.md)
-{% endcontent-ref %}
+[Certificates FAQ](../login-troubleshooting/certificates-faq)

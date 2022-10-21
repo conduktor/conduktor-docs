@@ -47,7 +47,7 @@ Before the migration, Conduktor was using Auth0 [User Store](https://auth0.com/d
 
 After the migration, the next time you connect to Conduktor, you will automatically get redirected to your company's IdP.
 
-![Your users will get redirected to your IdP based on their email address](../.gitbook/assets/universal-login.png)
+![Your users will get redirected to your IdP based on their email address](../assets/assets/universal-login.png)
 
 ### SAML configuration step by step
 

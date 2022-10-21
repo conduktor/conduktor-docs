@@ -14,16 +14,16 @@ We try our best to be compatible since ksqlDB 0.10.x onwards \(up to 0.14 as of 
 
 If you're using Confluent Cloud, consider reading the dedicated documentation to be sure you're using the right credentials.
 
-{% page-ref page="how-to-start-with-confluent-cloud-ksqldb.md" %}
+[How to start with Confluent Cloud ksqlDB](./how-to-start-with-confluent-cloud-ksqldb)
 
 ## Configuration
 
 The default configuration when starting ksqlDB locally is to connect to http://localhost:8088, as seen below:
 
-![Default configuration for ksqlDB](../.gitbook/assets/screenshot-2021-02-02-at-22.01.40.png)
+![Default configuration for ksqlDB](../assets/assets/screenshot-2021-02-02-at-22.01.40.png)
 
 ## Security
 
 Conduktor supports custom headers, basic auth \(username/password\), and TLS security \(1-way or mutual TLS\).
 
-![](../.gitbook/assets/screenshot-2021-02-02-at-22.05.32.png)
+![](../assets/assets/screenshot-2021-02-02-at-22.05.32.png)

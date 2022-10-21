@@ -32,7 +32,7 @@ This page will explain you how to configure Conduktor to use your custom deseria
 
 For that step, we will use the "Plugins" capability of Conduktor.
 
-_You can have more information on this "Plugins" feature in the_ [_Plugins documentation_](../../../kafka-cluster-connection/setting-up-a-connection-to-kafka/)
+_You can have more information on this "Plugins" feature in the_ [_Plugins documentation_](../../setting-up-a-connection-to-kafka)
 
 A Kafka deserializer is an implementation of the `org.apache.kafka.common.serialization.Deserializer<T>` Java interface (for more information, see [kafka-clients documentation](https://kafka.apache.org/30/javadoc/org/apache/kafka/common/serialization/Deserializer.html)).\
 You need to have one, or more, jar(s) containing these implementations so you can add these jar files in the "Plugins" section of your cluster configuration in Conduktor.
@@ -41,7 +41,7 @@ _You can find some Kafka deserializer implementation examples in this open-sourc
 _In the README of this project, a link to download a `.jar` file containing these Kafka deserializers is provided so you can test the feature with them._\
 _The behaviour of each Kafka deserializer implementation is explained in the README._
 
-![](../../.gitbook/assets/custom_deserializer/add_custom_deserializer.gif)
+![](../../assets/assets/custom_deserializer/add_custom_deserializer.gif)
 
 ⚠️ Plugins are part of a cluster configuration. When you add a plugin to one of your cluster configuration, this plugin is only available to this cluster.\
 If you want to use the same plugin plugin with another cluster configured in Conduktor, you'll need to add this plugin to the configuration of this other cluster too.
@@ -59,4 +59,4 @@ In this new sub-menu, there are two fields:
 
 Last thing to do is to hit the "Start" button to start the consumption of your selected topic data 🎉
 
-![](../../.gitbook/assets/custom_deserializer/use_custom_deserializer.gif)
+![](../../assets/assets/custom_deserializer/use_custom_deserializer.gif)
