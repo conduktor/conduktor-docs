@@ -19,7 +19,7 @@ description: Use Github to share your clusters configuration privately among you
 
 On the welcome screen select import from github.
 
-![](../assets/assets/config/import-export/blur-import.png)
+![](../assets/config/import-export/blur-import.png)
 
 note : if you try to import a not encrypted configuration, let the password field empty
 
@@ -27,7 +27,7 @@ If your repo is private, you can easily create a github token: The "Generate" bu
 
 All you need is to Click on "Generate Token" and copy/paste it in conduktor
 
-![](../assets/assets/config/import-export/github-mutli-import.png)
+![](../assets/config/import-export/github-mutli-import.png)
 
 This will create the clusters in your Conduktor by fetching the configuration remotely, and keep them sync each time you connect to it.
 
@@ -45,4 +45,4 @@ If you want to push a modification of the cluster configuration, just re-export 
 
 Now, next time on of your teammate connect to this cluster, he will prompted to update his configuration:
 
-![](../assets/assets/image%20%2844%29.png)
+![](../assets/image%20%2844%29.png)

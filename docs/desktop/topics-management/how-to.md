@@ -30,12 +30,12 @@ Go to the Consumer Group itself, and Reset Offsets from here.
 
 In the Topic Details view, click on the "Advanced" drop-down, then choose "Reassign partitions..." to open the Reassignment dialog.
 
-![](../assets/assets/topic-reassign-dropdown.png)
+![](../assets/topic-reassign-dropdown.png)
 
 Choose the destination brokers, pick a strategy and Conduktor will generate the Reassignment Plan for you.\
 You can also choose to import your own in the json format expected by kafka-reassign-partitions.sh.
 
-![Partition Reassignment dialog](../assets/assets/reassignment-not-started.png)
+![Partition Reassignment dialog](../assets/reassignment-not-started.png)
 
 You can decide to automatically elect partition leaders after the reassignment.
 
@@ -43,7 +43,7 @@ The throttle limit is an important option in production : without it, the reassi
 
 When a reassignment is in progress, you can monitor it from anywhere using the topbar button :&#x20;
 
-![](../assets/assets/current-reassignment-topbar.png)
+![](../assets/current-reassignment-topbar.png)
 
 The opened dialog allows you to check the reassignment status and update the throttle limit.
 
@@ -55,9 +55,9 @@ While you will have made calculations on the number of partitions required for a
 
 However, it is important to understand if messages are produced with keys. When publishing a keyed message, Kafka provides a guarantee that messages with the same key are always routed to the same partition. This guarantee can be important for certain applications since messages within a partition are always delivered in order to the consumer. If the number of partitions changes, such a guarantee may no longer hold.&#x20;
 
-![Adding partitions to a topic](<../assets/assets/image (54).png>)
+![Adding partitions to a topic](<../assets/image (54).png>)
 
-![Adding partitions to a topic](<../assets/assets/image (53).png>)
+![Adding partitions to a topic](<../assets/image (53).png>)
 
 ## How to remove data from a Topic?
 
@@ -65,11 +65,11 @@ Conduktor can empty a topic, or a specific partition:
 
 - a whole topic: "Empty Topic..."
 
-![Empty a topic](../assets/assets/screenshot-2021-02-23-at-18.30.22.png)
+![Empty a topic](../assets/screenshot-2021-02-23-at-18.30.22.png)
 
 - a specific partition: the Delete icon on the right
 
-![](../assets/assets/screenshot-2021-02-23-at-18.31.05.png)
+![](../assets/screenshot-2021-02-23-at-18.31.05.png)
 
 ### Errors
 

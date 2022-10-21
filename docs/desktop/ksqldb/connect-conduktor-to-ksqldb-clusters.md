@@ -20,10 +20,10 @@ If you're using Confluent Cloud, consider reading the dedicated documentation to
 
 The default configuration when starting ksqlDB locally is to connect to http://localhost:8088, as seen below:
 
-![Default configuration for ksqlDB](../assets/assets/screenshot-2021-02-02-at-22.01.40.png)
+![Default configuration for ksqlDB](../assets/screenshot-2021-02-02-at-22.01.40.png)
 
 ## Security
 
 Conduktor supports custom headers, basic auth \(username/password\), and TLS security \(1-way or mutual TLS\).
 
-![](../assets/assets/screenshot-2021-02-02-at-22.05.32.png)
+![](../assets/screenshot-2021-02-02-at-22.05.32.png)

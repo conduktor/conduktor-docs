@@ -18,8 +18,8 @@ Conduktor is a native Desktop application and we provide easy-to-use installers 
 
 Please follow the relevant guides:
 
-**[Mac OS X](mac.md)**
+**[Mac OS X](mac)**
 
-**[Windows](windows.md)**
+**[Windows](windows)**
 
-**[Linux](linux.md)**
+**[Linux](linux)**

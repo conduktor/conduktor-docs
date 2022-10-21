@@ -41,7 +41,7 @@ _You can find some Kafka deserializer implementation examples in this open-sourc
 _In the README of this project, a link to download a `.jar` file containing these Kafka deserializers is provided so you can test the feature with them._\
 _The behaviour of each Kafka deserializer implementation is explained in the README._
 
-![](../../assets/assets/custom_deserializer/add_custom_deserializer.gif)
+![](../../assets/custom_deserializer/add_custom_deserializer.gif)
 
 ⚠️ Plugins are part of a cluster configuration. When you add a plugin to one of your cluster configuration, this plugin is only available to this cluster.\
 If you want to use the same plugin plugin with another cluster configured in Conduktor, you'll need to add this plugin to the configuration of this other cluster too.
@@ -59,4 +59,4 @@ In this new sub-menu, there are two fields:
 
 Last thing to do is to hit the "Start" button to start the consumption of your selected topic data 🎉
 
-![](../../assets/assets/custom_deserializer/use_custom_deserializer.gif)
+![](../../assets/custom_deserializer/use_custom_deserializer.gif)
