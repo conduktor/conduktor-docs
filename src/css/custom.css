@@ -65,7 +65,7 @@ aside.theme-doc-sidebar-container nav {
   padding: 0 2.7rem 0 0;
 }
 
-aside.theme-doc-sidebar-container .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
+aside.theme-doc-sidebar-container > div {
   top: var(--ifm-navbar-height);
   padding-top: 0;
   max-height: calc(100vh - 73px);
@@ -126,7 +126,7 @@ footer.footer--dark {
   border-left: 1px solid var(--colors-mauve3);
 }
 
-.tableOfContents_node_modules-\@docusaurus-theme-classic-lib-theme-TOC-styles-module {
+main .row .col--3 > div {
   top: calc(var(--ifm-navbar-height) + 2.7rem) !important;
 }
 
