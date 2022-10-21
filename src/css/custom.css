@@ -77,7 +77,9 @@ aside.theme-doc-sidebar-container nav {
 }
 
 aside.theme-doc-sidebar-container nav {
-  padding: 2.7rem 0;
+  overflow-y: auto;
+  box-sizing: content-box;
+  padding: 2.7rem 17px 2.7rem 0;
 }
 
 /* aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
