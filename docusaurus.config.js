@@ -67,11 +67,19 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Items',
+            title: 'Docs',
             items: [
               {
-                label: 'Item 1',
-                to: '/',
+                label: 'Platform',
+                to: '/platform',
+              },
+              {
+                label: 'Testing',
+                to: '/testing',
+              },
+              {
+                label: 'Desktop',
+                to: '/desktop',
               },
             ],
           },
