@@ -13,7 +13,7 @@ Conduktor shows the most useful informations you need to work with ksqlDB:
 - **Services**: you can connect to multiple ksqlDB clusters in Conduktor, each has its own configurations, custom types etc. ksqlDB distinguishes its clusters by the "Service" name.
 - **Types**: you can create type alias instead of always relying on the raw types \(such as `address<string, string>`, you can now use the `address` type in your streams and tables\)
 
-![](../assets/assets/screenshot-2021-02-02-at-22.18.12.png)
+![](../assets/screenshot-2021-02-02-at-22.18.12.png)
 
 Conduktor also alerts you in case of problems on your streams, also visible in the details.
 
@@ -26,11 +26,11 @@ The details of the Stream or Table shows many things:
 - The **queries** reading from or writing into this stream
 - The fields of the stream / table, to understand the data
 
-![](../assets/assets/screenshot-2021-02-02-at-22.17.39.png)
+![](../assets/screenshot-2021-02-02-at-22.17.39.png)
 
 Also, Conduktor will be redish in case of record errors:
 
-![](../assets/assets/screenshot-2021-02-02-at-22.16.11.png)
+![](../assets/screenshot-2021-02-02-at-22.16.11.png)
 
 ## Services
 
@@ -41,6 +41,6 @@ You can connect to multiple ksqlDB clusters in Conduktor, each has its own confi
 - Each service has its own custom types and functions
   - New ksqlDB functions can be added to your clusters by deploying a package \(.jar\)
 
-![The configuration of your ksqlDB service](../assets/assets/screenshot-2021-02-02-at-22.26.06.png)
+![The configuration of your ksqlDB service](../assets/screenshot-2021-02-02-at-22.26.06.png)
 
-![The functions available on your ksqlDB service](../assets/assets/screenshot-2021-02-02-at-22.26.11.png)
+![The functions available on your ksqlDB service](../assets/screenshot-2021-02-02-at-22.26.11.png)

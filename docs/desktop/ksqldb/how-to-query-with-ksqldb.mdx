@@ -12,16 +12,16 @@ import InfoBox from '@site/src/components/atoms/InfoBox'
 You can create streams or tables using a simple KSQL editor. You can have many queries, just add empty lines between each queries, for them to be considered independent. They will be execute one by one in different statements.
 
 <InfoBox type="danger">
-It's for KSQL stream queries, not metadata queries like "SHOW STREAMS;".
+  It's for KSQL stream queries, not metadata queries like "SHOW STREAMS;".
 </InfoBox>
 
-![](../assets/assets/screenshot-2021-02-02-at-22.44.48.png)
+![](../assets/screenshot-2021-02-02-at-22.44.48.png)
 
 ## The 2 types of ksqlDB queries
 
 With ksqlDB, you can PUSH or PULL!
 
-![](../assets/assets/screenshot-2021-02-02-at-22.49.42.png)
+![](../assets/screenshot-2021-02-02-at-22.49.42.png)
 
 ### Pull query: a specific key
 
@@ -29,7 +29,7 @@ With TABLEs, you can ask the value of a specific key at the current moment, inst
 
 A pull query results its result instantly. The value can be there, or not. It's exactly like querying a classic relational database.
 
-![](../assets/assets/screenshot-2021-02-02-at-22.57.46.png)
+![](../assets/screenshot-2021-02-02-at-22.57.46.png)
 
 ### Push query: follow the real-time updates!
 
@@ -37,4 +37,4 @@ A push query never stops! It's what the `EMIT CHANGES` suffix suggests. It will 
 
 It's like consuming a topic except that a STREAM has a proper defined SQLish structure, therefore we can select only the fields we want, do computation directly from the query etc. Conduktor is then able to render a classic "table" of columns/rows, because the data format is known.
 
-![](../assets/assets/screenshot-2021-02-02-at-22.57.58.png)
+![](../assets/screenshot-2021-02-02-at-22.57.58.png)

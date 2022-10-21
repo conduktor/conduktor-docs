@@ -17,7 +17,7 @@ In order to successfully consume messages serialized with AWS Glue Registry, you
 cs bootstrap software.amazon.glue:schema-registry-serde:1.1.10 --assembly -M com.amazonaws.services.schemaregistry.deserializers.GlueSchemaRegistryKafkaDeserializer -o glue-schema-registry-serde-1.1.10-with-dependancies.jar
 ```
 
-We have also generated the fat jar for your convenience: <a href="../../assets/assets/glue-schema-registry-serde-1.1.10-with-dependancies.jar">glue-schema-registry-serde-1.1.10-with-dependancies.jar</a>
+We have also generated the fat jar for your convenience: <a href="/assets/glue-schema-registry-serde-1.1.10-with-dependancies.jar">glue-schema-registry-serde-1.1.10-with-dependancies.jar</a>
 
 Now import this jar file in your cluster configuration and use the class `GlueSchemaRegistryKafkaDeserializer` in the Custom Format (Plugin) from the Consume screen.
 

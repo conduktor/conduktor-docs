@@ -31,15 +31,15 @@ To do so, go to the Kafka Streams menu and click on `IMPORT TOPOLOGY,` then:
 
 Here is an example importing a Kafka Streams application using the application.id `myapplicationid` and exposing a endpoint `/topology`:
 
-![](./assets/assets/screenshot-2020-09-20-at-18.56.14.png)
+![](./assets/screenshot-2020-09-20-at-18.56.14.png)
 
 Conduktor will then monitor the endpoint and display a summary (topics in and out) in the main listing:
 
-![](./assets/assets/screenshot-2020-09-20-at-19.00.42.png)
+![](./assets/screenshot-2020-09-20-at-19.00.42.png)
 
 If the application is down, the topology disappears and it becomes redish, time to call the developers!
 
-![](./assets/assets/screenshot-2020-09-20-at-19.02.14.png)
+![](./assets/screenshot-2020-09-20-at-19.02.14.png)
 
 ## How do I retrieve my Topology description?
 
@@ -61,10 +61,10 @@ Conduktor can help you in two ways:
 - Do it manually by specifying all of topics in/out/internals/intermediate. It's not super practical.
 - Do it with all topics already set because you imported the Topology within Conduktor already
 
-![Manual (specify everything) or a registered application in Conduktor](./assets/assets/screenshot-2020-09-20-at-19.05.04.png)
+![Manual (specify everything) or a registered application in Conduktor](./assets/screenshot-2020-09-20-at-19.05.04.png)
 
 A wizard will then helps you by explaining the steps:
 
-![](./assets/assets/screenshot-2020-09-20-at-19.06.28.png)
+![](./assets/screenshot-2020-09-20-at-19.06.28.png)
 
 If you're doing a reset of a registered Kafka Streams application within Conduktor, you can just hit Next until the end, everything is setup automatically! 🤩

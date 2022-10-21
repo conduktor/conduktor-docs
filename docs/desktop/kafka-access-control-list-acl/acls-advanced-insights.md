@@ -12,7 +12,7 @@ ACLs are very useful to secure resources, but there are many different permissio
 
 Conduktor helps you visualize and manage your low-level ACLs, but also helps you by giving more high-level insights we'll describe below.
 
-![Low-level ACLs, difficult to interpret](<../assets/assets/Screenshot 2022-02-20 at 20.39.06.png>)
+![Low-level ACLs, difficult to interpret](<../assets/Screenshot 2022-02-20 at 20.39.06.png>)
 
 ## Topic / Users
 
@@ -22,7 +22,7 @@ Conduktor Enterprise offers a set of alternative views to inspect more easily wi
 - which ACLs on a User are useless (topics are gone for instance)
 - expand the prefixed ACLs to the real topics of your clusters, this way you know exactly what is the impact of the ACL / on which resource
 
-![](<../assets/assets/Screenshot 2022-02-20 at 20.51.50.png>)
+![](<../assets/Screenshot 2022-02-20 at 20.51.50.png>)
 
 Conduktor also provide an inverted view with all the topics and their associated users:
 
@@ -37,10 +37,10 @@ According to your Kafka configuration, it can mean that ANY user can access them
 
 You have to be very careful of the value of the property "`allow.everyone.if.no.acl.found`". If "true", you're in trouble and all these topics are accessible by anyone. Consider setting it to "false" to be sure you are not leaking data.
 
-![](<../assets/assets/Screenshot 2022-02-20 at 21.20.21.png>)
+![](<../assets/Screenshot 2022-02-20 at 21.20.21.png>)
 
 ### Public topics
 
 It's important to know the topics accessible by any users (\*) on your clusters or by anonymous users. According to your data governance policy, having public topics can be a big problem, Conduktor makes it easier to identify and fix them.
 
-![](<../assets/assets/Screenshot 2022-02-20 at 21.05.40.png>)
+![](<../assets/Screenshot 2022-02-20 at 21.05.40.png>)

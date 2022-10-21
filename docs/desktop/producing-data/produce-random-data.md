@@ -11,7 +11,7 @@ Conduktor allows generating random data for all data types supported by the prod
 
 Simply check "Generate random data" next to the key or value Serializer type to enable generation and display the available options.
 
-![](../assets/assets/generation-s1.png)
+![](../assets/generation-s1.png)
 
 You can constraint the range on numeric data types, the length on string and bytes, and the charset on string.
 
@@ -19,11 +19,11 @@ You can constraint the range on numeric data types, the length on string and byt
 
 We allow generating Avro records out of the box, including most complex types. Simply check the "Generate random data" checkbox, pick a strategy and subject and start generating data on the fly !&#x20;
 
-![](../assets/assets/generation-avro.png)
+![](../assets/generation-avro.png)
 
 If you want to customize individual field generation, we support annotation-based configuration inspired by [Confluent's Avro Data Generator library](https://github.com/confluentinc/avro-random-generator), using an `arg.properties` \*\*\*\* field containing properties mirroring the generation options for basic serialization types of our Producer.
 
-![](../assets/assets/avro-extension-json.png)
+![](../assets/avro-extension-json.png)
 
 The following field type / properties combinations are available :&#x20;
 
