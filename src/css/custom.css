@@ -120,6 +120,11 @@ main a {
   font-weight: 500;
 }
 
+main iframe,
+main img {
+  border-radius: var(--radii-radius3);
+}
+
 footer.footer--dark {
   background-color: var(--colors-mauve12) !important;
 }

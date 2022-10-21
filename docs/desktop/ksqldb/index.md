@@ -4,7 +4,7 @@ description: Streaming everything with ease!
 
 # ksqlDB: Streaming with SQL
 
-{% embed url="https://www.youtube.com/watch?v=0xUsAFFG3dU&list=PLYmXYyXCMsfMMhiKPw4k1FF7KWxOEajsA&index=28&ab_channel=ConduktorConduktor" %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0xUsAFFG3dU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Conduktor & ksqlDB compatibility
 

@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## How Conduktor helps when Kafka is failing?
 
-{% embed url="https://www.youtube.com/watch?v=ZJTw2-GVr-4&list=PLYmXYyXCMsfMMhiKPw4k1FF7KWxOEajsA&index=17&ab_channel=ConduktorConduktor" %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZJTw2-GVr-4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## How to consume data from a Topic?
 
