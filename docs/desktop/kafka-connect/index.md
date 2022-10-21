@@ -7,7 +7,7 @@ description: >-
 
 # Kafka Connect
 
-{% embed url="https://www.youtube.com/watch?v=4GSmIE9ji9c&list=PLYmXYyXCMsfMMhiKPw4k1FF7KWxOEajsA&index=24&ab\_channel=ConduktorConduktor" %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4GSmIE9ji9c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Configuration
 

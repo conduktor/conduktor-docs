@@ -34,9 +34,9 @@ If you have no problem with IPv6, if your infrastructure is up to date and serve
 
 To do this, create the file `conduktor.vmoptions` in your Conduktor personal folder and disable the option (restart Conduktor to be taken into account):
 
-- MacOS: /Users/`jsx<user>`/Library/Application Support/conduktor/conduktor.vmoptions
-- Windows: C:\Users\\`jsx<user>`\AppData\Local\conduktor\conduktor\conduktor.vmoptions
-- Linux: /home/`jsx<user>`/.config/conduktor/conduktor.vmoptions (or XDG Config path if set)
+- MacOS: /Users/&#60;user&#62;/Library/Application Support/conduktor/conduktor.vmoptions
+- Windows: C:\Users\\&#60;user&#62;\AppData\Local\conduktor\conduktor\conduktor.vmoptions
+- Linux: /home/&#60;user&#62;/.config/conduktor/conduktor.vmoptions (or XDG Config path if set)
 
 ```
 # in conduktor.vmoptions, supports only -D* options

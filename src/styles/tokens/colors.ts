@@ -1,7 +1,10 @@
-import { grass, mauve, mauveDark, purpleDark, tomato } from '@radix-ui/colors'
+import { amber, grass, mauve, mauveDark, purpleDark, tomato } from '@radix-ui/colors'
 
 export const colors = {
   ...mauve,
+  ...tomato,
+  ...grass,
+  ...amber,
 
   purple1: 'hsl(244, 33%, 99%)',
   purple2: 'hsl(243, 100%, 99%)',
@@ -44,6 +47,7 @@ export const colors = {
 
   error: tomato.tomato9,
   success: grass.grass9,
+  warning: amber.amber9,
 
   // TODO: create color palette
   primary25: 'rgba(62, 59, 232, 0.05)',
