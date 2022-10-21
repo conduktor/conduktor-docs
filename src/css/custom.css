@@ -66,12 +66,18 @@ aside.theme-doc-sidebar-container nav {
 }
 
 aside.theme-doc-sidebar-container .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
-  top: 2.7rem;
+  top: var(--ifm-navbar-height);
+  padding-top: 0;
+  max-height: calc(100vh - 73px);
 }
 
 aside.theme-doc-sidebar-container,
 aside.theme-doc-sidebar-container nav {
   width: 275px;
+}
+
+aside.theme-doc-sidebar-container nav {
+  padding: 2.7rem 0;
 }
 
 /* aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
