@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ## Apache Kafka on Windows
 
-Thanks to WSL 2, Apache Kafka can run properly on Windows. You can read a how-to guide at Confluent: [https://www.confluent.io/blog/set-up-and-run-kafka-on-windows-linux-wsl-2](https://www.confluent.io/blog/set-up-and-run-kafka-on-windows-linux-wsl-2/#start-kafka-cluster)
+Thanks to WSL 2, Apache Kafka can run properly on Windows. You can read a how-to guide at [Confluent](https://www.confluent.io/blog/set-up-and-run-kafka-on-windows-linux-wsl-2/#start-kafka-cluster).
 
 ## Conduktor runs on your host network
 

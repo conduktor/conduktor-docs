@@ -33,13 +33,13 @@ Part of understanding why your CLI (and therefore Conduktor) can't connect to yo
 
 > Another longer blog can be found at: [https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
 
-![internal + external listeners configured](<../.gitbook/assets/image (48).png>)
+![internal + external listeners configured](<../assets/assets/image (48).png>)
 
 ## Connecting to Kafka behind a bastion / SSH hops
 
 Connecting to Apache Kafka through a simple SSH tunnel with Conduktor is impossible, due to how the Apache Kafka protocol works. No client can currently do this setup:
 
-![](<../.gitbook/assets/image (8).png>)
+![](<../assets/assets/image (8).png>)
 
 You may try by running a special kafka-proxy as mentioned in [Connect to Amazon MSK](connect-to-amazon-msk.md), where it's a common use-case.
 
@@ -47,10 +47,10 @@ You may try by running a special kafka-proxy as mentioned in [Connect to Amazon 
 
 This setup does not work, because your computer will not be able to resolve the private subnet IP/DNS exposed by Apache Kafka:
 
-![](<../.gitbook/assets/image (3) (1).png>)
+![](<../assets/assets/image (3) (1).png>)
 
 Because even though your Kafka brokers are accessible through a public IP, upon connecting Conduktor (and the Kafka Clients) will be forced to use the private IP of Apache Kafka. This is a limitation of Apache Kafka due to [how the listeners work.](https://rmoff.net/2018/08/02/kafka-listeners-explained/) Please read the section above _Understanding Kafka Listeners_.
 
 If you're using a VPN, this would work because your computer will be able to resolve the private subnet IP/DNS:
 
-![Using a VPN makes your local computer part of the private network](<../.gitbook/assets/image (35).png>)
+![Using a VPN makes your local computer part of the private network](<../assets/assets/image (35).png>)

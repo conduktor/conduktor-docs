@@ -21,19 +21,19 @@ It's also there to configure:
 
 Go Options > Settings:
 
-![](./.gitbook/assets/screenshot-2020-09-19-at-17.13.15.png)
+![](./assets/assets/screenshot-2020-09-19-at-17.13.15.png)
 
 We can choose to display dates as UTC instead of using the local timezone.
 
 We can also decide which columns to hide or show. When columns are hidden, processing is not done (like with "Show Last Write" which can be quite expensive if you have many topics, it's a good idea to hide it).
 
-![](./.gitbook/assets/settings-view.png)
+![](./assets/assets/settings-view.png)
 
 ## JVM (Advanced)
 
 It's possible to grab some stats about the JVM (read-only!):
 
-![](./.gitbook/assets/screenshot-2020-09-19-at-17.20.48.png)
+![](./assets/assets/screenshot-2020-09-19-at-17.20.48.png)
 
 It's mostly for advanced users who understand what's going on.
 
@@ -93,7 +93,7 @@ Conduktor logs all Kafka client warnings and errors to a file, directly accessib
 
 A popup will open with the logs and the path to the kafka.log file:
 
-![](./.gitbook/assets/screenshot-2020-11-09-at-10.35.07.png)
+![](./assets/assets/screenshot-2020-11-09-at-10.35.07.png)
 
 ### Managed Kafka logging
 

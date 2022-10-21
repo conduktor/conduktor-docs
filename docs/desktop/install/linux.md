@@ -24,7 +24,7 @@ sudo dpkg -i ./Conduktor-2.7.0.deb
 
 You may be prompted to entire your admin credentials so that Conduktor can be installed
 
-![](<../.gitbook/assets/image (27).png>)
+![](<../assets/assets/image (27).png>)
 
 Conduktor is then installed in /opt/conduktor
 
@@ -43,7 +43,7 @@ drwxr-xr-x 3 root root 4096 Apr  9 13:11 share/
 
 **To start Conduktor, you should be able to find it in your Ubuntu applications**
 
-![](<../.gitbook/assets/image (23).png>)
+![](<../assets/assets/image (23).png>)
 
 Alternatively, you can run:
 
@@ -102,9 +102,7 @@ This is not the recommended way to install Conduktor, but if you have a JRE 11+ 
 
 The next step is to sign in to Conduktor. See this section here
 
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
-{% endcontent-ref %}
+**[Sign in to Conduktor](../sign-in)**
 
 ## Installation Issues
 

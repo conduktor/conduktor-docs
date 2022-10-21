@@ -12,19 +12,10 @@ Conduktor only fully supports ksqlDB from v0.10.x and was tested until v0.14. Do
 
 ## Follow the guide!
 
-{% content-ref url="connect-conduktor-to-ksqldb-clusters.md" %}
-[connect-conduktor-to-ksqldb-clusters.md](connect-conduktor-to-ksqldb-clusters.md)
-{% endcontent-ref %}
+[Connect Conduktor to ksqlDB clusters](./connect-conduktor-to-ksqldb-clusters)
 
-{% content-ref url="what-to-do-with-ksqldb.md" %}
-[what-to-do-with-ksqldb.md](what-to-do-with-ksqldb.md)
-{% endcontent-ref %}
+[What to do with ksqlDB](what-to-do-with-ksqldb)
 
-{% content-ref url="how-to-query-with-ksqldb.md" %}
-[how-to-query-with-ksqldb.md](how-to-query-with-ksqldb.md)
-{% endcontent-ref %}
+[How to query with ksqlB](how-to-query-with-ksqldb)
 
-{% content-ref url="ksqldb-faq.md" %}
-[ksqldb-faq.md](ksqldb-faq.md)
-{% endcontent-ref %}
-
+[ksqlDB FAQ](ksqldb-faq)

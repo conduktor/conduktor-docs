@@ -28,13 +28,13 @@ For any other functionality, Conduktor does not create any Consumer Groups. Idea
   - from the main list
   - from the Consumer Group details
 
-![](./.gitbook/assets/screenshot-2020-09-20-at-12.21.07.png)
+![](./assets/assets/screenshot-2020-09-20-at-12.21.07.png)
 
 ## How to Reset the Offsets of a Consumer Group?
 
 - **Stop the applications** running on this Consumer Group, otherwise the buttons won't be accessible. Don't worry, we clearly state that the group must be stopped before acting on it 😉.
 
-![](./.gitbook/assets/screenshot-2020-09-20-at-12.03.06.png)
+![](./assets/assets/screenshot-2020-09-20-at-12.03.06.png)
 
 - Click on "Change offsets" then configure the strategy to how reset the offsets:
   - which topic: a consumer group can subscribe to multiple topics
@@ -51,7 +51,7 @@ For any other functionality, Conduktor does not create any Consumer Groups. Idea
   - X is the number of changes
 - Don't forget to restart your application! 💪
 
-![](./.gitbook/assets/screenshot-2020-09-20-at-12.06.59.png)
+![](./assets/assets/screenshot-2020-09-20-at-12.06.59.png)
 
 ## How can I track the lag of my Consumer Group and my topics?
 
@@ -63,7 +63,7 @@ The global view of the Consumers shows the overall lag of your consumer groups. 
 - **Members**: how many instances of your applications are using this consumer group
 - **Partitions / Topics**: how many partitions your consumer group is keeping track of
 
-![](./.gitbook/assets/screenshot-2021-01-29-at-19.23.34.png)
+![](./assets/assets/screenshot-2021-01-29-at-19.23.34.png)
 
 ### Getting the lag per partition
 
@@ -75,7 +75,7 @@ You can also see the details per partitions in the details. Note that a consumer
   - The Current Offset of first three partitions below are also "?" because no commit were made yet, hence the lag is indeterminate.
 - The lag is the **difference** between the latest offset committed by the consuming applications for the partition, and its current end offset where records are being written to.
 
-![](./.gitbook/assets/consumer-group-question-mark.jpg)
+![](./assets/assets/consumer-group-question-mark.jpg)
 
 ## How to force a Member to leave a Consumer Group
 

@@ -11,11 +11,11 @@ description: Conduktor can help you to send messages into your topic. It's usefu
 
 Click on the Producer button in the top bar to open the Producer dialog:
 
-![](../.gitbook/assets/screenshot-2020-07-24-at-11.24.42.png)
+![](../assets/assets/screenshot-2020-07-24-at-11.24.42.png)
 
 You'll have a new dialog on top of Conduktor you can freely move around:
 
-![](../.gitbook/assets/screenshot-2020-07-24-at-11.30.49.png)
+![](../assets/assets/screenshot-2020-07-24-at-11.30.49.png)
 
 ## Configuration
 
@@ -36,11 +36,11 @@ In this example, we are sending Apache Avro data corresponding to the schema of 
 - key: a string "0759d889-5660-4edc-85bf-f5108c1d95ec"
 - value: a JSON that Conduktor will convert to Apache Avro binary data using the selected "Topic Name Strategy", here "customer-orders-value"
 
-![](../.gitbook/assets/screenshot-2020-07-24-at-11.30.49.png)
+![](../assets/assets/screenshot-2020-07-24-at-11.30.49.png)
 
 - You can see the corresponding Apache Avro schema by clicking on "SCHEMA":
 
-![](../.gitbook/assets/screenshot-2020-07-24-at-11.31.06.png)
+![](../assets/assets/screenshot-2020-07-24-at-11.31.06.png)
 
 Click "Send" (top right) as many times as you want to send the payload to Kafka.
 
@@ -126,7 +126,7 @@ You can create as many template as you want, and duplicate them to easily create
 Do not forget to click "SAVE" on the bottom right of the dialog to save your modification, otherwise you'll lose them.
 {% endhint %}
 
-![a copy was created](../.gitbook/assets/screenshot-2020-07-24-at-11.40.05.png)
+![a copy was created](../assets/assets/screenshot-2020-07-24-at-11.40.05.png)
 
 ### "Replay" a Consumed record
 
@@ -134,17 +134,17 @@ When consuming records, it's possible to create a "Produce Template" from it. Th
 
 To do so, consume some data and open the details dialog, then click on the button "Copy To A Producer Template"&#x20;
 
-![](../.gitbook/assets/screenshot-2020-07-26-at-15.03.09.png)
+![](../assets/assets/screenshot-2020-07-26-at-15.03.09.png)
 
 This will create a new template in your producer, with the same deserialized payload, that you can resend at will!
 
-![](../.gitbook/assets/screenshot-2020-07-26-at-15.03.29.png)
+![](../assets/assets/screenshot-2020-07-26-at-15.03.29.png)
 
 ## Producing data from CSV
 
 On the producer view, after selecting a topic, the "PRODUCE FROM CSV" button (bottom right) gets enabled.
 
-![](../.gitbook/assets/produce-csv-button.png)
+![](../assets/assets/produce-csv-button.png)
 
 It will open a dialog that explains the different formats accepted by Conduktor :&#x20;
 
@@ -167,7 +167,7 @@ For advanced usages, it's possible to alter more how the data are sent to Kafka.
 - Idempotence: not enabled by default
 - Acks: All
 
-![](../.gitbook/assets/screenshot-2020-07-24-at-11.42.43.png)
+![](../assets/assets/screenshot-2020-07-24-at-11.42.43.png)
 
 ## Roadmap
 

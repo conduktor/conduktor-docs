@@ -16,7 +16,7 @@ Example:
 - 20-30
 - 20-21,24,26
 
-![Change which partitions to consume](../.gitbook/assets/screenshot-2020-06-25-at-15.37.27.png)
+![Change which partitions to consume](../assets/assets/screenshot-2020-06-25-at-15.37.27.png)
 
 ## Show only the latest value
 
@@ -26,7 +26,7 @@ For instance, if you want to know what is the _last modification_ on a certain k
 
 In the Advanced panel, check "Latest by Key" and consume your topic. Nothing will change _except_ that all the visible keys will be the last version of them. You will see the records with the same key updated in-place with their latest value.
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-15.40.15.png)
+![](../assets/assets/screenshot-2020-06-25-at-15.40.15.png)
 
 ## Consumer tuning
 
@@ -34,7 +34,7 @@ By default, Conduktor is configured to work properly in the vast majority of use
 
 In the Advanced panel, click on Open Settings to get directly to the consumer settings: (it's possible to get there by the main Settings button in Conduktor's main view)
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-15.07.08 (3).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-15.07.08 (3).png>)
 
 For instance, if you have large messages in your topic, consider:
 
@@ -45,7 +45,7 @@ For instance, if you have large messages in your topic, consider:
 
 Conduktor is able to read the special internal topic of Kafka where all the consumer committed offsets are stored. Not everybody has access to this topic **\_\_consumer_offsets**. If you have, you'll see that you won't be able to choose how to read this topic, because there is only one way:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-15.51.58.png)
+![](../assets/assets/screenshot-2020-06-25-at-15.51.58.png)
 
 You will still be able to do classic operations like filtering, to look for your consumer group for instance. It's useful to track Kafka rebalancing, commits and so on.
 
@@ -55,4 +55,4 @@ There are different type of key/value in this topic that we won't explain here. 
 
 Conduktor is able to aggregate your events. For the moment only one aggregator is available which is named "most frequent key". This aggregator is powered by a TopK algorithm, this is a probabilistic structure and the results are can diverge from the real distribution by a few percent. This aggregator is very useful to understand the distribution of your data or to analyze key hot spots.
 
-![](../.gitbook/assets/2021-11-25_15-04.png)
+![](../assets/assets/2021-11-25_15-04.png)

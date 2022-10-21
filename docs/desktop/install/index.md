@@ -8,7 +8,7 @@ sidebar_position: 3
 
 ## Download Conduktor
 
-Please download the latest version of Conduktor [from this page](https://www.conduktor.io/download)
+Please download the latest version of Conduktor **[from this page](https://www.conduktor.io/download)**.
 
 Please note that there is no Docker image of Conduktor: this is a Desktop Application, not a webapp.
 
@@ -18,14 +18,8 @@ Conduktor is a native Desktop application and we provide easy-to-use installers 
 
 Please follow the relevant guides:
 
-{% content-ref url="mac.md" %}
-[mac.md](mac.md)
-{% endcontent-ref %}
+**[Mac OS X](mac.md)**
 
-{% content-ref url="windows.md" %}
-[windows.md](windows.md)
-{% endcontent-ref %}
+**[Windows](windows.md)**
 
-{% content-ref url="linux.md" %}
-[linux.md](linux.md)
-{% endcontent-ref %}
+**[Linux](linux.md)**

@@ -14,11 +14,9 @@ In order to successfully consume messages serialized with RedHat Apicurio Schema
 cs bootstrap io.apicurio:apicurio-registry-serdes-avro-serde:2.2.3.Final -M io.apicurio.registry.serde.avro.AvroKafkaDeserializer --assembly -o apicurio-registry-serdes-avro-serde-2.2.3.Final-with-dependancies.jar
 ```
 
-We have also generated the fat jar for your convenience: [apicurio-registry-serdes-avro-serde-2.2.3.Final-with-dependancies.jar](https://github.com/conduktor/docs/raw/master/.gitbook/assets/apicurio-registry-serdes-avro-serde-2.2.3.Final-with-dependancies.jar)
+We have also generated the fat jar for your convenience: [apicurio-registry-serdes-avro-serde-2.2.3.Final-with-dependancies.jar](https://github.com/conduktor/docs/raw/master/assets/assets/apicurio-registry-serdes-avro-serde-2.2.3.Final-with-dependancies.jar)
 
 Now import this jar file in your cluster configuration and use the class `AvroKafkaDeserializer` in the Custom Format (Plugin) from the Consume screen.
-
-![](<../../.gitbook/assets/Capture d’écran 2022-05-06 à 15.21.23.png>)
 
 ```
 # Minimum required config with RedHat Registry

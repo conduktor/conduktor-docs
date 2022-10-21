@@ -16,13 +16,13 @@ There is a lot of information when it comes to Connectors!
 
 Here is a typical example with 6 Kafka Connect instances for multiple environments:
 
-![](<../.gitbook/assets/screenshot-2020-09-19-at-16.55.39 (1).png>)
+![](<../assets/assets/screenshot-2020-09-19-at-16.55.39 (1).png>)
 
 ## Error Management
 
 Conduktor displays the connectors on the main list in error (clearly in red). In the details, it's possible to look at which task failed and why:
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-16.38.25.png)
+![](../assets/assets/screenshot-2020-09-19-at-16.38.25.png)
 
 ## Restart / Pause / Stop
 
@@ -33,7 +33,7 @@ It's possible to restart a Connector or simply a task (or all tasks at once, dif
 - Restart ALL the tasks of a Connector
 - Restart a particular task of a Connector
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-16.40.06.png)
+![](../assets/assets/screenshot-2020-09-19-at-16.40.06.png)
 
 ### Connector States
 
@@ -44,7 +44,7 @@ A connector and its tasks can have different states:
 - PAUSED
 - UNASSIGNED: no worker is picking it up!
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-16.42.47.png)
+![](../assets/assets/screenshot-2020-09-19-at-16.42.47.png)
 
 ## Reset Connector Source Offsets
 
@@ -65,19 +65,19 @@ Here is an example:
 - Select the key and "RESET SOURCE OFFSETS"
 - Restart your Connector (re-create it), it will start from scratch.
 
-![](../.gitbook/assets/screenshot-2020-11-12-at-17.32.42.png)
+![](../assets/assets/screenshot-2020-11-12-at-17.32.42.png)
 
 ## Create Connectors
 
 We provide a wizard to easily create connectors. The available connector types depend on the Kafka Connect instance you're creating a connector. You can also simply load a JSON to init the wizard:
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-16.50.37.png)
+![](../assets/assets/screenshot-2020-09-19-at-16.50.37.png)
 
 When you pick a Sink or a Source connector type (or Create From JSON), you have access to a nice wizard properly organized and fully documented (just hover the property names).
 
 For instance, here, one of the step of the Elasticsearch Sink Connector:
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-17.00.07.png)
+![](../assets/assets/screenshot-2020-09-19-at-17.00.07.png)
 
 ## Update Connector
 

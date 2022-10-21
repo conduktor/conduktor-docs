@@ -19,11 +19,11 @@ Conduktor handles the whole set of format providing by the Schema Registry:
 
 In the Schema Registry, we distinguish them by using their respective icon:
 
-![](../.gitbook/assets/screenshot-2021-02-01-at-16.46.24.png)
+![](../assets/assets/screenshot-2021-02-01-at-16.46.24.png)
 
 We parse them and display their content (their fields, structures, etc.) in a similar flatten way. This way, it's easier to take a quick look at them and see the depth of the fields. Example:
 
-![](../.gitbook/assets/screenshot-2021-02-01-at-16.51.29.png)
+![](../assets/assets/screenshot-2021-02-01-at-16.51.29.png)
 
 ## How to delete a Subject from the Schema Registry? Soft or Hard.
 
@@ -31,11 +31,11 @@ If you are using the Confluent Schema Registry, you can soft-delete or hard-dele
 
 In Conduktor, we translate this with a simple "Delete" (soft-delete), or "Delete (permanently)" to be more explicit:
 
-![](../.gitbook/assets/screenshot-2021-02-01-at-16.52.34.png)
+![](../assets/assets/screenshot-2021-02-01-at-16.52.34.png)
 
 When a subject is "soft-deleted", it appears greyish if you "Show soft-deleted subjects" is checked. (by defaut, it is NOT checked):
 
-![](../.gitbook/assets/screenshot-2021-02-01-at-16.55.40.png)
+![](../assets/assets/screenshot-2021-02-01-at-16.55.40.png)
 
 ## Using Aiven's Schema Registry (Karapace)?
 

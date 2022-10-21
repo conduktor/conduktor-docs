@@ -12,7 +12,7 @@ This is the first thing to setup when you're consuming a topic
 
 Conduktor supports many formats when deserializing data and we keep adding some.
 
-We support the most common formats, but also bytes, JSON, and multiple Avro and Protobuf flavours. We are compatible with the **Confluent Schema Registry** and the **AWS Glue Registry** but we also support Avro and Protobuf data **not** written using the Confluent Schema Registry. You can even provide your own Avro or Protobuf schema directly within Conduktor (see [Schema without Confluent Schema Registry](pick-your-format-wisely.md#without-confluent-schema-registry)).
+We support the most common formats, but also bytes, JSON, and multiple Avro and Protobuf flavours. We are compatible with the **Confluent Schema Registry** and the **AWS Glue Registry** but we also support Avro and Protobuf data **not** written using the Confluent Schema Registry. You can even provide your own Avro or Protobuf schema directly within Conduktor (see [Schema without Confluent Schema Registry](#without-confluent-schema-registry-)).
 
 ## Key and Value
 
@@ -20,18 +20,18 @@ There are 2 formats to pick: the key format and the value format.
 
 - In most cases, the key is a String so nothing to worry about here. But Conduktor also support various formats
 
-![List of supported key formats](../.gitbook/assets/key_formats.png)
+![List of supported key formats](../assets/assets/key_formats.png)
 
 - The value is typically JSON or Avro or Protobuf but it can also be long, float or other primitives when working with Kafka Streams where you're doing aggregations for instance
 
-![List of supported value formats](../.gitbook/assets/value_formats.png)
+![List of supported value formats](../assets/assets/value_formats.png)
 
 {% hint style="info" %}
 Conduktor automatically pick "Avro (Auto)" when it detects a matching Confluent Schema Registry subject (if configured)
 {% endhint %}
 
 {% hint style="warning" %}
-If you don't see "Avro (Auto)", it means you didn't configured the url of your schema registry in your cluster configuration: [check the doc](https://docs.conduktor.io/kafka-cluster-connection/setting-up-a-connection-to-kafka#schema-registry).
+If you don't see "Avro (Auto)", it means you didn't configured the url of your schema registry in your cluster configuration: [check the doc](../setting-up-a-connection-to-kafka/#schema-registry).
 {% endhint %}
 
 ## Without Confluent Schema Registry ?
@@ -48,7 +48,7 @@ But not everyone follows this convention! This means it's possible that the reco
 - Which schemaId to use : `Avro (Schema ID)` (if using Confluent Schema Registry)
 - Which schema to use : `Avro (Custom)` (no need to the registry)
 
-![Avro custom](../.gitbook/assets/value_formats_avro.png)
+![Avro custom](../assets/assets/value_formats_avro.png)
 
 For instance, I want to provide an Avro Schema to read my data:
 
@@ -80,7 +80,7 @@ It can be used to "project" the data: read and display only a subset of fields
 }
 ```
 
-![Consume using custom Avro schema](<../.gitbook/assets/image (52) (1).png>)
+![Consume using custom Avro schema](<../assets/assets/image (52) (1).png>)
 
 ### With Protobuf, provide the schema
 
@@ -102,7 +102,7 @@ message SearchRequest {
 }
 ```
 
-![Consume using custom Protobuf Schema](<../.gitbook/assets/image (54) (1).png>)
+![Consume using custom Protobuf Schema](<../assets/assets/image (54) (1).png>)
 
 {% hint style="info" %}
 Conduktor will iterate over all root message types in the provided schema and select the best one for each message (the first type decoding without missing or unknown fields).
@@ -113,7 +113,7 @@ Conduktor will iterate over all root message types in the provided schema and se
 With AWS Glue Registry, the registry name and the schema information (including the format) are embedded in the message.
 All you need to do is provide the AWS region of your registry.
 
-![Consume with AWS Glue Registry](../.gitbook/assets/aws-glue-consume-config.png)
+![Consume with AWS Glue Registry](../assets/assets/aws-glue-consume-config.png)
 
 You also need to have your AWS credentials configured in your system
 (see [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)).
@@ -124,7 +124,7 @@ Conduktor will deserialize your messages (Json, Avro, Protobuf format are suppor
 
 If you try to consume Avro data without properly configuring it (and because it was not auto-detected by Conduktor for some reasons), you'll end up with garbage data like this:
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-16.13.10 (1).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-16.13.10 (1).png>)
 
 On the contrary, if you try to read non-Avro data using the Avro format, you'll end up with a list of errors (Conduktor doesn't stop, in case it was test records for instance):
 
@@ -132,7 +132,7 @@ On the contrary, if you try to read non-Avro data using the Avro format, you'll 
 ERR: Unknown magic byte!
 {% endhint %}
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-16.15.21 (1).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-16.15.21 (1).png>)
 
 ## Custom deserializers
 

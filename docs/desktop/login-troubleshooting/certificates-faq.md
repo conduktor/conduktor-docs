@@ -46,9 +46,9 @@ On the Cluster selection screen, navigate to _Options > Network > Trusted Certif
 
 Check the box "Allow non-trusted certificates automatically"
 
-![](../.gitbook/assets/network-tab.png)
+![](../assets/assets/network-tab.png)
 
-![](../.gitbook/assets/ignore-ssl.png)
+![](../assets/assets/ignore-ssl.png)
 
 Restart Conduktor and try again.&#x20;
 
@@ -76,7 +76,7 @@ If you don't have them, get in touch with your Administrator to help you.
 
 We are pleased to present to you our new Certificate model, intended to simplify your life as much as possible when your architecture involves **non-trusted issuers.**
 
-![The SSL Context is shared across all connections except ksqlDB](../.gitbook/assets/ssl-context.png)
+![The SSL Context is shared across all connections except ksqlDB](../assets/assets/ssl-context.png)
 
 With this new model, you just need to import the certificates once in the Network tab and they will be picked up by all the components.&#x20;
 
@@ -99,7 +99,7 @@ ssl.truststore.password=changeit
 
 #### JKS Manual Import (for Kafka Connect and ksqlDB)
 
-![The previous method is still available](../.gitbook/assets/manual-jks.png)
+![The previous method is still available](../assets/assets/manual-jks.png)
 
 ### Client Certificate Authentication
 

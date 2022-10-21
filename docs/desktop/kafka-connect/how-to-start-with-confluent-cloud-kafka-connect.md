@@ -60,6 +60,6 @@ https://api.confluent.cloud/connect/v1/environments/env-6789/clusters/lkc-8888/
 
 Configure your Conduktor with all these elements, selecting Basic Auth to add the username/password:
 
-![](../.gitbook/assets/confluent/ccloud-confluent.png)
+![](../assets/assets/confluent/ccloud-confluent.png)
 
 Test for the Connectivity here, to ensure the API Key is ready, it may takes a few minutes!
