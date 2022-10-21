@@ -7,7 +7,7 @@ title: No Internet Connection
 
 If Conduktor cannot connect to the internet at startup, a warning will appear
 in the bottom right corner of the welcome screen (next to the version number)
-![](./.gitbook/assets/internet-connection-error.png)
+![](./assets/assets/internet-connection-error.png)
 
 ## Why is this happening?
 

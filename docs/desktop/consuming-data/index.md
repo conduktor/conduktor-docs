@@ -23,13 +23,13 @@ If you're using Kafka Transactions in your topic, note that by default, Condukto
 
 From the main topics view, click on the icon next to its name to take a peek at its data:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-15.21.24.png)
+![](../assets/assets/screenshot-2020-06-25-at-15.21.24.png)
 
 We provide 2 views when consuming data: simple list and a tabular view. It's possible to switch back-and-forth by clicking on the "Tabular View" button below the list
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-15.04.41 (1).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-15.04.41 (1).png>)
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-15.07.08 (2).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-15.07.08 (2).png>)
 
 You can double-click on a record to open a new dialog with all its info, its schema if it's Avro and so on. You can also open several of them at once to compare records.
 
@@ -37,7 +37,7 @@ You can double-click on a record to open a new dialog with all its info, its sch
 Pick "JSON" as your Value deserializer to see the **formatted** **JSON** in the details dialog. If you pick just "string", it won't be formatted otherwise.
 {% endhint %}
 
-![The payload of a record](../.gitbook/assets/screenshot-2020-06-25-at-15.15.11.png)
+![The payload of a record](../assets/assets/screenshot-2020-06-25-at-15.15.11.png)
 
 From here, you can:
 
@@ -54,13 +54,13 @@ It's possible to consume multiple topics at the same. It's useful when you're lo
 
 To do so, on the topics view, select multiple topics and click on "Consume selected Topics":
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-14.46.18.png)
+![](../assets/assets/screenshot-2020-06-25-at-14.46.18.png)
 
 Then configure how you want to consume the data, (start, until), add a filter for instance on the user "1337", then start consuming to see where the users appears in the topics you selected.
 
 When consuming multi-topics, you can see the topic name above the value:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-14.51.37.png)
+![](../assets/assets/screenshot-2020-06-25-at-14.51.37.png)
 
 ## Monitoring the progress
 
@@ -68,7 +68,7 @@ When you're looking for a needle in a large topics, you'd like to know where Con
 
 This will open a panel updated in real-time displaying the progress for all partitions (and all topics, if several are consumed at once):
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-16.48.45 (1).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-16.48.45 (1).png>)
 
 {% hint style="warning" %}
 It's possible to identify if a partition has issues if it's not moving on or barely (probably that the leader broker of this partitions is in trouble)

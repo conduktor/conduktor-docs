@@ -11,7 +11,7 @@ They are available from the Schema Registry screen:
 - Create an Avro Schema from JSON
 - Check the different compatibilities between 2 Avro Schemas \(useful to be sure it will be compatible!\)
 
-![](../.gitbook/assets/screenshot-2020-09-20-at-19.19.14.png)
+![](../assets/assets/screenshot-2020-09-20-at-19.19.14.png)
 
 ## Generate an Avro Schema from JSON
 
@@ -19,7 +19,7 @@ When your company is slowly moving to Apache Avro, you generally already have so
 
 Paste your JSON on the left, Conduktor answers with an Avro Schema on the right, easy!
 
-![](../.gitbook/assets/screenshot-2020-09-20-at-19.22.55.png)
+![](../assets/assets/screenshot-2020-09-20-at-19.22.55.png)
 
 ## How to check for Avro schemas compatibility rules?
 
@@ -31,7 +31,7 @@ Put the original schema on the left, the future schema on the right, and you'll 
 
 For instance, here, if we remove a field, we know it's not FORWARD nor FULL compatible, but only BACKWARD compatible \(a consumer could be updated without taking this field into account\):
 
-![Removing "index" field makes the compatibility only Backward](../.gitbook/assets/screenshot-2020-09-20-at-19.25.20.png)
+![Removing "index" field makes the compatibility only Backward](../assets/assets/screenshot-2020-09-20-at-19.25.20.png)
 
 ### Subjects and Transitive checks
 
@@ -41,4 +41,4 @@ Often you start from a Subject, no need to copy the original schema in the left 
 The transitive checks are useful only when you are comparing a **lineage** of schemas.
 {% endhint %}
 
-![](../.gitbook/assets/screenshot-2020-09-20-at-19.33.50.png)
+![](../assets/assets/screenshot-2020-09-20-at-19.33.50.png)

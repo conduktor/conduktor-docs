@@ -22,19 +22,19 @@ JMX is a common protocol used in Java applications to expose metrics. Apache Kaf
 JMX is not an HTTP protocol, it cannot be accessed through an Internet browser
 {% endhint %}
 
-![](./.gitbook/assets/2021-02-03-14-04-03-metrics.png)
+![](./assets/assets/2021-02-03-14-04-03-metrics.png)
 
 With this configuration, Conduktor will regularly fetch the JMX endpoints:
 
 ```jsx<broker advertised listeners>:9999, using the JMX protocol`
 
-The `jsx<broker advertised listeners>` are **NOT** the bootstrap address you have configured in Conduktor to connect to your Kafka cluster. These things are entirely different, this is a specificity of how Kafka works. Please refer to [understanding-kafka-listeners](https://docs.conduktor.io/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups#understanding-kafka-listeners) if you have no idea what we are talking about.
+The `jsx<broker advertised listeners>` are **NOT** the bootstrap address you have configured in Conduktor to connect to your Kafka cluster. These things are entirely different, this is a specificity of how Kafka works. Please refer to [understanding-kafka-listeners](./setting-up-a-connection-to-kafka/impossible-connection-setups#understanding-kafka-listeners) if you have no idea what we are talking about.
 
 Therefore, your computer must be able to connect to this address:port for Conduktor to fetch the metrics.
 
 Conduktor also supports connecting to JMX endpoints and registries through both one and two-way SSL.&#x20;
 
-![](./.gitbook/assets/2021-02-03-14-47-56-metrics-ssl.png)
+![](./assets/assets/2021-02-03-14-47-56-metrics-ssl.png)
 
 To enable JMX over SSL, specify the following JVM arguments when starting the brokers :&#x20;
 
@@ -74,13 +74,13 @@ It's often started as a Java agent directly on the main Java program. When Jolok
 This is the power of Jolokia. Because it exposes the metrics through HTTP, they are accessible through an Internet browser
 {% endhint %}
 
-![](./.gitbook/assets/screenshot-2021-01-17-at-21.56.35.png)
+![](./assets/assets/screenshot-2021-01-17-at-21.56.35.png)
 
 With this configuration, Conduktor will regularly fetch the HTTP(S) endpoints:
 
 - `jsx<broker advertised listeners>:8778/jolokia`
 
-The `jsx<broker advertised listeners>` are **NOT** the bootstrap address you have configured in Conduktor to connect to your Kafka cluster. These things are entirely different, this is a specificity of how Kafka works. Please refer to [understanding-kafka-listeners](https://docs.conduktor.io/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups#understanding-kafka-listeners) if you have no idea what we are talking about.
+The `jsx<broker advertised listeners>` are **NOT** the bootstrap address you have configured in Conduktor to connect to your Kafka cluster. These things are entirely different, this is a specificity of how Kafka works. Please refer to [understanding-kafka-listeners](./setting-up-a-connection-to-kafka/impossible-connection-setups#understanding-kafka-listeners) if you have no idea what we are talking about.
 
 Therefore, your computer must be able to connect to this address:port for Conduktor to fetch the metrics.
 
@@ -91,27 +91,27 @@ For now, Conduktor barely used the power of the metrics. We're working to expose
 - **Version**: without metrics, Conduktor can only apply some heuristics to determine the version of the brokers. With metrics, we can know exactly which one it is!
   - It's important to be sure that all your version are up-to-date and similar
 
-![](./.gitbook/assets/screenshot-2021-01-18-at-00.08.51.png)
+![](./assets/assets/screenshot-2021-01-18-at-00.08.51.png)
 
 - **Topic throughput**: we display the throughput (in/out). Useful to know the activity of a topic. Does it have many consumers, or many producers, or none?
 
-![](./.gitbook/assets/screenshot-2021-01-18-at-00.13.05.png)
+![](./assets/assets/screenshot-2021-01-18-at-00.13.05.png)
 
 - **Rolling Restart**
   - This is an ops oriented feature, only available when you host your own Kafka and when Conduktor can ssh into the machines.
   - The metrics are necessary to monitor the Under Replicated Partitions
 
-![](./.gitbook/assets/screenshot-2021-01-18-at-00.15.37.png)
+![](./assets/assets/screenshot-2021-01-18-at-00.15.37.png)
 
 ## Configuring Conduktor
 
 Conduktor has a few configurations related to Monitoring, accessible from Options > Settings
 
-![](./.gitbook/assets/settings-menu.png)
+![](./assets/assets/settings-menu.png)
 
 Then choose Monitoring on the left to display the Monitoring settings (you must have enabled the metrics on your cluster to edit these settings)
 
-![](./.gitbook/assets/monitoring-settings-small.png)
+![](./assets/assets/monitoring-settings-small.png)
 
 The refresh interval defines the rate at which Conduktor retrieves data from your metric endpoint (and therefore the speed at which it will display the latest metric values).
 

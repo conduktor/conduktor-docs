@@ -71,12 +71,12 @@ aside.theme-doc-sidebar-container .sidebar_node_modules-\@docusaurus-theme-class
 
 aside.theme-doc-sidebar-container,
 aside.theme-doc-sidebar-container nav {
-  width: 200px;
+  width: 275px;
 }
 
-aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
+/* aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
   display: none;
-}
+} */
 
 aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible:hover,
 aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible--active {
@@ -93,6 +93,7 @@ aside.theme-doc-sidebar-container nav ul li a {
   background-color: unset !important;
   color: var(--colors-mauve11);
   font-weight: 500;
+  font-size: var(--fontSizes-fontSize2);
 }
 
 aside.theme-doc-sidebar-container nav ul li a.menu__link--active {
@@ -105,7 +106,10 @@ aside.theme-doc-sidebar-container nav ul li ul {
 
 main {
   padding-left: 2.7rem;
-  max-width: 100% !important;
+}
+
+main a {
+  font-weight: 500;
 }
 
 footer.footer--dark {

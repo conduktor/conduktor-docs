@@ -45,6 +45,6 @@ $ ccloud api-key list --resource lksqlc-0yp12
 
 Configure your Conduktor with all these elements, selecting Basic Auth to add the username/password:
 
-![](../.gitbook/assets/screenshot-2021-01-29-at-00.02.42.png)
+![](../assets/assets/screenshot-2021-01-29-at-00.02.42.png)
 
 Test for the Connectivity here, to ensure the API Key is ready, it may takes a few minutes!

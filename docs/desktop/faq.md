@@ -24,7 +24,7 @@ In case we're missing an integration, it can be useful to setup it globally on C
 -Djavax.net.ssl.keyStorePassword=<password>
 ```
 
-See [https://docs.conduktor.io/misc/configuring-conduktor#custom-environment-variables](https://docs.conduktor.io/misc/configuring-conduktor#custom-environment-variables) to see where.
+See [Configuring Conduktor -> Custom environment variables](configuring-conduktor#custom-environment-variabless) to see where.
 
 ## I'm using IPv6 infrastructure
 
@@ -64,7 +64,7 @@ dpkg: dependency problems prevent configuration of conduktor:
   Package libffi6 is not installed.
 ```
 
-It's possible to install the previous version using coming from Ubuntu 19.10 (Eoan Ermine): download it here [http://mirrors.kernel.org/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-8_amd64.deb](http://mirrors.kernel.org/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-8_amd64.deb)
+It's possible to install the previous version using coming from Ubuntu 19.10 (Eoan Ermine): download it [here](http://mirrors.kernel.org/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-8_amd64.deb).
 
 ```
 $ curl -LO http://archive.ubuntu.com/ubuntu/pool/main/libf/libffi/libffi6_3.2.1-9_amd64.deb

@@ -14,7 +14,7 @@ For this reason, Conduktor offers you an easy way to start a Kafka cluster. This
 
 Click on "Start a local Kafka cluster", then you can configure your cluster :
 
-![](./.gitbook/assets/2022-03-09_17-39.png)
+![](./assets/assets/2022-03-09_17-39.png)
 
 - Choose a Kafka version&#x20;
 - Do you need a registry? Just activate the toggle.&#x20;
@@ -24,7 +24,7 @@ The cluster will be entirely managed by Conduktor. You don't have to configure a
 
 Once you are connected to your managed Cluster, you can copy and paste the addresses of your Kafka cluster and registry to use it outside of Conduktor :&#x20;
 
-![](<./.gitbook/assets/image (53) (1).png>)
+![](<./assets/assets/image (53) (1).png>)
 
 ## Common error cases
 

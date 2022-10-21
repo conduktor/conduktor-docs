@@ -10,7 +10,7 @@ description: Topics are just "virtual containers" in Kafka. The real deal is the
 
 When you go to the details of a topic, we present a summary with many of the most useful information we need to know regarding a topic health. (it's all red-ish if something is wrong!)
 
-![](<../.gitbook/assets/screenshot-2020-06-25-at-15.07.08 (1).png>)
+![](<../assets/assets/screenshot-2020-06-25-at-15.07.08 (1).png>)
 
 - **Count** / **Overall**
   - **Count** is the sum (end offsets - beginning offsets) for all partitions (the beginning offsets are moving forward due to limited topic retention time/size).
@@ -36,9 +36,9 @@ Conduktor offers two perspectives for this.
 
 ### A view per partition
 
-![A normal situation, everything's good](../.gitbook/assets/screenshot-2020-09-19-at-22.25.57.png)
+![A normal situation, everything's good](../assets/assets/screenshot-2020-09-19-at-22.25.57.png)
 
-![When something is wrong! Here, the partition 0 has no leader](../.gitbook/assets/screenshot-2020-11-05-at-09.13.02.png)
+![When something is wrong! Here, the partition 0 has no leader](../assets/assets/screenshot-2020-11-05-at-09.13.02.png)
 
 - **partition** number: 0 to N
 - **leader**: this is a [broker.id](https://kafka.apache.org/documentation/#broker.id) of the leader. It can be any integer (0 to [reserved.broker.max.id](https://kafka.apache.org/documentation/#reserved.broker.max.id) typically 1000). It can also be `MISSING!` if Kafka doesn't find any leader for this partition. It generally means a broker is offline and that no replicas were up to date (or the topic was not replicated enough..) 😱
@@ -52,7 +52,7 @@ Conduktor offers two perspectives for this.
 
 This is useful to understand how the partitions are distributed in your cluster.&#x20;
 
-![](../.gitbook/assets/screenshot-2020-09-19-at-22.26.41.png)
+![](../assets/assets/screenshot-2020-09-19-at-22.26.41.png)
 
 {% hint style="warning" %}
 Also, if some partitions are in trouble, you can go to this screen and see at a glance if they all belong to the same broker.
@@ -64,7 +64,7 @@ Also, if some partitions are in trouble, you can go to this screen and see at a 
 
 Go to the Configuration tab on the topic:
 
-![](../.gitbook/assets/screenshot-2020-09-20-at-21.57.51.png)
+![](../assets/assets/screenshot-2020-09-20-at-21.57.51.png)
 
 {% hint style="danger" %}
 It's possible you do not have access to the configuration of a Topic because your Kafka user does not have the necessary ACLs configured.
@@ -82,7 +82,7 @@ For instance, here, we want to increase `min.cleanable.dirty.ratio`, we can hove
 - the current value (always useful to know the defaults to be sure we are not doing anything crazy 🤭 )
 - a textfield with the new value to set
 
-![](../.gitbook/assets/screenshot-2020-09-20-at-22.00.29.png)
+![](../assets/assets/screenshot-2020-09-20-at-22.00.29.png)
 
 {% hint style="success" %}
 It's also possible to DELETE an override to fallback on the default value of the cluster. (the defaults are configurable by the Kafka clusters administrators)
@@ -106,7 +106,7 @@ Conduktor helps you to know where the config comes from:
 - **TOPIC**: from a topic override (doesn't know if default for all or custom)
 - **S**: for static. It's quite common to have many of them for well configured Kafka clusters
 
-![S stands for Static](../.gitbook/assets/screenshot-2020-09-20-at-22.05.30.png)
+![S stands for Static](../assets/assets/screenshot-2020-09-20-at-22.05.30.png)
 
 {% hint style="success" %}
 You may have noticed the toggle button "Show Overrides Only" in this Configuration panel: it's used to remove the Kafka defaults and see only what have been modified.

@@ -161,7 +161,7 @@ sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required useKeyTab
 - **Cause 3**: Clock skew - If the time on the KDC and on the client differ significantly (typically 5 minutes), this error can be returned.
   - _**Solution 3:** Synchronize the clocks (or have a system administrator do so)._
 - **Cause 4**: The Kerberos realm name is not all uppercase.
-  - _**Solution 4:** Make the Kerberos realm name all uppercase. Note: It is recommended to have all uppercase realm names. See_ [_Naming Conventions for Realm Names and Hostnames_](https://docs.oracle.com/en/java/javase/11/security/kerberos-requirements.html#GUID-E73CCEA1-E94F-4E8D-9C42-403AF825658A)_._\
+  - _**Solution 4:** Make the Kerberos realm name all uppercase. Note: It is recommended to have all uppercase realm names. See_ [_Naming Conventions for Realm Names and Hostnames_](https://docs.oracle.com/en/java/javase/11/security/kerberos-requirements.html#GUID-E73CCEA1-E94F-4E8D-9C42-403AF825658A)_._
 
 ## FAQ
 

@@ -21,7 +21,7 @@ The data only transits between your Conduktor Desktop, on your machine, and your
 
 Your data stays exclusively in your enterprise network. It flows only between Conduktor and your brokers & applications.
 
-![](./.gitbook/assets/screenshot-2021-02-15-at-11.41.49.png)
+![](./assets/assets/screenshot-2021-02-15-at-11.41.49.png)
 
 ## Where is Conduktor installed?
 
@@ -53,7 +53,7 @@ As any software, Conduktor generates logs to help debugging or understanding wha
 
 ## Analytics / Error reporting
 
-![Check the option on our welcome screen to help us :)](<./.gitbook/assets/screenshot-2021-02-15-at-10.59.49 (1).png>)
+![Check the option on our welcome screen to help us :)](<./assets/assets/screenshot-2021-02-15-at-10.59.49 (1).png>)
 
 When the option "Analytics/Reports" is checked on our welcome screen, we will send some signals to:
 
@@ -62,7 +62,7 @@ When the option "Analytics/Reports" is checked on our welcome screen, we will se
 
 ## Support: Ask us Anything!
 
-![We are here to help us!](./.gitbook/assets/screenshot-2021-02-15-at-11.30.03.png)
+![We are here to help us!](./assets/assets/screenshot-2021-02-15-at-11.30.03.png)
 
 Listening to our users is super important. We provide many spots in our interface, for the users to contact us in case of questions/issues/feature requests.
 
@@ -80,7 +80,7 @@ To ensure a maximum security and availability of the login system, we use auth0 
 
 Conduktor contacts auth0 when the user logins (on [https://auth.conduktor.io/](https://auth.conduktor.io/)). The user can register or login on auth0 secured pages, which then provide a secured JWT to Conduktor on the machine.
 
-![](./.gitbook/assets/screenshot-2021-02-15-at-11.26.03.png)
+![](./assets/assets/screenshot-2021-02-15-at-11.26.03.png)
 
 ## How can I rollback in case of critical bug?
 

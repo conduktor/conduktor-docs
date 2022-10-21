@@ -45,7 +45,7 @@ $ ssh -i ~/.ssh/ec2-key.pem -N \
 
 The networking layer looks like this (not public):
 
-![](../.gitbook/assets/screenshot-2021-10-06-at-22.37.03.png)
+![](../assets/assets/screenshot-2021-10-06-at-22.37.03.png)
 
 ### Alternative: Another Proxy
 
@@ -90,13 +90,13 @@ Conduktor fully handles AWS IAM, you just have to setup your connection with you
 
 Read our guest blog on AWS for more details: [https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk/](https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk/)
 
-![](../.gitbook/assets/bdb1447-access-control-msk-4.gif)
+![](../assets/assets/bdb1447-access-control-msk-4.gif)
 
 ### AWS MSK + IAM Architecture
 
 A small overview of "what's going on" when you use AWS MSK and configure IAM (read the mentioned blog above for more details):
 
-![](<../.gitbook/assets/image (46).png>)
+![](<../assets/assets/image (46).png>)
 
 ### Configuration Example
 

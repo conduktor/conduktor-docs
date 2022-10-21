@@ -34,7 +34,7 @@ For instance, here, we only care about `.state.version` in:
 
 We setup this as our filter, and we'll only see the value of `version`:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-17.05.50%20%281%29.png)
+![](../assets/assets/screenshot-2020-06-25-at-17.05.50%20%281%29.png)
 
 Typical use-cases:
 
@@ -49,10 +49,10 @@ Typical use-cases:
 
 If your jq filter is invalid, or only fails for some records, Conduktor will display the jq error in place of the value:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-17.25.48.png)
+![](../assets/assets/screenshot-2020-06-25-at-17.25.48.png)
 
 {% hint style="info" %}
-If you're using Avro, it's also possible to provide a custom schema \(with less fields\) by using the format "Avro \(Custom Schema\)", see [Avro without Confluent?](https://docs.conduktor.io/features/consuming-data#avro-without-confluent)
+If you're using Avro, it's also possible to provide a custom schema \(with less fields\) by using the format "Avro \(Custom Schema\)", see [Avro without Confluent?](../consuming-data)
 {% endhint %}
 
 ## Filtering data
@@ -71,7 +71,7 @@ By default, Conduktor uses "**now \(latest\)**": it means that only new incoming
   - **latest minux X offsets**: just the latest data published, no matter when
   - **an offset**: this will be the starting offset for all the partitions consumed. You generally use this and select only one partition \(see Advanced\).
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-17.34.02.png)
+![](../assets/assets/screenshot-2020-06-25-at-17.34.02.png)
 
 ### Choose until when to consume
 
@@ -83,7 +83,7 @@ Sometimes, you don't want to continuously consume incoming data and just want to
 - **timestamp**: consume data up until a particular date.
   - also useful when combined to a start date
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-17.52.07.png)
+![](../assets/assets/screenshot-2020-06-25-at-17.52.07.png)
 
 ### Filter messages by their key/value/headers
 
@@ -101,9 +101,9 @@ If you set several filters, it's treated like an "**AND**".
 We **don't** support "OR" operand; we don't have any complex UI to tell "\(this or \(that and that\)\) or this"
 {% endhint %}
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-18.07.45.png)
+![](../assets/assets/screenshot-2020-06-25-at-18.07.45.png)
 
-![The different filters options: contains, regex, json](../.gitbook/assets/screenshot-2020-06-25-at-18.18.03.png)
+![The different filters options: contains, regex, json](../assets/assets/screenshot-2020-06-25-at-18.18.03.png)
 
 ### Filter: Regex
 
@@ -139,7 +139,7 @@ Regexes can be complicated \(look the above comment\). This is why we also offer
 
 Here, we want to see only the Avro records where `.state.version` equals to 227:
 
-![](../.gitbook/assets/screenshot-2020-06-25-at-18.51.37.png)
+![](../assets/assets/screenshot-2020-06-25-at-18.51.37.png)
 
 Refer to [Projecting data](https://docs.conduktor.io/features/consuming-data#projecting-data) to know what's possible, it's the same syntax.
 
@@ -157,4 +157,4 @@ All kinds of existing filters can be used in composed filter.
 
 To add or remove a filter use the `+` & `-` buttons.
 
-![](../.gitbook/assets/produce-and-consume/composable-filter.png)
+![](../assets/assets/produce-and-consume/composable-filter.png)

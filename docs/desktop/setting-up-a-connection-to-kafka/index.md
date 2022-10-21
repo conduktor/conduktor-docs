@@ -11,11 +11,11 @@ description: Conduktor allows you to easily add, manage and save cluster connect
 
 To add a cluster, please click on the "Add new cluster" button
 
-![](../.gitbook/assets/add_new_cluster_button.png)
+![](../assets/assets/add_new_cluster_button.png)
 
 This will open up a list of configurations you can set for Conduktor
 
-![](../.gitbook/assets/new_cluster_configuration_main.png)
+![](../assets/assets/new_cluster_configuration_main.png)
 
 ### Kafka Cluster
 
@@ -33,19 +33,19 @@ You can use the two buttons to test the Kafka and Zookeeper connectivity to ensu
 
 If using Aiven, you can use our integration to setup the configuration:
 
-![](<../.gitbook/assets/Screenshot 2021-11-29 at 15.54.17.png>)
+![](<../assets/assets/Screenshot 2021-11-29 at 15.54.17.png>)
 
 Download the 3 necessary files on Aiven's interface (service.key, service.cert, ca.pem). Conduktor will generate files out of them in the folder you chose (don't remove them!).
 
 Please be careful to check that the files you are downloading from Aiven contain a proper key, and not `jsx<hidden>`, which happens when you don't have the permissions.
 
-![](<../.gitbook/assets/Screenshot 2021-11-29 at 15.48.08.png>)
+![](<../assets/assets/Screenshot 2021-11-29 at 15.48.08.png>)
 
 #### Redhat
 
 If using Redhat, you can click on the Redhat button and follow the guide to create a service account and retrieve your Redhat Kafka cluster information. Then fill the form with the required information:
 
-![](../.gitbook/assets/redhat-integration-last-step.png)
+![](../assets/assets/redhat-integration-last-step.png)
 
 If you are using the SASL/OAUTHBEARER authentication with a custom token endpoint, do not forget to change the token endpoint URL.
 
@@ -55,7 +55,7 @@ Click on create to go back to the cluster configuration page, it will be automat
 
 In case you are using the [Confluent Schema Registry](https://docs.confluent.io/current/schema-registry/index.html) and usually Avro data, you should use this tab to setup the connection details to your registry. These detail are necessary to activate the "Schema Registry" tab in Conduktor, as well as consume and produce data in Avro format.
 
-![](../.gitbook/assets/screen-shot-2021-08-17-at-5.30.06-pm.png)
+![](../assets/assets/screen-shot-2021-08-17-at-5.30.06-pm.png)
 
 - **URL:** HTTP or HTTPS endpoint of your schema registry.
 - **Security:** Choose the security type (None, Basic Auth, Bearer Token)
@@ -79,7 +79,7 @@ schema.registry.ssl.key.password=<xxx>
 
 Here you can add a list of Kafka Connect clusters that are linked to this Kafka cluster.
 
-![](../.gitbook/assets/screen-shot-2021-08-17-at-5.30.31-pm.png)
+![](../assets/assets/screen-shot-2021-08-17-at-5.30.31-pm.png)
 
 Each Kafka Connect cluster will have
 
@@ -93,7 +93,7 @@ You can also test the connectivity to your Connect clusters from there.
 
 Enabling metrics allows Conduktor to get real-time features, statistics, monitoring over your cluster, as well as the rolling restart feature.
 
-![](../.gitbook/assets/screen-shot-2021-08-17-at-5.31.50-pm.png)
+![](../assets/assets/screen-shot-2021-08-17-at-5.31.50-pm.png)
 
 We current support Jolokia and JMX to extract metrics.
 
@@ -112,13 +112,13 @@ The SSH configuration is quite powerful and should only be allowed to be set-up 
 
 The SSH configuration enables Conduktor to directly access your brokers machines, enabling features like the rolling restart feature.
 
-![](../.gitbook/assets/screen-shot-2021-08-17-at-5.32.18-pm.png)
+![](../assets/assets/screen-shot-2021-08-17-at-5.32.18-pm.png)
 
 Please provide the port, user, authentication method (password or SSH key pair) and test the SSH configuration.
 
 ### Plugins (aka "custom jars")
 
-![Available since v2.17.0](../.gitbook/assets/screen-shot-2021-08-17-at-5.33.05-pm.png)
+![Available since v2.17.0](../assets/assets/screen-shot-2021-08-17-at-5.33.05-pm.png)
 
 The Plugins configuration allows you to load your custom jars into Conduktor.\
 These customs jars are useful to extend the capabilities of our internal Kakfa clients.
@@ -135,7 +135,7 @@ For example, if you're using OAuth2 to authenticate the connections to your Kafk
 
 With this additional property and this jar configured, Conduktor will be able to configure its internal Kafka client to successfully connect to your Kafka cluster.
 
-To learn more about custom Kafka deserializers and how to use them in Conduktor, please the dedicated documentation: [Custom deserializers](../../features/consuming-data/custom-deserializers/)
+To learn more about custom Kafka deserializers and how to use them in Conduktor, please the dedicated documentation: [Custom deserializers](../consuming-data/custom-deserializers/)
 
 ⚠️ When adding a plugin to a cluster configuration, this plugin is only available for this cluster.\
 If you want to use this same plugin with a second cluster configured in Conduktor, you'll need to add this plugin in this second cluster configuration too.
@@ -160,23 +160,19 @@ Don't hesitate to contact our support if you meet any issue with your plugins an
 
 Conduktor has utilities to test the connectivity to your Kafka clusters. In case you cannot establish a connectivity to your clusters, please make sure to read the following two pages:
 
-{% content-ref url="connecting-to-a-secure-kafka.md" %}
-[connecting-to-a-secure-kafka.md](connecting-to-a-secure-kafka.md)
-{% endcontent-ref %}
+[Connecting to a secure Kafka](connecting-to-a-secure-kafka.md)
 
-{% content-ref url="impossible-connection-setups.md" %}
-[impossible-connection-setups.md](impossible-connection-setups.md)
-{% endcontent-ref %}
+[Impossible connection setups](impossible-connection-setups.md)
 
 ## Multi Cluster Management
 
 Conduktor allows you to manage and save the configuration and connection details to multiple Kafka clusters for easy and quick connections. The clusters you have used last will appear at the top of your cluster list.
 
-![the left-hand side contains the list of your clusters](<../.gitbook/assets/image (2).png>)
+![the left-hand side contains the list of your clusters](<../assets/assets/image (2).png>)
 
 To edit the configuration of a cluster, hover your mouse over a cluster, and the "config button" will appear.
 
-![the config button appears next to the cluster name](<../.gitbook/assets/image (17).png>)
+![the config button appears next to the cluster name](<../assets/assets/image (17).png>)
 
 {% hint style="info" %}
 The ability to export, backup and share Kafka cluster configurations is an upcoming feature of the Enterprise License.
@@ -186,14 +182,10 @@ The ability to export, backup and share Kafka cluster configurations is an upcom
 
 Setting up Conduktor with secure clusters is possible but requires you to have the exact properties. We have setup a longer guide here to help you out:
 
-{% content-ref url="connecting-to-a-secure-kafka.md" %}
-[connecting-to-a-secure-kafka.md](connecting-to-a-secure-kafka.md)
-{% endcontent-ref %}
+[Connecting to a secure Kafka](connecting-to-a-secure-kafka.md)
 
 ## Connectivity Issues
 
 Having connectivity issues? Be sure that you're not in a case of "impossible connection setup". Read more here:
 
-{% content-ref url="impossible-connection-setups.md" %}
-[impossible-connection-setups.md](impossible-connection-setups.md)
-{% endcontent-ref %}
+[Impossible connection setups](impossible-connection-setups.md)
