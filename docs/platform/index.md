@@ -2,46 +2,25 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Overview
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## What is Conduktor Platform?
 
-## Getting Started
+### Streamline Apache Kafka
 
-Get started by **creating a new site**.
+Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, testing, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** or as a **managed service**.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+**Try Conduktor Platform immediately** via **[demo.conduktor.io](https://demo.conduktor.io)**.
 
-### What you'll need
+### Platform Walkthrough
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on overview below:
 
-## Generate a new site
+[![Platform Overview](https://img.youtube.com/vi/SnLv2yL5sy0/0.jpg)](https://www.youtube.com/watch?v=SnLv2yL5sy0)
 
-Generate a new Docusaurus site using the **classic template**.
+## Resources
 
-The classic template will automatically be added to your project after you run the command:
+  - [Chanelog](https://github.com/conduktor/conduktor-platform#changelog)
+  - [Support](https://www.conduktor.io/contact/support/)
+  - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
 
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.

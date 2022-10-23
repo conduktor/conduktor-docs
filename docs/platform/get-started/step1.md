@@ -2,10 +2,15 @@
 sidebar_position: 1
 ---
 
-# Step 1
+# Online Demo
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**Try Conduktor Platform immediately** via **[demo.conduktor.io](https://demo.conduktor.io)**.
 
-## Getting Started
+The demo environment is accessible by anyone and simulates an enterprise organisations Kafka ecosystem. 
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+Use the quick links below to jump into specific solutions within the Platform:
+- [Console](https://demo.conduktor.io/console/clusters/)
+- [Testing](https://demo.conduktor.io/testing)    
+- [Monitoring](https://demo.conduktor.io/monitoring)
+- [Data Masking](https://demo.conduktor.io/data-masking)
+- [Topic-as-a-Service](https://demo.conduktor.io/governance)
