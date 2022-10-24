@@ -68,6 +68,7 @@ aside.theme-doc-sidebar-container nav {
 aside.theme-doc-sidebar-container > div {
   top: var(--ifm-navbar-height);
   padding-top: 0;
+  height: calc(100% - 30px);
 }
 
 aside.theme-doc-sidebar-container,
