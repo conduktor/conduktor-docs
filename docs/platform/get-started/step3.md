@@ -2,10 +2,24 @@
 sidebar_position: 3
 ---
 
-# Step 3
+# Docker Compose
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Use Docker Compose to start a single node Kafka cluster, Schema Registry and the latest version of the Conduktor Platform.
 
-## Getting Started
+### Prerequisites
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+:::info
+Install **[Docker Compose](https://docs.docker.com/compose/install/)**
+:::
+
+## Run Conduktor Platform
+
+Note that when you run this command, you will be prompted for your organization name and be asked to create admin credentials.
+
+```
+curl -sS https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/autorun/autorun.sh | bash -s setup
+```
+
+## Access Conduktor
+
+After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
