@@ -2,15 +2,15 @@
 sidebar_position: 3
 ---
 
+import InfoBox from '@site/src/components/atoms/InfoBox'
+
 # Docker Compose
 
 Use Docker Compose to start a single node Kafka cluster, Schema Registry and the latest version of the Conduktor Platform.
 
 ### Prerequisites
 
-:::info
-Install **[Docker Compose](https://docs.docker.com/compose/install/)**
-:::
+<InfoBox type="info">Install <a href="https://docs.docker.com/compose/install">Docker Compose</a></InfoBox>
 
 ## Run Conduktor Platform
 
