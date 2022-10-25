@@ -12,7 +12,7 @@ interface SearchInputProps {}
 const SearchInput: React.FunctionComponent<SearchInputProps> = () => {
   return (
     <StyledSearchInput>
-      <SearchInputIcon />
+      <SearchInputIcon src="/assets/svgs/search.svg" alt="Search Icon" />
       <SearchInputText type="text" value="Search" />
       <SearchInputShortcut>
         <SearchInputShortcutKey>⌘</SearchInputShortcutKey>
