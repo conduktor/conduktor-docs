@@ -12,11 +12,11 @@ If anything is missing or wrong, or for any feedback, please [contact us](https:
 
 ## Navigating the documentation
 
-**[Conduktor First Steps](./install)**
+**[Conduktor First Steps](/desktop/conduktor-first-steps/install)**
 
 **[Account Management](./account-management)**
 
-**[Kafka Cluster Connection](./setting-up-a-connection-to-kafka)**
+**[Kafka Cluster Connection](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka)**
 
 ## Learning Kafka
 
