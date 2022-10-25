@@ -58,9 +58,10 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          { to: '/platform', label: 'Platform', position: 'left' },
-          { to: '/testing', label: 'Testing', position: 'left' },
-          { to: '/desktop', label: 'Desktop', position: 'left' },
+          {
+            type: 'custom-navbar',
+            position: 'left',
+          },
         ],
       },
       footer: {
@@ -112,6 +113,12 @@ const config = {
         path: './docs/desktop',
         routeBasePath: 'desktop',
         sidebarPath: require.resolve('./sidebars.js'),
+      },
+    ],
+    [
+      'docusaurus2-dotenv',
+      {
+        systemvars: true,
       },
     ],
   ],
