@@ -1,4 +1,3 @@
-import ReactSearchIcon from '-!svg-react-loader?name=SearchIcon!@site/static/assets/svgs/search.svg'
 import { styled } from '@site/src/styles'
 
 export const StyledSearchInput = styled('div', {
@@ -15,7 +14,7 @@ export const StyledSearchInput = styled('div', {
   boxShadow: '$shadow1',
 })
 
-export const SearchInputIcon = styled(ReactSearchIcon, {
+export const SearchInputIcon = styled('img', {
   width: 18,
   height: 18,
   position: 'absolute',
@@ -27,6 +26,7 @@ export const SearchInputIcon = styled(ReactSearchIcon, {
 
 export const SearchInputText = styled('input', {
   all: 'unset',
+  pointerEvents: 'none',
 })
 
 export const SearchInputShortcut = styled('ul', {
