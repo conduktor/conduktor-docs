@@ -13,7 +13,7 @@ Yes, you can test your event-driven applications, Kafka Streams applications, or
 
 ## Get Started
 
-To get started, we thoroughly recommend that you complete our [**Getting Started**](broken-reference) guide This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
+To get started, we thoroughly recommend that you complete our [**Getting Started**](/testing/getting-started/sign-up-to-conduktor-testing) guide This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
 
 :::info
 This product is in **Beta.**
@@ -24,8 +24,8 @@ If anything is missing or not clear enough, please [contact us](https://www.cond
 **Pro tip:** you can **search** the documentation in the top right corner of this website
 :::
 
-[Getting Started](getting-started/sign-up-to-conduktor-testing)
+[Getting Started](/testing/getting-started/sign-up-to-conduktor-testing)
 
-[Features](features/workspace)
+[Features](/testing/features/workspace)
 
-[Changelog](miscellaneous/changelog)
+[Changelog](/testing/miscellaneous/changelog)
