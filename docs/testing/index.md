@@ -13,11 +13,10 @@ Yes, you can test your event-driven applications, Kafka Streams applications, or
 
 ## Get Started
 
-To get started, we thoroughly recommend that you complete our [**Getting Started**](/testing/getting-started/sign-up-to-conduktor-testing) guide This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
+To get started, we thoroughly recommend that you complete our [**Getting Started**](/testing/getting-started/sign-up-to-conduktor-testing) guide. This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
 
 :::info
-This product is in **Beta.**
-If anything is missing or not clear enough, please [contact us](https://www.conduktor.io/contact). The fastest way to guarantee a response is by using the chat widget inside Conduktor Testing.
+If anything in the docs is not clear or you need further help, please [contact us](https://www.conduktor.io/contact). Alternatively, the fastest way to guarantee a response is by using the chat widget inside Conduktor Testing.
 :::
 
 :::tip
