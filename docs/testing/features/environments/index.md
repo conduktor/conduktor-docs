@@ -2,7 +2,7 @@
 
 Environments facilitate the storage of parameters and configurations that can be referenced in test scenarios.&#x20;
 
-For example, attaching a **different cluster configuration** across **development**, **staging** and **production** environments.&#x20;
+For example, attaching a **different cluster configuration** across **development**, **staging**, and **production** environments.&#x20;
 
 You can also use variables to store frequently referenced data. For example, a **message key** that's **frequently referenced** in your test scenarios.&#x20;
 
@@ -14,7 +14,7 @@ To get started, navigate to the **Environments** tab from the main navigation an
 
 ![](<../../assets/image (133).png>)
 
-Give your environment a **name** and select a **colour** to associate with the environment.
+Give your environment a **name** and select a **color** to associate with the environment.
 
 ![](<../../assets/image (61).png>)
 

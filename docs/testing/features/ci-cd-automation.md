@@ -12,15 +12,6 @@ Conduktor Testing supports automated execution of Test Scenarios via the CI Agen
 - Ensure builds are stable before they are released
 - Helps compute test results and identify regressions
 
-**Jump to:**
-
-- [Configuring the CI Agent](ci-cd-automation#configuring-the-ci-agent)
-- [Obtaining the CI Configuration](ci-cd-automation#obtaining-the-ci-configuration)
-- [Using the CI Configuration](ci-cd-automation#using-the-ci-configuration)
-  - [Github Actions](ci-cd-automation#using-the-ci-configuration)
-  - [Circle CI](ci-cd-automation#running-on-circle-ci)
-  - [Gitlab](ci-cd-automation#running-on-gitlab-ci-cd)
-
 ## Configuring the CI Agent
 
 The pre-requisite for executing tests in your CI environment is configuring the CI Agent.&#x20;
@@ -75,7 +66,7 @@ On the next screen, you will be displayed the **CI configuration.** This will be
 
 ### Running on Github Actions
 
-Below shows an example Github action, utilising the CI agent to automate execution of tests.
+Below shows an example Github action, utilizing the CI agent to automate execution of tests.
 
 Note the parameters:
 

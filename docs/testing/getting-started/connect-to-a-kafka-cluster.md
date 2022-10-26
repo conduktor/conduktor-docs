@@ -8,17 +8,6 @@ You must add a Kafka cluster in your [Workspace](../features/workspace). This en
 
 The ability to reach your cluster will depend on where you have installed the [Testing Agent](install-the-testing-agent).
 
-**Quick links:**
-
-- [Adding a cluster](connect-to-a-kafka-cluster#adding-a-cluster)
-- [Schema Registry](connect-to-a-kafka-cluster#schema-registry)
-- [Connect to a local Kafka cluster](connect-to-a-kafka-cluster#connect-to-a-local-kafka-cluster)
-- [Connect to a secure Kafka cluster](connect-to-a-kafka-cluster#connect-to-a-secure-kafka-cluster)
-- [Connect to a Confluent cluster](connect-to-a-kafka-cluster#connect-to-a-confluent-cluster)
-- [Connect to a Aiven cluster](connect-to-a-kafka-cluster#connect-to-an-aiven-cluster)
-- [Connect to a Red Hat cluster](connect-to-a-kafka-cluster#connect-to-a-red-hat-cluster)
-- [Connect to a MSK cluster](connect-to-a-kafka-cluster#connecting-to-an-msk-cluster)
-
 ## Adding a cluster
 
 To add a Kafka cluster, navigate to the **Clusters** tab from within your [Workspace](../features/workspace).&#x20;

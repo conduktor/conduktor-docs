@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Test Scenarios
 
-Test Scenarios represent a set of tasks used to validate some functionality in your application, pipeline or service.
+Test Scenarios represent a set of tasks used to validate some functionality in your application, pipeline, or service.
 
 Test scenarios can be specified in two ways:
 
@@ -23,4 +23,4 @@ Once your scenario is created, you will be pushed into the **Editor** view. This
 
 ![](<../../assets/image (176).png>)
 
-Continue to learn more about adding \***\* [**Tasks**](tasks/) \*\*** to your scenario.
+Continue to learn more about adding [**Tasks**](tasks/) to your scenario.

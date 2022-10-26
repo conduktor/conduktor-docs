@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Use the **HTTP** task to test APIs that form part of your system architecture.&#x20;
 
-This involves defining an API endpoint, the method, any relevant body data, headers, query parameters or authentication required for your API.
+This involves defining an API endpoint, the method, any relevant body data, headers, query parameters, or authentication required for your API.
 
 When making a request, you can make **checks** on the response data. Below outlines what you are able to test in regards to the response.
 
@@ -18,16 +18,6 @@ When making a request, you can make **checks** on the response data. Below outli
 | Response Time | The response time in ms                         |
 | Response Size | The response size in bytes                      |
 
-**Quick Links:**
-
-- [Creating an HTTP Task](http-task#creating-an-http-task)
-  - [Method & URL](http-task#method-and-url)
-  - [Body](http-task#body)
-  - [Query Parameters](http-task#query-parameters)
-  - [Authentication](http-task#authentication)
-- [Previewing Requests](http-task#undefined)
-- [Combining HTTP & Kafka](http-task#combining-http-and-kafka)
-  - [Example: REST Proxy & Kafka Consumer](http-task#example-rest-proxy-and-kafka-consumer)
 
 ## Creating an HTTP Task
 
@@ -95,7 +85,7 @@ There are multiple options for adding authentication to your HTTP request.
 
 #### Basic Auth
 
-Add the username and _optional_ password in the provided inputs
+Add the username and _optional_ password in the provided inputs.
 
 #### Bearer Token
 
@@ -113,7 +103,7 @@ Before saving your HTTP task, use the `Preview` button to see if your request is
 
 It also gives you a chance to preview the response data, which is useful when adding checks.&#x20;
 
-It will demonstrate the structure of any response data, and give an indication on the status code, response time and response size.
+It will demonstrate the structure of any response data, and give an indication on the status code, response time, and response size.
 
 ![](<../../../assets/image (39).png>)
 
@@ -156,7 +146,7 @@ On the **Checks** tab, add a validation on the response code.
 
 #### Consumer Task
 
-- Chained to the `On Response` port of the HTTP task, add a **Consumer** task to the canvas.
+- Chained to the `On Response` port of the HTTP task, add a **Consumer** task to the canvas
 - Configure the Cluster and Topic that you expect to receive the message
 - On the **Data** tab, choose `JSON` as the value format
 - Leave the default **Lifecycle** conditions, assuming we only expect to consume 1 record

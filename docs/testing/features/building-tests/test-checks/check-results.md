@@ -8,7 +8,7 @@ When you execute a test scenario containing checks, the result will be either pa
 
 Execute a test scenario, or navigate to a historical run, and select the **Checks** tab.
 
-Click into a failed check to see the **actual result** against the **expected result**. \*\*\*\*&#x20;
+Click into a failed check to see the **actual result** against the **expected result**.&#x20;
 
 :::info
 **Tip!** Revisit a historical test run via the **Executions** module within the **Insights** tab.

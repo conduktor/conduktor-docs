@@ -15,12 +15,6 @@ You can consume data from Kafka with a number of conditions.
 | Time Interval  | Constantly consume records until an elapsed time (ms) is reached                              |
 | With filter(s) | Use any of the above methods with additional filter conditions to intercept specific messages |
 
-**Quick links:**
-
-- [Deserialization support](consumer-task#deserialization-support)
-- [Create a consumer task](consumer-task#create-a-consume-task)
-- [Consumer filters](consumer-task#consumer-filters)
-
 ## Deserialization support
 
 When you consume data from Kafka you must specify the deserialization format for the record keys and values.&#x20;
@@ -67,7 +61,7 @@ However, you can amend these to suit your needs within the **Lifecycle** section
 
 ![](<../../../assets/image (97).png>)
 
-To learn about adding checks (tests) on data consumed from Kafka, move on to \***\* [**Test Checks\*\*](../test-checks/).&#x20;
+To learn about adding checks (tests) on data consumed from Kafka, move on to [**Test Checks\**](../test-checks/).&#x20;
 
 ## Consumer filters
 

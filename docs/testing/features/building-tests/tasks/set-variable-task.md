@@ -12,12 +12,6 @@ You can define a value explicitly, or reference data from a chained task using t
 Unlike [environment](../../environments/) variables, which can be used globally across any scenario, local variables are only available within the context of the scenario they are set.
 :::
 
-**Quick links:**
-
-- [Create a Set Variable task](set-variable-task#create-a-set-variable-task)
-- [Accessing a local variable](set-variable-task#accessing-a-local-variable)
-- [Accessing data from a previous task](set-variable-task#accessing-data-from-a-previous-task)
-
 ## Create a Set Variable task
 
 When inside the visual editor for a new scenario, select the **Scenario Start** button and select **Set Variables** from the dropdown menu.
@@ -36,7 +30,7 @@ Note you can switch between the different [Custom Inputs](/testing/features/cust
 
 Once you have configured a local variable, it's possible to access it in subsequent tasks.
 
-Depending \*\*\*\* on which [custom input](/testing/features/custom-inputs) you are using, you should access local variables differently.
+Depending on which [custom input](/testing/features/custom-inputs) you are using, you should access local variables differently.
 
 | Attribute      | How to access: Field selection (JQ) | How to access: JavaScript   |
 | -------------- | ----------------------------------- | --------------------------- |
@@ -69,10 +63,8 @@ For example, if you have a Set Variable task that's chained to the **`ON RECORD`
 
 **Example:** Setting a variable from a JSON message value via a Consumer task
 
-_Note you should use the Field Selection (JQ) \*\*\*\*_ [_custom input_](/testing/features/custom-inputs) _to access the data_
+_Note you should use the Field Selection (JQ) _ [_custom input_](/testing/features/custom-inputs) _to access the data_
 
 ![](<../../../assets/image (47).png>)
 
 If you have more than one origin for a task, you can use Field Selection (JQ) or Javascript advanced filtering options to pick the right one.&#x20;
-
-Soon, we will provide more documentation on that (and we'll try to simplify this part).\

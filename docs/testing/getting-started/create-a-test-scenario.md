@@ -44,7 +44,7 @@ In the **General** tab, select a configured **Cluster,** and choose the **Topic*
 
 Navigate to the **Data** tab and select the **serialization format** for your message key/value.&#x20;
 
-With **String** selected as the value format, enter the value `Hello World`
+With **String** selected as the value format, enter the value `Hello World`.
 
 ![](<../assets/image (158).png>)
 
@@ -54,7 +54,7 @@ Select **Save** to add your Produce task to the graph.
 
 ## Add a Consume task
 
-Next, we will add a **Consume** task that will consume the **Hello World** message.
+Next, we will add a **Consume** task that will consume the `Hello World` message.
 
 :::info
 **Note:** Kafka is asynchronous**,** so when producing and consuming from the same topic, these tasks should be configured in **parallel**.&#x20;

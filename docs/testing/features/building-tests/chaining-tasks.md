@@ -8,7 +8,7 @@ You can chain tasks by clicking on the start node or a **task output port**, the
 
 ![Consumers have 2 output ports](../../assets/output-ports.png)
 
-For exampe, Consumer tasks have 2 output ports:
+For example, Consumer tasks have 2 output ports:
 
 - **on record** will trigger the next task on each record consumed. The record data will be accessible in the next task
 - **on end triggers** the next task when the consumer lifecycle ends. Consumed records are not accessible to subsequent tasks
@@ -26,10 +26,6 @@ You can create new links by drawing a line (dragging) from the output port of a 
 You can do joins simply by having multiple parents for a task. In this case, the child task will only be triggered when each parent emitted a new event
 
 ## Accessing the output
-
-:::caution
-This features requires agent version >= 0.16.0&#x20;
-:::
 
 You can access the parent events in the child task. For example, if you chain an HTTP Request task with a Producer task, you will be able to produce data coming from the HTTP response.
 

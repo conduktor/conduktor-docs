@@ -5,22 +5,11 @@ description: Domain-specific language
 
 # DSL
 
-The DSL (Domain-specific language) is a specialised language enabling **rapid test declaration** and **version control** of your [Test Scenarios](building-tests/test-scenarios).&#x20;
+The DSL (Domain-specific language) is a specialized language enabling **rapid test declaration** and **version control** of your [Test Scenarios](building-tests/test-scenarios).&#x20;
 
 When you use the Testing UI, it's possible to toggle between the visual and code-wise representation of a test.&#x20;
 
 Additionally, it's possible to **export** the DSL behind a test scenario, and version control it in a system like Github. You can also **import** the DSL from a file, and create a test scenario from it.
-
-**Jump to:**
-
-- [Introduction](dsl#undefined)
-- [Toggling the DSL view](dsl#undefined)
-- [Restore a DSL version](dsl#undefined)
-- [Import DSL as a new test scenario](dsl#import-dsl-as-a-new-test-scenario)
-
-:::info
-**Note** we will provide more specific detail(s) on the DSL schema soon
-:::
 
 ## Introduction
 

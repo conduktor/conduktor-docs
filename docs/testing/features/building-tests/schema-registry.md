@@ -17,13 +17,6 @@ It's possible to produce and consume messages with a specified:
 
 Additionally, you can both filter and check messages consumed based on the Schema Id.
 
-**Jump to:**
-
-- [Producing a message with schema registry type](schema-registry#producing-a-message-with-schema-registry-type)
-- [Consuming a message with schema registry type](schema-registry#consuming-a-message-with-schema-registry-type)
-- [Filtering messages on Schema Id](schema-registry#filtering-messages-on-schema-id)
-- [Checking the Schema Id](schema-registry#checking-the-schema-id)
-
 ## Producing a message with schema registry type
 
 Add a [Producer Task](tasks/producer-task) to the canvas editor.&#x20;

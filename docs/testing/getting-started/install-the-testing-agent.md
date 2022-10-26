@@ -34,7 +34,7 @@ Select **Create** to generate the commands for **downloading** and **running** y
 
 ## Run the Testing Agent
 
-Select \***\* the relevant **OS** for running your Agent. You will be provided commands for **downloading** and **running\*\* the Agent on:
+Select the relevant **OS** for running your Agent. You will be provided commands for **downloading** and **running** the Agent on:
 
 - MacOS
 - Linux
@@ -42,14 +42,14 @@ Select \***\* the relevant **OS** for running your Agent. You will be provided c
 - Docker
 
 :::info
-Using Docker introduces complexity when trying to reach clusters on localhost, or referencing certificates on your local file system. \
+Using Docker introduces complexity when trying to reach clusters on localhost, or referencing certificates on your local file system. 
 For these use cases, we recommend using a [binary distribution](install-the-testing-agent#binary-installation).
 :::
 
 ![](<../assets/image (10) (1).png>)
 
 :::tip
-A token can be used by **multiple** agents, allowing it to scale horizontally. \
+A token can be used by **multiple** agents, allowing it to scale horizontally.
 However when running agents in different locations, or with different access or different resources, you should create separate tokens.
 :::
 
@@ -90,12 +90,12 @@ java -jar conduktor-testing-agent-*.jar --token=<TOKEN>
 ### Container installation
 
 :::info
-Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system. \
+Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system.
 For these use cases, we recommend using the [binary distribution](install-the-testing-agent#binary-installation).
 :::
 
-**Container image**: `ghcr.io/conduktor/testing-agent:latest`\
-\
+**Container image**: `ghcr.io/conduktor/testing-agent:latest`
+
 You will need to provide the agent token as well, through the **TOKEN** environment variable
 
 **Run** with Docker:
