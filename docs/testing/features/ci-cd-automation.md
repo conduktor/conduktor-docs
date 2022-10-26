@@ -1,5 +1,7 @@
 ---
 sidebar_position: 8
+title: CI/CD Automation
+description: Automate testing via the CI Agent.
 ---
 
 # CI/CD Automation

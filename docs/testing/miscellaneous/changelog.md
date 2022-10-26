@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Changelog
+description: Conduktor Testing changelog
 ---
 
 # Changelog

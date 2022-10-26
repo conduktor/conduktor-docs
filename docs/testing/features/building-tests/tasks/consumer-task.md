@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Consumer Task
+description: Consume data from a Kafka topic.
 ---
 
 # Consumer Task

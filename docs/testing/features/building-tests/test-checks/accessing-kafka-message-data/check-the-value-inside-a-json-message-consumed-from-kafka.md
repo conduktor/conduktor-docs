@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Check the value inside a JSON message consumed from Kafka
+description: Check the value inside a JSON message consumed from Kafka in Conduktor Testing.
 ---
 
 # Check the value inside a JSON message consumed from Kafka

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Accessing Http response data
+description: When you do Http calls, you may need to access the data for checks,
 ---
 
 # Accessing Http response data

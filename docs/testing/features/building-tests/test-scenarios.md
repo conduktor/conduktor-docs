@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Test Scenarios
+description: Test Scenarios represent a set of tasks used to validate some functionality in your application, pipeline, or service.
 ---
 
 # Test Scenarios

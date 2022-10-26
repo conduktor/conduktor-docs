@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+title: Chaining tasks
+description: You can chain tasks by clicking on the start node or a task output port, then selecting the task type to create.
 ---
 
 # Chaining tasks

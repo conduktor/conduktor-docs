@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+title: Task Ports
+description: When you add a task to a scenario, there are ports which can be used for chaining tasks together.
 ---
 
 # Task Ports

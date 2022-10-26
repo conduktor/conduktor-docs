@@ -1,4 +1,5 @@
 ---
+title: Learn Apache Kafka with Conduktor
 sidebar_position: 2
 description: You are in good hands with us!
 ---

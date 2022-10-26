@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Data Security
+description: Modify your data security and privacy settings when using Conduktor testing.
 ---
 
 # Data Security

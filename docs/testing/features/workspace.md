@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Workspace
+description: Workspaces are used to organise objects such as clusters, environments, test suites, and test scenarios.
 ---
 
 # Workspace

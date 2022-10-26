@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+title: HTTP Task
+description: Use the HTTP task to test APIs that form part of your system architecture.
 ---
 
 # HTTP Task

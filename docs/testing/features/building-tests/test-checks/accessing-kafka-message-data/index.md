@@ -1,4 +1,5 @@
 ---
+title: Accessing Kafka message data
 description: Access data from your message key, value or the associated metadata
 ---
 

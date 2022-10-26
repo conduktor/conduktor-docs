@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+title: Check Results
+description: Investigate the reasons for a test failure.
 ---
 
 # Check Results

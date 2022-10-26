@@ -1,3 +1,7 @@
+---
+title: Using environment variables
+description: How to reference environment variables from the scenario editor view.
+---
 # Using environment variables
 
 Once you have configured environment variables in your workspace, you can reference them in test scenarios. The below details how to reference environment variables from the scenario editor view.

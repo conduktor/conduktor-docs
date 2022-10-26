@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+title: Custom Inputs
+description: Options available for creating custom inputs.
 ---
 
 # Custom Inputs

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Connect to a Kafka Cluster
+description: You must add a Kafka cluster to your workspace to build tests.
 ---
 
 # Connect to a Kafka Cluster

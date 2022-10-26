@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Check the partition of a message produced to Kafka
+description: Check the partition of a message produced to Kafka in Conduktor Testing.
 ---
 
 # Check the partition of a message produced to Kafka

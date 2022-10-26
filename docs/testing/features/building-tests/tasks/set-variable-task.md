@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Set Variable Task
+description: The Set Variable task enables you to assign values to a local variable for use in your Test Scenario.
 ---
 
 # Set Variable Task
