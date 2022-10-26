@@ -1,11 +1,17 @@
-# Website
-
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
-
 ### Installation
 
 ```
 $ yarn
+```
+
+### Configuration (.env)
+
+```
+REACT_APP_ALGOLIA_APPLICATION_ID=HS2F10UEF6
+REACT_APP_ALGOLIA_API_KEY=30759c59272fdbfca7ea58a5a7ac4569
+REACT_APP_ALGOLIA_INDEX=prod_docs
+
+ALGOLIA_ADMIN_KEY=91241e52d4eb276e124313f49f259403
 ```
 
 ### Local Development
@@ -23,19 +29,3 @@ $ yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
