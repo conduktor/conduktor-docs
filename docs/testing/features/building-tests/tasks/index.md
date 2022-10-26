@@ -1,3 +1,8 @@
+---
+title: Tasks
+description: Tasks are the building blocks that make up a Test Scenario.
+---
+
 # Tasks
 
 Tasks are the building blocks that make up a [Test Scenario](../test-scenarios). Each task represents an action, for example:

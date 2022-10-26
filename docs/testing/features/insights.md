@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+title: Insights
+description: Testing metrics are collated inside the Insights tab.
 ---
 
 # Insights

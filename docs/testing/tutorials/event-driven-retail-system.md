@@ -1,4 +1,5 @@
 ---
+title: Event-Driven Retail System
 description: Learn how to test the end-to-end flow of an event-driven architecture
 ---
 

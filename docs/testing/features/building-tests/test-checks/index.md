@@ -1,4 +1,5 @@
 ---
+title: Test Checks
 description: Learn how to apply different types of validation on your Kafka data
 ---
 

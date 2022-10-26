@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Install the Testing Agent
+description: The testing agent ensures you can reach clusters securely and with isolation. Set it up to enable testing.
 ---
 
 # Setup the Testing Agent

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Test Suites
+description: Test Suites represent a collection of test scenarios that are logically grouped together.
 ---
 
 # Test Suites

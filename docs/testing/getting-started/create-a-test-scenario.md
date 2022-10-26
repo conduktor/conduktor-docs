@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+title: Create a Test Scenario
+description: In this example, we will demonstrate how to create a Test Scenario.
 ---
 
 # Create a Test Scenario

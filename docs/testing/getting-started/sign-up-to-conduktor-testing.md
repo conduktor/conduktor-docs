@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Download Conduktor Platform
+description: Download Conduktor Platform to get started with testing.
 ---
 
 # Download Conduktor Platform

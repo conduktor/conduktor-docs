@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+title: Schema Registry
 description: Learn how to integrate Schema Registry in your Test Scenarios
 ---
 

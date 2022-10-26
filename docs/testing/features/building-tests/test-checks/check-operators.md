@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Check Operators
+description: List of operators available for checks.
 ---
 
 # Check Operators

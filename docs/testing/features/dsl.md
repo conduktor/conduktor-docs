@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+title: DSL
 description: Domain-specific language
 ---
 

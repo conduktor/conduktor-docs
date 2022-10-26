@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Producer Task
+description: Produce data to a Kafka topic.
 ---
 
 # Producer Task
