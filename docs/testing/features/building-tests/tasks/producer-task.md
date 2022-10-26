@@ -15,14 +15,6 @@ You can produce data to Kafka in multiple ways.&#x20;
 | Stream             | Produce an automated stream of messages with configurable timer options.         |
 | Stream & Batch     | Produce an automated stream of batched messages with configurable timer options. |
 
-**Quick Links:**
-
-- [Serialization support](producer-task#serialization-support)
-- [Adding headers as metadata](producer-task#adding-headers-as-metadata)
-- [Create a simple producer task](producer-task#create-a-simple-produce-task)
-- [Create an advanced producer task](producer-task#create-an-advanced-produce-task)
-- [Additional producer options](producer-task#additional-options)
-
 ## Serialization support
 
 When you produce data to Kafka you must specify the serialization format for the record keys and values.&#x20;

@@ -6,15 +6,6 @@ sidebar_position: 3
 
 Depending on the type of the data you are testing, there are a range of different operators available for checks. Below details the operators for each distinct data type.
 
-Jump to:
-
-- [String](check-operators#string)
-- [Number](check-operators#number)
-- [Date](check-operators#undefined)
-- [List](check-operators#undefined)
-- [Map/Object](check-operators#map-object)
-- [Boolean](check-operators#undefined)
-
 ## String <a href="#string" id="string"></a>
 
 | Operator             | Description                                                                                                                            |
@@ -70,8 +61,8 @@ Jump to:
 | does not exist       | Returns true if the specified value **does not exist** in the list                         |
 | for all              | Returns true if each element in the list **passes the provided test**                      |
 | not all              | Returns true if each element in the list **does not pass the provided test**               |
-| has same elements    | Returns true if the list **has the same elements** as \*\*\*\* the provided list           |
-| not same elements    | Returns true if the list **does not have the same elements** as \*\*\*\* the provided list |
+| has same elements    | Returns true if the list **has the same elements** as the provided list           |
+| not same elements    | Returns true if the list **does not have the same elements** as the provided list |
 | has subset           | Returns true if the list **has a subset** of the provided list items                       |
 | does not have subset | Returns true if the list **does not have a subset** of the provided list items             |
 | contains             | Returns true if the list **contains** the provided value                                   |
@@ -89,10 +80,10 @@ Jump to:
 | is not null         | Returns true if the map/object **is not null**                                       |
 | contains            | Returns true if the map/object **contains** the specified value                      |
 | does not contain    | Returns true if the map/object **does not contain** the specified value              |
-| has key             | Returns true if the map/object **has the key** that's \*\*\*\* specified             |
-| does not have key   | Returns true if the map/object **does not have the key** that's \*\*\*\* specified   |
-| has value           | Returns true if the map/object **has the value** that's \*\*\*\* specified           |
-| does not have value | Returns true if the map/object **does not have the value** that's \*\*\*\* specified |
+| has key             | Returns true if the map/object **has the key** that's specified             |
+| does not have key   | Returns true if the map/object **does not have the key** that's specified   |
+| has value           | Returns true if the map/object **has the value** that's specified           |
+| does not have value | Returns true if the map/object **does not have the value** that's specified |
 | equals              | Returns true if the map/object **equals** the specified value                        |
 | does not equal      | Returns true if the map/object **does not** **equal** the specified value            |
 

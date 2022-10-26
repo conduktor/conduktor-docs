@@ -24,7 +24,7 @@ For example, produce a JSON message value using the below example:
 }
 ```
 
-In the consumer task, you could create a check to validates if the sessionId in the record equals the value specified in an equal environment variable:&#x20;
+In the consumer task, you could create a check to validate if the `sessionId` in the record equals the value specified in an equal environment variable:&#x20;
 
 _Note to resolve your variable correctly, you **must have an environment selected!**_
 
