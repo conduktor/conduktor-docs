@@ -53,13 +53,16 @@ auth:
 
 Run the below command in the directory containing your `platform-config.yaml` file.
 
+If you are a **Conduktor Enterprise** customer, you can start the platform with the `LICENSE_KEY` environment variable.
+
 ### MacOS / Linux
 
 ```
 docker run --rm \
   -p "8080:8080" \
+  -e LICENSE_KEY="<your-license>" \
   --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
-conduktor/conduktor-platform:1.1.3
+conduktor/conduktor-platform:1.2.0
 ```
 
 ### Windows
@@ -67,8 +70,9 @@ conduktor/conduktor-platform:1.1.3
 ```
 docker run --rm `
   -p "8080:8080" `
+  -e LICENSE_KEY="<your-license>" `
   --mount "type=bind,source=$pwd/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" `
-conduktor/conduktor-platform:1.1.3
+conduktor/conduktor-platform:1.2.0
 ```
 
 ## Access Conduktor
