@@ -12,9 +12,9 @@ Jump to:
 
 | ENV | Since Version | Until Version | Default Value |   | 
 |-----|---------------|---------------|---------------|---|
-| `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](./Advanced_settings.md#run-mode)
+| `RUN_MODE`          | 1.0.2 | latest | Memory presets for the platform see [ advanced settings](../installation/hardware.md)
 | `CDK_VOLUME_DIR`    | 1.0.2 | latest | `/var/conduktor` | Volume directory where Conduktor platform store data |
-| `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./conduktor/default-platform-config.yaml) | Conduktor platform configuration file location |
+| `CDK_IN_CONF_FILE`  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location |
 | `EMBEDDED_POSTGRES` | 1.1.2 | 1.1.3 | `true` | Flag to enabled or disable embedded Postgresql database. (Deprecated since **1.2.0**. Now if no external database is configured embedded database is used) |
 | `PLATFORM_DB_URL`   | 1.1.2 | latest | None | Deprecated, use `CDK_DATABASE_URL` or decomposed external database configuration. |
 | `CDK_DATABASE_URL` | 1.2.0 | latest | None | External Postgresql configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. |
