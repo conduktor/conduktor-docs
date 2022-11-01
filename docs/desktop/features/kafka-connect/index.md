@@ -1,4 +1,5 @@
 ---
+title: Kafka Connect
 description: >-
   Kafka Connect is a mandatory piece to build a complete and flexible data
   streaming platform. Its purpose is to move data from/to another system

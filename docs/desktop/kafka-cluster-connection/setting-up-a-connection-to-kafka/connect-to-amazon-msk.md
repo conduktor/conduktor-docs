@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Connect to Amazon MSK
+description: Using Conduktor Desktop with Amazon MSK
 ---
 
 # Connect to Amazon MSK

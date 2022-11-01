@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Windows Installation
+description: Installing Conduktor Desktop for Windows
 ---
 
 # Windows

@@ -1,3 +1,8 @@
+---
+title: Login Troubleshooting & FAQ
+description: Solve common issues related to logging in to Conduktor Desktop
+---
+
 # Login Troubleshooting & FAQ
 
 ## I have an internet proxy, how do I configure it?

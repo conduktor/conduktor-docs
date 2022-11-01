@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: AWS Glue Schema Registry
+description: Using Glue Schema with Conduktor Desktop
 ---
 
 # AWS Glue Schema Registry

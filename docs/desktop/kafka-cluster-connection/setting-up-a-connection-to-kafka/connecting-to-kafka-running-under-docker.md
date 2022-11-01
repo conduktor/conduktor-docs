@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Connecting to Kafka running under Docker
+description: How to connect to Kafka through Docker
 ---
 
 # Connecting to Kafka running under Docker

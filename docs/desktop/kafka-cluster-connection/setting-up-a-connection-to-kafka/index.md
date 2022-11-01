@@ -1,4 +1,5 @@
 ---
+title: Setting up a connection to Kafka
 description: Conduktor allows you to easily add, manage and save cluster connection
   configuration.
 ---

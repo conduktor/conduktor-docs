@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Single Sign On
+description: Configuring SSO with Conduktor Desktop
 ---
 
 # Single Sign On

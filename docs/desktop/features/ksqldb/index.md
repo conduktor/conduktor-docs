@@ -1,4 +1,5 @@
 ---
+title: ksqlDB - Streaming with SQL
 description: Streaming everything with ease!
 ---
 

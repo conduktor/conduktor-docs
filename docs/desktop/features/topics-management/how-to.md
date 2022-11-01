@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: How to
+description: Common How to questions for Conduktor Desktop
 ---
 
 # How to

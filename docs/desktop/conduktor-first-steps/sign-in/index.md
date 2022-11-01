@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Sign in to Conduktor
+description: Getting started with the sign-in process
 ---
 
 # Sign in to Conduktor

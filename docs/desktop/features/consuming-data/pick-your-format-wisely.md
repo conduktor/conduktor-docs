@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: Pick your format wisely
 description: Conduktor supports many formats and growing. From the basic formats to the
   most useful, JSON, Apache Avro, Protobuf, with or without Schema Registry.
 ---

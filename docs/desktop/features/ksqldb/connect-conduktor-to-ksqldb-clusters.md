@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Connect Conduktor to ksqlDB clusters
+description: Conduktor can connect to multiple ksqlDB clusters at once. 
 ---
 
 # Connect Conduktor to ksqlDB clusters

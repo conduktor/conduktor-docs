@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Advanced Consumer
+description: Advanced tips and tricks for consuming with Conduktor
 ---
 
 # Advanced Consumer

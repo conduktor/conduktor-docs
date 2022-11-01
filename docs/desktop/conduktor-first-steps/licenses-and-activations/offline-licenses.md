@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+title: Offline Licenses
 description: For companies without online access, offline licenses are the way to go!
 ---
 

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Installing Conduktor
+description: How to download and install Conduktor desktop
 ---
 
 # Installing Conduktor

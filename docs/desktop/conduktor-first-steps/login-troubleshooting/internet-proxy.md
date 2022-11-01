@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Using an internet proxy
+description: How to login through an internet proxy
 ---
 
 # Using an internet proxy

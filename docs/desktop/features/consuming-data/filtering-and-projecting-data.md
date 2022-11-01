@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Filtering & Projecting data
+description: Conduktor provides many options when it comes to filtering and projecting data
 ---
 
 # Filtering & Projecting data

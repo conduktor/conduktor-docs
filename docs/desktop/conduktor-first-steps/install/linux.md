@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Linux Installation
+description: Installing Conduktor Desktop on Linux operating systems
 ---
 
 # Linux

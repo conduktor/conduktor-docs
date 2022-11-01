@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+title: Apache Kafka-wire compatible solutions
 description: While we don't officially support alternatives solutions to Apache Kafka, they
   follow the same protocol as Apache Kafka so they should work.
 ---
