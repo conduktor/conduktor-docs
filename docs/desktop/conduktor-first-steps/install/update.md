@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+title: Updating Conduktor
 description: This is the SAME process as Installing Conduktor, just download and Next >
   Next > Next.
 ---

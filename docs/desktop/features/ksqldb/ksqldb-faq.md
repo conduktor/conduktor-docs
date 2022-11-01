@@ -1,5 +1,6 @@
 ---
 sidebar_position: 5
+title: ksqlDB FAQ
 description: Some issues and questions you may have using ksqlDB in Conduktor
 ---
 

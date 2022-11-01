@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: Managing Permissions / RBAC
 description: Allow/Deny access to specific features of Conduktor Desktop for sensitive
   production clusters.
 ---

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+title: What to do with ksqlDB?
 description: All the features Conduktor has to offer when it comes to ksqlDB!
 ---
 

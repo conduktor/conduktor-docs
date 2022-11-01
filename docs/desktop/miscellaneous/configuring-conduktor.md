@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Configuring Conduktor
+description: How to configure Conduktor Desktop
 ---
 
 # Configuring Conduktor

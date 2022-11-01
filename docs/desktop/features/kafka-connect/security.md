@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Security
+description: Security for Kafka Connect
 ---
 
 # Security

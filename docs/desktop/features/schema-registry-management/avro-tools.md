@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: Avro Tools
 description: When we are working with Apache Avro, we often need some tools to help us out.
   Conduktor provides 2 quick tool for the moment.
 ---

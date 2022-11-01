@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: RedHat Apicurio Schema Registry
+description: Using Apicurio with Conduktor
 ---
 
 # RedHat Apicurio Schema Registry

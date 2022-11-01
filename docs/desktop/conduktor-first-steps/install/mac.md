@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Mac OS X Installation
+description: Installing Conduktor Desktop on Max OS X
 ---
 
 # Mac OS X

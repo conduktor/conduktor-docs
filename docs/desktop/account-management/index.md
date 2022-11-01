@@ -1,4 +1,5 @@
 ---
+title: Account Management
 description: You can manage your subscriptions & your licenses in autonomy. No need to
   contact us :).
 ---

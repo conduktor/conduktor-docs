@@ -1,3 +1,8 @@
+---
+title: Import/Export configurations
+description: Import or export your configurations for Conduktor
+---
+
 # Import/Export configurations
 
 This feature is for **Enterprise** users where this is typically needed, to share your configuration with your team.

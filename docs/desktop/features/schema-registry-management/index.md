@@ -1,4 +1,5 @@
 ---
+title: Schema Registry
 description: >-
   The Schema Registry is a critical piece in streaming architectures. It is the
   source of truth of the schemas of your data. The consumers & producers need it

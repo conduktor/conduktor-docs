@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+title: How to query with ksqlDB?
 description: Do you prefer Pushing or Pulling?
 ---
 

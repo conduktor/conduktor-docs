@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: No Internet Connection
+description: Troubleshoot problems with Conduktor Desktop
 ---
 
 # Conduktor cannot access internet

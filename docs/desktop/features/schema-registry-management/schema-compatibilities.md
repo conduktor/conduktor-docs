@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+title: Subjects & Schema Compatibilities
 description: Defining the compatibility of your subjects ensure that your consumer will
   never have any issue when consuming your data, that you will never break them
   by mistake.

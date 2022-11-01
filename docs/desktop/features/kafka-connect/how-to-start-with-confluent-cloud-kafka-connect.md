@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: How to start with Confluent Cloud kafka connect?
+description: Using Confluent Cloud with Kafka Connect and Conduktor Desktop
 ---
 
 # How to start with Confluent Cloud kafka connect?

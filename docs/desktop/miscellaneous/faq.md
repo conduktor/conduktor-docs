@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+title: FAQ
 description: A list of common question our community asks
 ---
 

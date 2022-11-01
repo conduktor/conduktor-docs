@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: How to start with Confluent Cloud ksqlDB?
+description: Using Confluent Cloud with ksqlDB and Conduktor Desktop
 ---
 
 # How to start with Confluent Cloud ksqlDB?

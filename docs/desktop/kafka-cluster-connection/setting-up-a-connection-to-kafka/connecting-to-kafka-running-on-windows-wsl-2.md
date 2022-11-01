@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+title: Connecting to Kafka running on Windows WSL 2
+description: Running Kafka on Windows through WSL 2
 ---
 
 # Connecting to Kafka running on Windows WSL 2
