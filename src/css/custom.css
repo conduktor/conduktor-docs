@@ -42,8 +42,13 @@ nav.navbar .navbar__inner {
   padding: 0 1.5rem;
 }
 
+nav.navbar .navbar__items {
+  position: relative;
+}
+
+nav.navbar .navbar__logo,
 .navbar__brand {
-  margin-right: 2.5rem;
+  margin-right: 0;
 }
 
 .main-wrapper {

@@ -55,7 +55,7 @@ const config = {
       navbar: {
         logo: {
           alt: 'Conduktor Docs logo',
-          src: 'img/logo.svg',
+          src: 'assets/svgs/logo.svg',
         },
         items: [
           {

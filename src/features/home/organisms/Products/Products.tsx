@@ -1,5 +1,7 @@
 import Container from '@site/src/components/atoms/Container'
+import Flex from '@site/src/components/atoms/Flex'
 import React from 'react'
+import Badge from '../../atoms/Badge'
 import Heading from '../../atoms/Heading'
 import { items } from './Products.constants'
 import {
@@ -27,8 +29,13 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
                 <ListVisual>
                   <ListVisualImage src={item.icon} alt={item.name} />
                 </ListVisual>
-                <ListItemName>{item.name}</ListItemName>
-                <ListItemDescription>{item.description}</ListItemDescription>
+                <Flex direction="row" align="flex-start" justify="space-between">
+                  <Flex direction="column">
+                    <ListItemName>{item.name}</ListItemName>
+                    <ListItemDescription>{item.description}</ListItemDescription>
+                  </Flex>
+                  {item.comingSoon ? <Badge>soon</Badge> : <span></span>}
+                </Flex>
               </ListItemLink>
             </ListItem>
           ))}

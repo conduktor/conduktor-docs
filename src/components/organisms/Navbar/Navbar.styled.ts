@@ -10,4 +10,5 @@ export const StyledNavbar = styled('ul', {
 
 export const NavbarItem = styled('li', {
   width: '100%',
+  display: 'flex',
 })
