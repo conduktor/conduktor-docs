@@ -34,7 +34,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: 'platform',
+          routeBasePath: '/platform',
           path: './docs/platform',
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
@@ -68,18 +68,50 @@ const config = {
         style: 'dark',
         links: [
           {
+            title: 'Platform',
+            items: [
+              {
+                label: 'Overview',
+                to: '/platform',
+              },
+              {
+                label: 'Installation',
+                to: '/platform/installation',
+              },
+              {
+                label: 'Configuration',
+                to: '/platform/configuration',
+              },
+            ],
+          },
+          {
             title: 'Docs',
             items: [
               {
-                label: 'Platform',
-                to: '/platform',
+                label: 'Console',
+                to: '/platform/console',
               },
               {
                 label: 'Testing',
                 to: '/platform/testing',
               },
               {
-                label: 'Desktop',
+                label: 'Monitoring',
+                to: '/platform/monitoring',
+              },
+            ],
+          },
+          {
+            title: '𝅷',
+            items: [
+              {
+                html: `<a href="/platform/data-masking">Data Masking <span class="badge">soon</span></a>`,
+              },
+              {
+                html: `<a href="/platform/topic-service">Topic as a Service <span class="badge">soon</span></a>`,
+              },
+              {
+                label: 'Conduktor Desktop',
                 to: '/desktop',
               },
             ],
@@ -97,15 +129,6 @@ const config = {
     }),
   clientModules: [require.resolve('./_document.js')],
   plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'desktop',
-        path: './docs/desktop',
-        routeBasePath: 'desktop',
-        sidebarPath: require.resolve('./sidebars.js'),
-      },
-    ],
     [
       'docusaurus2-dotenv',
       {

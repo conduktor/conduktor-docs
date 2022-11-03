@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Testing Documentation
+title: Introduction
 description: Learn how to get started with Conduktor Testing
 ---
 
