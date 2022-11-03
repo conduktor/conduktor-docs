@@ -33,6 +33,7 @@ export default globalCss({
     Inter('Inter-ExtraBold', 800),
     Inter('Inter-Italic', 400, 'italic'),
 
+    PolySans('PolySans-Slim', 300),
     PolySans('PolySans-Neutral', 400),
     PolySans('PolySans-Median', 500),
     PolySans('PolySans-Median', 600),

@@ -1,10 +1,5 @@
 export const items = [
   {
-    title: 'Managed',
-    icon: '/assets/svgs/guides/conduktor.svg',
-    href: 'https://signup.conduktor.io',
-  },
-  {
     title: 'Docker',
     icon: '/assets/svgs/guides/docker.svg',
     href: '/',
@@ -17,6 +12,11 @@ export const items = [
   {
     title: 'GCP',
     icon: '/assets/svgs/guides/gcp.png',
+    href: '/',
+  },
+  {
+    title: 'Kubernetes',
+    icon: '/assets/svgs/guides/kubernetes.svg',
     href: '/',
   },
 ]
