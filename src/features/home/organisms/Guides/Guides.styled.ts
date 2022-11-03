@@ -26,7 +26,7 @@ export const ListItemLink = styled('a', {
   border: '1px solid $mauve4',
   display: 'flex',
   alignItems: 'center',
-  boxShadow: '$shadow2',
+  boxShadow: '$shadow1',
 
   '&:hover': {
     strong: {

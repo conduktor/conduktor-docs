@@ -1,5 +1,6 @@
 import Layout from '@theme/Layout'
 import React from 'react'
+import Community from '../features/home/organisms/Community'
 import GetStarted from '../features/home/organisms/GetStarted'
 import Guides from '../features/home/organisms/Guides'
 import Hero from '../features/home/organisms/Hero'
@@ -15,6 +16,7 @@ export default function Home(): JSX.Element {
       <Products />
       <GetStarted />
       <Guides />
+      <Community />
     </Layout>
   )
 }
