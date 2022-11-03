@@ -33,7 +33,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./platform_sidebars.js'),
           routeBasePath: '/platform',
           path: './docs/platform',
           lastVersion: 'current',
@@ -76,11 +76,11 @@ const config = {
               },
               {
                 label: 'Installation',
-                to: '/platform/installation',
+                to: '/platform/installation/hardware',
               },
               {
                 label: 'Configuration',
-                to: '/platform/configuration',
+                to: 'platform/configuration/introduction',
               },
             ],
           },
@@ -129,6 +129,15 @@ const config = {
     }),
   clientModules: [require.resolve('./_document.js')],
   plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'desktop',
+        path: './docs/desktop',
+        routeBasePath: 'desktop',
+        sidebarPath: require.resolve('./desktop_sidebars.js'),
+      },
+    ],
     [
       'docusaurus2-dotenv',
       {
