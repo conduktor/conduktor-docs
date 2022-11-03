@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link'
 import { keyframes, styled } from '@site/src/styles'
-import { ANIMATION_DURATION } from '../../Switcher/Switcher.constants'
+import { ANIMATION_DURATION } from '../../organisms/Switcher/Switcher.constants'
 
 const scaleIn = keyframes({
   from: { transform: 'rotateX(-30deg) scale(0.9)', opacity: 0 },
