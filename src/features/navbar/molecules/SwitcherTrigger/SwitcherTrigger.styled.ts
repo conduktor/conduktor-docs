@@ -26,6 +26,7 @@ export const Trigger = styled('button', {
   padding: '$space4',
   borderRadius: '$radius3',
   transition: 'background-color 200ms ease-in-out',
+  marginLeft: `calc(24px - $space4)`,
 
   '&:hover, &:focus': {
     backgroundColor: '$purple3',

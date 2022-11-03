@@ -1,5 +1,6 @@
 import Flex from '@site/src/components/atoms/Flex'
 import Badge from '@site/src/features/home/atoms/Badge'
+import useOutsideClick from '@site/src/hooks/useOutsideClick'
 import React from 'react'
 import { items } from '../../../home/organisms/Products/Products.constants'
 import {
@@ -14,16 +15,21 @@ import {
 } from './SwitcherContainer.styled'
 
 interface SwitcherContainerProps {
-  ref: React.RefObject<HTMLInputElement>
   handleClose: Function
   fade: 'in' | 'out'
 }
 
 const SwitcherContainer: React.FunctionComponent<SwitcherContainerProps> = ({
-  ref,
   handleClose,
   fade,
 }) => {
+  const ref = React.useRef<HTMLInputElement>(null)
+
+  useOutsideClick({
+    parentRef: ref,
+    callback: handleClose,
+  })
+
   React.useEffect(() => {
     return () => {
       handleClose()

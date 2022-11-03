@@ -1,7 +1,6 @@
 import { useLocation } from '@docusaurus/router'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import useKeyCombination from '@site/src/hooks/useKeyCombination'
-import useOutsideClick from '@site/src/hooks/useOutsideClick'
 import React from 'react'
 import SwitcherContainer from '../../molecules/SwitcherContainer'
 import Placeholder from '../../molecules/SwitcherPlaceholder'
@@ -17,7 +16,6 @@ const Switcher: React.FunctionComponent<SwitcherProps> = () => {
   const isHome = isBrowser ? location.pathname === '/' : true
   const [isOpened, setIsOpened] = React.useState<boolean>(false)
   const [fade, setFade] = React.useState<'in' | 'out'>('in')
-  const containerRef = React.useRef<HTMLInputElement>(null)
 
   const handleClose = () => {
     setFade('out')
@@ -35,11 +33,6 @@ const Switcher: React.FunctionComponent<SwitcherProps> = () => {
     },
   })
 
-  useOutsideClick({
-    parentRef: containerRef,
-    callback: handleClose,
-  })
-
   React.useEffect(() => {
     return () => {
       setIsOpened(false)
@@ -54,9 +47,7 @@ const Switcher: React.FunctionComponent<SwitcherProps> = () => {
       ) : (
         <SwitcherTrigger onClick={() => (isOpened ? handleClose() : setIsOpened(true))} />
       )}
-      {!isHome && isOpened && (
-        <SwitcherContainer ref={containerRef} fade={fade} handleClose={handleClose} />
-      )}
+      {!isHome && isOpened && <SwitcherContainer fade={fade} handleClose={handleClose} />}
     </StyledSwitcher>
   )
 }
