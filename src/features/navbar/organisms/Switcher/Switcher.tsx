@@ -1,9 +1,9 @@
 import useKeyCombination from '@site/src/hooks/useKeyCombination'
 import useOutsideClick from '@site/src/hooks/useOutsideClick'
 import React from 'react'
-import SwitcherContainer from '../molecules/SwitcherContainer'
-import Placeholder from '../molecules/SwitcherPlaceholder'
-import SwitcherTrigger from '../molecules/SwitcherTrigger/SwitcherTrigger'
+import SwitcherContainer from '../../molecules/SwitcherContainer'
+import Placeholder from '../../molecules/SwitcherPlaceholder'
+import SwitcherTrigger from '../../molecules/SwitcherTrigger/SwitcherTrigger'
 import { ANIMATION_DURATION } from './Switcher.constants'
 import { StyledSwitcher } from './Switcher.styled'
 
@@ -45,7 +45,11 @@ const Switcher: React.FunctionComponent<SwitcherProps> = () => {
 
   return (
     <StyledSwitcher>
-      {isHome ? <Placeholder /> : <SwitcherTrigger onClick={() => setIsOpened(!isOpened)} />}
+      {isHome ? (
+        <Placeholder />
+      ) : (
+        <SwitcherTrigger onClick={() => (isOpened ? handleClose() : setIsOpened(true))} />
+      )}
       {!isHome && isOpened && (
         <SwitcherContainer ref={containerRef} fade={fade} handleClose={handleClose} />
       )}

@@ -1,7 +1,7 @@
 import Flex from '@site/src/components/atoms/Flex'
 import Badge from '@site/src/features/home/atoms/Badge'
 import React from 'react'
-import { items } from '../../../../home/organisms/Products/Products.constants'
+import { items } from '../../../home/organisms/Products/Products.constants'
 import {
   List,
   ListItem,
