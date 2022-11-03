@@ -119,6 +119,19 @@ const config = {
               },
             ],
           },
+          {
+            title: 'Community',
+            items: [
+              {
+                label: 'GitHub',
+                href: 'https://github.com/conduktor',
+              },
+              {
+                label: 'Discord',
+                to: '/',
+              },
+            ],
+          },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Conduktor Inc.`,
       },
