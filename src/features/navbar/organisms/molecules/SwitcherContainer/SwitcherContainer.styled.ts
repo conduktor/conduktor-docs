@@ -1,5 +1,6 @@
 import Link from '@docusaurus/Link'
 import { keyframes, styled } from '@site/src/styles'
+import { ANIMATION_DURATION } from '../../Switcher/Switcher.constants'
 
 const scaleIn = keyframes({
   from: { transform: 'rotateX(-30deg) scale(0.9)', opacity: 0 },
@@ -21,7 +22,17 @@ export const StyledSwitcherContainer = styled('div', {
   borderRadius: '$radius5',
   padding: '$space6',
   width: 730,
-  animation: `${scaleIn} 200ms ease`,
+
+  variants: {
+    fade: {
+      in: {
+        animation: `${scaleIn} ${ANIMATION_DURATION}ms ease`,
+      },
+      out: {
+        animation: `${scaleOut} ${ANIMATION_DURATION}ms ease`,
+      },
+    },
+  },
 })
 
 export const List = styled('ul', {

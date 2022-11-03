@@ -100,15 +100,6 @@ const config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'testing',
-        path: './docs/testing',
-        routeBasePath: 'testing',
-        sidebarPath: require.resolve('./sidebars.js'),
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
         id: 'desktop',
         path: './docs/desktop',
         routeBasePath: 'desktop',

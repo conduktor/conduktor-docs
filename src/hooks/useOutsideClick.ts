@@ -11,7 +11,7 @@ const useOutsideClick = ({ parentRef, callback }: useOutsideClickProps) => {
       const parentElement = parentRef.current as HTMLElement
       const target = event.target as HTMLElement
 
-      if (target && !parentElement.contains(target)) callback()
+      if (target && (!parentElement.contains(target) || !parentElement)) callback()
     }
 
     document.addEventListener(
