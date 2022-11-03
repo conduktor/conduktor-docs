@@ -12,12 +12,12 @@ When using the editor view to create test scenarios, you will notice the **downw
 
 There are multiple options available:
 
-| Input Type                   | Description                                                                                                                                                                                                                                 |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Plain                        | This is a standard field. The value is not interpreted.                                                                                                                                                                                     |
-| Field Selection (JSON Query) | Use this to access record data and record metadata when making [Test Checks](/testing/features/building-tests/test-checks). For the technical capabilities of JQ, refer to [this link](https://stedolan.github.io/jq/manual/#Basicfilters). |
-| Template (mustache)          | Access different properties such as [environment](/testing/features/environments) and [local](/testing/features/building-tests/tasks/set-variable-task) variables through a selection modal in the UI.                                       |
-| JavaScript                   | Create dynamic values or manipulate your data using JavaScript.                                                                                                                                                                              |
+| Input Type                   | Description                                                                                                                                                                                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Plain                        | This is a standard field. The value is not interpreted.                                                                                                                                                                                              |
+| Field Selection (JSON Query) | Use this to access record data and record metadata when making [Test Checks](/platform/testing/features/building-tests/test-checks). For the technical capabilities of JQ, refer to [this link](https://stedolan.github.io/jq/manual/#Basicfilters). |
+| Template (mustache)          | Access different properties such as [environment](/platform/testing/features/environments) and [local](/platform/testing/features/building-tests/tasks/set-variable-task) variables through a selection modal in the UI.                             |
+| JavaScript                   | Create dynamic values or manipulate your data using JavaScript.                                                                                                                                                                                      |
 
 ## Plain input selection
 
