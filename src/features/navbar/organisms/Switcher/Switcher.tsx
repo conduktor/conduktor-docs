@@ -1,3 +1,5 @@
+import { useLocation } from '@docusaurus/router'
+import useIsBrowser from '@docusaurus/useIsBrowser'
 import useKeyCombination from '@site/src/hooks/useKeyCombination'
 import useOutsideClick from '@site/src/hooks/useOutsideClick'
 import React from 'react'
@@ -10,7 +12,9 @@ import { StyledSwitcher } from './Switcher.styled'
 interface SwitcherProps {}
 
 const Switcher: React.FunctionComponent<SwitcherProps> = () => {
-  const isHome = location.pathname === '/'
+  const location = useLocation()
+  const isBrowser = useIsBrowser()
+  const isHome = isBrowser ? location.pathname === '/' : true
   const [isOpened, setIsOpened] = React.useState<boolean>(false)
   const [fade, setFade] = React.useState<'in' | 'out'>('in')
   const containerRef = React.useRef<HTMLInputElement>(null)

@@ -76,7 +76,7 @@ const config = {
               },
               {
                 label: 'Testing',
-                to: '/testing',
+                to: '/platform/testing',
               },
               {
                 label: 'Desktop',
