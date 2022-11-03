@@ -1,7 +1,7 @@
 import useKeyCombination from '@site/src/hooks/useKeyCombination'
 import React from 'react'
 import { isMacOs } from 'react-device-detect'
-import SearchModal from '../../../../components/organisms/SearchModal'
+import SearchModal from '../../organisms/SearchModal'
 import {
   SearchInputIcon,
   SearchInputShortcut,
@@ -10,9 +10,11 @@ import {
   StyledSearchInput,
 } from './SearchInput.styled'
 
-interface SearchInputProps {}
+interface SearchInputProps {
+  compact?: boolean
+}
 
-const SearchInput: React.FunctionComponent<SearchInputProps> = () => {
+const SearchInput: React.FunctionComponent<SearchInputProps> = ({ compact = false }) => {
   const [modal, setModal] = React.useState<boolean>(false)
 
   useKeyCombination({
@@ -25,12 +27,14 @@ const SearchInput: React.FunctionComponent<SearchInputProps> = () => {
 
   return (
     <React.Fragment>
-      <StyledSearchInput onClick={() => setModal(true)}>
-        <SearchInputIcon src="/assets/svgs/search.svg" alt="Search Icon" />
+      <StyledSearchInput compact={compact} onClick={() => setModal(true)}>
+        <SearchInputIcon compact={compact} src="/assets/svgs/search.svg" alt="Search Icon" />
         <SearchInputText type="text" defaultValue="Search" readOnly={true} />
-        <SearchInputShortcut>
-          <SearchInputShortcutKey>{isMacOs ? '⌘' : 'CTRL'}</SearchInputShortcutKey>
-          <SearchInputShortcutKey>K</SearchInputShortcutKey>
+        <SearchInputShortcut compact={compact}>
+          <SearchInputShortcutKey compact={compact}>
+            {isMacOs ? '⌘' : 'CTRL'}
+          </SearchInputShortcutKey>
+          <SearchInputShortcutKey compact={compact}>K</SearchInputShortcutKey>
         </SearchInputShortcut>
       </StyledSearchInput>
       {modal && <SearchModal modal={modal} setModal={setModal} />}
