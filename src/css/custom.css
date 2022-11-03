@@ -129,6 +129,20 @@ footer.footer--dark {
   border-left: 1px solid var(--colors-mauve3);
 }
 
+main .row .col:nth-of-type(1) {
+  --ifm-col-width: 85%;
+  max-width: var(--ifm-col-width) !important;
+  flex: auto;
+}
+
+main .row .col:nth-of-type(2) > div {
+  position: fixed;
+  right: 3.7rem;
+  width: 15%;
+}
+
+
+
 /* mobile */
 
 @media only screen and (max-width: 1024px) {
