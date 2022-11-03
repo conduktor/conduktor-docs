@@ -43,10 +43,7 @@ const config = {
           editUrl: 'https://github.com/conduktor/conduktor-docs/',
         },
         theme: {
-          customCss: [
-            require.resolve('./src/css/custom.css'),
-            require.resolve('./src/css/stitches.css'),
-          ],
+          customCss: [require.resolve('./src/css/custom.css')],
         },
       }),
     ],
