@@ -1,6 +1,7 @@
 import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Heading from '../../atoms/Heading'
+import Desktop from '../../molecules/Desktop'
 import { items } from './Guides.constants'
 import {
   List,
@@ -28,6 +29,7 @@ const Guides: React.FunctionComponent<GuidesProps> = () => {
             </ListItem>
           ))}
         </List>
+        <Desktop />
       </Container>
     </StyledGuides>
   )

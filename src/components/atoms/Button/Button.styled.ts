@@ -1,6 +1,7 @@
+import Link from '@docusaurus/Link'
 import { styled } from '@site/src/styles'
 
-export const StyledButton = styled('a', {
+const styles = {
   all: 'unset',
   cursor: 'pointer',
   backgroundColor: '$purple9',
@@ -21,4 +22,7 @@ export const StyledButton = styled('a', {
     color: '#fff',
     backgroundColor: '$purple10',
   },
-})
+}
+
+export const ButtonHref = styled('a', styles)
+export const ButtonLink = styled(Link, styles)
