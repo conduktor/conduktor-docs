@@ -1,8 +1,8 @@
 import Container from '@site/src/components/atoms/Container'
 import React from 'react'
+import Heading from '../../atoms/Heading'
 import { items } from './Products.constants'
 import {
-  Heading,
   List,
   ListItem,
   ListItemDescription,

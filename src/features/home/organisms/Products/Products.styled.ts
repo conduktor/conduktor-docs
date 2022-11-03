@@ -3,15 +3,6 @@ import { styled } from '@site/src/styles'
 
 export const StyledProducts = styled('section', {})
 
-export const Heading = styled('h2', {
-  fontSize: '$fontSize9',
-  fontWeight: '$semi',
-  color: '$mauve12',
-  lineHeight: '$fit',
-  display: 'block',
-  marginBottom: '$space9',
-})
-
 export const List = styled('ul', {
   all: 'unset',
   listStyleType: 'none',
