@@ -160,6 +160,7 @@ const config = {
       },
     ],
   ],
+  clientModules: [require.resolve('./loader.js')],
 }
 
 module.exports = config
