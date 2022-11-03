@@ -13,15 +13,29 @@ import {
   StyledSwitcherContainer,
 } from './SwitcherContainer.styled'
 
-interface SwitcherContainerProps {}
+interface SwitcherContainerProps {
+  ref: React.RefObject<HTMLInputElement>
+  handleClose: Function
+  fade: 'in' | 'out'
+}
 
-const SwitcherContainer: React.FunctionComponent<SwitcherContainerProps> = () => {
+const SwitcherContainer: React.FunctionComponent<SwitcherContainerProps> = ({
+  ref,
+  handleClose,
+  fade,
+}) => {
+  React.useEffect(() => {
+    return () => {
+      handleClose()
+    }
+  }, [])
+
   return (
-    <StyledSwitcherContainer>
+    <StyledSwitcherContainer ref={ref} fade={fade}>
       <List>
         {items.map((item, itemIndex) => (
           <ListItem key={itemIndex}>
-            <ListItemLink to={item.to}>
+            <ListItemLink to={item.to} onClick={() => handleClose()}>
               <ListItemIcon src={item.icon} alt={item.name} />
               <Flex direction="column">
                 <ListItemTitle>{item.name}</ListItemTitle>

@@ -12,7 +12,7 @@ const SwitcherTrigger: React.FunctionComponent<SwitcherTriggerProps> = ({ onClic
   return (
     <StyledSwitcherTrigger>
       <Trigger onClick={onClick}>
-        {location.pathname.split('/')[1]}
+        {location.pathname.split('/')[2]}
         <TriggerIcon src="/assets/svgs/common/angleDown.svg" alt="Angle down icon" />
       </Trigger>
     </StyledSwitcherTrigger>
