@@ -43,7 +43,10 @@ const config = {
           editUrl: 'https://github.com/conduktor/conduktor-docs/',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('./src/css/stitches.css'),
+          ],
         },
       }),
     ],
@@ -127,7 +130,6 @@ const config = {
         disableSwitch: true,
       },
     }),
-  clientModules: [require.resolve('./_document.js')],
   plugins: [
     [
       '@docusaurus/plugin-content-docs',
