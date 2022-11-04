@@ -1,5 +1,9 @@
 export const items = [
   {
+    name: 'Platform',
+    href: '/platform',
+  },
+  {
     name: 'Demo',
     href: '/',
   },
