@@ -14,7 +14,9 @@ export default function ContentWrapper(props) {
           <SearchInput compact={true} />
         </SearchInputContainer>
       )}
-      <Content {...props} />
+      <div id="navbar-content-wrapper">
+        <Content {...props} />
+      </div>
     </>
   )
 }
