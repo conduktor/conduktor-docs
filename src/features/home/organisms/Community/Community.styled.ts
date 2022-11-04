@@ -17,6 +17,15 @@ export const ListItem = styled('li', {
   border: '1px solid $mauve4',
 })
 
+export const ListItemVisual = styled('div', {
+  backgroundColor: '$mauve2',
+  padding: '$space12 0',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'background-color 200ms ease-in-out',
+})
+
 export const ListItemLink = styled('a', {
   all: 'unset',
   cursor: 'pointer',
@@ -27,19 +36,10 @@ export const ListItemLink = styled('a', {
       color: '$purple9',
     },
 
-    'div[data-visual="true"]': {
+    [`& ${ListItemVisual}`]: {
       backgroundColor: '$mauve3',
     },
   },
-})
-
-export const ListItemVisual = styled('div', {
-  backgroundColor: '$mauve2',
-  padding: '$space12 0',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  transition: 'background-color 200ms ease-in-out',
 })
 
 export const ListItemVisualIcon = styled('img', {})

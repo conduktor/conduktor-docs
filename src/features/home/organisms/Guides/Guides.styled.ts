@@ -16,6 +16,16 @@ export const ListItem = styled('li', {
   width: '100%',
 })
 
+export const ListItemTitleArrow = styled('img', {
+  width: 16,
+  height: 16,
+  marginLeft: '$space4',
+  opacity: 0,
+  transform: 'rotate(0deg)',
+  transition: 'transform 250ms ease-out, opacity 200ms ease-out',
+  marginTop: 2,
+})
+
 export const ListItemLink = styled('a', {
   all: 'unset',
   cursor: 'pointer',
@@ -32,7 +42,7 @@ export const ListItemLink = styled('a', {
     strong: {
       color: '$purple9',
     },
-    'img[data-arrow="true"]': {
+    [`& ${ListItemTitleArrow}`]: {
       opacity: 1,
       transform: 'rotate(0deg) translateX(5px)',
     },
@@ -47,14 +57,4 @@ export const ListItemTitle = styled('strong', {
   transition: 'color 200ms ease-in-out',
   display: 'flex',
   alignItems: 'center',
-})
-
-export const ListItemTitleArrow = styled('img', {
-  width: 16,
-  height: 16,
-  marginLeft: '$space4',
-  opacity: 0,
-  transform: 'rotate(0deg)',
-  transition: 'transform 250ms ease-out, opacity 200ms ease-out',
-  marginTop: 2,
 })
