@@ -21,7 +21,7 @@ body {
   --ifm-navbar-height: 73px;
   --ifm-heading-color: hsl(260, 25%, 11%);
   --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --ifm-heading-font-weight: 'PolySans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --ifm-heading-font-family: 'PolySans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --ifm-heading-font-weight: 600;
   --ifm-container-width: 1216px;
   --ifm-container-width-xl: 1216px;
@@ -40,6 +40,7 @@ nav.navbar {
   border-bottom: 1px solid var(--colors-mauve3);
   max-height: var(--ifm-navbar-height);
   box-shadow: unset;
+  padding: var(--ifm-navbar-padding-vertical) 0;
 }
 
 nav.navbar ul {
