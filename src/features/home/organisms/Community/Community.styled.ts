@@ -26,6 +26,10 @@ export const ListItemLink = styled('a', {
     strong: {
       color: '$purple9',
     },
+
+    'div[data-visual="true"]': {
+      backgroundColor: '$mauve3',
+    },
   },
 })
 
@@ -35,6 +39,7 @@ export const ListItemVisual = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  transition: 'background-color 200ms ease-in-out',
 })
 
 export const ListItemVisualIcon = styled('img', {})
