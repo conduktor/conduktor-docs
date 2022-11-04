@@ -1,7 +1,7 @@
 export const items = [
   {
-    name: 'Platform',
-    href: '/platform',
+    name: 'Home',
+    href: '/',
   },
   {
     name: 'Demo',
