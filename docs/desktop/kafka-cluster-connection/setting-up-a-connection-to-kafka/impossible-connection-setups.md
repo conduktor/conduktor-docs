@@ -31,9 +31,9 @@ clusters are running.
 
 ## Understanding Kafka Listeners
 
-Part of understanding why your CLI (and therefore Conduktor) can't connect to your Kafka Cluster is due to your knowledge of how the Apache Kafka listeners work. As such, we **heavily** recommend for you to read [>> this blog <<](https://rmoff.net/2018/08/02/kafka-listeners-explained/) to learn about Kafka listeners.
+Part of understanding why your CLI (and therefore Conduktor) can't connect to your Kafka Cluster is due to your knowledge of how the Apache Kafka listeners work. As such, we **heavily** recommend for you to read [>> this blog <<](https://rmoff.net/2018/08/02/kafka-listeners-explained) to learn about Kafka listeners.
 
-> Another longer blog can be found at: [https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
+> Another longer blog can be found at: [https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc)
 
 ![internal + external listeners configured](<../../assets/image (48).png>)
 
@@ -51,7 +51,7 @@ This setup does not work, because your computer will not be able to resolve the 
 
 ![](<../../assets/image (3) (1).png>)
 
-Because even though your Kafka brokers are accessible through a public IP, upon connecting Conduktor (and the Kafka Clients) will be forced to use the private IP of Apache Kafka. This is a limitation of Apache Kafka due to [how the listeners work.](https://rmoff.net/2018/08/02/kafka-listeners-explained/) Please read the section above _Understanding Kafka Listeners_.
+Because even though your Kafka brokers are accessible through a public IP, upon connecting Conduktor (and the Kafka Clients) will be forced to use the private IP of Apache Kafka. This is a limitation of Apache Kafka due to [how the listeners work.](https://rmoff.net/2018/08/02/kafka-listeners-explained) Please read the section above _Understanding Kafka Listeners_.
 
 If you're using a VPN, this would work because your computer will be able to resolve the private subnet IP/DNS:
 

@@ -25,6 +25,6 @@ That attribute could be a:
 - Message value
 - Some metadata associated with the record (e.g. partition, offset)
 
-To see how to access these attributes, please continue to [**Accessing Kafka message data**](accessing-kafka-message-data/).&#x20;
+To see how to access these attributes, please continue to [**Accessing Kafka message data**](/platform/testing/features/building-tests/test-checks/accessing-kafka-message-data).&#x20;
 
 &#x20;

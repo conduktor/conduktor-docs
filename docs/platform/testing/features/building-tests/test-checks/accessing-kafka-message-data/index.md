@@ -8,7 +8,7 @@ description: Access data from your message key, value or the associated metadata
 When you produce or consume records from Kafka you may need to **access the data for checks**.&#x20;
 
 :::info
-Looking for how to access the **previous** task data ? Here is the [documentation ](../../chaining-tasks#accessing-the-output)
+Looking for how to access the **previous** task data ? Here is the [documentation ](/platform/testing/features/building-tests/chaining-tasks#accessing-the-output)
 :::
 
 For example:
@@ -58,7 +58,7 @@ Make checks on the key & value for any consumed record(s) and associated metadat
 | Value Schema Id | Number       | .record.valueSchemaId               | context.record.valueSchemaId |
 
 :::info
-See an [example](check-the-value-inside-a-json-message-consumed-from-kafka) of how to check an attribute inside a JSON message value
+See an [example](/platform/testing/features/building-tests/test-checks/accessing-kafka-message-data/check-the-value-inside-a-json-message-consumed-from-kafka) of how to check an attribute inside a JSON message value
 :::
 
 ---

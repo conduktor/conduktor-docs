@@ -33,7 +33,7 @@ This page will explain you how to configure Conduktor to use your custom deseria
 
 For that step, we will use the "Plugins" capability of Conduktor.
 
-_You can have more information on this "Plugins" feature in the_ [_Plugins documentation_](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/)
+_You can have more information on this "Plugins" feature in the_ [_Plugins documentation_](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka)
 
 A Kafka deserializer is an implementation of the `org.apache.kafka.common.serialization.Deserializer<T>` Java interface (for more information, see [kafka-clients documentation](https://kafka.apache.org/30/javadoc/org/apache/kafka/common/serialization/Deserializer.html)).\
 You need to have one, or more, jar(s) containing these implementations so you can add these jar files in the "Plugins" section of your cluster configuration in Conduktor.

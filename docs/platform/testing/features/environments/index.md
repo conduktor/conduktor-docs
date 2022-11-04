@@ -52,4 +52,4 @@ _Similarly, a different string value has been attached to the variable topic-key
 
 ![](<../../assets/image (66).png>)
 
-Continue to learn about [using environment variables](using-environment-variables) in Test Scenarios.
+Continue to learn about [using environment variables](/platform/testing/features/environments/using-environment-variables) in Test Scenarios.

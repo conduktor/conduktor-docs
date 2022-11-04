@@ -9,7 +9,7 @@ description: When you do Http calls, you may need to access the data for checks,
 When you do Http calls, you may need to **access the data for checks**.&#x20;
 
 :::info
-Looking for how to access or extract the **previous** task data ? Here is the [documentation](../chaining-tasks#accessing-the-output)
+Looking for how to access or extract the **previous** task data ? Here is the [documentation](/platform/testing/features/building-tests/chaining-tasks#accessing-the-output)
 :::
 
 For example:

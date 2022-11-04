@@ -44,7 +44,7 @@ Select the relevant **OS** for running your Agent. You will be provided commands
 - Docker
 
 :::info
-Using Docker introduces complexity when trying to reach clusters on localhost, or referencing certificates on your local file system. 
+Using Docker introduces complexity when trying to reach clusters on localhost, or referencing certificates on your local file system.
 For these use cases, we recommend using a [binary distribution](install-the-testing-agent#binary-installation).
 :::
 
@@ -66,7 +66,7 @@ You will only be shown the token **once**, so it's recommended you **Download** 
 After executing the commands, you should see `Agent connected!` in the logs.&#x20;
 
 :::info
-If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads/) a more recent version of Java. The Agent supports **Java 11+**.
+If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads) a more recent version of Java. The Agent supports **Java 11+**.
 :::
 
 Assuming setup was successful, you will see the green `Connection is successful!` message within the Conduktor Testing UI.
@@ -79,7 +79,7 @@ Now you have the Testing Agent installed, you will be able to reach clusters tha
 
 ## Binary Installation&#x20;
 
-**Java 11+** is required for running the Testing Agent. If you do not meet these requirements, please [download](https://www.oracle.com/java/technologies/downloads/) a more recent Java version.
+**Java 11+** is required for running the Testing Agent. If you do not meet these requirements, please [download](https://www.oracle.com/java/technologies/downloads) a more recent Java version.
 
 ### [Download](https://releases.conduktor.io/testing-agent-jar) the Conduktor Testing Agent
 

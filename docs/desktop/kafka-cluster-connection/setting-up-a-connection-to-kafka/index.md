@@ -34,7 +34,7 @@ this tab is the most important tab, and you have the following options:
 - **cluster name:** this will be the name of your cluster when navigating the list of clusters on the right-hand side of the Conduktor splash screen
 - **bootstrap servers:** list of Kafka brokers to connect to, usually providing two or three brokers is enough. In the form of `broker1-url:9092,broker2-url:9092`, or `PLAINTEXT://broker1-url:9092,broker2-url:9092`
 - **zookeeper (optional):** providing a Zookeeper URL will allow you to access more features through Conduktor, for example partition reassignment. Over time, as Kafka migrates away from using Zookeeper, this configuration will become less and less necessary to provide. In the form of `zookeeper1-url:2181,zookeeper2-url:2181`
-- **additional properties:** this is one of the most important section, especially if you have a [secure Kafka cluster](connecting-to-a-secure-kafka). Any additional properties you usually provide to your CLI or your Java clients should be inserted here. For more information, please read the [secure Kafka cluster section](connecting-to-a-secure-kafka).
+- **additional properties:** this is one of the most important section, especially if you have a [secure Kafka cluster](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka). Any additional properties you usually provide to your CLI or your Java clients should be inserted here. For more information, please read the [secure Kafka cluster section](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka).
 
 You can use the two buttons to test the Kafka and Zookeeper connectivity to ensure you connection details are accurate.
 
@@ -170,9 +170,9 @@ Don't hesitate to contact our support if you meet any issue with your plugins an
 
 Conduktor has utilities to test the connectivity to your Kafka clusters. In case you cannot establish a connectivity to your clusters, please make sure to read the following two pages:
 
-[Connecting to a secure Kafka](connecting-to-a-secure-kafka)
+[Connecting to a secure Kafka](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka)
 
-[Impossible connection setups](impossible-connection-setups)
+[Impossible connection setups](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups)
 
 ## Multi Cluster Management
 
@@ -193,10 +193,10 @@ Enterprise License.
 
 Setting up Conduktor with secure clusters is possible but requires you to have the exact properties. We have setup a longer guide here to help you out:
 
-[Connecting to a secure Kafka](connecting-to-a-secure-kafka)
+[Connecting to a secure Kafka](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka)
 
 ## Connectivity Issues
 
 Having connectivity issues? Be sure that you're not in a case of "impossible connection setup". Read more here:
 
-[Impossible connection setups](impossible-connection-setups)
+[Impossible connection setups](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups)

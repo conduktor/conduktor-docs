@@ -98,7 +98,7 @@ You can switch at a:
 
 ### **Task Level DSL**
 
-When in **edit** mode for a [Task](building-tests/tasks/), use the **DSL View** button to switch to the code-wise representation of your task.&#x20;
+When in **edit** mode for a [Task](building-tests/tasks), use the **DSL View** button to switch to the code-wise representation of your task.&#x20;
 
 ![](<../assets/image (32).png>)
 

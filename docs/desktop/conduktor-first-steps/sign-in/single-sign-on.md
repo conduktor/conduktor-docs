@@ -96,7 +96,7 @@ Leave most default as-is except for the "Sign-in redirect URL": `https://auth.co
 :::danger
 Due to some limitation on Auth0, we need that your OIDC token contains custom claims. Check your IdP documentation to on how to do this.
 
-Okta documentation: [Configure OIDC attributes](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main/)
+Okta documentation: [Configure OIDC attributes](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main)
 :::
 
 - `email_verified` with the value `true`.&#x20;

@@ -8,8 +8,8 @@ Use our managed service to get started with Conduktor in just a few minutes. The
 
 ## Sign Up
 
-- Navigate to [https://signup.conduktor.io/](https://signup.conduktor.io/)
-- Underneath **_Don't have an account?_**, select [sign up](https://signup.conduktor.io/)
+- Navigate to [https://signup.conduktor.io/](https://signup.conduktor.io)
+- Underneath **_Don't have an account?_**, select [sign up](https://signup.conduktor.io)
 - Follow the onboarding to create your organization
 
 ## Configure Your First Cluster

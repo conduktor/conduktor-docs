@@ -140,4 +140,4 @@ ERR: Unknown magic byte!
 
 ## Custom deserializers
 
-See the dedicated documentation page: [Custom deserializers](custom-deserializers/)
+See the dedicated documentation page: [Custom deserializers](custom-deserializers)

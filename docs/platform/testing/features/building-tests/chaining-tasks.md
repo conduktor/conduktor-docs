@@ -32,7 +32,7 @@ You can do joins simply by having multiple parents for a task. In this case, the
 You can access the parent events in the child task. For example, if you chain an HTTP Request task with a Producer task, you will be able to produce data coming from the HTTP response.
 
 :::info
-Looking for how to access the **current** task data in Checks ? Here is the [documentation](test-checks/accessing-kafka-message-data/)
+Looking for how to access the **current** task data in Checks ? Here is the [documentation](test-checks/accessing-kafka-message-data)
 :::
 
 Using the previous task data is easy, but requires some documentation until we complete a simple integration in the UI.

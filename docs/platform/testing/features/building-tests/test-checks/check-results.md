@@ -16,7 +16,7 @@ Click into a failed check to see the **actual result** against the **expected re
 **Tip!** Revisit a historical test run via the **Executions** module within the **Insights** tab.
 :::
 
-In the below example, the [Test Check](./) has **failed** because the expected value does not match the actual value.&#x20;
+In the below example, the [Test Check](.) has **failed** because the expected value does not match the actual value.&#x20;
 
 _Any test checks that fail will cause the Test Scenario to be considered a fail._
 

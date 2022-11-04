@@ -44,7 +44,7 @@ Note that:
 
 ### Producer Task
 
-This task produces a message into the `pageviews` topic. There are no [Test Checks](../features/building-tests/test-checks/) associated with it.&#x20;
+This task produces a message into the `pageviews` topic. There are no [Test Checks](../features/building-tests/test-checks) associated with it.&#x20;
 
 The cluster and topic are configured on the **General** tab. Then, a valid JSON message value is set on the **Data** tab.&#x20;
 
@@ -81,7 +81,7 @@ Below shows the expected output for an **enriched** message.&#x20;
 }
 ```
 
-To validate the User Service is working correctly, we will create a [Test Check](../features/building-tests/test-checks/) on the consumed message.
+To validate the User Service is working correctly, we will create a [Test Check](../features/building-tests/test-checks) on the consumed message.
 
 - Navigate to the **Checks** tab
 - The 'Plan Type' attribute is the result of **message enrichment**
@@ -120,7 +120,7 @@ In the above case, we can see the end-to-end test scenario has **failed**. Hover
 >
 > This means that the business SLA of 500ms was not met.
 
-Navigating to the **Checks** tab will detail the result of any [Test Checks](../features/building-tests/test-checks/). In this case, the check on the enriched data was successful.&#x20;
+Navigating to the **Checks** tab will detail the result of any [Test Checks](../features/building-tests/test-checks). In this case, the check on the enriched data was successful.&#x20;
 
 > userId `12345` was correctly attributed to a `Free` plan by the User Service
 

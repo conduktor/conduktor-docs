@@ -6,7 +6,7 @@ description: You can manage your subscriptions & your licenses in autonomy. No n
 
 # Account Management
 
-When you register a Conduktor account, you have access to Conduktor Desktop and to our portal: [account.conduktor.io](https://account.conduktor.io/). (same account, same credentials)
+When you register a Conduktor account, you have access to Conduktor Desktop and to our portal: [account.conduktor.io](https://account.conduktor.io). (same account, same credentials)
 
 ### The Roles in the Portal
 

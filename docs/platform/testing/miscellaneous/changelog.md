@@ -268,7 +268,7 @@ Initial public release enabling E2E Kafka testing scenarios. Release inclusive o
     - Apply headers
     - Stream messages with elapsed time/record conditions
     - Additional options: chunk size, force partition, compression, idempotence, acks
-    - [Check](../features/building-tests/test-checks/) metadata: offset, partition, timestamp, topic
+    - [Check](../features/building-tests/test-checks) metadata: offset, partition, timestamp, topic
   - Kafka [Consumer](../features/building-tests/tasks/consumer-task) task
     - Apply filters: headers, jq, schema id
     - Lifecycle conditions: x records, elapsed time
@@ -293,8 +293,8 @@ Initial public release enabling E2E Kafka testing scenarios. Release inclusive o
 - \***\*[**DSL**](../features/dsl)\*\***
   - Export/Import DSL code
   - Versioning of DSL inside the application (with restore)
-  - Switch between DSL/UI when editing a [task](../features/building-tests/tasks/) or [scenario](../features/building-tests/test-scenarios)
-- \***\*[**Environments**](../features/environments/)\*\***
+  - Switch between DSL/UI when editing a [task](../features/building-tests/tasks) or [scenario](../features/building-tests/test-scenarios)
+- \***\*[**Environments**](../features/environments)\*\***
   - Create environments
   - Attach [variables](../features/environments/using-environment-variables) (Types: Cluster, String)
   - [Use](../features/environments/using-environment-variables) variables

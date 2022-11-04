@@ -42,4 +42,4 @@ When a subject is "soft-deleted", it appears greyish if you "Show soft-deleted s
 
 If you are running Kafka at Aiven's (good idea!), then you're using karapace as the Schema Registry. It's totally different of the Confluent Schema Registry. It's almost 100% compatible.
 
-[karapace](https://github.com/aiven/karapace/)
+[karapace](https://github.com/aiven/karapace)

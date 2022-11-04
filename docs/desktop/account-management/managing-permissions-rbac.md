@@ -11,7 +11,7 @@ description: Allow/Deny access to specific features of Conduktor Desktop for sen
 This feature is available only for Enterprises.
 :::
 
-To be in control of what features your users can use on your clusters when using Conduktor Desktop, considering limiting their permissions. This is available on your account at [https://account.conduktor.io](https://account.conduktor.io/).
+To be in control of what features your users can use on your clusters when using Conduktor Desktop, considering limiting their permissions. This is available on your account at [https://account.conduktor.io](https://account.conduktor.io).
 
 ## Scope
 
