@@ -46,8 +46,6 @@ nav.navbar ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
-  display: flex;
-  align-items: center;
 }
 
 nav.navbar .navbar__inner {
@@ -74,29 +72,29 @@ nav.navbar .navbar__logo,
   max-width: var(--ifm-container-width);
 }
 
+aside > div {
+  padding-left: 1.5rem;
+}
+
 aside.theme-doc-sidebar-container {
   border-right: 1px solid var(--colors-mauve3);
 }
-
-aside.theme-doc-sidebar-container,
-aside.theme-doc-sidebar-container nav {
-  width: 275px;
-}
-
 
 aside.theme-doc-sidebar-container nav {
   overflow-y: auto;
   box-sizing: content-box;
   padding-right: 17px;
+  padding-top: var(--space-space6);
 }
 
 aside.theme-doc-sidebar-container nav > ul {
-  padding: var(--space-space9) var(--space-space9) var(--space-space9) 0;
+  padding-bottom: var(--space-space9);
 }
 
-/* aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
-  display: none;
-} */
+aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button {
+  background-color: transparent;
+  padding: 0;
+}
 
 aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible:hover,
 aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible--active {

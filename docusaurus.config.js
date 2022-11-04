@@ -34,6 +34,8 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./platform_sidebars.js'),
+          sidebarCollapsed: true,
+          sidebarCollapsible: true,
           routeBasePath: '/platform',
           path: './docs/platform',
           lastVersion: 'current',
@@ -138,6 +140,11 @@ const config = {
       },
       colorMode: {
         disableSwitch: true,
+      },
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+        },
       },
     }),
   plugins: [
