@@ -14,7 +14,7 @@ It lacks several important Apache Kafka features like Kafka Connect, Kafka Strea
 
 :::info
 AWS MSK supports also Kafka Connect clusters.
-[Read more about it](https://aws.amazon.com/blogs/aws/introducing-amazon-msk-connect-stream-data-to-and-from-your-apache-kafka-clusters-using-managed-connectors/).
+[Read more about it](https://aws.amazon.com/blogs/aws/introducing-amazon-msk-connect-stream-data-to-and-from-your-apache-kafka-clusters-using-managed-connectors).
 :::
 
 ## Conduktor & MSK
@@ -23,7 +23,7 @@ Conduktor, which is running on your computer, has no access by default to MSK. S
 
 To make it work:
 
-- Start a proxy [https://github.com/dajudge/kafkaproxy/](https://github.com/dajudge/kafkaproxy/) on a EC2 instance that has access to the cluster. For instance, using Docker:
+- Start a proxy [https://github.com/dajudge/kafkaproxy/](https://github.com/dajudge/kafkaproxy) on a EC2 instance that has access to the cluster. For instance, using Docker:
 
 ```
 $ sudo docker run --net host \
@@ -93,7 +93,7 @@ ssh -i ~/.ssh/ec2-key.pem -N \
 
 Conduktor fully handles AWS IAM, you just have to setup your connection with your IAM access.
 
-Read our guest blog on AWS for more details: [https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk/](https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk/)
+Read our guest blog on AWS for more details: [https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk/](https://aws.amazon.com/blogs/big-data/securing-apache-kafka-is-easy-and-familiar-with-iam-access-control-for-amazon-msk)
 
 ![](../../assets/bdb1447-access-control-msk-4.gif)
 

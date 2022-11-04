@@ -21,8 +21,8 @@ From within a [Test Suite](test-suites), select **New Scenario** to add a new sc
 
 ![](<../../assets/image (85).png>)
 
-Once your scenario is created, you will be pushed into the **Editor** view. This is where you can create your set of [Tasks](tasks/).
+Once your scenario is created, you will be pushed into the **Editor** view. This is where you can create your set of [Tasks](tasks).
 
 ![](<../../assets/image (176).png>)
 
-Continue to learn more about adding [**Tasks**](tasks/) to your scenario.
+Continue to learn more about adding [**Tasks**](tasks) to your scenario.

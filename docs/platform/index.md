@@ -21,6 +21,6 @@ Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on over
 ## Resources
 
 - [Chanelog](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md)
-- [Roadmap](https://product.conduktor.help/)
-- [Support](https://www.conduktor.io/contact/support/)
+- [Roadmap](https://product.conduktor.help)
+- [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)

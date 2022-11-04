@@ -63,7 +63,7 @@ However, you can amend these to suit your needs within the **Lifecycle** section
 
 ![](<../../../assets/image (97).png>)
 
-To learn about adding checks (tests) on data consumed from Kafka, move on to [**Test Checks\**](../test-checks/).&#x20;
+To learn about adding checks (tests) on data consumed from Kafka, move on to [\*\*Test Checks\*\*](../test-checks).&#x20;
 
 ## Consumer filters
 

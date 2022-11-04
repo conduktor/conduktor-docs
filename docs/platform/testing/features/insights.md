@@ -10,11 +10,11 @@ When you execute tests from the Testing application or via the CI runner, metric
 
 **Collected metrics:**
 
-| Metric                   | Dimensions                                  | Description                                                                                                                  |
-| ------------------------ | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Passed/Failed Executions | <ul><li>Total (%)</li><li>By Date</li></ul> | Details the number of passed/failed executions.                                                                              |
-| Scenario Duration        | <ul><li>By Date</li></ul>                   | Details the end-to-end duration for the test execution.                                                                      |
-| Task Duration            | <ul><li>By Task</li><li>By Date</li></ul>   | Details the duration of each [Task](building-tests/tasks/) that makes up the [Test Scenario](building-tests/test-scenarios). |
+| Metric                   | Dimensions                                  | Description                                                                                                                 |
+| ------------------------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Passed/Failed Executions | <ul><li>Total (%)</li><li>By Date</li></ul> | Details the number of passed/failed executions.                                                                             |
+| Scenario Duration        | <ul><li>By Date</li></ul>                   | Details the end-to-end duration for the test execution.                                                                     |
+| Task Duration            | <ul><li>By Task</li><li>By Date</li></ul>   | Details the duration of each [Task](building-tests/tasks) that makes up the [Test Scenario](building-tests/test-scenarios). |
 
 :::info
 Note that when there are more than 1 executions for an interval, the **average** time across all executions will be shown for the session and task duration.

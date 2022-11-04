@@ -16,7 +16,7 @@ If anything is missing or wrong, or for any feedback, please [contact us](https:
 
 **[Conduktor First Steps](/desktop/conduktor-first-steps/install)**
 
-**[Account Management](./account-management)**
+**[Account Management](/desktop/account-management)**
 
 **[Kafka Cluster Connection](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka)**
 
@@ -24,4 +24,4 @@ If anything is missing or wrong, or for any feedback, please [contact us](https:
 
 New to Apache Kafka? You are in the perfect spot here! We offer you more than 3h _free_ videos, to learn Apache Kafka and all its extensions, it is happening here:
 
-**[Learn Apache Kafka with Conduktor](learn-apache-kafka-with-conduktor)**
+**[Learn Apache Kafka with Conduktor](/desktop/learn-apache-kafka-with-conduktor)**

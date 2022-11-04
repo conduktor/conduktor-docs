@@ -25,16 +25,16 @@ After the trial period, your account will fallback to the free plan where you ca
 
 When you purchase a license through our [pricing page](https://www.conduktor.io/pricing), you will purchase using your email address.
 
-- If you buy only one license, then your email address will be the one you will have to use with Conduktor when you log in. You will have access to [our portal](https://account.conduktor.io/) to manage your subscription and see your license auto-assigned to yourself.
-- If you buy more than one license, then you'll be able to assign your licenses to whoever you want using [our portal](https://account.conduktor.io/).
+- If you buy only one license, then your email address will be the one you will have to use with Conduktor when you log in. You will have access to [our portal](https://account.conduktor.io) to manage your subscription and see your license auto-assigned to yourself.
+- If you buy more than one license, then you'll be able to assign your licenses to whoever you want using [our portal](https://account.conduktor.io).
 
 ![](<../../assets/image (19).png>)
 
 ## Enterprise Plan
 
-On Enterprise Plan, you will have the possibility to add addons to your subscription (by asking us), and will have access to [our portal](https://account.conduktor.io/) to manage your licenses.
+On Enterprise Plan, you will have the possibility to add addons to your subscription (by asking us), and will have access to [our portal](https://account.conduktor.io) to manage your licenses.
 
-- [Offline access](offline-licenses)
+- [Offline access](/desktop/conduktor-first-steps/licenses-and-activations/offline-licenses)
 - Licenses Reassignment
 - Unlimited machines: Conduktor limits machine usage to 1 per account
 - Licenses Auto-Assignment: link your subscription to one or multiple domains to automatically grant a license to the users from these domains: `*@mycompany.com` This is useful for large subscriptions where you don't want to manual assign/reassign licenses and let the system in "auto-mode".

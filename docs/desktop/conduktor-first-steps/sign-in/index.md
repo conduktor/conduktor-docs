@@ -10,7 +10,7 @@ In order for us to verify the license you have purchased, we require you to sign
 
 :::info
 Do you have an internet proxy? Check out the
-[internet proxy section](../login-troubleshooting/internet-proxy).
+[internet proxy section](/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy).
 :::
 
 ## Login flow
@@ -53,4 +53,4 @@ And you're all set!
 
 Please read the following page:
 
-[Login Troubleshooting & FAQ](../login-troubleshooting/)
+[Login Troubleshooting & FAQ](/desktop/conduktor-first-steps/login-troubleshooting)

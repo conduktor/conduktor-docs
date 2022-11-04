@@ -63,7 +63,7 @@ Provide the Id in either the Key/Value Schema Id field. This will filter message
 
 ## Checking the Schema Id
 
-When making [Test Checks](test-checks/) in a scenario, it's possible to check the Key or Value Schema Id.
+When making [Test Checks](test-checks) in a scenario, it's possible to check the Key or Value Schema Id.
 
 The syntax for accessing these values in a [Consumer Task](tasks/consumer-task) is outlined below:
 

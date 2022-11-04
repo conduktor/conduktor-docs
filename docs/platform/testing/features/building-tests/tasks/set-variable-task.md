@@ -11,7 +11,7 @@ The Set Variable task enables you to assign values to a local variable for use i
 You can define a value explicitly, or reference data from a chained task using the [Task Ports](task-ports).&#x20;
 
 :::info
-Unlike [environment](../../environments/) variables, which can be used globally across any scenario, local variables are only available within the context of the scenario they are set.
+Unlike [environment](../../environments) variables, which can be used globally across any scenario, local variables are only available within the context of the scenario they are set.
 :::
 
 ## Create a Set Variable task

@@ -26,4 +26,4 @@ If you're running a lower version, it will take more time because each connector
 
 ## How to start with Confluent Cloud Kafka Connect
 
-[How to start with Confluent Cloud Kafka Connect](./how-to-start-with-confluent-cloud-kafka-connect)
+[How to start with Confluent Cloud Kafka Connect](/desktop/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect)

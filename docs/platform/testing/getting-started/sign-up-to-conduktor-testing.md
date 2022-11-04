@@ -6,13 +6,13 @@ description: Download Conduktor Platform to get started with testing.
 
 # Download Conduktor Platform
 
-Conduktor Testing is available in Conduktor Platform, either as a web application or as a Docker app. Head to our [Get Started](https://www.conduktor.io/get-started/) page and choose the right option for you.
+Conduktor Testing is available in Conduktor Platform, either as a web application or as a Docker app. Head to our [Get Started](https://www.conduktor.io/get-started) page and choose the right option for you.
 
 ## Starting the Web App
 
 If you do not yet have a Conduktor account, you will need to sign-up first.&#x20;
 
-Select Option 3: "Sign up and access online" from the left-hand menu on the [Get Started](https://conduktor.io/get-started/) page.&#x20;
+Select Option 3: "Sign up and access online" from the left-hand menu on the [Get Started](https://conduktor.io/get-started) page.&#x20;
 
 ![](<../assets/image (168) (1).png>)
 
@@ -40,7 +40,7 @@ You will be redirected to the Conduktor Testing landing page. The first step is 
 
 ## Starting the Docker App
 
-Select Option 1 or 2 from the left-hand menu on the [Get Started](https://conduktor.io/get-started/) page.&#x20;
+Select Option 1 or 2 from the left-hand menu on the [Get Started](https://conduktor.io/get-started) page.&#x20;
 
 ![](<../assets/image (168) (1).png>)
 

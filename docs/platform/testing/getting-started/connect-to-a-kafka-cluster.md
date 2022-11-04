@@ -113,7 +113,7 @@ To connect to an Aiven cluster, you must specify the **Access Key**, **Access Ce
 
 To obtain these files, go to:
 
-[https://console.aiven.io/project/](https://console.aiven.io/project/)\&#60;project&#62;/services/\&#60;cluster&#62; \
+[https://console.aiven.io/project/](https://console.aiven.io/project)\&#60;project&#62;/services/\&#60;cluster&#62; \
 \
 From within the cluster configuration modal, add the Bootstrap server. This is labelled **Service URI** within the Aiven console.&#x20;
 

@@ -29,11 +29,11 @@ You might use this input for simple test scenarios, where you want to manually d
 
 ## Field Selection (JSON Query)
 
-Use the Field Selection (JQ) option when creating [Test Checks](building-tests/test-checks/). This enables you to access record data and record metadata so you can test the data.
+Use the Field Selection (JQ) option when creating [Test Checks](building-tests/test-checks). This enables you to access record data and record metadata so you can test the data.
 
 For example, access the record value for a consumed message, and assert the expected value.&#x20;
 
-See [Accessing Kafka message data](building-tests/test-checks/accessing-kafka-message-data/) for more information.
+See [Accessing Kafka message data](building-tests/test-checks/accessing-kafka-message-data) for more information.
 
 ![](<../assets/image (57).png>)
 

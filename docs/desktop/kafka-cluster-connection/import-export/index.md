@@ -6,7 +6,7 @@ description: Import or export your configurations for Conduktor
 # Import/Export configurations
 
 This feature is for **Enterprise** users where this is typically needed, to share your configuration with your team.
-You can also use [GitHub](github-enterprise) to auto-synchronize your configuration with your team.
+You can also use [GitHub](/desktop/kafka-cluster-connection/import-export/github-enterprise) to auto-synchronize your configuration with your team.
 
 ### Export the configuration all several clusters
 
@@ -25,7 +25,7 @@ On the welcome screen, you can export your configuration to a file \(cluster-nam
 
 ### Import Configurations
 
-You can import Cluster Configurations from a file, from [GitHub](github-enterprise) or directly from your clipboard!
+You can import Cluster Configurations from a file, from [GitHub](/desktop/kafka-cluster-connection/import-export/github-enterprise) or directly from your clipboard!
 If the cluster already exist,we will ask you if you want to override the existing cluster configuration or not \(see below\).
 
 ![](../../assets/config/import-export/2-import.png)

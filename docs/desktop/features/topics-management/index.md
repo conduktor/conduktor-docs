@@ -21,7 +21,7 @@ The field is automatically populated and auto-completes:
 
 ### Avoid long names and use Smart Groups
 
-Conduktor has a feature called [Smart Groups](./smart-groups) to remove long names from the list and instead create distinct columns to work with.
+Conduktor has a feature called [Smart Groups](/desktop/features/topics-management/smart-groups) to remove long names from the list and instead create distinct columns to work with.
 
 ![](../../assets/screenshot-2020-09-19-at-21.49.07.png)
 

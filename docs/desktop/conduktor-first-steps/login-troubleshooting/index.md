@@ -7,11 +7,11 @@ description: Solve common issues related to logging in to Conduktor Desktop
 
 ## I have an internet proxy, how do I configure it?
 
-By default, Conduktor detects the system proxy and use it. If for some reasons, you need to configure another proxy, see the [Using an Internet Proxy](internet-proxy).
+By default, Conduktor detects the system proxy and use it. If for some reasons, you need to configure another proxy, see the [Using an Internet Proxy](/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy).
 
 ## Will Conduktor work offline?
 
-Conduktor use Auth0 to register/login our users, and validate their license if any. Therefore, an online access is mandatory. For organizations with restricted Internet access, we now offer [offline licenses](../licenses-and-activations/offline-licenses) to bypass this requirement.
+Conduktor use Auth0 to register/login our users, and validate their license if any. Therefore, an online access is mandatory. For organizations with restricted Internet access, we now offer [offline licenses](/desktop/conduktor-first-steps/licenses-and-activations/offline-licenses) to bypass this requirement.
 
 ## Oops!, something went wrong!
 
@@ -33,13 +33,13 @@ This can happen due to many reasons. Here are a few:
 
 - Are you running Conduktor from your enterprise network?
   - You may need to configure a **proxy**:&#x20;
-    - [Internet Proxy](./internet-proxy)
+    - [Internet Proxy](/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy)
   - You may need to add a **trusted certificate** to Conduktor:&#x20;
-    - [Certificates FAQ](./certificates-faq)
+    - [Certificates FAQ](/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq)
 - **Browser plugins** can redirect http calls to httpS. The last step of our identification flow is a call to a local temporary http server (http://localhost:5xxx), so if something in the browser forces a redirect from http to https, the flow will never complete.
 - If you're using a **VPN**, you may have to configure it to not alter communication to \*.conduktor.io or add a certificate into Conduktor (if you VPN adds its own security layer with a self-signed certificate..)
   - Using **ZScaler** ? Download the ZScaler certificate and import it into Conduktor
-    - [Certificates FAQ](./certificates-faq)
+    - [Certificates FAQ](/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq)
 - Ensure you don't have an **antivirus** or a **firewall** blocking communications. You may have to add `https://auth.conduktor.io` to some allow-list or something.
 - By default, Conduktor uses your system proxy. This can causes some troubles such as: `Unable to tunnel through proxy. Proxy returns` Go to the settings, setup your proxy manually instead of the system proxy and and add an exception for `*.conduktor.io`
 
@@ -59,7 +59,7 @@ If your organization has its own self-signed CA and certificates, you can add tr
 
 Check our dedicated page:&#x20;
 
-[Certificates FAQ](./certificates-faq)
+[Certificates FAQ](/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq)
 
 ## Login Callback is HTTP_S\_ instead of HTTP
 
