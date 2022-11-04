@@ -32,6 +32,10 @@ export const ListItemLink = styled('a', {
     strong: {
       color: '$purple9',
     },
+    'img[data-arrow="true"]': {
+      opacity: 1,
+      transform: 'rotate(0deg) translateX(5px)',
+    },
   },
 })
 
@@ -41,4 +45,16 @@ export const ListItemTitle = styled('strong', {
   color: '$mauve12',
   marginLeft: '$space5',
   transition: 'color 200ms ease-in-out',
+  display: 'flex',
+  alignItems: 'center',
+})
+
+export const ListItemTitleArrow = styled('img', {
+  width: 16,
+  height: 16,
+  marginLeft: '$space4',
+  opacity: 0,
+  transform: 'rotate(0deg)',
+  transition: 'transform 250ms ease-out, opacity 200ms ease-out',
+  marginTop: 2,
 })

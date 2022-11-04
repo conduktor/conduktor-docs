@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemLink,
   ListItemTitle,
+  ListItemTitleArrow,
   StyledGuides,
 } from './Guides.styled'
 
@@ -24,7 +25,14 @@ const Guides: React.FunctionComponent<GuidesProps> = () => {
             <ListItem key={itemIndex}>
               <ListItemLink href={item.href}>
                 <ListItemIcon src={item.icon} alt={item.title} />
-                <ListItemTitle>{item.title}</ListItemTitle>
+                <ListItemTitle>
+                  {item.title}
+                  <ListItemTitleArrow
+                    data-arrow
+                    src="/assets/svgs/common/arrowRight.svg"
+                    alt="Arrow right"
+                  />
+                </ListItemTitle>
               </ListItemLink>
             </ListItem>
           ))}
