@@ -43,5 +43,5 @@ const client = algoliasearch(
     index.saveObjects(objects, {
       autoGenerateObjectIDIfNotExist: true,
     }) &&
-    console.log('Algolia successfully indexed')
+    console.log('\x1b[32m[SUCCESS]\x1b[0m Algolia \x1b[32msuccessfuly\x1b[0m indexed')
 })()

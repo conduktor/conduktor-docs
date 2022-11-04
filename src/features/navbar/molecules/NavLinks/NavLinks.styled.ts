@@ -5,7 +5,7 @@ export const StyledNavLinks = styled('ul', {
   all: 'unset',
   listStyleType: 'none',
   display: 'flex',
-  gap: '$space6',
+  gap: '$space9',
   alignItems: 'center',
 })
 
