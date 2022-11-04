@@ -72,11 +72,19 @@ aside.theme-doc-sidebar-container {
   border-right: 1px solid var(--colors-mauve3);
 }
 
+aside #navbar-content-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 aside.theme-doc-sidebar-container nav {
   overflow-y: auto;
   box-sizing: content-box;
   padding-right: 17px;
   padding-top: var(--space-space6);
+  width: calc(100% - 17px);
+  height: 100%;
 }
 
 aside.theme-doc-sidebar-container nav > ul {
@@ -98,6 +106,28 @@ aside.theme-doc-sidebar-container nav ul li a:hover {
   color: var(--ifm-menu-color-active) !important;
 }
 
+aside .menu__list-item button {
+  margin: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+aside .menu__list-item button svg {
+  transform: rotate(0deg);
+  transition: transform 200ms ease-in-out;
+}
+
+aside .menu__list-item button svg path {
+  fill: var(--colors-mauve11);
+}
+
+aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button[data-collapsed="false"] svg {
+  transform: rotate(-90deg);
+}
+
 aside.theme-doc-sidebar-container nav ul li a {
   padding: 0.2rem 0;
   background-color: unset !important;
@@ -105,6 +135,10 @@ aside.theme-doc-sidebar-container nav ul li a {
   font-weight: 500;
   font-size: var(--fontSizes-fontSize2);
 }
+
+aside .menu__list-item-collapsible:hover button svg path {
+  fill: var(--colors-purple9);
+} 
 
 aside.theme-doc-sidebar-container nav ul li a.menu__link--active {
   color: var(--ifm-menu-color-active) !important;
