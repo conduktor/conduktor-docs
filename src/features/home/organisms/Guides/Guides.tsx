@@ -27,11 +27,7 @@ const Guides: React.FunctionComponent<GuidesProps> = () => {
                 <ListItemIcon src={item.icon} alt={item.title} />
                 <ListItemTitle>
                   {item.title}
-                  <ListItemTitleArrow
-                    data-arrow
-                    src="/assets/svgs/common/arrowRight.svg"
-                    alt="Arrow right"
-                  />
+                  <ListItemTitleArrow src="/assets/svgs/common/arrowRight.svg" alt="Arrow right" />
                 </ListItemTitle>
               </ListItemLink>
             </ListItem>
