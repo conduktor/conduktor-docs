@@ -25,7 +25,7 @@ const Community: React.FunctionComponent<CommunityProps> = () => {
           {items.map((item, itemIndex) => (
             <ListItem key={itemIndex}>
               <ListItemLink href={item.href} target="_blank">
-                <ListItemVisual>
+                <ListItemVisual data-visual>
                   <ListItemVisualIcon src={item.icon} alt={item.title} />
                 </ListItemVisual>
                 <ListItemContent>
