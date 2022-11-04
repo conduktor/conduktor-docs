@@ -11,9 +11,9 @@ description: It's an important aspect when using Kafka and its extensions (Kafka
   height="315"
   src="https://www.youtube.com/embed/Uuo-xyJup4M"
   title="YouTube video player"
-  frameborder="0"
+  frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
+  allowFullScreen
 ></iframe>
 
 Currently, Conduktor provides only a few features from the metrics system. We only handle the metrics when the Kafka brokers expose their metrics using JMX or Jolokia (JMX over HTTP).&#x20;

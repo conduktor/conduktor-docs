@@ -16,7 +16,7 @@ Conduktor will transform your approach and interactions with Apache Kafka. We gi
 
 Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on overview below:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SnLv2yL5sy0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SnLv2yL5sy0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
 ## Resources
 

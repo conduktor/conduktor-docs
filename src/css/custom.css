@@ -286,6 +286,19 @@ main .row .col:nth-of-type(2) > div strong[data-title="true"] {
   display: block;
 }
 
+main .markdown h1 {
+  position: sticky;
+  top: 25px;
+  transition: font-size 200ms ease-in-out;
+}
+
+main .markdown h1[data-sticky="true"] {
+  z-index: 200;
+  font-size: var(--fontSizes-fontSize4);
+  margin-bottom: 0;
+  width: fit-content;
+}
+
 /* mobile */
 
 @media only screen and (max-width: 1024px) {
