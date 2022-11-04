@@ -4,7 +4,7 @@ import React from 'react'
 export default function TreeWrapper(props) {
   return (
     <>
-      <strong>Quick nav</strong>
+      <strong data-title>Quick nav</strong>
       <Tree {...props} />
     </>
   )
