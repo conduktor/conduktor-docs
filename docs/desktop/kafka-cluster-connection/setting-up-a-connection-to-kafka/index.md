@@ -11,9 +11,9 @@ description: Conduktor allows you to easily add, manage and save cluster connect
   height="315"
   src="https://www.youtube.com/embed/9a0Fl3tIpTc"
   title="YouTube video player"
-  frameborder="0"
+  frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
+  allowFullScreen
 ></iframe>
 
 ## Adding a Cluster
