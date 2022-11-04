@@ -12,9 +12,7 @@ export const StyledSearchInput = styled('div', {
         padding: '$space4 $space4 $space4 $space10',
         fontSize: '$fontSize2',
         fontWeight: '$medium',
-        width: 300,
         color: '$mauve11',
-        margin: '0 auto',
         boxShadow: '$shadow1',
       },
       false: {
