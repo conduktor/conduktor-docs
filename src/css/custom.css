@@ -1,4 +1,3 @@
-@import 'stitches.css';
 @import 'alerts.css';
 
 body {
@@ -38,6 +37,14 @@ nav.navbar {
   border-bottom: 1px solid var(--colors-mauve3);
   max-height: var(--ifm-navbar-height);
   box-shadow: unset;
+}
+
+nav.navbar ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
 }
 
 nav.navbar .navbar__inner {
