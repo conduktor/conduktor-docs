@@ -1,24 +1,21 @@
 import Button from '@site/src/components/atoms/Button'
-import Flex from '@site/src/components/atoms/Flex'
 import React from 'react'
-import { Content, Icon, Paragraph, StyledDesktop, Title } from './Desktop.styled'
+import styles from './Desktop.module.scss'
 
 interface DesktopProps {}
 
 const Desktop: React.FunctionComponent<DesktopProps> = () => {
   return (
-    <StyledDesktop>
-      <Content>
-        <Flex direction="row" align="center">
-          <Icon src="/assets/svgs/desktop.svg" alt="Conduktor Desktop" />
-          <Flex direction="column">
-            <Title>Looking for Conduktor Desktop documentation?</Title>
-            <Paragraph>All the features of our legacy product, documented.</Paragraph>
-          </Flex>
-        </Flex>
-      </Content>
+    <div className={styles.StyledDesktop}>
+      <div className={styles.Content}>
+        <img className={styles.Icon} src="/assets/svgs/desktop.svg" alt="Conduktor Desktop" />
+        <div className={styles.TitleContainer}>
+          <strong className={styles.Title}>Looking for Conduktor Desktop documentation?</strong>
+          <p className={styles.Paragraph}>All the features of our legacy product, documented.</p>
+        </div>
+      </div>
       <Button to="/desktop">Read now</Button>
-    </StyledDesktop>
+    </div>
   )
 }
 

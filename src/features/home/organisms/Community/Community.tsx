@@ -2,42 +2,32 @@ import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Heading from '../../atoms/Heading'
 import { items } from './Community.constants'
-import {
-  List,
-  ListItem,
-  ListItemContent,
-  ListItemLink,
-  ListItemParagraph,
-  ListItemTitle,
-  ListItemVisual,
-  ListItemVisualIcon,
-  StyledCommunity,
-} from './Community.styled'
+import styles from './Community.module.scss'
 
 interface CommunityProps {}
 
 const Community: React.FunctionComponent<CommunityProps> = () => {
   return (
-    <StyledCommunity>
+    <section className={styles.StyledCommunity}>
       <Container>
         <Heading>Join the community</Heading>
-        <List>
+        <ul className={styles.List}>
           {items.map((item, itemIndex) => (
-            <ListItem key={itemIndex}>
-              <ListItemLink href={item.href} target="_blank">
-                <ListItemVisual>
-                  <ListItemVisualIcon src={item.icon} alt={item.title} />
-                </ListItemVisual>
-                <ListItemContent>
-                  <ListItemTitle>{item.title}</ListItemTitle>
-                  <ListItemParagraph>{item.description}</ListItemParagraph>
-                </ListItemContent>
-              </ListItemLink>
-            </ListItem>
+            <li className={styles.ListItem} key={itemIndex}>
+              <a className={styles.ListItemLink} href={item.href} target="_blank">
+                <div className={styles.ListItemVisual}>
+                  <img src={item.icon} alt={item.title} />
+                </div>
+                <div className={styles.ListItemContent}>
+                  <strong className={styles.ListItemTitle}>{item.title}</strong>
+                  <p className={styles.ListItemParagraph}>{item.description}</p>
+                </div>
+              </a>
+            </li>
           ))}
-        </List>
+        </ul>
       </Container>
-    </StyledCommunity>
+    </section>
   )
 }
 

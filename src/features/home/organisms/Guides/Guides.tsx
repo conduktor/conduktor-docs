@@ -3,39 +3,35 @@ import React from 'react'
 import Heading from '../../atoms/Heading'
 import Desktop from '../../molecules/Desktop'
 import { items } from './Guides.constants'
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemLink,
-  ListItemTitle,
-  ListItemTitleArrow,
-  StyledGuides,
-} from './Guides.styled'
+import styles from './Guides.module.scss'
 
 interface GuidesProps {}
 
 const Guides: React.FunctionComponent<GuidesProps> = () => {
   return (
-    <StyledGuides>
+    <section className={styles.StyledGuides}>
       <Container>
         <Heading>Deployment guides</Heading>
-        <List>
+        <ul className={styles.List}>
           {items.map((item, itemIndex) => (
-            <ListItem key={itemIndex}>
-              <ListItemLink href={item.href}>
-                <ListItemIcon src={item.icon} alt={item.title} />
-                <ListItemTitle>
+            <li className={styles.ListItem} key={itemIndex}>
+              <a className={styles.ListItemLink} href={item.href}>
+                <img src={item.icon} alt={item.title} />
+                <strong className={styles.ListItemTitle}>
                   {item.title}
-                  <ListItemTitleArrow src="/assets/svgs/common/arrowRight.svg" alt="Arrow right" />
-                </ListItemTitle>
-              </ListItemLink>
-            </ListItem>
+                  <img
+                    className={styles.ListItemTitleArrow}
+                    src="/assets/svgs/common/arrowRight.svg"
+                    alt="Arrow right"
+                  />
+                </strong>
+              </a>
+            </li>
           ))}
-        </List>
+        </ul>
         <Desktop />
       </Container>
-    </StyledGuides>
+    </section>
   )
 }
 

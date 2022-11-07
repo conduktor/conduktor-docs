@@ -1,0 +1,19 @@
+.StyledSwitcherPlaceholder {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.Placeholder {
+  text-decoration: none  !important;
+  color: var(--colors-purple9);
+  cursor: pointer;
+  font-weight: var(--fontWeights-slim);
+  font-family: var(--fonts-poly);
+  line-height: var(--lineHeights-fit);
+  font-size: 25px;
+  display: block;
+  user-select: none;
+  margin-top: 1.5px;
+  margin-left: 24px;
+}

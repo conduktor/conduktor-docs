@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyledBadge } from './Badge.styled'
+import styles from './Badge.module.scss'
 
 interface BadgeProps {
   children: React.ReactNode
 }
 
 const Badge: React.FunctionComponent<BadgeProps> = ({ children }) => {
-  return <StyledBadge>{children}</StyledBadge>
+  return <span className={styles.StyledBadge}>{children}</span>
 }
 
 export default Badge

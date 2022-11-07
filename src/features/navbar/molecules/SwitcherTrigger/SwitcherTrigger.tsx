@@ -2,7 +2,7 @@ import { useLocation } from '@docusaurus/router'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import { items as ProductsItems } from '@site/src/features/home/organisms/Products/Products.constants'
 import React from 'react'
-import { StyledSwitcherTrigger, Trigger, TriggerIcon } from './SwitcherTrigger.styled'
+import styles from './SwitcherTrigger.module.scss'
 
 interface SwitcherTriggerProps {
   onClick: () => void
@@ -29,12 +29,16 @@ const SwitcherTrigger: React.FunctionComponent<SwitcherTriggerProps> = ({ onClic
   const pathname = isBrowser ? getPathName(location.pathname) : 'platform'
 
   return (
-    <StyledSwitcherTrigger>
-      <Trigger onClick={onClick}>
+    <div className={styles.StyledSwitcherTrigger}>
+      <button className={styles.Trigger} onClick={onClick}>
         {pathname}
-        <TriggerIcon src="/assets/svgs/common/angleDown.svg" alt="Angle down icon" />
-      </Trigger>
-    </StyledSwitcherTrigger>
+        <img
+          className={styles.TriggerIcon}
+          src="/assets/svgs/common/angleDown.svg"
+          alt="Angle down icon"
+        />
+      </button>
+    </div>
   )
 }
 

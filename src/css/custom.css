@@ -1,10 +1,5 @@
 @import 'alerts.css';
 
-body {
-  opacity: 0;
-  transition: opacity 200ms ease-in-out;
-}
-
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: hsl(244, 78%, 58%);

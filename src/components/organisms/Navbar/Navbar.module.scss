@@ -1,0 +1,12 @@
+.StyledNavbar {
+  all: unset;
+  list-style-type:  none;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-space10);
+  width: 100%;
+}
+
+.NavbarItem {
+  display: flex;
+}
