@@ -1,0 +1,21 @@
+.Button {
+  cursor: pointer;
+  background-color: var(--colors-purple9);
+  color: #fff;
+  border-radius: var(--radii-radius2);
+  font-weight: var(--fontWeights-bold);
+  letter-spacing: -0.15px;
+  line-height: var(--lineHeights-button);
+  height: 40px;
+  padding: 0 var(--space-space9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: background-color 200ms ease-in-out;
+
+  &:hover {
+    color: #fff;
+    background-color: var(--colors-purple10);
+  }
+}

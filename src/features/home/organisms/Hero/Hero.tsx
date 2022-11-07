@@ -3,25 +3,29 @@ import GradientMask from '@site/src/components/atoms/GradientMask/GradientMask'
 import GridBackground from '@site/src/components/atoms/GridBackground/GridBackground'
 import SearchInput from '@site/src/components/molecules/SearchInput'
 import React from 'react'
-import { ContentContainer, Heading, LightbeamVisual, Paragraph, StyledHero } from './Hero.styled'
+import styles from './Hero.module.scss'
 
 interface HeroProps {}
 
 const Hero: React.FunctionComponent<HeroProps> = () => {
   return (
-    <StyledHero>
-      <LightbeamVisual src="/assets/visuals/lightBeams1.webp" alt="Light Beams" />
+    <section className={styles.StyledHero}>
+      <img
+        className={styles.LightbeamVisual}
+        src="/assets/visuals/lightBeams1.webp"
+        alt="Light Beams"
+      />
       <GridBackground>
-        <ContentContainer>
+        <div className={styles.ContentContainer}>
           <Container>
-            <Heading>Documentation</Heading>
-            <Paragraph>Guides and tutorials for everything Conduktor</Paragraph>
+            <h1 className={styles.Heading}>Documentation</h1>
+            <p className={styles.Paragraph}>Guides and tutorials for everything Conduktor</p>
             <SearchInput />
           </Container>
-        </ContentContainer>
+        </div>
       </GridBackground>
       <GradientMask startColor="transparent" endColor="#fff" top={0} />
-    </StyledHero>
+    </section>
   )
 }
 

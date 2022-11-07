@@ -1,13 +1,16 @@
+import Link from '@docusaurus/Link'
 import React from 'react'
-import { Placeholder, StyledSwitcherPlaceholder } from './SwitcherPlaceholder.styled'
+import styles from './SwitcherPlaceholder.module.scss'
 
 interface SwitcherPlaceholderProps {}
 
 const SwitcherPlaceholder: React.FunctionComponent<SwitcherPlaceholderProps> = () => {
   return (
-    <StyledSwitcherPlaceholder>
-      <Placeholder to="/">docs</Placeholder>
-    </StyledSwitcherPlaceholder>
+    <div className={styles.StyledSwitcherPlaceholder}>
+      <Link className={styles.Placeholder} to="/">
+        docs
+      </Link>
+    </div>
   )
 }
 

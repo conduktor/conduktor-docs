@@ -1,5 +1,6 @@
+import Link from '@docusaurus/Link'
 import React from 'react'
-import { ButtonHref, ButtonLink } from './Button.styled'
+import styles from './Button.module.scss'
 
 interface ButtonProps {
   id?: string
@@ -19,13 +20,13 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   children,
 }) => {
   return href ? (
-    <ButtonHref id={id} href={href} target={target} css={{ width }}>
+    <a className={styles.Button} id={id} href={href} target={target} style={{ width }}>
       {children}
-    </ButtonHref>
+    </a>
   ) : (
-    <ButtonLink id={id} href={href} target={target} css={{ width }}>
+    <Link className={styles.Button} id={id} href={href} target={target} style={{ width }}>
       {children}
-    </ButtonLink>
+    </Link>
   )
 }
 

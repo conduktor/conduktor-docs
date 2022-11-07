@@ -149,6 +149,7 @@ const config = {
       },
     }),
   plugins: [
+    'docusaurus-plugin-sass',
     [
       '@docusaurus/plugin-content-docs',
       {
@@ -165,7 +166,7 @@ const config = {
       },
     ],
   ],
-  clientModules: [require.resolve('./loader.js')],
+  stylesheets: ['/css/stitches.css'],
 }
 
 module.exports = config

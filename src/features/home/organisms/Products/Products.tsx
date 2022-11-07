@@ -1,47 +1,38 @@
+import Link from '@docusaurus/Link'
 import Container from '@site/src/components/atoms/Container'
-import Flex from '@site/src/components/atoms/Flex'
 import React from 'react'
 import Badge from '../../atoms/Badge'
 import Heading from '../../atoms/Heading'
 import { items } from './Products.constants'
-import {
-  List,
-  ListItem,
-  ListItemDescription,
-  ListItemLink,
-  ListItemName,
-  ListVisual,
-  ListVisualImage,
-  StyledProducts,
-} from './Products.styled'
+import styles from './Products.module.scss'
 
 interface ProductsProps {}
 
 const Products: React.FunctionComponent<ProductsProps> = () => {
   return (
-    <StyledProducts>
+    <section>
       <Container>
         <Heading>Browse by product</Heading>
-        <List>
+        <ul className={styles.List}>
           {items.map((item, itemIndex) => (
-            <ListItem key={itemIndex}>
-              <ListItemLink to={item.to}>
-                <ListVisual>
-                  <ListVisualImage src={item.icon} alt={item.name} />
-                </ListVisual>
-                <Flex direction="row" align="flex-start" justify="space-between">
-                  <Flex direction="column">
-                    <ListItemName>{item.name}</ListItemName>
-                    <ListItemDescription>{item.description}</ListItemDescription>
-                  </Flex>
+            <li key={itemIndex} className={styles.ListItem}>
+              <Link to={item.to} className={styles.ListItemLink}>
+                <div className={styles.ListVisual}>
+                  <img className={styles.ListVisualImage} src={item.icon} alt={item.name} />
+                </div>
+                <div className={styles.ListItemNameContainer}>
+                  <div>
+                    <strong className={styles.ListItemName}>{item.name}</strong>
+                    <p className={styles.ListItemDescription}>{item.description}</p>
+                  </div>
                   {item.comingSoon ? <Badge>soon</Badge> : <span></span>}
-                </Flex>
-              </ListItemLink>
-            </ListItem>
+                </div>
+              </Link>
+            </li>
           ))}
-        </List>
+        </ul>
       </Container>
-    </StyledProducts>
+    </section>
   )
 }
 

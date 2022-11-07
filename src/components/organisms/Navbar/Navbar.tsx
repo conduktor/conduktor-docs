@@ -1,20 +1,20 @@
 import NavLinks from '@site/src/features/navbar/molecules/NavLinks/NavLinks'
 import Switcher from '@site/src/features/navbar/organisms/Switcher'
 import React from 'react'
-import { NavbarItem, StyledNavbar } from './Navbar.styled'
+import styles from './Navbar.module.scss'
 
 interface NavbarProps {}
 
 const Navbar: React.FunctionComponent<NavbarProps> = () => {
   return (
-    <StyledNavbar>
-      <NavbarItem>
+    <ul className={styles.StyledNavbar}>
+      <li className={styles.NavbarItem}>
         <Switcher />
-      </NavbarItem>
-      <NavbarItem>
+      </li>
+      <li className={styles.NavbarItem}>
         <NavLinks />
-      </NavbarItem>
-    </StyledNavbar>
+      </li>
+    </ul>
   )
 }
 

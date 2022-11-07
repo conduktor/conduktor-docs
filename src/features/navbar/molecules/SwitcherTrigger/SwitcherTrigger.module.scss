@@ -1,0 +1,33 @@
+
+.StyledSwitcherTrigger {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.Trigger {
+  border: none;
+  background-color: unset;
+  color: var(--colors-purple9);
+  cursor: pointer;
+  font-weight: var(--fontWeights-slim);
+  font-family: var(--fonts-poly);
+  line-height: var(--lineHeights-fit);
+  font-size: 25px;
+  display: block;
+  user-select: none;
+  margin-top: 1.5px;
+  margin-left: 24px;
+  padding: var(--space-space4);
+  border-radius: var(--radii-radius3);
+  transition: background-color 200ms ease-in-out;
+  margin-left: calc(24px - var(--space-space4));
+
+  &:hover, &:focus {
+    background-color: var(--colors-purple3) !important;
+  }
+}
+
+.TriggerIcon {
+  margin-left: var(--space-space4);
+}

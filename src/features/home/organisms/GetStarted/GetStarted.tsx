@@ -1,31 +1,21 @@
 import Button from '@site/src/components/atoms/Button'
 import React from 'react'
 import Container from '../../../../components/atoms/Container'
-import {
-  Card,
-  CardContent,
-  CardParagraph,
-  CardTitle,
-  PlatformVisual,
-  PlatformVisualContainer,
-  StyledGetStarted,
-} from './GetStarted.styled'
+import styles from './GetStarted.module.scss'
 
 interface GetStartedProps {}
 
 const GetStarted: React.FunctionComponent<GetStartedProps> = () => {
   return (
-    <StyledGetStarted
-      breakpoint={{ '@initial': 'initial', '@bp3': 'bp3', '@bp4': 'bp4', '@bp5': 'bp5' }}
-    >
+    <div className={styles.StyledGetStarted}>
       <Container>
-        <Card breakpoint={{ '@initial': 'initial', '@bp3': 'bp3' }}>
-          <CardContent breakpoint={{ '@initial': 'initial', '@bp3': 'bp3' }}>
-            <CardTitle>Get Started</CardTitle>
-            <CardParagraph>
+        <div className={styles.Card}>
+          <div className={styles.CardContent}>
+            <h2 className={styles.CardTitle}>Get Started</h2>
+            <p className={styles.CardParagraph}>
               Get everything that Desktop can do and much more with Conduktor Platform. Available in
               SaaS and Docker form. Need a desktop app? Carry on below.
-            </CardParagraph>
+            </p>
             <Button
               id="download-get-started"
               href="https://www.conduktor.io/get-started"
@@ -33,20 +23,21 @@ const GetStarted: React.FunctionComponent<GetStartedProps> = () => {
             >
               Try for free
             </Button>
-          </CardContent>
-          <PlatformVisualContainer
+          </div>
+          <a
+            className={styles.PlatformVisualContainer}
             href="https://www.conduktor.io/get-started"
             id="visual-download-get-started"
           >
-            <PlatformVisual
+            <img
+              className={styles.PlatformVisual}
               src="/assets/images/platform-download.png"
               alt="Conduktor Platform"
-              breakpoint={{ '@initial': 'initial', '@bp3': 'bp3' }}
             />
-          </PlatformVisualContainer>
-        </Card>
+          </a>
+        </div>
       </Container>
-    </StyledGetStarted>
+    </div>
   )
 }
 

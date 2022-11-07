@@ -2,13 +2,7 @@ import useKeyCombination from '@site/src/hooks/useKeyCombination'
 import React from 'react'
 import { isMacOs } from 'react-device-detect'
 import SearchModal from '../../organisms/SearchModal'
-import {
-  SearchInputIcon,
-  SearchInputShortcut,
-  SearchInputShortcutKey,
-  SearchInputText,
-  StyledSearchInput,
-} from './SearchInput.styled'
+import styles from './SearchInput.module.scss'
 
 interface SearchInputProps {
   compact?: boolean
@@ -27,16 +21,32 @@ const SearchInput: React.FunctionComponent<SearchInputProps> = ({ compact = fals
 
   return (
     <React.Fragment>
-      <StyledSearchInput compact={compact} onClick={() => setModal(true)}>
-        <SearchInputIcon compact={compact} src="/assets/svgs/search.svg" alt="Search Icon" />
-        <SearchInputText type="text" defaultValue="Search" readOnly={true} />
-        <SearchInputShortcut compact={compact}>
-          <SearchInputShortcutKey compact={compact}>
+      <div
+        className={styles.StyledSearchInput}
+        data-compact={compact}
+        onClick={() => setModal(true)}
+      >
+        <img
+          className={styles.SearchInputIcon}
+          data-compact={compact}
+          src="/assets/svgs/search.svg"
+          alt="Search Icon"
+        />
+        <input
+          className={styles.SearchInputText}
+          type="text"
+          defaultValue="Search"
+          readOnly={true}
+        />
+        <ul className={styles.SearchInputShortcut} data-compact={compact}>
+          <li className={styles.SearchInputShortcutKey} data-compact={compact}>
             {isMacOs ? '⌘' : 'CTRL'}
-          </SearchInputShortcutKey>
-          <SearchInputShortcutKey compact={compact}>K</SearchInputShortcutKey>
-        </SearchInputShortcut>
-      </StyledSearchInput>
+          </li>
+          <li className={styles.SearchInputShortcutKey} data-compact={compact}>
+            K
+          </li>
+        </ul>
+      </div>
       {modal && <SearchModal modal={modal} setModal={setModal} />}
     </React.Fragment>
   )

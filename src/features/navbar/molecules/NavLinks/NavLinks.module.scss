@@ -1,0 +1,15 @@
+.StyledNavLinks {
+  list-style-type: none;
+  display: flex;
+  gap: var(--space-space9);
+  align-items: center;
+}
+
+.NavLink {
+  cursor: pointer;
+  color: var(--colors-mauve12);
+  text-decoration: none !important;
+  font-weight: var(--fontWeights-medium);
+  font-size: var(--fontSizes-fontSize2);
+  transition: color 200ms ease-in-out;
+}
