@@ -177,6 +177,12 @@ const config = {
         trackingID: process.env.GOOGLE_UA_ID,
       },
     ],
+    [
+      require.resolve('docusaurus-gtm-plugin'),
+      {
+        id: process.env.GOOGLE_GTM_ID,
+      },
+    ],
   ],
   stylesheets: ['/css/stitches.css'],
 }
