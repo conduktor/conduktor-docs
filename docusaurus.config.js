@@ -165,6 +165,12 @@ const config = {
         systemvars: true,
       },
     ],
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: process.env.GA_TRACKING_ID,
+      },
+    ],
   ],
   stylesheets: ['/css/stitches.css'],
 }
