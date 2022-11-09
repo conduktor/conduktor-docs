@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ### Streamline Apache Kafka
 
-Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, testing, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** or as a **managed service**.
+Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, testing, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** or as a **managed cloud service**.
 
 **Try Conduktor Platform immediately** via **[demo.conduktor.io](https://demo.conduktor.io)**.
 

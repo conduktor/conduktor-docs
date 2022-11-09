@@ -4,7 +4,10 @@ sidebar_position: 3
 
 # Docker Compose
 
-Use Docker Compose to start a single node Kafka cluster, Schema Registry and the latest version of the Conduktor Platform.
+Use Docker Compose to start:
+ - Single node Kafka cluster
+ - Schema Registry
+ - The latest version of Conduktor Platform
 
 ### Prerequisites
 
@@ -14,9 +17,9 @@ Install [Docker Compose](https://docs.docker.com/compose/install)
 
 ## Run Conduktor Platform
 
-Note that when you run this command, you will be prompted for your organization name and be asked to create admin credentials.
+Note that when you run this command, you will be prompted for your **organization name** and be asked to create **admin credentials**.
 
-```
+```bash
 curl -sS https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-local/autorun/autorun.sh | bash -s setup
 ```
 
@@ -34,4 +37,4 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
  - Cluster configurations
  - User authentication (Basic or SSO)
 
-In the above example, a default `platform-config.yaml` is used to start the platform. However, if you would like to see more examples of customization, see [YAML snippets](#somewhere).
+In the above example, a default `platform-config.yaml` is used to start the platform. However, if you would like to see more examples of customization, see the [configuration snippets](./../../configuration/configuration-snippets.md).

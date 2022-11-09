@@ -15,7 +15,9 @@ Conduktor can be configured using an input yaml file that provides configuration
 
 For example: `platform-config.yaml`
 
-```
+*Note that you may omit the database configuration if you wish to use an embedded postgres for testing purposes.*
+
+```yaml
 organization:
   name: demo
 
@@ -50,21 +52,21 @@ license: "<you license key>"
 
 Below shows how to bind a local file to override `/opt/conduktor/default-platform-config.yaml`. 
 
-```
+```bash
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
    -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:latest
 ```
 
 Alternatively, use the `CDK_IN_CONF_FILE` environment variable to bind the file frmo another location:
 
-```
+```bash
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
    -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
    -e EMBEDDED_POSTGRES="false" \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:latest
 ```
 
 ## Environment Override
