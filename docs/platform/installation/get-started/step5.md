@@ -8,6 +8,4 @@ The below guide details how to deploy a production-ready instance of Conduktor P
 
 Everything is deployed using CloudFormation templates and the Platform is deployed in ECS Fargate.
 
-
 https://github.com/conduktor/quickstart-conduktor-aws-msk
-
