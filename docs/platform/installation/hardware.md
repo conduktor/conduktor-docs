@@ -30,11 +30,11 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
 **Recommended**
 
 - 4+ CPU cores
-- 16+ Go of RAM (`RUN_MODE`=small)
-- 10+ Go of disk space
+- 16+ GB of RAM (`RUN_MODE`=small)
+- 10+ GB of disk space
 
 **Example: Starting the platform in small run mode**
-```
+```bash
  docker run --rm \
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
@@ -50,7 +50,7 @@ See more about [environment variables](../configuration/env-variables)
 All module can be disabled by environment variable.
 
 Default values:
-```sh
+```bash
  CONSOLE_ENABLED="true"
  TESTING_ENABLED="true"
  MONITORING_ENABLED="true"
@@ -60,7 +60,7 @@ Default values:
 ```
 
 Example: Disable topic scanner
-```sh
+```bash
  docker run --rm \
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \

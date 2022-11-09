@@ -18,7 +18,7 @@ The below example shows how to configure Conduktor with a `SASL_SSL` Kafka clust
 
 For more examples, see [YAML snippets](#somewhere).
 
-```
+```yaml
 organization:
   name: default
 
@@ -57,22 +57,22 @@ If you are a **Conduktor Enterprise** customer, you can start the platform with 
 
 ### MacOS / Linux
 
-```
+```bash
 docker run --rm \
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
-conduktor/conduktor-platform:1.2.0
+conduktor/conduktor-platform:latest
 ```
 
 ### Windows
 
-```
+```bash
 docker run --rm `
   -p "8080:8080" `
   -e LICENSE_KEY="<your-license>" `
   --mount "type=bind,source=$pwd/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" `
-conduktor/conduktor-platform:1.2.0
+conduktor/conduktor-platform:latest
 ```
 
 ## Access Conduktor
@@ -80,7 +80,7 @@ conduktor/conduktor-platform:1.2.0
 After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
 
 Use the credentials **specified in the YAML** file to login. If you did not change the default credentials, you should use:
-```
+```yaml
 User: admin@conduktor.io
 Password: admin
 ```
