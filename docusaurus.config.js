@@ -171,6 +171,12 @@ const config = {
         trackingID: process.env.GA_TRACKING_ID,
       },
     ],
+    [
+      '@docusaurus/plugin-google-analytics',
+      {
+        trackingID: process.env.GOOGLE_UA_ID,
+      },
+    ],
   ],
   stylesheets: ['/css/stitches.css'],
 }
