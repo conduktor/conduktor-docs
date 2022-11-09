@@ -1,5 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+require('dotenv').config()
 
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
@@ -160,9 +161,21 @@ const config = {
       },
     ],
     [
-      'docusaurus2-dotenv',
+      '@docusaurus/plugin-google-gtag',
       {
-        systemvars: true,
+        trackingID: process.env.GOOGLE_GTAG_ID,
+      },
+    ],
+    [
+      '@docusaurus/plugin-google-analytics',
+      {
+        trackingID: process.env.GOOGLE_UA_ID,
+      },
+    ],
+    [
+      require.resolve('docusaurus-gtm-plugin'),
+      {
+        id: process.env.GOOGLE_GTM_ID,
       },
     ],
   ],
