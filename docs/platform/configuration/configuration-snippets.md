@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Configuration Snippets
 
-Below outlines snippets demonstrating differnet configuration options for the `platform-config.yaml`.
+Below outlines snippets demonstrating different configuration options for the `platform-config.yaml`.
 
 Jump to:
 - [Complete Configuration Example](#complete-configuration-example)
