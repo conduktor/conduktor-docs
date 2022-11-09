@@ -150,7 +150,12 @@ const config = {
       },
     }),
   plugins: [
-    'docusaurus2-dotenv',
+    [
+      'docusaurus2-dotenv',
+      {
+        systemvars: true,
+      },
+    ],
     'docusaurus-plugin-sass',
     [
       '@docusaurus/plugin-content-docs',
