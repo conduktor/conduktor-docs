@@ -1,10 +1,7 @@
 import algoliasearch from 'algoliasearch'
-import dotenv from 'dotenv'
 import fs from 'fs'
 import { globby } from 'globby'
 import matter from 'gray-matter'
-
-dotenv.config({ path: '.env' })
 
 const client = algoliasearch(
   process.env.REACT_APP_ALGOLIA_APPLICATION_ID,

@@ -150,6 +150,7 @@ const config = {
       },
     }),
   plugins: [
+    'docusaurus2-dotenv',
     'docusaurus-plugin-sass',
     [
       '@docusaurus/plugin-content-docs',

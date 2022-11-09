@@ -7,7 +7,6 @@ const Heading: React.FunctionComponent<HeadingProps> = () => {
 
   React.useEffect(() => {
     const scrollEvent = () => {
-      console.log('window.scrollY', window.scrollY)
       setSticky(window.scrollY >= 100)
     }
     document.addEventListener('scroll', scrollEvent)
