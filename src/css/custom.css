@@ -304,6 +304,104 @@ main .markdown h1[data-sticky="true"] {
   width: fit-content;
 }
 
+table {
+  border: none;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 14px;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  border: none;
+  border-bottom: 1px solid var(--colors-mauve4) !important;
+  background-color: #fff;
+}
+
+table th,
+table td {
+  padding: var(--space-space4);
+}
+
+table td {
+  font-size: 13px;
+  border: 1px solid var(--colors-mauve4) !important;
+}
+
+table td code {
+  font-size: 12px;
+  font-family: var(--fonts-mono) !important;
+}
+
+table th {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.15px;
+  color: var(--colors-mauve11);
+  border: 1px solid var(--colors-mauve4) !important;
+  min-width: 200px;
+  background-color: var(--colors-mauve2);
+}
+
+table tr:nth-child(2n) {
+  background-color: var(--colors-mauve1);
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 14px;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
 /* mobile */
 
 @media only screen and (max-width: 1024px) {
