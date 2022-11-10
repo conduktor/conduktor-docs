@@ -21,9 +21,9 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
       </li>
       {items.map((item, itemIndex) => (
         <li key={itemIndex}>
-          <Link className={styles.NavLink} to={item.href}>
+          <a className={styles.NavLink} href={item.href} target="_blank">
             {item.name}
-          </Link>
+          </a>
         </li>
       ))}
       <li>
