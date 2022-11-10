@@ -1,11 +1,11 @@
 export const items = [
   {
     name: 'Demo',
-    href: '/',
+    href: 'https://demo.conduktor.io',
   },
   {
     name: 'Blog',
-    href: '/',
+    href: 'https://conduktor.io/blog',
   },
   {
     name: 'Features Requests',
