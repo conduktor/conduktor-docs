@@ -226,6 +226,16 @@ main img {
   border-radius: var(--radii-radius3);
 }
 
+main img {
+  width: 100%;
+}
+
+main iframe {
+  width: 100%;
+  height: 450px;
+  margin-bottom: 2rem;
+}
+
 footer.footer--dark {
   background-color: var(--colors-mauve12) !important;
 }
