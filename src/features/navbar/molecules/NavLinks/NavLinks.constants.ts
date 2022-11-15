@@ -8,11 +8,11 @@ export const items = [
     href: 'https://conduktor.io/blog',
   },
   {
-    name: 'Features Requests',
-    href: '/',
+    name: 'Roadmap',
+    href: 'https://product.conduktor.help',
   },
   {
     name: 'FAQ',
-    href: '/',
+    to: '/faq',
   },
 ]
