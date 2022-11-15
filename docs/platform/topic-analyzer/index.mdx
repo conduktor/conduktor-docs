@@ -4,20 +4,33 @@ description: Topic Analyzer is your Kafka expert as a service, providing automat
 ---
 
 import HubSpotForm from '@site/src/components/organisms/HubSpotForm'
+import Header from '@site/src/features/coming-soon/molecules/Header'
+import Paragraph from '@site/src/features/coming-soon/molecules/Paragraph'
+import Features from '@site/src/features/coming-soon/molecules/Features'
 import Container from '@site/src/features/coming-soon/organisms/Container'
 
 <Container>
-  <img src="/assets/images/coming-soon.png" alt="Coming soon" />
+  <Header icon="/assets/svgs/products/24x24/topic-analyzer.svg" title="Topic Analyzer" />
+  <Paragraph>
+    <strong>Topic Analyzer is still in beta</strong>, but is coming soon! Fill in your email to get updates about the release and be the first to know.
+    <br />
+    <br />
+    <strong>Topic Analyzer provides automated recommendations</strong> for your Kafka topics, helping you to optimize your configurations. Topic Analyzer will provide recommendations for settings such as linger.ms, batch.size, and compression. By implementing the recommendations, you can enhance throughput and reduce latency, ultimately lowering the costs of running Kafka.
+  </Paragraph>
+  <Features
+    items={[
+      'Improve your Kafka configurations',
+      'Understand the shape of your data',
+      'Utilize Kafka more efficiently',
+      'Deep-dive your schema usage',
+    ]}
+  />
   <HubSpotForm
     formId="30242125-ce26-4234-a4b3-7b89af1f0f33"
     height={56}
-    customCSS={`form { display: flex; padding-top: 1rem; align-items: center; justify-content: space-between; gap: 1rem; } .field { width: 100%; margin-bottom: 0 !important; } .hs_submit .actions input { margin-top: 0 !important; } .hs-error-msgs { display: none !important; } label { display: none !important; }`}
+    customCSS={`form { display: flex; padding-top: 2rem; align-items: center; justify-content: space-between; gap: 1rem; } .field { width: 100%; margin-bottom: 0 !important; } .hs_submit .actions input { margin-top: 0 !important; } .hs-error-msgs { display: none !important; } label { display: none !important; }`}
   />
+
 </Container>
 
-Topic Analyzer is still in beta, but is coming soon! Fill in your email to get updates about the release and be
-the first to know. 
-
-Topic Analyzer provides automated recommendations for your Kafka topics, helping you to optimize your configurations.
-Topic Analyzer will provide recommendations for settings such as linger.ms, batch.size, and compression. By implementing
-the recommendations, you can enhance throughput and reduce latency, ultimately lowering the costs of running Kafka.
+<img src="/assets/images/coming-soon.png" alt="Coming soon" />
