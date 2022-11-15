@@ -154,6 +154,7 @@ aside ul li.console,
 aside ul li.testing,
 aside ul li.monitoring,
 aside ul li.data-masking,
+aside ul li.topic-analyzer,
 aside ul li.topic-service {
   position: relative;
   padding: 0.25rem 0 0.25rem 2rem;
@@ -163,6 +164,7 @@ aside ul li.console::before,
 aside ul li.testing::before,
 aside ul li.monitoring::before,
 aside ul li.data-masking::before,
+aside ul li.topic-analyzer::before,
 aside ul li.topic-service::before {
   position: absolute;
   left: 0;
@@ -184,11 +186,15 @@ aside ul li.data-masking::before {
   content: url(/assets/svgs/products/24x24/data-masking.svg);
 }
 
+aside ul li.topic-analyzer::before {
+  content: url(/assets/svgs/products/24x24/topic-analyzer.svg);
+}
+
 aside ul li.topic-service::before {
   content: url(/assets/svgs/products/24x24/topic-service.svg);
 }
 
-aside ul li.data-masking::after,
+aside ul li.topic-analyzer::after,
 aside ul li.topic-service::after {
   position: absolute;
   right: 0;
@@ -208,7 +214,7 @@ aside ul li.topic-service::after {
   padding: 0.25rem;
 }
 
-aside ul li.data-masking a::after,
+aside ul li.topic-analyzer a::after,
 aside ul li.topic-service a::after {
   display: none;
 }
