@@ -14,7 +14,6 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  trailingSlash: false,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -42,9 +41,7 @@ const config = {
           path: './docs/platform',
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/conduktor/conduktor-docs/',
+          exclude: ['./api/**/*'],
         },
         theme: {
           customCss: [require.resolve('./src/css/custom.css')],
@@ -150,14 +147,25 @@ const config = {
       },
     }),
   plugins: [
+    [
+      'docusaurus2-dotenv',
+      {
+        systemvars: true,
+      },
+    ],
     'docusaurus-plugin-sass',
     [
       '@docusaurus/plugin-content-docs',
       {
         id: 'desktop',
-        path: './docs/desktop',
-        routeBasePath: 'desktop',
         sidebarPath: require.resolve('./desktop_sidebars.js'),
+        sidebarCollapsed: true,
+        sidebarCollapsible: true,
+        routeBasePath: '/desktop',
+        exclude: ['./api/**/*'],
+        path: './docs/desktop',
+        lastVersion: 'current',
+        onlyIncludeVersions: ['current'],
       },
     ],
     [

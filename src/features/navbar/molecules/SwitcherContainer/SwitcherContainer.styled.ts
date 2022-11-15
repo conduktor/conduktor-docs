@@ -67,6 +67,8 @@ export const ListItemLink = styled(Link, {
 
 export const ListItemIcon = styled('img', {
   marginRight: '$space6',
+  width: 48,
+  height: 48,
 })
 
 export const ListItemTitle = styled('strong', {
