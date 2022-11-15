@@ -4,7 +4,7 @@
 $ yarn
 ```
 
-### Configuration (.env)
+### Configuration
 
 ```
 REACT_APP_ALGOLIA_APPLICATION_ID=HS2F10UEF6
