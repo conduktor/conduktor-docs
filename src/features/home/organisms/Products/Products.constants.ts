@@ -34,4 +34,11 @@ export const items = [
     icon: '/assets/svgs/products/taas.svg',
     comingSoon: true,
   },
+  {
+    name: 'Desktop',
+    description: 'More than an interface to Kafka',
+    to: '/desktop',
+    icon: '/assets/svgs/products/desktop.svg',
+    comingSoon: false,
+  },
 ]
