@@ -5,7 +5,11 @@ export const items = [
   },
   {
     name: 'Blog',
-    href: 'https://conduktor.io/blog',
+    href: 'https://www.conduktor.io/blog',
+  },
+  {
+    name: 'Changelog',
+    href: 'https://www.conduktor.io/changelog',
   },
   {
     name: 'Roadmap',
