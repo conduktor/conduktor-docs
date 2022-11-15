@@ -230,6 +230,14 @@ main img {
   width: 100%;
 }
 
+.breadcrumbs__link {
+  font-weight: 500;
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  background: var(--colors-mauve2);
+}
+
 main iframe {
   width: 100%;
   height: 450px;
