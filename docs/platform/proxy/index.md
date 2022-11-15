@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Overview
 
 ## What is Conduktor Proxy?
@@ -5,9 +9,10 @@
 ### Kafka with a boost
 
 Conduktor Proxy will improve and extend your Kafka environment. We give you the functionality that is currently lacking from your Apache Kafka deployment. Enjoy features such as:
-  * multi-tenancy
-  * chaos engineering
-  * encryption
+
+- multi-tenancy
+- chaos engineering
+- encryption
 
 All without any changes to your existing Kafka deployment.
 
