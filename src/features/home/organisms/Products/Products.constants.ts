@@ -25,6 +25,13 @@ export const items = [
     description: 'Hide sensitive data',
     to: '/platform/data-masking',
     icon: '/assets/svgs/products/dataMasking.svg',
+    comingSoon: false,
+  },
+  {
+    name: 'Topic Analyzer',
+    description: 'Auto Kafka recommendations',
+    to: '/platform/topic-analyzer',
+    icon: '/assets/svgs/products/topic-analyzer.svg',
     comingSoon: true,
   },
   {

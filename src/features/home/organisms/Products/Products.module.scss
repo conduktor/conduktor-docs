@@ -1,12 +1,13 @@
 .List {
   list-style-type: none;
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-space8);
   padding: 0;
 }
 
 .ListItem {
-  width: 100%;
+  width: 200px;
 }
 
 .ListItemLink {
@@ -43,6 +44,8 @@
 .ListVisualImage {
   box-shadow: var(--shadows-shadow3);
   transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+  height: 48px;
+  width: 48px;
 }
 
 .ListItemNameContainer {
