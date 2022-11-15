@@ -154,6 +154,7 @@ aside ul li.console,
 aside ul li.testing,
 aside ul li.monitoring,
 aside ul li.data-masking,
+aside ul li.proxy,
 aside ul li.topic-analyzer,
 aside ul li.topic-service {
   position: relative;
@@ -164,6 +165,7 @@ aside ul li.console::before,
 aside ul li.testing::before,
 aside ul li.monitoring::before,
 aside ul li.data-masking::before,
+aside ul li.proxy::before,
 aside ul li.topic-analyzer::before,
 aside ul li.topic-service::before {
   position: absolute;
@@ -184,6 +186,10 @@ aside ul li.monitoring::before {
 
 aside ul li.data-masking::before {
   content: url(/assets/svgs/products/24x24/data-masking.svg);
+}
+
+aside ul li.proxy::before {
+  content: url(/assets/svgs/products/24x24/proxy.svg);
 }
 
 aside ul li.topic-analyzer::before {
@@ -358,7 +364,7 @@ table th {
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.15px;
-  color: var(--colors-mauve11);
+  color: var(--colors-mauve12);
   border: 1px solid var(--colors-mauve4) !important;
   min-width: 200px;
   background-color: var(--colors-mauve2);
