@@ -42,9 +42,6 @@ const config = {
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/conduktor/conduktor-docs/',
         },
         theme: {
           customCss: [require.resolve('./src/css/custom.css')],
@@ -169,9 +166,6 @@ const config = {
         path: './docs/desktop',
         lastVersion: 'current',
         onlyIncludeVersions: ['current'],
-        // Please change this to your repo.
-        // Remove this to remove the "edit this page" links.
-        editUrl: 'https://github.com/conduktor/conduktor-docs/docs/desktop',
       },
     ],
     [
