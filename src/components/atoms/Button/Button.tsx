@@ -24,7 +24,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       {children}
     </a>
   ) : (
-    <Link className={styles.Button} id={id} href={href} target={target} style={{ width }}>
+    <Link className={styles.Button} id={id} to={to} target={target} style={{ width }}>
       {children}
     </Link>
   )
