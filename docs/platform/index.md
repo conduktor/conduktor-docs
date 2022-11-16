@@ -10,7 +10,7 @@ sidebar_position: 1
 
 Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, testing, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** or as a **managed cloud service**.
 
-**Try Conduktor Platform immediately** via **[demo.conduktor.io](https://demo.conduktor.io)**.
+**Try Conduktor Platform immediately** **[here](https://www.conduktor.io/get-started#option-3)**.
 
 ### Platform Walkthrough
 

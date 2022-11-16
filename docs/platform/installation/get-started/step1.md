@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Online Demo
 
-**Try Conduktor Platform immediately** via **[demo.conduktor.io](https://demo.conduktor.io)**.
+**Try Conduktor Platform immediately** **[here](https://www.conduktor.io/get-started#option-3)**.
 
 The demo environment is accessible by anyone and simulates an enterprise organisations Kafka ecosystem.
 
