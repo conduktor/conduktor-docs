@@ -38,7 +38,6 @@ If run from docker :
 ```bash
  docker run --rm \
    --mount "type=bind,source=$PWD/truststore.jks,target=/opt/conduktor/certs/truststore.jks" \
-   -e EMBEDDED_POSTGRES="false" \
    -e CDK_SSL_TRUSTSTORE_PATH="/opt/conduktor/certs/truststore.jks" \
    -e CDK_SSL_TRUSTSTORE_PASSWORD="changeit" \
   conduktor/conduktor-platform:latest
