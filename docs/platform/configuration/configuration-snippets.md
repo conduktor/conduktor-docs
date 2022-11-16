@@ -17,7 +17,6 @@ Jump to:
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
 - [Kafka Connect](#kafka-connect)
 - [SSO](#sso)
-- [OIDC](#oidc)
 
 
 ## Complete Configuration Example
