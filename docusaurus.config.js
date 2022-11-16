@@ -1,9 +1,11 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-require('dotenv').config()
 
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
+const { gtag } = require('./src/services/gtag')
+const { analytics } = require('./src/services/analytics')
+const { gtm } = require('./src/services/gtm')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -168,24 +170,9 @@ const config = {
         onlyIncludeVersions: ['current'],
       },
     ],
-    [
-      '@docusaurus/plugin-google-gtag',
-      {
-        trackingID: process.env.GOOGLE_GTAG_ID,
-      },
-    ],
-    [
-      '@docusaurus/plugin-google-analytics',
-      {
-        trackingID: process.env.GOOGLE_UA_ID,
-      },
-    ],
-    [
-      require.resolve('docusaurus-gtm-plugin'),
-      {
-        id: process.env.GOOGLE_GTM_ID,
-      },
-    ],
+    gtag,
+    analytics,
+    gtm,
   ],
   stylesheets: ['/css/stitches.css'],
 }
