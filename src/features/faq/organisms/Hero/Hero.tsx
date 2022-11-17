@@ -19,9 +19,9 @@ const Hero: React.FunctionComponent<HeroProps> = () => {
           <Container>
             <h1 className={styles.Heading}>Frequently asked questions</h1>
             <p className={styles.Paragraph}>
-              Everything you need to know about the product and billing. Can't find the
+              Find answers to the most common questions we receive about Conduktor Platform.
               <br />
-              answer you're looking for? Please chat to our friendly team.
+              Can't find what you're looking for? Get in touch with us
             </p>
           </Container>
         </div>
