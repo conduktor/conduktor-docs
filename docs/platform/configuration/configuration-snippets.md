@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # Configuration Snippets
@@ -17,7 +17,6 @@ Jump to:
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
 - [Kafka Connect](#kafka-connect)
 - [SSO](#sso)
-- [OIDC](#oidc)
 
 
 ## Complete Configuration Example
@@ -127,7 +126,7 @@ clusters:
       security.protocol=SASL_SSL
       sasl.mechanism=AWS_MSK_IAM
       sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
-      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
 ```
 On top of that, you can override either the `default` profile or the role to assume.
 Override Profile
@@ -230,30 +229,4 @@ Cluster with Kafka Connect configured with Basic Auth
 
 ## SSO
 
-For more information on SSO, see [User Authentication](#somewhere)
-
-### OIDC
-```yml
-sso:
-  oauth2:
-    - name: "auth0"
-      default: true
-      client-id: <client_id>
-      client-secret: <client_secret>
-      callback-uri: http://localhost/auth/oauth/callback/auth0
-      openid:
-        issuer: https://conduktor-staging.eu.auth0.com/
-```
-
-### LDAP
-```yml
-sso:
-  ldap:
-    - name: "default"                                                # Custom name for ldap connection
-      server: "ldap://www.zflexldap.com:389"                         # LDAP server URI with port
-      managerDn: "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"  # Bind DN 
-      managerPassword: "zflexpass"                                   # Bind Password
-      search-base: "ou=users,ou=guests,dc=zflexsoftware,dc=com"      # Base DN to search for users
-      groups-base: "ou=groups,ou=guests,dc=zflexsoftware,dc=com"     # Base DN to search for groups
-```
-
+For more information on SSO, see [User Authentication](./user-authentication)
