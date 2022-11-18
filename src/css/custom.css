@@ -325,6 +325,7 @@ table {
   padding: 0;
   width: 100%;
   table-layout: fixed;
+  margin-bottom: 2rem;
 }
 
 table caption {
