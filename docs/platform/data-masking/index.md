@@ -1,6 +1,52 @@
 ---
-title: Introduction
-description: Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+sidebar_position: 1
+title: Overview
+description: Learn how to apply masking policies
 ---
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+# Data Masking
+
+:::info
+Data Masking is an Enterprise feature. Please [contact us](https://www.conduktor.io/contact) to discuss getting access.
+:::
+
+## Overview
+
+The Conduktor Platform enables you to meet compliance regulations and obfuscate personal and sensitive data. As a Platform administrator, you must create policies to secure and govern such data within Conduktor.
+ 
+Policies will be actioned and applied when:
+* Consuming Kafka messages in the Console
+* Consuming Kafka messages in Conduktor Testing
+
+![data-masking.png](/img/data-masking/data-masking.png)
+
+## Important
+
+Note that data masking **does not impact how the underlying data is stored**. Currently, policies are applied globally at an organization level. Soon, support will be added for fine-grained policies that can be applied for specific groups of users.
+
+
+## Create a Policy 
+Navigate to Data Masking via the home screen or the primary navigation switcher.
+
+Select **Add Policy** and fill out the form with the policy details.
+
+* **Policy Name**: Unique name for identifying your policy
+* **Compliance**: The compliance regulation the policy adheres to (GDPR, PCI-DSS) 
+* **Information Kind**: The kind of information for obfuscation (e.g. PII, Financial) 
+* **Masking Rule**: How the obfuscation should be implemented (e.g. hide-all, hide-last-3)
+* **Risk Level**: Categorization for the risk level associated with the policy
+* **Fields**: List of fields that should be obfuscated with the masking rule
+
+![data-masking-2.png](/img/data-masking/data-masking-2.png)
+
+
+## Validate a Policy
+Once you have created a policy, you should validate it through the Conduktor Console. 
+
+* Navigate to a topic that contains data where your policy should be applied
+    * _Alternatively, use the 'Produce' tab to mock a message that matches your policy rules_
+* Check that the expected fields are obfuscated using the appropriate masking rule
+
+![data-masking-3.png](/img/data-masking/data-masking-3.png)
+
+

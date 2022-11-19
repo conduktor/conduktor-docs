@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Configuration properties and environment variables
+# Configuration Properties and Environment Variables
 
 Jump to:
 - [Docker Image Environment Variables](#docker-image-environment-variables)

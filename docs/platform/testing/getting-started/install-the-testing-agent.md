@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Install the Testing Agent
+title: Setup the Testing Agent
 description: The testing agent ensures you can reach clusters securely and with isolation. Set it up to enable testing.
 ---
 
@@ -8,18 +8,16 @@ description: The testing agent ensures you can reach clusters securely and with 
 
 The Testing Agent is a micro-application that runs on your desktop, private network or CI environment. It ensures you can reach clusters that your host has access to securely and with isolation.
 
-When you **Create** the Testing Agent in your Workspace, you will be provided the OS specific commands for **Running** the Agent.&#x20;
+ - If you started Conduktor via **Docker**, the installation is bundled with an **embedded agent**
+ - If you are using **Conduktor Cloud**, you must [setup](#agent-setup) the Testing Agent to get started
 
-You **must** setup the Testing Agent to execute [Test Scenarios](../features/building-tests/test-scenarios).
+## Agent Setup
 
 :::tip
-Testing Agent can be installed and used on GNU/Linux, macOS, FreeBSD, and Windows. You can install it:
-
+The Testing Agent can be installed and used on GNU/Linux, macOS, FreeBSD, and Windows. You can install it:
 - In a container
 - By downloading a binary manually
-  :::
-
-## Agent Setup&#x20;
+:::
 
 From within the Conduktor Testing UI, navigate to the **Agents** tab. Note you may need to create a [Workspace](../features/workspace) first.
 
@@ -30,7 +28,7 @@ Provide a **Name** to identify your agent, and confirm whether it will be person
 - **Personal Agent:** For running locally on your own machine or server.
 - **Organisation Agent**: For running inside a company server or network.
 - **CI Agent:** You will use this token for executing tests in CI/CD jobs. Note this is only relevant when you have already created meaningful tests, and want to automate their execution.
-  - \__[\_Learn more_](../features/ci-cd-automation) _about using the CI Agent_
+  - _[Learn more](../features/ci-cd-automation) about using the CI Agent_
 
 Select **Create** to generate the commands for **downloading** and **running** your Agent.&#x20;
 
@@ -42,11 +40,6 @@ Select the relevant **OS** for running your Agent. You will be provided commands
 - Linux
 - Windows
 - Docker
-
-:::info
-Using Docker introduces complexity when trying to reach clusters on localhost, or referencing certificates on your local file system.
-For these use cases, we recommend using a [binary distribution](install-the-testing-agent#binary-installation).
-:::
 
 ![](<../assets/image (10) (1).png>)
 

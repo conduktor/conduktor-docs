@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # System Requirements
@@ -39,11 +39,10 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
-  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:latest
 ```
 
-See more about [environment variables](../configuration/env-variables)
+See more about [environment variables](../configuration/env-variables), or starting the Platform in [Docker Quick Start](../installation/get-started/step2.md).
 
 # Disabling a Module
 
@@ -66,9 +65,9 @@ Example: Disable topic scanner
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   -e SCANNER_ENABLED="false" \
-  -e KAFKA_BOOTSTRAP_SERVER=0.0.0.0:9092 \
-  conduktor/conduktor-platform:1.2.0
+  conduktor/conduktor-platform:latest
 ```
 
+See more about starting the Platform in [Docker Quick Start](../installation/get-started/step2.md).
 
 

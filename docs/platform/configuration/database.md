@@ -1,8 +1,8 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-# Database configuration
+# Database Configuration
 For quickstart purpose platform run with an internal embedded database (default).   
 
 For production environmnents conduktor-platform support (since version [**1.1.2**](../README.md#112-20-10-2022)) external database configuration. 
