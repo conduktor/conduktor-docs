@@ -1,4 +1,12 @@
-# Introduction
+---
+sidebar_position: 1
+title: Overview
+description: Learn how to get started with Console
+---
+
+# Console
+
+## Overview
 
 The Conduktor Console is a powerful UI for Apache Kafka. The Console equips users with functionality to support many tasks pertaining to Kafka. The Console’s capabilities are divided into three main areas:
  - [Exploration](#exploration)
