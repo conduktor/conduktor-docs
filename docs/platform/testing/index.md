@@ -22,7 +22,7 @@ Conduktor Testing provides:
 
 ## Get Started
 
-To get started, we thoroughly recommend that you complete our [**Getting Started**](/platform/testing/getting-started/sign-up-to-conduktor-testing) guide. This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
+To get started, we thoroughly recommend that you complete our [**Getting Started**](/platform/testing/getting-started/install-the-testing-agent) guide. This will ensure your workspace is correctly configured and you can start executing tests!&#x20;
 
-- [Getting Started](/platform/testing/getting-started/sign-up-to-conduktor-testing)
+- [Getting Started](/platform/testing/getting-started/install-the-testing-agent)
 - [Features](/platform/testing/features/workspace)
