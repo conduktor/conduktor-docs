@@ -9,18 +9,13 @@ The Conduktor Platform enables you to view messages in Kafka Topics.
 By default, the most recent 20 messages of a topic are displayed.
 You can refine your search depending on the amount of records in your topic combining the filters at your disposal.
 
-All filters are persisted across sessions for each topic.
+Jump to:
+ - [Filtering](#filtering)
+ - [Deserialization](#deserialization)
 
 ## Filtering
 
-- [Max Records](#max-records)
-- [Show From](#show-from)
-- [Partitions](#partitions)
-- [JS Filters](#js-filters)
-- [Quick search](#quick-search)
-- [Deserialization](#deserialization)
-
-
+All filters are persisted across sessions for each topic.
 
 ### Max Records
 This filter restricts the number of record returned to the browser. You can increase that number up to a maximum of 1000.

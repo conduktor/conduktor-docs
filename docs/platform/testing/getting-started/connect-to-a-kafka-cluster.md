@@ -6,9 +6,13 @@ description: You must add a Kafka cluster to your workspace to build tests.
 
 # Connect to a Kafka Cluster
 
-You must add a Kafka cluster in your [Workspace](../features/workspace). This enables you to reference the cluster when building [Test Scenarios](../features/building-tests/test-scenarios).&#x20;
+You must add a Kafka cluster in your [Workspace](../features/workspace). This enables you to reference the cluster when building [Test Scenarios](../features/building-tests/test-scenarios).
 
-The ability to reach your cluster will depend on where you have installed the [Testing Agent](install-the-testing-agent).
+The ability to reach your cluster will depend on where you have setup the [Testing Agent](install-the-testing-agent).
+
+:::info
+If you started Conduktor via **Docker**, you should have already configured your Kafka Clusters and can skip this.
+:::
 
 ## Adding a cluster
 

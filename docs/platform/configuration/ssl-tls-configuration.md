@@ -1,15 +1,15 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # SSL/TLS configuration
 
-Depending on the environment, conduktor-platform might need to access external services like Kafka clusters, SSO servers, database, object-storage, ... that require custom certificate for SSL/TLS communication.
+Depending on the environment, conduktor-platform might need to access external services like Kafka clusters, SSO servers, database, object-storage etc. that require custom certificate for SSL/TLS communication.
 
 Since version 1.5.0 Conduktor-platform support SSL/TLS connections using Java Truststore. 
 
 
-### Create TrustStore (jks) from certificat in PEM format
+### Create TrustStore (jks) from certificate in PEM format
 If you already have a truststore, you can ignore this step. 
 
 For that ou need `keytool` program that is usually package on JDK distributions and a certificat in PEM format (`.pem` or `.crt`).
