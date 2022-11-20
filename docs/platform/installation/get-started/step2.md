@@ -7,16 +7,18 @@ sidebar_position: 2
 Get started with the latest Conduktor Platform Docker image in just a few minutes.
 
 Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your oganizations environment. The file is used to declare:
- - Cluster configurations
+ - Organization name
+ - Kafka clusters
+ - External database (optional)
  - User authentication (Basic or SSO)
 
 ## Create a Configuration File
 
 The below example shows how to configure Conduktor with a `SASL_SSL` Kafka cluster and Schema Registry. 
 
-**Update the bootstrap server, cluster configuration properties, organization name and user credentials.**
+Update the **bootstrap server**, **cluster configuration properties**, **organization name** and **user credentials**.
 
-For more examples, see [YAML snippets](#somewhere).
+For more examples, see [YAML snippets](../../configuration/configuration-snippets.md).
 
 ```yaml
 organization:
@@ -62,6 +64,7 @@ docker run --rm \
   -p "8080:8080" \
   -e LICENSE_KEY="<your-license>" \
   --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
+  --mount "source=conduktor_data,target=/var/conduktor" \
 conduktor/conduktor-platform:latest
 ```
 
@@ -72,6 +75,7 @@ docker run --rm `
   -p "8080:8080" `
   -e LICENSE_KEY="<your-license>" `
   --mount "type=bind,source=$pwd/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" `
+  --mount "source=conduktor_data,target=/var/conduktor" `
 conduktor/conduktor-platform:latest
 ```
 

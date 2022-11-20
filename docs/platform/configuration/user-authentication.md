@@ -1,11 +1,19 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # User Authentication
-To configure platform authentication you have several choices : 
+To configure platform authentication you have several choices.
 
-## 1. Configure local account 
+ - [Configure Local Users](#configure-local-users)
+ - [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
+    - [LDAP Server](#ldap-server)
+    - [Auth0](#auth0)
+    - [Okta](#okta)
+    - [Keycloak](#keycloak)
+    - [Azure](#azure)
+
+## Configure Local Ssers 
 Into platform configuration file or from environment variables, configure authorized connection users.
 
 Configuration example 
@@ -26,7 +34,7 @@ CDK_AUTH_LOCALUSERS_1_EMAIL="user@demo.dev"
 CDK_AUTH_LOCALUSERS_1_PASSWORD="userpwd"
 ```
 
-## 2. Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)
+## Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)
 
 Detail list of properties [here](./env-variables#sso-properties)
 
