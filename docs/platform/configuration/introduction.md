@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Introduction
+description: Conduktor can be configured using an input yaml file
 ---
 
 # Introduction
@@ -7,6 +9,7 @@ sidebar_position: 1
 ## Configuration File
 
 Conduktor can be configured using an input yaml file that provides configuration for:
+
 - organization name
 - external database
 - kafka clusters
@@ -15,7 +18,7 @@ Conduktor can be configured using an input yaml file that provides configuration
 
 For example: `platform-config.yaml`
 
-*Note that you may omit the database configuration if you wish to use an embedded postgres for testing purposes.*
+_Note that you may omit the database configuration if you wish to use an embedded postgres for testing purposes._
 
 ```yaml
 organization:
@@ -33,10 +36,10 @@ database:
 
 clusters:
   - id: local
-    name: "My Local Kafka Cluster"
-    color: "#0013E7"
+    name: 'My Local Kafka Cluster'
+    color: '#0013E7'
     ignoreUntrustedCertificate: false
-    bootstrapServers: "some-host:9092"
+    bootstrapServers: 'some-host:9092'
 
 auth:
   demo-users:
@@ -45,12 +48,12 @@ auth:
       groups:
         - ADMIN
 
-license: "<you license key>"
+license: '<you license key>'
 ```
 
 ## Binding the File
 
-Below shows how to bind a local file to override `/opt/conduktor/default-platform-config.yaml`. 
+Below shows how to bind a local file to override `/opt/conduktor/default-platform-config.yaml`.
 
 ```bash
  docker run --rm \

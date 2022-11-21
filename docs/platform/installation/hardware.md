@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: System Requirements
+description: Conduktor Platform is provided as a single Docker container.
 ---
 
 # System Requirements
@@ -7,25 +9,26 @@ sidebar_position: 2
 Conduktor Platform is provided as a single Docker container.
 
 Jump to:
- - [Hardware Requirements](#hardware-requirements)
- - [Disabling a Module](#disabling-a-module)
+
+- [Hardware Requirements](#hardware-requirements)
+- [Disabling a Module](#disabling-a-module)
 
 ## Hardware Requirements
 
 To configure Conduktor Platform for a particular hardware, you can use the environment variable `RUN_MODE`
 
-| ENV     | Available RAM    |      
-|---------|--------------------|
-| `nano`    | `8GB`  |
-| `small`   | `16GB` |
-| `medium`  | `32GB` |
-| `large`   | `64GB` |
+| ENV      | Available RAM |
+| -------- | ------------- |
+| `nano`   | `8GB`         |
+| `small`  | `16GB`        |
+| `medium` | `32GB`        |
+| `large`  | `64GB`        |
 
 **Minimum**
 
- - 4 CPU cores
- - 8 GB of RAM (`RUN_MODE`=nano)
- - 5 GB of disk space
+- 4 CPU cores
+- 8 GB of RAM (`RUN_MODE`=nano)
+- 5 GB of disk space
 
 **Recommended**
 
@@ -34,6 +37,7 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
 - 10+ GB of disk space
 
 **Example: Starting the platform in small run mode**
+
 ```bash
  docker run --rm \
   -p "8080:8080" \
@@ -49,6 +53,7 @@ See more about [environment variables](../configuration/env-variables), or start
 All module can be disabled by environment variable.
 
 Default values:
+
 ```bash
  CONSOLE_ENABLED="true"
  TESTING_ENABLED="true"
@@ -59,6 +64,7 @@ Default values:
 ```
 
 Example: Disable topic scanner
+
 ```bash
  docker run --rm \
   -p "8080:8080" \
@@ -69,5 +75,3 @@ Example: Disable topic scanner
 ```
 
 See more about starting the Platform in [Docker Quick Start](../installation/get-started/step2.md).
-
-

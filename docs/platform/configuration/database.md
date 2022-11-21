@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+title: Database Configuration
+description: For quickstart purpose platform run with an internal embedded database (default).
 ---
 
 # Database Configuration

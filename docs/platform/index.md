@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Conduktor | Enterprise Apache Kafka platform
+description: Conduktor Platform is the all-in-one friendly interface, testing, and monitoring tool to work with the Apache Kafka ecosystem
 ---
 
 # Overview
@@ -18,7 +20,6 @@ Conduktor will transform your approach and interactions with Apache Kafka. We gi
 - Sign up to [Conduktor Cloud](https://signup.conduktor.io/)
 
 Alternatively, access our demo environment **[here](https://www.conduktor.io/get-started#option-3)**.
-
 
 ### Platform Walkthrough
 

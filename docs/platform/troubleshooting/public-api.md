@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Public API
+description: Conduktor Platform Public API
 ---
 
 # Public API
@@ -7,28 +9,33 @@ sidebar_position: 2
 ## Healthcheck endpoints
 
 ### Liveness endpoint
- `/platform/api/modules/health/live`
 
-Return a status 200 when platform-api http server is up.  
+`/platform/api/modules/health/live`
+
+Return a status 200 when platform-api http server is up.
 
 Curl example :
+
 ```shell
 $ curl -s  http://localhost:8080/platform/api/modules/health/live | jq .
 #"Ok"
 ```
 
-Could be used to setup probes on kubernetes or docker-compose. 
+Could be used to setup probes on kubernetes or docker-compose.
 
 #### docker-compose probe setup
 
-
 ```yaml
 healthcheck:
-    test: ["CMD-SHELL", "curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/platform/api/modules/health/live"]
-    interval: 10s
-    start_period: 120s # Leave time for the psql init scripts to run
-    timeout: 5s
-    retries: 3
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/platform/api/modules/health/live',
+    ]
+  interval: 10s
+  start_period: 120s # Leave time for the psql init scripts to run
+  timeout: 5s
+  retries: 3
 ```
 
 #### Kubernetes liveness probe
@@ -39,25 +46,28 @@ Port configuration
 ports:
   - containerPort: 8080
     protocol: TCP
-    name: httpprobe 
+    name: httpprobe
 ```
+
 Probe configuration
 
 ```yaml
 livenessProbe:
-    httpGet:
-        path: /platform/api/modules/health/live
-        port: httpprobe
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 5
+  httpGet:
+    path: /platform/api/modules/health/live
+    port: httpprobe
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
 ```
 
 ### Readyness/startup endpoint
+
 `/platform/api/modules/health/ready`
 
 Return readiness of the platform and each module.
-Modules status  :
+Modules status :
+
 - `STARTING` (initial state)
 - `UP`
 - `DOWN`
@@ -67,6 +77,7 @@ This endpoint return 200 statusCode if all modules are in `UP` or `DISABLED` sta
 Otherwise, return 503 ("Service Unavailable") if at least one module is in `STARTING` or `DOWN` state.
 
 Curl example :
+
 ```shell
 $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 #{
@@ -85,11 +96,11 @@ $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 
 Port configuration
 
-```yaml
+````yaml
 ports:
   - containerPort: 8080
     protocol: TCP
-    name: httpprobe 
+    name: httpprobe
 
 ```yaml
 startupProbe:
@@ -100,16 +111,18 @@ startupProbe:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 30
-```
+````
 
 ## Platform Information
 
 ### Platform versions
+
 `/platform/api/modules/versions`
 
 This endpoint expose modules version used to build the platform along with platform current version.
 
 Curl example :
+
 ```shell
 curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 # {
