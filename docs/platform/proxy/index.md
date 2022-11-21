@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Overview
+description: Conduktor Proxy will improve and extend your Kafka environment. We give you the functionality that is currently lacking from your Apache Kafka deployment. Enjoy features such as multi-tenancy, chaos engineering, encryption.
 ---
 
 # Overview

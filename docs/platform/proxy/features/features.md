@@ -1,10 +1,15 @@
+---
+title: Conduktor Proxy Features
+description: Conduktor Proxy enables a set of features above and beyond what is available from the underlying Kafka cluster it operates on.
+---
+
 # Conduktor Proxy Features
 
 Conduktor Proxy enables a set of features above and beyond what is available from the underlying Kafka cluster it operates on.
 
 ## Multi Tenancy
 
-The multi tenancy feature of Conduktor Proxy allows a single underlying Kafka cluster to be represented as many, isolated smaller clusters to clients. These representations can duplicate topic/consumer group names etc. and remain isolated from eachother. 
+The multi tenancy feature of Conduktor Proxy allows a single underlying Kafka cluster to be represented as many, isolated smaller clusters to clients. These representations can duplicate topic/consumer group names etc. and remain isolated from eachother.
 
 To give an example, an organisation may host applications for point of sale and procurement. Both of these may require a topic named "orders" but may not be aware of the requirement of the other application. Multi Tenancy addresses this issue by allowing the two applications to go exist in an isolated manner on the backing cluster.
 
@@ -20,9 +25,9 @@ For more detail regarding this see the **[encryption demo](https://github.com/co
 
 ## Chaos Proxy
 
-Kafka is often prized for its resilience but the applications that operate on it often go untested and unprepared for issues that can affect Kafka clients. 
+Kafka is often prized for its resilience but the applications that operate on it often go untested and unprepared for issues that can affect Kafka clients.
 
-Chaos proxy addresses this by simulating common issues, such as latency and request failures to the clients that connect to Kafka through it. Scenarios in which these errors are created can be curated to provide complete coverage and ensure that, should the worst happen, your applications will endure. 
+Chaos proxy addresses this by simulating common issues, such as latency and request failures to the clients that connect to Kafka through it. Scenarios in which these errors are created can be curated to provide complete coverage and ensure that, should the worst happen, your applications will endure.
 
 ## Safeguard
 
