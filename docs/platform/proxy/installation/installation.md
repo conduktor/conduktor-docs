@@ -28,7 +28,7 @@ Jump to:
 
 ## Kafka Requirements
 
-Conduktor Proxy requires Apache Kafka version
+Conduktor Proxy requires Apache Kafka version 3.0 or higher.
 
 # Running the proxy
 
