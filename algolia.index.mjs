@@ -12,7 +12,7 @@ const client = algoliasearch(
 )
 
 ;(async () => {
-  const pages = await globby(['docs/'], {
+  const pages = await globby(['docs/platform'], {
     expandDirectories: {
       extensions: ['md', 'mdx'],
     },
@@ -27,8 +27,8 @@ const client = algoliasearch(
       .replace('docs', '')
       .replace('/index', '')
 
-    // if (!data.title) throw new Error(`Title is missing for ${slug}`)
-    // if (!data.description) throw new Error(`Description is missing for ${slug}`)
+    if (!data.title) throw new Error(`Title is missing for ${slug}`)
+    if (!data.description) throw new Error(`Description is missing for ${slug}`)
 
     return {
       title: data.title,
@@ -40,6 +40,7 @@ const client = algoliasearch(
 
   const index = client.initIndex(process.env.REACT_APP_ALGOLIA_INDEX)
   objects &&
+    index.clearObjects() &&
     index.saveObjects(objects, {
       autoGenerateObjectIDIfNotExist: true,
     }) &&
