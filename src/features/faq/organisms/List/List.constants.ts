@@ -2,15 +2,15 @@ export const items = [
   {
     question: 'Can I use Active Directory for SSO?',
     answer:
-      'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
+      'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
   },
   {
-    question: "How can we deploy Conduktor Platform?",
+    question: 'How can we deploy Conduktor Platform?',
     answer:
       'We have two distribution models; Either a docker container that you can deploy wherever you like, or a managed option (Conduktor Cloud), where we run the Platform for you and you connect it to your Kafka environment.<br/><br/>With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
   },
   {
-    question: "Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?",
+    question: 'Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
       "Right now it does not. It's on our roadmap to make RBAC trickle down to Kafka ACLs also.",
   },
@@ -21,13 +21,12 @@ export const items = [
   },
   {
     question: 'Do you have a Helm chart for deploying in my Kubernetes environment?',
-    answer:
-      'We are working on a helm chart and will make this available soon.'
+    answer: 'We are working on a helm chart and will make this available soon.',
   },
   {
-    question: "Is access to the internet required to run the Conduktor Platform?",
+    question: 'Is access to the internet required to run the Conduktor Platform?',
     answer:
-      "No, you can run an air gapped docker image in your environment without internet access.",
+      'No, you can run an air gapped docker image in your environment without internet access.',
   },
   {
     question: 'Can we externalize Postgres & other data storage?',
@@ -45,17 +44,18 @@ export const items = [
       'We currently have a public cloud formation available <a href="https://github.com/conduktor/quickstart-conduktor-aws-msk" target="_blank">here</a>.',
   },
   {
-    question: 'Do you have a managed (SaaS) option?  When will it have feature parity with the Docker installation?',
+    question:
+      'Do you have a managed (SaaS) option?  When will it have feature parity with the Docker installation?',
     answer:
       'We have fully managed SaaS as an option. You can sign up <a href="https://signup.conduktor.io/" target="_blank">here</a>.<br/><br/>Currently, Monitoring is unavailable in Conduktor Cloud. However, we expect to have parity beetween Docker and SaaS by January 2023.',
   },
   {
     question: 'What kind of compliance requirements does your SaaS product satisfy?',
-    answer:
-      'None for now. However, we are working on a SOC 2 Type 2 compliance.',
+    answer: 'None for now. However, we are working on a SOC 2 Type 2 compliance.',
   },
   {
-    question: 'What is different about Conduktor Testing from other options such as test containers and jUnit?',
+    question:
+      'What is different about Conduktor Testing from other options such as test containers and jUnit?',
     answer:
       'Conduktor testing is an end-to-end and integration testing environment. It is designed to be used by multiple teams to share knowledge and provide global visibility of test strategy throughout an organization.  In addition, Conduktor Testing provides data validation and data checks at each step of a distributed system. This ensures both data correctness and application resilience.',
   },
@@ -80,23 +80,24 @@ export const items = [
       'Sure! You can see our platform hands on with Stephane Mareek <a href="https://www.youtube.com/watch?v=SnLv2yL5sy0" target="_blank">here</a>, get a free demo and discussion with us <a href="https://www.conduktor.io/contact/demo" target="_blank">here</a>, or try it on our demo environment <a href="https://www.conduktor.io/get-started#option-3" target="_blank">here</a>.',
   },
   {
-    question: 'If I have licenses of Conduktor Desktop is it still account.conduktor.io where I manage these licenses, add/remove etc?',
+    question:
+      'If I have licenses of Conduktor Desktop is it still account.conduktor.io where I manage these licenses, add/remove etc?',
     answer:
-      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment, whether using Conduktor Cloud or our docker image on your environment. Please see a working example on our live demonstration <a href="https://demo.conduktor.io/admin/" target="_blank">here</a>'
+      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment, whether using Conduktor Cloud or our docker image on your environment. Please see a working example on our live demonstration <a href="https://demo.conduktor.io/admin/" target="_blank">here</a>',
   },
   {
     question: 'Does the Data Masking solution make any changes to my Kafka data?',
-    answer:
-      'No it does not. The data is masked on the Conduktor Platform only.'
+    answer: 'No it does not. The data is masked on the Conduktor Platform only.',
   },
   {
-    question: 'If I am currently using JMX exporter on a specific port, how do I utilize Conduktor Platforms Monitoring features? Do I have to use a specific port?',
+    question:
+      'If I am currently using JMX exporter on a specific port, how do I utilize Conduktor Platforms Monitoring features? Do I have to use a specific port?',
     answer:
-      'You can use the port you are currently using, just change the configuration called jmxScrapePort as shown <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Environment_Override.md#property-definitions" target="_blank">here</a>.'
+      'You can use the port you are currently using, just change the configuration called jmxScrapePort as shown <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Environment_Override.md#property-definitions" target="_blank">here</a>.',
   },
   {
-    question: 'What other integrations are planned for Monitoring and Alerting? For example, MS Teams, Email?',
-    answer:
-      'We plan to have webhooks available so you can integrate with other services.'
+    question:
+      'What other integrations are planned for Monitoring and Alerting? For example, MS Teams, Email?',
+    answer: 'We plan to have webhooks available so you can integrate with other services.',
   },
 ]
