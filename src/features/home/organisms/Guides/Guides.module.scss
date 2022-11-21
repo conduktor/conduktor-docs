@@ -5,6 +5,12 @@
   padding: 0 0 var(--space-space14) 0;
   margin-bottom: var(--space-space14);
   border-bottom: 1px solid var(--colors-mauve4);
+
+  @media only screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    margin-bottom: var(--space-space9);
+    padding: 0 0 var(--space-space9) 0;
+  }
 }
 
 .ListItem {
