@@ -7,6 +7,10 @@
   display: flex;
   gap: var(--space-space8);
   padding: 0;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .ListItem {

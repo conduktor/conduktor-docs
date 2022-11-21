@@ -4,10 +4,19 @@
   flex-wrap: wrap;
   gap: var(--space-space8);
   padding: 0;
+
+  @media only screen and (max-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .ListItem {
   width: 200px;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .ListItemLink {
@@ -24,9 +33,13 @@
       }
     }
 
-    strong: {
+    strong {
       color: var(--colors-purple9);
     }
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
   }
 }
 
@@ -52,6 +65,14 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media only screen and (max-width: 768px) {
+    display: block;
+
+    span {
+      width: fit-content;
+    }
+  }
 }
 
 .ListItemName {
