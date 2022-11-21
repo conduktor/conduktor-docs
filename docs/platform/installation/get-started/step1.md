@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+title: Online Demo
+description: Try Conduktor Platform immediately.
 ---
 
 # Online Demo

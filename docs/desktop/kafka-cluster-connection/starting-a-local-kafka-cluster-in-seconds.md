@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+title: Starting a local Kafka cluster in seconds
+description: Conduktor Desktop is a cross-platform (Linux, macOS and Windows) and works out of the box. You don't need to install anything but Conduktor.
 ---
 
 # Starting a local Kafka cluster in seconds

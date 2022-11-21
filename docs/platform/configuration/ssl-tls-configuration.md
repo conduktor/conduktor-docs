@@ -1,16 +1,18 @@
 ---
 sidebar_position: 6
+title: SSL/TLS configuration
+description: Depending on the environment, conduktor-platform might need to access external services like Kafka clusters, SSO servers, database, object-storage etc. that require custom certificate for SSL/TLS communication.
 ---
 
 # SSL/TLS configuration
 
 Depending on the environment, conduktor-platform might need to access external services like Kafka clusters, SSO servers, database, object-storage etc. that require custom certificate for SSL/TLS communication.
 
-Since version 1.5.0 Conduktor-platform support SSL/TLS connections using Java Truststore. 
-
+Since version 1.5.0 Conduktor-platform support SSL/TLS connections using Java Truststore.
 
 ### Create TrustStore (jks) from certificate in PEM format
-If you already have a truststore, you can ignore this step. 
+
+If you already have a truststore, you can ignore this step.
 
 For that ou need `keytool` program that is usually package on JDK distributions and a certificat in PEM format (`.pem` or `.crt`).
 
@@ -28,13 +30,14 @@ keytool  \
 
 ### Configure custom truststore on conduktor-plaform
 
-For that we need to mount the truststore file into the conduktor-platform container and pass the correct environment variables 
-for locating truststore file inside the container and password if needed. 
+For that we need to mount the truststore file into the conduktor-platform container and pass the correct environment variables
+for locating truststore file inside the container and password if needed.
 
 Assuming that truststore file is named `truststore.jks` with password `changeit`.  
 We mount truststore file into `/opt/conduktor/certs/truststore.jks` inside the container.
 
 If run from docker :
+
 ```bash
  docker run --rm \
    --mount "type=bind,source=$PWD/truststore.jks,target=/opt/conduktor/certs/truststore.jks" \
@@ -44,6 +47,7 @@ If run from docker :
 ```
 
 From docker-compose :
+
 ```yaml
 version: '3.8'
 
@@ -58,6 +62,6 @@ services:
         target: /opt/conduktor/certs/truststore.jks
         read_only: true
     environment:
-      CDK_SSL_TRUSTSTORE_PATH: "/opt/conduktor/certs/truststore.jks"
-      CDK_SSL_TRUSTSTORE_PASSWORD: "changeit"
+      CDK_SSL_TRUSTSTORE_PATH: '/opt/conduktor/certs/truststore.jks'
+      CDK_SSL_TRUSTSTORE_PASSWORD: 'changeit'
 ```
