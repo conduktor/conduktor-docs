@@ -15,13 +15,11 @@ const scaleOut = keyframes({
 export const StyledSwitcherContainer = styled('div', {
   position: 'absolute',
   top: 'var(--ifm-navbar-height)',
-  left: 0,
   backgroundColor: '#fff',
   border: '1px solid rgba(0, 0, 0, 0.07)',
   boxShadow: '$shadow6',
   borderRadius: '$radius5',
   padding: '$space6',
-  width: 730,
 
   variants: {
     fade: {
