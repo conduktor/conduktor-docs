@@ -1,18 +1,24 @@
+---
+title: System Requirements
+description: Conduktor Proxy is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
+---
+
 # System Requirements
 
-Conduktor Proxy is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer. 
+Conduktor Proxy is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
 
 Jump to:
- - [Hardware Requirements](#hardware-requirements)
- - [Disabling a Module](#disabling-a-module)
+
+- [Hardware Requirements](#hardware-requirements)
+- [Disabling a Module](#disabling-a-module)
 
 ## Hardware Requirements
 
 **Minimum**
 
- - 4 CPU cores
- - 8 GB of RAM
- - 5 GB of disk space
+- 4 CPU cores
+- 8 GB of RAM
+- 5 GB of disk space
 
 **Recommended**
 
@@ -22,11 +28,12 @@ Jump to:
 
 ## Kafka Requirements
 
-Conduktor Proxy requires Apache Kafka version  
+Conduktor Proxy requires Apache Kafka version
 
 # Running the proxy
 
 **Example: Starting Conduktor Proxy with a single node Kafka deployment **
+
 ```bash
  docker run \
   -e KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
