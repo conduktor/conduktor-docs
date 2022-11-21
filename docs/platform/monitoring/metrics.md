@@ -6,10 +6,11 @@ description: Monitoring Metrics
 
 # Metrics
 
-Below outlines the metrics surfaced within Conduktor Monitoring. 
+Below outlines the metrics surfaced within Conduktor Monitoring.
 
-You will have access to some metrics without any additional configuration, but should install the [agent](./getting-started/agent-setup.md) to use Monitoring at full capacity.
+You will have access to some metrics without any additional configuration, but should install the [agent](/platform/monitoring/getting-started/agent-setup) to use Monitoring at full capacity.
 
+<!-- prettier-ignore -->
 | Context | Metric | Definition |
 |-----|---------------|---------------|
 | Apps Monitoring | Consumer group status | Indication of healthy or critical status based on lag(s). <br />Critical if max lag/s exceeds 180 |
