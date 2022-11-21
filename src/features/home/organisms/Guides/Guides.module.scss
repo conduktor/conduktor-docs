@@ -20,7 +20,12 @@
   border: 1px solid var(--colors-mauve4);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   box-shadow: var(--shadows-shadow1);
+
+  &[data-disabled='true'] {
+    pointer-events: none;
+  }
 
   &:hover {
     strong: {
@@ -42,6 +47,11 @@
   transform: rotate(0deg);
   transition: transform 250ms ease-out, opacity 200ms ease-out;
   margin-top: 2px;
+}
+
+.ListItemTitleContainer {
+  display: flex;
+  align-items: center;
 }
 
 .ListItemTitle  {
