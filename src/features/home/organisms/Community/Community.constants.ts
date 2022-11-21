@@ -11,6 +11,6 @@ export const items = [
     description:
       'Join our awesome community of developers on Discord o help and show off what you built',
     icon: '/assets/svgs/community/discord.svg',
-    href: '/',
+    href: 'https://discord.gg/gzTrmjdXdA',
   },
 ]
