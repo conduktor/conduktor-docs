@@ -8,7 +8,7 @@ interface NavbarProps {}
 const Navbar: React.FunctionComponent<NavbarProps> = () => {
   return (
     <ul className={styles.StyledNavbar}>
-      <li className={styles.NavbarItem}>
+      <li className={`${styles.NavbarItem} ${styles.Switcher}`}>
         <Switcher />
       </li>
       <li className={styles.NavbarItem}>

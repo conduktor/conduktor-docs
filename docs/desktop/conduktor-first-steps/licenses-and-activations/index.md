@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Licenses & Activations
+description: You can find a list of all the licenses on the pricing page at Conduktor Pricing
 ---
 
 # Licenses & Activations

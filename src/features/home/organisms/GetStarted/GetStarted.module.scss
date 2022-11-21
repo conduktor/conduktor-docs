@@ -4,6 +4,10 @@
   margin-bottom: var(--negative-margin);
   padding: var(--space-space14) 0;
   background-size: 64px 64px, 64px 64px, 20px 20px, 20px 20px;
+
+  @media only screen and (max-width: 768px) {
+    padding: var(--space-space12) 0;
+  }
 }
 
 .Card {
@@ -14,6 +18,10 @@
   margin-bottom: calc(var(--negative-margin) * -1);
   border-radius: var(--radii-radius7);
   z-index: var(--zIndicies-zIndex1);
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .CardContent {
@@ -21,6 +29,10 @@
   flex-direction: column;
   justify-content: center;
   padding: var(--space-space12);
+
+  @media only screen and (max-width: 768px) {
+    padding: var(--space-space9);
+  }
 }
 
 .CardTitle {
@@ -29,6 +41,10 @@
   font-weight: var(--fontWeights-semi);
   margin-bottom: var(--space-space6);
   line-height: 45px;
+
+  @media only screen and (max-width: 768px) {
+    font-size: var(--fontSizes-fontSize9);
+  }
 }
 
 .CardParagraph {
@@ -36,6 +52,10 @@
   font-size: var(--fontSizes-fontSize4);
   margin-bottom: var(--space-space10);
   display: block;
+
+  @media only screen and (max-width: 768px) {
+    font-size: var(--fontSizes-fontSize3);
+  }
 }
 
 .PlatformVisualContainer {
@@ -47,6 +67,10 @@
 
   &:hover img {
     transform: translateY(-10px);
+  }
+
+  @media only screen and (max-width: 768px) {
+    display: none;
   }
 }
 

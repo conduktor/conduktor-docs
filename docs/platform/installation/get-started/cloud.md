@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+title: Conduktor Cloud
+description: Use our managed cloud service to get started with Conduktor in just a few minutes. The below guide will show you how to sign up and configure your first cluster.
 ---
 
 # Conduktor Cloud

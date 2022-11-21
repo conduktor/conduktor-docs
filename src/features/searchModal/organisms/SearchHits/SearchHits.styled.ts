@@ -22,6 +22,7 @@ export const Hit = styled('li', {
 
     '&:hover, &:focus': {
       backgroundColor: '$mauve4',
+      textDecoration: 'none !important',
     },
   },
 })

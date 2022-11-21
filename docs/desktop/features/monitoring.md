@@ -1,5 +1,6 @@
 ---
 sidebar_position: 11
+title: Monitoring
 description: It's an important aspect when using Kafka and its extensions (Kafka Streams,
   Kafka Connect, ksqlDB..) to know what's going on behind the scene!
 ---

@@ -1,7 +1,7 @@
 export const items = [
   {
     name: 'Demo',
-    href: 'https://demo.conduktor.io',
+    href: 'https://www.conduktor.io/get-started#option-3',
   },
   {
     name: 'Blog',

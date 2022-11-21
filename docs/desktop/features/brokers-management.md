@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+title: Brokers Management
+description: You can modify non read-only configurations dynamically in the Broker details view
 ---
 
 # Brokers Management

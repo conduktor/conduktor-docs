@@ -1,22 +1,103 @@
 export const items = [
   {
-    question: 'Can I evaluate Conduktor Platform for free?',
+    question: 'Can I use Active Directory for SSO?',
     answer:
-      'Yes. We offer multiple solutions to evaluate Conduktor Platform.<br/><br/>First, choose between Docker or web app.<br/><br/>Second, choose if you want to connect your Kafka cluster or use the one we provide as demonstration. You have full access to our documentation.<br/><br/>Finally, you decide: you can evaluate on your own or our Team can assist. Let us know.',
+      'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
   },
   {
-    question: "What's included in the customer success activities?",
+    question: 'How can we deploy Conduktor Platform?',
     answer:
-      'Included in the Conduktor Platform Enterprise subscription, our Customer Success team is here to support your team.<br/><br/>It starts with the onboarding meeting, making sure that installation and configuration are done correctly & that all the users can get access to the Platform.<br/><br/>We explain the best way to submit your support requests, get access to documentation, and to our eLearning content.<br/><br/>We can plan quarterly meetings to review your adoption, update your requirements, and share an overview of new solutions. The customer success team is also available for product overviews and deep dive sessions.',
+      'We have two distribution models; Either a docker container that you can deploy wherever you like, or a managed option (Conduktor Cloud), where we run the Platform for you and you connect it to your Kafka environment.<br/><br/>With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
   },
   {
-    question: "I'm a Conduktor Desktop customer. What are the options for me?",
+    question: 'Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
-      "Don't worry, Conduktor Desktop is still there and every customer can decide to renew their current subscriptions as we continue to support this product.<br/><br/>Also, we provide several ways to evaluate your options. You can convert to Conduktor Platform, get a free trial, arrange a demo, or try our demo environment.",
+      "Right now it does not. It's on our roadmap to make RBAC trickle down to Kafka ACLs also.",
   },
   {
-    question: 'I am a reseller buying on behalf of another company',
+    question: 'Can we use IAM + MSK?',
     answer:
-      'Resellers are able to buy our Enterprise subscription to Conduktor Platform. Due to the nature of our subscriptions, we need to identify the end user entity to be reflected as the end user while having the reseller as the billing entity.<br/><br/>As per our EULA, one subscription is restricted to one end user and cannot be shared or transferred during the term.',
+      'Yes!  Conduktor does not currently support modifying IAM policies but is fully compatible with IAM for MSK authentication.',
+  },
+  {
+    question: 'Do you have a Helm chart for deploying in my Kubernetes environment?',
+    answer: 'We are working on a helm chart and will make this available soon.',
+  },
+  {
+    question: 'Is access to the internet required to run the Conduktor Platform?',
+    answer:
+      'No, you can run an air gapped docker image in your environment without internet access.',
+  },
+  {
+    question: 'Can we externalize Postgres & other data storage?',
+    answer:
+      'Yes!  The instructions for doing this can be found <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Configuration.md#external-database-configuration" target="_blank">here</a>.',
+  },
+  {
+    question: 'What schema registries do you support?',
+    answer:
+      'Conduktor currently supports Confluent Schema Registry, as well as AWS Glue Schema registry.',
+  },
+  {
+    question: 'Do you have Terraform or CloudFormation?',
+    answer:
+      'We currently have a public cloud formation available <a href="https://github.com/conduktor/quickstart-conduktor-aws-msk" target="_blank">here</a>.',
+  },
+  {
+    question:
+      'Do you have a managed (SaaS) option?  When will it have feature parity with the Docker installation?',
+    answer:
+      'We have fully managed SaaS as an option. You can sign up <a href="https://signup.conduktor.io/" target="_blank">here</a>.<br/><br/>Currently, Monitoring is unavailable in Conduktor Cloud. However, we expect to have parity beetween Docker and SaaS by January 2023.',
+  },
+  {
+    question: 'What kind of compliance requirements does your SaaS product satisfy?',
+    answer: 'None for now. However, we are working on a SOC 2 Type 2 compliance.',
+  },
+  {
+    question:
+      'What is different about Conduktor Testing from other options such as test containers and jUnit?',
+    answer:
+      'Conduktor testing is an end-to-end and integration testing environment. It is designed to be used by multiple teams to share knowledge and provide global visibility of test strategy throughout an organization.  In addition, Conduktor Testing provides data validation and data checks at each step of a distributed system. This ensures both data correctness and application resilience.',
+  },
+  {
+    question: 'What is the suggested settings for running the docker image?',
+    answer:
+      'We suggest you add a docker volume. If you fail to add the second --mount option each time you restart the docker container your settings and metrics will be erased. See our Docker Quick Start guide for exact commands.',
+  },
+  {
+    question: 'I want to run this docker image in AWS Fargate/ECS/EKS, how can I do that?',
+    answer:
+      'We are working on a manifest as well as helm chart to enable this.  For now, deploying Conduktor platform as a single container works for most folks. <a href="https://docs.docker.com/get-started/kube-deploy/" target="_blank">https://docs.docker.com/get-started/kube-deploy/</a> has instructions.',
+  },
+  {
+    question: 'What are the suggested resources that should be dedicated to Conduktor Platform?',
+    answer:
+      'We are working on a Helm chart to enable this.  For now, deploying Conduktor platform as a single container works for most folks.  See <a href="https://docs.docker.com/get-started/kube-deploy/" target="_blank">https://docs.docker.com/get-started/kube-deploy/</a> for more instructions.',
+  },
+  {
+    question: 'Do you have an overview video of the Platform features?',
+    answer:
+      'Sure! You can see our platform hands on with Stephane Mareek <a href="https://www.youtube.com/watch?v=SnLv2yL5sy0" target="_blank">here</a>, get a free demo and discussion with us <a href="https://www.conduktor.io/contact/demo" target="_blank">here</a>, or try it on our demo environment <a href="https://www.conduktor.io/get-started#option-3" target="_blank">here</a>.',
+  },
+  {
+    question:
+      'If I have licenses of Conduktor Desktop is it still account.conduktor.io where I manage these licenses, add/remove etc?',
+    answer:
+      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment, whether using Conduktor Cloud or our docker image on your environment. Please see a working example on our live demonstration <a href="https://demo.conduktor.io/admin/" target="_blank">here</a>',
+  },
+  {
+    question: 'Does the Data Masking solution make any changes to my Kafka data?',
+    answer: 'No it does not. The data is masked on the Conduktor Platform only.',
+  },
+  {
+    question:
+      'If I am currently using JMX exporter on a specific port, how do I utilize Conduktor Platforms Monitoring features? Do I have to use a specific port?',
+    answer:
+      'You can use the port you are currently using, just change the configuration called jmxScrapePort as shown <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Environment_Override.md#property-definitions" target="_blank">here</a>.',
+  },
+  {
+    question:
+      'What other integrations are planned for Monitoring and Alerting? For example, MS Teams, Email?',
+    answer: 'We plan to have webhooks available so you can integrate with other services.',
   },
 ]

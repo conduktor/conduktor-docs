@@ -1,5 +1,6 @@
 ---
 sidebar_position: 5
+title: Consumer Groups Management
 description: Consumer Groups are one of the most powerful concept in Apache Kafka. It is
   used to track the position of each consumer. In case it goes offline, it can
   resume from its last position.

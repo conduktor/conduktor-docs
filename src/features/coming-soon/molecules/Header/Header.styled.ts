@@ -6,9 +6,9 @@ export const StyledHeader = styled('div', {
 })
 
 export const Icon = styled('img', {
+  marginRight: '$space9',
   height: 96,
   width: 96,
-  marginRight: '$space9',
 })
 
 export const Title = styled('h1', {

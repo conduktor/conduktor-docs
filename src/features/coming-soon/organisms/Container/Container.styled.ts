@@ -1,5 +1,14 @@
 import { styled } from '@site/src/styles'
 
 export const StyledContainer = styled('div', {
-  maxWidth: '75%',
+  variants: {
+    breakpoint: {
+      initial: {
+        maxWidth: '75%',
+      },
+      bp3: {
+        maxWidth: '100%',
+      },
+    },
+  },
 })

@@ -6,7 +6,11 @@ interface ContainerProps {
 }
 
 const Container: React.FunctionComponent<ContainerProps> = ({ children }) => {
-  return <StyledContainer>{children}</StyledContainer>
+  return (
+    <StyledContainer breakpoint={{ '@initial': 'initial', '@bp3': 'bp3' }}>
+      {children}
+    </StyledContainer>
+  )
 }
 
 export default Container
