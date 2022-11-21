@@ -28,6 +28,13 @@ export const items = [
     comingSoon: false,
   },
   {
+    name: 'Proxy',
+    description: "Unlock Kafka's potential",
+    to: '/platform/proxy',
+    icon: '/assets/svgs/products/proxy.svg',
+    comingSoon: false,
+  },
+  {
     name: 'Topic Analyzer',
     description: 'Auto Kafka recommendations',
     to: '/platform/topic-analyzer',
