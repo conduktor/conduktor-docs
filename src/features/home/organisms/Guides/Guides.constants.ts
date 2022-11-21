@@ -2,21 +2,25 @@ export const items = [
   {
     title: 'Docker',
     icon: '/assets/svgs/guides/docker.svg',
-    href: '/',
+    to: '/platform/installation/get-started/docker',
+    comingSoon: false,
+  },
+  {
+    title: 'Conduktor Cloud',
+    icon: '/assets/svgs/guides/cloud.svg',
+    to: '/platform/installation/get-started/cloud',
+    comingSoon: false,
   },
   {
     title: 'AWS',
     icon: '/assets/svgs/guides/aws.svg',
-    href: '/',
-  },
-  {
-    title: 'GCP',
-    icon: '/assets/svgs/guides/gcp.png',
-    href: '/',
+    to: '/platform/installation/get-started/cloudformation',
+    comingSoon: false,
   },
   {
     title: 'Kubernetes',
     icon: '/assets/svgs/guides/kubernetes.svg',
-    href: '/',
+    to: '/',
+    comingSoon: true,
   },
 ]
