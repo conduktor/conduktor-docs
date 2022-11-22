@@ -332,7 +332,6 @@ footer .footer__bottom {
 main .markdown h1 {
   position: sticky;
   top: 25px;
-  transition: font-size 200ms ease-in-out;
 }
 
 @media only screen and (max-width: 768px) {
@@ -350,7 +349,14 @@ main .markdown h1[data-sticky="true"] {
   z-index: 200;
   font-size: var(--fontSizes-fontSize4);
   margin-bottom: 0;
-  width: fit-content;
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main .markdown h1[data-transition="true"] {
+  transition: font-size 200ms ease-in-out;
 }
 
 table {
