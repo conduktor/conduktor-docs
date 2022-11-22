@@ -21,37 +21,31 @@ The below example shows how to configure Conduktor with a `SASL_SSL` Kafka clust
 
 Update the **bootstrap server**, **cluster configuration properties**, **organization name** and **user credentials**.
 
-For more examples, see [YAML snippets](../../configuration/configuration-snippets.md).
+For more examples, see [Configuration Snippets](../../configuration/configuration-snippets.md).
 
 ```yaml
 organization:
   name: default
 
 clusters:
-  - id: cluster-id
+  - id: my-kafka-cluster
     name: My Kafka Cluster
-    color: '#E70000'
-    ignoreUntrustedCertificate: false
-    bootstrapServers: 'your-bootstrap-server:9092'
+    bootstrapServers: "my-bootstrap-server:9092"
     properties: |
       security.protocol=SASL_SSL
       sasl.mechanism=PLAIN
-      sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule   required username='username'   password='password';
+      sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='username' password='password';
     schemaRegistry:
-      id: confluent-sr
-      url: 'http://your-schema-registry:8081'
-      ignoreUntrustedCertificate: false
+      id: my-schema-registry
+      url: "http://my-schema-registry:8081"
       security:
-        username: 'username'
-        password: 'password'
-    labels: {}
+        username: "username"
+        password: "password"
 
 auth:
   demo-users:
     - email: admin@conduktor.io
       password: admin
-      groups:
-        - ADMIN
 ```
 
 ## Launch Conduktor

@@ -16,25 +16,35 @@ You should setup the Agent to use Monitoring at full capacity. Running prometheu
 
 Create a new directory for jmx-exporter
 
-```mkdir /opt/jmx-exporter```
+```bash
+mkdir /opt/jmx-exporter
+```
 
 Download the jar into your newly generated directory
 
-```curl https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.17.2/jmx_prometheus_javaagent-0.17.2.jar -o/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar```
+```bash
+curl https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.17.2/jmx_prometheus_javaagent-0.17.2.jar -o/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar
+```
 
 Download the associated monitoring configuration file
 
-```curl http://demo.conduktor.io/monitoring/kafka-broker.yml -o /opt/jmx-exporter/kafka-broker.yml```
+```bash
+curl http://demo.conduktor.io/monitoring/kafka-broker.yml -o /opt/jmx-exporter/kafka-broker.yml
+```
 
 ### Start your Kafka service
 
 Your kafka server must start with the following javaagent:
 
-```-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml```
+```bash
+-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml
+```
 
 For instance, you can set the environment variable:
 
-```KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml```
+```bash
+KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml
+```
 
 ***
 
@@ -42,7 +52,9 @@ For instance, you can set the environment variable:
 
 Install Prometheus node exporter on your server (apt based systems).
 
-```apt install prometheus-node-exporter```
+```bash
+apt install prometheus-node-exporter
+```
 
 Note on other systems you can install it manually (<a href="https://prometheus.io/docs/guides/node-exporter/#installing-and-running-the-node-exporter">docs</a>).
 

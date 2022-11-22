@@ -30,21 +30,17 @@ organization:
   name: conduktor
 
 clusters:
-  - id: local
+  - id: my-local-kafka-cluster
     name: My Local Kafka Cluster
     color: '#0013E7'
-    ignoreUntrustedCertificate: false
-    bootstrapServers: 'localhost:9092'
+    bootstrapServers: 'my-bootstrap-server:9092'
     schemaRegistry:
-      id: Local SR
-      url: 'http://localhost:8081'
-      ignoreUntrustedCertificate: false
-    labels: {}
+      id: my-schema-registry
+      url: 'http://my-schema-registry:8081'
 
   - id: confluent-pkc
     name: Confluent pkc-lq8v7
     color: '#E70000'
-    ignoreUntrustedCertificate: false
     bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
     properties: |
       security.protocol=SASL_SSL
@@ -53,7 +49,6 @@ clusters:
     schemaRegistry:
       id: confluent-sr
       url: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
-      ignoreUntrustedCertificate: false
       security:
         username: <username>
         password: <password>
@@ -94,13 +89,10 @@ clusters:
   - id: local
     name: My Local Kafka Cluster
     color: '#0013E7'
-    ignoreUntrustedCertificate: false
     bootstrapServers: 'localhost:9092'
     schemaRegistry:
       id: Local SR
       url: 'http://localhost:8081'
-      ignoreUntrustedCertificate: false
-    labels: {}
 ```
 
 ## Amazon MSK with IAM Authentication Example
@@ -159,7 +151,6 @@ clusters:
   - id: confluent-pkc
     name: Confluent pkc-lzoyy
     color: '#E70000'
-    ignoreUntrustedCertificate: false
     bootstrapServers: 'pkc-lzoyy.eu-central-1.aws.confluent.cloud:9092'
     properties: |
       security.protocol=SASL_SSL
@@ -175,7 +166,6 @@ Connect to a confluent cloud cluster with schema registry using basic auth
 - id: confluent-pkc
   name: Confluent pkc-lq8v7
   color: '#E70000'
-  ignoreUntrustedCertificate: false
   bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
   properties: |
     security.protocol=SASL_SSL
@@ -184,7 +174,6 @@ Connect to a confluent cloud cluster with schema registry using basic auth
   schemaRegistry:
     id: confluent-sr
     url: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
-    ignoreUntrustedCertificate: false
     security:
       username: <username>
       password: <password>
