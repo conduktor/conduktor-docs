@@ -6,6 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const { gtag } = require('./src/services/gtag')
 const { analytics } = require('./src/services/analytics')
 const { gtm } = require('./src/services/gtm')
+const { redirects } = require('./src/services/redirects')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -13,8 +14,9 @@ const config = {
   tagline: 'Dinosaurs are cool',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
+  trailingSlash: false,
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
@@ -170,6 +172,7 @@ const config = {
         onlyIncludeVersions: ['current'],
       },
     ],
+    redirects,
     gtag,
     analytics,
     gtm,
