@@ -7,7 +7,7 @@ description: Conduktor Platform is the all-in-one friendly interface, testing, a
 # Overview
 
 :::info
-If anything in the docs is not clear or you need further help, please [contact us](https://www.conduktor.io/contact).
+If anything in the documentation is not clear or you need further help, please [contact us](https://www.conduktor.io/contact).
 :::
 
 ## What is Conduktor Platform?
@@ -29,7 +29,7 @@ Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on over
 
 ## Resources
 
-- [Changelog](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md)
+- [Changelog](https://conduktor.io/changelog)
 - [Roadmap](https://product.conduktor.help)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)

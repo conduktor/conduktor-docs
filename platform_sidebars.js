@@ -35,6 +35,11 @@ const sidebars = {
       ],
     },
     {
+      type: 'link',
+      label: 'FAQs',
+      href: '/faq',
+    },
+    {
       type: 'html',
       value: '<hr />',
       defaultStyle: true,
