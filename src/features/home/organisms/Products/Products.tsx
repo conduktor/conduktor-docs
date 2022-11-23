@@ -30,7 +30,7 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
                   <div className={styles.ListItemNameWrapper}>
                     <strong className={styles.ListItemName}>{item.name}</strong>
                     {item.comingSoon ? <Badge>soon</Badge> : <span></span>}
-                    {item.legacy ? <Badge>legacy</Badge> : <span></span>}
+                    {item.legacy ? <Badge type="legacy">legacy</Badge> : <span></span>}
                   </div>
                   <p className={styles.ListItemDescription}>{item.description}</p>
                 </div>
