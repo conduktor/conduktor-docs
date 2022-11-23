@@ -4,35 +4,30 @@ export const items = [
     description: 'Explore and manage Kafka',
     to: '/platform/console',
     icon: '/assets/svgs/products/console.svg',
-    comingSoon: false,
   },
   {
     name: 'Testing',
     description: 'Automated Kafka testing',
     to: '/platform/testing',
     icon: '/assets/svgs/products/testing.svg',
-    comingSoon: false,
   },
   {
     name: 'Monitoring',
     description: 'Tailored Kafka monitoring',
     to: '/platform/monitoring',
     icon: '/assets/svgs/products/monitoring.svg',
-    comingSoon: false,
   },
   {
     name: 'Data Masking',
     description: 'Hide sensitive data',
     to: '/platform/data-masking',
     icon: '/assets/svgs/products/dataMasking.svg',
-    comingSoon: false,
   },
   {
     name: 'Proxy',
     description: "Unlock Kafka's potential",
     to: '/platform/proxy',
     icon: '/assets/svgs/products/proxy.svg',
-    comingSoon: false,
   },
   {
     name: 'Topic Analyzer',
@@ -50,9 +45,9 @@ export const items = [
   },
   {
     name: 'Desktop',
-    description: 'More than an interface to Kafka',
+    description: 'More than an interface',
     to: '/desktop',
     icon: '/assets/svgs/products/desktop.svg',
-    comingSoon: false,
+    legacy: true,
   },
 ]

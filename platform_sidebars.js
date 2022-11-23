@@ -36,8 +36,8 @@ const sidebars = {
     },
     {
       type: 'link',
-      label: 'FAQs',
-      href: '/faq'
+      label: 'FAQ',
+      href: '/faq',
     },
     {
       type: 'html',
