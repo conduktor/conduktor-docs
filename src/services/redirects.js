@@ -52,7 +52,7 @@ const redirects = [
       },
       {
         from: '/kafka-cluster-connection/import-export-configurations',
-        to: '/desktop/kafka-cluster-connection/import-export-configurations',
+        to: '/desktop/kafka-cluster-connection/import-export',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka',
@@ -64,39 +64,39 @@ const redirects = [
       },
       {
         from: '/misc/configuring-conduktor',
-        to: '/desktop/misc/configuring-conduktor',
+        to: '/desktop/miscellaneous/configuring-conduktor',
       },
       {
         from: '/misc/data-security',
-        to: '/desktop/misc/data-security',
+        to: '/desktop/miscellaneous/data-security',
       },
       {
         from: '/misc/faq',
-        to: '/desktop/misc/faq',
+        to: '/desktop/miscellaneous/faq',
       },
       {
         from: '/misc/internet-troubleshooting',
-        to: '/desktop/misc/internet-troubleshooting',
+        to: '/desktop/miscellaneous/internet-troubleshooting',
       },
       {
         from: '/portal/account-management',
-        to: '/desktop/portal/account-management',
+        to: '/desktop/account-management',
       },
       {
         from: '/sign-in-section/install',
-        to: '/desktop/sign-in-section/install',
+        to: '/desktop/conduktor-first-steps/install',
       },
       {
         from: '/sign-in-section/licenses-and-activations',
-        to: '/desktop/sign-in-section/licenses-and-activations',
+        to: '/desktop/conduktor-first-steps/licenses-and-activations',
       },
       {
         from: '/sign-in-section/login-troubleshooting',
-        to: '/desktop/sign-in-section/login-troubleshooting',
+        to: '/desktop/conduktor-first-steps/login-troubleshooting',
       },
       {
         from: '/sign-in-section/sign-in',
-        to: '/desktop/sign-in-section/sign-in',
+        to: '/desktop/conduktor-first-steps/sign-in',
       },
       {
         from: '/features/consuming-data/advanced-consumer',
@@ -176,7 +176,7 @@ const redirects = [
       },
       {
         from: '/kafka-cluster-connection/import-export-configurations/github-enterprise',
-        to: '/desktop/kafka-cluster-connection/import-export-configurations/github-enterprise',
+        to: '/desktop/kafka-cluster-connection/import-export/github-enterprise',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions',
