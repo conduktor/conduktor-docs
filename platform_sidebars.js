@@ -37,7 +37,7 @@ const sidebars = {
     {
       type: 'link',
       label: 'FAQs',
-      href: '/faq',
+      href: '/faq'
     },
     {
       type: 'html',
