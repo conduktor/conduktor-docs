@@ -3,7 +3,6 @@ import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Badge from '../../atoms/Badge'
 import Heading from '../../atoms/Heading'
-import Desktop from '../../molecules/Desktop'
 import { items } from './Guides.constants'
 import styles from './Guides.module.scss'
 
@@ -36,7 +35,6 @@ const Guides: React.FunctionComponent<GuidesProps> = () => {
             </li>
           ))}
         </ul>
-        <Desktop />
       </Container>
     </section>
   )

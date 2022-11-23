@@ -1,4 +1,5 @@
 import Link from '@docusaurus/Link'
+import Button from '@site/src/components/atoms/Button'
 import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Badge from '../../atoms/Badge'
@@ -12,26 +13,30 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
   return (
     <section>
       <Container>
-        <Heading>Browse by product</Heading>
+        <div className={styles.HeadingContainer}>
+          <Heading>Browse by product</Heading>
+          <Button to="/platform" type="secondary">
+            Explore overview
+          </Button>
+        </div>
         <ul className={styles.List}>
-          {items
-            .filter(item => item.to !== '/desktop')
-            .map((item, itemIndex) => (
-              <li key={itemIndex} className={styles.ListItem}>
-                <Link to={item.to} className={styles.ListItemLink}>
-                  <div className={styles.ListVisual}>
-                    <img className={styles.ListVisualImage} src={item.icon} alt={item.name} />
-                  </div>
-                  <div className={styles.ListItemNameContainer}>
-                    <div>
-                      <strong className={styles.ListItemName}>{item.name}</strong>
-                      <p className={styles.ListItemDescription}>{item.description}</p>
-                    </div>
+          {items.map((item, itemIndex) => (
+            <li key={itemIndex} className={styles.ListItem}>
+              <Link to={item.to} className={styles.ListItemLink}>
+                <div className={styles.ListVisual}>
+                  <img className={styles.ListVisualImage} src={item.icon} alt={item.name} />
+                </div>
+                <div className={styles.ListItemNameContainer}>
+                  <div className={styles.ListItemNameWrapper}>
+                    <strong className={styles.ListItemName}>{item.name}</strong>
                     {item.comingSoon ? <Badge>soon</Badge> : <span></span>}
+                    {item.legacy ? <Badge>legacy</Badge> : <span></span>}
                   </div>
-                </Link>
-              </li>
-            ))}
+                  <p className={styles.ListItemDescription}>{item.description}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
         </ul>
       </Container>
     </section>

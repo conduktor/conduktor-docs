@@ -45,21 +45,6 @@
   }
 }
 
-.Link {
-  color: var(--colors-mauve11);
-  font-size: var(--fontSizes-fontSize3);
-  font-weight: var(--fontWeights-medium);
-  display: block;
-  margin-bottom: var(--space-space9);
-  text-align: center;
-  transition: color 200ms ease;
-
-  &:hover {
-    color: var(--colors-purple9);
-    text-decoration: none !important;
-  }
-}
-
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}

@@ -62,17 +62,20 @@
 }
 
 .ListItemNameContainer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: block;
 
   @media only screen and (max-width: 768px) {
-    display: block;
 
     span {
       width: fit-content;
     }
   }
+}
+
+.ListItemNameWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .ListItemName {
@@ -88,4 +91,16 @@
 .ListItemDescription {
   color: var(--colors-mauve11);
   letter-spacing: -0.15px;
+  font-size: 15px;
+}
+
+.HeadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-space9);
+
+  h2 {
+    margin-bottom: 0;
+  }
 }

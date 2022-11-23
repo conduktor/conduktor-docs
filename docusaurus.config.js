@@ -14,7 +14,6 @@ const config = {
   tagline: 'Dinosaurs are cool',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
-  trailingSlash: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
@@ -154,9 +153,9 @@ const config = {
     [
       'docusaurus-plugin-dotenv',
       {
-          path: "./.env", 
-          systemvars: true, 
-      }
+        path: './.env',
+        systemvars: true,
+      },
     ],
     'docusaurus-plugin-sass',
     [

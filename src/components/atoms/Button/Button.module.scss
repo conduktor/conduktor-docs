@@ -1,7 +1,5 @@
 .Button {
   cursor: pointer;
-  background-color: var(--colors-purple9);
-  color: #fff;
   border-radius: var(--radii-radius2);
   font-weight: var(--fontWeights-bold);
   letter-spacing: -0.15px;
@@ -14,8 +12,20 @@
   text-decoration: none !important;
   transition: background-color 200ms ease-in-out;
 
-  &:hover {
+  &[data-type="primary"] {
+    background-color: var(--colors-purple9);
     color: #fff;
-    background-color: var(--colors-purple10);
+    &:hover {
+      background-color: var(--colors-purple10);
+    }
+  }
+
+  &[data-type="secondary"] {
+    background-color: transparent;
+    border: 1px solid var(--colors-mauve6);
+    color: var(--colors-mauve12);
+    &:hover {
+      background-color: var(--colors-mauve6);
+    }
   }
 }

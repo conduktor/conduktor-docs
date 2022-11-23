@@ -6,7 +6,7 @@ interface HeadingProps {
 }
 
 const Heading: React.FunctionComponent<HeadingProps> = ({ children }) => {
-  return <h1 className={styles.StyledHeading}>{children}</h1>
+  return <h2 className={styles.StyledHeading}>{children}</h2>
 }
 
 export default Heading
