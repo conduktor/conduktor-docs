@@ -265,6 +265,10 @@ main img {
 
 main img {
   width: 100%;
+  box-shadow: var(--shadows-shadow1);
+  border-radius: var(--radii-radius4);
+  border: 1px solid var(--colors-mauve3);
+  padding: var(--space-space6);
 }
 
 .breadcrumbs__link {
