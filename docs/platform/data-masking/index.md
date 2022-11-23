@@ -34,6 +34,7 @@ Select **Add Policy** and fill out the form with the policy details.
 * **Compliance**: The compliance regulation the policy adheres to (GDPR, PCI-DSS) 
 * **Information Kind**: The kind of information for obfuscation (e.g. PII, Financial) 
 * **Masking Rule**: How the obfuscation should be implemented (e.g. hide-all, hide-last-3)
+    * _Note that number fields will be masked with 0 to preserve the type_
 * **Risk Level**: Categorization for the risk level associated with the policy
 * **Fields**: List of fields that should be obfuscated with the masking rule
 
