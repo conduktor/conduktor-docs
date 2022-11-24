@@ -8,7 +8,7 @@ description: Monitoring Metrics available in Conduktor Monitoring
 
 Below details the metrics that are surfaced within Conduktor Monitoring.
 
-You will have access to some metrics without any additional configuration, but you should install the [agent](/platform/monitoring/getting-started/agent-setup) to use Monitoring at full capacity.
+You will have access to some metrics without any additional configuration, but you should install the [agent](/platform/monitoring/agent-setup) to use Monitoring at full capacity.
 
 <!-- prettier-ignore -->
 | Context | Metric | Definition |
