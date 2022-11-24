@@ -31,12 +31,13 @@ If you have any issues with this process, please contact us through the chat box
 Once you have configured Slack, click the **+ New Alert** button from within the **Alerts** tab.
 
 Fill in the:
- - **Name**: Unique name to identify your alert
- - **Graph**: The metric you wish to create an alert on
- - **Broker / Topic / Consumer Group**: Further options to filter your alert granularity
- - **Operator**: The operator used to define your alert condition (for example, greater than or less than)
- - **Value**: The value to use as threshold for the alert
- - **Comments**: Any additional comments to share with your colleagues
+
+- **Name**: Unique name to identify your alert
+- **Graph**: The metric you wish to create an alert on
+- **Broker / Topic / Consumer Group**: Further options to filter your alert granularity
+- **Operator**: The operator used to define your alert condition (for example, greater than or less than)
+- **Value**: The value to use as threshold for the alert
+- **Comments**: Any additional comments to share with your colleagues
 
 ![monitoring-alert-1](/img/monitoring/monitoring-alert-1.png)
 
