@@ -259,11 +259,11 @@ main a {
 }
 
 main iframe,
-main img {
+main p img {
   border-radius: var(--radii-radius3);
 }
 
-main img {
+main p img {
   width: 100%;
   box-shadow: var(--shadows-shadow1);
   border-radius: var(--radii-radius4);
