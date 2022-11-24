@@ -1,6 +1,6 @@
 ---
-sidebar_position: 3
-title: Create Alert
+sidebar_position: 2
+title: Create an Alert
 description: Learn how to create an alert in Monitoring
 ---
 
@@ -20,7 +20,7 @@ If you require an additional integration, please [let us know](https://product.c
 
 From within Monitoring, navigagte to the **Alerts** tab. If you have not yet configured the Slack integration, then follow the link to set this up as a pre-requisite.
 
-If you have any issues with this process, please [contact us](https://conduktor.io/contact)
+If you have any issues with this process, please contact us through the chat box at the bottom of your window.
 
 ![monitoring-configure](/img/monitoring/monitoring-configure.png)
 
@@ -31,13 +31,12 @@ If you have any issues with this process, please [contact us](https://conduktor.
 Once you have configured Slack, click the **+ New Alert** button from within the **Alerts** tab.
 
 Fill in the:
-
-- **Name**: Unique name to identify your alert
-- **Graph**: The metric you wish to create an alert on
-- **Broker / Topic / Consumer Group**: Further options to filter your alert granularity
-- **Operator**: The operator used to define your alert condition (for example, greater than or less than)
-- **Value**: The value to use as threshold for the alert
-- **Comments**: Any additional comments to share with your colleagues
+ - **Name**: Unique name to identify your alert
+ - **Graph**: The metric you wish to create an alert on
+ - **Broker / Topic / Consumer Group**: Further options to filter your alert granularity
+ - **Operator**: The operator used to define your alert condition (for example, greater than or less than)
+ - **Value**: The value to use as threshold for the alert
+ - **Comments**: Any additional comments to share with your colleagues
 
 ![monitoring-alert-1](/img/monitoring/monitoring-alert-1.png)
 
@@ -45,6 +44,6 @@ Fill in the:
 
 Alternatively, you can create an alert more dynamically when viewing a graph.
 
-Next to each graph, you have a **+** button that can be used to create the alert.
+Next to each graph, you have a **+** button that can be used to create the alert. Once you have clicked, follow the steps from Option 1 to fill out the form.
 
 ![monitoring-alert-1](/img/monitoring/monitoring-alert-2.png)

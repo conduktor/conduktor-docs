@@ -6,7 +6,7 @@ description: Learn how to get started with Monitoring
 
 # Agent Setup
 
-You should setup the Agent to use Monitoring at full capacity. Running prometheus node exporter and JMX exporter will ensure you maximize the metrics you have access to within Conduktor.
+You should setup the Agent to use Monitoring at full capacity. Running Prometheus node exporter and JMX exporter will ensure you maximize the metrics you have access to within Conduktor. As there can be a wide range of unique configurations and edge cases when seting up an agent, these instructions should only be considered guidelines. Should you encounter any issues with setup, please contact us directly using the chat widget on this page.
 
 ## Setup JMX Exporter
 
@@ -18,13 +18,13 @@ Create a new directory for jmx-exporter
 mkdir /opt/jmx-exporter
 ```
 
-Download the jar into your newly generated directory
+Download the jar into your newly generated directory:
 
 ```bash
 curl https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.17.2/jmx_prometheus_javaagent-0.17.2.jar -o/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar
 ```
 
-Download the associated monitoring configuration file
+Download the associated monitoring configuration file:
 
 ```bash
 curl http://demo.conduktor.io/monitoring/kafka-broker.yml -o /opt/jmx-exporter/kafka-broker.yml
@@ -32,7 +32,7 @@ curl http://demo.conduktor.io/monitoring/kafka-broker.yml -o /opt/jmx-exporter/k
 
 ### Start your Kafka service
 
-Your kafka server must start with the following javaagent:
+Your Kafka server must start with the following javaagent:
 
 ```bash
 -javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml
@@ -48,7 +48,7 @@ KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101
 
 ## Setup Node Exporter
 
-Install Prometheus node exporter on your server (apt based systems).
+Install Prometheus node exporter on your server (apt based systems):
 
 ```bash
 apt install prometheus-node-exporter

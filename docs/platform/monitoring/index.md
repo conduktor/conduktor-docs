@@ -16,16 +16,11 @@ Currently, Monitoring fully supports:
 
 However, [Application Monitoring](#application-monitoring) and most core metrics are available for all Kafka providers.
 
-**Jump to:**
- - [Ops Monitoring](#ops-monitoring)
- - [Application Monitoring](#application-monitoring)
- - [Alerting](#alerting)
-
 ![Monitoring](/img/monitoring/monitoring-intro.webp)
 
 
 ## Ops Monitoring
-To support understanding of your Kafka infrastructures healthiness, we can help you understand:
+To support understanding of your Kafka infrastructures healthiness, we can help you monitor:
  - Cluster health state  
  - Broker health state
  - Partitions health state

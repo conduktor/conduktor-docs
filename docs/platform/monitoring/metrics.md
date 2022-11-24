@@ -1,14 +1,14 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 title: Metrics
-description: Monitoring Metrics
+description: Monitoring Metrics available in Conduktor Monitoring
 ---
 
 # Metrics
 
-Below outlines the metrics surfaced within Conduktor Monitoring.
+Below details the metrics that are surfaced within Conduktor Monitoring.
 
-You will have access to some metrics without any additional configuration, but should install the [agent](/platform/monitoring/agent-setup) to use Monitoring at full capacity.
+You will have access to some metrics without any additional configuration, but you should install the [agent](/platform/monitoring/getting-started/agent-setup) to use Monitoring at full capacity.
 
 <!-- prettier-ignore -->
 | Context | Metric | Definition |
@@ -22,7 +22,7 @@ You will have access to some metrics without any additional configuration, but s
 | Cluster Health | Offline partitions count | Offline partitions can be caused by lingering capacity issues, crashed brokers or cluster wide faults. This is a critical factor in the healthiness of your cluster because an offline partition can not be produced to or consumed from. The view here is that of the controller, if the controller believes a partition is offline it may not reassign or bring online a leader. |
 | Cluster Health | Under replicated partitions count | Under replicated partitions are a risk to data durability as well as availability. Under replicated partitions can happen for various reasons including, inability for replicas to keep up or network splits. |
 | Cluster Health | Under min ISR partitions count | Under minimum ISR partitions do not meet the durability requirements to be produced to. Producers that try to produce messages to a partition that is under the specified minimum isr will have the messages rejected and be forced to handle the exception. |
-| Cluster Health | Disk - FS usage | If a Kafka broker fills up its disk durability and availability of data is risk. Also producers will be unable to to produce to that broker. Filling a brokers' disk is also a hard incident to recover from and often involves loss of data. |
+| Cluster Health | Disk - FS usage | If a Kafka broker fills up its disk durability and availability of data is at risk. Also producers will be unable to to produce to that broker. Filling a brokers' disk is also a hard incident to recover from and often involves loss of data. |
 | Cluster Health | Partitions count | Total number of partitions(including replicas) across selected Kafka cluster. |
 | Cluster Health | Active brokers count | Number of active brokers on selected Kafka cluster. |
 | Cluster Health | Active partitions count | Total number of partitions active on selected Kafka cluster. |

@@ -12,7 +12,7 @@ Data Masking is an Enterprise feature. Please [contact us](https://www.conduktor
 
 ## Overview
 
-The Conduktor Platform enables you to meet compliance regulations and obfuscate personal and sensitive data. As a Platform administrator, you must create policies to secure and govern such data within Conduktor.
+Conduktor Platform enables you to meet compliance regulations and obfuscate personal and sensitive data. As a Platform administrator, you must create policies to secure and govern such data within Conduktor.
  
 Policies will be actioned and applied when:
 * Consuming Kafka messages in the Console
@@ -45,9 +45,7 @@ Select **Add Policy** and fill out the form with the policy details.
 Once you have created a policy, you should validate it through the Conduktor Console. 
 
 * Navigate to a topic that contains data where your policy should be applied
-    * _Alternatively, use the 'Produce' tab to mock a message that matches your policy rules_
+    * _Alternatively, use the 'Produce' tab to mockup a message that matches your policy rules_
 * Check that the expected fields are obfuscated using the appropriate masking rule
 
 ![data-masking-3.png](/img/data-masking/data-masking-3.png)
-
-
