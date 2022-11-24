@@ -269,6 +269,7 @@ main img {
   border-radius: var(--radii-radius4);
   border: 1px solid var(--colors-mauve3);
   padding: var(--space-space6);
+  margin-top: var(--space-space6);
 }
 
 .breadcrumbs__link {
