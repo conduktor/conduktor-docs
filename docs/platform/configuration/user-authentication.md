@@ -79,7 +79,7 @@ SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
 #### LDAPS
 
 For LDAP over SSL (LDAPS) connection you have to provide a trust certificate to `conduktor-platform` using Java JKS TrustStore file. 
-See [SSL/TLS configuriation](./ssl-tls-configuration.md) for more details.
+See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
 
 
 ### Oauth2 Identity Provider
