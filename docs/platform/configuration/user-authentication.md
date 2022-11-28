@@ -16,7 +16,7 @@ To configure platform authentication you have several choices.
   - [Keycloak](#keycloak)
   - [Azure](#azure)
 
-## Configure Local Ssers
+## Configure Local Users
 
 Into platform configuration file or from environment variables, configure authorized connection users.
 
@@ -75,6 +75,12 @@ SSO_LDAP_0_GROUPS-ENABLED="true"
 SSO_LDAP_0_GROUPS-BASE="ou=groups,ou=guests,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
 ```
+
+#### LDAPS
+
+For LDAP over SSL (LDAPS) connection you have to provide a trust certificate to `conduktor-platform` using Java JKS TrustStore file. 
+See [SSL/TLS configuriation](./ssl-tls-configuration.md) for more details.
+
 
 ### Oauth2 Identity Provider
 
