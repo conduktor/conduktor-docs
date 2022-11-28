@@ -1,12 +1,18 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 title: Kubernetes
 description: The below guide details how to deploy kubernetes resources to run Conduktor Platform.
 ---
 
 > This is still experimental, do not hesitate to help us refining our documentation.
 
+PLEASE DO NOT USE, THIS IS UNTESTED.
+
+If you have some feedback about it, please contact us.
+
+
 # OpenShift
+
 
 ```
 kind: Deployment
@@ -56,8 +62,6 @@ spec:
           volumeMounts:
             - name: conduktor
               mountPath: /var/conduktor
-            - name: nginx
-              mountPath: /etc/nginx/sites-enabled
             - name: config
               mountPath: /opt/conduktor/custom-config
           terminationMessagePath: /dev/termination-log
