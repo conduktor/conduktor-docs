@@ -62,6 +62,12 @@ sso:
       group-filter: 'uniquemember={0}' # Group search filter
 ```
 
+> **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in.  Try setting your `search-filter` to the below in your `platform-config.yaml`
+
+```yaml
+search-filter: '(sAMAccountName={0})'
+```
+
 Or from environment variables :
 
 ```bash
