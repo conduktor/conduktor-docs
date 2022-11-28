@@ -16,7 +16,7 @@ To configure platform authentication you have several choices.
   - [Keycloak](#keycloak)
   - [Azure](#azure)
 
-## Configure Local Ssers
+## Configure Local Users
 
 Into platform configuration file or from environment variables, configure authorized connection users.
 
@@ -62,6 +62,12 @@ sso:
       group-filter: 'uniquemember={0}' # Group search filter
 ```
 
+> **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in.  Try setting your `search-filter` to the below in your `platform-config.yaml`
+
+```yaml
+search-filter: '(sAMAccountName={0})'
+```
+
 Or from environment variables :
 
 ```bash
@@ -75,6 +81,12 @@ SSO_LDAP_0_GROUPS-ENABLED="true"
 SSO_LDAP_0_GROUPS-BASE="ou=groups,ou=guests,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
 ```
+
+#### LDAPS
+
+For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate to `conduktor-platform` using Java JKS TrustStore file. 
+See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
+
 
 ### Oauth2 Identity Provider
 
