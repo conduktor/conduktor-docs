@@ -28,7 +28,7 @@ Conduktor platofrm run as a docker container on the instance of your choice in y
 
 ## Analytics / Error reporting
 
-Analytics data and error reporting are enabled by default and can't be disabled.
+In order to improve the Platform experience for our users, we are sending fully anonymized analytics:
 We sent signal to:
 
 - Segment (totally anonymized): about which dialog is opened, which button was clicked etc. This will help us determining some screens are super used or not used at all.
