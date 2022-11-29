@@ -15,6 +15,14 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 - External database (optional)
 - User authentication (Basic or SSO)
 
+:::caution
+Note that currently the Platform must run with:
+- **Root user**
+- **Filesystem NOT in read-only mode**
+
+We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
+:::
+
 ## Create a Configuration File
 
 The below example shows how to configure Conduktor with a `SASL_SSL` Kafka cluster and Schema Registry.

@@ -6,4 +6,6 @@ description: The below guide details how to deploy kubernetes resources to run C
 
 Kubernetes support is still a **work in progress**. 
 
-If you want to help us out or if you are interested in this support please [contact us](https://www.conduktor.io/contact).
+Provide us direct [feedback](https://product.conduktor.help/c/55-helm-chart) on your expectations for Helm. 
+
+If you have alternate requirements or want to help us out, then please [contact us](https://www.conduktor.io/contact).

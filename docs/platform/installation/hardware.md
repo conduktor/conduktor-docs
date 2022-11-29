@@ -13,6 +13,14 @@ Jump to:
 - [Hardware Requirements](#hardware-requirements)
 - [Disabling a Module](#disabling-a-module)
 
+:::caution
+Note that currently the Platform must run with:
+- **Root user**
+- **Filesystem NOT in read-only mode**
+
+We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
+:::
+
 ## Hardware Requirements
 
 To configure Conduktor Platform for a particular hardware, you can use the environment variable `RUN_MODE`
