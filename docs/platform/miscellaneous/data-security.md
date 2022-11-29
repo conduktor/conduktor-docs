@@ -24,7 +24,7 @@ Your data stays exclusively in your enterprise network. It flows only between Co
 
 ## Where is Conduktor installed?
 
-Conduktor platofrm run as a docker container on the instance of your choice in your own infrastructure.
+Conduktor Platform runs as a docker container on the instance of your choice in your own infrastructure.
 
 ## Analytics / Error reporting
 
