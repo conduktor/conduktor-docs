@@ -11,6 +11,7 @@ To configure platform authentication you have several choices.
 - [Configure Local Users](#configure-local-users)
 - [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
   - [LDAP Server](#ldap-server)
+  - [LDAPS](#ldaps) 
   - [Auth0](#auth0)
   - [Okta](#okta)
   - [Keycloak](#keycloak)
@@ -82,7 +83,7 @@ SSO_LDAP_0_GROUPS-BASE="ou=groups,ou=guests,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
 ```
 
-#### LDAPS
+### LDAPS
 
 For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate to `conduktor-platform` using Java JKS TrustStore file. 
 See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
