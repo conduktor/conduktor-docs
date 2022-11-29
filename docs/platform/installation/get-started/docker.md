@@ -18,7 +18,7 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 :::caution
 Note that currently the Platform must run with:
 - **Root user**
-- **Filesystem NOT in read-only mode**
+- **Root FileSystem NOT in read-only mode**
 
 We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
 :::
