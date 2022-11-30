@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: Data Security
 description: >-
 Conduktor on-premise does not send your data anywhere. Everything stays
