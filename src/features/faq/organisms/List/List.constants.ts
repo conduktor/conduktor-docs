@@ -1,5 +1,15 @@
 export const items = [
   {
+    question: 'How does Conduktor Cloud differ from the \'Self-Managed\' version of Conduktor?',
+    answer:
+      'Conduktor Cloud offers the same capabilities, including all our solutions, scalability, and resiliency available in our self-managed software, but without having to worry about installation or cluster administration.',
+  },
+  {
+    question: 'What services are provided in the Conduktor Cloud?',
+    answer:
+      'Conduktor automatically provisions infrastructure, deploys and configures cluster software, maintains availability, provides scalability, performs backups, and handles software upgrades including Conduktor, operating system, and system software.',
+  },
+  {
     question: 'Can I use Active Directory for SSO?',
     answer:
       'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
