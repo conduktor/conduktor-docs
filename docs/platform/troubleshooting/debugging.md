@@ -11,8 +11,8 @@ Platform diagnostic is a tool that allow you to extract all the relevant log fro
 
 ## Installation
 
-note available only for Linux, Mac and WSL2 for now.
-if you need an other support, make us a request
+> **Note** :  available only for Linux, Mac and WSL2 for now.
+> if you need an other support, make us a request
 
 [download ARM version](https://releases.conduktor.io/platform-diagnostic-arm_0-1-0)
 [download x86 version](https://releases.conduktor.io/platform-diagnostic-amd_0-1-0)
