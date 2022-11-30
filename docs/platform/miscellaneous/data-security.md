@@ -2,7 +2,7 @@
 sidebar_position: 2
 title: Data Security
 description: >-
-  One thing to be clear: In On-premise we do not send your data anywhere! Everything stays
+Conduktor on-premise does not send your data anywhere. Everything stays
   between your computer and your Apache Kafka clusters / applications.
 ---
 
