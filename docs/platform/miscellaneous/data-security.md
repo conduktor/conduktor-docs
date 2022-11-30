@@ -29,7 +29,6 @@ Conduktor Platform runs as a docker container on the instance of your choice in 
 ## Analytics / Error reporting
 
 In order to improve the Platform experience for our users, we are sending fully anonymized analytics:
-We sent signal to:
 
 - Segment (totally anonymized): about which dialog is opened, which button was clicked etc. This will help us determining some screens are super used or not used at all.
 - Sentry: only in case of errors, we send the error to Sentry to provide us visibility, if a feature is broken.
