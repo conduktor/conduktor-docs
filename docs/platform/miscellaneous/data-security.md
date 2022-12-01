@@ -30,8 +30,11 @@ In order to improve our product, we do collect some information that allows us t
 
 - Segment:
   - We collect your email address so that we can engage with you directly through our support software (Intercom).
-  - We also capture anonymized information about which pages have been seen, or which button was clicked. This allows us to improve the user experience of Conduktor. 
-- Sentry: only in case of errors, we send the error to Sentry to provide us visibility, if a feature is broken.
+  - We also capture anonymized information about which pages have been seen, or which button was clicked. This allows us to improve the user experience when navigating Conduktor. 
+- Sentry: 
+  - Only in case of errors, we send the error to Sentry to provide us visibility of a broken feature.
+- Datadog: 
+  - Provides insight into front-end performance issues that impact our users.
 
 ## Login / Licenses
 
