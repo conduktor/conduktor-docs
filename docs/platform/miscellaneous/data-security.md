@@ -24,11 +24,13 @@ Your data stays exclusively in your enterprise network. It flows only between Co
 
 Conduktor Platform runs as a docker container on the instance of your choice in your own infrastructure.
 
-## Analytics / Error reporting
+## Support / Analytics / Error reporting
 
-In order to improve the Platform experience for our users, we are sending fully anonymized analytics:
+In order to improve our product, we do collect some information that allows us to personalize the Platform experience.  
 
-- Segment (totally anonymized): about which dialog is opened, which button was clicked etc. This will help us determining some screens are super used or not used at all.
+- Segment:
+  - We collect your email address so that we can engage with you directly through our support software (Intercom).
+  - We also capture anonymized information about which pages have been seen, or which button was clicked. This allows us to improve the user experience of Conduktor. 
 - Sentry: only in case of errors, we send the error to Sentry to provide us visibility, if a feature is broken.
 
 ## Login / Licenses
