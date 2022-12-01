@@ -1,6 +1,6 @@
 export const items = [
   {
-    question: 'How does Conduktor Cloud differ from the \'Self-Managed\' version of Conduktor?',
+    question: "How does Conduktor Cloud differ from the 'Self-Managed' version of Conduktor?",
     answer:
       'Conduktor Cloud offers the same capabilities, including all our solutions, scalability, and resiliency available in our self-managed software, but without having to worry about installation or cluster administration.',
   },
