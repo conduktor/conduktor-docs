@@ -6,6 +6,10 @@ description: Conduktor can be configured using an input yaml file
 
 # Introduction
 
+## Security notes
+
+The [database](./database.md) as well as the configuration file described in this document may contain sensitive information(usernames, passwords, and SSL truststore/keystores).  The configuration file and SSL files should be protected by file system permissions.  The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
+ 
 ## Configuration File
 
 Conduktor can be configured using an input yaml file that provides configuration for:
