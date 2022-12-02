@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+title: Upgrade guide
+description: Conduktor platform upgrade guide.
+---
+
 ## Upgrading Conduktor Platform.
 
 ### Release cadence
