@@ -1,5 +1,5 @@
 ## Upgrading Conduktor Platform.
-
+Consider using Conduktor Cloud to not worry about installation, upgrade or software administration.
 ### Release cadence
 Conduktor plans to provide a new release at least monthly.  We suggest that upgrades are done at least bi-monthly.
 
