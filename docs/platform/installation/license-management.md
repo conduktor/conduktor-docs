@@ -37,27 +37,27 @@ curl -s  http://localhost:3000/platform/api/license | jq .
 Example:
 ```
 curl -s  http://localhost:3000/platform/api/license | jq .
-#{
-#  "raw-token": "<token>",
-#  "expire": 1669248000,
-#  "plan": "enterprise",
-#  "version": 1,
-#  "features": {
-#    "admin.auditlog.enable": true,
-#    "admin.enable": true,
-#    "console.enable": true,
-#    "datamasking.enable": true,
-#    "monitoring.alerting.enable": true,
-#    "monitoring.enable": true,
-#    "platform.clusters.limit": -1,
-#    "platform.rbac.enable": true,
-#    "platform.sso.enable": true,
-#    "testing.enable": true,
-#    "testing.tests.run.monthly.limit": -1,
-#    "topic.analyser.enable": true,
-#    "governance.enable": true
-#  }
-#}
+{
+  "raw-token": "<token>",
+  "expire": 1669248000,
+  "plan": "enterprise",
+  "version": 1,
+  "features": {
+    "admin.auditlog.enable": true,
+    "admin.enable": true,
+    "console.enable": true,
+    "datamasking.enable": true,
+    "monitoring.alerting.enable": true,
+    "monitoring.enable": true,
+    "platform.clusters.limit": -1,
+    "platform.rbac.enable": true,
+    "platform.sso.enable": true,
+    "testing.enable": true,
+    "testing.tests.run.monthly.limit": -1,
+    "topic.analyser.enable": true,
+    "governance.enable": true
+  }
+}
 ```
 
 ## Renew or install new license
