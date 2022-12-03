@@ -62,4 +62,4 @@ curl -s  http://localhost:3000/platform/api/license | jq .
 
 ## Renew or install new license
 
-To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file.  Than restart the Conduktor Platform container.  
+To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file. Then restart the Conduktor Platform container.  
