@@ -101,7 +101,7 @@ Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secre
 
 ### Billing note
 
-Note that deploying this CloudFormation template into your environment will result in billable resources being consumed.  See [aws MSK billing](https://aws.amazon.com/msk/pricing/) for more information.
+Note that deploying this CloudFormation template into your environment will result in billable resources being consumed.  See [Amazon MSK pricing](https://aws.amazon.com/msk/pricing/) for more information.
 
 ```yml
 clusters:
