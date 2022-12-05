@@ -200,12 +200,29 @@ See database configuration [documentation](./database) for more info
   - _Default_ : ∅
     > **Tips** : To set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
 
+- **`clusters[].jmxScrapePort`** : JMX-exporter port used to scrape kafka broker metrics for monitoring
+
+  - _Env_ : **`CDK_CLUSTERS_0_JMXSCRAPEPORT`**
+  - _Mandatory_ : false
+  - _Type_ : int
+  - _Default_ : `9101`
+
+- **`clusters[].nodeScrapePort`** : Node-exporter port used to scrape kafka host metrics for monitoring
+  - _Env_ : **`CDK_CLUSTERS_0_NODESCRAPEPORT`**
+  - _Mandatory_ : false
+  - _Type_ : int
+  - _Default_ : `9100`
+
+## Schema registry properties
+
 - **`clusters[].schemaRegistry.id`** : String used to uniquely identify your schema registry
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_ID`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+
+#### Confluent schema registry properties
 
 - **`clusters[].schemaRegistry.url`** : The schema registry URL
 
@@ -228,6 +245,8 @@ See database configuration [documentation](./database) for more info
   - _Type_ : string where each line is a property
   - _Default_ : ∅
     > **Tips** : To set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
+    
+If you need to authenticate with basic auth, you can use the following properties:
 
 - **`clusters[].schemaRegistry.security.username`** : Basic auth username
 
@@ -242,6 +261,51 @@ See database configuration [documentation](./database) for more info
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
+
+If you need to authenticate with bearer auth, you can use the following property:
+
+- **`clusters[].schemaRegistry.security.token`** : Bearer auth token
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+#### Amazon Glue schema registry properties
+
+- **`clusters[].schemaRegistry.region`** : The Glue schema registry region
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+If you need to authenticate with credentials, you can use the following properties:
+
+- **`clusters[].schemaRegistry.security.accessKeyId`** : Credentials auth access key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_ACCESSKEYID`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].schemaRegistry.security.secretKey`** : Credentials auth secret key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_SECRETKEY`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+> **Tips** : If you set no access key nor secret key, the credentials will be automatically retrieved from the environment.
+
+- **`clusters[].schemaRegistry.registryName`** : The Glue schema registry name
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+#### Kafka Connect properties
 
 - **`clusters[].kafkaConnects[].id`** : String used to uniquely identify your Kafka Connect
 
@@ -270,19 +334,6 @@ See database configuration [documentation](./database) for more info
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
-
-- **`clusters[].jmxScrapePort`** : JMX-exporter port used to scrape kafka broker metrics for monitoring
-
-  - _Env_ : **`CDK_CLUSTERS_0_JMXSCRAPEPORT`**
-  - _Mandatory_ : false
-  - _Type_ : int
-  - _Default_ : `9101`
-
-- **`clusters[].nodeScrapePort`** : Node-exporter port used to scrape kafka host metrics for monitoring
-  - _Env_ : **`CDK_CLUSTERS_0_NODESCRAPEPORT`**
-  - _Mandatory_ : false
-  - _Type_ : int
-  - _Default_ : `9100`
 
 ### Environment properties (for governance feature)
 
@@ -359,7 +410,7 @@ Optional local accounts list used to login on conduktor-platform
 ### SSO properties
 
 SSO authentication properties (only on enterprise plan).
-See authentication [documentation](./user-authentication) for snipets
+See authentication [documentation](./user-authentication) for snippets
 
 - **`sso.ignoreUntrustedCertificate`** : Disable SSL checks
   - _Env_ : **`SSO_IGNORE-UNTRUSTED-CERTIFICATE`**
