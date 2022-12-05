@@ -8,21 +8,20 @@ description: This page provides guidence for how to install, verify and renew li
 
 Conduktor platform requires a license to enable features beyond the base features.  The license is put into the `platform-config.yaml` file.
 
-On a far right justified line provide a `license` configuration declaration.  Example:
+On a far left justified line provide a `license` configuration declaration.  Example:
 ```yaml
-services:
-  conduktor-platform:
-    image: conduktor/conduktor-platform:latest
-    ports:
-      - 8080:8080
-    volumes:
-      - type: bind
-        source: ./truststore.jks
-        target: /opt/conduktor/certs/truststore.jks
-        read_only: true
-    environment:
-      CDK_SSL_TRUSTSTORE_PATH: '/opt/conduktor/certs/truststore.jks'
-      CDK_SSL_TRUSTSTORE_PASSWORD: 'changeit'
+clusters:
+  - id: default
+    name: My Local Kafka Cluster
+    color: "#0013E7"
+    ignoreUntrustedCertificate: false
+    bootstrapServers: "localhost:9092"
+    properties:
+    schemaRegistry:
+      url: "localhost:8081"
+      ignoreUntrustedCertificate: false
+      properties:
+    labels: {}
 
 license: "YOUR_LICENSE_HERE"
 ```
