@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: Schema Registry
-description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka. 
+description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
 # Schema Registry
@@ -10,7 +10,7 @@ Conduktor Platform provides a visual interface for Schema Registry, allowing you
 
 ## Getting Started
 
-Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](../admin/managing-clusters) section to learn how. Schema Registry can be added on creation of clusters or to existing clusters.
+Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Schema Registry can be added on creation of clusters or to existing clusters.
 
 ## Creating a Schema
 
@@ -18,7 +18,7 @@ Once Schema Registry is setup, navigate to Conduktor Console, then to the Schema
 
 ![Create a Schema](/img/console/create-schema.png)
 
-You will then need to choose the configuration details and enter your schema. 
+You will then need to choose the configuration details and enter your schema.
 
 ### Schema formats
 
@@ -26,7 +26,7 @@ Conduktor Platform supports the [Avro](https://avro.apache.org/docs/current/spec
 
 ### Strategy
 
-Schemas can be applied in several ways: To topics, to records, to both topics & records, or through a custom method. 
+Schemas can be applied in several ways: To topics, to records, to both topics & records, or through a custom method.
 
 - Topic Name: This strategy associates your schema with a specific topic of your choosing. Simply enter the topic name that you want the schema to apply to. You will also need to specify if the schema will apply to the key or value of a message. The topic name field will auto-complete for you, so no need to remember specific spellings!
 
@@ -77,4 +77,3 @@ On a soft delete, only the version of the schema is deleted and the underlying s
 ## Setting up a Schema Registry Example
 
 To see an example of setting up Schema Registry, head to [Part 3 of this blog post](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it). This example uses an Aiven cluster and Karaspace Schema Registry.
-

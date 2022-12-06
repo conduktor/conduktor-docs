@@ -12,7 +12,7 @@ The Admin section of Conduktor Platform enables you to add, update, and delete K
 
 To create a new cluster, click on the "Create cluster" button in the top right-hand corner, then follow the instructions from the [Get Started](../installation/get-started/cloud#configure-your-first-cluster) section.
 
-To edit an existing cluster, select it from the list. You will then be able to adjust the cluster name & color, technical ID, bootstrap servers, and additional properties. You can also enable Schema Registry and Kafka Connect for the cluster. 
+To edit an existing cluster, select it from the list. You will then be able to adjust the cluster name & color, technical ID, bootstrap servers, and additional properties. You can also enable Schema Registry and Kafka Connect for the cluster.
 
 ## Schema Registry
 
@@ -22,7 +22,7 @@ You will then need to obtain the address of your Schema Registry, as well as any
 
 ## Kafka Connect
 
-Setting up Kafka Connect works similarly to Schema Registry; you will need to enable it for your clusters first, then locate the Kafka Connect URL and authentication for entry into Conduktor Platform. Below is an example using Confluent Cloud 
+Setting up Kafka Connect works similarly to Schema Registry; you will need to enable it for your clusters first, then locate the Kafka Connect URL and authentication for entry into Conduktor Platform. Below is an example using Confluent Cloud
 
 ### Confluent Cloud Kafka Connect
 

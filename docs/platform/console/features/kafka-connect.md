@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Kafka Connect
-description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka. 
+description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
 # Kafka Connect
@@ -10,7 +10,7 @@ Kafka Connect is a tool to stream data between Apache Kafka and other data syste
 
 ## Getting Started
 
-Kafka Connect needs to be enabled on a per-cluster basis before any schemas can be added. To add Kafka Connect to your cluster, head to the [Admin](../admin/managing-clusters) section to learn how. Kafka Connect can be added on creation of clusters or to existing clusters.
+Kafka Connect needs to be enabled on a per-cluster basis before any schemas can be added. To add Kafka Connect to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Kafka Connect can be added on creation of clusters or to existing clusters.
 
 ## Creating a Connector
 
@@ -30,7 +30,7 @@ Once your configuration is entered, click the "Validate" button to check that yo
 
 You will be able to manage all of your created connectors from the Kafka Connect display. You can pause,restart, and remove connectors; change their configurations; and check for any failed connectors or tasks. You can perform actions one at a time or across multiple connectors.
 
-To pause, restart, or remove a connector, select the menu from the right-hand side of a connector, then choose the option you need. 
+To pause, restart, or remove a connector, select the menu from the right-hand side of a connector, then choose the option you need.
 
 Alternatively, click on a connector to adjust all aspects in one place. You will be able to edit the configuration, restart individual tasks, or choose to pause, restart, and delete:
 

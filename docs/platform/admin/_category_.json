@@ -1,8 +1,8 @@
 {
-    "label": "Admin",
-    "position": 4,
-    "link": {
-      "type": "generated-index",
-      "description": "Administration options"
-    }
+  "label": "Admin",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Administration options."
   }
+}
