@@ -129,7 +129,7 @@ const config = {
               },
               {
                 label: 'Discord',
-                to: '/',
+                to: 'https://discord.gg/gzTrmjdXdA',
               },
             ],
           },
