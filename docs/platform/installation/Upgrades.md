@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Upgrade guide
+title: Upgrade Guide
 description: Conduktor platform upgrade guide.
 ---
 
