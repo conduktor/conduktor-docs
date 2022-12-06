@@ -178,6 +178,13 @@ const config = {
     gtm,
   ],
   stylesheets: ['/css/stitches.css'],
+  scripts: [
+    {
+      src: 'https://cdn-cookieyes.com/client_data/bb65dd08fda6eb81ef9cf1c2/script.js',
+      id: 'cookieyes',
+      type: 'text/javascript',
+    },
+  ],
 }
 
 module.exports = config
