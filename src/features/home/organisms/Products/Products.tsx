@@ -15,8 +15,8 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
       <Container>
         <div className={styles.HeadingContainer}>
           <Heading>Browse by product</Heading>
-          <Button to="/platform" type="secondary">
-            Explore overview
+          <Button id="home-get-started" href="https://www.conduktor.io/get-started" type="gradient">
+            Get Started
           </Button>
         </div>
         <ul className={styles.List}>
