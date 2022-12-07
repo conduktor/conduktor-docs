@@ -163,12 +163,13 @@ clusters:
     schemaRegistry:
       region: <aws-region>
       security:
+        type: Credentials
         accessKeyId: <access-key-id>
         secretKey: <secret-key>
     labels: {}
 ```
 
-Connect to an MSK cluster with schema registry using credentials inherited from environment
+Connect to an MSK cluster with schema registry using the default chain of credentials providers
 
 ```yml
 clusters:
@@ -186,7 +187,31 @@ clusters:
     schemaRegistry:
       region: <aws-region>
       security:
-        role: <role> # optional to use the default role
+        type: FromContext
+        profile: <profile> # optional to use the default profile
+    labels: {}
+```
+
+Connect to an MSK cluster with schema registry using a specific role
+
+```yml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: <aws-region>
+      security:
+        type: FromRole
+        role: <role>
     labels: {}
 ```
 

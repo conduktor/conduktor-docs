@@ -280,28 +280,62 @@ If you need to authenticate with bearer auth, you can use the following property
   - _Type_ : string
   - _Default_ : ∅
 
-If you need to authenticate with credentials, you can use the following properties:
-
-- **`clusters[].schemaRegistry.security.accessKeyId`** : Credentials auth access key
-
-  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_ACCESSKEYID`**
-  - _Mandatory_ : false
-  - _Type_ : string
-  - _Default_ : ∅
-
-- **`clusters[].schemaRegistry.security.secretKey`** : Credentials auth secret key
-
-  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_SECRETKEY`**
-  - _Mandatory_ : false
-  - _Type_ : string
-  - _Default_ : ∅
-
-> **Tips** : If you set no access key nor secret key, the credentials will be automatically retrieved from the environment.
-
 - **`clusters[].schemaRegistry.registryName`** : The Glue schema registry name
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`**
   - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+If you need to authenticate with credentials, you can use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with credentials
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
+  - _Mandatory_ : true
+  - _Value_ : `Credentials`
+
+- **`clusters[].schemaRegistry.amazonSecurity.accessKeyId`** : Credentials auth access key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].schemaRegistry.amazonSecurity.secretKey`** : Credentials auth secret key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+If you need to authenticate with the default chain, you can use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with the default chain
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
+  - _Mandatory_ : true
+  - _Value_ : `FromContext`
+
+- **`clusters[].schemaRegistry.amazonSecurity.profile`** : Authentication profile
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+If you need to authenticate with a specific role, you can use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with a specific role
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
+  - _Mandatory_ : true
+  - _Value_ : `FromRole`
+
+- **`clusters[].schemaRegistry.amazonSecurity.role`** : Authentication role
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`**
+  - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
