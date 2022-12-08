@@ -222,6 +222,7 @@ you can add a `registryName` to the `schemaRegistry` section to use a specific r
 schemaRegistry:
   region: <aws-region>
   security:
+    type: Credentials
     accessKeyId: <access-key-id>
     secretKey: <secret-key>
   registryName: <registry-name>

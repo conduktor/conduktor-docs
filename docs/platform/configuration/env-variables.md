@@ -213,7 +213,7 @@ See database configuration [documentation](./database) for more info
   - _Type_ : int
   - _Default_ : `9100`
 
-## Schema registry properties
+### Schema registry properties
 
 - **`clusters[].schemaRegistry.id`** : String used to uniquely identify your schema registry
 
@@ -287,35 +287,29 @@ If you need to authenticate with bearer auth, you can use the following property
   - _Type_ : string
   - _Default_ : ∅
 
-If you need to authenticate with credentials, you can use the following properties:
-
 - **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with credentials
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
   - _Mandatory_ : true
-  - _Value_ : `Credentials`
+  - _Value_ : `Credentials` | `FromContext` | `FromRole`
+    
+If `amazonSecurity.type` is `Credentials`, you must use the following properties:
 
 - **`clusters[].schemaRegistry.amazonSecurity.accessKeyId`** : Credentials auth access key
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID`**
-  - _Mandatory_ : false
+  - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`clusters[].schemaRegistry.amazonSecurity.secretKey`** : Credentials auth secret key
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`**
-  - _Mandatory_ : false
+  - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
-If you need to authenticate with the default chain, you can use the following properties:
-
-- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with the default chain
-
-  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
-  - _Mandatory_ : true
-  - _Value_ : `FromContext`
+If `amazonSecurity.type` is `FromContext`, you must use the following properties:
 
 - **`clusters[].schemaRegistry.amazonSecurity.profile`** : Authentication profile
 
@@ -324,13 +318,7 @@ If you need to authenticate with the default chain, you can use the following pr
   - _Type_ : string
   - _Default_ : ∅
 
-If you need to authenticate with a specific role, you can use the following properties:
-
-- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with a specific role
-
-  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
-  - _Mandatory_ : true
-  - _Value_ : `FromRole`
+If `amazonSecurity.type` is `FromRole`, you must use the following properties:
 
 - **`clusters[].schemaRegistry.amazonSecurity.role`** : Authentication role
 
