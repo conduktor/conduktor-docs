@@ -9,7 +9,7 @@ interface ButtonProps {
   target?: string
   width?: string | number | 'fit-content'
   hasArrow?: boolean
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary' | 'gradient'
   children: React.ReactNode
 }
 

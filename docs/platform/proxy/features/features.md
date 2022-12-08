@@ -11,7 +11,7 @@ Conduktor Proxy enables a set of features above and beyond what is available fro
 
 The multi tenancy feature of Conduktor Proxy allows a single underlying Kafka cluster to be represented as many, isolated smaller clusters to clients. These representations can duplicate topic/consumer group names etc. and remain isolated from eachother.
 
-To give an example, an organisation may host applications for point of sale and procurement. Both of these may require a topic named "orders" but may not be aware of the requirement of the other application. Multi Tenancy addresses this issue by allowing the two applications to go exist in an isolated manner on the backing cluster.
+To give an example, an organisation may host applications for point of sale and procurement. Both of these may require a topic named "orders" but may not be aware of the requirement of the other application. Multi Tenancy addresses this issue by allowing the two applications to co-exist in an isolated manner on the backing cluster.
 
 For more detail regarding this see the **[multi tenancy demo](https://github.com/conduktor/conduktor-proxy-demos/tree/main/multi-tenant)**
 
