@@ -28,6 +28,10 @@ Note that currently the Platform must run with:
 We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
 :::
 
+## Skills required
+
+A basic familiarity with Docker, docker-compose, and how to edit docker-compose configuration files.
+ 
 ## Run Conduktor Platform
 
 Note that when you run this command, you will be prompted for your **organization name** and be asked to create **admin credentials**.

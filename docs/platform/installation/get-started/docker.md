@@ -6,7 +6,7 @@ description: Get started with the latest Conduktor Platform Docker image in just
 
 # Docker Quick Start
 
-Get started with the latest Conduktor Platform Docker image in just a few minutes.
+Get started with the latest Conduktor Platform Docker image. The installation and configuration process takes under 30 minutes.
 
 Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your organizations environment. The file is used to declare:
 
