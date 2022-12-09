@@ -6,11 +6,13 @@ description: The below guide details how to deploy a production-ready instance o
 
 # Cloudformation
 
+![AWS architecture](../../configuration/assets/aws-architecture.png)
+
 The below guide details how to deploy a production-ready instance of Conduktor Platform on MSK.
 
 Everything is deployed using CloudFormation templates and the Platform is deployed in ECS Fargate.
 
-https://github.com/conduktor/quickstart-conduktor-aws-msk
+https://aws.amazon.com/blogs/big-data/gain-visibility-into-your-amazon-msk-cluster-by-deploying-the-conduktor-platform/ 
 
 ## Skills required
 
