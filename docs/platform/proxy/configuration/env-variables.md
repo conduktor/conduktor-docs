@@ -30,116 +30,107 @@ Default configurations for Conduktor Proxy can be overridden by environment vari
 
 ### Host/Port Configurations
 
-| Environment Variable                  | Default Value | Description                                                                                                                                                                                                                                                                                                   |
-| ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `hostPortConfiguration_proxyBindHost` | `0.0.0.0`     | The host on which to bind the proxy                                                                                                                                                                                                                                                                           |
-| `hostPortConfiguration_proxyHost`     | `localhost`   | The proxy hostname that should be presented to clients                                                                                                                                                                                                                                                        |
-| `hostPortConfiguration_portRange`     | `6969:6975`   | A range of ports to be opened on the Conduktor Proxy host, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the KAfka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment |
+| Environment Variable | Default Value | Description                                                                                                                                                                                                                                                                                                   |
+|---------------------| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PROXY_BIND_HOST`   | `0.0.0.0`     | The host on which to bind the proxy                                                                                                                                                                                                                                                                           |
+| `PROXY_HOST`        | `localhost`   | The proxy hostname that should be presented to clients                                                                                                                                                                                                                                                        |
+| `PROXY_PORT_RANGE`  | `6969:6975`   | A range of ports to be opened on the Conduktor Proxy host, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the KAfka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment |
 
 ### Schema Registry Configurations
 
-| Environment Variable  | Default Value | Description                                                                         |
-| --------------------- | ------------- | ----------------------------------------------------------------------------------- |
-| `schemaRegistry_host` | None          | A HTTP endpoint for interacting with a Schema Registry (e.g. http://localhost:8081) |
+| Environment Variable    | Default Value | Description                                                                         |
+|-------------------------| ------------- | ----------------------------------------------------------------------------------- |
+| `SCHEMA_REGISTRY_HOST`  | None          | A HTTP endpoint for interacting with a Schema Registry (e.g. http://localhost:8081) |
 
 ### Authentication Configurations
 
 Note: These configurations apply to authentication between clients and Conduktor Proxy. For authentication between Conduktor Proxy and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable                     | Default Value | Description                                                                                                                |
-| ---------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `authenticationConfig_authenticatorType` | `NONE`        | The type of authentication clients should use to connect to the Proxy, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |
-| `sslConfig_keyStore_keyStorePath`        | None          | Path to a keystore for SSL connections                                                                                     |
-| `sslConfig_keyStore_keyStorePassword`    | None          | Password for the keystore defined above                                                                                    |
-| `sslConfig_keyStore_keyPassword`         | None          | Password for the key contained in the store above                                                                          |
-| `sslConfig_keyStore_keyStoreType`        | `jks`         | The type of keystore used for SSL connections                                                                              |
+| Environment Variable                | Default Value | Description                                                                                                                |
+|-------------------------------------| ------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `AUTHENTICATION_AUTHENTICATOR_TYPE` | `NONE`        | The type of authentication clients should use to connect to the Proxy, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |
+| `SSL_KEY_STORE_PATH`                | None          | Path to a keystore for SSL connections                                                                                     |
+| `SSL_KEY_STORE_PASSWORD`            | None          | Password for the keystore defined above                                                                                    |
+| `SSL_KEY_PASSWORD`                  | None          | Password for the key contained in the store above                                                                          |
+| `SSL_KEY_TYPE`                      | `jks`         | The type of keystore used for SSL connections                                                                              |
 
 ### HTTP Configurations
 
 | Environment Variable | Default Value | Description                                                    |
-| -------------------- | ------------- | -------------------------------------------------------------- |
-| `httpConfig_port`    | `8888`        | The port on which the Proxy will present a HTTP management API |
+|----------------------| ------------- | -------------------------------------------------------------- |
+| `HTTP_PORT`          | `8888`        | The port on which the Proxy will present a HTTP management API |
 
 ### Thread Configurations
 
-| Environment Variable            | Default Value | Description                                                                        |
-| ------------------------------- | ------------- | ---------------------------------------------------------------------------------- |
-| `threadConfig_downStreamThread` | `2`           | The number of threads dedicated to handling IO between clients and Conduktor Proxy |
-| `threadConfig_upstreamThread`   | `4`           | The number of threads dedicated to handling IO between Kafka and Conduktor Proxy   |
+| Environment Variable | Default Value | Description                                                                        |
+|----------------------| ------------- | ---------------------------------------------------------------------------------- |
+| `DOWNSTREAM_THREAD`  | `2`           | The number of threads dedicated to handling IO between clients and Conduktor Proxy |
+| `UPSTREAM_THREAD`    | `4`           | The number of threads dedicated to handling IO between Kafka and Conduktor Proxy   |
 
 ### Upstream Connection Configurations
 
-| Environment Variable                       | Default Value | Description                                                 |
-| ------------------------------------------ | ------------- | ----------------------------------------------------------- |
-| `upstreamConnectionConfig_numOfConnection` | `10`          | The number of connections between Conduktor Proxy and Kafka |
+| Environment Variable        | Default Value | Description                                                 |
+|-----------------------------| ------------- | ----------------------------------------------------------- |
+| `UPSTREAM_NUM_CONNECTION`   | `10`          | The number of connections between Conduktor Proxy and Kafka |
 
 ### Topic Store Configurations
 
-| Environment Variable                                | Default Value    | Description                                                                               |
-| --------------------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------- |
-| `topicStoreConfig_topicMappingServiceBackingTopic`  | `_topicMappings` | The name of an internal topic used to store topic mapping configuration for multi tenancy |
-| `topicStoreConfig_topicRegistryServiceBackingTopic` | `_topicRegistry` | The name of an internal topic used to store topic metadata                                |
+| Environment Variable                  | Default Value    | Description                                                                               |
+|---------------------------------------| ---------------- | ----------------------------------------------------------------------------------------- |
+| `TOPIC_STORE_MAPPING_BACKING_TOPIC`   | `_topicMappings` | The name of an internal topic used to store topic mapping configuration for multi tenancy |
+| `TOPIC_STORE_REGISTRY_BACKING_TOPIC`  | `_topicRegistry` | The name of an internal topic used to store topic metadata                                |
 
 ### Interceptor Configurations
 
-| Environment Variable                                                 | Default Value         | Description                                                            |
-| -------------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------- |
-| `interceptorStoreConfig_interceptorConfigurationServiceBackingTopic` | `_interceptorConfigs` | The name of an internal topic used to store interceptor configurations |
-| `resourceNameBackingTopic`                                           | `_resourceNames`      | The name of an internal topic used to store named resource metadata    |
+| Environment Variable               | Default Value         | Description                                                            |
+|------------------------------------| --------------------- | ---------------------------------------------------------------------- |
+| `INTERCEPTOR_STORE_BACKING_TOPIC`  | `_interceptorConfigs` | The name of an internal topic used to store interceptor configurations |
+| `RESOURCE_NAME_BACKING_TOPIC`      | `_resourceNames`      | The name of an internal topic used to store named resource metadata    |
 
 ### Tenant Store Configurations
 
-| Environment Variable                                       | Default Value           | Description                                                 |
-| ---------------------------------------------------------- | ----------------------- | ----------------------------------------------------------- |
-| `tenantStoreConfig_tenantConfigurationServiceBackingTopic` | `_tenantConfigMappings` | The name of an internal topic used to store tenant metadata |
+| Environment Variable           | Default Value           | Description                                                 |
+|--------------------------------| ----------------------- | ----------------------------------------------------------- |
+| `TENANT_STORES_BACKING_TOPIC`  | `_tenantConfigMappings` | The name of an internal topic used to store tenant metadata |
 
 ### Offset Store Configurations
 
-| Environment Variable                                      | Default Value                            | Description                                                         |
-| --------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------- |
-| `offsetStoreConfig_committedOffsetBackingTopic`           | `_offsetStore`                           | The name of an internal topic used to store offset metadata         |
-| `offsetStoreConfig_consumerGroupSubscriptionBackingTopic` | `_consumerGroupSubscriptionBackingTopic` | The name of an internal topic used to store consumer group metadata |
+| Environment Variable                                       | Default Value                            | Description                                                         |
+|------------------------------------------------------------| ---------------------------------------- | ------------------------------------------------------------------- |
+| `OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`              | `_offsetStore`                           | The name of an internal topic used to store offset metadata         |
+| `OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC`   | `_consumerGroupSubscriptionBackingTopic` | The name of an internal topic used to store consumer group metadata |
 
 ### Feature Flags Configurations
 
-| Environment Variable | Default Value | Description                               |
-| -------------------- | ------------- | ----------------------------------------- |
-| `featureFlags_rbac`  | `false`       | Whether or not to enable the RBAC feature |
-
-### Cold Storage Configurations
-
-| Environment Variable                  | Default Value  | Description                              |
-| ------------------------------------- | -------------- | ---------------------------------------- |
-| `amazonProperties_accessKey`          | `ignored`      | AWS access key for S3                    |
-| `amazonProperties_secretKey`          | `ignore`       | AWS secret key for S3                    |
-| `amazonProperties_bucketName`         | `ignored`      | S3 bucket name for cold storage          |
-| `amazonProperties_uri`                | `s3://ignored` | S3 uri for cold storage                  |
-| `amazonProperties_region`             | `ignored`      | S3 region for cold starage               |
-| `amazonProperties_localDiskDirectory` | `/tmp/ignored` | local storage directory for cold starage |
+| Environment Variable                | Default Value | Description                                                                                                                                                   |
+|-------------------------------------| ------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `FEATURE_FLAGS_RBAC`                | `false`       | Whether or not to enable the RBAC feature                                                                                                                     |
+| `FEATURE_FLAGS_SINGLE_TENANT`       | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                   |
+| `FEATURE_FLAGS_NO_INTERNAL_TOPICS`  | `false`       | Whether or not to enable no internal topics mode, in this mode proxy internal topics are not created. Note only one proxy instance is supported in this mode. |
 
 ### Metrics Configurations
 
-| Environment Variable    | Default Value | Description                                          |
-| ----------------------- | ------------- | ---------------------------------------------------- |
-| `prometheusMetricsPort` | `9089`        | The port on which Prometheus metrics will be exposed |
+| Environment Variable      | Default Value | Description                                          |
+|---------------------------| ------------- | ---------------------------------------------------- |
+| `PROMETHEUS_METRICS_PORT` | `9089`        | The port on which Prometheus metrics will be exposed |
 
 ### Conduktor Platform Configurations
 
-| Environment Variable | Default Value           | Description                                                                                                                                                                                                                 |
-| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `platformM2M_secret` | `changeit`              | A shared secret used to authenticate requests between Conduktor Proxy and Conduktor Platform. This can usually be found as the `sharedSecret` property in `/etc/conduktor/devtools.yml` in the Conduktor Platform container |
-| `platformM2M_issuer` | `http://localhost/auth` | The issuer used to authenticate requests between Conduktor Proxy and Conduktor Platform this should be in the form `http://[platform host name]/auth`                                                                       |
+| Environment Variable   | Default Value           | Description                                                                                                                                                                                                                 |
+|------------------------| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLATFORM_M2M_SECRET`  | `changeit`              | A shared secret used to authenticate requests between Conduktor Proxy and Conduktor Platform. This can usually be found as the `sharedSecret` property in `/etc/conduktor/devtools.yml` in the Conduktor Platform container |
+| `PLATFORM_M2M_ISSUER`  | `http://localhost/auth` | The issuer used to authenticate requests between Conduktor Proxy and Conduktor Platform this should be in the form `http://[platform host name]/auth`                                                                       |
 
 ### RBAC configurations
 
-| Environment Variable          | Default Value                       | Description                                      |
-| ----------------------------- | ----------------------------------- | ------------------------------------------------ |
-| `rbacConfig_platformEndpoint` | `http://localhost:8080/admin/api/p` | The Conduktor Platform persmissions API endpoint |
+| Environment Variable      | Default Value                       | Description                                      |
+|---------------------------| ----------------------------------- | ------------------------------------------------ |
+| `RBAC_PLATFORM_ENDPOINT`  | `http://localhost:8080/admin/api/p` | The Conduktor Platform persmissions API endpoint |
 
 ### Licensing configurations
 
-| Environment Variable                | Default Value | Description                                               |
-| ----------------------------------- | ------------- | --------------------------------------------------------- |
-| `licenseConfig_licenseBackingTopic` | `_license`    | The namme of an internal topic used to store license data |
-| `licenseConfig_publicKey`           | None          | The public key used to decode license keys                |
-| `licenseConfig_licenseKey`          | None          | License key                                               |
+| Environment Variable    | Default Value | Description                                               |
+|-------------------------| ------------- | --------------------------------------------------------- |
+| `LICENSE_BACKING_TOPIC` | `_license`    | The namme of an internal topic used to store license data |
+| `LICENSE_PUBLIC_KEY`    | None          | The public key used to decode license keys                |
+| `LICENSE_KEY`           | None          | License key                                               |
