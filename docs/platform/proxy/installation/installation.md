@@ -37,7 +37,7 @@ Conduktor Proxy requires Apache Kafka version 2.5.0 or higher.
 ```bash
  docker run \
   -e KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
-  conduktor/conduktor-proxy:0.1.0-amd64
+  conduktor/conduktor-proxy:0.3.0-amd64
 ```
 
 For more complex deployments see [environment variables](../configuration/env-variables)
