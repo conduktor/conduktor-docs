@@ -279,6 +279,7 @@ If you need to authenticate with bearer auth, you can use the following property
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 - **`clusters[].schemaRegistry.registryName`** : The Glue schema registry name
 
@@ -286,12 +287,16 @@ If you need to authenticate with bearer auth, you can use the following property
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 - **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with credentials
 
   - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
   - _Mandatory_ : true
-  - _Value_ : `Credentials` | `FromContext` | `FromRole`
+  - _Type_ : string
+  - _Values_ : `Credentials` | `FromContext` | `FromRole`
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
     
 If `amazonSecurity.type` is `Credentials`, you must use the following properties:
 
@@ -301,6 +306,7 @@ If `amazonSecurity.type` is `Credentials`, you must use the following properties
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 - **`clusters[].schemaRegistry.amazonSecurity.secretKey`** : Credentials auth secret key
 
@@ -308,6 +314,7 @@ If `amazonSecurity.type` is `Credentials`, you must use the following properties
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 If `amazonSecurity.type` is `FromContext`, you must use the following properties:
 
@@ -317,6 +324,7 @@ If `amazonSecurity.type` is `FromContext`, you must use the following properties
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 If `amazonSecurity.type` is `FromRole`, you must use the following properties:
 
@@ -326,6 +334,7 @@ If `amazonSecurity.type` is `FromRole`, you must use the following properties:
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+  - _Since_ : `1.x.x`
 
 #### Kafka Connect properties
 
