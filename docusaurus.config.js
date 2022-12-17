@@ -124,12 +124,16 @@ const config = {
             title: 'Community',
             items: [
               {
+                label: 'Changelog',
+                href: 'https://www.conduktor.io/changelog',
+              },
+              {
                 label: 'GitHub',
                 href: 'https://github.com/conduktor',
               },
               {
                 label: 'Discord',
-                to: 'https://discord.gg/gzTrmjdXdA',
+                href: 'https://discord.gg/gzTrmjdXdA',
               },
             ],
           },
