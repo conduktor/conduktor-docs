@@ -36,11 +36,16 @@ You will be required to input the following information:
 
 - **Cluster name**: This will enable you to reference your cluster when using Conduktor
 - **Bootstrap servers**: The list of host and port pairs used to establish the initial connection to the Kafka cluster
+- **Authentication method**: The mechanism and properties required to authenticate your connection 
 - **Additional properties**: Additional properties that you would usually provide your CLI or Java clients. This is especially important if you have a secure Kafka cluster.
+
+:::info
+To learn more about configuring SSL clusters, read our [**dedicated guide**](#./../../../configuration/ssl-tls-configuration.md) on adding certificates in the UI.
+:::
 
 Use the **Test connection** button to validate your cluster is reachable.
 
-![New-Cluster](/img/get-started/New-Cluster.png)
+![admin-add-cluster.png](/img/admin/admin-add-cluster.png)
 
 Once you have successfully configured your cluster, head to the **Console** to start exploring your Kafka data.
 
