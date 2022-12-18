@@ -6,19 +6,28 @@ description: Automate testing via the CI Agent.
 
 # CI/CD Automation
 
-Conduktor Testing supports automated execution of Test Scenarios via the CI Agent. This process enables you to run a [Test Suite](building-tests/test-suites) from within your build pipeline.
+Conduktor Testing supports automated execution of Test Scenarios via the CI Agent. This process enables you to run a [Test Suite](building-tests/test-suites) from within your build pipeline with ease.
 
-**Why automated testing in CI/CD?**
+**Why automate testing in your CI environment?**
 
 - Reduce manual efforts when tests need to be run repetitively
 - Ensure builds are stable before they are released
 - Helps compute test results and identify regressions
 
+Jump to
+ - [Configuring the CI Agent](#configuring-the-ci-agent)
+ - [Creating a Run Configuration](#create-a-run-configuration)
+ - [Generating the CI Script](#generating-the-ci-script)
+    - [Github Actions Example](#running-on-github-actions)
+    - [Circle CI Example](#running-on-circle-ci)
+    - [Gitlab Example](#running-on-gitlab-cicd)
+    - [Jenkins Example](#running-on-jenkins)
+
 ## Configuring the CI Agent
 
-The pre-requisite for executing tests in your CI environment is configuring the CI Agent.&#x20;
+The pre-requisite for executing tests in your CI environment is configuring the CI Agent.
 
-> A single agent token can be used in multiple CI process in parallel. However for audit purposes, we recommend creating new agents when the scope or access changes.
+A single agent token can be used in multiple CI process in parallel. However for audit purposes, we recommend creating new agents when the scope or access changes.
 
 This can be obtained from the **Agents** tab by selecting **Create an agent.**
 
@@ -40,31 +49,47 @@ Careful, as **you will only be shown the token once!** So make sure you download
 
 Select the **Github Action** tab to see an example command for executing test scenarios in your CI/CD environment.
 
-Note you can use this template, but you will need to replace the **'CONFIG'** dependency.&#x20;
+Note you can use this template, but you will need to replace the **'REFERENCE'** dependency.
 
-To obtain the config, see [obtaining the CI configuration](ci-cd-automation#obtaining-the-ci-configuration).&#x20;
+To obtain the reference, see creating a [Run Configuraiton](#create-a-run-configuration).
 
-![](<../assets/image (27) (1) (1).png>)
+![](<../assets/conduktor-testing-gh-action.png>)
 
-## Obtaining the CI Configuration
+## Create a Run Configuration
 
-To obtain the CI configuration for executing your tests in an automated manner, you must first have a [Test Suite ](building-tests/test-suites)created.
+You must create a Run Configuration that can be referenced for CI execution. 
 
-From within the test suite, select the **Integrate with CI/CD** button.
+Run configurations are created from [Test Suites](building-tests/test-suites).
 
-![](<../assets/image (162).png>)
+With a Test Suite open, navigate to the **Automation** tab to create a Run Configuration.
 
-Configure your options, such as which scenarios to include, and the [data storage](../miscellaneous/data-security) settings. Then, select **Generate CI configuration.**
+![](<../assets/testing-run-config.png>)
 
-![](<../assets/image (98).png>)
+Select **+ New Run Configuration** and configure the parameters for your CI tests. 
+ - Give your Run Configuration a suitable **Name** and **Description**
+ - If using environments, select the **Environment**
+ - Select the **Scenarios** that you wish to be part of your Run Configuration
+ - If necessary, configure the [Data Security](../miscellaneous/data-security) settings
 
-On the next screen, you will be displayed the **CI configuration.** This will be used when automating execution in your code pipeline.
+![](<../assets/testing-run-config-2.png>)
 
-**Copy** the JSON to the clipboard.
+**Save** the configuration to create the Run Configuration.
 
-![](<../assets/image (8) (1) (1).png>)
+## Generating the CI Script
 
-## Using the CI Configuration&#x20;
+Once you have saved a [Run Configuration](#create-a-run-configuration), Conduktor will help generate a custom script for integrating in popular CI tools.
+
+Select the **Integrate with CI/CD** button from within the **Automation** screen of your Test Suite.
+
+![](<../assets/testing-ci-config.png>)
+
+Add the **Token** from when you created a [CI Agent](#configuring-the-ci-agent) earlier, and select your **Run Configuration** from the prior step. 
+
+Upon clicking **Get custom configuration**, you will be presented with templates for running your tests via Github Actions, Docker, Circle CI, Gitlab and Jenkins.
+
+![](<../assets/testing-ci-script.png>)
+
+Note that Conduktor Testing **integrates with any CI/CD platform**. If we do not provide an example, please [contact us](https://www.conduktor.io/contact/support) so we can help you. 
 
 ### Running on Github Actions
 
@@ -73,47 +98,25 @@ Below shows an example Github action, utilizing the CI agent to automate executi
 Note the parameters:
 
 - **Container image**: `ghcr.io/conduktor/testing-agent-ci:latest`
-- **Token**: _Replace with your CI token_
-- **CI Configuration:** The CI configuration obtained in the prior step
-
-> If you copied the Base64 version of the configuration, you should use the _CONFIG_BASE64_ environment variable instead.&#x20;
+- **Token**: Replace with your [CI token](#configuring-the-ci-agent)
+- **Reference:** The [Run Configuration](#create-a-run-configuration) reference
 
 ```yaml
-name: Example github action
-
+name: Example Github Action
 on:
   push:
     branches:
-      - testing-runner-ci
-
+      - main
 jobs:
   tests:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/conduktor/testing-agent-ci:latest
     steps:
-      - name: Run Testing Scenario
+      - name: My Awesome Test Suite
         env:
-          TOKEN: <YOUR CI TOKEN>
-          CONFIG: |
-            {
-              "scenarios": [
-                {
-                  "id": "6C1MLj8jFqHAfzdvDFCW4rx"
-                },
-                {
-                  "id": "b8SNLtyWdWmPfc6Mt33fYr"
-                },
-                {
-                  "id": "7e7AQMPoLjqSfvZ9W9yoGF"
-                }
-              ],
-              "iterations": 1,
-              "dataRedactionConfig": {
-                "redactRecordData": false,
-                "redactCheckData": false
-              }
-            }
+          TOKEN: YWIzZWFhNWYtNDkzOC00NWIxLThmMGEtNGFiZjNlNDJjYjY1bXktZmlyc3QtYWdlbnQ
+          REFERENCE: fZTEYJeZqK3eW72rqyt9Z4
         run: /opt/docker/bin/runner-ci-build
 ```
 
@@ -124,10 +127,8 @@ Below is an example of a Circle CI workflow, using the CI agent to automate test
 Note the parameters:
 
 - **Container image**: `ghcr.io/conduktor/testing-agent-ci:latest`
-- **Token**: _Replace with your CI token_
-- **CI Configuration:** The CI configuration obtained [in the prior step](ci-cd-automation#obtaining-the-ci-configuration)
-
-> If you copied the Base64 version of the configuration, you should use the _CONFIG_BASE64_ environment variable instead.&#x20;
+- **Token**: Replace with your [CI token](#configuring-the-ci-agent)
+- **Reference:** The [Run Configuration](#create-a-run-configuration) reference
 
 ```yaml
 version: 2.1
@@ -141,27 +142,8 @@ jobs:
           name: Run Testing Scenario
           command: '/opt/docker/bin/runner-ci-build'
           environment:
-            TOKEN: <YOUR CI TOKEN>
-            CONFIG: |
-              {
-                "scenarios": [
-                  {
-                  {
-                    "id": "6C1MLj8jFqHAfzdvDFCW4rx"
-                  },
-                  {
-                    "id": "b8SNLtyWdWmPfc6Mt33fYr"
-                  },
-                  {
-                    "id": "7e7AQMPoLjqSfvZ9W9yoGF"
-                  }
-                ],
-                "iterations": 3,
-                "dataRedactionConfig": {
-                  "redactRecordData": true,
-                  "redactCheckData": false
-                }
-              }
+            TOKEN: YWIzZWFhNWYtNDkzOC00NWIxLThmMGEtNGFiZjNlNDJjYjY1bXktZmlyc3QtYWdlbnQ
+            REFERENCE: fZTEYJeZqK3eW72rqyt9Z4
 
 workflows:
   conduktor-testing-workflow:
@@ -176,10 +158,8 @@ Below is an example of a Gitlab CI workflow, using the CI agent to automate test
 Note the parameters:
 
 - **Container image**: `ghcr.io/conduktor/testing-agent-ci:latest`
-- **Token**: _Replace with your CI token_
-- **CI Configuration:** The CI configuration obtained [in the prior step](ci-cd-automation#obtaining-the-ci-configuration)
-
-> If you copied the Base64 version of the configuration, you should use the _CONFIG_BASE64_ environment variable instead.&#x20;
+- **Token**: Replace with your [CI token](#configuring-the-ci-agent)
+- **Reference:** The [Run Configuration](#create-a-run-configuration) reference
 
 ```yaml
 stages:
@@ -191,27 +171,9 @@ conduktor-testing-job:
     name: ghcr.io/conduktor/testing-agent-ci:latest
     entrypoint: ['']
   variables:
-    TOKEN: <YOUR CI TOKEN>
-    CONFIG: |
-      {
-        "scenarios": [
-          {
-          {
-            "id": "6C1MLj8jFqHAfzdvDFCW4rx"
-          },
-          {
-            "id": "b8SNLtyWdWmPfc6Mt33fYr"
-          },
-          {
-            "id": "7e7AQMPoLjqSfvZ9W9yoGF"
-          }
-        ],
-        "iterations": 3,
-        "dataRedactionConfig": {
-          "redactRecordData": true,
-          "redactCheckData": false
-        }
-      }
+    TOKEN: YWIzZWFhNWYtNDkzOC00NWIxLThmMGEtNGFiZjNlNDJjYjY1bXktZmlyc3QtYWdlbnQ
+    REFERENCE: fZTEYJeZqK3eW72rqyt9Z4
+
 script: /opt/docker/bin/runner-ci-build
 ```
 
@@ -219,28 +181,25 @@ script: /opt/docker/bin/runner-ci-build
 
 Below is an example of a Jenkins pipeline, using the CI agent to automate test execution.
 
-_Prerequisite: Your Jenkins agent should have access to docker daemon._&#x20;
+_Prerequisite: Your Jenkins agent should have access to docker daemon._
 
 Note the parameters:
 
 - **Container image**: `ghcr.io/conduktor/testing-agent-ci:latest`
-- **Token**: _Replace with your CI token_
-- **CI Configuration:** The CI configuration obtained [in the prior step](ci-cd-automation#obtaining-the-ci-configuration) (use CONFIG_BASE64)
+- **Token**: Replace with your [CI token](#configuring-the-ci-agent)
+- **Reference:** The [Run Configuration](#create-a-run-configuration) reference
 
 ```hoon
 pipeline {
-    agent any
-    stages {
-        stage('my-test-suite') {
-            steps {
-                sh '''
-                docker run \
-                    -e TOKEN="<YOUR CI TOKEN>"  \
-                    -e CONFIG_BASE64="<YOUR BASE64 CONFIG>"  \
-                    ghcr.io/conduktor/testing-agent-ci:latest
-                '''
-            }
-        }
-    }
+  agent any
+  stages {
+      stage('my-test-suite') {
+          steps {
+              sh '''
+              docker run -e TOKEN="YWIzZWFhNWYtNDkzOC00NWIxLThmMGEtNGFiZjNlNDJjYjY1bXktZmlyc3QtYWdlbnQ" -e REFERENCE="fZTEYJeZqK3eW72rqyt9Z4" ghcr.io/conduktor/testing-agent-ci:latest
+              '''
+          }
+      }
+  }
 }
 ```
