@@ -13,11 +13,21 @@ Depending on the environment, Conduktor might need to access external services l
 :::
 <br />
 
+The following table gives you an overview of what's currently supported and which methods you can use to configure it:  
+- From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
+- Volume mount. This method is available as a backup plan, or if you have LDAPS
+
+|                                | Kafka clusters         | Kafka Connect / Schema Registry | LDAPS, OIDC            |
+|--------------------------------|------------------------|---------------------------------|------------------------|
+| SSL to secure data in transit  | ✅ UI<br>✅ volume mount | ✅ UI<br>✅ volume mount          | 🚫 UI<br>✅ volume mount |
+| SSL to authenticate the client | ✅ UI<br>✅ volume mount | 🚫 Unsupported                   | 🚫 Unsupported          |
+
 Jump to:
  - [Using the Conduktor Certificate Store](#using-the-conduktor-certificate-store)
     - _Recommended for Kafka, Kafka Connect and Schema Registry connections_
  - [Mounting Custom Truststore](#mounting-custom-truststore)
     - _Recommended for SSO, DB or other external services requrigin SSL/TLS communication_
+ - [Client Certificate Authentication](#client-certificate-authentication)
 
 ## Using the Conduktor Certificate Store
 
@@ -111,3 +121,48 @@ services:
       CDK_SSL_TRUSTSTORE_PATH: '/opt/conduktor/certs/truststore.jks'
       CDK_SSL_TRUSTSTORE_PASSWORD: 'changeit'
 ```
+
+## Client Certificate Authentication
+This mechanism uses TLS protocol to authenticate the client.
+Other names include:
+- Mutual SSL, Mutual TLS, mTLS
+- Two-Way SSL, SSL Certificate Authentication
+- Digital Certificate Authentication, Public Key Infrastructure (PKI) Authentication
+
+### Using the UI (Recommended method)
+Your Kafka Admin or your Kafka Provider gave you 2 files for authentication
+- An Access key (.key file)
+- An Access certificate (.pem or .crt file)  
+
+Here's an example with Aiven
+![mtls-1.png](assets/mtls-1.png)
+
+You need to paste the 2 file contents into Conduktor Platform
+![mtls-1.png](assets/mtls-2.png)
+
+### Using Volume Mount (Alternate method)
+:::info
+Unsupported from the UI as of version `1.8.0`, there's a bug that prevents saving `ssl.keystore.location`. Use the YAML cluster configuration if you must use the alternate method.
+:::
+
+You can mount the keystore file in Conduktor Platform:
+````yaml
+version: '3.8'
+services:
+conduktor-platform:
+image: conduktor/conduktor-platform:latest
+ports:
+- 8080:8080
+volumes:
+- type: bind
+source: ./keystore.jks
+target: /opt/conduktor/certs/keystore.jks
+read_only: true
+````
+And then configure the Kafka additional properties like this:
+````properties
+security.protocol=SSL
+ssl.keystore.location=/opt/conduktor/certs/keystore.jks
+ssl.keystore.password=changeit
+ssl.key.password=password
+````
