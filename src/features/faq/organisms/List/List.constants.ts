@@ -110,4 +110,8 @@ export const items = [
       'What other integrations are planned for Monitoring and Alerting? For example, MS Teams, Email?',
     answer: 'We plan to have webhooks available so you can integrate with other services.',
   },
+  {
+    question: 'How are the cluster credentials I enter on the platform stored?',
+    answer: 'They are secrets that are encrypted to/from the DB (via AES encryption algorithm), of which the key is accessible only via our internal DevOps team.',
+  },
 ]
