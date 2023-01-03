@@ -46,12 +46,6 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
   - _Type_ : string
   - _Default_ : ∅
 
-- **`url`** : Platform external url. Can be useful to force platform to use a specific url for SSO callback.
-  - _Env_ : **`CDK_URL`**
-  - _Mandatory_ : false
-  - _Type_ : string
-  - _Default_ : ∅
-
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
 ### Database properties
