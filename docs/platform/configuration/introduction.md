@@ -79,6 +79,13 @@ Alternatively, use the `CDK_IN_CONF_FILE` environment variable to bind the file 
   conduktor/conduktor-platform:latest
 ```
 
+## Container user and permissions
+
+Before platform `1.8.0`, platform was running as root user. 
+After `1.8.0`, platform is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
+
+All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user. 
+
 ## Environment Override
 
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.

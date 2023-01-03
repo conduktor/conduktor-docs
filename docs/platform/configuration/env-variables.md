@@ -14,15 +14,16 @@ Jump to:
 ## Docker image environment variables
 
 <!-- prettier-ignore -->
-| ENV | Since Version | Until Version | Default Value |   | 
-|-----|---------------|---------------|---------------|---|
-| **`RUN_MODE`**          | 1.0.2 | latest | `nano` | Memory presets for the platform see [ advanced settings](../installation/hardware.md)
-| **`CDK_VOLUME_DIR`**    | 1.0.2 | latest | `/var/conduktor` | Volume directory where Conduktor platform store data **|
-| **`CDK_IN_CONF_FILE`**  | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location **|
-| **`CDK_LISTENING_PORT`** | 1.2.0 | latest | `8080` | Platform listening port **|
-| **`CDK_SSL_TRUSTSTORE_PATH`** | 1.5.0 | latest | None | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification
-| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0 | latest | None | Truststore password (optional)
-| **`CDK_SSL_TRUSTSTORE_TYPE`** | 1.5.0 | latest | `jks` | Truststore type (optional)
+| ENV                               | Since Version | Until Version | Default Value                                                                          |   | 
+|-----------------------------------|---------------|---------------|----------------------------------------------------------------------------------------|---|
+| **`RUN_MODE`**                    | 1.0.2         | latest | `nano`                                                                                 | Memory presets for the platform see [ advanced settings](../installation/hardware.md)
+| **`CDK_VOLUME_DIR`**              | 1.0.2         | latest | `/var/conduktor`                                                                       | Volume directory where Conduktor platform store data **|
+| **`CDK_IN_CONF_FILE`**            | 1.0.2         | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location **|
+| **`CDK_LISTENING_PORT`**          | 1.2.0         | latest | `8080`                                                                                 | Platform listening port **|
+| **`CDK_SSL_TRUSTSTORE_PATH`**     | 1.5.0         | latest | None                                                                                   | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification
+| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest | None                                                                                   | Truststore password (optional)
+| **`CDK_SSL_TRUSTSTORE_TYPE`**     | 1.5.0         | latest | `jks`                                                                                  | Truststore type (optional)
+| **`CDK_SSL_DEBUG`**               | 1.9.0         | latest | `false`                                                                                | Enable SSL/TLS debug logs
 
 ## Platform properties reference
 
