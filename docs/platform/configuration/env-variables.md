@@ -372,7 +372,6 @@ See authentication [documentation](./user-authentication) for snipets
 #### LDAP properties
 
 - **`sso.ldap[].name`** : Ldap connection name
-
   - _Env_ : **`SSO_LDAP_0_NAME`**
   - _Mandatory_ : true
   - _Type_ : string
@@ -383,45 +382,40 @@ See authentication [documentation](./user-authentication) for snipets
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
+  - 
 - **`sso.ldap[].managerDn`** : Sets the manager DN
-
   - _Env_ : **`SSO_LDAP_0_MANAGERDN`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].managerPassword`** : Sets the manager password
-
   - _Env_ : **`SSO_LDAP_0_MANAGERPASSWORD`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].search-subtree`** : Sets if the subtree should be searched.
-
-  - _Env_ : **`SSO_LDAP_0_SEARCH-subtree`**
+  - _Env_ : **`SSO_LDAP_0_SEARCH-SUBTREE`**
   - _Mandatory_ : false
   - _Type_ : boolean
   - _Default_ : `true`
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].search-base`** : Sets the base DN to search.
-
   - _Env_ : **`SSO_LDAP_0_SEARCH-BASE`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
-- **`sso.ldap[].search-filter`** : Sets the search filter.
-
+- **`sso.ldap[].search-filter`** : Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`.
   - _Env_ : **`SSO_LDAP_0_SEARCH-FILTER`**
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : `"(uid={0})"`
   - _Since_ : `1.5.0`
 
-- **`sso.ldap[].search-attributes`** : Sets the attributes list to return.
-
+- **`sso.ldap[].search-attributes`** : Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token.
   - _Env_ : **`SSO_LDAP_0_SEARCH-ATTRIBUTES`**
   - _Mandatory_ : false
   - _Type_ : string array
@@ -429,7 +423,6 @@ See authentication [documentation](./user-authentication) for snipets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-enabled`** : Sets if group search is enabled.
-
   - _Env_ : **`SSO_LDAP_0_GROUPS-ENABLED`**
   - _Mandatory_ : false
   - _Type_ : boolean
@@ -437,7 +430,6 @@ See authentication [documentation](./user-authentication) for snipets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-subtree`** : Sets if the subtree should be searched.
-
   - _Env_ : **`SSO_LDAP_0_GROUPS-SUBTREE`**
   - _Mandatory_ : false
   - _Type_ : boolean
@@ -445,29 +437,26 @@ See authentication [documentation](./user-authentication) for snipets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-base`** : Sets the base DN to search from.
-
   - _Env_ : **`SSO_LDAP_0_GROUPS-BASE`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
-- **`sso.ldap[].groups-filter`** : Sets the group search filter.
-
+- **`sso.ldap[].groups-filter`** : Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`.
   - _Env_ : **`SSO_LDAP_0_GROUPS-FILTER`**
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : `"uniquemember={0}"`
   - _Since_ : `1.5.0`
 
-- **`sso.ldap[].groups-filter-attribute`** : Sets the name of the user attribute to bind to the group search filter.
-
+- **`sso.ldap[].groups-filter-attribute`** : Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN.
   - _Env_ : **`SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE`**
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
   - _Since_ : `1.5.0`
 
-- **`sso.ldap[].groups-attribute`** : SSets the group attribute name
+- **`sso.ldap[].groups-attribute`** : Sets the group attribute name. Defaults to `cn`.
   - _Env_ : **`SSO_LDAP_0_GROUPS-ATTRIBUTE`**
   - _Mandatory_ : false
   - _Type_ : string
