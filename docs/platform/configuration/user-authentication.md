@@ -89,8 +89,8 @@ For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate t
 See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
 
 **Troubleshot LDAPS issues**  
-Download the script `platform-sso-debug.sh` here and run it.   
-TODO: LINK TO SCRIPT
+Download the script [platform-sso-debug.sh](https://github.com/conduktor/conduktor-platform/raw/main/example-sso-ldap/platform-sso-debug.sh) and run it:  
+
 
 If you encounter an error that looks like this:
 ````console
