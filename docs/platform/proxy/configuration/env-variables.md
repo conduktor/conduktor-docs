@@ -107,6 +107,7 @@ Note: These configurations apply to authentication between clients and Conduktor
 | `FEATURE_FLAGS_RBAC`                | `false`       | Whether or not to enable the RBAC feature                                                                                                                     |
 | `FEATURE_FLAGS_SINGLE_TENANT`       | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                   |
 | `FEATURE_FLAGS_NO_INTERNAL_TOPICS`  | `false`       | Whether or not to enable no internal topics mode, in this mode proxy internal topics are not created. Note only one proxy instance is supported in this mode. |
+| `FEATURE_FLAGS_JWT_TOKEN_ENDPOINT`  | `false`       | Whether or not to enable a REST endpoint for generating auth JWT tokens                                                                                       |
 
 ### Metrics Configurations
 
@@ -134,3 +135,10 @@ Note: These configurations apply to authentication between clients and Conduktor
 | `LICENSE_BACKING_TOPIC` | `_license`    | The namme of an internal topic used to store license data |
 | `LICENSE_PUBLIC_KEY`    | None          | The public key used to decode license keys                |
 | `LICENSE_KEY`           | None          | License key                                               |
+
+### Security configuration
+
+| Environment Variable         | Default Value | Description                                 |
+|------------------------------|---------------|---------------------------------------------|
+| `JWT_AUTH_MASTER_USERNAME`   | `conduktor`   | Master credentials for use with admin APIs  |
+| `JWT_AUTH_MASTER_PASSWORD`   | `conduktor`   | Master credentials for use with admin APIs  |
