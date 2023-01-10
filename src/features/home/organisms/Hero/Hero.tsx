@@ -1,3 +1,4 @@
+import Button from '@site/src/components/atoms/Button'
 import Container from '@site/src/components/atoms/Container'
 import GradientMask from '@site/src/components/atoms/GradientMask/GradientMask'
 import GridBackground from '@site/src/components/atoms/GridBackground/GridBackground'
@@ -20,6 +21,11 @@ const Hero: React.FunctionComponent<HeroProps> = () => {
           <Container>
             <h1 className={styles.Heading}>Documentation</h1>
             <p className={styles.Paragraph}>Guides and tutorials for everything Conduktor</p>
+            <div className={styles.ButtonContainer}>
+              <Button to="/platform/category/get-started" type="transparent" hasArrow>
+                Installation and Configuration
+              </Button>
+            </div>
             <SearchInput />
           </Container>
         </div>

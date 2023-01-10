@@ -45,6 +45,10 @@
   }
 }
 
+.ButtonContainer {
+  margin-bottom: var(--space-space9);
+}
+
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}

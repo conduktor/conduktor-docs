@@ -12,6 +12,12 @@
   text-decoration: none !important;
   transition: background-color 200ms ease-in-out;
 
+  &[data-arrow="true"] span {
+    margin-left: var(--space-space2);
+    transform: rotate(0deg);
+    transition: transform 250ms ease-out;
+  }
+
   &[data-type="primary"] {
     background-color: var(--colors-purple9);
     color: #fff;
@@ -36,6 +42,21 @@
     
     &:hover {
       filter: grayscale(0.2);
+    }
+  }
+
+  &[data-type="transparent"] {
+    background-color: transparent;
+    padding: 0;
+    color: var(--colors-mauve12);
+    transition: 200ms color ease-in-out;
+
+    &:hover {
+      color: var(--colors-purple9);
+
+      span {
+        transform: rotate(0deg) translateX(3px);
+      }
     }
   }
 }

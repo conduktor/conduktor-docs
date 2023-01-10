@@ -30,6 +30,12 @@ export const items = [
     icon: '/assets/svgs/products/proxy.svg',
   },
   {
+    name: 'Admin',
+    description: 'Control your Conduktor account',
+    to: '/platform/admin/managing-clusters',
+    icon: '/assets/svgs/products/admin.svg',
+  },
+  {
     name: 'Topic Analyzer',
     description: 'Auto Kafka recommendations',
     to: '/platform/topic-analyzer',

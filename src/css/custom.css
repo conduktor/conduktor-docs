@@ -156,6 +156,7 @@ aside ul li.testing,
 aside ul li.monitoring,
 aside ul li.data-masking,
 aside ul li.proxy,
+aside ul li.admin,
 aside ul li.desktop,
 aside ul li.topic-analyzer,
 aside ul li.topic-service,
@@ -170,6 +171,7 @@ aside ul li.testing::before,
 aside ul li.monitoring::before,
 aside ul li.data-masking::before,
 aside ul li.proxy::before,
+aside ul li.admin::before,
 aside ul li.desktop::before,
 aside ul li.topic-analyzer::before,
 aside ul li.topic-as-a-service::before,
@@ -201,6 +203,11 @@ aside ul li.data-masking::before {
 ul li[data-icon="true"].proxy::before,
 aside ul li.proxy::before {
   content: url(/assets/svgs/products/24x24/proxy.svg);
+}
+
+ul li[data-icon="true"].admin::before,
+aside ul li.admin::before {
+  content: url(/assets/svgs/products/24x24/admin.svg);
 }
 
 ul li[data-icon="true"].desktop::before,

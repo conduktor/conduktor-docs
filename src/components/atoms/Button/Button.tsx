@@ -9,7 +9,7 @@ interface ButtonProps {
   target?: string
   width?: string | number | 'fit-content'
   hasArrow?: boolean
-  type?: 'primary' | 'secondary' | 'gradient'
+  type?: 'primary' | 'secondary' | 'gradient' | 'transparent'
   children: React.ReactNode
 }
 
@@ -31,10 +31,10 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       target={target}
       style={{ width }}
       data-type={type}
-      data-hades="true"
+      data-arrow={hasArrow}
     >
       {children}
-      {hasArrow && ' →'}
+      {hasArrow && <span>→</span>}
     </a>
   ) : (
     <Link
@@ -44,10 +44,10 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       target={target}
       style={{ width }}
       data-type={type}
-      data-hades="true"
+      data-arrow={hasArrow}
     >
       {children}
-      {hasArrow && ' →'}
+      {hasArrow && <span>→</span>}
     </Link>
   )
 }

@@ -1,5 +1,4 @@
 import Link from '@docusaurus/Link'
-import Button from '@site/src/components/atoms/Button'
 import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Badge from '../../atoms/Badge'
@@ -15,9 +14,6 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
       <Container>
         <div className={styles.HeadingContainer}>
           <Heading>Browse by product</Heading>
-          <Button id="home-get-started" href="https://www.conduktor.io/get-started" type="gradient">
-            Get Started
-          </Button>
         </div>
         <ul className={styles.List}>
           {items.map((item, itemIndex) => (
