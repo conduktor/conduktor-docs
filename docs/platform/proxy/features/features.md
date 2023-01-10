@@ -29,8 +29,13 @@ Kafka is often prized for its resilience but the applications that operate on it
 
 Chaos proxy addresses this by simulating common issues, such as latency and request failures to the clients that connect to Kafka through it. Scenarios in which these errors are created can be curated to provide complete coverage and ensure that, should the worst happen, your applications will endure.
 
+For more detail regarding this see the **[chaos demo](https://github.com/conduktor/conduktor-proxy-demos/tree/main/chaos)**
+
+
 ## Safeguard
 
 One of the main advantages of Kafka is its flexibility. However, with this flexibility, comes a risk of misconfiguration that can result in inefficient or even potentially dangerous client configurations. Such configurations can easily go undetected and impact application performance.
 
 Conduktor Proxy Safeguard detects inefficient or incorrect configurations of this type and either transparently corrects them or reports them to the applications so that they can be remedied. The result is a more efficient, higher performing system.
+
+For more detail regarding this see the **[safeguard demo](https://github.com/conduktor/conduktor-proxy-demos/tree/main/safeguard)**
