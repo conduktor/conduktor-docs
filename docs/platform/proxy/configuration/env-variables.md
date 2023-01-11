@@ -142,3 +142,9 @@ Note: These configurations apply to authentication between clients and Conduktor
 |------------------------------|---------------|---------------------------------------------|
 | `JWT_AUTH_MASTER_USERNAME`   | `conduktor`   | Master credentials for use with admin APIs  |
 | `JWT_AUTH_MASTER_PASSWORD`   | `conduktor`   | Master credentials for use with admin APIs  |
+
+### Logging configuration
+
+| Environment Variable       | Default Value | Description                                                                                      |
+|----------------------------|---------------|--------------------------------------------------------------------------------------------------|
+| `LOG4J2_APPENDER_LAYOUT`   | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |
