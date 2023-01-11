@@ -24,6 +24,11 @@ Jump to:
 | **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest | None                                                                                   | Truststore password (optional)
 | **`CDK_SSL_TRUSTSTORE_TYPE`**     | 1.5.0         | latest | `jks`                                                                                  | Truststore type (optional)
 | **`CDK_SSL_DEBUG`**               | 1.9.0         | latest | `false`                                                                                | Enable SSL/TLS debug logs
+| **`CDK_HTTP_PROXY_HOST`**         | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
+| **`CDK_HTTP_PROXY_PORT`**         | 1.10.0        | latest | `80`                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
+| **`CDK_HTTP_NON_PROXY_HOSTS`**    | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
+| **`CDK_HTTP_PROXY_USERNAME`**     | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
+| **`CDK_HTTP_PROXY_PASSWORD`**     | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
 
 ## Platform properties reference
 
