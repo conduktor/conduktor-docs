@@ -6,38 +6,53 @@ description: This page provides guidence for how to install, verify and renew li
 
 ## License installation
 
-Conduktor platform requires a license to enable features beyond the base features.  The license is put into the `platform-config.yaml` file.
+Conduktor platform requires a license to enable features beyond the base features. The license can be put in the environment variables (this is recommended), or into the `platform-config.yaml` file.
 
-On a far left justified line provide a `license` configuration declaration.  Example:
+### As an environment variable
+
+In the `docker run` command, you can add the -e flag to specify your license key, like this:
+`-e CDK_LICENSE="YOUR_LICENSE_HERE"`
+
+If you have many environment variables, you can write them in a file, and load this file using the --env-file flag.
+For example, you can create a file named `env.list` in which you write:
+```
+CDK_LICENSE="YOUR_LICENSE_HERE"
+```
+
+And then run the `docker run` command with `--env-file=env.list`
+
+### Into the configuration file
+
+On a far left justified line provide a `license` configuration declaration. Example:
 ```yaml
-clusters:
-  - id: default
-    name: My Local Kafka Cluster
-    color: "#0013E7"
-    ignoreUntrustedCertificate: false
-    bootstrapServers: "localhost:9092"
-    properties:
-    schemaRegistry:
-      url: "localhost:8081"
-      ignoreUntrustedCertificate: false
-      properties:
-    labels: {}
-
 license: "YOUR_LICENSE_HERE"
 ```
 
 ## License verification
+
+You have multiple ways to check that your license has been used to launch the platform.
+
+### In the logs
+
+When you run the platform, you can find these meaningful logs in the head:
+
+```
+[ INFO  platform_cli::license::validator] Input configured license : Some("YOUR_LICENSE_HERE")
+[ INFO  platform_cli::license::validator] License is valid ! Remaining days : 365
+```
+
+### Within the Conduktor Platform container
 
 From within the Conduktor Platform container run the following:
 ```sh
 curl -s  http://localhost:3000/platform/api/license | jq .
 ```
 
-Example:
+Example of result:
 ```
 curl -s  http://localhost:3000/platform/api/license | jq .
 {
-  "raw-token": "<token>",
+  "raw-token": "YOUR_LICENSE_HERE",
   "expire": 1669248000,
   "plan": "enterprise",
   "version": 1,
@@ -59,6 +74,14 @@ curl -s  http://localhost:3000/platform/api/license | jq .
 }
 ```
 
-## Renew or install new license
+### In the UI
 
-To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file. Then restart the Conduktor Platform container.  
+In the Admin section, you can find the Clusters tab where there is the information of how many clusters you can create in your Organization.
+
+<img width="357" alt="image" src="https://user-images.githubusercontent.com/112936799/212074277-4e015325-bd98-4f2a-be89-b8828be3eee1.png">
+
+You can also check through the different tabs that you have access to all the products you're supposed to have access to.
+
+## Renew or install a new license
+
+To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Platform container again.  
