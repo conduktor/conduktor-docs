@@ -6,14 +6,14 @@ description: This page provides guidence for how to install, verify and renew li
 
 ## License installation
 
-Conduktor platform requires a license to enable features beyond the base features. The license can be put in the environment variables (recommended), or into the `platform-config.yaml` file.
+Conduktor platform requires a license to enable features beyond the base features. The license can be put in the environment variables (this is recommended), or into the `platform-config.yaml` file.
 
 ### As an environment variable
 
-In the `docker run` command, you can add the -e option to specify your license key, like this:
+In the `docker run` command, you can add the -e flag to specify your license key, like this:
 `-e CDK_LICENSE="YOUR_LICENSE_HERE"`
 
-If you have many environment variables, you can write them in a file, and load this file using the --env-file option.
+If you have many environment variables, you can write them in a file, and load this file using the --env-file flag.
 For example, you can create a file named `env.list` in which you write:
 ```
 CDK_LICENSE="YOUR_LICENSE_HERE"
@@ -30,7 +30,7 @@ license: "YOUR_LICENSE_HERE"
 
 ## License verification
 
-You have multiple ways to check that you license has been used to launch the platform.
+You have multiple ways to check that your license has been used to launch the platform.
 
 ### In the logs
 
