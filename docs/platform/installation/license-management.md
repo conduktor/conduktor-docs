@@ -15,6 +15,7 @@ In the `docker run` command, you can add the -e flag to specify your license key
 
 If you have many environment variables, you can write them in a file, and load this file using the --env-file flag.
 For example, you can create a file named `env.list` in which you write:
+
 ```
 CDK_LICENSE="YOUR_LICENSE_HERE"
 ```
@@ -24,8 +25,9 @@ And then run the `docker run` command with `--env-file=env.list`
 ### Into the configuration file
 
 On a far left justified line provide a `license` configuration declaration. Example:
+
 ```yaml
-license: "YOUR_LICENSE_HERE"
+license: 'YOUR_LICENSE_HERE'
 ```
 
 ## License verification
@@ -44,11 +46,13 @@ When you run the platform, you can find these meaningful logs in the head:
 ### Within the Conduktor Platform container
 
 From within the Conduktor Platform container run the following:
+
 ```sh
 curl -s  http://localhost:3000/platform/api/license | jq .
 ```
 
 Example of result:
+
 ```
 curl -s  http://localhost:3000/platform/api/license | jq .
 {
@@ -78,10 +82,10 @@ curl -s  http://localhost:3000/platform/api/license | jq .
 
 In the Admin section, you can find the Clusters tab where there is the information of how many clusters you can create in your Organization.
 
-<img width="357" alt="image" src="https://user-images.githubusercontent.com/112936799/212074277-4e015325-bd98-4f2a-be89-b8828be3eee1.png">
+![](https://user-images.githubusercontent.com/112936799/212074277-4e015325-bd98-4f2a-be89-b8828be3eee1.png)
 
 You can also check through the different tabs that you have access to all the products you're supposed to have access to.
 
 ## Renew or install a new license
 
-To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Platform container again.  
+To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Platform container again.
