@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: SSL/TLS configuration
+title: SSL/TLS Configuration
 description: Depending on the environment, Conduktor might need to access external services like Kafka clusters, SSO servers, database, or object-storage that require custom certificate for SSL/TLS communication.
 ---
 
