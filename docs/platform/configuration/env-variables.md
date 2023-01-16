@@ -36,6 +36,14 @@ Starting from Conduktor Platform `1.2.0` input configuration fields can be provi
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
 
+#### Support of *_FILE environment variables
+
+Since release `1.10.0`, setting an environment variable matching *_FILE to a file path, the prefixed environment variable will be overridden with the value specified in that file.
+
+For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override `CDK_LICENSE` with the content of the file `/run/secrets/license`.
+
+> Exception: `CDK_IN_CONF_FILE` is not supported
+
 ### Global properties
 
 - **`organization.name`** : Your organizations name
