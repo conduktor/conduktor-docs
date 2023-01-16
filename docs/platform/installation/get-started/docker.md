@@ -9,8 +9,9 @@ description: Get started with the latest Conduktor Platform Docker image in just
 Get started with the latest Conduktor Platform Docker image. The installation and configuration process takes under 30 minutes.
 
 There are two ways to configure Conduktor via Docker:
- - [**Simple Setup**](#simple-setup): Configure your clusters and certificates inside the Conduktor interface
- - [**Advanced Configuration**](#advanced-setup): Use a configuration file to declare an external database and SSO
+ - [**Simple Setup**](#simple-setup): Use the embedded database and configure your clusters and certificates inside the Conduktor interface. Great for **demo purposes** and experimenting with the product.
+
+ - [**Advanced Configuration**](#advanced-setup): Use a configuration file to declare an external database and SSO. This is the recommended option for **production environments**.  
 
 ## Simple Setup
 
@@ -77,7 +78,7 @@ Password: admin
 
 Once you have authenticated using the default credentials, you should configure your first cluster.
 
-Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and select **'My Local Kafka Cluster'** to edit the configuration.
+Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and either **create** a new cluster configuration, or select **'My Local Kafka Cluster'** to edit the configuration.
 
 From within the cluster configuration screen, add the:
  - Bootstrap server
@@ -125,11 +126,14 @@ Conduktor can be configured using a configuration file `platform-config.yaml`. T
 
 The below example shows how to configure Conduktor with an external database, SSO and an optional license key (for Enterprise customers).
 
-:::caution
-Note it's no longer recommended to configure your Kafka clusters, Schema Registry and Kafka Connect via the configuration file. Instead, we advise you to configure this from the `localhost:8080/admin/clusters` screen within the Conduktor interface. This allows you to validate and test the connection more easily.
+All configuration properties can also be parsed as [Environment Variables](../../configuration/env-variables) when starting Conduktor.
+
+:::info
+Note it's optional to configure your Kafka clusters, Schema Registry and Kafka Connect via the configuration file. Instead, you can configure this from the `localhost:8080/admin/clusters` screen within the Conduktor interface. This allows you to validate and test the connections more easily.
 :::
 
 For more examples, see:
+ - [Configuration Properties and Environment Variables](../../configuration/env-variables)
  - [Configuration Snippets](../../configuration/configuration-snippets)
  - [Configuring SSO](../../configuration/user-authentication)
 
@@ -138,14 +142,12 @@ organization:
   name: demo
 
 database:
-  url: postgresql://user:password@host:5432/database
-  # OR in a decomposed way
-  # host: "host"
-  # port: 5432
-  # name: "database"
-  # username: "user"
-  # password: "password"
-  # connection_timeout: 30 # in seconds
+  host: 'host'
+  port: 5432
+  name: 'database'
+  username: 'user'
+  password: 'password'
+  connection_timeout: 30 # in seconds
 
 sso:
   oauth2:
