@@ -50,6 +50,24 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
+    
+- **`platform.fqdn`** : Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy.
+  - _Env_ : **`CDK_PLATFORM_FQDN`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : `"localhost"`
+
+- **`platform.https.cert.path`** : Path to the SSL certificate file path.
+  - _Env_ : **`CDK_PLATFORM_HTTPS_CERT_PATH`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`platform.https.key.path`** : Path to the SSL certificate key file path.
+  - _Env_ : **`CDK_PLATFORM_HTTPS_KEY_PATH`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
