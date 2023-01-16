@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Cloudformation
 description: The below guide details how to deploy a production-ready instance of Conduktor Platform on MSK.
 ---
