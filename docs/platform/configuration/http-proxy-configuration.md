@@ -1,6 +1,6 @@
 ---
-sidebar_position: 7
-title: HTTP Proxy
+sidebar_position: 8
+title: HTTP Proxy Configuration
 description: Specify proxy settings that Conduktor Platform should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
 ---
 
@@ -16,7 +16,7 @@ There are 5 properties you can set to specify the proxy that will be used by the
 `CDK_HTTP_PROXY_PASSWORD`: the proxy password
 
 ## Example
-````yaml
+```yaml
 version: '3.8'
 services:
   conduktor-platform:
@@ -27,4 +27,4 @@ services:
       CDK_HTTP_PROXY_HOST: "proxy.mydomain.com"
       CDK_HTTP_PROXY_PORT: 8000
       CDK_HTTP_NON_PROXY_HOSTS: "*.mydomain.com"
-````
+```

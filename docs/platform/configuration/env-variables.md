@@ -14,27 +14,37 @@ Jump to:
 ## Docker image environment variables
 
 <!-- prettier-ignore -->
-| ENV                               | Since Version | Until Version | Default Value                                                                          |   | 
-|-----------------------------------|---------------|---------------|----------------------------------------------------------------------------------------|---|
-| **`RUN_MODE`**                    | 1.0.2         | latest | `nano`                                                                                 | Memory presets for the platform see [ advanced settings](../installation/hardware.md)
-| **`CDK_VOLUME_DIR`**              | 1.0.2         | latest | `/var/conduktor`                                                                       | Volume directory where Conduktor platform store data **|
-| **`CDK_IN_CONF_FILE`**            | 1.0.2         | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location **|
-| **`CDK_LISTENING_PORT`**          | 1.2.0         | latest | `8080`                                                                                 | Platform listening port **|
-| **`CDK_SSL_TRUSTSTORE_PATH`**     | 1.5.0         | latest | None                                                                                   | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification
-| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest | None                                                                                   | Truststore password (optional)
-| **`CDK_SSL_TRUSTSTORE_TYPE`**     | 1.5.0         | latest | `jks`                                                                                  | Truststore type (optional)
-| **`CDK_SSL_DEBUG`**               | 1.9.0         | latest | `false`                                                                                | Enable SSL/TLS debug logs
-| **`CDK_HTTP_PROXY_HOST`**         | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
-| **`CDK_HTTP_PROXY_PORT`**         | 1.10.0        | latest | `80`                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
-| **`CDK_HTTP_NON_PROXY_HOSTS`**    | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
-| **`CDK_HTTP_PROXY_USERNAME`**     | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
-| **`CDK_HTTP_PROXY_PASSWORD`**     | 1.10.0        | latest | None                                                                                   | Specify proxy settings that Conduktor Platform should use to access the Internet
+| ENV                               | Since Version | Until Version | Default Value                                                                          |                                                                                                                   | 
+|-----------------------------------|---------------|---------------|----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **`CDK_DEBUG`**                   | 1.0.0         | latest        | `false`                                                                                | Flag to enable platform debug logs                                                                                |
+| **`RUN_MODE`**                    | 1.0.2         | latest        | `nano`                                                                                 | Memory presets for the platform see [advanced settings](../installation/hardware.md)                              |
+| **`CDK_VOLUME_DIR`**              | 1.0.2         | latest        | `/var/conduktor`                                                                       | Volume directory where Conduktor platform store data **                                                           |
+| **`CDK_IN_CONF_FILE`**            | 1.0.2         | latest        | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location **                                                                 |
+| **`CDK_LISTENING_PORT`**          | 1.2.0         | latest        | `8080`                                                                                 | Platform listening port **                                                                                        |
+| **`CDK_SSL_TRUSTSTORE_PATH`**     | 1.5.0         | latest        | None                                                                                   | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification                            |
+| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest        | None                                                                                   | Truststore password (optional)                                                                                    |
+| **`CDK_SSL_TRUSTSTORE_TYPE`**     | 1.5.0         | latest        | `jks`                                                                                  | Truststore type (optional)                                                                                        |
+| **`CDK_SSL_DEBUG`**               | 1.9.0         | latest        | `false`                                                                                | Enable SSL/TLS debug logs                                                                                         |
+| **`CDK_HTTP_PROXY_HOST`**         | 1.10.0        | latest        | None                                                                                   | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_PORT`**         | 1.10.0        | latest        | `80`                                                                                   | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_NON_PROXY_HOSTS`**    | 1.10.0        | latest        | None                                                                                   | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_USERNAME`**     | 1.10.0        | latest        | None                                                                                   | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_PASSWORD`**     | 1.10.0        | latest        | None                                                                                   | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_GLOBAL_JAVA_OPTS`**        | 1.10.0        | latest        | None                                                                                   | Custom JAVA_OPTS parameters passed to platform modules.                                                           |
 
 ## Platform properties reference
 
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
+
+#### Support of `*_FILE` environment variables
+
+Since release `1.10.0`, setting an environment variable matching `*_FILE` to a file path, the prefixed environment variable will be overridden with the value specified in that file.
+
+For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override `CDK_LICENSE` with the content of the file `/run/secrets/license`.
+
+> Exception: `CDK_IN_CONF_FILE` is not supported
 
 ### Global properties
 
@@ -52,6 +62,26 @@ Below shows the mapping of configuration fields in the `platform-config.yaml` to
   - _Default_ : ∅
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
+    
+- **`platform.fqdn`** : Platform FQDN. 
+Could be useful for SSO callback URL when using a reverse proxy. 
+The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy.
+  - _Env_ : **`CDK_PLATFORM_FQDN`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : `"localhost"`
+
+- **`platform.https.cert.path`** : Path to the SSL `certificate` file.
+  - _Env_ : **`CDK_PLATFORM_HTTPS_CERT_PATH`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`platform.https.key.path`** : Path to the SSL `private key` file.
+  - _Env_ : **`CDK_PLATFORM_HTTPS_KEY_PATH`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
 
 ### Database properties
 
