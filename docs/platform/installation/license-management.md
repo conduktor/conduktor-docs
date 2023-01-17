@@ -45,7 +45,7 @@ When you run the platform, you can find these meaningful logs in the head:
 
 ### With API
 
-Since release `1.10.0` you can use the `/platform/api/license` endpoint to get the license information (license token not returned).
+Since release `1.10.0` you can use the `/platform/api/license` endpoint to get the license details.
 ```sh
 curl -s  http://localhost:8080/platform/api/license | jq .
 ```
