@@ -48,7 +48,6 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 
 ### Global properties
 
-
 | Configuration field | Environment variable  | Description | Type | Mandatory | Default value |
 |---------------------|-----------------------|-------------|------|-----------|---------------|
 | **`organization.name`** | **`CDK_ORGANIZATION_NAME`** | Your organization's name | string | Yes | `"default"` |
@@ -224,14 +223,14 @@ See authentication [documentation](./user-authentication) for snipets
 | **`sso.ldap[].groups-filter-attribute`** | **`SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE`** | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN. | string | `1.5.0` | No | ∅ |
 | **`sso.ldap[].groups-attribute`** | **`SSO_LDAP_0_GROUPS-ATTRIBUTE`** | Sets the group attribute name. | string | `1.5.0` | No | `"cn"` |
 
-#### Oauth2 properties
+#### OAuth2 properties
 
 | Configuration field | Environment variable  | Description | Type | Mandatory | Default value | Values |
 |---------------------|-----------------------|-------------|------|-----------|---------------|--------|
-| **`sso.oauth2[].name`** | **`SSO_OAUTH2_0_NAME`** | Oauth2 connection name | string | Yes | ∅ ||
+| **`sso.oauth2[].name`** | **`SSO_OAUTH2_0_NAME`** | OAuth2 connection name | string | Yes | ∅ ||
 | **`sso.oauth2[].default`** | **`SSO_OAUTH2_0_DEFAULT`** | Use as default | boolean | Yes | ∅ ||
-| **`sso.oauth2[].client-id`** | **`SSO_OAUTH2_0_CLIENT-ID`** | Oauth2 client id | string | Yes | ∅ ||
-| **`sso.oauth2[].client-secret`** | **`SSO_OAUTH2_0_CLIENT-SECRET`** | Oauth2 client secret | string | Yes | ∅ ||
+| **`sso.oauth2[].client-id`** | **`SSO_OAUTH2_0_CLIENT-ID`** | OAuth2 client id | string | Yes | ∅ ||
+| **`sso.oauth2[].client-secret`** | **`SSO_OAUTH2_0_CLIENT-SECRET`** | OAuth2 client secret | string | Yes | ∅ ||
 | **`sso.oauth2[].openid.issuer`** | **`SSO_OAUTH2_0_OPENID_ISSUER`** | Issuer to check on token | string | Yes | ∅ ||
 | **`sso.oauth2[].scopes`** | **`SSO_OAUTH2_0_SCOPES`** | Scope to be requested in the client credentials request | string | Yes | `[]` ||
 | **`sso.oauth2[].authorization-url`** | **`SSO_OAUTH2_0_AUTHORIZATION-URL`** | Authorization endpoint URL | string | No | ∅ ||
