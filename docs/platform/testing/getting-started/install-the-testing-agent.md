@@ -8,15 +8,17 @@ description: The testing agent ensures you can reach clusters securely and with 
 
 The Testing Agent is a micro-application that runs on your desktop, private network or CI environment. It ensures you can reach clusters that your host has access to securely and with isolation.
 
- - If you started Conduktor via **Docker**, the installation is bundled with an **embedded agent**
- - If you are using **Conduktor Cloud**, you must [setup](#agent-setup) the Testing Agent to get started
+- If you started Conduktor via **Docker**, the installation is bundled with an **embedded agent**
+- If you are using **Conduktor Cloud**, you must [setup](#agent-setup) the Testing Agent to get started
 
 ## Agent Setup
 
 :::tip
 The Testing Agent can be installed and used on GNU/Linux, macOS, FreeBSD, and Windows. You can install it:
+
 - In a container
 - By downloading a binary manually
+
 :::
 
 From within the Conduktor Testing UI, navigate to the **Agents** tab. Note you may need to create a [Workspace](../features/workspace) first.
@@ -82,6 +84,13 @@ Then, **Run** the below command via command line, populating the token parameter
 java -jar conduktor-testing-agent-*.jar --token=<TOKEN>
 ```
 
+:::tip
+Using a proxy? You can inherit the configuration from your system by using :
+
+`java -Djava.net.useSystemProxies=true -jar ...`
+
+:::
+
 ### Container installation
 
 :::info
@@ -96,19 +105,41 @@ You will need to provide the agent token as well, through the **TOKEN** environm
 **Run** with Docker:
 
 ```
+
 docker run -e TOKEN=<TOKEN> -d ghcr.io/conduktor/testing-agent:latest
+
 ```
 
 **Run** with Docker Compose:
 
 ```
+
 # docker-compose.yaml
+
 services:
-  testing-agent:
-    image: ghcr.io/conduktor/testing-agent:latest
-    environment:
-      TOKEN: <TOKEN>
+testing-agent:
+image: ghcr.io/conduktor/testing-agent:latest
+environment:
+TOKEN: <TOKEN>
+
 ```
+
+## Using with self-hosted platforms
+
+To allow external agents and CI runners to reach your on-premise platform, you will need to expose the **`7010`** TCP port on the platform.
+
+The agent will initiate a connection using GRPC.
+
+**Your platform needs to be reachable from the system running the agent**.
+Make sure to setup your network accordingly.
+
+You can then configure your agent/CI runner with the following environment variables:
+
+- `PFM_HOST` : the IP/domain of your platform
+- `PFM_PORT` : the port mapped to the 7010 internal port of your platform
+- `PFM_USE_SSL` : true if you are using SSL, false otherwise
+
+Alternatively, you can use the `--host=XX`, `--port=XX` and `--use-ssl=XX` command line arguments.
 
 ## Running in your CI/CD Environment&#x20;
 
