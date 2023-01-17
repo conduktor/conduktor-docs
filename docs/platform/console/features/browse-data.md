@@ -10,7 +10,7 @@ The Conduktor Platform enables you to view messages in your Kafka Topics.
 
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212052836-71c9826d-275b-4576-a8dc-957ed468eaff.png">
 
-After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **filter** your search according to multiple criteria and also manually decide on the the **deserialisation** formats of the messages key and value.
+After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **filter** your search according to multiple criteria and also manually decide on the **deserialisation** formats of the messages key and value.
 
 Jump to:
 
