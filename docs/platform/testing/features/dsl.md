@@ -20,7 +20,7 @@ Below shows an example of a simple Test Scenario that:
 - Consumes the message
 - Checks the data of the consumed record
 
-```
+```yaml
 version: '0.1'
 name: My first scenario
 tasks:
@@ -38,7 +38,7 @@ tasks:
     keyFormat: String
     valueFormat: String
     headers:
-    - app.name: Conduktor Testing
+      - app.name: Conduktor Testing
     acks: All
     idempotent: false
     properties:
@@ -64,15 +64,15 @@ tasks:
       negate: false
     check:
       checks:
-      - left:
-          type: Jq
-          value: .record.value
-        right:
-          type: Plain
-          value: Hello World
-        operator: EQUALS
-        modifiers: {}
-        type: StringComparator
+        - left:
+            type: Jq
+            value: .record.value
+          right:
+            type: Plain
+            value: Hello World
+          operator: EQUALS
+          modifiers: {}
+          type: StringComparator
       operator: ALL
       type: ListCheck
     lifecycle:
@@ -81,10 +81,10 @@ tasks:
       failConditions:
         elapsedMillis: 60000
 scenario:
-- task: Produce
-  startsOn: scenarioStart
-- task: Consume
-  startsOn: scenarioStart
+  - task: Produce
+    startsOn: scenarioStart
+  - task: Consume
+    startsOn: scenarioStart
 ```
 
 ## Toggling the DSL view

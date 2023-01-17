@@ -80,7 +80,7 @@ Now you have the Testing Agent installed, you will be able to reach clusters tha
 
 Then, **Run** the below command via command line, populating the token parameter with your newly generated token.
 
-```
+```shell
 java -jar conduktor-testing-agent-*.jar --token=<TOKEN>
 ```
 
@@ -104,24 +104,20 @@ You will need to provide the agent token as well, through the **TOKEN** environm
 
 **Run** with Docker:
 
-```
-
+```shell
 docker run -e TOKEN=<TOKEN> -d ghcr.io/conduktor/testing-agent:latest
-
 ```
 
 **Run** with Docker Compose:
 
-```
-
+```yaml
 # docker-compose.yaml
 
 services:
-testing-agent:
-image: ghcr.io/conduktor/testing-agent:latest
-environment:
-TOKEN: <TOKEN>
-
+  testing-agent:
+    image: ghcr.io/conduktor/testing-agent:latest
+    environment:
+      TOKEN: <TOKEN>
 ```
 
 ## Using with self-hosted platforms

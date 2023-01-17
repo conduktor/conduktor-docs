@@ -2,6 +2,7 @@
 title: Using environment variables
 description: How to reference environment variables from the scenario editor view.
 ---
+
 # Using environment variables
 
 Once you have configured environment variables in your workspace, you can reference them in test scenarios. The below details how to reference environment variables from the scenario editor view.
@@ -22,9 +23,9 @@ To do this, you should use the syntax:
 
 For example, produce a JSON message value using the below example:
 
-```
+```json
 {
-    "sessionId": "b885d9a3-de57-4b75-bbcf-29df19362642"
+  "sessionId": "b885d9a3-de57-4b75-bbcf-29df19362642"
 }
 ```
 
@@ -50,6 +51,6 @@ You can access environment variables via the JavaScript input selection.
 
 To do this, you should use the below syntax:
 
-`context.env.`<`variable name>`
+`context.env.<variable name>`
 
 ![](<../../assets/image (105).png>)

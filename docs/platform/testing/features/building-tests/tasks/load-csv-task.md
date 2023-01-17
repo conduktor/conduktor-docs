@@ -118,11 +118,11 @@ In this example, we will demonstrate how to load csv data from a local file, and
 
   Here is the resulting template :
 
-  ```
+  ```json
   {
-  "item_id": "{{source.my_csv.csvRecord.data.item_id}}",
-  "item_label": "{{source.my_csv.csvRecord.data.label}}",
-  "price": {{source.my_csv.csvRecord.data.price}}
+    "item_id": "{{source.my_csv.csvRecord.data.item_id}}",
+    "item_label": "{{source.my_csv.csvRecord.data.label}}",
+    "price": {{source.my_csv.csvRecord.data.price}}
   }
   ```
 
