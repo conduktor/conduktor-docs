@@ -1,6 +1,6 @@
 ---
 sidebar_position: 8
-title: HTTP Proxy
+title: HTTP Proxy Configuration
 description: Specify proxy settings that Conduktor Platform should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
 ---
 
