@@ -10,7 +10,7 @@ The server certificate is a public entity. It is sent to every client that conne
 
 Configuration properties are: 
 - `platform.https.cert.path` or environment variable `CDK_PLATFORM_HTTPS_CERT_PATH` : path to server certificate file
-- `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH` : path to server certificate key file  
+- `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH` : path to server private key file  
 
 ## Example configuration using docker-compose
 
