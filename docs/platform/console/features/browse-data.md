@@ -75,65 +75,75 @@ return value.timestamp == 1673541484
 A few other examples, let's imagine we have the following 2 Records in our Topic:
 
 ```js
-[ Record 1
-  {
-    "key": "order",
-    "value": {
-      "orderId": 12345,
-      "paid": true,
-      "totalPrice": 50,
-      "items": [
-        {
-          "id": "9cb5cb81-b678-4f96-84dc-70096038eca9",
-          "name": "beers pack"
-        },
-        {
-          "id": "507b5045-eafd-41a6-afb5-1890f08cfd8e",
-          "name": "baby diapers pack"
-        }
-      ]
-    },
-    "headers": {
-      "app": "orders-microservice",
-      "trace-id": "9f0f004a-70c5-4301-9d28-bf5d7ebf238d"
-    }
+Record 1:
+
+{
+  "key": "order",
+  "value": {
+    "orderId": 12345,
+    "paid": true,
+    "totalPrice": 50,
+    "items": [
+      {
+        "id": "9cb5cb81-b678-4f96-84dc-70096038eca9",
+        "name": "beers pack"
+      },
+      {
+        "id": "507b5045-eafd-41a6-afb5-1890f08cfd8e",
+        "name": "baby diapers pack"
+      }
+    ]
   },
-  
-  Record 2
-  {
-    "key": "order",
-    "value": {
-      "orderId": 12346,
-      "paid": false,
-      "totalPrice": 10,
-      "items": [
-        {
-          "id": "7f55662e-5ba2-4ab4-9546-45fdd1ca60ca",
-          "name": "shampoo bottle"
-        }
-      ]
-    },
-    "headers": {
-      "app": "orders-microservice",
-      "trace-id": "1076c6dc-bd6c-4d5e-8a11-933b10bd77f5"
-    }
+  "headers": {
+    "app": "orders-microservice",
+    "trace-id": "9f0f004a-70c5-4301-9d28-bf5d7ebf238d"
   }
-]
+}
+Record 2:
 
-Here are some examples of filters related to these Records:
+{
+  "key": "order",
+  "value": {
+    "orderId": 12346,
+    "paid": false,
+    "totalPrice": 10,
+    "items": [
+      {
+        "id": "7f55662e-5ba2-4ab4-9546-45fdd1ca60ca",
+        "name": "shampoo bottle"
+      }
+    ]
+  },
+  "headers": {
+    "app": "orders-microservice",
+    "trace-id": "1076c6dc-bd6c-4d5e-8a11-933b10bd77f5"
+  }
+}
+```
 
+Here are some examples of filters related to these records:
+
+```js
 return value.totalPrice >= 30: 
 //Selects all the orders having a total price superior to or equal to 30
+```
 
+```js
 return value.items.lenght > 1: 
 //Selects all the orders containing more than one 1 item
+```
 
+```js
 return value.orderId == 12345: 
 //Finds a specific order based in its ID
+```
 
+```js
 return !value.paid: 
 //Selects all the orders that aren't paid
+```
 
+```js
 return !headers.includesKey("trace-id"): 
 //Selects all the records not having a trace-id header
 ```
