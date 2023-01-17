@@ -75,7 +75,7 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
   - _Type_ : string
   - _Default_ : ∅
 
-- **`platform.https.key.path`** : Path to the SSL certificate key file path.
+- **`platform.https.key.path`** : Path to the SSL `private key` file.
   - _Env_ : **`CDK_PLATFORM_HTTPS_KEY_PATH`**
   - _Mandatory_ : false
   - _Type_ : string
