@@ -60,6 +60,8 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
+
+> **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
     
 - **`platform.fqdn`** : Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy.
   - _Env_ : **`CDK_PLATFORM_FQDN`**
@@ -78,8 +80,6 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : ∅
-
-> **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
 ### Database properties
 
