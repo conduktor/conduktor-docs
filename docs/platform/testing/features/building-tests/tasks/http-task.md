@@ -20,7 +20,6 @@ When making a request, you can make **checks** on the response data. Below outli
 | Response Time | The response time in ms                         |
 | Response Size | The response size in bytes                      |
 
-
 ## Creating an HTTP Task
 
 When inside the editor for a new scenario, select the **Scenario Start** button and select **HTTP Request.**&#x20;
@@ -133,8 +132,8 @@ Equally, we will use a consumer task to validate that the message is propagated 
 - In the `Headers` section, set the `Content-Type` to `application/vnd.kafka.json.v2+json`
 - Add the below record in the `Body` section, with the `JSON` option selected
 
-```
-{"records":[{"value":{"foo":"bar"}}]}
+```json
+{ "records": [{ "value": { "foo": "bar" } }] }
 ```
 
 ![](<../../../assets/image (10).png>)
