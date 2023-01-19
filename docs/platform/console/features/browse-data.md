@@ -74,7 +74,7 @@ return value.timestamp == 1673541484
 
 A few other examples, let's imagine we have the following 2 Records in our Topic:
 
-```js
+```
 Record 1:
 
 {
@@ -124,27 +124,27 @@ Record 2:
 Here are some examples of filters related to these records:
 
 ```js
-return value.totalPrice >= 30: 
+return value.totalPrice >= 30
 //Selects all the orders having a total price superior to or equal to 30
 ```
 
 ```js
-return value.items.lenght > 1: 
+return value.items.lenght > 1
 //Selects all the orders containing more than one 1 item
 ```
 
 ```js
-return value.orderId == 12345: 
+return value.orderId == 12345
 //Finds a specific order based in its ID
 ```
 
 ```js
-return !value.paid: 
+return !value.paid
 //Selects all the orders that aren't paid
 ```
 
 ```js
-return !headers.includesKey("trace-id"): 
+return !headers.includesKey("trace-id")
 //Selects all the records not having a trace-id header
 ```
 
