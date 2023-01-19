@@ -8,7 +8,7 @@ description: The Conduktor Platform enables you to view messages in your Kafka T
 
 The Conduktor Platform enables you to view messages in your Kafka Topics.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212052836-71c9826d-275b-4576-a8dc-957ed468eaff.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212052836-71c9826d-275b-4576-a8dc-957ed468eaff.png" />
 
 After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **filter** your search according to multiple criteria and also manually decide on the **deserialisation** formats of the messages key and value.
 
@@ -32,7 +32,7 @@ By default, the most recent 20 messages of a topic are displayed and all filters
 
 Positions the consumer any given point in time, returning up to `max-records` records to the browser.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212060432-df2a176f-4de9-4c92-9648-7d01178395db.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212060432-df2a176f-4de9-4c92-9648-7d01178395db.png" />
 
 - **Most Recent**: Consume from the end of the topic to always provide you with the `max-records` most recent records.
   - Each partition is queried equally: Most recent 1000 records in a 5 partitions topics: 200 most recent records of each partition
@@ -48,13 +48,13 @@ Positions the consumer any given point in time, returning up to `max-records` re
 This filter allows you to change the number of record returned to the browser. You can increase that number from 1 up to a maximum of 1000 records.
 These are the records on which you will search when using the "Quick Search" filter.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128328-7f89c0fe-08c9-46eb-b82e-de52ca085f8d.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128328-7f89c0fe-08c9-46eb-b82e-de52ca085f8d.png" />
 
 ### Partitions
 
 If you know the partition you want to browse, this filter will help you reduce the number of records returned to the browser. This filter is available behind the "More options" button.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212129932-563138e6-3a8f-4e04-8b8a-18238495c3bb.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212129932-563138e6-3a8f-4e04-8b8a-18238495c3bb.png" />
 
 ### JS Filters
 
@@ -62,7 +62,7 @@ Using JavaScript Filters lets you perform complex searches on the json represent
 This lets you search through several thousand records without directly viewing them in your browser.  
 This is the recommended way to filter through topics with more than several thousand records per day.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212131081-6b12deb0-39af-4c34-98f7-a950ac6ae4b7.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212131081-6b12deb0-39af-4c34-98f7-a950ac6ae4b7.png" />
 
 From the example above:
 
@@ -152,7 +152,7 @@ Please check the embedded documentation in Conduktor Platform for further detail
 
 ### Quick search
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212137236-92fddc6b-10a6-496e-9bfc-1dd8409586cb.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212137236-92fddc6b-10a6-496e-9bfc-1dd8409586cb.png" />
 
 This filter performs a plaintext search on the records already sent to the browser.
 It is best used combined with any previous filtering applied.
@@ -165,6 +165,6 @@ By default, we try to identify the Deserializer automatically for both the Key a
 
 If the deserialization fails or doesn't represent the data as you expect, you can manually pick which deserializer to use.
 
-<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128823-76a9384d-d37d-4c34-b7a8-e704330903c9.png">
+<img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128823-76a9384d-d37d-4c34-b7a8-e704330903c9.png" />
 
 Deserializers are available behind the "More options" button.
