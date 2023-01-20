@@ -118,7 +118,6 @@ From within the Conduktor interface, connect using the bootstrap server:
 Conduktor can be configured using a configuration file `platform-config.yaml`. This is used to setup your organizations environment. The file can be used to declare:
 
 - Organization name
-- Kafka clusters, Schema Registry and Kafka Connect
 - External database
 - SSO
 
@@ -128,13 +127,8 @@ The below example shows how to configure Conduktor with an external database, SS
 
 All configuration properties can also be parsed as [Environment Variables](../../configuration/env-variables) when starting Conduktor.
 
-:::info
-Note it's optional to configure your Kafka clusters, Schema Registry and Kafka Connect via the configuration file. Instead, you can configure this from the `localhost:8080/admin/clusters` screen within the Conduktor interface. This allows you to validate and test the connections more easily.
-:::
-
 For more examples, see:
  - [Configuration Properties and Environment Variables](../../configuration/env-variables)
- - [Configuration Snippets](../../configuration/configuration-snippets)
  - [Configuring SSO](../../configuration/user-authentication)
 
 ```yaml
