@@ -20,13 +20,6 @@ Once you have started Conduktor, you can [customize it](#customizing-the-docker-
 Install [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-:::caution
-Note that currently the Platform must run with:
-- **Root user**
-- **Root FileSystem NOT in read-only mode**
-
-We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
-:::
 
 ## Skills required
 
