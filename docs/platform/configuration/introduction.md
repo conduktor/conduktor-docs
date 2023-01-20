@@ -5,7 +5,7 @@ description: Conduktor can be configured using an input yaml file
 ---
 
 # Introduction
-Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your oganizations environment. The file is used to declare:
+Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your organization environment. The file is used to declare:
 
 - Organization name
 - External database (optional)
