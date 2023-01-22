@@ -51,10 +51,10 @@ curl -s  http://localhost:8080/platform/api/license | jq .
 ```
 Example of result:
 
-```
-curl -s  http://localhost:8080/platform/api/license | jq .
+```json
 {
   "expire": 1669248000,
+  "organization": "conduktor",
   "plan": "enterprise",
   "version": 1,
   "features": {
@@ -64,7 +64,7 @@ curl -s  http://localhost:8080/platform/api/license | jq .
     "datamasking.enable": true,
     "monitoring.alerting.enable": true,
     "monitoring.enable": true,
-    "platform.clusters.limit": -1,
+    "platform.clusters.limit": 5,
     "platform.rbac.enable": true,
     "platform.sso.enable": true,
     "testing.enable": true,
@@ -74,41 +74,13 @@ curl -s  http://localhost:8080/platform/api/license | jq .
   }
 }
 ```
-
-```bash
 
 ### Within the Conduktor Platform container
 
-From within the Conduktor Platform container run the following:
+You can get the same result as above from within the Conduktor Platform container with the following command:
 
 ```sh
-curl -s  http://localhost:3000/platform/api/license | jq .
-```
-
-Example of result:
-
-```
-curl -s  http://localhost:3000/platform/api/license | jq .
-{
-  "expire": 1669248000,
-  "plan": "enterprise",
-  "version": 1,
-  "features": {
-    "admin.auditlog.enable": true,
-    "admin.enable": true,
-    "console.enable": true,
-    "datamasking.enable": true,
-    "monitoring.alerting.enable": true,
-    "monitoring.enable": true,
-    "platform.clusters.limit": -1,
-    "platform.rbac.enable": true,
-    "platform.sso.enable": true,
-    "testing.enable": true,
-    "testing.tests.run.monthly.limit": -1,
-    "topic.analyser.enable": true,
-    "governance.enable": true
-  }
-}
+curl -s  http://localhost:3000/platform/api/license
 ```
 
 ### In the UI
