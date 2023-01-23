@@ -323,6 +323,239 @@ See authentication [documentation](./user-authentication) for snippets
   - _Type_ : string one of : `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH" `
   - _Default_ : ∅
 
+### Kafka clusters properties
+
+:::info
+Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is now **deprecated**.  
+Looking to configure your Kafka Clusters using GitOps processes?  
+Contact our [Customer Success](mailto:support@conduktor.io?subject=I%20Want%20GitOps)
+:::
+
+:::warning
+Please consider the following limitations regarding Kafka Cluster definition:  
+- This is not GitOps. If you later need to update a cluster defined this way, you **must** update it through the UI
+- Some additional properties will interfere with the UI and you won't be able to update them.
+  - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
+:::
+
+You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
+
+- **`clusters[].id`** : String used to uniquely identify your Kafka cluster
+
+  - _Env_ : **`CDK_CLUSTERS_0_ID`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].name`** : Alias or user-friendly name for your Kafka cluster
+
+  - _Env_ : **`CDK_CLUSTERS_0_NAME`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].color`** : Attach a color to associate with your cluster in the UI
+
+  - _Env_ : **`CDK_CLUSTERS_0_COLOR`**
+  - _Mandatory_ : false
+  - _Type_ : string in hexadecimal format (`#FFFFFF`)
+  - _Default_ : random
+
+- **`clusters[].ignoreUntrustedCertificate`** : Skip SSL certificate validation
+
+  - _Env_ : **`CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE`**
+  - _Mandatory_ : false
+  - _Type_ : boolean
+  - _Default_ : `false`
+
+- **`clusters[].bootstrapServers`** : List of host:port for your Kafka brokers separated by coma `,`
+
+  - _Env_ : **`CDK_CLUSTERS_0_BOOTSTRAPSERVERS`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].zookeeperServer`** : Zookeeper server url
+
+  - _Env_ : **`CDK_CLUSTERS_0_ZOOKEEPERSERVER`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].properties`** : Any cluster configuration properties.
+
+  - _Env_ : **`CDK_CLUSTERS_0_PROPERTIES`**
+  - _Mandatory_ : false
+  - _Type_ : string where each line is a property
+  - _Default_ : ∅
+    > **Tips** : To set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
+
+- **`clusters[].jmxScrapePort`** : JMX-exporter port used to scrape kafka broker metrics for monitoring
+
+  - _Env_ : **`CDK_CLUSTERS_0_JMXSCRAPEPORT`**
+  - _Mandatory_ : false
+  - _Type_ : int
+  - _Default_ : `9101`
+
+- **`clusters[].nodeScrapePort`** : Node-exporter port used to scrape kafka host metrics for monitoring
+  - _Env_ : **`CDK_CLUSTERS_0_NODESCRAPEPORT`**
+  - _Mandatory_ : false
+  - _Type_ : int
+  - _Default_ : `9100`
+
+### Schema registry properties
+
+- **`clusters[].schemaRegistry.id`** : String used to uniquely identify your schema registry
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_ID`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+#### Confluent schema registry properties
+
+- **`clusters[].schemaRegistry.url`** : The schema registry URL
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].schemaRegistry.ignoreUntrustedCertificate`** : Skip SSL certificate validation
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE`**
+  - _Mandatory_ : false
+  - _Type_ : boolean
+  - _Default_ : `false`
+
+- **`clusters[].schemaRegistry.properties`** : Any schema registry configuration parameters
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`**
+  - _Mandatory_ : false
+  - _Type_ : string where each line is a property
+  - _Default_ : ∅
+    > **Tips** : To set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
+
+If you need to authenticate with basic auth, you can use the following properties:
+
+- **`clusters[].schemaRegistry.security.username`** : Basic auth username
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].schemaRegistry.security.password`** : Basic auth password
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+If you need to authenticate with bearer auth, you can use the following property:
+
+- **`clusters[].schemaRegistry.security.token`** : Bearer auth token
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+#### Amazon Glue schema registry properties
+
+- **`clusters[].schemaRegistry.region`** : The Glue schema registry region
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+- **`clusters[].schemaRegistry.registryName`** : The Glue schema registry name
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+- **`clusters[].schemaRegistry.amazonSecurity.type`** : Authentication with credentials
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Values_ : `Credentials` | `FromContext` | `FromRole`
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+If `amazonSecurity.type` is `Credentials`, you must use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.accessKeyId`** : Credentials auth access key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+- **`clusters[].schemaRegistry.amazonSecurity.secretKey`** : Credentials auth secret key
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+If `amazonSecurity.type` is `FromContext`, you must use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.profile`** : Authentication profile
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+If `amazonSecurity.type` is `FromRole`, you must use the following properties:
+
+- **`clusters[].schemaRegistry.amazonSecurity.role`** : Authentication role
+
+  - _Env_ : **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+  - _Since_ : `1.x.x`
+
+### Kafka Connect properties
+
+- **`clusters[].kafkaConnects[].id`** : String used to uniquely identify your Kafka Connect
+
+  - _Env_ : **`CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].kafkaConnects[].url`** : The Kafka connect URL
+
+  - _Env_ : **`CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`**
+  - _Mandatory_ : true
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].kafkaConnects[].security.username`** : Basic auth username
+
+  - _Env_ : **`CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
+- **`clusters[].kafkaConnects[].security.username`** : Basic auth password
+
+  - _Env_ : **`CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`**
+  - _Mandatory_ : false
+  - _Type_ : string
+  - _Default_ : ∅
+
 ### Monitoring properties
 
 - **`monitoring.storage.s3.endpoint`** : External monitoring S3 storage endpoint
