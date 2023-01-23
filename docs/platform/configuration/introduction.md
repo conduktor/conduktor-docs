@@ -12,6 +12,11 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 - User authentication (Basic or SSO)
 - Platform License
 
+:::info
+Looking to configure your Kafka Clusters using GitOps processes ?   
+Contact our [Customer Success](mailto:support@conduktor.io?subject=I%20Want%20GitOps)
+:::
+
 ## Security notes
 
 The [database](./database.md) as well as the configuration file described in this document may contain sensitive information.
