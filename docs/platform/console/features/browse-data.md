@@ -10,12 +10,66 @@ The Conduktor Platform enables you to view messages in your Kafka Topics.
 
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212052836-71c9826d-275b-4576-a8dc-957ed468eaff.png" />
 
-After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **filter** your search according to multiple criteria and also manually decide on the **deserialisation** formats of the messages key and value.
+After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **format** the message to keep only the fields you need, **filter** your records according to multiple criteria and also manually decide on the **deserialisation** formats of the messages key and value.
 
+:::info
+Each feature is built on top of each another, and the ordering in which they are executed could matter.  
+1. Kafka filters (Show From, Partition)
+2. Deserialization
+3. JS Filters
+4. Max Results (Except for Show From Most Recent where the JS Filter is applied after polling the X most recent)
+5. Quick Search
+6. Formatting  
+
+This means that if you set a Kafka filter to `From Beginning`, `Max Record 1000` and apply a **JS Filter**, it will consume all the records from the topic until either:
+1. The topic runs out of records
+2. 1000 records match your JS filter
+:::
 Jump to:
-
+- [Formatting](#formatting)
 - [Filtering](#filtering)
 - [Deserialization](#deserialization)
+
+## Formatting
+You can format your message as long as it has a JSON-compatible representation (Including Avro and Proto with Schema Registry).  
+Given a sample message like the following one:
+```json
+{
+  "foo": {
+    "bar": "value"
+  }
+}
+```
+You can use the following JQ filter on your message:
+```json
+.foo
+// will output
+{
+  "bar": "value"
+}
+
+.foo.bar
+// will output
+"value"
+```
+Other useful examples include:
+```json
+// Subset
+.data.authorizationInfo
+
+// New JSON from elements
+{ id: .source, val: .specversion }
+
+// Functions
+.data.authenticationInfo.principal | split(":")[1]
+
+// Concat
+.data.authenticationInfo.principal + " granted " + .data.authorizationInfo.operation
+
+// Filter 
+[3, 2, 1] | first
+```
+Check the [JQ Manual](https://stedolan.github.io/jq/manual/) for more details.  
 
 ## Filtering
 
