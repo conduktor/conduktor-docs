@@ -4,8 +4,4 @@ title: Kubernetes
 description: The below guide details how to deploy kubernetes resources to run Conduktor Platform.
 ---
 
-Kubernetes support is still a **work in progress**. 
-
-Provide us direct [feedback](https://product.conduktor.help/c/55-helm-chart) on your expectations for Helm. 
-
-If you have alternate requirements or want to help us out, then please [contact us](https://www.conduktor.io/contact).
+Deployment of Conduktor Cloud on Kubernetes **is in beta**. If you're looking to deploy Conduktor Cloud on Kubernetes please [reach out to us](https://www.conduktor.io/contact/sales) and we'll enable access to the beta.
