@@ -14,13 +14,14 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 
 :::info
 The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
-The Manage Clusters page have several advantages over the YAML configuration:
+
+The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
 - Intuitive interface with live update capabilities
 - Centralized and secured with RBAC and Audit Logs Events
 - Certificate store to help with your Custom certificates needs (no more JKS files and volume mounts)
 
 Need to configure your Kafka Clusters using GitOps processes?   
-Contact our [Customer Success](mailto:support@conduktor.io?subject=I%20Want%20GitOps)  
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
   
 If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](./env-variables.md#kafka-clusters-properties) page
 :::
