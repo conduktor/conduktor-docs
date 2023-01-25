@@ -183,7 +183,7 @@ return value.totalPrice >= 30;
 ```
 
 ```js
-return value.items.lenght > 1;
+return value.items.length > 1;
 // Selects all the orders containing more than one 1 item
 ```
 
