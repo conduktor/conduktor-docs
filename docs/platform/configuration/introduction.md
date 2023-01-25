@@ -13,7 +13,7 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 - Platform License
 
 :::info
-The new **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
+The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
 The Manage Clusters page have several advantages over the YAML configuration:
 - Intuitive interface with live update capabilities
 - Centralized and secured with RBAC and Audit Logs Events
