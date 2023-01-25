@@ -328,7 +328,7 @@ See authentication [documentation](./user-authentication) for snippets
 :::info
 Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is now **deprecated**.  
 Looking to configure your Kafka Clusters using GitOps processes?  
-Contact our [Customer Success](mailto:support@conduktor.io?subject=I%20Want%20GitOps)
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
 :::
 
 :::warning
