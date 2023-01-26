@@ -6,6 +6,10 @@ description: Learn how to get started with Monitoring
 
 # Agent Setup
 
+:::warning
+Monitoring is changing and the agent will no longer be supported from April. [Find out more](../../support/important-notices#monitoring-is-changing-january-27-2023). In the meantime, you should only configure the agent using the `.yaml` file.
+:::
+
 You should setup the Agent to use Monitoring at full capacity. Running Prometheus node exporter and JMX exporter will ensure you maximize the metrics you have access to within Conduktor. As there can be a wide range of unique configurations and edge cases when seting up an agent, these instructions should only be considered guidelines. Should you encounter any issues with setup, please contact us directly using the chat widget on this page.
 
 
