@@ -6,6 +6,20 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 # Configuration Snippets
 
+:::warning
+The new **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
+
+The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
+- Intuitive interface with live update capabilities
+- Centralized and secured with RBAC and Audit Logs Events
+- Certificate store to help with your Custom certificates needs (no more JKS files and volume mounts)
+
+Need to configure your Kafka Clusters using GitOps processes?   
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
+
+If you absolutely need to configure your clusters using YAML, keep reading.
+:::
+
 Below outlines snippets demonstrating different configuration options for the `platform-config.yaml`.
 
 Jump to:
@@ -20,7 +34,7 @@ Jump to:
 - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
 - [Kafka Connect](#kafka-connect)
-- [SSO](#sso)
+
 
 ## Complete Configuration Example
 
@@ -170,7 +184,6 @@ clusters:
         type: Credentials
         accessKeyId: <access-key-id>
         secretKey: <secret-key>
-    labels: {}
 ```
 
 Connect to an MSK cluster with schema registry using the default chain of credentials providers
@@ -193,7 +206,6 @@ clusters:
       security:
         type: FromContext
         profile: <profile> # optional to use the default profile
-    labels: {}
 ```
 
 Connect to an MSK cluster with schema registry using a specific role
@@ -216,7 +228,6 @@ clusters:
       security:
         type: FromRole
         role: <role>
-    labels: {}
 ```
 
 On top of that, and for all these previous configuration example,
@@ -267,7 +278,6 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     security:
       username: <username>
       password: <password>
-  labels: {}
 ```
 
 ## SSL Certificates Example - Aiven (truststore)
@@ -328,7 +338,3 @@ Cluster with Kafka Connect configured with Basic Auth
         username: <username>
         password: <password>
 ```
-
-## SSO
-
-For more information on SSO, see [User Authentication](./user-authentication)
