@@ -317,6 +317,7 @@ Enter the name you want, and the application type and redirect URI as below:
 ![](https://user-images.githubusercontent.com/112936799/215047250-cdca3b05-94fb-43a9-96a9-03d9dfa4fee6.png)
 
 The callback should be like: `http://<platform hostname>/oauth/callback/<OAuth2 config name>`
+:::warning If you use another hostname than localhost, you may need to start your callback by https  :::
 
 When you click on `Create`, you get you credentials. We suggest you to download the JSON file and keep it safe.
 
@@ -346,7 +347,10 @@ You can check the `Confidential client` property to get credentials.
 ![](https://user-images.githubusercontent.com/112936799/215052109-5d7093b5-5a71-4953-b493-1248785ef77c.png)
 
 In the callback property, type `http://<platform hostname>/oauth/callback/<OAuth2 config name>`, and select `email`, `profile`, and `openid` as OpenID client scopes, in the `Advanced app client settings` section.
-  
+
+:::warning If you use another hostname than localhost, you may need to start your callback by https  :::
+
+
 Finally, click on `Create`. You can get your application credentials here:
   
 ![](https://user-images.githubusercontent.com/112936799/215053721-2fab36bc-59c9-4091-a063-4e1b467e3047.png)
