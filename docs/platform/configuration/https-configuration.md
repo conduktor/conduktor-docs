@@ -12,6 +12,9 @@ Configuration properties are:
 - `platform.https.cert.path` or environment variable `CDK_PLATFORM_HTTPS_CERT_PATH` : path to server certificate file
 - `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH` : path to server private key file  
 
+> **Note** : Certificate and private key files don't need to be readable system-wide but they must allow read from
+user `conduktor-platform` (uid `10001`).
+
 ## Example configuration using docker-compose
 
 In this example server certificate and key are stored in files `server.crt` and `server.key` in the same directory as the docker-compose file.
