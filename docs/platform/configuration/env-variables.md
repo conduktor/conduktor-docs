@@ -142,13 +142,13 @@ Optional local accounts list used to login on conduktor-platform
 
 - **`auth.local-users[].email`** : User login
 
-  - _Env_ : **`CDK_AUTH_LOCALUSERS_0_EMAIL`**
+  - _Env_ : **`CDK_AUTH_LOCAL-USERS_0_EMAIL`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : `"admin@conduktor.io"`
 
 - **`auth.local-users[].password`** : User password
-  - _Env_ : **`CDK_AUTH_LOCALUSERS_0_PASSWORD`**
+  - _Env_ : **`CDK_AUTH_LOCAL-USERS_0_PASSWORD`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : `"admin"`
