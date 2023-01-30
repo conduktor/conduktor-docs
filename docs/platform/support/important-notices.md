@@ -36,8 +36,8 @@ Though it will not be possible to derive every metric without any agent, we will
 | Topic Monitoring | Messages out per topic (/s) | Number of messages consumed per second, per broker at a topic granularity. |
 | Topic Monitoring | Messages out per topic (/s) | Number of messages consumed per second, per broker at a topic granularity. |
 | Topic Monitoring | Total size of messages | Total size of messages in the topic. |
-| Topic Monitoring | Duplicates count | Duplicate message count over the last N minutes, per topic.  |
-| Topic Monitoring | Distinct duplicates count | Number of distinct, duplicated messages over the last N minutes, per topic. |
-| Topic Monitoring | Transaction abort count | Number of transactions aborted per topic. |
-| Topic Monitoring | Batch size | Average size of batches produced to a topic. |
-| Topic Monitoring | Messages per batch | Average number of messages produced per Batch to a topic. |
+| Topic Monitoring | Duplicates count | Duplicate message count over the last N minutes, per topic. <br />Note this depends on Topic Analyzer being enabled.  |
+| Topic Monitoring | Distinct duplicates count | Number of distinct, duplicated messages over the last N minutes, per topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Transaction abort count | Number of transactions aborted per topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Batch size | Average size of batches produced to a topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Messages per batch | Average number of messages produced per Batch to a topic. <br />Note this depends on Topic Analyzer being enabled. |

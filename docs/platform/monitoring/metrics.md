@@ -35,8 +35,8 @@ You will have access to some metrics without any additional configuration, but y
 | Topic Monitoring | Topic traffic in (B/s) | Byte rate per second of messages produced, per broker at a topic granularity. |
 | Topic Monitoring | Topic traffic out (B/s) | Byte rate per second of messages consumed, per broker at a topic granularity. |
 | Topic Monitoring | Total size of messages | Total size of messages in the topic. |
-| Topic Monitoring | Duplicates count | Duplicate message count over the last N minutes, per topic.  |
-| Topic Monitoring | Distinct duplicates count | Number of distinct, duplicated messages over the last N minutes, per topic. |
-| Topic Monitoring | Transaction abort count | Number of transactions aborted per topic. |
-| Topic Monitoring | Batch size | Average size of batches produced to a topic. |
-| Topic Monitoring | Messages per batch | Average number of messages produced per Batch to a topic. |
+| Topic Monitoring | Duplicates count | Duplicate message count over the last N minutes, per topic. <br />Note this depends on Topic Analyzer being enabled.  |
+| Topic Monitoring | Distinct duplicates count | Number of distinct, duplicated messages over the last N minutes, per topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Transaction abort count | Number of transactions aborted per topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Batch size | Average size of batches produced to a topic. <br />Note this depends on Topic Analyzer being enabled. |
+| Topic Monitoring | Messages per batch | Average number of messages produced per Batch to a topic. <br />Note this depends on Topic Analyzer being enabled. |
