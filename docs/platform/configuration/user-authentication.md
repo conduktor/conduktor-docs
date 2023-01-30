@@ -35,10 +35,10 @@ auth:
 Same configuration from environment variables :
 
 ```bash
-CDK_AUTH_LOCALUSERS_0_EMAIL="admin@demo.dev"
-CDK_AUTH_LOCALUSERS_0_PASSWORD="adminpwd"
-CDK_AUTH_LOCALUSERS_1_EMAIL="user@demo.dev"
-CDK_AUTH_LOCALUSERS_1_PASSWORD="userpwd"
+CDK_AUTH_LOCAL-USERS_0_EMAIL="admin@demo.dev"
+CDK_AUTH_LOCAL-USERS_0_PASSWORD="adminpwd"
+CDK_AUTH_LOCAL-USERS_1_EMAIL="user@demo.dev"
+CDK_AUTH_LOCAL-USERS_1_PASSWORD="userpwd"
 ```
 
 ## Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)
