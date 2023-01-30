@@ -10,11 +10,11 @@ Below outlines important notices relating to Conduktor Platform.
 
 ### Monitoring is changing (January 27, 2023)
 
-On **January 27, 2023**, we announced that as of **April** there will be changes made to improve the ease of setup and usability of Monitoring. 
+On **January 27, 2023**, we announced that as of **April 3rd, 2023** there will be changes made to improve the ease of setup and usability of Monitoring. 
 
-Since launching in September 2022, we have listened carefully to customer feedback. One area that has been prone to misconfiguration is setting up the Prometheus Node/JMX exporter. Additionally, we lacked support for many bespoke integrations such as MSK Open Monitoring, Confluent Cloud and Strimzi. Conduktor’s goal has always been to make our users lives easier, not complicate them.
+Since launching in September 2022, we have listened carefully to customer feedback. One area that has been prone to misconfiguration is setting up the Prometheus Node/JMX exporter. Conduktor’s goal has always been to make our users lives easier, not complicate them. 
 
-As a result, we are streamlining how we collect metrics. Moving forwards, all of our metrics will be collected agent-less, meaning you will get the benefits of Monitoring without any additional configuration. Simply add your cluster to your organisation, and we will start collecting metrics immediately. This will also enable us to **maximize our support for all Kafka vendors** out-of-the-box.
+As a result, we will focus our immediate attention on providing an excellent Monitoring experience without the need for an Agent. This allows us to **maximize support for all Kafka vendors** out-of-the-box, rather than investing in a wide variety of bespoke setups and integrations. This means you will get the benefits of Monitoring without any additional configuration. Simply add your cluster to your organisation, and we will start collecting metrics immediately.
 
 Though it will not be possible to derive every metric without any agent, we will continue to provide the most critical metrics for ensuring observability of your Kafka applications. See below on the metrics we will continue to collect.
 
