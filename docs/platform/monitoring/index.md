@@ -6,6 +6,10 @@ description: Learn how to get started with Monitoring
 
 # Monitoring
 
+:::info
+Monitoring is changing to improve the ease of setup and usability. [Find out more](../support/important-notices#monitoring-is-changing-january-27-2023).
+:::
+
 ## Overview
 
 Conduktor Monitoring gives you insight into the most important Kafka metrics. There is no complicated setup and it integrates easily with existing systems. 
@@ -22,9 +26,9 @@ However, [Application Monitoring](#application-monitoring) and most core metrics
 ## Ops Monitoring
 To support understanding of your Kafka infrastructures healthiness, we can help you monitor:
  - Cluster health state  
- - Broker health state
  - Partitions health state
- - CPU usage
+ - Topic activity
+ - Topic storage
 
 See [metrics](metrics.md) for more information.
 
@@ -32,6 +36,7 @@ See [metrics](metrics.md) for more information.
 To support understanding of your Kafka applications state, we help you monitor:
  - Consumer group state  
  - Consumer group lag
+ 
 
 See [metrics](metrics.md) for more information.
 
