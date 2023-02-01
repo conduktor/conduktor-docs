@@ -259,13 +259,6 @@ See authentication [documentation](./user-authentication) for snippets
   - _Default_ : `"cn"`
   - _Since_ : `1.5.0`
 
-- **`sso.ldap[].properties`** : Additional properties that will be passed to identity provider context
-  - _Env_ : **`SSO_LDAP_0_PROPERTIES`**
-  - _Mandatory_ : false
-  - _Type_ : dictionary
-  - _Default_ : ∅
-  - _Since_ : `1.11.0`
-
 #### Oauth2 properties
 
 - **`sso.oauth2[].name`** : Oauth2 connection name
