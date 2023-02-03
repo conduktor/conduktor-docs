@@ -19,9 +19,10 @@ The following environment variables are used to configure Conduktor Platform log
 | `CDK_ROOT_LOG_COLOR`  | `true`        | Flag to enable color in logs when possible | 
 
 :::info
-For backward compatibility, `CDK_DEBUG` is still supported
+For backward compatibility, `CDK_DEBUG` is still supported.
+
 If `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`, then `CDK_DEBUG` is also set to `true`.
-And if CDK_DEBUG is set to `true`, then `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`.
+And if `CDK_DEBUG` is set to `true`, then `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`.
 :::
 
 ### Per module log configuration
