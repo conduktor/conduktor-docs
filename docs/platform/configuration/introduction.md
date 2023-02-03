@@ -68,18 +68,16 @@ Below shows how to bind a local file to override `/opt/conduktor/default-platfor
 
 ```bash
  docker run --rm \
-   --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml" \
-   -e EMBEDDED_POSTGRES="false" \
+   --mount "type=bind,source=$PWD/platform-config.yml,target=/opt/conduktor/default-platform-config.yaml"
   conduktor/conduktor-platform:latest
 ```
 
-Alternatively, use the `CDK_IN_CONF_FILE` environment variable to bind the file frmo another location:
+Alternatively, use the `CDK_IN_CONF_FILE` environment variable to bind the file from another location:
 
 ```bash
  docker run --rm \
    --mount "type=bind,source=$PWD/platform-config.yml,target=/etc/platform-config.yaml" \
-   -e CDK_IN_CONF_FILE="/etc/platform-config.yaml" \
-   -e EMBEDDED_POSTGRES="false" \
+   -e CDK_IN_CONF_FILE="/etc/platform-config.yaml"
   conduktor/conduktor-platform:latest
 ```
 
