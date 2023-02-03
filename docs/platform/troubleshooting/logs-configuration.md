@@ -18,24 +18,30 @@ The following environment variables are used to configure Conduktor Platform log
 | `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global platform log level                  | 
 | `CDK_ROOT_LOG_COLOR`  | `true`        | Flag to enable color in logs when possible | 
 
+:::info
+For backward compatibility, `CDK_DEBUG` is still supported
+If `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`, then `CDK_DEBUG` is also set to `true`.
+And if CDK_DEBUG is set to `true`, then `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`.
+:::
+
 ### Per module log configuration
 The following environment variables are used to configure Conduktor Platform logs per module.
 
-| ENV                                 | Default value        |                                                                                           |
-|-------------------------------------|----------------------|-------------------------------------------------------------------------------------------|
-| `PLATFORM_STARTUP_LOG_LEVEL`        | `INFO`               | Setup process logs level set to INFO and switch to DEBUG if `CDK_ROOT_LOG_LEVEL` is DEBUG |  
-| `CONSOLE_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Console root log level                                                                    |  
-| `SCANNER_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Topic analyzer root log level                                                             |   
-| `GOVERNANCE_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Governance root log level                                                                 |  
-| `ADMIN_API_ROOT_LOG_LEVEL`          | `CDK_ROOT_LOG_LEVEL` | Admin root log level                                                                      |  
-| `AUTHENTICATOR_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Authenticator root log level                                                              |  
-| `TESTING_API_ROOT_LOG_LEVEL`        | `CDK_ROOT_LOG_LEVEL` | Testing root log level                                                                    |  
-| `TESTING_AGENT_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Testing agent root log level                                                              |  
-| `CORTEX_ROOT_LOG_LEVEL`             | `CDK_ROOT_LOG_LEVEL` | Cortex log level                                                                          |  
-| `CORTEX_ALERT_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Cortex alert manager log level                                                            |  
-| `KAFKA_LAG_EXPORTER_ROOT_LOG_LEVEL` | `CDK_ROOT_LOG_LEVEL` | Kafka lag exporter root log level                                                         |  
-| `PROMETHEUS_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Prometheus log level                                                                      |  
-| `PLATFORM_API_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Platform-api root log level                                                               |  
+| ENV                                 | Default value        |                                                                                                                              |
+|-------------------------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `PLATFORM_STARTUP_LOG_LEVEL`        | `INFO`               | Set the setup/configuration process logs level. By default, set to INFO and switch to DEBUG if `CDK_ROOT_LOG_LEVEL` is DEBUG |  
+| `CONSOLE_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                           |  
+| `SCANNER_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring and topic analyzer                                                                                |   
+| `GOVERNANCE_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Logs related to governance (Topic as a Service, Datamasking)                                                                 |  
+| `ADMIN_API_ROOT_LOG_LEVEL`          | `CDK_ROOT_LOG_LEVEL` | Logs related to platform administration                                                                                      |  
+| `AUTHENTICATOR_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to authentication (SSO, LDAP)                                                                                   |  
+| `TESTING_API_ROOT_LOG_LEVEL`        | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Testing UI                                                                           |  
+| `TESTING_AGENT_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to the agent executing tests                                                                                    |  
+| `CORTEX_ROOT_LOG_LEVEL`             | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
+| `CORTEX_ALERT_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Logs related to alerting                                                                                                     |  
+| `KAFKA_LAG_EXPORTER_ROOT_LOG_LEVEL` | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
+| `PROMETHEUS_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
+| `PLATFORM_API_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Internal platform api logs (health endpoints)                                                                                |  
 
 #### Log level inheritance
 Each module log level inherits from `CDK_ROOT_LOG_LEVEL` if explicitly not set.     
