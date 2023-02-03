@@ -3,7 +3,7 @@ sidebar_position: 2
 title: Log configuration
 description: How to setup and tune Conduktor Platform logs 
 ---
-# Global platform log configuration
+# Conduktor platform log configuration
 
 Before version 1.11.0, Conduktor Platform logs could be configured only with environment variable `CDK_DEBUG` that enables debug logs for startup process and shows modules logs in container stdout.
 
@@ -11,6 +11,7 @@ Since version 1.11.0, Conduktor Platform logs can be configured with more granul
 
 ## Log configuration environment variables
 ### Platform wide log configuration
+The following environment variables are used to configure Conduktor Platform logs globally.
 
 | ENV                   | Default value |                                            |
 |-----------------------|---------------|--------------------------------------------|
@@ -18,6 +19,8 @@ Since version 1.11.0, Conduktor Platform logs can be configured with more granul
 | `CDK_ROOT_LOG_COLOR`  | `true`        | Flag to enable color in logs when possible | 
 
 ### Per module log configuration
+The following environment variables are used to configure Conduktor Platform logs per module.
+
 | ENV                                 | Default value        |                                                                                           |
 |-------------------------------------|----------------------|-------------------------------------------------------------------------------------------|
 | `PLATFORM_STARTUP_LOG_LEVEL`        | `INFO`               | Setup process logs level set to INFO and switch to DEBUG if `CDK_ROOT_LOG_LEVEL` is DEBUG |  
@@ -33,6 +36,11 @@ Since version 1.11.0, Conduktor Platform logs can be configured with more granul
 | `KAFKA_LAG_EXPORTER_ROOT_LOG_LEVEL` | `CDK_ROOT_LOG_LEVEL` | Kafka lag exporter root log level                                                         |  
 | `PROMETHEUS_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Prometheus log level                                                                      |  
 | `PLATFORM_API_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Platform-api root log level                                                               |  
+
+#### Log level inheritance
+Each module log level inherits from `CDK_ROOT_LOG_LEVEL` if explicitly not set. 
+For example, if `CDK_ROOT_LOG_LEVEL` is set to `DEBUG` and `CONSOLE_ROOT_LOG_LEVEL` is not set, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.
+And if `CDK_ROOT_LOG_LEVEL` is set to `INFO` and `CONSOLE_ROOT_LOG_LEVEL` is set to `DEBUG`, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.
 
 ## Fine tuning log configuration with configuration file
 If you want even more fine-tuning, you can use per module logback configuration file to set log level per loggers.
