@@ -38,9 +38,11 @@ The following environment variables are used to configure Conduktor Platform log
 | `PLATFORM_API_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Platform-api root log level                                                               |  
 
 #### Log level inheritance
-Each module log level inherits from `CDK_ROOT_LOG_LEVEL` if explicitly not set. 
-For example, if `CDK_ROOT_LOG_LEVEL` is set to `DEBUG` and `CONSOLE_ROOT_LOG_LEVEL` is not set, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.
-And if `CDK_ROOT_LOG_LEVEL` is set to `INFO` and `CONSOLE_ROOT_LOG_LEVEL` is set to `DEBUG`, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.
+Each module log level inherits from `CDK_ROOT_LOG_LEVEL` if explicitly not set.     
+
+For example, if `CDK_ROOT_LOG_LEVEL` is set to `DEBUG` and `CONSOLE_ROOT_LOG_LEVEL` is not set, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.   
+
+And if `CDK_ROOT_LOG_LEVEL` is set to `INFO` and `CONSOLE_ROOT_LOG_LEVEL` is set to `DEBUG`, `CONSOLE_ROOT_LOG_LEVEL` will be set to `DEBUG`.   
 
 ## Fine tuning log configuration with configuration file
 If you want even more fine-tuning, you can use per module logback configuration file to set log level per loggers.
