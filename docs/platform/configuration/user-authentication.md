@@ -8,16 +8,18 @@ description: To configure platform authentication you have several choices.
 
 To configure platform authentication you have several choices.
 
-- [Configure Local Users](#configure-local-users)
-- [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
-  - [LDAP Server](#ldap-server)
-  - [LDAPS](#ldaps) 
-  - [Auth0](#auth0)
-  - [Okta](#okta)
-  - [Keycloak](#keycloak)
-  - [Azure](#azure)
-  - [Google](#google)
-  - [Cognito](#cognito)
+- [User Authentication](#user-authentication)
+  - [Configure Local Users](#configure-local-users)
+  - [Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
+    - [LDAP server](#ldap-server)
+    - [LDAPS](#ldaps)
+    - [Oauth2 Identity Provider](#oauth2-identity-provider)
+    - [Auth0](#auth0)
+    - [Okta](#okta)
+    - [Keycloak](#keycloak)
+    - [Azure](#azure)
+    - [Google](#google)
+    - [Cognito](#cognito)
 
 ## Configure Local Users
 
@@ -317,7 +319,9 @@ Enter the name you want, and the application type and redirect URI as below:
 ![](https://user-images.githubusercontent.com/112936799/215047250-cdca3b05-94fb-43a9-96a9-03d9dfa4fee6.png)
 
 The callback should be like: `http://<platform hostname>/oauth/callback/<OAuth2 config name>`
-:::warning If you use another hostname than localhost, you may need to start your callback by https  :::
+:::warning
+If you use another hostname than localhost, you may need to start your callback by https
+:::
 
 When you click on `Create`, you get you credentials. We suggest you to download the JSON file and keep it safe.
 
@@ -348,7 +352,9 @@ You can check the `Confidential client` property to get credentials.
 
 In the callback property, type `http://<platform hostname>/oauth/callback/<OAuth2 config name>`, and select `email`, `profile`, and `openid` as OpenID client scopes, in the `Advanced app client settings` section.
 
-:::warning If you use another hostname than localhost, you may need to start your callback by https  :::
+:::warning
+If you use another hostname than localhost, you may need to start your callback by https
+:::
 
 
 Finally, click on `Create`. You can get your application credentials here:
