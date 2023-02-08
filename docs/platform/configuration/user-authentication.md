@@ -60,9 +60,7 @@ sso:
       managerPassword: 'zflexpass' # Bind Password
       search-base: 'ou=users,ou=guests,dc=zflexsoftware,dc=com' # Base DN to search for users
       search-filter: '(uid={0})' # Search filter
-      groups-enabled: true # Enable group search
-      groups-base: 'ou=groups,ou=guests,dc=zflexsoftware,dc=com' # Base DN to search for groups
-      group-filter: 'uniquemember={0}' # Group search filter
+
 ```
 
 > **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in.  Try setting your `search-filter` to the below in your `platform-config.yaml`
@@ -80,9 +78,7 @@ SSO_LDAP_0_MANAGERDN="cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_MANAGERPASSWORD="zflexpass"
 SSO_LDAP_0_SEARCH-BASE="ou=users,ou=guests,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
-SSO_LDAP_0_GROUPS-ENABLED="true"
-SSO_LDAP_0_GROUPS-BASE="ou=groups,ou=guests,dc=zflexsoftware,dc=com"
-SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
+
 ```
 
 ### LDAPS
