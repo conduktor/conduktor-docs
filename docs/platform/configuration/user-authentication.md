@@ -11,7 +11,7 @@ To configure platform authentication you have several choices.
 - [Configure Local Users](#configure-local-users)
 - [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
   - [LDAP Server](#ldap-server)
-  - [LDAPS](#ldaps) 
+  - [LDAPS](#ldaps)
   - [Auth0](#auth0)
   - [Okta](#okta)
   - [Keycloak](#keycloak)
@@ -41,7 +41,7 @@ CDK_AUTH_LOCAL-USERS_1_EMAIL="user@demo.dev"
 CDK_AUTH_LOCAL-USERS_1_PASSWORD="userpwd"
 ```
 
-## Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)
+## Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise and team plans**)
 
 Detail list of properties [here](./env-variables#sso-properties)
 
@@ -63,7 +63,7 @@ sso:
       group-filter: 'uniquemember={0}' # Group search filter
 ```
 
-> **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in.  Try setting your `search-filter` to the below in your `platform-config.yaml`
+> **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in. Try setting your `search-filter` to the below in your `platform-config.yaml`
 
 ```yaml
 search-filter: '(sAMAccountName={0})'
@@ -89,37 +89,41 @@ For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate t
 See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
 
 **Troubleshot LDAPS issues**  
-Download the script [sso-debug.sh](https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-sso-ldap/sso-debug.sh) and run it:  
-
+Download the script [sso-debug.sh](https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-sso-ldap/sso-debug.sh) and run it:
 
 If you encounter an error that looks like this:
-````console
+
+```console
 15:09:15.276 DEBUG i.m.s.l.LdapAuthenticationProvider - Starting authentication with configuration [default]
 15:09:15.276 DEBUG i.m.s.l.LdapAuthenticationProvider - Attempting to initialize manager context
 15:09:15.279 DEBUG i.m.s.l.LdapAuthenticationProvider - Failed to create manager context. Returning unknown authentication failure. Encountered ldap.conduktor.io:1636
-````
+```
 
 In order to confirm your configuration and figure out if the issue is SSL-related, apply the following procedure:
+
 1. Set the property `sso.ignoreUntrustedCertificate` to `true`
-````yaml
+
+```yaml
 sso:
   ignoreUntrustedCertificate: true # < ---- THIS
   ldap:
   - name: default
     server: "ldaps://domain:636"
     ...
-````
+```
+
 2. Run the script `platform-sso-debug.sh`
 3. Try to authenticate to the platform
 4. Confirm the message you have looks like this
-````console
+
+```console
 15:37:03.297 DEBUG i.m.s.l.LdapAuthenticationProvider - Starting authentication with configuration [default]
 15:37:03.297 DEBUG i.m.s.l.LdapAuthenticationProvider - Attempting to initialize manager context
 15:37:03.336 WARN  nl.altindag.ssl.SSLFactory - UnsafeTrustManager is being used. Client/Server certificates will be accepted without validation.
 15:37:03.563 DEBUG i.m.s.l.LdapAuthenticationProvider - Manager context initialized successfully
 15:37:03.563 DEBUG i.m.s.l.LdapAuthenticationProvider - Attempting to authenticate with user [test]
 15:37:03.586 DEBUG i.m.s.l.LdapAuthenticationProvider - User not found [test]
-````
+```
 
 From there, either leave the ignoreUntrusted or add the certificate to the truststore.  
 See [SSL/TLS configuration](./ssl-tls-configuration.md) for more details.
