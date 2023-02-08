@@ -16,6 +16,8 @@ To configure platform authentication you have several choices.
   - [Okta](#okta)
   - [Keycloak](#keycloak)
   - [Azure](#azure)
+  - [Google](#google)
+  - [Amazon Cognito](#amazon-cognito)
 
 ## Configure Local Users
 
@@ -58,9 +60,7 @@ sso:
       managerPassword: 'zflexpass' # Bind Password
       search-base: 'ou=users,ou=guests,dc=zflexsoftware,dc=com' # Base DN to search for users
       search-filter: '(uid={0})' # Search filter
-      groups-enabled: true # Enable group search
-      groups-base: 'ou=groups,ou=guests,dc=zflexsoftware,dc=com' # Base DN to search for groups
-      group-filter: 'uniquemember={0}' # Group search filter
+
 ```
 
 > **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in. Try setting your `search-filter` to the below in your `platform-config.yaml`
@@ -78,9 +78,7 @@ SSO_LDAP_0_MANAGERDN="cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_MANAGERPASSWORD="zflexpass"
 SSO_LDAP_0_SEARCH-BASE="ou=users,ou=guests,dc=zflexsoftware,dc=com"
 SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
-SSO_LDAP_0_GROUPS-ENABLED="true"
-SSO_LDAP_0_GROUPS-BASE="ou=groups,ou=guests,dc=zflexsoftware,dc=com"
-SSO_LDAP_0_GROUPS-FILTER="uniquemember={0}"
+
 ```
 
 ### LDAPS
@@ -299,5 +297,81 @@ SSO_OAUTH2_0_CLIENT-ID="${AZURE_APPLICATION_ID}"
 SSO_OAUTH2_0_CLIENT-SECRET="${AZURE_CLIENT_SECRET}"
 SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.0"
 ```
-
 > **Note** : do not use the "Secret ID" of the client secret as the `client-id`. You **must** use the application ID.
+
+### Google
+
+First of all, you need to create an application on the `OAuth consent screen` tab of you Google Console. The scopes needed are `email`, `profile`, and `openid`.
+
+![](https://user-images.githubusercontent.com/112936799/215048193-877f1080-ed45-4eda-b769-6e0c1baebae1.png)
+
+To restrict the access to your internal workspace, you need to check the `Internal` user type.
+
+![](https://user-images.githubusercontent.com/112936799/215048148-5220aaa6-dac6-48d8-b350-50af6345fbb7.png)
+
+When it's done, you will create new credentials on the `Credentials` tab. You can select `OAuth client ID`.
+![](https://user-images.githubusercontent.com/112936799/215046169-ffb3b7e6-0344-4bde-9bb0-7d6dc1e526bf.png)
+
+Enter the name you want, and the application type and redirect URI as below:
+
+![](https://user-images.githubusercontent.com/112936799/215047250-cdca3b05-94fb-43a9-96a9-03d9dfa4fee6.png)
+
+The callback should be like: `http://<platform hostname>/oauth/callback/<OAuth2 config name>`
+
+:::danger
+If you use another hostname than localhost, you may need to start your callback by https
+:::
+
+When you click on `Create`, you get you credentials. We suggest you to download the JSON file and keep it safe.
+
+![](https://user-images.githubusercontent.com/112936799/215049414-39c17f90-5572-46ad-9e32-5d85b42e0b75.png)
+
+Now you have everything you need to setup the platform. Within your `platform-config.yaml` file, you can add the following block:
+
+```yaml
+sso:
+  oauth2:
+    - name: 'google'
+      default: true
+      client-id: <your_google_id>
+      client-secret: <your_google_secret>
+      openid:
+        issuer: 'https://accounts.google.com'
+```
+
+### Amazon Cognito
+
+The first step is to create a user pool on Cognito. You can go through different steps with default properties. At step 5, you need to choose a name for your user pool and your application.
+
+We also suggest you to check the hosted UI and enter the domain you want.
+![](https://user-images.githubusercontent.com/112936799/215052347-74d34cb0-b82d-4a58-a66a-09d863c9780f.png)
+
+You can check the `Confidential client` property to get credentials.
+![](https://user-images.githubusercontent.com/112936799/215052109-5d7093b5-5a71-4953-b493-1248785ef77c.png)
+
+You will be able to see those credentials at the bottom of "App Integration", in your user pool.
+If you don't have a client id, you can "create app client" , choosing confidential client and give an app client name.
+
+In the callback property, type `http://<platform hostname>/oauth/callback/<OAuth2 config name>`, and select `email`, `profile`, and `openid` as OpenID client scopes, in the `Advanced app client settings` section.
+
+:::danger
+If you use another hostname than localhost, you may need to start your callback by https
+:::
+
+
+Finally, click on `Create`. You can get your application credentials here:
+  
+![](https://user-images.githubusercontent.com/112936799/215053721-2fab36bc-59c9-4091-a063-4e1b467e3047.png)
+
+Now you have everything you need to setup the platform. Within your `platform-config.yaml` file, you can add the following block:
+
+```yaml
+sso:
+  oauth2:
+    - name: 'cognito'
+      default: true
+      client-id: <cognito client ID>
+      client-secret: <cognito client secret>
+      openid:
+        issuer: 'https://cognito-idp.<your aws region code>.amazonaws.com/<your user pool ID>
+  ```
