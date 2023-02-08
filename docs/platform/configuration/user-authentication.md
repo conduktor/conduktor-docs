@@ -8,18 +8,16 @@ description: To configure platform authentication you have several choices.
 
 To configure platform authentication you have several choices.
 
-- [User Authentication](#user-authentication)
-  - [Configure Local Users](#configure-local-users)
-  - [Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise plan only**)](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
-    - [LDAP server](#ldap-server)
-    - [LDAPS](#ldaps)
-    - [Oauth2 Identity Provider](#oauth2-identity-provider)
-    - [Auth0](#auth0)
-    - [Okta](#okta)
-    - [Keycloak](#keycloak)
-    - [Azure](#azure)
-    - [Google](#google)
-    - [Cognito](#cognito)
+- [Configure Local Users](#configure-local-users)
+- [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
+  - [LDAP Server](#ldap-server)
+  - [LDAPS](#ldaps) 
+  - [Auth0](#auth0)
+  - [Okta](#okta)
+  - [Keycloak](#keycloak)
+  - [Azure](#azure)
+  - [Google](#google)
+  - [Amazon Cognito](#amazon-cognito)
 
 ## Configure Local Users
 
@@ -319,7 +317,8 @@ Enter the name you want, and the application type and redirect URI as below:
 ![](https://user-images.githubusercontent.com/112936799/215047250-cdca3b05-94fb-43a9-96a9-03d9dfa4fee6.png)
 
 The callback should be like: `http://<platform hostname>/oauth/callback/<OAuth2 config name>`
-:::warning
+
+:::danger
 If you use another hostname than localhost, you may need to start your callback by https
 :::
 
@@ -340,7 +339,7 @@ sso:
         issuer: 'https://accounts.google.com'
 ```
 
-### Cognito
+### Amazon Cognito
 
 The first step is to create a user pool on Cognito. You can go through different steps with default properties. At step 5, you need to choose a name for your user pool and your application.
 
@@ -350,9 +349,12 @@ We also suggest you to check the hosted UI and enter the domain you want.
 You can check the `Confidential client` property to get credentials.
 ![](https://user-images.githubusercontent.com/112936799/215052109-5d7093b5-5a71-4953-b493-1248785ef77c.png)
 
+You will be able to see those credentials at the bottom of "App Integration", in your user pool.
+If you don't have a client id, you can "create app client" , choosing confidential client and give an app client name.
+
 In the callback property, type `http://<platform hostname>/oauth/callback/<OAuth2 config name>`, and select `email`, `profile`, and `openid` as OpenID client scopes, in the `Advanced app client settings` section.
 
-:::warning
+:::danger
 If you use another hostname than localhost, you may need to start your callback by https
 :::
 
@@ -368,8 +370,8 @@ sso:
   oauth2:
     - name: 'cognito'
       default: true
-      client-id: <your cognito ID>
-      client-secret: <your cognito secret>
+      client-id: <cognito client ID>
+      client-secret: <cognito client secret>
       openid:
         issuer: 'https://cognito-idp.<your aws region code>.amazonaws.com/<your user pool ID>
   ```
