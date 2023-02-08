@@ -39,6 +39,7 @@ Jump to:
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
+
 > **Note** : Lists start at index 0 and are provided using `_idx_` syntax.
 
 #### Support of `*_FILE` environment variables
@@ -65,16 +66,18 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
   - _Default_ : ∅
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
-    
-- **`platform.fqdn`** : Platform FQDN. 
-Could be useful for SSO callback URL when using a reverse proxy. 
-The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy.
+
+- **`platform.fqdn`** : Platform FQDN.
+  Could be useful for SSO callback URL when using a reverse proxy.
+  The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy.
+
   - _Env_ : **`CDK_PLATFORM_FQDN`**
   - _Mandatory_ : false
   - _Type_ : string
   - _Default_ : `"localhost"`
 
 - **`platform.https.cert.path`** : Path to the SSL `certificate` file.
+
   - _Env_ : **`CDK_PLATFORM_HTTPS_CERT_PATH`**
   - _Mandatory_ : false
   - _Type_ : string
@@ -157,7 +160,7 @@ Optional local accounts list used to login on conduktor-platform
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise plan).
+SSO authentication properties (only on enterprise and team plans).
 See authentication [documentation](./user-authentication) for snippets
 
 - **`sso.ignoreUntrustedCertificate`** : Disable SSL checks
@@ -170,6 +173,7 @@ See authentication [documentation](./user-authentication) for snippets
 #### LDAP properties
 
 - **`sso.ldap[].name`** : Ldap connection name
+
   - _Env_ : **`SSO_LDAP_0_NAME`**
   - _Mandatory_ : true
   - _Type_ : string
@@ -182,18 +186,21 @@ See authentication [documentation](./user-authentication) for snippets
   - _Default_ : ∅
   -
 - **`sso.ldap[].managerDn`** : Sets the manager DN
+
   - _Env_ : **`SSO_LDAP_0_MANAGERDN`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].managerPassword`** : Sets the manager password
+
   - _Env_ : **`SSO_LDAP_0_MANAGERPASSWORD`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].search-subtree`** : Sets if the subtree should be searched.
+
   - _Env_ : **`SSO_LDAP_0_SEARCH-SUBTREE`**
   - _Mandatory_ : false
   - _Type_ : boolean
@@ -201,12 +208,14 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].search-base`** : Sets the base DN to search.
+
   - _Env_ : **`SSO_LDAP_0_SEARCH-BASE`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].search-filter`** : Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`.
+
   - _Env_ : **`SSO_LDAP_0_SEARCH-FILTER`**
   - _Mandatory_ : false
   - _Type_ : string
@@ -214,6 +223,7 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].search-attributes`** : Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token.
+
   - _Env_ : **`SSO_LDAP_0_SEARCH-ATTRIBUTES`**
   - _Mandatory_ : false
   - _Type_ : string array
@@ -221,6 +231,7 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-enabled`** : Sets if group search is enabled.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-ENABLED`**
   - _Mandatory_ : false
   - _Type_ : boolean
@@ -228,6 +239,7 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-subtree`** : Sets if the subtree should be searched.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-SUBTREE`**
   - _Mandatory_ : false
   - _Type_ : boolean
@@ -235,12 +247,14 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-base`** : Sets the base DN to search from.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-BASE`**
   - _Mandatory_ : true
   - _Type_ : string
   - _Default_ : ∅
 
 - **`sso.ldap[].groups-filter`** : Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-FILTER`**
   - _Mandatory_ : false
   - _Type_ : string
@@ -248,6 +262,7 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-filter-attribute`** : Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE`**
   - _Mandatory_ : false
   - _Type_ : string
@@ -255,6 +270,7 @@ See authentication [documentation](./user-authentication) for snippets
   - _Since_ : `1.5.0`
 
 - **`sso.ldap[].groups-attribute`** : Sets the group attribute name. Defaults to `cn`.
+
   - _Env_ : **`SSO_LDAP_0_GROUPS-ATTRIBUTE`**
   - _Mandatory_ : false
   - _Type_ : string
@@ -341,11 +357,12 @@ Contact our [Customer Success](https://www.conduktor.io/contact/support) or give
 :::
 
 :::warning
-Please consider the following limitations regarding Kafka Cluster definition:  
+Please consider the following limitations regarding Kafka Cluster definition:
+
 - This is not GitOps. If you later need to update a cluster defined this way, you **must** update it through the UI
 - Some additional properties will interfere with the UI and you won't be able to update them.
   - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
-:::
+    :::
 
 You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
 
