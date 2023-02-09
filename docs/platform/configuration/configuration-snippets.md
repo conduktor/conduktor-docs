@@ -7,6 +7,13 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 # Configuration Snippets
 
 :::warning
+Cluster configuration from YAML have several limitation you should be aware of:
+- This it not GitOps compatible (changes after the initial deployment will not be reflected)
+- No Audit log events send on cluster configuration
+- No SSL authentication support on Schema Registry and Kafka Connect
+- Limited Glue support
+- Certificates defined in properties or with CDK_SSL_TRUSTSTORE_PATH are not stored in the Conduktor Platform Certificate Store and cannot be updated from the UI
+
 The new **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
 
 The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
