@@ -351,7 +351,7 @@ See authentication [documentation](./user-authentication) for snippets
 ### Kafka clusters properties
 
 :::info
-Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is now **deprecated**.  
+Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is **limited**.  
 Looking to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
 :::
@@ -361,8 +361,8 @@ Please consider the following limitations regarding Kafka Cluster definition:
 
 - This is not GitOps. If you later need to update a cluster defined this way, you **must** update it through the UI
 - Some additional properties will interfere with the UI and you won't be able to update them.
-  - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
-    :::
+  - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.   
+:::
 
 You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
 
