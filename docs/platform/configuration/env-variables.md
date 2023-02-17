@@ -13,30 +13,33 @@ Jump to:
 
 ## Docker image environment variables
 
-<!-- prettier-ignore -->
-| Environment variable              | Description                                                                                                       | Default Value                                                                          | Since Version | Until Version |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------- | ------------- |
-| **`CDK_DEBUG`**                   | Flag to enable platform debug logs                                                                                | `false`                                                                                | `1.0.0`       | latest        |
-| **`RUN_MODE`**                    | Memory presets for the platform see [ advanced settings](../installation/hardware.md)                             | `nano`                                                                                 | `1.0.2`       | latest        |
-| **`CDK_VOLUME_DIR`**              | Volume directory where Conduktor platform store data \*\*                                                         | `/var/conduktor`                                                                       | `1.0.2`       | latest        |
-| **`CDK_IN_CONF_FILE`**            | Conduktor platform configuration file location \*\*                                                               | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | `1.0.2`       | latest        |
-| **`CDK_LISTENING_PORT`**          | Platform listening port \*\*                                                                                      | `8080`                                                                                 | `1.2.0`       | latest        |
-| **`CDK_SSL_TRUSTSTORE_PATH`**     | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification                            | None                                                                                   | `1.5.0`       | latest        |
-| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | Truststore password (optional)                                                                                    | None                                                                                   | `1.5.0`       | latest        |
-| **`CDK_SSL_TRUSTSTORE_TYPE`**     | Truststore type (optional)                                                                                        | `jks`                                                                                  | `1.5.0`       | latest        |
-| **`CDK_SSL_DEBUG`**               | Enable SSL/TLS debug logs                                                                                         | `false`                                                                                | `1.9.0`       | latest        |
-| **`CDK_HTTP_PROXY_HOST`**         | Specify [proxy settings](/platform/configuration/http-proxy-configuration) that Conduktor Platform should use to access the Internet | None                                                                                   | `1.10.0`      | latest        |
-| **`CDK_HTTP_PROXY_PORT`**         | Specify [proxy settings](/platform/configuration/http-proxy-configuration) that Conduktor Platform should use to access the Internet | `80`                                                                                   | `1.10.0`      | latest        |
-| **`CDK_HTTP_NON_PROXY_HOSTS`**    | Specify [proxy settings](/platform/configuration/http-proxy-configuration) that Conduktor Platform should use to access the Internet | None                                                                                   | `1.10.0`      | latest        |
-| **`CDK_HTTP_PROXY_USERNAME`**     | Specify [proxy settings](/platform/configuration/http-proxy-configuration) that Conduktor Platform should use to access the Internet | None                                                                                   | `1.10.0`      | latest        |
-| **`CDK_HTTP_PROXY_PASSWORD`**     | Specify [proxy settings](/platform/configuration/http-proxy-configuration) that Conduktor Platform should use to access the Internet | None                                                                                   | `1.10.0`      | latest        |
-| **`CDK_GLOBAL_JAVA_OPTS`**        | Custom JAVA_OPTS parameters passed to platform modules                                                            | None                                                                                   | `1.10.0`      | latest        |
+| ENV | Since Version | Until Version | Default Value |  |
+| --- | --- | --- | --- | --- |
+| **`CDK_DEBUG`** | 1.0.0 | latest | `false` | Flag to enable platform debug logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
+| **`RUN_MODE`** | 1.0.2 | latest | `nano` | Memory presets for the platform see [advanced settings](../installation/hardware.md) |
+| **`CDK_VOLUME_DIR`** | 1.0.2 | latest | `/var/conduktor` | Volume directory where Conduktor platform store data \*\* |
+| **`CDK_IN_CONF_FILE`** | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location \*\* |
+| **`CDK_LISTENING_PORT`** | 1.2.0 | latest | `8080` | Platform listening port \*\* |
+| **`CDK_SSL_TRUSTSTORE_PATH`** | 1.5.0 | latest | None | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification |
+| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0 | latest | None | Truststore password (optional) |
+| **`CDK_SSL_TRUSTSTORE_TYPE`** | 1.5.0 | latest | `jks` | Truststore type (optional) |
+| **`CDK_SSL_DEBUG`** | 1.9.0 | latest | `false` | Enable SSL/TLS debug logs |
+| **`CDK_HTTP_PROXY_HOST`** | 1.10.0 | latest | None | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_PORT`** | 1.10.0 | latest | `80` | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_NON_PROXY_HOSTS`** | 1.10.0 | latest | None | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_USERNAME`** | 1.10.0 | latest | None | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_HTTP_PROXY_PASSWORD`** | 1.10.0 | latest | None | Specify [proxy settings](./http-proxy-configuration.md) that Conduktor Platform should use to access the Internet |
+| **`CDK_GLOBAL_JAVA_OPTS`** | 1.10.0 | latest | None | Custom JAVA_OPTS parameters passed to platform modules. |
+| **`CDK_ROOT_LOG_LEVEL`** | 1.11.0 | latest | `INFO` | Set the platform global log level (DEBUG, INFO, WARN, ERROR). See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
+| **`CDK_ROOT_LOG_COLOR`** | 1.11.0 | latest | `true` | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
 
 ## Platform properties reference
 
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
+
+> **Note** : Lists start at index 0 and are provided using `_idx_` syntax.
 
 #### Support of `*_FILE` environment variables
 
@@ -48,13 +51,13 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 
 ### Global properties
 
-| Configuration field            | Environment variable                   | Description                                                                                                                                                                                         | Type   | Mandatory | Default value |
-| ------------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------- | ------------- |
-| **`organization.name`**        | **`CDK_ORGANIZATION_NAME`**            | Your organization's name                                                                                                                                                                            | string | Yes       | `"default"`   |
-| **`license`**                  | **`CDK_LICENSE`** or **`LICENSE_KEY`** | Enterprise license key. If not provided, fallback to free plan.                                                                                                                                     | string | No        | ∅             |
-| **`platform.fqdn`**            | **`CDK_PLATFORM_FQDN`**                | Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using `X-Forwarded-Host` header coming from upstream reverse proxy. | string | No        | `"localhost"` |
-| **`platform.https.cert.path`** | **`CDK_PLATFORM_HTTPS_CERT_PATH`**     | Path to the SSL `certificate` file                                                                                                                                                                  | string | No        | ∅             |
-| **`platform.https.key.path`**  | **`CDK_PLATFORM_HTTPS_KEY_PATH`**      | Path to the SSL `private key` file                                                                                                                                                                  | string | No        | ∅             |
+| Property | Description | Environment Variable | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `organization.name` | Your organization's name | `CDK_ORGANIZATION_NAME` | true | string | `"default"` |
+| `license` | Enterprise license key. If not provided, fallback to free plan. | CDK_LICENSE or LICENSE_KEY | false | string | ∅ |
+| `platform.fqdn` | Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using X-Forwarded-Host header coming from upstream reverse proxy. | `CDK_PLATFORM_FQDN` | false | string | `"localhost"` |
+| `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
+| `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
@@ -62,178 +65,159 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 
 See database configuration [documentation](./database) for more info
 
-| Configuration field               | Environment variable                                                 | Description                                                                                                                        | Type    | Mandatory | Default value |
-| --------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- | ------------- |
-| **`database.url`**                | **`CDK_DATABASE_URL`** (prior to `1.2.0` it was _`PLATFORM_DB_URL`_) | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]` | string  | No        | ∅             |
-| **`database.host`**               | **`CDK_DATABASE_HOST`**                                              | External PostgreSQL server hostname                                                                                                | string  | No        | ∅             |
-| **`database.port`**               | **`CDK_DATABASE_PORT`**                                              | External PostgreSQL server port                                                                                                    | integer | No        | ∅             |
-| **`database.name`**               | **`CDK_DATABASE_NAME`**                                              | External PostgreSQL database name                                                                                                  | string  | No        | ∅             |
-| **`database.username`**           | **`CDK_DATABASE_USERNAME`**                                          | External PostgreSQL login role                                                                                                     | string  | No        | ∅             |
-| **`database.password`**           | **`CDK_DATABASE_PASSWORD`**                                          | External PostgreSQL login password                                                                                                 | string  | No        | ∅             |
-| **`database.connection_timeout`** | **`CDK_DATABASE_CONNECTIONTIMEOUT`**                                 | External PostgreSQL connection timeout in seconds                                                                                  | integer | No        | ∅             |
-
-### Monitoring properties
-
-| Configuration field                         | Environment variable                            | Description                                       | Type    | Mandatory | Default value | Since Version |
-| ------------------------------------------- | ----------------------------------------------- | ------------------------------------------------- | ------- | --------- | ------------- | ------------- |
-| **`monitoring.storage.s3.endpoint`**        | **`CDK_MONITORING_STORAGE_S3_ENDPOINT`**        | External monitoring S3 storage endpoint           | string  | No        | ∅             | `1.5.0`       |
-| **`monitoring.storage.s3.region`**          | **`CDK_MONITORING_STORAGE_S3_REGION`**          | External monitoring S3 storage region             | string  | No        | ∅             | `1.5.0`       |
-| **`monitoring.storage.s3.bucket`**          | **`CDK_MONITORING_STORAGE_S3_BUCKET`**          | External monitoring S3 storage bucket name        | string  | Yes       | ∅             | `1.5.0`       |
-| **`monitoring.storage.s3.insecure`**        | **`CDK_MONITORING_STORAGE_S3_INSECURE`**        | External monitoring S3 storage SSL/TLS check flag | boolean | No        | `false`       | `1.5.0`       |
-| **`monitoring.storage.s3.accessKeyId`**     | **`CDK_MONITORING_STORAGE_S3_ACCESSKEYID`**     | External monitoring S3 storage access key         | string  | Yes       | ∅             | `1.5.0`       |
-| **`monitoring.storage.s3.secretAccessKey`** | **`CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`** | External monitoring S3 storage access key secret  | string  | Yes       | ∅             | `1.5.0`       |
-
-### Kafka clusters properties
-
-| Configuration field                         | Environment variable                            | Description                                                          | Type                                     | Mandatory | Default value |
-| ------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------- | --------- | ------------- |
-| **`clusters[].id`**                         | **`CDK_CLUSTERS_0_ID`**                         | String used to uniquely identify your Kafka cluster                  | string                                   | Yes       | ∅             |
-| **`clusters[].name`**                       | **`CDK_CLUSTERS_0_NAME`**                       | Alias or user-friendly name for your Kafka cluster                   | string                                   | Yes       | ∅             |
-| **`clusters[].color`**                      | **`CDK_CLUSTERS_0_COLOR`**                      | Attach a color to associate with your cluster in the UI              | string in hexadecimal format (`#FFFFFF`) | No        | random        |
-| **`clusters[].ignoreUntrustedCertificate`** | **`CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE`** | Skip SSL certificate validation                                      | boolean                                  | No        | `false`       |
-| **`clusters[].bootstrapServers`**           | **`CDK_CLUSTERS_0_BOOTSTRAPSERVERS`**           | List of host:port for your Kafka brokers separated by coma `,`       | string                                   | Yes       | ∅             |
-| **`clusters[].zookeeperServer`**            | **`CDK_CLUSTERS_0_ZOOKEEPERSERVER`**            | Zookeeper server url                                                 | string                                   | No        | ∅             |
-| **`clusters[].properties`**                 | **`CDK_CLUSTERS_0_PROPERTIES`**                 | Any cluster configuration properties                                 | string where each line is a property     | No        | ∅             |
-| **`clusters[].jmxScrapePort`**              | **`CDK_CLUSTERS_0_JMXSCRAPEPORT`**              | JMX-exporter port used to scrape kafka broker metrics for monitoring | integer                                  | No        | `9101`        |
-| **`clusters[].nodeScrapePort`**             | **`CDK_CLUSTERS_0_NODESCRAPEPORT`**             | Node-exporter port used to scrape kafka host metrics for monitoring  | integer                                  | No        | `9100`        |
-
-> **Tips** : For clusters[].properties you can set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
-
-### Schema registry properties
-
-| Configuration field                | Environment variable                   | Description                                           | Type   | Mandatory | Default value |
-| ---------------------------------- | -------------------------------------- | ----------------------------------------------------- | ------ | --------- | ------------- |
-| **`clusters[].schemaRegistry.id`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_ID`** | String used to uniquely identify your schema registry | string | Yes       | ∅             |
-
-#### Confluent schema registry properties
-
-| Configuration field                                        | Environment variable                                           | Description                                  | Type                                 | Mandatory | Default value |
-| ---------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------- | ------------------------------------ | --------- | ------------- |
-| **`clusters[].schemaRegistry.url`**                        | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`**                        | The schema registry URL                      | string                               | Yes       | ∅             |
-| **`clusters[].schemaRegistry.ignoreUntrustedCertificate`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE`** | Skip SSL certificate validation              | boolean                              | No        | `false`       |
-| **`clusters[].schemaRegistry.properties`**                 | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`**                 | Any schema registry configuration parameters | string where each line is a property | No        | ∅             |
-
-> **Tips** : For clusters[].schemaRegistry.properties, you can set multi-line properties using environment variable, separate each properties with `\n` like `prop1=value1\nprop3=value3`.
-
-If you need to authenticate with basic auth, you can use the following properties:
-
-| Configuration field                               | Environment variable                                  | Description         | Type   | Mandatory | Default value |
-| ------------------------------------------------- | ----------------------------------------------------- | ------------------- | ------ | --------- | ------------- |
-| **`clusters[].schemaRegistry.security.username`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`** | Basic auth username | string | No        | ∅             |
-| **`clusters[].schemaRegistry.security.password`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`** | Basic auth password | string | No        | ∅             |
-
-If you need to authenticate with bearer auth, you can use the following property:
-
-| Configuration field                            | Environment variable                               | Description       | Type   | Mandatory | Default value |
-| ---------------------------------------------- | -------------------------------------------------- | ----------------- | ------ | --------- | ------------- |
-| **`clusters[].schemaRegistry.security.token`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`** | Bearer auth token | string | No        | ∅             |
-
-#### Amazon Glue schema registry properties
-
-| Configuration field                                 | Environment variable                                    | Description                     | Type   | Mandatory | Default value | Values                                   | Since Version |
-| --------------------------------------------------- | ------------------------------------------------------- | ------------------------------- | ------ | --------- | ------------- | ---------------------------------------- | ------------- |
-| **`clusters[].schemaRegistry.region`**              | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`**              | The Glue schema registry region | string | Yes       | ∅             |                                          | `1.x.x`       |
-| **`clusters[].schemaRegistry.registryName`**        | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`**        | The Glue schema registry name   | string | No        | ∅             |                                          | `1.x.x`       |
-| **`clusters[].schemaRegistry.amazonSecurity.type`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`** | Authentication with credentials | string | Yes       | ∅             | `Credentials`, `FromContext`, `FromRole` | `1.x.x`       |
-
-If `amazonSecurity.type` is `Credentials`, you must use the following properties:
-
-| Configuration field                                        | Environment variable                                           | Description                 | Type   | Mandatory | Default value | Since Version |
-| ---------------------------------------------------------- | -------------------------------------------------------------- | --------------------------- | ------ | --------- | ------------- | ------------- |
-| **`clusters[].schemaRegistry.amazonSecurity.accessKeyId`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID`** | Credentials auth access key | string | Yes       | ∅             | `1.x.x`       |
-| **`clusters[].schemaRegistry.amazonSecurity.secretKey`**   | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`**   | Credentials auth secret key | string | Yes       | ∅             | `1.x.x`       |
-
-If `amazonSecurity.type` is `FromContext`, you must use the following properties:
-
-| Configuration field                                    | Environment variable                                       | Description            | Type   | Mandatory | Default value | Since Version |
-| ------------------------------------------------------ | ---------------------------------------------------------- | ---------------------- | ------ | --------- | ------------- | ------------- |
-| **`clusters[].schemaRegistry.amazonSecurity.profile`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`** | Authentication profile | string | No        | ∅             | `1.x.x`       |
-
-If `amazonSecurity.type` is `FromRole`, you must use the following properties:
-
-| Configuration field                                 | Environment variable                                    | Description         | Type   | Mandatory | Default value | Since Version |
-| --------------------------------------------------- | ------------------------------------------------------- | ------------------- | ------ | --------- | ------------- | ------------- |
-| **`clusters[].schemaRegistry.amazonSecurity.role`** | **`CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`** | Authentication role | string | Yes       | ∅             | `1.x.x`       |
-
-#### Kafka Connect properties
-
-| Configuration field                                | Environment variable                                   | Description                                         | Type   | Since Version | Mandatory |
-| -------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------- | ------ | ------------- | --------- |
-| **`clusters[].kafkaConnects[].id`**                | **`CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`**                | String used to uniquely identify your Kafka Connect | string | Yes           | ∅         |
-| **`clusters[].kafkaConnects[].url`**               | **`CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`**               | The Kafka connect URL                               | string | Yes           | ∅         |
-| **`clusters[].kafkaConnects[].security.username`** | **`CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`** | Basic auth username                                 | string | No            | ∅         |
-| **`clusters[].kafkaConnects[].security.password`** | **`CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`** | Basic auth password                                 | string | No            | ∅         |
-
-### Environment properties (for governance feature)
-
-Optional list of environments used by governance.
-
-| Configuration field    | Environment variable       | Description                         | Type   | Mandatory | Default value |
-| ---------------------- | -------------------------- | ----------------------------------- | ------ | --------- | ------------- |
-| **`envs[].name`**      | **`CDK_ENVS_0_NAME`**      | Environment name used by governance | string | Yes       | ∅             |
-| **`envs[].clusterId`** | **`CDK_ENVS_0_CLUSTERID`** | Environment linked clusterId        | string | Yes       | ∅             |
-
-### Application properties (for governance feature)
-
-Optional list of applications used by governance.
-
-| Configuration field              | Environment variable                 | Description             | Type                               | Mandatory | Default value |
-| -------------------------------- | ------------------------------------ | ----------------------- | ---------------------------------- | --------- | ------------- |
-| **`applications[].name`**        | **`CDK_APPLICATIONS_0_NAME`**        | Application name        | string                             | Yes       | ∅             |
-| **`applications[].description`** | **`CDK_APPLICATIONS_0_DESCRIPTION`** | Application description | string                             | No        | ∅             |
-| **`applications[].slug`**        | **`CDK_APPLICATIONS_0_SLUG`**        | Application slug        | string                             | Yes       | ∅             |
-| **`applications[].tags[]`**      | **`CDK_APPLICATIONS_0_TAGS`**        | Application tags list   | string                             | No        | ∅             |
-| **`applications[].owner`**       | **`CDK_APPLICATIONS_0_OWNER`**       | Application owner email | string (e.g: `U:user@company.com`) | Yes       | ∅             |
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `database.url` | External Postgresql configuration URL | CDK_DATABASE_URL | false | string | ∅ |
+|  | in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` |  |  |  |  |
+| `database.host` | External Postgresql server hostname | `CDK_DATABASE_HOST` | false | string | ∅ |
+| `database.port` | External Postgresql server port | `CDK_DATABASE_PORT` | false | int | ∅ |
+| `database.name` | External Postgresql database name | `CDK_DATABASE_NAME` | false | string | ∅ |
+| `database.username` | External Postgresql login role | `CDK_DATABASE_USERNAME` | false | string | ∅ |
+| `database.password` | External Postgresql login password | `CDK_DATABASE_PASSWORD` | false | string | ∅ |
+| `database.connection_timeout` | External Postgresql connection timeout in seconds | `CDK_DATABASE_CONNECTIONTIMEOUT` | false | int | ∅ |
 
 ### Local users properties
 
 Optional local accounts list used to login on conduktor-platform
 
-| Configuration field               | Environment variable                 | Description   | Type   | Mandatory | Default value          |
-| --------------------------------- | ------------------------------------ | ------------- | ------ | --------- | ---------------------- |
-| **`auth.local-users[].email`**    | **`CDK_AUTH_LOCALUSERS_0_EMAIL`**    | User login    | string | Yes       | `"admin@conduktor.io"` |
-| **`auth.local-users[].password`** | **`CDK_AUTH_LOCALUSERS_0_PASSWORD`** | User password | string | Yes       | `"admin"`              |
+| Property | Description | Env Variable | Mandatory | Type | Default Value |
+| --- | --- | --- | --- | --- | --- |
+| `auth.local-users[].email` | User login | `CDK_AUTH_LOCAL-USERS_0_EMAIL` | true | string | `"admin@conduktor.io"` |
+| `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL-USERS_0_PASSWORD` | true | string | `"admin"` |
+
+### Monitoring properties
+
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `monitoring.storage.s3.endpoint` | External monitoring S3 storage endpoint | `CDK_MONITORING_STORAGE_S3_ENDPOINT` | false | string | ∅ | `1.5.0` |
+| `monitoring.storage.s3.region` | External monitoring S3 storage region | `CDK_MONITORING_STORAGE_S3_REGION` | false | string | ∅ | `1.5.0` |
+| `monitoring.storage.s3.bucket` | External monitoring S3 storage bucket name | `CDK_MONITORING_STORAGE_S3_BUCKET` | true | string | ∅ | `1.5.0` |
+| `monitoring.storage.s3.insecure` | External monitoring S3 storage SSL/TLS check flag | `CDK_MONITORING_STORAGE_S3_INSECURE` | false | bool | false | `1.5.0` |
+| `monitoring.storage.s3.accessKeyId` | External monitoring S3 storage access key | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` | true | string | ∅ | `1.5.0` |
+| `monitoring.storage.s3.secretAccessKey` | External monitoring S3 storage access key secret | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY` | true | string | ∅ | `1.5.0` |
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise plan).
-See authentication [documentation](./user-authentication) for snipets
+SSO authentication properties (only on enterprise and team plans). See authentication [documentation](./user-authentication) for snippets
 
-| Configuration field                  | Environment variable                   | Description        | Type    | Mandatory | Default value | Since Version |
-| ------------------------------------ | -------------------------------------- | ------------------ | ------- | --------- | ------------- | ------------- |
-| **`sso.ignoreUntrustedCertificate`** | **`SSO_IGNORE-UNTRUSTED-CERTIFICATE`** | Disable SSL checks | boolean | No        | `false`       | `1.3.0`       |
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `SSO_IGNORE-UNTRUSTED-CERTIFICATE` | false | boolean | `false` | `1.3.0` |
 
 #### LDAP properties
 
-| Configuration field                      | Environment variable                     | Description                                                                                                                                                                                       | Type         | Mandatory | Default value        | Since Version |
-| ---------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------- | -------------------- | ------------- |
-| **`sso.ldap[].name`**                    | **`SSO_LDAP_0_NAME`**                    | Ldap connection name                                                                                                                                                                              | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].server`**                  | **`SSO_LDAP_0_SERVER`**                  | Ldap server host and port                                                                                                                                                                         | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].managerDn`**               | **`SSO_LDAP_0_MANAGERDN`**               | Sets the manager DN                                                                                                                                                                               | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].managerPassword`**         | **`SSO_LDAP_0_MANAGERPASSWORD`**         | Sets the manager password                                                                                                                                                                         | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].search-subtree`**          | **`SSO_LDAP_0_SEARCH-SUBTREE`**          | Sets if the subtree should be searched                                                                                                                                                            | boolean      | No        | `true`               | `1.5.0`       |
-| **`sso.ldap[].search-base`**             | **`SSO_LDAP_0_SEARCH-BASE`**             | Sets the base DN to search                                                                                                                                                                        | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].search-filter`**           | **`SSO_LDAP_0_SEARCH-FILTER`**           | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`                                                                                   | string       | No        | `"(uid={0})"`        | `1.5.0`       |
-| **`sso.ldap[].search-attributes`**       | **`SSO_LDAP_0_SEARCH-ATTRIBUTES`**       | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token | string array | No        | `[]`                 | `1.5.0`       |
-| **`sso.ldap[].groups-enabled`**          | **`SSO_LDAP_0_GROUPS-ENABLED`**          | Sets if group search is enabled                                                                                                                                                                   | boolean      | No        | `false`              | `1.5.0`       |
-| **`sso.ldap[].groups-subtree`**          | **`SSO_LDAP_0_GROUPS-SUBTREE`**          | Sets if the subtree should be searched                                                                                                                                                            | boolean      | No        | `true`               | `1.5.0`       |
-| **`sso.ldap[].groups-base`**             | **`SSO_LDAP_0_GROUPS-BASE`**             | Sets the base DN to search from                                                                                                                                                                   | string       | Yes       | ∅                    | None          |
-| **`sso.ldap[].groups-filter`**           | **`SSO_LDAP_0_GROUPS-FILTER`**           | Sets the group search filter. For group class `GroupOfUniqueNames`, use the default value. For group class `GroupOfNames`, use `"member={0}"`.                                                    | string       | No        | `"uniqueMember={0}"` | `1.5.0`       |
-| **`sso.ldap[].groups-filter-attribute`** | **`SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE`** | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN.                                                                                                | string       | No        | ∅                    | `1.5.0`       |
-| **`sso.ldap[].groups-attribute`**        | **`SSO_LDAP_0_GROUPS-ATTRIBUTE`**        | Sets the group attribute name.                                                                                                                                                                    | string       | No        | `"cn"`               | `1.5.0`       |
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `sso.ldap[].name` | Ldap connection name | `SSO_LDAP_0_NAME` | true | string | ∅ |  |
+| `sso.ldap[].server` | Ldap server host and port | `SSO_LDAP_0_SERVER` | true | string | ∅ |  |
+| `sso.ldap[].managerDn` | Sets the manager DN | `SSO_LDAP_0_MANAGERDN` | true | string | ∅ |  |
+| `sso.ldap[].managerPassword` | Sets the manager password | `SSO_LDAP_0_MANAGERPASSWORD` | true | string | ∅ |  |
+| `sso.ldap[].search-subtree` | Sets if the subtree should be searched. | `SSO_LDAP_0_SEARCH-SUBTREE` | false | boolean | `true` | `1.5.0` |
+| `sso.ldap[].search-base` | Sets the base DN to search. | `SSO_LDAP_0_SEARCH-BASE` | true | string | ∅ |  |
+| `sso.ldap[].search-filter` | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`. | `SSO_LDAP_0_SEARCH-FILTER` | false | string | `"(uid={0})"` | `1.5.0` |
+| `sso.ldap[].search-attributes` | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token. | `SSO_LDAP_0_SEARCH-ATTRIBUTES` | false | string array | `[]` | `1.5.0` |
+| `sso.ldap[].groups-enabled` | Sets if group search is enabled. | `SSO_LDAP_0_GROUPS-ENABLED` | false | boolean | `false` | `1.5.0` |
+| `sso.ldap[].groups-subtree` | Sets if the subtree should be searched. | `SSO_LDAP_0_GROUPS-SUBTREE` | false | boolean | `true` | `1.5.0` |
+| `sso.ldap[].groups-base` | Sets the base DN to search from. | `SSO_LDAP_0_GROUPS-BASE` | true | string | ∅ |  |
+| `sso.ldap[].groups-filter` | Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`. | `SSO_LDAP_0_GROUPS-FILTER` | false | string | `"uniquemember={0}"` | `1.5.0` |
+| `sso.ldap[].groups-filter-attribute` | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN. | `SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE` | false | string | ∅ | `1.5.0` |
+| `sso.ldap[].groups-attribute` | Sets the group attribute name. Defaults to `cn`. | `SSO_LDAP_0_GROUPS-ATTRIBUTE` | false | string | `"cn"` | `1.5.0` |
+| `sso.ldap[].properties` | Additional properties that will be passed to identity provider context. | `SSO_LDAP_0_PROPERTIES` | false | dictionary | ∅ | `1.11.0` |
 
-#### OAuth2 properties
+#### Oauth2 properties
 
-| Configuration field                  | Environment variable                 | Description                                             | Type    | Mandatory | Default value | Values                                                                                                                     |
-| ------------------------------------ | ------------------------------------ | ------------------------------------------------------- | ------- | --------- | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **`sso.oauth2[].name`**              | **`SSO_OAUTH2_0_NAME`**              | OAuth2 connection name                                  | string  | Yes       | ∅             |                                                                                                                            |
-| **`sso.oauth2[].default`**           | **`SSO_OAUTH2_0_DEFAULT`**           | Use as default                                          | boolean | Yes       | ∅             |                                                                                                                            |
-| **`sso.oauth2[].client-id`**         | **`SSO_OAUTH2_0_CLIENT-ID`**         | OAuth2 client id                                        | string  | Yes       | ∅             |                                                                                                                            |
-| **`sso.oauth2[].client-secret`**     | **`SSO_OAUTH2_0_CLIENT-SECRET`**     | OAuth2 client secret                                    | string  | Yes       | ∅             |                                                                                                                            |
-| **`sso.oauth2[].openid.issuer`**     | **`SSO_OAUTH2_0_OPENID_ISSUER`**     | Issuer to check on token                                | string  | Yes       | ∅             |                                                                                                                            |
-| **`sso.oauth2[].scopes`**            | **`SSO_OAUTH2_0_SCOPES`**            | Scope to be requested in the client credentials request | string  | Yes       | `[]`          |                                                                                                                            |
-| **`sso.oauth2[].authorization-url`** | **`SSO_OAUTH2_0_AUTHORIZATION-URL`** | Authorization endpoint URL                              | string  | No        | ∅             |                                                                                                                            |
-| **`sso.oauth2[].token.url`**         | **`SSO_OAUTH2_0_TOKEN_URL`**         | Get token endpoint URL                                  | string  | No        | ∅             |                                                                                                                            |
-| **`sso.oauth2[].token.auth-method`** | **`SSO_OAUTH2_0_TOKEN_AUTH-METHOD`** | Authentication Method                                   | string  | No        |               | `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` |
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `sso.oauth2[].name` | Oauth2 connection name | `SSO_OAUTH2_0_NAME` | true | string | ∅ |
+| `sso.oauth2[].default` | Use as default | `SSO_OAUTH2_0_DEFAULT` | true | boolean | ∅ |
+| `sso.oauth2[].client-id` | Oauth2 client id | `SSO_OAUTH2_0_CLIENT-ID` | true | string | ∅ |
+| `sso.oauth2[].client-secret` | Oauth2 client secret | `SSO_OAUTH2_0_CLIENT-SECRET` | true | string | ∅ |
+| `sso.oauth2[].openid.issuer` | Issuer to check on token | `SSO_OAUTH2_0_OPENID_ISSUER` | true | string | ∅ |
+| `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `SSO_OAUTH2_0_SCOPES` | true | string | `[]` |
+| `sso.oauth2[].authorization-url` | Authorization endpoint URL | `SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
+| `sso.oauth2[].token.url` | Get token endpoint URL | `SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
+| `sso.oauth2[].token.auth-method` | Authentication Method | `SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
 
-> **Note** : In environment variables, lists start at index 0 and are provided using `_idx_` syntax.
+### Kafka clusters properties
+
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `clusters[].id` | String used to uniquely identify your Kafka cluster | `CDK_CLUSTERS_0_ID` | true | string | ∅ |
+| `clusters[].name` | Alias or user-friendly name for your Kafka cluster | `CDK_CLUSTERS_0_NAME` | true | string | ∅ |
+| `clusters[].color` | Attach a color to associate with your cluster in the UI | `CDK_CLUSTERS_0_COLOR` | false | string in hexadecimal format (`#FFFFFF`) | random |
+| `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
+| `clusters[].bootstrapServers` | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS` | true | string | ∅ |
+| `clusters[].zookeeperServer` | Zookeeper server url | `CDK_CLUSTERS_0_ZOOKEEPERSERVER` | false | string | ∅ |
+| `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
+| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
+| `clusters[].nodeScrapePort` | Node-exporter port used to scrape kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
+
+:::info Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is **limited**.  
+Looking to configure your Kafka Clusters using GitOps processes?  
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature. :::
+
+:::warning Please consider the following limitations regarding Kafka Cluster definition:
+
+- This is not GitOps. If you later need to update a cluster defined this way, you **must** update it through the UI
+- Some additional properties will interfere with the UI and you won't be able to update them.
+  - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
+
+You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
+
+### Schema registry properties
+
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.id` | String used to uniquely identify your schema registry | `CDK_CLUSTERS_0_SCHEMAREGISTRY_ID` | true | string | ∅ |
+| `clusters[].schemaRegistry.url` | The schema registry URL | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL` | true | string | ∅ |
+| `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
+| `clusters[].schemaRegistry.properties` | Any schema registry configuration parameters | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES` | false | string where each line is a property | ∅ |
+
+If you need to authenticate with basic auth, you can use the following properties:
+
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| clusters[].schemaRegistry.security.username | Basic auth username | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME` | false | string | ∅ |
+| clusters[].schemaRegistry.security.password | Basic auth password | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD` | false | string | ∅ |
+
+If you need to authenticate with bearer auth, you can use the following property:
+
+| Property | Description | Environment Variable | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.security.token` | Bearer auth token | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN` | `false` | string | ∅ |
+
+#### Amazon Glue schema registry properties
+
+| Property | Description | Env | Mandatory | Type | Default | Values | Since |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.region` | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION` | true | string | ∅ | - | `1.x.x` |
+| `clusters[].schemaRegistry.registryName` | The Glue schema registry name | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME` | false | string | ∅ | - | `1.x.x` |
+| `clusters[].schemaRegistry.amazonSecurity.type` | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE` | true | string | ∅ | `Credentials`, `FromContext`, `FromRole` | `1.x.x` |
+
+If `amazonSecurity.type` is `Credentials`, you must use the following properties:
+
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true | string | ∅ | `1.x.x` |
+| `clusters[].schemaRegistry.amazonSecurity.secretKey` | Credentials auth secret key | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY` | true | string | ∅ | `1.x.x` |
+
+If `amazonSecurity.type` is `FromContext`, you must use the following properties:
+
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.amazonSecurity.profile` | Authentication profile | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE` | false | string | ∅ | `1.x.x` |
+
+If `amazonSecurity.type` is `FromRole`, you must use the following properties:
+
+| Property | Description | Env | Mandatory | Type | Default | Since |
+| --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].schemaRegistry.amazonSecurity.role` | Authentication role | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE` | true | string | ∅ | `1.x.x` |
+
+### Kafka Connect properties
+
+| Property | Description | Environment Variable | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `clusters[].kafkaConnects[].id` | String used to uniquely identify your Kafka Connect | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID` | true | string | ∅ |
+| `clusters[].kafkaConnects[].url` | The Kafka connect URL | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL` | true | string | ∅ |
+| `clusters[].kafkaConnects[].security.username` | Basic auth username | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME` | false | string | ∅ |
+| `clusters[].kafkaConnects[].security.password` | Basic auth password | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD` | false | string | ∅ |

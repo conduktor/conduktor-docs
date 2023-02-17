@@ -112,12 +112,13 @@ export const items = [
   },
   {
     question: 'How are the cluster credentials I enter on the platform stored?',
-    answer: 'They are secrets that are encrypted to/from the DB (via AES encryption algorithm), of which the key is accessible only via our internal DevOps team.',
+    answer:
+      'They are secrets that are encrypted to/from the DB (via AES encryption algorithm), of which the key is accessible only via our internal DevOps team.',
   },
   {
-    question: 'Are the timestamps in Conduktor Console for Kafka messages based on Local time or Coordinated Universal Time(UTC)?',
-    answer: 'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionailty to allow users be able to choose between either local time and UTC on Conduktor Console.',
+    question:
+      'Are the timestamps in Conduktor Console for Kafka messages based on Local time or Coordinated Universal Time(UTC)?',
+    answer:
+      'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionailty to allow users be able to choose between either local time and UTC on Conduktor Console.',
   },
-  
-  
 ]
