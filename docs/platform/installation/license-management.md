@@ -43,21 +43,18 @@ When you run the platform, you can find these meaningful logs in the head:
 [ INFO  platform_cli::license::validator] License is valid ! Remaining days : 365
 ```
 
-### Within the Conduktor Platform container
+### With API
 
-From within the Conduktor Platform container run the following:
-
+Since release `1.10.0` you can use the `/platform/api/license` endpoint to get the license details.
 ```sh
-curl -s  http://localhost:3000/platform/api/license | jq .
+curl -s  http://localhost:8080/platform/api/license | jq .
 ```
-
 Example of result:
 
-```
-curl -s  http://localhost:3000/platform/api/license | jq .
+```json
 {
-  "raw-token": "YOUR_LICENSE_HERE",
   "expire": 1669248000,
+  "organization": "conduktor",
   "plan": "enterprise",
   "version": 1,
   "features": {
@@ -67,7 +64,7 @@ curl -s  http://localhost:3000/platform/api/license | jq .
     "datamasking.enable": true,
     "monitoring.alerting.enable": true,
     "monitoring.enable": true,
-    "platform.clusters.limit": -1,
+    "platform.clusters.limit": 5,
     "platform.rbac.enable": true,
     "platform.sso.enable": true,
     "testing.enable": true,
@@ -76,6 +73,14 @@ curl -s  http://localhost:3000/platform/api/license | jq .
     "governance.enable": true
   }
 }
+```
+
+### Within the Conduktor Platform container
+
+You can get the same result as above from within the Conduktor Platform container with the following command:
+
+```sh
+curl -s  http://localhost:3000/platform/api/license
 ```
 
 ### In the UI

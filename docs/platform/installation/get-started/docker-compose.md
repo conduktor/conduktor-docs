@@ -20,13 +20,6 @@ Once you have started Conduktor, you can [customize it](#customizing-the-docker-
 Install [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-:::caution
-Note that currently the Platform must run with:
-- **Root user**
-- **Root FileSystem NOT in read-only mode**
-
-We're working to resolve both aspects. Please acknowledge this when deploying the container in the short-term. 
-:::
 
 ## Skills required
 
@@ -53,8 +46,7 @@ After a few minutes, **Conduktor will be available at [http://localhost:8080](ht
 Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your oganizations environment. The file is used to declare:
 
 - Organization name
-- Kafka clusters
 - External database (optional)
 - User authentication (Basic or SSO)
 
-In the above example, a default `platform-config.yaml` is used to start the platform. However, if you would like to see more examples for connecting to your own infrastructure, see the [configuration snippets](./../../configuration/configuration-snippets.md).
+In the above example, a default `platform-config.yaml` is used to start the platform. However, if you would like to see more examples for connecting to your own infrastructure, see the [Configuration Page](./../../configuration/introduction.md).

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: SSL/TLS configuration
+title: SSL/TLS Configuration
 description: Depending on the environment, Conduktor might need to access external services like Kafka clusters, SSO servers, database, or object-storage that require custom certificate for SSL/TLS communication.
 ---
 
@@ -15,19 +15,19 @@ Since version `1.8.0` Conduktor provides a mechanism inside the UI for managing 
 The following table gives you an overview of what's currently supported and which methods you can use to configure it:
 
 - From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
-- Volume mount. This method is available as a backup plan, or if you have LDAPS
+- Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
 
-|                                | Kafka clusters            | Kafka Connect / Schema Registry | LDAPS, OIDC               |
-| ------------------------------ | ------------------------- | ------------------------------- | ------------------------- |
-| SSL to secure data in transit  | ✅ UI<br/>✅ volume mount | ✅ UI<br/>✅ volume mount       | 🚫 UI<br/>✅ volume mount |
-| SSL to authenticate the client | ✅ UI<br/>✅ volume mount | 🚫 Unsupported                  | 🚫 Unsupported            |
+|                                | Kafka clusters | Kafka Connect / Schema Registry | LDAPS, OIDC               |
+| ------------------------------ |----------------|---------------------------------| ------------------------- |
+| SSL to secure data in transit  | ✅ UI           | ✅ UI                            | 🚫 UI<br/>✅ volume mount |
+| SSL to authenticate the client | ✅ UI           | 🚫 Unsupported                  | 🚫 Unsupported            |
 
 Jump to:
 
 - [Using the Conduktor Certificate Store](#using-the-conduktor-certificate-store)
   - _Recommended for Kafka, Kafka Connect and Schema Registry connections_
 - [Mounting Custom Truststore](#mounting-custom-truststore)
-  - _Recommended for SSO, DB or other external services requrigin SSL/TLS communication_
+  - _Recommended for SSO, DB or other external services requiring SSL/TLS communication_
 - [Client Certificate Authentication](#client-certificate-authentication)
 
 ## Using the Conduktor Certificate Store

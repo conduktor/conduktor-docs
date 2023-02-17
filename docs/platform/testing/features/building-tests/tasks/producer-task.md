@@ -115,3 +115,9 @@ There are additional, advanced options available under the **Options** heading.&
 | Acks            | Denotes the brokers that must receive the record before the write is considered successful. Options: - none - leader - all     |
 
 Continue to read more about [Consumer](consumer-task) tasks.
+
+## Load CSV data into Kafka
+
+You can use the Load CSV task chained with a Producer task to load data from a CSV file into Kafka.
+
+Check out our walkthrough [here](./load-csv-task#producing-the-csv-data-into-kafka)

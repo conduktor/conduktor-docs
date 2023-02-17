@@ -6,6 +6,27 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 # Configuration Snippets
 
+:::warning
+Cluster configuration from YAML have several limitation you should be aware of:
+- This it not GitOps compatible (changes after the initial deployment will not be reflected)
+- No Audit log events send on cluster configuration
+- No SSL authentication support on Schema Registry and Kafka Connect
+- Limited AWS Glue support
+- Certificates defined in properties or with CDK_SSL_TRUSTSTORE_PATH are not stored in the Conduktor Platform Certificate Store and cannot be updated from the UI
+
+The new **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using [Conduktor Platform UI](../installation/get-started/cloud.md#configure-your-first-cluster).  
+
+The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
+- Intuitive interface with live update capabilities
+- Centralized and secured with RBAC and Audit Logs Events
+- Certificate store to help with your Custom certificates needs (no more JKS files and volume mounts)
+
+Need to configure your Kafka Clusters using GitOps processes?   
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
+
+If you absolutely need to configure your clusters using YAML, keep reading.
+:::
+
 Below outlines snippets demonstrating different configuration options for the `platform-config.yaml`.
 
 Jump to:
@@ -14,12 +35,13 @@ Jump to:
 - [Plain Auth Example](#plain-auth-example)
 - [Plain Auth With Schema Registry](#plain-auth-with-schema-registry)
 - [Amazon MSK with IAM Authentication Example](#amazon-msk-with-iam-authentication-example)
+- [Amazon MSK with Glue Schema Registry](#amazon-msk-with-glue-schema-registry)
 - [Confluent Cloud Example](#confluent-cloud-example)
 - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
 - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
 - [Kafka Connect](#kafka-connect)
-- [SSO](#sso)
+
 
 ## Complete Configuration Example
 
@@ -146,6 +168,88 @@ Override Role
 sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleArn="arn:aws:iam::123456789012:role/msk_client_role";
 ```
 
+## Amazon MSK with Glue Schema Registry
+
+Connect to an MSK cluster with schema registry using credentials
+
+```yml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: <aws-region>
+      security:
+        type: Credentials
+        accessKeyId: <access-key-id>
+        secretKey: <secret-key>
+```
+
+Connect to an MSK cluster with schema registry using the default chain of credentials providers
+
+```yml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: <aws-region>
+      security:
+        type: FromContext
+        profile: <profile> # optional to use the default profile
+```
+
+Connect to an MSK cluster with schema registry using a specific role
+
+```yml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: <aws-region>
+      security:
+        type: FromRole
+        role: <role>
+```
+
+On top of that, and for all these previous configuration example,
+you can add a `registryName` to the `schemaRegistry` section to use a specific registry for this cluster.
+
+````yml
+schemaRegistry:
+  region: <aws-region>
+  security:
+    type: Credentials
+    accessKeyId: <access-key-id>
+    secretKey: <secret-key>
+  registryName: <registry-name>
+````
+
 ## Confluent Cloud Example
 
 Connect to a confluent cloud cluster using API keys
@@ -181,7 +285,6 @@ Connect to a confluent cloud cluster with schema registry using basic auth
     security:
       username: <username>
       password: <password>
-  labels: {}
 ```
 
 ## SSL Certificates Example - Aiven (truststore)
@@ -242,7 +345,3 @@ Cluster with Kafka Connect configured with Basic Auth
         username: <username>
         password: <password>
 ```
-
-## SSO
-
-For more information on SSO, see [User Authentication](./user-authentication)
