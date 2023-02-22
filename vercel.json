@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { 
+      "source": "/desktop/conduktor-first-steps/install",
+      "destination": "/platform/category/get-started", 
+      "permanent": true
+    }
+  ]
+}
