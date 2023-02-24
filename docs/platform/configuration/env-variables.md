@@ -141,18 +141,6 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 
 ### Kafka clusters properties
 
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `clusters[].id` | String used to uniquely identify your Kafka cluster | `CDK_CLUSTERS_0_ID` | true | string | ∅ |
-| `clusters[].name` | Alias or user-friendly name for your Kafka cluster | `CDK_CLUSTERS_0_NAME` | true | string | ∅ |
-| `clusters[].color` | Attach a color to associate with your cluster in the UI | `CDK_CLUSTERS_0_COLOR` | false | string in hexadecimal format (`#FFFFFF`) | random |
-| `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
-| `clusters[].bootstrapServers` | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS` | true | string | ∅ |
-| `clusters[].zookeeperServer` | Zookeeper server url | `CDK_CLUSTERS_0_ZOOKEEPERSERVER` | false | string | ∅ |
-| `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
-| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
-| `clusters[].nodeScrapePort` | Node-exporter port used to scrape kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
-
 :::info Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is **limited**.  
 Looking to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature. :::
@@ -164,6 +152,18 @@ Contact our [Customer Success](https://www.conduktor.io/contact/support) or give
   - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
 
 You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
+
+| Property | Description | Env | Mandatory | Type | Default |
+| --- | --- | --- | --- | --- | --- |
+| `clusters[].id` | String used to uniquely identify your Kafka cluster | `CDK_CLUSTERS_0_ID` | true | string | ∅ |
+| `clusters[].name` | Alias or user-friendly name for your Kafka cluster | `CDK_CLUSTERS_0_NAME` | true | string | ∅ |
+| `clusters[].color` | Attach a color to associate with your cluster in the UI | `CDK_CLUSTERS_0_COLOR` | false | string in hexadecimal format (`#FFFFFF`) | random |
+| `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
+| `clusters[].bootstrapServers` | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS` | true | string | ∅ |
+| `clusters[].zookeeperServer` | Zookeeper server url | `CDK_CLUSTERS_0_ZOOKEEPERSERVER` | false | string | ∅ |
+| `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
+| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
+| `clusters[].nodeScrapePort` | Node-exporter port used to scrape kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
 
 ### Schema registry properties
 
