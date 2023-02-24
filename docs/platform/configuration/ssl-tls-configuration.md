@@ -17,10 +17,10 @@ The following table gives you an overview of what's currently supported and whic
 - From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
 - Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
 
-|                                | Kafka clusters | Kafka Connect / Schema Registry | LDAPS, OIDC               |
-| ------------------------------ |----------------|---------------------------------| ------------------------- |
-| SSL to secure data in transit  | ✅ UI           | ✅ UI                            | 🚫 UI<br/>✅ volume mount |
-| SSL to authenticate the client | ✅ UI           | 🚫 Unsupported                  | 🚫 Unsupported            |
+|                                | Kafka Clusters | Schema Registry | Kafka Connect |  LDAPS, OIDC               |
+| ---------------- |----------------|----------------| ---------------- | ---------------- |
+| SSL to secure data in transit  | ✅ UI           | ✅ UI            | ✅ UI                       | 🚫 UI<br/>✅ volume mount |
+| SSL to authenticate the client | ✅ UI           | ✅ UI            | 🚫 Unsupported              | 🚫 Unsupported            |
 
 Jump to:
 

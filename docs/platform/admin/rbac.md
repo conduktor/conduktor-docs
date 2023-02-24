@@ -16,16 +16,23 @@ The Conduktor RBAC system enables you to restrict access to resources and enforc
 
 With RBAC enabled, it's possible to:
 
-- Administer **Topic** level read/write controls
 - Configure global permissions across **multiple clusters**
+- Administer permissions for resources:
+   - Topic
+   - Consumer Groups
+   - Cluster
+   - Subject
+   - Kafka Connect
 
-Jump to:
-
+---
+**Jump to:**
 - [Enable RBAC](#enable-rbac-in-your-organization)
 - [Roles](#roles)
-- [Resoure Conditions](#resource-conditions)
-  - [Example: Applying editor role permissions on topic resources](#example-applying-editor-role-permissions-on-topic-resources)
-  - [Overlapping Role Assignments](#overlapping-role-assigments)
+- [Managing Resoure Conditions](#manage-resource-conditions)
+  - [Example: Assigning Topic Permissions](#example-assigning-topic-permissions)
+- [Resource Permissions](#resource-permissions)
+- [Overlapping Role Assignments](#overlapping-role-assigments)
+---
 
 ### Enable RBAC in your Organization
 
@@ -46,7 +53,7 @@ Below outlines what these roles permit **when RBAC is enabled**. You should comb
 | **Editor** | Editor role provides 'global' edit permissions on all Kafka resources such as consumer groups, kafka connect, ACLs, topics and subjects. Add [resource conditions](#resource-conditions) to this role to provide edit permissions on Kafka resources.           |
 | **Viewer** | Viewer role provides 'global' read-only permissions on all Kafka resources such as consumer groups, kafka connect, ACLs, topics and subjects. Add [resource conditions](#resource-conditions) to this role to provide read-only permissions on Kafka resources. |
 
-### Resource Conditions
+### Manage Resource Conditions
 
 Resource conditions are used to grant access to resources according to the permissions that the role assumes. Resource conditions can be applied to:
 
@@ -57,7 +64,8 @@ From the **Members** screen in Admin, select the breadcrumb next to either a use
 
 ![Admin manage permissions](/img/admin/admin-manage-permissions.png)
 
-#### Example: Applying Editor Role Permissions on Topic Resources
+#### Example: Assigning Topic Permissions
+The below example demonstrates how to apply Editor role permissions on Topic resources.
 
 From the permissions screen, you should bind resources to the relevant role. The example below demonstrates how to:
 
@@ -68,6 +76,24 @@ From the permissions screen, you should bind resources to the relevant role. The
 Note you can use a wildcard to ensure access is permitted to all topic names within the same domain or context.
 
 ![Admin manage permissions](/img/admin/admin-resource-permissions.png)
+
+### Resource Permissions
+
+The Editor/Viewer roles dictate different permissions for specific resources:
+
+| Resource      | Role      | Permissions |
+| ----------- | ----------- | ----------- |
+| Topic      | Editor      | Create topic<br />Describe Topic<br />Read/Write topic<br />Edit/Read topic config<br />Empty/Delete topic     |
+| Topic      | Viewer   | Read topic<br />Read topic config<br />Describe topic    |
+| Cluster      | Editor   | Read ACLs<br />Create ACLs<br />Delete ACLs<br />Edit registry compatibility    |
+| Cluster      | Viewer   | Read ACLs    |
+| Subject      | Editor   | Read subjects<br />Edit subjects<br />Delete subjects<br />Edit subject compatibility  |
+| Subject      | Viewer   |  Read subjects  |
+| Consumer Group      | Editor   |  Read consumer groups<br />Edit consumer groups<br />Describe consumer groups   |
+| Consumer Group      | Viewer   |  Read consumer groups<br />Describe consume groups   |
+| Connector      | Editor   | Read connectors<br />Edit connectors<br />View connector config<br />Manage tasks     |
+| Connector      | Viewer   |  Read connectors<br /> View connector config   |
+
 
 ### Overlapping Role Assigments
 
