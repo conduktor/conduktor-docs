@@ -122,12 +122,6 @@ const sidebars = {
     },
     {
       type: 'doc',
-      label: 'Topic Analyzer',
-      className: 'topic-analyzer',
-      id: 'topic-analyzer/index',
-    },
-    {
-      type: 'doc',
       label: 'Topic as a Service',
       className: 'topic-service',
       id: 'topic-service/index',

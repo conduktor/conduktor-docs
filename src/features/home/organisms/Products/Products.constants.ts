@@ -36,18 +36,10 @@ export const items = [
     icon: '/assets/svgs/products/admin.svg',
   },
   {
-    name: 'Topic Analyzer',
-    description: 'Auto Kafka recommendations',
-    to: '/platform/topic-analyzer',
-    icon: '/assets/svgs/products/topic-analyzer.svg',
-    comingSoon: true,
-  },
-  {
     name: 'Topic as a Service',
     description: 'Standardize your processes',
     to: '/platform/topic-service',
     icon: '/assets/svgs/products/taas.svg',
-    comingSoon: true,
   },
   {
     name: 'Desktop',
