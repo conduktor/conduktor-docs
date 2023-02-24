@@ -7,7 +7,7 @@ export default function TreeWrapper(props) {
   const ref = useRef()
 
   useTogglerState(ref)
-  usePresetStates()
+  usePresetStates(ref)
 
   return (
     <div ref={ref}>
