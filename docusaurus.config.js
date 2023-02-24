@@ -112,7 +112,7 @@ const config = {
                 html: `<a href="/platform/data-masking">Data Masking <span class="badge">soon</span></a>`,
               },
               {
-                html: `<a href="/platform/topic-service">Topic as a Service <span class="badge">soon</span></a>`,
+                html: `<a href="/platform/topic-service">Topic as a Service</a>`,
               },
               {
                 label: 'Conduktor Desktop',

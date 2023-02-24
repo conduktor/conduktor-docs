@@ -233,8 +233,7 @@ aside ul li.topic-as-a-service::before {
 ul li[data-icon="true"].topic-analyzer::after,
 ul li[data-icon="true"].topic-as-a-service::after,
 aside ul li.topic-analyzer::after,
-aside ul li.topic-service::after,
-aside ul li.topic-as-a-service::after {
+aside ul li.topic-service::after {
   position: absolute;
   right: 0;
   top: 50%;
