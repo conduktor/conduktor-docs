@@ -58,6 +58,7 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 | `platform.fqdn` | Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using X-Forwarded-Host header coming from upstream reverse proxy. | `CDK_PLATFORM_FQDN` | false | string | `"localhost"` |
 | `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
 | `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
+| `enable_product_metrics` | In order to improve Conduktor Platform, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
