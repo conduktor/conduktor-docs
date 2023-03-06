@@ -282,6 +282,42 @@ main p img {
   margin-top: var(--space-space6);
 }
 
+main article table thead tr th:first-of-type,
+main article table tbody tr td:first-of-type {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+main article table tbody tr td:first-of-type {
+  background-color: var(--colors-mauve2);
+}
+
+main article table thead tr th:first-of-type::after,
+main article table thead tr th:first-of-type::before,
+main article table tbody tr td:first-of-type::after,
+main article table tbody tr td:first-of-type::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 1.5px;
+  background-color: var(--colors-mauve4);
+  z-index: 2;
+}
+
+main article table thead tr th:first-of-type::after,
+main article table tbody tr td:first-of-type::after {
+  right: -1px;
+}
+
+main article table thead tr th:first-of-type::before,
+main article table tbody tr td:first-of-type::before {
+  left: 0;
+}
+
 .breadcrumbs__link {
   font-weight: 500;
 }
