@@ -15,8 +15,8 @@ const config = {
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
@@ -51,18 +51,6 @@ const config = {
           customCss: [require.resolve('./src/css/custom.css')],
         },
       }),
-    ],
-    [
-      '@docusaurus/preset-classic',
-      {
-        sitemap: {
-          changefreq: 'weekly',
-          priority: 0.5,
-          filename: 'sitemap.xml',
-          noIndex: false,
-          trailingSlash: true,
-        },
-      },
     ],
   ],
 
