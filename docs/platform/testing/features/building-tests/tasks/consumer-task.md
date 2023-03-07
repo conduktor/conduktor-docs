@@ -10,11 +10,11 @@ Use the **Consumer** task to consume data from a Kafka topic.
 
 You can consume data from Kafka with a number of conditions.
 
-| Method         | Description                                                                                   |
-| -------------- | --------------------------------------------------------------------------------------------- |
-| Single Record  | Consume a single record from a Kafka topic                                                    |
-| X Records      | Consume a user-defined number of records from a Kafka topic                                   |
-| Time Interval  | Constantly consume records until an elapsed time (ms) is reached                              |
+| Method | Description |
+| --- | --- |
+| Single Record | Consume a single record from a Kafka topic |
+| X Records | Consume a user-defined number of records from a Kafka topic |
+| Time Interval | Constantly consume records until an elapsed time (ms) is reached |
 | With filter(s) | Use any of the above methods with additional filter conditions to intercept specific messages |
 
 ## Deserialization support
@@ -37,13 +37,11 @@ Currently supported SerDes formats:
 
 ## Create a consumer task
 
-For this exercise, we will assume you have already added a [simple Produce task](producer-task#create-a-simple-produce-task) to your test scenario. We will consume the message configured in the Producer task.&#x20;
+For this exercise, we will assume you have already added a [simple Produce task](/platform/testing/features/building-tests/tasks/producer-task/#create-a-simple-producer-task-) to your test scenario. We will consume the message configured in the Producer task.&#x20;
 
-:::info
-**Note: When producing and consuming from the same topic**
+:::info **Note: When producing and consuming from the same topic**
 
-To ensure the consumer task is subscribed when the message is produced, these tasks must be configured in **parallel**.&#x20;
-:::
+To ensure the consumer task is subscribed when the message is produced, these tasks must be configured in **parallel**.&#x20; :::
 
 From inside the editor view, select the **Scenario Start** button and select **Consumer** from the dropdown menu.
 
@@ -63,7 +61,7 @@ However, you can amend these to suit your needs within the **Lifecycle** section
 
 ![](<../../../assets/image (97).png>)
 
-To learn about adding checks (tests) on data consumed from Kafka, move on to [\*\*Test Checks\*\*](../test-checks).&#x20;
+To learn about adding checks (tests) on data consumed from Kafka, move on to [\*\*Test Checks\*\*](/platform/testing/features/building-tests/test-checks/).&#x20;
 
 ## Consumer filters
 
@@ -71,18 +69,18 @@ It's possible to filter messages consumed by your Consumer task. This is useful 
 
 There are **multiple filter types**:
 
-| Filter Type | Description                                                                            |
-| ----------- | -------------------------------------------------------------------------------------- |
-| Headers     | Filter on message headers (metadata)                                                   |
-| JSON Query  | Filter on a message key or message value                                               |
-| Schema Id   | When using Schema Registry, filter on a schema Id for the message key or message value |
+| Filter Type | Description |
+| --- | --- |
+| Headers | Filter on message headers (metadata) |
+| JSON Query | Filter on a message key or message value |
+| Schema Id | When using Schema Registry, filter on a schema Id for the message key or message value |
 
 Also, you can configure your filter rules with **two conditions**:
 
-| Filter Condition | Description                                                                                   |
-| ---------------- | --------------------------------------------------------------------------------------------- |
-| All              | Filter messages that obey all filter rules (in cases where there are multiple filters)        |
-| Any of           | Filter messages that abide by at least one filter (in cases where there are multiple filters) |
+| Filter Condition | Description |
+| --- | --- |
+| All | Filter messages that obey all filter rules (in cases where there are multiple filters) |
+| Any of | Filter messages that abide by at least one filter (in cases where there are multiple filters) |
 
 To add filters to your Consumer task, navigate to the **Data** tab when in edit mode. Under the **Filters** header, click the '**+**' button to add a new filter.
 

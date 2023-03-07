@@ -6,7 +6,7 @@ description: Domain-specific language
 
 # DSL
 
-The DSL (Domain-specific language) is a specialized language enabling **rapid test declaration** and **version control** of your [Test Scenarios](building-tests/test-scenarios).&#x20;
+The DSL (Domain-specific language) is a specialized language enabling **rapid test declaration** and **version control** of your [Test Scenarios](/platform/testing/features/building-tests/test-scenarios/).&#x20;
 
 When you use the Testing UI, it's possible to toggle between the visual and code-wise representation of a test.&#x20;
 
@@ -98,7 +98,7 @@ You can switch at a:
 
 ### **Task Level DSL**
 
-When in **edit** mode for a [Task](building-tests/tasks), use the **DSL View** button to switch to the code-wise representation of your task.&#x20;
+When in **edit** mode for a [Task](/platform/testing/features/building-tests/tasks/), use the **DSL View** button to switch to the code-wise representation of your task.&#x20;
 
 ![](<../assets/image (32).png>)
 
@@ -131,9 +131,9 @@ To rollback to a previous version, select **Restore version** from the diff comp
 If you prefer to declare tests utilising the DSL, you may want to import a scenario so that:
 
 - It's visually represented inside the UI
-- You can export the [CI configuration](ci-cd-automation) for automation&#x20;
+- You can export the [CI configuration](/platform/testing/features/ci-cd-automation/) for automation&#x20;
 
-From within a [Test Suite](building-tests/test-suites), select the **Import from DSL** option.
+From within a [Test Suite](/platform/testing/features/building-tests/test-suites/), select the **Import from DSL** option.
 
 ![](<../assets/image (99).png>)
 

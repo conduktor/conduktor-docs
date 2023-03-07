@@ -1,15 +1,12 @@
 ---
 sidebar_position: 1
 title: Pick your format wisely
-description: Conduktor supports many formats and growing. From the basic formats to the
-  most useful, JSON, Apache Avro, Protobuf, with or without Schema Registry.
+description: Conduktor supports many formats and growing. From the basic formats to the most useful, JSON, Apache Avro, Protobuf, with or without Schema Registry.
 ---
 
 # Pick your format wisely
 
-:::info
-This is the first thing to setup when you're consuming a topic.
-:::
+:::info This is the first thing to setup when you're consuming a topic. :::
 
 Conduktor supports many formats when deserializing data and we keep adding some.
 
@@ -27,15 +24,9 @@ There are 2 formats to pick: the key format and the value format.
 
 ![List of supported value formats](../../assets/value_formats.png)
 
-:::info
-Conduktor automatically pick "Avro (Auto)" when it detects a matching Confluent Schema Registry
-subject (if configured)
-:::
+:::info Conduktor automatically pick "Avro (Auto)" when it detects a matching Confluent Schema Registry subject (if configured) :::
 
-:::caution
-If you don't see "Avro (Auto)", it means you didn't configured the url of your schema registry in
-your cluster configuration: [check the doc](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/#schema-registry).
-:::
+:::caution If you don't see "Avro (Auto)", it means you didn't configured the url of your schema registry in your cluster configuration: [check the doc](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/#schema-registry). :::
 
 ## Without Confluent Schema Registry ?
 
@@ -61,9 +52,7 @@ For instance, I want to provide an Avro Schema to read my data:
   - In most cases, this will NOT be checked if we're using this feature
 - The data will be read using this schema!
 
-:::tip
-It can be used to "project" the data: read and display only a subset of fields
-:::
+:::tip It can be used to "project" the data: read and display only a subset of fields :::
 
 ```javascript
 {
@@ -107,20 +96,15 @@ message SearchRequest {
 
 ![Consume using custom Protobuf Schema](<../../assets/image (54) (1).png>)
 
-:::info
-Conduktor will iterate over all root message types in the provided schema and select the best one
-for each message (the first type decoding without missing or unknown fields).
-:::
+:::info Conduktor will iterate over all root message types in the provided schema and select the best one for each message (the first type decoding without missing or unknown fields). :::
 
 ### Using AWS Glue Registry
 
-With AWS Glue Registry, the registry name and the schema information (including the format) are embedded in the message.
-All you need to do is provide the AWS region of your registry.
+With AWS Glue Registry, the registry name and the schema information (including the format) are embedded in the message. All you need to do is provide the AWS region of your registry.
 
 ![Consume with AWS Glue Registry](../../assets/aws-glue-consume-config.png)
 
-You also need to have your AWS credentials configured in your system
-(see [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)).
+You also need to have your AWS credentials configured in your system (see [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)).
 
 Conduktor will deserialize your messages (Json, Avro, Protobuf format are supported) and display them in a json format.
 
@@ -132,12 +116,10 @@ If you try to consume Avro data without properly configuring it (and because it 
 
 On the contrary, if you try to read non-Avro data using the Avro format, you'll end up with a list of errors (Conduktor doesn't stop, in case it was test records for instance):
 
-:::danger
-ERR: Unknown magic byte!
-:::
+:::danger ERR: Unknown magic byte! :::
 
 ![](<../../assets/screenshot-2020-06-25-at-16.15.21 (1).png>)
 
 ## Custom deserializers
 
-See the dedicated documentation page: [Custom deserializers](custom-deserializers)
+See the dedicated documentation page: [Custom deserializers](/desktop/features/consuming-data/custom-deserializers/)

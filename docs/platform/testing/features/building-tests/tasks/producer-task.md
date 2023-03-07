@@ -10,12 +10,12 @@ Use the **Producer** task to produce data to a Kafka topic.&#x20;
 
 You can produce data to Kafka in multiple ways.&#x20;
 
-| Method             | Description                                                                      |
-| ------------------ | -------------------------------------------------------------------------------- |
-| Single Record      | Produce a single message to a Kafka topic                                        |
-| Batch (Chunk Size) | Produce a batch (chunk) of messages to a Kafka topic                             |
-| Stream             | Produce an automated stream of messages with configurable timer options.         |
-| Stream & Batch     | Produce an automated stream of batched messages with configurable timer options. |
+| Method | Description |
+| --- | --- |
+| Single Record | Produce a single message to a Kafka topic |
+| Batch (Chunk Size) | Produce a batch (chunk) of messages to a Kafka topic |
+| Stream | Produce an automated stream of messages with configurable timer options. |
+| Stream & Batch | Produce an automated stream of batched messages with configurable timer options. |
 
 ## Serialization support
 
@@ -41,11 +41,9 @@ When inside the editor for a new scenario, select the **Scenario Start** button 
 
 ![](<../../../assets/image (53).png>)
 
-Give your task an appropriate **name**, and select the **Cluster** and **Topic** that you want to produce data to. If you do not have a Cluster configured, [add one ](../../../getting-started/connect-to-a-kafka-cluster)first.&#x20;
+Give your task an appropriate **name**, and select the **Cluster** and **Topic** that you want to produce data to. If you do not have a Cluster configured, [add one ](/platform/testing/getting-started/connect-to-a-kafka-cluster/)first.&#x20;
 
-:::tip
-**Pro Tip!** After selecting a Cluster and Topic, use **Topic Preview** to fetch the latest records from your topic
-:::
+:::tip **Pro Tip!** After selecting a Cluster and Topic, use **Topic Preview** to fetch the latest records from your topic :::
 
 ![](<../../../assets/image (21).png>)
 
@@ -73,7 +71,7 @@ From the **Data** tab of a Producer task, scroll down to the **Headers** section
 
 ![](<../../../assets/image (170).png>)
 
-Read more about how to use **header filters** in [Consumer](consumer-task) Tasks.
+Read more about how to use **header filters** in [Consumer](/platform/testing/features/building-tests/tasks/consumer-task/) Tasks.
 
 ## Create an advanced producer task
 
@@ -97,9 +95,7 @@ Next, scroll down and toggle the **Stream messages** button to activate streamin
 - Under **Timer Options**, enter an **Interval (ms)** value of **1000**
 - Under **Stop Conditions**, enter the value **10**
 
-:::info
-Under these conditions, our task will produce a record to Kafka **every second until 10 records** have been produced.&#x20;
-:::
+:::info Under these conditions, our task will produce a record to Kafka **every second until 10 records** have been produced.&#x20; :::
 
 ![](<../../../assets/image (155).png>)
 
@@ -107,17 +103,17 @@ Under these conditions, our task will produce a record to Kafka **every second u
 
 There are additional, advanced options available under the **Options** heading.&#x20;
 
-| Option          | Description                                                                                                                    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Force partition | Force producing data to a specific partition                                                                                   |
-| Compression     | Compress the Kafka messages configured in your Producer task. Compression types available: - none - gzip - snappy - lz4 - zstd |
-| Idempotence     | The producer will ensure that **exactly one** copy of each message is written in the stream                                    |
-| Acks            | Denotes the brokers that must receive the record before the write is considered successful. Options: - none - leader - all     |
+| Option | Description |
+| --- | --- |
+| Force partition | Force producing data to a specific partition |
+| Compression | Compress the Kafka messages configured in your Producer task. Compression types available: - none - gzip - snappy - lz4 - zstd |
+| Idempotence | The producer will ensure that **exactly one** copy of each message is written in the stream |
+| Acks | Denotes the brokers that must receive the record before the write is considered successful. Options: - none - leader - all |
 
-Continue to read more about [Consumer](consumer-task) tasks.
+Continue to read more about [Consumer](/platform/testing/features/building-tests/tasks/consumer-task/) tasks.
 
 ## Load CSV data into Kafka
 
 You can use the Load CSV task chained with a Producer task to load data from a CSV file into Kafka.
 
-Check out our walkthrough [here](./load-csv-task#producing-the-csv-data-into-kafka)
+Check out our walkthrough [here](/platform/testing/features/building-tests/tasks/load-csv-task/#producing-the-csv-data-into-kafka/)

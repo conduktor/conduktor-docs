@@ -20,7 +20,7 @@ Additionally, you can both filter and check messages consumed based on the Schem
 
 ## Producing a message with schema registry type
 
-Add a [Producer Task](tasks/producer-task) to the canvas editor.&#x20;
+Add a [Producer Task](/platform/testing/features/building-tests/tasks/producer-task) to the canvas editor.&#x20;
 
 On the General tab, specify the cluster and topic relevant to your scenario. Then, progress to the 'Data' tab of the form.
 
@@ -33,15 +33,13 @@ When producing the message, you can either:
 - **Generate random data:** This will infer the correct data types from your schema
 - **Manually enter data:** Provide a manual input for the message&#x20;
 
-:::tip
-**Pro Tip!** Use 'Preview Schema' to peek your schema inside the Testing application
-:::
+:::tip **Pro Tip!** Use 'Preview Schema' to peek your schema inside the Testing application :::
 
 ![Preview Schema  ](<../../assets/image (3).png>)
 
 ## Consuming a message with schema registry type
 
-Add a corresponding [Consumer Task](tasks/consumer-task) to the canvas editor.&#x20;
+Add a corresponding [Consumer Task](/platform/testing/features/building-tests/tasks/consumer-task/) to the canvas editor.&#x20;
 
 On the General tab, specify the cluster and topic relevant to your scenario. Then, progress to the 'Data' tab of the form.
 
@@ -63,9 +61,9 @@ Provide the Id in either the Key/Value Schema Id field. This will filter message
 
 ## Checking the Schema Id
 
-When making [Test Checks](test-checks) in a scenario, it's possible to check the Key or Value Schema Id.
+When making [Test Checks](/platform/testing/features/building-tests/test-checks/) in a scenario, it's possible to check the Key or Value Schema Id.
 
-The syntax for accessing these values in a [Consumer Task](tasks/consumer-task) is outlined below:
+The syntax for accessing these values in a [Consumer Task](/platform/testing/features/building-tests/tasks/consumer-task/) is outlined below:
 
 **JQ:**
 

@@ -5,6 +5,7 @@ description: Conduktor can be configured using an input yaml file
 ---
 
 # Introduction
+
 Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your organization environment. The file is used to declare:
 
 - Organization name
@@ -12,27 +13,26 @@ Conduktor depends on a configuration file `platform-config.yaml`. This is used t
 - User authentication (Basic or SSO)
 - Platform License
 
-:::info
-The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.  
+:::info The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.
 
 The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
+
 - Intuitive interface with live update capabilities
 - Centralized and secured with RBAC and Audit Logs Events
 - Certificate store to help with your Custom certificates needs (no more JKS files and volume mounts)
 
-Need to configure your Kafka Clusters using GitOps processes?   
+Need to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
-  
-If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](./env-variables.md#kafka-clusters-properties) page
-:::
+
+If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](/platform/configuration/env-variables/#kafka-clusters-properties) page :::
 
 ## Security notes
 
-The [database](./database.md) as well as the configuration file described in this document may contain sensitive information.
+The [database](/platform/configuration/database/) as well as the configuration file described in this document may contain sensitive information.
 
 - The configuration file should be protected by file system permissions.
 - The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
- 
+
 ## Configuration File
 
 _Note that you may omit the database configuration if you wish to use an embedded postgres for testing purposes._
@@ -83,13 +83,12 @@ Alternatively, use the `CDK_IN_CONF_FILE` environment variable to bind the file 
 
 ## Container user and permissions
 
-Before platform `1.8.0`, platform was running as root user. 
-After `1.8.0`, platform is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
+Before platform `1.8.0`, platform was running as root user. After `1.8.0`, platform is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
 
-All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user. 
+All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.
 
 ## Environment Override
 
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 
-For more information, see [Environment Variables](./env-variables)
+For more information, see [Environment Variables](/platform/configuration/env-variables/)

@@ -18,4 +18,4 @@ Select **Create New**; you will then be prompted to provide a name.&#x20;
 
 ![](<../../assets/image (2) (1) (1).png>)
 
-Now that your test suite is created, you can start creating [test scenarios](test-scenarios).
+Now that your test suite is created, you can start creating [test scenarios](/platform/testing/features/building-tests/test-scenarios/).

@@ -16,7 +16,7 @@ Select the **+ button** to create a new check
 
 ![](<../../../../assets/image (49).png>)
 
-With the [custom input](../../../custom-inputs) type **Field selection (JQ)** selected:
+With the [custom input](/platform/testing/features/custom-inputs/) type **Field selection (JQ)** selected:
 
 - add `.record.partition` as the field selection
 - Select `type` = `any` and `operator` =`equals`&#x20;
@@ -26,10 +26,10 @@ With the [custom input](../../../custom-inputs) type **Field selection (JQ)** se
 
 **Run** your test, and navigate to the **Checks** tab when the execution is complete to observe the result of your check.
 
-_Note to run tests you must have the_ [_Testing Agent_](../../../../getting-started/install-the-testing-agent) _installed_.&#x20;
+_Note to run tests you must have the_ [_Testing Agent_](/platform/testing/getting-started/install-the-testing-agent/) _installed_.&#x20;
 
 ![](<../../../../assets/image (111).png>)
 
 In this case, our test failed as the message was not produced into partition 0. Instead, the record was produced into partition 2.
 
-Continue to see how to [check the value of an attribute inside a JSON message](check-the-value-inside-a-json-message-consumed-from-kafka).
+Continue to see how to [check the value of an attribute inside a JSON message](/platform/testing/features/building-tests/test-checks/accessing-kafka-message-data/check-the-value-inside-a-json-message-consumed-from-kafka/).

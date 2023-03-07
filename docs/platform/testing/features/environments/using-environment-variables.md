@@ -7,11 +7,11 @@ description: How to reference environment variables from the scenario editor vie
 
 Once you have configured environment variables in your workspace, you can reference them in test scenarios. The below details how to reference environment variables from the scenario editor view.
 
-There are multiple ways of referencing environment variables, depending on the [custom input](../custom-inputs) you are using.
+There are multiple ways of referencing environment variables, depending on the [custom input](/platform/testing/features/custom-inputs/) you are using.
 
-- [Field selection (JSON Query)](using-environment-variables#field-selection-json-query)
-- [Template selection (Mustache)](using-environment-variables#template-selection-mustache)
-- [JavaScript](using-environment-variables#javascript)
+- [Field selection (JSON Query)](/platform/testing/features/environments/using-environment-variables/#field-selection-json-query)
+- [Template selection (Mustache)](/platform/testing/features/environments/using-environment-variables/#template-selection-mustache)
+- [JavaScript](/platform/testing/features/environments/using-environment-variables/#javascript)
 
 ## Field selection (JSON Query)
 

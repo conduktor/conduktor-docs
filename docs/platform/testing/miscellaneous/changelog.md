@@ -49,11 +49,9 @@ This release contains background work to allow on-premise deployment (work in pr
 
 ## 0.17.0 - 17/08/22
 
-:::info
-This release brings ARM support for the CI and agent docker images.
+:::info This release brings ARM support for the CI and agent docker images.
 
-The sizes have increased significantly, this is temporary while we are optimizing the new multi-arch build. We should be back to normal within the next releases.
-:::
+The sizes have increased significantly, this is temporary while we are optimizing the new multi-arch build. We should be back to normal within the next releases. :::
 
 **Features:**
 
@@ -74,13 +72,13 @@ The sizes have increased significantly, this is temporary while we are optimizin
 
 **Other notes / Known bugs:**
 
-- We have started to document how to [run our CI Agent for multiple CI/CD providers](../features/ci-cd-automation#using-the-ci-configuration-github-actions), for now on Github Action, GitlabCI and CircleCI. We will add more shortly.&#x20;
+- We have started to document how to [run our CI Agent for multiple CI/CD providers](/platform/testing/features/ci-cd-automation#using-the-ci-configuration-github-actions/), for now on Github Action, GitlabCI and CircleCI. We will add more shortly.&#x20;
 
 ## 0.16.0 - 22/07/22
 
 **Features:**
 
-- Greatly simplified how to reference parent task data in child tasks. Check our new documentation [here](../features/building-tests/chaining-tasks#accessing-the-output)
+- Greatly simplified how to reference parent task data in child tasks. Check our new documentation [here](/platform/testing/features/building-tests/chaining-tasks/#accessing-the-output)
 - Extended data redaction to produced data, http responses and variables
 - Improved some error messages on outdated agents and unknown commands
 - Set Variable task name is now editable
@@ -263,47 +261,47 @@ Initial public release enabling E2E Kafka testing scenarios. Release inclusive o
 
 **Features:**
 
-- \***\*[**Test Scenarios**](../features/building-tests/test-scenarios)\*\***
-  - Kafka [Producer](../features/building-tests/tasks/producer-task) task
+- \***\*[**Test Scenarios**](/platform/testing/features/building-tests/test-scenarios/)\*\***
+  - Kafka [Producer](/platform/testing/features/building-tests/tasks/producer-task) task
     - Apply headers
     - Stream messages with elapsed time/record conditions
     - Additional options: chunk size, force partition, compression, idempotence, acks
-    - [Check](../features/building-tests/test-checks) metadata: offset, partition, timestamp, topic
-  - Kafka [Consumer](../features/building-tests/tasks/consumer-task) task
+    - [Check](/platform/testing/features/building-tests/test-checks/) metadata: offset, partition, timestamp, topic
+  - Kafka [Consumer](/platform/testing/features/building-tests/tasks/consumer-task/) task
     - Apply filters: headers, jq, schema id
     - Lifecycle conditions: x records, elapsed time
     - Check data and metadata: key, value, offset, partition, topic, timestamp
-  - &#x20;[Set Variable](../features/building-tests/tasks/set-variable-task) task
+  - &#x20;[Set Variable](/platform/testing/features/building-tests/tasks/set-variable-task/) task
     - Set 1 or many variables
     - Pass value from a previous task into variable
-  - Task [ports](../features/building-tests/tasks/task-ports)
+  - Task [ports](/platform/testing/features/building-tests/tasks/task-ports/)
     - Chain tasks when:
       - Task completes
       - For each record (event) associated with the task
 - **Clusters**
-  - Reach local, private and public clusters using the [agent](../getting-started/install-the-testing-agent)
+  - Reach local, private and public clusters using the [agent](/platform/testing/getting-started/install-the-testing-agent/)
   - Add additional properties in your configuration
   - Schema registry support
     - No auth, basic auth, bearer token
-- [**Custom Inputs**](../features/custom-inputs)\*\*\*\*
+- [**Custom Inputs**](/platform/testing/features/custom-inputs/)\*\*\*\*
   - Plain
   - Field Selection (JSON Query 'jq')
   - Template (mustache)
   - JavaScript
-- \***\*[**DSL**](../features/dsl)\*\***
+- \***\*[**DSL**](/platform/testing/features/dsl/)\*\***
   - Export/Import DSL code
   - Versioning of DSL inside the application (with restore)
-  - Switch between DSL/UI when editing a [task](../features/building-tests/tasks) or [scenario](../features/building-tests/test-scenarios)
-- \***\*[**Environments**](../features/environments)\*\***
+  - Switch between DSL/UI when editing a [task](/platform/testing/features/building-tests/tasks/) or [scenario](/platform/testing/features/building-tests/test-scenarios/)
+- \***\*[**Environments**](/platform/testing/features/environments/)\*\***
   - Create environments
-  - Attach [variables](../features/environments/using-environment-variables) (Types: Cluster, String)
-  - [Use](../features/environments/using-environment-variables) variables
-- [**Insights**](../features/insights)\*\*\*\*
+  - Attach [variables](/platform/testing/features/environments/using-environment-variables/) (Types: Cluster, String)
+  - [Use](/platform/testing/features/environments/using-environment-variables/) variables
+- [**Insights**](/platform/testing/features/insights/)\*\*\*\*
   - Scenario level insights available
   - Metrics: Pased/Failed executions, E2E execution duration, execution time of each task
-- \***\*[**Agent**](../getting-started/install-the-testing-agent)\*\***
+- \***\*[**Agent**](/platform/testing/getting-started/install-the-testing-agent/)\*\***
   - Local agent for reaching local/private clusters
-  - [CI Agent](../features/ci-cd-automation) for executing test scenarios in build pipeline
+  - [CI Agent](/platform/testing/features/ci-cd-automation/) for executing test scenarios in build pipeline
 - **Collaboration**
   - Create an organisation
   - Invite your colleagues (Manage Team)
