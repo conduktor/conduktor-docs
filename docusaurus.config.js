@@ -14,6 +14,7 @@ const config = {
   tagline: 'Dinosaurs are cool',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
+  trailingSlash: true,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
