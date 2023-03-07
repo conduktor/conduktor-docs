@@ -8,15 +8,15 @@ description: Modify your data security and privacy settings when using Conduktor
 
 ## How are my data and configurations used?
 
-When you use Conduktor Testing, some information is shared with our platform. You can find more information about data that may be collected when you use our products via the [privacy policy](https://www.conduktor.io/privacy-policy).
+When you use Conduktor Testing, some information is shared with our platform. You can find more information about data that may be collected when you use our products via the [privacy policy](https://www.conduktor.io/privacy-policy/).
 
 For Conduktor Testing to provide most value, we store some data relating to your test executions. This enables you to inspect data associated with a historical test execution.&#x20;
 
 Information we store:
 
 - Cluster configurations
-- Records consumed from Kafka [consumer](../features/building-tests/tasks/consumer-task) tasks
-- Metadata captured from Kafka [producer](../features/building-tests/tasks/producer-task) tasks
+- Records consumed from Kafka [consumer](/platform/testing/features/building-tests/tasks/consumer-task/) tasks
+- Metadata captured from Kafka [producer](/platform/testing/features/building-tests/tasks/producer-task/) tasks
 - Metrics relating to test executions (for example, the execution duration, test passes/failures)
 
 ### Opting out of data storage

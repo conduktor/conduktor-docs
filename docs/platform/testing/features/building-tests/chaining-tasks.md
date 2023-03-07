@@ -15,7 +15,7 @@ For example, Consumer tasks have 2 output ports:
 - **on record** will trigger the next task on each record consumed. The record data will be accessible in the next task
 - **on end triggers** the next task when the consumer lifecycle ends. Consumed records are not accessible to subsequent tasks
 
-You can find more details on available ports per task type in [this document](tasks/task-ports).
+You can find more details on available ports per task type in [this document](/platform/testing/features/building-tests/tasks/task-ports/).
 
 Links can be deleted by clicking on the cross icon in the middle of a line:
 
@@ -31,9 +31,7 @@ You can do joins simply by having multiple parents for a task. In this case, the
 
 You can access the parent events in the child task. For example, if you chain an HTTP Request task with a Producer task, you will be able to produce data coming from the HTTP response.
 
-:::info
-Looking for how to access the **current** task data in Checks ? Here is the [documentation](test-checks/accessing-kafka-message-data)
-:::
+:::info Looking for how to access the **current** task data in Checks ? Here is the [documentation](/platform/testing/features/building-tests/test-checks/) :::
 
 Using the previous task data is easy, but requires some documentation until we complete a simple integration in the UI.
 

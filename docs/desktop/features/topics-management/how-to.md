@@ -18,7 +18,7 @@ Several ways:
 - from the topic list: the inspect button next to the name of the topic
 - from the topic details view: from the _CONSUME DATA_ button
 
-Also see [Consuming data ](../consuming-data)for all the details.
+Also see [Consuming data ](/desktop/features/consuming-data/)for all the details.
 
 ## How to reset the offsets of a Topic?
 

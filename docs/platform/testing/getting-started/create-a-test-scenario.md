@@ -10,13 +10,13 @@ In this example, we will demonstrate how to create a Test Scenario that will:
 
 - Produce a `Hello World` message into a Kafka topic
 - Consume the message from the same topic
-- Create a [Test Check](../features/building-tests/test-checks) to validate the consumed data
+- Create a [Test Check](/platform/testing/features/building-tests/test-checks/) to validate the consumed data
 
-This tutorial assumes you have setup the [Testing Agent](install-the-testing-agent) already.
+This tutorial assumes you have setup the [Testing Agent](/platform/testing/getting-started/install-the-testing-agent/) already.
 
 ## Create a Test Suite
 
-From within your [Workspace](../features/workspace), navigate to the **Test Suites** tab and select **Create New.**
+From within your [Workspace](/platform/testing/features/workspace/), navigate to the **Test Suites** tab and select **Create New.**
 
 Give your test suite a name, for example, 'My First Test Suite'.
 
@@ -30,7 +30,6 @@ Give your test scenario a name, for example, 'Hello World'.
 
 ![testing-hello-world.png](/img/testing/hello-world/testing-hello-world.png)
 
-
 ## Add a Produce task
 
 From within the editor view, click **Scenario Start** and select **Producer** from the dropdown menu.
@@ -39,9 +38,7 @@ From within the editor view, click **Scenario Start** and select **Producer** fr
 
 In the **General** tab, select a configured **Cluster,** and choose the **Topic** to produce data into.
 
-:::tip
-**Pro Tip:** Use the **Topic preview** button to fetch sample records from your Kafka topic
-:::
+:::tip **Pro Tip:** Use the **Topic preview** button to fetch sample records from your Kafka topic :::
 
 ![testing-producer.png](/img/testing/hello-world/testing-producer.png)
 
@@ -93,6 +90,6 @@ Select the **Run** button to execute your test and observe the result.&#x20;
 
 _Note you must have a connected agent selected via the left navigation menu._
 
-Navigate to the **Checks** tab to see the result of any [Test Checks](../features/building-tests/test-checks).
+Navigate to the **Checks** tab to see the result of any [Test Checks](/platform/testing/features/building-tests/test-checks/).
 
 ![testing-checks.png](/img/testing/hello-world/testing-checks.png)

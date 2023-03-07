@@ -1,5 +1,6 @@
 # Conduktor Docs
 
+- Use relative paths and traling slashes for links (e.g `/platform/testing/features/ci-cd-automation/` instead of `../../features/ci-cd-automation/`)
 - Production (main): https://docs.conduktor.io
 
 # Development

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Connect Conduktor to ksqlDB clusters
-description: Conduktor can connect to multiple ksqlDB clusters at once. 
+description: Conduktor can connect to multiple ksqlDB clusters at once.
 ---
 
 # Connect Conduktor to ksqlDB clusters
@@ -16,7 +16,7 @@ We try our best to be compatible since ksqlDB 0.10.x onwards \(up to 0.14 as of 
 
 If you're using Confluent Cloud, consider reading the dedicated documentation to be sure you're using the right credentials.
 
-[How to start with Confluent Cloud ksqlDB](./how-to-start-with-confluent-cloud-ksqldb)
+[How to start with Confluent Cloud ksqlDB](/desktop/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb)
 
 ## Configuration
 

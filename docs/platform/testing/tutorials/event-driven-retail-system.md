@@ -27,9 +27,7 @@ The general flow can be described as:
 
 Below demonstrates how to build a Test Scenario representing the above architecture.
 
-:::info
-Remember, any dependent applications must be running to validate the scenario. In this case, the User and Promotions Services are considered external applications.
-:::
+:::info Remember, any dependent applications must be running to validate the scenario. In this case, the User and Promotions Services are considered external applications. :::
 
 ![](<../assets/image (10) (1) (1).png>)
 
@@ -37,14 +35,14 @@ Note that:
 
 - The first task produces a message into `pageviews` topic
 - Once it's been processed by the User Service, the second task consumes the enriched event from `enriched_pageviews`
-  - _Note that it's chained onto the `end` _ [_port_](../features/building-tests/tasks/task-ports) _of the previous task_
+  - _Note that it's chained onto the `end` _ [_port_](/platform/testing/features/building-tests/tasks/task-ports/) _of the previous task_
 - Lastly, the third task will consume any resultant events from `upsell_events`
 
 ## Breaking it Down
 
 ### Producer Task
 
-This task produces a message into the `pageviews` topic. There are no [Test Checks](../features/building-tests/test-checks) associated with it.&#x20;
+This task produces a message into the `pageviews` topic. There are no [Test Checks](/platform/testing/features/building-tests/test-checks/) associated with it.&#x20;
 
 The cluster and topic are configured on the **General** tab. Then, a valid JSON message value is set on the **Data** tab.&#x20;
 
@@ -60,9 +58,7 @@ In the **Data** tab, the deserialisation formats for consuming the enriched mess
 
 Only 1 enriched message is expected from the User Service, therefore the default lifecycle rules _(stop after 1 message is consumed)_ are suitable.
 
-:::info
-If messages were continuously being produced into this topic, we would need to use a filter to intercept the correct one.&#x20;
-:::
+:::info If messages were continuously being produced into this topic, we would need to use a filter to intercept the correct one.&#x20; :::
 
 ![](<../assets/Screenshot 2022-05-24 at 20.54.29.png>)
 
@@ -81,7 +77,7 @@ Below shows the expected output for an **enriched** message.&#x20;
 }
 ```
 
-To validate the User Service is working correctly, we will create a [Test Check](../features/building-tests/test-checks) on the consumed message.
+To validate the User Service is working correctly, we will create a [Test Check](/platform/testing/features/building-tests/test-checks/) on the consumed message.
 
 - Navigate to the **Checks** tab
 - The 'Plan Type' attribute is the result of **message enrichment**
@@ -120,7 +116,7 @@ In the above case, we can see the end-to-end test scenario has **failed**. Hover
 >
 > This means that the business SLA of 500ms was not met.
 
-Navigating to the **Checks** tab will detail the result of any [Test Checks](../features/building-tests/test-checks). In this case, the check on the enriched data was successful.&#x20;
+Navigating to the **Checks** tab will detail the result of any [Test Checks](/platform/testing/features/building-tests/test-checks/). In this case, the check on the enriched data was successful.&#x20;
 
 > userId `12345` was correctly attributed to a `Free` plan by the User Service
 

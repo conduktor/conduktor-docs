@@ -12,12 +12,12 @@ When using the editor view to create test scenarios, you will notice the **downw
 
 There are multiple options available:
 
-| Input Type                   | Description                                                                                                                                                                                                                                          |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Plain                        | This is a standard field. The value is not interpreted.                                                                                                                                                                                              |
+| Input Type | Description |
+| --- | --- |
+| Plain | This is a standard field. The value is not interpreted. |
 | Field Selection (JSON Query) | Use this to access record data and record metadata when making [Test Checks](/platform/testing/features/building-tests/test-checks). For the technical capabilities of JQ, refer to [this link](https://stedolan.github.io/jq/manual/#Basicfilters). |
-| Template (mustache)          | Access different properties such as [environment](/platform/testing/features/environments) and [local](/platform/testing/features/building-tests/tasks/set-variable-task) variables through a selection modal in the UI.                             |
-| JavaScript                   | Create dynamic values or manipulate your data using JavaScript.                                                                                                                                                                                      |
+| Template (mustache) | Access different properties such as [environment](/platform/testing/features/environments) and [local](/platform/testing/features/building-tests/tasks/set-variable-task) variables through a selection modal in the UI. |
+| JavaScript | Create dynamic values or manipulate your data using JavaScript. |
 
 ## Plain input selection
 
@@ -29,11 +29,11 @@ You might use this input for simple test scenarios, where you want to manually d
 
 ## Field Selection (JSON Query)
 
-Use the Field Selection (JQ) option when creating [Test Checks](building-tests/test-checks). This enables you to access record data and record metadata so you can test the data.
+Use the Field Selection (JQ) option when creating [Test Checks](/platform/testing/features/building-tests/test-checks/). This enables you to access record data and record metadata so you can test the data.
 
 For example, access the record value for a consumed message, and assert the expected value.&#x20;
 
-See [Accessing Kafka message data](building-tests/test-checks/accessing-kafka-message-data) for more information.
+See [Accessing Kafka message data](/platform/testing/features/building-tests/test-checks/accessing-kafka-message-data/) for more information.
 
 ![](<../assets/image (57).png>)
 

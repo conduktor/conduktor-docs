@@ -64,7 +64,7 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 
 ### Database properties
 
-See database configuration [documentation](./database) for more info
+See database configuration [documentation](/platform/configuration/database/) for more info
 
 | Property | Description | Env | Mandatory | Type | Default |
 | --- | --- | --- | --- | --- | --- |
@@ -99,7 +99,7 @@ Optional local accounts list used to login on conduktor-platform
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise and team plans). See authentication [documentation](./user-authentication) for snippets
+SSO authentication properties (only on enterprise and team plans). See authentication [documentation](/platform/configuration/user-authentication/) for snippets
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |

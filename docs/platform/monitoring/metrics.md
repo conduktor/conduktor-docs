@@ -6,9 +6,7 @@ description: Monitoring Metrics available in Conduktor Monitoring
 
 # Metrics
 
-:::info
-Monitoring is changing to improve the ease of setup and usability. [Find out more](../support/important-notices#monitoring-is-changing-january-27-2023).
-:::
+:::info Monitoring is changing to improve the ease of setup and usability. [Find out more](/platform/support/important-notices/#monitoring-is-changing-january-27-2023). :::
 
 Below details the metrics that are surfaced within Conduktor Monitoring.
 

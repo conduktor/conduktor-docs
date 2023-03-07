@@ -25,7 +25,7 @@ In case we're missing an integration, it can be useful to setup it globally on C
 -Djavax.net.ssl.keyStorePassword=<password>
 ```
 
-See [Configuring Conduktor -> Custom environment variables](configuring-conduktor#custom-environment-variabless) to see where.
+See [Configuring Conduktor -> Custom environment variables](/desktop/miscellaneous/configuring-conduktor#custom-environment-variables/) to see where.
 
 ## I'm using IPv6 infrastructure
 

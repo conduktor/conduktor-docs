@@ -13,15 +13,14 @@ The Testing Agent is a micro-application that runs on your desktop, private netw
 
 ## Agent Setup
 
-:::tip
-The Testing Agent can be installed and used on GNU/Linux, macOS, FreeBSD, and Windows. You can install it:
+:::tip The Testing Agent can be installed and used on GNU/Linux, macOS, FreeBSD, and Windows. You can install it:
 
 - In a container
 - By downloading a binary manually
 
 :::
 
-From within the Conduktor Testing UI, navigate to the **Agents** tab. Note you may need to create a [Workspace](../features/workspace) first.
+From within the Conduktor Testing UI, navigate to the **Agents** tab. Note you may need to create a [Workspace](/platform/testing/features/workspace/) first.
 
 ![](<../assets/image (27) (1) (1) (1).png>)
 
@@ -30,7 +29,7 @@ Provide a **Name** to identify your agent, and confirm whether it will be person
 - **Personal Agent:** For running locally on your own machine or server.
 - **Organisation Agent**: For running inside a company server or network.
 - **CI Agent:** You will use this token for executing tests in CI/CD jobs. Note this is only relevant when you have already created meaningful tests, and want to automate their execution.
-  - _[Learn more](../features/ci-cd-automation) about using the CI Agent_
+  - _[Learn more](/platform/testing/features/ci-cd-automation/) about using the CI Agent_
 
 Select **Create** to generate the commands for **downloading** and **running** your Agent.&#x20;
 
@@ -45,24 +44,17 @@ Select the relevant **OS** for running your Agent. You will be provided commands
 
 ![](<../assets/image (10) (1).png>)
 
-:::tip
-A token can be used by **multiple** agents, allowing it to scale horizontally.
-However when running agents in different locations, or with different access or different resources, you should create separate tokens.
-:::
+:::tip A token can be used by **multiple** agents, allowing it to scale horizontally. However when running agents in different locations, or with different access or different resources, you should create separate tokens. :::
 
 ### Download the Token
 
-:::danger
-You will only be shown the token **once**, so it's recommended you **Download** the token and store it somewhere secure.
-:::
+:::danger You will only be shown the token **once**, so it's recommended you **Download** the token and store it somewhere secure. :::
 
 ### Validate the Connection
 
 After executing the commands, you should see `Agent connected!` in the logs.&#x20;
 
-:::info
-If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads) a more recent version of Java. The Agent supports **Java 11+**.
-:::
+:::info If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads) a more recent version of Java. The Agent supports **Java 11+**. :::
 
 Assuming setup was successful, you will see the green `Connection is successful!` message within the Conduktor Testing UI.
 
@@ -70,7 +62,7 @@ Ensure that your newly created Agent is selected in the left-hand navigation men
 
 ![](<../assets/image (11) (1).png>)
 
-Now you have the Testing Agent installed, you will be able to reach clusters that your host has access to within the Testing application. Continue to [connecting a Kafka cluster](connect-to-a-kafka-cluster).
+Now you have the Testing Agent installed, you will be able to reach clusters that your host has access to within the Testing application. Continue to [connecting a Kafka cluster](/platform/testing/getting-started/connect-to-a-kafka-cluster/).
 
 ## Binary Installation&#x20;
 
@@ -84,8 +76,7 @@ Then, **Run** the below command via command line, populating the token parameter
 java -jar conduktor-testing-agent-*.jar --token=<TOKEN>
 ```
 
-:::tip
-Using a proxy? You can inherit the configuration from your system by using :
+:::tip Using a proxy? You can inherit the configuration from your system by using :
 
 `java -Djava.net.useSystemProxies=true -jar ...`
 
@@ -93,10 +84,7 @@ Using a proxy? You can inherit the configuration from your system by using :
 
 ### Container installation
 
-:::info
-Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system.
-For these use cases, we recommend using the [binary distribution](install-the-testing-agent#binary-installation).
-:::
+:::info Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system. For these use cases, we recommend using the [binary distribution](/platform/testing/getting-started/install-the-testing-agent/#binary-installation-). :::
 
 **Container image**: `ghcr.io/conduktor/testing-agent:latest`
 
@@ -126,8 +114,7 @@ To allow external agents and CI runners to reach your on-premise platform, you w
 
 The agent will initiate a connection using GRPC.
 
-**Your platform needs to be reachable from the system running the agent**.
-Make sure to setup your network accordingly.
+**Your platform needs to be reachable from the system running the agent**. Make sure to setup your network accordingly.
 
 You can then configure your agent/CI runner with the following environment variables:
 
@@ -141,4 +128,4 @@ Alternatively, you can use the `--host=XX`, `--port=XX` and `--use-ssl=XX` comma
 
 The Testing Agent is a long-running process, and should not be used in a CI pipeline.
 
-For CI workflows, please read [our dedicated documentation](../features/ci-cd-automation).
+For CI workflows, please read [our dedicated documentation](/platform/testing/features/ci-cd-automation/).

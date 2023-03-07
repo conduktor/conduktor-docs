@@ -6,7 +6,7 @@ description: Check the value inside a JSON message consumed from Kafka in Conduk
 
 # Check the value inside a JSON message consumed from Kafka
 
-First, add a [Producer](../../tasks/producer-task) task to your test scenario.&#x20;
+First, add a [Producer](/platform/testing/features/building-tests/tasks/producer-task/) task to your test scenario.&#x20;
 
 Navigate to the **Data** tab and select the **Value format** = **JSON**.
 
@@ -33,10 +33,10 @@ With the input type **Field selection (JQ)** selected:
 
 Save your consumer task and **Run** your scenario. ** Navigate to the **Checks** tab to observe the result of the test check. **&#x20;
 
-_Note you must have the_ [_Testing Agent_](../../../../getting-started/install-the-testing-agent) _installed to run test scenarios._
+_Note you must have the_ [_Testing Agent_](/platform/testing/getting-started/install-the-testing-agent/) _installed to run test scenarios._
 
 ![](<../../../../assets/image (104).png>)
 
 In this case our test was successful, as the expression validated true against the record that was consumed.&#x20;
 
-Continue to read more about [Check Operators](../check-operators).
+Continue to read more about [Check Operators](/platform/testing/features/building-tests/test-checks/check-operators/).

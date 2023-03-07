@@ -1,8 +1,7 @@
 ---
 sidebar_position: 4
 title: Understanding Connectivity Issues
-description: Overall, Conduktor cannot connect to Apache Kafka if using the classic Apache
-  Kafka CLI wouldn't work either.
+description: Overall, Conduktor cannot connect to Apache Kafka if using the classic Apache Kafka CLI wouldn't work either.
 ---
 
 # Understanding Connectivity Issues
@@ -23,11 +22,7 @@ This will typically be a one of these problems:
 - you're using Docker and you did not expose the Kafka ports to your host, where Conduktor is running
 - your computer cannot resolve the IPs/DNS exposed by Apache Kafka because your cluster is running in a private subnet not known to your computer
 
-:::tip
-Just remember that Conduktor is running on **your** machine, running on
-**your** network, which may be _different_ from the network your Apache Kafka
-clusters are running.
-:::
+:::tip Just remember that Conduktor is running on **your** machine, running on **your** network, which may be _different_ from the network your Apache Kafka clusters are running. :::
 
 ## Understanding Kafka Listeners
 
@@ -43,7 +38,7 @@ Connecting to Apache Kafka through a simple SSH tunnel with Conduktor is impossi
 
 ![](<../../assets/image (8).png>)
 
-You may try by running a special kafka-proxy as mentioned in [Connect to Amazon MSK](connect-to-amazon-msk), where it's a common use-case.
+You may try by running a special kafka-proxy as mentioned in [Connect to Amazon MSK](/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk/), where it's a common use-case.
 
 ## Connecting to Kafka in a private cloud
 

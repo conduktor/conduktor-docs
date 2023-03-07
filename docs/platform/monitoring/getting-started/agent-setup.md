@@ -6,11 +6,9 @@ description: Learn how to get started with Monitoring
 
 # Agent Setup
 
-:::warning
-Monitoring is changing to improve the ease of setup and usability. As a result, agent support will be removed from **April 3rd, 2023**. [Find out more](../../support/important-notices#monitoring-is-changing-january-27-2023). 
+:::warning Monitoring is changing to improve the ease of setup and usability. As a result, agent support will be removed from **April 3rd, 2023**. [Find out more](/platform/support/important-notices/#monitoring-is-changing-january-27-2023).
 
-It should not be setup in case of a new Conduktor deployment, and will be maintained only for existing users to support their transition.
-:::
+It should not be setup in case of a new Conduktor deployment, and will be maintained only for existing users to support their transition. :::
 
 ## Overview
 
@@ -52,7 +50,7 @@ For instance, you can set the environment variable:
 KAFKA_OPTS=-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-0.17.2.jar=9101:/opt/jmx-exporter/kafka-broker.yml
 ```
 
-***
+---
 
 ## Setup Node Exporter
 
@@ -65,4 +63,3 @@ apt install prometheus-node-exporter
 Note on other systems you can install it manually (<a href="https://prometheus.io/docs/guides/node-exporter/#installing-and-running-the-node-exporter">docs</a>).
 
 Node exporter can be started with its default configuration and should listen on port 9100. However, you may want to select which filesystems are monitored. You can use the `--collector.filesystem.mount-points-exclude=...` option for this.
-
