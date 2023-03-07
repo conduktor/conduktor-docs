@@ -52,6 +52,18 @@ const config = {
         },
       }),
     ],
+    [
+      '@docusaurus/preset-classic',
+      {
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          filename: 'sitemap.xml',
+          noIndex: false,
+          trailingSlash: true,
+        },
+      },
+    ],
   ],
 
   themeConfig:
