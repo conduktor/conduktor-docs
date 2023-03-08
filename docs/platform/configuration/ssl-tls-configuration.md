@@ -19,7 +19,7 @@ The following table gives you an overview of what's currently supported and whic
 
 |                                | Kafka Clusters | Schema Registry | Kafka Connect |  LDAPS, OIDC               |
 | ---------------- |----------------|----------------| ---------------- | ---------------- |
-| SSL to secure data in transit  | ✅ UI           | ✅ UI            | ✅ UI                       | 🚫 UI<br/>✅ volume mount |
+| SSL to secure data in transit  | ✅ UI           | ✅ UI            | ✅ UI                       | 🚫 UI<br/>✅ Volume mount |
 | SSL to authenticate the client | ✅ UI           | ✅ UI            | 🚫 Unsupported              | 🚫 Unsupported            |
 
 Jump to:
@@ -42,14 +42,14 @@ Since version `1.8.0` you can manage custom certificates for Kafka, Kafka Connec
 
 Assuming you have appropriate permissions, you can add cluster configurations from within **Admin**. When you add the bootstrap server to your configuration, a check will be made to validate if the certificate is issued by a valid authority.
 
-![admin-ssl.png](/img/admin/admin-ssl.png)
+![admin-ssl.png](/img/admin/admin-ssl.png) [comment]: <> (Not sure we use still have this UI, it's just a Cross now?)
 
 If the response indicates the certificate is not issued by a valid authority, you have two options:
 
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates.
 - **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem or .jks files), or paste the certificate as text.
 
-![admin-ssl-2.png](/img/admin/admin-ssl-2.png)
+![admin-ssl-2.png](/img/admin/admin-ssl-2.png) [comment]: <> (Needs updated screenshot)
 
 Upon uploading the certificate, you should then see the green icon indicating **connection is secure**.
 
@@ -71,7 +71,7 @@ Since version `1.5.0` Conduktor supports SSL/TLS connections using Java Truststo
 
 If you already have a truststore, you can ignore this step.
 
-For that ou need `keytool` program that is usually package on JDK distributions and a certificat in PEM format (`.pem` or `.crt`).
+For that you need a `keytool` program that is usually packaged on JDK distributions and a certificate in PEM format (`.pem` or `.crt`).
 
 ```bash
 keytool  \
@@ -142,10 +142,12 @@ Your Kafka Admin or your Kafka Provider gave you 2 files for authentication
 Here's an example with Aiven
 ![mtls-1.png](assets/mtls-1.png)
 
-You need to paste the 2 file contents into Conduktor Platform
-![mtls-1.png](assets/mtls-2.png)
+You can paste the 2 file's contents into Conduktor Platform, or alternatively import from keystore.
+![mtls-1.png](assets/mtls-2.png) [comment]: <> (Needs updated screenshot to include import from keystore)
 
 ### Using Volume Mount (Alternate method)
+
+[comment]: <> (Think we can remove this Info below, and add new text about how you can do this, and screenshot if needed)
 
 :::info
 Unsupported from the UI as of version `1.8.0`, there's a bug that prevents saving `ssl.keystore.location`. Use the YAML cluster configuration if you must use the alternate method.
