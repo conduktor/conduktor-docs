@@ -136,10 +136,12 @@ Other names include:
 ### Using the UI (keystore method)
 Your Kafka Admin or your Kafka Provider gave you a keystore file (.jks or .p12 format)
 
-Click the "Import from keystore button" to select a keystore file from your filesystem.
-![mtls-3.png](assets/mtls-3.png)
+Click the "Import from keystore" button to select a keystore file from your filesystem.
+![mtls-3a.png](assets/mtls-3a.png)
 
 Fill in the required keystore password and key password and click "Import".  
+![mtls-3b.png](assets/mtls-3b.png)
+
 You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate
 ![mtls-4.png](assets/mtls-4.png)
 
