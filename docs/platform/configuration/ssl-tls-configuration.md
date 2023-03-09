@@ -15,7 +15,7 @@ Since version `1.8.0` Conduktor provides a mechanism inside the UI for managing 
 The following table gives you an overview of what's currently supported and which methods you can use to configure it:
 
 - From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
-- Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
+- Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components
 
 |                                | Kafka Clusters | Schema Registry / Kafka Connect |  LDAPS, OIDC               |
 | ---------------- |----------------|------------- | ---------------- |
@@ -47,8 +47,8 @@ Assuming you have appropriate permissions, you can add cluster configurations fr
 
 If the response indicates the certificate is not issued by a valid authority, you have two options:
 
-- **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates.
-- **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem, .jks or .p12 files), or paste the certificate as text.
+- **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
+- **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem, .jks or .p12 files), or paste the certificate as text
 
 ![admin-ssl-2.png](/img/admin/admin-ssl-2.png)
 
@@ -134,7 +134,7 @@ Other names include:
 - Digital Certificate Authentication, Public Key Infrastructure (PKI) Authentication
 
 ### Using the UI (keystore method)
-Your Kafka Admin or your Kafka Provider gave you a keystore file (.jks or .p12 format)
+Your Kafka Admin or your Kafka Provider gave you a keystore file (.jks or .p12 format).
 
 Click the "Import from keystore" button to select a keystore file from your filesystem.
 ![mtls-3a.png](assets/mtls-3a.png)
@@ -142,17 +142,17 @@ Click the "Import from keystore" button to select a keystore file from your file
 Fill in the required keystore password and key password and click "Import".  
 ![mtls-3b.png](assets/mtls-3b.png)
 
-You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate
+You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
 ![mtls-4.png](assets/mtls-4.png)
 
 ### Using the UI (Access key & Access certificate method)
 
-Your Kafka Admin or your Kafka Provider gave you 2 files for authentication
+Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
 
 - An Access key (.key file)
 - An Access certificate (.pem or .crt file)
 
-Here's an example with Aiven
+Here's an example with Aiven:
 ![mtls-1.png](assets/mtls-1.png)
 
 You can paste the 2 file's contents into Conduktor Platform, or alternatively import from keystore.
