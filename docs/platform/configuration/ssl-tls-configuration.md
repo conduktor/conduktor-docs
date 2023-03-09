@@ -17,10 +17,10 @@ The following table gives you an overview of what's currently supported and whic
 - From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
 - Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
 
-|                                | Kafka Clusters | Schema Registry | Kafka Connect |  LDAPS, OIDC               |
-| ---------------- |----------------|----------------| ---------------- | ---------------- |
-| SSL to secure data in transit  | ✅ UI           | ✅ UI            | ✅ UI                       | 🚫 UI<br/>✅ Volume mount |
-| SSL to authenticate the client | ✅ UI           | ✅ UI            | 🚫 Unsupported              | 🚫 Unsupported            |
+|                                | Kafka Clusters | Schema Registry / Kafka Connect |  LDAPS, OIDC               |
+| ---------------- |----------------|------------- | ---------------- |
+| SSL to secure data in transit  | ✅ UI           | ✅ UI         | 🚫 UI<br/>✅ Volume mount |
+| SSL to authenticate the client | ✅ UI           | ✅ UI         | 🚫 Unsupported            |
 
 Jump to:
 
@@ -37,6 +37,7 @@ Since version `1.8.0` you can manage custom certificates for Kafka, Kafka Connec
 - .crt
 - .pem
 - .jks
+- .p12
 
 ### Uploading certificates in the cluster configuration screen
 
@@ -47,7 +48,7 @@ Assuming you have appropriate permissions, you can add cluster configurations fr
 If the response indicates the certificate is not issued by a valid authority, you have two options:
 
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates.
-- **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem or .jks files), or paste the certificate as text.
+- **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem, .jks or .p12 files), or paste the certificate as text.
 
 ![admin-ssl-2.png](/img/admin/admin-ssl-2.png)
 
@@ -132,7 +133,17 @@ Other names include:
 - Two-Way SSL, SSL Certificate Authentication
 - Digital Certificate Authentication, Public Key Infrastructure (PKI) Authentication
 
-### Using the UI (Recommended method)
+### Using the UI (keystore method)
+Your Kafka Admin or your Kafka Provider gave you a keystore file (.jks or .p12 format)
+
+Click the "Import from keystore button" to select a keystore file from your filesystem.
+![mtls-3.png](assets/mtls-3.png)
+
+Fill in the required keystore password and key password and click "Import".  
+You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate
+![mtls-4.png](assets/mtls-4.png)
+
+### Using the UI (Access key & Access certificate method)
 
 Your Kafka Admin or your Kafka Provider gave you 2 files for authentication
 
@@ -143,13 +154,9 @@ Here's an example with Aiven
 ![mtls-1.png](assets/mtls-1.png)
 
 You can paste the 2 file's contents into Conduktor Platform, or alternatively import from keystore.
-![mtls-1.png](assets/mtls-2.png)
+![mtls-2.png](assets/mtls-2.png)
 
 ### Using Volume Mount (Alternate method)
-
-:::info
-Unsupported from the UI as of version `1.8.0`, there's a bug that prevents saving `ssl.keystore.location`. Use the YAML cluster configuration if you must use the alternate method.
-:::
 
 You can mount the keystore file in Conduktor Platform:
 
@@ -167,11 +174,5 @@ target: /opt/conduktor/certs/keystore.jks
 read_only: true
 ```
 
-And then configure the Kafka additional properties like this:
-
-```properties
-security.protocol=SSL
-ssl.keystore.location=/opt/conduktor/certs/keystore.jks
-ssl.keystore.password=changeit
-ssl.key.password=password
-```
+And then from the UI, choose the SSL Authentication method "Keystore file is mounted on the volume" and fill in the required fields
+![mtls-5.png](assets/mtls-5.png)
