@@ -134,6 +134,7 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 | `sso.oauth2[].client-id` | Oauth2 client id | `SSO_OAUTH2_0_CLIENT-ID` | true | string | ∅ |
 | `sso.oauth2[].client-secret` | Oauth2 client secret | `SSO_OAUTH2_0_CLIENT-SECRET` | true | string | ∅ |
 | `sso.oauth2[].openid.issuer` | Issuer to check on token | `SSO_OAUTH2_0_OPENID_ISSUER` | true | string | ∅ |
+| `sso.oauth2[].groups-claim` | Claim used to return group information in token | `SSO_OAUTH2_0_GROUPS_CLAIM` | false | string | `groups` |
 | `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `SSO_OAUTH2_0_SCOPES` | true | string | `[]` |
 | `sso.oauth2[].authorization-url` | Authorization endpoint URL | `SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
 | `sso.oauth2[].token.url` | Get token endpoint URL | `SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
