@@ -24,7 +24,7 @@ The Manage Clusters page (`/admin/clusters`) has several advantages over the YAM
 Need to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
 
-If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](/platform/configuration/env-variables/#kafka-clusters-properties) page :::
+If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](/platform/configuration/env-variables/#kafka-clusters-properties) page. :::
 
 ## Security notes
 
