@@ -99,7 +99,8 @@ Create the **Kafka cluster** **API key.** You also have the option to create the
 
 From within the cluster configuration modal of the Testing application, **Paste** your configuration as additional properties.
 
-:::caution **Note:** You will need to **remove any comments from the configuration**, and **move the bootstrap server URL** to the correct form input. If you are not using the schema registry, you can also remove these properties. :::
+:::caution **Note:** You will need to **remove any comments from the configuration**, and **move the bootstrap server URL** to the correct form input. If you are not using the schema registry, you can also remove these properties. 
+:::
 
 **Refresh** the connection and if successful, you will see the **CONNECTED** label turn green.
 
@@ -129,7 +130,8 @@ It's important that the [Testing Agent](/platform/testing/getting-started/instal
 
 ![](<../assets/image (138).png>)
 
-:::tip **Pro Tip!** If you are using the Conduktor Desktop GUI, you can use the **Aiven wizard** to setup your cluster configuration and paste the config into Testing.&#x20; :::
+:::tip **Pro Tip!** If you are using the Conduktor Desktop GUI, you can use the **Aiven wizard** to setup your cluster configuration and paste the config into Testing.&#x20; 
+:::
 
 ## Connect to a Red Hat cluster
 
