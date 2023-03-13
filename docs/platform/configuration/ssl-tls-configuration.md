@@ -29,6 +29,7 @@ Jump to:
 - [Mounting Custom Truststore](#mounting-custom-truststore)
   - _Recommended for SSO, DB or other external services requiring SSL/TLS communication_
 - [Client Certificate Authentication](#client-certificate-authentication)
+  - _Recommended for mTLS; import your keystore file_
 
 ## Using the Conduktor Certificate Store
 
