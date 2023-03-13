@@ -44,17 +44,20 @@ Select the relevant **OS** for running your Agent. You will be provided commands
 
 ![](<../assets/image (10) (1).png>)
 
-:::tip A token can be used by **multiple** agents, allowing it to scale horizontally. However when running agents in different locations, or with different access or different resources, you should create separate tokens. :::
+:::tip A token can be used by **multiple** agents, allowing it to scale horizontally. However when running agents in different locations, or with different access or different resources, you should create separate tokens. 
+:::
 
 ### Download the Token
 
-:::danger You will only be shown the token **once**, so it's recommended you **Download** the token and store it somewhere secure. :::
+:::danger You will only be shown the token **once**, so it's recommended you **Download** the token and store it somewhere secure. 
+:::
 
 ### Validate the Connection
 
 After executing the commands, you should see `Agent connected!` in the logs.&#x20;
 
-:::info If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads) a more recent version of Java. The Agent supports **Java 11+**. :::
+:::info If you observe an error regarding the Java Runtime (class file version 55.0), please [download](https://www.oracle.com/java/technologies/downloads) a more recent version of Java. The Agent supports **Java 11+**. 
+:::
 
 Assuming setup was successful, you will see the green `Connection is successful!` message within the Conduktor Testing UI.
 
@@ -84,7 +87,8 @@ java -jar conduktor-testing-agent-*.jar --token=<TOKEN>
 
 ### Container installation
 
-:::info Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system. For these use cases, we recommend using the [binary distribution](/platform/testing/getting-started/install-the-testing-agent/#binary-installation-). :::
+:::info Using Docker introduces complexity when trying to reach clusters on localhost or reference certificates on your local file system. For these use cases, we recommend using the [binary distribution](/platform/testing/getting-started/install-the-testing-agent/#binary-installation-). 
+:::
 
 **Container image**: `ghcr.io/conduktor/testing-agent:latest`
 
