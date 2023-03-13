@@ -12,7 +12,7 @@ For production environmnents conduktor-platform support (since version [**1.1.2*
 
 ### Database requirements
 
-- PostgreSQL 13+ (or 11+ with extensions `pgcrypto` and `uuid-ossp` installed for UUID and Json support)
+- PostgreSQL 13+
 - Provided connection role should have grant `ALL PRIVILEGES` on configured database. Platform should be able to create/update/delete schema and tables on database.
 
 ### Database Configuration Properties
