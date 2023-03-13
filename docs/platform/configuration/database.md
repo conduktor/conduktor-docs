@@ -12,7 +12,7 @@ For production environmnents conduktor-platform support (since version [**1.1.2*
 
 ### Database requirements
 
-- PostgreSQL 14+
+- PostgreSQL 13+ (or 11+ with extensions `pgcrypto` and `uuid-ossp` installed for UUID and Json support)
 - Provided connection role should have grant `ALL PRIVILEGES` on configured database. Platform should be able to create/update/delete schema and tables on database.
 
 ### Database Configuration Properties
@@ -25,6 +25,11 @@ For production environmnents conduktor-platform support (since version [**1.1.2*
 - `database.username` : Database login role
 - `database.password` : Database login password
 - `database.connection_timeout` : Connection timeout option in seconds
+
+#### SSL support
+
+By default, Conduktor Platform will try to connect to the database using SSL mode `prefer`. 
+We plan to make this configurable in the future along with database certificate.
 
 ### Setup
 
