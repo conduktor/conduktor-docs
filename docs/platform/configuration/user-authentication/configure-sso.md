@@ -292,7 +292,8 @@ Enter the name you want, and the application type and redirect URI as below:
 
 The callback should be like: `http://<platform hostname>/oauth/callback/<OAuth2 config name>`
 
-:::danger If you use another hostname than localhost, you may need to start your callback by https :::
+:::danger If you use another hostname than localhost, you may need to start your callback by https.
+:::
 
 When you click on `Create`, you get you credentials. We suggest you to download the JSON file and keep it safe.
 
