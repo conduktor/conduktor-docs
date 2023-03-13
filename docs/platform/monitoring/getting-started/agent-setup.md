@@ -8,7 +8,8 @@ description: Learn how to get started with Monitoring
 
 :::warning Monitoring is changing to improve the ease of setup and usability. As a result, agent support will be removed from **April 3rd, 2023**. [Find out more](/platform/support/important-notices/#monitoring-is-changing-january-27-2023).
 
-It should not be setup in case of a new Conduktor deployment, and will be maintained only for existing users to support their transition. :::
+It should not be setup in case of a new Conduktor deployment, and will be maintained only for existing users to support their transition.
+:::
 
 ## Overview
 
