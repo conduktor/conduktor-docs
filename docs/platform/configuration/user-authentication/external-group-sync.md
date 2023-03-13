@@ -12,7 +12,7 @@ External group synchronization allows you to integrate Conduktor's RBAC system w
 
 ## Prerequisites
 
-You must first configure [SSO](./user-authentication.md) to an LDAP or OAuth2.0 identity provider. In addition to the properties required for the default configuration, you must also add the relevant group properties.
+You must first configure [SSO](./configure-sso.md) to an LDAP or OAuth2.0 identity provider. In addition to the properties required for the default configuration, you must also add the relevant group properties.
 
 ### LDAP
 
