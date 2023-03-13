@@ -82,7 +82,7 @@ CDK_SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
 
 ### LDAPS
 
-For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate to `conduktor-platform` using Java JKS TrustStore file. See [SSL/TLS configuration](../ssl-tls-configuration) for more details.
+For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate to `conduktor-platform` using Java JKS TrustStore file. See [SSL/TLS configuration](/platform/configuration/ssl-tls-configuration/) for more details.
 
 **Troubleshot LDAPS issues**  
 Download the script [sso-debug.sh](https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-sso-ldap/sso-debug.sh) and run it:
@@ -122,7 +122,7 @@ sso:
 ```
 
 From there, either leave the ignoreUntrusted or add the certificate to the truststore.  
-See [SSL/TLS configuration](../ssl-tls-configuration) for more details.
+See [SSL/TLS configuration](/platform/configuration/ssl-tls-configuration/) for more details.
 
 ### Oauth2 Identity Provider
 

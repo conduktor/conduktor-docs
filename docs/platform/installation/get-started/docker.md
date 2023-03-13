@@ -130,7 +130,7 @@ All configuration properties can also be parsed as [Environment Variables](/plat
 For more examples, see:
 
 - [Configuration Properties and Environment Variables](/platform/configuration/env-variables/)
-- [Configuring SSO](/platform/configuration/user-authentication/)
+- [Configuring SSO](/platform/category/user-authentication/)
 
 ```yaml
 organization:
@@ -206,7 +206,7 @@ conduktor/conduktor-platform:latest
 
 After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
 
-If using [SSO](/platform/configuration/user-authentication/), you will see an option to login via the relevant identity provider.
+If using [SSO](/platform/category/user-authentication/), you will see an option to login via the relevant identity provider.
 
 ![Sign In Azure](/img/get-started/azure-start.png)
 
