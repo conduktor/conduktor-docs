@@ -16,7 +16,8 @@ When you execute tests from the Testing application or via the CI runner, metric
 | Scenario Duration | <ul><li>By Date</li></ul> | Details the end-to-end duration for the test execution. |
 | Task Duration | <ul><li>By Task</li><li>By Date</li></ul> | Details the duration of each [Task](/platform/testing/features/building-tests/tasks/) that makes up the [Test Scenario](/platform/testing/features/building-tests/test-scenarios/). |
 
-:::info Note that when there are more than 1 executions for an interval, the **average** time across all executions will be shown for the session and task duration. :::
+:::info Note that when there are more than 1 executions for an interval, the **average** time across all executions will be shown for the session and task duration. 
+:::
 
 ## View Insights
 

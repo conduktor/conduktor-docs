@@ -10,7 +10,8 @@ You must add a Kafka cluster in your [Workspace](/platform/testing/features/work
 
 The ability to reach your cluster will depend on where you have setup the [Testing Agent](/platform/testing/getting-started/install-the-testing-agent/).
 
-:::info If you started Conduktor via **Docker**, you should have already configured your Kafka Clusters and can skip this. :::
+:::info If you started Conduktor via **Docker**, you should have already configured your Kafka Clusters and can skip this. 
+:::
 
 ## Adding a cluster
 
@@ -52,7 +53,8 @@ You are able to connect to a Kafka cluster that is running on your localhost. Fo
 
 **The only pre-requisite** is that the [Testing Agent](/platform/testing/getting-started/install-the-testing-agent/) is running on a host that has access to your cluster.
 
-:::tip **Pro tip!** You can [start a Kafka cluster in seconds](https://docs.conduktor.io/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds/) using our other product, Conduktor Desktop :::
+:::tip **Pro tip!** You can [start a Kafka cluster in seconds](https://docs.conduktor.io/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds/) using our other product, Conduktor Desktop 
+:::
 
 To connect to Kafka running on localhost:
 
@@ -97,7 +99,8 @@ Create the **Kafka cluster** **API key.** You also have the option to create the
 
 From within the cluster configuration modal of the Testing application, **Paste** your configuration as additional properties.
 
-:::caution **Note:** You will need to **remove any comments from the configuration**, and **move the bootstrap server URL** to the correct form input. If you are not using the schema registry, you can also remove these properties. :::
+:::caution **Note:** You will need to **remove any comments from the configuration**, and **move the bootstrap server URL** to the correct form input. If you are not using the schema registry, you can also remove these properties. 
+:::
 
 **Refresh** the connection and if successful, you will see the **CONNECTED** label turn green.
 
@@ -127,7 +130,8 @@ It's important that the [Testing Agent](/platform/testing/getting-started/instal
 
 ![](<../assets/image (138).png>)
 
-:::tip **Pro Tip!** If you are using the Conduktor Desktop GUI, you can use the **Aiven wizard** to setup your cluster configuration and paste the config into Testing.&#x20; :::
+:::tip **Pro Tip!** If you are using the Conduktor Desktop GUI, you can use the **Aiven wizard** to setup your cluster configuration and paste the config into Testing.&#x20; 
+:::
 
 ## Connect to a Red Hat cluster
 
@@ -161,7 +165,8 @@ security.protocol=SASL_SSL
 
 For connecting to MSK, we recommend installing the [Testing Agent](/platform/testing/getting-started/install-the-testing-agent/) on an EC2 instance with access to the cluster.&#x20;
 
-:::info Note that you will need to configure **Security Groups** so that the cluster's security group can accept traffic coming from the EC2 instance's security group. See [docs](https://docs.aws.amazon.com/msk/latest/developerguide/create-client-machine.html).&#x20; :::
+:::info Note that you will need to configure **Security Groups** so that the cluster's security group can accept traffic coming from the EC2 instance's security group. See [docs](https://docs.aws.amazon.com/msk/latest/developerguide/create-client-machine.html).&#x20; 
+:::
 
 When you create an Agent inside the Testing UI, you will be provided the commands for downloading and running it.&#x20;
 

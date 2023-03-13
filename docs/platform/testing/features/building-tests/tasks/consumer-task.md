@@ -41,7 +41,8 @@ For this exercise, we will assume you have already added a [simple Produce task]
 
 :::info **Note: When producing and consuming from the same topic**
 
-To ensure the consumer task is subscribed when the message is produced, these tasks must be configured in **parallel**.&#x20; :::
+To ensure the consumer task is subscribed when the message is produced, these tasks must be configured in **parallel**.&#x20; 
+:::
 
 From inside the editor view, select the **Scenario Start** button and select **Consumer** from the dropdown menu.
 

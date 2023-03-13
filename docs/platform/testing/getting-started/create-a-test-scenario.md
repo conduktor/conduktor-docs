@@ -38,7 +38,8 @@ From within the editor view, click **Scenario Start** and select **Producer** fr
 
 In the **General** tab, select a configured **Cluster,** and choose the **Topic** to produce data into.
 
-:::tip **Pro Tip:** Use the **Topic preview** button to fetch sample records from your Kafka topic :::
+:::tip **Pro Tip:** Use the **Topic preview** button to fetch sample records from your Kafka topic.
+:::
 
 ![testing-producer.png](/img/testing/hello-world/testing-producer.png)
 
