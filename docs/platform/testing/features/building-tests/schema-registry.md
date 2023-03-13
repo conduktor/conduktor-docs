@@ -33,7 +33,8 @@ When producing the message, you can either:
 - **Generate random data:** This will infer the correct data types from your schema
 - **Manually enter data:** Provide a manual input for the message&#x20;
 
-:::tip **Pro Tip!** Use 'Preview Schema' to peek your schema inside the Testing application :::
+:::tip **Pro Tip!** Use 'Preview Schema' to peek your schema inside the Testing application.
+:::
 
 ![Preview Schema  ](<../../assets/image (3).png>)
 
