@@ -40,7 +40,8 @@ Select **CI Agent** and click **Create.**
 
 **Download** the newly generated token and store it somewhere secure.&#x20;
 
-:::danger Careful, as **you will only be shown the token once!** So make sure you download it and store it somewhere secure :::
+:::danger Careful, as **you will only be shown the token once!** So make sure you download it and store it somewhere secure.
+:::
 
 ![](<../assets/image (34) (1).png>)
 
