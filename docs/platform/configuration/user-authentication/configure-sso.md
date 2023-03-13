@@ -71,12 +71,12 @@ search-filter: '(sAMAccountName={0})'
 Or from environment variables :
 
 ```bash
-SSO_LDAP_0_NAME="default"
-SSO_LDAP_0_SERVER="ldap://www.zflexldap.com:389"
-SSO_LDAP_0_MANAGERDN="cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
-SSO_LDAP_0_MANAGERPASSWORD="zflexpass"
-SSO_LDAP_0_SEARCH-BASE="ou=users,ou=guests,dc=zflexsoftware,dc=com"
-SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
+CDK_SSO_LDAP_0_NAME="default"
+CDK_SSO_LDAP_0_SERVER="ldap://www.zflexldap.com:389"
+CDK_SSO_LDAP_0_MANAGERDN="cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
+CDK_SSO_LDAP_0_MANAGERPASSWORD="zflexpass"
+CDK_SSO_LDAP_0_SEARCH-BASE="ou=users,ou=guests,dc=zflexsoftware,dc=com"
+CDK_SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
 
 ```
 
@@ -156,11 +156,11 @@ sso:
 Or from environment variables :
 
 ```bash
-SSO_OAUTH2_0_NAME="auth0"
-SSO_OAUTH2_0_DEFAULT=true
-SSO_OAUTH2_0_CLIENT-ID="<auth0 app client id>"
-SSO_OAUTH2_0_CLIENT-SECRET="<auth0 app client secret>"
-SSO_OAUTH2_0_OPENID_ISSUER="<auth0 app domain>.auth0.com"
+CDK_SSO_OAUTH2_0_NAME="auth0"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<auth0 app client id>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<auth0 app client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="<auth0 app domain>.auth0.com"
 ```
 
 ### Okta
@@ -193,11 +193,11 @@ sso:
 Or from environment variables :
 
 ```bash
-SSO_OAUTH2_0_NAME="okta"
-SSO_OAUTH2_0_DEFAULT=true
-SSO_OAUTH2_0_CLIENT-ID="<okta app client id>"
-SSO_OAUTH2_0_CLIENT-SECRET="<okta app client secret>"
-SSO_OAUTH2_0_OPENID_ISSUER="<okta domain>.okta.com"
+CDK_SSO_OAUTH2_0_NAME="okta"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<okta app client id>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<okta app client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="<okta domain>.okta.com"
 ```
 
 ### Keycloak
@@ -230,11 +230,11 @@ sso:
 Or from environment variables :
 
 ```bash
-SSO_OAUTH2_0_NAME="keycloak"
-SSO_OAUTH2_0_DEFAULT=true
-SSO_OAUTH2_0_CLIENT-ID="<keycloak client id>"
-SSO_OAUTH2_0_CLIENT-SECRET="<keycloak client secret>"
-SSO_OAUTH2_0_OPENID_ISSUER="http://<host(:port)>/realms/<realm name>"
+CDK_SSO_OAUTH2_0_NAME="keycloak"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<keycloak client id>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<keycloak client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<host(:port)>/realms/<realm name>"
 ```
 
 ### Azure
@@ -265,11 +265,11 @@ sso:
 Or from environment variables :
 
 ```bash
-SSO_OAUTH2_0_NAME="azure"
-SSO_OAUTH2_0_DEFAULT=true
-SSO_OAUTH2_0_CLIENT-ID="${AZURE_APPLICATION_ID}"
-SSO_OAUTH2_0_CLIENT-SECRET="${AZURE_CLIENT_SECRET}"
-SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.0"
+CDK_SSO_OAUTH2_0_NAME="azure"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="${AZURE_APPLICATION_ID}"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="${AZURE_CLIENT_SECRET}"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.0"
 ```
 
 > **Note** : do not use the "Secret ID" of the client secret as the `client-id`. You **must** use the application ID.

@@ -53,12 +53,12 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 
 | Property | Description | Environment Variable | Mandatory | Type | Default |
 | --- | --- | --- | --- | --- | --- |
-| `organization.name` | Your organization's name | `CDK_ORGANIZATION_NAME` | true | string | `"default"` |
-| `license` | Enterprise license key. If not provided, fallback to free plan. | CDK_LICENSE or LICENSE_KEY | false | string | ∅ |
-| `platform.fqdn` | Platform FQDN. Could be useful for SSO callback URL when using a reverse proxy. The platform will try to guess it automatically using X-Forwarded-Host header coming from upstream reverse proxy. | `CDK_PLATFORM_FQDN` | false | string | `"localhost"` |
+| `organization.name`        | Your organization's name | `CDK_ORGANIZATION_NAME`        | true | string | `"default"` |
+| `license`                  | Enterprise license key. If not provided, fallback to free plan. | CDK_LICENSE or LICENSE_KEY     | false | string | ∅ |
+| `platform.external.url`    | Force Platform external URL. Useful for SSO callback URL when using a reverse proxy. By default, the platform will try to guess it automatically using X-Forwarded-* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL`    | false | string | ∅ |
 | `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
-| `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
-| `enable_product_metrics` | In order to improve Conduktor Platform, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
+| `platform.https.key.path`  | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH`  | false | string | ∅ |
+| `enable_product_metrics`   | In order to improve Conduktor Platform, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS`   | false | boolean | `true` |
 
 > **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 
@@ -103,42 +103,41 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `SSO_IGNORE-UNTRUSTED-CERTIFICATE` | false | boolean | `false` | `1.3.0` |
+| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNORE-UNTRUSTED-CERTIFICATE` | false | boolean | `false` | `1.3.0` |
 
 #### LDAP properties
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sso.ldap[].name` | Ldap connection name | `SSO_LDAP_0_NAME` | true | string | ∅ |  |
-| `sso.ldap[].server` | Ldap server host and port | `SSO_LDAP_0_SERVER` | true | string | ∅ |  |
-| `sso.ldap[].managerDn` | Sets the manager DN | `SSO_LDAP_0_MANAGERDN` | true | string | ∅ |  |
-| `sso.ldap[].managerPassword` | Sets the manager password | `SSO_LDAP_0_MANAGERPASSWORD` | true | string | ∅ |  |
-| `sso.ldap[].search-subtree` | Sets if the subtree should be searched. | `SSO_LDAP_0_SEARCH-SUBTREE` | false | boolean | `true` | `1.5.0` |
-| `sso.ldap[].search-base` | Sets the base DN to search. | `SSO_LDAP_0_SEARCH-BASE` | true | string | ∅ |  |
-| `sso.ldap[].search-filter` | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`. | `SSO_LDAP_0_SEARCH-FILTER` | false | string | `"(uid={0})"` | `1.5.0` |
-| `sso.ldap[].search-attributes` | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token. | `SSO_LDAP_0_SEARCH-ATTRIBUTES` | false | string array | `[]` | `1.5.0` |
-| `sso.ldap[].groups-enabled` | Sets if group search is enabled. | `SSO_LDAP_0_GROUPS-ENABLED` | false | boolean | `false` | `1.5.0` |
-| `sso.ldap[].groups-subtree` | Sets if the subtree should be searched. | `SSO_LDAP_0_GROUPS-SUBTREE` | false | boolean | `true` | `1.5.0` |
-| `sso.ldap[].groups-base` | Sets the base DN to search from. | `SSO_LDAP_0_GROUPS-BASE` | true | string | ∅ |  |
-| `sso.ldap[].groups-filter` | Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`. | `SSO_LDAP_0_GROUPS-FILTER` | false | string | `"uniquemember={0}"` | `1.5.0` |
-| `sso.ldap[].groups-filter-attribute` | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN. | `SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE` | false | string | ∅ | `1.5.0` |
-| `sso.ldap[].groups-attribute` | Sets the group attribute name. Defaults to `cn`. | `SSO_LDAP_0_GROUPS-ATTRIBUTE` | false | string | `"cn"` | `1.5.0` |
-| `sso.ldap[].properties` | Additional properties that will be passed to identity provider context. | `SSO_LDAP_0_PROPERTIES` | false | dictionary | ∅ | `1.11.0` |
+| `sso.ldap[].name` | Ldap connection name | `CDK_SSO_LDAP_0_NAME`                    | true | string | ∅ |  |
+| `sso.ldap[].server` | Ldap server host and port | `CDK_SSO_LDAP_0_SERVER`                  | true | string | ∅ |  |
+| `sso.ldap[].managerDn` | Sets the manager DN | `CDK_SSO_LDAP_0_MANAGERDN`               | true | string | ∅ |  |
+| `sso.ldap[].managerPassword` | Sets the manager password | `CDK_SSO_LDAP_0_MANAGERPASSWORD`         | true | string | ∅ |  |
+| `sso.ldap[].search-subtree` | Sets if the subtree should be searched. | `CDK_SSO_LDAP_0_SEARCH-SUBTREE`          | false | boolean | `true` | `1.5.0` |
+| `sso.ldap[].search-base` | Sets the base DN to search. | `CDK_SSO_LDAP_0_SEARCH-BASE`             | true | string | ∅ |  |
+| `sso.ldap[].search-filter` | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`. | `CDK_SSO_LDAP_0_SEARCH-FILTER`           | false | string | `"(uid={0})"` | `1.5.0` |
+| `sso.ldap[].search-attributes` | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token. | `CDK_SSO_LDAP_0_SEARCH-ATTRIBUTES`       | false | string array | `[]` | `1.5.0` |
+| `sso.ldap[].groups-enabled` | Sets if group search is enabled. | `CDK_SSO_LDAP_0_GROUPS-ENABLED`          | false | boolean | `false` | `1.5.0` |
+| `sso.ldap[].groups-subtree` | Sets if the subtree should be searched. | `CDK_SSO_LDAP_0_GROUPS-SUBTREE`          | false | boolean | `true` | `1.5.0` |
+| `sso.ldap[].groups-base` | Sets the base DN to search from. | `CDK_SSO_LDAP_0_GROUPS-BASE`             | true | string | ∅ |  |
+| `sso.ldap[].groups-filter` | Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`. | `CDK_SSO_LDAP_0_GROUPS-FILTER`           | false | string | `"uniquemember={0}"` | `1.5.0` |
+| `sso.ldap[].groups-filter-attribute` | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN. | `CDK_SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE` | false | string | ∅ | `1.5.0` |
+| `sso.ldap[].groups-attribute` | Sets the group attribute name. Defaults to `cn`. | `CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE`        | false | string | `"cn"` | `1.5.0` |
+| `sso.ldap[].properties` | Additional properties that will be passed to identity provider context. | `CDK_SSO_LDAP_0_PROPERTIES`              | false | dictionary | ∅ | `1.11.0` |
 
 #### Oauth2 properties
 
 | Property | Description | Env | Mandatory | Type | Default |
 | --- | --- | --- | --- | --- | --- |
-| `sso.oauth2[].name` | Oauth2 connection name | `SSO_OAUTH2_0_NAME` | true | string | ∅ |
-| `sso.oauth2[].default` | Use as default | `SSO_OAUTH2_0_DEFAULT` | true | boolean | ∅ |
-| `sso.oauth2[].client-id` | Oauth2 client id | `SSO_OAUTH2_0_CLIENT-ID` | true | string | ∅ |
-| `sso.oauth2[].client-secret` | Oauth2 client secret | `SSO_OAUTH2_0_CLIENT-SECRET` | true | string | ∅ |
-| `sso.oauth2[].openid.issuer` | Issuer to check on token | `SSO_OAUTH2_0_OPENID_ISSUER` | true | string | ∅ |
-| `sso.oauth2[].groups-claim` | Claim used to return group information in token | `CDK_SSO_OAUTH2_0_GROUPS_CLAIM` | false | string | `groups` |
-| `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `SSO_OAUTH2_0_SCOPES` | true | string | `[]` |
-| `sso.oauth2[].authorization-url` | Authorization endpoint URL | `SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
-| `sso.oauth2[].token.url` | Get token endpoint URL | `SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
-| `sso.oauth2[].token.auth-method` | Authentication Method | `SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
+| `sso.oauth2[].name` | Oauth2 connection name | `CDK_SSO_OAUTH2_0_NAME`              | true | string | ∅ |
+| `sso.oauth2[].default` | Use as default | `CDK_SSO_OAUTH2_0_DEFAULT`           | true | boolean | ∅ |
+| `sso.oauth2[].client-id` | Oauth2 client id | `CDK_SSO_OAUTH2_0_CLIENT-ID`         | true | string | ∅ |
+| `sso.oauth2[].client-secret` | Oauth2 client secret | `CDK_SSO_OAUTH2_0_CLIENT-SECRET`     | true | string | ∅ |
+| `sso.oauth2[].openid.issuer` | Issuer to check on token | `CDK_SSO_OAUTH2_0_OPENID_ISSUER`     | true | string | ∅ |
+| `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `CDK_SSO_OAUTH2_0_SCOPES`            | true | string | `[]` |
+| `sso.oauth2[].authorization-url` | Authorization endpoint URL | `CDK_SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
+| `sso.oauth2[].token.url` | Get token endpoint URL | `CDK_SSO_OAUTH2_0_TOKEN_URL`         | false | string | ∅ |
+| `sso.oauth2[].token.auth-method` | Authentication Method | `CDK_SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
 
 ### Kafka clusters properties
 
