@@ -12,7 +12,7 @@ Alerting is an Enterprise feature. Please [contact us](https://www.conduktor.io/
 
 ## Overview
 
-Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** so that you can receive real-time notifications.
+Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** so that you can receive real-time notifications. //TODO Slack and Teams
 
 If you require an additional integration, please [let us know](https://product.conduktor.help/tabs/1-in-development) so we can consider it.
 
@@ -41,10 +41,10 @@ Fill in the:
 
 ![monitoring-alert-1](/img/monitoring/monitoring-alert-1.png)
 
-### Option 2: Create Alert from Graph
+### Option 2: From a Graph
 
 Alternatively, you can create an alert more dynamically when viewing a graph.
 
-Next to each graph, you have a **+** button that can be used to create the alert. Once you have clicked, follow the steps from Option 1 to fill out the form.
+Next to each graph, you have a **+** button that can be used to create the alert. Once you have clicked the button, follow the steps from Option 1 to fill out the form.
 
 ![monitoring-alert-1](/img/monitoring/monitoring-alert-2.png)
