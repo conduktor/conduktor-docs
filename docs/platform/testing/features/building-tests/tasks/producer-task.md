@@ -43,7 +43,8 @@ When inside the editor for a new scenario, select the **Scenario Start** button 
 
 Give your task an appropriate **name**, and select the **Cluster** and **Topic** that you want to produce data to. If you do not have a Cluster configured, [add one ](/platform/testing/getting-started/connect-to-a-kafka-cluster/)first.&#x20;
 
-:::tip **Pro Tip!** After selecting a Cluster and Topic, use **Topic Preview** to fetch the latest records from your topic :::
+:::tip **Pro Tip!** After selecting a Cluster and Topic, use **Topic Preview** to fetch the latest records from your topic. 
+:::
 
 ![](<../../../assets/image (21).png>)
 
@@ -95,7 +96,8 @@ Next, scroll down and toggle the **Stream messages** button to activate streamin
 - Under **Timer Options**, enter an **Interval (ms)** value of **1000**
 - Under **Stop Conditions**, enter the value **10**
 
-:::info Under these conditions, our task will produce a record to Kafka **every second until 10 records** have been produced.&#x20; :::
+:::info Under these conditions, our task will produce a record to Kafka **every second until 10 records** have been produced.&#x20; 
+:::
 
 ![](<../../../assets/image (155).png>)
 

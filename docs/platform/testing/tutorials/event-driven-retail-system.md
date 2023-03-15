@@ -27,7 +27,8 @@ The general flow can be described as:
 
 Below demonstrates how to build a Test Scenario representing the above architecture.
 
-:::info Remember, any dependent applications must be running to validate the scenario. In this case, the User and Promotions Services are considered external applications. :::
+:::info Remember, any dependent applications must be running to validate the scenario. In this case, the User and Promotions Services are considered external applications. 
+:::
 
 ![](<../assets/image (10) (1) (1).png>)
 
@@ -58,7 +59,8 @@ In the **Data** tab, the deserialisation formats for consuming the enriched mess
 
 Only 1 enriched message is expected from the User Service, therefore the default lifecycle rules _(stop after 1 message is consumed)_ are suitable.
 
-:::info If messages were continuously being produced into this topic, we would need to use a filter to intercept the correct one.&#x20; :::
+:::info If messages were continuously being produced into this topic, we would need to use a filter to intercept the correct one.&#x20; 
+:::
 
 ![](<../assets/Screenshot 2022-05-24 at 20.54.29.png>)
 

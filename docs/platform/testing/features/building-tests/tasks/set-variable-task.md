@@ -10,7 +10,8 @@ The Set Variable task enables you to assign values to a local variable for use i
 
 You can define a value explicitly, or reference data from a chained task using the [Task Ports](/platform/testing/features/building-tests/tasks/task-ports/).&#x20;
 
-:::info Unlike [environment](/platform/testing/features/environments/) variables, which can be used globally across any scenario, local variables are only available within the context of the scenario they are set. :::
+:::info Unlike [environment](/platform/testing/features/environments/) variables, which can be used globally across any scenario, local variables are only available within the context of the scenario they are set. 
+:::
 
 ## Create a Set Variable task
 
@@ -20,7 +21,8 @@ When inside the visual editor for a new scenario, select the **Scenario Start** 
 
 Enter the variable value in the **Value** input, and add your variable name in the **Assign to** input.
 
-:::info Note you can switch between the different [Custom Inputs](/platform/testing/features/custom-inputs/) for assigning values to variables using different methods. For example, via a JavaScript snippet.&#x20; :::
+:::info Note you can switch between the different [Custom Inputs](/platform/testing/features/custom-inputs/) for assigning values to variables using different methods. For example, via a JavaScript snippet.&#x20; 
+:::
 
 ![](<../../../assets/image (4) (1).png>)
 
