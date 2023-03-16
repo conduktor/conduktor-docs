@@ -46,6 +46,5 @@ export const items = [
     description: 'More than an interface',
     to: '/desktop',
     icon: '/assets/svgs/products/desktop.svg',
-    legacy: true,
   },
 ]
