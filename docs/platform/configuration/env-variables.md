@@ -224,3 +224,5 @@ If `amazonSecurity.type` is `FromRole`, you must use the following properties:
 | `clusters[].kafkaConnects[].url` | The Kafka connect URL | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL` | true | string | ∅ |
 | `clusters[].kafkaConnects[].security.username` | Basic auth username | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME` | false | string | ∅ |
 | `clusters[].kafkaConnects[].security.password` | Basic auth password | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD` | false | string | ∅ |
+| `clusters[].kafkaConnects[].security.token` | Bearer token | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_TOKEN` | false | string | ∅ |
+| `clusters[].kafkaConnects[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_KAFKACONNECTS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | string | ∅ |
