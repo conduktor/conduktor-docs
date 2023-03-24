@@ -49,17 +49,39 @@ Detail list of properties [here](/platform/configuration/env-variables/#sso-prop
 
 ### LDAP server
 
-> **Note** : For example purpose the LDAP used is from [zflexldap](https://www.zflexldapadministrator.com/index.php/blog/82-free-online-ldap)
+Conduktor platform can be configured to use an LDAP server as an identity provider.
+
+To map LDAP users into Conduktor Platform will search for the following attributes from LDAP user entry :
+- `uid` : user id
+- `mail` or `email` : user email. **This is the only mandatory field**
+- `cn` : user name
+- `sn` : user surname
+- `givenName` : user first name
+- `displayName` : user display name
+
+#### LDAP Groups
+Group membership is also supported. Be aware that depending on your LDAP server group class change the attribute used to filter groups. 
+For example : 
+- if group class is `groupOfNames` then the attribute used to filter groups is `member`. 
+- if group class is `groupOfUniqueNames` then the attribute used to filter groups is `uniqueMember`.
+
+
+> **Note** : For example purpose the LDAP used is from our [example-sso-ldap](https://github.com/conduktor/conduktor-platform/tree/main/example-sso-ldap)
 
 ```yaml
 sso:
   ldap:
-    - name: 'default' # Custom name for ldap connection
-      server: 'ldap://www.zflexldap.com:389' # LDAP server URI with port
-      managerDn: 'cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com' # Bind DN
-      managerPassword: 'zflexpass' # Bind Password
-      search-base: 'ou=users,ou=guests,dc=zflexsoftware,dc=com' # Base DN to search for users
-      search-filter: '(uid={0})' # Search filter
+    - name: "default"                              # Custom name for ldap connection
+      server: "ldap://openldap:1389"               # LDAP server URI with port
+      managerDn: "cn=admin,dc=example,dc=org"      # Bind DN
+      managerPassword: "adminpassword"             # Bind Password
+      search-subtree: true                         # Search subtree (default to true)
+      search-base: "ou=users,dc=example,dc=org"    # Base DN to search for users
+      search-filter: "(uid={0})"                   # Search filter (default to "(uid={0})") could also be "(cn={0})" or "(mail={0})" will be used in login form
+      groups-enabled: true                         # Enable group membership (default to false)
+      groups-base: "ou=groups,dc=example,dc=org"   # Base DN to search for groups
+      groups-filter: "(member={0})"                # Filter to search for groups (default to "(member={0})") could also be "(uniqueMember={0})" depending on your LDAP server group class
+      groups-attribute: "cn"                       # Attribute to retrieve from LDAP group entry (default to "cn")
 ```
 
 > **Note** : If your LDAP server is Active directory, and you get "invalid user" error in Conduktor Platform when trying to log-in. Try setting your `search-filter` to the below in your `platform-config.yaml`
@@ -68,16 +90,20 @@ sso:
 search-filter: '(sAMAccountName={0})'
 ```
 
-Or from environment variables :
+You can also configure SSO from environment variables :
 
 ```bash
 CDK_SSO_LDAP_0_NAME="default"
-CDK_SSO_LDAP_0_SERVER="ldap://www.zflexldap.com:389"
-CDK_SSO_LDAP_0_MANAGERDN="cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com"
-CDK_SSO_LDAP_0_MANAGERPASSWORD="zflexpass"
-CDK_SSO_LDAP_0_SEARCH-BASE="ou=users,ou=guests,dc=zflexsoftware,dc=com"
+CDK_SSO_LDAP_0_SERVER="ldap://openldap:1389"
+CDK_SSO_LDAP_0_MANAGERDN="cn=admin,dc=example,dc=org"
+CDK_SSO_LDAP_0_MANAGERPASSWORD="adminpassword"
+CDK_SSO_LDAP_0_SEARCH-SUBTREE="true"
+CDK_SSO_LDAP_0_SEARCH-BASE="ou=users,dc=example,dc=org"
 CDK_SSO_LDAP_0_SEARCH-FILTER="(uid={0})"
-
+CDK_SSO_LDAP_0_GROUPS-ENABLED="true"
+CDK_SSO_LDAP_0_GROUPS-BASE="ou=groups,dc=example,dc=org"
+CDK_SSO_LDAP_0_GROUPS-FILTER="(member={0})"
+CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 ```
 
 ### LDAPS
