@@ -78,7 +78,7 @@ Add this in the additional properties (notice the `schema.registry.` prefix):
 
 ```
 schema.registry.ssl.truststore.location=/kafkassl/kafka.client.truststore.jks
-schema.registry.ssl.trusstore.password=<xxx>
+schema.registry.ssl.truststore.password=<xxx>
 schema.registry.ssl.keystore.location=/kafkassl/kafka.client.keystore.jks
 schema.registry.ssl.keystore.password=<xxx>
 schema.registry.ssl.key.password=<xxx>
