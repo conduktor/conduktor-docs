@@ -11,7 +11,7 @@ There are 5 properties you can set to specify the proxy that will be used by the
 
 `CDK_HTTP_PROXY_HOST`: the host name of the proxy server  
 `CDK_HTTP_PROXY_PORT`: the port number, the default value being 80.  
-`CDK_HTTP_NON_PROXY_HOSTS`: a list of hosts that should be reached directly, bypassing the proxy. This is a list of patterns separated by '|'. The patterns may start or end with a '*' for wildcards. Any host matching one of these patterns will be reached through a direct connection instead of through a proxy.  
+`CDK_HTTP_NON_PROXY_HOSTS`: a list of hosts that should be reached directly, bypassing the proxy. This is a list of patterns separated by `|`. The patterns may start or end with a `*` for wildcards, we do not support `/`. Any host matching one of these patterns will be reached through a direct connection instead of through a proxy.  
 `CDK_HTTP_PROXY_USERNAME`: the proxy username  
 `CDK_HTTP_PROXY_PASSWORD`: the proxy password
 
