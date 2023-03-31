@@ -78,7 +78,7 @@ Password: admin
 
 Once you have authenticated using the default credentials, you should configure your first cluster.
 
-Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and either **create** a new cluster configuration, or select **'My Local Kafka Cluster'** to edit the configuration.
+Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
 
 From within the cluster configuration screen, add the:
 
@@ -109,9 +109,7 @@ advertised.listeners=PLAINTEXT://127.0.0.1:9092,EXTERNAL://host.docker.internal:
 inter.broker.listener.name=PLAINTEXT
 ```
 
-From within the Conduktor interface, connect using the bootstrap server:
-
-`host.docker.internal:19092`
+From within the Conduktor interface, connect using the bootstrap server: `host.docker.internal:19092`
 
 ## Advanced Setup
 
@@ -126,6 +124,7 @@ Conduktor can be configured using a configuration file `platform-config.yaml`. T
 The below example shows how to configure Conduktor with an external database, SSO and an optional license key (for Enterprise customers).
 
 All configuration properties can also be parsed as [Environment Variables](/platform/configuration/env-variables/) when starting Conduktor.
+If you need some help to convert this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 
 For more examples, see:
 
@@ -153,14 +152,14 @@ sso:
       openid:
         issuer: https://login.microsoftonline.com/{tenantid}/v2.0
 
-license: '<you license key>'
+license: '<your license key>'
 ```
 
 ### Step 2: Launch Conduktor
 
 Run the below command in the directory containing your `platform-config.yaml` file.
 
-If you are a **Conduktor Enterprise** customer, you can start the platform with the `LICENSE_KEY` environment variable.
+If you are a **Conduktor Enterprise** customer, you can decide either to put the license in your configuration file or to start the platform with the environment variable `LICENSE_KEY`, as bellow.
 
 <Tabs>
 <TabItem value="MacOS" label="MacOS">
