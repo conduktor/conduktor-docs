@@ -138,6 +138,7 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 | `sso.oauth2[].authorization-url` | Authorization endpoint URL | `CDK_SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
 | `sso.oauth2[].token.url` | Get token endpoint URL | `CDK_SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
 | `sso.oauth2[].token.auth-method` | Authentication Method | `CDK_SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
+| `sso.oauth2[].groups-claim ` | Configure Group Claims | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` | false | string | ∅ |
 
 ### Kafka clusters properties
 
