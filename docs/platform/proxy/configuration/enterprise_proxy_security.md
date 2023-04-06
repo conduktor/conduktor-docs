@@ -1,7 +1,14 @@
 ---
-title: Security
-description: Securing Conduktor Proxy with JWT 
+sidebar_position: 3
+title: Enterprise Security
+description: Securing Conduktor Gateway with JWT 
 ---
+
+This page covers the Enterprise level security available the Enterprise version of Conduktor Gateway.  
+
+Refer to [Open Source Security](./oss_security.md) for open source security documentation
+
+
 
 # Securing client access to proxy
 
