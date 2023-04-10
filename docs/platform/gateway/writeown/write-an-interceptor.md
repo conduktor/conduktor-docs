@@ -1,6 +1,6 @@
 ---
-title: Interceptor Developer Guide
-description: 
+title: Conduktor Gateway Write Your Own Interceptor
+description: This page describes the steps required to create your own interceptor, ready to deploy to your environment
 ---
 
 
@@ -10,10 +10,23 @@ There are a number of interceptors already available as part of the Conduktor Ma
 
 This page describes the steps required to create your own interceptor, ready to deploy to your environment, or release to the Conduktor Marketplace for the wider community to enjoy.
 
+This is applicable to only the Open Source Conduktor Gateway.
+
+If you have ideas or requirements for interceptors that can be added to the Enterprise Gateway [let us know](https://www.conduktor.io/contact/).
+
+## What is the Conduktor Gateway
+
+The Conduktor Gateway is a powerful tool that sits between your Kafka clients and your Kafka clusters. This gateway hosts plugable, extensible interceptors, which can be configured to have access to all Kafka traffic passing through the Gateway.
+
+Interceptors are configured to trigger actions based on the type and content of Kafka traffic. From manipulating the Kafka data itself, to interacting with an external service, what can be achieved by being able to act on any of your in-flight Kafka data is limited only by your imagination.
+
+Interceptors are configured in the Conduktor Gateway's [application.yaml](https://github.com/conduktor/conduktor-gateway/blob/main/gateway-core/config/application.yaml) configuration file by specifying a fully qualified class name, configuration details and a priority.  Multiple interceptors can be configured to run sequentially, in the priority specified order.
+
+If there is no interceptor available that fulfils your requirements, you can easily add your own.
 
 ## Fundamentals of Interceptor Development
 
-The Interceptor Framework defines the two interfaces required to define your own Interceptors: [Interceptor.java](/src/main/java/io/conduktor/gateway/interceptor/Interceptor.java) and [Plugin.java](/src/main/java/io/conduktor/gateway/interceptor/Plugin.java).
+The Interceptor Framework defines the two interfaces required to define your own Interceptors: [Interceptor.java](https://github.com/conduktor/conduktor-gateway/blob/main/interceptor-framework/src/main/java/io/conduktor/gateway/interceptor/Interceptor.java) and [Plugin.java](https://github.com/conduktor/conduktor-gateway/blob/main/interceptor-framework/src/main/java/io/conduktor/gateway/interceptor/Plugin.java).
 
 ### `Interceptor.java`
 The `Interceptor.java` interface defines a method that takes a Kafka request or response object, which can then be used to drive that interceptor function.
@@ -248,13 +261,19 @@ The pom.xml in the loggerInterceptor package demonstrates one way to do this.
 
 Place the built interceptor jar file on the classpath of the gateway.
 
-Restart the gateway with the new jar file on the classpath.  In this example, the new interceptor is in a jar file that can be found in the conductor-proxy-oss-holding repository under `myNewInterceptor/target/proxy-1.0-SNAPSHOT.jar`.
+Restart the gateway with the new jar file on the classpath.  In this example, the new interceptor is in a jar file that can be found in the conduktor-gateway repository under `myNewInterceptor/target/my-new-interceptor-1.0-SNAPSHOT.jar`.
 
 ```bash
 $ cp myNewInterceptor/target/my-new-interceptor-1.0-SNAPSHOT.jar bin/my-new-interceptor-1.0-SNAPSHOT.jar # Best practice is to store your interceptors in a central location
 $ export CLASSPATH=$CLASSPATH:bin/my-new-interceptor-1.0-SNAPSHOT.jar
 $ bin/run-gateway.sh
 ```
+
+# Submit an Interceptor to Conduktor
+
+Conduktor lovse to learn new things, and share what we have learnt with the Kafka community. 
+
+If you've written a new interceptor and want to contribute it to the Kafka Community via the Conduktor Marketplace, please [get in touch](https://www.conduktor.io/contact/) and we'll work with you to share it.
 
 # FAQS
 

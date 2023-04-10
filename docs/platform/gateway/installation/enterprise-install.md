@@ -1,5 +1,6 @@
 ---
-title: Installation
+sidebar_position: 2
+title: Enterprise Installation
 description: Conduktor Proxy is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
 ---
 
@@ -45,7 +46,7 @@ Conduktor Proxy should connect to Kafka as an admin user. As a minimum this user
   conduktor/conduktor-proxy:0.5.0-amd64
 ```
 
-For more complex deployments see [environment variables](../configuration/env-variables)
+For more complex deployments see [environment variables](../configuration/env-variables.md)
 
 # Connecting to secured Kafka
 
@@ -63,4 +64,4 @@ becomes:
 KAFKA_SSL_TRUSTSTORE_LOCATION
 ```
 
-for more infomation on this see [environment variables](../configuration/env-variables)
+for more infomation on this see [environment variables](../configuration/env-variables.md)
