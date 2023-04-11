@@ -12,7 +12,7 @@ Alerting is an Enterprise feature. Please [contact us](https://www.conduktor.io/
 
 ## Overview
 
-Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** so that you can receive real-time notifications. //TODO Slack and Teams
+Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** so that you can receive real-time notifications. // TODO Slack and Teams
 
 If you require an additional integration, please [let us know](https://product.conduktor.help/tabs/1-in-development) so we can consider it.
 
