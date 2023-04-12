@@ -10,13 +10,17 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 
 Kafka is a powerful tool, with great flexibility. This power and flexibility can lead to challenges around managing and bringing structure to your Kafka ecosystem, especially as that ecosystem grows.
 
-Conduktor Gateway aids you on your Kafka journey by adding governance, security, auditability, testability and much more.  When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and so confidence in your Kafka environment.
+Conduktor Gateway aids you on your Kafka journey by adding governance, security, auditability, testability and much more.  When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment.
 
 Conduktor Gateway has two offerings: 
 
-The source available, free to use [Conduktor Gateway](https://github.com/conduktor/conduktor-gateway)
+The [open-source](https://github.com/conduktor/conduktor-gateway), free to use Conduktor Gateway.
 
-The fully functional, enterprise ready [Conduktor Gateway](https://github.com/conduktor/conduktor-proxy-demos)
+The [Enterprise](https://github.com/conduktor/conduktor-proxy-demos) ready Conduktor Gateway.
+
+## Getting Started
+
+To start your Conduktor Gateway journey [review the installation options](installation/installation.md).
 
 ## Components
 
@@ -57,10 +61,6 @@ Both offerings are fully Apache Kafka protocol compliant, and support use of Kaf
 | Create your own interceptor  | Yes              | -                |
 | Community Marketplace        | Yes              | -                |
 
-
-## Getting Started
-
-To start your Conduktor Gateway journey [review the installation options](installation/installation.md).
 
 ## Resources
 

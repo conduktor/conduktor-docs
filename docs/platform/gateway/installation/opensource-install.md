@@ -9,9 +9,9 @@ The opensource Conduktor Gateway is made up of two components, the gateway trans
 
 The gateway transport layer is the wiring between your Kafka client application and your Kafka broker. It has access to all the Kafka data flowing through it. 
 
-Interceptors are loaded into the gateway.  The interceptors are triggered when Kafka data flows through the gateway, and provide function such as adding chaos to the flows to aid with testing, or adding safeguards around what Kafka configurations are allowed, to keep your Kafka cluster protected.
+Interceptors are loaded into the gateway.  The interceptors are triggered when Kafka data flows through the gateway, and provide functionality such as adding chaos to aid with testing, or adding safeguards around what Kafka configurations are allowed and keep your Kafka cluster protected.
 
-It is also possible to [write your own interceptor](../writeown/write-an-interceptor.md).
+It is also possible to [write your own interceptor](../interceptors/write-an-interceptor.md).
 
 This diagram show the high level architecture of the open source Conduktor Gateway
 
@@ -19,25 +19,31 @@ This diagram show the high level architecture of the open source Conduktor Gatew
 
 # Quick start and demo
 
+The quick start guide will demonstrate how to install Conduktor Gateway and configure it against a Kafka running on localhost. The logging interceptor will be used to write a log to stdout when Kafka traffic flows through the gateway.
+
 ## Get a Kafka instance
 
 Follow step 1 and step 2 (Zookeeper or KRaft version) from the [Apache Kafka Quick Start](https://kafka.apache.org/quickstart) to create a single broker cluster running on your local system.  Use the default configuration, which will start a broker on `localhost:9092`.
 
 ## Run the gateway
 
-Build the Gateway image:
+Build the Gateway image.
+
+:::caution
+Note this requires Java 17 or later. If you are using an older version, please download Java 17+
+:::
 
 ```bash
 $ git clone https://github.com/conduktor/conduktor-gateway && cd conduktor-gateway
 $ mvn clean package 
 ```
 
-**Note:** this requires Java 17 or later.
+
 
 Add the demo [logger interceptor](https://github.com/conduktor/conduktor-gateway/tree/main/logger-interceptor) to the classpath, and then start the gateway:
 
 ```bash
-$ CLASSPATH=logger-interceptor/target/logger-interceptor-0.1.0-SNAPSHOT.jar bin/run-gateway.sh
+$ CLASSPATH=logger-interceptor/target/logger-interceptor-0.2.0-SNAPSHOT.jar bin/run-gateway.sh
 ```
 
 In the terminal window, you should see a log line similar to this, which indicates the gateway has started successfully:

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Environment Variables
-description: Conduktor Proxy connections to Kafka are configured by prefixed and translated environment variables.
+description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
 
 Configuring the environment using environment variables is the recommended way of configuring the Enterprise Conduktor Gateway.
@@ -17,7 +17,7 @@ Jump to:
 
 ## Kafka Environment Variables
 
-Conduktor Proxy connections to Kafka are configured by prefixed and translated environment variables. Any variable prefixed with `KAFKA_` will be treated as a connection parameter. The remainder of the environmnt variable will be lower cased and have `_` replaced with `.` so that a variable
+Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables. Any variable prefixed with `KAFKA_` will be treated as a connection parameter. The remainder of the environmnt variable will be lower cased and have `_` replaced with `.` so that a variable
 
 ```bash
 KAFKA_BOOTSTRAP_SERVERS
@@ -29,17 +29,17 @@ is equivalent to the Kafka property
 bootstrap.servers
 ```
 
-## Proxy Environment Variables
+## Gateway Environment Variables
 
-Default configurations for Conduktor Proxy can be overridden by environment variables:
+Default configurations for Conduktor Gateway can be overridden by environment variables:
 
 ### Host/Port Configurations
 
-| Environment Variable | Default Value | Description                                                                                                                                                                                                                                                                                                   |  Enterprise Only  |
-|----------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
-| `PROXY_BIND_HOST`    | `0.0.0.0`     | The host on which to bind the proxy                                                                                                                                                                                                                                                                           |        No         |
-| `PROXY_HOST`         | `localhost`   | The proxy hostname that should be presented to clients                                                                                                                                                                                                                                                        |        No         | 
-| `PROXY_PORT_RANGE`   | `6969:6975`   | A range of ports to be opened on the Conduktor Proxy host, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment |        No         |
+| Environment Variable | Default Value | Description                                                                                                                                                                                                                                                                                                                                                            |  Enterprise Only  |
+|----------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
+| `PROXY_BIND_HOST`    | `0.0.0.0`     | The host on which to bind the gateway (Use `GATEWAY_BIND_HOST` with the open source gateway)                                                                                                                                                                                                                                                                           |        No         |
+| `PROXY_HOST`         | `localhost`   | The gateway hostname that should be presented to clients  (Use `GATEWAY_HOST` with the open source gateway)                                                                                                                                                                                                                                                            |        No         | 
+| `PROXY_PORT_RANGE`   | `6969:6975`   | A range of ports to be opened on the Conduktor `PROXY_HOST`, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. (Use `GATEWAY_PORT_RANGE` with the open source gateway) |        No         |
 
 ### Schema Registry Configurations
 
@@ -49,34 +49,34 @@ Default configurations for Conduktor Proxy can be overridden by environment vari
 
 ### Authentication Configurations
 
-Note: These configurations apply to authentication between clients and Conduktor Proxy. For authentication between Conduktor Proxy and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
+Note: These configurations apply to authentication between clients and Conduktor Gateway. For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable                | Default Value | Description                                                                                                                | Enterprise Only |
-|-------------------------------------| ------------- | -------------------------------------------------------------------------------------------------------------------------- |:---------------:|
-| `AUTHENTICATION_AUTHENTICATOR_TYPE` | `NONE`        | The type of authentication clients should use to connect to the Proxy, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |       No        |
-| `SSL_KEY_STORE_PATH`                | None          | Path to a keystore for SSL connections                                                                                     |       No        |
-| `SSL_KEY_STORE_PASSWORD`            | None          | Password for the keystore defined above                                                                                    |       No        |
-| `SSL_KEY_PASSWORD`                  | None          | Password for the key contained in the store above                                                                          |       No        |
-| `SSL_KEY_TYPE`                      | `jks`         | The type of keystore used for SSL connections                                                                              |       No        |
+| Environment Variable                | Default Value | Description                                                                                                                  | Enterprise Only |
+|-------------------------------------| ------------- |------------------------------------------------------------------------------------------------------------------------------|:---------------:|
+| `AUTHENTICATION_AUTHENTICATOR_TYPE` | `NONE`        | The type of authentication clients should use to connect to the gateway, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |       No        |
+| `SSL_KEY_STORE_PATH`                | None          | Path to a keystore for SSL connections                                                                                       |       No        |
+| `SSL_KEY_STORE_PASSWORD`            | None          | Password for the keystore defined above                                                                                      |       No        |
+| `SSL_KEY_PASSWORD`                  | None          | Password for the key contained in the store above                                                                            |       No        |
+| `SSL_KEY_TYPE`                      | `jks`         | The type of keystore used for SSL connections                                                                                |       No        |
 
 ### HTTP Configurations
 
-| Environment Variable | Default Value | Description                                                    | Enterprise Only |
-|----------------------| ------------- | -------------------------------------------------------------- |:---------------:|
-| `HTTP_PORT`          | `8888`        | The port on which the Proxy will present a HTTP management API |       Yes       | 
+| Environment Variable | Default Value | Description                                                      | Enterprise Only |
+|----------------------| ------------- |------------------------------------------------------------------|:---------------:|
+| `HTTP_PORT`          | `8888`        | The port on which the gateway will present a HTTP management API |       Yes       | 
 
 ### Thread Configurations
 
-| Environment Variable | Default Value | Description                                                                        | Enterprise Only |
-|----------------------| ------------- | ---------------------------------------------------------------------------------- |:---------------:|
-| `DOWNSTREAM_THREAD`  | `2`           | The number of threads dedicated to handling IO between clients and Conduktor Proxy |       No        |
-| `UPSTREAM_THREAD`    | `4`           | The number of threads dedicated to handling IO between Kafka and Conduktor Proxy   |       No        |
+| Environment Variable | Default Value | Description                                                                          | Enterprise Only |
+|----------------------| ------------- |--------------------------------------------------------------------------------------|:---------------:|
+| `DOWNSTREAM_THREAD`  | `2`           | The number of threads dedicated to handling IO between clients and Conduktor Gateway |       No        |
+| `UPSTREAM_THREAD`    | `4`           | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |       No        |
 
 ### Upstream Connection Configurations
 
-| Environment Variable        | Default Value | Description                                                 | Enterprise Only |
-|-----------------------------| ------------- | ----------------------------------------------------------- |:---------------:|
-| `UPSTREAM_NUM_CONNECTION`   | `10`          | The number of connections between Conduktor Proxy and Kafka |      No         | 
+| Environment Variable        | Default Value | Description                                                   | Enterprise Only |
+|-----------------------------| ------------- |---------------------------------------------------------------|:---------------:|
+| `UPSTREAM_NUM_CONNECTION`   | `10`          | The number of connections between Conduktor Gateway and Kafka |      No         | 
 
 ### Topic Store Configurations
 
@@ -107,12 +107,12 @@ Note: These configurations apply to authentication between clients and Conduktor
 
 ### Feature Flags Configurations
 
-| Environment Variable                | Default Value | Description                                                                                                                                                   | Enterprise Only |
-|-------------------------------------| ------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `FEATURE_FLAGS_RBAC`                | `false`       | Whether or not to enable the RBAC feature                                                                                                                     |      Yes        |
-| `FEATURE_FLAGS_SINGLE_TENANT`       | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                   |       Yes       |
-| `FEATURE_FLAGS_NO_INTERNAL_TOPICS`  | `false`       | Whether or not to enable no internal topics mode, in this mode proxy internal topics are not created. Note only one proxy instance is supported in this mode. |       Yes       |
-| `FEATURE_FLAGS_JWT_TOKEN_ENDPOINT`  | `false`       | Whether or not to enable a REST endpoint for generating auth JWT tokens                                                                                       |       Yes       |
+| Environment Variable                | Default Value | Description                                                                                                                                                       | Enterprise Only |
+|-------------------------------------| ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
+| `FEATURE_FLAGS_RBAC`                | `false`       | Whether or not to enable the RBAC feature                                                                                                                         |      Yes        |
+| `FEATURE_FLAGS_SINGLE_TENANT`       | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                       |       Yes       |
+| `FEATURE_FLAGS_NO_INTERNAL_TOPICS`  | `false`       | Whether or not to enable no internal topics mode, in this mode gateway internal topics are not created. Note only one gateway instance is supported in this mode. |       Yes       |
+| `FEATURE_FLAGS_JWT_TOKEN_ENDPOINT`  | `false`       | Whether or not to enable a REST endpoint for generating auth JWT tokens                                                                                           |       Yes       |
 
 ### Metrics Configurations
 
@@ -122,10 +122,10 @@ Note: These configurations apply to authentication between clients and Conduktor
 
 ### Conduktor Platform Configurations
 
-| Environment Variable   | Default Value           | Description                                                                                                                                                                                                                 | Enterprise Only |
-|------------------------| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |:---------------:|
-| `PLATFORM_M2M_SECRET`  | `changeit`              | A shared secret used to authenticate requests between Conduktor Proxy and Conduktor Platform. This can usually be found as the `sharedSecret` property in `/etc/conduktor/devtools.yml` in the Conduktor Platform container |       Yes       |
-| `PLATFORM_M2M_ISSUER`  | `http://localhost/auth` | The issuer used to authenticate requests between Conduktor Proxy and Conduktor Platform this should be in the form `http://[platform host name]/auth`                                                                       |       Yes       |
+| Environment Variable   | Default Value           | Description                                                                                                                                                                                                                   | Enterprise Only |
+|------------------------| ----------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
+| `PLATFORM_M2M_SECRET`  | `changeit`              | A shared secret used to authenticate requests between Conduktor Gateway and Conduktor Platform. This can usually be found as the `sharedSecret` property in `/etc/conduktor/devtools.yml` in the Conduktor Platform container |       Yes       |
+| `PLATFORM_M2M_ISSUER`  | `http://localhost/auth` | The issuer used to authenticate requests between Conduktor Gateway and Conduktor Platform this should be in the form `http://[platform host name]/auth`                                                                       |       Yes       |
 
 ### RBAC configurations
 

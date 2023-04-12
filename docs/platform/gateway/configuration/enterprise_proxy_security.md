@@ -10,7 +10,7 @@ Refer to [Open Source Security](./oss_security.md) for open source security docu
 
 
 
-# Securing client access to proxy
+# Securing client access to Gateway
 
 Jump to:
 
@@ -20,10 +20,10 @@ Jump to:
 
 ## Access control
 
-Conduktor proxy supports SASL authentication with clients the same as base Kafka. The PLAIN sasl mechanism is used to 
+Conduktor Gateway supports SASL authentication with clients the same as base Kafka. The PLAIN sasl mechanism is used to 
 communicate user information to the server via the usual username and password fields.
 
-The Proxy uses encrypted JWT tokens in the password field to encode metadata required by the proxy (tenant 
+The gateway uses encrypted JWT tokens in the password field to encode metadata required by the gateway (tenant 
 information etc.). These tokens are encrypted by a shared secret that is also used to provide access control so that 
 tokens that were not created with this secret will be denied access.
 
@@ -55,14 +55,14 @@ following:
       JWT_AUTH_MASTER_PASSWORD: superUser
 ```
 
-Conduktor Proxy is natively multi tenant. This means that tokens must contain more than a username and secret, they 
+Conduktor Gateway is natively multi tenant. This means that tokens must contain more than a username and secret, they 
 must also encode tenant metadata. For convenience a token can be generated through the API by providing the following:
 
 1. An organisation id - an integer valuing indicating the tenant's organisation
 2. A cluster id - some tenants may have multiple clusters, this is a further string identifier to differentiate these.
 3. A user id
 
-Note: A tenant name in Conduktor Proxy is formed of [organisation id]-[cluster id]
+Note: A tenant name in Conduktor Gateway is formed of [organisation id]-[cluster id]
 
 ```bash
 curl \
