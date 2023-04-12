@@ -83,6 +83,7 @@ authenticationConfig:
       password: alsoPassw0rd
 ```
 
+[Open Source Security](./oss_security.md) describes the security considerations and settings in more detail.
 
 ## Thread Configurations
 

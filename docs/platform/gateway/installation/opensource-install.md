@@ -7,7 +7,7 @@ description:  Open source installation
 
 The opensource Conduktor Gateway is made up of two components, the gateway transport layer, and interceptors downloaded from the Conduktor Marketplace.
 
-The gateway transport layer is the wiring between your Kafka client application and your Kafka broker. It had access to all the Kafka data flowing through it. 
+The gateway transport layer is the wiring between your Kafka client application and your Kafka broker. It has access to all the Kafka data flowing through it. 
 
 Interceptors are loaded into the gateway.  The interceptors are triggered when Kafka data flows through the gateway, and provide function such as adding chaos to the flows to aid with testing, or adding safeguards around what Kafka configurations are allowed, to keep your Kafka cluster protected.
 
@@ -19,7 +19,7 @@ This diagram show the high level architecture of the open source Conduktor Gatew
 
 # Quick start and demo
 
-## Get a Kafka instance:
+## Get a Kafka instance
 
 Follow step 1 and step 2 (Zookeeper or KRaft version) from the [Apache Kafka Quick Start](https://kafka.apache.org/quickstart) to create a single broker cluster running on your local system.  Use the default configuration, which will start a broker on `localhost:9092`.
 
@@ -40,13 +40,13 @@ Add the demo [logger interceptor](https://github.com/conduktor/conduktor-gateway
 $ CLASSPATH=logger-interceptor/target/logger-interceptor-0.1.0-SNAPSHOT.jar bin/run-gateway.sh
 ```
 
-In the terminal window, you should see a log line similar to 
+In the terminal window, you should see a log line similar to this, which indicates the gateway has started successfully:
 ```
 2023-04-05 22:00:12 [      main] [INFO ] [GatewayExecutor:50] - Gateway started successfully with port range: 6969:6975`
 ```
 
 ## Validate 
-Test the logger interceptor using the Kafka command line tools.  The logger interceptor writes lines to standard out (here the gateway logs) when Kafka traffic flows through the gateway:
+Test the demonstration logger interceptor using the Kafka command line tools.  The logger interceptor writes lines to standard out (here the gateway logs) when Kafka traffic flows through the gateway:
 
 ```bash
 cd <kafka_install_directory>
@@ -55,7 +55,7 @@ bin/kafka-console-producer.sh --topic my-gateway --bootstrap-server localhost:69
 bin/kafka-console-consumer.sh --topic my-gateway --bootstrap-server localhost:6969 --from-beginning --property print.headers=true
 ```
 
-Then look in the terminal where the gateway is running, you should find log lines, written by the logger interceptor, similar to:
+Look in the terminal where the gateway is running, you should find log lines, written by the logger interceptor, similar to:
 
 ```bash
 Hello there, a class org.apache.kafka.common.requests.FetchResponse was sent/received
@@ -77,7 +77,14 @@ There are two sets of properties to configure when using your own client and you
 
 ![img.png](img.png)
 
-## Conduktor Gateway to Kafka cluster configuration
+
+## Kafka Client to Conduktor Gateway configuration
+
+By default the Conduktor Open Source Gateway does not run with any security enabled. [Basic security](../configuration/oss_security.md) is available.
+
+To connect your Kafka clients to the gateway update the `bootstrap.servers` in the client properties to be `localhost:6969`. This will ensure all Kafka traffic is routed via the gateway.
+
+If needed, you can update the host and port for the gateway by editing the [hostport configuration](../configuration/opensource-yaml-config.md#hostport-configurations).  If you update this configuration, remember to update the bootstrap.servers in your client configuration to match.
 
 ## Conduktor Gateway to Kafka cluster configuration
 
@@ -87,22 +94,16 @@ Gateway configuration is set in a kafka.config properties file, the location of 
 
 The default gateway configuration file can be found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`
 
-The location of the Kafka properties file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
+The location of the Kafka configuration file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
 
 ```yaml
 kafkaSelector:
   type: file
   path: gateway-core/config/kafka.config
 ```
-[Open Source Conduktor Gateway Security](../configuration/oss_security.md) describes how to set this configuration in more detail.
+
+[Open Source Conduktor Gateway Security](../configuration/oss_security.md) describes the format of the kafka.config file in more detail, including how to connect to a secured Kafka cluster.
 
 
-## Kafka Client to Conduktor Gateway configuration
-
-By default the Conduktor Open Source Gateway does not run with any security enabled. [Basic security](../configuration/oss_security.md) is available.
-
-The Enterprise ready Conduktor Gateway has a more comprehensive set of [security settings](../configuration/enterprise_proxy_security.md) if this is needed.
-
-To connect your Kafka clients to an unsecured instance of the gateway update their `bootstrap.servers` to be `localhost:6969` (or the Gateway's address, if you have [edited this configuration](../configuration/opensource-yaml-config.md#hostport-configurations)) in the client configuration. This will ensure all Kafka traffic is routed via the Gateway.
 
 

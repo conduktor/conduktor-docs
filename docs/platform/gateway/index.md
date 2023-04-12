@@ -59,7 +59,7 @@ Both offerings are fully Apache Kafka protocol compliant, and support use of Kaf
 | Community Marketplace        | Yes              | -                |
 
 
-### Getting Started
+## Getting Started
 
 To start your Conduktor Gateway journey [review the installation options](installation/installation.md).
 

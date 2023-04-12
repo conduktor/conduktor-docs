@@ -1,5 +1,5 @@
 ---
-title: Open Source Conduktor Gateway Security
+title: Open Source Security
 description: Simple Conduktor Gateway security
 ---
 
@@ -10,8 +10,8 @@ Jump to [Enterprise Security](./enterprise_proxy_security.md) for the Enterprise
 # Concepts
 There are two sets of configuration to consider when securing your gateway.
 
- - The connection between the gateway and the Kafka cluster
  - The connection between Kafka clients and the gateway
+ - The connection between the gateway and the Kafka cluster
 
 ![img.png](img.png)
 
@@ -20,18 +20,37 @@ There are two sets of configuration to consider when securing your gateway.
 
 The connections to gateway from Kafka clients can be secured by a simple user id and password configuration.  The traffic can also be encrypted using TLS.
 
+The authenticationConfig stanza in the application.yaml defines the security configuration.
+
+The authenticatorType specifies the authentication type for clients connecting to the gateway. The value can be one of:
+
+ - NONE (unencrypted connection, no authentication)
+ - SSL (tls encrypted connection, no authentication
+ - SASL_PLAINTEXT (unencrypted connection, userid and password based authentication)
+ - SASL_SSL (tls encrypted connection, userid and password based authentication)
+
+The sslConfig stanza defines the SSL configuration and is required if an option that specifies an encrypted connection has been defined in the authenticatorType (eg SSL).
+
+The userPool defines the list of user name and password pairs for users connecting to the gateway, and is required if an option that specifies userid and password authentication has been defined in authenticatorType (eg SASL).
+
+Example
 
 ```yaml
 authenticationConfig:
-  authenticatorType: - the authentication type for client <--> gateway e.g. NONE
-  sslConfig:
-    updateContextIntervalMinutes: - the interval to check for for SSL context changes e.g. 5
+  authenticatorType: SASL_SSL 
+  sslConfig: 
+    updateContextIntervalMinutes: the duration in minutes between checks for for SSL context changes (minimum 1)
     keyStore:
-      keyStorePath: - path to a SSL keystore  e.g. config/kafka-gateway.keystore.jks
-      keyStorePassword: - the keystore password
-      keyPassword: - the key password
-      keyStoreType: - the keystore type e.g. jks
-      updateIntervalMsecs: - the interval to check for keystore changes e.g. 600000
+      keyStorePath: path to a SSL keystore
+      keyStorePassword: the keystore password
+      keyPassword: the key password
+      keyStoreType: the keystore type (jks)
+      updateIntervalMsecs: the interval to check for keystore changes e.g. 600000   
+  userPool: 
+    - username: The username
+      password: The password for this username
+    - username: Other username
+      password: The password for the other username   
 ```
 
 ## Conduktor Gateway to Kafka cluster configuration
@@ -54,9 +73,7 @@ kafkaSelector:
 
 To update the connection details, edit the kafka.config file with the connection information of the Kafka cluster you wish to connect to.
 
-For example, to connect to the the Conduktor Playground use the credentials that can be found at `https://<ORGANISATION>.conduktor.app/admin/cluster/<CLUSTER-NAME>`
-
-To find these, navigate to [Conduktor.io](https://conduktor.io) -> Admin -> Clusters -> Select Cluster -> Advanced Properties where you can find configuration similar to:
+For example, to connect to the the Conduktor Playground use the credentials that can be found [Conduktor.io](https://conduktor.io) -> Admin -> Clusters -> Select Cluster -> Advanced Properties where you can find configuration similar to:
 
 ```properties
 bootstrap.servers=cluster.playground.cdkt.io:9092

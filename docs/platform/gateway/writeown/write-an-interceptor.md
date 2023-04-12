@@ -1,8 +1,7 @@
 ---
-title: Conduktor Gateway Write Your Own Interceptor
+title: Write Your Own Interceptor
 description: This page describes the steps required to create your own interceptor, ready to deploy to your environment
 ---
-
 
 # Interceptors
 

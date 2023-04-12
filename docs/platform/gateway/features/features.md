@@ -5,7 +5,7 @@ description: Conduktor Proxy enables a set of features above and beyond what is 
 
 # Conduktor Proxy Features
 
-Conduktor Proxy enables a set of features above and beyond what is available from the underlying Kafka cluster it operates on.
+Enterprise Conduktor Proxy enables a set of features above and beyond what is available from the underlying Kafka cluster it operates on.
 
 ## Multi Tenancy
 
