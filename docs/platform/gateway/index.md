@@ -51,7 +51,6 @@ Both offerings are fully Apache Kafka protocol compliant, and support use of Kaf
 | Safeguard                    | Yes (limited)    | Yes              |
 | Schema validation            | Yes (limited)    | Yes              |
 | Encryption                   | -                | Yes              |
-| Data masking                 | -                | Yes              |
 | Data transforms              | -                | Yes              |
 | Data audit                   | -                | Yes              |
 | Cold storage                 | -                | Yes              |
