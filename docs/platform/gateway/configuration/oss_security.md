@@ -63,7 +63,7 @@ Gateway configuration is set in a kafka.config properties file, the location of 
 
 A default gateway configuration file can be found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`
 
-The location of the Kakfa properties file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
+The location of the Kafka properties file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
 
 ```yaml
 kafkaSelector:
