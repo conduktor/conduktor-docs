@@ -4,11 +4,11 @@ title: Load CSV Task
 description: Use the Load CSV task to import test data into your scenario
 ---
 
-# LoadCSV Task
+# Load CSV Task
 
 Use the **LoadCSV** task to load data from a CSV file into your test suite.
 
-The Csv can be loaded from a local file, or from a remote S3 server.
+The CSV can be loaded from a local file, or from a remote S3 server.
 
 This lets you configure and change your test data outside of the scenario.
 It also allows "dynamic" CI integrations, where the data is built by another test or service before executing the task.
@@ -26,7 +26,7 @@ When inside the editor for a new scenario, select the **Scenario Start** button 
 There are a few things to understand regarding this option :
 
 - The file must be on the same filesystem as the agent (may be different from your local machine)
-- CSVs are loaded on execution, not before. We don't store the data ahead of the test, so the file must be present on execution.
+- CSVs are loaded on execution, not before. We don't store the data ahead of the test, so the file must be present on execution
 
 This is particularly useful for local development, or for cases where the data is generated in the CI pipeline before the execution.
 For all other cases, the S3 option may be more suitable.
@@ -46,8 +46,8 @@ This means that the credentials should be configured on the agent host, and are 
 
 You can also define them when launching the agent :
 
-- in the CI action or jar, via the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables,
-- or to the jar via command line arguments : `java -Daws.accessKeyId=... -Daws.secretKey=... -jar ...`
+- In the CI action or jar, via the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables,
+- Or to the jar via command line arguments : `java -Daws.accessKeyId=... -Daws.secretKey=... -jar ...`
 
 ## Producing the CSV data into Kafka
 
@@ -62,7 +62,7 @@ In this example, we will demonstrate how to load csv data from a local file, and
 - Create a Load CSV task
 - Update the reference to `my_csv` to simplify the chaining
 - Set the file location to `Local File`
-- provide the path to a csv file on the agent filesystem, e.g. `/tmp/data.csv` (or `C:\tmp\data.csv` on Windows)
+- Provide the path to a csv file on the agent filesystem, e.g. `/tmp/data.csv` (or `C:\tmp\data.csv` on Windows)
 
   - For this example our csv file contains the following data:
 
@@ -73,7 +73,7 @@ In this example, we will demonstrate how to load csv data from a local file, and
   books,3,Harry Potter,10
   ```
 
-  - we will want to use the `category` column as the key for our messages, and a JSON object containing the other columns as the value
+  - We will want to use the `category` column as the key for our messages, and a JSON object containing the other columns as the value
 
 - In this example, the delimiter is `,` (comma)
 - We have a header row, so we check the `Has header` checkbox. Headers will be derived from the first row of the CSV file.
@@ -110,7 +110,7 @@ In this example, we will demonstrate how to load csv data from a local file, and
   - Change the type of input to Template (mustache)
   - To send the whole CSV record as `{[column_name]: column_value}`, we could use the same method as for the key, but without a column name.
     - {{source.my_csv.csvRecord.data}}
-  - Instead for this example, we will build a custom json by using that method on individual fields, to allow customization.
+  - Instead for this example, we will build a custom JSON by using that method on individual fields, to allow customization.
 
     ![](../../../assets/load_csv_example_7.png)
 
@@ -139,6 +139,6 @@ Click on the eye icon on a **Record produced** event to see the resulting events
 
 ![](../../../assets/load_csv_example_9.png)
 
-We produced custom data based on our CSV !
+We've produced custom data based on our CSV !
 
 You can now complete your test suite with other tasks, such as a consumer task to validate the data at any point of your system.
