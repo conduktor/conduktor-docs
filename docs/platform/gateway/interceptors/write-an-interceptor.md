@@ -5,7 +5,7 @@ description: This page describes the steps required to create your own intercept
 
 # Interceptors
 
-There are a number of interceptors already available as part of the Conduktor Marketplace.  If one of these does not fulfil your requirements, you can create your own interceptor using the Interceptor API.
+There are a number of interceptors already available as part of the [Conduktor Marketplace](https://marketplace.conduktor.io), where you can see what is already available. If one of the existing interceptors does not fulfil your requirements, you can create your own interceptor using the Interceptor API.
 
 This page describes the steps required to create your own interceptor, ready to deploy to your environment, or release to the Conduktor Marketplace for the wider community to enjoy.
 

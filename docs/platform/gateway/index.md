@@ -50,6 +50,7 @@ Both offerings are fully Apache Kafka protocol compliant, and support use of Kaf
 | Cost                         | Free             | Custom pricing   |
 | Support                      | Community        | Fully supported  |
 | Kafka protocol compliant     | Yes              | Yes              |
+| Security                     | [Yes (limited)](./configuration/oss_security.md)| [Yes](./configuration/enterprise_proxy_security.md)
 | Multi Tenancy                | -                | Yes              |
 | Chaos engineering            | Yes (limited)    | Yes              |
 | Safeguard                    | Yes (limited)    | Yes              |
