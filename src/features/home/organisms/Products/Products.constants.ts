@@ -24,10 +24,10 @@ export const items = [
     icon: '/assets/svgs/products/dataMasking.svg',
   },
   {
-    name: 'Proxy',
+    name: 'Gateway',
     description: "Unlock Kafka's potential",
-    to: '/platform/proxy',
-    icon: '/assets/svgs/products/proxy.svg',
+    to: '/platform/gateway',
+    icon: '/assets/svgs/products/gateway.svg',
   },
   {
     name: 'Admin',
