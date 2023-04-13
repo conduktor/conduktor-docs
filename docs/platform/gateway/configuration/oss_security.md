@@ -63,7 +63,7 @@ Gateway configuration is set in a kafka.config properties file, the location of 
 
 A default gateway configuration file can be found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`
 
-The location of the Kakfa properties file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
+The location of the Kafka properties file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
 
 ```yaml
 kafkaSelector:
@@ -73,7 +73,7 @@ kafkaSelector:
 
 To update the connection details, edit the kafka.config file with the connection information of the Kafka cluster you wish to connect to.
 
-For example, to connect to the the Conduktor Playground use the credentials that can be found [Conduktor.io](https://conduktor.io) -> Admin -> Clusters -> Select Cluster -> Advanced Properties where you can find configuration similar to:
+For example, to connect to our Conduktor Free Kafka Playground use the credentials that can be found [Conduktor.io](https://conduktor.io) -> Admin -> Clusters -> Select Cluster -> Advanced Properties where you can find configuration similar to:
 
 ```properties
 bootstrap.servers=cluster.playground.cdkt.io:9092

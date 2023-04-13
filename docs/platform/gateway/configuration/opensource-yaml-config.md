@@ -5,7 +5,7 @@ description: Conduktor Gateway configuration via yaml
 
 This page describes the valid yaml file configuration options for the opensource Conduktor Gateway (Enterprise documentation is in progress)
 
-To configure the Enterprise Condkutor Gateway refer to the [Environment Variables](./env-variables.md).
+To configure the Enterprise Conduktor Gateway: refer to the [Environment Variables](./env-variables.md).
 
 ## Kafka Connection Configurations
 
