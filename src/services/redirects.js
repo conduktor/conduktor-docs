@@ -246,6 +246,14 @@ const redirects = [
         from: '/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry',
         to: '/desktop/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry',
       },
+      {
+        from: '/platform/proxy/features',
+        to: '/platform/gateway',
+      },
+      {
+        from: '/platform/proxy',
+        to: '/platform/gateway',
+      }
     ],
   },
 ]
