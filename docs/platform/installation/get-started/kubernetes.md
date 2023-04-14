@@ -9,7 +9,7 @@ Kubernetes.
 
 :::info
 Deployment of Conduktor Cloud on Kubernetes **is currently in public beta**. The deployment method may
-change without notice, we welcome [feedbacks](https://product.conduktor.help/c/55-helm-chart). If you
+change without notice, we welcome [feedback](https://product.conduktor.help/c/55-helm-chart). If you
 have issues, please contact our [support](https://www.conduktor.io/contact/support/).
 :::
 
