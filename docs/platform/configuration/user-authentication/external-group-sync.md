@@ -71,18 +71,3 @@ From within the Members screen, select the breadcrumbs next to an existing group
 ![](../assets/admin-map-external-group.png)
 
 Once you have mapped external groups, use Conduktor's [RBAC](../../admin/rbac.md) system to enforce permissions.
-
-## Create a user before login, SSO
-
-It is now possible to add users to your organization before their first login. This allows an administrator to allocate permissions of an individual prior to them logging in. Upon login they will be synced to this account. 
-
-**Note**, this is not required but only when you may wish to configure user setup, e.g. *Permissions* before they login.
-
-From within the Members screen, select the Create members button to begin creating member profiles within Conduktor.
-![](../assets/create-members-pre-login-button.png)
-
-Enter the email(s) you wish to create the member(s) for, followed by *Create users*.
-![](../assets/create-members-pre-login-add-emails.png)
-
-You may then create a group you wish to add the member to, or add to an existing group as you would for logged in members.
-![](../assets/create-members-pre-login-add-complete.png)
