@@ -8,6 +8,22 @@ description: The following notes describe important changes that affect Condukto
 
 Below outlines important notices relating to Conduktor Platform.
 
+### Important change when updating to Conduktor 1.14.0 (April 17, 2023)
+
+For existing customers updating to Conduktor **1.14.0**, you must configure an explicit administrator account else Conduktor will fail to start. 
+
+**Steps to migrate**
+ - Identify any administrator account previously defined in:
+    - `auth.local-users` of platform configuration
+    - `CDK_AUTH_LOCAL-USERS_0_EMAIL` and `CDK_AUTH_LOCAL-USERS_0_PASSWORD` env variables
+ - Migrate the administrator(s) to:
+    - `admin.email` and `admin.password` in your platform configuration file
+    - `CDK_ADMIN_EMAIL` and `CDK_ADMIN_PASSWORD` env vairables
+
+Note **it's mandatory to have an administrator account defined for Conduktor to start**. If you were not using Conduktor prior to 1.14.0, then we recommend following the [simple setup](../installation/get-started/docker.md#simple-setup), which will guide you through creating an administrator account in the onboarding wizard.
+
+---
+
 ### Monitoring is changing (January 27, 2023)
 
 On **January 27, 2023**, we announced that as of **April 3rd, 2023** there will be changes made to improve the ease of setup and usability of Monitoring. 

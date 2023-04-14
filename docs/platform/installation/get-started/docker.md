@@ -6,23 +6,21 @@ description: Get started with the latest Conduktor Platform Docker image in just
 
 # Docker Quick Start
 
-Get started with the latest Conduktor Platform Docker image. The installation and configuration process takes under 30 minutes.
+Get started with the latest Conduktor Docker image. The installation and configuration process takes under 30 minutes.
 
 There are two ways to configure Conduktor via Docker:
 
-- [**Simple Setup**](#simple-setup): Use the embedded database and configure your clusters and certificates inside the Conduktor interface. Great for **demo purposes** and experimenting with the product.
+- [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your enironment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
 
-- [**Advanced Configuration**](#advanced-setup): Use a configuration file to declare an external database and SSO. This is the recommended option for **production environments**.
+- [**Advanced Configuration**](#advanced-setup): Use a configuration file or environment variables to declare an external database and SSO. This is the recommended option for **production environments**.
 
 ## Simple Setup
 
-Launch Conduktor and configure your Kafka cluster, Schema Registry and Kafka Connect from within the Conduktor interface.
+When launching Conduktor for the first time, you will presented with onboarding to help configure your environment.
 
 ### Step 1: Launch Conduktor
 
 Run the below command to launch Conduktor.
-
-If you are a **Conduktor Enterprise** customer, you should start the platform with the `LICENSE_KEY` environment variable. Otherwise, you can remove this line from the command.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -32,7 +30,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 ```bash
 docker run --rm --pull always \
   -p 8080:8080 \
-  -e LICENSE_KEY="<your-license>" \
   --mount "source=conduktor_data,target=/var/conduktor" \
 conduktor/conduktor-platform:latest
 ```
@@ -43,7 +40,6 @@ conduktor/conduktor-platform:latest
 ```bash
 docker run --rm --pull always \
   -p 8080:8080 \
-  -e LICENSE_KEY="<your-license>" \
   --add-host=host.docker.internal:host-gateway \
   --mount "source=conduktor_data,target=/var/conduktor" \
 conduktor/conduktor-platform:latest
@@ -55,7 +51,6 @@ conduktor/conduktor-platform:latest
 ```bash
 docker run --rm --pull always `
   -p 8080:8080 `
-  -e LICENSE_KEY="<your-license>" `
   --mount "source=conduktor_data,target=/var/conduktor" `
 conduktor/conduktor-platform:latest
 ```
@@ -63,20 +58,15 @@ conduktor/conduktor-platform:latest
 </TabItem>
 </Tabs>
 
-### Step 2: Access Conduktor using the default credentials
+### Step 2: Complete Onboarding
 
-After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
+After a few seconds, the Conduktor onboarding wizard will be available at **[http://localhost:8080](http://localhost:8080)**.
 
-Use the default credentials below to login:
+![Onboarding](./assets/onboarding-console.png)
 
-```yaml
-User: admin@conduktor.io
-Password: admin
-```
+### Step 3: Configure your first Kafka cluster
 
-### Step 3: Configure your first cluster
-
-Once you have authenticated using the default credentials, you should configure your first cluster.
+Once you complete the wizard, you should configure a Kafka cluster.
 
 Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
 
@@ -86,7 +76,7 @@ From within the cluster configuration screen, add the:
 - Authentication details
 - Additional properties
 
-Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificate Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store)
+Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificate Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store).
 
 ![Admin Cluster Config](/img/get-started/admin-cluster-config.png)
 
@@ -113,13 +103,17 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 ## Advanced Setup
 
-Conduktor can be configured using a configuration file `platform-config.yaml`. This is used to setup your organizations environment. The file can be used to declare:
+Conduktor can also be configured using a configuration file `platform-config.yaml`, or through environment variables. This is used to setup your organizations environment. The file can be used to declare:
 
 - Organization name
 - External database
 - SSO
 
 ### Step 1: Create a Configuration File
+
+There are two ways to create a configuration file:
+ - When starting Conduktor for the first time, the **onboarding will guide** you through this process. See [simple setup](#simple-setup).
+ - Manually create a configuration (see below).
 
 The below example shows how to configure Conduktor with an external database, SSO and an optional license key (for Enterprise customers).
 
@@ -211,4 +205,4 @@ If using [SSO](/platform/category/user-authentication/), you will see an option 
 
 ### Step 4: Configure your first cluster
 
-See [configuring your first cluster](#step-3-configure-your-first-cluster)
+See [configuring your first cluster](#step-3-configure-your-first-kafka-cluster)
