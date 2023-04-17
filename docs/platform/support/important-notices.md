@@ -45,7 +45,7 @@ auth:
       password: he11oworld
 ```
 :::caution
-You should only set a single administrator account in the platfrm configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
+You should only set a single administrator account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator roles from within the Conduktor interface.
 :::
 
 Note that the administrator account can also be set via **environment variables:**
