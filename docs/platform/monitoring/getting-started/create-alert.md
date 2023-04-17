@@ -12,23 +12,24 @@ Alerting is an Enterprise feature. Please [contact us](https://www.conduktor.io/
 
 ## Overview
 
-Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** so that you can receive real-time notifications. // TODO Slack and Teams
+Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** and **MS Teams** so that you can receive real-time notifications.
 
 If you require an additional integration, please [let us know](https://product.conduktor.help/tabs/1-in-development) so we can consider it.
 
-## Configure Slack
+## Configure the Integration
 
-From within Monitoring, navigagte to the **Alerts** tab. If you have not yet configured the Slack integration, then follow the link to set this up as a pre-requisite.
+From within Monitoring, navigagte to the **Alerts** tab. If you have not yet configured an integration, then follow the link to set this up as a pre-requisite.
 
 If you have any issues with this process, please contact us through the chat box at the bottom of your window.
 
 ![monitoring-configure](/img/monitoring/monitoring-configure.png)
 
+
 ## Create an Alert
 
 ### Option 1: From the Alerts Tab
 
-Once you have configured Slack, click the **+ New Alert** button from within the **Alerts** tab.
+Once you have configured your integration, click the **+ New Alert** button from within the **Alerts** tab.
 
 Fill in the:
 

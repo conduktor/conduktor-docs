@@ -45,4 +45,4 @@ See [metrics](metrics.md) for more information.
 
 ## Alerting
 
-We enable real-time notifications on built-in and custom alerts. Alerts can be made at a topic granularity and with configurable thresholds. Note that we currently support alerting via **Slack**. // TODO Slack and Teams
+We enable real-time notifications on built-in and custom alerts. Alerts can be made at a topic granularity and with configurable thresholds. We currently support alerting via **Slack** and **MS Teams**.
