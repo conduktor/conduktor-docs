@@ -10,6 +10,7 @@ Below outlines important notices relating to Conduktor Platform.
 
 ### Important change when updating to Conduktor 1.14.0 (April 17, 2023)
 
+For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration. 
 For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
 
 **Steps to migrate**
@@ -39,13 +40,11 @@ admin:
 
 auth:
   local-users:
-    - email: admin@conduktor.io
-      password: admin
     - email: developer@conduktor.io
       password: he11oworld
 ```
 :::caution
-You should only set a single administrator account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator roles from within the Conduktor interface.
+You should only set a single administrator account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
 :::
 
 Note that the administrator account can also be set via **environment variables:**
