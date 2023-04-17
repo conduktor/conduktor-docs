@@ -105,7 +105,8 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNORE-UNTRUSTED-CERTIFICATE` | false | boolean | `false` | `1.3.0` |
+| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` | `1.3.0`  |
+| `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and Oauth2) as PEM format. | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       | `1.14.0` |
 
 #### LDAP properties
 
