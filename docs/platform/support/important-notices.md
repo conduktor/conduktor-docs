@@ -10,7 +10,7 @@ Below outlines important notices relating to Conduktor Platform.
 
 ### Important change when updating to Conduktor 1.14.0 (April 17, 2023)
 
-For existing customers updating to Conduktor **1.14.0**, you must configure an explicit administrator account else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
+For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
 
 **Steps to migrate**
 
