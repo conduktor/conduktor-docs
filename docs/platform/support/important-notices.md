@@ -10,17 +10,49 @@ Below outlines important notices relating to Conduktor Platform.
 
 ### Important change when updating to Conduktor 1.14.0 (April 17, 2023)
 
-For existing customers updating to Conduktor **1.14.0**, you must configure an explicit administrator account else Conduktor will fail to start. 
+For existing customers updating to Conduktor **1.14.0**, you must configure an explicit administrator account else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
 
 **Steps to migrate**
- - Identify any administrator account previously defined in:
-    - `auth.local-users` of platform configuration
-    - `CDK_AUTH_LOCAL-USERS_0_EMAIL` and `CDK_AUTH_LOCAL-USERS_0_PASSWORD` env variables
- - Migrate the administrator(s) to:
-    - `admin.email` and `admin.password` in your platform configuration file
-    - `CDK_ADMIN_EMAIL` and `CDK_ADMIN_PASSWORD` env vairables
 
-Note **it's mandatory to have an administrator account defined for Conduktor to start**. If you were not using Conduktor prior to 1.14.0, then we recommend following the [simple setup](../installation/get-started/docker.md#simple-setup), which will guide you through creating an administrator account in the onboarding wizard.
+Previously, your configuration file might have looked like:
+```yaml
+organization:
+  name: conduktor
+
+auth:
+  local-users:
+    - email: admin@conduktor.io
+      password: admin
+    - email: developer@conduktor.io
+      password: he11oworld
+```
+
+After the update, your configuration should look like:
+
+```yaml
+organization:
+  name: conduktor
+
+admin:
+  email: admin@conduktor.io
+  password: admin
+
+auth:
+  local-users:
+    - email: admin@conduktor.io
+      password: admin
+    - email: developer@conduktor.io
+      password: he11oworld
+```
+:::caution
+You should only set a single administrator account in the platfrm configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
+:::
+
+Note that the administrator account can also be set via **environment variables:**
+ - `CDK_ADMIN_EMAIL`
+ - `CDK_ADMIN_PASSWORD`
+
+Note **it's mandatory to have an administrator account defined for Conduktor to start**. If you were not using Conduktor prior to 1.14.0, then we recommend following the [simple setup](../installation/get-started/docker.md#simple-setup), which will guide you through creating an administrator account during the onboarding wizard.
 
 ---
 
