@@ -10,7 +10,7 @@ Get started with the latest Conduktor Docker image. The installation and configu
 
 There are two ways to configure Conduktor via Docker:
 
-- [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your enironment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
+- [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your environment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
 
 - [**Advanced Configuration**](#advanced-setup): Use a configuration file or environment variables to declare an external database and SSO. This is the recommended option for **production environments**.
 
