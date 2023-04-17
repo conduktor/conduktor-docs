@@ -372,7 +372,7 @@ sso:
 ```
 
 
-## Create a user before login, SSO
+## Manage permissions of users before they login
 
 It is now possible to add users to your organization before their first login. 
 This allows an administrator to manage their permissions or add them to groups prior to them logging in. 
