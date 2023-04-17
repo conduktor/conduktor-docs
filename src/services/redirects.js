@@ -253,6 +253,18 @@ const redirects = [
       {
         from: '/platform/proxy',
         to: '/platform/gateway',
+      },
+      {
+        from: '/platform/proxy/configuration/proxy_security',
+        to: '/platform/gateway/configuration/enterprise_proxy_security',
+      },
+      {
+        from: '/platform/proxy/configuration/env-variables',
+        to: '/platform/gateway/configuration/env-variables',
+      },
+      {
+        from: '/platform/proxy/installation/installation',
+        to: '/platform/gateway/installation/enterprise-install',
       }
     ],
   },
