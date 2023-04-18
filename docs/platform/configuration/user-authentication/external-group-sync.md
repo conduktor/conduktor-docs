@@ -66,7 +66,7 @@ In the above example, any users that are present in the externally mapped groups
 
 **Map an existing Conduktor group to an external group**
 
-From within the Members screen, select the breadcrumb next to an existing group and select 'Map external group'.
+From within the Members screen, select the breadcrumbs next to an existing group and select 'Map external group'.
 
 ![](../assets/admin-map-external-group.png)
 
