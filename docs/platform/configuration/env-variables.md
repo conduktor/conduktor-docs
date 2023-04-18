@@ -61,6 +61,8 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 | Property | Description | Environment Variable | Mandatory | Type | Default |
 | --- | --- | --- | --- | --- | --- |
 | `organization.name` | Your organization's name | `CDK_ORGANIZATION_NAME` | true | string | `"default"` |
+| `admin.email` | Your organization's root administrator account email | `CDK_ADMIN_EMAIL` | true | string | ∅ |
+| `admin.password` | Your organization's root administrator account password | `CDK_ADMIN_PASSWORD` | true | string | ∅ |
 | `license` | Enterprise license key. If not provided, fallback to free plan. | CDK_LICENSE or LICENSE_KEY | false | string | ∅ |
 | `platform.external.url` | Force Platform external URL. Useful for SSO callback URL when using a reverse proxy. By default, the platform will try to guess it automatically using X-Forwarded-\* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL` | false | string | ∅ |
 | `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
@@ -110,7 +112,8 @@ SSO authentication properties (only on enterprise and team plans). See authentic
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNORE-UNTRUSTED-CERTIFICATE` | false | boolean | `false` | `1.3.0` |
+| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` | `1.3.0`  |
+| `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and Oauth2) as PEM format. | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       | `1.14.0` |
 
 #### LDAP properties
 

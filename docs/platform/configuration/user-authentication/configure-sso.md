@@ -123,6 +123,16 @@ CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 ### LDAPS
 
 For LDAP over SSL (LDAPS) connection you have to provide a trusted certificate to `conduktor-platform` using Java JKS TrustStore file. See [SSL/TLS configuration](/platform/configuration/ssl-tls-configuration/) for more details.
+LDAPS SSL certificate can also be passed as PEM encoded string using the property `sso.trustedCertificates`.
+
+```yaml
+sso:
+  ignoreUntrustedCertificate: false
+  trustedCertificates: |
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+```
 
 **Troubleshot LDAPS issues**  
 Download the script [sso-debug.sh](https://raw.githubusercontent.com/conduktor/conduktor-platform/main/example-sso-ldap/sso-debug.sh) and run it:
