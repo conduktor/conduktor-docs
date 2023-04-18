@@ -17,15 +17,13 @@ Jump to:
 
 **Minimum**
 
-- 4 CPU cores
-- 8 GB of RAM
-- 5 GB of disk space
+- 1 CPU core
+- 2 GB of RAM
 
 **Recommended**
 
-- 4+ CPU cores
-- 16+ GB of RAM
-- 10+ GB of disk space
+- 2 CPU cores
+- 4 GB of RAM
 
 ## Kafka Requirements
 
