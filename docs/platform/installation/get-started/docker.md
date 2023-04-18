@@ -129,6 +129,10 @@ For more examples, see:
 organization:
   name: demo
 
+admin:
+  email: admin@company.io
+  password: admin
+
 database:
   host: 'host'
   port: 5432

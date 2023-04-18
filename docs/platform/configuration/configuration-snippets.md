@@ -51,6 +51,10 @@ This demonstrates a complete configuration for Conduktor Enterprise consisting o
 organization:
   name: conduktor
 
+admin:
+  email: admin@company.io
+  password: admin
+
 clusters:
   - id: my-local-kafka-cluster
     name: My Local Kafka Cluster
