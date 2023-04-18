@@ -18,7 +18,7 @@ To configure platform authentication you have several choices.
   - [Azure](#azure)
   - [Google](#google)
   - [Amazon Cognito](#amazon-cognito)
-- [Manage permissions of users before they login](#create-a-user-before-login-sso)
+- [Manage permissions of users before they login](#manage-permissions-of-users-before-they-login)
 
 ## Configure Local Users
 
@@ -374,11 +374,11 @@ sso:
 
 ## Manage permissions of users before they login
 
-It is now possible to add users to your organization before their first login. 
+It is now possible to add users to your organization before their first login via SSO. 
 This allows an administrator to manage their permissions or add them to groups prior to them logging in. 
-Upon login they will be synced to this account.
+Upon login via SSO they will be synced to this account.
 
-**Note**, this is not required but only when you may wish to configure user setup, e.g. *Permissions* before they login.
+**Note**, this is not required but only when you may wish to configure user setup, e.g. *Permissions* before they login, and will only work for SSO setups.
 
 From within the Members screen, select the Create members button to begin creating member profiles within Conduktor.
 ![](../assets/create-members-pre-login-button.png)
