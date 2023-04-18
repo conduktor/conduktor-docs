@@ -22,26 +22,39 @@ To configure platform authentication you have several choices.
 
 ## Configure Local Users
 
-Into platform configuration file or from environment variables, configure authorized connection users.
+Within the platform configuration file or via environment variables, configure authorized connection users.
 
-Configuration example
+:::caution
+Since Conduktor 1.14.0 you must set a **single root administrator** account in the platform configuration, which is used for initialization. However, it's possible to define multiple users with an administrator role from within the Conduktor interface.
+:::
+
+**Configuration example**:
 
 ```yaml
+organization:
+  name: conduktor
+
+admin:
+  email: admin@conduktor.io
+  password: admin
+
 auth:
   local-users:
-    - email: admin@demo.dev
-      password: adminpwd
-    - email: user@demo.dev
-      password: userpwd
+    - email: user02@conduktor.io
+      password: he11oworld
+    - email: user03@conduktor.io
+      password: he11oworld
 ```
 
 Same configuration from environment variables :
 
 ```bash
-CDK_AUTH_LOCAL-USERS_0_EMAIL="admin@demo.dev"
-CDK_AUTH_LOCAL-USERS_0_PASSWORD="adminpwd"
-CDK_AUTH_LOCAL-USERS_1_EMAIL="user@demo.dev"
-CDK_AUTH_LOCAL-USERS_1_PASSWORD="userpwd"
+CDK_ADMIN_EMAIL="admin@conduktor.io"
+CDK_ADMIN_PASSWORD="admin"
+CDK_AUTH_LOCAL-USERS_0_EMAIL="user02@conduktor.io"
+CDK_AUTH_LOCAL-USERS_0_PASSWORD="he11oworld"
+CDK_AUTH_LOCAL-USERS_1_EMAIL="user03@conduktor.io"
+CDK_AUTH_LOCAL-USERS_1_PASSWORD="he11oworld"
 ```
 
 ## Configure SSO to an LDAP or Oauth2 Identity Provider (**enterprise and team plans**)
