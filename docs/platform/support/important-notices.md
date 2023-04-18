@@ -8,9 +8,13 @@ description: The following notes describe important changes that affect Condukto
 
 Below outlines important notices relating to Conduktor Platform.
 
-### Important change when updating to Conduktor 1.14.0 (April 17, 2023)
+### Important change when updating to Conduktor 1.14.0 (April 18, 2023)
 
 For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **root administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
+
+:::caution
+You should only set a **single root administrator** account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
+:::
 
 **Steps to migrate**
 
@@ -42,9 +46,6 @@ auth:
     - email: developer@conduktor.io
       password: he11oworld
 ```
-:::caution
-You should only set a **single** root administrator account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
-:::
 
 Note that the administrator account can also be set via **environment variables:**
  - `CDK_ADMIN_EMAIL`
