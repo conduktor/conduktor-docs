@@ -24,8 +24,7 @@ Conduktor Gateway supports SASL authentication with clients the same as base Kaf
 communicate user information to the server via the usual username and password fields.
 
 The gateway uses encrypted JWT tokens in the password field to encode metadata required by the gateway (tenant 
-information etc.). These tokens are encrypted by a shared secret that is also used to provide access control so that 
-tokens that were not created with this secret will be denied access.
+information etc.).
 
 To configure access control first we must enable JWT based authentication. This can be done with the following 
 environment variables:
