@@ -71,7 +71,7 @@ kafkaSelector:
   path: gateway-core/config/kafka.config
 ```
 
-To update the connection details, edit the kafka.config file with the connection information of the Kafka cluster you wish to connect to.
+To update the connection details, edit the kafka.config file with the connection information of the Kafka cluster you wish to connect to, this is a Java style connection.
 
 For example, to connect to our Conduktor Free Kafka Playground use the credentials that can be found [Conduktor.io](https://conduktor.io) -> Admin -> Clusters -> Select Cluster -> Advanced Properties where you can find configuration similar to:
 
