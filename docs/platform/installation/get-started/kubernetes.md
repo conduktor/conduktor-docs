@@ -38,6 +38,7 @@ Platform Controller chart follow controller pattern where the controller service
 
 2. When Controller start after migrating itself if needed, it start a watcher on `ConfigMap` containing Conduktor Platform configuration and start it's reconciliation loop. 
 Depending on the configuration the Controller might ask Kubernetes API to deploy :
+
     - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`. 
     - A `Service` to access Condutkro Platform exposed ports
     - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.
@@ -216,7 +217,18 @@ If you want to your own `Secret` to provide database password, see [`Secrets`](#
 
 #### Setup Ingress for Conduktor Platform 
 
-//TODO
+By default, Conduktor Platform is not exposed by an `Ingress`. To enable it you need an proper `IngressController` configured in your cluster like [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) and add configure it in your values.
+
+
+```yaml
+platform:
+  ingress: 
+    enabled: true
+    ingressClassName: "nginx" # your ingress controller class name. In this case nginx for an Nginx Ingress Controller
+    host: "conduktor.my-domain.org"
+    tls: 
+      
+```
 
 #### Setup S3
 
