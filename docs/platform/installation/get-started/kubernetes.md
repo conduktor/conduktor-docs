@@ -67,7 +67,7 @@ But for production environment, it is *strongly recommended* to provide a Postgr
 See [external database configuration](#setup-external-database) section for more details.
 
 ### S3 Bucket
-Conduktor Platform need a S3 bucket to offload monitoring data and be stateless as much as possible. 
+Conduktor Platform needs an S3 bucket to store monitoring data
 For that purpose, Helm chart deploy by default a MinIO dependecy service that act an S3 provider. 
 
 But for production environement, it is recommended to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
