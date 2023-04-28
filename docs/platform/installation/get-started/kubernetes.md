@@ -70,7 +70,7 @@ See [external database configuration](#setup-external-database) section for more
 Conduktor Platform needs an S3 bucket to store monitoring data
 For that purpose, Helm chart deploy by default a MinIO dependecy service that act an S3 provider. 
 
-But for production environement, it is recommended to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
+But for production environement, it is *strongly recommended* to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
 
 See [external S3 configuration](#setup-s3) section for more details.
 
