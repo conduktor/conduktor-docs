@@ -102,7 +102,7 @@ helm repo update
 
 ### How to install conduktor Platform chart
 
-To install helm chart of Platform Controller you need to provide some basic mandatory configuration fit it to work. 
+To install the Conduktor Platform helm chart you need to provide some basic mandatory configuration fit it to work. 
 
 Here is a basic value file `custom-values.yaml` that will be used to configure the chart.
 ```yaml
