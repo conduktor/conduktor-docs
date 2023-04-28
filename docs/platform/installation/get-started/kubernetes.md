@@ -100,7 +100,7 @@ helm repo add conduktor https://helm.conduktor.io
 helm repo update
 ```
 
-### How to install Platform Controller chart
+### How to install conduktor Platform chart
 
 To install helm chart of Platform Controller you need to provide some basic mandatory configuration fit it to work. 
 
