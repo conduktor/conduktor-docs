@@ -76,7 +76,8 @@ See [external S3 configuration](#setup-s3) section for more details.
 
 ## Versions compatibility matrix
 
-Because Conduktor Platform, Platform-Controller and it's Helm chart have different version, please consult following version compatibility table to know what version of the chart deploy what version of the Conduktor Platform.
+Conduktor Platform, Platform-Controller, and its Helm chart have different versions.
+Please consult the following version compatibility table to know what version of the chart deploys what version of the Conduktor Platform.
 
 | Conduktor Platform | Platform-controller | Helm chart |
 |--------------------|---------------------|------------|
