@@ -37,11 +37,11 @@ Platform Controller chart follow controller pattern where the controller service
 
 
 2. When Controller start after migrating itself if needed, it start a watcher on `ConfigMap` containing Conduktor Platform configuration and start it's reconciliation loop. 
-Depending on the configuration the Controller might ask Kubernetes API to deploy :
-
-    - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`. 
-    - A `Service` to access Condutkro Platform exposed ports
-    - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.
+Depending on the configuration the Controller might ask Kubernetes API to deploy :    
+    - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`.    
+    - A `Service` to access Condutkro Platform exposed ports   
+    - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details. 
+  
 
 :::info   
 All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. That mean that even if Controller is down or updating itself, Platform is still running. And if `ConfigMap` is removed, everythink owned by it is also purged.   
@@ -286,6 +286,9 @@ By default, Platform Controller chart come with an optional [Bitnami MinIO](http
 
 
 ```yaml
+minio:
+  enabled: false    # disabled dependency Bitnami MinIO
+
 platform:
   config: 
     monitoring:
