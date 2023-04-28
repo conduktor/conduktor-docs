@@ -62,7 +62,7 @@ Conduktor Platform and the Platform Controller need a PostgreSQL database to wor
 
 By default, for trial and demo purpose the chart come with an optional [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency that is used as database. 
 
-But for production environment, it is strongly recommended to provide a PostgreSQL database not managed by the chart and disable dependency on using `postgresql.enabled=false`.
+But for production environment, it is *strongly recommended* to provide a PostgreSQL database not managed by the chart and disable dependency on using `postgresql.enabled=false`.
 
 See [external database configuration](#setup-external-database) section for more details.
 
