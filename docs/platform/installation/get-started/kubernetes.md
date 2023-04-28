@@ -6,10 +6,10 @@ description: The below guide details how to deploy kubernetes resources to run C
 
 The below guide will help you to deploy a production-ready instance of Conduktor Platform on Kubernetes.
 
-:::info
+:::info    
 Deployment of Conduktor Cloud on Kubernetes **is currently in public beta**. The deployment method may
 change without notice, we welcome [feedback](https://product.conduktor.help/c/55-helm-chart). If you
-have issues, please contact our [support](https://www.conduktor.io/contact/support/).
+have issues, please contact our [support](https://www.conduktor.io/contact/support/).   
 :::
 
 # Helm installation
@@ -43,11 +43,11 @@ Depending on the configuration the Controller might ask Kubernetes API to deploy
     - A `Service` to access Condutkro Platform exposed ports
     - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.
 
-:::info
+:::info   
 All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. That mean that even if Controller is down or updating itself, Platform is still running. And if `ConfigMap` is removed, everythink owned by it is also purged.   
 :::
 
-//TODO schema
+![Platform Controller diagram](/img/get-started/kubernetes-platform-controller-diag.png)
 
 ## Requirements
 
@@ -153,6 +153,51 @@ See [verions compatibility matrix](#versions-compatibility-matrix) to know which
 You can customize values of the helm chart in order to match your setup. You can learn about
 available values in the [helm chart documentation](https://helm.conduktor.io/platform-controller/#parameters).
 
+#### Extra environement variables
+
+If some [Platform configuration](../../configuration/env-variables.md) is not available in chart values, you can use `platform.config.extraEnvVars`, `platform.config.extraEnvVarsCM` and `platform.condig.extraEnvVarsSecret` to provide them from environement variables comming from values, a `ConfigMap` or a `Secret` 
+
+Example with a cluster definition. 
+
+Existing `ConfigMap` named `extra-platform-config`
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: extra-platform-config
+  namespace: NAMESPACE
+data:
+  CDK_CLUSTERS_0_ID: "cluster-id"
+  CDK_CLUSTERS_0_NAME: "My Cluster"
+  CDK_CLUSTERS_0_BOOTSTRAPSERVERS: "my-kafka:9092"
+  CDK_CLUSTERS_0_SCHEMAREGISTRY_ID: "My Schema Registry"
+  CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: "my-sr:8080"
+```
+
+Existing `Secret` name `extra-platform-secret`
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-platform-secret
+  namespace: NAMESPACE
+type: Opaque
+data:
+    CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME: "aaaa"
+    CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: "bbbb"
+```
+
+Chart values : 
+```yaml
+platform:
+  config:
+    extraEnvVars:
+      - name: "CDK_CLUSTERS_0_COLOR"
+        value: "#E70000"
+    extraEnvVarsCM: "extra-platform-config"
+    extraEnvVarsSecret: "extra-platform-secret"
+```
+All extra environment variables will end up been concatenated and set on Platform `Deployment`. Secrets will not be read and only references are forwarded to Platform `Deployment`. 
 
 #### Secrets
 
@@ -226,13 +271,35 @@ platform:
     enabled: true
     ingressClassName: "nginx" # your ingress controller class name. In this case nginx for an Nginx Ingress Controller
     host: "conduktor.my-domain.org"
-    tls: 
-      
+    tls:
+      enabled: true 
+      host: "conduktor.my-domain.org"
+      secretRef: platform-secret-tls # secret containing tls.crt certificate and tls.key private key
+    annotations: {} # extra annotations for ingress 
 ```
 
 #### Setup S3
 
-//TODO
+Conduktor platform can offload kafka metrics collected for internal monitoring into a S3 object storage and so retain as less state as possible inside the Pod. 
+
+By default, Platform Controller chart come with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false` but in that case it is recommended to provide your own.
+
+
+```yaml
+platform:
+  config: 
+    monitoring:
+      storage:
+        s3:
+          bucket: ""
+          endpoint: ""
+          accessKey: ""
+          secretKey: ""
+          region: "" 
+          insecure: true
+```
+
+Currently S3 `accessKey` and `secretKey` are not supported as `Secret` but as workaround `platform.condig.extraEnvVarsSecret` can be used to provide them using `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` and `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY` environment variables. See [secrets](#secrets) section for more details.
 
 ### Miscellaneous
 
@@ -253,7 +320,17 @@ By default this service account and role will be created by the chart.
 It can be disabled with `controller.serviceAccount.create` value. In this case you should also provide an already existing service account using `controller.serviceAccount.name` value.
 
 ## Troubleshooting
-// TODO log controller / platform
-// basic errors
+
+### See Platform Controller logs
+
+```bash
+kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform-controller --all-containers
+```
+
+### See Conduktor Platform logs
+
+```bash
+kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform --all-containers
+```
 
 [^1]: You don't have to be administrator of the cluster, but your should be able to create new resources in a namespace.
