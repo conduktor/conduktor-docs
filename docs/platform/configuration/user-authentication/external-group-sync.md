@@ -44,8 +44,11 @@ sso:
         issuer: https://login.microsoftonline.com/{tenantid}/v2.0
       groups-claim: ${GROUPS_CLAIM}
 ```
-For **Azure AD**, the claim value can be found in the 'Token configuration' tab within your App registration.
-![](../assets/azure-ad-claims.png)
+For **Azure AD**, you can create this claim in the 'Token configuration' tab within your `App registration`.
+Click on `Add groups claim`, then select `Security groups` as group type to include, and ensure that the token property is `Group ID` for each type.
+![](https://user-images.githubusercontent.com/112936799/236053504-49e91058-4f75-4ca5-acf4-3cdfac5a73f0.png)
+
+You can see that the claim name is `groups`, so you can add the following line in you configuration file: `groups-claim: "groups"`.
 
 ## Create a Group Mapping
 
