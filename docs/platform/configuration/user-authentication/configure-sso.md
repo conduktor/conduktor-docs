@@ -291,25 +291,41 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<host(:port)>/realms/<realm name>"
 
 Configure new application on MS Azure
 
-- **Step 1**: Create a new application in `App registrations` ![](../assets/azure-app-step-001.png)
+- **Step 1**: Create a new application in `App registrations`
 
-- **Step 2**: Name the application with a relevant name ![](../assets/azure-app-step-002.png)
+You can select the name you want, and enter the redirect URI as following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
-- **Step 3**: Create a new client secret. Keep these details secret. ![](../assets/azure-app-step-003.png)
+![](https://user-images.githubusercontent.com/112936799/236046089-41e2218e-4471-43f8-ad84-6f289d27523c.png)
 
-- **Step 4**: Define the callback URL. Either use the full domain you will use to host the application, or `localhost` ![](../assets/azure-app-step-004.png)
+- **Step 2**: Create a new client secret.
 
-In your application summary, you can easily find the tenant ID of your organization in MS Azure. Replace the `{tenantid}` in the below configuration for `openid`. Use the application ID as the `client-id`, and the client secret you created earlier as `client-secret`
+![](https://user-images.githubusercontent.com/112936799/236047761-e68729c8-bb89-4dc2-8064-278f72867eff.png)
+
+:::warning
+You need to keep these values somewhere, as you won't have access to the `Value` again.
+:::
+
+The `Value` marked by the red arrow on the screenshot is the one to put as `client-secret` in the configuration file.
+
+- **Step 3**: Find the `Application (client) ID`
+
+This useful information can be find on the overview of you application. It has been marked with a red arrow on the screen below. It will be the `client-id` in the configuration file.
+
+![](https://user-images.githubusercontent.com/112936799/236051414-df7ec977-053d-46f7-b7ee-9c6b87538625.png)
+
+- **Step 4**: Write the configuration snippet
+
+At the end, you should be able to write the following snippet in your Platform configuration file:
 
 ```yaml
 sso:
   oauth2:
     - name: 'azure'
       default: true
-      client-id: ${AZURE_APPLICATION_ID}
-      client-secret: ${AZURE_CLIENT_SECRET}
+      client-id: ${AZURE_APPLICATION_ID} # from step 3
+      client-secret: ${AZURE_CLIENT_SECRET} # from step 2
       openid:
-        issuer: https://login.microsoftonline.com/{tenantid}/v2.0
+        issuer: https://login.microsoftonline.com/{AZURE_TENANT_ID}/v2.0 # from step 3
 ```
 
 Or from environment variables :
@@ -322,7 +338,9 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="${AZURE_CLIENT_SECRET}"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.0"
 ```
 
-> **Note** : do not use the "Secret ID" of the client secret as the `client-id`. You **must** use the application ID.
+:::info
+If you want to use the `external groups mapping` to map groups between your Platform and Azure, please take a look at [this](../external-group-sync/).
+:::
 
 ### Google
 
