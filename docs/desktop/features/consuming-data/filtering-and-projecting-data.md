@@ -53,7 +53,8 @@ If your jq filter is invalid, or only fails for some records, Conduktor will dis
 
 ![](../../assets/screenshot-2020-06-25-at-17.25.48.png)
 
-:::info If you're using Avro, it's also possible to provide a custom schema \(with less fields\) by using the format "Avro \(Custom Schema\)", see [Avro without Confluent?](/desktop/features/consuming-data/) :::
+:::info If you're using Avro, it's also possible to provide a custom schema \(with less fields\) by using the format "Avro \(Custom Schema\)", see [Avro without Confluent?](/desktop/features/consuming-data/) 
+:::
 
 ## Filtering data
 
@@ -61,7 +62,8 @@ It's possible to combine multiple filters on multiple dimensions: time, quantity
 
 #### Choose where to start from
 
-:::caution By default, Conduktor uses **"now \(latest\)"**: it means that only new incoming data will appear in Conduktor, not the past. :::
+:::caution By default, Conduktor uses **"now \(latest\)"**: it means that only new incoming data will appear in Conduktor, not the past.
+:::
 
 - time based: a hour, a date
 - offset based:
@@ -94,7 +96,8 @@ We offer many ways to select only the interesting key/value you're looking for.
 
 Most works with key, value and headers.
 
-:::info If you set several filters, it's treated like an **"AND"**. We **don't** support **"OR"** operand; we don't have any complex UI to tell "\(this or \(that and that\)\) or this" :::
+:::info If you set several filters, it's treated like an **"AND"**. We **don't** support **"OR"** operand; we don't have any complex UI to tell "\(this or \(that and that\)\) or this" 
+:::
 
 ![](../../assets/screenshot-2020-06-25-at-18.07.45.png)
 
@@ -113,13 +116,15 @@ Not familiar with regexes? Let's present a few use-case to understand their powe
 
 :::danger Beware of **"special"** characters like **"(" "{'{'}"** or **"."**, they need to be **"escaped"**.
 
-If you want to match **"1.2.2"** or **"1.2.3"**, use **"1\.2\.[23]"** and NOT **"1.2.[23]"** or you will match **"**1**0**2**4**3**": "."** means **"any character"** :::
+If you want to match **"1.2.2"** or **"1.2.3"**, use **"1\.2\.[23]"** and NOT **"1.2.[23]"** or you will match **"**1**0**2**4**3**": "."** means **"any character"** 
+:::
 
 :::info You can use regex with a json-ish syntax if you want to match the json payload, and not use the Json Field filter.
 
 - "state"\s:\s{'{'}\s"id"\s:\s".",\s"version"\s:\s\*227`
 
-This is the "equivalent" of the json field filter: `.state.version = 227` :::
+This is the "equivalent" of the json field filter: `.state.version = 227` 
+:::
 
 ### Filter: Json Field
 
