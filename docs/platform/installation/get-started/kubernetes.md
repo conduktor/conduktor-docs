@@ -210,6 +210,7 @@ The following keys are expected in provided existing `Secret` :
 - `admin-password` : Platform administrator password (Required)
 - `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provied using `platform.config.database.password`.
 - `license` : Platform enterprise license. Required in secrets, can be empty for free use.
+- `sso-oauth2-client-id` : SSO OIDC client id. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-oauth2-client-secret` : SSO OIDC client secret. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server setup.
 
@@ -226,8 +227,9 @@ data:
   admin-password: 'aaaaa'
   license: 'bbbbb'
   database-password: 'cccccc'
-  sso-oauth2-client-secret: 'ddddd'
-  sso-ldap-manager-password: 'eeeee'
+  sso-oauth2-client-id: 'ddddd'
+  sso-oauth2-client-secret: 'eeeee'
+  sso-ldap-manager-password: 'fffff'
 ```
 
 Chart custom value
