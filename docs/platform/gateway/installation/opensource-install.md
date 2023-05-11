@@ -31,11 +31,13 @@ Build the Gateway image.
 
 :::caution
 Note this requires Java 17 or later. If you are using an older version, please download Java 17+
+
+You'll also need a running docker process to build the package.
 :::
 
 ```bash
 git clone https://github.com/conduktor/conduktor-gateway && cd conduktor-gateway
-mvn clean package -DskipTests=true
+mvn clean package
 ```
 
 
