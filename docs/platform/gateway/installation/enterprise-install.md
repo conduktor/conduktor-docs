@@ -29,7 +29,7 @@ Jump to:
 
 Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. 
 Conduktor Gateway should connect to Kafka as an admin user. As a minimum this user should have rights to:
-* Create/Delete/ALter topics
+* Create/Delete/Alter topics
 * Commit offsets
 * Create/alter/delete consumer groups
 * Describe cluster information
@@ -49,7 +49,7 @@ For more complex deployments see [environment variables](../configuration/env-va
 # Connecting to secured Kafka
 
 Conduktor Gateway connects to Kafka just like any other client. Any extra configurations (encryption/authentication etc.) 
-can be provided via environment variable using the KAFKA_ prefix. Security configurations can be provided using this 
+can be provided via environment variables using the KAFKA_ prefix. Security configurations can be provided using this 
 scheme. For example:
 
 ```bash
