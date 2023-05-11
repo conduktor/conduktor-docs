@@ -81,8 +81,21 @@ Next, explore the Interceptors on the [Conduktor Marketplace](https://marketplac
 
 In the Marketplace you'll find a wide range of Interceptors, a number of which are available for use for free in the open-source Conduktor Gateway. 
 
-Each interceptor describes its configuration settings.  Update the configuration file found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`  to enable each interceptor you'd like to try and then restart the gateway to pick up the changes.
+Once you've decided which of the free interceptors you'd like to try, select the "Download" button to download that interceptor's jar file.  Save this to a location on your machine that you can add to your Java classpath.
 
+Update your Gateway's configuration file, found at `<GATEWAY_REPOSITORY_LOCATION>/gateway-core/config/application.yaml` to enable each interceptor you'd like to try.  The `Configuring Interceptors` section on each Interceptor's page in the Marketplace describes its configuration settings.  
+
+Multiple interceptors can be configured, each as a separate list item, under the `interceptors` field in the `application.yaml` configuration file.
+
+Once you've updated the configuration, update your classpath to include the interceptor jar file, and then restart the gateway to pick up the changes.
+
+```bash
+CLASSPATH=<DOWNLOAD_LOCATION>/interceptorName.jar:logger-interceptor/target/logger-interceptor-0.5.0-SNAPSHOT.jar bin/run-gateway.sh
+```
+
+:::note
+If you remove the logger interceptor from your classpath, don't forget to remove the entry for this interceptor from `application.yaml` too.
+:::
 
 # Bring your own Kafka Cluster and Kafka Clients.
 
