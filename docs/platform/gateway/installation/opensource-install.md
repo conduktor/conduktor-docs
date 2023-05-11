@@ -31,19 +31,20 @@ Build the Gateway image.
 
 :::caution
 Note this requires Java 17 or later. If you are using an older version, please download Java 17+
+
+You'll also need a running docker process to build the package.
 :::
 
 ```bash
-$ git clone https://github.com/conduktor/conduktor-gateway && cd conduktor-gateway
-$ mvn clean package 
+git clone https://github.com/conduktor/conduktor-gateway && cd conduktor-gateway
+mvn clean package
 ```
-
 
 
 Add the demo [logger interceptor](https://github.com/conduktor/conduktor-gateway/tree/main/logger-interceptor) to the classpath, and then start the gateway:
 
 ```bash
-$ CLASSPATH=logger-interceptor/target/logger-interceptor-0.2.0-SNAPSHOT.jar bin/run-gateway.sh
+CLASSPATH=logger-interceptor/target/logger-interceptor-0.5.0-SNAPSHOT.jar bin/run-gateway.sh
 ```
 
 In the terminal window, you should see a log line similar to this, which indicates the gateway has started successfully:
@@ -61,7 +62,10 @@ bin/kafka-console-producer.sh --topic my-gateway --bootstrap-server localhost:69
 bin/kafka-console-consumer.sh --topic my-gateway --bootstrap-server localhost:6969 --from-beginning --property print.headers=true
 ```
 
-Look in the terminal where the gateway is running, you should find log lines, written by the logger interceptor, similar to:
+
+Each Kafka flow that is sent by the calls above is intercepted by the Logger Interceptor as it passes through the Gateway, and information about that Kafka flow is written to the logs.
+
+Look in the terminal window where the gateway is running. You'll find log lines, written by the Logger Interceptor, similar to:
 
 ```bash
 Hello there, a class org.apache.kafka.common.requests.FetchResponse was sent/received
@@ -71,9 +75,18 @@ Fetch was requested from localhost
 
 This completes the quick start and demo.
 
+# Conduktor Marketplace
+
+Next, explore the Interceptors on the [Conduktor Marketplace](https://marketplace.conduktor.io).
+
+In the Marketplace you'll find a wide range of Interceptors, a number of which are available for use for free in the open-source Conduktor Gateway. 
+
+Each interceptor describes its configuration settings.  Update the configuration file found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`  to enable each interceptor you'd like to try and then restart the gateway to pick up the changes.
+
+
 # Bring your own Kafka Cluster and Kafka Clients.
 
-The next step is to use your own Kafka cluster and Kafka clients, so you can start exploring the benefits Conduktor Gateway can bring to your environment.
+Once you've decided on your interceptors, update the configuration to use your own Kafka cluster and Kafka clients, so you can start exploring the benefits Conduktor Gateway can bring to your environment.
 
 There are two sets of properties to configure when using your own client and your own Kafka cluster:
 
