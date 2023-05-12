@@ -213,6 +213,8 @@ The following keys are expected in provided existing `Secret` :
 - `sso-oauth2-client-id` : SSO OIDC client id. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-oauth2-client-secret` : SSO OIDC client secret. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server setup.
+- `monitoring-s3-access-key` : Access Key used by monitoring to authenticate to a remote S3 service, only used when `minio.enabled=false` and you don't provide `minio.auth.existingSecret`.
+- `monitoring-s3-secret-key` : Secret key used by monitoring to authenticate to a remote S3 service, only used when `minio.enabled=false` and you don't provide `minio.auth.existingSecret`.
 
 Example: 
 Custom secret named `my-platform-secret`.
