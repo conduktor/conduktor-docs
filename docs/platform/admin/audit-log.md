@@ -7,12 +7,26 @@ description: List of the Audit Log events tracked throughout the Platform
 # Audit Log Events
 
 :::info
-Audit log is an Team and Enterprise feature.
+Audit log is an Enterprise feature. Please [contact us](https://www.conduktor.io/contact) to discuss getting access.
 :::
 
-When you navigate Conduktor, we capture audit events that give you detailed tracking of actions relating to Kafka. This gives you centralized visibility of user-related and resource-related events.
+# Overview
+
+When you navigate Conduktor, audit events are captured that give you detailed tracking of actions relating to Kafka. This gives you centralized visibility of user-related and resource-related events.
+
+Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for topic creation, which also details the number of partitions and replication factor that were used.
+
+![Admin Audit](./images/admin-audit.png)
+
+## Audit Events
 
 Below outlines the audit events currently tracked by Conduktor.
+
+  - [Console](#console)
+  - [Data Masking](#data-masking)
+  - [Topic as a Service](#topic-as-a-service)
+  - [Testing](#testing)
+  - [Admin](#admin)
 
 ## Console
 
@@ -20,49 +34,51 @@ Below outlines the audit events currently tracked by Conduktor.
 
 CRN: `kafka:/cluster/<uuid>/topic/<topic-name>`
 
-- cdk.devtools.topic.ProducedRecord
-- cdk.devtools.topics.Browsed
-- cdk.devtools.topic.Deleted
-- cdk.devtools.topic.Created
-- cdk.devtools.topic.Updated
-- cdk.devtools.topic.Emptied
+- topic.ProducedRecord
+- topic.Browsed
+- topic.Deleted
+- topic.Created
+- topic.Updated
+- topic.Emptied
+- topic.Tagged
+- topic.Untagged
 
 ### ResourceType: `Subject`
 
 CRN `kafka:/cluster/<uuid>/subject/<subject-name>`
 
-- cdk.devtools.subject.Created
-- cdk.devtools.subject.Updated
-- cdk.devtools.subject.ChangedCompat
-- cdk.devtools.subject.Deleted
-- cdk.devtools.subject.DeletedVersions
-- cdk.devtools.subject.DeletedVersion
+- subject.Created
+- subject.Updated
+- subject.ChangedCompat
+- subject.Deleted
+- subject.DeletedVersions
+- subject.DeletedVersion
 
 ### ResourceType: `SchemaRegistry`
 
 CRN `kafka:/cluster/<uuid>`
 
-- cdk.devtools.registry.ChangedGlobalCompat
+- registry.ChangedGlobalCompat
 
 ### ResourceType: `ConsumerGroup`
 
 CRN `kafka:/cluster/<uuid>/group/<group-name>`
 
-- cdk.devtools.consumergroup.Created
-- cdk.devtools.consumergroup.Updated (ResetOffsets)
-- cdk.devtools.consumergroup.Deleted
+- consumergroup.Created
+- consumergroup.Updated (ResetOffsets)
+- consumergroup.Deleted
 
 ### ResourceType: `Connector`
 
 CRN `kafka:/cluster/<uuid>/connect/<connect-cluster-id>/<connector-name>`
 
-- cdk.devtools.connector.Created
-- cdk.devtools.connector.Updated
-- cdk.devtools.connector.Deleted
-- cdk.devtools.connector.Restarted
-- cdk.devtools.connector.RestartedTask
-- cdk.devtools.connector.Paused
-- cdk.devtools.connector.Resumed
+- connector.Created
+- connector.Updated
+- connector.Deleted
+- connector.Restarted
+- connector.RestartedTask
+- connector.Paused
+- connector.Resumed
 
 ## Data Masking
 
@@ -70,8 +86,8 @@ CRN `kafka:/cluster/<uuid>/connect/<connect-cluster-id>/<connector-name>`
 
 CRN `platform:/datamasking/<uuid>`
 
-- cdk.datamasking.policy.Upserted
-- cdk.datamasking.policy.Deleted
+- policy.Upserted
+- policy.Deleted
 
 ## Topic as a Service
 
@@ -79,12 +95,12 @@ CRN `platform:/datamasking/<uuid>`
 
 CRN `platform:/application/<app-slug>`
 
-- cdk.taas.application.Created
-- cdk.taas.application.Deleted
-- cdk.taas.application.Updated
-- cdk.taas.application.access-request.Approved
+- application.Created
+- application.Deleted
+- application.Updated
+- application.access-request.Approved
   from / to
-- cdk.taas.application.access-request.Rejected
+- application.access-request.Rejected
 
 ## Testing
 
@@ -92,67 +108,65 @@ CRN `platform:/application/<app-slug>`
 
 CRN: `testing:/workspace/<organization-id>`
 
-- cdk.testing.workspace.Created
-- cdk.testing.workspace.Updated
-- cdk.testing.workspace.Deleted
+- testing.workspace.Created
+- testing.workspace.Updated
+- testing.workspace.Deleted
 
 ### ResourceType: `Test Suite`
 
 CRN: `testing:/testsuite/<workspace-id>`
 
-- cdk.testing.testsuite.Created
-- cdk.testing.testsuite.Renamed
-- cdk.testing.testsuite.Deleted
+- testing.testsuite.Created
+- testing.testsuite.Renamed
+- testing.testsuite.Deleted
 
 ### ResourceType: `Test Scenario`
 
 CRN: `testing:/scenario/<test-suite-id>`
 
-- cdk.testing.scenario.Created
-- cdk.testing.scenario.Updated
-- cdk.testing.scenario.Deleted
-- cdk.testing.scenario.Executed
+- testing.scenario.Created
+- testing.scenario.Updated
+- testing.scenario.Deleted
+- testing.scenario.Executed
 
 ### ResourceType: `Task`
 
 - CRN: `testing:/task/<scenario-id>`
-- cdk.testing.task.Created
-- cdk.testing.task.Updated
-- cdk.testing.task.Duplicated (missing resource right now)
-- cdk.testing.task.Deleted
+- testing.task.Created
+- testing.task.Updated
+- testing.task.Duplicated (missing resource right now)
+- testing.task.Deleted
 
 ### ResourceType: `Environment`
 
 CRN: `testing:/environment/<workspace-id>`
 
-- cdk.testing.environment.Created
-- cdk.testing.environment.Updated
-- cdk.testing.environment.Deleted
+- testing.environment.Created
+- testing.environment.Updated
+- testing.environment.Deleted
 
 ### ResourceType: `Environment Variable`
 
 CRN: `testing:/variableDefinition/<workspace-id>`
 
-- cdk.testing.variableDefinition.Created
-- cdk.testing.variableDefinition.Updated
-- cdk.testing.variableDefinition.Deleted
+- testing.variableDefinition.Created
+- testing.variableDefinition.Updated
+- testing.variableDefinition.Deleted
 
 ### ResourceType: `Cluster`
 
 CRN: `testing:/cluster/<workspace-id>`
 
-- cdk.testing.cluster.Created
-- cdk.testing.cluster.Updated
-- cdk.testing.cluster.Deleted
+- testing.cluster.Created
+- testing.cluster.Updated
+- testing.cluster.Deleted
 
 ### ResourceType: `Agent`
 
 CRN: `testing:/agent/<agent-id>`
 
-- cdk.testing.agent.Created
-- cdk.testing.agent.Deleted
-
-# Coming Soon
+- testing.agent.Created
+- testing.agent.Deleted
 
 ## Admin
 
@@ -160,24 +174,24 @@ CRN: `testing:/agent/<agent-id>`
 
 CRN `kafka:/cluster/<uuid>`
 
-- cdk.admin.cluster.Created
-- cdk.admin.cluster.Updated
-- cdk.admin.cluster.Deleted
+- cluster.Created
+- cluster.Updated
+- cluster.Deleted
 
-### ResourceType: Group
+### ResourceType: `Group`
 
 CRN `platform:/group/<uuid>`
 
-- cdk.admin.group.Created
-- cdk.admin.group.AddedMember
-- cdk.admin.group.DeletedMember
-- cdk.admin.group.permission.Added
-- cdk.admin.group.permission.Removed
+- group.Created
+- group.member.Added
+- group.member.Deleted
+- group.permission.Added
+- group.permission.Deleted
 
-### ResourceType: User
+### ResourceType: `User`
 
 CRN `platform:/user/<email>`
 
-- cdk.admin.user.permission.Added
-- cdk.admin.user.permission.Deleted
-- cdk.admin.user.ChangedRole
+- user.permission.Added
+- user.permission.Deleted
+- user.platform_role.Updated
