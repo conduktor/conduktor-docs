@@ -25,13 +25,13 @@ The authenticationConfig stanza in the application.yaml defines the security con
 The authenticatorType specifies the authentication type for clients connecting to the gateway. The value can be one of:
 
  - NONE (unencrypted connection, no authentication)
- - SSL (tls encrypted connection, no authentication
+ - SSL (tls encrypted connection, no authentication)
  - SASL_PLAINTEXT (unencrypted connection, userid and password based authentication)
  - SASL_SSL (tls encrypted connection, userid and password based authentication)
 
-The sslConfig stanza defines the SSL configuration and is required if an option that specifies an encrypted connection has been defined in the authenticatorType (eg SSL).
+The `sslConfig` stanza defines the SSL configuration and is required if an option that specifies an encrypted connection has been defined in the authenticatorType (e.g. SSL).
 
-The userPool defines the list of user name and password pairs for users connecting to the gateway, and is required if an option that specifies userid and password authentication has been defined in authenticatorType (eg SASL).
+The userPool defines the list of user name and password pairs for users connecting to the gateway, and is required if an option that specifies userid and password authentication has been defined in authenticatorType (e.g. SASL).
 
 Example
 
@@ -55,7 +55,7 @@ authenticationConfig:
 
 ## Conduktor Gateway to Kafka cluster configuration
 
-The configuration for connecting to the Kafka cluster is a standard kafka configuration file.
+The configuration for connecting to the Kafka cluster is a standard Kafka configuration file.
 
 This means that the Conduktor Gateway can connect to any Kafka cluster that a standard Kafka application can connect to.
 
@@ -82,7 +82,8 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='<USERNAME>' password='<JWT.TOKEN.STRING>';
 ```
 
-![img_1.png](img_1.png)
+
+![mvn_clean_package_success.png](../installation/mvn_clean_package_success.png)
 
 Or, to connect to a Confluent Cloud instance use configuration similar to:
 
@@ -92,3 +93,5 @@ security.protocol=SASL_SSL
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='{{ CLUSTER_API_KEY }}' password='{{ CLUSTER_API_SECRET }}';
 sasl.mechanism=PLAIN
 ```
+[Conduktor Console](https://www.conduktor.io/console/) is able to produce a copy paste example for most connections within the cluster config Advanced properties section if you are having trouble finding this for your own setup.
+
