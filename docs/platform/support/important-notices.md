@@ -19,7 +19,7 @@ Set the environment variable `TESTING_ENABLED` to **true** when starting Condukt
 
 **Why are we making this change?**
 
-By removing the number of services started by default, this provides a performance optimisation for customers that are not currently using Testing.
+By removing the number of services started by default on-premise, this provides a performance optimisation for customers that are not currently using Testing.
 
 ---
 
