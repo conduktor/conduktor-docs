@@ -106,7 +106,7 @@ Once you've decided which of the free interceptors you'd like to try, select the
 
 Multiple interceptors can be configured simultaneously, each as a separate list item, under the `interceptors` field in the `application.yaml` configuration file.
 
-This example adds both the [Create topic validation](https://conduktor-marketplace.vercel.app/interceptors/safeguard-topic-creation-validation/) and [Schema id present](https://conduktor-marketplace.vercel.app/interceptors/safeguard-schema-id-present/) interceptors.
+This example adds both the [Create topic validation](https://marketplace.conduktor.io/interceptors/safeguard-topic-creation-validation/) and [Schema id present](https://marketplace.conduktor.io/interceptors/safeguard-schema-id-present/) interceptors.
 
 ```yaml
 kafkaSelector:
@@ -177,7 +177,7 @@ Gateway configuration is set in a `kafka.config` properties file, the location o
 
 The default gateway configuration file can be found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`
 
-The location of the Kafka configuration file used to connect to the backing Kafka cluster is set by the kafkaSelector section in the yaml file:
+The location of the Kafka configuration file used to connect to the backing Kafka cluster is set by the `kafkaSelector` section in the yaml file:
 
 ```yaml
 kafkaSelector:
