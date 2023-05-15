@@ -145,7 +145,7 @@ CLASSPATH=<DOWNLOAD_LOCATION>/gateway-create-topic-safeguard-1.0.0.jar:<DOWNLOAD
 ```  
 
 :::note
-If you remove the logger interceptor from your classpath, as is shown in the example above, don't forget to remove the entry for this interceptor from your `application.yaml` configuration file too. 
+If you remove the logger interceptor from your classpath, as is shown in the example above when we declare it again without the logger included, don't forget to remove the entry for this interceptor from your `application.yaml` configuration file too. It is fine to have unused interceptors in your CLASSPATH, but not fine when inlcuded as part of the configuration file.
 :::
 
 # Use your own Kafka cluster and Kafka clients
