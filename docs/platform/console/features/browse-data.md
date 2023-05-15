@@ -242,8 +242,6 @@ Since Conduktor 1.15.0, data can be exported from the consumer view. Data can be
   - **JSON**
       - Exported as [JSON lines](https://jsonlines.org/)
 
-The maximum number of results that can be exported is **5,000**. 
-
 To export data, click the breadcrumb from within the table and choose the desired export format. All results that are loaded within the Conduktor UI will be exported.
 
 ![Create a connector](/img/console/console-export.png)
