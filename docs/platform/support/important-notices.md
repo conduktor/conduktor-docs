@@ -10,7 +10,8 @@ Below outlines important notices relating to Conduktor Platform.
 
 ### Important change when updating to Conduktor 1.15.0 (May 15, 2023)
 
-Note that in Conduktor 1.15.0, the Testing application will no longer be started by default. If you wish to start Testing alongside the Platform, you must start Conduktor using an explicit environment variable.
+Note that in Conduktor 1.15.0, the Testing application will no longer be started by default on our on-premise deployment. It's still available on our Cloud version.
+If you wish to start Testing alongside the Platform on-premise, you must start Conduktor using an explicit environment variable.
 
 **How to start Platform with Testing?**
 
