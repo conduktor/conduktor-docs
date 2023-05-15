@@ -3,7 +3,7 @@ title: Yaml Configuration
 description: Conduktor Gateway configuration via yaml
 ---
 
-This page describes the valid yaml file configuration options for the opensource Conduktor Gateway (Enterprise documentation is in progress)
+This page describes the valid yaml file configuration options for the opensource Conduktor Gateway (Enterprise documentation is in progress).
 
 To configure the Enterprise Conduktor Gateway: refer to the [Environment Variables](./env-variables.md).
 

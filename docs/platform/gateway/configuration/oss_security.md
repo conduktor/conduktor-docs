@@ -25,7 +25,7 @@ The authenticationConfig stanza in the application.yaml defines the security con
 The authenticatorType specifies the authentication type for clients connecting to the gateway. The value can be one of:
 
  - NONE (unencrypted connection, no authentication)
- - SSL (tls encrypted connection, no authentication
+ - SSL (tls encrypted connection, no authentication)
  - SASL_PLAINTEXT (unencrypted connection, userid and password based authentication)
  - SASL_SSL (tls encrypted connection, userid and password based authentication)
 
