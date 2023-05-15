@@ -82,7 +82,7 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='<USERNAME>' password='<JWT.TOKEN.STRING>';
 ```
 
-![img_1.png](img_1.png)
+![mvn_clean_package_success.png](mvn_clean_package_success.png)
 
 Or, to connect to a Confluent Cloud instance use configuration similar to:
 

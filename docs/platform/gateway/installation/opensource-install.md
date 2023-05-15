@@ -61,7 +61,7 @@ Once the `mvn clean package` has run successfully, you can run the gateway with 
 
 To confirm a successful build, look for `BUILD_SUCCESS` in the output from the `mvn clean package`:
 
-![img_1.png](img_1.png)
+![mvn_clean_package_success.png](mvn_clean_package_success.png)
 
 
 ## Run the logging interceptor
