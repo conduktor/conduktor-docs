@@ -42,7 +42,7 @@ Depending on the configuration, the Controller might ask Kubernetes API to deplo
   
 
 :::info   
-All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. That means that even if Controller is down or updating itself, Conduktor is still running. And if `ConfigMap` is removed, everything owned by it is also purged.   
+All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. This means that even if Controller is down or updating itself, Conduktor is still running. And if `ConfigMap` is removed, everything owned by it is also purged.   
 :::
 
 ![Platform Controller diagram](/img/get-started/kubernetes-platform-controller-diag.png)
@@ -202,7 +202,7 @@ As described in the [architecture](#architecture) section, the Controller Helm c
 
 However, you can also provide an existing `Secret` to the chart, which can be used in-place of the one created automatically. 
 
-The following keys are expected in provided existing `Secret`: 
+The following keys are expected in the provided existing `Secret`: 
 - `admin-password` : Platform administrator password (Required)
 - `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provided using `platform.config.database.password`.
 - `license` : Platform enterprise license. Required in secrets, can be empty for free use.
@@ -277,7 +277,7 @@ platform:
 
 #### Setup S3
 
-Conduktor can offload kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as least state as possible inside the Pod. 
+Conduktor can offload Kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as least state as possible inside the Pod. 
 
 By default, the Conduktor Controller chart comes with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false`, but in that case it's recommended to provide your own.
 
