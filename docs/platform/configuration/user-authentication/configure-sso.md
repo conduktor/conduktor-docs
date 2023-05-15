@@ -339,7 +339,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.
 ```
 
 :::info
-If you want to use the `external groups mapping` to map groups between your Platform and Azure, please take a look at [this](../external-group-sync/).
+If you want to use the `external groups mapping` to map groups between your Platform and Azure, please take a look at [this](../external-group-sync/#azure-ad-example).
 :::
 
 ### Google
