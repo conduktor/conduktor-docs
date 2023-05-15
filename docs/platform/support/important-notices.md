@@ -8,6 +8,21 @@ description: The following notes describe important changes that affect Condukto
 
 Below outlines important notices relating to Conduktor Platform.
 
+### Important change when updating to Conduktor 1.15.0 (May 15, 2023)
+
+Note that in Conduktor 1.15.0, the Testing application will no longer be started by default on our on-premise deployment. It's still available on our Cloud version.
+If you wish to start Testing alongside the Platform on-premise, you must start Conduktor using an explicit environment variable.
+
+**How to start Platform with Testing?**
+
+Set the environment variable `TESTING_ENABLED` to **true** when starting Conduktor. See docker image [environment variables](../configuration/env-variables.md).
+
+**Why are we making this change?**
+
+By removing the number of services started by default on-premise, this provides a performance optimisation for customers that are not currently using Testing.
+
+---
+
 ### Important change when updating to Conduktor 1.14.0 (April 18, 2023)
 
 For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **root administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
