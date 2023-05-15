@@ -23,6 +23,26 @@ kafkaSelector:
   path: gateway-core/config/kafka.config
 ```
 
+## Interceptors
+
+```yaml
+- name: Unique name for this instance of the interceptor
+  pluginClass: Fully qualified class name of the interceptor plugin
+  priority: Priority for running this intercetpor.  0 is highest priority (run first), 2^32 is lowest.  If two interceptors have the same priority then the running order is indeterminate.
+  config: Configuration for this interceptor
+```
+
+Example:
+
+```yaml
+- name: myLoggingInterceptor
+  pluginClass: io.conduktor.example.loggerinterceptor.LoggerInterceptorPlugin
+  priority: 100
+  config:
+    - key: "loggingStyle"
+      value: "obiWan"
+```
+
 ## Host/Port Configurations
 
 ```yaml
@@ -135,22 +155,4 @@ maxResponseLatency: 3000
 inFlightRequestExpiryMs: 30000
 ```
 
-## Interceptors
 
-```yaml
-- name: Unique name for this instance of the interceptor
-  pluginClass: Fully qualified class name of the interceptor plugin
-  priority: Priority for running this intercetpor.  0 is highest priority (run first), 2^32 is lowest.  If two interceptors have the same priority then the running order is indeterminate.
-  config: Configuration for this interceptor
-```
-
-Example:
-
-```yaml
-- name: myLoggingInterceptor
-  pluginClass: io.conduktor.example.loggerinterceptor.LoggerInterceptorPlugin
-  priority: 100
-  config:
-    - key: "loggingStyle"
-      value: "obiWan"
-```
