@@ -15,7 +15,7 @@ kafkaSelector:
   path: the path to the file containing properties to connect gateway to the Kafka cluster
 ```
 
-Example
+Example:
 
 ```yaml
 kafkaSelector:
@@ -52,7 +52,7 @@ hostPortConfiguration:
   portRange: a port range that gateway can assign to brokers
 ```
 
-Example
+Example:
 
 ```yaml
 hostPortConfiguration:
@@ -115,7 +115,7 @@ threadConfig:
     maxPendingTask: the maximum pending upstream tasks before new tasks will be rejected
 ```
 
-Example
+Example:
 
 ```yaml
 threadConfig:
@@ -133,7 +133,7 @@ upstreamConnectionConfig:
   maxIdleTimeMs: the maximum time a connection can remain idle before it will be reaped
 ```
 
-Example
+Example:
 
 ```yaml
 upstreamConnectionConfig:
