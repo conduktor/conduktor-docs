@@ -26,7 +26,7 @@ Platform Controller chart follow controller pattern where the controller service
 
     - A `Secret` for platform sensitive data like administrator password, database password, license, SSO secrets, ...
     - A `ConfigMap` containing configuration for the Conduktor Platform and for other resources managed by the controller
-    - A `ServiceAccount` with poper permission for Controller to access Kubernetes API
+    - A `ServiceAccount` with proper permission for Controller to access Kubernetes API
     - A `Deployment` for the Controller service 
     - A `Service` to access Controller APIs (healthcheck, state, ...)
     - Optionally an `Ingress` to expose controller `Service` (not needed for now)
@@ -38,10 +38,10 @@ Platform Controller chart follow controller pattern where the controller service
 
 2. When Controller start after migrating itself if needed, it start a watcher on `ConfigMap` containing Conduktor Platform configuration and start it's reconciliation loop. 
 Depending on the configuration the Controller might ask Kubernetes API to deploy :    
+
     - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`.    
-    - A `Service` to access Condutkro Platform exposed ports   
-    - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details. 
-  
+    - A `Service` to access Condutkor Platform exposed ports   
+    - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.    
 
 :::info   
 All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. That mean that even if Controller is down or updating itself, Platform is still running. And if `ConfigMap` is removed, everythink owned by it is also purged.   
@@ -68,9 +68,9 @@ See [external database configuration](#setup-external-database) section for more
 
 ### S3 Bucket
 Conduktor Platform needs an S3 bucket to store monitoring data
-For that purpose, Helm chart deploy by default a MinIO dependecy service that act an S3 provider. 
+For that purpose, Helm chart deploy by default a MinIO dependency service that act an S3 provider. 
 
-But for production environement, it is **strongly recommended** to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
+But for production environment, it is **strongly recommended** to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
 
 See [external S3 configuration](#setup-s3) section for more details.
 
@@ -88,6 +88,7 @@ Please consult the following version compatibility table to know what version of
 | 1.12.1             | 0.7.0               | 0.2.5      |
 | 1.13.0             | 0.8.0               | 0.3.0      |
 | 1.14.0             | 0.9.0               | 0.4.0      |
+| 1.15.0             | 0.10.2              | 0.5.0      |
 
 ## Getting started
 
@@ -114,7 +115,7 @@ platform:
     license: "..." # Optional
 ```
 
-Then run helm install using prevous values file.
+Then run helm install using previous values file.
 ```shell
 export NAMESPACE=conduktor
 export RELEASE_NAME=platform
@@ -210,8 +211,11 @@ The following keys are expected in provided existing `Secret` :
 - `admin-password` : Platform administrator password (Required)
 - `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provied using `platform.config.database.password`.
 - `license` : Platform enterprise license. Required in secrets, can be empty for free use.
-- `sso-oauth2-client-secret` : SSO OIDC client secret. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
+- `sso-oauth2-client-id` : SSO OIDC client ID. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
+- `sso-oauth2-client-secret` : SSO OIDC client secret (since chart 0.5.0). Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server setup.
+- `monitoring-s3-access-key` : Monitoring S3 access key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
+- `monitoring-s3-secret-key` : Monitoring S3 secret key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
 
 Example: 
 Custom secret named `my-platform-secret`.
@@ -225,9 +229,10 @@ type: Opaque
 data:
   admin-password: 'aaaaa'
   license: 'bbbbb'
-  database-password: 'cccccc'
-  sso-oauth2-client-secret: 'ddddd'
-  sso-ldap-manager-password: 'eeeee'
+  database-password: 'ccccc'
+  sso-oauth2-client-id: 'ddddd'
+  sso-oauth2-client-secret: 'eeeee'
+  sso-ldap-manager-password: 'fffff'
 ```
 
 Chart custom value
@@ -263,7 +268,7 @@ If you want to your own `Secret` to provide database password, see [`Secrets`](#
 
 #### Setup Ingress for Conduktor Platform 
 
-By default, Conduktor Platform is not exposed by an `Ingress`. To enable it you need an proper `IngressController` configured in your cluster like [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) and add configure it in your values.
+By default, Conduktor Platform is not exposed by an `Ingress`. To enable it you need a proper `IngressController` configured in your cluster like [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) and add configure it in your values.
 
 
 ```yaml
@@ -303,7 +308,7 @@ platform:
           insecure: true
 ```
 
-Currently S3 `accessKey` and `secretKey` are not supported as `Secret` but as workaround `platform.condig.extraEnvVarsSecret` can be used to provide them using `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` and `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY` environment variables. See [secrets](#secrets) section for more details.
+Currently, S3 `accessKey` and `secretKey` are not supported as `Secret` but as workaround `platform.condig.extraEnvVarsSecret` can be used to provide them using `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` and `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY` environment variables. See [secrets](#secrets) section for more details.
 
 ### Miscellaneous
 
@@ -320,8 +325,38 @@ Platform Controller need a service account with a bind role containing the follo
     resources: ["services", "pods", "configmaps"]
     verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 ```
-By default this service account and role will be created by the chart. 
+By default, this service account and role will be created by the chart. 
 It can be disabled with `controller.serviceAccount.create` value. In this case you should also provide an already existing service account using `controller.serviceAccount.name` value.
+
+#### Setup node affinity
+Since chart 0.5.0, we provide a way to setup node affinity for Platform and Controller Pods.
+Example : 
+```yaml
+# platform specific node affinity configuration
+platform:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/os
+            operator: In
+            values:
+            - linux
+            - 
+# controller specific node affinity configuration
+controller: 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+         - matchExpressions:
+         - key: kubernetes.io/ok
+           operator: In
+           values:
+            - linux
+```
+See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity) on Node Affinity for more details.
 
 ## Troubleshooting
 
@@ -337,4 +372,4 @@ kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform-controller --all-
 kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform --all-containers
 ```
 
-[^1]: You don't have to be administrator of the cluster, but your should be able to create new resources in a namespace.
+[^1]: You don't have to be administrator of the cluster, but you should be able to create new resources in a namespace.
