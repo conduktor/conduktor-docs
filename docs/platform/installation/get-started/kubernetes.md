@@ -40,7 +40,7 @@ Platform Controller chart follow controller pattern where the controller service
 Depending on the configuration the Controller might ask Kubernetes API to deploy :    
 
     - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`.    
-    - A `Service` to access Condutkor Platform exposed ports   
+    - A `Service` to access Conduktor Platform exposed ports   
     - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.    
 
 :::info   
