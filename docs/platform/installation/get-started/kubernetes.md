@@ -153,7 +153,11 @@ You can customize values of the helm chart in order to match your setup. Learn m
 
 #### Extra environment variables
 
-If some [Platform configuration](../../configuration/env-variables.md) is not available in chart values, you can use `platform.config.extraEnvVars`, `platform.config.extraEnvVarsCM` and `platform.condig.extraEnvVarsSecret` to provide them from environment variables coming from values, a `ConfigMap` or a `Secret`.
+You can provide extra environment variables that will be forwarded to Conduktor. These extra environment variables can be provided using:
+
+  - `platform.config.extraEnvVars`: directly provide key-value pairs
+  - `platform.config.extraEnvVarsCM`: provide environment variables from an existing `ConfigMap`
+  - `platform.condig.extraEnvVarsSecret`: provide environment variables from an existing `Secret`. This is useful as a workaround for non-supported configurations in Controller Chart values.
 
 Example with a cluster definition:
 
@@ -195,7 +199,7 @@ platform:
     extraEnvVarsCM: "extra-platform-config"
     extraEnvVarsSecret: "extra-platform-secret"
 ```
-All extra environment variables will be concatenated and set on Platform `Deployment`. Secrets will not be read and only references are forwarded to Platform `Deployment`. 
+All extra environment variables will be concatenated and set on Conduktor Controller `Deployment`. Secrets will not be read and only references are forwarded to Conduktor Controller `Deployment`. 
 
 #### Secrets
 
@@ -282,7 +286,7 @@ platform:
 
 #### Setup S3
 
-Conduktor can offload Kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as least state as possible inside the Pod. 
+Conduktor can offload Kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as minimal state as possible inside the Pod. 
 
 By default, the Conduktor Controller chart comes with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false`, but in that case it's recommended to provide your own.
 
