@@ -157,7 +157,9 @@ You can provide extra environment variables that will be forwarded to Conduktor.
 
   - `platform.config.extraEnvVars`: directly provide key-value pairs
   - `platform.config.extraEnvVarsCM`: provide environment variables from an existing `ConfigMap`
-  - `platform.condig.extraEnvVarsSecret`: provide environment variables from an existing `Secret`. This is useful as a workaround for non-supported configurations in Controller Chart values.
+  - `platform.config.extraEnvVarsSecret`: provide environment variables from an existing `Secret`
+
+This is useful as a workaround for non-supported configurations in Controller Chart values. 
 
 Example with a cluster definition:
 
@@ -250,7 +252,7 @@ The database host should be reachable by the Controller AND the Platform.
 
 See [database requirement](../../configuration/database.md#database-requirements) for more details on supported PostgreSQL version.
 
-Configuration example : 
+Configuration example: 
 ```yaml
 postgresql:
   enabled: false    # disabled dependency Bitnami PostgreSQL
@@ -308,9 +310,7 @@ platform:
           insecure: true
 ```
 
-Currently S3 `accessKey` and `secretKey` are not supported as `Secret`, but as a workaround `platform.condig.extraEnvVarsSecret` can be used to provide them using environment variables:
-  - `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` 
-  - `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`
+You can provide `accessKey` and `secretKey` using an existing secret via `monitoring-s3-access-key` and `monitoring-s3-secret-key` secret data keys.
 
 See [secrets](#secrets) section for more details.
 
