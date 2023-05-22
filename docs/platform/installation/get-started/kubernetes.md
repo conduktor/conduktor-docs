@@ -1,50 +1,48 @@
 ---
 sidebar_position: 5
 title: Kubernetes
-description: The below guide details how to deploy kubernetes resources to run Conduktor Platform.
+description: The below guide details how to deploy kubernetes resources to run Conduktor.
 ---
 
-The below guide will help you to deploy a production-ready instance of Conduktor Platform on Kubernetes.
+The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
 
 :::info    
-Deployment of Conduktor Cloud on Kubernetes **is currently in public beta**. The deployment method may
+Deployment of Conduktor on Kubernetes **is currently in public beta**. The deployment method may
 change without notice, we welcome [feedback](https://product.conduktor.help/c/55-helm-chart). If you
 have issues, please contact our [support](https://www.conduktor.io/contact/support/).   
 :::
 
 # Helm installation
 
-Conduktor provide a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy the Conduktor Platform using the [controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/). 
+Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor using the [controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/). 
 
 
 ## Architecture
 
-Platform Controller chart follow controller pattern where the controller service (deployed inside Pod) watch a standard ConfigMap resource and run reconciliation process upon changes to this ConfigMap to deploy a Conduktor Platform.
+The Controller chart follows the Kubernetes controller pattern to deploy Conduktor. The controller service (deployed inside a Pod) watches a standard ConfigMap resource and runs reconciliation processes upon changes to this ConfigMap.
+
+1. When installing the Conduktor Controller chart, the chart deploys several things:
+    - `Secret` for sensitive data such as the administrator password, database password, license, SSO secrets
+    - `ConfigMap` containing configuration for Conduktor and for other resources managed by the controller
+    - `ServiceAccount` with proper permissions for the Controller to access Kubernetes API
+    - `Deployment` for the Controller service 
+    - `Service` to access Controller APIs (healthcheck, state, ...)
+    - Optionally, an `Ingress` to expose controller `Service` (not needed for now)
+    - Optionally, a `ServiceMonitor` service for collecting prometheus metrics from the Controller (see [troubleshooting](#troubleshooting))
+    - Optionally, [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency for demo/trial purposes. This can be disabled with `postgresql.enabled=false`
+    - Optionally, [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency for demo/trial purposes. This can be used to provide an S3 Bucket for Conduktor to offload monitoring data. Can be disabled with `minio.enabled=false`
+    - Optionally, [Bitnami Kafka](https://github.com/bitnami/charts/tree/main/bitnami/kafka) dependency for demo/trial purposes. This can be used to provide a Kafka broker that is automatically configured in Conduktor. Can be disabled with `kafka.enabled=false`
 
 
-1. So when installing Platform Controller chart, the chart deploy several things : 
-
-    - A `Secret` for platform sensitive data like administrator password, database password, license, SSO secrets, ...
-    - A `ConfigMap` containing configuration for the Conduktor Platform and for other resources managed by the controller
-    - A `ServiceAccount` with proper permission for Controller to access Kubernetes API
-    - A `Deployment` for the Controller service 
-    - A `Service` to access Controller APIs (healthcheck, state, ...)
-    - Optionally an `Ingress` to expose controller `Service` (not needed for now)
-    - Optionally a `ServiceMonitor` service for collecting prometheus metrics from the Controller (see [troubleshooting](#troubleshooting))
-    - Optionally [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency for demo/trial purpose. Can be disabled with `postgresql.enabled=false`.
-    - Optionally [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency for demo/trial purpose to provide a S3 Bucket for the platform to offload monitoring data. Can be disabled with `minio.enabled=false`.
-    - Optionally [Bitnami Kafka](https://github.com/bitnami/charts/tree/main/bitnami/kafka) dependency for demo/trial purpose to provide a Kafka broker that is automatically configured in the Platform. Can be disabled with `kafka.enabled=false`.
-
-
-2. When Controller start after migrating itself if needed, it start a watcher on `ConfigMap` containing Conduktor Platform configuration and start it's reconciliation loop. 
-Depending on the configuration the Controller might ask Kubernetes API to deploy :    
-
-    - A `Deployment` for the Conduktor Platform with all configuration read in input `ConfigMap` and `Secret`.    
-    - A `Service` to access Conduktor Platform exposed ports   
-    - Optionally an `Ingress` to expose Platform on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for mor details.    
+2. In case of a migration, when the Controller starts it will start a watcher on `ConfigMap` containing the Conduktor configuration and start it's reconciliation loop. 
+Depending on the configuration, the Controller might ask Kubernetes API to deploy:
+   - A `Deployment` for Conduktor with all configurations read in input `ConfigMap` and `Secret`    
+   - A `Service` to access Conduktor exposed ports   
+   - Optionally, an `Ingress` to expose Conduktor on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for more details 
+  
 
 :::info   
-All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. That mean that even if Controller is down or updating itself, Platform is still running. And if `ConfigMap` is removed, everythink owned by it is also purged.   
+All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. This means that even if Controller is down or updating itself, Conduktor is still running. And if `ConfigMap` is removed, everything owned by it is also purged.   
 :::
 
 ![Platform Controller diagram](/img/get-started/kubernetes-platform-controller-diag.png)
@@ -53,33 +51,32 @@ All resources deployed by the Controller are in fact [owned](https://kubernetes.
 
 * Kubernetes Cluster 1.16+ ([setup a local cluster](https://k3d.io/v5.4.9/#installation))[^1]
     * With access to a namespace with [minimal role](#minimal-role-rules)
-* Kubectl ([install](https://kubernetes.io/docs/tasks/tools/#kubectl)) with proper kube context configured.
+* Kubectl ([install](https://kubernetes.io/docs/tasks/tools/#kubectl)) with proper kube context configured
 * Helm 3.1.0+ ([install](https://helm.sh/docs/intro/install/))
 * Basic knowledge of Kubernetes
 
 ### Database
-Conduktor Platform and the Platform Controller need a PostgreSQL database to work.   
+Conduktor and the Controller need a PostgreSQL database to work.   
 
-By default, for trial and demo purpose the chart come with an optional [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency that is used as database. 
+By default, and for trial and demo purposes, the chart comes with an optional [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency that is used as database. 
 
-But for production environment, it is **strongly recommended** to provide a PostgreSQL database not managed by the chart and disable dependency on using `postgresql.enabled=false`.
+But for production environments, it is **strongly recommended** to provide a PostgreSQL database that is not managed by the chart and to disable dependency on using `postgresql.enabled=false`.
 
 See [external database configuration](#setup-external-database) section for more details.
 
 ### S3 Bucket
-Conduktor Platform needs an S3 bucket to store monitoring data
-For that purpose, Helm chart deploy by default a MinIO dependency service that act an S3 provider. 
+Conduktor requires an S3 bucket to store monitoring data. For that purpose, the Helm chart deploys by default a MinIO dependency service that acts as an S3 provider. 
 
-But for production environment, it is **strongly recommended** to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
+But for **production environments**, it is **strongly recommended** to setup an external S3 service and disable MinIO dependency with `minio.enabled=false` value.
 
 See [external S3 configuration](#setup-s3) section for more details.
 
 ## Versions compatibility matrix
 
-Conduktor Platform, Platform-Controller, and its Helm chart have different versions.
-Please consult the following version compatibility table to know what version of the chart deploys what version of the Conduktor Platform.
+Conduktor, Platform-Controller, and its Helm chart have different versions.
+Please consult the following version compatibility matrix to understand which version of the chart deploys the corresponding version of Conduktor.
 
-| Conduktor Platform | Platform-controller | Helm chart |
+| Conduktor | Platform-controller | Helm chart |
 |--------------------|---------------------|------------|
 | 1.11.1             | 0.4.0               | 0.2.1      |
 | 1.11.1             | 0.5.0               | 0.2.2      |
@@ -94,16 +91,16 @@ Please consult the following version compatibility table to know what version of
 
 ### Setup Conduktor Helm repository
 
-Configure helm in order to recognize **Conduktor Repository**, you only have to do this step once.
+Configure helm in order to recognize **Conduktor Repository**. You only have to do this step once.
 
 ```shell
 helm repo add conduktor https://helm.conduktor.io
 helm repo update
 ```
 
-### How to install conduktor Platform chart
+### How to install the Conduktor chart
 
-To install the Conduktor Platform helm chart you need to provide some basic mandatory configuration fit it to work. 
+To install the Conduktor helm chart you need to provide some basic mandatory configuration for it to work. 
 
 Here is a basic value file `custom-values.yaml` that will be used to configure the chart.
 ```yaml
@@ -115,7 +112,7 @@ platform:
     license: "..." # Optional
 ```
 
-Then run helm install using previous values file.
+Then, run helm install using previous values file.
 ```shell
 export NAMESPACE=conduktor
 export RELEASE_NAME=platform
@@ -125,20 +122,20 @@ helm install -n ${NAMESPACE} --create-namespace \
     -f custom-values.yaml
 ```
 
-Once deployed, you will be able to access the platform on [localhost:8080](localhost:8080) by using a port-forward (you can also configure an [ingress](#setup-ingress-for-conduktor-platform) with helm values).
+Once deployed, you will be able to access Conduktor on [localhost:8080](localhost:8080) by using a port-forward (you can also configure an [ingress](#setup-ingress-for-conduktor-platform) with helm values).
 
 ```bash
 kubectl port-forward deployment/platform -n ${NAMESPACE} 8080:80
 ```
 
-Then login using the configured credentials provided in `custom-values.yaml` configuration file. And you can enjoy Conduktor Platform.
+Then, login using the configured credentials provided in the `custom-values.yaml` configuration file. You are now able to enjoy Conduktor.
 
-If you want to expose Conduktor Platform on an ingress read [Ingress configuration](#setup-ingress-for-conduktor-platform) section for more details.
+If you want to expose Conduktor on an ingress, read the [Ingress configuration](#setup-ingress-for-conduktor-platform) section for more details.
 
 
-### How to upgrade Platform Controller
+### How to upgrade the Controller
 
-Usually, it only need an Helm Conduktor repository update and an Helm upgrade with previous existing configuration values.  
+Usually, it only requires a Helm Conduktor repository update and a Helm upgrade with pre-existing configuration values.  
 ```bash
 # update public repository to download new releases of conduktor/platform-controller
 helm repo update
@@ -146,20 +143,25 @@ helm repo update
 helm upgrade -n ${NAMESPACE} ${HELM_RELEASE_NAME} conduktor/platform-controller -f custom-values.yaml
 ```
 
-Upgrade will update deployed Controller image and optional dependencies as well as updating `ConfigMap` and `Secret` if needed. Then the new Controller will do a reconciliation to ask to update the Conduktor Platform image and others managed Kubernetes resources. 
+An upgrade will update the deployed Controller image, optional dependencies and update `ConfigMap` and `Secret` if required. Then, the new Controller will do a reconciliation that asks to update the Conduktor image and other managed Kubernetes resources. 
 
-See [verions compatibility matrix](#versions-compatibility-matrix) to know which version of the chart deploy which version of the Conduktor Platform
+See [verions compatibility matrix](#versions-compatibility-matrix) to know which version of the chart deploys the corresponding version of Conduktor.
 
 ### Custom deployment
 
-You can customize values of the helm chart in order to match your setup. You can learn about
-available values in the [helm chart documentation](https://helm.conduktor.io/platform-controller/#parameters).
+You can customize values of the helm chart in order to match your setup. Learn more about available values in the [helm chart documentation](https://helm.conduktor.io/platform-controller/#parameters).
 
-#### Extra environement variables
+#### Extra environment variables
 
-If some [Platform configuration](../../configuration/env-variables.md) is not available in chart values, you can use `platform.config.extraEnvVars`, `platform.config.extraEnvVarsCM` and `platform.condig.extraEnvVarsSecret` to provide them from environement variables comming from values, a `ConfigMap` or a `Secret` 
+You can provide extra environment variables that will be forwarded to Conduktor. These extra environment variables can be provided using:
 
-Example with a cluster definition. 
+  - `platform.config.extraEnvVars`: directly provide key-value pairs
+  - `platform.config.extraEnvVarsCM`: provide environment variables from an existing `ConfigMap`
+  - `platform.config.extraEnvVarsSecret`: provide environment variables from an existing `Secret`
+
+This is useful as a workaround for non-supported configurations in Controller Chart values. 
+
+Example with a cluster definition:
 
 Existing `ConfigMap` named `extra-platform-config`
 ```yaml
@@ -199,21 +201,21 @@ platform:
     extraEnvVarsCM: "extra-platform-config"
     extraEnvVarsSecret: "extra-platform-secret"
 ```
-All extra environment variables will end up been concatenated and set on Platform `Deployment`. Secrets will not be read and only references are forwarded to Platform `Deployment`. 
+All extra environment variables will be concatenated and set on Conduktor Controller `Deployment`. Secrets will not be read and only references are forwarded to Conduktor Controller `Deployment`. 
 
 #### Secrets
 
-As describe in [architecture](#architecture) section, Platform Controller Helm chart will deploy a `Secret` resource containing all sensitive data given in values during installation.
+As described in the [architecture](#architecture) section, the Controller Helm chart will deploy a `Secret` resource containing all sensitive data provided as values during installation.
 
-But you can also provide an existing `Secret` to the chart to be used in-place of the one created automatically. 
+However, you can also provide an existing `Secret` to the chart, which can be used in-place of the one created automatically. 
 
-The following keys are expected in provided existing `Secret` : 
+The following keys are expected in the provided existing `Secret`: 
 - `admin-password` : Platform administrator password (Required)
-- `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provied using `platform.config.database.password`.
+- `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provided using `platform.config.database.password`.
 - `license` : Platform enterprise license. Required in secrets, can be empty for free use.
 - `sso-oauth2-client-id` : SSO OIDC client ID. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-oauth2-client-secret` : SSO OIDC client secret (since chart 0.5.0). Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
-- `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server setup.
+- `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server is setup.
 - `monitoring-s3-access-key` : Monitoring S3 access key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
 - `monitoring-s3-secret-key` : Monitoring S3 secret key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
 
@@ -245,12 +247,12 @@ platform:
 
 #### Setup external database
 
-To setup external database you have to setup `platform.config.database` configuration properties. 
-Database host should be reachable by the Controller AND the Platform. 
+To setup an external database you should setup `platform.config.database` configuration properties. 
+The database host should be reachable by the Controller AND the Platform. 
 
 See [database requirement](../../configuration/database.md#database-requirements) for more details on supported PostgreSQL version.
 
-Configuration example : 
+Configuration example: 
 ```yaml
 postgresql:
   enabled: false    # disabled dependency Bitnami PostgreSQL
@@ -264,11 +266,11 @@ platform:
       password: ""  # Database authentication password 
       name: ""      # Database name
 ```
-If you want to your own `Secret` to provide database password, see [`Secrets`](#secrets) section for more details.
+If you want to use your own `Secret` to provide the database password, see the [Secrets](#secrets) section for more details.
 
-#### Setup Ingress for Conduktor Platform 
+#### Setup Ingress for Conduktor 
 
-By default, Conduktor Platform is not exposed by an `Ingress`. To enable it you need a proper `IngressController` configured in your cluster like [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) and add configure it in your values.
+By default, Conduktor is not exposed by an `Ingress`. To enable it, you need a proper `IngressController` configured in your cluster such as [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/), and add the configuration values.
 
 
 ```yaml
@@ -286,9 +288,9 @@ platform:
 
 #### Setup S3
 
-Conduktor platform can offload kafka metrics collected for internal monitoring into a S3 object storage and so retain as less state as possible inside the Pod. 
+Conduktor can offload Kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as minimal state as possible inside the Pod. 
 
-By default, Platform Controller chart come with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false` but in that case it is recommended to provide your own.
+By default, the Conduktor Controller chart comes with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false`, but in that case it's recommended to provide your own.
 
 
 ```yaml
@@ -308,12 +310,14 @@ platform:
           insecure: true
 ```
 
-Currently, S3 `accessKey` and `secretKey` are not supported as `Secret` but as workaround `platform.condig.extraEnvVarsSecret` can be used to provide them using `CDK_MONITORING_STORAGE_S3_ACCESSKEYID` and `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY` environment variables. See [secrets](#secrets) section for more details.
+You can provide `accessKey` and `secretKey` using an existing secret via `monitoring-s3-access-key` and `monitoring-s3-secret-key` secret data keys.
+
+See [secrets](#secrets) section for more details.
 
 ### Miscellaneous
 
 #### Minimal Role rules
-Platform Controller need a service account with a bind role containing the following rules to work properly.
+The Controller needs a service account with a bind role containing the following rules to work properly.
 ```
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
@@ -325,8 +329,9 @@ Platform Controller need a service account with a bind role containing the follo
     resources: ["services", "pods", "configmaps"]
     verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 ```
-By default, this service account and role will be created by the chart. 
-It can be disabled with `controller.serviceAccount.create` value. In this case you should also provide an already existing service account using `controller.serviceAccount.name` value.
+By default, this service account and role will be created by the chart. It can be disabled with `controller.serviceAccount.create` value. 
+
+In this case you should also provide an existing service account using `controller.serviceAccount.name` value.
 
 #### Setup node affinity
 Since chart 0.5.0, we provide a way to setup node affinity for Platform and Controller Pods.
@@ -360,16 +365,16 @@ See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-co
 
 ## Troubleshooting
 
-### See Platform Controller logs
+### See Controller logs
 
 ```bash
 kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform-controller --all-containers
 ```
 
-### See Conduktor Platform logs
+### See Conduktor logs
 
 ```bash
 kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform --all-containers
 ```
 
-[^1]: You don't have to be administrator of the cluster, but you should be able to create new resources in a namespace.
+[^1]: You don't have to be an administrator of the cluster, but you should be able to create new resources in a namespace.
