@@ -6,12 +6,7 @@ description: Monitoring Metrics available in Conduktor Monitoring
 
 # Metrics
 
-:::info Monitoring is changing to improve the ease of setup and usability. [Find out more](/platform/support/important-notices/#monitoring-is-changing-january-27-2023). 
-:::
-
-The below details the metrics that are surfaced within Conduktor Monitoring.
-
-You will have access to some metrics without any additional configuration, but you should install the [agent](/platform/monitoring/getting-started/agent-setup) to use Monitoring at full capacity.
+Below details the metrics that are surfaced within Conduktor Monitoring.
 
 <!-- prettier-ignore -->
 | Context | Metric | Definition |

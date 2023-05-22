@@ -6,6 +6,7 @@ description: How to manage and update your Kafka clusters in Conduktor Platform
 
 # Managing Clusters
 
+## Overview 
 The Admin section of Conduktor Platform enables you to add, update, and delete Kafka clusters. By default, only users with Admin permissions will be able to view and perform actions relating to Cluster management. You will not be able to add clusters beyond your current organization limit; please use the chat box below or contact us to discuss an increase to this limit.
 
 ![Cluster admin](/img/admin/cluster-admin.png)

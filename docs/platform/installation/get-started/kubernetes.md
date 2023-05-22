@@ -85,6 +85,7 @@ Please consult the following version compatibility matrix to understand which ve
 | 1.12.1             | 0.7.0               | 0.2.5      |
 | 1.13.0             | 0.8.0               | 0.3.0      |
 | 1.14.0             | 0.9.0               | 0.4.0      |
+| 1.15.0             | 0.10.2              | 0.5.0      |
 
 ## Getting started
 
@@ -206,8 +207,11 @@ The following keys are expected in the provided existing `Secret`:
 - `admin-password` : Platform administrator password (Required)
 - `database-password` : PostgreSQL authentication password. Required if `postgresql.enabled=false` and password not directly provided using `platform.config.database.password`.
 - `license` : Platform enterprise license. Required in secrets, can be empty for free use.
-- `sso-oauth2-client-secret` : SSO OIDC client secret. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
+- `sso-oauth2-client-id` : SSO OIDC client ID. Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
+- `sso-oauth2-client-secret` : SSO OIDC client secret (since chart 0.5.0). Optional, only used if `platform.config.sso.enabled=true` and OIDC client setup.
 - `sso-ldap-manager-password` : SSO LDAP manager authentication password. Optional, only used if `platform.config.sso.enabled=true` and LDAP server is setup.
+- `monitoring-s3-access-key` : Monitoring S3 access key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
+- `monitoring-s3-secret-key` : Monitoring S3 secret key (since chart 0.5.0). Optional, only used if S3 setup and `minio.enabled=false`.
 
 Example: 
 Custom secret named `my-platform-secret`.
@@ -221,9 +225,10 @@ type: Opaque
 data:
   admin-password: 'aaaaa'
   license: 'bbbbb'
-  database-password: 'cccccc'
-  sso-oauth2-client-secret: 'ddddd'
-  sso-ldap-manager-password: 'eeeee'
+  database-password: 'ccccc'
+  sso-oauth2-client-id: 'ddddd'
+  sso-oauth2-client-secret: 'eeeee'
+  sso-ldap-manager-password: 'fffff'
 ```
 
 Chart custom value
@@ -324,6 +329,36 @@ By default, this service account and role will be created by the chart. It can b
 
 In this case you should also provide an existing service account using `controller.serviceAccount.name` value.
 
+#### Setup node affinity
+Since chart 0.5.0, we provide a way to setup node affinity for Platform and Controller Pods.
+Example : 
+```yaml
+# platform specific node affinity configuration
+platform:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/os
+            operator: In
+            values:
+            - linux
+            - 
+# controller specific node affinity configuration
+controller: 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+         - matchExpressions:
+         - key: kubernetes.io/ok
+           operator: In
+           values:
+            - linux
+```
+See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity) on Node Affinity for more details.
+
 ## Troubleshooting
 
 ### See Controller logs
@@ -338,4 +373,4 @@ kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform-controller --all-
 kubectl logs -f -n NAMESPACE -l conduktor.io/app-name=platform --all-containers
 ```
 
-You don't have to be administrator of the cluster, but you should be able to create new resources in a namespace.
+[^1]: You don't have to be an administrator of the cluster, but you should be able to create new resources in a namespace.

@@ -6,11 +6,17 @@ description: The Conduktor Platform enables you to view messages in your Kafka T
 
 # Browse Data
 
+## Overview 
 The Conduktor Platform enables you to view messages in your Kafka Topics.
+
+In the example below, the topic **_wikipedia.parsed_** is selected. 
+
+After selecting a topic, you can **format** the message to keep only the fields you need, **filter** your records according to multiple criteria, and also manually decide on the **deserialisation** formats for the messages key and value.
 
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212052836-71c9826d-275b-4576-a8dc-957ed468eaff.png" />
 
-After choosing a Topic, in the example above it is _wikipedia.parsed_, you can **format** the message to keep only the fields you need, **filter** your records according to multiple criteria and also manually decide on the **deserialisation** formats of the messages key and value.
+
+
 
 :::info
 Each feature is built on top of each another, and the ordering in which they are executed could matter.  
@@ -25,10 +31,13 @@ This means that if you set a Kafka filter to `From Beginning`, `Max Record 1000`
 1. The topic runs out of records
 2. 1000 records match your JS filter
 :::
-Jump to:
+
+**Jump to:**
 - [Formatting](#formatting)
 - [Filtering](#filtering)
 - [Deserialization](#deserialization)
+- [Exporting Data](#exporting-data)
+
 
 ## Formatting
 You can format your message as long as it has a JSON-compatible representation (Including Avro and Proto with Schema Registry).  
@@ -99,7 +108,7 @@ Positions the consumer any given point in time, returning up to `max-records` re
 
 ### Max Results
 
-This filter allows you to change the number of record returned to the browser. You can increase that number from 1 up to a maximum of 1000 records.
+This filter allows you to change the number of record returned to the browser. You can increase that number from 1 up to a maximum of 5000 records.
 These are the records on which you will search when using the "Quick Search" filter.
 
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128328-7f89c0fe-08c9-46eb-b82e-de52ca085f8d.png" />
@@ -222,3 +231,17 @@ If the deserialization fails or doesn't represent the data as you expect, you ca
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/81160538/212128823-76a9384d-d37d-4c34-b7a8-e704330903c9.png" />
 
 Deserializers are available behind the "More options" button.
+
+## Exporting Data
+
+Since Conduktor 1.15.0, data can be exported from the consumer view. Data can be exported in formats:
+
+  - **CSV**
+      - Exported with the **schema**: timestamp, partition, offset, key, value
+
+  - **JSON**
+      - Exported as [JSON lines](https://jsonlines.org/)
+
+To export data, click the breadcrumb from within the table and choose the desired export format. All results that are loaded within the Conduktor UI will be exported.
+
+![Create a connector](/img/console/console-export.png)
