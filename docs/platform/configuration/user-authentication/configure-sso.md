@@ -295,11 +295,11 @@ Configure a new application on MS Azure
 
 You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
-![](https://user-images.githubusercontent.com/112936799/236046089-41e2218e-4471-43f8-ad84-6f289d27523c.png)
+<img src="../assets/Azure-groups-config.png" height="300">
 
 - **Step 2**: Create a new client secret.
 
-![](https://user-images.githubusercontent.com/112936799/236047761-e68729c8-bb89-4dc2-8064-278f72867eff.png)
+<img src="../assets/Azure-client-secret.png" height="300">
 
 :::warning
 You need to keep these values somewhere safe, as you will not have access to them again.
@@ -311,7 +311,7 @@ The `Value` marked by the red arrow on the screenshot above is the one to put as
 
 This useful information can be found in the overview of you application. It has been marked with a red arrow on the screenshot below. This will be the `client-id` in the configuration file.
 
-![](https://user-images.githubusercontent.com/112936799/236051414-df7ec977-053d-46f7-b7ee-9c6b87538625.png)
+<img src="../assets/Azure-client-ID.png" height="300">
 
 - **Step 4**: Write the configuration snippet
 
