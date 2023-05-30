@@ -44,8 +44,19 @@ sso:
         issuer: https://login.microsoftonline.com/{tenantid}/v2.0
       groups-claim: ${GROUPS_CLAIM}
 ```
-For **Azure AD**, the claim value can be found in the 'Token configuration' tab within your App registration.
-![](../assets/azure-ad-claims.png)
+
+#### Azure AD example
+
+For **Azure AD**, you can create this claim in the 'Token configuration' tab within your `App registration`.
+Click on `Add groups claim`.
+
+![](../assets/Azure-add-groups-claim.png)
+
+Then select `Security groups` as group type to include, and ensure that the token property is `Group ID` for each type.
+
+![](../assets/Azure-groups-config.png)
+
+You can see that the claim name is `groups`, so you can add the following line in you configuration file: `groups-claim: "groups"`.
 
 ## Create a Group Mapping
 
@@ -69,5 +80,7 @@ In the above example, any users that are present in the externally mapped groups
 From within the Members screen, select the breadcrumbs next to an existing group and select 'Map external group'.
 
 ![](../assets/admin-map-external-group.png)
+
+The value to set depends on the IdP you use. For example, for **Azure**, you must put the `Object ID` of your groups. For **Keycloak**, this is the name of the group.
 
 Once you have mapped external groups, use Conduktor's [RBAC](../../admin/rbac.md) system to enforce permissions.

@@ -289,30 +289,46 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<host(:port)>/realms/<realm name>"
 
 ### Azure
 
-Configure new application on MS Azure
+Configure a new application on MS Azure
 
-- **Step 1**: Create a new application in `App registrations` ![](../assets/azure-app-step-001.png)
+- **Step 1**: Create a new application in `App registrations`
 
-- **Step 2**: Name the application with a relevant name ![](../assets/azure-app-step-002.png)
+You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
-- **Step 3**: Create a new client secret. Keep these details secret. ![](../assets/azure-app-step-003.png)
+![](../assets/Azure-new-app.png)
 
-- **Step 4**: Define the callback URL. Either use the full domain you will use to host the application, or `localhost` ![](../assets/azure-app-step-004.png)
+- **Step 2**: Create a new client secret.
 
-In your application summary, you can easily find the tenant ID of your organization in MS Azure. Replace the `{tenantid}` in the below configuration for `openid`. Use the application ID as the `client-id`, and the client secret you created earlier as `client-secret`
+![](../assets/Azure-client-secret.png)
+
+:::warning
+You need to keep the `Value` somewhere safe, as you will not have access to it again.
+:::
+
+`Value` is marked by the red arrow on the screenshot above and is the one to put as `client-secret` in the configuration file.
+
+- **Step 3**: Find the `Application (client) ID`
+
+This useful information can be found in the overview of you application. It has been marked with a red arrow on the screenshot below. This will be the `client-id` in the configuration file.
+
+![](../assets/Azure-client-ID.png)
+
+- **Step 4**: Write the configuration snippet
+
+At the end, you should be able to write the following snippet in your Conduktor Platform configuration file:
 
 ```yaml
 sso:
   oauth2:
     - name: 'azure'
       default: true
-      client-id: ${AZURE_APPLICATION_ID}
-      client-secret: ${AZURE_CLIENT_SECRET}
+      client-id: ${AZURE_APPLICATION_ID} # from step 3
+      client-secret: ${AZURE_CLIENT_SECRET} # from step 2
       openid:
-        issuer: https://login.microsoftonline.com/{tenantid}/v2.0
+        issuer: https://login.microsoftonline.com/{AZURE_TENANT_ID}/v2.0 # from step 3
 ```
 
-Or from environment variables :
+Or using environment variables as shown here:
 
 ```bash
 CDK_SSO_OAUTH2_0_NAME="azure"
@@ -322,7 +338,9 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="${AZURE_CLIENT_SECRET}"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.0"
 ```
 
-> **Note** : do not use the "Secret ID" of the client secret as the `client-id`. You **must** use the application ID.
+:::info
+If you want to use the `external groups mapping` to map groups between your Conduktor Platform instance and Azure, please take a look at [here](../external-group-sync/#azure-ad-example).
+:::
 
 ### Google
 
