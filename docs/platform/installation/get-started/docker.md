@@ -6,7 +6,7 @@ description: Get started with the latest Conduktor Platform Docker image in just
 
 # Docker Quick Start
 
-Get started with the latest Conduktor Docker image. The installation and configuration process takes under 30 minutes.
+Get started with the latest Conduktor Docker image. The installation and configuration process takes a few minutes only, the time to download and start the containers and the platform to start.
 
 There are two ways to configure Conduktor via Docker:
 
