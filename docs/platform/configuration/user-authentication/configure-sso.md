@@ -289,11 +289,11 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<host(:port)>/realms/<realm name>"
 
 ### Azure
 
-Configure new application on MS Azure
+Configure a new application on MS Azure
 
 - **Step 1**: Create a new application in `App registrations`
 
-You can select the name you want, and enter the redirect URI as following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
+You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
 ![](https://user-images.githubusercontent.com/112936799/236046089-41e2218e-4471-43f8-ad84-6f289d27523c.png)
 
@@ -302,20 +302,20 @@ You can select the name you want, and enter the redirect URI as following: `http
 ![](https://user-images.githubusercontent.com/112936799/236047761-e68729c8-bb89-4dc2-8064-278f72867eff.png)
 
 :::warning
-You need to keep these values somewhere, as you won't have access to the `Value` again.
+You need to keep these values somewhere safe, as you will not have access to them again.
 :::
 
-The `Value` marked by the red arrow on the screenshot is the one to put as `client-secret` in the configuration file.
+The `Value` marked by the red arrow on the screenshot above is the one to put as `client-secret` in the configuration file.
 
 - **Step 3**: Find the `Application (client) ID`
 
-This useful information can be find on the overview of you application. It has been marked with a red arrow on the screen below. It will be the `client-id` in the configuration file.
+This useful information can be found in the overview of you application. It has been marked with a red arrow on the screenshot below. This will be the `client-id` in the configuration file.
 
 ![](https://user-images.githubusercontent.com/112936799/236051414-df7ec977-053d-46f7-b7ee-9c6b87538625.png)
 
 - **Step 4**: Write the configuration snippet
 
-At the end, you should be able to write the following snippet in your Platform configuration file:
+At the end, you should be able to write the following snippet in your Conduktor Platform configuration file:
 
 ```yaml
 sso:
@@ -328,7 +328,7 @@ sso:
         issuer: https://login.microsoftonline.com/{AZURE_TENANT_ID}/v2.0 # from step 3
 ```
 
-Or from environment variables :
+Or using environment variables as shown here:
 
 ```bash
 CDK_SSO_OAUTH2_0_NAME="azure"
@@ -339,7 +339,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.
 ```
 
 :::info
-If you want to use the `external groups mapping` to map groups between your Platform and Azure, please take a look at [this](../external-group-sync/#azure-ad-example).
+If you want to use the `external groups mapping` to map groups between your Conduktor Platform instance and Azure, please take a look at [here](../external-group-sync/#azure-ad-example).
 :::
 
 ### Google
