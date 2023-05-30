@@ -295,7 +295,7 @@ Configure a new application on MS Azure
 
 You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
-![](../assets/Azure-groups-config.png)
+![](../assets/Azure-new-app.png)
 
 - **Step 2**: Create a new client secret.
 
