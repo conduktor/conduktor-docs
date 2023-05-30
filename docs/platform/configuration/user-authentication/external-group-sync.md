@@ -48,7 +48,9 @@ sso:
 #### Azure AD example
 
 For **Azure AD**, you can create this claim in the 'Token configuration' tab within your `App registration`.
-Click on `Add groups claim`, then select `Security groups` as group type to include, and ensure that the token property is `Group ID` for each type.
+Click on `Add groups claim`.
+<img width="535" alt="Screenshot 2023-05-30 at 10 22 49" src="https://github.com/conduktor/conduktor-docs/assets/112936799/b9d9ad6e-1535-4485-aa5d-518c2b7b3269">
+Then select `Security groups` as group type to include, and ensure that the token property is `Group ID` for each type.
 ![](https://user-images.githubusercontent.com/112936799/236053504-49e91058-4f75-4ca5-acf4-3cdfac5a73f0.png)
 
 You can see that the claim name is `groups`, so you can add the following line in you configuration file: `groups-claim: "groups"`.
