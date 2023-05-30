@@ -302,10 +302,10 @@ You can select the name you want, shown here as `conduktor-platform`, and enter 
 ![](../assets/Azure-client-secret.png)
 
 :::warning
-You need to keep these values somewhere safe, as you will not have access to them again.
+You need to keep the `Value` somewhere safe, as you will not have access to it again.
 :::
 
-The `Value` marked by the red arrow on the screenshot above is the one to put as `client-secret` in the configuration file.
+`Value` is marked by the red arrow on the screenshot above and is the one to put as `client-secret` in the configuration file.
 
 - **Step 3**: Find the `Application (client) ID`
 
