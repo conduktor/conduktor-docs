@@ -6,7 +6,7 @@ description: Securing Conduktor Gateway with JWT
 
 This page covers the Enterprise level security available the Enterprise version of Conduktor Gateway.  
 
-Refer to [Open Source Security](./oss_security.md) for open source security documentation
+Refer to [Open Source Security](./oss_security.md) for open source security documentation.
 
 
 
@@ -20,7 +20,7 @@ Jump to:
 
 ## Access control
 
-Conduktor Gateway supports SASL authentication with clients the same as base Kafka. The PLAIN sasl mechanism is used to 
+Conduktor Gateway supports SASL authentication with clients the same as base Kafka. The PLAIN SASL mechanism is used to 
 communicate user information to the server via the usual username and password fields.
 
 The gateway uses encrypted JWT tokens in the password field to encode metadata required by the gateway (tenant 
@@ -40,8 +40,6 @@ We then configure the shared secret that will encrypt the JWT tokens.
       USER_POOL_SECRET_KEY: secret
 ```
 
-Now 
-
 ## Generating tokens
 
 Tokens are generated using an admin REST API. This is not exposed by default and is secured with a set of administrator 
@@ -54,7 +52,7 @@ following:
       JWT_AUTH_MASTER_PASSWORD: superUser
 ```
 
-Conduktor Gateway is natively multi tenant. This means that tokens must contain more than a username and secret, they 
+Conduktor Gateway is natively multi-tenant. This means that tokens must contain more than a username and secret, they 
 must also encode tenant metadata. For convenience a token can be generated through the API by providing the following:
 
 1. An organisation id - an integer valuing indicating the tenant's organisation
