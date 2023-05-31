@@ -27,18 +27,18 @@ Jump to:
 
 ## Kafka Requirements
 
-Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. 
-Conduktor Gateway should connect to Kafka as an admin user. As a minimum this user should have rights to:
-* Create/Delete/Alter topics
-* Commit offsets
-* Create/alter/delete consumer groups
-* Describe cluster information
+Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gateway should connect to Kafka as an admin user. As a minimum this user should have rights to:
+
+- Create/Delete/Alter topics
+- Commit offsets
+- Create/alter/delete consumer groups
+- Describe cluster information
 
 # Running the gateway
 
 **Example: Starting Conduktor Gateway with a single node Kafka deployment.**  
- Note if your kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,   
-  ```-e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:19092``` , in order to reach it.
+ Note if your kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,  
+ `-e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:19092` , in order to reach it.
 
 ```bash
  docker run \
@@ -46,13 +46,11 @@ Conduktor Gateway should connect to Kafka as an admin user. As a minimum this us
   conduktor/conduktor-proxy:0.5.0-amd64
 ```
 
-For more complex deployments see [environment variables](../configuration/env-variables.md)
+For more complex deployments see [environment variables](/platform/gateway/configuration/env-variables/)
 
 # Connecting to secured Kafka
 
-Conduktor Gateway connects to Kafka just like any other client. Any extra configurations (encryption/authentication etc.) 
-can be provided via environment variables using the KAFKA_ prefix. Security configurations can be provided using this 
-scheme. For example:
+Conduktor Gateway connects to Kafka just like any other client. Any extra configurations (encryption/authentication etc.) can be provided via environment variables using the KAFKA\_ prefix. Security configurations can be provided using this scheme. For example:
 
 ```bash
 ssl.truststore.location
@@ -64,4 +62,4 @@ becomes:
 KAFKA_SSL_TRUSTSTORE_LOCATION
 ```
 
-for more infomation on this see [environment variables](../configuration/env-variables.md)
+for more infomation on this see [environment variables](/platform/gateway/configuration/env-variables/)
