@@ -70,7 +70,11 @@
       "last 1 safari version"
     ]
   },
+  "packageManager": "yarn@1.22.19",
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18.x",
+    "yarn": ">=1.22.x",
+    "pnpm": "yarn",
+    "npm": "yarn"
   }
 }
