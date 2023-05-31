@@ -36,7 +36,9 @@ Conduktor Gateway should connect to Kafka as an admin user. As a minimum this us
 
 # Running the gateway
 
-**Example: Starting Conduktor Gateway with a single node Kafka deployment **
+**Example: Starting Conduktor Gateway with a single node Kafka deployment.**  
+ Note if your kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,   
+  ```-e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:19092``` , in order to reach it.
 
 ```bash
  docker run \
