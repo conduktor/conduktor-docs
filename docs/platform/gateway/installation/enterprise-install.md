@@ -46,7 +46,7 @@ Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gatew
   conduktor/conduktor-proxy:0.5.0-amd64
 ```
 
-For more complex deployments see [environment variables](/platform/gateway/configuration/env-variables/)
+For more complex deployments see [environment variables](/platform/gateway/configuration/env-variables/).
 
 # Connecting to secured Kafka
 
@@ -62,4 +62,4 @@ becomes:
 KAFKA_SSL_TRUSTSTORE_LOCATION
 ```
 
-for more infomation on this see [environment variables](/platform/gateway/configuration/env-variables/)
+for more infomation on this see [environment variables](/platform/gateway/configuration/env-variables/).
