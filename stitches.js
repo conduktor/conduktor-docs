@@ -1,5 +1,5 @@
-import fs from 'fs'
-import { getCssText } from './src/styles'
+const fs = require('fs')
+const { getCssText } = require('./src/styles/dist/index')
 
 fs.writeFile('./static/css/stitches.css', getCssText(), error => {
   if (error) console.error(error)
