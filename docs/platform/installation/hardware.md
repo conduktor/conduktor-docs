@@ -46,7 +46,7 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
   conduktor/conduktor-platform:latest
 ```
 
-See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
+See more about [environment variables](../configuration/env-variables), or starting the Platform in [Docker Quick Start](../installation/get-started/docker).
 
 # Disabling a Module
 
@@ -58,20 +58,7 @@ Default values:
  CONSOLE_ENABLED="true"
  TESTING_ENABLED="true"
  MONITORING_ENABLED="true"
- DATA_MASKING_ENABLED="true"
- SCANNER_ENABLED="true"
  GOVERNANCE_ENABLED="true"
 ```
 
-Example: Disable topic scanner
-
-```bash
- docker run --rm \
-  -p "8080:8080" \
-  -e LICENSE_KEY="<your-license>" \
-  -e RUN_MODE="small" \
-  -e SCANNER_ENABLED="false" \
-  conduktor/conduktor-platform:latest
-```
-
-See more about starting the Platform in [Docker Quick Start]((/platform/installation/get-started/docker/).
+See more about starting the Platform in [Docker Quick Start](../installation/get-started/docker).
