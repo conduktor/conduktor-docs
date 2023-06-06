@@ -42,7 +42,7 @@ If anything is not showing or showing "exited" as the status, a good first step 
 ### From Kubernetes
 
 ```sh
-mitch@m1-mbp example-local % kubectl get po -n <platform-namespace>
+mitch@m1-mbp example-local % kubectl get pod -n <platform-namespace>
 NAME                                         READY   STATUS    RESTARTS   AGE
 platform-75d45ff86c-dlwb5                    1/1     Running   0          14d
 ```
