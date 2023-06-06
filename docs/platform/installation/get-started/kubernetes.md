@@ -7,8 +7,7 @@ description: The below guide details how to deploy kubernetes resources to run C
 The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
 
 :::info    
-Deployment of Conduktor on Kubernetes **is currently in public beta**. The deployment method may
-change without notice, we welcome [feedback](https://product.conduktor.help/c/55-helm-chart). If you
+We welcome [feedback](https://product.conduktor.help/c/55-helm-chart). If you
 have issues, please contact our [support](https://www.conduktor.io/contact/support/).   
 :::
 
@@ -47,7 +46,7 @@ All resources deployed by the Controller are in fact [owned](https://kubernetes.
 
 ![Platform Controller diagram](/img/get-started/kubernetes-platform-controller-diag.png)
 
-## Requirements
+## General requirements
 
 * Kubernetes Cluster 1.16+ ([setup a local cluster](https://k3d.io/v5.4.9/#installation))[^1]
     * With access to a namespace with [minimal role](#minimal-role-rules)
@@ -55,12 +54,20 @@ All resources deployed by the Controller are in fact [owned](https://kubernetes.
 * Helm 3.1.0+ ([install](https://helm.sh/docs/intro/install/))
 * Basic knowledge of Kubernetes
 
+## Production requirements
+For production environments, we  **strongly recommend** : 
+
+* To setup an [external PostgreSQL (14+) database](../../configuration/database.md) with appropriate backup policy and disable the dependency on Bitnami PostgreSQL with `postgresql.enabled=false`
+* To setup an [external S3 Bucket](#setup-s3) and disable the dependency on Bitnami MinIO with `minio.enabled=false`
+* To disable demo Kafka broker with `kafka.enabled=false` and [use your own Kafka cluster](../get-started/cloud.md#configure-your-first-cluster).
+* Enough resources to run Conduktor and its dependencies (PostgreSQL, MinIO, Kafka) with the [recommended configuration](../hardware.md#hardware-requirements)
+
 ### Database
 Conduktor and the Controller need a PostgreSQL database to work.   
 
 By default, and for trial and demo purposes, the chart comes with an optional [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency that is used as database. 
 
-But for production environments, it is **strongly recommended** to provide a PostgreSQL database that is not managed by the chart and to disable dependency on using `postgresql.enabled=false`.
+But for **production environments**, it is **strongly recommended** to provide a PostgreSQL database that is not managed by the chart and to disable dependency on using `postgresql.enabled=false`.
 
 See [external database configuration](#setup-external-database) section for more details.
 
@@ -76,16 +83,18 @@ See [external S3 configuration](#setup-s3) section for more details.
 Conduktor, Platform-Controller, and its Helm chart have different versions.
 Please consult the following version compatibility matrix to understand which version of the chart deploys the corresponding version of Conduktor.
 
-| Conduktor | Platform-controller | Helm chart |
-|--------------------|---------------------|------------|
-| 1.11.1             | 0.4.0               | 0.2.1      |
-| 1.11.1             | 0.5.0               | 0.2.2      |
-| 1.11.1             | 0.5.0               | 0.2.3      |
-| 1.11.1             | 0.6.0               | 0.2.4      |
-| 1.12.1             | 0.7.0               | 0.2.5      |
-| 1.13.0             | 0.8.0               | 0.3.0      |
-| 1.14.0             | 0.9.0               | 0.4.0      |
-| 1.15.0             | 0.10.2              | 0.5.0      |
+| Conduktor                                           | Platform-controller | Helm chart |
+|-----------------------------------------------------|---------------------|------------|
+| [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.4.0               | 0.2.1      |
+| [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.5.0               | 0.2.2      |
+| [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.5.0               | 0.2.3      |
+| [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.6.0               | 0.2.4      |
+| [1.12.1](https://www.conduktor.io/changelog/1.12.1) | 0.7.0               | 0.2.5      |
+| [1.13.0](https://www.conduktor.io/changelog/1.13.0) | 0.8.0               | 0.3.0      |
+| [1.14.0](https://www.conduktor.io/changelog/1.14.0) | 0.9.0               | 0.4.0      |
+| [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.10.2              | 0.5.0      |
+| [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.10.2              | 0.5.1      |
+| [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.12.1              | 0.6.1      |
 
 ## Getting started
 
@@ -333,6 +342,8 @@ By default, this service account and role will be created by the chart. It can b
 
 In this case you should also provide an existing service account using `controller.serviceAccount.name` value.
 
+> Note: Platform pod do not require a service account and use the default one from the namespace. But if needed you can provide a custom existing service account using `platform.serviceAccount.name` value.
+
 #### Setup node affinity
 Since chart 0.5.0, we provide a way to setup node affinity for Platform and Controller Pods.
 Example : 
@@ -377,6 +388,25 @@ platform:
       # You can either specify a port here, or leave it empty so Kubernetes will
       # allocate a port automatically.
       platform: ""
+```
+
+#### Taints and tolerations support
+Since chart 0.6.1, we provide a way to configure taints and tolerations for the platform and controller pods.
+See kubernetes [documentation](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) on taints and tolerations for more details.
+
+```yaml
+controller:
+  tolerations:
+     - key: "key1"
+       operator: "Equal"
+       value: "value1"
+       effect: "NoSchedule"
+     
+platform:
+  tolerations:
+     - key: "key2"
+       operator: "Exists"
+       effect: "NoExecute"
 ```
 
 ## Troubleshooting
