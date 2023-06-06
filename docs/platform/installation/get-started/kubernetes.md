@@ -365,7 +365,7 @@ See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-co
 
 #### Platform service type NodePort
 
-Since chart 0.6.0, we provide a way to configure the type of service is 
+Since chart 0.6.1, we provide a way to configure the type of service is 
 created for the platform. By default, the service type is ClusterIP, but you 
 can also configure it to be NodePort, as followed:
 
