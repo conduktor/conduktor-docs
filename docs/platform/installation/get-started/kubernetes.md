@@ -363,6 +363,22 @@ controller:
 ```
 See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity) on Node Affinity for more details.
 
+#### Platform service type NodePort
+
+Since chart 0.6.1, we provide a way to configure the type of service is 
+created for the platform. By default, the service type is ClusterIP, but you 
+can also configure it to be NodePort, as followed:
+
+```yaml
+platform:
+  service:
+    type: NodePort
+    nodePorts:
+      # You can either specify a port here, or leave it empty so Kubernetes will
+      # allocate a port automatically.
+      platform: ""
+```
+
 ## Troubleshooting
 
 ### See Controller logs
