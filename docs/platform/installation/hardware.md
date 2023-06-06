@@ -46,7 +46,7 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
   conduktor/conduktor-platform:latest
 ```
 
-See more about [environment variables](../configuration/env-variables), or starting the Platform in [Docker Quick Start](../installation/get-started/docker).
+See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
 
 # Disabling a Module
 
@@ -61,4 +61,4 @@ Default values:
  GOVERNANCE_ENABLED="true"
 ```
 
-See more about starting the Platform in [Docker Quick Start](../installation/get-started/docker).
+See more about starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
