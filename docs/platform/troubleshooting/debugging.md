@@ -40,7 +40,7 @@ If you are using an external Kafka installation, you will only need to verify th
 If anything is not showing or showing "exited" as the status, a good first step is to check the `docker logs` output with `docker logs ${CONDUKTOR_PLATFORM_CONTAINER_NAME}`, for example in the example-local docker it would be `docker logs example-local-conduktor-platform-1`. These logs can be saved to a file with `docker logs example-local-conduktor-platform-1 >& docker-logs-output.txt`.
 
 ### From Kubernetes
-
+Kubernetes support have been introduced in version `0.3.0`
 ```sh
 mitch@m1-mbp example-local % kubectl get pod -n <platform-namespace>
 NAME                                         READY   STATUS    RESTARTS   AGE
