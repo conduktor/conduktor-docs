@@ -98,7 +98,7 @@ The Platform Diagnostic tool supports:
 For the Docker version, execute this tool on the same machine where the Conduktor platform is running.
 
 ```sh
-./platform-diagnostic-amd_0-1-0 run docker
+./platform-diagnostic-amd_0-3-0 run docker
 ```
 
 #### Kubernetes
