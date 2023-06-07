@@ -62,7 +62,7 @@ Platform diagnostic is a tool that allow you to extract all the relevant log fro
 
 
 
-- For Conduktor Platform version >= **1.15.0**
+- For Conduktor Platform version >= **1.15.0**    
 [M1 version](https://releases.conduktor.io/platform-diagnostic-m1_0-3-0)   
 [x86 version](https://releases.conduktor.io/platform-diagnostic-amd_0-3-0)
 
