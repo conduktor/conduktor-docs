@@ -107,7 +107,7 @@ For the Kubernetes version, execute this tool on a machine that has access to th
 
 ```sh
 # Execute the binary in a shell
-./platform-diagnostic-amd_0-1-0 run kubernetes --namespace=<namespace_name> --pod-name=<platform-foo-bar>
+./platform-diagnostic-amd_0-3-0 run kubernetes --namespace=<namespace_name> --pod-name=<platform-foo-bar>
 ```
 
 #### Expected output
