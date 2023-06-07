@@ -80,7 +80,7 @@ Platform diagnostic is a tool that allow you to extract all the relevant log fro
 
 First, allow the execution of the downloaded tool:
 ```sh
-chmod +x platform-diagnostic-amd_0-1-0
+chmod +x platform-diagnostic-amd_0-3-0
 ```
 
 To display the usage information, execute the following command:
