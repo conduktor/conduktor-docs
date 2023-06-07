@@ -111,7 +111,7 @@ Blob Storage and Swift, if none is specified, files are stored locally.
 | `monitoring.storage.s3.accessKeyId`       | S3 storage access key                    | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`      | true      | string | ∅       | `1.5.0`  |
 | `monitoring.storage.s3.secretAccessKey`   | S3 storage access key secret             | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`  | true      | string | ∅       | `1.5.0`  |
 | `monitoring.storage.gcs.bucketName`       | GCS storage bucket name                  | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`      | true      | string | ∅       | `1.16.0` |
-| `monitoring.storage.gcs.serviceAccount`   | GCS storage path to service account file | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`  | true      | string | ∅       | `1.16.0` |
+| `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`  | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`   | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`    | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME` | false     | string | ∅       | `1.16.0` |
