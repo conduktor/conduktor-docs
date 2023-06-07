@@ -61,21 +61,12 @@ Platform diagnostic is a tool that allow you to extract all the relevant log fro
 > if you need another support, make us a request
 
 
+| Tool Version | Supported Conduktor versions | x86_64 | ARM64 (M1 compatible) |  
+|--------------|------------------------------|--------|-----------------------|
+| 0.1.0        | <= 1.9.1                     | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-1-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-arm_0-1-0) |
+| 0.2.0        | >= 1.10.0                    | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-2-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-arm_0-2-0) |
+| 0.3.0        | >= 1.15.0                    | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-3-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-m1_0-3-0)  |
 
-- For Conduktor Platform version >= **1.15.0**    
-
-[M1 version](https://releases.conduktor.io/platform-diagnostic-m1_0-3-0)   
-[x86 version](https://releases.conduktor.io/platform-diagnostic-amd_0-3-0)
-
-- For Conduktor Platform version >= **1.10.0**
-
-[ARM version](https://releases.conduktor.io/platform-diagnostic-arm_0-2-0)   
-[x86 version](https://releases.conduktor.io/platform-diagnostic-amd_0-2-0)
-
-- For Conduktor Platform version <= **1.9.1**
-
-[ARM version](https://releases.conduktor.io/platform-diagnostic-arm_0-1-0)
-[x86 version](https://releases.conduktor.io/platform-diagnostic-amd_0-1-0)
 
 ### Usage
 
@@ -171,7 +162,7 @@ The other option is to `docker exec -it ${CONTAINER_ID} /bin/bash`
 From within the container the first step should be verify that all expected services are started. Conduktor platform uses supervisord inside of the container to ensure various services are started:
 
 ```sh
-root@15012271cc24:/# supervisorctl
+conduktor-platform@15012271cc24:/# supervisorctl status
 admin-portal                     RUNNING   pid 32, uptime 0:49:39
 alertmanager                     RUNNING   pid 43, uptime 0:49:39
 authenticator                    RUNNING   pid 29, uptime 0:49:39
@@ -189,10 +180,11 @@ proxy                            RUNNING   pid 72, uptime 0:49:39
 testing                          RUNNING   pid 35, uptime 0:49:39
 testing-agent                    RUNNING   pid 38, uptime 0:49:39
 topic_scanner                    RUNNING   pid 69, uptime 0:49:39
-supervisor>
 ```
 
 In the above example you can see that `data_masking` and `governance_api` failed to start. This tells us what log files will be most important to look into.  
+
+> Tips: if you have an error on supervisorctl command that might be because you don't have correct environment set. Verify that you are running with  `conduktor-platform` user using `/bin/bash` shell and you can force environment by sourcing `/etc/profile` in current shell.
 
 ## 4. Get the logs and send them to support
 
