@@ -100,7 +100,7 @@ Optional local accounts list used to login on conduktor-platform
 
 Monitoring allows multiple block storage backends to be used for storing 
 monitoring data. Only one backend can be used at a time among S3, GCS, Azure 
-Blob Storage and Swift, if none is specified, files are stored locally.
+Blob Storage and Swift, if none is specified, files are stored locally on container volume.
 
 | Property                                  | Description                              | Env                                          | Mandatory | Type   | Default | Since    |
 |-------------------------------------------|------------------------------------------|----------------------------------------------|-----------|--------|---------|----------|
