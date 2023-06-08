@@ -150,6 +150,17 @@ Note: These configurations apply to authentication between clients and Conduktor
 
 ### Logging configuration
 
-| Environment Variable       | Default Value | Description                                                                                      | Enterprise Only |
-|----------------------------|---------------|--------------------------------------------------------------------------------------------------|:---------------:|
-| `LOG4J2_APPENDER_LAYOUT`   | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |       Yes       |
+| Environment Variable                                   | Default Value | Description                                                                                      | Enterprise Only |
+|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|:---------------:|
+| `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |       Yes       |
+| `LOG4J2_ROOT_LEVEL`                                    | `info`        | The logging level for the root logger                                                            |       Yes       |
+| `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | The logging level for the package org.apache.kafka                                               |       Yes       |
+| `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | The logging level for the package io.kcache                                                      |       Yes       |
+| `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | The logging level for the package io.vertx                                                       |       Yes       |
+| `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | The logging level for the package io.netty                                                       |       Yes       |
+| `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | The logging level for the package io.conduktor                                                   |       Yes       |
+| `LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL`        | `info`        | The logging level for the package io.conduktor.proxy.authorization                               |       Yes       |
+| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | The logging level for the package io.conduktor.proxy.rebuilder.components                        |       Yes       |
+| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.service                                     |       Yes       |
+| `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |       Yes       |
+| `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |       Yes       |
