@@ -8,6 +8,38 @@ description: The following notes describe important changes that affect Condukto
 
 Below outlines important notices relating to Conduktor Platform.
 
+ - [Important changes regarding your production deployment (June 12th, 2023)](#important-changes-regarding-your-production-deployment-june-12th-2023)
+ - [Important change when updating to Conduktor 1.15.0 (May 15, 2023)](#important-change-when-updating-to-conduktor-1150-may-15-2023)
+ - [Important change when updating to Conduktor 1.14.0 (April 18, 2023)](#important-change-when-updating-to-conduktor-1140-april-18-2023)
+ - [Monitoring is changing (January 27, 2023)](#monitoring-is-changing-january-27-2023)
+
+### Important notice regarding production deployments (June 12th, 2023)
+
+:::caution
+We are deprecating support for the **embedded database** in an upcoming release. Additionally, you must ensure you have a **block storage (S3, GCS, Azure, Swift)** configured for storing your monitoring data.
+
+Support for both the embedded database and using a container volume filesystem for monitoring data will be **removed** in an **August** release. If you require support in making these changes, please **[contact us](https://www.conduktor.io/contact/support/)** so we can help you. 
+:::
+
+Since v1.0, Conduktor has shipped with an **optional embedded database** for storing Console data. For demo and trial purposes, the embedded database allows you to get started quickly; storing data such as users, permissions, tags and configurations. However, it was never intended that the embedded database be used in production.
+
+Equally, if you do not configure an external block storage for **monitoring data**, it has been possible to depend on the container volume filesystem. Again, this does not meet our [production requirements](../installation/hardware.md#production-requirements), as the volume will grow in size as your usage of Conduktor continues.
+
+When deploying Conduktor in [production](../installation/hardware.md#production-requirements), we want to ensure you have a reliable, durable and recoverable deployment. 
+
+As such, it is:
+   - **Mandatory** to use an [external PostgreSQL (14+) database](../configuration/database.md). This will ensure you have a robust and supported migration path when updating Conduktor. It also ensures that you have an appropriate backup policy in case of a corrupt environment. 
+   - **Mandatory** to setup [block storage (S3, GCS, Azure, Swift)](../configuration/env-variables.md#monitoring-properties) to store metrics data required for Monitoring. This will ensure your container volume does not grow indefinitely.
+   - **Mandatory** to ensure you meet the [hardware requirements](../installation/hardware.md) necessary for running Conduktor.
+
+If you are an existing customer with a production-grade deployment, it's vital that you review if you are adhering to these requirements. Support for both the embedded database and using a container volume filesystem for monitoring data will be **removed in an August release**.
+
+If you require support in making these changes, our **[customer success team](https://www.conduktor.io/contact/support/)** are here to help. 
+
+
+
+
+
 ### Important change when updating to Conduktor 1.15.0 (May 15, 2023)
 
 Note that in Conduktor 1.15.0, the Testing application will no longer be started by default on our on-premise deployment. It's still available on our Cloud version.
