@@ -41,6 +41,13 @@ Default configurations for Conduktor Gateway can be overridden by environment va
 | `PROXY_HOST`         | `localhost`   | The gateway hostname that should be presented to clients  (Use `GATEWAY_HOST` with the open source gateway)                                                                                                                                                                                                                                                            |        No         | 
 | `PROXY_PORT_RANGE`   | `6969:6975`   | A range of ports to be opened on the Conduktor `PROXY_HOST`, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. (Use `GATEWAY_PORT_RANGE` with the open source gateway) |        No         |
 
+### Load Balancing Configurations
+
+| Environment Variable                     | Default Value      | Description                                                                                                                                                                                                          | Enterprise Only |
+|------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
+| `PROXY_CLUSTER_ID`                       | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing                                                                                             |       Yes       |
+| `FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
+
 ### Schema Registry Configurations
 
 | Environment Variable    | Default Value | Description                                                                         |  Enterprise Only   |
