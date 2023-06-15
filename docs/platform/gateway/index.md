@@ -59,7 +59,7 @@ Both offerings are fully Apache Kafka protocol compliant, and support use of Kaf
 | Data transforms              | -                | Yes              |
 | Data audit                   | -                | Yes              |
 | Cold storage                 | -                | Yes              |
-| Create your own interceptor  | Yes              | -                |
+| Create your own interceptor  | Yes              | Yes              |
 | Community Marketplace        | Yes              | -                |
 
 
