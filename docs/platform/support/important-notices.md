@@ -28,7 +28,7 @@ Equally, if you do not configure an external block storage for **monitoring data
 When deploying Conduktor in [production](../installation/hardware.md#production-requirements), we want to ensure you have a reliable, durable and recoverable deployment. 
 
 As such, it is:
-   - **Mandatory** to use an [external PostgreSQL (14+) database](../configuration/database.md). This will ensure you have a robust and supported migration path when updating Conduktor. It also ensures that you have an appropriate backup policy in case of a corrupt environment. 
+   - **Mandatory** to use an [external PostgreSQL (13+) database](../configuration/database.md). This will ensure you have a robust and supported migration path when updating Conduktor. It also ensures that you have an appropriate backup policy in case of a corrupt environment. 
    - **Mandatory** to setup [block storage (S3, GCS, Azure, Swift)](../configuration/env-variables.md#monitoring-properties) to store metrics data required for Monitoring. This will ensure your container volume does not grow indefinitely.
    - **Mandatory** to ensure you meet the [hardware requirements](../installation/hardware.md) necessary for running Conduktor.
 
