@@ -55,7 +55,7 @@ All resources deployed by the Controller are in fact [owned](https://kubernetes.
 * Basic knowledge of Kubernetes
 
 ## Production requirements
-For production environments, we  **strongly recommend** : 
+For production environments, we  **require** : 
 
 * To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy and disable the dependency on Bitnami PostgreSQL with `postgresql.enabled=false`
 * To setup an [external S3 Bucket](#setup-s3) and disable the dependency on Bitnami MinIO with `minio.enabled=false`
