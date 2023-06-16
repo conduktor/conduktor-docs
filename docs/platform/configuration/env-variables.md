@@ -40,6 +40,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 | **`CDK_ROOT_LOG_COLOR`** | 1.11.0 | latest | `true` | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
 | **`CDK_ONBOARDING_MODE`** | 1.14.0 | latest | `auto` | Specify whether to start Conduktor with the onboarding wizard enabled. Accepted values: `auto`, `never`, `always`. Defaults to `auto`  that will start onboarding when no configuration is provided. |
 | **`TESTING_ENABLED`** | 1.15.0 | latest | `false` | Specify whether to start Conduktor with Testing enabled. |
+| **`PROXY_BUFFER_SIZE`** | 1.16.0 | latest | `8k` | Tune internal Nginx `proxy_buffer_size`. |
 
 ## Platform properties reference
 
