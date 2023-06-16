@@ -11,7 +11,7 @@ Conduktor Platform is provided as a single Docker container.
 Jump to:
 
 - [Hardware Requirements](#hardware-requirements)
-- [Disabling a Module](#disabling-a-module)
+- [Production Requirements](#production-requirements)
 
 ## Hardware Requirements
 
@@ -48,17 +48,16 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
 
 See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
 
-# Disabling a Module
+## Production Requirements
 
-All module can be disabled by environment variable.
+For production environments, there are **mandatory requirements** to ensure your deployment is **reliable**, **durable**, and **can be recovered easily**. 
 
-Default values:
+To ensure you meet these requirements, you must:
 
-```bash
- CONSOLE_ENABLED="true"
- TESTING_ENABLED="true"
- MONITORING_ENABLED="true"
- GOVERNANCE_ENABLED="true"
-```
-
-See more about starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
+ - Setup an [external PostgreSQL (14+) database](../configuration/database.md) with appropriate backup policy. 
+    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations. 
+    - Note that the embedded database is not fit for Production, and we cannot guarantee that your data will be migrated easily. 
+ - Setup [block storage](../configuration/env-variables.md#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring. 
+ - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue. 
+ 
+Note that if you are deploying the [Helm chart](./get-started/kubernetes.md), the [production requirements](./get-started/kubernetes.md#production-requirements) are clearly outlined in the installation guide. 
