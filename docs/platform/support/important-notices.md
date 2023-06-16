@@ -8,12 +8,12 @@ description: The following notes describe important changes that affect Condukto
 
 Below outlines important notices relating to Conduktor Platform.
 
- - [Important changes regarding your production deployment (June 12th, 2023)](#important-changes-regarding-your-production-deployment-june-12th-2023)
+ - [Important changes regarding your production deployment (June 16th, 2023)](#important-notice-regarding-production-deployments-june-16th-2023)
  - [Important change when updating to Conduktor 1.15.0 (May 15, 2023)](#important-change-when-updating-to-conduktor-1150-may-15-2023)
  - [Important change when updating to Conduktor 1.14.0 (April 18, 2023)](#important-change-when-updating-to-conduktor-1140-april-18-2023)
  - [Monitoring is changing (January 27, 2023)](#monitoring-is-changing-january-27-2023)
 
-### Important notice regarding production deployments (June 12th, 2023)
+### Important notice regarding production deployments (June 16th, 2023)
 
 :::caution
 We are deprecating support for the **embedded database** in an upcoming release. Additionally, you must ensure you have a **block storage (S3, GCS, Azure, Swift)** configured for storing your monitoring data.
