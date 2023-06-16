@@ -10,6 +10,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 - [Platform Properties Reference](#platform-properties-reference)
    - [Global Properties](#global-properties)
    - [Database Properties](#database-properties)
+   - [Session Lifetime Properties](#session-lifetime-properties)
    - [Local User Properties](#local-users-properties)
    - [Monitoring Properties](#monitoring-properties)
    - [SSO Properties](#sso-properties)
@@ -87,6 +88,14 @@ See database configuration [documentation](/platform/configuration/database/) fo
 | `database.username` | External Postgresql login role | `CDK_DATABASE_USERNAME` | false | string | ∅ |
 | `database.password` | External Postgresql login password | `CDK_DATABASE_PASSWORD` | false | string | ∅ |
 | `database.connection_timeout` | External Postgresql connection timeout in seconds | `CDK_DATABASE_CONNECTIONTIMEOUT` | false | int | ∅ |
+
+### Session Lifetime Properties
+
+Optional properties for configuring your user sessions lifetime.
+
+| Property | Description | Env Variable | Mandatory | Type | Default Value |
+| --- | --- | --- | --- | --- | --- |
+| `auth.sessionLifetime` | Max session lifetime in seconds | `CDK_AUTH_SESSIONLIFETIME` | false | int | 259200 |
 
 ### Local users properties
 
