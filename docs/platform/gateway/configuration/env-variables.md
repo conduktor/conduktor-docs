@@ -46,7 +46,7 @@ Default configurations for Conduktor Gateway can be overridden by environment va
 | Environment Variable                     | Default Value      | Description                                                                                                                                                                                                          | Enterprise Only |
 |------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
 | `PROXY_CLUSTER_ID`                       | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing                                                                                             |       Yes       |
-| `FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
+| `FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `false`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
 
 ### Schema Registry Configurations
 
