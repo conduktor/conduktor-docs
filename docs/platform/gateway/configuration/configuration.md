@@ -23,6 +23,10 @@ Conduktor Gateway should be deployed as a resilient, distributed service. To ena
 default, balance client connections across running instances. This behaviour is configured with [load balancing 
 configurations](./env-variables.md#load-Balancing-configurations).
 
-Note: Load balancing of this type is not suitable for production deployments. We recommend that, for these deployments, 
+:::caution
+
+Load balancing of this type is not suitable for production deployments. We recommend that, for these deployments, 
 internal load balancing is disabled and an external TCP load balancer (such as [HA-proxy](https://www.haproxy.org/)) is 
 used.
+
+:::
