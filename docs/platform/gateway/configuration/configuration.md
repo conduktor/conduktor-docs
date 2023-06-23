@@ -38,5 +38,4 @@ used.
 Conduktor Gateway does not apply the upstream Kafka's `auto.topic.create.enable` configuration. All topics used by 
 Conduktor Gateway must be explicitly created before usage. 
 
-
 :::
