@@ -29,4 +29,12 @@ Load balancing of this type is not suitable for production deployments. We recom
 internal load balancing is disabled and an external TCP load balancer (such as [HA-proxy](https://www.haproxy.org/)) is 
 used.
 
+## Auto Topic Creation
+
+:::caution
+
+Conduktor Gateway does not apply the upstream Kafka's `auto.topic.create.enable` configuration. All topics used by 
+Conduktor Gateway must be explicitly created before usage. 
+
+
 :::
