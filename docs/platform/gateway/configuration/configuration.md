@@ -30,3 +30,12 @@ internal load balancing is disabled and an external TCP load balancer (such as [
 used.
 
 :::
+
+## Auto Topic Creation
+
+:::caution
+
+Conduktor Gateway does not apply the upstream Kafka's `auto.create.topics.enable` configuration. All topics used by 
+Conduktor Gateway must be explicitly created before usage. 
+
+:::
