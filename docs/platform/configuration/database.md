@@ -6,14 +6,14 @@ description: For quickstart purpose platform run with an internal embedded datab
 
 # Database Configuration
 
-For quickstart purpose platform run with an internal embedded database (default).
+For quickstart purposes Conduktor Platform can run with an internal embedded database (currently the default option).
 
-For production environmnents conduktor-platform support (since version [**1.1.2**](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md#112-2022-10-20)) external database configuration.
+For production environmnents, since version [**1.1.2**](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md#112-2022-10-20) , Conduktor Platform supports external database configurations.
 
 ### Database requirements
 
 - PostgreSQL 13+
-- Provided connection role should have grant `ALL PRIVILEGES` on configured database. Platform should be able to create/update/delete schema and tables on database.
+- Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
 
 ### Database Configuration Properties
 
@@ -33,17 +33,17 @@ We plan to make this configurable in the future along with database certificate.
 
 ### Setup
 
-There is several possibility to configure external database:
+There are several options available when configuring an external database:
 
 1. From a single connection url
 
-   - With `CDK_DATABASE_URL` environment variable.
-   - With `database.url` configuration field.
-     In either cases, this connection url is using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+   - With the `CDK_DATABASE_URL` environment variable.
+   - With the `database.url` configuration field.
+     In either case, this connection url is using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
 
 2. From decomposed configuration fields
-   - With `CDK_DATABASE_*` env vars. (see [environment variables list](#configuration-using-environment-variables))
-   - With `database.*` on configuration file.
+   - With the `CDK_DATABASE_*` env vars. (see the [environment variables list](#configuration-using-environment-variables))
+   - With the `database.*` on configuration file.
 
 ```yaml
 database:
@@ -63,8 +63,8 @@ docker run \
   conduktor/conduktor-platform:latest
 ```
 
-> **Note 1** : If all connection url **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
+> **Note 1** : If all connection urls **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
 
-> **Note 2** : If an invalid connection url or some mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with meaningful error message.
+> **Note 2** : If there is an invalid connection url or some of the mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with a meaningful error message.
 
-> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured either from url or decompose fields, platform will start using embedded database.
+> **Note 3** : Before version **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured from either the url or decompose fields, platform will start using the embedded database.
