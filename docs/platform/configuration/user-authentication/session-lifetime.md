@@ -8,7 +8,7 @@ description: Configure idle session timeout and max session timeout
 
 ## Overview
 
-Conduktor uses long and short-lived tokens for verifying authenticated users. By default, the **maximum session life time is set to 3 days**. This means a user can close Conduktor and  return before 3 days have expired to continue their session without needing to re-authenticate.
+Conduktor uses long and short-lived tokens for verifying authenticated users. By default, the **maximum session life time is set to 3 days**. This means a user can close Conduktor and return before 3 days have expired to continue their session without needing to re-authenticate.
 
 An aditional configuration can be use to determine the **maximum idle session time** before a user becomes unauthenticated. The idle timeout represents the duration of the short-lived access token. This token will be refreshed periodically until either:
  - The maximum session lifetime is reached
