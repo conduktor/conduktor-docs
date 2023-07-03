@@ -1,18 +1,18 @@
 ---
 sidebar_position: 5
 title: Database Configuration
-description: For quickstart purpose platform run with an internal embedded database (default).
+description: Conduktor requiere a postgres database to run.
 ---
 
 # Database Configuration
 
-For quickstart purposes Conduktor Platform can run with an internal embedded database (currently the default option).
+Conduktor require a postgres database to store it's state.
 
-For production environmnents, since version [**1.1.2**](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md#112-2022-10-20) , Conduktor Platform supports external database configurations.
+The embedded database have been deprecated and removed in **1.17.0**.
 
 ### Database requirements
 
-- PostgreSQL 13+
+- PostgreSQL 14+
 - Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
 
 ### Database Configuration Properties
@@ -65,6 +65,7 @@ docker run \
 
 > **Note 1** : If all connection urls **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
 
-> **Note 2** : If there is an invalid connection url or some of the mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with a meaningful error message.
+> **Note 2** : If an invalid connection url or some mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with meaningful error message.
 
-> **Note 3** : Before version **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured from either the url or decompose fields, platform will start using the embedded database.
+> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured either from url or decompose fields, platform will start using embedded database.
+

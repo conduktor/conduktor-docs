@@ -10,8 +10,9 @@ Conduktor Platform is provided as a single Docker container.
 
 Jump to:
 
-- [Hardware Requirements](#hardware-requirements)
-- [Production Requirements](#production-requirements)
+- [System Requirements](#system-requirements)
+  - [Hardware Requirements](#hardware-requirements)
+  - [Production Requirements](#production-requirements)
 
 ## Hardware Requirements
 
@@ -41,6 +42,7 @@ To configure Conduktor Platform for a particular hardware, you can use the envir
 ```bash
  docker run --rm \
   -p "8080:8080" \
+  -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
   -e LICENSE_KEY="<your-license>" \
   -e RUN_MODE="small" \
   conduktor/conduktor-platform:latest
