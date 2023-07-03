@@ -91,11 +91,12 @@ See database configuration [documentation](/platform/configuration/database/) fo
 
 ### Session Lifetime Properties
 
-Optional properties for configuring your user sessions lifetime.
+Optional properties for configuring [session lifetime](../user-authentication/session-lifetime).
 
 | Property | Description | Env Variable | Mandatory | Type | Default Value |
 | --- | --- | --- | --- | --- | --- |
 | `auth.sessionLifetime` | Max session lifetime in seconds | `CDK_AUTH_SESSIONLIFETIME` | false | int | 259200 |
+| `auth.idleTimeout` | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT` | false | int | 259200 |
 
 ### Local users properties
 
