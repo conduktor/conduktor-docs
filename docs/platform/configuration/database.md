@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Database Configuration
-description: Conduktor requiere a postgres database to run.
+description: Conduktor require a postgres database to run.
 ---
 
 # Database Configuration
