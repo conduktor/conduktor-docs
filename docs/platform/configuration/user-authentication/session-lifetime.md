@@ -24,4 +24,4 @@ Use the below environment variables or [configuration properties](../env-variabl
 Environment variables:
 
  - `CDK_AUTH_SESSIONLIFETIME`: **Max session lifetime in seconds**. Default is 3 days.
- - `CDK_AUTH_IDLETIMEOUT`: **Max idle session time in seconds** (access token lifetime). Note if this value is not set, the same value will be taken from `CDK_AUTH_SESSIONLIFETIME`.
+ - `CDK_AUTH_IDLETIMEOUT`: **Max idle session time in seconds** (access token lifetime). Note if this value is not set, the same value will be taken from `CDK_AUTH_SESSIONLIFETIME`. Should be lower than `CDK_AUTH_SESSIONLIFETIME`.
