@@ -96,7 +96,7 @@ Optional properties for configuring [session lifetime](../user-authentication/se
 | Property | Description | Env Variable | Mandatory | Type | Default Value |
 | --- | --- | --- | --- | --- | --- |
 | `auth.sessionLifetime` | Max session lifetime in seconds | `CDK_AUTH_SESSIONLIFETIME` | false | int | 259200 |
-| `auth.idleTimeout` | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime`. | `CDK_AUTH_IDLETIMEOUT` | false | int | 259200 |
+| `auth.idleTimeout` | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT` | false | int | 259200 |
 
 ### Local users properties
 
