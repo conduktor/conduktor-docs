@@ -8,7 +8,7 @@ description: Conduktor require a postgres database to run.
 
 Conduktor require a postgres database to store it's state.
 
-The embedded database have been deprecated and removed in **1.17.0**.
+The embedded database has been deprecated and will be removed in **1.17.0**.
 
 ### Database requirements
 
