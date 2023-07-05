@@ -4,11 +4,12 @@ title: Managing Clusters
 description: How to manage your Kafka clusters in Conduktor Platform
 ---
 
-import { Badge } from "@site/src/features/home/atoms/Badge"
+import Badge from '@site/src/features/home/atoms/Badge'
 
 # Managing Clusters
 
-## Overview 
+## Overview
+
 The Admin section of Conduktor Platform enables you to add, update, and delete Kafka clusters. By default, only users with Admin permissions will be able to view and perform actions relating to Cluster management. You will not be able to add clusters beyond your current organization limit; please use the chat box below or contact us to discuss an increase to this limit.
 
 ![Cluster admin](/img/admin/cluster-admin.png)
@@ -31,8 +32,8 @@ sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username='<username>' password='<password>';
 ```
 
-:::info
-If your configuration references keystore or truststore path, check the [Client Certificate Authentication](https://docs.conduktor.io/platform/configuration/ssl-tls-configuration/#client-certificate-authentication) documentation.
+:::info If your configuration references keystore or truststore path, check the [Client Certificate Authentication](https://docs.conduktor.io/platform/configuration/ssl-tls-configuration/#client-certificate-authentication) documentation.
+
 :::
 
 ## Connect to a Confluent cluster
@@ -41,12 +42,11 @@ Via your Confluent cluster dashboard, select the **Clients** tab within **Data i
 
 Select **Java** as the language.
 
-![](</img/admin/confluent-language.png>)
+![](/img/admin/confluent-language.png)
 
 Create the **Kafka cluster** **API key.** You also have the option to create the **Schema Registry API Key** if you are using Schema Registry.
 
-![](</img/admin/confluent-api-key.png>)
-
+![](/img/admin/confluent-api-key.png)
 
 **Copy** the configuration to your clipboard.
 
@@ -54,7 +54,7 @@ From within the cluster configuration of the Admin application, **Paste** your c
 
 You can test the connection and if successful, you will see a green **CONNECTED** label.
 
-![](</img/admin/confluent-connection.png>)
+![](/img/admin/confluent-connection.png)
 
 Click **Create Configuration** to save your cluster.&#x20;
 
@@ -62,58 +62,55 @@ Click **Create Configuration** to save your cluster.&#x20;
 
 To connect to an Aiven cluster, you have two ways to do it.
 
-First one is to add **SSL** authentication. 
+First one is to add **SSL** authentication.
 
-![](</img/admin/aiven-ssl-home.png>)
+![](/img/admin/aiven-ssl-home.png)
 
 For this, you must specify the **Access Key**, **Access Certificate**.
 
 You also need to add the Bootstrap server. This is labelled **Service URI** within the Aiven console.&#x20; Since it's ssl, you need to specify a **CA Certificate**.
 
-![](</img/admin/aiven-ssl.png>)
+![](/img/admin/aiven-ssl.png)
 
 The second way is by using **SASL**.
 
 In Aiven, change your authentication method by **SASL**.
 
-![](</img/admin/aiven-sasl-home.png>)
+![](/img/admin/aiven-sasl-home.png)
 
 Retrieve **Service URI**, **User** and **Password**.
 
 You can fill all those informations in Conduktor Admin.
 
-![](</img/admin/aiven-sasl.png>)
+![](/img/admin/aiven-sasl.png)
 
 ## Connect to a MSK cluster
 
 For connecting to MSK, you first need to create an IAM user
 
-![](</img/admin/msk-iam-user.png>)
+![](/img/admin/msk-iam-user.png)
 
 After that, you have to give it permissions to connect to your MSK cluster.
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kafka:*",
-                "kafka-cluster:*"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["kafka:*", "kafka-cluster:*"],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
 Finally, generate an access key.
 
-![](</img/admin/msk-access-key.png>)
+![](/img/admin/msk-access-key.png)
 
 You can fill the cluster form with all those informations.
 
-![](</img/admin/msk-conduktor.png>)
+![](/img/admin/msk-conduktor.png)
 
-## Connect to a Redpanda cluster <Badge>Coming Soon</Badge>
+## Connect to a Redpanda cluster <Badge type="soon">Coming Soon</Badge>
