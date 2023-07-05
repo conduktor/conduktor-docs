@@ -108,7 +108,7 @@ From within the cluster configuration modal of the Testing application, **Paste*
 
 Click **Create Cluster** to save your cluster.&#x20;
 
-## Connect to a Aiven cluster
+## Connect to an Aiven cluster
 
 To connect to an Aiven cluster, you must specify the **Access Key**, **Access Certificate**, and **CA Certificate**.
 
