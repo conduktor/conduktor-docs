@@ -54,7 +54,7 @@ For production environments, there are **mandatory requirements** to ensure your
 
 To ensure you meet these requirements, you must:
 
- - Setup an [external PostgreSQL (14+) database](../configuration/database.md) with appropriate backup policy. 
+ - Setup an [external PostgreSQL (13+) database](../configuration/database.md) with appropriate backup policy. 
     - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations. 
     - Note that the embedded database is not fit for Production, and we cannot guarantee that your data will be migrated easily. 
  - Setup [block storage](../configuration/env-variables.md#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring. 
