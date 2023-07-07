@@ -574,3 +574,21 @@ table tr:nth-child(2n) {
     margin-right: 0;
   }
 }
+
+.markdown > h2,
+.markdown > h3,
+.markdown > h4,
+.markdown > h5,
+.markdown > h6 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.markdown > h2 span[data-type],
+.markdown > h3 span[data-type],
+.markdown > h4 span[data-type],
+.markdown > h5 span[data-type],
+.markdown > h6 span[data-type] {
+  margin-top: 4px;
+}
