@@ -14,6 +14,7 @@ For production environmnents, since version [**1.1.2**](https://github.com/condu
 
 - PostgreSQL 13+
 - Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
+- For your Postgres deployment please use at least 1-2 vCPU, 1 GB of Ram, and 10 GB of disk.
 
 ### Database Configuration Properties
 
