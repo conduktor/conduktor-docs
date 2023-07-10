@@ -32,6 +32,8 @@ This means that if you set a Kafka filter to `From Beginning`, `Max Record 1000`
 2. 1000 records match your JS filter
 :::
 
+> **_NOTE:_**  The time and date on Conduktor Console is taken from the local timezone of the user in question. For example if the Kafka environment is configured in Universal Time Coordinated (UTC) and the user of Conduktor console is viewing messages from Dublin, Ireland. On Conduktor Console the information will be shown to this user in their own local timezone (Dublin,Ireland). Please be aware that this isnt a mistake from Kafka itself but the fact that you are seeing messages in your local timezone.
+
 **Jump to:**
 - [Formatting](#formatting)
 - [Filtering](#filtering)
