@@ -41,10 +41,10 @@ This means that if you set a Kafka filter to `From Beginning`, `Max Record 1000`
 > Please be aware that this isnt a mistake from Kafka itself but the fact that you are seeing messages in your local timezone.
 >
 > User consuming one message from Dublin,Ireland.
-> ![image (14)](https://github.com/conduktor/conduktor-docs/assets/81160538/8b739672-8959-443a-9e79-31d5dba825cf)
-
+> ![Consuming one message in Dublin,Ireland](/static/assets/images/localtime-in-dublin-conduktor-console.png)
+> 
 > User consuming same message but from Paris, France.
-> ![image (15)](https://github.com/conduktor/conduktor-docs/assets/81160538/e6c9b34c-dd19-4125-8860-ce64fe363bcd)
+>![Consuming the same message but in Paris, France](/static/assets/images/localtime-in-france-conduktor-console.png)
 
 
 
