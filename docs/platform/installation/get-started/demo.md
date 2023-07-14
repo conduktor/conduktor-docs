@@ -13,7 +13,6 @@ The demo environment is accessible by anyone and simulates an enterprise organis
 Use the quick links below to jump into specific solutions within the Platform:
 
 - [Console](https://demo.conduktor.io/console/clusters)
-- [Testing](https://demo.conduktor.io/testing)
 - [Monitoring](https://demo.conduktor.io/monitoring)
 - [Data Masking](https://demo.conduktor.io/data-masking)
 - [Topic-as-a-Service](https://demo.conduktor.io/governance)
