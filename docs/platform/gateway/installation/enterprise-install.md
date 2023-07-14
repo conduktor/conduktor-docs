@@ -1,12 +1,12 @@
 ---
-sidebar_position: 2
-title: Enterprise Installation
-description: Conduktor Gateway is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
+sidebar_position: 1
+title: Installation
+description: Conduktor Gateway is provided as a Docker image. This can either be deployed in a single container or a number of instances can be deployed behind a load balancer.
 ---
 
 # System Requirements
 
-Conduktor Gateway is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
+Conduktor Gateway is provided as a Docker image. This can either be deployed in a single container or a number of instances can be deployed behind a load balancer.
 
 Jump to:
 
@@ -37,18 +37,20 @@ Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gatew
 # Running the gateway
 
 **Example: Starting Conduktor Gateway with a single node Kafka deployment.**  
- Note in the below example change the bootstrap server value to your own. If your Kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,  
+ In the below example change the bootstrap server value to your own. If your running Kafka on localhost not inside a Docker container then modify your bootstrap server as below,  
  `-e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:19092` , in order to reach it.
+
+Alternatively check out our demos which have docker compose examples that run out of the box, [Gateway Demos](https://github.com/conduktor/conduktor-proxy-demos).
 
 ```bash
  docker run \
   -e KAFKA_BOOTSTRAP_SERVERS=kafka:9092 \
   -p 6969-6973:6969-6973 \
   -p 8888:8888 \
-  conduktor/conduktor-proxy:latest
+  conduktor/conduktor-proxy:1.8.2.1-amd64
 ```
 
-For more control over your deployments see [environment variables](/platform/gateway/configuration/env-variables/).
+For more control over your deployments you'll want to make use of [environment variables](/platform/gateway/configuration/env-variables/).
 
 # Connecting to secured Kafka
 
