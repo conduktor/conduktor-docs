@@ -37,13 +37,15 @@ Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gatew
 # Running the gateway
 
 **Example: Starting Conduktor Gateway with a single node Kafka deployment.**  
- Note if your Kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,  
+ Note in the below example change the bootstrap server value to your own. If your Kafka is running on localhost not inside a Docker container then modify your bootstrap server as below,  
  `-e KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:19092` , in order to reach it.
 
 ```bash
  docker run \
-  -e KAFKA_BOOTSTRAP_SERVERS=localhost:9092 \
-  conduktor/conduktor-proxy:1.8.2.1-amd64
+  -e KAFKA_BOOTSTRAP_SERVERS=kafka:9092 \
+  -p 6969-6973:6969-6973 \
+  -p 8888:8888 \
+  conduktor/conduktor-proxy:latest
 ```
 
 For more control over your deployments see [environment variables](/platform/gateway/configuration/env-variables/).
