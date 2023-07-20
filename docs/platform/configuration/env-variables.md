@@ -126,8 +126,8 @@ container volume.
 | `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | true      | string | ∅       | `1.16.0` |
-| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | false     | string | ∅       | `1.16.0` |
-| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINT`       | false     | string | ∅       | `1.16.0` |
+| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | true      | string | ∅       | `1.16.0` |
+| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.swift.authUrl`        | Swift storage authentication URL         | `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.swift.password`       | Swift storage user password              | `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | true      | string | ∅       | `1.16.0` |
 | `monitoring.storage.swift.containerName`  | Swift storage container name             | `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | true      | string | ∅       | `1.16.0` |
