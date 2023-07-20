@@ -19,6 +19,7 @@ const getPathName = (pathname: string) => {
 
   if (paths.includes(path)) return parts[2].replace('-', ' ')
   else if (parts[1] === 'desktop') return 'desktop'
+  else if (parts[1] === 'gateway') return 'gateway'
 
   return 'platform'
 }
