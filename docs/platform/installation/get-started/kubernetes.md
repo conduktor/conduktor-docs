@@ -18,30 +18,30 @@ Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a c
 
 ## Architecture
 
-The Controller chart follows the Kubernetes controller pattern to deploy Conduktor. The controller service (deployed inside a Pod) watches a standard ConfigMap resource and runs reconciliation processes upon changes to this ConfigMap.
+The controller chart follows the Kubernetes controller pattern to deploy Conduktor. The controller service (deployed inside a Pod) watches a standard ConfigMap resource and runs reconciliation processes upon changes to this ConfigMap.
 
-1. When installing the Conduktor Controller chart, the chart deploys several things:
+1. When installing the Conduktor controller chart, the chart deploys several things:
     - `Secret` for sensitive data such as the administrator password, database password, license, SSO secrets
     - `ConfigMap` containing configuration for Conduktor and for other resources managed by the controller
-    - `ServiceAccount` with proper permissions for the Controller to access Kubernetes API
-    - `Deployment` for the Controller service 
-    - `Service` to access Controller APIs (healthcheck, state, ...)
+    - `ServiceAccount` with proper permissions for the controller to access Kubernetes API
+    - `Deployment` for the controller service 
+    - `Service` to access controller APIs (healthcheck, state, ...)
     - Optionally, an `Ingress` to expose controller `Service` (not needed for now)
-    - Optionally, a `ServiceMonitor` service for collecting prometheus metrics from the Controller (see [troubleshooting](#troubleshooting))
+    - Optionally, a `ServiceMonitor` service for collecting prometheus metrics from the controller (see [troubleshooting](#troubleshooting))
     - Optionally, [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency for demo/trial purposes. This can be disabled with `postgresql.enabled=false`
     - Optionally, [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency for demo/trial purposes. This can be used to provide an S3 Bucket for Conduktor to offload monitoring data. Can be disabled with `minio.enabled=false`
     - Optionally, [Bitnami Kafka](https://github.com/bitnami/charts/tree/main/bitnami/kafka) dependency for demo/trial purposes. This can be used to provide a Kafka broker that is automatically configured in Conduktor. Can be disabled with `kafka.enabled=false`
 
 
-2. In case of a migration, when the Controller starts it will start a watcher on `ConfigMap` containing the Conduktor configuration and start it's reconciliation loop. 
-Depending on the configuration, the Controller might ask Kubernetes API to deploy:
+2. In case of a migration, when the controller starts it will start a watcher on `ConfigMap` containing the Conduktor configuration and start it's reconciliation loop. 
+Depending on the configuration, the controller might ask Kubernetes API to deploy:
    - A `Deployment` for Conduktor with all configurations read in input `ConfigMap` and `Secret`    
    - A `Service` to access Conduktor exposed ports   
-   - Optionally, an `Ingress` to expose Conduktor on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for more details 
+   - Optionally, an `Ingress` to expose Conduktor on some host url. See [ingress configuration](#setup-ingress-for-conduktor-platform) for more details.
   
 
 :::info   
-All resources deployed by the Controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by input `ConfigMap`. This means that even if Controller is down or updating itself, Conduktor is still running. And if `ConfigMap` is removed, everything owned by it is also purged.   
+All resources deployed by the controller are in fact [owned](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/) by the input `ConfigMap`. This means that even if the controller is down or updating itself, Conduktor is still running. And if the `ConfigMap` is removed, everything owned by it is also purged.   
 :::
 
 ![Platform Controller diagram](/img/get-started/kubernetes-platform-controller-diag.png)
@@ -55,7 +55,7 @@ All resources deployed by the Controller are in fact [owned](https://kubernetes.
 * Basic knowledge of Kubernetes
 
 ## Production requirements
-For production environments, it is  **mandatory**: 
+For production environments, this is  **mandatory**: 
 
 * To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy and disable the dependency on Bitnami PostgreSQL with `postgresql.enabled=false`
 * To setup an [external S3 Bucket](#setup-s3) and disable the dependency on Bitnami MinIO with `minio.enabled=false`
@@ -63,7 +63,7 @@ For production environments, it is  **mandatory**:
 * Enough resources to run Conduktor and its dependencies (PostgreSQL, MinIO, Kafka) with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ### Database
-Conduktor and the Controller need a PostgreSQL database to work.   
+Conduktor and the controller need a PostgreSQL database to work.   
 
 By default, and for trial and demo purposes, the chart comes with an optional [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) dependency that is used as database. 
 
@@ -80,10 +80,10 @@ See [external S3 configuration](#setup-s3) section for more details.
 
 ## Versions compatibility matrix
 
-Conduktor, Platform-Controller, and its Helm chart have different versions.
+Conduktor console, the Platform-controller, and its Helm chart have different versions.
 Please consult the following version compatibility matrix to understand which version of the chart deploys the corresponding version of Conduktor.
 
-| Conduktor                                           | Platform-controller | Helm chart |
+| Conduktor console                                   | Platform-controller | Helm chart |
 |-----------------------------------------------------|---------------------|------------|
 | [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.4.0               | 0.2.1      |
 | [1.11.1](https://www.conduktor.io/changelog/1.11.1) | 0.5.0               | 0.2.2      |
@@ -156,7 +156,7 @@ helm upgrade -n ${NAMESPACE} ${HELM_RELEASE_NAME} conduktor/platform-controller 
 
 An upgrade will update the deployed Controller image, optional dependencies and update `ConfigMap` and `Secret` if required. Then, the new Controller will do a reconciliation that asks to update the Conduktor image and other managed Kubernetes resources. 
 
-See [verions compatibility matrix](#versions-compatibility-matrix) to know which version of the chart deploys the corresponding version of Conduktor.
+See [versions compatibility matrix](#versions-compatibility-matrix) to know which version of the chart deploys the corresponding version of Conduktor.
 
 ### Custom deployment
 
@@ -170,7 +170,7 @@ You can provide extra environment variables that will be forwarded to Conduktor.
   - `platform.config.extraEnvVarsCM`: provide environment variables from an existing `ConfigMap`
   - `platform.config.extraEnvVarsSecret`: provide environment variables from an existing `Secret`
 
-This is useful as a workaround for non-supported configurations in Controller Chart values. 
+This is useful as a workaround for non-supported configurations in the controller chart values. 
 
 Example with a cluster definition:
 
@@ -212,11 +212,11 @@ platform:
     extraEnvVarsCM: "extra-platform-config"
     extraEnvVarsSecret: "extra-platform-secret"
 ```
-All extra environment variables will be concatenated and set on Conduktor Controller `Deployment`. Secrets will not be read and only references are forwarded to Conduktor Controller `Deployment`. 
+All extra environment variables will be concatenated and set on Conduktor controller `Deployment`. Secrets will not be read and only references are forwarded to Conduktor controller `Deployment`. 
 
 #### Secrets
 
-As described in the [architecture](#architecture) section, the Controller Helm chart will deploy a `Secret` resource containing all sensitive data provided as values during installation.
+As described in the [architecture](#architecture) section, the controller Helm chart will deploy a `Secret` resource containing all sensitive data provided as values during installation.
 
 However, you can also provide an existing `Secret` to the chart, which can be used in-place of the one created automatically. 
 
@@ -301,7 +301,7 @@ platform:
 
 Conduktor can offload Kafka metrics collected for internal monitoring into a S3 object storage. This enables you to retain as minimal state as possible inside the Pod. 
 
-By default, the Conduktor Controller chart comes with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false`, but in that case it's recommended to provide your own.
+By default, the Conduktor controller chart comes with an optional [Bitnami MinIO](https://github.com/bitnami/charts/tree/main/bitnami/minio) dependency to provide such S3. It can be disabled with `minio.enabled=false`, but in that case it's recommended to provide your own.
 
 
 ```yaml
@@ -328,7 +328,7 @@ See [secrets](#secrets) section for more details.
 ### Miscellaneous
 
 #### Minimal Role rules
-The Controller needs a service account with a bind role containing the following rules to work properly.
+The controller needs a service account with a bind role containing the following rules to work properly.
 ```
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
@@ -347,7 +347,7 @@ In this case you should also provide an existing service account using `controll
 > Note: Platform pod do not require a service account and use the default one from the namespace. But if needed you can provide a custom existing service account using `platform.serviceAccount.name` value.
 
 #### Setup node affinity
-Since chart 0.5.0, we provide a way to setup node affinity for Platform and Controller Pods.
+Since chart 0.5.0, we provide a way to setup node affinity for platform and controller pods.
 Example : 
 ```yaml
 # platform specific node affinity configuration
@@ -374,7 +374,7 @@ controller:
            values:
             - linux
 ```
-See kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity) on Node Affinity for more details.
+See Kubernetes [documentation](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity) on Node Affinity for more details.
 
 #### Platform service type NodePort
 
