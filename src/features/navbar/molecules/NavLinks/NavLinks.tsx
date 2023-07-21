@@ -17,7 +17,12 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
     <ul className={styles.StyledNavLinks}>
       <li>
         <Link className={styles.NavLink} to={isHome ? '/platform' : '/'}>
-          {isHome ? 'Platform' : 'Home'}
+          {isHome ? 'Console' : 'Home'}
+        </Link>
+      </li>
+      <li>
+        <Link className={styles.NavLink} to={isHome ? '/gateway' : '/'}>
+          {isHome ? 'Gateway' : 'Home'}
         </Link>
       </li>
       {items.map((item, itemIndex) => (
