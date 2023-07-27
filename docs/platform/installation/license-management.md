@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 title: License Management
 description: This page provides guidence for how to install, verify and renew licenses for Conduktor Platform.
 ---

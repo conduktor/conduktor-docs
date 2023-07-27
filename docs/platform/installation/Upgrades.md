@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: Upgrading Conduktor Platform
+title: Upgrading
 description: Consider using Conduktor Cloud to not worry about installation, upgrade or software administration.
 ---
 

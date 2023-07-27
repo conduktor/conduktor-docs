@@ -1,13 +1,11 @@
 ---
-sidebar_position: 1
-title: Debug Conduktor Platform
-description: How to debug Conduktor Platform
+sidebar_position: 2
+title: Debugging
+description: How to debug Conduktor
 ---
-# Debug Conduktor Platform
+# Debug Conduktor
 
-Conduktor Platform Docker image runs on Ubuntu Linux.   
-It runs multiple services in a single Docker container.    
-These services are supervised by [supervisord](http://supervisord.org/).    
+Conduktor Platform Docker image runs on Ubuntu Linux. It runs multiple services in a single Docker container. These services are supervised by [supervisord](http://supervisord.org/).    
 
 To troubleshoot the Platform, we suggest you to go through the following steps.
 

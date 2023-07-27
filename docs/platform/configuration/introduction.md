@@ -9,7 +9,7 @@ description: Conduktor can be configured using an input yaml file
 Conduktor depends on a configuration file `platform-config.yaml`. This is used to setup your organization environment. The file is used to declare:
 
 - Organization name
-- External database (**strongly recommended for production environments**)
+- External database (**required for production environments**)
 - User authentication (Basic or SSO)
 - Platform License
 
@@ -36,7 +36,7 @@ The [database](/platform/configuration/database/) as well as the configuration f
 - The configuration file should be protected by file system permissions.
 - The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
 
-## Configuration File
+## Configuration file
 
 _Note that you may omit the database configuration if you wish to use an embedded postgres for testing purposes._
 
@@ -44,6 +44,10 @@ _Note that you may omit the database configuration if you wish to use an embedde
 # platform-config.yaml
 organization:
   name: demo
+
+admin:
+  email: admin@company.io
+  password: admin
 
 database:
   url: postgresql://user:password@host:5432/database
@@ -57,15 +61,13 @@ database:
 
 auth:
   demo-users:
-    - email: admin@demo.dev
-      password: adminpwd
-      groups:
-        - ADMIN
+    - email: user@company.io
+      password: userpwd
 
 license: '<your license key>'
 ```
 
-## Binding the File
+## Binding the file
 
 Below shows how to bind a local file to override `/opt/conduktor/default-platform-config.yaml`.
 
@@ -90,7 +92,7 @@ Before platform `1.8.0`, platform was running as root user. After `1.8.0`, platf
 
 All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.
 
-## Environment Override
+## Environment override
 
 Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
 

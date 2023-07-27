@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: System Requirements
 description: Conduktor Platform is provided as a single Docker container.
 ---
