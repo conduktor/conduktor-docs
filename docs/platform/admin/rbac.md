@@ -26,6 +26,7 @@ With RBAC enabled, it's possible to:
 
 ---
 **Jump to:**
+- [Enable RBAC](#enable-rbac-in-your-organization)
 - [How to assign permissions?](#how-to-assign-permissions)
 - [Manage Services Permissions](#manage-services-permissions)
 - [Manage Resources Permissions](#manage-resources-permissions)
@@ -34,6 +35,12 @@ With RBAC enabled, it's possible to:
   - [Quick Select](#quick-select)
   - [Example](#example)
 ---
+## Enable RBAC in your Organization
+
+By default, RBAC is disabled within your organization, meaning that everyone has access to everything and permissions are not taken into account. 
+Assuming you are an Administrator, you can enable this via the **Settings** tab of Admin. That way, people without any permissions won't see anything, except if they have permissions.
+
+![Cluster admin](/img/admin/admin-rbac.png)
 
 ## How to assign permissions?
 
