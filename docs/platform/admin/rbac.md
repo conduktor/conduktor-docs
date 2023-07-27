@@ -45,7 +45,7 @@ And you can assign those permissions to:
 To do so, you can either click on the name of the user/group, or click on the `...` icon on the right of their name, like shown below.
 
 ![Assign permissions](/images/assign-permissions.png)
-images/assign-premissions.png
+
 :::info
 Please note that permissions are additive, meaning that if a user belongs to multiple groups, they will inherit all the permissions given to these groups.
 If they have a restricted access to a topic, but belong to a group that has a full access, then they will have a full access too.
