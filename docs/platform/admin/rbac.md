@@ -26,10 +26,13 @@ With RBAC enabled, it's possible to:
 
 ---
 **Jump to:**
-- [Managing Resource Conditions](#manage-resource-permissions)
-  - [Example: Assigning Topic Permissions](#example-assigning-topic-permissions)
-- [Resource Permissions](#resource-permissions)
-- [Overlapping Role Assignments](#overlapping-role-assigments)
+- [How to assign permissions?](#how-to-assign-permissions)
+- [Manage Services Permissions](#manage-services-permissions)
+- [Manage Resources Permissions](#manage-resources-permissions)
+  - [Granular Permissions](#granular-permissions)
+  - [Prefixes](#prefixes)
+  - [Quick Select](#quick-select)
+  - [Example](#example)
 ---
 
 ## How to assign permissions?
@@ -44,7 +47,7 @@ And you can assign those permissions to:
 
 To do so, you can either click on the name of the user/group, or click on the `...` icon on the right of their name, like shown below.
 
-![Assign permissions](/images/assign-permissions.png)
+![Assign permissions](/img/admin/assign-permissions.png)
 
 :::info
 Please note that permissions are additive, meaning that if a user belongs to multiple groups, they will inherit all the permissions given to these groups.
@@ -55,21 +58,21 @@ If they have a restricted access to a topic, but belong to a group that has a fu
 
 Since 1.17.0, you are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
 
-![Services default set](/images/services-default-set.png)
+![Services default set](/img/admin/services-default-set.png)
 
 This set of permissions means that the user will have this view of the `Admin` section:
 
-![Default view](/images/bob-no-access.png)
+![Default view](/img/admin/bob-no-access.png)
 
 If you check all the boxes, the user will have this view of the `Admin` section:
 
-![Full access user view](/images/alice-full-access.png)
+![Full access user view](/img/admin/alice-full-access.png)
 
 Finally, if you remove their access to Data Masking and/or Topic as a Service, they will still see the modules, but won't be able to access them. Here is an example for Topic as a Service:
 
-![Topic as a Service access denied](/images/taas-access-denied.png)
+![Topic as a Service access denied](/img/admin/taas-access-denied.png)
 
-## Manage Resource Permissions
+## Manage Resources Permissions
 
 ### Granular Permissions
 Since 1.17.0, the RBAC model is way more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
@@ -115,7 +118,7 @@ When you define a permission, you might want it to be applied to:
 
 Here is an example of those three cases within the UI:
 
-![Prefixes examples](/images/prefixes-example.png)
+![Prefixes examples](/img/admin/prefixes-example.png)
 
 The exact same works for other Kafka resources.
 
@@ -123,15 +126,15 @@ The exact same works for other Kafka resources.
 
 In order to win some time during the permissions creation, you can use the `Quick select` to give a default set of permissions.
 
-![Quick select](/images/quick-select.png)
+![Quick select](/img/admin/quick-select.png)
 
 The screenshots below show the different `Quick select` sets of permissions depending on the resource.
 
-![Topics quick select](/images/topics-quick-select.png)
-![Consumer groups quick select](/images/consumer-groups-quick-select.png)
-![Subjects quick select](/images/subjects-quick-select.png)
-![Kafka connectors](/images/kafka-connectors-quick-select.png)
-![Clusters](/images/clusters-quick-select.png)
+![Topics quick select](/img/admin/topics-quick-select.png)
+![Consumer groups quick select](/img/admin/consumer-groups-quick-select.png)
+![Subjects quick select](/img/admin/subjects-quick-select.png)
+![Kafka connectors](/img/admin/kafka-connectors-quick-select.png)
+![Clusters](/img/admin/clusters-quick-select.png)
 For the `Clusters` permissions, the first set is for `Viewer`, and the second one is for `Admin`.
 
 If the `Quick select` doesn't fit your need, you can still `Select permissions manually` by checking the exact boxes you need.
@@ -140,7 +143,7 @@ If the `Quick select` doesn't fit your need, you can still `Select permissions m
 
 Here is an example of a set of permissions given to Alice:
 
-![Alice example](/images/alice-example.png)
+![Alice example](/img/admin/alice-example.png)
 
 We can see that this is a recap of all the permissions this user has.
 
