@@ -16,7 +16,7 @@ And finally, consult the logs and send them to our support team if necessary.
 
 Let's now see in details each step.
 
-## 1. Verify that the Platform is up and running
+## 1. Verify that the Conduktor is up and running
 
 ### From Docker
 
