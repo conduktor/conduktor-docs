@@ -67,11 +67,11 @@ Since 1.17.0, you are able to restrict access to Conduktor Console services. The
 
 ![Services default set](/img/admin/services-default-set.png)
 
-This set of permissions means that the user will have this view of the `Admin` section:
+This set of permissions means that the user will have this view of the `Admin` section (note the available tabs on the left):
 
 ![Default view](/img/admin/bob-no-access.png)
 
-If you check all the boxes, the user will have this view of the `Admin` section:
+If you check all the boxes, the user will have this view of the `Admin` section (access to additional settings):
 
 ![Full access user view](/img/admin/alice-full-access.png)
 
@@ -82,7 +82,7 @@ Finally, if you remove their access to Data Masking and/or Topic as a Service, t
 ## Manage Resources Permissions
 
 ### Granular Permissions
-Since 1.17.0, the RBAC model is way more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
+Since 1.17.0, the RBAC model is much more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
 
 | Resource         | Permissions           |
 | ---------------- | --------------------- |
