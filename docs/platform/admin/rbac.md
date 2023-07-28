@@ -42,7 +42,9 @@ Assuming you are an Administrator, you can enable this via the **Settings** tab 
 
 ![Cluster admin](/img/admin/admin-rbac.png)
 
-## How to assign permissions?
+## RBAC in Console since 1.17.0
+
+### How to assign permissions?
 
 You can assign two kinds of permissions:
 - Services permissions: to see and/or manage Conduktor Console services
@@ -61,7 +63,7 @@ Please note that permissions are additive, meaning that if a user belongs to mul
 If they have a restricted access to a topic, but belong to a group that has a full access, then they will have a full access too.
 :::
 
-## Manage Services Permissions
+### Manage Services Permissions
 
 Since 1.17.0, you are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
 
@@ -79,9 +81,9 @@ Finally, if you remove their access to Data Masking and/or Topic as a Service, t
 
 ![Topic as a Service access denied](/img/admin/taas-access-denied.png)
 
-## Manage Resources Permissions
+### Manage Resources Permissions
 
-### Granular Permissions
+#### Granular Permissions
 Since 1.17.0, the RBAC model is much more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
 
 | Resource         | Permissions           |
@@ -116,7 +118,7 @@ Since 1.17.0, the RBAC model is much more granular and allows you to go deep int
 
 All these permissions can be applied on one specific cluster, or all your clusters.
 
-### Prefixes
+#### Prefixes
 
 When you define a permission, you might want it to be applied to:
 - A specific topic, by typing `my-topic` for instance
@@ -129,7 +131,7 @@ Here is an example of those three cases within the UI:
 
 The exact same works for other Kafka resources.
 
-### Quick Select
+#### Quick Select
 
 In order to win some time during the permissions creation, you can use the `Quick select` to give a default set of permissions.
 
@@ -146,7 +148,7 @@ For the `Clusters` permissions, the first set is for `Viewer`, and the second on
 
 If the `Quick select` doesn't fit your need, you can still `Select permissions manually` by checking the exact boxes you need.
 
-### Example
+#### Example
 
 Here is an example of a set of permissions given to Alice:
 
@@ -159,4 +161,67 @@ In blue, we have the permissions Alice inherits from the group `Project A`, and 
 This set of permissions gives her:
 - A full access to the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `Local Kafka`
 - Some actions on all the topics and consumer groups that start with the prefix `app-a-`, on all the clusters, that she inherits from the group `Project A`
+
+## RBAC Before 1.17.0
+
+### Roles
+
+There are currently four hard-coded roles in Conduktor. More granular roles and support for custom roles is coming soon, please [contact us](#link) to discuss your needs.
+
+Below outlines what these roles permit **when RBAC is enabled**. You should combine roles with [resource conditions](#resource-conditions) to bind permisisons sets to specific resources.
+
+|  **Role**  | **Description**                                                                                                                                                                                                                                                 |
+| :--------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Admin**  | Platform Admin has super user access and no restrictions in regards to platform actions or kafka resources.                                                                                                                                                     |
+| **Member** | Platform Member has read-only access in regards to platform entities such as roles, groups, users and settings. By default, **a member has no Kafka resource access**. This must be granted explicitly through the Editor and Viewer roles.                     |
+| **Editor** | Editor role provides 'global' edit permissions on all Kafka resources such as consumer groups, kafka connect, ACLs, topics and subjects. Add [resource conditions](#resource-conditions) to this role to provide edit permissions on Kafka resources.           |
+| **Viewer** | Viewer role provides 'global' read-only permissions on all Kafka resources such as consumer groups, kafka connect, ACLs, topics and subjects. Add [resource conditions](#resource-conditions) to this role to provide read-only permissions on Kafka resources. |
+
+### Manage Resource Conditions
+
+Resource conditions are used to grant access to resources according to the permissions that the role assumes. Resource conditions can be applied to:
+
+- Users
+- Groups
+
+From the **Members** screen in Admin, select the breadcrumb next to either a user or a group. From the dropdown menu, choose **manage permissions**.
+
+![Admin manage permissions](/img/admin/admin-manage-permissions.png)
+
+#### Example: Assigning Topic Permissions
+The below example demonstrates how to apply Editor role permissions on Topic resources.
+
+From the permissions screen, you should bind resources to the relevant role. The example below demonstrates how to:
+
+- Provide **Editor** role permissions
+- On all **Topic** resources in Cluster 'Upstash'
+- Where the topic names are prefixed: `sales.ecommerce.*`
+
+Note you can use a wildcard to ensure access is permitted to all topic names within the same domain or context.
+
+![Admin manage permissions](/img/admin/admin-resource-permissions.png)
+
+### Resource Permissions
+
+The Editor/Viewer roles dictate different permissions for specific resources:
+
+| Resource      | Role      | Permissions |
+| ----------- | ----------- | ----------- |
+| Topic      | Editor      | Create topic<br />Describe Topic<br />Read/Write topic<br />Edit/Read topic config<br />Empty/Delete topic     |
+| Topic      | Viewer   | Read topic<br />Read topic config<br />Describe topic    |
+| Cluster      | Editor   | Read ACLs<br />Create ACLs<br />Delete ACLs<br />Edit registry compatibility    |
+| Cluster      | Viewer   | Read ACLs    |
+| Subject      | Editor   | Read subjects<br />Edit subjects<br />Delete subjects<br />Edit subject compatibility  |
+| Subject      | Viewer   |  Read subjects  |
+| Consumer Group      | Editor   |  Read consumer groups<br />Edit consumer groups<br />Describe consumer groups   |
+| Consumer Group      | Viewer   |  Read consumer groups<br />Describe consume groups   |
+| Connector      | Editor   | Read connectors<br />Edit connectors<br />View connector config<br />Manage tasks     |
+| Connector      | Viewer   |  Read connectors<br /> View connector config   |
+
+
+### Overlapping Role Assigments
+
+If you have overlapping role assignments, your permissions set will be the union of those role assignments. This is because RBAC operates as an additive model.
+
+For example, if you had Editor role with permissions to edit, read and describe on consumer groups, and Viewer role with only read and describe permissions, your complete permissions set would include the superset (i.e. edit, read and describe).
 
