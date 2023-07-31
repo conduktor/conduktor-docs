@@ -1,14 +1,15 @@
 ---
 sidebar_position: 3
-title: Enterprise Security
+title: Gateway Security
 description: Securing Conduktor Gateway with JWT 
 ---
 
-This page covers the Enterprise level security available the Enterprise version of Conduktor Gateway.  
+There are two sets of configuration to consider when securing your gateway.
 
-Refer to [Open Source Security](./oss_security.md) for open source security documentation.
+ - The connection between Kafka clients and the gateway
+ - The connection between the gateway and the Kafka cluster
 
-
+![img.png](img.png)
 
 # Securing client access to Gateway
 
@@ -26,33 +27,24 @@ communicate user information to the server via the usual username and password f
 The gateway uses encrypted JWT tokens in the password field to encode metadata required by the gateway (tenant 
 information etc.).
 
-To configure access control first we must enable JWT based authentication. This can be done with the following 
-environment variables:
+To configure access control it is best practice to configure the shared secret that will encrypt the JWT tokens.
 
 ```bash
-      USER_POOL_TYPE: JWT
-      USER_POOL_CLASSNAME: io.conduktor.proxy.service.userPool.JwtUserPoolService
-```
-
-We then configure the shared secret that will encrypt the JWT tokens.
-
-```bash
-      USER_POOL_SECRET_KEY: secret
+      GATEWAY_USER_POOL_SECRET_KEY: secret
 ```
 
 ## Generating tokens
 
-Tokens are generated using an admin REST API. This is not exposed by default and is secured with a set of administrator 
-credentials that are also configured with environment variables. This interface can be enabled by setting the 
-following: 
+Tokens are generated using an admin REST API. This is secured with a set of administrator 
+credentials that are configured with environment variables and should be set to not use the default values.
+The example below sets username and password to `superUser`: 
 
 ```bash
-      FEATURE_FLAGS_JWT_TOKEN_ENDPOINT: true
       JWT_AUTH_MASTER_USERNAME: superUser
       JWT_AUTH_MASTER_PASSWORD: superUser
 ```
 
-Conduktor Gateway is natively multi-tenant. This means that tokens must contain more than a username and secret, they 
+Conduktor Gateway is designed for multi-tenacy but by default is turned off so you can connect straightaway with your existing client credentials. This means that tokens must contain more than a username and secret, they 
 must also encode tenant metadata. For convenience a token can be generated through the API by providing the following:
 
 1. An organisation id - an integer valuing indicating the tenant's organisation
@@ -60,7 +52,6 @@ must also encode tenant metadata. For convenience a token can be generated throu
 3. A user id
 
 Note: A tenant name in Conduktor Gateway is formed of [organisation id]-[cluster id]
-
 ```bash
 curl \
     --silent \

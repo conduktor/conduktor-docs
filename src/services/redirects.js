@@ -256,16 +256,12 @@ const redirects = [
       },
       {
         from: '/platform/proxy/configuration/proxy_security',
-        to: '/gateway/configuration/enterprise_proxy_security',
+        to: '/gateway/configuration/gateway_security',
       },
       {
         from: '/platform/proxy/configuration/env-variables',
         to: '/gateway/configuration/env-variables',
       },
-      {
-        from: '/platform/proxy/installation/installation',
-        to: '/gateway/installation/enterprise-install',
-      }
     ],
   },
 ]
