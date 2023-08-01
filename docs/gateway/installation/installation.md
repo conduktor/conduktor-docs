@@ -42,8 +42,7 @@ In its most simple form GW can be run from a simple Docker run command with the 
   -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092 \
   -e KAFKA_SASL_MECHANISM=SCRAM-SHA-256 \
   -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-  -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.scram.ScramLoginModule \
-  required username='usr' password='pwd';"\
+  -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.scram.ScramLoginModule required username='usr' password='pwd';"\
   conduktor/conduktor-proxy:2.0.0
 ```
 If you're interested in trying out Gateway yourself go checkout the [demos](https://github.com/conduktor/conduktor-proxy-demos).
