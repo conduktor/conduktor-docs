@@ -15,14 +15,18 @@ Conduktor Gateway aids you on your Kafka journey by adding governance, security,
 
 ## Components
 
-The core of Conduktor Gateway is the transport layer between your Kafka client applications and your Kafka clusters. 
+The core of Conduktor Gateway is the transport layer between your Kafka client applications and your Kafka clusters.
+
+![gateway-overview.png](./Overview.png)
 
 This transport layer is enhanced by interacting with the Kafka, modifying the data or performing logical operations to add value. Gateway itself is made of two conceptual parts, the Gateway core, and interceptors.
-There is much you can do with a Conduktor Gateway, just some of the features include:
+There is so much you can do with a Conduktor Gateway, just some of the features include:
  - Virtual clusters for your clients through multi-tenancy
  - Encryption, for encrypting at the field level within your Kafka records, to aid with compliance around use of confidential, personal, or high value data
  - Chaos engineering, which enables you to develop against, and then prove that your Kafka applications can handle failure scenarios
  - Safeguarding, which puts structure and guards in place to ensure your Kafka environment is used in the right way
+
+ ![gateway-so-many-features.png](./so-many-features.png)
 
 ## Getting Started
 
@@ -30,6 +34,6 @@ To start your Conduktor Gateway journey [review the installation options](instal
 ## Resources
 
 - [Support](https://www.conduktor.io/contact/support)
-- [Arrange a technical demo](https://www.conduktor.io/contact/demo)
-- [Try out the demos](https://github.com/conduktor/conduktor-proxy-demos)
+- [Arrange a technical demo from us](https://www.conduktor.io/contact/demo)
+- [Try out some demos yourself](https://github.com/conduktor/conduktor-proxy-demos)
 - [Roadmap](https://product.conduktor.help)
