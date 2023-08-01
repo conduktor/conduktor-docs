@@ -4,7 +4,7 @@ title: Database Configuration
 description: For quickstart purpose platform run with an internal embedded database (default).
 ---
 
-# Database Configuration
+# Database configuration
 
 For quickstart purposes Conduktor Platform can run with an internal embedded database (currently the default option).
 
@@ -16,7 +16,7 @@ For production environmnents, since version [**1.1.2**](https://github.com/condu
 - Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
 - For your Postgres deployment please use at least 1-2 vCPU, 1 GB of Ram, and 10 GB of disk.
 
-### Database Configuration Properties
+### Database configuration properties
 
 - `database` : is a key/value configuration consisting of:
 - `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`

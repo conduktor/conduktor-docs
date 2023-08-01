@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
-title: Configuration Properties and Environment Variables
+sidebar_position: 3
+title: Configuration Properties & Environment Variables
 description: Starting from Conduktor Platform 1.2.0 input configuration fields can be provided using environment variables.
 ---
 
