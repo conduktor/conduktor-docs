@@ -165,7 +165,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.17.0
+    image: conduktor/conduktor-platform:latest
     depends_on:
       - postgresql
     ports:
