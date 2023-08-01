@@ -6,57 +6,43 @@ description: Get started with the latest Conduktor Platform Docker image in just
 
 # Docker Quick Start
 
-Get started with the latest Conduktor Docker image. The installation and configuration process takes a few minutes only, the time to download and start the containers and the platform to start.
+Get started with the latest Conduktor Docker image. The installation and configuration process takes only a few minutes.
 
 There are two ways to configure Conduktor via Docker:
 
 - [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your environment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
+   - [Launch Conduktor with an embedded Kafka (Redpanda)](#launch-conduktor-with-an-embedded-kafka-redpanda)
+   - [Launch Conduktor and connect it to your existing Kafka](#or-launch-conduktor-and-connect-it-to-your-existing-kafka)
 
 - [**Advanced Configuration**](#advanced-setup): Use a configuration file or environment variables to declare an external database and SSO. This is the recommended option for **production environments**.
 
-## Simple Setup
+# Simple Setup
 
 When launching Conduktor for the first time, you will presented with onboarding to help configure your environment.
 
-### Step 1: Launch Conduktor
+:::info
+Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
+:::
 
-Run the below command to launch Conduktor.
+## Step 1: Launch Conduktor
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+Run one of the below commands to launch Conduktor.
 
-<Tabs>
-<TabItem value="MacOS" label="MacOS">
+### Launch Conduktor with an embedded Kafka (Redpanda) 
 
-```bash
-docker run --rm --pull always \
-  -p 8080:8080 \
-  --mount "source=conduktor_data,target=/var/conduktor" \
-conduktor/conduktor-platform:latest
-```
-
-</TabItem>
-<TabItem value="Linux" label="Linux">
+This option pre-configures Conduktor to connect to the embedded Redpanda and Schema Registry.
 
 ```bash
-docker run --rm --pull always \
-  -p 8080:8080 \
-  --add-host=host.docker.internal:host-gateway \
-  --mount "source=conduktor_data,target=/var/conduktor" \
-conduktor/conduktor-platform:latest
+curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-</TabItem>
-<TabItem value="Windows" label="Windows">
+### OR, Launch Conduktor and connect it to your existing Kafka
+
+Add your own cluster configuration from within the Conduktor UI.
 
 ```bash
-docker run --rm --pull always `
-  -p 8080:8080 `
-  --mount "source=conduktor_data,target=/var/conduktor" `
-conduktor/conduktor-platform:latest
+curl -L https://releases.conduktor.io/console -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
-
-</TabItem>
-</Tabs>
 
 ### Step 2: Complete Onboarding
 
@@ -64,11 +50,11 @@ After a few seconds, the Conduktor onboarding wizard will be available at **[htt
 
 ![Onboarding](./assets/onboarding-console.png)
 
-### Step 3: Configure your first Kafka cluster
+### Step 3: Configure your existing Kafka cluster
 
-Once you complete the wizard, you should configure a Kafka cluster.
+Conduktor works with all Kafka providers such as Confluent, Aiven, MSK and Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
 
-Go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
+Once you complete the onboarding wizard, go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
 
 From within the cluster configuration screen, add the:
 
@@ -103,35 +89,39 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 ## Advanced Setup
 
-Conduktor can also be configured using a configuration file `platform-config.yaml`, or through environment variables. This is used to setup your organizations environment. The file can be used to declare:
+Conduktor can also be configured using a configuration file `platform-config.yaml`, or through **environment variables**. This is used to setup your organizations environment. Configuration can be used to declare:
 
 - Organization name
-- External database
-- SSO
+- External database (**required for production environments**)
+- User authentication (Basic or SSO)
+- Platform license
+
+For production deployments, it's critical that you review the [production requirements](../hardware.md#production-requirements).
 
 ### Step 1: Create a Configuration File
-
-There are two ways to create a configuration file:
- - When starting Conduktor for the first time, the **onboarding will guide** you through this process. See [simple setup](#simple-setup).
- - Manually create a configuration (see below).
 
 The below example shows how to configure Conduktor with an external database, SSO and an optional license key (for Enterprise customers).
 
 All configuration properties can also be parsed as [Environment Variables](/platform/configuration/env-variables/) when starting Conduktor.
-If you need some help to convert this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
+If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 
 For more examples, see:
 
 - [Configuration Properties and Environment Variables](/platform/configuration/env-variables/)
 - [Configuring SSO](/platform/category/user-authentication/)
 
-```yaml
+```yaml title="platform-config.yaml"
 organization:
   name: demo
 
 admin:
   email: admin@company.io
   password: admin
+
+auth:
+  local-users:
+    - email: user@conduktor.io
+      password: user
 
 database:
   host: 'host'
@@ -153,51 +143,54 @@ sso:
 license: '<your license key>'
 ```
 
-### Step 2: Launch Conduktor
+### Step 2: Bind file 
 
-Run the below command in the directory containing your `platform-config.yaml` file.
+The below docker-compose indicates how to bind your `platform-config.yaml` file.
 
-If you are a **Conduktor Enterprise** customer, you can decide either to put the license in your configuration file or to start the platform with the environment variable `LICENSE_KEY`, as bellow.
+Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it.
 
-<Tabs>
-<TabItem value="MacOS" label="MacOS">
+```yaml title="docker-compose.yaml"
+version: '3.8'
 
-```bash
-docker run --rm \
-  -p "8080:8080" \
-  -e LICENSE_KEY="<your-license>" \
-  --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
-  --mount "source=conduktor_data,target=/var/conduktor" \
-conduktor/conduktor-platform:latest
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-platform:
+    image: conduktor/conduktor-platform:1.17.0
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+      - type: bind
+        source: "./platform-config.yaml"
+        target: /opt/conduktor/platform-config.yaml
+        read_only: true
+    environment:
+      CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
 ```
 
-</TabItem>
-<TabItem value="Linux" label="Linux">
-
-```bash
-docker run --rm \
-  -p "8080:8080" \
-  -e LICENSE_KEY="<your-license>" \
-  --add-host=host.docker.internal:host-gateway \
-  --mount "type=bind,source=$PWD/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" \
-  --mount "source=conduktor_data,target=/var/conduktor" \
-conduktor/conduktor-platform:latest
-```
-
-</TabItem>
-<TabItem value="Windows" label="Windows">
-
-```bash
-docker run --rm `
-  -p "8080:8080" `
-  -e LICENSE_KEY="<your-license>" `
-  --mount "type=bind,source=$pwd/platform-config.yaml,target=/opt/conduktor/default-platform-config.yaml" `
-  --mount "source=conduktor_data,target=/var/conduktor" `
-conduktor/conduktor-platform:latest
-```
-
-</TabItem>
-</Tabs>
+For all configuration properties and environment variables see [Configuration Properties and Environment Variables](/platform/configuration/env-variables/).
 
 ### Step 3: Access Conduktor
 
