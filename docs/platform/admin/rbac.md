@@ -226,7 +226,7 @@ The Editor/Viewer roles dictate different permissions for specific resources:
 | Connector      | Editor   | Read connectors<br />Edit connectors<br />View connector config<br />Manage tasks     |
 | Connector      | Viewer   |  Read connectors<br /> View connector config   |
 
-### Overlapping Role Assigments
+### Overlapping Role Assignments
 
 If you have overlapping role assignments, your permissions set will be the union of those role assignments. This is because RBAC operates as an additive model.
 
