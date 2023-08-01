@@ -27,13 +27,21 @@ With RBAC enabled, it's possible to:
 ---
 **Jump to:**
 - [Enable RBAC](#enable-rbac-in-your-organization)
-- [How to assign permissions?](#how-to-assign-permissions)
-- [Manage Services Permissions](#manage-services-permissions)
-- [Manage Resources Permissions](#manage-resources-permissions)
-  - [Granular Permissions](#granular-permissions)
-  - [Prefixes](#prefixes)
-  - [Quick Select](#quick-select)
-  - [Example](#example)
+- [RBAC in Console since 1.17.0](#rbac-in-console-since-1170)
+   - [How to assign permissions?](#how-to-assign-permissions)
+   - [Manage Services Permissions](#manage-services-permissions)
+   - [Manage Resources Permissions](#manage-resources-permissions)
+     - [Granular Permissions](#granular-permissions)
+     - [Prefixes](#prefixes)
+     - [Quick Select](#quick-select)
+     - [Example](#example)
+- [RBAC Before 1.17.0](#rbac-before-1170)
+  - [Roles](#roles)
+  - [Manage Resource Conditions](#manage-resource-conditions)
+     - [Example: Assigning Topic Permissions](#example-assigning-topic-permissions)
+  - [Resource permissions](#resource-permissions)
+  - [Overlapping Role Assignments](#overlapping-role-assignments)
+
 ---
 ## Enable RBAC in your Organization
 
@@ -217,7 +225,6 @@ The Editor/Viewer roles dictate different permissions for specific resources:
 | Consumer Group      | Viewer   |  Read consumer groups<br />Describe consume groups   |
 | Connector      | Editor   | Read connectors<br />Edit connectors<br />View connector config<br />Manage tasks     |
 | Connector      | Viewer   |  Read connectors<br /> View connector config   |
-
 
 ### Overlapping Role Assigments
 
