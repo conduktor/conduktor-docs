@@ -26,7 +26,7 @@ export const items = [
   {
     name: 'Gateway',
     description: "Unlock Kafka's potential",
-    to: '/platform/gateway',
+    to: '/gateway',
     icon: '/assets/svgs/products/gateway.svg',
   },
   {
