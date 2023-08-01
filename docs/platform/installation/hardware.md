@@ -1,12 +1,12 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: System Requirements
-description: Conduktor Platform is provided as a single Docker container.
+description: Conduktor Console is provided as a single Docker container.
 ---
 
 # System Requirements
 
-Conduktor Platform is provided as a single Docker container.
+Conduktor Console is provided as a single Docker container.
 
 Jump to:
 
@@ -15,7 +15,7 @@ Jump to:
 
 ## Hardware Requirements
 
-To configure Conduktor Platform for a particular hardware, you can use the environment variable `RUN_MODE`
+To configure Conduktor Console for particular hardware, you can use the environment variable `RUN_MODE`
 
 | ENV      | Available RAM |
 | -------- | ------------- |

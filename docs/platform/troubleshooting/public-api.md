@@ -1,12 +1,10 @@
 ---
-sidebar_position: 3
-title: Public API
-description: Conduktor Platform Public API
+sidebar_position: 1
+title: API health endpoints
+description: Conduktor API health endpoints
 ---
 
-# Public API
-
-## Healthcheck endpoints
+# API Healthcheck endpoints
 
 ### Liveness endpoint
 
@@ -82,13 +80,12 @@ Curl example :
 $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 #{
 #  "authenticator": "DOWN",
-#  "admin": "UP",
 #  "console": "UP",
-#  "testing": "STARTING",
-#  "data_masking": "UP",
+#  "testing": "DISABLED",
 #  "monitoring": "UP",
 #  "topic_analyzer": "DISABLED",
-#  "topic_as_service": "DISABLED"
+#  "governance": "UP",
+#  "is_ready": true
 #}
 ```
 
@@ -126,19 +123,13 @@ Curl example :
 ```shell
 curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 # {
-# "platform": "1.1.2-281af34d06dd83b4551a4f8a75aed8f54285a74c",
-# "devtools": "1.7.1",
-# "analyser": "0.9.0",
-# "governance_api": "0.11.11",
-# "governance_web": "0.13.0",
-# "portal": "1.66.0",
-# "portal_front": "0.24.0",
-# "data_masking": "0.19.0",
-# "authenticator": "1.3.7",
-# "home": "0.21.0",
-# "monitoring": "0.30.0",
-# "testing_api": "0.22.0",
-# "testing_agent": "0.22.0",
-# "testing_ui": "0.22.3"
+#  "platform": "main-5709b4018926a09601087ace83483ebf137a8c77",
+#  "console": "b5204df2bf9511996f05b3f01344924e9378ae5e",
+#  "console_web": "c67f454eaf7e9331f9992ebd4433a75b82156e2a-staging",
+#  "governance_api": "0.50.9",
+#  "authenticator": "1.7.0",
+#  "monitoring": "0.64.0",
+#  "testing_api": "0.39.0",
+#  "testing_agent": "0.38.0"
 # }
 ```

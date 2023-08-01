@@ -1,7 +1,7 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Log configuration
-description: How to setup and tune Conduktor Platform logs 
+description: How to setup and tune Conduktor logs 
 ---
 # Conduktor platform log configuration
 
