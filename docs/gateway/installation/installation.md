@@ -35,7 +35,7 @@ Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gatew
 - Describe cluster information
 
 # Running the gateway
-In its most simple form GW can be run from a simple Docker run command with the credentials to connect to you Kafka cluster.
+In its most simple form GW can be run from a simple Docker run command with the credentials to connect to you Kafka cluster. However, Gateway needs to interact with your clients and your Kafka to get the most from it.
 
 ```bash
  docker run \
