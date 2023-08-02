@@ -6,29 +6,29 @@ description: Get started with the latest Conduktor Platform Docker image in just
 
 # Docker Quick Start
 
-Get started with the latest Conduktor Docker image. The installation and configuration process takes only a few minutes.
+:::info
+Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
+:::
 
-There are two ways to configure Conduktor via Docker:
+Get started with the latest Conduktor Docker image. The installation and configuration process takes only a few minutes.
 
 - [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your environment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
    - [Launch Conduktor with an embedded Kafka (Redpanda)](#launch-conduktor-with-an-embedded-kafka-redpanda)
    - [Launch Conduktor and connect it to your existing Kafka](#or-launch-conduktor-and-connect-it-to-your-existing-kafka)
 
-- [**Advanced Configuration**](#advanced-setup): Use a configuration file or environment variables to declare an external database and SSO. This is the recommended option for **production environments**.
+- [**Advanced Configuration**](#advanced-setup): Configure your environment using a configuration file or using environment variables. This is essential for **production environments**.
+   - [Using a configuration file](#advanced-setup)
+   - [Using environment variables](#configuration-using-environment-variables)
 
 # Simple Setup
 
 When launching Conduktor for the first time, you will presented with onboarding to help configure your environment.
 
-:::info
-Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
-:::
-
-## Step 1: Launch Conduktor
+### Step 1: Launch Conduktor
 
 Run one of the below commands to launch Conduktor.
 
-### Launch Conduktor with an embedded Kafka (Redpanda) 
+### Launch Conduktor with an embedded Kafka (Redpanda)
 
 This option pre-configures Conduktor to connect to the embedded Redpanda and Schema Registry.
 
@@ -202,4 +202,53 @@ If using [SSO](/platform/category/user-authentication/), you will see an option 
 
 ### Step 4: Configure your first cluster
 
-See [configuring your first cluster](#step-3-configure-your-first-kafka-cluster)
+See [configuring your first cluster](#step-3-configure-your-existing-kafka-cluster)
+
+### Configuration using environment variables
+
+All input configuration fields can also be provided using environment variables.
+
+For more information, see [Environment Variables](/platform/configuration/env-variables/).
+
+Below shows an example docker-compose that uses environment variables for configuration.
+
+```yaml title="docker-compose.yaml"
+version: '3.8'
+
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-platform:
+    image: conduktor/conduktor-platform:1.17.0
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_LICENSE: "${LICENSE_TOKEN:-}"
+      CDK_ORGANIZATION_NAME: "${ORGANIZATION_NAME}"
+      CDK_ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      CDK_ADMIN_PASSWORD: "${ADMIN_PSW}"
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
+```

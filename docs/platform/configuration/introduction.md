@@ -115,9 +115,52 @@ For all configuration properties and environment variables see [Configuration Pr
 
 ## Environment override
 
-Starting from Conduktor Platform `1.2.0`, input configuration fields can alternatively be provided using environment variables.
+Since Conduktor `1.2.0`, input configuration fields can also be provided using environment variables.
 
-For more information, see [Environment Variables](/platform/configuration/env-variables/)
+For more information, see [Environment Variables](/platform/configuration/env-variables/).
+
+Below shows an example docker-compose that uses environment variables for configuration.
+
+```yaml title="docker-compose.yaml
+version: '3.8'
+
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-platform:
+    image: conduktor/conduktor-platform:1.17.0
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_LICENSE: "${LICENSE_TOKEN:-}"
+      CDK_ORGANIZATION_NAME: "${ORGANIZATION_NAME}"
+      CDK_ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      CDK_ADMIN_PASSWORD: "${ADMIN_PSW}"
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
+```
 
 ## Container user and permissions
 
