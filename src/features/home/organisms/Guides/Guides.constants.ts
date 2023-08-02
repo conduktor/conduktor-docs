@@ -6,12 +6,6 @@ export const items = [
     comingSoon: false,
   },
   {
-    title: 'Conduktor Cloud',
-    icon: '/assets/svgs/guides/cloud.svg',
-    to: '/platform/installation/get-started/cloud',
-    comingSoon: false,
-  },
-  {
     title: 'AWS',
     icon: '/assets/svgs/guides/aws.svg',
     to: '/platform/installation/get-started/cloudformation',
@@ -20,7 +14,6 @@ export const items = [
   {
     title: 'Kubernetes',
     icon: '/assets/svgs/guides/kubernetes.svg',
-    to: '/',
-    comingSoon: true,
+    to: '/platform/installation/get-started/kubernetes',
   },
 ]
