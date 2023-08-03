@@ -6,6 +6,18 @@
   ** to new topic above
 - Pause creating topic mapping
 - Call api to start migrate, wait til api success. Please ping us if api has error.
+  Example:
+
+```shell
+curl -v\
+    --silent \
+    --request POST "http://localhost:8888/admin/migrateInterceptor/v1beta/from/18/to/2" \
+    --user "superUser:superUser" \
+    --header 'accept: application/json' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{"sourceTopic": "_interceptorConfigs","destinationTopic": "_interceptorConfigs2"}'
+```
+
 - Start V2, test and monitor....
 - Delete old topic when things work well.
 
