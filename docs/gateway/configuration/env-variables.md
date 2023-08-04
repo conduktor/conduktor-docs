@@ -48,7 +48,7 @@ __Example Values__
 
 :::info
 
-Multi-tenancy is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the app to connect to the cluster, allowing it to passthrough the Gateway.
+Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the app to connect to the cluster, allowing it to passthrough the Gateway.
 To get the most out of Conduktor Gateway multi-tenancy should later be activated.
 
 :::
@@ -169,13 +169,6 @@ Note: These configurations apply to authentication between clients and Conduktor
 | `GATEWAY_LICENSE_BACKING_TOPIC` | `_license`    | The namme of an internal topic used to store license data |       Yes       |
 | `GATEWAY_LICENSE_PUBLIC_KEY`    | None          | The public key used to decode license keys                |       Yes       |
 | `GATEWAY_LICENSE_KEY`           | None          | License key                                               |       Yes       |
-
-### Security configuration
-
-| Environment Variable         | Default Value | Description                                 | Enterprise Only |
-|------------------------------|---------------|---------------------------------------------|:---------------:|
-| `JWT_AUTH_MASTER_USERNAME`   | `conduktor`   | Master credentials for use with admin APIs  |       Yes       |
-| `JWT_AUTH_MASTER_PASSWORD`   | `conduktor`   | Master credentials for use with admin APIs  |       Yes       |
 
 ### Logging configuration
 
