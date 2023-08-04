@@ -28,7 +28,7 @@ conduktor-gateway:
 
 # Securing Client access to your Gateway
 
-## Transitive security
+## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
 
@@ -36,7 +36,7 @@ Gateway will then transfer the credentials to your underlying Kafka, thus levera
 
 :::caution
 
-Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for transitive security.
+Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for passthrough identity.
 
 :::
 
@@ -44,7 +44,7 @@ Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for tra
 
 Gateway enables you to adapt the security protocol to your liking.
 
-For example, you may want to change security on a given target Kafka.
+For example, you may want to change security on a given target Kafka from `SASL_PLAINTEXT` to `NONE`
 
 ```yaml
 conduktor-gateway:
@@ -57,6 +57,8 @@ conduktor-gateway:
       GATEWAY_SECURITY_PROTOCOL: NONE
 ```
 
+For `SASL_SSL` you will need to create keystore
+
 ```yaml
 gateway-confluent-cloud:
   image: conduktor/conduktor-proxy:distro
@@ -66,11 +68,23 @@ gateway-confluent-cloud:
     KAFKA_SECURITY_PROTOCOL: SASL_SSL
     KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="xxxx" password="yyyyyy";
     GATEWAY_SECURITY_PROTOCOL: SASL_SSL
-    GATEWAY_SSL_KEY_STORE_PATH: /clientConfig/gateway.keystore.jks
+    GATEWAY_SSL_KEY_STORE_PATH: /keystores/gateway.keystore.jks
     GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
     GATEWAY_SSL_KEY_PASSWORD: 123456
     GATEWAY_SSL_KEY_TYPE: jks
+    volumes:
+      - type: bind
+        source: "./jks"
+        target: /jks
+        read_only: true
 ```
+
+:::caution
+
+Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` files
+
+:::
+
 
 Gateway supports
 * NONE
@@ -100,7 +114,7 @@ The following command will create a virtual cluster called `london`, it will ret
 
 ```bash
 curl \
-    --request POST "gateway:888/admin/auth/v1/cluster/london/account/sa" \
+    --request POST "conduktor-gateway:888/admin/auth/v1/cluster/london/account/sa" \
     --user 'admin:conduktor' \
     --header 'Content-Type: application/json' \
     --data-raw '{"lifeTimeSeconds": 7776000}'
@@ -126,7 +140,7 @@ echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base
 
 ```
 
-## Using the token
+### Connecting to a virtual cluster
 
 The token should be provided in the password field of the client configuration as follows:
 
@@ -136,3 +150,11 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="sa" password="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidGVuYW50IjoibG9uZG9uIiwiZXhwIjoxNjk4NzQ0OTgxfQ.9f0htbb0s1Qgy4J0WGoDNHLZCBwbcr1BWPhkvDJgVz8";
 ```
 
+and then list topics `london` topics using its `sa` account 
+
+```bash
+kafka-topics \
+  --bootstrap-server conduktor-gateway:6969 \
+  --command-config /clientConfig/london-sa.properties \
+  --list
+```
