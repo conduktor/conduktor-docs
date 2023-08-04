@@ -44,7 +44,7 @@ Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for pas
 
 Gateway enables you to adapt the security protocol to your liking.
 
-For example, you may want to change security on a given target Kafka from `SASL_PLAINTEXT` to `NONE`
+For example, you may want to add `SSL` on top on a `SASL_PLAINTEXT` Kafka.
 
 ```yaml
 conduktor-gateway:
@@ -54,29 +54,16 @@ conduktor-gateway:
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="x" password="y";
-      GATEWAY_SECURITY_PROTOCOL: NONE
-```
-
-For `SASL_SSL` you will need to create keystore
-
-```yaml
-gateway-confluent-cloud:
-  image: conduktor/conduktor-proxy:distro
-  environment:
-    KAFKA_BOOTSTRAP_SERVERS: pkc-ymrq7.us-east-2.aws.confluent.cloud:9092
-    KAFKA_SASL_MECHANISM: PLAIN
-    KAFKA_SECURITY_PROTOCOL: SASL_SSL
-    KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="xxxx" password="yyyyyy";
-    GATEWAY_SECURITY_PROTOCOL: SASL_SSL
-    GATEWAY_SSL_KEY_STORE_PATH: /keystores/gateway.keystore.jks
-    GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
-    GATEWAY_SSL_KEY_PASSWORD: 123456
-    GATEWAY_SSL_KEY_TYPE: jks
-    volumes:
-      - type: bind
-        source: "./jks"
-        target: /jks
-        read_only: true
+      GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+      GATEWAY_SSL_KEY_STORE_PATH: /keystores/gateway.keystore.jks
+      GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
+      GATEWAY_SSL_KEY_PASSWORD: 123456
+      GATEWAY_SSL_KEY_TYPE: jks
+      volumes:
+        - type: bind
+          source: "./jks"
+          target: /jks
+          read_only: true
 ```
 
 :::caution
