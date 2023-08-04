@@ -13,7 +13,7 @@ There are two sets of configuration to consider when securing your gateway.
 
 # Securing Gateway access to your Kafka
 
-You can use all the kafka mechanism, NONE, SASL, OAuthBearer, Kerberos etc. 
+You can use all the kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc. 
 
 ```yaml
 conduktor-gateway:
@@ -30,21 +30,21 @@ conduktor-gateway:
 
 ## Transitive security
 
-By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept login and password. 
+By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
 
 Gateway will then transfer the credentials to your underlying Kafka, thus leveraging your existing security and ACLs.
 
 :::caution
 
-Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for transitive identity.
+Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for transitive security.
 
 :::
 
-## Gateway internal Security
+## Gateway internal security
 
 Gateway enables you to adapt the security protocol to your liking.
 
-For example, you may want to change security on a given target Kafka
+For example, you may want to change security on a given target Kafka.
 
 ```yaml
 conduktor-gateway:
@@ -81,9 +81,9 @@ Gateway supports
 `OAuth` and `mTLS` are currently being worked on.
 
 
-## Gateway internal Security with multi-tenancy
+## Gateway internal Security with virtual clusters
 
-To enable multi-tenancy you need specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` 
+To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` 
 
 ```yaml
 conduktor-gateway:
@@ -96,7 +96,7 @@ conduktor-gateway:
       GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
 ```
 
-This command will create a virtual cluster called `london`, it will return the password of the account `sa` to be able to connect to the new cluster. 
+The following command will create a virtual cluster called `london`, it will return the password of the account `sa` to be able to connect to the new cluster. 
 
 ```bash
 curl \
@@ -114,7 +114,7 @@ This will respond with a token similar to this:
 }
 ```
 
-This token is JWT, it contains
+This token is a JWT, inspecting it from the below commans you can see it contains
 
 ```bash
 echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base64d | fromjson'

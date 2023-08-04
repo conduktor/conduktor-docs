@@ -19,4 +19,4 @@ This behaviour is configured with [load balancing configurations](./env-variable
 
 For production deployments we recommend an external TCP load balancer (such as [HA-proxy](https://www.haproxy.org/)).
 
-When external load balancing is used, you need to disable the internal load balancing. § [load balancing configurations](./env-variables.md#load-Balancing-configurations). 
+When external load balancing is used, you need to disable the internal load balancing, see [load balancing configurations](./env-variables.md#load-Balancing-configurations). 
