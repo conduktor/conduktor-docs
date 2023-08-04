@@ -1,11 +1,13 @@
 ---
+sidebar_position: 3
 title: Open Source Security
 description: Simple Conduktor Gateway security
 ---
 
 This page covers the basic security available the open source version of Conduktor Gateway.
 
-Jump to [Enterprise Security](./enterprise_proxy_security.md) for the Enterprise security.
+Jump to [Enterprise Security](..//configuration/gateway_security.md) for the Enterprise security.
+docs/gateway/configuration/gateway_security.md
 
 # Concepts
 There are two sets of configuration to consider when securing your gateway.
@@ -83,7 +85,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 ```
 
 
-![mvn_clean_package_success.png](../installation/mvn_clean_package_success.png)
+![mvn_clean_package_success.png](./mvn_clean_package_success.png)
 
 Or, to connect to a Confluent Cloud instance use configuration similar to:
 
