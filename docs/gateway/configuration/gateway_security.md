@@ -117,7 +117,7 @@ This will respond with a token similar to this:
 This token is JWT, it contains
 
 ```bash
-echo $token | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base64d | fromjson'
+echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base64d | fromjson'
 {
   "username": "sa",
   "tenant": "london",
