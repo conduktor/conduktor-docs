@@ -27,7 +27,13 @@ conduktor-gateway:
 
 
 # Securing Client access to your Gateway
+You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
+Gateway supports
+* NONE
+* SSL
+* SASL_SSL
+* SASL_PLAINTEXT
 ## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
@@ -79,7 +85,7 @@ Gateway supports
 * SASL_SSL
 * SASL_PLAINTEXT
 
-`OAuth` and `mTLS` are currently being worked on.
+`OAuth` and `mTLS` are under development.
 
 
 ## Gateway internal Security with virtual clusters
@@ -115,7 +121,7 @@ This will respond with a token similar to this:
 }
 ```
 
-This token is a JWT, inspecting it from the below commans you can see it contains
+This token is a JWT, inspecting it from the below command you can see it contains:
 
 ```bash
 echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base64d | fromjson'
