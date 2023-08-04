@@ -68,11 +68,23 @@ gateway-confluent-cloud:
     KAFKA_SECURITY_PROTOCOL: SASL_SSL
     KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="xxxx" password="yyyyyy";
     GATEWAY_SECURITY_PROTOCOL: SASL_SSL
-    GATEWAY_SSL_KEY_STORE_PATH: /clientConfig/gateway.keystore.jks
+    GATEWAY_SSL_KEY_STORE_PATH: /keystores/gateway.keystore.jks
     GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
     GATEWAY_SSL_KEY_PASSWORD: 123456
     GATEWAY_SSL_KEY_TYPE: jks
+    volumes:
+      - type: bind
+        source: "./jks"
+        target: /jks
+        read_only: true
 ```
+
+:::caution
+
+Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` files
+
+:::
+
 
 Gateway supports
 * NONE
