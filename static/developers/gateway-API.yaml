@@ -14,27 +14,29 @@ info:
 tags:
   - name: Introduction
     description: Conduktor Gateway enables you to enhance your Kafka experience without changing your applications.
-  - name: Auth
-    description: APIs to manage broker authentication.
-  - name: Clusters
-    description: APIs to perform operations on clusters within Conduktor Gateway.
-  - name: Interceptor
-    description: APIs to manage interceptors within Conduktor Gateway
+  - name: Virtual Clusters
+    description: APIs to perform operations on virtual clusters within Conduktor Gateway.
+  - name: Interceptors for Virtual Cluster 
+    description: APIs to manage virtual cluster interceptors within Conduktor Gateway
+  - name: Interceptors for Username 
+    description: APIs to manage usernames interceptors within Conduktor Gateway
   - name: Plugins
     description: APIs to interact with plugins within Conduktor Gateway.
+  - name: RBAC
+    description: APIs to manage RBAC
 servers:
   - url: "/admin"
 paths:
-  "/auth/v1/platformRbac/cluster/{clusterId}":
+  "/auth/v1/platformRbac/vcluster/{vcluster}":
     post:
-      summary: Create credentials for a Conduktor Console user for RBAC
+      summary: Create credentials for a Conduktor Console username for RBAC
       tags:
-        - Auth
+        - RBAC
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
           description: The cluster to create the credentials for.
       requestBody:
@@ -42,21 +44,21 @@ paths:
           application/json:
             example:
               organization: conduktor
-              user: user@conduktor.io
-              cluster: my-cluster
+              username: user@conduktor.io
+              vcluster: my-cluster
               lifeTimeSeconds: 7776000
             schema:
               "$ref": "#/components/schemas/RbacTokenRequest"
         required: true
       responses:
         '200':
-          description: Cluster token
+          description: Virtual Cluster token
           content:
             application/json:
               example:
                 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
               schema:
-                "$ref": "#/components/schemas/TenantToken"
+                "$ref": "#/components/schemas/ClusterToken"
         '401':
           description: ''
           content: {}
@@ -65,49 +67,49 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: Cluster doesn't exist. 
+          description: Virtual Cluster doesn't exist.
           content: {}
       security:
         - basicAuth: []
       operationId: Auth_v1_createPlatformRbacToken
       deprecated: false
-  "/auth/v1/cluster/{clusterId}/account/{account}":
+  "/vclusters/v1/vcluster/{vcluster}/username/{username}":
     post:
-      summary: Create account credentials for a specific cluster
+      summary: Create a virtual cluster with a username to connect to it
       tags:
-        - Auth
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster where the account will be created against.
+          description: The id to give to the new virtual cluster
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: The account to create the credentials for.
+          description: The username to connect to the newly created virtual cluster
       requestBody:
         content:
           application/json:
             example:
               lifeTimeSeconds: 7776000
             schema:
-              "$ref": "#/components/schemas/TenantTokenRequest"
+              "$ref": "#/components/schemas/ClusterTokenRequest"
         required: true
       responses:
         '200':
-          description: Account token
+          description: Username token
           content:
             application/json:
               example:
                 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
               schema:
-                "$ref": "#/components/schemas/TenantToken"
+                "$ref": "#/components/schemas/ClusterToken"
         '401':
           description: ''
           content: {}
@@ -116,31 +118,31 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: cluster doesn't exist. 
+          description: Virtual cluster doesn't exist.
           content: {}
       security:
         - basicAuth: []
       operationId: Auth_v1_createClusterAccountToken
       deprecated: false
-  "/clusters/v1/":
+  "/vclusters/v1/":
     get:
-      summary: List clusters
+      summary: List virtual clusters
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters: []
       responses:
         '200':
-          description: List of cluster ids with topic mappings
+          description: List of virtual cluster ids with topic mappings
           content:
             application/json:
               example:
-                tenants:
-                  - cluster1
-                  - cluster2
+                vclusters:
+                  - vcluster1
+                  - vcluster2
               schema:
-                "$ref": "#/components/schemas/ClusterList"
+                "$ref": "#/components/schemas/VClusterList"
         '401':
           description: ''
           content: {}
@@ -149,26 +151,26 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
       security:
         - basicAuth: []
       operationId: Clusters_v1_listClusters
       deprecated: false
-  "/clusters/v1/cluster/{clusterId}/topics":
+  "/vclusters/v1/vcluster/{vcluster}/topics":
     delete:
-      summary: Delete all topic mappings for a cluster
+      summary: Delete all topic mappings for a virtual cluster
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to delete topics for
+          description: The id of the virtual cluster to delete topics for
       responses:
         '200':
-          description: cluster topic mappings deleted
+          description: Virtual cluster topic mappings deleted
           content: {}
         '401':
           description: ''
@@ -178,25 +180,25 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: Cluster doesn't have any topic mappings
+          description: Virtual Cluster doesn't have any topic mappings
           content: {}
       security:
         - basicAuth: []
       operationId: Clusters_v1_deleteClusters
       deprecated: false
     get:
-      summary: List topic mappings for a cluster
+      summary: List topic mappings for a virtual cluster
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to list topic mappings for
+          description: The id of the virtual cluster to list topic mappings for
       responses:
         '200':
           description: List of the topic mappings with their configuration
@@ -232,29 +234,29 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: Cluster doesn't have any topic mappings defined
+          description: Virtual Cluster doesn't have any topic mappings defined
           content: {}
       security:
         - basicAuth: []
       operationId: Clusters_v1_listClusterTopicMapping
       deprecated: false
-  "/clusters/v1/cluster/{clusterId}/topics/{logicalTopicName}":
+  "/vclusters/v1/vcluster/{vcluster}/topics/{logicalTopicName}":
     delete:
-      summary: Delete a topic mapping for a cluster
-      description: Delete targeted topic mapping for a cluster. If this API call is
-        deleting the last topic mapping registered for a cluster, the cluster will not
+      summary: Delete a topic mapping for a virtual cluster
+      description: Delete targeted topic mapping for a virtual cluster. If this API call is
+        deleting the last topic mapping registered for a virtual cluster, the virtual cluster will not
         be visible anymore after deletion in the multi-tenancy API.
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to delete a topic mapping for
+          description: The id of the virtual cluster to delete a topic mapping for
         - schema:
             type: string
           in: path
@@ -273,25 +275,25 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: Topic (logical topic name) or cluster not found
+          description: Topic (logical topic name) or virtual cluster not found
           content: {}
       security:
         - basicAuth: []
       operationId: Clusters_v1_deleteClusterTopicMapping
       deprecated: false
     post:
-      summary: Create topic mapping for a cluster
+      summary: Create topic mapping for a virtual cluster
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to create a topic mapping for
+          description: The id of the virtual cluster to create a topic mapping for
         - schema:
             type: string
           in: path
@@ -335,7 +337,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '409':
           description: Invalid update detected. RealTopicName cannot be updated
           content:
@@ -354,30 +356,30 @@ paths:
         - basicAuth: []
       operationId: Clusters_v1_createClusterTopicMapping
       deprecated: false
-  "/clusters/v1/rerouting/{fromCluster}/{toCluster}":
+  "/vclusters/v1/rerouting/{fromVCluster}/{toVCluster}":
     post:
-      summary: Reroute all mappings from a cluster to another
+      summary: Reroute all mappings from a virtual cluster to another virtual cluster
       tags:
-        - Clusters
+        - Virtual Clusters
       parameters:
         - schema:
             type: string
           in: path
-          name: fromCluster
+          name: fromVCluster
           required: true
-          description: Cluster id to switch from
+          description: Virtual Cluster id to switch from
         - schema:
             type: string
           in: path
-          name: toCluster
+          name: toVCluster
           required: true
-          description: Cluster id to switch to
+          description: Virtual Cluster id to switch to
       responses:
         '200':
-          description: Cluster switched
+          description: Virtual Cluster switched
           content: { }
         '400':
-          description: Bad parameter. A cluster id is not configured
+          description: Bad parameter. A virtual cluster id is not configured
           content: { }
         '401':
           description: ''
@@ -387,23 +389,23 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
       security:
         - basicAuth: [ ]
       operationId: Clusters_v1_clusterRerouting
       deprecated: false
-  "/interceptors/v1/cluster/{clusterId}/interceptor/{interceptorName}":
+  "/interceptors/v1/vcluster/{vcluster}/interceptor/{interceptorName}":
     post:
-      summary: Create an interceptor for a cluster
+      summary: Create an interceptor for a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to create an interceptor for
+          description: The id of the virtual cluster to create an interceptor for
         - schema:
             type: string
           in: path
@@ -436,7 +438,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '409':
           description: Invalid update detected. cluster + interceptorName must be unique.
           content:
@@ -448,16 +450,16 @@ paths:
       operationId: Interceptor_v1_createClusterInterceptor
       deprecated: false
     put:
-      summary: Update an interceptor for a cluster
+      summary: Update an interceptor for a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to update an interceptor for
+          description: The id of the virtual cluster to update an interceptor for
         - schema:
             type: string
           in: path
@@ -490,7 +492,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -499,16 +501,16 @@ paths:
       operationId: Interceptor_v1_updateClusterInterceptor
       deprecated: false
     get:
-      summary: Get info on an interceptor for a cluster
+      summary: Get info on an interceptor for a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to get information on an interceptor for
+          description: The id of the virtual cluster to get information on an interceptor for
         - schema:
             type: string
           in: path
@@ -539,7 +541,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -548,17 +550,17 @@ paths:
       operationId: Interceptor_v1_getClusterInterceptor
       deprecated: false
     delete:
-      summary: Delete an interceptor for a cluster
-      description: Delete an interceptor for a cluster
+      summary: Delete an interceptor for a virtual cluster
+      description: Delete an interceptor for a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to delete an interceptor for
+          description: The id of the virtual cluster to delete an interceptor for
         - schema:
             type: string
           in: path
@@ -577,7 +579,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -585,18 +587,18 @@ paths:
         - basicAuth: []
       operationId: Interceptor_v1_deleteClustertInterceptor
       deprecated: false
-  "/interceptors/v1/cluster/{clusterId}/interceptors":
+  "/interceptors/v1/vcluster/{vcluster}/interceptors":
     get:
       summary: Get interceptors of a cluster
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to get interceptors
+          description: The id of the virtual cluster to get interceptors
       responses:
         '200':
           description: Interceptor list
@@ -639,32 +641,32 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: cluster not found
+          description: Virtual cluster not found
           content: {}
       security:
         - basicAuth: []
       operationId: Interceptor_v1_getClusterInterceptors
       deprecated: false
-  "/interceptors/v1/cluster/{clusterId}/account/{account}/interceptor/{interceptorName}":
+  "/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptor/{interceptorName}":
     post:
-      summary: Create interceptor for a user
+      summary: Add interceptor for a specific username within a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Username 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to create an interceptor for
+          description: The id of the virtual cluster to create an interceptor for
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: the account to get interceptors
+          description: the username to apply the interceptor to
         - schema:
             type: string
           in: path
@@ -697,34 +699,28 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
-        '409':
-          description: Invalid update detected. cluster + interceptorName must be unique.
-          content:
-            application/json:
-              example:
-                message: interceptorName for cluster must be unique.
+                message: You do not have permission to call this API, please contact your administrator.
       security:
         - basicAuth: []
       operationId: Interceptor_v1_createAccountInterceptor
       deprecated: false
     put:
-      summary: Update interceptor for a user
+      summary: Update interceptor for a username within a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Username 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to update an interceptor for
+          description: The id of the virtual cluster to update an interceptor for
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: the account to get interceptors
+          description: the username to apply the updated interceptor
         - schema:
             type: string
           in: path
@@ -757,7 +753,13 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
+        '409':
+          description: Invalid update detected. cluster + interceptorName must be unique.
+          content:
+            application/json:
+              example:
+                message: interceptorName for cluster must be unique.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -766,22 +768,22 @@ paths:
       operationId: Interceptor_v1_updateAccountInterceptor
       deprecated: false
     get:
-      summary: Get an interceptor for a user
+      summary: Get an interceptor for a username within a given virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Username 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to create an interceptor for
+          description: The id of the virtual cluster
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: the account to get interceptors
+          description: the username to get interceptors
         - schema:
             type: string
           in: path
@@ -790,7 +792,7 @@ paths:
           description: Interceptor name to get data
       responses:
         '200':
-          description: Interceptor updated
+          description: Interceptors for Username 
           content:
             application/json:
               example:
@@ -812,7 +814,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -821,23 +823,23 @@ paths:
       operationId: Interceptor_v1_getAccountInterceptor
       deprecated: false
     delete:
-      summary: Delete an interceptor for a user
-      description: Delete an interceptor for a user.
+      summary: Delete an interceptor for a username within a virtual cluster
+      description: Delete an interceptor for a username
       tags:
-        - Interceptor
+        - Interceptors for Username 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to delete an interceptor from
+          description: The id of the virtual cluster to delete an interceptor from
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: the account to delete interceptors from
+          description: the username to delete interceptors from
         - schema:
             type: string
           in: path
@@ -856,7 +858,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
           description: Interceptor (interceptor name) or cluster not found
           content: {}
@@ -864,24 +866,24 @@ paths:
         - basicAuth: []
       operationId: Interceptor_v1_deleteAccountInterceptor
       deprecated: false
-  "/interceptors/v1/cluster/{clusterId}/account/{account}/interceptors":
+  "/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptors":
     get:
-      summary: Get interceptors of a user
+      summary: Get interceptors of a username within a virtual cluster
       tags:
-        - Interceptor
+        - Interceptors for Username 
       parameters:
         - schema:
             type: string
           in: path
-          name: clusterId
+          name: vcluster
           required: true
-          description: The id of the cluster to get interceptors for
+          description: The id of the virtual cluster to get interceptors for
         - schema:
             type: string
           in: path
-          name: account
+          name: username
           required: true
-          description: the account to get interceptors for
+          description: the username to get interceptors for
       responses:
         '200':
           description: Interceptor list
@@ -924,9 +926,9 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: cluster not found
+          description: Virtual cluster not found
           content: {}
       security:
         - basicAuth: []
@@ -934,9 +936,10 @@ paths:
       deprecated: false
   "/interceptors/v1/interceptors":
     get:
-      summary: Get all interceptors (cluster and global interceptors)
+      summary: Get all interceptors (virtual cluster and global interceptors)
       tags:
-        - Interceptor
+        - Interceptors for Virtual Cluster
+        - Interceptors for Username
       parameters:
         - schema:
             type: string
@@ -950,20 +953,20 @@ paths:
           content:
             application/json:
               example:
-                - tenant: ''
+                - vcluster: ''
                   name: myEncryptionInterceptor
                   pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
                   priority: 50
                   config:
                     topic: topicName
-                - tenant: tenant1
+                - vcluster: cluster1
                   name: myInjectHeaderInterceptor
                   pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
                   priority: 51
                   config:
                     topic: topicName
-                - tenant: tenant1
-                  user: user1
+                - vcluster: cluster1
+                  account: user1
                   name: myInjectHeaderInterceptor
                   pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
                   priority: 51
@@ -973,20 +976,20 @@ paths:
                 items:
                   "$ref": "#/components/schemas/InterceptorWithClusterResponse"
                 example:
-                  - tenant: ''
+                  - vcluster: ''
                     name: myEncryptionInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
                     priority: 50
                     config:
                       topic: topicName
-                  - tenant: tenant1
+                  - vcluster: cluster1
                     name: myInjectHeaderInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
                     priority: 51
                     config:
                       topic: topicName
-                  - tenant: tenant1
-                    user: user1
+                  - vcluster: cluster1
+                    account: account1
                     name: myInjectHeaderInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
                     priority: 51
@@ -1004,9 +1007,9 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
         '404':
-          description: cluster not found
+          description: Virtual cluster not found
           content: {}
       security:
         - basicAuth: []
@@ -1014,7 +1017,7 @@ paths:
       deprecated: false
   "/plugins/v1":
     get:
-      summary: List all the available plugins
+      summary: List all available plugins
       tags:
         - Plugins
       responses:
@@ -1024,8 +1027,8 @@ paths:
             application/json:
               example:
                 plugins: [io.conduktor.gateway.interceptor.AlterBrokerConfigsSafeGuardPlugin,
-                           io.conduktor.gateway.interceptor.AlterTopicConfigsSafeGuardPlugin
-                           ]
+                          io.conduktor.gateway.interceptor.AlterTopicConfigsSafeGuardPlugin
+                ]
         '400':
           description: If bad request
           content: {}
@@ -1037,7 +1040,7 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
       security:
         - basicAuth: []
       operationId: Plugins_v1_getPlugins
@@ -1049,7 +1052,7 @@ paths:
         - Plugins
       responses:
         '200':
-          description: List all available plugins with extended information
+          description: Get all available plugins with extended information
           content:
             application/json:
               example:
@@ -1078,14 +1081,14 @@ paths:
           content:
             application/json:
               example:
-                message: User doesn't have permission. Please contact your administrator
+                message: You do not have permission to call this API, please contact your administrator.
       security:
         - basicAuth: []
       operationId: Plugins_v1_getPluginsExtended
       deprecated: false
 components:
   schemas:
-    TenantToken:
+    ClusterToken:
       properties:
         token:
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
@@ -1095,7 +1098,7 @@ components:
       type: object
       required:
         - token
-    TenantTokenRequest:
+    ClusterTokenRequest:
       properties:
         lifeTimeSeconds:
           example: 7776000
@@ -1132,22 +1135,22 @@ components:
         - lifeTimeSeconds
         - organization
         - user
-    ClusterList:
+    VClusterList:
       properties:
-        tenants:
+        vclusters:
           items:
             type: string
           example:
-            - cluster1
-            - cluster2
+            - vcluster1
+            - vcluster2
           type: array
       example:
-        tenants:
-          - cluster1
-          - cluster2
+        vclusters:
+          - vcluster1
+          - vcluster2
       type: object
       required:
-        - clusters
+        - vclusters
     TopicMapping:
       properties:
         logicalTopicName:
@@ -1240,11 +1243,11 @@ components:
         - config
     InterceptorWithClusterResponse:
       properties:
-        tenant:
-          example: cluster1
+        vcluster:
+          example: vcluster1
           type: string
-        user:
-          example: user1
+        account:
+          example: account1
           type: string
         name:
           example: myEncryptionInterceptor
@@ -1258,8 +1261,8 @@ components:
         config:
           type: object
       example:
-        tenant: tenant1
-        user: user1
+        vcluster: cluster1
+        account: account1
         name: myEncryptionInterceptor
         pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
         priority: 50
@@ -1267,7 +1270,7 @@ components:
           topic: topicName
       type: object
       required:
-        - tenant
+        - vcluster
         - name
         - pluginClass
         - priority
