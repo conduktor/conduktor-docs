@@ -37,6 +37,16 @@ curl -v\
 | AUTHENTICATION_AUTHENTICATOR_TYPE | GATEWAY_SECURITY_PROTOCOL  |
 
 - need to set **GATEWAY_FEATURE_FLAGS_MULTI_TENANCY** to true
-- outdated environment variable: FEATURE_FLAGS_JWT_TOKEN_ENDPOINT
+- GATEWAY_SECURITY_PROTOCOL need to use **SASL_PLAINTEXT** instead of **SASL_PLAIN**
+- outdated environment variable: **FEATURE_FLAGS_JWT_TOKEN_ENDPOINT**
+
+# Renew auth token
+
+Client needs to renew their password by use new api to retrieve auth token. We have small change on url of auth token api.
+Now, client can have password for specific user.
+- Old: /admin/auth/v1beta1/tenants/{tenant}
+- New: /admin/vclusters/v1/vcluster/{vcluster}/username/{username}
+
+
 
 # Run V2
