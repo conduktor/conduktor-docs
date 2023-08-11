@@ -18,7 +18,7 @@ In v2 there are a small number of additional environment variables you will need
 - Set **GATEWAY_FEATURE_FLAGS_MULTI_TENANCY** to true, default is Passthrough
 - `GATEWAY_SECURITY_PROTOCOL` (previously `AUTHENTICATION_AUTHENTICATOR_TYPE`) needs to use `SASL_PLAINTEXT` instead of `SASL_PLAIN` , if used
 
-Some environemnt variables are deprecated, or you are likely using default values, environment variable e.g. the following is removed `FEATURE_FLAGS_JWT_TOKEN_ENDPOINT`
+Some environment variables are deprecated, or you are likely using default values, environment variable e.g. the following is removed `FEATURE_FLAGS_JWT_TOKEN_ENDPOINT`
 
 Recommended to test a temporary instance in a dev environment to have the config you need. We're happy to help answer specific questions on -e or otherwise.
 # Migrate interceptors
