@@ -7,10 +7,11 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 # Overview
 
 ## What is the Conduktor Gateway
+A vendor agnostic Apache Kafka proxy. Adding governance, security, cost-optimisation, and much more!
 
 Kafka is a powerful tool, with great flexibility. This power and flexibility can lead to challenges around managing and bringing structure to your Kafka ecosystem, especially as that ecosystem grows.
 
-Conduktor Gateway aids you on your Kafka journey by adding governance, security, auditability, testability and much more.  When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
+ When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
 
 
 ## Components
