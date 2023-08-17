@@ -112,6 +112,41 @@ Once deployed, you will be able to access Conduktor on
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 ```
 
+### Configure the platform
+
+#### Fresh install
+
+You can configure the platform by inserting into the `config` section of the
+`values.yaml` file the configuration of platform you want to apply. You can 
+find available configuration in the [configuration section](../../configuration/env-variables.md)
+
+
+#### Based on a docker configuration
+
+If you already have a configuration file that you were using within docker,
+you can use it by giving it to the helm chart with the following command:
+
+```shell
+# values.yaml
+config:
+  organization:
+    name: "my-org"
+
+  admin:
+    email: "..."
+    password: "..."
+    
+  database:
+    host: '${POSTGRES_HOST}'
+    port: 5432
+    name: '${POSTGRES_DATABASE}'
+    username: '${POSTGRES_USERNAME}'
+    password: '${POSTGRES_PASSWORD}'
+    
+  # HERE you can paste the platform configuration
+  # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
+```
+
 ## Snippets
 
 ### Install with an enterprise license

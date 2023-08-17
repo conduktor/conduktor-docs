@@ -16,6 +16,7 @@ If you have issues, please contact our [support](https://www.conduktor.io/contac
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor using the [controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/). 
 
+## Migrate to conduktor/console helm chart
 
 ## Architecture
 
