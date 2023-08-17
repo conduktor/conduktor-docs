@@ -15,7 +15,7 @@ Jump to:
 
 ## Kafka Environment Variables
 
-Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables. Any variable prefixed with `KAFKA_` will be treated as a connection parameter. The remainder of the environmnt variable will be lower cased and have `_` replaced with `.` so that a variable
+Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables. Any variable prefixed with `KAFKA_` will be treated as a connection parameter. The remainder of the environment variable will be lower cased and have `_` replaced with `.` so that a variable
 
 ```bash
 KAFKA_BOOTSTRAP_SERVERS
@@ -43,13 +43,16 @@ __Example Values__
   -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
   -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.scram.ScramLoginModule required username='usr' password='pw';" \
   -e GATEWAY_FEATURE_FLAGS_MULTITENANCY=true \
+  -e GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING=false \
   -e GATEWAY_ADMIN_API_USERS=[{username: adminChangeMe, password: conduktorChangeMe, admin: true}}]
 ```
 
 :::info
 
-Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the app to connect to the cluster, allowing it to passthrough the Gateway.
-To get the most out of Conduktor Gateway multi-tenancy should later be activated.
+Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the client app to connect to the cluster, allowing it to passthrough the Gateway. To get the most out of Conduktor Gateway multi-tenancy should later be activated.
+
+To disable this Passthrough, and activate virtual clusters, set the environemnt variable as follows, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` 
+You can see this declared in the example above, for more detail see the `Gateway Security` page.
 
 :::
 ### Host/Port Configurations
@@ -65,27 +68,28 @@ To get the most out of Conduktor Gateway multi-tenancy should later be activated
 | Environment Variable                     | Default Value      | Description                                                                                                                                                                                                          | Enterprise Only |
 |------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
 | `GATEWAY_CLUSTER_ID`                       | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing                                                                                             |       Yes       |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `false`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
-| `GATEWAY_RACK_ID`   | `?`   | Description goes here. |        No         |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
+| `GATEWAY_RACK_ID`   | `null`   | Description goes here. |        No         |
 
 ### Schema Registry Configurations
 
 | Environment Variable    | Default Value | Description                                                                         |  Enterprise Only   |
 |-------------------------| ------------- | ----------------------------------------------------------------------------------- |:------------------:|
-| `SCHEMA_REGISTRY_HOST`  | None          | A HTTP endpoint for interacting with a Schema Registry (e.g. http://localhost:8081) |        Yes         |
+| `SCHEMA_REGISTRY_HOST`  | None          | A HTTP endpoint for interacting with a Schema Registry (e.g. `http://localhost:8081`) |        Yes         |
 
 ### Authentication Configurations
 
 Note: These configurations apply to authentication between clients and Conduktor Gateway. For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable                | Default Value | Description                                                                                                                  | Enterprise Only |
+| Environment Variable                | Default Value | Description       | Enterprise Only |
 |-------------------------------------| ------------- |------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `GATEWAY_SECURITY_PROTOCOL` | `NONE`        | The type of authentication clients should use to connect to the gateway, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |       No        |
-| `GATEWAY_SSL_KEY_STORE_PATH`                | config/kafka-proxy.keystore.jks          | Path to a keystore for SSL connections                                                                                       |       No        |
-| `GATEWAY_SSL_KEY_STORE_PASSWORD`            | 123456          | Password for the keystore defined above                                                                                      |       No        |
-| `GATEWAY_SSL_KEY_PASSWORD`                  | None          | Password for the key contained in the store above                                                                            |       No        |
+| `GATEWAY_SECURITY_PROTOCOL` | `NONE`        | The type of authentication clients should use to connect to the gateway, valid values are `NONE`, `SSL`, `SASL_PLAIN` and `SASL_SSL` |       No        |
+| `GATEWAY_SSL_KEY_STORE_PATH`                | `config/kafka-proxy.keystore.jks`          | Path to a keystore for SSL connections                                                                                       |       No        |
+| `GATEWAY_SSL_KEY_STORE_PASSWORD`            | `123456 `         | Password for the keystore defined above                                                                                      |       No        |
+| `GATEWAY_SSL_KEY_PASSWORD`                  | `None`         | Password for the key contained in the store above                                                                            |       No        |
 | `GATEWAY_SSL_KEY_TYPE`                      | `jks`         | The type of keystore used for SSL connections       
-| `GATEWAY_SSL_UPDATE_INTERVAL_MS`            | 600000         |                                             |       No        |
+| `GATEWAY_SSL_UPDATE_INTERVAL_MS`            | `600000`        |                                             |       No        |
+| `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]`      |  Credentials for the admin API.                      |       No        |
 
 ### HTTP Configurations
 
