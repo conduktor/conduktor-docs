@@ -12,6 +12,8 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
   const location = useLocation()
   const { pathname } = location
   const isHome = pathname === '/'
+  const isConsole = pathname === '/platform/'
+  const isGateway = pathname === '/gateway/'
 
   return (
     <ul className={styles.StyledNavLinks}>
@@ -20,11 +22,27 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
           {isHome ? 'Console' : 'Home'}
         </Link>
       </li>
-      <li>
-        <Link className={styles.NavLink} to={isHome ? '/gateway' : '/'}>
-          {isHome ? 'Gateway' : 'Home'}
-        </Link>
-      </li>
+      {isGateway && (
+        <li>
+          <Link className={styles.NavLink} to={isHome ? '/gateway' : '/platform'}>
+            {isHome ? 'Gateway' : 'Console'}
+          </Link>
+        </li>
+      )}
+      {isConsole && (
+        <li>
+          <Link className={styles.NavLink} to={isHome ? '/gateway' : '/gateway'}>
+            {isHome ? 'Gateway' : 'Gateway'}
+          </Link>
+        </li>
+      )}
+      {isHome && (
+        <li>
+          <Link className={styles.NavLink} to={isHome ? '/gateway' : '/gateway'}>
+            {isHome ? 'Gateway' : 'Gateway'}
+          </Link>
+        </li>
+      )}
       {items.map((item, itemIndex) => (
         <li key={itemIndex}>
           {item.href && (
