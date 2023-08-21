@@ -15,7 +15,11 @@ Jump to:
 
 ## Kafka Environment Variables
 
-Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables. Any variable prefixed with `KAFKA_` will be treated as a connection parameter. The remainder of the environment variable will be lower cased and have `_` replaced with `.` so that a variable
+Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
+Any variable prefixed with `KAFKA_` will be treated as a connection parameter.
+The remainder of the environment variable will be lower cased and have `_` replaced with `.`.
+
+Thus a variable
 
 ```bash
 KAFKA_BOOTSTRAP_SERVERS
@@ -31,162 +35,185 @@ bootstrap.servers
 
 Default configurations for Conduktor Gateway can be overridden by environment variables:
 
+## Guidelines
 
-### Guidelines
-A typical deployment of Gateway is hard to describe as every environment will be unique in it's design and considerations. As such, the below is an example including some variables we recommend you modify in any setup you do, but is by no means a guarantee of sufficient requirements in your setup. We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing issues or questions please contact support at `support@conduktor.io`.
+A typical deployment of Gateway is hard to describe as every environment will be unique in it's design and
+considerations.
+
+As such, the below is an example including some variables we recommend you modify in any setup you do, but is by no
+means a guarantee of sufficient requirements in your setup.
+
+We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
+issues or questions please contact support at `support@conduktor.io`.
 
 __Example Values__
 
 ```shell
-  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092 \
-  -e KAFKA_SASL_MECHANISM=SCRAM-SHA-256 \
-  -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-  -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.scram.ScramLoginModule required username='usr' password='pw';" \
-  -e GATEWAY_FEATURE_FLAGS_MULTITENANCY=true \
-  -e GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING=false \
-  -e GATEWAY_ADMIN_API_USERS=[{username: adminChangeMe, password: conduktorChangeMe, admin: true}}]
+  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092 \
+  -e KAFKA_SASL_MECHANISM=PLAIN \
+  -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
+  -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';"
 ```
 
-:::info
+## Host/Port
 
-Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the client app to connect to the cluster, allowing it to passthrough the Gateway. To get the most out of Conduktor Gateway multi-tenancy should later be activated.
+| Environment Variable      | Default Value | Description                                                                                         |
+|---------------------------|---------------|-----------------------------------------------------------------------------------------------------|
+| `GATEWAY_BIND_HOST`       | `0.0.0.0`     | The host on which to bind the gateway                                                                                                                                                                                                                                              |
+| `GATEWAY_ADVERTISED_HOST` | `localhost`   | The gateway hostname that should be presented to clients                                                                                                                                                                                                                           |
+| `GATEWAY_PORT_START`      | `6969`        | Port on which Gateway will start listening into                                                                                                                                                                                                                                    |
+| `GATEWAY_PORT_COUNT`      | `7`           | Number of ports to be used by the gateway, it each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
-To disable this Passthrough, and activate virtual clusters, set the environemnt variable as follows, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` 
-You can see this declared in the example above, for more detail see the `Gateway Security` page.
 
-:::
-### Host/Port Configurations
+## Load Balancing
 
-| Environment Variable | Default Value | Description                                                                                                                                                                                                                                                                                                                                                            |  Enterprise Only  |
-|----------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
-| `GATEWAY_BIND_HOST`    | `0.0.0.0`     | The host on which to bind the gateway (Use `GATEWAY_BIND_HOST` with the open source gateway)                                                                                                                                                                                                                                                                           |        No         |
-| `GATEWAY_HOST`         | `localhost`   | The gateway hostname that should be presented to clients  (Use `GATEWAY_HOST` with the open source gateway)                                                                                                                                                                                                                                                            |        No         | 
-| `GATEWAY_PORT_RANGE`   | `6969:6975`   | A range of ports to be opened on the Conduktor `GATEWAY_HOST`, each port in this range will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. (Use `GATEWAY_PORT_RANGE` with the open source gateway) |        No         |
+| Environment Variable                           | Default Value       | Description                                                                                                              |
+|------------------------------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_CLUSTER_ID`                           | `conduktorGateway`  | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`              | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
+| `GATEWAY_RACK_ID`                              | none                | Similar as `broker.rack`                                                                                                 |
 
-### Load Balancing Configurations
+## Client to Gateway Authentication
 
-| Environment Variable                     | Default Value      | Description                                                                                                                                                                                                          | Enterprise Only |
-|------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `GATEWAY_CLUSTER_ID`                       | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing                                                                                             |       Yes       |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING`  | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances. This is not recommended for production use and should be disabled when an external load balancer is used |       Yes       |
-| `GATEWAY_RACK_ID`   | `null`   | Description goes here. |        No         |
+Note: These configurations apply to authentication between clients and Conduktor Gateway.
+For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-### Schema Registry Configurations
+| Environment Variable        | Default Value                         | Description                                                                                                                  |
+|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |
 
-| Environment Variable    | Default Value | Description                                                                         |  Enterprise Only   |
-|-------------------------| ------------- | ----------------------------------------------------------------------------------- |:------------------:|
-| `SCHEMA_REGISTRY_HOST`  | None          | A HTTP endpoint for interacting with a Schema Registry (e.g. `http://localhost:8081`) |        Yes         |
+### SSL
 
-### Authentication Configurations
+| Environment Variable                            | Default Value                      | Description                                       |
+|-------------------------------------------------|------------------------------------|---------------------------------------------------|
+| `GATEWAY_SSL_KEY_STORE_PATH`                    | `config/kafka-proxy.keystore.jks`  | Path to a keystore for SSL connections            |
+| `GATEWAY_SSL_KEY_STORE_PASSWORD`                | `123456`                           | Password for the keystore defined above           |
+| `GATEWAY_SSL_KEY_PASSWORD`                      | `123456`                           | Password for the key contained in the store above |
+| `GATEWAY_SSL_KEY_TYPE`                          | `jks`                              | We currently only support `jks`                   |
+| `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
+| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
 
-Note: These configurations apply to authentication between clients and Conduktor Gateway. For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
+### SSL Config
 
-| Environment Variable                | Default Value | Description       | Enterprise Only |
-|-------------------------------------| ------------- |------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `GATEWAY_SECURITY_PROTOCOL` | `NONE`        | The type of authentication clients should use to connect to the gateway, valid values are `NONE`, `SSL`, `SASL_PLAIN` and `SASL_SSL` |       No        |
-| `GATEWAY_SSL_KEY_STORE_PATH`                | `config/kafka-proxy.keystore.jks`          | Path to a keystore for SSL connections                                                                                       |       No        |
-| `GATEWAY_SSL_KEY_STORE_PASSWORD`            | `123456 `         | Password for the keystore defined above                                                                                      |       No        |
-| `GATEWAY_SSL_KEY_PASSWORD`                  | `None`         | Password for the key contained in the store above                                                                            |       No        |
-| `GATEWAY_SSL_KEY_TYPE`                      | `jks`         | The type of keystore used for SSL connections       
-| `GATEWAY_SSL_UPDATE_INTERVAL_MS`            | `600000`        |                                             |       No        |
-| `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]`      |  Credentials for the admin API.                      |       No        |
+| Environment Variable                                      | Default Value | Description                  |
+|-----------------------------------------------------------|---------------|------------------------------|
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`         | `0`           | Max Reauth                   |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER`   | `2`           | Backoff multiplier on reauth |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`       | `5000`        | Max backoff                  |
 
-### HTTP Configurations
+## HTTP
 
-| Environment Variable | Default Value | Description                                                      | Enterprise Only |
-|----------------------| ------------- |------------------------------------------------------------------|:---------------:|
-| `GATEWAY_HTTP_PORT`          | `8888`        | The port on which the gateway will present a HTTP management API |       Yes       | 
+| Environment Variable      | Default Value                                           | Description                                                                       |
+|---------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------|
+| `GATEWAY_HTTP_PORT`       | `8888`                                                  | The port on which the gateway will present a HTTP management API                  |
+| `GATEWAY_SECURED_METRICS` | `true`                                                  | Does the HTTP management API require users?                                       |
+| `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write |
 
-### Thread Configurations
+## Internal state
 
-| Environment Variable | Default Value | Description                                                                          | Enterprise Only |
-|----------------------| ------------- |--------------------------------------------------------------------------------------|:---------------:|
-| `GATEWAY_DOWNSTREAM_THREAD`  | `2`           | The number of threads dedicated to handling IO between clients and Conduktor Gateway |       No        |
-| `GATEWAY_UPSTREAM_THREAD`    | `4`           | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |       No        |
+Conduktor needs to save state
 
-### Upstream Connection Configurations
+| Environment Variable    | Default Value   | Description                                |
+|-------------------------|-----------------|--------------------------------------------|
+| `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY`, `KAFKA` and `POSTGRES` |
+| `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh                  |
 
-| Environment Variable        | Default Value | Description                                                   | Enterprise Only |
-|-----------------------------| ------------- |---------------------------------------------------------------|:---------------:|
-| `GATEWAY_UPSTREAM_NUM_CONNECTION`   | `10`          | The number of connections between Conduktor Gateway and Kafka |      No         | 
+### Topics names
 
-### Topic Store Configurations
+State are saved into topics, you can choose to change their names.
 
-| Environment Variable                  | Default Value    | Description                                                                               | Enterprise Only |
-|---------------------------------------| ---------------- | ----------------------------------------------------------------------------------------- |:---------------:|
-| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`   | `_topicMappings` | The name of an internal topic used to store topic mapping configuration for multi tenancy |       Yes       |
-| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`  | `_topicRegistry` | The name of an internal topic used to store topic metadata                                |       Yes       |
+* If you are using `GATEWAY_STORAGE_TYPE` = `KAFKA` they will be materialized as a topic.
+* If you are using `GATEWAY_STORAGE_TYPE` = `POSTGRES` they will be stored as a table.
+* If you are using `GATEWAY_STORAGE_TYPE` = `IN_MEMORY` they will be stored in memory.
 
-### Interceptor Configurations
 
-| Environment Variable               | Default Value         | Description                                                            | Enterprise Only |
-|------------------------------------| --------------------- | ---------------------------------------------------------------------- |:---------------:|
-| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`  | `_interceptorConfigs` | The name of an internal topic used to store interceptor configurations |       Yes       |
-| `GATEWAY_RESOURCE_NAME_BACKING_TOPIC`      | `_resourceNames`      | The name of an internal topic used to store named resource metadata    |      Yes        |
+| Environment Variable                                             | Default Value                              | Description                                         |
+|------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------|
+| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`                      | `_topicMappings`                           | Name of topicMappings topic                         |
+| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`                     | `_topicRegistry`                           | Name of topicRegistry topic                         |
+| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`                        | `_interceptorConfigs`                      | Name of interceptorConfigs topic                    |
+| `GATEWAY_ACLS_STORES_BACKING_TOPIC`                              | `_acls`                                    | Name of acls topic                                  |
+| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                             | Name of offsetStore topic                           |
+| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic`   | Name of consumerGroupSubscriptionBackingTopic topic |
+| `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                                 | Name of license topic                               |
 
-### Tenant Store Configurations
+### `IN_MEMORY` State Configurations
 
-| Environment Variable           | Default Value           | Description                                                 | Enterprise Only |
-|--------------------------------| ----------------------- | ----------------------------------------------------------- |:---------------:|
-| `GATEWAY_TENANT_STORES_BACKING_TOPIC`  | `_tenantConfigMappings` | The name of an internal topic used to store tenant metadata |      Yes        |
+none
 
-### Offset Store Configurations
+### `KAFKA` State Configurations
 
-| Environment Variable                                       | Default Value                            | Description                                                         | Enterprise Only |
-|------------------------------------------------------------| ---------------------------------------- | ------------------------------------------------------------------- |:---------------:|
-| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`              | `_offsetStore`                           | The name of an internal topic used to store offset metadata         | Yes |
-| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC`   | `_consumerGroupSubscriptionBackingTopic` | The name of an internal topic used to store consumer group metadata | Yes |
+| Environment Variable                                         | Default Value | Description                                          |
+|--------------------------------------------------------------|---------------|------------------------------------------------------|
+| `GATEWAY_TOPIC_STORE_REAL_TOPIC_PARTITION_COUNT`             | `-1`          | Defaults to the one defined in your cluster settings |
+| `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
+| `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
-### Other Feature Flags Configurations
+### `POSTGRES` State Configurations
 
-| Environment Variable                | Default Value | Description                                                                                                                                                       | Enterprise Only |
-|-------------------------------------| ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `GATEWAY_FEATURE_FLAGS_MULTITENANCY`        | `false`       | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. 
-| `GATEWAY_FEATURE_FLAGS_AUDIT`                | `true`       | Whether or not to enable the audit feature          |      Yes        |
-| `GATEWAY_FEATURE_FLAGS_RBAC`                | `false`       | Whether or not to enable the RBAC feature          |      Yes        |
-| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`       | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed. |       Yes       |
-| `GATEWAY_FEATURE_FLAGS_NO_INTERNAL_TOPICS`  | `false`       | Whether or not to enable no internal topics mode, in this mode gateway internal topics are not created. Note only one gateway instance is supported in this mode. |       Yes       |
+| Environment Variable                    | Default Value | Description |
+|-----------------------------------------|---------------|-------------|
+| `GATEWAY_STORAGE_RDBMS_URL`             | none          |             |
+| `GATEWAY_STORAGE_RDBMS_USER`            | none          |             |
+| `GATEWAY_STORAGE_RDBMS_PASSWORD`        | none          |             |
+| `GATEWAY_STORAGE_RDBMS_SCHEMA`          | none          |             |
+| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` | none          |             |
 
-### Metrics Configurations
+## Internal setup
 
-| Environment Variable      | Default Value | Description                                          | Enterprise only |
-|---------------------------| ------------- | ---------------------------------------------------- |:---------------:|
-| `PROMETHEUS_METRICS_PORT` | `9089`        | The port on which Prometheus metrics will be exposed | Yes |
+### Threading
 
-### Conduktor Platform Configurations
+| Environment Variable                | Default Value   | Description                                                                          |
+|-------------------------------------|-----------------|--------------------------------------------------------------------------------------|
+| `GATEWAY_DOWNSTREAM_THREAD`         | number of cores | The number of threads dedicated to handling IO between clients and Conduktor Gateway |
+| `GATEWAY_UPSTREAM_THREAD`           | number of cores | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |
+| `GATEWAY_UPSTREAM_MAX_PENDING_TASK` | `2048`          | Maximum number of pending tasks to handling IO between Kafka and Conduktor Gateway   |
 
-| Environment Variable   | Default Value           | Description                                                                                                                                                                                                                   | Enterprise Only |
-|------------------------| ----------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------:|
-| `PLATFORM_M2M_SECRET`  | `changeit`              | A shared secret used to authenticate requests between Conduktor Gateway and Conduktor Platform. This can usually be found as the `sharedSecret` property in `/etc/conduktor/devtools.yml` in the Conduktor Platform container |       Yes       |
-| `PLATFORM_M2M_ISSUER`  | `http://localhost/auth` | The issuer used to authenticate requests between Conduktor Gateway and Conduktor Platform this should be in the form `http://[platform host name]/auth`                                                                       |       Yes       |
+### Upstream Connection
 
-### RBAC configurations
+| Environment Variable              | Default Value | Description                                                    |
+|-----------------------------------| ------------- |----------------------------------------------------------------|
+| `GATEWAY_UPSTREAM_NUM_CONNECTION` | `10`          | The number of connections between Conduktor Gateway and Kafka  |
 
-| Environment Variable      | Default Value                       | Description                                      | Enterprise Only |
-|---------------------------| ----------------------------------- | ------------------------------------------------ |:---------------:|
-| `GATEWAY_RBAC_PLATFORM_ENDPOINT`  | `http://localhost:8080/admin/api/p` | The Conduktor Platform persmissions API endpoint |       Yes       |
+## Feature Flags
 
-### Licensing configurations
+| Environment Variable                            | Default Value | Description                                                                                                                                                                |
+|-------------------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`       | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
+| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`        | Whether or not to enable the audit feature                                                                                                                                 |
+| `GATEWAY_FEATURE_FLAGS_RBAC`                    | `false`       | Whether or not to enable the RBAC feature                                                                                                                                  |
+| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
 
-| Environment Variable    | Default Value | Description                                               | Enterprise Only |
-|-------------------------| ------------- | --------------------------------------------------------- |:---------------:|
-| `GATEWAY_LICENSE_BACKING_TOPIC` | `_license`    | The namme of an internal topic used to store license data |       Yes       |
-| `GATEWAY_LICENSE_PUBLIC_KEY`    | None          | The public key used to decode license keys                |       Yes       |
-| `GATEWAY_LICENSE_KEY`           | None          | License key                                               |       Yes       |
 
-### Logging configuration
+## Licensing
 
-| Environment Variable                                   | Default Value | Description                                                                                      | Enterprise Only |
-|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|:---------------:|
-| `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |       Yes       |
-| `LOG4J2_ROOT_LEVEL`                                    | `info`        | The logging level for the root logger                                                            |       Yes       |
-| `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | The logging level for the package org.apache.kafka                                               |       Yes       |
-| `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | The logging level for the package io.kcache                                                      |       Yes       |
-| `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | The logging level for the package io.vertx                                                       |       Yes       |
-| `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | The logging level for the package io.netty                                                       |       Yes       |
-| `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | The logging level for the package io.conduktor                                                   |       Yes       |
-| `LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL`        | `info`        | The logging level for the package io.conduktor.proxy.authorization                               |       Yes       |
-| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | The logging level for the package io.conduktor.proxy.rebuilder.components                        |       Yes       |
-| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.service                                     |       Yes       |
-| `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |       Yes       |
-| `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |       Yes       |
+| Environment Variable             | Default Value | Description                                               |
+|----------------------------------| ------------- | --------------------------------------------------------- |
+| `GATEWAY_LICENSE_KEY`            | None          | License key                                               |
+
+## Audit
+
+| Environment Variable                            | Default Value   | Description                                                                                                        |
+|-------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | `0.1.0`         | Version                                                                                                            |
+| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                  |
+| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings  |
+| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`            | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
+
+## Logging
+
+| Environment Variable                                   | Default Value | Description                                                                                      |
+|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
+| `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |
+| `LOG4J2_ROOT_LEVEL`                                    | `info`        | The logging level for the root logger                                                            |
+| `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | The logging level for the package org.apache.kafka                                               |
+| `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | The logging level for the package io.kcache                                                      |
+| `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | The logging level for the package io.vertx                                                       |
+| `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | The logging level for the package io.netty                                                       |
+| `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | The logging level for the package io.conduktor                                                   |
+| `LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL`        | `info`        | The logging level for the package io.conduktor.proxy.authorization                               |
+| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | The logging level for the package io.conduktor.proxy.rebuilder.components                        |
+| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.service                                     |
+| `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |
+| `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |
