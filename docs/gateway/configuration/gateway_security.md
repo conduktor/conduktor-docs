@@ -116,7 +116,7 @@ The following command will create a virtual cluster called `london`, it will ret
 
 ```bash
 curl \
-    --request POST "conduktor-gateway:8888/admin/auth/v1/vcluster/london/username/sa" \
+    --request POST "conduktor-gateway:8888/admin/vclusters/v1/vcluster/london/username/sa" \
     --user 'admin:conduktor' \
     --header 'Content-Type: application/json' \
     --data-raw '{"lifeTimeSeconds": 7776000}'
