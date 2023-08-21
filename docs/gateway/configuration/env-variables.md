@@ -93,8 +93,6 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
 | `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
 
-### REAuth
-
 ### SSL Config
 
 | Environment Variable                                      | Default Value | Description                  |
