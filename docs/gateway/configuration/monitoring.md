@@ -27,3 +27,19 @@ Please note that if you enabled `GATEWAY_SECURED_METRICS` you will need to acces
 | The total time the I/O thread spent waiting                                 | `gateway.upstream.io_wait_total`             |
 |                                                                             | `gateway.brokered_active_connections`        |
 |                                                                             | `gateway.active_connections.vcluster`        |
+|                                                                             | `gateway.latency.request_response`           |
+|                                                                             | `gateway.apiKeys.latency.request_response`   |
+|                                                                             | `gateway.bytes_exchanged`   |
+|                                                                             | `gateway.bytes_exchanged.vcluster`   |
+|                                                                             | `gateway.thread.request.rebuild`   |
+|                                                                             | `gateway.thread.request.received`   |
+|                                                                             | `gateway.thread.tasks`   |
+|                                                                             | `gateway.upstream.connections.upstream.connected`   |
+|                                                                             | `gateway.upstream.connections.downstream`   |
+|                                                                             | `gateway.upstream.io.nodes`   |
+|                                                                             | `gateway.upstream.nodes`   |
+|                                                                             | `gateway.kcache_size`   |
+|                                                                             | `gateway.backend.brokered_active_connections`   |
+|                                                                             | `gateway.failed_authentications`   |
+|                                                                             | `gateway.topic.log_end_offset`   |
+|                                                                             | `gateway.topic.current_offset`   |
