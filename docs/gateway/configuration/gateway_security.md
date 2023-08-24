@@ -93,6 +93,38 @@ Gateway supports
 
 `OAuth` and `mTLS` are under development.
 
+## mTLS
+
+```yaml
+authenticationConfig:
+  securityProtocol: MTLS
+  sslConfig:
+    updateContextIntervalMinutes: 5
+    keyStore:
+      keyStorePath: config/tls/mtls/server-keystore.jks
+      keyStorePassword: changeit
+      keyPassword: changeit
+      keyStoreType: jks
+      updateIntervalMsecs: 600000
+    truststore:
+      trustStorePath: config/tls/mtls/server-truststore.jks
+      trustStorePassword: changeit
+      trustStoreType: jks
+      updateIntervalMsecs: 600000
+      clientAuth: NONE #OPTIONAL | REQUIRE | NONE - default: NONE. 
+```
+
+Client properties
+
+```properties
+security.protocol=SSL
+ssl.truststore.location=config/tls/mtls/client-truststore.jks
+ssl.truststore.password=changeit
+ssl.keystore.location=config/tls/mtls/client-keystore.jks
+ssl.keystore.password=changeit
+ssl.key.password=changeit
+```
+
 
 ## Client to Gateway with virtual clusters
 
