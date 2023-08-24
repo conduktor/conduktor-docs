@@ -96,7 +96,9 @@ Please consult the following version compatibility matrix to understand which ve
 | [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.10.2              | 0.5.1      |
 | [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.12.1              | 0.6.1      |
 | [1.16.1](https://www.conduktor.io/changelog/1.16.1) | 0.13.0              | 0.7.0      |
-| [1.16.3](https://www.conduktor.io/changelog/1.16.3) | 0.14.2              | 0.8.1      |
+| [1.17.1](https://www.conduktor.io/changelog/1.17.1) | 0.15.1              | 0.9.1      |
+| [1.17.2](https://www.conduktor.io/changelog/1.17.2) | 0.15.2              | 0.9.2      |
+| [1.17.3](https://www.conduktor.io/changelog/1.17.3) | 0.15.3              | 0.9.4      |
 
 ## Getting started
 
