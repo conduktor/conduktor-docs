@@ -605,20 +605,7 @@ paths:
           content:
             application/json:
               example:
-                - name: myEncryptionInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
-                  priority: 50
-                  config:
-                    topic: topicName
-                - name: myInjectHeaderInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
-                  priority: 51
-                  config:
-                    topic: topicName
-              schema:
-                items:
-                  "$ref": "#/components/schemas/InterceptorResponse"
-                example:
+                interceptors:
                   - name: myEncryptionInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
                     priority: 50
@@ -629,6 +616,21 @@ paths:
                     priority: 51
                     config:
                       topic: topicName
+              schema:
+                items:
+                  "$ref": "#/components/schemas/InterceptorsResponse"
+                example:
+                  interceptors:
+                    - name: myEncryptionInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
+                      priority: 50
+                      config:
+                        topic: topicName
+                    - name: myInjectHeaderInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
+                      priority: 51
+                      config:
+                        topic: topicName
                 type: array
         '400':
           description: If bad request
@@ -890,20 +892,7 @@ paths:
           content:
             application/json:
               example:
-                - name: myEncryptionInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
-                  priority: 50
-                  config:
-                    topic: topicName
-                - name: myInjectHeaderInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
-                  priority: 51
-                  config:
-                    topic: topicName
-              schema:
-                items:
-                  "$ref": "#/components/schemas/InterceptorResponse"
-                example:
+                interceptors:
                   - name: myEncryptionInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
                     priority: 50
@@ -914,6 +903,21 @@ paths:
                     priority: 51
                     config:
                       topic: topicName
+              schema:
+                items:
+                  "$ref": "#/components/schemas/InterceptorsResponse"
+                example:
+                  interceptors:
+                    - name: myEncryptionInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
+                      priority: 50
+                      config:
+                        topic: topicName
+                    - name: myInjectHeaderInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
+                      priority: 51
+                      config:
+                        topic: topicName
                 type: array
         '400':
           description: If bad request
@@ -953,29 +957,7 @@ paths:
           content:
             application/json:
               example:
-                - vcluster: ''
-                  name: myEncryptionInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
-                  priority: 50
-                  config:
-                    topic: topicName
-                - vcluster: cluster1
-                  name: myInjectHeaderInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
-                  priority: 51
-                  config:
-                    topic: topicName
-                - vcluster: cluster1
-                  account: user1
-                  name: myInjectHeaderInterceptor
-                  pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
-                  priority: 51
-                  config:
-                    topic: topicName
-              schema:
-                items:
-                  "$ref": "#/components/schemas/InterceptorWithClusterResponse"
-                example:
+                interceptors:
                   - vcluster: ''
                     name: myEncryptionInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
@@ -989,12 +971,36 @@ paths:
                     config:
                       topic: topicName
                   - vcluster: cluster1
-                    account: account1
+                    account: username1
                     name: myInjectHeaderInterceptor
                     pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
                     priority: 51
                     config:
                       topic: topicName
+              schema:
+                items:
+                  "$ref": "#/components/schemas/InterceptorsWithClusterResponse"
+                example:
+                  interceptors:
+                    - vcluster: ''
+                      name: myEncryptionInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
+                      priority: 50
+                      config:
+                        topic: topicName
+                    - vcluster: cluster1
+                      name: myInjectHeaderInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
+                      priority: 51
+                      config:
+                        topic: topicName
+                    - vcluster: cluster1
+                      account: account1
+                      name: myInjectHeaderInterceptor
+                      pluginClass: io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin
+                      priority: 51
+                      config:
+                        topic: topicName
                 type: array
         '400':
           description: If bad request
@@ -1015,7 +1021,7 @@ paths:
         - basicAuth: []
       operationId: Interceptor_v1_getInterceptors
       deprecated: false
-  "/plugins/v1":
+  "/plugins/v1/":
     get:
       summary: List all available plugins
       tags:
@@ -1216,6 +1222,20 @@ components:
         - pluginClass
         - priority
         - config
+    InterceptorsResponse:
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/InterceptorResponse"
+      example:
+        interceptors:
+          - name: myEncryptionInterceptor
+            pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
+            priority: 50
+            config:
+              topic: topicName
+      type: object
     InterceptorResponse:
       properties:
         name:
@@ -1241,6 +1261,22 @@ components:
         - pluginClass
         - priority
         - config
+    InterceptorsWithClusterResponse:
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterceptorWithClusterResponse'
+      example:
+        interceptors:
+        - vcluster: cluster1
+          account: account1
+          name: myEncryptionInterceptor
+          pluginClass: io.conduktor.gateway.interceptor.EncryptPlugin
+          priority: 50
+          config:
+            topic: topicName
+      type: object
     InterceptorWithClusterResponse:
       properties:
         vcluster:
