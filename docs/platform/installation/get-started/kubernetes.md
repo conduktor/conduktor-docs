@@ -31,16 +31,20 @@ Check our [Snippets](#snippets) section for more examples.
 helm repo add conduktor https://helm.conduktor.io
 helm repo update
 
+export ADMIN_EMAIL="<your_admin_email>"
+export ADMIN_PASSWORD="<your_admin_password>"
+export ORG_NAME="<your_org_name>"
+
 # Deploy helm chart
 helm install console conduktor/console \
     --create-namespace -n conduktor \
-    --set config.organization.name="my-org" \
-    --set config.admin.email="admin@my-org.com" \
-    --set config.admin.password="admin" \
+    --set config.organization.name="${ORG_NAME}" \
+    --set config.admin.email="${ADMIN_EMAIL}" \
+    --set config.admin.password="${ADMIN_PASSWORD}" \
     --set config.database.password="${POSTGRES_PASSWORD}" \
     --set config.database.username="${POSTGRES_USER}" \
     --set config.database.host="${POSTGRES_HOST}" \
-    --set license="${LICENSE}"
+    --set config.license="${LICENSE}" # can be omitted if deploying the free tier
     
 # Port forward to access the platform
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
@@ -57,9 +61,9 @@ open http://localhost:8080
 ## Production requirements
 For production environments, this is  **mandatory**:
 
-* To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy and disable the dependency on Bitnami PostgreSQL with `postgresql.enabled=false`
-* To setup an [external S3 Bucket](#setup-s3) and disable the dependency on Bitnami MinIO with `minio.enabled=false`
-* Enough resources to run Conduktor and its dependencies (PostgreSQL, MinIO, Kafka) with the [recommended configuration](../hardware.md#hardware-requirements)
+* To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy
+* To setup an [external S3 Bucket](../../configuration/env-variables.md#monitoring-properties)
+* Enough resources to run Conduktor with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ## Getting started
 
@@ -78,20 +82,20 @@ Configure the platform with the following values:
 # values.yaml
 config:
   organization:
-    name: "my-org"
+    name: "<your_org_name>"
 
   admin:
-    email: "admin@my-org.com"
-    password: "admin"
+    email: "<your_admin_email>"
+    password: "<your_admin_password>"
 
   database:
-    host: '${POSTGRES_HOST}'
+    host: '<postgres_host>'
     port: 5432
-    name: '${POSTGRES_DATABASE}'
-    username: '${POSTGRES_USERNAME}'
-    password: '${POSTGRES_PASSWORD}'
+    name: '<postgres_database>'
+    username: '<postgres_username>'
+    password: '<postgres_password>'
     
-  # HERE you can paste the console configuration
+  # HERE you can paste the console configuration (under the config key)
   # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
@@ -101,27 +105,28 @@ Install the chart on your cluster:
 helm install console conduktor/console \
     --create-namespace -n conduktor \
     --values values.yaml \
-    --set license="${LICENSE}"
-```
+    --set config.license="${LICENSE}" # can be omitted if deploying the free tier
+``` 
 
 Once deployed, you will be able to access Conduktor on 
-[localhost:8080](localhost:8080) by using a port-forward 
-(you can also configure an [ingress](#install-with-an-ingress) with helm values).
+[localhost:8080](localhost:8080) by using a port-forward. You can also 
+configure an ingress to make the console available externally, check out our 
+[snippets](#snippets).
 
 ```bash
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 ```
 
-### Configure the platform
+## Configure the platform
 
-#### Fresh install
+### Fresh install
 
 You can configure the platform by inserting into the `config` section of the
 `values.yaml` file the configuration of platform you want to apply. You can 
 find available configuration in the [configuration section](../../configuration/env-variables.md)
 
 
-#### Based on a docker configuration
+### Based on a docker configuration
 
 If you already have a configuration file that you were using within docker,
 you can use it by giving it to the helm chart with the following command:
@@ -130,237 +135,49 @@ you can use it by giving it to the helm chart with the following command:
 # values.yaml
 config:
   organization:
-    name: "my-org"
+    name: "<your_org_name>"
 
   admin:
-    email: "..."
-    password: "..."
+    email: "<your_admin_email>"
+    password: "<your_admin_password>"
     
   database:
-    host: '${POSTGRES_HOST}'
+    host: '<postgres_host>'
     port: 5432
-    name: '${POSTGRES_DATABASE}'
-    username: '${POSTGRES_USERNAME}'
-    password: '${POSTGRES_PASSWORD}'
+    name: '<postgres_database>'
+    username: '<postgres_username>'
+    password: '<postgres_password>'
     
-  # HERE you can paste the platform configuration
+  # HERE you can paste the platform configuration (under the config key)
   # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
+```
+
+### Provide the license as secret
+
+We expect the secret to contain a key named `license` which contains your 
+license key.
+
+```shell
+# values.yaml
+config:
+  organization:
+    name: "<your_org_name>"
+
+  admin:
+    email: "<your_admin_email>"
+    password: "<your_admin_password>"
+    
+  database:
+    host: '<postgres_host>'
+    port: 5432
+    name: '<postgres_database>'
+    username: '<postgres_username>'
+    password: '<postgres_password>'
+
+  existingLicenseSecret: "<your_secret_name>"
 ```
 
 ## Snippets
 
-### Install with an enterprise license
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-  license: "${ENTERPRISE_LICENSE}"
-```    
-
-### Install with a PodAffinity
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-platform:
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: security
-                operator: In
-                values:
-                  - S1
-          topologyKey: topology.kubernetes.io/zone
-```
-
-### Install with a toleration
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-  platform:
-    external:
-      url: "https://platform.local"
-    https:
-      selfSigned: true
-platform:
-  tolerations:
-    - key: "donotschedule"
-      operator: "Exists"
-      effect: "NoSchedule"
-```
-
-### Install with Self-Signed TLS certificate
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-  platform:
-    external:
-      url: "https://platform.local"
-    https:
-      selfSigned: true
-```
-
-### Install with a custom TLS certificate on the platform Pod
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-  platform:
-    external:
-      url: "https://platform.local"
-    https:
-      selfSigned: false
-      existingSecret: "platform-tls"
-ingress:
-  secrets:
-    - name: platform-tls
-      certificate: |-
-        -----BEGIN CERTIFICATE-----
-        ...
-        -----END CERTIFICATE-----
-      key: |-
-        -----BEGIN PRIVATE KEY-----
-        ...
-        -----END PRIVATE KEY-----
-```
-
-### Install with a custom service account
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-serviceAccount:
-  create: false
-  name: "my-service-account"
-```
-
-### Install with a AWS EKS IAM Role
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-serviceAccount:
-    annotations:
-        eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/my-role"
-```
-
-### Install with an Ingress
-
-```yaml
-config:
-  organization:
-    name: "my-org"
-
-  admin:
-    email: "admin@my-org.com"
-    password: "admin"
-
-  database:
-    host: ''
-    port: 5432
-    name: 'postgres'
-    username: ''
-    password: ''
-
-  ingress:
-    enabled: true
-    pathType: "Prefix"
-    hostname: platform.my-org.local
-    # Replace with your ingress Class Name
-    ingressClassName: "nginx"
-```
+Please refer to our helm chart [README](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#snippets)
+for config snippets.

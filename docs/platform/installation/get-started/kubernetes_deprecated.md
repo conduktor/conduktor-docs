@@ -6,8 +6,10 @@ description: The below guide details how to deploy kubernetes resources to run C
 
 The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
 
-:::alert
+:::warning
 Be aware that this method is deprecated and shouldn't be used anymore. 
+Please follow our [migration guide](#migrate-to-conduktorconsole-helm-chart) 
+to use our new chart.
 
 If you have issues, please contact our [support](https://www.conduktor.io/contact/support/).   
 :::
@@ -17,6 +19,62 @@ If you have issues, please contact our [support](https://www.conduktor.io/contac
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor using the [controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/). 
 
 ## Migrate to conduktor/console helm chart
+
+We recently released a helm chart which will deploy console in simpler 
+manner, we **recommend** users to migrate to this deployment as soon as 
+possible. In order to migrate, the `platform-controller` chart version must 
+be equal or newer to `v0.9.6`, as it will generate a secret containing the 
+values format needed for the new helm chart matching your current 
+configuration for the platform-controller.
+
+Once you upgraded, you'll see a deprecation 
+notice with steps that are matching your configuration, if you didn't see it,
+please upgrade again, it'll show you the message. 
+If you **can't see** the 
+message, you can follow those steps and adapt them to your case:
+
+1. Ensure you are on the proper Kubernetes context and in the namespace 
+   where the `platform-controller` is installed
+2. Retrieve the auto-generated configuration for `conduktor/console` helm chart:
+
+```shell
+$ export SECRET_NAME=$(kubectl get secrets --no-headers -o custom-columns=":metadata.name" | grep 'migrate')
+$ kubectl get secrets/${SECRET_NAME} --template={{ printf "{{.data.config}}" }} | base64 -D > values.yaml
+```
+
+3. *Optional:* Migrate the database and/or block 
+   storage dependencies
+
+If you were previously using the postgresql or minio dependency, update the 
+values.yaml file with a provisioned database and/or block storage. Be aware, 
+you should restore the database and/or block storage as well to prevent loss 
+of data.
+
+4. Uninstall the release of `conduktor/platform-controller` helmchart with 
+   the following command:
+
+*WARNING:* This will delete all your data, make sure you have a backup 
+before proceeding.
+
+```shell
+export RELEASE_NAME="<your_helm_release_name>"
+$ helm uninstall ${RELEASE_NAME}
+```
+
+5. Install the `conduktor/console` helm chart with the following commands:
+
+```shell
+$ helm repo add conduktor https://helm.conduktor.io
+$ helm repo update
+$ helm install console conduktor/console -f values.yaml
+```
+
+6. Enjoy!
+
+:::info
+If you encounter any trouble migrating, please contact our
+[support](https://www.conduktor.io/contact/support/).
+:::
 
 ## Architecture
 
@@ -99,6 +157,9 @@ Please consult the following version compatibility matrix to understand which ve
 | [1.15.0](https://www.conduktor.io/changelog/1.15.0) | 0.12.1              | 0.6.1      |
 | [1.16.1](https://www.conduktor.io/changelog/1.16.1) | 0.13.0              | 0.7.0      |
 | [1.16.3](https://www.conduktor.io/changelog/1.16.3) | 0.14.2              | 0.8.1      |
+| [1.17.1](https://www.conduktor.io/changelog/1.17.1) | 0.15.1              | 0.9.1      |
+| [1.17.2](https://www.conduktor.io/changelog/1.17.2) | 0.15.2              | 0.9.2      |
+| [1.17.3](https://www.conduktor.io/changelog/1.17.3) | 0.15.3              | 0.9.6      |
 
 ## Getting started
 
