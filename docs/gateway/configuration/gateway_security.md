@@ -13,7 +13,7 @@ There are two sets of configuration to consider when securing your gateway.
 
 # Gateway to your Kafka security
 
-You can use all the kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc. 
+You can use all the Kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc. 
 
 ```yaml
 conduktor-gateway:
@@ -26,13 +26,31 @@ conduktor-gateway:
 ```
 
 # Securing Client access to your Gateway
-You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
+You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. Passthrough supports;
 
-Gateway supports
+Security Protocols
 * NONE
+* SASL_PLAINTEXT
+
+SASL Mechanisms
+* NONE
+* PLAINTEXT
+
+As you start to explore more of Gateway you may want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka. Virtual clusters support;
+
+Security Protocols
+* NONE
+* PLAINTEXT
 * SSL
 * SASL_SSL
 * SASL_PLAINTEXT
+
+SASL Mechanisms
+* NONE
+* PLAIN
+* mTLS
+
+OAUTHBEARER is under development and Kerberos is <only supported with a workaround?>
 ## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
@@ -85,7 +103,7 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 :::
 
 
-Gateway supports
+Gateway supports the addition of the following security protocols;
 * NONE
 * SSL
 * SASL_SSL
