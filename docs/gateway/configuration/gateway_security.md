@@ -41,7 +41,6 @@ As you start to explore more of Gateway you may want to connect to a virtual clu
 Security Protocols
 * NONE
 * PLAINTEXT
-* SSL
 * SASL_SSL
 * SASL_PLAINTEXT
 
@@ -50,7 +49,7 @@ SASL Mechanisms
 * PLAIN
 * mTLS
 
-OAUTHBEARER is under development and Kerberos is <only supported with a workaround?>
+OAUTHBEARER is under development.
 ## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
@@ -105,7 +104,6 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 
 Gateway supports the addition of the following security protocols;
 * NONE
-* SSL
 * SASL_SSL
 * SASL_PLAINTEXT
 
