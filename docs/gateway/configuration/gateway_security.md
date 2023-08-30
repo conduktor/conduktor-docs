@@ -100,7 +100,7 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 
 ## mTLS
 
-to enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`. 
+To enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`. 
 
 If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway.
 
