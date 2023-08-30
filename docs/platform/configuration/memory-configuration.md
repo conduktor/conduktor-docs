@@ -16,7 +16,9 @@ Conduktor use environment variable `RUN_MODE` to select between different memory
 | `large`    | `8GB`              | `4096m`     | `2048m`        | `256m`            |
 | `custom`   | No target          | N.A.        | N.A.           | N.A.              |
 
-This mean that Conduktor wont start it the container CGroup memory limit is set below target RAM usage.
+:::caution   
+This mean that Conduktor won't start if the container **CGroup memory limit** is set below target RAM usage.   
+:::
 
 ### Using `custom` RUN_MODE
 
@@ -50,6 +52,6 @@ GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
 In this example we set around 5Go of RAM for Governance and leave other modules like Cosnole and Authenticator with `small` memory presets. 
 
 
-:::caution
-Be aware that in this example target RAM usage is increased from 4Go to 8-9Go and container CGroup limit memory should be set accordingly.
+:::caution   
+Be aware that in this example target RAM usage is increased from 4Go to 8-9Go and container CGroup limit memory should be set accordingly.   
 :::
