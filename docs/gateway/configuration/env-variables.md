@@ -64,7 +64,6 @@ __Example Values__
 | `GATEWAY_PORT_START`      | `6969`        | Port on which Gateway will start listening into                                                                                                                                                                                                                                    |
 | `GATEWAY_PORT_COUNT`      | `7`           | Number of ports to be used by the gateway, it each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
-
 ## Load Balancing
 
 | Environment Variable                           | Default Value       | Description                                                                                                              |
@@ -78,9 +77,9 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable        | Default Value                         | Description                                                                                                                  |
-|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are NONE, SSL, SASL_PLAIN and SASL_SSL |
+| Environment Variable        | Default Value                         | Description                                                                                                                    |
+|-----------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `NONE`, `SASL_PLAIN` and `SASL_SSL`  |
 
 ### SSL
 
@@ -92,6 +91,13 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_SSL_KEY_TYPE`                          | `jks`                              | We currently only support `jks`                   |
 | `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
 | `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
+
+| Environment Variable               | Default Value                       | Description                                                                                              |
+|------------------------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SSL_TRUST_STORE_PATH`     | `config/kafka-proxy.truststore.jks` | Path to a keystore for SSL connections                                                                   |
+| `GATEWAY_SSL_TRUST_STORE_PASSWORD` | `123456`                            | Password for the keystore defined above                                                                  |
+| `GATEWAY_SSL_TRUST_STORE_TYPE`     | `jks`                               | We currently only support `jks`                                                                          |
+| `GATEWAY_SSL_CLIENT_AUTH`          | `NONE`                              | `NONE` will not request client authentication, `OPTIONAL` will request client authentication, `REQUIRE` will require client authentication |
 
 ### SSL Config
 
@@ -120,12 +126,12 @@ Conduktor needs to save state
 
 ### Topics names
 
-State are saved into topics, you can choose to change their names.
+State is saved in different location based on `GATEWAY_STORAGE_TYPE`
 
-* If you are using `GATEWAY_STORAGE_TYPE` = `KAFKA` they will be materialized as a topic.
-* If you are using `GATEWAY_STORAGE_TYPE` = `POSTGRES` they will be stored as a table.
-* If you are using `GATEWAY_STORAGE_TYPE` = `IN_MEMORY` they will be stored in memory.
-
+When it is set
+* `KAFKA` they will be materialized as a topic.
+* `POSTGRES` they will be stored as a table.
+* `IN_MEMORY` they will be stored in memory.
 
 | Environment Variable                                             | Default Value                              | Description                                         |
 |------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------|
@@ -184,7 +190,6 @@ none
 | `GATEWAY_FEATURE_FLAGS_RBAC`                    | `false`       | Whether or not to enable the RBAC feature                                                                                                                                  |
 | `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
-
 
 ## Licensing
 

@@ -11,6 +11,18 @@ There are two sets of configuration to consider when securing your gateway.
 
 ![client-to-gateway-excalidraw](./images/gw-security/client-to-gateway-excalidraw.png)
 
+Jump to:
+
+- [Gateway to your Kafka security](#gateway-to-your-kafka-security)
+- [Your client to Gateway security](#your-client-to-gateway-security)
+  - [Passthrough security](#passthrough-security)
+  - [Client to Gateway, additional security](#client-to-gateway-additional-security)
+  - [mTLS](#mtls)
+  - [Client to Gateway, with virtual clusters](#client-to-gateway-with-virtual-clusters)
+    - [Enable virtual clusters](#enable-virtual-clusters-with-the-environment-variables)
+    - [Create a username](#create-a-username)
+    - [Update your client to connect to the virtual cluster](#update-your-client-to-connect-to-the-virtual-cluster)
+
 # Gateway to your Kafka security
 
 You can use all the kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc. 
@@ -25,14 +37,15 @@ conduktor-gateway:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
 ```
 
-# Securing Client access to your Gateway
+# Your client to Gateway security
 You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
-Gateway supports
-* NONE
-* SSL
-* SASL_SSL
-* SASL_PLAINTEXT
+Gateway supports;
+* `NONE`
+* `SASL_SSL`
+* `SASL_PLAINTEXT`
+* `OAuth` , is under development
+
 ## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
@@ -47,7 +60,7 @@ To disable this Passthrough, and activate virtual clusters, set the environemnt 
 
 :::caution
 
-Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for passthrough identity.
+Conduktor Gateway only supports `SASL_PLAIN` and `SASL_SSL` for passthrough identity.
 
 :::
 
@@ -56,11 +69,11 @@ Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for pas
 
 Gateway enables you to adapt the security protocol to your liking.
 
-For example, you may want to add `SSL` on top on a `SASL_PLAINTEXT` Kafka. Compare the Gateway security protocol to the Kafka security protocol. 
+For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare the Gateway security protocol to the Kafka security protocol. 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-proxy:distro
+    image: conduktor/conduktor-gateway:2.1.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -85,25 +98,25 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 :::
 
 
-Gateway supports
-* NONE
-* SSL
-* SASL_SSL
-* SASL_PLAINTEXT
+## mTLS
 
-`OAuth` and `mTLS` are under development.
+to enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`. 
+
+If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway.
+
+See the [environment variables](/gateway/configuration/env-variables/#ssl) for more.
 
 
-## Client to Gateway with virtual clusters
+## Client to Gateway, with virtual clusters
 
-To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` , create a username to connect to the virtual cluster, update your client to use this username on connecting.
+To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` , create a username to connect to the virtual cluster, and update your client to use this username when connecting.
 
 ![tenant-user.png](./images/gw-security/tenant-user-london.png)
 
-
+### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.0.0-amd64
+    image: conduktor/conduktor-gateway:2.1.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -111,7 +124,7 @@ conduktor-gateway:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
       GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
 ```
-
+### Create a username
 The following command will create a virtual cluster called `london`, it will return the password of the username `sa` to be able to connect to the new cluster. 
 
 ```bash
@@ -130,21 +143,23 @@ This will respond with a token similar to this:
 }
 ```
 
-This token is a JWT, inspecting it from the below command you can see it contains:
+This token is a JWT, inspecting it from the below command you can see its contents:
 
 ```bash
 echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base64d | fromjson'
+```
+
+```json
 {
   "username": "sa",
   "vcluster": "london",
   "exp": 1700053793
 }
-
 ```
 
-### Connecting to a virtual cluster
+### Update your client to connect to the virtual cluster
 
-The token should be provided in the password field of the client configuration as follows:
+The token should be provided in the password field of the client configuration, such as in a properties file `london-sa.properties`, as follows:
 
 ```properties
 security.protocol=SASL_PLAINTEXT
@@ -153,7 +168,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 ```
 
 You are then connecting to the virtual cluster with that username and can perform commands as you please e.g.
-listing topics in the virtual cluster `london` from the username sa.
+listing topics in the virtual cluster `london` from the username `sa`.
 
 ```bash
 kafka-topics \
