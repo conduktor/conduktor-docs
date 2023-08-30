@@ -50,6 +50,6 @@ GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
 In this example we set around 5Go of RAM for Governance and leave other modules like Cosnole and Authenticator with `small` memory presets. 
 
 
-:::warning
+:::caution
 Be aware that in this example target RAM usage is increased from 4Go to 8-9Go and container CGroup limit memory should be set accordingly.
 :::
