@@ -104,7 +104,7 @@ to enable `mTLS` for the `SASL_SSL` security protocol please set the environment
 
 If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway.
 
-See the [environment variables](/gateway/configuration/env-variables/) for more.
+See the [environment variables](/gateway/configuration/env-variables/#ssl) for more.
 
 
 ## Client to Gateway, with virtual clusters
