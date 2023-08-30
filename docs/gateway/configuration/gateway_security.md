@@ -29,10 +29,11 @@ conduktor-gateway:
 You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
 Gateway supports
-* NONE
-* SSL
-* SASL_SSL
-* SASL_PLAINTEXT
+* `NONE`
+* `SASL_SSL`
+* `SASL_PLAINTEXT`
+* `OAuth` is under development
+
 ## Passthrough security
 
 By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the login and password. 
@@ -47,7 +48,7 @@ To disable this Passthrough, and activate virtual clusters, set the environemnt 
 
 :::caution
 
-Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for passthrough identity.
+Conduktor Gateway does only support `SASL_PLAIN` and `SASL_SSL` for passthrough identity.
 
 :::
 
@@ -56,7 +57,7 @@ Conduktor Gateway does not currently support `OAuthBearer` or `Kerberos` for pas
 
 Gateway enables you to adapt the security protocol to your liking.
 
-For example, you may want to add `SSL` on top on a `SASL_PLAINTEXT` Kafka. Compare the Gateway security protocol to the Kafka security protocol. 
+For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare the Gateway security protocol to the Kafka security protocol. 
 
 ```yaml
 conduktor-gateway:
@@ -85,45 +86,13 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 :::
 
 
-Gateway supports
-* NONE
-* SSL
-* SASL_SSL
-* SASL_PLAINTEXT
-
-`OAuth` and `mTLS` are under development.
-
 ## mTLS
 
-```yaml
-authenticationConfig:
-  securityProtocol: MTLS
-  sslConfig:
-    updateContextIntervalMinutes: 5
-    keyStore:
-      keyStorePath: config/tls/mtls/server-keystore.jks
-      keyStorePassword: changeit
-      keyPassword: changeit
-      keyStoreType: jks
-      updateIntervalMsecs: 600000
-    truststore:
-      trustStorePath: config/tls/mtls/server-truststore.jks
-      trustStorePassword: changeit
-      trustStoreType: jks
-      updateIntervalMsecs: 600000
-      clientAuth: NONE #OPTIONAL | REQUIRE | NONE - default: NONE. 
-```
+to enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE` 
 
-Client properties
+If you are using certificates signed with local authorities authority, you'll need to also setup trustsore in the gateway.
 
-```properties
-security.protocol=SSL
-ssl.truststore.location=config/tls/mtls/client-truststore.jks
-ssl.truststore.password=changeit
-ssl.keystore.location=config/tls/mtls/client-keystore.jks
-ssl.keystore.password=changeit
-ssl.key.password=changeit
-```
+See the [environment variables](/gateway/configuration/env-variables/).
 
 
 ## Client to Gateway with virtual clusters
