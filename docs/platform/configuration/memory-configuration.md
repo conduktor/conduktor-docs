@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 title: Memory configuration
 description: Fine tune memory usage of Conduktor
 ---
