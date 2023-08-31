@@ -20,12 +20,39 @@ Conduktor use environment variable `RUN_MODE` to select between different memory
 This mean that Conduktor won't start if the container **CGroup memory limit** is set below target RAM usage.   
 :::
 
+#### Modules memory usage
+- **Console** : contain administation, RBAC and kafka resources exploration... Should scale with the number of users and kafka resources. 
+- **Governance** : contain data-masking engine, kafka indexer and kafka metrics exporter. Should scale for large kafka cluster to index.
+- **Authenticator** : Authentication module to interface SSO/LDAP and local users. Scale on internal user list size and number of concurrent users connected.
+
+### Override specific module memory settings
+
+All modules memory preset can be overridden using following environment variables :
+
+- **`CONSOLE_MEMORY_OPTS`** : Used by Console module
+- **`GOVERNANCE_MEMORY_OPTS`** : Used by governance  module
+- **`AUTHENTICATOR_MEMORY_OPTS`** : Used by authenticator module
+
+The others modules will still use preset from `RUN_MODE` value.
+
+#### Example
+
+```
+RUN_MODE=small
+GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
+``` 
+In this example we set around 5Go of RAM for Governance and leave other modules like Cosnole and Authenticator with `small` memory presets. 
+
+:::caution   
+Be aware that in this example target RAM usage is increased from 4Go to 8-9Go and **container CGroup memory limit** should be set accordingly.   
+:::
+
 ### Using `custom` RUN_MODE
 
-When `RUN_MODE=custom` Conduktor require to set manually memory Java options for internal components using following environment variables : 
-- **`CONSOLE_MEMORY_OPTS`** : Used by Console backend (should scale with the number of users and kafka resources)
-- **`GOVERNANCE_MEMORY_OPTS`** : Used by governance and internal indexer modules (should scale for large kafka cluster to index)
-- **`AUTHENTICATOR_MEMORY_OPTS`** : Used by internal authentication module (scale on internal user list size and number of concurrent users connected)
+If existing `RUN_MODE` presets are too restrictive or don't meet your needs, you can use `custom` `RUN_MODE` that remove CGroup memory limit startup check and require that you set manually memory Java options for all internal components using environement variables `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS`.  
+
+Unlike single module override, **all environment variables must be set** when `RUN_MODE=custom`.
+
 
 #### Example
 Conduktor run environment variables with a target of 16Go: 
@@ -39,19 +66,6 @@ AUTHENTICATOR_MEMORY_OPTS="-Xms128m -Xmx512m"
 In this example we set around 8Go for Console, 5Go for Governance and 510Mo for Authenticator leaving a safty marging of 2,5Go for other JVM memory pools and extra internal modules.
 
 
-### Override specific module memory settings
-You can also use `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS` environement variable to override one module memory settings and using `RUN_MODE` preset for the others. 
-
-
-#### Example
-
-```
-RUN_MODE=small
-GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
-``` 
-In this example we set around 5Go of RAM for Governance and leave other modules like Cosnole and Authenticator with `small` memory presets. 
-
-
-:::caution   
-Be aware that in this example target RAM usage is increased from 4Go to 8-9Go and container CGroup limit memory should be set accordingly.   
+:::caution     
+In `custom` mode, Conduktor will not check CGroup memory limits to prevent under provisioning.   
 :::
