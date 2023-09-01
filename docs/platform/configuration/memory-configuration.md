@@ -6,7 +6,7 @@ description: Fine tune memory usage of Conduktor
 
 # Memory configuration
 
-Conduktor use environment variable `RUN_MODE` to select between different memory configuration preset for internal components. 
+Conduktor use environment variable `RUN_MODE` to switch between different memory configuration presets. 
 
 | `RUN_MODE` | Target RAM usage   | Console Xmx | Governance Xmx | Authenticator Xmx |
 | ---------- | ------------------ |------------ | -------------- | ----------------- |
@@ -67,5 +67,5 @@ In this example we set around 8Go for Console, 5Go for Governance and 510Mo for 
 
 
 :::caution     
-In `custom` mode, Conduktor will not check CGroup memory limits to prevent under provisioning.   
+In `custom` mode, Conduktor will not check CGroup memory limits to prevent under provisioning that could lead to unexpected crash.  
 :::
