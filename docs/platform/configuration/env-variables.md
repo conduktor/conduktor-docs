@@ -6,17 +6,23 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 
 # Configuration Properties and Environment Variables
 
-- [Docker Image Environment Variables](#docker-image-environment-variables)
-- [Platform Properties Reference](#platform-properties-reference)
-   - [Global Properties](#global-properties)
-   - [Database Properties](#database-properties)
-   - [Session Lifetime Properties](#session-lifetime-properties)
-   - [Local User Properties](#local-users-properties)
-   - [Monitoring Properties](#monitoring-properties)
-   - [SSO Properties](#sso-properties)
-   - [Kafka Cluster Properties](#kafka-clusters-properties)
-   - [Schema Registry Properties](#schema-registry-properties)
-   - [Kafka Connect Properties](#kafka-connect-properties)
+- [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
+  - [Docker image environment variables](#docker-image-environment-variables)
+  - [Platform properties reference](#platform-properties-reference)
+      - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
+    - [Global properties](#global-properties)
+    - [Database properties](#database-properties)
+    - [Session Lifetime Properties](#session-lifetime-properties)
+    - [Local users properties](#local-users-properties)
+    - [Monitoring properties](#monitoring-properties)
+    - [Conduktor platform Cortex](#conduktor-platform-cortex)
+    - [SSO properties](#sso-properties)
+      - [LDAP properties](#ldap-properties)
+      - [Oauth2 properties](#oauth2-properties)
+    - [Kafka clusters properties](#kafka-clusters-properties)
+    - [Schema registry properties](#schema-registry-properties)
+      - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
+    - [Kafka Connect properties](#kafka-connect-properties)
 
 ## Docker image environment variables
 
@@ -109,36 +115,59 @@ Optional local accounts list used to login on conduktor-platform
 
 ### Monitoring properties
 
-Monitoring allows multiple block storage backends to be used for storing 
+if you are running a platform version < 1.18 go to [old doc](./env-variables-monitoring-pre-1.18.md)
+
+for version >= `1.18` 
+it is mandatory to run and configure properly the monitoring backend, see more information here [conduktor-platform-cortex](#monitoring-cortex)
+for `conduktor-platform` configuration, see bellow : 
+
+| Property                                  | Description                                  | Env                                        | Mandatory | Type   | Default                 | Since    |
+|-------------------------------------------|----------------------------------------------|--------------------------------------------|-----------|--------|-------------------------|----------|
+| `monitoring.clusters-refresh-interval`    | Refresh rate for metrics                     | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | string | ∅                      | `1.12.0` |
+| `monitoring.cortex-url`                   | where is available the cortex backend        | `CDK_MONITORING_CORTEX-URL`                | true      | string | ∅                      | `1.18.0` |
+| `monitoring.alert-manager-url`            | where is availbale the cortex alert manager  | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅                      | `1.18.0` |
+| `monitoring.callback-url`                 | Where the cortex backend should call me      | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅                      | `1.18.0` |
+| `monitoring.notification-callback-url`    | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅                      | `1.18.0` |
+
+### Conduktor platform Cortex
+
+these [configuration]/[environement variable] refer to the `conduktor-platform-cortex` image.
+
+this image is the metrics backend for monitoring. 
+the monitoring can not work without his related backend
+
+This backend is an embedded cortex and so it allows multiple block storage to be used for storing 
 monitoring data. Only one backend can be used at a time among S3, GCS, Azure 
 Blob Storage and Swift, if none is specified, files are stored locally on 
 container volume.
 
-| Property                                  | Description                              | Env                                           | Mandatory | Type   | Default                 | Since    |
-|-------------------------------------------|------------------------------------------|-----------------------------------------------|-----------|--------|-------------------------|----------|
-| `monitoring.storage.s3.endpoint`          | S3 storage endpoint                      | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | false     | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.region`            | S3 storage region                        | `CDK_MONITORING_STORAGE_S3_REGION`            | false     | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.bucket`            | S3 storage bucket name                   | `CDK_MONITORING_STORAGE_S3_BUCKET`            | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.insecure`          | S3 storage SSL/TLS check flag            | `CDK_MONITORING_STORAGE_S3_INSECURE`          | false     | bool   | false                   | `1.5.0`  |
-| `monitoring.storage.s3.accessKeyId`       | S3 storage access key                    | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.secretAccessKey`   | S3 storage access key secret             | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.gcs.bucketName`       | GCS storage bucket name                  | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | false     | string | "blob.core.windows.net" | `1.16.0` |
-| `monitoring.storage.swift.authUrl`        | Swift storage authentication URL         | `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.password`       | Swift storage user password              | `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.containerName`  | Swift storage container name             | `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userId`         | Swift storage user id                    | `CDK_MONITORING_STORAGE_SWIFT_USERID`         | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.username`       | Swift storage user name                  | `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userDomainName` | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userDomainId`   | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.domainId`       | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.domainName`     | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.projectId`      | Swift storage project ID                 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.regionName`     | Swift storage region name                | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | false     | string | ∅                       | `1.16.0` |
+| Property                                  | Description                              | Env                                           | Mandatory | Type   | Default                 | Since     |
+|-------------------------------------------|------------------------------------------|-----------------------------------------------|-----------|--------|-------------------------|-----------|
+| `console-url`                             | Where is te console that manage me       | `CDK_CONSOLE-URL`                             | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.s3.endpoint`          | S3 storage endpoint                      | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.s3.region`            | S3 storage region                        | `CDK_MONITORING_STORAGE_S3_REGION`            | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.s3.bucket`            | S3 storage bucket name                   | `CDK_MONITORING_STORAGE_S3_BUCKET`            | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.s3.insecure`          | S3 storage SSL/TLS check flag            | `CDK_MONITORING_STORAGE_S3_INSECURE`          | false     | bool   | false                    | `1.18.0` |
+| `monitoring.storage.s3.accessKeyId`       | S3 storage access key                    | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.s3.secretAccessKey`   | S3 storage access key secret             | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.gcs.bucketName`       | GCS storage bucket name                  | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | false     | string | "blob.core.windows.net"  | `1.18.0` |
+| `monitoring.storage.swift.authUrl`        | Swift storage authentication URL         | `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.password`       | Swift storage user password              | `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.containerName`  | Swift storage container name             | `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | true      | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.userId`         | Swift storage user id                    | `CDK_MONITORING_STORAGE_SWIFT_USERID`         | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.username`       | Swift storage user name                  | `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.userDomainName` | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.userDomainId`   | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.domainId`       | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.domainName`     | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.projectId`      | Swift storage project ID                 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | false     | string | ∅                       | `1.18.0` |
+| `monitoring.storage.swift.regionName`     | Swift storage region name                | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | false     | string | ∅                       | `1.18.0` |
+
 
 ### SSO properties
 
