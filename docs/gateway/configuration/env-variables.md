@@ -6,14 +6,13 @@ description: Conduktor Gateway connections to Kafka are configured by prefixed a
 
 Configuring the environment variables is the recommended way of setting up Conduktor Gateway.
 
-# Environment Variables
 
 Jump to:
 
 - [Kafka Environment Variables](#kafka-environment-variables)
-- [Override Environment Variables](#override-environment-variables)
+- [Gateway Environment Variables](#gateway-environment-variables)
 
-## Kafka Environment Variables
+# Kafka Environment Variables
 
 Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 Any variable prefixed with `KAFKA_` will be treated as a connection parameter.
@@ -31,7 +30,7 @@ is equivalent to the Kafka property;
 bootstrap.servers
 ```
 
-## Gateway Environment Variables
+# Gateway Environment Variables
 
 Default configurations for Conduktor Gateway can be overridden by environment variables:
 
@@ -222,3 +221,9 @@ none
 | `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.service                                     |
 | `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |
 | `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |
+
+## Usage Analytics
+
+| Environment Variable                                   | Default Value | Description                                                                                      |
+|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`     | Conduktor collects basic user analytics to understand product usage and enable product development and improvement,  such as a Gateway Started event. This is not based on any of the underlying Kafka data.|
