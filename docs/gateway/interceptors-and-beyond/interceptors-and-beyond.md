@@ -10,7 +10,7 @@ So far you have learnt about setting up Gateway as an application and configurin
 
 For more on Interceptors, including how to configure them, browse the marketplace at [marketplace.conduktor.io](https://marketplace.conduktor.io/).
 
-For more on multi-tenancy and other features where you can try Gateway out yourself [Gateway demos](https://github.com/conduktor/conduktor-proxy-demos).
+For more on multi-tenancy and other features where you can try Gateway out yourself [Gateway demos](https://github.com/conduktor/conduktor-gateway-demos).
 
 ![multi-tenancy.png](./multi-tenant.png)
 
