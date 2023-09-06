@@ -16,7 +16,7 @@ Jump to:
 
 Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 Any variable prefixed with `KAFKA_` will be treated as a connection parameter.
-The remainder of the environment variable will be lower cased and have `_` replaced with `.`.
+The reminder of the environment variable will be lower cased and have `_` replaced with `.`.
 
 Thus a variable
 
