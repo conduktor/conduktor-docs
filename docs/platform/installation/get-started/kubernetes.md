@@ -34,16 +34,18 @@ helm repo update
 export ADMIN_EMAIL="<your_admin_email>"
 export ADMIN_PASSWORD="<your_admin_password>"
 export ORG_NAME="<your_org_name>"
+export NAMESPACE="<your_kubernetes_namespace>"
 
 # Deploy helm chart
 helm install console conduktor/console \
-    --create-namespace -n conduktor \
+    --create-namespace -n ${NAMESPACE} \
     --set config.organization.name="${ORG_NAME}" \
     --set config.admin.email="${ADMIN_EMAIL}" \
     --set config.admin.password="${ADMIN_PASSWORD}" \
-    --set config.database.password="${POSTGRES_PASSWORD}" \
-    --set config.database.username="${POSTGRES_USER}" \
-    --set config.database.host="${POSTGRES_HOST}" \
+    --set config.database.password="<your_postgres_password>" \
+    --set config.database.username="<your_postgres_user>" \
+    --set config.database.host="<your_postgres_host>" \
+    --set config.database.port="5432" \
     --set config.license="${LICENSE}" # can be omitted if deploying the free tier
     
 # Port forward to access the platform
@@ -152,12 +154,9 @@ config:
   # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
-### Provide the license as secret
+### Configure with an enterprise license
 
-We expect the secret to contain a key named `license` which contains your 
-license key.
-
-```shell
+```yaml
 # values.yaml
 config:
   organization:
@@ -174,7 +173,10 @@ config:
     username: '<postgres_username>'
     password: '<postgres_password>'
 
-  existingLicenseSecret: "<your_secret_name>"
+  license: "<your_license>"
+
+  # HERE you can paste the platform configuration (under the config key)
+  # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
 ## Snippets
