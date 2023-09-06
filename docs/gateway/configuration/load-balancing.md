@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-title: Configuration
+sidebar_position: 4
+title: Load Balancing
 description: Load Balancing
 ---
 
