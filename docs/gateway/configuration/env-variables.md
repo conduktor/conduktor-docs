@@ -61,7 +61,7 @@ __Example Values__
 | `GATEWAY_BIND_HOST`       | `0.0.0.0`                          | The host on which to bind the gateway                                                                                                                                                                                                                                               |
 | `GATEWAY_ADVERTISED_HOST` | defaults to your hostname          | The gateway hostname that should be presented to clients                                                                                                                                                                                                                            |
 | `GATEWAY_PORT_START`      | `6969`                             | Port on which Gateway will start listening into                                                                                                                                                                                                                                     |
-| `GATEWAY_PORT_COUNT`      | defaults to your number of brokers | Number of ports to be used by the gateway, it each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
+| `GATEWAY_PORT_COUNT`      | defaults to your number of brokers | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
 ## Load Balancing
 
