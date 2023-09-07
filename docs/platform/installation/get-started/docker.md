@@ -164,7 +164,7 @@ services:
 
 You just have to run the following command to launch the PostgreSQL instance and Conduktor Console:
 ```sh
-docker compose -f docker-compose.yaml up
+docker compose up
 ```
 
 After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
