@@ -8,7 +8,9 @@ description: Conduktor require a postgres database to run.
 
 Conduktor requires a postgres database to store its state.
 
-The embedded database has been deprecated and will be removed in **1.17.0**.
+:::info
+Until version 1.18, Conduktor supported an embedded database. This is deprecated from 1.18 onwards to ensure your Console deployment is production ready. Please contact [support](https://support.conduktor.io/) if you are having difficulty migrating.
+:::
 
 ### Database requirements
 
@@ -18,13 +20,13 @@ The embedded database has been deprecated and will be removed in **1.17.0**.
 ### Database Configuration Properties
 
 - `database` : is a key/value configuration consisting of:
-- `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
-- `database.host` : Postgresql server host name
-- `database.port` : Postgresql server port
-- `database.name` : Database name
-- `database.username` : Database login role
-- `database.password` : Database login password
-- `database.connection_timeout` : Connection timeout option in seconds
+   - `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+   - `database.host` : Postgresql server host name
+   - `database.port` : Postgresql server port
+   - `database.name` : Database name
+   - `database.username` : Database login role
+   - `database.password` : Database login password
+   - `database.connection_timeout` : Connection timeout option in seconds
 
 #### SSL support
 
