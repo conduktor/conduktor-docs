@@ -127,7 +127,7 @@ database:
   connection_timeout: 30 # in seconds
 ```
 
-#### Step 2: Bind file 
+#### Step 2: Bind the file 
 
 The below docker-compose indicates how to bind your `platform-config.yaml` file.
 
