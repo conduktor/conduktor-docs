@@ -169,6 +169,8 @@ docker compose -f docker-compose.yaml up
 
 After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
 
+You can use the admin email and password to log in.
+
 If using [SSO](/platform/category/user-authentication/), you will see an option to log in via the relevant identity provider.
 
 ![Sign In Azure](/img/get-started/azure-start.png)
