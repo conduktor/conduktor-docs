@@ -181,7 +181,7 @@ See [configuring your first cluster](#step-3-configure-your-existing-kafka-clust
 
 ### Configuration using environment variables
 
-All configuration properties can also be provided using [environment variables](/platform/configuration/env-variables/). That way, you don't need to use a configuration file.
+All configuration properties can be provided using either[environment variables](/platform/configuration/env-variables/) or the config file.
 
 If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 
