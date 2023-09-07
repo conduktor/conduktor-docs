@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Docker
-description: Get started with the latest Conduktor Platform Docker image in just a few minutes.
+description: Get started with the latest Conduktor Console Docker image in just a few minutes.
 ---
 
 # Docker Quick Start
@@ -10,7 +10,7 @@ description: Get started with the latest Conduktor Platform Docker image in just
 Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-Get started with the latest Conduktor Docker image. The installation and configuration process takes only a few minutes.
+Get started with the latest Conduktor Console Docker image. The installation and configuration process takes only a few minutes.
 
 - [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your environment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
    - [Launch Conduktor with an embedded Kafka (Redpanda)](#launch-conduktor-with-an-embedded-kafka-redpanda)
@@ -20,15 +20,15 @@ Get started with the latest Conduktor Docker image. The installation and configu
    - [Using a configuration file](#advanced-setup)
    - [Using environment variables](#configuration-using-environment-variables)
 
-# Simple Setup
+## Simple Setup
 
-When launching Conduktor for the first time, you will presented with onboarding to help configure your environment.
+When launching Conduktor Console for the first time, you will presented with onboarding to help configure your environment.
 
 ### Step 1: Launch Conduktor
 
 Run one of the below commands to launch Conduktor.
 
-### Launch Conduktor with an embedded Kafka (Redpanda)
+#### Launch Conduktor with an embedded Kafka (Redpanda)
 
 This option pre-configures Conduktor to connect to the embedded Redpanda and Schema Registry.
 
@@ -36,7 +36,7 @@ This option pre-configures Conduktor to connect to the embedded Redpanda and Sch
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-### OR, Launch Conduktor and connect it to your existing Kafka
+#### OR, Launch Conduktor and connect it to your existing Kafka
 
 Add your own cluster configuration from within the Conduktor UI.
 
@@ -70,7 +70,7 @@ Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificate Store](../../
 
 Add the below to your Kafka **server.properties** file
 
-```
+```env
 listeners=EXTERNAL://0.0.0.0:19092,PLAINTEXT://0.0.0.0:9092
 listener.security.protocol.map=PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
 advertised.listeners=PLAINTEXT://127.0.0.1:9092,EXTERNAL://host.docker.internal:19092
@@ -78,7 +78,7 @@ advertised.listeners=PLAINTEXT://127.0.0.1:9092,EXTERNAL://host.docker.internal:
 
 If running Kafka in KRaft mode, add the below to your Kafka **config/kraft/server.properties** file
 
-```
+```env
 listeners=EXTERNAL://0.0.0.0:19092,PLAINTEXT://0.0.0.0:9092,CONTROLLER://:9093
 listener.security.protocol.map=PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
 advertised.listeners=PLAINTEXT://127.0.0.1:9092,EXTERNAL://host.docker.internal:19092
@@ -89,7 +89,7 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 ## Advanced Setup
 
-Conduktor can also be configured using a configuration file `platform-config.yaml`, or through **environment variables**. This is used to setup your organizations environment. Configuration can be used to declare:
+Conduktor can also be configured using a configuration file `platform-config.yaml`, or through **environment variables**. This is used to set up your organization's environment. Configuration can be used to declare:
 
 - Organization name
 - External database (**required for production environments**)
@@ -98,56 +98,40 @@ Conduktor can also be configured using a configuration file `platform-config.yam
 
 For production deployments, it's critical that you review the [production requirements](../hardware.md#production-requirements).
 
-### Step 1: Create a Configuration File
+### Configuration using a configuration file
 
-The below example shows how to configure Conduktor with an external database, SSO and an optional license key (for Enterprise customers).
+#### Step 1: Create a configuration file
 
-All configuration properties can also be parsed as [Environment Variables](/platform/configuration/env-variables/) when starting Conduktor.
-If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
+The below example shows how to configure Conduktor with the minimum configuration:
+- The name of the organization
+- An external database
+- A local administrator
 
-For more examples, see:
-
-- [Configuration Properties and Environment Variables](/platform/configuration/env-variables/)
-- [Configuring SSO](/platform/category/user-authentication/)
+If you want, you can add more snippets, like [SSO](/platform/configuration/user-authentication/configure-sso/) or [license key](/platform/installation/license-management/#into-the-configuration-file).
+You can get the list of all the properties supported [here](/platform/configuration/env-variables/).
 
 ```yaml title="platform-config.yaml"
 organization:
-  name: demo
+  name: My Company
 
 admin:
   email: admin@company.io
   password: admin
 
-auth:
-  local-users:
-    - email: user@conduktor.io
-      password: user
-
 database:
-  host: 'host'
+  host: 'postgresql'
   port: 5432
-  name: 'database'
+  name: 'conduktor'
   username: 'user'
   password: 'password'
   connection_timeout: 30 # in seconds
-
-sso:
-  oauth2:
-    - name: 'azure'
-      default: true
-      client-id: ${AZURE_APPLICATION_ID}
-      client-secret: ${AZURE_CLIENT_SECRET}
-      openid:
-        issuer: https://login.microsoftonline.com/{tenantid}/v2.0
-
-license: '<your license key>'
 ```
 
-### Step 2: Bind file 
+#### Step 2: Bind file 
 
 The below docker-compose indicates how to bind your `platform-config.yaml` file.
 
-Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it.
+Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it. The file is also mounted to be used from within the container.
 
 ```yaml title="docker-compose.yaml"
 version: '3.8'
@@ -156,13 +140,10 @@ services:
   postgresql:
     image: postgres:14
     hostname: postgresql
-    volumes:
-      - pg_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "conduktor-platform"
-      POSTGRES_USER: "conduktor"
-      POSTGRES_PASSWORD: "change_me"
-      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_DB: "conduktor"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
 
   conduktor-platform:
     image: conduktor/conduktor-platform:latest
@@ -171,46 +152,38 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - conduktor_data:/var/conduktor
       - type: bind
         source: "./platform-config.yaml"
         target: /opt/conduktor/platform-config.yaml
         read_only: true
     environment:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
-    healthcheck:
-      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 3
-
-volumes:
-  pg_data: {}
-  conduktor_data: {}
 ```
 
-For all configuration properties and environment variables see [Configuration Properties and Environment Variables](/platform/configuration/env-variables/).
+#### Step 3: Access Conduktor
 
-### Step 3: Access Conduktor
+You just have to run the following command to launch the PostgreSQL instance and Conduktor Console:
+```sh
+docker compose -f docker-compose.yaml up
+```
 
 After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
 
-If using [SSO](/platform/category/user-authentication/), you will see an option to login via the relevant identity provider.
+If using [SSO](/platform/category/user-authentication/), you will see an option to log in via the relevant identity provider.
 
 ![Sign In Azure](/img/get-started/azure-start.png)
 
-### Step 4: Configure your first cluster
+#### Step 4: Configure your first cluster
 
 See [configuring your first cluster](#step-3-configure-your-existing-kafka-cluster)
 
 ### Configuration using environment variables
 
-All input configuration fields can also be provided using environment variables.
+All configuration properties can also be provided using [environment variables](/platform/configuration/env-variables/). That way, you don't need to use a configuration file.
 
-For more information, see [Environment Variables](/platform/configuration/env-variables/).
+If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 
-Below shows an example docker-compose that uses environment variables for configuration.
+Below is an example of the same deployment that uses environment variables for the Conduktor Console configuration.
 
 ```yaml title="docker-compose.yaml"
 version: '3.8'
@@ -219,36 +192,20 @@ services:
   postgresql:
     image: postgres:14
     hostname: postgresql
-    volumes:
-      - pg_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "conduktor-platform"
-      POSTGRES_USER: "conduktor"
-      POSTGRES_PASSWORD: "change_me"
-      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_DB: "conduktor"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.17.0
+    image: conduktor/conduktor-platform:latest
     depends_on:
       - postgresql
     ports:
       - "8080:8080"
-    volumes:
-      - conduktor_data:/var/conduktor
-    healthcheck:
-      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 3
     environment:
-      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
-      CDK_LICENSE: "${LICENSE_TOKEN:-}"
-      CDK_ORGANIZATION_NAME: "${ORGANIZATION_NAME}"
-      CDK_ADMIN_EMAIL: "${ADMIN_EMAIL}"
-      CDK_ADMIN_PASSWORD: "${ADMIN_PSW}"
-
-volumes:
-  pg_data: {}
-  conduktor_data: {}
+      CDK_DATABASE_URL: "postgresql://user:password@postgresql:5432/conduktor"
+      CDK_ORGANIZATION_NAME: "My Company"
+      CDK_ADMIN_EMAIL: "admin@company.io"
+      CDK_ADMIN_PASSWORD: "admin"
 ```
