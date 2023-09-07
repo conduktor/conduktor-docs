@@ -65,7 +65,7 @@ docker run \
 
 > **Note 1** : If all connection urls **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
 
-> **Note 2** : If an invalid connection url or some mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with a meaningful error message.
+> **Note 2** : If an invalid connection url or other mandatory configuration field (`host`, `username` and `name`) is missing, Conduktor will fail gracefully with a meaningful error message.
 
 > **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured either from url or decompose fields, platform will start using embedded database.
 
