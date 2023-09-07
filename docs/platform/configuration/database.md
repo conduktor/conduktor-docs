@@ -6,7 +6,7 @@ description: Conduktor require a postgres database to run.
 
 # Database Configuration
 
-Conduktor requires a postgres database to store its state.
+Conduktor **requires** a postgres database to store its state.
 
 :::info
 Until version 1.18, Conduktor supported an embedded database. This is deprecated from 1.18 onwards to ensure your Console deployment is production ready. Please contact [support](https://support.conduktor.io/) if you are having difficulty migrating.
@@ -14,8 +14,8 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
 
 ### Database requirements
 
-- PostgreSQL 14+
-- Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
+- PostgreSQL 13+
+- Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Console should be able to create/update/delete schemas and tables on the database.
 
 ### Database Configuration Properties
 
@@ -30,7 +30,7 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
 
 #### SSL support
 
-By default, Conduktor Platform will try to connect to the database using SSL mode `prefer`. 
+By default, Conduktor will try to connect to the database using SSL mode `prefer`. 
 We plan to make this configurable in the future along with database certificate.
 
 ### Setup
@@ -60,8 +60,11 @@ database:
 Example :
 
 ```shell
-docker run \
+ docker run --rm \
+  -p "8080:8080" \
   -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
+  -e LICENSE_KEY="<your-license>" \
+  -e RUN_MODE="small" \
   conduktor/conduktor-platform:latest
 ```
 
@@ -69,5 +72,4 @@ docker run \
 
 > **Note 2** : If an invalid connection url or other mandatory configuration field (`host`, `username` and `name`) is missing, Conduktor will fail gracefully with a meaningful error message.
 
-> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured either from url or decompose fields, platform will start using embedded database.
-
+> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration.
