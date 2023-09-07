@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Open Source Installation
 description:  Open source installation
 ---
@@ -22,7 +22,7 @@ The gateway transport layer is the wiring between your Kafka client application 
 
 Interceptors are loaded into the gateway.  The interceptors are triggered when Kafka data flows through the gateway, and provide functionality such as adding chaos to aid with testing, or adding safeguards around what Kafka configurations are allowed and keep your Kafka cluster protected.
 
-It is also possible to [write your own interceptor](../interceptors/write-an-interceptor.md).
+It is also possible to [write your own interceptor](./write-an-interceptor.md).
 
 This diagram show the high level architecture of the open source Conduktor Gateway.
 
@@ -102,7 +102,7 @@ Next, explore our other Interceptors on the [Conduktor Marketplace](https://mark
 
 Once you've decided which of the free interceptors you'd like to try, select the "Download" button on the Interceptor's page in the Marketplace to download that interceptor's .jar file.  Save this to a location on your machine that you can add to your Java classpath.
 
-[Update your Gateway's configuration file](../configuration/opensource-yaml-config.md), found at `<GATEWAY_REPOSITORY_LOCATION>/gateway-core/config/application.yaml` to enable each interceptor you'd like to try.  The `Configuration` section on each Interceptor's page in the Marketplace describes the available configuration and can be copy pasted directly.  
+[Update your Gateway's configuration file](./opensource-yaml-config.md), found at `<GATEWAY_REPOSITORY_LOCATION>/gateway-core/config/application.yaml` to enable each interceptor you'd like to try.  The `Configuration` section on each Interceptor's page in the Marketplace describes the available configuration and can be copy pasted directly.  
 
 Multiple interceptors can be configured simultaneously, each as a separate list item, under the `interceptors` field in the `application.yaml` configuration file.
 
@@ -163,17 +163,17 @@ There are two sets of properties to configure when using your own client and you
 
 ## Kafka Client to Conduktor Gateway configuration
 
-By default the Conduktor Open Source Gateway does not run with any security enabled. [Basic security](../configuration/oss_security.md) is available.
+By default the Conduktor Open Source Gateway does not run with any security enabled. [Basic security](./oss_security.md) is available.
 
 To connect your Kafka clients to the gateway update the `bootstrap.servers` in the client properties to be `localhost:6969`. This will ensure all Kafka traffic is routed via the gateway.
 
-If needed, you can update the host and port for the gateway by editing the [hostport configuration](../configuration/opensource-yaml-config.md#hostport-configurations).  If you update this configuration, remember to update the `bootstrap.servers` in your client configuration to match.
+If needed, you can update the host and port for the gateway by editing the [hostport configuration](./opensource-yaml-config.md#hostport-configurations).  If you update this configuration, remember to update the `bootstrap.servers` in your client configuration to match.
 
 ## Conduktor Gateway to Kafka cluster configuration
 
 Conduktor Gateway can connect to any Kafka cluster that a standard Kafka application can connect to.
 
-Gateway configuration is set in a `kafka.config` properties file, the location of which is configured by your [gateway configuration file](../configuration/opensource-yaml-config.md).
+Gateway configuration is set in a `kafka.config` properties file, the location of which is configured by your [gateway configuration file](./opensource-yaml-config.md).
 
 The default gateway configuration file can be found at `<GATEWAY_DOWNLOAD_LOCATION>/gateway-core/config/application.yaml`
 
@@ -185,7 +185,7 @@ kafkaSelector:
   path: gateway-core/config/kafka.config
 ```
 
-[Open Source Conduktor Gateway Security](../configuration/oss_security.md) describes the format of the kafka.config file in more detail, including how to connect to a secured Kafka cluster.
+[Open Source Conduktor Gateway Security](./oss_security.md) describes the format of the kafka.config file in more detail, including how to connect to a secured Kafka cluster.
 
 
 

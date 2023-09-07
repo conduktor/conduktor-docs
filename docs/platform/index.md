@@ -14,12 +14,9 @@ If anything in the documentation is not clear or you need further help, please [
 
 ### Streamline Apache Kafka
 
-Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, testing, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** or as a **managed cloud service**.
+Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** and can be deployed via Docker or Helm Charts.
 
 - Jump straight into the [Docker Quick Start](../platform/installation/get-started/docker)
-- Sign up to [Conduktor Cloud](https://signup.conduktor.io/)
-
-Alternatively, access our demo environment **[here](https://www.conduktor.io/get-started#option-3)**.
 
 ### Platform Walkthrough
 

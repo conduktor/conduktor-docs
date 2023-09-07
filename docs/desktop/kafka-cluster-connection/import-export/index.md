@@ -10,7 +10,7 @@ You can also use [GitHub](/desktop/kafka-cluster-connection/import-export/github
 
 ### Export the configuration all several clusters
 
-with the ![](../../assets/config/import-export/upload.png) button you can export all your cluster in a single file.
+With the export button you can export all your cluster in a single file.
 ![](../../assets/config/import-export/blur-export.png)
 
 This export include sensitive data like credentials, secretes and certificate files, you will have to provide a password to secure it.
