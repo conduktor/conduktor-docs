@@ -146,7 +146,7 @@ services:
       POSTGRES_PASSWORD: "password"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+    image: conduktor/conduktor-platform:1.17.3
     depends_on:
       - postgresql
     ports:
@@ -181,7 +181,7 @@ See [configuring your first cluster](#step-3-configure-your-existing-kafka-clust
 
 ### Configuration using environment variables
 
-All configuration properties can be provided using either[environment variables](/platform/configuration/env-variables/) or the config file.
+All configuration properties can be provided using either[environment variables](/platform/configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
 
 If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 
@@ -200,7 +200,7 @@ services:
       POSTGRES_PASSWORD: "password"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+    image: conduktor/conduktor-platform:1.17.3
     depends_on:
       - postgresql
     ports:
