@@ -17,7 +17,7 @@ Get started with the latest Conduktor Console Docker image. The installation and
    - [Launch Conduktor and connect it to your existing Kafka](#or-launch-conduktor-and-connect-it-to-your-existing-kafka)
 
 - [**Advanced Configuration**](#advanced-setup): Configure your environment using a configuration file or using environment variables. This is essential for **production environments**.
-   - [Using a configuration file](#advanced-setup)
+   - [Using a configuration file](#configuration-using-a-configuration-file)
    - [Using environment variables](#configuration-using-environment-variables)
 
 ## Simple Setup
@@ -89,8 +89,13 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 ## Advanced Setup
 
-Conduktor can also be configured using a configuration file `platform-config.yaml`, or through **environment variables**. This is used to set up your organization's environment. Configuration can be used to declare:
+Conduktor can also be configured using a [configuration file](#configuration-using-a-configuration-file) `platform-config.yaml`, or through [environment variables](#configuration-using-environment-variables). This is used to set up your organization's environment.
 
+:::note
+All configuration properties can be provided using either [environment variables](/platform/configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
+:::
+
+Configuration can be used to declare:
 - Organization name
 - External database (**required for production environments**)
 - User authentication (Basic or SSO)
