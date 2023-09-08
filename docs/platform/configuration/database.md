@@ -65,7 +65,7 @@ Example :
   -p "8080:8080" \
   -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
   -e LICENSE_KEY="<your-license>" \
-  -e RUN_MODE="small" \
+  -e RUN_MODE="nano" \
   conduktor/conduktor-platform:latest
 ```
 
