@@ -92,7 +92,7 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 Conduktor can also be configured using a [configuration file](#configuration-using-a-configuration-file) `platform-config.yaml`, or through [environment variables](#configuration-using-environment-variables). This is used to set up your organization's environment.
 
 :::note
-All configuration properties can be provided using either [environment variables](/platform/configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
+If you use both methods, environment variables will take precedence.
 :::
 
 Configuration can be used to declare:
