@@ -25,7 +25,7 @@ Jump to:
 
 # Gateway to your Kafka security
 
-You can use all the kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc. 
+You can use all the kafka mechanisms, PLAINTEXT (none), SASL, OAuthBearer, Kerberos etc. 
 
 ```yaml
 conduktor-gateway:
@@ -41,7 +41,7 @@ conduktor-gateway:
 You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
 Gateway supports;
-* `NONE`
+* `PLAINTEXT` (none)
 * `SASL_SSL`
 * `SASL_PLAINTEXT`
 * `OAuth` , is under development
