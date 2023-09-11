@@ -64,6 +64,7 @@ Conduktor Gateway only supports `SASL_PLAIN` and `SASL_SSL` for passthrough iden
 
 :::
 
+Interceptors are interacted with through the admin API using a vcluster name of `passthrough`.
 
 ## Client to Gateway, additional security
 
