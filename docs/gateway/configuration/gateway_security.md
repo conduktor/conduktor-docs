@@ -41,10 +41,10 @@ conduktor-gateway:
 You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
 Gateway supports;
-* `NONE`
+* `PLAINTEXT`
+* `SSL`
 * `SASL_SSL`
 * `SASL_PLAINTEXT`
-* `OAuth` , is under development
 
 ## Passthrough security
 
@@ -124,7 +124,10 @@ conduktor-gateway:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
       GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
 ```
-### Create a username
+
+### Sasl plain user/password mechanism
+
+#### Create a username
 The following command will create a virtual cluster called `london`, it will return the password of the username `sa` to be able to connect to the new cluster. 
 
 ```bash
@@ -157,7 +160,7 @@ echo "$token" | jq -R 'gsub("-";"+") | gsub("_";"/") | split(".") | .[1] | @base
 }
 ```
 
-### Update your client to connect to the virtual cluster
+#### Update your client to connect to the virtual cluster
 
 The token should be provided in the password field of the client configuration, such as in a properties file `london-sa.properties`, as follows:
 
@@ -176,3 +179,43 @@ kafka-topics \
   --command-config /clientConfig/london-sa.properties \
   --list
 ```
+
+### Sasl OAuthbearer mechanism
+
+Conduktor gateway support OAuth authentification by leveraging OAuthbearer sasl mechanism. For this section you will need a OpenID provider exposing public keys.
+
+#### Configure gateway to support OAuthbearer with environemnt variables
+
+```yaml
+conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.1.1
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
+      KAFKA_SASL_MECHANISM: PLAIN
+      KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
+      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
+      GATEWAY_OAUTH_JWKS_URL: <YOUR_OIDC_PROVIDER_JWKS_URL|JWKS_FILE_URL>
+      GATEWAY_OAUTH_EXPECTED_ISSUER: <YOUR_OIDC_ISSUER>
+```
+
+If the generated token by the provider define an `aud` header you have to configure a `GATEWAY_OAUTH_EXPECTED_AUDIENCES` with a list of supported audiences.
+
+#### Configure your client to connect to gatyeway using OAuthbearer
+
+Your client will connect through an OAuth provider using a grant credentials flow to create a token to be sent to gateway. This token will be verified based on the configuration below.
+
+```
+sasl.mechanism=OAUTHBEARER
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.oauthbearer.token.endpoint.url=<YOUR_OIDC_PROVIDER_TOKEN_URL>
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="<CLIENT_ID>" clientSecret="<CLIENT_SECRET>" scope="email";
+```
+
+#### Customize the virtual cluster
+
+By default the virtual cluster will equal to the subject of the token.  
+This could be modified by adding specfic claims in the token for be sent to gateway.
+
+Virtual cluster could be defined for a token using the `gateway.vcluster` claim.
+You can also override the user from the subject by defining a `gateway.username` claim.
