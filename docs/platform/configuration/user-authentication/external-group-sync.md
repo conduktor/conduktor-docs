@@ -58,6 +58,8 @@ Then select `Security groups` as group type to include, and ensure that the toke
 
 You can see that the claim name is `groups`, so you can add the following line in you configuration file: `groups-claim: "groups"`.
 
+**Please note:** If you have a larger number of groups within your enterprise you may need to use the `"Groups assigned to the application"` option in the `"Select Group Types"` tab. This is in order to avoid exceeding the limit on the number of groups a token can emit. See further documentation from on utlising this within Azure [here](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal).
+
 ## Create a Group Mapping
 
 Now that LDAP or OIDC is configured to map groups, you can now create a sync between an external group and a Conduktor group. You can:
