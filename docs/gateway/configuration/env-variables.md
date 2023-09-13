@@ -76,9 +76,9 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable        | Default Value                         | Description                                                                                                                    |
-|-----------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `NONE`, `SASL_PLAIN` and `SASL_SSL`  |
+| Environment Variable        | Default Value                         | Description                                                                                                                        |
+|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAIN` and `SASL_SSL` |
 
 #### SSL
 
@@ -106,6 +106,14 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER`   | `2`           | Backoff multiplier on reauth |
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`       | `5000`        | Max backoff                  |
 
+#### SECURITY PROVIDER
+
+| Environment Variable        | Default Value | Description                                                                                                      |
+|-----------------------------|---------------|------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_FIPS` and `CONSCRYPT` |
+
+Please note that `CONSCRYPT` does not support Mac OS with aarch64
+
 ### HTTP
 
 | Environment Variable      | Default Value                                           | Description                                                                       |
@@ -116,7 +124,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 ### Internal state
 
-Conduktor needs to save state
+Conduktor needs to save state, you can choose where:
 
 | Environment Variable    | Default Value   | Description                                |
 |-------------------------|-----------------|--------------------------------------------|
@@ -157,13 +165,13 @@ none
 
 #### `POSTGRES` State Configurations
 
-| Environment Variable                    | Default Value | Description       |
-|-----------------------------------------|---------------|-------------------|
-| `GATEWAY_STORAGE_RDBMS_URL`             |               | Postgres url      |
-| `GATEWAY_STORAGE_RDBMS_USER`            |               | Postgres user     |
-| `GATEWAY_STORAGE_RDBMS_PASSWORD`        |               | Postgres password |
-| `GATEWAY_STORAGE_RDBMS_SCHEMA`          |               | Postgres schema   |
-| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` |               | polling interval  |
+| Environment Variable                    | Default Value | Description            |
+|-----------------------------------------|---------------|------------------------|
+| `GATEWAY_STORAGE_RDBMS_URL`             | None          | Postgresql Url         |
+| `GATEWAY_STORAGE_RDBMS_USER`            | None          | Postgresql User        |
+| `GATEWAY_STORAGE_RDBMS_PASSWORD`        | None          | Postgresql password    |
+| `GATEWAY_STORAGE_RDBMS_SCHEMA`          | None          | Postgresql Schema      |
+| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` | 500ms         | Refresh interval in ms |
 
 ### Internal setup
 
