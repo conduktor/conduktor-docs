@@ -62,7 +62,7 @@ To disable this Passthrough, and activate virtual clusters, set the environemnt 
 
 For Passthrough mode, Conduktor Gateway currently supports:
 - Security protocols: `SASL_PLAINTEXT` and `SASL_SSL`
-- SASL mechanism: `PLAIN`, `SCRAM-SHA-256` and `SCRAM-SHA-512`
+- SASL mechanisms: `PLAIN`, `SCRAM-SHA-256` and `SCRAM-SHA-512`
 
 :::
 
