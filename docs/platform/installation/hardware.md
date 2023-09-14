@@ -9,44 +9,9 @@ description: Conduktor Console is provided as a single Docker container.
 Conduktor Console is provided as a single Docker container.
 
 Jump to:
+ - [Production Requirements](#production-requirements)
+ - [Hardware Requirements](#hardware-requirements)
 
-- [Hardware Requirements](#hardware-requirements)
-- [Production Requirements](#production-requirements)
-
-## Hardware Requirements
-
-To configure Conduktor Console for particular hardware, you can use the environment variable `RUN_MODE`
-
-| ENV      | Available RAM |
-| -------- | ------------- |
-| `nano`   | `8GB`         |
-| `small`  | `16GB`        |
-| `medium` | `32GB`        |
-| `large`  | `64GB`        |
-
-**Minimum**
-
-- 4 CPU cores
-- 8 GB of RAM (`RUN_MODE`=nano)
-- 5 GB of disk space
-
-**Recommended**
-
-- 4+ CPU cores
-- 16+ GB of RAM (`RUN_MODE`=small)
-- 10+ GB of disk space
-
-**Example: Starting the platform in small run mode**
-
-```bash
- docker run --rm \
-  -p "8080:8080" \
-  -e LICENSE_KEY="<your-license>" \
-  -e RUN_MODE="small" \
-  conduktor/conduktor-platform:latest
-```
-
-See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
 
 ## Production Requirements
 
@@ -61,3 +26,40 @@ To ensure you meet these requirements, you must:
  - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue. 
  
 Note that if you are deploying the [Helm chart](./get-started/kubernetes.md), the [production requirements](./get-started/kubernetes.md#production-requirements) are clearly outlined in the installation guide. 
+
+## Hardware Requirements
+
+To configure Conduktor Console for particular hardware, you can use the environment variable `RUN_MODE`
+
+| `RUN_MODE`| Available RAM (post 1.18.0) | Available RAM (pre 1.18.0) |
+| --------- | --------------------------- | -------------------------- |
+| `nano`    | `3GB`                       | `8GB`                      |
+| `small`   | `4GB`                       | `16GB`                     |
+| `medium`  | `6GB`                       | `32GB`                     |
+| `large`   | `8GB`                       | `64GB`                     |
+| `custom` | See [custom memory setup](../configuration/memory-configuration.md) |  N.A. |
+
+**Minimum**
+
+- 2 CPU cores
+- 3 GB of RAM (`RUN_MODE`=nano)
+- 5 GB of disk space
+
+**Recommended**
+
+- 4+ CPU cores
+- 4+ GB of RAM (`RUN_MODE`=small)
+- 10+ GB of disk space
+
+**Example: Starting the platform in small run mode**
+
+```bash
+ docker run --rm \
+  -p "8080:8080" \
+  -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
+  -e LICENSE_KEY="<your-license>" \
+  -e RUN_MODE="small" \
+  conduktor/conduktor-platform:latest
+```
+
+See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).

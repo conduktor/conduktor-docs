@@ -1,14 +1,16 @@
 ---
 sidebar_position: 5
 title: Database Configuration
-description: For quickstart purpose platform run with an internal embedded database (default).
+description: Conduktor require a postgres database to run.
 ---
 
 # Database configuration
 
-For quickstart purposes Conduktor Platform can run with an internal embedded database (currently the default option).
+Conduktor **requires** a postgres database to store its state.
 
-For production environmnents, since version [**1.1.2**](https://github.com/conduktor/conduktor-platform/blob/main/CHANGELOG.md#112-2022-10-20) , Conduktor Platform supports external database configurations.
+:::info
+Until version 1.18, Conduktor supported an embedded database. This is deprecated from 1.18 onwards to ensure your Console deployment is production ready. Please contact [support](https://support.conduktor.io/) if you are having difficulty migrating.
+:::
 
 ### Database requirements
 
@@ -19,17 +21,17 @@ For production environmnents, since version [**1.1.2**](https://github.com/condu
 ### Database configuration properties
 
 - `database` : is a key/value configuration consisting of:
-- `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
-- `database.host` : Postgresql server host name
-- `database.port` : Postgresql server port
-- `database.name` : Database name
-- `database.username` : Database login role
-- `database.password` : Database login password
-- `database.connection_timeout` : Connection timeout option in seconds
+   - `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+   - `database.host` : Postgresql server host name
+   - `database.port` : Postgresql server port
+   - `database.name` : Database name
+   - `database.username` : Database login role
+   - `database.password` : Database login password
+   - `database.connection_timeout` : Connection timeout option in seconds
 
 #### SSL support
 
-By default, Conduktor Platform will try to connect to the database using SSL mode `prefer`. 
+By default, Conduktor will try to connect to the database using SSL mode `prefer`. 
 We plan to make this configurable in the future along with database certificate.
 
 ### Setup
@@ -59,13 +61,16 @@ database:
 Example :
 
 ```shell
-docker run \
+ docker run --rm \
+  -p "8080:8080" \
   -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
+  -e LICENSE_KEY="<your-license>" \
+  -e RUN_MODE="nano" \
   conduktor/conduktor-platform:latest
 ```
 
 > **Note 1** : If all connection urls **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.
 
-> **Note 2** : If there is an invalid connection url or some of the mandatory configuration fields (`host`, `username` and `name`) are missing, conduktor-platform will crash with a meaningful error message.
+> **Note 2** : If an invalid connection url or other mandatory configuration field (`host`, `username` and `name`) is missing, Conduktor will fail gracefully with a meaningful error message.
 
-> **Note 3** : Before version **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration. If no external database is configured from either the url or decompose fields, platform will start using the embedded database.
+> **Note 3** : Before **1.2.0** `EMBEDDED_POSTGRES=false` was mandatory to enable external postgresql configuration.

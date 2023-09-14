@@ -36,5 +36,5 @@ To start your Conduktor Gateway journey [review the installation options](instal
 
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo from us](https://www.conduktor.io/contact/demo)
-- [Try out some demos yourself](https://github.com/conduktor/conduktor-proxy-demos)
+- [Try out some demos yourself](https://github.com/conduktor/conduktor-gateway-demos)
 - [Roadmap](https://product.conduktor.help)

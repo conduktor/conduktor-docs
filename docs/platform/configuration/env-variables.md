@@ -48,6 +48,9 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 | **`CDK_ONBOARDING_MODE`** | 1.14.0 | latest | `auto` | Specify whether to start Conduktor with the onboarding wizard enabled. Accepted values: `auto`, `never`, `always`. Defaults to `auto`  that will start onboarding when no configuration is provided. |
 | **`TESTING_ENABLED`** | 1.15.0 | latest | `false` | Specify whether to start Conduktor with Testing enabled. |
 | **`PROXY_BUFFER_SIZE`** | 1.16.0 | latest | `8k` | Tune internal Nginx `proxy_buffer_size`. |
+| **`CONSOLE_MEMORY_OPTS`** | 1.18.0 | latest | Depends on `RUN_MODE` | Configure memory Java options for Console module. See [memory setup page](./memory-configuration.md) for more details |
+| **`GOVERNANCE_MEMORY_OPTS`** | 1.18.0 | latest | Depends on `RUN_MODE` | Configure memory Java options for Governance module. See [memory setup page](./memory-configuration.md) for more details |
+| **`AUTHENTICATOR_MEMORY_OPTS`** | 1.18.0 | latest | Depends on `RUN_MODE` | Configure memory Java options for Authenticator module. See [memory setup page](./memory-configuration.md) for more details |
 
 ## Platform properties reference
 

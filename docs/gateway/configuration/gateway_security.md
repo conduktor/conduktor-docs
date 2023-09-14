@@ -29,7 +29,7 @@ You can use all the kafka mechanisms, NONE, SASL, OAuthBearer, Kerberos etc.
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.1
+    image: conduktor/conduktor-gateway:2.1.4
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -60,7 +60,9 @@ To disable this Passthrough, and activate virtual clusters, set the environemnt 
 
 :::caution
 
-Conduktor Gateway only supports `SASL_PLAIN` and `SASL_SSL` for passthrough identity.
+For Passthrough mode, Conduktor Gateway currently supports:
+- Security protocols: `SASL_PLAINTEXT` and `SASL_SSL`
+- SASL mechanisms: `PLAIN`, `SCRAM-SHA-256` and `SCRAM-SHA-512`
 
 :::
 
@@ -73,7 +75,7 @@ For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.1
+    image: conduktor/conduktor-gateway:2.1.4
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -116,7 +118,7 @@ To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_T
 ### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.1
+    image: conduktor/conduktor-gateway:2.1.4
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
