@@ -12,7 +12,7 @@ To see the available Interceptors, including how to configure them, browse the m
 
 To try out the Gateway features for yourself head to the [Gateway demos](https://github.com/conduktor/conduktor-gateway-demos).
 
-and for instructions on how to add or update interceptors & virtual clusters, refer to the Gateway [API documentation](https://developers.conduktor.io/).
+For instructions on how to add or update interceptors & virtual clusters, refer to the Gateway [API documentation](https://developers.conduktor.io/).
 
 ![multi-tenancy.png](./multi-tenant.png)
 

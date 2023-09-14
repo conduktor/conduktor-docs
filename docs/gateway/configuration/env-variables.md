@@ -56,12 +56,12 @@ __Example Values__
 
 ### Host/Port
 
-| Environment Variable      | Default Value | Description                                                                                         |
-|---------------------------|---------------|-----------------------------------------------------------------------------------------------------|
-| `GATEWAY_BIND_HOST`       | `0.0.0.0`     | The host on which to bind the gateway                                                                                                                                                                                                                                              |
-| `GATEWAY_ADVERTISED_HOST` | `localhost`   | The gateway hostname that should be presented to clients                                                                                                                                                                                                                           |
-| `GATEWAY_PORT_START`      | `6969`        | Port on which Gateway will start listening into                                                                                                                                                                                                                                    |
-| `GATEWAY_PORT_COUNT`      | `7`           | Number of ports to be used by the gateway, it each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. We recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
+| Environment Variable      | Default Value                          | Description                                                                                                                                                                                                                                                                                     |
+|---------------------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_BIND_HOST`       | `0.0.0.0`                              | The host on which to bind the gateway                                                                                                                                                                                                                                                           |
+| `GATEWAY_ADVERTISED_HOST` | defaults to your hostname              | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
+| `GATEWAY_PORT_START`      | `6969`                                 | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
+| `GATEWAY_PORT_COUNT`      | defaults to your number of brokers +2  | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
 ### Load Balancing
 
@@ -76,9 +76,9 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable        | Default Value                         | Description                                                                                                                    |
-|-----------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `NONE`, `SASL_PLAIN` and `SASL_SSL`  |
+| Environment Variable        | Default Value                         | Description                                                                                                                        |
+|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAIN` and `SASL_SSL` |
 
 #### SSL
 
@@ -106,6 +106,14 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER`   | `2`           | Backoff multiplier on reauth |
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`       | `5000`        | Max backoff                  |
 
+#### SECURITY PROVIDER
+
+| Environment Variable        | Default Value | Description                                                                                                      |
+|-----------------------------|---------------|------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_FIPS` and `CONSCRYPT` |
+
+Please note that `CONSCRYPT` does not support Mac OS with aarch64
+
 ### HTTP
 
 | Environment Variable      | Default Value                                           | Description                                                                       |
@@ -116,7 +124,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 ### Internal state
 
-Conduktor needs to save state
+Conduktor needs to save state, you can choose where:
 
 | Environment Variable    | Default Value   | Description                                |
 |-------------------------|-----------------|--------------------------------------------|
@@ -128,6 +136,7 @@ Conduktor needs to save state
 State is saved in different location based on `GATEWAY_STORAGE_TYPE`
 
 When it is set
+
 * `KAFKA` they will be materialized as a topic.
 * `POSTGRES` they will be stored as a table.
 * `IN_MEMORY` they will be stored in memory.
@@ -156,13 +165,13 @@ none
 
 #### `POSTGRES` State Configurations
 
-| Environment Variable                    | Default Value | Description |
-|-----------------------------------------|---------------|-------------|
-| `GATEWAY_STORAGE_RDBMS_URL`             | none          |             |
-| `GATEWAY_STORAGE_RDBMS_USER`            | none          |             |
-| `GATEWAY_STORAGE_RDBMS_PASSWORD`        | none          |             |
-| `GATEWAY_STORAGE_RDBMS_SCHEMA`          | none          |             |
-| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` | none          |             |
+| Environment Variable                    | Default Value | Description            |
+|-----------------------------------------|---------------|------------------------|
+| `GATEWAY_STORAGE_RDBMS_URL`             | None          | Postgresql Url         |
+| `GATEWAY_STORAGE_RDBMS_USER`            | None          | Postgresql User        |
+| `GATEWAY_STORAGE_RDBMS_PASSWORD`        | None          | Postgresql password    |
+| `GATEWAY_STORAGE_RDBMS_SCHEMA`          | None          | Postgresql Schema      |
+| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` | 500ms         | Refresh interval in ms |
 
 ### Internal setup
 

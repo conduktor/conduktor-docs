@@ -31,23 +31,24 @@ Note that if you are deploying the [Helm chart](./get-started/kubernetes.md), th
 
 To configure Conduktor Console for particular hardware, you can use the environment variable `RUN_MODE`
 
-| ENV      | Available RAM |
-| -------- | ------------- |
-| `nano`   | `8GB`         |
-| `small`  | `16GB`        |
-| `medium` | `32GB`        |
-| `large`  | `64GB`        |
+| `RUN_MODE`| Available RAM (post 1.18.0) | Available RAM (pre 1.18.0) |
+| --------- | --------------------------- | -------------------------- |
+| `nano`    | `3GB`                       | `8GB`                      |
+| `small`   | `4GB`                       | `16GB`                     |
+| `medium`  | `6GB`                       | `32GB`                     |
+| `large`   | `8GB`                       | `64GB`                     |
+| `custom` | See [custom memory setup](../configuration/memory-configuration.md) |  N.A. |
 
 **Minimum**
 
-- 4 CPU cores
-- 8 GB of RAM (`RUN_MODE`=nano)
+- 2 CPU cores
+- 3 GB of RAM (`RUN_MODE`=nano)
 - 5 GB of disk space
 
 **Recommended**
 
 - 4+ CPU cores
-- 16+ GB of RAM (`RUN_MODE`=small)
+- 4+ GB of RAM (`RUN_MODE`=small)
 - 10+ GB of disk space
 
 **Example: Starting the platform in small run mode**
