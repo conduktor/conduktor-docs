@@ -35,7 +35,7 @@ In line with the [deprecation of the Testing module](#important-change-when-upda
 
 #### Authentication
 
-Finally, we have rewritten our authentication module due to all those changes, to move to something way simpler. If you have any issue with authentication using LDAP or OIDC with this new release, please contact [Conduktor Support](https://support.conduktor.io).
+Finally, we have rewritten our authentication module due to all those changes, to move to something far simpler. If you have any issues with authentication using LDAP or OIDC with this new release, please contact [Conduktor Support](https://support.conduktor.io).
 
 ### Important notice regarding production deployments (June 16th, 2023)
 
