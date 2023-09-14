@@ -198,7 +198,8 @@ conduktor-gateway:
       GATEWAY_OAUTH_EXPECTED_ISSUER: <YOUR_OIDC_ISSUER>
 ```
 
-If the generated token by the provider defines an `aud` header you have to configure a `GATEWAY_OAUTH_EXPECTED_AUDIENCES` with a list of supported audiences.
+If the generated token by the provider defines an `aud` header you have to configure a `GATEWAY_OAUTH_EXPECTED_AUDIENCES` with a list of supported audiences.  
+Example : `GATEWAY_OAUTH_EXPECTED_AUDIENCES: [audience1, audience2]`
 
 #### Configure your client to connect to Gateway using OAuthbearer
 
