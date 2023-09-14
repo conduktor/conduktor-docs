@@ -20,9 +20,10 @@ Below outlines important notices relating to Conduktor Platform.
 We are cleaning up our Docker image to bring you a simpler, lighter, and generally more operable product.
 
 In that regard, we have extracted the 'Storage & Alerting' aspect of the Monitoring Solution from the base Console image and moved it to a [dependency image](https://hub.docker.com/r/conduktor/conduktor-platform-cortex/tags).
+
 **Consequences**:
 - If you didn't use Monitoring: No further action is required on your part. You won't be able to access the Monitoring module anymore.
-- If you used Monitoring, read the [documentation](??????????????) to understand how to deploy and configure the dependency image conduktor/conduktor-platform-cortex:1.18.0.
+- If you used Monitoring: read the [documentation](??????????????) to understand how to deploy and configure the dependency image conduktor/conduktor-platform-cortex:1.18.0.
 
 #### Embedded database
 
