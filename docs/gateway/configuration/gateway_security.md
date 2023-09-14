@@ -4,10 +4,10 @@ title: Gateway Security
 description: Securing Conduktor Gateway  
 ---
 
-There are two sets of configuration to consider when securing your gateway.
+There are two sets of configuration to consider when securing your Gateway.
 
- - The connection between Kafka clients and the gateway
- - The connection between the gateway and the Kafka cluster
+ - The connection between Kafka clients and the Gateway
+ - The connection between the Gateway and the Kafka cluster
 
 ![client-to-gateway-excalidraw](./images/gw-security/client-to-gateway-excalidraw.png)
 
