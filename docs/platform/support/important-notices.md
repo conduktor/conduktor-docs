@@ -7,7 +7,7 @@ description: The following notes describe important changes that affect Condukto
 # Important Notices
 
 Below outlines important notices relating to Conduktor Platform.
- - [Important change when updating to Conduktor 1.18.0 (September 14th, 2023)](#important-change-when-updating-to-conduktor-1180-september-14-2023)
+ - [Important change when updating to Conduktor 1.18.0 (September 14th, 2023)](#important-change-when-updating-to-conduktor-1180-september-14th-2023)
  - [Important changes regarding your production deployment (June 16th, 2023)](#important-notice-regarding-production-deployments-june-16th-2023)
  - [Important change when updating to Conduktor 1.15.0 (May 15, 2023)](#important-change-when-updating-to-conduktor-1150-may-15-2023)
  - [Important change when updating to Conduktor 1.14.0 (April 18, 2023)](#important-change-when-updating-to-conduktor-1140-april-18-2023)
