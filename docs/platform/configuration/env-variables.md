@@ -122,8 +122,8 @@ Starting with version 1.18.0, if you want to benefit our Monitoring capabilities
 :::
 
 Before 1.18:
-- `conduktor/conduktor-platform:1.17.3` or below
-  Starting with 1.18
+- `conduktor/conduktor-platform:1.17.3` or below  
+Starting with 1.18:
 - `conduktor/conduktor-platform:1.18.0` or above
 - `conduktor/conduktor-platform-cortex:1.18.0` or above
 
@@ -154,61 +154,7 @@ Cortex ports are configured like this by default:
 
 ### Cortex Configuration
 
-:::warning
-This Configuration is for Cortex dependency image `conduktor/conduktor-platform-cortex`
-:::
-
-The only required property is `console-url`, everything else related to storage for the metrics.
-By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
-You can mount a volume on this folder to keep metrics data between updates.
-Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
-
-| Property                                  | Description                              | Env                                           | Mandatory | Type   | Default                 | Since     |
-|-------------------------------------------|------------------------------------------|-----------------------------------------------|-----------|--------|-------------------------|-----------|
-| `console-url`                             | Where is te console that manage me       | `CDK_CONSOLE-URL`                             | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.s3.endpoint`          | S3 storage endpoint                      | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.s3.region`            | S3 storage region                        | `CDK_MONITORING_STORAGE_S3_REGION`            | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.s3.bucket`            | S3 storage bucket name                   | `CDK_MONITORING_STORAGE_S3_BUCKET`            | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.s3.insecure`          | S3 storage SSL/TLS check flag            | `CDK_MONITORING_STORAGE_S3_INSECURE`          | false     | bool   | false                    | `1.18.0` |
-| `monitoring.storage.s3.accessKeyId`       | S3 storage access key                    | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.s3.secretAccessKey`   | S3 storage access key secret             | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.gcs.bucketName`       | GCS storage bucket name                  | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | false     | string | "blob.core.windows.net"  | `1.18.0` |
-| `monitoring.storage.swift.authUrl`        | Swift storage authentication URL         | `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.password`       | Swift storage user password              | `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.containerName`  | Swift storage container name             | `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | true      | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.userId`         | Swift storage user id                    | `CDK_MONITORING_STORAGE_SWIFT_USERID`         | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.username`       | Swift storage user name                  | `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.userDomainName` | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.userDomainId`   | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.domainId`       | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.domainName`     | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.projectId`      | Swift storage project ID                 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | false     | string | ∅                       | `1.18.0` |
-| `monitoring.storage.swift.regionName`     | Swift storage region name                | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | false     | string | ∅                       | `1.18.0` |
-
-Typically, in docker compose it would look like this:
-````yaml
-version: '3.8'
-services:
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.0
-    ports:
-      - "8080:8080"
-      CDK_MONITORING_CORTEX-URL: http://cortex:9009/
-      CDK_MONITORING_ALERT-MANAGER-URL: http://cortex:9010/
-      CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
-      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
-  conduktor-monitoring:
-    hostname: cortex
-    image: ghcr.io/conduktor/conduktor-platform-cortex:1.18.0-rc1
-    environment:
-      CDK_CONSOLE-URL: "conduktor-platform:8080"
-````
-
+See [Cortex configuration page](/platform/configuration/cortex/) for more info
 
 ### SSO properties
 
