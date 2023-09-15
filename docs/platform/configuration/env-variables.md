@@ -117,32 +117,51 @@ Optional local accounts list used to login on conduktor-platform
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL-USERS_0_PASSWORD` | true | string | `"admin"` |
 
 ### Monitoring properties
+:::info
+Starting with version 1.18.0, if you want to benefit our Monitoring capabilities (dashboard and alerts), you need to deploy new image along with Console.
+:::
 
-if you are running a platform version < 1.18 go to [old doc](./env-variables-monitoring-pre-1.18.md)
+Before 1.18:
+- `conduktor/conduktor-platform:1.17.3` or below
+  Starting with 1.18
+- `conduktor/conduktor-platform:1.18.0` or above
+- `conduktor/conduktor-platform-cortex:1.18.0` or above
 
-for version >= `1.18` 
-it is mandatory to run and configure properly the monitoring backend, see more information here [conduktor-platform-cortex](#monitoring-cortex)
-for `conduktor-platform` configuration, see bellow : 
+This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
+Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-| Property                                  | Description                                  | Env                                        | Mandatory | Type   | Default                 | Since    |
-|-------------------------------------------|----------------------------------------------|--------------------------------------------|-----------|--------|-------------------------|----------|
-| `monitoring.clusters-refresh-interval`    | Refresh rate for metrics                     | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | string | ∅                      | `1.12.0` |
-| `monitoring.cortex-url`                   | where is available the cortex backend        | `CDK_MONITORING_CORTEX-URL`                | true      | string | ∅                      | `1.18.0` |
-| `monitoring.alert-manager-url`            | where is availbale the cortex alert manager  | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅                      | `1.18.0` |
-| `monitoring.callback-url`                 | Where the cortex backend should call me      | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅                      | `1.18.0` |
-| `monitoring.notification-callback-url`    | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅                      | `1.18.0` |
+You can choose to not deploy `conduktor/conduktor-platform-cortex` (Cortex) image. In such case, you will not be able to access to the following pages anymore.
+![](./assets/monitoring-disabled.png)
 
-### Conduktor platform Cortex
+The configuration is split in 2 chapters: 
+- Console Configuration for Cortex `conduktor/conduktor-platform`
+- Cortex Configuration `conduktor/conduktor-platform-cortex`
 
-these [configuration]/[environement variable] refer to the `conduktor-platform-cortex` image.
+#### Console Configuration for Cortex
 
-this image is the metrics backend for monitoring. 
-the monitoring can not work without his related backend
+First, we need to configure Console to connect to Cortex services.
+Cortex ports are configured like this by default:
+- Query port 9009
+- Alert Manager port 9010
 
-This backend is an embedded cortex and so it allows multiple block storage to be used for storing 
-monitoring data. Only one backend can be used at a time among S3, GCS, Azure 
-Blob Storage and Swift, if none is specified, files are stored locally on 
-container volume.
+| Property                                  | Description                                    | Env                                        | Mandatory | Type   | Default | Since    |
+|-------------------------------------------|------------------------------------------------|--------------------------------------------|-----------|--------|---------|----------|
+| `monitoring.cortex-url`                   | Cortex Search Query URL with port 9009         | `CDK_MONITORING_CORTEX-URL`                | true      | string | ∅       | `1.18.0` |
+| `monitoring.alert-manager-url`            | Cortex Alert Manager URL with port 9010        | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅       | `1.18.0` |
+| `monitoring.callback-url`                 | Console API                                    | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅       | `1.18.0` |
+| `monitoring.notification-callback-url`    | Where the Slack notification should redirect   | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅       | `1.18.0` |
+| `monitoring.clusters-refresh-interval`    | Refresh rate in seconds for metrics (Optional) | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | int    | 30      | `1.18.0` |
+
+### Cortex Configuration
+
+:::warning
+This Configuration is for Cortex dependency image `conduktor/conduktor-platform-cortex`
+:::
+
+The only required property is `console-url`, everything else related to storage for the metrics.
+By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
+You can mount a volume on this folder to keep metrics data between updates.
+Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
 
 | Property                                  | Description                              | Env                                           | Mandatory | Type   | Default                 | Since     |
 |-------------------------------------------|------------------------------------------|-----------------------------------------------|-----------|--------|-------------------------|-----------|
@@ -170,6 +189,25 @@ container volume.
 | `monitoring.storage.swift.domainName`     | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | false     | string | ∅                       | `1.18.0` |
 | `monitoring.storage.swift.projectId`      | Swift storage project ID                 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | false     | string | ∅                       | `1.18.0` |
 | `monitoring.storage.swift.regionName`     | Swift storage region name                | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | false     | string | ∅                       | `1.18.0` |
+
+Typically, in docker compose it would look like this:
+````yaml
+version: '3.8'
+services:
+  conduktor-platform:
+    image: conduktor/conduktor-platform:1.18.0
+    ports:
+      - "8080:8080"
+      CDK_MONITORING_CORTEX-URL: http://cortex:9009/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://cortex:9010/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+  conduktor-monitoring:
+    hostname: cortex
+    image: ghcr.io/conduktor/conduktor-platform-cortex:1.18.0-rc1
+    environment:
+      CDK_CONSOLE-URL: "conduktor-platform:8080"
+````
 
 
 ### SSO properties
