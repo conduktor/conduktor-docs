@@ -4,12 +4,16 @@ title: Cortex Configuration
 description: Cortex Configuration
 ---
 
-:::warning
+:::caution
 This Configuration is for Cortex dependency image `conduktor/conduktor-platform-cortex`
 :::
 
 This image is exclusively configured through Environement Variables.  
+
+
 The only required property is `CDK_CONSOLE-URL`, everything else related to storage for the metrics.  
+
+
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
 You can mount a volume on this folder to keep metrics data between updates.
 Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`

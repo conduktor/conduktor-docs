@@ -117,20 +117,22 @@ Optional local accounts list used to login on conduktor-platform
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL-USERS_0_PASSWORD` | true | string | `"admin"` |
 
 ### Monitoring properties
-:::info
+:::caution
 Starting with version 1.18.0, if you want to benefit our Monitoring capabilities (dashboard and alerts), you need to deploy new image along with Console.
-:::
 
 Before 1.18:
-- `conduktor/conduktor-platform:1.17.3` or below  
+- `conduktor/conduktor-platform:1.17.3` or below
+
 Starting with 1.18:
 - `conduktor/conduktor-platform:1.18.0` or above
 - `conduktor/conduktor-platform-cortex:1.18.0` or above
 
+:::
+
 This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-You can choose to not deploy `conduktor/conduktor-platform-cortex` (Cortex) image. In such case, you will not be able to access to the following pages anymore.
+You can choose to not deploy `conduktor/conduktor-platform-cortex` (Cortex) image. In such case, you will not be able to access to the following pages anymore:
 ![](./assets/monitoring-disabled.png)
 
 The configuration is split in 2 chapters: 
