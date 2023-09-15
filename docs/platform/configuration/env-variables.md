@@ -6,17 +6,23 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 
 # Configuration Properties and Environment Variables
 
-- [Docker Image Environment Variables](#docker-image-environment-variables)
-- [Platform Properties Reference](#platform-properties-reference)
-   - [Global Properties](#global-properties)
-   - [Database Properties](#database-properties)
-   - [Session Lifetime Properties](#session-lifetime-properties)
-   - [Local User Properties](#local-users-properties)
-   - [Monitoring Properties](#monitoring-properties)
-   - [SSO Properties](#sso-properties)
-   - [Kafka Cluster Properties](#kafka-clusters-properties)
-   - [Schema Registry Properties](#schema-registry-properties)
-   - [Kafka Connect Properties](#kafka-connect-properties)
+- [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
+  - [Docker image environment variables](#docker-image-environment-variables)
+  - [Platform properties reference](#platform-properties-reference)
+      - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
+    - [Global properties](#global-properties)
+    - [Database properties](#database-properties)
+    - [Session Lifetime Properties](#session-lifetime-properties)
+    - [Local users properties](#local-users-properties)
+    - [Monitoring properties](#monitoring-properties)
+    - [Conduktor platform Cortex](#conduktor-platform-cortex)
+    - [SSO properties](#sso-properties)
+      - [LDAP properties](#ldap-properties)
+      - [Oauth2 properties](#oauth2-properties)
+    - [Kafka clusters properties](#kafka-clusters-properties)
+    - [Schema registry properties](#schema-registry-properties)
+      - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
+    - [Kafka Connect properties](#kafka-connect-properties)
 
 ## Docker image environment variables
 
@@ -111,37 +117,46 @@ Optional local accounts list used to login on conduktor-platform
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL-USERS_0_PASSWORD` | true | string | `"admin"` |
 
 ### Monitoring properties
+:::caution
+Starting with version 1.18.0, if you want to benefit our Monitoring capabilities (dashboard and alerts), you need to deploy new image along with Console.
 
-Monitoring allows multiple block storage backends to be used for storing 
-monitoring data. Only one backend can be used at a time among S3, GCS, Azure 
-Blob Storage and Swift, if none is specified, files are stored locally on 
-container volume.
+Before 1.18:
+- `conduktor/conduktor-platform:1.17.3` or below
 
-| Property                                  | Description                              | Env                                           | Mandatory | Type   | Default                 | Since    |
-|-------------------------------------------|------------------------------------------|-----------------------------------------------|-----------|--------|-------------------------|----------|
-| `monitoring.storage.s3.endpoint`          | S3 storage endpoint                      | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | false     | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.region`            | S3 storage region                        | `CDK_MONITORING_STORAGE_S3_REGION`            | false     | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.bucket`            | S3 storage bucket name                   | `CDK_MONITORING_STORAGE_S3_BUCKET`            | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.insecure`          | S3 storage SSL/TLS check flag            | `CDK_MONITORING_STORAGE_S3_INSECURE`          | false     | bool   | false                   | `1.5.0`  |
-| `monitoring.storage.s3.accessKeyId`       | S3 storage access key                    | `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.s3.secretAccessKey`   | S3 storage access key secret             | `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | true      | string | ∅                       | `1.5.0`  |
-| `monitoring.storage.gcs.bucketName`       | GCS storage bucket name                  | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.gcs.serviceAccount`   | GCS storage service account json content | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.accountName`    | Azure storage account name               | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.accountKey`     | Azure storage account key                | `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.containerName`  | Azure storage container name             | `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.azure.endpointSuffix` | Azure storage endpoint suffix            | `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | false     | string | "blob.core.windows.net" | `1.16.0` |
-| `monitoring.storage.swift.authUrl`        | Swift storage authentication URL         | `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.password`       | Swift storage user password              | `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.containerName`  | Swift storage container name             | `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | true      | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userId`         | Swift storage user id                    | `CDK_MONITORING_STORAGE_SWIFT_USERID`         | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.username`       | Swift storage user name                  | `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userDomainName` | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.userDomainId`   | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.domainId`       | Swift storage user domain id             | `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.domainName`     | Swift storage user domain name           | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.projectId`      | Swift storage project ID                 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | false     | string | ∅                       | `1.16.0` |
-| `monitoring.storage.swift.regionName`     | Swift storage region name                | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | false     | string | ∅                       | `1.16.0` |
+Starting with 1.18:
+- `conduktor/conduktor-platform:1.18.0` or above
+- `conduktor/conduktor-platform-cortex:1.18.0` or above
+
+:::
+
+This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
+Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
+
+You can choose to not deploy `conduktor/conduktor-platform-cortex` (Cortex) image. In such case, you will not be able to access to the following pages anymore:
+![](./assets/monitoring-disabled.png)
+
+The configuration is split in 2 chapters: 
+- Console Configuration for Cortex `conduktor/conduktor-platform`
+- Cortex Configuration `conduktor/conduktor-platform-cortex`
+
+#### Console Configuration for Cortex
+
+First, we need to configure Console to connect to Cortex services.
+Cortex ports are configured like this by default:
+- Query port 9009
+- Alert Manager port 9010
+
+| Property                                  | Description                                    | Env                                        | Mandatory | Type   | Default | Since    |
+|-------------------------------------------|------------------------------------------------|--------------------------------------------|-----------|--------|---------|----------|
+| `monitoring.cortex-url`                   | Cortex Search Query URL with port 9009         | `CDK_MONITORING_CORTEX-URL`                | true      | string | ∅       | `1.18.0` |
+| `monitoring.alert-manager-url`            | Cortex Alert Manager URL with port 9010        | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅       | `1.18.0` |
+| `monitoring.callback-url`                 | Console API                                    | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅       | `1.18.0` |
+| `monitoring.notification-callback-url`    | Where the Slack notification should redirect   | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅       | `1.18.0` |
+| `monitoring.clusters-refresh-interval`    | Refresh rate in seconds for metrics (Optional) | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | int    | 60      | `1.18.0` |
+
+### Cortex Configuration
+
+See [Cortex configuration page](/platform/configuration/cortex/) for more info
 
 ### SSO properties
 
