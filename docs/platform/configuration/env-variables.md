@@ -152,7 +152,7 @@ Cortex ports are configured like this by default:
 | `monitoring.alert-manager-url`            | Cortex Alert Manager URL with port 9010        | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅       | `1.18.0` |
 | `monitoring.callback-url`                 | Console API                                    | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅       | `1.18.0` |
 | `monitoring.notification-callback-url`    | Where the Slack notification should redirect   | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅       | `1.18.0` |
-| `monitoring.clusters-refresh-interval`    | Refresh rate in seconds for metrics (Optional) | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | int    | 30      | `1.18.0` |
+| `monitoring.clusters-refresh-interval`    | Refresh rate in seconds for metrics (Optional) | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | int    | 60      | `1.18.0` |
 
 ### Cortex Configuration
 
