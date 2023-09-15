@@ -7,11 +7,35 @@ description: The following notes describe important changes that affect Condukto
 # Important Notices
 
 Below outlines important notices relating to Conduktor Platform.
-
+ - [Important change when updating to Conduktor 1.18.0 (September 14th, 2023)](#important-change-when-updating-to-conduktor-1180-september-14th-2023)
  - [Important changes regarding your production deployment (June 16th, 2023)](#important-notice-regarding-production-deployments-june-16th-2023)
  - [Important change when updating to Conduktor 1.15.0 (May 15, 2023)](#important-change-when-updating-to-conduktor-1150-may-15-2023)
  - [Important change when updating to Conduktor 1.14.0 (April 18, 2023)](#important-change-when-updating-to-conduktor-1140-april-18-2023)
  - [Monitoring is changing (January 27, 2023)](#monitoring-is-changing-january-27-2023)
+
+### Important change when updating to Conduktor 1.18.0 (September 14th, 2023)
+
+#### Monitoring
+
+We are cleaning up our Docker image to bring you a simpler, lighter, and generally more operable product.
+
+In that regard, we have extracted the 'Storage & Alerting' aspect of the Monitoring Solution from the base Console image and moved it to a [dependency image](https://hub.docker.com/r/conduktor/conduktor-platform-cortex/tags).
+
+**Consequences**:
+- If you didn't use Monitoring: No further action is required on your part. You won't be able to access the Monitoring module anymore.
+- If you used Monitoring: read the [documentation](/platform/configuration/env-variables/#monitoring-properties) to understand how to deploy and configure the dependency image conduktor/conduktor-platform-cortex:1.18.0.
+
+#### Embedded database
+
+As having a Postgres database is one of the production requirements we have, we decided to remove the embedded Postgres database from the Docker image. That way, having a Postgres database is now required to deploy Conduktor Console. If you want to get started and discover the product, here are guides for [Docker](/platform/installation/get-started/docker/) and [Kubernetes](/platform/installation/get-started/kubernetes/).
+
+#### Testing
+
+In line with the [deprecation of the Testing module](#important-change-when-updating-to-conduktor-1150-may-15-2023), we have removed Testing from the base image.
+
+#### Authentication
+
+Finally, we have rewritten our authentication module due to all those changes, to move to something far simpler. If you have any issues with authentication using LDAP or OIDC with this new release, please contact [Conduktor Support](https://support.conduktor.io).
 
 ### Important notice regarding production deployments (June 16th, 2023)
 
