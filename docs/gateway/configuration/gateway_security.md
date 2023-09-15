@@ -205,7 +205,7 @@ Example : `GATEWAY_OAUTH_EXPECTED_AUDIENCES: [audience1, audience2]`
 
 #### Configure your client to connect to Gateway using OAuthbearer
 
-Your client will connect through an OAuth provider using a grant credentials flow to create a token, to be sent to gateway. This token will be verified based on the configuration below.
+Your client will connect through an OAuth provider using a grant credentials flow to create a token, to be sent to Gateway. This token will be verified based on the configuration below.
 
 ```
 sasl.mechanism=OAUTHBEARER
