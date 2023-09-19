@@ -108,9 +108,9 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SECURITY PROVIDER
 
-| Environment Variable        | Default Value | Description                                                                                                      |
-|-----------------------------|---------------|------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_FIPS` and `CONSCRYPT` |
+| Environment Variable        | Default Value | Description                                                                                                             |
+|-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT` |
 
 Please note that `CONSCRYPT` does not support Mac OS with aarch64
 
