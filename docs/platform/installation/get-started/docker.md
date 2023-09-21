@@ -48,7 +48,7 @@ curl -L https://releases.conduktor.io/console -o docker-compose.yml && docker co
 
 After a few seconds, the Conduktor onboarding wizard will be available at **[http://localhost:8080](http://localhost:8080)**.
 
-![Onboarding](./assets/onboarding-console.png)
+![Onboarding](./assets/onboarding_console.png)
 
 ### Step 3: Configure your existing Kafka cluster
 
@@ -117,19 +117,32 @@ You can get the list of all the properties supported [here](/platform/configurat
 
 ```yaml title="platform-config.yaml"
 organization:
-  name: My Company
-
-admin:
-  email: admin@company.io
-  password: admin
+  name: "conduktor"
 
 database:
   host: 'postgresql'
   port: 5432
-  name: 'conduktor'
-  username: 'user'
-  password: 'password'
+  name: 'conduktor-platform'
+  username: 'conduktor'
+  password: 'change_me'
   connection_timeout: 30 # in seconds
+
+admin:
+  email: "<name@your_company.io>"
+  password: "admin"
+
+auth:
+  local-users:
+    - email: user@conduktor.io
+      password: user
+
+monitoring:
+  cortex-url: http://conduktor-monitoring:9009/
+  alert-manager-url: http://conduktor-monitoring:9010/
+  callback-url: http://conduktor-platform:8080/monitoring/api/
+  notifications-callback-url: http://localhost:8080
+
+license: "" # license key if Enterprise
 ```
 
 #### Step 2: Bind the file 
@@ -146,12 +159,12 @@ services:
     image: postgres:14
     hostname: postgresql
     environment:
-      POSTGRES_DB: "conduktor"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.17.3
+    image: conduktor/conduktor-platform:1.18.0
     depends_on:
       - postgresql
     ports:
@@ -163,6 +176,11 @@ services:
         read_only: true
     environment:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+
+  conduktor-monitoring:
+    image: conduktor/conduktor-platform-cortex:1.18.0
+    environment:
+      CDK_CONSOLE-URL: "conduktor-platform:8080"
 ```
 
 #### Step 3: Access Conduktor
@@ -200,19 +218,33 @@ services:
     image: postgres:14
     hostname: postgresql
     environment:
-      POSTGRES_DB: "conduktor"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.17.3
+    image: conduktor/conduktor-platform:1.18.0
     depends_on:
       - postgresql
     ports:
       - "8080:8080"
     environment:
-      CDK_DATABASE_URL: "postgresql://user:password@postgresql:5432/conduktor"
-      CDK_ORGANIZATION_NAME: "My Company"
-      CDK_ADMIN_EMAIL: "admin@company.io"
+      CDK_LICENSE: "" # license key if Enterprise
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      CDK_ORGANIZATION_NAME: "<Your Company>"
+      CDK_ADMIN_EMAIL: "<name@your_company.io>"
       CDK_ADMIN_PASSWORD: "admin"
+      CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+
+  conduktor-monitoring:
+    image: conduktor/conduktor-platform-cortex:1.18.0
+    environment:
+      CDK_CONSOLE-URL: "conduktor-platform:8080"
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
 ```
