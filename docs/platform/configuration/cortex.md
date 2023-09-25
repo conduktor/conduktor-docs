@@ -8,10 +8,10 @@ description: Cortex Configuration
 This Configuration is for Cortex dependency image `conduktor/conduktor-platform-cortex`
 :::
 
-This image is exclusively configured through Environement Variables.  
+This image is exclusively configured through Environment Variables.  
 
 
-The only required property is `CDK_CONSOLE-URL`, everything else related to storage for the metrics.  
+The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
 
 
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
