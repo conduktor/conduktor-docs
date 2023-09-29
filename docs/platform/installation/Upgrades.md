@@ -6,12 +6,11 @@ description: Consider is available as Docker image.
 
 # Upgrading
 
-
-Consider using Conduktor Cloud to not worry about installation, upgrade or software administration.
-
 ### Release cadence
 
 Conduktor plans to provide a new release at least monthly. We suggest that upgrades are done no more than two versions apart at a time.
+
+You can subscribe to release notifications [here](https://support.conduktor.io/hc/en-gb/sections/16400521075217-Releases).
 
 ### Upgrade process
 

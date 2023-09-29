@@ -8,7 +8,7 @@ description: Configure synchronization between your auth providers groups.
 
 ## Overview
 
-External group synchronization allows you to integrate Conduktor's RBAC system with your LDAP or OIDC source of truth. When you map an external group, it will ensure a user is added to the Conduktor platform group at login. This mechanism ensures a user inherits necessary group permissions, and that they are removed accordingly from Conduktor groups if their external membership changes.
+External group synchronization allows you to integrate Conduktor's RBAC system with your LDAP or OIDC source of truth. When you map an external group, it will ensure a user is added to the Conduktor Console group at login. This mechanism ensures a user inherits necessary group permissions, and that they are removed accordingly from Conduktor groups if their external membership changes.
 
 ## Prerequisites
 
@@ -75,7 +75,7 @@ From within Admin, navigate to the Members screen and select the Groups tab.
 
 ![](../assets/external-group-map.png)
 
-In the above example, any users that are present in the externally mapped groups will inherit permissions that are set against the Conduktor group 'Platform Engineering. To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../admin/rbac.md).
+In the above example, any users that are present in the externally mapped groups will inherit permissions that are set against the Conduktor group 'Platform Engineering'. To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../admin/rbac.md).
 
 **Map an existing Conduktor group to an external group**
 

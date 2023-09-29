@@ -1,6 +1,7 @@
 .List {
   list-style-type: none;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: var(--space-space8);
   padding: 0;
@@ -96,7 +97,7 @@
 
 .HeadingContainer {
   margin-bottom: var(--space-space9);
-
+  text-align: center;
   h2 {
     margin-bottom: 0;
   }

@@ -6,7 +6,7 @@ description: This page provides guidence for how to install, verify and renew li
 
 ## License installation
 
-Conduktor platform requires a license to enable features beyond the base features. The license can be put in the environment variables (this is recommended), or into the `platform-config.yaml` file.
+Conduktor requires a license to enable features beyond the base features. The license can be put in the environment variables (this is recommended), or into the `platform-config.yaml` file.
 
 ### As an environment variable
 
@@ -32,11 +32,11 @@ license: 'YOUR_LICENSE_HERE'
 
 ## License verification
 
-You have multiple ways to check that your license has been used to launch the platform.
+You have multiple ways to check that your license has been used to launch the Console.
 
 ### In the logs
 
-When you run the platform, you can find these meaningful logs in the head:
+When you run the Console, you can find these meaningful logs in the head:
 
 ```
 [ INFO  platform_cli::license::validator] Input configured license : Some("YOUR_LICENSE_HERE")
@@ -75,9 +75,9 @@ Example of result:
 }
 ```
 
-### Within the Conduktor Platform container
+### Within the Conduktor Console container
 
-You can get the same result as above from within the Conduktor Platform container with the following command:
+You can get the same result as above from within the Conduktor Console container with the following command:
 
 ```sh
 curl -s  http://localhost:3000/platform/api/license
@@ -93,4 +93,4 @@ You can also check through the different tabs that you have access to all the pr
 
 ## Renew or install a new license
 
-To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Platform container again.
+To renew or install a new license, change the `license` configuration in the `platform-config.yaml` file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Console container again.

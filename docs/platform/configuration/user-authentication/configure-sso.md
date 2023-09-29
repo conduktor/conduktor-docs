@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 title: Configure SSO
-description: To configure platform authentication you have several choices.
+description: To configure Console authentication you have several choices.
 ---
 
 # User Authentication
 
-To configure platform authentication you have several choices.
+To configure Console authentication you have several choices.
 
 - [Configure Local Users](#configure-local-users)
 - [Configure SSO](#configure-sso-to-an-ldap-or-oauth2-identity-provider-enterprise-plan-only)
@@ -22,10 +22,10 @@ To configure platform authentication you have several choices.
 
 ## Configure Local Users
 
-Within the platform configuration file or via environment variables, configure authorized connection users.
+Within the Console configuration file or via environment variables, configure authorized connection users.
 
 :::caution
-Since Conduktor 1.14.0 you must set a **single root administrator** account in the platform configuration, which is used for initialization. However, it's possible to define multiple users with an administrator role from within the Conduktor interface.
+Since Conduktor 1.14.0 you must set a **single root administrator** account in the console configuration, which is used for initialization. However, it's possible to define multiple users with an administrator role from within the Conduktor interface.
 :::
 
 **Configuration example**:
@@ -63,9 +63,9 @@ Detail list of properties [here](/platform/configuration/env-variables/#sso-prop
 
 ### LDAP server
 
-Conduktor platform can be configured to use an LDAP server as an identity provider.
+Conduktor Console can be configured to use an LDAP server as an identity provider.
 
-To map LDAP users into Conduktor Platform will search for the following attributes from LDAP user entry :
+To map LDAP users into Conduktor Console will search for the following attributes from LDAP user entry :
 - `uid` : user id
 - `mail` or `email` : user email. **This is the only mandatory field**
 - `cn` : user name
@@ -159,7 +159,7 @@ sso:
 ```
 
 2. Run the script `platform-sso-debug.sh`
-3. Try to authenticate to the platform
+3. Try to authenticate to Console
 4. Confirm the message you have looks like this
 
 ```console
@@ -186,11 +186,11 @@ Configure a new Application on Auth0 :
 
 - **Step 3**: configure callback url ![](../assets/auth0-app-step3.png)
 
-> **Note** : Conduktor platform expose a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
+> **Note** : Conduktor exposes a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
 
 - **Step 4**: save changes ![](../assets/auth0-app-step4.png)
 
-Platform configuration : Add the following yaml fragment to your input `platform-config.yml` file.
+Console configuration: Add the following yaml fragment to your input `platform-config.yml` file.
 
 ```yaml
 sso:
@@ -221,13 +221,13 @@ Configure a new Application on Okta :
 
 - **Step 2**: configure callback url ![](../assets/okta-app-step2.png)
 
-> Note: Conduktor platform expose a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
+> Note: Conduktor exposes a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
 
 - **Step 3**: configure app assignment and save changes ![](../assets/okta-app-step3.png)
 
 - **Step 4**: Get client Id/Secret ![](../assets/okta-app-step4.png)
 
-Platform configuration : Add the following yaml fragment to your input `platform-config.yml` file.
+Console configuration: Add the following yaml fragment to your input `platform-config.yml` file.
 
 ```yaml
 sso:
@@ -260,11 +260,11 @@ Configure a new client on Keycloak :
 
 - **Step 3**: Configure redirect url ![](../assets/keycloak-app-step3.png)
 
-> **Note** : Conduktor platform expose a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
+> **Note** : Conduktor exposes a callback URI for Oauth2 authentication flow. This URL is defined as `http://<platform hostname>/oauth/callback/<oauth2 config name>`.
 
 - **Step 4**: Get client secret ![](../assets/keycloak-app-step4.png)
 
-Platform configuration : Add the following yaml fragment to your input `platform-config.yml` file.
+Console configuration: Add the following yaml fragment to your input `platform-config.yml` file.
 
 ```yaml
 sso:
@@ -293,7 +293,7 @@ Configure a new application on MS Azure
 
 - **Step 1**: Create a new application in `App registrations`
 
-You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Platform locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
+You can select the name you want, shown here as `conduktor-platform`, and enter the redirect URI as the following: `http://<platform_host>/oauth/callback/azure`. For example, if you deployed the Console locally, you can use `http://localhost/oauth/callback/azure`, like on the screenshot below.
 
 ![](../assets/Azure-new-app.png)
 
@@ -315,7 +315,7 @@ This useful information can be found in the overview of you application. It has 
 
 - **Step 4**: Write the configuration snippet
 
-At the end, you should be able to write the following snippet in your Conduktor Platform configuration file:
+At the end, you should be able to write the following snippet in your Conduktor Console configuration file:
 
 ```yaml
 sso:
@@ -339,7 +339,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/{tenantid}/v2.
 ```
 
 :::info
-If you want to use the `external groups mapping` to map groups between your Conduktor Platform instance and Azure, please take a look at [here](../external-group-sync/#azure-ad-example).
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, please take a look at [here](../external-group-sync/#azure-ad-example).
 :::
 
 ### Google
@@ -367,7 +367,7 @@ When you click on `Create`, you get you credentials. We suggest you to download 
 
 ![](https://user-images.githubusercontent.com/112936799/215049414-39c17f90-5572-46ad-9e32-5d85b42e0b75.png)
 
-Now you have everything you need to setup the platform. Within your `platform-config.yaml` file, you can add the following block:
+Now you have everything you need to setup the Console. Within your `platform-config.yaml` file, you can add the following block:
 
 ```yaml
 sso:
@@ -399,7 +399,7 @@ Finally, click on `Create`. You can get your application credentials here:
 
 ![](https://user-images.githubusercontent.com/112936799/215053721-2fab36bc-59c9-4091-a063-4e1b467e3047.png)
 
-Now you have everything you need to setup the platform. Within your `platform-config.yaml` file, you can add the following block:
+Now you have everything you need to setup the Console. Within your `platform-config.yaml` file, you can add the following block:
 
 ```yaml
 sso:

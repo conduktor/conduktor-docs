@@ -6,7 +6,7 @@ description: The following notes describe important changes that affect Condukto
 
 # Important Notices
 
-Below outlines important notices relating to Conduktor Platform.
+Below outlines important notices relating to Conduktor Console.
  - [Important change when updating to Conduktor 1.18.0 (September 14th, 2023)](#important-change-when-updating-to-conduktor-1180-september-14th-2023)
  - [Important changes regarding your production deployment (June 16th, 2023)](#important-notice-regarding-production-deployments-june-16th-2023)
  - [Important change when updating to Conduktor 1.15.0 (May 15, 2023)](#important-change-when-updating-to-conduktor-1150-may-15-2023)
@@ -69,7 +69,7 @@ If you require support in making these changes, our **[customer success team](ht
 Note that in Conduktor 1.15.0, the Testing application will no longer be started by default on our on-premise deployment. It's still available on our Cloud version.
 If you wish to start Testing alongside the Platform on-premise, you must start Conduktor using an explicit environment variable.
 
-**How to start Platform with Testing?**
+**How to start Console with Testing?**
 
 Set the environment variable `TESTING_ENABLED` to **true** when starting Conduktor. See docker image [environment variables](../configuration/env-variables.md).
 
@@ -84,7 +84,7 @@ By removing the number of services started by default on-premise, this provides 
 For existing customers updating to Conduktor **1.14.0**, you **must** configure an explicit **root administrator account** else Conduktor will fail to start. Note this is an **additive change**, and you should not remove or update any other parts of your existing configuration.
 
 :::caution
-You should only set a **single root administrator** account in the platform configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
+You should only set a **single root administrator** account in the Console configuration (used for initialization). However, it's possible to define multiple users with administrator role from within the Conduktor interface.
 :::
 
 **Steps to migrate**
