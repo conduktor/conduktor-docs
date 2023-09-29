@@ -1,14 +1,14 @@
 ---
 sidebar_position: 7
 title: AWS
-description: Use AWS to deploy a production-ready instance of Conduktor Platform on MSK.
+description: Use AWS to deploy a production-ready instance of Conduktor Console on MSK.
 ---
 
 # Deployment on AWS
 
 ## Getting started
 
-This blog contains all the information you should need to configure and deploy Conduktor Platform on AWS with MSK. 
+This blog contains all the information you should need to configure and deploy Conduktor Console on AWS with MSK. 
 https://aws.amazon.com/blogs/big-data/gain-visibility-into-your-amazon-msk-cluster-by-deploying-the-conduktor-platform/
 
 ## Resources required 
@@ -27,14 +27,14 @@ Note that IAM credentials are stored in S3 and on EFS/EBS.  Permissions limiting
 
 ## Use AWS RDS / Aurora as database
 
-**Only available starting at version 1.17.0 of the platform**
+**Only available starting at version 1.17.0 of the Console**
 
 If you want to use AWS RDS or AWS Aurora as database, please take in 
 consideration the following:
 
-- Platform will not work with all Postgresql engines within RDS, it will 
+- Console will not work with all Postgresql engines within RDS, it will 
   only work with engine version 14.8 / 15.3, other versions are not fully 
   supported.
-- Platform configuration through our onboarding interface won't work, users 
-  should configure the platform either with a yaml file or with environment
+- Console configuration through our onboarding interface won't work, users 
+  should configure the console either with a yaml file or with environment
   variables.

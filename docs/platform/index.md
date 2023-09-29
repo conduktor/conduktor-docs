@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Overview
-description: Conduktor Platform is the all-in-one friendly interface, testing, and monitoring tool to work with the Apache Kafka ecosystem
+description: Conduktor Console gives you complete visibility into your Kafka ecosystem and the ability to manage and monitor your data streaming applications
 ---
 
 # Overview
@@ -10,15 +10,15 @@ description: Conduktor Platform is the all-in-one friendly interface, testing, a
 If anything in the documentation is not clear or you need further help, please [contact us](https://www.conduktor.io/contact).
 :::
 
-## What is Conduktor Platform?
+## What is Conduktor Console?
 
 ### Streamline Apache Kafka
 
-Conduktor will transform your approach and interactions with Apache Kafka. We give you a single platform for Kafka management, monitoring, data quality, security, and data governance. The Conduktor Platform is available **self-hosted** and can be deployed via Docker or Helm Charts.
+Conduktor will transform your approach and interactions with Apache Kafka. We give you a single console for Kafka management, monitoring, data quality, security, and data governance. The Conduktor Console is available **self-hosted** and can be deployed via Docker or Helm Charts.
 
 - Jump straight into the [Docker Quick Start](../platform/installation/get-started/docker)
 
-### Platform Walkthrough
+### Console Walkthrough
 
 Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on overview below:
 

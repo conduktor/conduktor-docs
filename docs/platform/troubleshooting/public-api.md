@@ -110,13 +110,13 @@ startupProbe:
     failureThreshold: 30
 ````
 
-## Platform Information
+## Console Information
 
-### Platform versions
+### Console versions
 
 `/platform/api/modules/versions`
 
-This endpoint expose modules version used to build the platform along with platform current version.
+This endpoint expose module versions used to build the Console along with the overall Console version.
 
 Curl example :
 

@@ -15,7 +15,7 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
 ### Database requirements
 
 - PostgreSQL 13+
-- Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Platform should be able to create/update/delete schemas and tables on the database.
+- Provided connection role should have grant `ALL PRIVILEGES` on the configured database. Console should be able to create/update/delete schemas and tables on the database.
 - For your Postgres deployment please use at least 1-2 vCPU, 1 GB of Ram, and 10 GB of disk.
 
 ### Database configuration properties

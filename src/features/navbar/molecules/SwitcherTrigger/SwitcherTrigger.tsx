@@ -21,7 +21,7 @@ const getPathName = (pathname: string) => {
   else if (parts[1] === 'desktop') return 'desktop'
   else if (parts[1] === 'gateway') return 'gateway'
 
-  return 'platform'
+  return 'console'
 }
 
 const SwitcherTrigger: React.FunctionComponent<SwitcherTriggerProps> = ({ onClick }) => {

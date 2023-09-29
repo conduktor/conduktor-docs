@@ -3,19 +3,19 @@ sidebar_position: 3
 title: Log configuration
 description: How to setup and tune Conduktor logs 
 ---
-# Conduktor platform log configuration
+# Conduktor Console log configuration
 
-Before version 1.11.0, Conduktor Platform logs could be configured only with environment variable `CDK_DEBUG` that enables debug logs for startup process and shows modules logs in container stdout.
+Before version 1.11.0, Conduktor Console logs could be configured only with environment variable `CDK_DEBUG` that enables debug logs for startup process and shows modules logs in container stdout.
 
-Since version 1.11.0, Conduktor Platform logs can be configured with more granularity and with a more flexible way. 
+Since version 1.11.0, Conduktor Console logs can be configured with more granularity and with a more flexible way. 
 
 ## Log configuration environment variables
-### Platform wide log configuration
-The following environment variables are used to configure Conduktor Platform logs globally.
+### Console wide log configuration
+The following environment variables are used to configure Conduktor Console logs globally.
 
 | ENV                   | Default value |                                            |
 |-----------------------|---------------|--------------------------------------------|
-| `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global platform log level                  | 
+| `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global Console log level                  | 
 | `CDK_ROOT_LOG_COLOR`  | `true`        | Flag to enable color in logs when possible | 
 
 :::info
@@ -26,7 +26,7 @@ And if `CDK_DEBUG` is set to `true`, then `CDK_ROOT_LOG_LEVEL` is set to `DEBUG`
 :::
 
 ### Per module log configuration
-The following environment variables are used to configure Conduktor Platform logs per module.
+The following environment variables are used to configure Conduktor Console logs per module.
 
 | ENV                                 | Default value        |                                                                                                                              |
 |-------------------------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------|
@@ -34,7 +34,7 @@ The following environment variables are used to configure Conduktor Platform log
 | `CONSOLE_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                           |  
 | `SCANNER_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring and topic analyzer                                                                                |   
 | `GOVERNANCE_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Logs related to governance (Topic as a Service, Datamasking)                                                                 |  
-| `ADMIN_API_ROOT_LOG_LEVEL`          | `CDK_ROOT_LOG_LEVEL` | Logs related to platform administration                                                                                      |  
+| `ADMIN_API_ROOT_LOG_LEVEL`          | `CDK_ROOT_LOG_LEVEL` | Logs related to Console administration                                                                                      |  
 | `AUTHENTICATOR_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to authentication (SSO, LDAP)                                                                                   |  
 | `TESTING_API_ROOT_LOG_LEVEL`        | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Testing UI                                                                           |  
 | `TESTING_AGENT_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to the agent executing tests                                                                                    |  
@@ -56,7 +56,7 @@ If you want even more fine-tuning, you can use per module logback configuration 
 
 By default, all logback configuration files are located in `/opt/conduktor/loggers/` directory with **READ-ONLY** permissions.
 
-At startup, the platform will copy all (missing) logback configuration files from `/opt/conduktor/loggers/` to `/var/conduktor/configs/loggers/` directory with **READ-WRITE** permissions.
+At startup, the Console will copy all (missing) logback configuration files from `/opt/conduktor/loggers/` to `/var/conduktor/configs/loggers/` directory with **READ-WRITE** permissions.
 
 Because all logback configuration file are set to reload themselves every 15 seconds, you can then edit logback configuration files inside the container volume in `/var/conduktor/configs/loggers/` directory to tune log level per loggers.
 
@@ -70,4 +70,4 @@ They also use environment variables defined [here](#per-module-log-configuration
 
 ## Structured logging (JSON)
 
-Currently, platform does not support structured logging (JSON) but it is planned for a future release.
+Currently, Console does not support structured logging (JSON) but it is planned for a future release.

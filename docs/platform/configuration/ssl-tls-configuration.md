@@ -14,7 +14,7 @@ Since version `1.8.0` Conduktor provides a mechanism inside the UI for managing 
 
 The following table gives you an overview of what's currently supported and which methods you can use to configure it:
 
-- From the UI (recommended). From Conduktor Platform, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
+- From the UI (recommended). From Conduktor Console, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
 - Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components
 
 |                                | Kafka Clusters | Schema Registry / Kafka Connect |  LDAPS, OIDC               |
@@ -87,7 +87,7 @@ keytool  \
     -storetype JKS
 ```
 
-### Configure custom truststore on Conduktor Platform
+### Configure custom truststore on Conduktor Console
 
 For that we need to mount the truststore file into the conduktor-platform container and pass the correct environment variables
 for locating truststore file inside the container and password if needed.
@@ -156,12 +156,12 @@ Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
 Here's an example with Aiven:
 ![mtls-1.png](assets/mtls-1.png)
 
-You can paste the 2 file's contents into Conduktor Platform, or alternatively import from keystore.
+You can paste the 2 file's contents into Conduktor, or alternatively import from keystore.
 ![mtls-2.png](assets/mtls-2.png)
 
 ### Using Volume Mount (Alternate method)
 
-You can mount the keystore file in Conduktor Platform:
+You can mount the keystore file in 'conduktor-platform' image:
 
 ```yaml
 version: '3.8'

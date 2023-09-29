@@ -11,10 +11,10 @@ Conduktor can be configured using either a configuration file `platform-config.y
 - Organization name
 - External database (**required for production environments**)
 - User authentication (Basic or SSO)
-- Platform license
+- Console license
 
 :::info
-The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Platform UI.
+The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Console UI.
 
 The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
 
@@ -164,6 +164,6 @@ volumes:
 
 ## Container user and permissions
 
-Before platform `1.8.0`, platform was running as root user. After `1.8.0`, platform is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
+Before version `1.8.0`, Console was running as root user. After `1.8.0`, Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
 
 All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.

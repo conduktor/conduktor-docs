@@ -5,13 +5,13 @@ description: How to debug Conduktor
 ---
 # Debug Conduktor
 
-Conduktor Platform Docker image runs on Ubuntu Linux. It runs multiple services in a single Docker container. These services are supervised by [supervisord](http://supervisord.org/).    
+Conduktor Console Docker image runs on Ubuntu Linux. It runs multiple services in a single Docker container. These services are supervised by [supervisord](http://supervisord.org/).    
 
-To troubleshoot the Platform, we suggest you to go through the following steps.
+To troubleshoot the Console, we suggest you to go through the following steps.
 
-First, verify that the Platform is up and running.   
-Second, use our "**Platform Diagnostic**" tool to get an automatic diagnostic report about the Platform and its components.   
-Third, manually debug Conduktor Platform.    
+First, verify that the Console is up and running.   
+Second, use our "**Platform Diagnostic**" tool to get an automatic diagnostic report about the Console and its components.   
+Third, manually debug Conduktor Console.    
 And finally, consult the logs and send them to our support team if necessary.    
 
 Let's now see in details each step.
@@ -50,7 +50,7 @@ Pod status is available in the "STATUS" column. Here the pod is running.
 ## 2. Debug with the "Platform Diagnostic" tool
 
 :::info
-Platform diagnostic is a tool that allow you to extract all the relevant log from conduktor platform in order to give all the necessary information to our support team to investigate your issue
+Platform diagnostic is a tool that allow you to extract all the relevant log from Conduktor Console in order to give all the necessary information to our support team to investigate your issue
 :::
 
 ### Installation
@@ -80,12 +80,12 @@ To display the usage information, execute the following command:
 ```
 
 The Platform Diagnostic tool supports:
- - [The Docker](#docker) version of the Platform
- - [The Kubernetes](#kubernetes) version of the Platform
+ - [The Docker](#docker) version of the Console
+ - [The Kubernetes](#kubernetes) version of the Console
 
 #### Docker
 
-For the Docker version, execute this tool on the same machine where the Conduktor platform is running.
+For the Docker version, execute this tool on the same machine where the Conduktor Console is running.
 
 ```sh
 ./platform-diagnostic-amd_0-3-0 run docker
@@ -145,7 +145,7 @@ Privacy Policy : https://www.conduktor.io/privacy-policy
 
 finally, you can get the archive created and send it to `support@conduktor.io` with a description of the issue you are facing
 
-## 3. Manually debug Conduktor Platform
+## 3. Manually debug Conduktor Console
 
 ### Check services within the Conduktor-platform container
 
@@ -157,7 +157,7 @@ docker exec -it `docker ps | grep conduktor-platform | awk '{ print $1 }'` /bin/
 
 The other option is to `docker exec -it ${CONTAINER_ID} /bin/bash`
 
-From within the container the first step should be verify that all expected services are started. Conduktor platform uses supervisord inside of the container to ensure various services are started:
+From within the container the first step should be verify that all expected services are started. Conduktor Console uses supervisord inside of the container to ensure various services are started:
 
 ```sh
 conduktor-platform@15012271cc24:/# supervisorctl status

@@ -15,7 +15,7 @@ or contact our [support](https://www.conduktor.io/contact/support/).
 # Helm chart installation
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a 
-chart that will deploy Conduktor Platform on your Kubernetes cluster.
+chart that will deploy Conduktor Console on your Kubernetes cluster.
 
 ## TL;DR
 
@@ -48,7 +48,7 @@ helm install console conduktor/console \
     --set config.database.port="5432" \
     --set config.license="${LICENSE}" # can be omitted if deploying the free tier
     
-# Port forward to access the platform
+# Port forward to access Conduktor
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 open http://localhost:8080
 ```
@@ -78,7 +78,7 @@ helm repo update
 
 ### Install the Console Chart
 
-Configure the platform with the following values:
+Configure the Console with the following values:
 
 ```shell
 # values.yaml
@@ -119,12 +119,12 @@ configure an ingress to make the console available externally, check out our
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 ```
 
-## Configure the platform
+## Configure the Console
 
 ### Fresh install
 
-You can configure the platform by inserting into the `config` section of the
-`values.yaml` file the configuration of platform you want to apply. You can 
+You can configure the Console by inserting into the `config` section of the
+`values.yaml` file the configuration of Console you want to apply. You can 
 find available configuration in the [configuration section](../../configuration/env-variables.md)
 
 
@@ -150,7 +150,7 @@ config:
     username: '<postgres_username>'
     password: '<postgres_password>'
     
-  # HERE you can paste the platform configuration (under the config key)
+  # HERE you can paste the console configuration (under the config key)
   # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
@@ -175,7 +175,7 @@ config:
 
   license: "<your_license>"
 
-  # HERE you can paste the platform configuration (under the config key)
+  # HERE you can paste the console configuration (under the config key)
   # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 

@@ -1,11 +1,11 @@
 ---
 sidebar_position: 6
 title: HTTP Proxy Configuration
-description: Specify proxy settings that Conduktor Platform should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
+description: Specify proxy settings that Conduktor should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
 ---
 
 # HTTP Proxy Configuration
-Specify proxy settings that Conduktor Platform should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
+Specify proxy settings that Conduktor should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
 
 There are 5 properties you can set to specify the proxy that will be used by the http protocol handler:
 
