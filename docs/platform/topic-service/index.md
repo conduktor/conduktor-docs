@@ -9,7 +9,7 @@ description: Self Service
 ## Overview
 
 Self-Serve standardises your foundational processes for creating and managing Kafka resources such as topics, consumer groups and subjects.
-Instead of giving free reign to teams and developers, it allows you to bring governance into your enterprise. This is achieved by defining environments, applications and using requests and approval workflows to grant access to the applications. 
+Instead of giving free reign to teams and developers, it allows you to bring governance into your enterprise. This is achieved by defining environments, applications and using request and approval workflows to grant access to the applications. 
 
 **Pre-requisites**
  
