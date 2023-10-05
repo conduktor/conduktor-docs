@@ -16,7 +16,7 @@ Instead of giving free reign to teams and developers, it allows you to bring gov
 To start using Self-Serve you need:
 * Conduktor Console running
 * At least one Kafka cluster to map an environment to
-* An enterprise Conduktor license with access to TAAS
+* An enterprise Conduktor license with access to Topic-as-a-Service
 * Administrator access on Conduktor Console to do the environment mapping initially.
 
 ## Concepts
