@@ -52,7 +52,7 @@ Examples might be:
 
 ### Requests
 #### What is a Request?
-A request represents a user seeking the approval to create a new application within Conduktor Self-Serve. The requests tab will show the current pending requests, the requests which have been approved/rejecred and the history of all similar previous requests made by users to the administrators of your Conduktor instance(s). Note this tab is only available to those with adiministrator priviliges.
+A request represents a user seeking the approval to create a new application within Conduktor Self-Serve, and thus manage underlying Kafka resources that match the defined prefix(es). The requests tab will show the current pending requests, the requests which have been approved/rejected and the history of all similar previous requests made by users to the administrators of your Conduktor instance(s). Note this tab is only available to those with administrator privileges.
 
 Examples might be:
 * Requesting to create a new application within Self Serve is pending.
