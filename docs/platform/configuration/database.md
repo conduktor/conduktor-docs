@@ -29,10 +29,20 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
    - `database.password` : Database login password
    - `database.connection_timeout` : Connection timeout option in seconds
 
-#### SSL support
+### SSL support
 
 By default, Conduktor will try to connect to the database using SSL mode `prefer`. 
 We plan to make this configurable in the future along with database certificate.
+
+
+### Use AWS RDS / Aurora as database
+
+If you want to use AWS RDS or AWS Aurora as a database with Conduktor Console, please take into consideration the following:
+
+Console will not work with all Postgresql engines within RDS, it will only work with engine version 14.8 / 15.3, other versions are not fully supported.
+
+The Console configuration through our onboarding interface won't work, users should configure the console either with a yaml file or with environment variables.
+
 
 ### Setup
 
