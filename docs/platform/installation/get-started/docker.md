@@ -223,7 +223,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.0
+    image: conduktor/conduktor-platform:1.18.2
     depends_on:
       - postgresql
     ports:
@@ -240,9 +240,9 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.18.0
+    image: conduktor/conduktor-platform-cortex:1.18.2
     environment:
-      CDK_CONSOLE-URL: "conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 
 volumes:
   pg_data: {}
