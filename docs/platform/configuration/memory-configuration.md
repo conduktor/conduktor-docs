@@ -63,7 +63,7 @@ CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000"
 GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
 AUTHENTICATOR_MEMORY_OPTS="-Xms128m -Xmx512m"
 ``` 
-In this example we set around 8GB for Console, 5GB for Governance and 510MB for Authenticator leaving a safety marging of 2.5GB for other JVM memory pools and extra internal modules.
+In this example we set around 8GB for Console, 5GB for Governance and 510MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
 
 
 :::caution     
