@@ -49,7 +49,7 @@ Be aware that in this example the target RAM usage is increased from 4GB to 8-9G
 
 ### Using `custom` RUN_MODE
 
-If existing `RUN_MODE` presets are too restrictive or don't meet your needs, you can use the `custom` `RUN_MODE` and this removes the CGroup memory limit startup check and requires that you set manually the Java memory options for all internal components using the environement variables `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS`.  
+If existing `RUN_MODE` presets are too restrictive or don't meet your needs, you can use the `custom` `RUN_MODE` and this removes the CGroup memory limit startup check and requires that you set manually the Java memory options for all internal components using the environment variables `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS`.  
 
 Unlike single module override, **all environment variables must be set** when `RUN_MODE=custom`.
 
