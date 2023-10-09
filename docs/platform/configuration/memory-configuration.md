@@ -33,7 +33,7 @@ All modules memory presets can be overridden using following the environment var
 - **`GOVERNANCE_MEMORY_OPTS`** : Used by governance  module
 - **`AUTHENTICATOR_MEMORY_OPTS`** : Used by authenticator module
 
-The others modules will still use the preset from the `RUN_MODE` value.
+The other modules will still use the preset from the `RUN_MODE` value.
 
 #### Example
 
