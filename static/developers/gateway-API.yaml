@@ -51,8 +51,8 @@ paths:
               "$ref": "#/components/schemas/RbacTokenRequest"
         required: true
       responses:
-        '200':
-          description: Virtual Cluster token
+        '201':
+          description: Virtual Cluster token created
           content:
             application/json:
               example:
@@ -102,8 +102,8 @@ paths:
               "$ref": "#/components/schemas/ClusterTokenRequest"
         required: true
       responses:
-        '200':
-          description: Username token
+        '201':
+          description: Username token created
           content:
             application/json:
               example:
@@ -169,7 +169,7 @@ paths:
           required: true
           description: The id of the virtual cluster to delete topics for
       responses:
-        '200':
+        '204':
           description: Virtual cluster topic mappings deleted
           content: {}
         '401':
@@ -264,7 +264,7 @@ paths:
           required: true
           description: The logical topic name to delete the topic mapping for
       responses:
-        '200':
+        '204':
           description: Topic mapping deleted
           content: {}
         '401':
@@ -311,7 +311,7 @@ paths:
               "$ref": "#/components/schemas/TopicMappingRequest"
         required: true
       responses:
-        '200':
+        '201':
           description: Topic mapping created
           content:
             application/json:
@@ -394,6 +394,44 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_clusterRerouting
       deprecated: false
+  "/pclusters/v1/pcluster/{pcluster}/switch":
+    post:
+      summary: Replace the connection properties of a physical cluster with properties from another cluster
+      tags:
+        - Physical Clusters
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: pcluster
+          required: true
+          description: Physical Cluster id to update
+        - schema:
+            type: string
+          in: query
+          name: to
+          required: true
+          description: Physical Cluster id to switch to
+      responses:
+        '200':
+          description: Physical Cluster switched
+          content: { }
+        '400':
+          description: Bad parameter. A cluster id is not configured
+          content: { }
+        '401':
+          description: ''
+          content: { }
+        '403':
+          description: Permission not granted
+          content:
+            application/json:
+              example:
+                message: You do not have permission to call this API, please contact your administrator.
+      security:
+        - basicAuth: [ ]
+      operationId: PhysClusters_v1_clusterSwitch
+      deprecated: false
   "/interceptors/v1/vcluster/{vcluster}/interceptor/{interceptorName}":
     post:
       summary: Create an interceptor for a virtual cluster
@@ -424,7 +462,7 @@ paths:
               "$ref": "#/components/schemas/InterceptorRequest"
         required: true
       responses:
-        '200':
+        '201':
           description: Interceptor created
           content: {}
         '400':
@@ -568,7 +606,7 @@ paths:
           required: true
           description: The name of the interceptor to delete
       responses:
-        '200':
+        '204':
           description: Interceptor deleted
           content: {}
         '401':
@@ -687,7 +725,7 @@ paths:
               "$ref": "#/components/schemas/InterceptorRequest"
         required: true
       responses:
-        '200':
+        '201':
           description: Interceptor created
           content: {}
         '400':
@@ -849,7 +887,7 @@ paths:
           required: true
           description: The interceptor name to delete
       responses:
-        '200':
+        '204':
           description: Interceptor deleted
           content: {}
         '401':
