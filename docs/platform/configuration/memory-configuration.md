@@ -29,7 +29,7 @@ This means that Conduktor Console won't start if the container **CGroup memory l
 
 All modules memory presets can be overridden using following the environment variables :
 
-- **`CONSOLE_MEMORY_OPTS`** : Used by console module
+- **`CONSOLE_MEMORY_OPTS`** : Used by Console module
 - **`GOVERNANCE_MEMORY_OPTS`** : Used by governance  module
 - **`AUTHENTICATOR_MEMORY_OPTS`** : Used by authenticator module
 
@@ -41,7 +41,7 @@ The others modules will still use the preset from the `RUN_MODE` value.
 RUN_MODE=small
 GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
 ``` 
-In this example we set around 5GB of RAM for Governance and leave other modules like Cosnole and Authenticator with `small` memory presets. 
+In this example we set around 5GB of RAM for Governance and leave other modules like Console and Authenticator with `small` memory presets. 
 
 :::caution   
 Be aware that in this example the target RAM usage is increased from 4GB to 8-9GB and **container CGroup memory limit** should be set accordingly.   
@@ -49,7 +49,7 @@ Be aware that in this example the target RAM usage is increased from 4GB to 8-9G
 
 ### Using `custom` RUN_MODE
 
-If the existing `RUN_MODE` presets are too restrictive or don't meet your needs, you can use to using the `custom` `RUN_MODE` and this removes the CGroup memory limit startup check and requires that you set manually the Java memory options for all internal components using the environement variables `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS`.  
+If existing `RUN_MODE` presets are too restrictive or don't meet your needs, you can use to using the `custom` `RUN_MODE` and this removes the CGroup memory limit startup check and requires that you set manually the Java memory options for all internal components using the environement variables `CONSOLE_MEMORY_OPTS`, `GOVERNANCE_MEMORY_OPTS` and `AUTHENTICATOR_MEMORY_OPTS`.  
 
 Unlike single module override, **all environment variables must be set** when `RUN_MODE=custom`.
 
