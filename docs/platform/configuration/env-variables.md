@@ -15,7 +15,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
     - [Session Lifetime Properties](#session-lifetime-properties)
     - [Local users properties](#local-users-properties)
     - [Monitoring properties](#monitoring-properties)
-    - [Conduktor platform Cortex](#conduktor-platform-cortex)
+    - [Conduktor platform Cortex](#cortex-configuration)
     - [SSO properties](#sso-properties)
       - [LDAP properties](#ldap-properties)
       - [Oauth2 properties](#oauth2-properties)
@@ -161,7 +161,7 @@ See [Cortex configuration page](/platform/configuration/cortex/) for more info
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise and team plans). See authentication [documentation](/platform/category/user-authentication/) for snippets
+SSO authentication properties (only on enterprise and team plans). See [authentication documentation](/platform/category/configure-sso/) for snippets.
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |

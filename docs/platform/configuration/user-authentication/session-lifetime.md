@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Session Lifetime
 description: Configure idle session timeout and max session timeout
 ---
