@@ -18,11 +18,11 @@ You can select the name you want, shown here as `Conduktor Console`, and enter t
 
 For example, if you deployed Console locally using the name `azure` in your configuration file, you can use `http://localhost:8080/oauth/callback/azure`, like on the screenshot below.
 
-![](../../assets/azure-new-app.png)
+![](../../assets/Azure-new-app.png)
 
 - **Step 2**: Create a new client secret from the **Certificates & secrets** tab
 
-![](../../assets/azure-client-secret.png)
+![](../../assets/Azure-client-secret.png)
 
 :::warning
 You need to keep the `Value` somewhere safe, as you will not have access to it again.
@@ -30,7 +30,7 @@ You need to keep the `Value` somewhere safe, as you will not have access to it a
 
 - **Step 3**: Find the `Application (client) ID` and the `tenant ID` in the **Overview** tab
 
-![](../../assets/azure-client-id.png)
+![](../../assets/Azure-client-id.png)
 
 :::tip
 You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
@@ -65,7 +65,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the the **Token configuration** tab:
 
-![](../../assets/azure-add-groups-claim.png)
+![](../../assets/Azure-add-groups-claim.png)
 
 :::caution
 If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
