@@ -20,7 +20,7 @@ Otherwise, you can use the storage parameters described below to store the data 
 
 | Env                                           | Description                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|------------------------------------------|-----------|--------|-------------------------|----------|
-| `CDK_CONSOLE-URL`                             | Console URL and port       | true      | string | ∅                       | `1.18.0` |
+| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-platform:8080"`)       | true      | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | S3 storage endpoint                      | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region                        | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name                   | true      | string | ∅                       | `1.18.0` |
@@ -61,5 +61,5 @@ services:
     hostname: cortex
     image: ghcr.io/conduktor/conduktor-platform-cortex:1.18.0
     environment:
-      CDK_CONSOLE-URL: "conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 ````

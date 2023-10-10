@@ -111,8 +111,8 @@ const sidebars = {
     },
     {
       type: 'doc',
-      label: 'Topic as a Service',
-      className: 'topic-service',
+      label: 'Self-Serve',
+      className: 'admin',
       id: 'topic-service/index',
     },
   ],
