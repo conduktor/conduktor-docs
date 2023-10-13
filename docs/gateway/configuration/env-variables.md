@@ -128,7 +128,7 @@ Conduktor needs to save state, you can choose where:
 
 | Environment Variable    | Default Value   | Description                                |
 |-------------------------|-----------------|--------------------------------------------|
-| `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY`, `KAFKA` and `POSTGRES` |
+| `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY`, `KAFKA`                |
 | `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh                  |
 
 #### Topics names
@@ -138,7 +138,6 @@ State is saved in different location based on `GATEWAY_STORAGE_TYPE`
 When it is set
 
 * `KAFKA` they will be materialized as a topic.
-* `POSTGRES` they will be stored as a table.
 * `IN_MEMORY` they will be stored in memory.
 
 | Environment Variable                                             | Default Value                              | Description                                         |
@@ -162,16 +161,6 @@ none
 | `GATEWAY_TOPIC_STORE_REAL_TOPIC_PARTITION_COUNT`             | `-1`          | Defaults to the one defined in your cluster settings |
 | `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
 | `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
-
-#### `POSTGRES` State Configurations
-
-| Environment Variable                    | Default Value | Description            |
-|-----------------------------------------|---------------|------------------------|
-| `GATEWAY_STORAGE_RDBMS_URL`             | None          | Postgresql Url         |
-| `GATEWAY_STORAGE_RDBMS_USER`            | None          | Postgresql User        |
-| `GATEWAY_STORAGE_RDBMS_PASSWORD`        | None          | Postgresql password    |
-| `GATEWAY_STORAGE_RDBMS_SCHEMA`          | None          | Postgresql Schema      |
-| `GATEWAY_STORAGE_RDBMS_POLLINGINTERVAL` | 500ms         | Refresh interval in ms |
 
 ### Internal setup
 
