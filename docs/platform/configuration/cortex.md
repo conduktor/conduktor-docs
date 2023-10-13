@@ -59,7 +59,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
     hostname: cortex
-    image: ghcr.io/conduktor/conduktor-platform-cortex:1.18.0
+    image: conduktor/conduktor-platform-cortex:1.18.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 ````
