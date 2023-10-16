@@ -50,7 +50,7 @@ Typically, in docker compose it would look like this:
 version: '3.8'
 services:
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.0
+    image: conduktor/conduktor-platform:1.18.2
     ports:
       - "8080:8080"
       CDK_MONITORING_CORTEX-URL: http://cortex:9009/
@@ -59,7 +59,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
     hostname: cortex
-    image: ghcr.io/conduktor/conduktor-platform-cortex:1.18.0
+    image: conduktor/conduktor-platform-cortex:1.18.2
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 ````
