@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
 title: Getting Started
-description: Self Serve
+description: Kafka Self Serve Getting Started
 ---
 
-# Self-Serve
+# Kafka Self-Serve
 
 ## Introduction
 

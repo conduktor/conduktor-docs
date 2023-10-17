@@ -233,24 +233,6 @@ aside ul li.topic-as-a-service::before {
 ul li[data-icon="true"].topic-analyzer::after,
 ul li[data-icon="true"].topic-as-a-service::after,
 aside ul li.topic-analyzer::after,
-aside ul li.topic-service::after {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  content: 'soon';
-  text-transform: uppercase;
-  background-color: rgba(255, 187, 1, 0.17);
-  color: rgba(171, 83, 0, 0.98);
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1;
-  border-radius: 4px;
-  pointer-events: none;
-  user-select: none;
-  letter-spacing: 0.5px;
-  padding: 0.25rem;
-}
 
 ul li[data-icon="true"].topic-analyzer a::after,
 ul li[data-icon="true"].topic-as-a-service a::after,
