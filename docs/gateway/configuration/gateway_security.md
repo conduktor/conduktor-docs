@@ -36,6 +36,21 @@ conduktor-gateway:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
 ```
 
+## MSK
+
+Connecting to MSK is today supported with `Access Key ID` and `Access Secret Key`. These shoudl be provided in the Gateway cluster connection environment variables similar to a regular cluster connection, such as;
+
+```yaml
+security.protocol=SASL_SSL
+sasl.mechanism=AWS_MSK_IAM
+sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+aws_access_key_id=<ACCESS_KEY_ID>
+aws_secret_access_key=<SECRET_ACCESS_KEY>
+```
+
+For some help on how you might find these you can follow the [Conduktor cluster connection guide](https://docs.conduktor.io/platform/admin/managing-clusters/#connect-to-a-msk-cluster), or speak to your MSK admin.
+
 # Your client to Gateway security
 You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
