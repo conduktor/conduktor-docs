@@ -13,8 +13,7 @@ const GetStarted: React.FunctionComponent<GetStartedProps> = () => {
           <div className={styles.CardContent}>
             <h2 className={styles.CardTitle}>Get Started</h2>
             <p className={styles.CardParagraph}>
-              Get everything that Desktop can do and much more with Conduktor Platform. Available in
-              SaaS and Docker form. Need a desktop app? Carry on below.
+            Get started with Conduktor Console. The installation and configuration process takes only a few minutes.
             </p>
             <Button
               id="download-get-started"
@@ -31,7 +30,7 @@ const GetStarted: React.FunctionComponent<GetStartedProps> = () => {
           >
             <img
               className={styles.PlatformVisual}
-              src="/assets/images/platform-download.png"
+              src="/assets/images/docs-get-started.png"
               alt="Conduktor Platform"
             />
           </a>
