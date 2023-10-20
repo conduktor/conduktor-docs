@@ -10,17 +10,29 @@ description: Configure Auth0 as SSO for Conduktor Console.
 
 On Auth0 side, you'll have to create a new application:
 
-- **Step 1**: Create regular web application ![](../../assets/auth0-app-step1.png)
+- **Step 1**: Create a **Regular Web Application** ![](../../assets/auth0-create-app.png)
 
-- **Step 2**: Get client ID, client secret and domain ![](../../assets/auth0-app-step2.png)
+- **Step 2**: Get the `client ID`, `client secret` and `domain` ![](../../assets/auth0-client-id-secret-domain.png)
 
-- **Step 3**: Configure callback URL using the following pattern: `http(s)://<Console hostname>/oauth/callback/auth0` ![](../../assets/auth0-app-step3.png)
+- **Step 3**: Configure the callback URI
 
-- **Step 4**: Save changes
+The redirect URI must be like: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+
+For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`, like on the screenshot below.
+
+![](../../assets/auth0-callback.png)
+
+:::tip
+You can find the .well-known at: `https://<domain>/.well-known/openid-configuration`.
+:::
+
+:::caution
+Do not forget to select how you want to connect via the **Connections** tab of your Auth0 application.
+:::
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and domain, by what you got during the step 2.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, by what you got during the step 2.
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -30,15 +42,15 @@ sso:
       client-id: "<client ID>"
       client-secret: "<client secret>"
       openid:
-        issuer: "<domain>.auth0.com"
+        issuer: "https://<domain>"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="auth0"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
-CDK_SSO_OAUTH2_0_OPENID_ISSUER="<domain>.auth0.com"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 ```

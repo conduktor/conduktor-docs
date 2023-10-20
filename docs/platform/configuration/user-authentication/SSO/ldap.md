@@ -28,7 +28,7 @@ sso:
       groups-attribute: "cn"                       # Group name entry (default: "cn")
 ```
 
-You can also use environment variables :
+You can also use environment variables:
 
 ```json
 CDK_SSO_LDAP_0_NAME="LDAP"

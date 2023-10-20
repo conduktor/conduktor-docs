@@ -6,13 +6,13 @@ description: Configure Azure AD as SSO for Conduktor Console.
 
 # Configure Azure AD / Entra ID as SSO
 
-In this doc, we will name it Azure AD, but the product has been renamed in Entra ID recently.
+In this doc, we will name it Azure AD, but the product has been renamed as Entra ID recently.
 
 ## Azure AD Configuration
 
 On Azure AD side, you'll have to create a new application:
 
-- **Step 1**: Create a new application in `App registrations`
+- **Step 1**: Create a new application in `App registrations` and set the callback URI
 
 You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
 
@@ -28,7 +28,7 @@ For example, if you deployed Console locally using the name `azure` in your conf
 You need to keep the `Value` somewhere safe, as you will not have access to it again.
 :::
 
-- **Step 3**: Find the `Application (client) ID` and the `tenant ID` in the **Overview** tab
+- **Step 3**: Find the `client ID` and `tenant ID` in the **Overview** tab
 
 ![](../../assets/azure-client-id.png)
 
@@ -51,7 +51,7 @@ sso:
         issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="azure"
@@ -63,12 +63,12 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 ## Groups Configuration
 
-If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the the **Token configuration** tab:
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the **Token configuration** tab:
 
 ![](../../assets/azure-add-groups-claim.png)
 
 :::caution
-If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
+If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
 :::
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
@@ -85,7 +85,7 @@ sso:
         issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="azure"

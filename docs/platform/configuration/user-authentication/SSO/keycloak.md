@@ -10,23 +10,29 @@ description: Configure Keycloak as SSO for Conduktor Console.
 
 On Keycloak side, you'll have to create a new application:
 
-- **Step 1**: create a new OpenID Connect client, and set the client ID
+- **Step 1**: create a new OpenID Connect client, and set the `client ID`
 
 ![](../../assets/keycloak-create-client.png)
 
-- **Step 2**: Select the `Client authentication`
+- **Step 2**: Select the **Client authentication**
 
 ![](../../assets/keycloak-client-config.png)
 
-- **Step 3**: Configure the redirect URI as the following: `http(s)://<Console host>:<Console port>/oauth/callback/keycloak`
+- **Step 3**: Configure the redirect URI 
+
+You can configure it as the following: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`
 
 For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like on the screenshot below.
 
 ![](../../assets/keycloak-callback.png)
 
-- **Step 4**: Get the `client secret` in the `Credentials` tab
+- **Step 4**: Get the `client secret` in the **Credentials** tab
 
 ![](../../assets/keycloak-client-secret.png)
+
+:::tip
+You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
+:::
 
 ## Console Configuration
 
@@ -37,13 +43,13 @@ sso:
   oauth2:
     - name: "keycloak"
       default: true
-      client-id: "<client ID>" # from step 4
-      client-secret: "<client ID>" # from step 4
+      client-id: "<client ID>"
+      client-secret: "<client ID>"
       openid:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="keycloak"
@@ -53,21 +59,16 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-:::tip
-You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
-:::
-
-
 ## Groups Configuration
 
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Keycloak, you must create a scope and add it to your Keycloak application:
 
-- **Step 1**: Create the scope and configure the mapper to `Group Membership`
+- **Step 1**: Create the scope and configure the mapper to **Group Membership**
 
 ![](../../assets/keycloak-scope.png)
 ![](../../assets/keycloak-scope-mapper.png)
 
-You can add the claim to the token you want. In this example, the `UserInfo`.
+You can add the claim to the token you want. In this example, the **UserInfo**.
 
 - **Step 2**: Add the scope to the application
 
@@ -87,7 +88,7 @@ sso:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="keycloak"

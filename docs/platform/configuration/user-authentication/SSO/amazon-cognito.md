@@ -25,7 +25,7 @@ Make sure that a client secret will be generate. You can select `Confidential cl
 
 ![](../../assets/cognito-app-client.png)
 
-- **Step 3**: Set the scopes `profile`, `email`, and `openid` in the `Advanced app settings`
+- **Step 3**: Set the scopes `profile`, `email`, and `openid` in the **Advanced app settings**
 
 ![](../../assets/cognito-scopes.png)
 
@@ -41,20 +41,20 @@ You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<us
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, region, and use pool ID, by what you got during the previous steps.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, `region`, and `pool ID`, by what you got during the step 4.
 
 ```yaml title="platform-config.yaml"
 sso:
   oauth2:
     - name: "cognito"
       default: true
-      client-id: "<client ID>" # from step 4
-      client-secret: "<client secret>" # from step 4
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
       openid:
-        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>" # from step 4
+        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
-Or using environment variables :
+Or using environment variables:
 
 ```json
 CDK_SSO_OAUTH2_0_NAME="cognito"
@@ -73,11 +73,11 @@ sso:
   oauth2:
     - name: "cognito"
       default: true
-      client-id: "<client ID>" # from step 4
-      client-secret: "<client secret>" # from step 4
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
       groups-claim: "cognito:groups"
       openid:
-        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>" # from step 4
+        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
 Or using environment variables :

@@ -10,14 +10,14 @@ description: Configure Google as SSO for Conduktor Console.
 
 On Google side, you'll have to follow these steps:
 
-- **Step 1**: Create an application on the `OAuth consent screen` tab
+- **Step 1**: Create an application on the **OAuth consent screen** tab
 
 The scopes needed are `email`, `profile`, and `openid`.
 
 ![](../../assets/google-scopes.png)
 
 
-- **Step 2**: Restrict the access to your internal workspace by checking the `Internal` user type in the `OAuth consent screen`.
+- **Step 2**: Restrict the access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
 
 ![](../../assets/google-user-type-internal.png)
 
@@ -48,8 +48,8 @@ sso:
   oauth2:
     - name: "google"
       default: true
-      client-id: "<client ID>" # from step 4
-      client-secret: "<client secret>" # from step 4
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
       openid:
         issuer: "https://accounts.google.com"
 ```
