@@ -42,7 +42,12 @@ CDK_AUTH_LOCAL-USERS_1_PASSWORD="bob-secret"
 
 ## Configure SSO **(Enterprise feature)**
 
-In addition to these local admin and users, you can setup **Single Sign-On (SSO)** so your users can login using your company **LDAP** or **OIDC** identity provider. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
+In addition to these local admin and users, you can setup **Single Sign-On (SSO)** so your users can login using your company **LDAP** or **OIDC** identity provider.
+
+:::info
+This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
+:::
+
 
 ## Manage permissions of users before they login
 
