@@ -8,7 +8,7 @@ description: Configure and manage local admin and users
 
 When you first start Conduktor Console, a **local admin** will be created using the credentials you gave (**mandatory since 1.14.0**). This admin account allows you to make some actions like creating users and groups, connecting clusters, or giving permissions, in order to initialize your instance before onboarding users.
 
-You can also declare some **local users** for testing purpose, to see what users can see.
+You can also declare some **local users** for testing purposes, to observe what other users can see with different permissions.
 
 You can declare local admin and users within the **configuration file** or via **environment variables**.
 
