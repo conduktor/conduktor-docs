@@ -25,10 +25,14 @@ Jump to:
 
 # Gateway to your Kafka security
 
-You can use all the kafka mechanisms, PLAINTEXT (none), SASL, OAuthBearer, Kerberos etc. 
+You can use all the Kafka security protocols; PLAINTEXT (none), SASL_PLAINTEXT, SASL_SSL and soon SSL (in development).
+For these security protocols we support all SASL mechanisms; PLAIN, SCRAM SHA, OAuthBearer, Kerberos etc.
+
+Provide Gateway with the environment variables to connect to Kafka, these start with a `KAFKA_` prefix.
+
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.4
+    image: conduktor/conduktor-gateway:2.2.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -38,9 +42,12 @@ conduktor-gateway:
 
 ## MSK
 
-Connecting to MSK is today supported with `Access Key ID` and `Access Secret Key`. These shoudl be provided in the Gateway cluster connection environment variables similar to a regular cluster connection, such as;
+MSK requires a file containing all the properties required rather than just environment variables.
+Connecting to MSK is today supported with `Access Key ID` and `Access Secret Key`. 
 
-```yaml
+Create a file containing your connection properties, such as the below.
+
+```properties
 security.protocol=SASL_SSL
 sasl.mechanism=AWS_MSK_IAM
 sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
@@ -48,17 +55,33 @@ sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
 aws_access_key_id=<ACCESS_KEY_ID>
 aws_secret_access_key=<SECRET_ACCESS_KEY>
 ```
-
 For some help on how you might find these you can follow the [Conduktor cluster connection guide](https://docs.conduktor.io/platform/admin/managing-clusters/#connect-to-a-msk-cluster), or speak to your MSK admin.
 
-# Your client to Gateway security
-You have several options when connecting clients to Gateway. Passthrough security where it passes the existing credentials straight through to the backing cluster with no further checks, this is likely what you will use out of the box. As you start to explore more of Gateway you will want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
 
-Gateway supports;
-* `PLAINTEXT` (none)
-* `SSL`
-* `SASL_SSL`
-* `SASL_PLAINTEXT`
+Provide the Gateway container access to that file such as with a volume bind;
+
+```yaml
+volumes:
+  - type: bind
+    source: "./msk.properties"
+    target: /msk.properties
+    read_only: true
+```
+
+Lastly provide Gateway the path to the file so it can use the properties in the connection e.g.;
+
+```yaml
+GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /msk.properties }'
+```
+
+
+# Your client to Gateway security
+You have several options when connecting clients to Gateway.
+Passthrough security passes the existing credentials straight through to the backing cluster with no further checks. This is likely what you will use out of the box.
+
+As you start to explore more of Gateway you may want to connect to a virtual cluster where we support the following security mechanisms, note these don't have to match that between Gateway and the backing Kafka.
+
+Depending which mode you are in, Passthrough or Multi-tenancy (virtual clusters) , different security options are supported.
 
 ## Passthrough security
 
@@ -68,9 +91,9 @@ Gateway will then transfer the credentials to your underlying Kafka, thus levera
 
 This is enabled by the default value `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: false`.
 
-Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled Gateway will use the existing kafka credentials of the client app to connect to the cluster, allowing it to passthrough the Gateway. To get the most out of Conduktor Gateway multi-tenancy should later be activated.
+Virtual clusters is disabled by default to get you up and running with Gateway quicker and simpler. When disabled, Gateway will use the existing kafka credentials of the client app to connect to the cluster, allowing it to passthrough the Gateway.
 
-To disable this Passthrough, and activate virtual clusters, set the environemnt variable as follows, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true`
+To disable Passthrough mode, and activate virtual clusters, set the environemnt variable as follows, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true`.
 
 :::caution
 
@@ -79,6 +102,17 @@ For Passthrough mode, Conduktor Gateway currently supports:
 - SASL mechanisms: `PLAIN`, `SCRAM-SHA-256` and `SCRAM-SHA-512`
 
 :::
+
+Gateway only requires the bootstrap servers to get started in Passthrough mode.
+
+```yaml
+conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.2.0
+    hostname: conduktor-gateway
+    container_name: conduktor-gateway
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093
+```
 
 
 ## Client to Gateway, additional security
@@ -89,7 +123,7 @@ For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.4
+    image: conduktor/conduktor-gateway:2.2.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -127,12 +161,18 @@ See the [environment variables](/gateway/configuration/env-variables/#ssl) for m
 
 To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` , create a username to connect to the virtual cluster, and update your client to use this username when connecting.
 
+Virtual cluster mode supports;
+* `PLAINTEXT` (none)
+* `SASL_PLAINTEXT`
+* `SASL_SSL` (with `mTLS` option)
+* `SSL` (*soon*) (with `mTLS`)
+
 ![tenant-user.png](./images/gw-security/tenant-user-london.png)
 
 ### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.4
+    image: conduktor/conduktor-gateway:2.2.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -204,7 +244,7 @@ Conduktor gateway support OAuth authentification by leveraging OAuthbearer sasl 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.1.4
+    image: conduktor/conduktor-gateway:2.2.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
