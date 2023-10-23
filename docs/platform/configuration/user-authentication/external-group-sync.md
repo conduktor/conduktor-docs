@@ -1,24 +1,28 @@
 ---
-sidebar_position: 2
-title: External Group Sync
-description: Configure synchronization between your auth providers groups.
+sidebar_position: 3
+title: External Groups Mapping
+description: Configure the mapping between your auth providers groups and Conduktor Console groups.
 ---
-
-# External Group Sync
 
 ## Overview
 
-External group synchronization allows you to integrate Conduktor's RBAC system with your LDAP or OIDC source of truth. When you map an external group, it will ensure a user is added to the Conduktor Console group at login. This mechanism ensures a user inherits necessary group permissions, and that they are removed accordingly from Conduktor groups if their external membership changes.
+External groups mapping allows you to integrate **Conduktor's RBAC system** with your **LDAP or OIDC source of truth**. 
+When you map an external group, the **user is added to the Conduktor Console group at login**. 
+
+This mechanism ensures a **user inherits necessary group permissions**, and that they are removed accordingly from Conduktor groups if their external membership changes.
 
 ## Prerequisites
 
-You must first configure [SSO](./configure-sso.md) to an LDAP or OAuth2.0 identity provider. In addition to the properties required for the default configuration, you must also add the relevant group properties.
+You must first configure [SSO](/platform/category/configure-sso/) to an LDAP or OAuth2.0 identity provider. In addition to the properties required for the default configuration, you must also add the relevant group properties and create the scope in your IdP.
 
 ### LDAP
 
-For LDAP, populate the `groups-base` and `groups-filter` attributes. For more information see [configuration properties and environment variables](../../configuration/env-variables.md).
+For [LDAP](/platform/configuration/user-authentication/SSO/ldap), populate the `groups-base` and `groups-filter` attributes.
 
-```yaml
+For more information see [configuration properties and environment variables](/platform/configuration/env-variables/#ldap-properties).
+
+```yaml title="platform-config.yaml"
+sso:
   ldap:
     - name: "default"
       server: "ldap://ldap.test.io:1389"
@@ -31,57 +35,45 @@ For LDAP, populate the `groups-base` and `groups-filter` attributes. For more in
 
 ### OIDC
 
-For OIDC, populate the `groups-claim` attribute. For more information see [configuration properties and environment variables](../../configuration/env-variables.md).
+For OIDC, populate the `groups-claim` attribute. You can find some examples by [selecting your identity providers in this list](/platform/category/configure-sso/).
 
-```yaml
+For more information see [configuration properties and environment variables](/platform/configuration/env-variables/#oauth2-properties).
+
+```yaml title="platform-config.yaml"
 sso:
   oauth2:
-    - name: 'azure'
+    - name: "<IdP>"
       default: true
-      client-id: ${AZURE_APPLICATION_ID}
-      client-secret: ${AZURE_CLIENT_SECRET}
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      groups-claim: "<groups claim>"
       openid:
-        issuer: https://login.microsoftonline.com/{tenantid}/v2.0
-      groups-claim: ${GROUPS_CLAIM}
+        issuer: "<issuer>"
 ```
 
-#### Azure AD example
+## Create an External Group Mapping
 
-For **Azure AD**, you can create this claim in the 'Token configuration' tab within your `App registration`.
-Click on `Add groups claim`.
+Now that LDAP or OIDC is configured, you can create the mapping between external groups and Conduktor groups. You have two options for that:
+ - Map a **new Conduktor group** to an external group
+ - Map an **existing Conduktor group** to an external group
 
-![](../assets/Azure-add-groups-claim.png)
+**Create a new group with an external group mapped**
 
-Then select `Security groups` as group type to include, and ensure that the token property is `Group ID` for each type.
+From within Admin, navigate to the `Users & Groups` screen and select the `Groups` tab. 
 
-![](../assets/Azure-groups-config.png)
+ - Provide the `Name`, `Description` and select `Activate external groups mapping`
+ - Provide 1 or more LDAP/OIDC groups
 
-You can see that the claim name is `groups`, so you can add the following line in you configuration file: `groups-claim: "groups"`.
+![](../assets/external-groups-mapping-new-group.png)
 
-**Please note:** If you have a larger number of groups within your enterprise you may need to use the `"Groups assigned to the application"` option in the `"Select Group Types"` tab. This is in order to avoid exceeding the limit on the number of groups a token can emit. See further documentation from on utlising this within Azure [here](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal).
-
-## Create a Group Mapping
-
-Now that LDAP or OIDC is configured to map groups, you can now create a sync between an external group and a Conduktor group. You can:
- - Create a new Conduktor group with an external group mapping(s)
- - Map an existing Conduktor group to an external group(s)
-
-**Create a new group with an external group mapping**
-
-From within Admin, navigate to the Members screen and select the Groups tab. 
-
- - Provide the Name, Description and select Activate external groups mapping
- - Provide 1 or more LDAP/OIDC groups to create a sync
-
-![](../assets/external-group-map.png)
-
-In the above example, any users that are present in the externally mapped groups will inherit permissions that are set against the Conduktor group 'Platform Engineering'. To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../admin/rbac.md).
+In the above example, any users that are present in the group `project-c` in your IdP, will be added to the Conduktor group `Project C`, and will inherit permissions that are set against it. 
+To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../admin/rbac.md).
 
 **Map an existing Conduktor group to an external group**
 
-From within the Members screen, select the breadcrumbs next to an existing group and select 'Map external group'.
+From within the `Members` screen, select the breadcrumbs next to an existing group and select `Map external groups`.
 
-![](../assets/admin-map-external-group.png)
+![](../assets/external-group-mapping-existing-group.png)
 
 The value to set depends on the IdP you use. For example, for **Azure**, you must put the `Object ID` of your groups. For **Keycloak**, this is the name of the group.
 

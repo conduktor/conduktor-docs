@@ -161,7 +161,7 @@ See [Cortex configuration page](/platform/configuration/cortex/) for more info
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise and team plans). See authentication [documentation](/platform/category/user-authentication/) for snippets
+SSO authentication properties (only on enterprise and team plans). See [authentication documentation](/platform/category/configure-sso/) for snippets.
 
 | Property | Description | Env | Mandatory | Type | Default | Since |
 | --- | --- | --- | --- | --- | --- | --- |

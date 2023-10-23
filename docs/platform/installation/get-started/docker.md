@@ -112,7 +112,7 @@ The below example shows how to configure Conduktor with the minimum configuratio
 - An external database
 - A local administrator
 
-If you want, you can add more snippets, like [SSO](/platform/configuration/user-authentication/configure-sso/) or [license key](/platform/installation/license-management/#into-the-configuration-file).
+If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](/platform/installation/license-management/#into-the-configuration-file).
 You can get the list of all the properties supported [here](/platform/configuration/env-variables/).
 
 ```yaml title="platform-config.yaml"
