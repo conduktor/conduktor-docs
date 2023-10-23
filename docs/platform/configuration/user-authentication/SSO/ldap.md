@@ -10,7 +10,7 @@ You can find the list of LDAP properties [here](/platform/configuration/env-vari
 
 ## TL;DR
 
-Here is an example of snippet to put in your configuration file, that contains server, users and groups attributes.
+Here is an example snippet to put in your configuration file, that contains server, users and groups attributes.
 
 ```yaml title="platform-config.yaml"
 sso:
