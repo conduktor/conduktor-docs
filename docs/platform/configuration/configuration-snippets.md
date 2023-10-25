@@ -35,7 +35,7 @@ The below outlines reusable snippets for common configurations such as:
 
 This demonstrates a complete configuration for Conduktor Enterprise consisting of one Kafka cluster with Schema Registry, SSO and license key. 
 
-Note if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](./user-authentication/local-admin-and-users.md) instead.
+For identity provider specific guides see [configuring SSO](./user-authentication/SSO/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](./user-authentication/local-admin-and-users.md) instead.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -251,7 +251,7 @@ clusters:
       CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
       CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
-      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=\"<access-key-id>\"\naws_secret_access_key=\"<secret-access-key>\""
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
 ```
 </TabItem>
 </Tabs>
@@ -333,7 +333,7 @@ clusters:
       CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
-      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=\"<access-key-id>\"\naws_secret_access_key=\"<secret-access-key>\""
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
       CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'Credentials'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID: '<access-key-id>'
@@ -374,7 +374,7 @@ clusters:
       CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
-      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=\"<access-key-id>\"\naws_secret_access_key=\"<secret-access-key>\""
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
       CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromContext'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE: '<profile>'
@@ -415,7 +415,7 @@ clusters:
       CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
-      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=\"<access-key-id>\"\naws_secret_access_key=\"<secret-access-key>\""
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
       CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromRole'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE: '<role>'
