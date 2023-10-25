@@ -39,7 +39,7 @@ The other modules will still use the preset from the `RUN_MODE` value.
 
 ```
 RUN_MODE=small
-GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
+GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 ``` 
 In this example we set around 5GB of RAM for Governance and leave other modules like Console and Authenticator with `small` memory presets. 
 
@@ -59,11 +59,11 @@ Conduktor Console running environment variables with a target of 16GB:
 
 ```
 RUN_MODE=custom
-CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000"
-GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
+CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000m"
+GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 AUTHENTICATOR_MEMORY_OPTS="-Xms128m -Xmx512m"
 ``` 
-In this example we set around 8GB for Console, 5GB for Governance and 510MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
+In this example we set around 8GB for Console, 5GB for Governance and 512MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
 
 
 :::caution     
