@@ -8,18 +8,14 @@ description: Depending on the environment, Conduktor might need to access extern
 
 Depending on the environment, Conduktor might need to access external services like Kafka clusters, SSO servers, database, or object-storage that require custom certificate for SSL/TLS communication.
 
-:::info
-Since version `1.8.0` Conduktor provides a mechanism inside the UI for managing custom certificates for Kafka, Kafka Connect and Confluent Schema Registry\*\*
-:::
+The following table gives you an overview of what's currently supported and the methods to configure it:
 
-The following table gives you an overview of what's currently supported and which methods you can use to configure it:
-
-- From the UI (recommended). From Conduktor Console, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard
-- Volume mount. This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components
+- **From the UI (recommended)**: From Conduktor Console, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard.
+- **Volume mount**: This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
 
 |                                | Kafka Clusters | Schema Registry / Kafka Connect |  LDAPS, OIDC               |
 | ---------------- |----------------|------------- | ---------------- |
-| SSL to secure data in transit  | ✅ UI           | ✅ UI         | 🚫 UI<br/>✅ Volume mount |
+| SSL to secure data in transit  | ✅ UI           | ✅ UI         | ✅ UI |
 | SSL to authenticate the client | ✅ UI           | ✅ UI         | 🚫 Unsupported            |
 
 Jump to:
@@ -33,7 +29,7 @@ Jump to:
 
 ## Using the Conduktor Certificate Store
 
-Since version `1.8.0` you can manage custom certificates for Kafka, Kafka Connect and Schema Registry. This enables you to import and parse the certificates as text or files. The supported file formats are:
+You can manage custom certificates for Kafka, Kafka Connect and Schema Registry through the Console UI. This enables you to import and parse the certificates as text or files. The supported file formats are:
 
 - .crt
 - .pem
