@@ -251,6 +251,8 @@ Note you need only set [Kafka cluster properties](#kafka-clusters-properties) to
 
 #### Conduktor Gateway
 
+Configuring Gateway properties will enable you to deploy and manage interceptors on your virtual clusters.
+
 | Property | Description | Env | Mandatory | Type | Default | Values | Since |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Gateway | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |

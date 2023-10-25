@@ -8,6 +8,8 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 The Conduktor Console can be configured using a YAML configuration file or through environment variables. The full list of configurable properties can be found [here](./env-variables.md). Note that it's also possible to make some configurations (such as Kafka cluster configuration) through our [API](./api-overview.md).
 
+Note you can also configure your clusters within the [Admin](#../../../admin/managing-clusters.mdx) section of Console, whereby you can also upload certificates using the [certificate store](./ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+
 ## GitOps: Managing Cluster Configurations
 :::tip
 Our recommendation is to use the Console [API](./api-overview.md) if you wish to configure clusters with a GitOps approach. 
@@ -28,8 +30,12 @@ The below outlines reusable snippets for common configurations such as:
 - [Amazon MSK with Glue Schema Registry](#amazon-msk-with-glue-schema-registry)
 - [Confluent Cloud Example](#confluent-cloud-example)
 - [Confluent Cloud with Schema Registry](#confluent-cloud-with-schema-registry)
+- [Confluent Cloud with Service Account Management](#confluent-cloud-with-service-account-management)
 - [SSL Certificates Example - Aiven (truststore)](#ssl-certificates-example---aiven-truststore)
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
+- [Aiven with Service Account Management](#aiven-with-service-account-management)
+- [Conduktor Gateway Virtual Cluster](#conduktor-gateway-virtual-cluster)
+
 
 ## Complete Configuration Example
 
@@ -126,7 +132,7 @@ license: "" # license key if Enterprise
 
 ## Plain Auth Example
 
-Connect to a local cluster with no auth/encryption, for example a local development Kafka
+Connect to a local cluster with no auth/encryption, for example a local development Kafka.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -151,7 +157,7 @@ clusters:
 
 ## Plain Auth With Schema Registry
 
-Connect to a local cluster with schema registry
+Connect to a local cluster with schema registry.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -220,7 +226,7 @@ Cluster with Kafka Connect configured with Basic Auth
 
 ## Amazon MSK with IAM Authentication Example
 
-Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secret
+Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secret.
 
 ### Billing note
 
@@ -256,7 +262,7 @@ clusters:
 </TabItem>
 </Tabs>
 
-Connect to an MSK cluster with IAM credentials inherited from environment
+Connect to an MSK cluster with IAM credentials inherited from environment.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -300,7 +306,7 @@ sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleA
 
 ## Amazon MSK with Glue Schema Registry
 
-Connect to an MSK cluster with schema registry using credentials
+Connect to an MSK cluster with schema registry using credentials.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -342,7 +348,7 @@ clusters:
 </TabItem>
 </Tabs>
 
-Connect to an MSK cluster with schema registry using the default chain of credentials providers
+Connect to an MSK cluster with schema registry using the default chain of credentials providers.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -382,7 +388,7 @@ clusters:
 </TabItem>
 </Tabs>
 
-Connect to an MSK cluster with schema registry using a specific role
+Connect to an MSK cluster with schema registry using a specific role.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -456,7 +462,7 @@ schemaRegistry:
 
 ## Confluent Cloud Example
 
-Connect to a confluent cloud cluster using API keys
+Connect to a Confluent cloud cluster using API keys.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -488,7 +494,7 @@ clusters:
 
 ## Confluent Cloud with Schema Registry
 
-Connect to a confluent cloud cluster with schema registry using basic auth
+Connect to a Confluent cloud cluster with schema registry using basic auth.
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML File">
@@ -523,6 +529,49 @@ Connect to a confluent cloud cluster with schema registry using basic auth
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME: '<username>'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: '<password>'
+```
+
+</TabItem>
+</Tabs>
+
+## Confluent Cloud with Service Account Management
+
+Connect to a Confluent Cloud cluster and configure additional properties to manage Service Accounts, API Keys and ACLs. 
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
+```yaml
+- id: 'confluent-pkc'
+  name: 'Confluent Prod'
+  bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
+  kafkaFlavor:
+    type: "Confluent"
+    key: "<api_key>" # Confluent Cloud API Key, NOT cluster API Key
+    secret: "<api_secret>" # Confluent Cloud API Secret, NOT cluster API Secret
+    confluentEnvironmentId: "<env_id>"
+    confluentClusterId: "<cluster_id>"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
+
+```bash
+    environment:
+    environment:
+      CDK_CLUSTERS_0_ID: 'confluent-pkc'
+      CDK_CLUSTERS_0_NAME: 'Confluent Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<username>\" password=\"<password>\";"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Confluent"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_KEY: "<api_key>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_SECRET: "<api_secret>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTENVIRONMENTID: "<env_id>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID: "<cluster_id>"
 ```
 
 </TabItem>
@@ -595,6 +644,87 @@ You should have 3 files, and generally they are embedded in 2 files:
       CDK_CLUSTERS_0_NAME: 'Aiven SSL'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21650'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SSL\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----\nssl.keystore.type=PEM\nssl.keystore.key=-----BEGIN PRIVATE KEY----- <YOUR ACCES KEY> -----END PRIVATE KEY-----\nssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----"
+```
+
+</TabItem>
+</Tabs>
+
+## Aiven with Service Account Management
+
+Connect to an Aiven cluster and configure additional properties to manage Service Accounts and ACLs. 
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
+```yaml
+- id: 'aiven-09ba'
+  name: 'Aiven Prod'
+  bootstrapServers: 'kafka-09ba.aivencloud.com:21661'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=SCRAM-SHA-512
+    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="<username>" password="<password>";
+    ssl.truststore.type=PEM
+    ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
+  kafkaFlavor:
+    type: "Aiven"
+    apiToken: "<api_token>" 
+    project: "<project>" 
+    serviceName: "kafka-18350d67" # kafka cluster id (service name)
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
+
+```bash
+    environment:
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven-09ba'
+      CDK_CLUSTERS_0_NAME: 'Aiven Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21661'
+      CDK_CLUSTERS_0_PROPERTIES: "    security.protocol=SASL_SSL\n
+    sasl.mechanism=SCRAM-SHA-512\nsasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="username" password="password";\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Aiven"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_APITOKEN: "<api_key>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_PROJECT: "<api_secret>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME: "kafka-18350d67"
+```
+
+</TabItem>
+</Tabs>
+
+## Conduktor Gateway Virtual Cluster
+
+Configure virtual clusters from your [Conduktor Gateway](https://docs.conduktor.io/gateway) deployment to manage interceptors within Console. 
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
+```yaml
+- id: 'kafka'
+  name: 'Kafka'
+  bootstrapServers: 'http://conduktor-proxy-internal:8888'
+  kafkaFlavor:
+    type: "Gateway"
+    url: "http://conduktor-proxy-internal:8888" 
+    user: "admin" 
+    password: "conduktor" 
+    virtualCluster: "passthrough" 
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven-09ba'
+      CDK_CLUSTERS_0_NAME: 'Aiven Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'conduktor-proxy-internal:9092'
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Gateway"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_URL: "http://conduktor-proxy-internal:8888"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_USER: "admin"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD: "conduktor"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
 ```
 
 </TabItem>
