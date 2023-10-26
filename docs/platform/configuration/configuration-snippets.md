@@ -520,7 +520,6 @@ Connect to a Confluent cloud cluster with schema registry using basic auth.
 
 ```bash
     environment:
-    environment:
       CDK_CLUSTERS_0_ID: 'confluent-pkc'
       CDK_CLUSTERS_0_NAME: 'Confluent Prod'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
