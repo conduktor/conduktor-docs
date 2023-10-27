@@ -24,6 +24,8 @@ tags:
     description: APIs to interact with plugins within Conduktor Gateway.
   - name: RBAC
     description: APIs to manage RBAC
+  - name: User mappings
+    description: APIS to perform operations on user mappings within Conduktor Gateway.
 servers:
   - url: "/admin"
 paths:
@@ -75,6 +77,116 @@ paths:
         - basicAuth: []
       operationId: Auth_v1_createPlatformRbacToken
       deprecated: false
+  "/userMappings/v1/vcluster/{vcluster}":
+    post:
+      summary: Create a user mapping for a virtual cluster
+      tags:
+        - User mappings
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: vcluster
+          required: true
+          description: The id of the virtual cluster to create a new user mapping
+      requestBody:
+        content:
+          application/json:
+            example:
+              username: conduktor
+            schema:
+              "$ref": "#/components/schemas/UserMappingRequest"
+      responses:
+        '201':
+          description: User mapping is created
+        '401':
+          description: ''
+          content: {}
+        '403':
+          description: Permission not granted
+          content:
+            application/json:
+              example:
+                message: You do not have permission to call this API, please contact your administrator.
+      security:
+        - basicAuth: []
+      operationId: Clusters_v1_createUserMapping
+      deprecated: false
+    get:
+      summary: List user mappings for a virtual cluster
+      tags:
+        - User mappings
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: vcluster
+          required: true
+          description: The id of the virtual cluster to list user mappings for
+      responses:
+        '200':
+          description: List of the topic mappings with their configuration
+          content:
+            application/json:
+              example:
+                - username1
+                - username2
+              schema:
+                items:
+                  type: string
+                example:
+                  - username1
+                  - username2
+                type: array
+        '401':
+          description: ''
+          content: { }
+        '403':
+          description: Permission not granted
+          content:
+            application/json:
+              example:
+                message: You do not have permission to call this API, please contact your administrator.
+      security:
+        - basicAuth: [ ]
+      operationId: Clusters_v1_listUserMappings
+      deprecated: false
+  "/userMappings/v1/vcluster/{vcluster}/username/{username}":
+    delete:
+      summary: Delete a user mapping for a virtual cluster
+      tags:
+        - User mappings
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: vcluster
+          required: true
+          description: The id of the virtual cluster to delete a user mapping for
+        - schema:
+            type: string
+          in: path
+          name: username
+          required: true
+          description: The username to delete the user mapping for
+      responses:
+        '204':
+          description: User mapping deleted
+          content: {}
+        '401':
+          description: ''
+          content: {}
+        '403':
+          description: Permission not granted
+          content:
+            application/json:
+              example:
+                message: You do not have permission to call this API, please contact your administrator.
+      security:
+        - basicAuth: []
+      operationId: Clusters_v1_deleteUserMapping
+      deprecated: false
+
   "/vclusters/v1/vcluster/{vcluster}/username/{username}":
     post:
       summary: Create a virtual cluster with a username to connect to it
@@ -126,7 +238,7 @@ paths:
         - basicAuth: []
       operationId: Auth_v1_createClusterAccountToken
       deprecated: false
-  "/vclusters/v1/":
+  "/vclusters/v1":
     get:
       summary: List virtual clusters
       tags:
@@ -1059,7 +1171,7 @@ paths:
         - basicAuth: []
       operationId: Interceptor_v1_getInterceptors
       deprecated: false
-  "/plugins/v1/":
+  "/plugins/v1":
     get:
       summary: List all available plugins
       tags:
@@ -1153,6 +1265,12 @@ components:
       type: object
       required:
         - lifeTimeSeconds
+    UserMappingRequest:
+      properties:
+        username:
+          example: conduktor
+          type: string
+          description: username
     RbacTokenRequest:
       properties:
         organization:
