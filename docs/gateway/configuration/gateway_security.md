@@ -45,7 +45,7 @@ conduktor-gateway:
 MSK requires a file containing all the properties required rather than just environment variables.
 Connecting to MSK is today supported with `Access Key ID` and `Access Secret Key`. 
 
-Create a file containing your connection properties, such as the below.
+Create a file containing your connection properties, e.g. `msk.properties` such as the below.
 
 ```properties
 security.protocol=SASL_SSL
