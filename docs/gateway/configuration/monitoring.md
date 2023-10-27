@@ -48,3 +48,4 @@ Please note that if you enabled `GATEWAY_SECURED_METRICS` you will need to acces
 | The number of authentication attempts that failed for each user | `gateway.failed_authentications`   |
 | The log end offset of client topics | `gateway.topic.log_end_offset`   |
 | The current offset of consumer group on client topic | `gateway.topic.current_offset`   |
+| The total bytes exchanged within the context of the specified topic | `gateway_bytes_exchanged_topic_total` |
