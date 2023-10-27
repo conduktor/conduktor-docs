@@ -114,6 +114,7 @@ conduktor-gateway:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093
 ```
 
+Interceptors are interacted with through the admin API using a vcluster name of `passthrough`.
 
 ## Client to Gateway, additional security
 
