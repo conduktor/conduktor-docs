@@ -274,3 +274,16 @@ This could be modified by adding specfic claims in the token to be sent to Gatew
 
 The virtual cluster could be defined for a token using the `gateway.vcluster` claim.
 You can also override the user from the subject by defining a `gateway.username` claim.
+
+If you can't specify claims yourself, there is an alternative to map `username` to `vclsuter`. We can instead map the claim through the Gateway API.
+Here you are mapping the username, `conduktor` to the vcluster, `my-vcluster`.
+
+```
+curl --location ‘http://localhost:8888/admin/userMappings/v1/vcluster/my-vcluster’ \
+--header ‘Content-Type: application/json’ \
+--user “admin:conduktor” \
+--data ‘{
+    “username”: “conduktor”
+}’
+```
+
