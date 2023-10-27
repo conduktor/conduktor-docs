@@ -42,8 +42,7 @@ conduktor-gateway:
 
 ## MSK
 
-MSK requires a file containing all the properties required rather than just environment variables.
-Connecting to MSK is today supported with `Access Key ID` and `Access Secret Key`. 
+MSK requires a file containing properties required, use environment variables for the `Access Key ID` and `Access Secret Key`. 
 
 Create a file containing your connection properties, such as the below.
 
@@ -51,9 +50,7 @@ Create a file containing your connection properties, such as the below.
 security.protocol=SASL_SSL
 sasl.mechanism=AWS_MSK_IAM
 sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
-sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
-aws_access_key_id=<ACCESS_KEY_ID>
-aws_secret_access_key=<SECRET_ACCESS_KEY>
+sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
 ```
 For some help on how you might find these you can follow the [Conduktor cluster connection guide](https://docs.conduktor.io/platform/admin/managing-clusters/#connect-to-a-msk-cluster), or speak to your MSK admin.
 
