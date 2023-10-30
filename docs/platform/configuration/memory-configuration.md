@@ -19,7 +19,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="Console Helm" label="Console Helm">
 
-```yml
+```yaml
 # Values.yaml
 ...
 platform:
@@ -32,7 +32,7 @@ platform:
 </TabItem>
 <TabItem value="Kubernetes" label="Kubernetes">
 
-```bash
+```yaml
 # deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -51,7 +51,7 @@ template:
 </TabItem>
 <TabItem value="Docker Compose" label="Docker Compose">
 
-```bash
+```yaml
 # docker-compose.yaml
 ...
   conduktor-platform:
