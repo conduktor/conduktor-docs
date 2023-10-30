@@ -677,7 +677,6 @@ Connect to an Aiven cluster and configure additional properties to manage Servic
 
 ```bash
     environment:
-    environment:
       CDK_CLUSTERS_0_ID: 'aiven-09ba'
       CDK_CLUSTERS_0_NAME: 'Aiven Prod'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21661'
@@ -726,5 +725,43 @@ Configure virtual clusters from your [Conduktor Gateway](https://docs.conduktor.
       CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
 ```
 
+</TabItem>
+</Tabs>
+
+## SASL/OAUTHBEARER and OIDC Kafka Cluster Example
+
+OAUTHBEARER with OIDC Authentication is possible since Kafka 3.1 and [KIP-768](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=186877575)
+
+To demonstrate OIDC authentication, NASA has a Kafka Cluster from which you can connect to after you [Sign Up](https://gcn.nasa.gov/quickstart).  
+Here's a config example that works for their cluster.  
+Adapt the values to your needs for your own Kafka Cluster.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
+```yml
+clusters:
+  - id: 'nasa'
+    name: 'GCN NASA Kafka'
+    bootstrapServers: 'kafka.gcn.nasa.gov:9092'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=OAUTHBEARER
+      sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<YOUR_CLIENT_ID>" \
+      clientSecret="<YOUR_CLIENT_SECRET>";
+      sasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token
+      sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+```
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'nasa'
+      CDK_CLUSTERS_0_NAME: 'GCN NASA Kafka'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka.gcn.nasa.gov:9092'
+      CDK_CLUSTERS_0_PROPERTIES: 'security.protocol=SASL_SSL\nsasl.mechanism=OAUTHBEARER\nsasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="<YOUR_CLIENT_ID>" clientSecret="<YOUR_CLIENT_SECRET>";\nsasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token\nsasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler'
+```
 </TabItem>
 </Tabs>
