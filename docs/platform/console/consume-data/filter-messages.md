@@ -4,19 +4,35 @@ title: Filter Messages
 description: Use simple filters or JavaScript filters in Conduktor Console.
 ---
 
-Console enables you to view messages in your Kafka topics. There are numerous mechanisms to help you drill down into a topic to find specific messages.
+There are numerous mechanisms to help you drill down into a topic to find specific messages.
 
- - [Simple Filters](#simple-filters)
+ - [Standard Filters](#standard-filters)
+ - [Custom Filters](#custom-filters)
  - [JavaScript Filters](#javascript-filters)
 
+## Standard Filters
 
-## Simple Filters
+By default, the most recent 500 records are displayed from a topic. However, there are multiple filters available for customizing the results displayed in the topic consume view. 
 
-In the example below, the topic **wikipedia.parsed** is selected. 
+| Filter | Description |
+|:-------:|:-------:|
+| Show From | **Time-based** or **offset-based** filter for determining where to start consuming from. |
+| Limit | **Time-based** or **offset-based** filter for determing where to limit consumption. Choose 'None (live consume)' for **live consumer mode**.  |
+| Partitions | Choose all partitions or specific partition(s) to consume from. |
 
-After selecting a topic, you can [format](../format-data) the message to view only specific fields, **filter** your records according to multiple criteria, and also manually decide on the **deserialisation** formats for the messages key and value.
+![Format Data](/img/console/console-standard-filter.png)
 
-// TO DO
+## Custom Filters
+
+Console provides a powerful mechanism for filtering on the message **key** and **value**. From within the topic consume view, select **Add filter** to create a new custom filter.
+
+Note you have an array of different operators to build your filter conditions. You can also add multiple filters in parallel to facilitate more advanced filtering requirements. 
+
+:::tip
+Toggle **search in a specific field** to directly select a field that is derived from a sample of your messages.
+:::
+
+![Format Data](/img/console/console-custom-filter.png)
 
 ## JavaScript Filters
 
