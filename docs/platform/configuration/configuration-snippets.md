@@ -35,6 +35,7 @@ The below outlines reusable snippets for common configurations such as:
 - [2 Way SSL (keystore + truststore)](#2-way-ssl-keystore--truststore)
 - [Aiven with Service Account Management](#aiven-with-service-account-management)
 - [Conduktor Gateway Virtual Cluster](#conduktor-gateway-virtual-cluster)
+- [SASL/OAUTHBEARER and OIDC Kafka Cluster](#sasloauthbearer-and-oidc-kafka-cluster-example)
 
 
 ## Complete Configuration Example
