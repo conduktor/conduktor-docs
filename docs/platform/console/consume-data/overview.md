@@ -18,7 +18,7 @@ After selecting a topic, you can **[format](../format-data)** the message to kee
 ### Message DateTime 
 
 :::info
-Note that the date and time shown on Console is taken from the **local timezone** of the user.
+Note that the date and time shown on Console are taken from the **local timezone** of the user.
 :::
 
 For example, if you are producing a message from Dublin, Ireland Time (UTC+1) at 14:57:38 local , and you then consume this message from your browser (in Dublin), you will see 14:57:38.
