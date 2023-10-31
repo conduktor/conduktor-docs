@@ -27,7 +27,7 @@ To manually edit permissions, select the operation and choose **Allow**,**Deny**
 
 ![Console ACLs](/img/console/console-acls.png)
 
-# Provider Integrations
+## Provider Integrations
 
 Connect your Kafka provider to manage their benefits directly in Conduktor Console. The additional functionality you get from connecting your provider is made possible via their APIs.
 
