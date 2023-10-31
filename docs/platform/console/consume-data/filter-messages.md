@@ -38,7 +38,7 @@ Toggle **search in a specific field** to directly select a field that is derived
 
 JavaScript filters let you perform complex searches on the JSON representation of your kafka record and its metadata.  
 
-Although we recommend using [simple filters](www.test.com), we acknowledge that JavaScript may be preferable for some users or when there are advanced filtering requirements.
+Although we recommend using [custom filters](#custom-filters), we acknowledge that JavaScript may be preferable for some users or when there are advanced filtering requirements.
 
  - [Create a Javascript filter](#create-a-javascript-filter)
  - [Accessing message attributes](#accessing-message-attributes)

@@ -1,16 +1,18 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: Schema Registry
 description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
 # Schema Registry
 
-Conduktor Platform provides a visual interface for Schema Registry, allowing you to create and manage schemas with ease. Having Schema Registry ensures there is an automated way of ensuring data verification, schema evolution, and ability for new consumers to emerge without breaking downstream.
+Conduktor provides a visual interface for Schema Registry, allowing you to create and manage schemas with ease. Having Schema Registry ensures there is an automated way of ensuring data verification, schema evolution, and ability for new consumers to emerge without breaking downstream.
+
+Conduktor supports **Confluent**, **Confluent like** (e.g. Karapace) and **AWS Glue** schema registry types.
 
 ## Getting Started
 
-Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Schema Registry can be added on creation of clusters or to existing clusters.
+Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Add your Schema Registry details on the tab available on an existing cluster configuration.
 
 ## Creating a Schema
 
@@ -28,13 +30,13 @@ Conduktor Platform supports the [Avro](https://avro.apache.org/docs/current/spec
 
 Schemas can be applied in several ways: To topics, to records, to both topics & records, or through a custom method.
 
-- Topic Name: This strategy associates your schema with a specific topic of your choosing. Simply enter the topic name that you want the schema to apply to. You will also need to specify if the schema will apply to the key or value of a message. The topic name field will auto-complete for you, so no need to remember specific spellings!
+- **Topic Name**: This strategy associates your schema with a specific topic of your choosing. Simply enter the topic name that you want the schema to apply to. You will also need to specify if the schema will apply to the key or value of a message. The topic name field will auto-complete for you, so no need to remember specific spellings!
 
-- Record Name: This is set within a message. The schema will only apply to messages with the record name that you define, but it will apply globally across all topics. Note that the field which this will apply to varies based on the format you choose. For Avro, this is set by {name}. For JSON, it is {title}. For Protobuf, it will be {message}.
+- **Record Name**: This is set within a message. The schema will only apply to messages with the record name that you define, but it will apply globally across all topics. Note that the field which this will apply to varies based on the format you choose. For Avro, this is set by {name}. For JSON, it is {title}. For Protobuf, it will be {message}.
 
-- Topic + Record Name: Choose this option if you want your schema to apply to both a specific topic, and messages with a specific name within that topic.
+- **Topic + Record Name**: Choose this option if you want your schema to apply to both a specific topic, and messages with a specific name within that topic.
 
-- Custom: For more advanced options, use the Custom strategy. You can define your strategy in the Custom name field.
+- **Custom**: For more advanced options, use the Custom strategy. You can define your strategy in the Custom name field.
 
 ### Schema
 

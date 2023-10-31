@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 7
 title: Reprocess Messages
 description: Conduktor Platform can help you reprocess a message within a topic. This could be used for reprocessing a message from an existing DLQ (Dead Letter Queue), or for pushing any observed message into another topic.
 ---
