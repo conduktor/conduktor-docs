@@ -23,7 +23,7 @@ After selecting a service account, you can **edit** existing ACLs and **add** ne
  - Use preconfigured permissions (e.g. Consumer, Producer, Admin)
  - Manually define permissions
 
-To manually edit permissions, select the operation and choose **Allow**,**Deny** or **Not Set**.
+To manually edit permissions, select the operation and choose **Allow**, **Deny** or **Not Set**.
 
 ![Console ACLs](/img/console/console-acls.png)
 
