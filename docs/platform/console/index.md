@@ -25,9 +25,9 @@ Key features relating to exploration are:
     - Time, Offset and Partition based filters
     - JavaScript filters
     - Simple filters (contains, does not contain, equals, not equals etc.)
-    - Support for Avro, Protobuf, JSON
  - View and update topic configurations
  - View schemas and version history
+    - Support for Avro, Protobuf, JSON
     - Supporting all Confluent-like schema resgistries and AWS Glue
  - View consumer groups and topic-partition lag
  - View connectors and associated tasks
