@@ -13,7 +13,7 @@ The Conduktor Console is a powerful UI for Apache Kafka. The Console equips user
  - [Operations](#operations)
  - [Troubleshooting](#troubleshooting)
 
-![Conosle](/img/console/console-overview.png)
+![Console](/img/console/console-overview.png)
 
 ## Exploration
 
