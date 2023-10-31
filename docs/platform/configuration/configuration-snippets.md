@@ -8,7 +8,7 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 The Conduktor Console can be configured using a YAML configuration file or through environment variables. The full list of configurable properties can be found [here](./env-variables.md). Note that it's also possible to make some configurations (such as Kafka cluster configuration) through our [API](./api-overview.md).
 
-Note you can also configure your clusters within the [Admin](#../../../admin/managing-clusters.mdx) section of Console, whereby you can also upload certificates using the [certificate store](./ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+Note you can also configure your clusters within the [Admin](../admin/managing-clusters.md) section of Console, whereby you can also upload certificates using the [certificate store](./ssl-tls-configuration.md#using-the-conduktor-certificate-store).
 
 ## GitOps: Managing Cluster Configurations
 :::tip
@@ -41,7 +41,7 @@ The below outlines reusable snippets for common configurations such as:
 
 This demonstrates a complete configuration for Conduktor Enterprise consisting of one Kafka cluster with Schema Registry, SSO and license key. 
 
-For identity provider specific guides see [configuring SSO](./user-authentication/SSO/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](./user-authentication/local-admin-and-users.md) instead.
+For identity provider specific guides see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](/platform/configuration/user-authentication/local-admin-and-users/) instead.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
