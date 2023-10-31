@@ -29,7 +29,7 @@ Console provides a powerful mechanism for filtering on the message **key** and *
 Note you have an array of different operators to build your filter conditions. You can also add multiple filters in parallel to facilitate more advanced filtering requirements. 
 
 :::tip
-Toggle **search in a specific field** to directly select a field that is derived from a sample of your messages.
+Toggle **search in a specific field** to directly select a field that is derived from a sample of your messages. Note this function works only on JSON records. 
 :::
 
 ![Format Data](/img/console/console-custom-filter.png)
