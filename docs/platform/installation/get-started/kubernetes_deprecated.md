@@ -119,7 +119,7 @@ For production environments, this is  **mandatory**:
 
 * To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy and disable the dependency on Bitnami PostgreSQL with `postgresql.enabled=false`
 * To setup an [external S3 Bucket](#setup-s3) and disable the dependency on Bitnami MinIO with `minio.enabled=false`
-* To disable demo Kafka broker with `kafka.enabled=false` and [use your own Kafka cluster](../../admin/managing-clusters.mdx).
+* To disable demo Kafka broker with `kafka.enabled=false` and [use your own Kafka cluster](../../admin/managing-clusters.md).
 * Enough resources to run Conduktor and its dependencies (PostgreSQL, MinIO, Kafka) with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ### Database
