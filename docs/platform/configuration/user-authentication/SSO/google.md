@@ -39,6 +39,10 @@ After the creation, the pop-up below appears. You can save the client ID and sec
 You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
 :::
 
+:::info
+If you need to add an **authorized domain** to your Google account, you can follow [this guide](https://support.google.com/cloud/answer/6158849?hl=en-GB#authorized-domains&zippy=%2Cauthorized-domains).
+:::
+
 ## Console Configuration
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret by what you got during the step 4.
