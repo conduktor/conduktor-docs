@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Formatting Data (JQ)
 description: Export data from Conduktor Console.
 ---

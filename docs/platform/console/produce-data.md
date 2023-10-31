@@ -18,8 +18,6 @@ Conduktor supports common Kafka **serializers** to produce data:
 
 - String or JSON
 - Avro, Protobuf and JSON-Schema
-  - As of today, only Confluent or Confluent-like Schema Registry is supported
-  - As of today, only [TopicNameStrategy](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html#subject-name-strategy) is supported
 - Binary (using b64 representation)
 
 ## Random Data Generator

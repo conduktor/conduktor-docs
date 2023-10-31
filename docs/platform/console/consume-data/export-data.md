@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 6
 title: Export Data
 description: Export data from Conduktor Console.
 ---

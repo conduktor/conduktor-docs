@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Filter Messages
 description: Use simple filters or JavaScript filters in Conduktor Console.
 ---
