@@ -25,8 +25,8 @@ Jump to:
 
 # Gateway to your Kafka security
 
-You can use all the Kafka security protocols; PLAINTEXT (none), SASL_PLAINTEXT, SASL_SSL and soon SSL (in development).
-For these security protocols we support all SASL mechanisms; PLAIN, SCRAM SHA, OAuthBearer, Kerberos etc.
+You can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.
+For these security protocols we support all SASL mechanisms; `PLAIN`, `SCRAM SHA`, `OAuthBearer`, `Kerberos` etc.
 
 Provide Gateway with the environment variables to connect to Kafka, these start with a `KAFKA_` prefix.
 
