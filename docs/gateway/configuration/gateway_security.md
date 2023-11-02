@@ -40,38 +40,6 @@ conduktor-gateway:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
 ```
 
-## MSK
-
-MSK requires a file containing properties required, use environment variables for the `Access Key ID` and `Access Secret Key`. 
-
-Create a file containing your connection properties, e.g. `msk.properties` such as the below.
-
-```properties
-security.protocol=SASL_SSL
-sasl.mechanism=AWS_MSK_IAM
-sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
-sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
-```
-For some help on how you might find these you can follow the [Conduktor cluster connection guide](https://docs.conduktor.io/platform/admin/managing-clusters/#connect-to-a-msk-cluster), or speak to your MSK admin.
-
-
-Provide the Gateway container access to that file such as with a volume bind;
-
-```yaml
-volumes:
-  - type: bind
-    source: "./msk.properties"
-    target: /msk.properties
-    read_only: true
-```
-
-Lastly provide Gateway the path to the file so it can use the properties in the connection e.g.;
-
-```yaml
-GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /msk.properties }'
-```
-
-
 # Your client to Gateway security
 You have several options when connecting clients to Gateway.
 Passthrough security passes the existing credentials straight through to the backing cluster with no further checks. This is likely what you will use out of the box.
