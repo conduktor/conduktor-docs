@@ -149,6 +149,7 @@ When it is set
 | `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                             | Name of offsetStore topic                           |
 | `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic`   | Name of consumerGroupSubscriptionBackingTopic topic |
 | `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                                 | Name of license topic                               |
+| `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                             | Name of the user mapping topic                      |
 
 #### `IN_MEMORY` State Configurations
 
