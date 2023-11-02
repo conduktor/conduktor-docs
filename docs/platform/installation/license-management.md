@@ -10,17 +10,8 @@ Conduktor requires a license to enable features beyond the base features. The li
 
 ### As an environment variable
 
-In the `docker run` command, you can add the -e flag to specify your license key, like this:
-`-e CDK_LICENSE="YOUR_LICENSE_HERE"`
-
-If you have many environment variables, you can write them in a file, and load this file using the --env-file flag.
-For example, you can create a file named `env.list` in which you write:
-
-```
-CDK_LICENSE="YOUR_LICENSE_HERE"
-```
-
-And then run the `docker run` command with `--env-file=env.list`
+In your docker compose, you can add the environment variable to specify your license key, like this:
+`CDK_LICENSE="YOUR_LICENSE_HERE"`
 
 ### Into the configuration file
 

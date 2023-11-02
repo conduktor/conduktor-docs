@@ -3,8 +3,72 @@ sidebar_position: 9
 title: Memory Configuration
 description: Fine tune memory usage of Conduktor
 ---
+# Memory configuration (1.19 and later)
 
-# Memory configuration
+**RUN_MODE** is gone!  
+We now rely on container CGroups limits and use up to 80% of container memory limit for JVM max heap size.
+Our settings are the following
+```` shell
+-XX:+UseContainerSupport -XX:MaxRAMPercentage=80
+````
+
+You now only need to care about the limits that you set to your container.  
+
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="Console Helm" label="Console Helm">
+
+```yaml
+# Values.yaml
+...
+platform:
+  resources:
+    limits:
+      memory: 8Gi
+...
+```
+
+</TabItem>
+<TabItem value="Kubernetes" label="Kubernetes">
+
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+...
+template:
+  spec:
+    containers:
+      - name: platform
+        image: conduktor/conduktor-platform:1.19.0
+        resources:
+          limits:
+            memory: 8G
+...
+```
+
+</TabItem>
+<TabItem value="Docker Compose" label="Docker Compose">
+
+```yaml
+# docker-compose.yaml
+...
+  conduktor-platform:
+    image: conduktor/conduktor-platform:1.19.0
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+...
+```
+
+</TabItem>
+</Tabs>
+
+Read [this article](https://bell-sw.com/announcements/2020/10/28/JVM-in-Linux-containers-surviving-the-isolation/) to understand what this is about.
+
+# Memory configuration Before 1.19
 
 Conduktor Console uses the environment variable `RUN_MODE` to switch between different memory configuration presets. 
 
@@ -39,7 +103,7 @@ The other modules will still use the preset from the `RUN_MODE` value.
 
 ```
 RUN_MODE=small
-GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
+GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 ``` 
 In this example we set around 5GB of RAM for Governance and leave other modules like Console and Authenticator with `small` memory presets. 
 
@@ -59,11 +123,11 @@ Conduktor Console running environment variables with a target of 16GB:
 
 ```
 RUN_MODE=custom
-CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000"
-GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000"
+CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000m"
+GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 AUTHENTICATOR_MEMORY_OPTS="-Xms128m -Xmx512m"
 ``` 
-In this example we set around 8GB for Console, 5GB for Governance and 510MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
+In this example we set around 8GB for Console, 5GB for Governance and 512MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
 
 
 :::caution     

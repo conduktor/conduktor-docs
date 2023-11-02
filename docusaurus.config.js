@@ -97,10 +97,6 @@ const config = {
                 to: '/platform/console',
               },
               {
-                label: 'Testing',
-                to: '/platform/testing',
-              },
-              {
                 label: 'Monitoring',
                 to: '/platform/monitoring',
               },

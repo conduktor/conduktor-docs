@@ -13,40 +13,55 @@ The Conduktor Console is a powerful UI for Apache Kafka. The Console equips user
  - [Operations](#operations)
  - [Troubleshooting](#troubleshooting)
 
-![Conosle](/img/console/console.webp)
+![Console](/img/console/console-overview.png)
 
 ## Exploration
 
-The Conduktor Console presents all of your topics, schemas, consumer groups, and connectors in an easy-to-understand and centralized UI. 
+The Conduktor Console presents all of your topics, schemas, consumer groups, ACLs and connectors in an easy-to-understand and centralized UI. 
 
 Key features relating to exploration are:
- - Discover topics, schemas, consumer groups and connectors
- - Deep-dive to find messages via:
-    - Quick-search
-    - JS filters
- - Review topic configurations
- - Review schemas and version history
- - Search consumer groups
- - Understand consumer groups and topic-partition lag
- - Search connect instances and associated tasks
+ - Listing all your Kafka resources (topics, schemas, consumer groups, ACLs, connectors)
+ - Deep-diving into topics to find messages via:
+    - Time, Offset and Partition based filters
+    - JavaScript filters
+    - Simple filters (contains, does not contain, equals, not equals etc.)
+ - View and update topic configurations
+ - View schemas and version history
+    - Support for Avro, Protobuf, JSON
+    - Supporting all Confluent-like schema resgistries and AWS Glue
+ - View consumer groups and topic-partition lag
+ - View connectors and associated tasks
+ - View ACLs and service accounts
+ - View broker information
 
 ## Operations
 
 Key features relating to Kafka operations are:
  - Create, Edit, Empty and Delete topics
- - Produce to a topic
- - Create and update schemas
+ - Produce data to a topic
+    - With randomization and 'flow' mode (stream of messages)
+ - Create, update and delete schemas
  - Compare schema versions
  - Reset consumer group offsets
+    - Strategies: earliest, latest, specific offset, shift by, datetime
  - Create, pause, restart and delete Kafka connect instances
- - Reprocess messages
+ - Kafka connector auto-restart
+ - Reprocess messages (DLQ)
+ - Manage ACLs
+ - Manage Service Accounts
+ - Manage Gateway interceptors
+ - Infrastructure monitoring and alerting
+ - Application monitoring and alerting
 
 ## Troubleshooting
 
 Key features relation to troubleshooting Kafka include:
+ - Live consumuption of messages in a topic (while applying filters)
  - Surfacing errors relating to failed Connect tasks
- - Highlighting consumer group lag
+ - Monitoring and alerting on consumer group lag and other Kafka metrics
  - Checking the compatibility of schema changes
+ - Exporting data for deeper analysis
+ - Chaos engineering to test application resilience
 
  
 

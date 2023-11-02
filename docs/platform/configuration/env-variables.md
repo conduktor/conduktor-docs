@@ -20,6 +20,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
       - [LDAP properties](#ldap-properties)
       - [Oauth2 properties](#oauth2-properties)
     - [Kafka clusters properties](#kafka-clusters-properties)
+    - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
     - [Schema registry properties](#schema-registry-properties)
       - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
     - [Kafka Connect properties](#kafka-connect-properties)
@@ -205,17 +206,7 @@ SSO authentication properties (only on enterprise and team plans). See [authenti
 
 ### Kafka clusters properties
 
-:::info Configuring **Kafka Clusters, Schema Registry and Kafka Connect** with YAML is **limited**.  
-Looking to configure your Kafka Clusters using GitOps processes?  
-Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature. 
-:::
-
-:::warning Please consider the following limitations regarding Kafka Cluster definition:
-
-- This is not GitOps. If you later need to update a cluster defined this way, you **must** update it through the UI
-- Some additional properties will interfere with the UI and you won't be able to update them.
-  - `ssl.truststore.path` and `ssl.keystore.path` are known to cause issues.
-:::
+For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster Configurations](./configuration-snippets.md#gitops-managing-cluster-configurations).
 
 You can find sample configurations on the [Configuration Snippets](./configuration-snippets.md) page
 
@@ -230,6 +221,45 @@ You can find sample configurations on the [Configuration Snippets](./configurati
 | `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
 | `clusters[].jmxScrapePort` | JMX-exporter port used to scrape kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
 | `clusters[].nodeScrapePort` | Node-exporter port used to scrape kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
+
+### Kafka vendor specific properties
+
+Note that you do not need to set any of these additional properties to use the core features of the Console. However, by setting them you can get additional benefits such as managing service accounts and ACLs through Conduktor.
+
+#### Confluent Cloud
+
+Note you need only set [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. Setting these additional properties will enable you to manage Confluent Cloud service accounts, API keys and ACLs.
+
+| Property | Description | Env | Mandatory | Type | Default | Values | Since |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Confluent Cloud | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
+| `clusters[].kafkaFlavor.key` | Confluent Cloud API Key | `CDK_CLUSTERS_0_KAFKAFLAVOR_KEY` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.secret` | Confluent Cloud API Secret | `CDK_CLUSTERS_0_KAFKAFLAVOR_SECRET` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.confluentEnvironmentId` | Confluent Environment Id | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTENVIRONMENTID` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.confluentClusterId` | Confluent Cluster Id | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID` | true | string | ∅ | - | `1.19.x` |
+
+#### Aiven 
+
+Note you need only set [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. Setting these additional properties will enable you to manage Aiven service accounts and ACLs.
+
+| Property | Description | Env | Mandatory | Type | Default | Values | Since |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Aiven | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
+| `clusters[].kafkaFlavor.apiToken` | Aiven API token | `CDK_CLUSTERS_0_KAFKAFLAVOR_APITOKEN` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.project` | Aiven project | `CDK_CLUSTERS_0_KAFKAFLAVOR_PROJECT` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.serviceName` | Aiven service name | `CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME` | true | string | ∅ | - | `1.19.x` |
+
+#### Conduktor Gateway
+
+Configuring Gateway properties will enable you to deploy and manage interceptors on your virtual clusters.
+
+| Property | Description | Env | Mandatory | Type | Default | Values | Since |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Gateway | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
+| `clusters[].kafkaFlavor.url` | Gateway endpoint URL | `CDK_CLUSTERS_0_KAFKAFLAVOR_URL` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.user` | Gateway username | `CDK_CLUSTERS_0_KAFKAFLAVOR_USER` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.password` | Gateway password | `CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD` | true | string | ∅ | - | `1.19.x` |
+| `clusters[].kafkaFlavor.virtualCluster` | Gateway virtual cluster | `CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER` | true | string | ∅ | - | `1.19.x` |
 
 ### Schema registry properties
 
