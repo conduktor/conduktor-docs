@@ -128,7 +128,7 @@ See the [environment variables](/gateway/configuration/env-variables/#ssl) for m
 To work with virtual clusters you need to specify `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true` , create a username to connect to the virtual cluster, and update your client to use this username when connecting.
 
 Virtual cluster mode supports;
-* `PLAINTEXT` (none)
+* `PLAINTEXT`
 * `SASL_PLAINTEXT`
 * `SASL_SSL` (with `mTLS` option)
 * `SSL` (*soon*) (with `mTLS`)
