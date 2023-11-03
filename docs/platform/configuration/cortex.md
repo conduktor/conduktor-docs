@@ -46,6 +46,9 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | Swift storage user domain name           | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | Swift storage project ID                 | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | Swift storage region name                | false     | string | ∅                       | `1.18.0` |
+| `CORTEX_ROOT_LOG_LEVEL`                       | Cortex log level                         | false     | string | "info"                  | `1.18.0` |
+| `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level                  | false     | string | "info"                  | `1.18.0` |
+| `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level                     | false     | string | "info"                  | `1.18.0` |
 
 Typically, in docker compose it would look like this:
 ````yaml
