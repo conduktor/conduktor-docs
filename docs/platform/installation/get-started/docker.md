@@ -164,7 +164,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.2
+    image: conduktor/conduktor-platform:1.19.0
     depends_on:
       - postgresql
     ports:
@@ -178,7 +178,7 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.18.2
+    image: conduktor/conduktor-platform-cortex:1.19.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 ```
@@ -223,7 +223,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-platform:
-    image: conduktor/conduktor-platform:1.18.2
+    image: conduktor/conduktor-platform:1.19.0
     depends_on:
       - postgresql
     ports:
@@ -240,7 +240,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.18.2
+    image: conduktor/conduktor-platform-cortex:1.19.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 
