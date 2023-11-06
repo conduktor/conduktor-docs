@@ -50,6 +50,12 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level                  | false     | string | "info"                  | `1.18.0` |
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level                     | false     | string | "info"                  | `1.18.0` |
 
+
+:::info
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overrided completly by mounting a yaml file into path `/opt/override-configs/cortex.yaml`. You can also change path location using `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+This is not possible yet for Alert Manager and Prometheus. 
+:::
+
 Typically, in docker compose it would look like this:
 ````yaml
 version: '3.8'
