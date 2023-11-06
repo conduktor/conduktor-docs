@@ -79,11 +79,8 @@ Curl example :
 ```shell
 $ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
 #{
-#  "authenticator": "DOWN",
-#  "console": "UP",
-#  "testing": "DISABLED",
+#  "console": "DOWN",
 #  "monitoring": "UP",
-#  "topic_analyzer": "DISABLED",
 #  "governance": "UP",
 #  "is_ready": true
 #}
@@ -123,13 +120,9 @@ Curl example :
 ```shell
 curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 # {
-#  "platform": "main-5709b4018926a09601087ace83483ebf137a8c77",
-#  "console": "b5204df2bf9511996f05b3f01344924e9378ae5e",
-#  "console_web": "c67f454eaf7e9331f9992ebd4433a75b82156e2a-staging",
-#  "governance_api": "0.50.9",
-#  "authenticator": "1.7.0",
-#  "monitoring": "0.64.0",
-#  "testing_api": "0.39.0",
-#  "testing_agent": "0.38.0"
+#  "platform": "1.19.0",
+#  "console": "39db3b4b8a968b54549ce29194947c10697961aa",
+#  "console_web": "8c3693ac3b32fa2bf5f2e9177951732fec8c1bac",
+#  "monitoring": "0.72.0"
 # }
 ```
