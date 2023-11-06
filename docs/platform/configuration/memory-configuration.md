@@ -68,7 +68,7 @@ template:
 
 Read [this article](https://bell-sw.com/announcements/2020/10/28/JVM-in-Linux-containers-surviving-the-isolation/) to understand what this is about.
 
-# Memory configuration Before 1.19
+# Memory configuration before 1.19
 
 Conduktor Console uses the environment variable `RUN_MODE` to switch between different memory configuration presets. 
 

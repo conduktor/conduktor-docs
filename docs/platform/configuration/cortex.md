@@ -20,7 +20,9 @@ Otherwise, you can use the storage parameters described below to store the data 
 
 | Env                                           | Description                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|------------------------------------------|-----------|--------|-------------------------|----------|
-| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-platform:8080"`)       | true      | string | ∅                       | `1.18.0` |
+| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-platform:8080"`) | true | string | ∅ | `1.18.0` |
+| `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console | false | bool | false | `1.18.2` |
+| `CDK_SCRAPER_CAFILE`                          | Path to CA certificat file inside container to perform TLS check when scraping metrics from Console | false | string | ∅ | `1.18.2` |
 | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | S3 storage endpoint                      | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region                        | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name                   | true      | string | ∅                       | `1.18.0` |
@@ -44,6 +46,15 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | Swift storage user domain name           | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | Swift storage project ID                 | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | Swift storage region name                | false     | string | ∅                       | `1.18.0` |
+| `CORTEX_ROOT_LOG_LEVEL`                       | Cortex log level                         | false     | string | "info"                  | `1.18.0` |
+| `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level                  | false     | string | "info"                  | `1.18.0` |
+| `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level                     | false     | string | "info"                  | `1.18.0` |
+
+
+:::tip
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overrided completly by mounting a yaml file into path `/opt/override-configs/cortex.yaml`. You can also change path location using `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+This is not possible yet for Alert Manager and Prometheus. 
+:::
 
 Typically, in docker compose it would look like this:
 ````yaml
@@ -53,13 +64,29 @@ services:
     image: conduktor/conduktor-platform:1.18.2
     ports:
       - "8080:8080"
-      CDK_MONITORING_CORTEX-URL: http://cortex:9009/
-      CDK_MONITORING_ALERT-MANAGER-URL: http://cortex:9010/
+    environment: 
+      CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
+      CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
-    hostname: cortex
     image: conduktor/conduktor-platform-cortex:1.18.2
+    ports:
+      - "9009:9009" # cortex api
+      - "9010:9010" # alertmanager api
+      - "9090:9090" # prometheus api
     environment:
       CDK_CONSOLE-URL: "http://conduktor-platform:8080"
 ````
+
+## Troubleshooting  
+
+#### No metrics in monitoring page :  
+-   Go to http://localhost:9090/targets to see Prometheus scraping target status. If it fails, check that you can query metrics endpoint from `conduktor-platform-cortex` container. You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-platform` is configured with [TLS termination](./https-configuration.md#https-configuration)
+
+#### No slack notification alerts
+- Follow the steps to configure Slack integration on http://localhost:8080/admin/integrations page. It will ask to create a Slack App and set Oauth2 authentication token on Console. 
+- Don't forget to manually add Slack App bot into the channel integrations you want to use for alerts notifications.
+- Enable notifications on http://localhost:8080/monitoring/alerts and select the same channel as previously. See [create alert](../monitoring/getting-started/create-alert.md)
+
+If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 

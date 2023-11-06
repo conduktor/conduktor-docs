@@ -161,26 +161,13 @@ From within the container the first step should be verify that all expected serv
 
 ```sh
 conduktor-platform@15012271cc24:/# supervisorctl status
-admin-portal                     RUNNING   pid 32, uptime 0:49:39
-alertmanager                     RUNNING   pid 43, uptime 0:49:39
-authenticator                    RUNNING   pid 29, uptime 0:49:39
-console                          RUNNING   pid 33, uptime 0:49:39
-cortex                           RUNNING   pid 47, uptime 0:49:39
-crond                            EXITED    Nov 07 07:33 PM
-data_masking                     FATAL     Exited too quickly (process log may have details)
-governance_api                   FATAL     Exited too quickly (process log may have details)
-kafka_lag_exporter               RUNNING   pid 71, uptime 0:49:39
+console                          FATAL     Exited too quickly (process log may have details)
 kafka_monitoring_api             RUNNING   pid 31, uptime 0:49:39
 platform_api                     RUNNING   pid 39, uptime 0:49:39
-postgresql                       RUNNING   pid 28, uptime 0:49:39
-prometheus                       RUNNING   pid 41, uptime 0:49:39
-proxy                            RUNNING   pid 72, uptime 0:49:39
-testing                          RUNNING   pid 35, uptime 0:49:39
-testing-agent                    RUNNING   pid 38, uptime 0:49:39
-topic_scanner                    RUNNING   pid 69, uptime 0:49:39
+proxy                            RUNNING   pid 33, uptime 0:49:39
 ```
 
-In the above example you can see that `data_masking` and `governance_api` failed to start. This tells us what log files will be most important to look into.  
+In the above example you can see that `console` failed to start. This tells us what log files will be most important to look into.  
 
 > Tips: if you have an error on supervisorctl command that might be because you don't have correct environment set. Verify that you are running with  `conduktor-platform` user using `/bin/bash` shell and you can force environment by sourcing `/etc/profile` in current shell.
 
@@ -191,7 +178,7 @@ Logs are kept in `/var/conduktor/log`
 For example
 
 ```sh
- cat /var/conduktor/log/data_masking-stdout---supervisor-gm63c0c8.log
+ cat /var/conduktor/log/console-stdout---supervisor-gm63c0c8.log
 ```
 
 You can find a `stdout` file for each service.  

@@ -31,17 +31,7 @@ The following environment variables are used to configure Conduktor Console logs
 | ENV                                 | Default value        |                                                                                                                              |
 |-------------------------------------|----------------------|------------------------------------------------------------------------------------------------------------------------------|
 | `PLATFORM_STARTUP_LOG_LEVEL`        | `INFO`               | Set the setup/configuration process logs level. By default, set to INFO and switch to DEBUG if `CDK_ROOT_LOG_LEVEL` is DEBUG |  
-| `CONSOLE_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                           |  
-| `SCANNER_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring and topic analyzer                                                                                |   
-| `GOVERNANCE_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Logs related to governance (Topic as a Service, Datamasking)                                                                 |  
-| `ADMIN_API_ROOT_LOG_LEVEL`          | `CDK_ROOT_LOG_LEVEL` | Logs related to Console administration                                                                                      |  
-| `AUTHENTICATOR_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to authentication (SSO, LDAP)                                                                                   |  
-| `TESTING_API_ROOT_LOG_LEVEL`        | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Testing UI                                                                           |  
-| `TESTING_AGENT_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to the agent executing tests                                                                                    |  
-| `CORTEX_ROOT_LOG_LEVEL`             | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
-| `CORTEX_ALERT_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Logs related to alerting                                                                                                     |  
-| `KAFKA_LAG_EXPORTER_ROOT_LOG_LEVEL` | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
-| `PROMETHEUS_ROOT_LOG_LEVEL`         | `CDK_ROOT_LOG_LEVEL` | Logs related to monitoring                                                                                                   |  
+| `CONSOLE_ROOT_LOG_LEVEL`            | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                           |   
 | `PLATFORM_API_ROOT_LOG_LEVEL`       | `CDK_ROOT_LOG_LEVEL` | Internal platform api logs (health endpoints)                                                                                |  
 
 #### Log level inheritance
