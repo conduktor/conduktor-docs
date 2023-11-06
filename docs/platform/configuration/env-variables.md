@@ -30,7 +30,6 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 | ENV | Since Version | Until Version | Default Value |  |
 | --- | --- | --- | --- | --- |
 | **`CDK_DEBUG`** | 1.0.0 | latest | `false` | Flag to enable platform debug logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
-| **`RUN_MODE`** | 1.0.2 | latest | `nano` | Memory presets for the platform see [advanced settings](../installation/hardware.md) |
 | **`CDK_VOLUME_DIR`** | 1.0.2 | latest | `/var/conduktor` | Volume directory where Conduktor platform store data \*\* |
 | **`CDK_IN_CONF_FILE`** | 1.0.2 | latest | [`/opt/conduktor/default-platform-config.yaml`](./introduction.md#configuration-file)) | Conduktor platform configuration file location \*\* |
 | **`CDK_LISTENING_PORT`** | 1.2.0 | latest | `8080` | Platform listening port \*\* |
@@ -48,7 +47,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 | **`CDK_ROOT_LOG_COLOR`** | 1.11.0 | latest | `true` | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details. |
 | **`CDK_ONBOARDING_MODE`** | 1.14.0 | latest | `auto` | Specify whether to start Conduktor with the onboarding wizard enabled. Accepted values: `auto`, `never`, `always`. Defaults to `auto`  that will start onboarding when no configuration is provided. |
 | **`PROXY_BUFFER_SIZE`** | 1.16.0 | latest | `8k` | Tune internal Nginx `proxy_buffer_size`. |
-| **`CONSOLE_MEMORY_OPTS`** | 1.18.0 | latest | Depends on `RUN_MODE` | Configure memory Java options for Console module. See [memory setup page](./memory-configuration.md) for more details |
+| **`CONSOLE_MEMORY_OPTS`** | 1.18.0 | latest | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80` | Configure memory Java options for Console module. See [memory setup page](./memory-configuration.md) for more details |
 
 ## Platform properties reference
 
