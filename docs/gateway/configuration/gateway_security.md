@@ -247,11 +247,11 @@ If you can't specify claims yourself, there is an alternative to map `username` 
 Here you are mapping the username, `conduktor` to the vcluster, `my-vcluster`.
 
 ```
-curl --location ‘http://localhost:8888/admin/userMappings/v1/vcluster/my-vcluster’ \
---header ‘Content-Type: application/json’ \
---user “admin:conduktor” \
---data ‘{
-    “username”: “conduktor”
-}’
+curl --location 'http://localhost:8888/admin/userMappings/v1/vcluster/my-vcluster' \
+--header 'Content-Type: application/json' \
+--user "admin:conduktor" \
+--data '{
+    "username": "conduktor"
+}'
 ```
 
