@@ -20,9 +20,9 @@ Otherwise, you can use the storage parameters described below to store the data 
 
 | Env                                           | Description                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|------------------------------------------|-----------|--------|-------------------------|----------|
-| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-platform:8080"`)       | true      | string | ∅                       | `1.18.0` |
-| `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console     | false      | bool | false                       | `1.18.2` |
-| `CDK_SCRAPER_CAFILE`                          | Path to CA certificat file inside container to perform TLS check when scraping metrics from Console    | false      | string | ∅                       | `1.18.2` |
+| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-platform:8080"`) | true | string | ∅ | `1.18.0` |
+| `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console | false | bool | false | `1.18.2` |
+| `CDK_SCRAPER_CAFILE`                          | Path to CA certificat file inside container to perform TLS check when scraping metrics from Console | false | string | ∅ | `1.18.2` |
 | `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | S3 storage endpoint                      | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region                        | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name                   | true      | string | ∅                       | `1.18.0` |
@@ -51,7 +51,7 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level                     | false     | string | "info"                  | `1.18.0` |
 
 
-:::info
+:::tip
 Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overrided completly by mounting a yaml file into path `/opt/override-configs/cortex.yaml`. You can also change path location using `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
 This is not possible yet for Alert Manager and Prometheus. 
 :::
