@@ -24,7 +24,7 @@ sso:
       search-filter: "(uid={0})"                   # Search filter (default: "(uid={0})")
       groups-enabled: true                         # Enable group membership (default: false)
       groups-base: "ou=groups,dc=example,dc=org"   # Base DN to search for groups
-      groups-filter: "(member={0})"                # Filter on groups (default: "(member={0})")
+      groups-filter: "(member={0})"                # Filter on groups (default: "uniquemember={0}")
       groups-attribute: "cn"                       # Group name entry (default: "cn")
 ```
 
