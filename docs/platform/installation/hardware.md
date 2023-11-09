@@ -43,14 +43,4 @@ To configure Conduktor Console for particular hardware, you can use container CG
 - 4+ GB of RAM
 - 10+ GB of disk space
 
-**Example: Starting the platform in small run mode**
-
-```bash
- docker run --rm \
-  -p "8080:8080" \
-  -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
-  -e LICENSE_KEY="<your-license>" \
-  conduktor/conduktor-platform:latest
-```
-
 See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
