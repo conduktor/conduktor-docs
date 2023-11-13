@@ -171,7 +171,6 @@ none
 |-------------------------------------|-----------------|--------------------------------------------------------------------------------------|
 | `GATEWAY_DOWNSTREAM_THREAD`         | number of cores | The number of threads dedicated to handling IO between clients and Conduktor Gateway |
 | `GATEWAY_UPSTREAM_THREAD`           | number of cores | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |
-| `GATEWAY_UPSTREAM_MAX_PENDING_TASK` | `2048`          | Maximum number of pending tasks to handling IO between Kafka and Conduktor Gateway   |
 
 #### Upstream Connection
 

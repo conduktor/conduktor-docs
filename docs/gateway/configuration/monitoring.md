@@ -49,3 +49,5 @@ Please note that if you enabled `GATEWAY_SECURED_METRICS` you will need to acces
 | The log end offset of client topics | `gateway_topic_log_end_offset`   |
 | The current offset of consumer group on client topic | `gateway_topic_current_offset`   |
 | The total bytes exchanged within the context of the specified topic | `gateway_bytes_exchanged_topic_total` |
+| The total errors per API key for the specified virtual cluster and username | `gateway_error_per_apiKeys` |
+| The current inflight API keys of the specified virtual cluster and username | `gateway_current_inflight_apiKeys` |
