@@ -210,7 +210,7 @@ Conduktor gateway support OAuth authentification by leveraging OAuthbearer sasl 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.4
+    image: conduktor/conduktor-gateway:2.2.2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
