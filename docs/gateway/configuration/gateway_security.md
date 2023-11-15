@@ -72,7 +72,7 @@ Gateway only requires the bootstrap servers to get started in Passthrough mode.
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.4
+    image: conduktor/conduktor-gateway:2.2.2
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
