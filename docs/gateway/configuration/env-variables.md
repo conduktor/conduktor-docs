@@ -76,9 +76,9 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable        | Default Value                         | Description                                                                                                                        |
-|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAIN` and `SASL_SSL` |
+| Environment Variable        | Default Value                         | Description                                                                                                                              |
+|-----------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAIN`, `SASL_SSL` and `SSL` |
 
 #### SSL
 
@@ -100,11 +100,12 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SSL Config
 
-| Environment Variable                                      | Default Value | Description                  |
-|-----------------------------------------------------------|---------------|------------------------------|
-| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`         | `0`           | Max Reauth                   |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER`   | `2`           | Backoff multiplier on reauth |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`       | `5000`        | Max backoff                  |
+| Environment Variable                                    | Default Value | Description                  |
+|---------------------------------------------------------|---------------|------------------------------|
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth                   |
+| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
 
 #### SECURITY PROVIDER
 
@@ -126,10 +127,10 @@ Please note that `CONSCRYPT` does not support Mac OS with aarch64
 
 Conduktor needs to save state, you can choose where:
 
-| Environment Variable    | Default Value   | Description                                |
-|-------------------------|-----------------|--------------------------------------------|
-| `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY` or, `KAFKA`                |
-| `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh                  |
+| Environment Variable    | Default Value   | Description                         |
+|-------------------------|-----------------|-------------------------------------|
+| `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY` or, `KAFKA`      |
+| `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh           |
 
 #### Topics names
 
@@ -184,7 +185,6 @@ none
 |-------------------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`       | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
 | `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`        | Whether or not to enable the audit feature                                                                                                                                 |
-| `GATEWAY_FEATURE_FLAGS_RBAC`                    | `false`       | Whether or not to enable the RBAC feature                                                                                                                                  |
 | `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
 

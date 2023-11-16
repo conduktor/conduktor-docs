@@ -32,7 +32,7 @@ Provide Gateway with the environment variables to connect to Kafka, these start 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.0
+    image: conduktor/conduktor-gateway:2.2.2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -72,7 +72,7 @@ Gateway only requires the bootstrap servers to get started in Passthrough mode.
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.0
+    image: conduktor/conduktor-gateway:2.2.2
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
@@ -89,7 +89,7 @@ For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.0
+    image: conduktor/conduktor-gateway:2.2.2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -138,7 +138,7 @@ Virtual cluster mode supports;
 ### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.0
+    image: conduktor/conduktor-gateway:2.2.2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -210,7 +210,7 @@ Conduktor gateway support OAuth authentification by leveraging OAuthbearer sasl 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.0
+    image: conduktor/conduktor-gateway:2.2.2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
