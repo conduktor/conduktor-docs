@@ -4,6 +4,10 @@ title: Filter Messages
 description: Use simple filters or JavaScript filters in Conduktor Console.
 ---
 
+:::tip
+Use our [interactive guide](https://conduktor.navattic.com/console-filters) to learn how you can use Console filters to find Kafka messages
+:::
+
 There are numerous mechanisms to help you drill down into a topic to find specific messages.
 
  - [Standard Filters](#standard-filters)
