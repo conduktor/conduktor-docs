@@ -131,7 +131,7 @@ Virtual cluster mode supports;
 * `PLAINTEXT`
 * `SASL_PLAINTEXT`
 * `SASL_SSL` (with `mTLS` option)
-* `SSL` (*soon*) (with `mTLS`)
+* `SSL`
 
 ![tenant-user.png](./images/gw-security/tenant-user-london.png)
 
