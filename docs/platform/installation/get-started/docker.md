@@ -52,6 +52,10 @@ After a few seconds, the Conduktor onboarding wizard will be available at **[htt
 
 ### Step 3: Configure your existing Kafka cluster
 
+:::tip
+Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect
+:::
+
 Conduktor works with all Kafka providers such as Confluent, Aiven, MSK and Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
 
 Once you complete the onboarding wizard, go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
