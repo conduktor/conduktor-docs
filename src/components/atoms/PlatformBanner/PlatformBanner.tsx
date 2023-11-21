@@ -18,8 +18,7 @@ const Banner: FunctionComponent<BannerProps> = () => {
         <Flex direction="column">
           <Title>Conduktor Platform is here! Take the next step.</Title>
           <Paragraph breakpoint={{ '@initial': 'initial', '@bp3': 'bp3' }}>
-            Get everything that Desktop can do and much more with Conduktor Platform. Available in
-            Conduktor Cloud and Docker.
+            Get everything that Desktop can do and much more with Conduktor Platform.
           </Paragraph>
         </Flex>
       </Flex>
