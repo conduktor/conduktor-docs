@@ -257,7 +257,7 @@ sasl.oauthbearer.token.endpoint.url=<YOUR_OIDC_PROVIDER_TOKEN_URL>
 sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="<CLIENT_ID>" clientSecret="<CLIENT_SECRET>" scope="email";
 ```
 
-#### Customize the virtual cluster
+#### Customize the virtual cluster, OAuth
 
 By default the virtual cluster will be equal to the subject of the token.  
 This could be modified by adding specific claims in the token to be sent to Gateway.
@@ -299,3 +299,19 @@ conduktor-gateway:
       GATEWAY_SSL_TRUST_STORE_PASSWORD: 123456
       GATEWAY_SSL_TRUST_STORE_TYPE: pkcs12
 ```
+#### Configure your client to connect to Gateway using SSL
+
+Configure as you typically would your client, for example:
+
+```properties
+  bootstrap.servers=localhost:6969
+  security.protocol=SSL
+  ssl.truststore.location=.../truststore.jks
+  ssl.truststore.password=123456
+  ssl.keystore.location=.../keystore.jks
+  ssl.keystore.password=123456
+```
+
+#### Customize the virtual cluster, SSL
+
+Similar to the OAuth setup described [above](#customize-the-virtual-cluster-oauth) but using the Common Name(CN) as the username.
