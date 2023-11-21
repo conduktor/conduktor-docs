@@ -14,32 +14,24 @@ Jump to:
 
 ## Kafka Environment Variables
 
-Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
-Any variable prefixed with `KAFKA_` will be treated as a connection parameter.
-The remainder of the environment variable will be lower cased and have `_` replaced with `.`.
+Conduktor Gateway's connection to Kafka are configured by the `KAFKA_` environment variables.
+When translating Kafka's properties, use upper case instead and replace the `.` with `_`.  
 
-Thus a variable
+For example;  
+When defining Gateway's Kafka property `bootstrap.servers` , declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`.
 
-```bash
-KAFKA_BOOTSTRAP_SERVERS
-```
+Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway.
 
-is equivalent to the Kafka property;
-
-```bash
-bootstrap.servers
-```
 
 ## Gateway Environment Variables
 
-Default configurations for Conduktor Gateway can be overridden by environment variables:
+Default configurations for Conduktor Gateway can be overridden by environment variables.
 
 ### Guidelines
 
-A typical deployment of Gateway is hard to describe as every environment will be unique in it's design and
-considerations.
+There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
 
-As such, the below is an example including some variables we recommend you modify in any setup you do, but is by no
+The below is an example including some variables we recommend you modify in any setup you do, but is by no
 means a guarantee of sufficient requirements in your setup.
 
 We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
@@ -106,6 +98,18 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                |
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
+
+#### OAuthbearer
+
+GATEWAY_OAUTH_JWKS_URL: <YOUR_OIDC_PROVIDER_JWKS_URL|YOUR+JWKS_FILE_URL>
+      GATEWAY_OAUTH_EXPECTED_ISSUER: <YOUR_OIDC_ISSUER>
+    GATEWAY_OAUTH_EXPECTED_AUDIENCES: [audience1, audience2]`
+
+| Environment Variable | Default Value | Description |
+|----|---|---|
+| `GATEWAY_OAUTH_JWKS_URL` | `NULL` | The provider URL and file URL `<YOUR_OIDC_PROVIDER_JWKS_URL \| YOUR_JWKS_FILE_URL>` |
+| `GATEWAY_OAUTH_EXPECTED_ISSUER` | `NULL` | Your OIDC issuer |
+| `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL` | List of expected audiences, e.g. `[audience1, audience2]` |
 
 #### SECURITY PROVIDER
 
