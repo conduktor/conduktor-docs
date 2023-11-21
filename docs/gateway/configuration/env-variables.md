@@ -29,10 +29,9 @@ Default configurations for Conduktor Gateway can be overridden by environment va
 
 ### Guidelines
 
-A typical deployment of Gateway is hard to describe as every environment will be unique in it's design and
-considerations.
+There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
 
-As such, the below is an example including some variables we recommend you modify in any setup you do, but is by no
+The below is an example including some variables we recommend you modify in any setup you do, but is by no
 means a guarantee of sufficient requirements in your setup.
 
 We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
