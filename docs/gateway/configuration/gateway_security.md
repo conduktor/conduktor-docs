@@ -26,7 +26,7 @@ Jump to:
       - [Configure Gateway](#configure-gateway-to-support-oauthbearer-with-environemnt-variables)
       - [Configure your client](#configure-your-client-to-connect-to-gateway-using-oauthbearer)
       - [Customize the virtual cluster](#customize-the-virtual-cluster-oauth)
-    - [mTLS (SASL_SSL)](#mtls-sasl_ssl)
+    - [SASL_SSL](#sasl_ssl)
     - [SSL mechanism](#ssl-mechanism)
       - [Configure Gateway](#configure-gateway-to-support-ssl-with-environemnt-variables)
       - [Configure your client](#configure-your-client-to-connect-to-gateway-using-ssl)
@@ -152,7 +152,7 @@ conduktor-gateway:
 Scroll or jump to which type of setup you have for creating a username;
 * [Plain user/password mechanisms](#sasl-plain-userpassword-mechanism)
 * [SASL oauthbearer mechanism](#sasl-oauthbearer-mechanism)
-* [SASL_SSL with mTLS, see the section on mTLS](#mtls-sasl_ssl)
+* [SASL_SSL with mTLS, see the section on mTLS](#sasl_ssl)
 * [SSL](#ssl-mechanism)
 
 ### Plain user/password mechanisms
@@ -261,7 +261,7 @@ curl --location 'http://localhost:8888/admin/userMappings/v1/vcluster/my-vcluste
     "username": "conduktor"
 }'
 ```
-## mTLS (SASL_SSL)
+## SASL_SSL
 
 To enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`.  
 For `SSL` see [the section below](#ssl-mechanism).
@@ -287,7 +287,7 @@ conduktor-gateway:
 
 #### Configure Gateway to support SSL with environemnt variables
 
-A similar configuration to the [mTLS, SASL_SSL section](#mtls-sasl_ssl), described above, is used for SSL.
+A similar configuration to the [SASL_SSL section](#sasl_ssl), described above, is used for SSL.
 
 If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway as described in the  [environment variables](/gateway/configuration/env-variables/#ssl) page and the example below.
 
