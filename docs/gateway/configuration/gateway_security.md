@@ -4,7 +4,7 @@ title: Gateway Security
 description: Securing Conduktor Gateway  
 ---
 
-There are two stages of secuirty configuration to consider when securing your Gateway.
+There are two stages of security configuration to consider when securing your Gateway.
 
  - The connection between Kafka clients and the Gateway
  - The connection between the Gateway and the Kafka cluster
