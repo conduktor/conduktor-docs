@@ -238,12 +238,12 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 #### Customize the virtual cluster
 
 By default the virtual cluster will be equal to the subject of the token.  
-This could be modified by adding specfic claims in the token to be sent to Gateway.
+This could be modified by adding specific claims in the token to be sent to Gateway.
 
 The virtual cluster could be defined for a token using the `gateway.vcluster` claim.
 You can also override the user from the subject by defining a `gateway.username` claim.
 
-If you can't specify claims yourself, there is an alternative to map `username` to `vclsuter`. We can instead map the claim through the Gateway API.
+If you can't specify claims yourself, there is an alternative to map `username` to `vcluster`. We can instead map the claim through the Gateway API.
 Here you are mapping the username, `conduktor` to the vcluster, `my-vcluster`.
 
 ```
