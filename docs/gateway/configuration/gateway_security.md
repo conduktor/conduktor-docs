@@ -115,11 +115,25 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 
 ## mTLS
 
-To enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`. 
+To enable `mTLS` for the `SASL_SSL` security protocol please set the environment variable `GATEWAY_SSL_CLIENT_AUTH` to `REQUIRE`.  
+For `SSL` see [the section below](#ssl-mechanism).
 
-If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway.
+If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway as described in the  [environment variables](/gateway/configuration/env-variables/#ssl) page and the example below.
 
-See the [environment variables](/gateway/configuration/env-variables/#ssl) for more.
+```yaml
+conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.2.2
+    environment:
+      GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+      GATEWAY_SSL_CLIENT_AUTH: REQUIRE
+      GATEWAY_SSL_KEY_STORE_PATH: /config/keystore.jks
+      GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
+      GATEWAY_SSL_KEY_PASSWORD: 123456
+      GATEWAY_SSL_KEY_TYPE: pkcs12
+      GATEWAY_SSL_TRUST_STORE_PATH: /config/truststore.jks
+      GATEWAY_SSL_TRUST_STORE_PASSWORD: 123456
+      GATEWAY_SSL_TRUST_STORE_TYPE: pkcs12
+```
 
 
 ## Client to Gateway, with virtual clusters
@@ -153,7 +167,8 @@ conduktor-gateway:
 Scroll or jump to which type of setup you have for creating a username;
 * [Plain user/password mechanisms](#sasl-plain-userpassword-mechanism)
 * [SASL oauthbearer mechanism](#sasl-oauthbearer-mechanism)
-* 
+* [SASL_SSL with mTLS, see the above section on mTLS](#mtls)
+* [SSL](#ssl-mechanism)
 
 ### Plain user/password mechanism
 
@@ -262,3 +277,25 @@ curl --location 'http://localhost:8888/admin/userMappings/v1/vcluster/my-vcluste
 }'
 ```
 
+### SSL mechanism
+
+#### Configure Gateway to support OAuthbearer with environemnt variables
+
+A similar configuration to the [mTLS, SASL_SSL section](#mtls), described above, is used for SSL.
+
+If you are using certificates signed with local authorities authority, you'll need to also setup truststore in the Gateway as described in the  [environment variables](/gateway/configuration/env-variables/#ssl) page and the example below.
+
+```yaml
+conduktor-gateway:
+    image: conduktor/conduktor-gateway:2.2.2
+    environment:
+      GATEWAY_SECURITY_PROTOCOL: SSL
+      GATEWAY_SSL_CLIENT_AUTH: REQUIRE
+      GATEWAY_SSL_KEY_STORE_PATH: /config/keystore.jks
+      GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
+      GATEWAY_SSL_KEY_PASSWORD: 123456
+      GATEWAY_SSL_KEY_TYPE: pkcs12
+      GATEWAY_SSL_TRUST_STORE_PATH: /config/truststore.jks
+      GATEWAY_SSL_TRUST_STORE_PASSWORD: 123456
+      GATEWAY_SSL_TRUST_STORE_TYPE: pkcs12
+```
