@@ -14,25 +14,18 @@ Jump to:
 
 ## Kafka Environment Variables
 
-Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
-Any variable prefixed with `KAFKA_` will be treated as a connection parameter.
-The remainder of the environment variable will be lower cased and have `_` replaced with `.`.
+Conduktor Gateway's connection to Kafka are configured by the `KAFKA_` environment variables.
+When translating Kafka's properties, use upper case instead and replace the `.` with `_`.  
 
-Thus a variable
+For example;  
+When defining Gateway's Kafka property `bootstrap.servers` , declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`.
 
-```bash
-KAFKA_BOOTSTRAP_SERVERS
-```
+Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway.
 
-is equivalent to the Kafka property;
-
-```bash
-bootstrap.servers
-```
 
 ## Gateway Environment Variables
 
-Default configurations for Conduktor Gateway can be overridden by environment variables:
+Default configurations for Conduktor Gateway can be overridden by environment variables.
 
 ### Guidelines
 

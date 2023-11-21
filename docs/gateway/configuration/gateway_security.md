@@ -4,7 +4,7 @@ title: Gateway Security
 description: Securing Conduktor Gateway  
 ---
 
-There are two sets of configuration to consider when securing your Gateway.
+There are two stages of secuirty configuration to consider when securing your Gateway.
 
  - The connection between Kafka clients and the Gateway
  - The connection between the Gateway and the Kafka cluster
@@ -28,7 +28,8 @@ Jump to:
 You can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.
 For these security protocols we support all SASL mechanisms; `PLAIN`, `SCRAM SHA`, `OAuthBearer`, `Kerberos` etc.
 
-Provide Gateway with the environment variables to connect to Kafka, these start with a `KAFKA_` prefix.
+Provide Gateway with the environment variables to connect to Kafka.
+Use the variables that start with a `KAFKA_` prefix as it is Gateway's connection to **Kafka**.
 
 ```yaml
 conduktor-gateway:
