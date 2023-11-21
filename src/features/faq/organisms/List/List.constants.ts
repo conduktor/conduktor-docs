@@ -1,15 +1,5 @@
 export const items = [
   {
-    question: "How does Conduktor Cloud differ from the 'Self-Managed' version of Conduktor?",
-    answer:
-      'Conduktor Cloud offers the same capabilities, including all our solutions, scalability, and resiliency available in our self-managed software, but without having to worry about installation or cluster administration.',
-  },
-  {
-    question: 'What services are provided in the Conduktor Cloud?',
-    answer:
-      'Conduktor automatically provisions infrastructure, deploys and configures cluster software, maintains availability, provides scalability, performs backups, and handles software upgrades including Conduktor, operating system, and system software.',
-  },
-  {
     question: 'Can I use Active Directory for SSO?',
     answer:
       'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
@@ -17,7 +7,7 @@ export const items = [
   {
     question: 'How can we deploy Conduktor Platform?',
     answer:
-      'We have two distribution models; Either a docker container that you can deploy wherever you like, or a managed option (Conduktor Cloud), where we run the Platform for you and you connect it to your Kafka environment.<br/><br/>With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
+      'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
   },
   {
     question: 'Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?',
@@ -54,12 +44,6 @@ export const items = [
       'We currently have a public cloud formation available <a href="https://github.com/conduktor/quickstart-conduktor-aws-msk" target="_blank">here</a>.',
   },
   {
-    question:
-      'Do you have a managed (SaaS) option?  When will it have feature parity with the Docker installation?',
-    answer:
-      'We have fully managed SaaS as an option. You can sign up <a href="https://signup.conduktor.io/" target="_blank">here</a>.<br/><br/>Currently, Monitoring is unavailable in Conduktor Cloud. However, we expect to have parity beetween Docker and SaaS by January 2023.',
-  },
-  {
     question: 'What kind of compliance requirements does your SaaS product satisfy?',
     answer: 'None for now. However, we are working on a SOC 2 Type 2 compliance.',
   },
@@ -93,7 +77,7 @@ export const items = [
     question:
       'If I have licenses of Conduktor Desktop is it still account.conduktor.io where I manage these licenses, add/remove etc?',
     answer:
-      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment, whether using Conduktor Cloud or our docker image on your environment. Please see a working example on our live demonstration <a href="https://demo.conduktor.io/admin/" target="_blank">here</a>',
+      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment.',
   },
   {
     question: 'Does the Data Masking solution make any changes to my Kafka data?',
