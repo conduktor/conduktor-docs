@@ -10,7 +10,7 @@ Conduktor Gateway should be deployed as a resilient, distributed service.
 
 ## Internal Load Balancing
 
-By default Conduktor Gateway proposes an inbuilt load balancer that balance client connections across running instances. 
+By default Conduktor Gateway has an inbuilt load balancer that will balance client connections across running instances. 
 
 This behaviour is configured with [load balancing configurations](./env-variables.md#load-balancing). 
 
