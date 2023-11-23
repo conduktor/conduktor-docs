@@ -199,6 +199,8 @@ SSO authentication properties (only on enterprise and team plans). See [authenti
 | `sso.oauth2[].token.url` | Get token endpoint URL | `CDK_SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
 | `sso.oauth2[].token.auth-method` | Authentication Method | `CDK_SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
 | `sso.oauth2[].groups-claim ` | Configure Group Claims | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` | false | string | ∅ |
+| `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens | `CDK_SSO_OAUTH2_0_ALLOW-UNSIGNED-ID-TOKENS` | false | boolean | false |
+| `sso.oauth2[].preferred-jws-algorithm ` | Configure preferred JWS algorithm | `CDK_SSO_OAUTH2_0_PREFERRED-JWS-ALGORITHM` | false | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅ |
 
 ### Kafka clusters properties
 
