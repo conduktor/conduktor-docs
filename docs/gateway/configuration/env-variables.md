@@ -11,6 +11,17 @@ Jump to:
 
 - [Kafka Environment Variables](#kafka-environment-variables)
 - [Gateway Environment Variables](#gateway-environment-variables)
+  - [Host/Port](#hostport)
+  - [Load balancing](#load-balancing)
+  - [Client to Gateway Authentication](#client-to-gateway-authentication)
+  - [HTTP](#http)
+  - [Internal state](#internal-state)
+  - [Internal setup](#internal-setup)
+  - [Feature flags](#feature-flags)
+  - [Licensing](#licensing)
+  - [Audit](#audit)
+  - [Logging](#logging)
+  - [Product analytics](#product-analytics)
 
 ## Kafka Environment Variables
 
@@ -224,8 +235,8 @@ none
 | `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |
 | `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |
 
-### Usage Analytics
+### Product Analytics
 
 | Environment Variable                                   | Default Value | Description                                                                                      |
 |--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`     | Conduktor collects basic user analytics to understand product usage and enable product development and improvement,  such as a Gateway Started event. This is not based on any of the underlying Kafka data.|
+| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`     | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement,  such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor.|
