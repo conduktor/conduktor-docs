@@ -173,6 +173,7 @@ When it is set
 | `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic`   | Name of consumerGroupSubscriptionBackingTopic topic |
 | `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                                 | Name of license topic                               |
 | `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                             | Name of the user mapping topic                      |
+| `GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC` | `_encryptionConfig` | Name of the topic used to store encryption information, if not stored in the message header.
 
 #### `IN_MEMORY` State Configurations
 
@@ -209,6 +210,7 @@ none
 | `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`        | Whether or not to enable the audit feature                                                                                                                                 |
 | `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
+| GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC|_encryptionConfig}
 
 ### Licensing
 
