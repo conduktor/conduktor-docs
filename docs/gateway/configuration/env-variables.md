@@ -117,6 +117,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_OAUTH_JWKS_URL` | `NULL` | The provider URL and file URL `<YOUR_OIDC_PROVIDER_JWKS_URL \| YOUR_JWKS_FILE_URL>` |
 | `GATEWAY_OAUTH_EXPECTED_ISSUER` | `NULL` | Your OIDC issuer |
 | `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL` | List of expected audiences, e.g. `[audience1, audience2]` |
+| `GATEWAY_OAUTH_JWKS_REFRESH` | `NULL` | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT. [*source, kafka.apache.org*](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC) |
 
 #### SECURITY PROVIDER
 
