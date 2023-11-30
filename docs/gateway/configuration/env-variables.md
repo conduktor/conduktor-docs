@@ -14,6 +14,8 @@ Jump to:
   - [Host/Port](#hostport)
   - [Load balancing](#load-balancing)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
+  - [Security Provider](#security-provider)
+  - [Secret management](#secret-management)
   - [HTTP](#http)
   - [Internal state](#internal-state)
   - [Internal setup](#internal-setup)
@@ -68,11 +70,11 @@ __Example Values__
 
 ### Load Balancing
 
-| Environment Variable                           | Default Value       | Description                                                                                                              |
-|------------------------------------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_CLUSTER_ID`                           | `conduktorGateway`  | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`              | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
-| `GATEWAY_RACK_ID`                              | none                | Similar as `broker.rack`                                                                                                 |
+| Environment Variable                            | Default Value      | Description                                                                                                              |
+|-------------------------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
+| `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
 
 ### Client to Gateway Authentication
 
@@ -94,11 +96,11 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
 | `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
 
-| Environment Variable               | Default Value                       | Description                                                                                              |
-|------------------------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SSL_TRUST_STORE_PATH`     | `config/kafka-proxy.truststore.jks` | Path to a keystore for SSL connections                                                                   |
-| `GATEWAY_SSL_TRUST_STORE_PASSWORD` | `123456`                            | Password for the keystore defined above                                                                  |
-| `GATEWAY_SSL_TRUST_STORE_TYPE`     | `jks`                               | We currently only support `jks`                                                                          |
+| Environment Variable               | Default Value                       | Description                                                                                                                                |
+|------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SSL_TRUST_STORE_PATH`     | `config/kafka-proxy.truststore.jks` | Path to a keystore for SSL connections                                                                                                     |
+| `GATEWAY_SSL_TRUST_STORE_PASSWORD` | `123456`                            | Password for the keystore defined above                                                                                                    |
+| `GATEWAY_SSL_TRUST_STORE_TYPE`     | `jks`                               | We currently only support `jks`                                                                                                            |
 | `GATEWAY_SSL_CLIENT_AUTH`          | `NONE`                              | `NONE` will not request client authentication, `OPTIONAL` will request client authentication, `REQUIRE` will require client authentication |
 
 #### SSL Config
@@ -114,16 +116,17 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
 
-| Environment Variable | Default Value | Description |
-|----|---|---|
-| `GATEWAY_OAUTH_JWKS_URL` | `NULL` | The provider URL and file URL `<YOUR_OIDC_PROVIDER_JWKS_URL \| YOUR_JWKS_FILE_URL>` |
-| `GATEWAY_OAUTH_EXPECTED_ISSUER` | `NULL` | Your OIDC issuer |
-| `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL` | List of expected audiences, e.g. `[audience1, audience2]` |
-| `GATEWAY_OAUTH_JWKS_REFRESH` | `NULL` | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT|
-| `GATEWAY_OAUTH_JWKS_RETRY` | `NULL` | The (optional) value in milliseconds for the initial wait between JWKS (JSON Web Key Set) retrieval attempts from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
-| `GATEWAY_OAUTH_JWKS_MAX_RETRY` | `NULL` | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
-| `GATEWAY_OAUTH_SCOPE_CLAIM_NAME` | `NULL` | The OAuth claim for the subject is often named \"sub\", but this (optional) setting can provide a different name to use for the subject included in the JWT payload\'s claims if the OAuth/OIDC provider uses a different name for that claim |
-| `GATEWAY_OAUTH_SUB_CLAIM_NAME` | `NULL` | The OAuth claim for the subject is often named \"sub\", but this (optional) setting can provide a different name to use for the subject included in the JWT payload\'s claims if the OAuth/OIDC provider uses a different name for that claim |
+| Environment Variable              | Default Value | Description                                                                                                                                                                                                                                                                                                                                                                                          |
+|-----------------------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_OAUTH_JWKS_URL`          | `NULL`        |The OAuth/OIDC provider URL from which the provider's JWKS (JSON Web Key Set) can be retrieved. The URL can be HTTP(S)-based or file-based.                                                                                                                                                                                                                                                           | 
+| `GATEWAY_OAUTH_EXPECTED_ISSUER`   | `NULL`        | The (optional) setting for the broker to use to verify that the JWT was created by the expected issuer. The JWT will be inspected for the standard OAuth `iss` claim and if this value is set, the broker will match it exactly against what is in the JWT's `iss` claim. If there is no match, the broker will reject the JWT and authentication will fail                                          | 
+| `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL`        | The (optional) comma-delimited setting for the broker to use to verify that the JWT was issued for one of the expected audiences. The JWT will be inspected for the standard OAuth `aud` claim and if this value is set, the broker will match the value from JWT's `aud` claim to see if there is an exact match. If there is no match, the broker will reject the JWT and authentication will fail. | 
+| `GATEWAY_OAUTH_JWKS_REFRESH`      | `NULL`        | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT.                                                                                                                                                                                                                          | 
+| `GATEWAY_OAUTH_JWKS_RETRY`        | `NULL`        | The (optional) value in milliseconds for the initial wait between JWKS (JSON Web Key Set) retrieval attempts from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting                                                                                                                                                                                                                                                                                                                                                                                    | 
+| `GATEWAY_OAUTH_JWKS_MAX_RETRY`    | `NULL`        | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting                                                                                                                                                                                                                                                                                                                                            | 
+| `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`  | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                            |
+| `GATEWAY_OAUTH_SUB_CLAIM_NAME`    | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                          |
+
 
 #### SECURITY PROVIDER
 
@@ -133,15 +136,24 @@ Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REF
 
 Please note that `CONSCRYPT` does not support Mac OS with aarch64.
 
-When working with security providers, secrets may be passed from configuration to Gateway using environemnt variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
+#### SECRET MANAGEMENT
 
-| Environment Variable | Default Value | Description |
-| --- | --- | --- |
-| `SR_URL` | `NULL` | Schema registry URL value |
-| `SR_BASIC_AUTH_CRED_SRC` | `NULL` | Schema registry basic authorisation credentials source |
-| `VAULT_TOKEN` | `NULL` | Token for HashiVault |
+Secrets may be passed from configuration to Gateway using environement variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. 
 
+* `SCHEMA_REGISTRY_LOGIN`
+* `SCHEMA_REGISTRY_PASSWORD`
+* `AWS_ACCESS_KEY`
+* `AWS_SECRET_KEY`
+* `AWS_SESSION_TOKEN`
+* `AZURE_CLIENT_ID`
+* `AZURE_TENANT_ID`
+* `AZURE_CLIENT_SECRET`
+* `VAULT_TOKEN`
+* `VAULT_USERNAME`
+* `VAULT_PASSWORD`
+* etc.
 
+For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
 
 
 ### HTTP
@@ -170,17 +182,17 @@ When it is set
 * `KAFKA` they will be materialized as a topic.
 * `IN_MEMORY` they will be stored in memory.
 
-| Environment Variable                                             | Default Value                              | Description                                         |
-|------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------|
-| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`                      | `_topicMappings`                           | Name of topicMappings topic                         |
-| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`                     | `_topicRegistry`                           | Name of topicRegistry topic                         |
-| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`                        | `_interceptorConfigs`                      | Name of interceptorConfigs topic                    |
-| `GATEWAY_ACLS_STORES_BACKING_TOPIC`                              | `_acls`                                    | Name of acls topic                                  |
-| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                             | Name of offsetStore topic                           |
-| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic`   | Name of consumerGroupSubscriptionBackingTopic topic |
-| `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                                 | Name of license topic                               |
-| `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                             | Name of the user mapping topic                      |
-| `GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC` | `_encryptionConfig` | Name of the topic used to store encryption information, if not stored in the message header.
+| Environment Variable                                             | Default Value                            | Description                                                                                  |
+|------------------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------------|
+| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`                      | `_topicMappings`                         | Name of topicMappings topic                                                                  |
+| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`                     | `_topicRegistry`                         | Name of topicRegistry topic                                                                  |
+| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`                        | `_interceptorConfigs`                    | Name of interceptorConfigs topic                                                             |
+| `GATEWAY_ACLS_STORES_BACKING_TOPIC`                              | `_acls`                                  | Name of acls topic                                                                           |
+| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                           | Name of offsetStore topic                                                                    |
+| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic` | Name of consumerGroupSubscriptionBackingTopic topic                                          |
+| `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                               | Name of license topic                                                                        |
+| `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                           | Name of the user mapping topic                                                               |
+| `GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC`                        | `_encryptionConfig`                      | Name of the topic used to store encryption information, if not stored in the message header. |
 
 #### `IN_MEMORY` State Configurations
 
@@ -211,13 +223,12 @@ none
 
 ### Feature Flags
 
-| Environment Variable                            | Default Value | Description                                                                                                                                                                |
-|-------------------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`       | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
-| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`        | Whether or not to enable the audit feature                                                                                                                                 |
-| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`       | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
-| GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC|_encryptionConfig}
+| Environment Variable                            | Default Value      | Description                                                                                                                                                                |
+|-------------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`            | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
+| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`             | Whether or not to enable the audit feature                                                                                                                                 |
+| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`            | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
 
 ### Licensing
 
@@ -227,11 +238,11 @@ none
 
 ### Audit
 
-| Environment Variable                            | Default Value   | Description                                                                                                        |
-|-------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | `0.1.0`         | Version                                                                                                            |
-| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                  |
-| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings  |
+| Environment Variable                            | Default Value   | Description                                                                                                         |
+|-------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | `0.1.0`         | Version                                                                                                             |
+| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                   |
+| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   |
 | `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`            | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
 
 ### Logging
@@ -253,6 +264,6 @@ none
 
 ### Product Analytics
 
-| Environment Variable                                   | Default Value | Description                                                                                      |
-|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`     | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement,  such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor.|
+| Environment Variable                                   | Default Value | Description                                                                                                                                                                                                                                   |
+|--------------------------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`        | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. |
