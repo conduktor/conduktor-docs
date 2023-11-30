@@ -42,7 +42,7 @@ Use the variables that start with a `KAFKA_` prefix as it is Gateway's connectio
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -80,7 +80,7 @@ Gateway can be started with minimal changes in Passthrough mode, only requiring 
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
@@ -97,7 +97,7 @@ For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -141,7 +141,7 @@ Virtual cluster mode supports;
 ### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
@@ -217,7 +217,7 @@ Configuration instructions are provided for Gateway and for the client.
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
@@ -270,7 +270,7 @@ If you are using certificates signed with local authorities authority, you'll ne
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       GATEWAY_SECURITY_PROTOCOL: SASL_SSL
       GATEWAY_SSL_CLIENT_AUTH: REQUIRE
@@ -293,7 +293,7 @@ If you are using certificates signed with local authorities authority, you'll ne
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.2.2
+    image: conduktor/conduktor-gateway:2.3.0
     environment:
       GATEWAY_SECURITY_PROTOCOL: SSL
       GATEWAY_SSL_CLIENT_AUTH: REQUIRE
