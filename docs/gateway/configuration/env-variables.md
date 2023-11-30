@@ -128,7 +128,18 @@ GATEWAY_OAUTH_JWKS_URL: <YOUR_OIDC_PROVIDER_JWKS_URL|YOUR+JWKS_FILE_URL>
 |-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT` |
 
-Please note that `CONSCRYPT` does not support Mac OS with aarch64
+Please note that `CONSCRYPT` does not support Mac OS with aarch64.
+
+When working with security providers, secrets may be passed from configuration to Gateway using environemnt variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
+
+| Environment Variable | Default Value | Description |
+| --- | --- | --- |
+| `SR_URL` | `NULL` | Schema registry URL value |
+| `SR_BASIC_AUTH_CRED_SRC` | `NULL` | Schema registry basic authorisation credentials source |
+| `VAULT_TOKEN` | `NULL` | Token for HashiVault |
+
+
+
 
 ### HTTP
 
