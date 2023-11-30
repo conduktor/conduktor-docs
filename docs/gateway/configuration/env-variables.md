@@ -112,12 +112,18 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### OAuthbearer
 
+Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
+
 | Environment Variable | Default Value | Description |
 |----|---|---|
 | `GATEWAY_OAUTH_JWKS_URL` | `NULL` | The provider URL and file URL `<YOUR_OIDC_PROVIDER_JWKS_URL \| YOUR_JWKS_FILE_URL>` |
 | `GATEWAY_OAUTH_EXPECTED_ISSUER` | `NULL` | Your OIDC issuer |
 | `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL` | List of expected audiences, e.g. `[audience1, audience2]` |
-| `GATEWAY_OAUTH_JWKS_REFRESH` | `NULL` | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT. [*source, kafka.apache.org*](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC) |
+| `GATEWAY_OAUTH_JWKS_REFRESH` | `NULL` | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT|
+| `GATEWAY_OAUTH_JWKS_RETRY` | `NULL` | The (optional) value in milliseconds for the initial wait between JWKS (JSON Web Key Set) retrieval attempts from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
+| `GATEWAY_OAUTH_JWKS_MAX_RETRY` | `NULL` | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
+| `GATEWAY_OAUTH_SCOPE_CLAIM_NAME` | `NULL` | The OAuth claim for the subject is often named \"sub\", but this (optional) setting can provide a different name to use for the subject included in the JWT payload\'s claims if the OAuth/OIDC provider uses a different name for that claim |
+| `GATEWAY_OAUTH_SUB_CLAIM_NAME` | `NULL` | The OAuth claim for the subject is often named \"sub\", but this (optional) setting can provide a different name to use for the subject included in the JWT payload\'s claims if the OAuth/OIDC provider uses a different name for that claim |
 
 #### SECURITY PROVIDER
 
