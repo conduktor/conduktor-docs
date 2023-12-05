@@ -12,18 +12,19 @@ Jump to:
 - [Kafka Environment Variables](#kafka-environment-variables)
 - [Gateway Environment Variables](#gateway-environment-variables)
   - [Host/Port](#hostport)
-  - [Load balancing](#load-balancing)
+  - [Load Balancing](#load-balancing)
+  - [Gateway Mode](#gateway-mode)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Security Provider](#security-provider)
   - [Secret management](#secret-management)
   - [HTTP](#http)
-  - [Internal state](#internal-state)
-  - [Internal setup](#internal-setup)
-  - [Feature flags](#feature-flags)
+  - [Internal State](#internal-state)
+  - [Internal Setup](#internal-setup)
+  - [Feature Flags](#feature-flags)
   - [Licensing](#licensing)
   - [Audit](#audit)
   - [Logging](#logging)
-  - [Product analytics](#product-analytics)
+  - [Product Analytics](#product-analytics)
 
 ## Kafka Environment Variables
 
@@ -75,6 +76,13 @@ __Example Values__
 | `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
 | `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
+
+### Gateway Mode
+| Environment Variable | Valid values              | Description                                                                                                                        |
+|----------------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_MODE`       | `KAFKA_SECURITY`(default) | Pass Kafka credentials from the client through to the cluster for connecting. Does not enable multi-tenancy within Gateway                                                      |
+|                      | `GATEWAY_SECURITY`        | Allows client applications to connect using Conduktor Gateway security. Gateway connects to Kafka with it's own set of credentials. In this mode topic names etc. are not prefixed on the backing Kafka |
+|                      | `VCLUSTER`                | The multi-tenancy option that creates isolated virtual clusters within Gateway. In this mode topic names are prefixed on the backing Kafka cluster to provide isolated multi-tenancy |
 
 ### Client to Gateway Authentication
 
@@ -164,7 +172,7 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 | `GATEWAY_SECURED_METRICS` | `true`                                                  | Does the HTTP management API require users?                                       |
 | `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write |
 
-### Internal state
+### Internal State
 
 Conduktor needs to save state, you can choose where:
 
@@ -173,7 +181,7 @@ Conduktor needs to save state, you can choose where:
 | `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY` or, `KAFKA`      |
 | `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh           |
 
-#### Topics names
+#### Topics Names
 
 State is saved in different location based on `GATEWAY_STORAGE_TYPE`
 
@@ -206,7 +214,7 @@ none
 | `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
 | `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
-### Internal setup
+### Internal Setup
 
 #### Threading
 
@@ -220,13 +228,6 @@ none
 | Environment Variable              | Default Value | Description                                                    |
 |-----------------------------------| ------------- |----------------------------------------------------------------|
 | `GATEWAY_UPSTREAM_NUM_CONNECTION` | `10`          | The number of connections between Conduktor Gateway and Kafka  |
-
-### Gateway mode
-| Environment Variable | Valid values              | Description                                                                                                                        |
-|----------------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_MODE`       | `KAFKA_SECURITY`(default) | Pass Kafka credentials from the client through to the cluster for connecting.                                                      |
-|                      | `GATEWAY_SECURITY`        | Use the tenants within Gateway to connect and it must be enabled for multi-tenancy. In this mode topic names etc are not prefixed. |
-|                      | `VCLUSTER`                | Use the tenants within Gateway to connect and it must be enabled for multi-tenancy.                                                |
 
 ### Feature Flags
 
