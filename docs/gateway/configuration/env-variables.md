@@ -221,13 +221,18 @@ none
 |-----------------------------------| ------------- |----------------------------------------------------------------|
 | `GATEWAY_UPSTREAM_NUM_CONNECTION` | `10`          | The number of connections between Conduktor Gateway and Kafka  |
 
+### Gateway mode
+| Environment Variable | Valid values              | Description                                                                                                                        |
+|----------------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_MODE`       | `KAFKA_SECURITY`(default) | Pass Kafka credentials from the client through to the cluster for connecting.                                                      |
+|                      | `GATEWAY_SECURITY`        | Use the tenants within Gateway to connect and it must be enabled for multi-tenancy. In this mode topic names etc are not prefixed. |
+|                      | `VCLUSTER`                | Use the tenants within Gateway to connect and it must be enabled for multi-tenancy.                                                |
+
 ### Feature Flags
 
 | Environment Variable                            | Default Value      | Description                                                                                                                                                                |
 |-------------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`            | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
 | `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`             | Whether or not to enable the audit feature                                                                                                                                 |
-| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`            | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
 
 ### Licensing

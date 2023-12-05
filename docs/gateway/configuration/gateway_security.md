@@ -66,7 +66,7 @@ By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the
 
 Gateway will then transfer the credentials to your underlying Kafka, thus leveraging your existing security and ACLs.
 
-This is the default Gateway mode, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: false`.
+This is the default Gateway mode, `GATEWAY_MODE: KAFKA_SECURITY`.
 
 :::caution
 
@@ -124,7 +124,7 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 ## Client to Gateway, with virtual clusters
 
 To put Gateway in multi-tenancy mode, and to work with virtual clusters;
-1. Set the environemnt variable `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true`
+1. Set the environment variable `GATEWAYMODE: VCLUSTER`
 1. Create a username to connect to the virtual cluster, through the admin API
 1. Update your client to use this username when connecting
 
@@ -143,7 +143,7 @@ Virtual cluster mode supports;
 conduktor-gateway:
     image: conduktor/conduktor-gateway:2.3.0
     environment:
-      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
+      GATEWAY_MODE: VCLUSTER
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -223,7 +223,7 @@ conduktor-gateway:
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
-      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
+      GATEWAY_MODE: VCLUSTER
       GATEWAY_OAUTH_JWKS_URL: <YOUR_OIDC_PROVIDER_JWKS_URL|YOUR+JWKS_FILE_URL>
       GATEWAY_OAUTH_EXPECTED_ISSUER: <YOUR_OIDC_ISSUER>
 ```
