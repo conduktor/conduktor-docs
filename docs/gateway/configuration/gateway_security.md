@@ -51,12 +51,13 @@ conduktor-gateway:
 ```
 
 # Your client to Gateway security
-You have several options when connecting clients to Gateway depending on your security requirements or design requirements.
+You have several options when connecting clients to Gateway depending on your security requirements or design requirements. There are three modes Gateway can be initialised in. 
 
-If you are connecting to Gateway in Passthrough mode, or multitenancy mode (with virtual clusters) will provide different options.
-**Passthrough** security passes the existing Kafka credentials of the client straight through to the backing cluster with no further checks. This is great to use out of the box, or if you do not need virtual clusters.
+**Passthrough** security passes the existing Kafka credentials of the client straight through to the backing cluster with no further checks. This is great to use out of the box, or if you do not need virtual clusters. Here `GATEWAY_MODE` is using the default value of `KAFKA_SECURITY`.
 
-**Multi-tenancy** or virtual cluster mode. Depending on your design requirements, you may want clients to connect to a virtual cluster on Gateway.
+**Gateway security** , sometimes known as single-tenant, mode allows clients to have their own crednetials for connecting to Gateway, whilst Gateway has its own credentials to connect to Kafka. You have more control on secuirty at each stage.
+
+**Multi-tenancy** or virtual cluster mode. Depending on your design requirements, you may want clients to connect to an isolate virtual cluster on Gateway. Here `GATEWAY_MODE` should be set the value of `VCLUSTER`.
 
 Depending which mode you are in, Passthrough or Multi-tenancy (virtual clusters) , different security options are supported. Note these don't have to match that between Gateway and the backing Kafka, you could have simpler security for clients to Gateway and a more advanced method from Gateway to Kafka if you wished.
 
@@ -124,7 +125,7 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 ## Client to Gateway, with virtual clusters
 
 To put Gateway in multi-tenancy mode, and to work with virtual clusters;
-1. Set the environment variable `GATEWAYMODE: VCLUSTER`
+1. Set the environment variable `GATEWAY_MODE: VCLUSTER`
 1. Create a username to connect to the virtual cluster, through the admin API
 1. Update your client to use this username when connecting
 
