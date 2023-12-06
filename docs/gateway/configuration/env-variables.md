@@ -105,16 +105,18 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SSL Config
 
-| Environment Variable                                    | Default Value | Description                  |
-|---------------------------------------------------------|---------------|------------------------------|
-| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth                   |
-| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
+| Environment Variable                                    | Default Value | Description                                               |
+|---------------------------------------------------------|---------------|-----------------------------------------------------------|
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth, please update this variable when using `OAuth`|
+| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                                             |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth                              |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                                               |
 
 #### OAuthbearer
 
 Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
+
+If using OAuth you should also review the [SSL config](#ssl-config) section for the `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` variable, as the default of `0`is not suitable.
 
 | Environment Variable              | Default Value | Description                                                                                                                                                                                                                                                                                                                                                                                          |
 |-----------------------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
