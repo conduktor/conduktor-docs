@@ -105,12 +105,12 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SSL Config
 
-| Environment Variable                                    | Default Value | Description                  |
-|---------------------------------------------------------|---------------|------------------------------|
-| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth                   |
-| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
+| Environment Variable                                    | Default Value | Description                                               |
+|---------------------------------------------------------|---------------|-----------------------------------------------------------|
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth, please update this variable when using `OAuth`|
+| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                                             |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth                              |
+| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                                               |
 
 #### OAuthbearer
 
