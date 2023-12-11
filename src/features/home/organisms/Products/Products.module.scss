@@ -30,7 +30,7 @@
 
       img {
         transform: scale(1.02) translateY(-5px);
-        box-shadow: var(--shadows-shadow5);
+        // box-shadow: var(--shadows-shadow5);
       }
     }
 
@@ -49,14 +49,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--colors-purple9);
+  background-color: var(--colors-purple3);
   border-radius: var(--radii-radius5);
   margin-bottom: var(--space-space8);
   transition: filter 200ms ease-in-out;
+  transition: background-color 0.4s ease-in-out;
+
+    &:hover{
+      background-color: var(--colors-purple9);
+    }
 }
 
+
 .ListVisualImage {
-  box-shadow: var(--shadows-shadow3);
+  // box-shadow: var(--shadows-shadow3);
   transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
   height: 48px;
   width: 48px;
