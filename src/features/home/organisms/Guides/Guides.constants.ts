@@ -8,7 +8,7 @@ export const items = [
   {
     title: 'AWS',
     icon: '/assets/svgs/guides/aws.svg',
-    to: '/platform/installation/get-started/cloudformation',
+    to: '/platform/installation/get-started/AWS',
     comingSoon: false,
   },
   {
