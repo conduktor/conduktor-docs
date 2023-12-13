@@ -103,8 +103,6 @@ In the **Environment variables** section, add the essential environment variable
 
 You can see the full list of environment variables [here](../../configuration/env-variables.md). 
 
-
-
 :::info
 Note that you can also add your Kafka cluster, Schema Registry, Connect and ksqlDB configurations as environment variables. But if you're just getting started, we recommend you use the wizard inside the Console UI instead. The wizard provides support for uploading certificates, and help on debugging your connections.
 :::
@@ -127,6 +125,10 @@ Add the below Port mappings:
 
 In the **Environment variables** section, add the required environment variable to link the monitoring container with the console container.
  - `CDK_CONSOLE-URL`: http://localhost:8080
+
+![AWS Guide Task](./assets/aws-guide-cortex.png)
+
+Note that for production environments, you should also configure an [external S3 bucket](/platform/configuration/cortex) to store historical monitoring data.
 
 We can now go down below and **Create** our task definition.
 
@@ -179,8 +181,8 @@ Select the **Connect your Kafka clusters** option and start adding your Kafka cl
 
 Now that you have an up and running deployment of Console, it's time to invite your team!
 
- - [Configure SSO](../../configuration/user-authentication/SSO/) to easily onboard users
- - Configure [local users](../../configuration/user-authentication/local-admin-and-users.md) if you are not using SSO
+ - [Configure SSO](/platform/category/configure-sso/) to easily onboard users
+ - Configure [local users](/platform/configuration/user-authentication/local-admin-and-users/) if you are not using SSO
 
 ### Troubleshooting: Enabling Inbound Rules
 
