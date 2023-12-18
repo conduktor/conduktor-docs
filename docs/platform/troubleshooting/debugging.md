@@ -9,14 +9,13 @@ Conduktor Console Docker image runs on Ubuntu Linux. It runs multiple services i
 
 To troubleshoot the Console, we suggest you to go through the following steps.
 
-First, verify that the Console is up and running.   
-Second, use our "**Platform Diagnostic**" tool to get an automatic diagnostic report about the Console and its components.   
-Third, manually debug Conduktor Console.    
+First, verify that the Console is up and running.    
+Second, manually debug Conduktor Console.    
 And finally, consult the logs and send them to our support team if necessary.    
 
 Let's now see in details each step.
 
-## 1. Verify that the Conduktor is up and running
+## Verify that the Conduktor is up and running
 
 ### From Docker
 
@@ -47,105 +46,7 @@ platform-75d45ff86c-dlwb5                    1/1     Running   0          14d
 
 Pod status is available in the "STATUS" column. Here the pod is running.
 
-## 2. Debug with the "Platform Diagnostic" tool
-
-:::info
-Platform diagnostic is a tool that allow you to extract all the relevant log from Conduktor Console in order to give all the necessary information to our support team to investigate your issue
-:::
-
-### Installation
-
-> **Note** :  available only for Linux, Mac and WSL2 for now.
-> if you need another support, make us a request
-
-
-| Tool Version | Supported Conduktor versions | x86_64 | ARM64 (M1 compatible) |  
-|--------------|------------------------------|--------|-----------------------|
-| 0.1.0        | <= 1.9.1                     | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-1-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-arm_0-1-0) |
-| 0.2.0        | >= 1.10.0                    | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-2-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-arm_0-2-0) |
-| 0.3.0        | >= 1.15.0                    | [x86 bin](https://releases.conduktor.io/platform-diagnostic-amd_0-3-0) | [arm bin](https://releases.conduktor.io/platform-diagnostic-m1_0-3-0)  |
-
-
-### Usage
-
-First, allow the execution of the downloaded tool:
-```sh
-chmod +x platform-diagnostic-amd_0-3-0
-```
-
-To display the usage information, execute the following command:
-
-```bash
-./platform-diagnostic -h
-```
-
-The Platform Diagnostic tool supports:
- - [The Docker](#docker) version of the Console
- - [The Kubernetes](#kubernetes) version of the Console
-
-#### Docker
-
-For the Docker version, execute this tool on the same machine where the Conduktor Console is running.
-
-```sh
-./platform-diagnostic-amd_0-3-0 run docker
-```
-
-#### Kubernetes
-
-For the Kubernetes version, execute this tool on a machine that has access to the cluster. Make sure to select the correct Kubernetes context.
-
-```sh
-# Execute the binary in a shell
-./platform-diagnostic-amd_0-3-0 run kubernetes --namespace=<namespace_name> --pod-name=<platform-foo-bar>
-```
-
-#### Expected output
-
-When executing the tool, the output should resemble the following, with slight variations between the Kubernetes and Docker versions:
-
-```
-Welcome to Conduktor Platform Diagnostic⚕️ !
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠟⢻⡇⠀⠀⠀⠀⣠⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠀⢸⣧⣤⣀⡀⠺⢿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡿⠀⠀⠀⢸⣿⣿⣿⣿⣆⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠇⠀⠀⢀⣼⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡿⠀⠀⠴⠿⣿⣿⣦⣄⣠⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⡇⠀⠀⠀⠀⠀⠈⠉⠉⠛⠛⠿⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⢿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣷⣤⣀⠀⠀⠀⠀⠐⣿⣿⣷⣦⣤⣀⣤⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠛⠛⠛⠛⠛⠛⠂⠀⠀⠀⠘⢿⣿⣿⠋⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣻⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢦⣤⣀⡀⠀⠀⢀⣤⣾⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣾⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-
-All rights reserved to Conduktor Inc. https://www.conduktor.io
-ToS : https://www.conduktor.io/terms-of-service
-Privacy Policy : https://www.conduktor.io/privacy-policy
-
-[18:38:19] 🤖 Diagnostic starting...
-[18:38:19] ✅ Success - Init diagnostic
-[18:38:19] ✅ Success - Export host system informations
-[18:38:19] ✅ Success - Export docker version
-[18:38:19] ✅ Success - Export platfom health status
-[18:38:19] ✅ Success - Export user licence
-[18:38:19] ✅ Success - Export platform versions
-[18:38:19] ✅ Success - Export environment variables
-[18:38:19] ✅ Success - Export services information
-[18:38:20] ✅ Success - Export logs
-[18:38:20] ✅ Success - Export platform global configuration
-[18:38:20] ✅ Success - Sanitize configuration
-
-[18:38:20] 🚀 Success! A tarball with all the diagnostic files has been created at: /home/you/filename
-[18:38:20] 📌 Send this archive to 👉 support@conduktor.io 👈 with a description of your issue 👆
-```
-
-finally, you can get the archive created and send it to `support@conduktor.io` with a description of the issue you are facing
-
-## 3. Manually debug Conduktor Console
+## Manually debug Conduktor Console
 
 ### Check services within the Conduktor-platform container
 
@@ -171,7 +72,7 @@ In the above example you can see that `console` failed to start. This tells us w
 
 > Tips: if you have an error on supervisorctl command that might be because you don't have correct environment set. Verify that you are running with  `conduktor-platform` user using `/bin/bash` shell and you can force environment by sourcing `/etc/profile` in current shell.
 
-## 4. Get the logs and send them to support
+## Get the logs and send them to support
 
 Logs are kept in `/var/conduktor/log`
 
