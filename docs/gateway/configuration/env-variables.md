@@ -6,16 +6,15 @@ description: Conduktor Gateway connections to Kafka are configured by prefixed a
 
 Configuring the environment variables is the recommended way of setting up Conduktor Gateway.
 
-
 Jump to:
 
 - [Kafka Environment Variables](#kafka-environment-variables)
 - [Gateway Environment Variables](#gateway-environment-variables)
   - [Host/Port](#hostport)
-  - [Load balancing](#load-balancing)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Security Provider](#security-provider)
   - [Secret management](#secret-management)
+  - [Load balancing](#load-balancing)
   - [HTTP](#http)
   - [Internal state](#internal-state)
   - [Internal setup](#internal-setup)
@@ -28,13 +27,12 @@ Jump to:
 ## Kafka Environment Variables
 
 Conduktor Gateway's connection to Kafka are configured by the `KAFKA_` environment variables.
-When translating Kafka's properties, use upper case instead and replace the `.` with `_`.  
+When translating Kafka's properties, use upper case instead and replace the `.` with `_`.
 
 For example;  
 When defining Gateway's Kafka property `bootstrap.servers` , declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`.
 
 Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway.
-
 
 ## Gateway Environment Variables
 
@@ -68,15 +66,18 @@ __Example Values__
 | `GATEWAY_PORT_START`      | `6969`                                 | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
 | `GATEWAY_PORT_COUNT`      | defaults to your number of brokers +2  | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
-### Load Balancing
-
-| Environment Variable                            | Default Value      | Description                                                                                                              |
-|-------------------------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
-| `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
-
 ### Client to Gateway Authentication
+
+| Environment Variable | Default Value    | Description                                      |
+|----------------------|------------------|--------------------------------------------------|
+| `GATEWAY_MODE`       | `KAFKA_SECURITY` | credentials and ACL handled your target clusters | 
+
+`GATEWAY_MODE` can be:
+
+* `KAFKA_SECURITY` where your credentials and ACL handled your target Kafka cluster
+* `GATEWAY_SECURITY` where your credentials and ACL handled by Gateway
+* `VCLUSTER` where your virtual clusters, credentials and ACL handled by Gateway
+
 
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
@@ -129,7 +130,6 @@ If using OAuth you should also review the [SSL config](#ssl-config) section for 
 | `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`  | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                            |
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`    | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                          |
 
-
 #### SECURITY PROVIDER
 
 | Environment Variable        | Default Value | Description                                                                                                             |
@@ -140,7 +140,7 @@ Please note that `CONSCRYPT` does not support Mac OS with aarch64.
 
 #### SECRET MANAGEMENT
 
-Secrets may be passed from configuration to Gateway using environement variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. 
+Secrets may be passed from configuration to Gateway using environement variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables.
 
 * `SCHEMA_REGISTRY_LOGIN`
 * `SCHEMA_REGISTRY_PASSWORD`
@@ -157,6 +157,13 @@ Secrets may be passed from configuration to Gateway using environement variables
 
 For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
 
+### Load Balancing
+
+| Environment Variable                            | Default Value      | Description                                                                                                              |
+|-------------------------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
+| `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
 
 ### HTTP
 
@@ -225,12 +232,10 @@ none
 
 ### Feature Flags
 
-| Environment Variable                            | Default Value      | Description                                                                                                                                                                |
-|-------------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY`           | `false`            | Whether or not to pass Kafka credentials from the client through to the cluster for connecting, or use the tenants within Gateway. This must be enabled for multi-tenancy. |
-| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`             | Whether or not to enable the audit feature                                                                                                                                 |
-| `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT`           | `false`            | Whether or not to enable single tenant mode, in this mode topic names etc are not prefixed.                                                                                |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
+| Environment Variable                            | Default Value      | Description                                                         |
+|-------------------------------------------------|--------------------|---------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`             | Whether or not to enable the audit feature                          |  
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether or not to enable we replicate kafka internal load balancing |
 
 ### Licensing
 
