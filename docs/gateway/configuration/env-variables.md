@@ -51,7 +51,7 @@ issues or questions please contact support at `support@conduktor.io`.
 __Example Values__
 
 ```shell
-  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092 \
+  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092,kafka3:9092 \
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
   -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';"
@@ -65,7 +65,7 @@ __Example Values__
 | `GATEWAY_ADVERTISED_HOST` | defaults to your hostname              | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
 | `GATEWAY_PORT_START`      | `6969`                                 | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
 | `GATEWAY_PORT_COUNT`      | defaults to your number of brokers +2  | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
-
+ 
 ### Client to Gateway Authentication
 
 | Environment Variable | Default Value    | Description                                      |

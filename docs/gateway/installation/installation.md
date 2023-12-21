@@ -39,11 +39,11 @@ In its most simple form GW can be run from a simple Docker run command with the 
 
 ```bash
  docker run \
-  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092,kafka3:9092 \
+  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092,kafka3:9092,kafka3:9092 \
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
   -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";' \
-  conduktor/conduktor-gateway:2.3.0
+  conduktor/conduktor-gateway:2.3.1
 ```
 
 If you're interested in trying out Gateway yourself go checkout the [demos](https://github.com/conduktor/conduktor-gateway-demos).

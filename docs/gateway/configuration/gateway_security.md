@@ -23,12 +23,12 @@ Jump to:
       - [Create a username](#create-a-username)
       - [Update your client to connect to the virtual cluster](#update-your-client-to-connect-to-the-virtual-cluster)
     - [SASL OAuthbearer mechanism](#sasl-oauthbearer-mechanism)
-      - [Configure Gateway](#configure-gateway-to-support-oauthbearer-with-environemnt-variables)
+      - [Configure Gateway](#configure-gateway-to-support-oauthbearer-with-environment-variables)
       - [Configure your client](#configure-your-client-to-connect-to-gateway-using-oauthbearer)
       - [Customize the virtual cluster](#customize-the-virtual-cluster-oauth)
     - [SASL_SSL](#sasl_ssl)
     - [SSL mechanism](#ssl-mechanism)
-      - [Configure Gateway](#configure-gateway-to-support-ssl-with-environemnt-variables)
+      - [Configure Gateway](#configure-gateway-to-support-ssl-with-environment-variables)
       - [Configure your client](#configure-your-client-to-connect-to-gateway-using-ssl)
       - [Customize the virtual cluster](#customize-the-virtual-cluster-ssl)
 
@@ -38,13 +38,14 @@ You can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SA
 For these security protocols we support all SASL mechanisms; `PLAIN`, `SCRAM SHA`, `OAuthBearer`, `Kerberos` etc.
 
 Provide Gateway with the environment variables to connect to Kafka.
+
 Use the variables that start with a `KAFKA_` prefix as it is Gateway's connection to **Kafka**.
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092,kafka3:9092
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
@@ -54,6 +55,7 @@ conduktor-gateway:
 You have several options when connecting clients to Gateway depending on your security requirements or design requirements.
 
 If you are connecting to Gateway in Passthrough mode, or multitenancy mode (with virtual clusters) will provide different options.
+
 **Passthrough** security passes the existing Kafka credentials of the client straight through to the backing cluster with no further checks. This is great to use out of the box, or if you do not need virtual clusters.
 
 **Multi-tenancy** or virtual cluster mode. Depending on your design requirements, you may want clients to connect to a virtual cluster on Gateway.
@@ -66,21 +68,21 @@ By default Conduktor will leverage your `KAFKA_SECURITY_PROTOCOL` and accept the
 
 Gateway will then transfer the credentials to your underlying Kafka, thus leveraging your existing security and ACLs.
 
-This is the default Gateway mode, `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: false`.
+This is the default Gateway mode: `GATEWAY_MODE: KAFKA_SECURITY`.
 
 :::caution
 
-For Passthrough mode, Conduktor Gateway currently supports:
+For `KAFKA_SECURITY` mode, Conduktor Gateway currently supports:
 - Security protocols: `SASL_PLAINTEXT` and `SASL_SSL`
 - SASL mechanisms: `PLAIN`, `SCRAM-SHA-256` and `SCRAM-SHA-512`
 
 :::
 
-Gateway can be started with minimal changes in Passthrough mode, only requiring the bootstrap servers, e.g.:  
+Gateway can be started with minimal changes in `KAFKA_SECURITY` mode, only requiring the bootstrap servers, e.g.:  
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     hostname: conduktor-gateway
     container_name: conduktor-gateway
     environment:
@@ -97,9 +99,9 @@ For example, you may want to encrypt on top on a `SASL_PLAINTEXT` Kafka. Compare
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092,kafka3:9092
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="x" password="y";
@@ -124,13 +126,13 @@ Don't forget to add a volume bind, so Conduktor Gateway can access your `jks` fi
 ## Client to Gateway, with virtual clusters
 
 To put Gateway in multi-tenancy mode, and to work with virtual clusters;
-1. Set the environemnt variable `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true`
+1. Set the environment variable `GATEWAY_MODE: VCLUSTER`
 1. Create a username to connect to the virtual cluster, through the admin API
 1. Update your client to use this username when connecting
 
 These steps are detailed below, with the username creation being dependent on your security requirements.
 
-Virtual cluster mode supports;
+`VCLUSTER` mode supports;
 * `PLAINTEXT`
 * `SASL_PLAINTEXT`
 * `SASL_SSL` (with `mTLS` option)
@@ -141,17 +143,17 @@ Virtual cluster mode supports;
 ### Enable virtual clusters with the environment variables
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
-      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
+      GATEWAY_MODE: VCLUSTER
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092,kafka3:9092
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
 ```
 Scroll or jump to which type of setup you have for creating a username;
 * [Plain user/password mechanisms](#sasl-plain-userpassword-mechanism)
-* [SASL oauthbearer mechanism](#sasl-oauthbearer-mechanism)
+* [SASL OauthBearer mechanism](#sasl-oauthbearer-mechanism)
 * [SASL_SSL with mTLS, see the section on mTLS](#sasl_ssl)
 * [SSL](#ssl-mechanism)
 
@@ -207,23 +209,22 @@ kafka-topics \
   --list
 ```
 
-### SASL OAuthbearer mechanism
+### SASL OAuthBearer mechanism
 
-Conduktor gateway support OAuth authentification by leveraging OAuthbearer SASL mechanism. For this type of connection you will need a OpenID provider exposing public keys.
+Conduktor gateway support OAuth authentification by leveraging OAuthBearer SASL mechanism. For this type of connection you will need a OpenID provider exposing public keys.
 
 Configuration instructions are provided for Gateway and for the client.
 
-#### Configure Gateway to support OAuthbearer with environemnt variables
+#### Configure Gateway to support OAuthBearer with environment variables
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092,kafka3:9092
       KAFKA_SASL_MECHANISM: PLAIN
       KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
-      GATEWAY_FEATURE_FLAGS_MULTI_TENANCY: true
       GATEWAY_OAUTH_JWKS_URL: <YOUR_OIDC_PROVIDER_JWKS_URL|YOUR+JWKS_FILE_URL>
       GATEWAY_OAUTH_EXPECTED_ISSUER: <YOUR_OIDC_ISSUER>
 ```
@@ -231,7 +232,7 @@ conduktor-gateway:
 If the generated token by the provider defines an `aud` header, provide the list of supported audiences with the environment variable `GATEWAY_OAUTH_EXPECTED_AUDIENCES`.  
 Example :`GATEWAY_OAUTH_EXPECTED_AUDIENCES: [audience1, audience2]`
 
-#### Configure your client to connect to Gateway using OAuthbearer
+#### Configure your client to connect to Gateway using OAuthBearer
 
 Your client will connect through an OAuth provider using a grant credentials flow to create a token, to be sent to Gateway. This token will be verified based on the configuration below.
 
@@ -270,7 +271,7 @@ If you are using certificates signed with local authorities authority, you'll ne
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
       GATEWAY_SECURITY_PROTOCOL: SASL_SSL
       GATEWAY_SSL_CLIENT_AUTH: REQUIRE
@@ -285,7 +286,7 @@ conduktor-gateway:
 
 ### SSL mechanism
 
-#### Configure Gateway to support SSL with environemnt variables
+#### Configure Gateway to support SSL with environment variables
 
 A similar configuration to the [SASL_SSL section](#sasl_ssl), described above, is used for SSL.
 
@@ -293,7 +294,7 @@ If you are using certificates signed with local authorities authority, you'll ne
 
 ```yaml
 conduktor-gateway:
-    image: conduktor/conduktor-gateway:2.3.0
+    image: conduktor/conduktor-gateway:2.3.1
     environment:
       GATEWAY_SECURITY_PROTOCOL: SSL
       GATEWAY_SSL_CLIENT_AUTH: REQUIRE
