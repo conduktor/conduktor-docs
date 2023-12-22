@@ -27,7 +27,7 @@ Before you proceed, it is important to make sure that you have either already cr
  - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
  - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
  - [Step 4: Access Conduktor and Configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
- - [Step 5: Onboad your team](#step-5-onboard-your-team)
+ - [Step 5: Onboard your team](#step-5-onboard-your-team)
 
 
 ### Step 1: Create a PostgreSQL databse via Amazon RDS
@@ -38,7 +38,7 @@ You can skip this step if you already have an RDS database running you want to u
 
 Let's start by deploying a database on RDS that Conduktor will use to store its state. 
 
-As per the [system requirements](../hardware.md), the PostgreSQL db must be engine version **13+**.
+As per the [system requirements](../hardware.md), the PostgreSQL db must be engine version **13+**. Note that Console will not work with all Postgresql engines within RDS, it will only work with engine version 14.8+ / 15.3+, other versions are not fully supported.
 
 Go to the RDS menu and create a new database.
  - Select **PostgreSQL**
