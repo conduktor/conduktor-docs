@@ -4,8 +4,6 @@ title: Create a Policy
 description: How to create a Data Masking policy
 ---
 
-## Create a Policy
-
 In order to create a Data Masking policy and protect your data, you should navigate to the **Data Policies** section of the **Settings**. If you don't see this tab, you may not have the appropriate permissions to create policies.
 
 ![List of policies](/img/data-masking/overview-policies.png)
@@ -25,7 +23,7 @@ The minimum set of properties you'll have to set is the following:
 
 ![Add a policy](/img/data-masking/add-policy.png)
 
-### Restrict to Resources, Users and Groups
+## Restrict to Resources, Users and Groups
 
 Then, you can define how you want this policy to be applied, by defining the properties below:
 
