@@ -16,30 +16,31 @@ There are many OIDC (OpenID Connect) providers available, we already have guides
 
 For other providers, you can follow this guide that will explain the general steps to follow.
 
-## Oauth2 Provider Configuration
+## OAuth2 Provider Configuration
 
 ### 1. Create an OIDC application in your chosen provider.   
 This application should use standard OAuth2/OIDC [authorization code flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) with `CLIENT_SECRET_BASIC` authentication method.
 
-### 2. Set Oauth2 authorized redirect URI in your application
+### 2. Set OAuth2 authorized redirect URI in your application
 
-For the Oauth2 authorization code flow to work, the OAuth2 provider needs to know; and authorize; where to redirect the user after the authentication process. 
+For the OAuth2 authorization code flow to work, the OAuth2 provider needs to know; and authorize; where to redirect the user after the authentication process. 
 This is called the `redirect URI` or `callback URI`. 
 
 The redirect URI will look like this:    
 `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
-Where `<Console host>` and `<Console port>` depends on the Console external URL used and/or configured, and `<OAuth2 config name>` is the name of the OAuth2 configuration in your Console configuration file see step xxx.
+Where `<Console host>` and `<Console port>` depends on the Console external URL used and/or configured, and `<OAuth2 config name>` is the name of the OAuth2 configuration in your Console configuration file see [Console configuration](#console-configuration) step.
 
 #### More details on Console external URL
-When Console initiate oauth2 authorization code flow, it tells the OIDC provider where to redirect the user after the authentication process.
+When Console initiate the OAuth2 authorization code flow, it tells the OIDC provider where to redirect the user after the authentication process.
 
-But to forge this redirect URI, Console have several choices: 
+But to forge this redirect URI, Console has several choices: 
 
 ##### Console external URL is configured
 
 If the Console external URL is configured using environment variable `CDK_PLATFORM_EXTERNAL_URL` or configuration `platform.external.url`, it will use it.    
-**But SSO will work ONLY if Console is accessed using this URL.**
+**But SSO will work ONLY if Console is accessed using this URL.** 
+If you try to login from the second URL you will be redirected to the first URL and then lose browser authentication cookies meaning the SSO will not work.
 
 ##### Console external URL is NOT configured
 
@@ -53,7 +54,7 @@ It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` heade
 When using `X-Forwarded` headers allow users to connect using OIDC SSO from multiple URLs if they are all configured as valid redirect URIs in your OIDC provider.
 :::
 :::note
-Console do not support `Forwarded` header yet.
+Console does not support `Forwarded` header yet.
 :::
 
 
@@ -79,7 +80,7 @@ Required properties are:
 Optionally, you can configure the following properties:
 - `sso.oauth2.scopes`: the list of scopes to request during the authorization code flow.
 
-For detailed list of Oauth2 configurations supported by Console please refer to [this page](../../env-variables.md#oauth2-properties).
+For detailed list of OAuth2 configurations supported by Console please refer to [this page](../../env-variables.md#oauth2-properties).
 
 ### Example
 Here is an example of a configuration file for a generic OIDC provider:
