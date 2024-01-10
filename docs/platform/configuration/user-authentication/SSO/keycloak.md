@@ -36,7 +36,12 @@ You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, by what you got during the steps 2 and 3.
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, by what you got during the previous steps.
+
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -44,20 +49,24 @@ sso:
     - name: "keycloak"
       default: true
       client-id: "<client ID>"
-      client-secret: "<client ID>"
+      client-secret: "<client secret>"
       openid:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-Or using environment variables:
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="keycloak"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
+
+</TabItem>
+</Tabs>
 
 ## Groups Configuration
 
@@ -76,21 +85,25 @@ You can add the claim to the token you want. In this example, the **UserInfo**.
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
 ```yaml title="platform-config.yaml"
 sso:
   oauth2:
     - name: "keycloak"
       default: true
-      client-id: "<client ID>" # from step 4
-      client-secret: "<client ID>" # from step 4
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
       groups-claim: "groups"
       openid:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-Or using environment variables:
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="keycloak"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
@@ -98,6 +111,10 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
+
+</TabItem>
+</Tabs>
+
 
 ### External Groups Mapping
 

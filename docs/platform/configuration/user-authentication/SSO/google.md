@@ -47,6 +47,11 @@ If you need to add an **authorized domain** to your Google account, you can foll
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret by what you got during the step 4.
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
 ```yaml title="platform-config.yaml"
 sso:
   oauth2:
@@ -58,12 +63,16 @@ sso:
         issuer: "https://accounts.google.com"
 ```
 
-Or using environment variables :
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="google"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 ```
+
+</TabItem>
+</Tabs>

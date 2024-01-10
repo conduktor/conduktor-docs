@@ -34,6 +34,11 @@ Do not forget to select how you want to connect via the **Connections** tab of y
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, by what you got during the step 2.
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
 ```yaml title="platform-config.yaml"
 sso:
   oauth2:
@@ -45,12 +50,16 @@ sso:
         issuer: "https://<domain>"
 ```
 
-Or using environment variables:
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="auth0"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 ```
+
+</TabItem>
+</Tabs>

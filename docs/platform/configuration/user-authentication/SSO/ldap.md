@@ -12,6 +12,11 @@ You can find the list of LDAP properties [here](/platform/configuration/env-vari
 
 Here is an example snippet to put in your configuration file, that contains server, users and groups attributes.
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
 ```yaml title="platform-config.yaml"
 sso:
   ldap:
@@ -28,9 +33,10 @@ sso:
       groups-attribute: "cn"                       # Group name entry (default: "cn")
 ```
 
-You can also use environment variables:
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_LDAP_0_NAME="LDAP"
 CDK_SSO_LDAP_0_SERVER="ldap://openldap:1389"
 CDK_SSO_LDAP_0_MANAGERDN="cn=admin,dc=example,dc=org"
@@ -43,6 +49,9 @@ CDK_SSO_LDAP_0_GROUPS-BASE="ou=groups,dc=example,dc=org"
 CDK_SSO_LDAP_0_GROUPS-FILTER="(member={0})"
 CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 ```
+
+</TabItem>
+</Tabs>
 
 :::tip
 If your LDAP server is **Active Directory** and you get "invalid user" error when trying to log-in, try setting your `search-filter` to `'(sAMAccountName={0})'`.

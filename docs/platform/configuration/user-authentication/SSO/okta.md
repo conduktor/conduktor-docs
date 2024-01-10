@@ -43,6 +43,11 @@ You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-c
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, by what you got during the steps 4 and 5.
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
 ```yaml title="platform-config.yaml"
 sso:
   oauth2:
@@ -54,12 +59,16 @@ sso:
         issuer: "https://<domain>.okta.com"
 ```
 
-Or using environment variables:
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
 
-```json
+```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="okta"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>.okta.com"
 ```
+
+</TabItem>
+</Tabs>
