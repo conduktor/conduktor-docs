@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 title: Keycloak
 description: Configure Keycloak as SSO for Conduktor Console.
 ---
@@ -20,9 +20,11 @@ On Keycloak side, you'll have to create a new application:
 
 - **Step 3**: Configure the redirect URI 
 
-You can configure it as the following: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`
+You can configure it as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
 For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](./generic-oauth2.md#more-details-on-console-external-url).
 
 ![](../../assets/keycloak-callback.png)
 
