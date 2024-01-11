@@ -44,21 +44,14 @@ If you try to login from the second URL you will be redirected to the first URL 
 
 ##### Console external URL is NOT configured
 
-In that case, Console will try to determine the external URL by itself. 
-This is recommended if Console is accessed using multiple URLs (internal, external, etc).
+When no external Console URL is enforced, Console will use requests headers to resolve is external URL.
+This is recommended if Console is accessed using multiple URLs (internal, external, etc) and have SSO on each of them.
 
 The resolution strategy is the following:
-1. Use the `X-Forwarded-*` headers. This is the preferred method if you are using a **reverse proxy in front of Console**.    
+1. Use the [`Forwarded`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded) header. This is the preferred method if you are using a **reverse proxy in front of Console**.    
+2. Use the `X-Forwarded-*` headers. Support for the non-standard forwarded headers coming from some **reverse proxy** implementations.    
 It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` headers to determine the external URL.
-:::tip
-When using `X-Forwarded` headers allow users to connect using OIDC SSO from multiple URLs if they are all configured as valid redirect URIs in your OIDC provider.
-:::
-:::note
-Console does not support `Forwarded` header yet.
-:::
-
-
-2. Use the `Host` header. Used if you access to Console directly, without a reverse proxy.   
+3. Use the `Host` header. Used if you access to Console directly, without a reverse proxy.   
 In this case, the `Host` header (generally set by the browser) will be used to determine the external URL. 
 :::note
 **Port** will be guessed depending on the content of the `Host` header and fallback to Console configured port using environment variable `CDK_LISTENING_PORT` (default to `8080`).   
