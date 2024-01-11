@@ -48,7 +48,8 @@ When no external Console URL is enforced, Console will use requests headers to r
 This is recommended if Console is accessed using multiple URLs (internal, external, etc) and have SSO on each of them.
 
 The resolution strategy is the following:
-1. Use the [`Forwarded`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded) header. This is the preferred method if you are using a **reverse proxy in front of Console**.    
+1. Use the [`Forwarded`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded) header. This is the preferred method if you are using a **reverse proxy in front of Console**. 
+It uses the `host` and `proto` directives (if set) of `Forwarded` header to determine the external URL.
 2. Use the `X-Forwarded-*` headers. Support for the non-standard forwarded headers coming from some **reverse proxy** implementations.    
 It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` headers to determine the external URL.
 3. Use the `Host` header. Used if you access to Console directly, without a reverse proxy.   
