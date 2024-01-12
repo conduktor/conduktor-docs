@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: JS Filters Syntax Reference
+description: Reference Documentation for Topic related pages
 ---
 
 ## Introduction

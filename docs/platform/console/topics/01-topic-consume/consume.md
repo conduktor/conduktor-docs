@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Topic Consume
+description: Reference Documentation for Topic related pages
 ---
 
 :::info

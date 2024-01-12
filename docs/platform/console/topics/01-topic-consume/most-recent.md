@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: How Most Recent 500 works?
+description: Reference Documentation for Topic related pages
 ---
 
 When you first land on a topic consume page, the default search is configured with **Most Recent 500 messages.**
