@@ -33,7 +33,7 @@ The possible values are as follow:
 
 -   `Most Recent` option works differently depending on the **Limit** that you select
     -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
-        -   [How Most Recent 500 works?](./most-recent.md)
+        -   [How Most Recent 500 works?](./most-recent/)
     -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
 -   `Latest Hour`, `Today`, `Yesterday` to start the consumer respectively
     -   60 minute ago,
