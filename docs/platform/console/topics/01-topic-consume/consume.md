@@ -33,7 +33,7 @@ The possible values are as follow:
 
 -   `Most Recent` option works differently depending on the **Limit** that you select
     -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
-        -   [How Most Recent 500 works?](https://slite.com/api/public/notes/oHo-WLcl7ZZZPa/redirect)
+        -   [How Most Recent 500 works?](./most-recent.md)
     -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
 -   `Latest Hour`, `Today`, `Yesterday` to start the consumer respectively
     -   60 minute ago,
@@ -152,13 +152,11 @@ Examples:
 :::info
 ### JS Search
 
+If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.  
+Check this article on [JS Filters syntax](./js-filter-syntax/) to get examples and syntax around this filter.
 :::caution
 While it is the option that can potentially address the most complex use-cases, it is not the recommended or the fastest one.
-If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.
 :::caution
-
-
-Check this article on [JS Filters syntax ](https://slite.com/api/public/notes/zD1ANGvY79BRT-/redirect) to get examples and syntax around this filter.
 
 ### Statistics pop-up
 
