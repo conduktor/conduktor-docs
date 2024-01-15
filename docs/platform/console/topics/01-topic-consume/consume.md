@@ -231,6 +231,10 @@ Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-const
 ### Headers tab
 
 The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
+:::info
+While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display them.  
+If your producer doesn't write header values as UTF8 String, this tab might not render properly.
+:::
 ![img_5.png](img/topic-header-funnel.png)
 The resulting filter will be created:
 ![Capture d’écran 2024-01-12 à 12.12.14.png](img/topic-header-filter.png)
