@@ -235,8 +235,8 @@ The headers tab show you all the headers of your Kafka record, and lets you find
 The resulting filter will be created:
 ![Capture d’écran 2024-01-12 à 12.12.14.png](img/topic-header-filter.png)
 :::caution
-While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display them.  
-If your producer doesn't write header values as UTF8 String, this tab might not render properly.
+While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
+If your producer doesn't write header values as UTF8 String, this tab might not render properly, and header filter might not work as expected.
 :::
 ### Metadata tab
 
