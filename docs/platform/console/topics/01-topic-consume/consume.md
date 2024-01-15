@@ -4,6 +4,12 @@ title: Topic Consume
 description: Reference Documentation for Topic related pages
 ---
 
+
+- [Configure the Kafka Consumer](#configure-the-kafka-consumer)
+- [Filter records](#filter-records)
+- [Browse records](#browse-records)
+- [Operations](#operations)
+
 :::info
 **Checkout our video that presents the most important features of Topic Consume**
 :::info
