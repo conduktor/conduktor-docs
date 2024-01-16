@@ -61,7 +61,7 @@ sso:
 :::Please note
 If you are using a custom auth server in Okta, the OPENID_ISSUER should be in the form `https://<yourOktaDomain>/oauth2/<authorizationServerId>/` rather than `https://<domain>.okta.com`
 
-You can find documentation on this here `https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main/`.
+You can find documentation on this [here](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main/) .
 :::
 
 </TabItem>
