@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: Okta
 description: Configure Okta as SSO for Conduktor Console.
 ---
@@ -17,9 +17,11 @@ On Okta side, you'll have to create a new application:
 
 - **Step 2**: Configure the callback URI
 
-The redirect URI must be like: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](./generic-oauth2.md#more-details-on-console-external-url).
 
 ![](../../assets/okta-callback-uri.png)
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: Google
 description: Configure Google as SSO for Conduktor Console.
 ---
@@ -23,9 +23,11 @@ The scopes needed are `email`, `profile`, and `openid`.
 
 - **Step 3**: Create a new `OAuth client ID`
 
-You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `google` in your configuration file, you can use `http://localhost:8080/oauth/callback/google`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](./generic-oauth2.md#more-details-on-console-external-url).
 
 ![](../../assets/google-create-client.png)
 
