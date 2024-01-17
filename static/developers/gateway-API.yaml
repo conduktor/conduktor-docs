@@ -52,6 +52,7 @@ paths:
           application/json:
             example:
               username: conduktor
+              principal: 59fccdbd-9212-4aac-92be-5f3f59f2e8db
             schema:
               "$ref": "#/components/schemas/UserMappingRequest"
       responses:
@@ -148,6 +149,7 @@ paths:
   "/userMappings/v1":
     post:
       summary: Create a user mapping
+      description: "Create a user mapping to define a gateway user from an authentication principal"
       tags:
         - User mappings
       requestBody:
@@ -155,6 +157,7 @@ paths:
           application/json:
             example:
               username: conduktor
+              principal: 59fccdbd-9212-4aac-92be-5f3f59f2e8db
             schema:
               "$ref": "#/components/schemas/UserMappingRequest"
       responses:
@@ -2067,7 +2070,15 @@ components:
         username:
           example: conduktor
           type: string
-          description: username
+          description: Username for a user
+        principal:
+          example: 59fccdbd-9212-4aac-92be-5f3f59f2e8db
+          type: string
+          nullable: true
+          description: Authentication Principal to map a user from (will use username if not defined)
+      type: object
+      required:
+        - username
     VClusterList:
       properties:
         vclusters:
