@@ -725,7 +725,7 @@ paths:
         required: true
       responses:
         '200':
-          description: Interceptor updated
+          description: Interceptor created or updated
           content: {}
         '400':
           description: If bad config, bad priority and bad class name
@@ -739,12 +739,9 @@ paths:
             application/json:
               example:
                 message: You do not have permission to call this API, please contact your administrator.
-        '404':
-          description: Interceptor (interceptor name) or cluster not found
-          content: {}
       security:
         - basicAuth: []
-      operationId: Interceptor_v1_updateClusterInterceptor
+      operationId: Interceptor_v1_createOrUpdateClusterInterceptor
       deprecated: false
     get:
       summary: Get info on an interceptor for a virtual cluster
@@ -1405,12 +1402,9 @@ paths:
             application/json:
               example:
                 message: You do not have permission to call this API, please contact your administrator.
-        '404':
-          description: Interceptor (interceptor name) or cluster not found
-          content: { }
       security:
         - basicAuth: [ ]
-      operationId: Interceptor_v1_updatePassThroughClusterInterceptor
+      operationId: Interceptor_v1_createOrUpdatePassThroughClusterInterceptor
       deprecated: false
     get:
       summary: Get info on an interceptor
