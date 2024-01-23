@@ -93,8 +93,8 @@ In the **Environment variables** section, add the essential environment variable
  - `CDK_DATABASE_PASSWORD`: change_me
  - `CDK_DATABASE_PORT`: 5432
  - `CDK_DATABASE_USERNAME`: conduktor
- - `CDK_MONITORING_ALERT`: http://localhost:9010/
- - `CDK_MONITORING_CALLBACK`: http://localhost:8080/monitoring/api/
+ - `CDK_MONITORING_ALERT-MANAGER-URL`: http://localhost:9010/
+ - `CDK_MONITORING_CALLBACK-URL`: http://localhost:8080/monitoring/api/
  - `CDK_MONITORING_CORTEX-URL`: http://localhost:9009/
  - `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`: http://localhost:8080
  - `CDK_LICENSE`: Enterprise license key (Exclude if you are using Free)
