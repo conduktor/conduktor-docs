@@ -79,7 +79,7 @@ In the **Infrastructure Requirements** section:
 In the **Container Details** section:
  - Define the name of the container to conduktor-console
  - Specify the Image URI and version for Conduktor Console. You should use the most recent major/minor version.
-    - eg: `conduktor/conduktor-platform:1.19.2`
+    - eg: `conduktor/conduktor-platform:1.20.0`
  - Add a Port mapping on **8080**. This is the port of the UI of Conduktor Console.
 
 ![AWS Guide RDS Container](./assets/aws-guide-3.png)
@@ -113,7 +113,7 @@ Underneath your first container definition, select **+ Add container** so we can
 In the **Container Details** section:
  - Define the name of the container to conduktor-monitoring
  - Specify the Image URI and version for conduktor monitoring. You should use the most recent major/minor version.
-    - eg: `conduktor/conduktor-platform-cortex:1.19.2`
+    - eg: `conduktor/conduktor-platform-cortex:1.20.0`
 
 Add the below Port mappings:
 - 9090 | TCP | conduktor-cortex-9090-tcp
