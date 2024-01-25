@@ -9,7 +9,7 @@ description: Reference Documentation for Topic related pages
 The Topic page lets you search for any topic on your currently selected Kafka cluster.
 :::caution
 Configure** RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
-Check the [Settings](https://slite.com/api/public/notes/_OtvNSKy38tOKS/redirect) for more info.
+Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::caution
 Multiple search capabilities can be combined to help you find to the topic you want faster.
 
