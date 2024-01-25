@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 4
 title: CloudFormation
 description: Deploy an instance of Conduktor Console on AWS via CloudFormation.
 ---
@@ -10,7 +10,9 @@ description: Deploy an instance of Conduktor Console on AWS via CloudFormation.
 
 This guide will demonstrate how to use [AWS CloudFormation](https://aws.amazon.com/cloudformation/) to deploy Console in your AWS environment with all mandatory dependencies. It will deploy Conduktor as a Docker container on an ECS service with Fargate and configure it alongside a PostgreSQL database via RDS.
 
-> While this guide will help you get started, you may need to make additional configurations to ensure your deployment is production-ready.
+:::info
+While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements).
+:::
 
 The process should take no more than 15 - 30 minutes.
 
@@ -36,13 +38,13 @@ This template will create all the resources on a public subnet. It is important 
 
 1. Upload one of our templates:
 
-    > Decide if you want to deploy console use your own resources (cluster, DB, etc.) or if you want us to deploy the extra resources alongside console as well.
+    > Decide if you want to deploy console using your own resources (cluster, DB, etc.) or if you want us to deploy all resource dependencies alongside console as well.
 
     To deploy console **only**, you can use the following template:
 
     - [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml)
 
-    To deploy console and all resources needed, you can use the following template:
+    To deploy console and all resources needed (e.g. DB), you can use the following template:
 
     - [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml)
 
@@ -63,7 +65,11 @@ This template will create all the resources on a public subnet. It is important 
 
     ![Alt Config](assets/cloudformation-guide-3.png)
 
-    - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you may want to override the default ones.
+    - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you should override the default ones (e.g. the **admin email**, **admin password** and **AWS region**).
+
+    :::warning
+    Note the default value for region is specified in the template as **`eu-west-1c`**, if you are deploying in a **different region** you must update this value. 
+    :::
 
     ![Alt Config](assets/cloudformation-guide-4.png)
 
