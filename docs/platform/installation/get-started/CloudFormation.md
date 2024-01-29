@@ -18,7 +18,7 @@ The process should take no more than 15 - 30 minutes.
 
 ## Security
 
-This template will create all the resources on a public subnet. It is important to keep this in mind when using it.
+This template will create all the resources on a public subnet. However, the DB instance is available on private and public subnets. It is important to keep this in mind when using it.
 
 ## Networking & Architecture
 
@@ -60,6 +60,7 @@ This template will create all the resources on a public subnet. It is important 
     | `SecurityGroup` |  The Security group that will have access to your ECS service. |
     | `ClusterArn` | The ARN of the cluster you want to deploy your ECS service on. |
     | `DatabaseEndpoint` | The endpoint of your DB instance. |
+    | `DatabaseName` | The name of your DB instance. |
     | `DatabaseUsername` | The username for above DB instance. |
     | `DatabasePassword` | The password for above DB instance. |
 
