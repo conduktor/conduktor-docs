@@ -75,7 +75,7 @@ This template will create all the resources on a public subnet. It is important 
 
 1. Click "next".
 
-1. Acknowledge the tick box. *This will ensure we are able to see the logs Conduktor sends!*
+1. Acknowledge the tick box. *This will ensure we have the right permissions to access our ECS instance!*
 
     ![Alt Tickbox](assets/cloudformation-guide-5.png)
 
