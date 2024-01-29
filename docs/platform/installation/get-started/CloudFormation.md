@@ -65,10 +65,10 @@ This template will create all the resources on a public subnet. It is important 
 
     ![Alt Config](assets/cloudformation-guide-3.png)
 
-    - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you should override the default ones (e.g. the **admin email**, **admin password** and **AWS region**).
+    - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you may override the default ones.
 
     :::warning
-    Note the default value for region is specified in the template as **`eu-west-1c`**, if you are deploying in a **different region** you must update this value. 
+    Note the default value for region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
     :::
 
     ![Alt Config](assets/cloudformation-guide-4.png)
