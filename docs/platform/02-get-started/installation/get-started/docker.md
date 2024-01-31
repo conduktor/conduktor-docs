@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: Docker
 description: Get started with the latest Conduktor Console Docker image in just a few minutes.
 ---
