@@ -7,10 +7,23 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 # Overview
 
 
+- [Getting Started](#getting-started)
 - [What is Conduktor Gateway](#what-is-the-conduktor-gateway)
 - [Components](#components)
-- [Getting Started](#getting-started)
 - [Resources](#resources)
+
+## Getting Started
+
+These documents allow you to setup, configure and explore the Conduktor Gateway.
+
+If you are looking at setting up your Gateway, [review the installation options](installation/installation.md).  
+Need to configure Gateway for your specific setup, [review the configuration options](configuration/configuration.md).  
+Adding a plugin a.k.a. an interceptor, then [view the interceptors](interceptors/data-security/field-level-encryption.md) to see what there is and view examples to copy.  
+If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](demos/acls-gateway-security.md).
+
+Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.   
+Happy reading 😃.
+
 
 ## What is the Conduktor Gateway
 A vendor agnostic Apache Kafka proxy. Adding governance, security, cost-optimisation, and much more!
@@ -35,9 +48,7 @@ There is so much you can do with a Conduktor Gateway, just some of the features 
 
  ![gateway-so-many-features.png](./so-many-features.png)
 
-## Getting Started
 
-To start your Conduktor Gateway journey [review the installation options](installation/installation.md).
 ## Resources
 
 - [Support](https://www.conduktor.io/contact/support)
