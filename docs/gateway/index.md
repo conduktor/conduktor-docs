@@ -6,7 +6,6 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 
 # Overview
 
-
 - [Getting Started](#getting-started)
 - [What is Conduktor Gateway](#what-is-the-conduktor-gateway)
 - [Components](#components)
@@ -22,15 +21,19 @@ Adding a plugin a.k.a. an interceptor, then [view the interceptors](interceptors
 If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](demos/encryption/encryption.md).
 
 Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.   
+
 Happy reading 😃.
 
 
 ## What is the Conduktor Gateway
+
 A vendor agnostic Apache Kafka proxy. Adding governance, security, cost-optimisation, and much more!
 
 Kafka is a powerful tool, with great flexibility. This power and flexibility can lead to challenges around managing and bringing structure to your Kafka ecosystem, especially as that ecosystem grows.
 
-When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
+When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.
+Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. 
+Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
 
 
 ## Components
@@ -41,10 +44,10 @@ The core of Conduktor Gateway is the transport layer between your Kafka client a
 
 This transport layer is enhanced by interacting with the Kafka, modifying the data or performing logical operations to add value. Gateway itself is made of two conceptual parts, the Gateway core, and interceptors.
 There is so much you can do with a Conduktor Gateway, just some of the features include:
- - Virtual clusters for your clients through multi-tenancy
- - Encryption, for encrypting at the field level within your Kafka records, to aid with compliance around use of confidential, personal, or high value data
- - Chaos engineering, which enables you to develop against, and then prove that your Kafka applications can handle failure scenarios
- - Safeguarding, which puts structure and guards in place to ensure your Kafka environment is used in the right way
+ - [Virtual clusters](gateway/demos/ops) for your clients through multi-tenancy
+ - [Encryption](gateway/demos/encryption/), for encrypting at the field level within your Kafka records, to aid with compliance around use of confidential, personal, or high value data
+ - [Chaos engineering](gateway/demos/chaos), which enables you to develop against, and then prove that your Kafka applications can handle failure scenarios
+ - [Safeguarding](gateway/demos/safeguard), which puts structure and guards in place to ensure your Kafka environment is used in the right way
 
  ![gateway-so-many-features.png](./so-many-features.png)
 
