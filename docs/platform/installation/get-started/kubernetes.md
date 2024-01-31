@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 2
 title: Kubernetes
 description: The below guide details how to deploy kubernetes resources to run Conduktor.
 ---

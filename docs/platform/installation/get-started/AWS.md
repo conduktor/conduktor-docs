@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 3
 title: AWS
 description: Deploy an instance of Conduktor Console on AWS.
 ---
@@ -10,9 +10,13 @@ description: Deploy an instance of Conduktor Console on AWS.
 
 This guide will demonstrate how to deploy Console in your AWS environment with all mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
 
-While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements).
+Rather than follow this manual guide, you might prefer the [CloudFormation](CloudFormation.md) template.
 
-The process should take no more than **15 - 30 minutes**. 
+:::info
+While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements).
+:::
+
+The process should take no more than 15 - 30 minutes. 
 
 ## Security
 
