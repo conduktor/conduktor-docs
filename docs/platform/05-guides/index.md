@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
-title: Overview
+sidebar_position: 5
+title: How-To guides
 description: Conduktor Console gives you complete visibility into your Kafka ecosystem and the ability to manage and monitor your data streaming applications
 ---
- Docker compose up -d
+
+# Guides and How-To

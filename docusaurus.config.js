@@ -81,11 +81,11 @@ const config = {
               },
               {
                 label: 'Installation',
-                to: '/platform/installation/hardware',
+                to: '/platform/get-started/installation/hardware',
               },
               {
                 label: 'Configuration',
-                to: 'platform/configuration/introduction',
+                to: 'platform/get-started/configuration/introduction',
               },
             ],
           },
@@ -99,21 +99,6 @@ const config = {
               {
                 label: 'Monitoring',
                 to: '/platform/monitoring',
-              },
-            ],
-          },
-          {
-            title: '𝅷',
-            items: [
-              {
-                html: `<a href="/platform/data-masking">Data Masking</a>`,
-              },
-              {
-                html: `<a href="/platform/topic-service">Topic as a Service</a>`,
-              },
-              {
-                label: 'Conduktor Desktop',
-                to: '/desktop',
               },
             ],
           },

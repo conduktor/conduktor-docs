@@ -1,6 +1,6 @@
 {
     "label": "Get Started",
     "position": 2,
-    "link": {"type": "doc", "id": "index"}
+    "link": {"type": "doc", "id": "get-started/index"}
 }
   
