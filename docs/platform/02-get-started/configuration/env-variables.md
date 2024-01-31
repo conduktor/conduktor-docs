@@ -123,7 +123,7 @@ If you need more that what free plan offer, you can [contact us](https://www.con
 
 ### Database properties
 
-See database configuration [documentation](/platform/configuration/database/) for more info
+See database configuration [documentation](../database) for more info
 
 | Property | Description | Env | Mandatory | Type | Default |
 | --- | --- | --- | --- | --- | --- |
@@ -195,7 +195,7 @@ Cortex ports are configured like this by default:
 
 ### Cortex Configuration
 
-See [Cortex configuration page](/platform/configuration/cortex/) for more info
+See [Cortex configuration page](../cortex/) for more info
 
 ### SSO properties
 

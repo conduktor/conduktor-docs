@@ -8,7 +8,7 @@ description: Configure LDAPS as SSO for Conduktor Console.
 
 ## Certificate Configuration
 
-For LDAP over SSL (LDAPS) connection, you have to provide a trusted certificate using Java JKS TrustStore file. See [SSL/TLS configuration](/platform/configuration/ssl-tls-configuration/) for more details.
+For LDAP over SSL (LDAPS) connection, you have to provide a trusted certificate using Java JKS TrustStore file. See [SSL/TLS configuration](../../../ssl-tls-configuration/) for more details.
 
 LDAPS SSL certificate can also be passed as PEM encoded string using the property `sso.trustedCertificates`.
 
@@ -59,4 +59,4 @@ sso:
 ```
 
 From there, either leave the `ignoreUntrustedCertificate` at `true`, or add the certificate to the truststore.  
-See [SSL/TLS configuration](/platform/configuration/ssl-tls-configuration/) for more details.
+See [SSL/TLS configuration](../../../ssl-tls-configuration/) for more details.

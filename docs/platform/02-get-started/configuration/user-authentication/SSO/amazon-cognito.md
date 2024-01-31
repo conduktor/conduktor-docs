@@ -110,6 +110,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](/platform/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
+Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
 
 The value you need to put as external group is the `Object ID` of the Amazon Cognito group.

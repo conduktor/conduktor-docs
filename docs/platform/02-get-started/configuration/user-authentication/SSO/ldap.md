@@ -6,7 +6,7 @@ description: Configure LDAP as SSO for Conduktor Console.
 
 # Configure LDAP as SSO
 
-You can find the list of LDAP properties [here](/platform/configuration/env-variables/#ldap-properties).
+You can find the list of LDAP properties [here](../../../env-variables/#ldap-properties).
 
 ## TL;DR
 

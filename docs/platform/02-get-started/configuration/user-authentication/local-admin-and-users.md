@@ -29,7 +29,7 @@ auth:
       password: bob-secret
 ```
 
-Here is the same configuration from [environment variables](/platform/configuration/env-variables/):
+Here is the same configuration from [environment variables](../../env-variables/):
 
 ```json
 CDK_ADMIN_EMAIL="admin@conduktor.io"

@@ -42,7 +42,7 @@ The below outlines reusable snippets for common configurations such as:
 
 This demonstrates a complete configuration for Conduktor Enterprise consisting of one Kafka cluster with Schema Registry, SSO and license key. 
 
-For identity provider specific guides see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](/platform/configuration/user-authentication/local-admin-and-users/) instead.
+For identity provider specific guides see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](../user-authentication/local-admin-and-users/) instead.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
