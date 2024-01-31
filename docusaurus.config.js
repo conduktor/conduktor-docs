@@ -94,11 +94,15 @@ const config = {
             items: [
               {
                 label: 'Console',
-                to: '/platform/console',
+                to: '/platform',
               },
               {
-                label: 'Monitoring',
-                to: '/platform/monitoring',
+                label: 'Gateway',
+                to: '/gateway',
+              },
+              {
+                label: 'Desktop',
+                to: '/desktop',
               },
             ],
           },
