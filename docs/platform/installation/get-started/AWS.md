@@ -83,7 +83,7 @@ In the **Infrastructure Requirements** section:
 In the **Container Details** section:
  - Define the name of the container to conduktor-console
  - Specify the Image URI and version for Conduktor Console. You should use the most recent major/minor version.
-    - eg: `conduktor/conduktor-platform:1.19.2`
+    - eg: `conduktor/conduktor-platform:1.20.0`
  - Add a Port mapping on **8080**. This is the port of the UI of Conduktor Console.
 
 ![AWS Guide RDS Container](./assets/aws-guide-3.png)
@@ -97,8 +97,8 @@ In the **Environment variables** section, add the essential environment variable
  - `CDK_DATABASE_PASSWORD`: change_me
  - `CDK_DATABASE_PORT`: 5432
  - `CDK_DATABASE_USERNAME`: conduktor
- - `CDK_MONITORING_ALERT`: http://localhost:9010/
- - `CDK_MONITORING_CALLBACK`: http://localhost:8080/monitoring/api/
+ - `CDK_MONITORING_ALERT-MANAGER-URL`: http://localhost:9010/
+ - `CDK_MONITORING_CALLBACK-URL`: http://localhost:8080/monitoring/api/
  - `CDK_MONITORING_CORTEX-URL`: http://localhost:9009/
  - `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`: http://localhost:8080
  - `CDK_LICENSE`: Enterprise license key (Exclude if you are using Free)
@@ -117,7 +117,7 @@ Underneath your first container definition, select **+ Add container** so we can
 In the **Container Details** section:
  - Define the name of the container to conduktor-monitoring
  - Specify the Image URI and version for conduktor monitoring. You should use the most recent major/minor version.
-    - eg: `conduktor/conduktor-platform-cortex:1.19.2`
+    - eg: `conduktor/conduktor-platform-cortex:1.20.0`
 
 Add the below Port mappings:
 - 9090 | TCP | conduktor-cortex-9090-tcp

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 title: Amazon Cognito
 description: Configure Amazon Cognito as SSO for Conduktor Console.
 ---
@@ -16,10 +16,11 @@ On Amazon Cognito side, you'll have to create a user pool with an application:
 
 - **Step 2**: Configure the application client
 
-You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`, like on the screenshot below.
 
+For more details on Console redirect URI for OAuth2, you can check the [documentation](./generic-oauth2.md#more-details-on-console-external-url).
 
 Make sure that a client secret will be generate. You can select `Confidential client` for that.
 

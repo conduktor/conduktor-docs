@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: Auth0
 description: Configure Auth0 as SSO for Conduktor Console.
 ---
@@ -16,9 +16,11 @@ On Auth0 side, you'll have to create a new application:
 
 - **Step 3**: Configure the callback URI
 
-The redirect URI must be like: `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](./generic-oauth2.md#more-details-on-console-external-url).
 
 ![](../../assets/auth0-callback.png)
 

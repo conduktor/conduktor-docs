@@ -9,18 +9,23 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 - [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
   - [Docker image environment variables](#docker-image-environment-variables)
   - [Platform properties reference](#platform-properties-reference)
-      - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
+      - [Support of shell expansion in yaml configuration file](#support-of-shell-expansion-in-yaml-configuration-file)
+      - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
     - [Global properties](#global-properties)
     - [Database properties](#database-properties)
     - [Session Lifetime Properties](#session-lifetime-properties)
     - [Local users properties](#local-users-properties)
     - [Monitoring properties](#monitoring-properties)
-    - [Conduktor platform Cortex](#cortex-configuration)
+      - [Console Configuration for Cortex](#console-configuration-for-cortex)
+    - [Cortex Configuration](#cortex-configuration)
     - [SSO properties](#sso-properties)
       - [LDAP properties](#ldap-properties)
       - [Oauth2 properties](#oauth2-properties)
     - [Kafka clusters properties](#kafka-clusters-properties)
     - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
+      - [Confluent Cloud](#confluent-cloud)
+      - [Aiven](#aiven-)
+      - [Conduktor Gateway](#conduktor-gateway)
     - [Schema registry properties](#schema-registry-properties)
       - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
     - [Kafka Connect properties](#kafka-connect-properties)
@@ -55,7 +60,39 @@ Starting from Conduktor Platform `1.2.0` input configuration fields can be provi
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
 
-> **Note** : Lists start at index 0 and are provided using `_idx_` syntax.
+:::note
+Lists start at index 0 and are provided using `_idx_` syntax.
+:::
+
+#### Support of shell expansion in yaml configuration file
+
+Console support shell expansion for environment variable and home tilde `~` in YAML configuration file. 
+This is useful if you have to use custom environment variables in your configuration.
+
+For example, you can use the following syntax to use environment variables in your configuration file:
+```yaml
+
+database:
+  url: "jdbc:postgresql://${DB_LOGIN}:${DB_PWD}@${DB_HOST}:${DB_PORT:-5432}/${DB_NAME}"
+```
+with the following environment variables:
+- `DB_LOGIN`: `usr`
+- `DB_PWD`: `pwd`
+- `DB_HOST`: `some_host`
+- `DB_NAME`: `cdk`
+
+It will be expanded into the following configuration before being parsed by Console:
+```yaml
+database:
+  url: "jdbc:postgresql://usr:pwd@some_host:5432/cdk"
+```
+:::note
+If you want to escape the shell expansion in YAML file, you can use the following syntax: `$$`.
+For example if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
+
+Also note that values provided using environment variables will not be expended by Console.
+So for example if you use `CDK_ADMIN_PASSWORD` to set password like `secret$123`, it will be set as is. 
+:::
 
 #### Support of `*_FILE` environment variables
 
@@ -63,7 +100,9 @@ Since release `1.10.0`, setting an environment variable matching `*_FILE` to a f
 
 For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override `CDK_LICENSE` with the content of the file `/run/secrets/license`.
 
-> Exception: `CDK_IN_CONF_FILE` is not supported
+:::warning
+Exception: `CDK_IN_CONF_FILE` is not supported
+:::
 
 ### Global properties
 
@@ -78,7 +117,9 @@ For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override 
 | `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
 | `enable_product_metrics` | In order to improve Conduktor Platform, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
 
-> **Tips** : If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
+:::tip
+If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
+:::
 
 ### Database properties
 
@@ -195,9 +236,6 @@ SSO authentication properties (only on enterprise and team plans). See [authenti
 | `sso.oauth2[].client-secret` | Oauth2 client secret | `CDK_SSO_OAUTH2_0_CLIENT-SECRET` | true | string | ∅ |
 | `sso.oauth2[].openid.issuer` | Issuer to check on token | `CDK_SSO_OAUTH2_0_OPENID_ISSUER` | true | string | ∅ |
 | `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `CDK_SSO_OAUTH2_0_SCOPES` | true | string | `[]` |
-| `sso.oauth2[].authorization-url` | Authorization endpoint URL | `CDK_SSO_OAUTH2_0_AUTHORIZATION-URL` | false | string | ∅ |
-| `sso.oauth2[].token.url` | Get token endpoint URL | `CDK_SSO_OAUTH2_0_TOKEN_URL` | false | string | ∅ |
-| `sso.oauth2[].token.auth-method` | Authentication Method | `CDK_SSO_OAUTH2_0_TOKEN_AUTH-METHOD` | false | string one of: `"CLIENT_SECRET_BASIC"`, `"CLIENT_SECRET_JWT"`, `"CLIENT_SECRET_POST"`, `"NONE"`, `"PRIVATE_KEY_JWT"`, `"TLS_CLIENT_AUTH"` | ∅ |
 | `sso.oauth2[].groups-claim ` | Configure Group Claims | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` | false | string | ∅ |
 | `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens | `CDK_SSO_OAUTH2_0_ALLOW-UNSIGNED-ID-TOKENS` | false | boolean | false |
 | `sso.oauth2[].preferred-jws-algorithm ` | Configure preferred JWS algorithm | `CDK_SSO_OAUTH2_0_PREFERRED-JWS-ALGORITHM` | false | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅ |
