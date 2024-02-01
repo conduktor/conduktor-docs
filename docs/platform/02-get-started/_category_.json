@@ -1,6 +1,9 @@
 {
     "label": "Get Started",
     "position": 2,
-    "link": {"type": "doc", "id": "get-started/index"}
+    "link": {
+        "type": "generated-index",
+        "description": "Installation and setup docs."
+    }
 }
   
