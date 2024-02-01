@@ -16,7 +16,7 @@ In the case of failed tasks, Conduktor can also help to automatically restart th
 
 ## Getting Started
 
-Kafka Connect needs to be enabled on a per-cluster basis before any connectors can be added. To add Kafka Connect to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Add your Kafka Connect details on the tab available on an existing cluster configuration.
+Kafka Connect needs to be enabled on a per-cluster basis before any connectors can be added. To add Kafka Connect to your cluster, head to the [Admin](../../settings/managing-clusters) section to learn how. Add your Kafka Connect details on the tab available on an existing cluster configuration.
 
 ## Creating a Connector
 
