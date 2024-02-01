@@ -262,6 +262,10 @@ const redirects = [
         from: '/platform/proxy/configuration/env-variables',
         to: '/gateway/configuration/env-variables',
       },
+      {
+      from: '/platform/admin/managing-clusters',
+      to: '/platform/navigation/settings/managing-clusters',
+    },
     ],
   },
 ]
