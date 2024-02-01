@@ -37,7 +37,7 @@ sso:
 
 For OIDC, populate the `groups-claim` attribute. You can find some examples by [selecting your identity providers in this list](/platform/category/configure-sso/).
 
-For more information see [configuration properties and environment variables](../env-variables/#oauth2-properties).
+For more information see [configuration properties and environment variables](../../env-variables/#oauth2-properties).
 
 ```yaml title="platform-config.yaml"
 sso:

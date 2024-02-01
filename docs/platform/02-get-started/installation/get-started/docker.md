@@ -116,8 +116,8 @@ The below example shows how to configure Conduktor with the minimum configuratio
 - An external database
 - A local administrator
 
-If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](/platform/installation/license-management/#into-the-configuration-file).
-You can get the list of all the properties supported [here](/platform/configuration/env-variables/).
+If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](../../license-management/#into-the-configuration-file).
+You can get the list of all the properties supported [here](../../../configuration/env-variables/).
 
 ```yaml title="platform-config.yaml"
 organization:
@@ -208,7 +208,7 @@ See [configuring your first cluster](#step-3-configure-your-existing-kafka-clust
 
 ### Configuration using environment variables
 
-All configuration properties can be provided using either [environment variables](/platform/configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
+All configuration properties can be provided using either [environment variables](../../../configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
 
 If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
 

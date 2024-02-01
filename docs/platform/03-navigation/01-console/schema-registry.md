@@ -12,7 +12,7 @@ Conduktor supports **Confluent**, **Confluent like** (e.g. Karapace) and **AWS G
 
 ## Getting Started
 
-Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](/platform/admin/managing-clusters) section to learn how. Add your Schema Registry details on the tab available on an existing cluster configuration.
+Schema Registry needs to be enabled on a per-cluster basis before any schemas can be added. To add Schema Registry to your cluster, head to the [Admin](../../settings/managing-clusters) section to learn how. Add your Schema Registry details on the tab available on an existing cluster configuration.
 
 ## Creating a Schema
 

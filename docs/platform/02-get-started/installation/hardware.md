@@ -43,4 +43,4 @@ To configure Conduktor Console for particular hardware, you can use container CG
 - 4+ GB of RAM
 - 10+ GB of disk space
 
-See more about [environment variables](/platform/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/installation/get-started/docker/).
+See more about [environment variables](../../configuration/env-variables/), or starting the Platform in [Docker Quick Start](../../installation/get-started/docker/).

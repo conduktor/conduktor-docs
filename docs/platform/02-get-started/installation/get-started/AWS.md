@@ -132,7 +132,7 @@ In the **Environment variables** section, add the required environment variable 
 
 ![AWS Guide Task](assets/aws-guide-cortex.png)
 
-Note that for production environments, you should also configure an [external S3 bucket](/platform/configuration/cortex) to store historical monitoring data.
+Note that for production environments, you should also configure an [external S3 bucket](../../../configuration/cortex) to store historical monitoring data.
 
 We can now go down below and **Create** our task definition.
 
@@ -186,7 +186,7 @@ Select the **Connect your Kafka clusters** option and start adding your Kafka cl
 Now that you have an up and running deployment of Console, it's time to invite your team!
 
  - [Configure SSO](/platform/category/configure-sso/) to easily onboard users
- - Configure [local users](/platform/configuration/user-authentication/local-admin-and-users/) if you are not using SSO
+ - Configure [local users](../../../configuration/user-authentication/local-admin-and-users/) if you are not using SSO
 
 ### Troubleshooting: Enabling Inbound Rules
 

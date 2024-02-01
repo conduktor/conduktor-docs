@@ -25,13 +25,13 @@ The Manage Clusters page (`/admin/clusters`) has several advantages over the YAM
 Need to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://product.conduktor.help/c/75-public-apis) on this feature.
 
-If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](./env-variables/#kafka-clusters-properties) page.
+If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](../env-variables/#kafka-clusters-properties) page.
 :::
 
 
 ## Security notes
 
-The [database](./database/) as well as the configuration file described in this document may contain sensitive information.
+The [database](../database/) as well as the configuration file described in this document may contain sensitive information.
 
 - The configuration file should be protected by file system permissions.
 - The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
@@ -111,13 +111,13 @@ volumes:
   conduktor_data: {}
 ```
 
-For all configuration properties and environment variables see [Configuration Properties and Environment Variables](./env-variables/).
+For all configuration properties and environment variables see [Configuration Properties and Environment Variables](../env-variables/).
 
 ## Environment override
 
 Since Conduktor `1.2.0`, input configuration fields can also be provided using environment variables.
 
-For more information, see [Environment Variables](./env-variables/).
+For more information, see [Environment Variables](../env-variables/).
 
 Below shows an example docker-compose that uses environment variables for configuration.
 

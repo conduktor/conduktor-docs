@@ -8,7 +8,7 @@ description: Kafka Self Serve Getting Started
 
 ## Introduction
 
-If this is your first time setting up Self-Serve, please ensure you meet the [requirements](/platform/self-serve/#overview) and are familiar with the self-serve [concepts](/platform/self-serve/#concepts).
+If this is your first time setting up Self-Serve, please ensure you meet the [requirements](../#overview) and are familiar with the self-serve [concepts](../#concepts).
 
 This guide will outline how to setup self-serve for your organization, providing developers autonomy to manage defined Kafka resources.
 
