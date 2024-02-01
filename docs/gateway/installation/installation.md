@@ -34,7 +34,7 @@ Conduktor Gateway requires Apache Kafka version 2.5.0 or higher. Conduktor Gatew
 - Create/alter/delete consumer groups
 - Describe cluster information
 
-# Running the gateway
+## Running the gateway
 In its most simple form GW can be run from a simple Docker run command with the credentials to connect to you Kafka cluster. However, Gateway needs to interact with your clients and your Kafka to get the most from it.
 
 ```bash
@@ -49,7 +49,7 @@ In its most simple form GW can be run from a simple Docker run command with the 
 If you're interested in trying out Gateway yourself go checkout the [demos](https://github.com/conduktor/conduktor-gateway-demos).
 For more control over your deployments see the [environment variables](/gateway/configuration/env-variables/).
 
-# Connecting to secured Kafka
+## Connecting to secured Kafka
 
 Conduktor Gateway connects to Kafka just like any other client. Variables are prefixed with either KAFKA or GATEWAY, extra configurations (encryption/authentication etc.) can be provided via environment variables, as you can see in the above command. 
 Security configurations can be provided using this scheme. For example:
