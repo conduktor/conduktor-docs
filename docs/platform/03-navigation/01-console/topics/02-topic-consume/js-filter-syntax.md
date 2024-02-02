@@ -22,7 +22,7 @@ Otherwise the record will be skipped.
     return value.totalPrice >= 30;
     // Selects all the orders having a total price superior to or equal to 30
 
-## Record attributes[​](https://docs.conduktor.io/platform/console/consume-data/filter-messages/#accessing-message-attributes)
+## Record attributes
 
 When creating JavaScript filters, you may want to access message data or the metadata. See the parameters in the table below for accessing different message attributes.
 
@@ -38,7 +38,7 @@ When creating JavaScript filters, you may want to access message data or the met
 | offset              | Number |
 | partition           | Number |
 
-## Example filters[​](https://docs.conduktor.io/platform/console/consume-data/filter-messages/#example-filters)
+## Example filters
 
 Let's imagine we have the following 2 Records in our topic:
 

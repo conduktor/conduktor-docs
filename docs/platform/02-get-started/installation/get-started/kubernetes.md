@@ -98,7 +98,6 @@ config:
     password: '<postgres_password>'
     
   # HERE you can paste the console configuration (under the config key)
-  # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
 Install the chart on your cluster:
@@ -151,7 +150,6 @@ config:
     password: '<postgres_password>'
     
   # HERE you can paste the console configuration (under the config key)
-  # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
 ### Configure with an enterprise license
@@ -176,7 +174,6 @@ config:
   license: "<your_license>"
 
   # HERE you can paste the console configuration (under the config key)
-  # Ref: https://docs.conduktor.io/platform/configuration/env-variables/
 ```
 
 ## Snippets
