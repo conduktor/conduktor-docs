@@ -27,7 +27,7 @@ With RBAC enabled, it's possible to:
 ---
 **Jump to:**
 - [Enable RBAC](#enable-rbac-in-your-organization)
-- [RBAC in Console since 1.17.0](#rbac-in-console-since-1170)
+- [RBAC in Console since 1.17.1](#rbac-in-console-since-1170)
    - [How to assign permissions?](#how-to-assign-permissions)
    - [Manage Services Permissions](#manage-services-permissions)
    - [Manage Resources Permissions](#manage-resources-permissions)
@@ -35,7 +35,7 @@ With RBAC enabled, it's possible to:
      - [Prefixes](#prefixes)
      - [Quick Select](#quick-select)
      - [Example](#example)
-- [RBAC Before 1.17.0](#rbac-before-1170)
+- [RBAC Before 1.17.1](#rbac-before-1170)
   - [Roles](#roles)
   - [Manage Resource Conditions](#manage-resource-conditions)
      - [Example: Assigning Topic Permissions](#example-assigning-topic-permissions)
@@ -50,7 +50,7 @@ Assuming you are an Administrator, you can enable this via the **Settings** tab 
 
 ![Cluster admin](/img/admin/admin-rbac.png)
 
-## RBAC in Console since 1.17.0
+## RBAC in Console since 1.17.1
 
 ### How to assign permissions?
 
@@ -73,7 +73,7 @@ If they have a restricted access to a topic, but belong to a group that has a fu
 
 ### Manage Services Permissions
 
-Since 1.17.0, you are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
+Since 1.17.1, you are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
 
 ![Services default set](/img/admin/services-default-set.png)
 
@@ -92,7 +92,7 @@ Finally, if you remove their access to Data Masking and/or Topic as a Service, t
 ### Manage Resources Permissions
 
 #### Granular Permissions
-Since 1.17.0, the RBAC model is much more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
+Since 1.17.1, the RBAC model is much more granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
 
 | Resource         | Permissions           |
 | ---------------- | --------------------- |
@@ -170,7 +170,7 @@ This set of permissions gives her:
 - A full access to the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `Local Kafka`
 - Some actions on all the topics and consumer groups that start with the prefix `app-a-`, on all the clusters, that she inherits from the group `Project A`
 
-## RBAC Before 1.17.0
+## RBAC Before 1.17.1
 
 ### Roles
 
