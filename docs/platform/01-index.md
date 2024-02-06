@@ -7,9 +7,8 @@ description: Conduktor Console gives you complete visibility into your Kafka eco
 
 # Overview
 
-- [Getting Started](#getting-started)
-- [What is Conduktor Console](#what-is-the-conduktor-gateway)
-- [Components](#components)
+- [Getting Started](#getting-started-with-the-docs)
+- [What is Conduktor Console](#what-is-conduktor-console)
 - [Resources](#resources)
 
 ## Getting Started with the Docs
