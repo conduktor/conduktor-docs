@@ -6,10 +6,6 @@ description: Learn how to create an alert in Monitoring
 
 # Create an Alert
 
-:::info
-Alerting is an Enterprise feature. Please [contact us](https://www.conduktor.io/contact) to discuss getting access.
-:::
-
 ## Overview
 
 Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** and **MS Teams** so that you can receive real-time notifications.

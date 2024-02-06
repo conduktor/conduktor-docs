@@ -6,10 +6,6 @@ description: List of the Audit Log events tracked throughout the Platform
 
 # Audit Log Events
 
-:::info
-Audit log is an Enterprise feature. Please [contact us](https://www.conduktor.io/contact) to discuss getting access.
-:::
-
 # Overview
 
 When you navigate Conduktor, audit events are captured that give you detailed tracking of actions relating to Kafka. This gives you centralized visibility of user-related and resource-related events.
