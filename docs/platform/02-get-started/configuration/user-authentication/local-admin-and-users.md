@@ -40,7 +40,7 @@ CDK_AUTH_LOCAL-USERS_1_EMAIL="bob@conduktor.io"
 CDK_AUTH_LOCAL-USERS_1_PASSWORD="bob-secret"
 ```
 
-## Configure SSO **(Enterprise feature)**
+## Configure SSO
 
 In addition to these local admin and users, you can setup **Single Sign-On (SSO)** so your users can login using your company **LDAP** or **OIDC** identity provider.
 

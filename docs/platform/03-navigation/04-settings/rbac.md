@@ -6,10 +6,6 @@ description: Using Conduktor RBAC to enable granular access to Kafka resources
 
 # RBAC
 
-:::info
-Role-based access control (RBAC) is an Enterprise feature.
-:::
-
 ## Overview
 
 The Conduktor RBAC system enables you to restrict access to resources and enforce permissions at **User** and **Group** granularity. This is a critical step in ensuring that you have control over your Apache Kafka data.
