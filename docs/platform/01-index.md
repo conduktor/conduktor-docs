@@ -7,23 +7,38 @@ description: Conduktor Console gives you complete visibility into your Kafka eco
 
 # Overview
 
-:::info
-If anything in the documentation is not clear or you need further help, please [contact us](https://www.conduktor.io/contact).
-:::
+- [Getting Started](#getting-started)
+- [What is Conduktor Console](#what-is-the-conduktor-gateway)
+- [Components](#components)
+- [Resources](#resources)
+
+## Getting Started with the Docs
+
+These documents allow you to setup, configure and explore Conduktor Console.
+
+If you are looking at setting up Console, [review the installation](/platform/category/installation/).  
+
+Need to further configure Console for your specific setup, [review the configuration options](/platform/category/configuration/).  
+
+Want to maximise what you can get from Console [dive into the Navigation](/platform/category/configuration/).
+
 
 ## What is Conduktor Console?
 
-### Streamline Apache Kafka
+The Conduktor Console is a powerful UI for Apache Kafka. The Console equips users with functionality to support many essential tasks when working with Kafka.
 
-Conduktor will transform your approach and interactions with Apache Kafka. We give you a single console for Kafka management, monitoring, data quality, security, and data governance. The Conduktor Console is available **self-hosted** and can be deployed via Docker or Helm Charts.
+![Console UI screenshot](./console-overview.png)
 
-- Jump straight into the [Docker Quick Start](get-started/installation/get-started/docker)
 
-### Console Walkthrough
+**Access and Manage Kafka resource**. Explore topics, reset consumer offsets, manage ACLs, deploy & restart connectors, are just some of the things you can do.
 
-Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on overview below:
+**Self service**. Solve some of the most recurring problems associated with working with Kafka at scale. Ownership of resources, access request management, topic discvoerability, governance policies, and much more!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SnLv2yL5sy0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+**Secure Kafka**. Import your existing groups, configure detailed permissions for your users, set up your external integrations, review audit logs as well as much more.
+
+**Monitor Kafka**. The cluster, topics and consumer groups. Creating alerts to notify you based on Kafka metrics we collect for you.
+
+See [Navigation](/platform/category/configuration/) for more details.
 
 ## Resources
 
@@ -31,3 +46,7 @@ Curious about how Conduktor can help you? Watch Stéphane Maarek's hands-on over
 - [Roadmap](https://product.conduktor.help)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
+
+Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.  
+
+Happy reading 😃.
