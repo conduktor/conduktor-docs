@@ -17,7 +17,7 @@ Please note that if you enabled `GATEWAY_SECURED_METRICS` you will need to acces
 ```bash
 --username "admin:conduktor" localhost:8888/metrics
 ```
-
+See the [env variables](/gateway/configuration/env-variables/#http) for more.
 
 
 # Available metrics for Prometheus

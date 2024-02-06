@@ -6,12 +6,34 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 
 # Overview
 
+- [Getting Started](#getting-started)
+- [What is Conduktor Gateway](#what-is-the-conduktor-gateway)
+- [Components](#components)
+- [Resources](#resources)
+
+## Getting Started
+
+These documents allow you to setup, configure and explore the Conduktor Gateway.
+
+If you are looking at setting up your Gateway, [review the installation options](installation/installation.md).  
+Need to configure Gateway for your specific setup, [review the configuration options](configuration/configuration.md).  
+Adding a plugin a.k.a. an interceptor, then [view the interceptors](interceptors/data-security/field-level-encryption.md) to see what there is and view examples to copy.  
+If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](demos/encryption/encryption.md).
+
+Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.   
+
+Happy reading 😃.
+
+
 ## What is the Conduktor Gateway
+
 A vendor agnostic Apache Kafka proxy. Adding governance, security, cost-optimisation, and much more!
 
 Kafka is a powerful tool, with great flexibility. This power and flexibility can lead to challenges around managing and bringing structure to your Kafka ecosystem, especially as that ecosystem grows.
 
- When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.  Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
+When using Conduktor Gateway you can more easily follow the path to a mature Kafka set-up, avoiding the pitfalls and the common challenges that come with this progression.
+Conduktor Gateway gives you the power to add structure, organisation, enhanced functionality, and therefore confidence in your Kafka environment. 
+Gateway is fully Apache Kafka protocol compliant and vendor agnostic, it supports the use of Kafka wherever that Kafka is hosted.
 
 
 ## Components
@@ -29,9 +51,7 @@ There is so much you can do with a Conduktor Gateway, just some of the features 
 
  ![gateway-so-many-features.png](./so-many-features.png)
 
-## Getting Started
 
-To start your Conduktor Gateway journey [review the installation options](installation/installation.md).
 ## Resources
 
 - [Support](https://www.conduktor.io/contact/support)
