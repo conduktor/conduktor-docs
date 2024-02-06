@@ -113,5 +113,5 @@ Then, check the tag(s) you want to associate to the topic and click "Apply".
 To remove tags, simply click the "X" icon on the tag name. No confirmation.  
 ![Image](img/tag-delete.png)  
 :::tip
-Resource tagging is a power filtering feature that helps your organization & projects structure their resources. Read more...
+Resource tagging is a power filtering feature that helps your organization & projects structure their resources.
 :::
