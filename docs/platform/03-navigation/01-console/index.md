@@ -12,4 +12,4 @@ List Pages in In Console are served from a snapshot table refreshed periodically
 Read more [About Indexing](./about-indexing)
 :::
 
-![Capture](img/indexing-eplained.png)
+![Capture](img/indexing-explained.png)

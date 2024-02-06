@@ -13,7 +13,7 @@ Theses tables are updated by a background process that we call **Indexing**. Thi
 :::info
 Details pages are not using this mechanism. As soon as you are on a specific Topic page or Consumer group page, the data is fetched directly on the Kafka cluster.
 :::
-![Capture](img/indexing-eplained.png)
+![Capture](img/indexing-explained.png)
 
 ## So I just created a Topic... Where is it?!
 
