@@ -118,5 +118,3 @@ Finally, generate an access key.
 You can fill the cluster form with all this information.
 
 ![](/img/admin/msk-conduktor.png)
-
-## Connect to a Redpanda cluster <Badge type="soon">Coming Soon</Badge>
