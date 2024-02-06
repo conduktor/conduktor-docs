@@ -13,8 +13,7 @@ description: Reference Documentation for Topic related pages
 :::info
 **Checkout our video that presents the most important features of Topic Consume**
 :::info
-
-[\[https://www.youtube.com/watch?v=8fg0VJ3jSFc\]](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
+[Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
 
 ## Configure the Kafka Consumer
 
