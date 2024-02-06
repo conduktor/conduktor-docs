@@ -4,21 +4,6 @@ title: Navigation
 description: Learn how to get started with Console
 ---
 ## Welcome to Conduktor Console!
-:::info 
-Use the left-hand toolbar to browse articles, or ask your question directly via "Ask your knowledge base".
-
-Explore the different pages!  
-We have recorded many short videos showcasing the different features available.
-
-Check this one on https://conduktor.slite.com/app/docs/PW4_1aOZuZX5Zc or this other one on https://conduktor.slite.com/app/docs/_OtvNSKy38tOKS
-:::
-
-## Console layout
-Console layout is structured as follow:
-- Header bar with ...
-- Cluster selector
-- Left Menu bar with all 4 sections
-- Main content
 
 ### Console is split in 4 sections
 
