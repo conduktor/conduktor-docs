@@ -11,7 +11,7 @@ The intention is to show you the most relevant messages, split across the partit
 :::tip
 
 :::info HOW
-In most cases, it will give you `500 / partitions` messages, per partition.  
+In most cases, it will give you `500 / num_partitions` messages, per partition.  
 If your topic has:  
 **10** partitions, Most Recent **500** will give you **50** messages per partition.  
 **2 **partitions, Most Recent **500** will give you **250** messages per partition.  
