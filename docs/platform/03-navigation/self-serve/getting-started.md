@@ -75,13 +75,8 @@ This provides the owning group **autonomy** within their application scope.
 ![overview-figure6.png](/img/self-serve/overview-figure6.png)
 
 :::info
-Note: RBAC permissions derived from Self-Serve are not currently visible via the RBAC screen from within Admin. This will be available in an upcoming release.
+Note: RBAC permissions derived from Self-Serve are not currently visible via the RBAC screen.
 :::
-
-
-
-
-
 
 ## Step 4 - Create requests
 ### Request and Approval Workflows

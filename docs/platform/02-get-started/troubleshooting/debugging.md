@@ -19,8 +19,6 @@ Let's now see in details each step.
 
 ### From Docker
 
-For this example, we'll use [Conduktor's example-local](https://github.com/conduktor/conduktor-platform/tree/main/example-local).
-
 First step, verify that all the components are running.
 
 ```sh

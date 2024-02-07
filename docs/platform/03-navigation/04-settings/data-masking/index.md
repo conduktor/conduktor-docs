@@ -11,7 +11,7 @@ In order to meet **compliance regulations**, Conduktor Console provides a Data M
 As a Console administrator, you can **secure and govern** such data by creating Data Masking policies, so that users can't see them.
 
 :::info
-Data Masking **does not impact how the underlying data is stored**. The data will only be masked **within the Console**. For masking, or encrypting, the underlying Kafka data, we use the [Conduktor Gateway](/gateway/).
+Data Masking **does not impact how the underlying data is stored**. The data will only be masked **within the Console**. For masking, or encrypting, the underlying Kafka data, you can use the [Conduktor Gateway](/gateway/).
 
 :::
 

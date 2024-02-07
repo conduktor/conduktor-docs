@@ -11,9 +11,11 @@ description: Reference Documentation for Topic related pages
 - [Operations](#operations)
 
 :::info
-**Checkout our video that presents the most important features of Topic Consume**
-:::info
+**Checkout our video that presents the most important features of Topic Consume**  
+
 [Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
+:::info
+
 
 ## Configure the Kafka Consumer
 
