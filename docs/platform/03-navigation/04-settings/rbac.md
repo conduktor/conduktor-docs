@@ -172,7 +172,7 @@ This set of permissions gives her:
 
 There are currently four hard-coded roles in Conduktor. More granular roles and support for custom roles is coming soon, please [contact us](#link) to discuss your needs.
 
-Below outlines what these roles permit **when RBAC is enabled**. You should combine roles with [resource conditions](#resource-conditions) to bind permisisons sets to specific resources.
+Below outlines what these roles permit **when RBAC is enabled**. You should combine roles with [resource conditions](#manage-resource-conditions) to bind permisisons sets to specific resources.
 
 |  **Role**  | **Description**                                                                                                                                                                                                                                                 |
 | :--------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

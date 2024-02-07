@@ -15,4 +15,5 @@ If switching between the integrations you should return to this screen to **Conn
 
 ![admin integrations configured](/img/admin/admin-slack-teams-configured.jpg)
 
-With the integration configured you can now receive [Alerts in Monitoring](/docs/platform/03-navigation/monitoring/getting-started/create-alert.md)!
+With the integration configured you can now receive [Alerts in Monitoring](/platform/03-navigation/monitoring/getting-started/create-alert/)!
+
