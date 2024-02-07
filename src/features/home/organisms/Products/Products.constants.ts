@@ -2,7 +2,7 @@ export const items = [
   {
     name: 'Console',
     description: 'Explore and manage Kafka',
-    to: '/platform/console',
+    to: '/platform',
     icon: '/assets/svgs/products/console.svg',
   },
   {

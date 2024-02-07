@@ -13,11 +13,14 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 
 ## Getting Started
 
-These documents allow you to setup, configure and explore the Conduktor Gateway.
+These documents allow you to setup, configure and explore the Conduktor Gateway.  
 
 If you are looking at setting up your Gateway, [review the installation options](installation/installation.md).  
+
 Need to configure Gateway for your specific setup, [review the configuration options](configuration/configuration.md).  
+
 Adding a plugin a.k.a. an interceptor, then [view the interceptors](interceptors/data-security/field-level-encryption.md) to see what there is and view examples to copy.  
+
 If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](demos/encryption/encryption.md).
 
 Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.   
