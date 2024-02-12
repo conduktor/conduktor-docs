@@ -23,7 +23,7 @@ As Gateway is quite a technical product, we recommend you to [book a demo](https
 ## Operations
 
 - [Cluster switching/Failover](./ops/cluster-switching): Transparent failover for your applications
-- [Merge Clusters](./ops/merge-clusters): Merge multiple Kafka clusters into a single logical one
+- [Merge Clusters](./ops/merge-cluster): Merge multiple Kafka clusters into a single logical one
 - [Multi-tenancy](./ops/multi-tenancy): Build multi-tenancy infrastructure with Kafka
 - [Topic Concentration](./ops/topic-concentration): Concentrate multiple topics into a single one for cost savings
 - [Header injection](./ops/header-injection): Inject headers into your Kafka messages for lineage or chargeback support
@@ -34,7 +34,7 @@ As Gateway is quite a technical product, we recommend you to [book a demo](https
 
 - [Audit](./security/audit): Capture, protect, and preserve authorization activity into topics
 - [Data Masking](./security/data-masking): Field-level data masking
-- [OAuth2 Integration](./security/integration-oauth2): Secure your Kafka cluster with Keycloak
+- [OAuth2 Integration](./security/oauth): Secure your Kafka cluster with Keycloak
 
 ## Chaos Testing
 
@@ -47,7 +47,7 @@ To test the resiliency of your applications, we have many more demos. Here are a
 
 Ensure your teams follow technical and business rules and can't break conventions. Help preventing common mistakes and protect your infrastructure and your data from misbehaving clients.
 
-- [Schema Validation for Avro](./data-quality/safeguard-validate-schema-payload-avro/)
+- [Schema Validation for Avro](./quality/safeguard-validate-schema-payload-avro/)
 - [Enforce client.id convention](./safeguard/safeguard-client-id)
 - [Enforce all topics have SchemaId](./safeguard/safeguard-schema-id)
 
