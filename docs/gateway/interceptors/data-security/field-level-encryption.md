@@ -110,7 +110,7 @@ trade-off between performance (increased calls to `KMS`) and security (using the
 | kmsConfig            | [KMS](#kms)                               |              | Define multiple KMS                                                                                            |                                                                                           
 | defaultKeySecretId   | [SecretKeyTemplate](#secret-key-template) |              | default keySecretId is a unique identifier for the secret key, can be a template for crypto shredding usecases |
 | defaultAlgorithm     | [Algorithm Config](#algorithm-config)     |              | default algorithm to leverage                                                                                  |
-| tags                 | List<String>                              |              |                                                                                                                |
+| tags                 | List[String]                              |              |                                                                                                                |
 | namespace            | String                                    | `conduktor.` | Prefix of custom schema constrains for encryption                                                              |
 
 We'll use these custom schema fields for schema based field level encryption, assuming we're using
@@ -121,7 +121,7 @@ default namespace (`conduktor.`)
 | conduktor.keySecretId    | [SecretKeyTemplate](#secret-key-template) | keySecretId is a unique identifier for the secret key, can be a template for crypto shredding usecases |
 | conduktor.algorithm.type | [Algorithm](#algorithm)                   | Algorithm                                                                                              |
 | conduktor.algorithm.kms  | [KMS](#kms)                               | KMS to levarege                                                                                        |                                                                                |
-| conduktor.tags           | List<String>                              |                                                                                                        | Only for field level encryption. A list of field names for decryption, an empty list would decrypt all fields |
+| conduktor.tags           | List[String]                              |                                                                                                        | Only for field level encryption. A list of field names for decryption, an empty list would decrypt all fields |
 
 See more about schema based field level encryption [here](#schema-based-rules)
 
