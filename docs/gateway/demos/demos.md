@@ -18,7 +18,7 @@ As Gateway is quite a technical product, we recommend you to [book a demo](https
 
 - [Field level encryption](./encryption/encryption-decrypt-only-specific-fields/): Encrypt and decrypt only specific fields
 - [Full encryption for 3rd Party](./encryption/encryption-third-party/): Encrypt specific fields for 3rd party consumers
-- [Encrypting using Vault](/encryption/encryption-vault-with-secret-management): Use HashiCorp Vault to encrypt and decrypt data
+- [Encrypting using Vault](./encryption/encryption-vault-with-secret-management): Use HashiCorp Vault to encrypt and decrypt data
 
 ## Operations
 
