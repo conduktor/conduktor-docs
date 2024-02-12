@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Audit
 description: Protect your Kafka environment by knowing who is doing what in your Gateway.
 parent: data-security

@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Consumer group policy
 description: Ensure smooth Kafka consumer group operation by enforcing configuration policies.
 parent: governance

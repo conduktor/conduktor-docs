@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Produce policy
 description: Increase resilience and data quality by ensuring produced messages adhere to the specified configuration requirements.
 parent: governance

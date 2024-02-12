@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: SQL Topic
 description: Don't reinvent the wheel to filter and project your messages, just use SQL!
 parent: optimize

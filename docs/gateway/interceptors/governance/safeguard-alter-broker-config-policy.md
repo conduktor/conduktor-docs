@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Alter Broker Config Policy
 description: Ensuring your broker configuration adheres to your own standards.
 parent: governance
