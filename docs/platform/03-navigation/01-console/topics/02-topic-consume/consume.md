@@ -3,19 +3,18 @@ sidebar_position: 1
 title: Topic Consume
 description: Reference Documentation for Topic related pages
 ---
-
+import ReactPlayer from 'react-player'
 
 - [Configure the Kafka Consumer](#configure-the-kafka-consumer)
 - [Filter records](#filter-records)
 - [Browse records](#browse-records)
 - [Operations](#operations)
 
-:::info
-**Checkout our video that presents the most important features of Topic Consume**  
 
-[Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
-:::info
-
+## Filtering & Sorting on the Topic Consume screen  
+<div className="video__wrapper">
+    <ReactPlayer className="video__player" controls height="100%" url="https://www.youtube.com/watch?v=8fg0VJ3jSFc" width="100%" />
+</div>
 
 ## Configure the Kafka Consumer
 
