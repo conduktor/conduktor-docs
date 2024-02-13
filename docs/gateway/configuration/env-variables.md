@@ -170,7 +170,7 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 | Environment Variable      | Default Value                                           | Description                                                                       |
 |---------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------|
 | `GATEWAY_HTTP_PORT`       | `8888`                                                  | The port on which the gateway will present the HTTP API                  |
-| `GATEWAY_SECURED_METRICS` | `true`                                                  | Require authroised credentials to connect to the `/metrics` endpoint. See the [Monitoring page](/gateway/configuration/monitoring/) for more information. |
+| `GATEWAY_SECURED_METRICS` | `true`                                                  | Require authorised credentials to connect to the `/metrics` endpoint. See the [Monitoring page](/gateway/configuration/monitoring/) for more information. |
 | `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the API, please note that admin is required to do anything other than read |
 
 ### Internal state
