@@ -1,14 +1,14 @@
 ---
-title: Large message support
-description: Large message support
-tag: ops
+title: Encryption Field Level
+description: Encryption Field Level
+tag: encryption
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# Large messages support in Kafka with built-in claimcheck pattern.
+# Field level encryption
 
-
+Let's demonstrate field level encryption
 
 ## View the full demo in realtime
 
@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/nQDwV6Bld4WpIhI9BLR5G1JVA.svg)](https://asciinema.org/a/nQDwV6Bld4WpIhI9BLR5G1JVA)
+[![asciicast](https://asciinema.org/a/Kz9QEr0km1db9WZdQeJJ3JggV.svg)](https://asciinema.org/a/Kz9QEr0km1db9WZdQeJJ3JggV)
 
 </TabItem>
 </Tabs>
@@ -32,14 +32,12 @@ You can either follow all the steps manually, or watch the recording
 
 As can be seen from `docker-compose.yaml` the demo environment consists of the following services:
 
-* cli-aws
 * gateway1
 * gateway2
 * kafka-client
 * kafka1
 * kafka2
 * kafka3
-* minio
 * schema-registry
 * zookeeper
 
@@ -247,32 +245,6 @@ services:
       read_only: true
     labels:
       tag: conduktor
-  minio:
-    image: quay.io/minio/minio
-    hostname: minio
-    environment:
-      MINIO_SERVER_HOST: minio
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: minio123
-      MINIO_SITE_REGION: eu-south-1
-    container_name: minio
-    ports:
-    - 9000:9000
-    command: minio server /data
-    labels:
-      tag: conduktor
-  cli-aws:
-    image: amazon/aws-cli
-    hostname: cli-aws
-    container_name: cli-aws
-    entrypoint: sleep 100d
-    volumes:
-    - type: bind
-      source: credentials
-      target: /root/.aws/credentials
-      read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -299,101 +271,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Network large-messages_default  Creating
- Network large-messages_default  Created
- Container minio  Creating
- Container cli-aws  Creating
- Container kafka-client  Creating
+ Network encryption-field-level_default  Creating
+ Network encryption-field-level_default  Created
  Container zookeeper  Creating
- Container cli-aws  Created
- Container minio  Created
+ Container kafka-client  Creating
+ Container kafka-client  Created
  Container zookeeper  Created
  Container kafka1  Creating
  Container kafka2  Creating
  Container kafka3  Creating
- Container kafka-client  Created
- Container kafka3  Created
  Container kafka1  Created
+ Container kafka3  Created
  Container kafka2  Created
- Container gateway1  Creating
  Container gateway2  Creating
  Container schema-registry  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
+ Container gateway1  Creating
  gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container schema-registry  Created
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway2  Created
- Container minio  Starting
+ Container gateway1  Created
+ Container schema-registry  Created
  Container zookeeper  Starting
  Container kafka-client  Starting
- Container cli-aws  Starting
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container minio  Started
  Container kafka-client  Started
- Container cli-aws  Started
  Container zookeeper  Healthy
- Container kafka3  Starting
+ Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
- Container kafka1  Starting
- Container kafka3  Started
- Container kafka2  Started
+ Container kafka3  Starting
  Container kafka1  Started
+ Container kafka2  Started
+ Container kafka3  Started
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
  Container schema-registry  Starting
- Container kafka1  Healthy
+ Container kafka3  Healthy
  Container gateway1  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
- Container gateway1  Started
  Container gateway2  Started
+ Container gateway1  Started
  Container schema-registry  Started
- Container cli-aws  Waiting
- Container kafka1  Waiting
- Container zookeeper  Waiting
- Container kafka2  Waiting
  Container kafka3  Waiting
- Container gateway1  Waiting
- Container kafka-client  Waiting
- Container minio  Waiting
  Container schema-registry  Waiting
+ Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka3  Healthy
  Container kafka1  Healthy
- Container cli-aws  Healthy
  Container zookeeper  Healthy
  Container kafka2  Healthy
- Container minio  Healthy
  Container kafka-client  Healthy
  Container schema-registry  Healthy
- Container gateway1  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/c1cMWG6lEOAQ6Q36YzC95fWDF.svg)](https://asciinema.org/a/c1cMWG6lEOAQ6Q36YzC95fWDF)
+[![asciicast](https://asciinema.org/a/fnBlB6JCfBQL4GPczSw1oBMeO.svg)](https://asciinema.org/a/fnBlB6JCfBQL4GPczSw1oBMeO)
 
 </TabItem>
 </Tabs>
@@ -436,7 +396,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MjY0MH0.cRocKWM1Dtg1vnc7UFK1zbTumH4rqPvBfj-OhuNhE50';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0OTExMn0.n1gNRy65j-_IlBpVKbO0Rya5LS7BY7Nv8Ar-LSSRuLE';
 
 
 ```
@@ -444,75 +404,16 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OpE9FS5wImdgml3FUSxDtVUh0.svg)](https://asciinema.org/a/OpE9FS5wImdgml3FUSxDtVUh0)
+[![asciicast](https://asciinema.org/a/3Kou922iAh78pL0Tsi6P9bJCY.svg)](https://asciinema.org/a/3Kou922iAh78pL0Tsi6P9bJCY)
 
 </TabItem>
 </Tabs>
 
-## Review credentials
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-```sh
-cat credentials
-```
-
-</TabItem>
-<TabItem value="File Content">
-
-```
-[minio]
-aws_access_key_id = minio
-aws_secret_access_key = minio123
-```
-</TabItem>
-</Tabs>
-
-## Let's create a bucket
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-docker compose exec cli-aws \
-  aws \
-    --profile minio \
-    --endpoint-url=http://minio:9000 \
-    --region eu-south-1 \
-    s3api create-bucket \
-      --bucket bucket
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-{
-    "Location": "/bucket"
-}
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/MOK1oh8ZMuLON6hH5vxB93zTj.svg)](https://asciinema.org/a/MOK1oh8ZMuLON6hH5vxB93zTj)
-
-</TabItem>
-</Tabs>
-
-## Creating topic large-messages on teamA
+## Creating topic customers on teamA
 
 Creating on `teamA`:
 
-* Topic `large-messages` with partitions:1 and replication-factor:1
+* Topic `customers` with partitions:1 and replication-factor:1
 
 <Tabs>
 <TabItem value="Command">
@@ -525,7 +426,7 @@ kafka-topics \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
-    --topic large-messages
+    --topic customers
 ```
 
 
@@ -533,36 +434,292 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-Created topic large-messages.
+Created topic customers.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BikBq9aS8EVsQZ28cO17XIZOd.svg)](https://asciinema.org/a/BikBq9aS8EVsQZ28cO17XIZOd)
+[![asciicast](https://asciinema.org/a/KvRSpmqdj2N3HoHlfEl4M1Xac.svg)](https://asciinema.org/a/KvRSpmqdj2N3HoHlfEl4M1Xac)
 
 </TabItem>
 </Tabs>
 
-## Adding interceptor large-messages
+## Adding interceptor encrypt
 
-Let's ask Gateway to offload large messages to S3
+We want to encrypt only two fields, with an in memory KMS.
 
-Creating the interceptor named `large-messages` of the plugin `io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin` using the following payload
+Creating the interceptor named `encrypt` of the plugin `io.conduktor.gateway.interceptor.EncryptPlugin` using the following payload
 
 ```json
 {
-  "pluginClass" : "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
+  "pluginClass" : "io.conduktor.gateway.interceptor.EncryptPlugin",
   "priority" : 100,
   "config" : {
-    "topic" : "large-messages",
-    "s3Config" : {
-      "accessKey" : "minio",
-      "secretKey" : "minio123",
-      "bucketName" : "bucket",
-      "region" : "eu-south-1",
-      "uri" : "http://minio:9000"
+    "fields" : [ {
+      "fieldName" : "password",
+      "keySecretId" : "password-secret",
+      "algorithm" : {
+        "type" : "AES_GCM",
+        "kms" : "IN_MEMORY"
+      }
+    }, {
+      "fieldName" : "visa",
+      "keySecretId" : "visa-secret",
+      "algorithm" : {
+        "type" : "AES_GCM",
+        "kms" : "IN_MEMORY"
+      }
+    } ]
+  }
+}
+```
+
+Here's how to send it:
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+curl \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/encrypt" \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent \
+    --data @step-07-encrypt.json | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "message": "encrypt is created"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/BaLmRLKkSEWn9qi0s0SzVcHEr.svg)](https://asciinema.org/a/BaLmRLKkSEWn9qi0s0SzVcHEr)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors for teamA
+
+Listing interceptors on `gateway1` for virtual cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+curl \
+    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "interceptors": [
+    {
+      "name": "encrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+      "apiKey": null,
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "fields": [
+          {
+            "fieldName": "password",
+            "keySecretId": "password-secret",
+            "algorithm": {
+              "type": "AES_GCM",
+              "kms": "IN_MEMORY"
+            }
+          },
+          {
+            "fieldName": "visa",
+            "keySecretId": "visa-secret",
+            "algorithm": {
+              "type": "AES_GCM",
+              "kms": "IN_MEMORY"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/cSzECAJ059HKksLXUQB0DFIqA.svg)](https://asciinema.org/a/cSzECAJ059HKksLXUQB0DFIqA)
+
+</TabItem>
+</Tabs>
+
+## Let's send unencrypted json
+
+We are using regular kafka tools
+
+<Tabs>
+<TabItem value="Command">
+
+
+Sending 2 events
+```json
+{
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
+}
+{
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ;",
+  "address" : "Dubai, UAE"
+}
+```
+with
+
+
+```sh
+echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic customers
+
+echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","visa":"#888999XZ;","address":"Dubai, UAE"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic customers
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/SpOrUhrGnUN8ED7vkc71hrJy6.svg)](https://asciinema.org/a/SpOrUhrGnUN8ED7vkc71hrJy6)
+
+</TabItem>
+</Tabs>
+
+## Let's consume the message, and confirm tom and laura data is encrypted
+
+Let's consume the message, and confirm tom and laura data is encrypted in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic customers \
+    --from-beginning \
+    --timeout-ms 10000 | jq
+```
+
+
+returns 
+
+```json
+Processed a total of 2 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "AAAABQAAAAEAAAAzAVkr7fIQqA+DKEzi/7aG58TSCcdgHJgFKVzJAy/hJbnCU5u4rbCtDw97LG99iO5xZiT+TgFnTeqaC9aqxLOq67gaFwk4VkNeF5Lf+rewcrCnlKre2VhCUH9G4PjSkzg=",
+  "visa": "AAAABQAAAAEAAAAzATSYKKrmrHNo633oxe3rrKbB5vCb6gXe9T1Fy86eOFmuT+dS+W206qmY1e9egB11MBCTXBEnRCjpclso/Z38e6Z/OkWuIGGEG5pQZOkQTaqPOWxFipcoJakQyd0T",
+  "address": "Chancery lane, London"
+}
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "AAAABQAAAAEAAAAzAVkr7fIQqA+DKEzi/7aG58TSCcdgHJgFKVzJAy/hJbnCU5u4rbCtDw97LG99iO5xZiT+ropU26JwmZSvUDe0IP46E7LVhrYqMp886yoUJg5gkwlJ1UHMk7eVcqXOSA==",
+  "visa": "AAAABQAAAAEAAAAzATSYKKrmrHNo633oxe3rrKbB5vCb6gXe9T1Fy86eOFmuT+dS+W206qmY1e9egB11MBCTrtwyWo6emJLBiT1zaRrOpuNkwiJ5j70ZI/xoowJCOlDxTRSq/25hHa7nukvI",
+  "address": "Dubai, UAE"
+}
+
+```
+
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+Processed a total of 2 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "AAAABQAAAAEAAAAzAVkr7fIQqA+DKEzi/7aG58TSCcdgHJgFKVzJAy/hJbnCU5u4rbCtDw97LG99iO5xZiT+TgFnTeqaC9aqxLOq67gaFwk4VkNeF5Lf+rewcrCnlKre2VhCUH9G4PjSkzg=",
+  "visa": "AAAABQAAAAEAAAAzATSYKKrmrHNo633oxe3rrKbB5vCb6gXe9T1Fy86eOFmuT+dS+W206qmY1e9egB11MBCTXBEnRCjpclso/Z38e6Z/OkWuIGGEG5pQZOkQTaqPOWxFipcoJakQyd0T",
+  "address": "Chancery lane, London"
+}
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "AAAABQAAAAEAAAAzAVkr7fIQqA+DKEzi/7aG58TSCcdgHJgFKVzJAy/hJbnCU5u4rbCtDw97LG99iO5xZiT+ropU26JwmZSvUDe0IP46E7LVhrYqMp886yoUJg5gkwlJ1UHMk7eVcqXOSA==",
+  "visa": "AAAABQAAAAEAAAAzATSYKKrmrHNo633oxe3rrKbB5vCb6gXe9T1Fy86eOFmuT+dS+W206qmY1e9egB11MBCTrtwyWo6emJLBiT1zaRrOpuNkwiJ5j70ZI/xoowJCOlDxTRSq/25hHa7nukvI",
+  "address": "Dubai, UAE"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/i72UKVpoUd0ZfLWPSmhU5j03O.svg)](https://asciinema.org/a/i72UKVpoUd0ZfLWPSmhU5j03O)
+
+</TabItem>
+</Tabs>
+
+## Adding interceptor decrypt
+
+Let's add the decrypt interceptor to decipher messages
+
+Creating the interceptor named `decrypt` of the plugin `io.conduktor.gateway.interceptor.DecryptPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority" : 100,
+  "config" : {
+    "topic" : "customers",
+    "kmsConfig" : {
+      "vault" : {
+        "uri" : "http://vault:8200",
+        "token" : "vault-plaintext-root-token",
+        "version" : 1
+      }
     }
   }
 }
@@ -576,11 +733,11 @@ Here's how to send it:
 
 ```sh
 curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/large-messages" \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/decrypt" \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent \
-    --data @step-09-large-messages.json | jq
+    --data @step-11-decrypt.json | jq
 ```
 
 
@@ -589,7 +746,7 @@ curl \
 
 ```json
 {
-  "message": "large-messages is created"
+  "message": "decrypt is created"
 }
 
 ```
@@ -597,86 +754,94 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TRE5EZLNlxMmE7oKLE92h4XTq.svg)](https://asciinema.org/a/TRE5EZLNlxMmE7oKLE92h4XTq)
+[![asciicast](https://asciinema.org/a/CrcyRC6Dn9RfKi8TV9CpDdCNZ.svg)](https://asciinema.org/a/CrcyRC6Dn9RfKi8TV9CpDdCNZ)
 
 </TabItem>
 </Tabs>
 
-## Let's create a large message
+## Listing interceptors for teamA
 
-
+Listing interceptors on `gateway1` for virtual cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-openssl rand -hex $((20*1024*1024)) > large-message.bin 
-ls -lh large-message.bin
+curl \
+    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent | jq
 ```
 
 
 </TabItem>
 <TabItem value="Output">
 
-```
--rw-r--r--  1 framiere  staff    40M Feb 14 03:10 large-message.bin
+```json
+{
+  "interceptors": [
+    {
+      "name": "decrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+      "apiKey": null,
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "topic": "customers",
+        "kmsConfig": {
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "vault-plaintext-root-token",
+            "version": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "encrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+      "apiKey": null,
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "fields": [
+          {
+            "fieldName": "password",
+            "keySecretId": "password-secret",
+            "algorithm": {
+              "type": "AES_GCM",
+              "kms": "IN_MEMORY"
+            }
+          },
+          {
+            "fieldName": "visa",
+            "keySecretId": "visa-secret",
+            "algorithm": {
+              "type": "AES_GCM",
+              "kms": "IN_MEMORY"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PUu5CdxDZh2dQfrKlPAHxHqlq.svg)](https://asciinema.org/a/PUu5CdxDZh2dQfrKlPAHxHqlq)
+[![asciicast](https://asciinema.org/a/qSlEcjveIVqMGfnFEXQdXfJsw.svg)](https://asciinema.org/a/qSlEcjveIVqMGfnFEXQdXfJsw)
 
 </TabItem>
 </Tabs>
 
-## Sending large pdf file through kafka
+## Confirm message from tom and laura are decrypted
 
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-requiredMemory=$(( 2 * $(cat large-message.bin | wc -c | awk '{print $1}')))
-
-kafka-producer-perf-test \
-  --producer.config teamA-sa.properties \
-  --topic large-messages \
-  --throughput -1 \
-  --num-records 1 \
-  --payload-file large-message.bin \
-  --producer-props \
-    bootstrap.servers=localhost:6969 \
-    max.request.size=$requiredMemory \
-    buffer.memory=$requiredMemory
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-Reading payloads from: /Users/framiere/conduktor/conduktor-gateway-functional-testing/target/2024.02.14-00:39:58/large-messages/large-message.bin
-Number of messages read: 1
-1 records sent, 0,458085 records/sec (18,32 MB/sec), 2178,00 ms avg latency, 2178,00 ms max latency, 2178 ms 50th, 2178 ms 95th, 2178 ms 99th, 2178 ms 99.9th.
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/3cH6lWGvqUEuiZV2UIxualuzY.svg)](https://asciinema.org/a/3cH6lWGvqUEuiZV2UIxualuzY)
-
-</TabItem>
-</Tabs>
-
-## Let's read the message back
-
-
+Confirm message from tom and laura are decrypted in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
@@ -684,98 +849,70 @@ Number of messages read: 1
 
 ```sh
 kafka-console-consumer \
-  --bootstrap-server localhost:6969 \
-  --consumer.config teamA-sa.properties \
-  --topic large-messages \
-  --from-beginning \
-  --max-messages 1 > from-kafka.bin
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic customers \
+    --from-beginning \
+    --timeout-ms 10000 | jq
 ```
+
+
+returns 
+
+```json
+Processed a total of 2 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
+}
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ;",
+  "address": "Dubai, UAE"
+}
+
+```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
-```
-Processed a total of 1 messages
+```json
+Processed a total of 2 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
+}
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ;",
+  "address": "Dubai, UAE"
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GvqplvPC8T9GhxdJyMVp2ikgI.svg)](https://asciinema.org/a/GvqplvPC8T9GhxdJyMVp2ikgI)
+[![asciicast](https://asciinema.org/a/FwS5YtvEZnxUwLwY2ez4NvsO2.svg)](https://asciinema.org/a/FwS5YtvEZnxUwLwY2ez4NvsO2)
 
 </TabItem>
 </Tabs>
 
-## Let's compare the files
+## Read the underlying kafka data to reveal the magic
 
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-ls -lH *bin
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
--rw-r--r--  1 framiere  staff  41943041 Feb 14 03:10 from-kafka.bin
--rw-r--r--  1 framiere  staff  41943041 Feb 14 03:10 large-message.bin
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/iFcXsZ0Dd5ycqgHDPTnbQFpUJ.svg)](https://asciinema.org/a/iFcXsZ0Dd5ycqgHDPTnbQFpUJ)
-
-</TabItem>
-</Tabs>
-
-## Let's look at what's inside minio
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-docker compose exec cli-aws \
-    aws \
-        --profile minio \
-        --endpoint-url=http://minio:9000 \
-        --region eu-south-1 \
-        s3 \
-        ls s3://bucket --recursive --human-readable
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-2024-02-14 02:10:48   40.0 MiB large-messages/3038059a-340d-4fac-bbd2-2dfe65c39b68
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/Jzl098GBzQ6QtBb5MG7tj3oqV.svg)](https://asciinema.org/a/Jzl098GBzQ6QtBb5MG7tj3oqV)
-
-</TabItem>
-</Tabs>
-
-## Consuming from teamAlarge-messages
-
-Consuming from teamAlarge-messages in cluster `kafka1`
+Read the underlying kafka data to reveal the magic in cluster `kafka1`
 
 <Tabs>
 <TabItem value="Command">
@@ -784,7 +921,7 @@ Consuming from teamAlarge-messages in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --topic teamAlarge-messages \
+    --topic teamAcustomers \
     --from-beginning \
     --timeout-ms 10000 \
     --property print.headers=true | jq
@@ -794,8 +931,8 @@ kafka-console-consumer \
 returns 
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 17
-Processed a total of 1 messages
+jq: parse error: Invalid numeric literal at line 1, column 18
+Processed a total of 2 messages
 
 ```
 
@@ -805,15 +942,15 @@ Processed a total of 1 messages
 <TabItem value="Output">
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 17
-Processed a total of 1 messages
+jq: parse error: Invalid numeric literal at line 1, column 18
+Processed a total of 2 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sPVRXNnzy2WTrR1KMzEgyZ5uC.svg)](https://asciinema.org/a/sPVRXNnzy2WTrR1KMzEgyZ5uC)
+[![asciicast](https://asciinema.org/a/sy7MO05bdti94qTZrCqIuK0nB.svg)](https://asciinema.org/a/sy7MO05bdti94qTZrCqIuK0nB)
 
 </TabItem>
 </Tabs>
@@ -837,15 +974,10 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container cli-aws  Stopping
- Container minio  Stopping
- Container gateway1  Stopping
- Container schema-registry  Stopping
- Container gateway2  Stopping
  Container kafka-client  Stopping
- Container minio  Stopped
- Container minio  Removing
- Container minio  Removed
+ Container gateway2  Stopping
+ Container schema-registry  Stopping
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -856,17 +988,14 @@ docker compose down --volumes
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka1  Stopping
- Container kafka3  Stopping
  Container kafka2  Stopping
+ Container kafka3  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container cli-aws  Stopped
- Container cli-aws  Removing
- Container cli-aws  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
@@ -877,20 +1006,20 @@ docker compose down --volumes
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
- Network large-messages_default  Removing
- Network large-messages_default  Removed
+ Network encryption-field-level_default  Removing
+ Network encryption-field-level_default  Removed
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/2sOwDleBWgD4dmflaEy2RHoSi.svg)](https://asciinema.org/a/2sOwDleBWgD4dmflaEy2RHoSi)
+[![asciicast](https://asciinema.org/a/DdlJVW4dS62KSpif70hJnOUyy.svg)](https://asciinema.org/a/DdlJVW4dS62KSpif70hJnOUyy)
 
 </TabItem>
 </Tabs>
 
 # Conclusion
 
-ksqlDB can run in a virtual cluster where all its topics are concentrated into a single physical topic
+Yes, encryption in the Kafka world can be simple!
 

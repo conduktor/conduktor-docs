@@ -1,6 +1,7 @@
 ---
 title: Cluster Switching / Failover
 description: Cluster Switching / Failover
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -24,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fMuzLb4uEu9WOV7qGvNHz9BTn.svg)](https://asciinema.org/a/fMuzLb4uEu9WOV7qGvNHz9BTn)
+[![asciicast](https://asciinema.org/a/2u18hwFGboRm4r47DUYJ9wk3V.svg)](https://asciinema.org/a/2u18hwFGboRm4r47DUYJ9wk3V)
 
 </TabItem>
 </Tabs>
@@ -46,6 +47,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * failover-kafka3
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -77,6 +79,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -101,6 +105,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -125,6 +131,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -149,6 +157,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -178,8 +188,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -207,13 +219,15 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
     volumes:
     - type: bind
       source: .
       target: /config
       read_only: true
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -242,11 +256,25 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
     volumes:
     - type: bind
       source: .
       target: /config
       read_only: true
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
   failover-kafka1:
     image: confluentinc/cp-kafka:latest
     healthcheck:
@@ -271,6 +299,8 @@ services:
     container_name: failover-kafka1
     ports:
     - 29092:29092
+    labels:
+      tag: conduktor
   failover-kafka2:
     image: confluentinc/cp-kafka:latest
     healthcheck:
@@ -295,6 +325,8 @@ services:
     container_name: failover-kafka2
     ports:
     - 29093:29093
+    labels:
+      tag: conduktor
   failover-kafka3:
     image: confluentinc/cp-kafka:latest
     healthcheck:
@@ -319,6 +351,8 @@ services:
     container_name: failover-kafka3
     ports:
     - 29094:29094
+    labels:
+      tag: conduktor
   mirror-maker:
     image: confluentinc/cp-kafka:latest
     healthcheck:
@@ -346,6 +380,10 @@ services:
       target: /config
       read_only: true
     command: connect-mirror-maker /config/mm2.properties
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -453,17 +491,38 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka2  Running
- Container failover-kafka3  Running
- Container failover-kafka1  Running
- Container failover-kafka2  Running
- Container kafka3  Running
- Container kafka1  Running
- Container schema-registry  Running
- Container gateway1  Running
- Container mirror-maker  Running
- Container gateway2  Running
+ Network cluster-switching_default  Creating
+ Network cluster-switching_default  Created
+ Container zookeeper  Creating
+ Container kafka-client  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container failover-kafka2  Creating
+ Container kafka2  Creating
+ Container failover-kafka1  Creating
+ Container kafka3  Creating
+ Container failover-kafka3  Creating
+ Container kafka1  Creating
+ Container failover-kafka2  Created
+ Container failover-kafka1  Created
+ Container kafka2  Created
+ Container kafka1  Created
+ Container kafka3  Created
+ Container gateway2  Creating
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container failover-kafka3  Created
+ Container mirror-maker  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ Container gateway1  Created
+ Container schema-registry  Created
+ Container mirror-maker  Created
+ Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
@@ -471,70 +530,92 @@ docker compose up --detach --wait
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
+ Container failover-kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container failover-kafka3  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
+ Container zookeeper  Healthy
+ Container failover-kafka2  Starting
+ Container zookeeper  Healthy
+ Container kafka2  Starting
+ Container failover-kafka2  Started
+ Container failover-kafka1  Started
+ Container failover-kafka3  Started
+ Container kafka3  Started
+ Container kafka1  Started
+ Container kafka2  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container zookeeper  Healthy
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container zookeeper  Healthy
  Container kafka3  Waiting
  Container failover-kafka1  Waiting
  Container failover-kafka2  Waiting
  Container failover-kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Healthy
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container failover-kafka2  Healthy
- Container kafka3  Healthy
- Container failover-kafka3  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
  Container failover-kafka1  Healthy
- Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka3  Healthy
  Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container failover-kafka3  Healthy
+ Container schema-registry  Starting
+ Container kafka3  Healthy
+ Container mirror-maker  Starting
+ Container kafka1  Healthy
+ Container gateway2  Starting
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container gateway1  Started
+ Container schema-registry  Started
+ Container gateway2  Started
+ Container mirror-maker  Started
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
+ Container failover-kafka1  Waiting
+ Container kafka1  Waiting
  Container schema-registry  Waiting
- Container gateway1  Waiting
- Container zookeeper  Waiting
- Container failover-kafka3  Waiting
- Container failover-kafka2  Waiting
- Container kafka1  Waiting
- Container failover-kafka1  Waiting
- Container mirror-maker  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
  Container gateway2  Waiting
+ Container mirror-maker  Waiting
+ Container failover-kafka3  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container gateway1  Waiting
+ Container failover-kafka2  Waiting
  Container kafka2  Healthy
- Container failover-kafka2  Healthy
- Container schema-registry  Healthy
+ Container failover-kafka3  Healthy
  Container zookeeper  Healthy
- Container gateway2  Healthy
+ Container failover-kafka2  Healthy
  Container failover-kafka1  Healthy
  Container kafka3  Healthy
- Container failover-kafka3  Healthy
  Container kafka1  Healthy
+ Container kafka-client  Healthy
  Container mirror-maker  Healthy
+ Container schema-registry  Healthy
  Container gateway1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sRNp8WycM1wgO2G1B48byDc8w.svg)](https://asciinema.org/a/sRNp8WycM1wgO2G1B48byDc8w)
+[![asciicast](https://asciinema.org/a/m8Vga05xORhANTBITHpqzwlau.svg)](https://asciinema.org/a/m8Vga05xORhANTBITHpqzwlau)
 
 </TabItem>
 </Tabs>
@@ -577,7 +658,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ0MzQzOH0.adivqRFVLn7MyhLfllCoZQFl0H1g0NbqqoGLxBbNgnA';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0NjgwMX0.2aTbw-exvHhkE7bFqzWjSN9hd4SoW9hoyvSTIkmJgFY';
 
 
 ```
@@ -585,7 +666,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/3fo5PCg97npWAyeLVgiIlTQTL.svg)](https://asciinema.org/a/3fo5PCg97npWAyeLVgiIlTQTL)
+[![asciicast](https://asciinema.org/a/VeaB15mcmVN1E7W9ei5mMjwVl.svg)](https://asciinema.org/a/VeaB15mcmVN1E7W9ei5mMjwVl)
 
 </TabItem>
 </Tabs>
@@ -622,7 +703,7 @@ Created topic users.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LspZh43NlHDKo3QR60QmuZWbx.svg)](https://asciinema.org/a/LspZh43NlHDKo3QR60QmuZWbx)
+[![asciicast](https://asciinema.org/a/bXWLhVRPLuNRnYEovwce6kItT.svg)](https://asciinema.org/a/bXWLhVRPLuNRnYEovwce6kItT)
 
 </TabItem>
 </Tabs>
@@ -680,7 +761,7 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Kqmj0qxJwqC1kOPSmMdZbOOLV.svg)](https://asciinema.org/a/Kqmj0qxJwqC1kOPSmMdZbOOLV)
+[![asciicast](https://asciinema.org/a/Lk7Iw9O0jmvj8mYeUel7Vblci.svg)](https://asciinema.org/a/Lk7Iw9O0jmvj8mYeUel7Vblci)
 
 </TabItem>
 </Tabs>
@@ -728,7 +809,7 @@ teamAusers
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CtDeXOY5FU8WtgWAfh9d9eblL.svg)](https://asciinema.org/a/CtDeXOY5FU8WtgWAfh9d9eblL)
+[![asciicast](https://asciinema.org/a/wRDloAPMwLQdriYzBegEea6QX.svg)](https://asciinema.org/a/wRDloAPMwLQdriYzBegEea6QX)
 
 </TabItem>
 </Tabs>
@@ -751,6 +832,42 @@ kafka-console-consumer \
 ```
 
 
+returns 
+
+```json
+Processed a total of 1 messages
+{
+  "users": {
+    "clusterId": "main",
+    "name": "teamAusers",
+    "isConcentrated": false,
+    "compactedName": "teamAusers",
+    "isCompacted": false,
+    "compactedAndDeletedName": "teamAusers",
+    "isCompactedAndDeleted": false,
+    "createdAt": [
+      2024,
+      2,
+      14,
+      0,
+      33,
+      23,
+      291
+    ],
+    "isDeleted": false,
+    "configuration": {
+      "numPartitions": 1,
+      "replicationFactor": 1,
+      "properties": {}
+    },
+    "isVirtual": false
+  }
+}
+
+```
+
+
+
 </TabItem>
 <TabItem value="Output">
 
@@ -767,12 +884,12 @@ Processed a total of 1 messages
     "isCompactedAndDeleted": false,
     "createdAt": [
       2024,
-      1,
-      31,
       2,
-      17,
-      19,
-      477
+      14,
+      0,
+      33,
+      23,
+      291
     ],
     "isDeleted": false,
     "configuration": {
@@ -789,7 +906,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BJ8ejl8niZvNI894EmPAYYJbz.svg)](https://asciinema.org/a/BJ8ejl8niZvNI894EmPAYYJbz)
+[![asciicast](https://asciinema.org/a/stwHPEK8u9LIjtHF5vk8lamUe.svg)](https://asciinema.org/a/stwHPEK8u9LIjtHF5vk8lamUe)
 
 </TabItem>
 </Tabs>
@@ -812,12 +929,26 @@ kafka-console-consumer \
 ```
 
 
+returns 
+
+```json
+Processed a total of 1 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
+}
+
+```
+
+
+
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-01-31 03:17:26,767] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77977] Error while fetching metadata with correlation id 2 : {teamAusers=UNKNOWN_TOPIC_OR_PARTITION} (org.apache.kafka.clients.NetworkClient)
-[2024-01-31 03:17:26,872] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77977] Error while fetching metadata with correlation id 7 : {teamAusers=UNKNOWN_TOPIC_OR_PARTITION} (org.apache.kafka.clients.NetworkClient)
 Processed a total of 1 messages
 {
   "name": "tom",
@@ -832,7 +963,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sY0amCyMv8ptlqr453rNJOThP.svg)](https://asciinema.org/a/sY0amCyMv8ptlqr453rNJOThP)
+[![asciicast](https://asciinema.org/a/VHHkXkOs8NLhgm521uC6B80i6.svg)](https://asciinema.org/a/VHHkXkOs8NLhgm521uC6B80i6)
 
 </TabItem>
 </Tabs>
@@ -881,7 +1012,7 @@ teamAusers
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/w0KIVxGDiFr0PgSOUsRGFBNnv.svg)](https://asciinema.org/a/w0KIVxGDiFr0PgSOUsRGFBNnv)
+[![asciicast](https://asciinema.org/a/5wAOlsSELOPTR0xPmjYNXAQQ4.svg)](https://asciinema.org/a/5wAOlsSELOPTR0xPmjYNXAQQ4)
 
 </TabItem>
 </Tabs>
@@ -915,10 +1046,12 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/cA60dmNw2FoyFSVMYuTeCFp2c.svg)](https://asciinema.org/a/cA60dmNw2FoyFSVMYuTeCFp2c)
+[![asciicast](https://asciinema.org/a/mDwaya4ajbflwltRoQNeX7gDs.svg)](https://asciinema.org/a/mDwaya4ajbflwltRoQNeX7gDs)
 
 </TabItem>
 </Tabs>
+
+        From now on `gateway1` the cluster with id `main` is pointing to the `failover cluster.
 
 ## Failing over from main to failover
 
@@ -949,10 +1082,12 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9Q29usVepijFIst3GHPT7Iurl.svg)](https://asciinema.org/a/9Q29usVepijFIst3GHPT7Iurl)
+[![asciicast](https://asciinema.org/a/mhgcUQo65QEqIdbKxXZEtlj0g.svg)](https://asciinema.org/a/mhgcUQo65QEqIdbKxXZEtlj0g)
 
 </TabItem>
 </Tabs>
+
+        From now on `gateway2` the cluster with id `main` is pointing to the `failover cluster.
 
 ## Produce alice into users, it should hit only failover-kafka
 
@@ -994,7 +1129,7 @@ echo '{"name":"alice","username":"alice@conduktor.io","password":"youpi","visa":
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ekhF3PN8XgKTS5UGYkkt5TIyu.svg)](https://asciinema.org/a/ekhF3PN8XgKTS5UGYkkt5TIyu)
+[![asciicast](https://asciinema.org/a/xNbbaY9mqxQSEOqBl8Teobo20.svg)](https://asciinema.org/a/xNbbaY9mqxQSEOqBl8Teobo20)
 
 </TabItem>
 </Tabs>
@@ -1018,16 +1153,34 @@ kafka-console-consumer \
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 3 messages
 {
-  "name" : "alice",
-  "username" : "alice@conduktor.io",
-  "password" : "youpi",
-  "visa" : "#812SSS",
-  "address" : "Les ifs"
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
 }
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ",
+  "address": "Dubai, UAE"
+}
+{
+  "name": "alice",
+  "username": "alice@conduktor.io",
+  "password": "youpi",
+  "visa": "#812SSS",
+  "address": "Les ifs"
+}
+
 ```
+
 
 
 </TabItem>
@@ -1062,7 +1215,7 @@ Processed a total of 3 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/8cJjZIb1sJMCPoZE6ze0lLwMe.svg)](https://asciinema.org/a/8cJjZIb1sJMCPoZE6ze0lLwMe)
+[![asciicast](https://asciinema.org/a/eiWqyAY3LnOIlZB2eXauyAmgm.svg)](https://asciinema.org/a/eiWqyAY3LnOIlZB2eXauyAmgm)
 
 </TabItem>
 </Tabs>
@@ -1084,31 +1237,33 @@ kafka-console-consumer \
 ```
 
 
-returns 2 events
+returns 
+
 ```json
+Processed a total of 2 messages
 {
-  "name" : "tom",
-  "username" : "tom@conduktor.io",
-  "password" : "motorhead",
-  "visa" : "#abc123",
-  "address" : "Chancery lane, London"
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
 }
 {
-  "name" : "laura",
-  "username" : "laura@conduktor.io",
-  "password" : "kitesurf",
-  "visa" : "#888999XZ",
-  "address" : "Dubai, UAE"
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ",
+  "address": "Dubai, UAE"
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-01-31 03:17:53,034] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "tom",
@@ -1130,7 +1285,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WiIhI5LOxuLnVI9we6pdhrQyr.svg)](https://asciinema.org/a/WiIhI5LOxuLnVI9we6pdhrQyr)
+[![asciicast](https://asciinema.org/a/lcfht8HvCCA0AGEftJWkQf6mZ.svg)](https://asciinema.org/a/lcfht8HvCCA0AGEftJWkQf6mZ)
 
 </TabItem>
 </Tabs>
@@ -1153,16 +1308,34 @@ kafka-console-consumer \
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 3 messages
 {
-  "name" : "alice",
-  "username" : "alice@conduktor.io",
-  "password" : "youpi",
-  "visa" : "#812SSS",
-  "address" : "Les ifs"
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
 }
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ",
+  "address": "Dubai, UAE"
+}
+{
+  "name": "alice",
+  "username": "alice@conduktor.io",
+  "password": "youpi",
+  "visa": "#812SSS",
+  "address": "Les ifs"
+}
+
 ```
+
 
 
 </TabItem>
@@ -1197,7 +1370,7 @@ Processed a total of 3 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/YBv4fAo4G0E1FdCC2g4jOHzq0.svg)](https://asciinema.org/a/YBv4fAo4G0E1FdCC2g4jOHzq0)
+[![asciicast](https://asciinema.org/a/tIuJ4Vsf5SiEJj5rnzIekS5Z9.svg)](https://asciinema.org/a/tIuJ4Vsf5SiEJj5rnzIekS5Z9)
 
 </TabItem>
 </Tabs>
@@ -1222,45 +1395,49 @@ docker compose down --volumes
 
 ```
  Container mirror-maker  Stopping
- Container gateway1  Stopping
- Container gateway2  Stopping
  Container schema-registry  Stopping
- Container mirror-maker  Stopped
- Container mirror-maker  Removing
- Container gateway1  Stopped
- Container gateway1  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container gateway2  Stopping
+ Container kafka-client  Stopping
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container schema-registry  Removed
+ Container mirror-maker  Stopped
+ Container mirror-maker  Removing
  Container mirror-maker  Removed
- Container kafka1  Stopping
- Container kafka2  Stopping
- Container failover-kafka1  Stopping
  Container failover-kafka2  Stopping
  Container kafka3  Stopping
+ Container kafka1  Stopping
  Container failover-kafka3  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka2  Stopped
- Container kafka2  Removing
+ Container failover-kafka1  Stopping
+ Container kafka2  Stopping
  Container failover-kafka1  Stopped
  Container failover-kafka1  Removing
- Container kafka3  Stopped
- Container kafka3  Removing
+ Container failover-kafka1  Removed
  Container failover-kafka3  Stopped
  Container failover-kafka3  Removing
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container failover-kafka3  Removed
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container failover-kafka2  Stopped
  Container failover-kafka2  Removing
- Container kafka1  Removed
- Container kafka3  Removed
- Container failover-kafka1  Removed
- Container kafka2  Removed
- Container failover-kafka3  Removed
  Container failover-kafka2  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1273,7 +1450,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/I1Dt6fxljgeYDZRi1fiWI2sFL.svg)](https://asciinema.org/a/I1Dt6fxljgeYDZRi1fiWI2sFL)
+[![asciicast](https://asciinema.org/a/ucCbrKeqN4DjO2Hd0BLRzf4yl.svg)](https://asciinema.org/a/ucCbrKeqN4DjO2Hd0BLRzf4yl)
 
 </TabItem>
 </Tabs>

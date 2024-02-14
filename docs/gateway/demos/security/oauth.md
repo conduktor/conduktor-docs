@@ -1,6 +1,7 @@
 ---
 title: Oauth
 description: Oauth
+tag: security
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -22,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/8nd0h9elrmkwGdujcJD9AdbJJ.svg)](https://asciinema.org/a/8nd0h9elrmkwGdujcJD9AdbJJ)
+[![asciicast](https://asciinema.org/a/PJEcwZNwpr0ePn6rRee9QM7uU.svg)](https://asciinema.org/a/PJEcwZNwpr0ePn6rRee9QM7uU)
 
 </TabItem>
 </Tabs>
@@ -33,6 +34,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -64,6 +66,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -88,6 +92,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -112,6 +118,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -136,6 +144,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -165,8 +175,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -193,8 +205,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -222,6 +236,20 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
   keycloack:
     image: quay.io/keycloak/keycloak:22.0
     hostname: keycloak
@@ -243,6 +271,10 @@ services:
     - --metrics-enabled=true
     - --health-enabled=true
     - --import-realm
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -267,61 +299,95 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container keycloak  Running
- Container zookeeper  Running
- Container kafka3  Running
- Container kafka1  Running
- Container kafka2  Running
- Container gateway2  Running
- Container schema-registry  Running
- Container gateway1  Running
+ Network oauth_default  Creating
+ Network oauth_default  Created
+ Container zookeeper  Creating
+ Container kafka-client  Creating
+ Container keycloak  Creating
+ Container keycloak  Created
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka3  Creating
+ Container kafka2  Creating
+ Container kafka1  Creating
+ Container kafka1  Created
+ Container kafka2  Created
+ Container kafka3  Created
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container gateway2  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ Container schema-registry  Created
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ Container keycloak  Starting
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
+ Container keycloak  Started
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
+ Container kafka2  Starting
+ Container kafka3  Started
+ Container kafka1  Started
+ Container kafka2  Started
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
  Container kafka3  Waiting
  Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
+ Container gateway1  Starting
  Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container schema-registry  Starting
+ Container kafka2  Healthy
+ Container gateway2  Starting
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container gateway2  Started
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container zookeeper  Waiting
  Container schema-registry  Waiting
- Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container kafka3  Waiting
+ Container gateway1  Waiting
  Container keycloak  Waiting
- Container zookeeper  Waiting
- Container keycloak  Healthy
- Container kafka3  Healthy
- Container gateway2  Healthy
- Container kafka2  Healthy
+ Container kafka2  Waiting
  Container zookeeper  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
+ Container keycloak  Healthy
+ Container kafka1  Healthy
  Container schema-registry  Healthy
  Container gateway1  Healthy
- Container kafka1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Yag8CfAQPrw5IT1WMrhfz5HOj.svg)](https://asciinema.org/a/Yag8CfAQPrw5IT1WMrhfz5HOj)
+[![asciicast](https://asciinema.org/a/W59mqdJOrf8thMGSSDKAWaMBt.svg)](https://asciinema.org/a/W59mqdJOrf8thMGSSDKAWaMBt)
 
 </TabItem>
 </Tabs>
@@ -375,7 +441,7 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-[2024-01-31 08:45:04,429] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Jan 31 08:46:04 CET 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Jan 31 08:45:53 CET 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
+[2024-02-14 03:42:06,660] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Feb 14 03:43:06 CET 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Feb 14 03:42:55 CET 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
 Created topic cars.
 
 ```
@@ -383,7 +449,7 @@ Created topic cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/5YZD0qyTZWOwftVMhbhFEkmQ3.svg)](https://asciinema.org/a/5YZD0qyTZWOwftVMhbhFEkmQ3)
+[![asciicast](https://asciinema.org/a/xkZLt07tRTBDsDMa1yc1QOw3w.svg)](https://asciinema.org/a/xkZLt07tRTBDsDMa1yc1QOw3w)
 
 </TabItem>
 </Tabs>
@@ -408,7 +474,7 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-[2024-01-31 08:45:06,379] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Jan 31 08:46:06 CET 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Jan 31 08:45:55 CET 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
+[2024-02-14 03:42:08,472] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Feb 14 03:43:08 CET 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Feb 14 03:42:56 CET 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
 __consumer_offsets
 _acls
 _auditLogs
@@ -428,7 +494,7 @@ cars
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CpdilGqaJnyloFJhnWuezAcgy.svg)](https://asciinema.org/a/CpdilGqaJnyloFJhnWuezAcgy)
+[![asciicast](https://asciinema.org/a/vbbKoGwHvIu43LJsmN8qyhkLV.svg)](https://asciinema.org/a/vbbKoGwHvIu43LJsmN8qyhkLV)
 
 </TabItem>
 </Tabs>
@@ -452,35 +518,39 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
  Container keycloak  Stopping
+ Container gateway1  Stopping
+ Container kafka-client  Stopping
  Container schema-registry  Stopping
  Container gateway2  Stopping
  Container keycloak  Stopped
  Container keycloak  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container keycloak  Removed
  Container gateway2  Stopped
  Container gateway2  Removing
+ Container gateway2  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway2  Removed
  Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka2  Stopping
- Container kafka1  Stopping
  Container kafka3  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka1  Stopped
- Container kafka1  Removing
+ Container kafka1  Stopping
+ Container kafka2  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
  Container kafka1  Removed
  Container zookeeper  Stopping
- Container keycloak  Removed
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
@@ -492,7 +562,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CTQi1DO6ig0PFUuqrkrigxnsB.svg)](https://asciinema.org/a/CTQi1DO6ig0PFUuqrkrigxnsB)
+[![asciicast](https://asciinema.org/a/c0fcfmXvbm2ze0sQdIps6nFAi.svg)](https://asciinema.org/a/c0fcfmXvbm2ze0sQdIps6nFAi)
 
 </TabItem>
 </Tabs>

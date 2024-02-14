@@ -1,6 +1,7 @@
 ---
 title: Encryption performance
 description: Encryption performance
+tag: encryption
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -22,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/EyRnKhP7oBD6jHaIs9wLPQkHN.svg)](https://asciinema.org/a/EyRnKhP7oBD6jHaIs9wLPQkHN)
+[![asciicast](https://asciinema.org/a/DamHqdaj7DrVz9FBW9R0Wzri7.svg)](https://asciinema.org/a/DamHqdaj7DrVz9FBW9R0Wzri7)
 
 </TabItem>
 </Tabs>
@@ -33,6 +34,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -63,6 +65,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -87,6 +91,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -111,6 +117,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -135,6 +143,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -164,8 +174,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -190,8 +202,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -217,6 +231,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -244,32 +274,36 @@ docker compose up --detach --wait
  Network encryption-performance_default  Creating
  Network encryption-performance_default  Created
  Container zookeeper  Creating
+ Container kafka-client  Creating
  Container zookeeper  Created
  Container kafka3  Creating
+ Container kafka-client  Created
  Container kafka2  Creating
  Container kafka1  Creating
- Container kafka2  Created
- Container kafka1  Created
  Container kafka3  Created
- Container gateway2  Creating
+ Container kafka1  Created
+ Container kafka2  Created
  Container schema-registry  Creating
  Container gateway1  Creating
+ Container gateway2  Creating
  gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway1  Created
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container schema-registry  Created
  Container gateway2  Created
+ Container kafka-client  Starting
  Container zookeeper  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
- Container kafka2  Starting
- Container zookeeper  Healthy
  Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
+ Container zookeeper  Healthy
+ Container kafka2  Starting
  Container kafka2  Started
  Container kafka1  Started
  Container kafka3  Started
@@ -277,37 +311,39 @@ docker compose up --detach --wait
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka2  Healthy
- Container gateway1  Starting
+ Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container schema-registry  Starting
- Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container gateway1  Starting
+ Container kafka3  Healthy
  Container gateway2  Starting
- Container schema-registry  Started
- Container gateway1  Started
  Container gateway2  Started
- Container schema-registry  Waiting
- Container gateway1  Waiting
- Container gateway2  Waiting
+ Container gateway1  Started
+ Container schema-registry  Started
+ Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container gateway2  Waiting
  Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container zookeeper  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
  Container schema-registry  Healthy
  Container gateway1  Healthy
  Container gateway2  Healthy
@@ -317,7 +353,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9AgXTzjGYiGr9Jmd6Nf9OSus2.svg)](https://asciinema.org/a/9AgXTzjGYiGr9Jmd6Nf9OSus2)
+[![asciicast](https://asciinema.org/a/PwVnqGYd01uCEyg57zpXwY9oG.svg)](https://asciinema.org/a/PwVnqGYd01uCEyg57zpXwY9oG)
 
 </TabItem>
 </Tabs>
@@ -360,7 +396,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ3NDcxM30._dGASgR98bO1owYqbS7tdY-rsoj-8DUWken1Zsfbfvk';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MDQzOX0.ZpaQrQJ0_ekHFu1momq0AKmK2u59CSb0K8ckjIKmess';
 
 
 ```
@@ -368,7 +404,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WyoTiHWBU0lBfVHZ9iZhsQVbr.svg)](https://asciinema.org/a/WyoTiHWBU0lBfVHZ9iZhsQVbr)
+[![asciicast](https://asciinema.org/a/Nt6Has3YOnXt2LzGkRAOMwbTL.svg)](https://asciinema.org/a/Nt6Has3YOnXt2LzGkRAOMwbTL)
 
 </TabItem>
 </Tabs>
@@ -405,7 +441,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fnIzrgLmgHnW432dXMDaZl5RJ.svg)](https://asciinema.org/a/fnIzrgLmgHnW432dXMDaZl5RJ)
+[![asciicast](https://asciinema.org/a/AZ8wFEYrfDTbgFZtA0AmSK0Bg.svg)](https://asciinema.org/a/AZ8wFEYrfDTbgFZtA0AmSK0Bg)
 
 </TabItem>
 </Tabs>
@@ -414,13 +450,39 @@ Created topic customers.
 
 We want to encrypt only two fields, with an in memory KMS.
 
+Creating the interceptor named `encrypt` of the plugin `io.conduktor.gateway.interceptor.EncryptPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.EncryptPlugin",
+  "priority" : 100,
+  "config" : {
+    "fields" : [ {
+      "fieldName" : "password",
+      "keySecretId" : "password-secret",
+      "algorithm" : {
+        "type" : "AES_GCM",
+        "kms" : "IN_MEMORY"
+      }
+    }, {
+      "fieldName" : "visa",
+      "keySecretId" : "visa-secret",
+      "algorithm" : {
+        "type" : "AES_GCM",
+        "kms" : "IN_MEMORY"
+      }
+    } ]
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-07-encrypt.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/encrypt" \
     --header 'Content-Type: application/json' \
@@ -435,30 +497,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
-  "priority": 100,
-  "config": {
-    "fields": [
-      {
-        "fieldName": "password",
-        "keySecretId": "password-secret",
-        "algorithm": {
-          "type": "AES_GCM",
-          "kms": "IN_MEMORY"
-        }
-      },
-      {
-        "fieldName": "visa",
-        "keySecretId": "visa-secret",
-        "algorithm": {
-          "type": "AES_GCM",
-          "kms": "IN_MEMORY"
-        }
-      }
-    ]
-  }
-}
-{
   "message": "encrypt is created"
 }
 
@@ -467,7 +505,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/axjz8i769XGfmlWxzgcKWDVJ6.svg)](https://asciinema.org/a/axjz8i769XGfmlWxzgcKWDVJ6)
+[![asciicast](https://asciinema.org/a/O6KhXfFl7SDk94DM2ipyCosMg.svg)](https://asciinema.org/a/O6KhXfFl7SDk94DM2ipyCosMg)
 
 </TabItem>
 </Tabs>
@@ -476,13 +514,32 @@ curl \
 
 Let's add the decrypt interceptor to decipher messages
 
+Creating the interceptor named `decrypt` of the plugin `io.conduktor.gateway.interceptor.DecryptPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority" : 100,
+  "config" : {
+    "topic" : "customers",
+    "kmsConfig" : {
+      "vault" : {
+        "uri" : "http://vault:8200",
+        "token" : "vault-plaintext-root-token",
+        "version" : 1
+      }
+    }
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-08-decrypt.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/decrypt" \
     --header 'Content-Type: application/json' \
@@ -497,20 +554,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
-  "priority": 100,
-  "config": {
-    "topic": "customers",
-    "kmsConfig": {
-      "vault": {
-        "uri": "http://vault:8200",
-        "token": "vault-plaintext-root-token",
-        "version": 1
-      }
-    }
-  }
-}
-{
   "message": "decrypt is created"
 }
 
@@ -519,7 +562,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uEYMPfr0tXPXFd8EyTgIBWQ9Q.svg)](https://asciinema.org/a/uEYMPfr0tXPXFd8EyTgIBWQ9Q)
+[![asciicast](https://asciinema.org/a/WxjmjWx4Cic57X3wIYKODWOkX.svg)](https://asciinema.org/a/WxjmjWx4Cic57X3wIYKODWOkX)
 
 </TabItem>
 </Tabs>
@@ -599,7 +642,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/s1d11QbdKoITwAHLQlCe04uiK.svg)](https://asciinema.org/a/s1d11QbdKoITwAHLQlCe04uiK)
+[![asciicast](https://asciinema.org/a/fnrselEfsu4XDusn0e9eJtt00.svg)](https://asciinema.org/a/fnrselEfsu4XDusn0e9eJtt00)
 
 </TabItem>
 </Tabs>
@@ -630,22 +673,22 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-Reading payloads from: /Users/framiere/conduktor/conduktor-gateway-functional-testing/target/2024.01.31-11:50:59/encryption-performance/examples.json
+Reading payloads from: /Users/framiere/conduktor/conduktor-gateway-functional-testing/target/2024.02.14-00:39:58/encryption-performance/examples.json
 Number of messages read: 2
-39826 records sent, 7936,6 records/sec (0,92 MB/sec), 2961,8 ms avg latency, 4446,0 ms max latency.
-110097 records sent, 21984,2 records/sec (2,54 MB/sec), 7163,4 ms avg latency, 9307,0 ms max latency.
-142571 records sent, 28276,7 records/sec (3,26 MB/sec), 11170,6 ms avg latency, 12663,0 ms max latency.
-205819 records sent, 40372,5 records/sec (4,66 MB/sec), 13433,0 ms avg latency, 15321,0 ms max latency.
-211453 records sent, 41880,2 records/sec (4,83 MB/sec), 17032,3 ms avg latency, 19127,0 ms max latency.
-190601 records sent, 37938,1 records/sec (4,38 MB/sec), 21179,3 ms avg latency, 23315,0 ms max latency.
-1000000 records sent, 30755,036137 records/sec (3,55 MB/sec), 15316,61 ms avg latency, 25082,00 ms max latency, 15321 ms 50th, 24230 ms 95th, 25030 ms 99th, 25077 ms 99.9th.
+14683 records sent, 2907,5 records/sec (0,34 MB/sec), 3076,5 ms avg latency, 4714,0 ms max latency.
+112156 records sent, 22426,7 records/sec (2,59 MB/sec), 7464,1 ms avg latency, 9507,0 ms max latency.
+160979 records sent, 32144,4 records/sec (3,71 MB/sec), 11118,2 ms avg latency, 13202,0 ms max latency.
+185238 records sent, 36981,0 records/sec (4,27 MB/sec), 11490,4 ms avg latency, 13572,0 ms max latency.
+188282 records sent, 36623,6 records/sec (4,23 MB/sec), 15701,7 ms avg latency, 17962,0 ms max latency.
+189406 records sent, 37767,9 records/sec (4,36 MB/sec), 20001,7 ms avg latency, 22259,0 ms max latency.
+1000000 records sent, 29320,354190 records/sec (3,38 MB/sec), 15126,46 ms avg latency, 25649,00 ms max latency, 14164 ms 50th, 24589 ms 95th, 25544 ms 99th, 25648 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CULw9TR1SPENpc7spj6qm3UyP.svg)](https://asciinema.org/a/CULw9TR1SPENpc7spj6qm3UyP)
+[![asciicast](https://asciinema.org/a/plGpCj2foJGKDWVn7PWL5KZ2f.svg)](https://asciinema.org/a/plGpCj2foJGKDWVn7PWL5KZ2f)
 
 </TabItem>
 </Tabs>
@@ -670,29 +713,33 @@ docker compose down --volumes
 
 ```
  Container gateway2  Stopping
- Container gateway1  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container gateway1  Removed
+ Container kafka-client  Stopping
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka3  Stopping
- Container kafka1  Stopping
  Container kafka2  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
+ Container kafka1  Stopping
+ Container kafka3  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
- Container kafka2  Removed
  Container kafka1  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -705,7 +752,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/lKSFOFOcjBzIRVXMXiwy4GJyU.svg)](https://asciinema.org/a/lKSFOFOcjBzIRVXMXiwy4GJyU)
+[![asciicast](https://asciinema.org/a/BrvMvQQBY7KFmeWqdGsCOOUVV.svg)](https://asciinema.org/a/BrvMvQQBY7KFmeWqdGsCOOUVV)
 
 </TabItem>
 </Tabs>

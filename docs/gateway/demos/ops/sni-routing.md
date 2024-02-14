@@ -1,12 +1,12 @@
 ---
-title: Throughput
-description: Throughput
-tag: performance
+title: SNI Routing
+description: SNI Routing
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# How about the throughput impact?
+# SNI Routing
 
 
 
@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/x0X6mxCncWMtWezsNER0NSCti.svg)](https://asciinema.org/a/x0X6mxCncWMtWezsNER0NSCti)
+[![asciicast](https://asciinema.org/a/MoU74bPC3hg8YcBbePkxAF9wk.svg)](https://asciinema.org/a/MoU74bPC3hg8YcBbePkxAF9wk)
 
 </TabItem>
 </Tabs>
@@ -177,15 +177,21 @@ services:
     labels:
       tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway
     hostname: gateway1
     container_name: gateway1
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
-      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_ADVERTISED_HOST: gateway-sni.conduktor.local
       GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: SSL
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
+      GATEWAY_SSL_KEY_STORE_PATH: /config/keystore.jks
+      GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
+      GATEWAY_SSL_KEY_PASSWORD: 123456
+      GATEWAY_SSL_KEY_TYPE: pkcs12
+      GATEWAY_ADVERTISED_HOST_PREFIX: broker-sni-gateway1
+      GATEWAY_ROUTING_MECHANISM: host
     depends_on:
       kafka1:
         condition: service_healthy
@@ -204,17 +210,34 @@ services:
       retries: 25
     labels:
       tag: conduktor
+    volumes:
+    - type: bind
+      source: .
+      target: /config
+      read_only: true
+    networks:
+      default:
+        aliases:
+        - broker-sni-gateway1main1.gateway-sni.conduktor.local
+        - broker-sni-gateway1main2.gateway-sni.conduktor.local
+        - broker-sni-gateway1main3.gateway-sni.conduktor.local
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway
     hostname: gateway2
     container_name: gateway2
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
-      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_ADVERTISED_HOST: gateway-sni.conduktor.local
       GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: SSL
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
       GATEWAY_START_PORT: 7969
+      GATEWAY_SSL_KEY_STORE_PATH: /config/keystore.jks
+      GATEWAY_SSL_KEY_STORE_PASSWORD: 123456
+      GATEWAY_SSL_KEY_PASSWORD: 123456
+      GATEWAY_SSL_KEY_TYPE: jks
+      GATEWAY_ADVERTISED_HOST_PREFIX: broker-sni-gateway2
+      GATEWAY_ROUTING_MECHANISM: host
     depends_on:
       kafka1:
         condition: service_healthy
@@ -233,6 +256,17 @@ services:
       retries: 25
     labels:
       tag: conduktor
+    volumes:
+    - type: bind
+      source: .
+      target: /config
+      read_only: true
+    networks:
+      default:
+        aliases:
+        - broker-sni-gateway2main1.gateway-sni.conduktor.local
+        - broker-sni-gateway2main2.gateway-sni.conduktor.local
+        - broker-sni-gateway2main3.gateway-sni.conduktor.local
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -248,6 +282,85 @@ services:
 networks:
   demo: null
 ```
+</TabItem>
+</Tabs>
+
+## 
+
+
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+
+rm *jks *key *p12 *crt
+
+openssl req \
+  -x509 \
+  -newkey rsa:4096 \
+  -sha256 \
+  -days 3560 \
+  -nodes \
+  -keyout san.key \
+  -out san.crt \
+  -subj '/CN=username' \
+  -extensions san \
+  -config openssl.config
+
+  openssl pkcs12 \
+    -export \
+    -in san.crt \
+    -inkey san.key \
+    -name brokers \
+    -out san.p12 \
+    -password "pass:123456"
+
+  keytool \
+    -noprompt \
+    -alias brokers \
+    -importkeystore \
+    -deststorepass 123456 \
+    -destkeystore keystore.jks \
+    -srckeystore san.p12 \
+    -srcstoretype PKCS12 \
+    -srcstorepass 123456
+
+  keytool \
+    -noprompt \
+    -import \
+    -alias brokers \
+    -file san.crt \
+    -keypass 123456 \
+    -destkeystore truststore.jks \
+    -storepass 123456
+
+echo """
+security.protocol=SSL
+ssl.truststore.location=/clientConfig/truststore.jks
+ssl.truststore.password=123456
+""" > client.config
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+.+...+............+.+..+..........+..+......+....+++++++++++++++++++++++++++++++++++++++++++++*.............+++++++++++++++++++++++++++++++++++++++++++++*........+..+...............+...+...+.......+.....+...+...............+...+....+..................+.....+...+.+...+...+............+........+..........+............+.....+......+........................+.+.....+......+...+.+......+.....+.+..+..........+......+.........+......+......+.....+......+............+...............+.....................+....+..+...+...+.........+.+...+.....+.......+.........+.....+....+......+...+.....+.....................+.+......+..+.......+......+.....+....+...+.....................+.........+...........+.........+................+.....+......+.+.....+........................+.+.....+...+....+..+......+.............+.....+............+............+.+..............+......+....+..+..........+.........+++++
+.+....+.....+......+...+++++++++++++++++++++++++++++++++++++++++++++*..+++++++++++++++++++++++++++++++++++++++++++++*..+..+...............+.........+....................................+.+...+.....................+...............+.....................+..+...+...+.+........+.......+......+...+.........+...+...+..+....+...............+...+...+.....+...+....+......+.....+................+.....+...+...........................+...+...+............+.+......+......+..+......+.+...+...+..+..................+...+......+.+........+....+......+..+..........+...+......+...+..+......+...................+.....+....+.................+....+......+.....+...+......+......+...................+........+......+.+...+...+........+.+...+...........+......+...+...........................+......+.........+...+...+....+.....+....+.................+.........+.+.................+...+.........+...+..........+..+.+...+.....+.......+............+.....+.+.........+......+..+.........+...+............+...+.....................+.+...+......+..+...+......+......+.............+.....+.........+.+.....+.+.....+.........+..........+..+..........+............+..+.+.....+..........+.....+.............+......+........+.......+.....+..........+..................+.....+..................+.......+......+...........+...+...+.............+.....+.......+..+.+......+......+.........+......+.....+....+...+...............+........+....+.....+...+......+++++
+-----
+Import du fichier de clés san.p12 vers keystore.jks...
+Certificat ajouté au fichier de clés
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/H8K8FCdndeVcYeMWdNZCGXCYz.svg)](https://asciinema.org/a/H8K8FCdndeVcYeMWdNZCGXCYz)
+
 </TabItem>
 </Tabs>
 
@@ -271,66 +384,64 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Network throughput_default  Creating
- Network throughput_default  Created
+ Network sni-routing_default  Creating
+ Network sni-routing_default  Created
  Container zookeeper  Creating
  Container kafka-client  Creating
  Container kafka-client  Created
  Container zookeeper  Created
- Container kafka2  Creating
  Container kafka3  Creating
+ Container kafka2  Creating
  Container kafka1  Creating
  Container kafka2  Created
- Container kafka3  Created
  Container kafka1  Created
+ Container kafka3  Created
+ Container gateway2  Creating
  Container gateway1  Creating
  Container schema-registry  Creating
- Container gateway2  Creating
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway1  Created
- Container gateway2  Created
  Container schema-registry  Created
- Container kafka-client  Starting
+ Container gateway2  Created
  Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
  Container zookeeper  Healthy
- Container kafka2  Starting
+ Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
  Container zookeeper  Healthy
- Container kafka1  Starting
+ Container kafka2  Starting
+ Container kafka3  Started
  Container kafka2  Started
  Container kafka1  Started
- Container kafka3  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka2  Healthy
- Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container schema-registry  Starting
- Container kafka1  Healthy
- Container kafka3  Healthy
+ Container kafka2  Healthy
  Container gateway2  Starting
- Container kafka3  Healthy
- Container gateway1  Starting
+ Container gateway1  Started
  Container schema-registry  Started
  Container gateway2  Started
- Container gateway1  Started
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
@@ -339,42 +450,42 @@ docker compose up --detach --wait
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
- Container kafka2  Healthy
  Container zookeeper  Healthy
- Container kafka1  Healthy
  Container kafka-client  Healthy
+ Container kafka2  Healthy
  Container kafka3  Healthy
- Container schema-registry  Healthy
+ Container kafka1  Healthy
  Container gateway1  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TouC4ZNPCZXw8VpUJm0Y9JGTN.svg)](https://asciinema.org/a/TouC4ZNPCZXw8VpUJm0Y9JGTN)
+[![asciicast](https://asciinema.org/a/9x3pYG4MAKbeu74rIiQtZZ4EJ.svg)](https://asciinema.org/a/9x3pYG4MAKbeu74rIiQtZZ4EJ)
 
 </TabItem>
 </Tabs>
 
-## Creating topic physical-kafka on kafka1
+## Create a topic
 
-Creating on `kafka1`:
 
-* Topic `physical-kafka` with partitions:10 and replication-factor:1
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-topics \
-    --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --replication-factor 1 \
-    --partitions 10 \
-    --create --if-not-exists \
-    --topic physical-kafka
+docker compose exec kafka-client \
+  kafka-topics \
+    --bootstrap-server broker-sni-gateway1main1.gateway-sni.conduktor.local:6969 \
+    --create \
+    --replication-factor 3 \
+    --partitions 1 \
+    --topic clientTopic \
+    --command-config /clientConfig/client.config
 ```
 
 
@@ -382,80 +493,32 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-Created topic physical-kafka.
+Created topic clientTopic.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0Bu7OzkLh6uLbLrvesAy7pIF0.svg)](https://asciinema.org/a/0Bu7OzkLh6uLbLrvesAy7pIF0)
+[![asciicast](https://asciinema.org/a/tEw8C3p02ih0UIrls78LLg9D3.svg)](https://asciinema.org/a/tEw8C3p02ih0UIrls78LLg9D3)
 
 </TabItem>
 </Tabs>
 
-## Let's use kafka-producer-perf-test that comes bundled with Kafka
+## Produce a record to clientTopic using gateway1
 
-`throughput` is set to -1 to disable throttling and create the maximum pain
+
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-producer-perf-test \
-    --topic physical-kafka \
-    --throughput -1 \
-    --num-records 2500000 \
-    --record-size 255 \
-    --producer-props bootstrap.servers=localhost:19092,localhost:19093,localhost:19094
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-1831469 records sent, 366293,8 records/sec (89,08 MB/sec), 31,6 ms avg latency, 235,0 ms max latency.
-2500000 records sent, 377301,539390 records/sec (91,75 MB/sec), 24,85 ms avg latency, 235,00 ms max latency, 6 ms 50th, 130 ms 95th, 169 ms 99th, 221 ms 99.9th.
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/mNp5pC8UYeyBGH51eCTAnLIpO.svg)](https://asciinema.org/a/mNp5pC8UYeyBGH51eCTAnLIpO)
-
-</TabItem>
-</Tabs>
-
-## Creating virtual cluster teamA
-
-Creating virtual cluster `teamA` on gateway `gateway1` and reviewing the configuration file to access it
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-# Generate virtual cluster teamA with service account sa
-token=$(curl \
-    --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/teamA/username/sa" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data-raw '{"lifeTimeSeconds": 7776000}' | jq -r ".token")
-
-# Create access file
-echo  """
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='$token';
-""" > teamA-sa.properties
-
-# Review file
-cat teamA-sa.properties
+echo "Hello world 1" | docker compose exec -i kafka-client \
+  kafka-console-producer \
+    --bootstrap-server broker-sni-gateway1main1.gateway-sni.conduktor.local:6969 \
+    --topic clientTopic \
+    --producer.config /clientConfig/client.config
 ```
 
 
@@ -464,40 +527,30 @@ cat teamA-sa.properties
 
 ```
 
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY2MDEzNn0.BlTHQkKSZueueDmWrwGY2GUWzoVR-9cWx4wGk6dcYws';
-
-
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CbBhqUwIh3MaiV2wDmDNabVww.svg)](https://asciinema.org/a/CbBhqUwIh3MaiV2wDmDNabVww)
+[![asciicast](https://asciinema.org/a/BZv8h43K9QGnUTtEBV66J3MPb.svg)](https://asciinema.org/a/BZv8h43K9QGnUTtEBV66J3MPb)
 
 </TabItem>
 </Tabs>
 
-## Creating topic via-gateway on teamA
+## Produce a record to clientTopic using gateway2
 
-Creating on `teamA`:
 
-* Topic `via-gateway` with partitions:10 and replication-factor:1
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 10 \
-    --create --if-not-exists \
-    --topic via-gateway
+echo "Hello world 2" | docker compose exec -i kafka-client \
+  kafka-console-producer \
+    --bootstrap-server broker-sni-gateway2main2.gateway-sni.conduktor.local:6969 \
+    --topic clientTopic \
+    --producer.config /clientConfig/client.config
 ```
 
 
@@ -505,34 +558,33 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-Created topic via-gateway.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LfIqmLw5JbeUEnlAvx6V5LXhK.svg)](https://asciinema.org/a/LfIqmLw5JbeUEnlAvx6V5LXhK)
+[![asciicast](https://asciinema.org/a/0ggVFxAkHggO6YbJtZ63v5q5k.svg)](https://asciinema.org/a/0ggVFxAkHggO6YbJtZ63v5q5k)
 
 </TabItem>
 </Tabs>
 
-## Let's use kafka-producer-perf-test that comes bundled with Kafka
+## Consume records from clientTopic
 
-`throughput` is set to -1 to disable throttling and create the maximum pain
+
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-producer-perf-test \
-    --topic via-gateway \
-    --throughput -1 \
-    --num-records 2500000 \
-    --record-size 255 \
-    --producer-props bootstrap.servers=localhost:6969 \
-    --producer.config teamA-sa.properties
+docker compose exec kafka-client \
+  kafka-console-consumer \
+    --bootstrap-server broker-sni-gateway1main3.gateway-sni.conduktor.local:6969 \
+    --topic clientTopic \
+    --from-beginning \
+    --max-messages 2 \
+    --consumer.config /clientConfig/client.config
 ```
 
 
@@ -540,16 +592,16 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-522405 records sent, 104481,0 records/sec (25,41 MB/sec), 1015,3 ms avg latency, 1986,0 ms max latency.
-959612 records sent, 191654,1 records/sec (46,61 MB/sec), 463,7 ms avg latency, 1198,0 ms max latency.
-2500000 records sent, 172081,497797 records/sec (41,85 MB/sec), 514,13 ms avg latency, 1986,00 ms max latency, 388 ms 50th, 1517 ms 95th, 1784 ms 99th, 1924 ms 99.9th.
+Hello world 1
+Hello world 2
+Processed a total of 2 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JrAWXPxcqIDNOZUolqGNUvsB5.svg)](https://asciinema.org/a/JrAWXPxcqIDNOZUolqGNUvsB5)
+[![asciicast](https://asciinema.org/a/R8uUwVCr1tthVQDMF1IvkQEmu.svg)](https://asciinema.org/a/R8uUwVCr1tthVQDMF1IvkQEmu)
 
 </TabItem>
 </Tabs>
@@ -574,51 +626,47 @@ docker compose down --volumes
 
 ```
  Container kafka-client  Stopping
+ Container schema-registry  Stopping
  Container gateway1  Stopping
  Container gateway2  Stopping
- Container schema-registry  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway2  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka3  Stopping
  Container kafka2  Stopping
+ Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
- Network throughput_default  Removing
- Network throughput_default  Removed
+ Network sni-routing_default  Removing
+ Network sni-routing_default  Removed
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GzZds61jUvwpn5G7yso1TTZVG.svg)](https://asciinema.org/a/GzZds61jUvwpn5G7yso1TTZVG)
+[![asciicast](https://asciinema.org/a/RorLd0RtwHqt3nnv0H3CbvVZ6.svg)](https://asciinema.org/a/RorLd0RtwHqt3nnv0H3CbvVZ6)
 
 </TabItem>
 </Tabs>
-
-# Conclusion
-
-Gateway is fast enough for all use cases!
 

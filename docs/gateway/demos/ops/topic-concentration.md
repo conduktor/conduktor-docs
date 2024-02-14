@@ -1,6 +1,7 @@
 ---
 title: Topic Concentration
 description: Topic Concentration
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -28,7 +29,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/lKvHXGaVz3A0iyXzLa5tYsqfR.svg)](https://asciinema.org/a/lKvHXGaVz3A0iyXzLa5tYsqfR)
+[![asciicast](https://asciinema.org/a/QTCNNdOqs98T61U7oBfkELtKP.svg)](https://asciinema.org/a/QTCNNdOqs98T61U7oBfkELtKP)
 
 </TabItem>
 </Tabs>
@@ -39,6 +40,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -69,6 +71,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -93,6 +97,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,6 +123,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -141,6 +149,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -170,8 +180,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -196,8 +208,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -223,6 +237,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -247,58 +277,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka2  Running
- Container kafka3  Running
- Container kafka1  Running
- Container gateway2  Running
- Container schema-registry  Running
- Container gateway1  Running
+ Network topic-concentration_default  Creating
+ Network topic-concentration_default  Created
+ Container zookeeper  Creating
+ Container kafka-client  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka1  Creating
+ Container kafka3  Creating
+ Container kafka2  Creating
+ Container kafka3  Created
+ Container kafka1  Created
+ Container kafka2  Created
+ Container gateway2  Creating
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ Container gateway2  Created
+ Container schema-registry  Created
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
+ Container kafka-client  Started
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
+ Container kafka2  Started
+ Container kafka3  Started
+ Container kafka1  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
+ Container kafka3  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
+ Container gateway2  Starting
  Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
+ Container schema-registry  Starting
+ Container gateway1  Starting
+ Container gateway1  Started
+ Container gateway2  Started
+ Container schema-registry  Started
+ Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
  Container kafka3  Healthy
- Container gateway2  Healthy
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
  Container kafka2  Healthy
+ Container zookeeper  Healthy
  Container schema-registry  Healthy
  Container gateway1  Healthy
- Container zookeeper  Healthy
- Container kafka1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zB5OorDTTM3s3UbPpC75honwt.svg)](https://asciinema.org/a/zB5OorDTTM3s3UbPpC75honwt)
+[![asciicast](https://asciinema.org/a/KaFo6Wsi1sVwLybIeM8Li2GcL.svg)](https://asciinema.org/a/KaFo6Wsi1sVwLybIeM8Li2GcL)
 
 </TabItem>
 </Tabs>
@@ -341,7 +402,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ3MDAwMH0.pYWnQ3zOACA3UysGk2nfzVkgUoqvMxXqGSmd_-nUzGo';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY2MDQ0Nn0.h5mLoTTPBaMCDZWehkXX3Z8m3TXIqF0cvDp4QwPDr1Y';
 
 
 ```
@@ -349,7 +410,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sXwTgiA9z0F7GKzVZbPhZ2N8E.svg)](https://asciinema.org/a/sXwTgiA9z0F7GKzVZbPhZ2N8E)
+[![asciicast](https://asciinema.org/a/pKUTIExVo2YNST9DkzUBNB5O4.svg)](https://asciinema.org/a/pKUTIExVo2YNST9DkzUBNB5O4)
 
 </TabItem>
 </Tabs>
@@ -385,7 +446,7 @@ Created topic hold-many-concentrated-topics.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/d3uf7yFCfbY3ikWikrU4W0wiM.svg)](https://asciinema.org/a/d3uf7yFCfbY3ikWikrU4W0wiM)
+[![asciicast](https://asciinema.org/a/nVrbn9sDkhiV4eVyPtFafnxK4.svg)](https://asciinema.org/a/nVrbn9sDkhiV4eVyPtFafnxK4)
 
 </TabItem>
 </Tabs>
@@ -395,14 +456,22 @@ Created topic hold-many-concentrated-topics.
 Let's tell `gateway1` that topics matching the pattern `concentrated-.*` need to be concentrated into the underlying `hold-many-concentrated-topics` physical topic.
 
 > [!NOTE]
-> You don’t need to create the physical topic that backs the concentrated topics, it will automatically be created when a client topic starts using the concentrated topic.
+> You don���t need to create the physical topic that backs the concentrated topics, it will automatically be created when a client topic starts using the concentrated topic.
+
+
+```json
+{
+  "concentrated" : true,
+  "readOnly" : false,
+  "physicalTopicName" : "hold-many-concentrated-topics"
+}
+```
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-07-mapping.json | jq
 curl \
     --request POST 'http://localhost:8888/admin/vclusters/v1/vcluster/teamA/topics/concentrated-.%2A' \
     --header 'Content-Type: application/json' \
@@ -417,11 +486,6 @@ curl \
 
 ```json
 {
-  "concentrated": true,
-  "readOnly": false,
-  "physicalTopicName": "hold-many-concentrated-topics"
-}
-{
   "logicalTopicName": "concentrated-.*",
   "physicalTopicName": "hold-many-concentrated-topics",
   "readOnly": false,
@@ -433,196 +497,18 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Mci07QWNKvevJ0I6oxLxi027Q.svg)](https://asciinema.org/a/Mci07QWNKvevJ0I6oxLxi027Q)
+[![asciicast](https://asciinema.org/a/BSJsfT2SFJBWU6xXglwKyr1ew.svg)](https://asciinema.org/a/BSJsfT2SFJBWU6xXglwKyr1ew)
 
 </TabItem>
 </Tabs>
 
-## Create concentrated topics
-
-Creating on `teamA`:
-
-* Topic `concentrated-normal` with partitions:1 and replication-factor:1
-* Topic `concentrated-delete` with partitions:1 and replication-factor:1
-* Topic `concentrated-compact` with partitions:1 and replication-factor:1
-* Topic `concentrated-delete-compact` with partitions:1 and replication-factor:1
-* Topic `concentrated-compact-delete` with partitions:1 and replication-factor:1
-* Topic `concentrated-small-retention` with partitions:1 and replication-factor:1
-* Topic `concentrated-large-retention` with partitions:1 and replication-factor:1
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --create --if-not-exists \
-    --topic concentrated-normal
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config cleanup.policy=delete \
-    --create --if-not-exists \
-    --topic concentrated-delete
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config cleanup.policy=compact \
-    --create --if-not-exists \
-    --topic concentrated-compact
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config cleanup.policy=delete,compact \
-    --create --if-not-exists \
-    --topic concentrated-delete-compact
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config cleanup.policy=compact,delete \
-    --create --if-not-exists \
-    --topic concentrated-compact-delete
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config retention.ms=10000 \
-    --create --if-not-exists \
-    --topic concentrated-small-retention
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --replication-factor 1 \
-    --partitions 1 \
-    --config retention.ms=6048000000 \
-    --create --if-not-exists \
-    --topic concentrated-large-retention
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-Created topic concentrated-normal.
-Created topic concentrated-delete.
-Created topic concentrated-compact.
-Created topic concentrated-delete-compact.
-Created topic concentrated-compact-delete.
-Created topic concentrated-small-retention.
-Created topic concentrated-large-retention.
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/VSAPOCFZK3T7FAjOnn9djq4o0.svg)](https://asciinema.org/a/VSAPOCFZK3T7FAjOnn9djq4o0)
-
-</TabItem>
-</Tabs>
-
-## Assert the topics have been created
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --list
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-concentrated-compact
-concentrated-compact-delete
-concentrated-delete
-concentrated-delete-compact
-concentrated-large-retention
-concentrated-normal
-concentrated-small-retention
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/Z8ydylVEF0BSN5l82Cy2VzrWG.svg)](https://asciinema.org/a/Z8ydylVEF0BSN5l82Cy2VzrWG)
-
-</TabItem>
-</Tabs>
-
-## Assert the topics have not been created in the underlying kafka cluster
-
-If we list topics from the backend cluster, not from Gateway perspective, we do not see the concentrated topics.
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-topics \
-    --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --list
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-__consumer_offsets
-_acls
-_auditLogs
-_consumerGroupSubscriptionBackingTopic
-_encryptionConfig
-_interceptorConfigs
-_license
-_offsetStore
-_schemas
-_topicMappings
-_topicRegistry
-_userMapping
-hold-many-concentrated-topics
-hold-many-concentrated-topics_compacted
-hold-many-concentrated-topics_compactedAndDeleted
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/k5ZxxwmggJ2dwRlEwPBO2BSnj.svg)](https://asciinema.org/a/k5ZxxwmggJ2dwRlEwPBO2BSnj)
-
-</TabItem>
-</Tabs>
-
-## Let's continue created virtual topics, but now with many partitions
+## Let's create multiple topics with  many partitions
 
 Creating on `teamA`:
 
 * Topic `concentrated-topic-with-10-partitions` with partitions:10 and replication-factor:1
+* Topic `concentrated-topic-with-20-partitions` with partitions:20 and replication-factor:1
+* Topic `concentrated-topic-with-50-partitions` with partitions:50 and replication-factor:1
 * Topic `concentrated-topic-with-100-partitions` with partitions:100 and replication-factor:1
 
 <Tabs>
@@ -641,6 +527,20 @@ kafka-topics \
     --bootstrap-server localhost:6969 \
     --command-config teamA-sa.properties \
     --replication-factor 1 \
+    --partitions 20 \
+    --create --if-not-exists \
+    --topic concentrated-topic-with-20-partitions
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --command-config teamA-sa.properties \
+    --replication-factor 1 \
+    --partitions 50 \
+    --create --if-not-exists \
+    --topic concentrated-topic-with-50-partitions
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --command-config teamA-sa.properties \
+    --replication-factor 1 \
     --partitions 100 \
     --create --if-not-exists \
     --topic concentrated-topic-with-100-partitions
@@ -652,6 +552,8 @@ kafka-topics \
 
 ```
 Created topic concentrated-topic-with-10-partitions.
+Created topic concentrated-topic-with-20-partitions.
+Created topic concentrated-topic-with-50-partitions.
 Created topic concentrated-topic-with-100-partitions.
 
 ```
@@ -659,7 +561,7 @@ Created topic concentrated-topic-with-100-partitions.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/oOYQ3hd6kk0cfRvRYb57rZ0C5.svg)](https://asciinema.org/a/oOYQ3hd6kk0cfRvRYb57rZ0C5)
+[![asciicast](https://asciinema.org/a/xmWoldjnZ1dE6MZRY5b1erj3B.svg)](https://asciinema.org/a/xmWoldjnZ1dE6MZRY5b1erj3B)
 
 </TabItem>
 </Tabs>
@@ -684,22 +586,17 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-concentrated-compact
-concentrated-compact-delete
-concentrated-delete
-concentrated-delete-compact
-concentrated-large-retention
-concentrated-normal
-concentrated-small-retention
 concentrated-topic-with-10-partitions
 concentrated-topic-with-100-partitions
+concentrated-topic-with-20-partitions
+concentrated-topic-with-50-partitions
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KquKuvQQAWlfPM2xaUZxEMLad.svg)](https://asciinema.org/a/KquKuvQQAWlfPM2xaUZxEMLad)
+[![asciicast](https://asciinema.org/a/utAYnarZ9PVWpA7lqWw7njwWE.svg)](https://asciinema.org/a/utAYnarZ9PVWpA7lqWw7njwWE)
 
 </TabItem>
 </Tabs>
@@ -715,16 +612,14 @@ Producing 1 message in `concentrated-topic-with-10-partitions` in cluster `teamA
 Sending 1 event
 ```json
 {
-  "type" : "Sports",
-  "price" : 75,
-  "color" : "blue"
+  "message" : "10 partitions"
 }
 ```
 with
 
 
 ```sh
-echo '{"type": "Sports", "price": 75, "color": "blue"}' | \
+echo '{"message": "10 partitions"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
         --producer.config teamA-sa.properties \
@@ -742,7 +637,130 @@ echo '{"type": "Sports", "price": 75, "color": "blue"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SzEin7lBkiCJ9UR9UImMwNFMg.svg)](https://asciinema.org/a/SzEin7lBkiCJ9UR9UImMwNFMg)
+[![asciicast](https://asciinema.org/a/zCTGBfLxGOUcQNyDVOqiF28J9.svg)](https://asciinema.org/a/zCTGBfLxGOUcQNyDVOqiF28J9)
+
+</TabItem>
+</Tabs>
+
+## Producing 1 message in concentrated-topic-with-20-partitions
+
+Producing 1 message in `concentrated-topic-with-20-partitions` in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+Sending 1 event
+```json
+{
+  "message" : "20 partitions"
+}
+```
+with
+
+
+```sh
+echo '{"message": "20 partitions"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic concentrated-topic-with-20-partitions
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/vdTT6XnAhVKyccFqzwjbOQ1uU.svg)](https://asciinema.org/a/vdTT6XnAhVKyccFqzwjbOQ1uU)
+
+</TabItem>
+</Tabs>
+
+## Producing 1 message in concentrated-topic-with-50-partitions
+
+Producing 1 message in `concentrated-topic-with-50-partitions` in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+Sending 1 event
+```json
+{
+  "message" : "50 partitions"
+}
+```
+with
+
+
+```sh
+echo '{"message": "50 partitions"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic concentrated-topic-with-50-partitions
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/dBNdx3Zv83y3zwpMs1MbHwtwt.svg)](https://asciinema.org/a/dBNdx3Zv83y3zwpMs1MbHwtwt)
+
+</TabItem>
+</Tabs>
+
+## Producing 1 message in concentrated-topic-with-100-partitions
+
+Producing 1 message in `concentrated-topic-with-100-partitions` in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+Sending 1 event
+```json
+{
+  "message" : "100 partitions"
+}
+```
+with
+
+
+```sh
+echo '{"message": "100 partitions"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic concentrated-topic-with-100-partitions
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/5bJwlSOYThzXkRHOXz2JxpqSb.svg)](https://asciinema.org/a/5bJwlSOYThzXkRHOXz2JxpqSb)
 
 </TabItem>
 </Tabs>
@@ -761,80 +779,184 @@ kafka-console-consumer \
     --consumer.config teamA-sa.properties \
     --topic concentrated-topic-with-10-partitions \
     --from-beginning \
-    --timeout-ms 10000 \
-    --property print.headers=true | jq
+    --timeout-ms 10000 | jq
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 1 messages
 {
-  "headers" : { },
-  "value" : {
-    "type" : "Sports",
-    "price" : 75,
-    "color" : "blue"
-  }
+  "message": "10 partitions"
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 11
-[2024-01-31 10:40:36,810] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
+{
+  "message": "10 partitions"
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/wIEeOpZsHXW8qc7gaWueCoxHa.svg)](https://asciinema.org/a/wIEeOpZsHXW8qc7gaWueCoxHa)
+[![asciicast](https://asciinema.org/a/SqTwrgaxlzXkVIjrXfg4ARquM.svg)](https://asciinema.org/a/SqTwrgaxlzXkVIjrXfg4ARquM)
 
 </TabItem>
 </Tabs>
 
-## Producing 1 message in concentrated-topic-with-100-partitions
+## Consuming from concentrated-topic-with-20-partitions
 
-Producing 1 message in `concentrated-topic-with-100-partitions` in cluster `teamA`
+Consuming from concentrated-topic-with-20-partitions in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
 
 
-Sending 1 event
-```json
-{
-  "msg" : "hello world"
-}
-```
-with
-
-
 ```sh
-echo '{"msg":"hello world"}' | \
-    kafka-console-producer \
-        --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
-        --topic concentrated-topic-with-100-partitions
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic concentrated-topic-with-20-partitions \
+    --from-beginning \
+    --timeout-ms 10000 | jq
 ```
+
+
+returns 
+
+```json
+Processed a total of 1 messages
+{
+  "message": "20 partitions"
+}
+
+```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
-```
+```json
+Processed a total of 1 messages
+{
+  "message": "20 partitions"
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Y8h1S0E1YyeARGoaQpxSK15ea.svg)](https://asciinema.org/a/Y8h1S0E1YyeARGoaQpxSK15ea)
+[![asciicast](https://asciinema.org/a/3HLeO9OHIGWoDODq6900aHZyR.svg)](https://asciinema.org/a/3HLeO9OHIGWoDODq6900aHZyR)
+
+</TabItem>
+</Tabs>
+
+## Consuming from concentrated-topic-with-50-partitions
+
+Consuming from concentrated-topic-with-50-partitions in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic concentrated-topic-with-50-partitions \
+    --from-beginning \
+    --timeout-ms 10000 | jq
+```
+
+
+returns 
+
+```json
+Processed a total of 1 messages
+{
+  "message": "50 partitions"
+}
+
+```
+
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+Processed a total of 1 messages
+{
+  "message": "50 partitions"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/sZHNVs5xHjAvn7hid5rHzxPEu.svg)](https://asciinema.org/a/sZHNVs5xHjAvn7hid5rHzxPEu)
+
+</TabItem>
+</Tabs>
+
+## Consuming from concentrated-topic-with-100-partitions
+
+Consuming from concentrated-topic-with-100-partitions in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic concentrated-topic-with-100-partitions \
+    --from-beginning \
+    --timeout-ms 10000 | jq
+```
+
+
+returns 
+
+```json
+Processed a total of 1 messages
+{
+  "message": "100 partitions"
+}
+
+```
+
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+Processed a total of 1 messages
+{
+  "message": "100 partitions"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/7jxEY4gCk3tAFsm8Tfy56wCuT.svg)](https://asciinema.org/a/7jxEY4gCk3tAFsm8Tfy56wCuT)
 
 </TabItem>
 </Tabs>
@@ -858,13 +980,21 @@ kafka-console-consumer \
 ```
 
 
+returns 
+
+```json
+jq: parse error: Invalid numeric literal at line 1, column 11
+Processed a total of 1 messages
+
+```
+
+
+
 </TabItem>
 <TabItem value="Output">
 
 ```json
 jq: parse error: Invalid numeric literal at line 1, column 11
-[2024-01-31 10:40:50,916] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -872,14 +1002,14 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yjMNoSs4CVLOzTKWe153axTa7.svg)](https://asciinema.org/a/yjMNoSs4CVLOzTKWe153axTa7)
+[![asciicast](https://asciinema.org/a/3TKY3Un7dn2Z946cxKv1JBXBN.svg)](https://asciinema.org/a/3TKY3Un7dn2Z946cxKv1JBXBN)
 
 </TabItem>
 </Tabs>
 
-## Consuming from concentrated-topic-with-100-partitions
+## Revealing the magic
 
-Consuming from concentrated-topic-with-100-partitions in cluster `teamA`
+Revealing the magic in cluster `kafka1`
 
 <Tabs>
 <TabItem value="Command">
@@ -887,101 +1017,39 @@ Consuming from concentrated-topic-with-100-partitions in cluster `teamA`
 
 ```sh
 kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic concentrated-topic-with-100-partitions \
+    --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
+    --topic hold-many-concentrated-topics \
     --from-beginning \
     --timeout-ms 10000 \
     --property print.headers=true | jq
 ```
 
 
-returns 1 event
+returns 
+
 ```json
-{
-  "headers" : { },
-  "value" : {
-    "msg" : "hello world"
-  }
-}
+jq: parse error: Invalid numeric literal at line 1, column 22
+Unable to write to standard out, closing consumer.
+Processed a total of 2 messages
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 11
-[2024-01-31 10:41:03,305] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
-Processed a total of 1 messages
+jq: parse error: Invalid numeric literal at line 1, column 22
+Unable to write to standard out, closing consumer.
+Processed a total of 2 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uzgVIVTLUtQzN8OM14wJMTjb9.svg)](https://asciinema.org/a/uzgVIVTLUtQzN8OM14wJMTjb9)
-
-</TabItem>
-</Tabs>
-
-## Tearing down the docker environment
-
-Remove all your docker processes and associated volumes
-
-* `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-docker compose down --volumes
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
- Container gateway1  Stopping
- Container gateway2  Stopping
- Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container gateway2  Stopped
- Container gateway2  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
- Container gateway1  Removed
- Container gateway2  Removed
- Container schema-registry  Removed
- Container kafka2  Stopping
- Container kafka3  Stopping
- Container kafka1  Stopping
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka2  Removed
- Container kafka3  Removed
- Container zookeeper  Stopping
- Container zookeeper  Stopped
- Container zookeeper  Removing
- Container zookeeper  Removed
- Network topic-concentration_default  Removing
- Network topic-concentration_default  Removed
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/RWnyFSWp5h2fPSASJhEcLTkqO.svg)](https://asciinema.org/a/RWnyFSWp5h2fPSASJhEcLTkqO)
+[![asciicast](https://asciinema.org/a/I2J1yiZfXuc7fZFpW5psLLJOB.svg)](https://asciinema.org/a/I2J1yiZfXuc7fZFpW5psLLJOB)
 
 </TabItem>
 </Tabs>
