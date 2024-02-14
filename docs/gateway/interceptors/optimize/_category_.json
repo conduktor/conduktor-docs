@@ -1,3 +1,6 @@
 {
-  "label": "Optimize"
+  "label": "Optimize",
+  "link": {
+    "type": "generated-index"
+  }
 }

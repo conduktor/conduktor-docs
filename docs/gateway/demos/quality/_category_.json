@@ -1,1 +1,6 @@
-{"label": "Quality"}
+{
+  "label": "Quality",
+  "link": {
+    "type": "generated-index"
+  }
+}

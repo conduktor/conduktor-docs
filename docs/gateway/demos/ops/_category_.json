@@ -1,1 +1,6 @@
-{"label": "Ops"}
+{
+  "label": "Ops",
+  "link": {
+    "type": "generated-index"
+  }
+}

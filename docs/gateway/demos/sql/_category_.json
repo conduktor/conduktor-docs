@@ -1,1 +1,6 @@
-{"label": "Sql"}
+{
+  "label": "Sql",
+  "link": {
+    "type": "generated-index"
+  }
+}

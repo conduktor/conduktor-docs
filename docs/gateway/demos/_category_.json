@@ -1,1 +1,6 @@
-{"label": "Demos"}
+{
+  "label": "Demos",
+  "link": {
+    "type": "generated-index"
+  }
+}

@@ -1,1 +1,6 @@
-{"label": "Performance"}
+{
+  "label": "Performance",
+  "link": {
+    "type": "generated-index"
+  }
+}
