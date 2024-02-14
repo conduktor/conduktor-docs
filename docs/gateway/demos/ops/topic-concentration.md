@@ -8,11 +8,11 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Infinite Partitions with Topic Concentration
 
-Conduktor Gateway's topic concentration feature allows you to store multiple topics's data on a single underlying Kafka topic. 
+Conduktor Gateway's topic concentration feature allows you to store multiple topics's data on a single underlying Kafka topic.
 
 To clients, it appears that there are multiple topics and these can be read from as normal but in the underlying Kafka cluster there is a lot less resource required.
 
-In this demo we are going to create a concentrated topic for powering several virtual topics. 
+In this demo we are going to create a concentrated topic for powering several virtual topics.
 
 Create the virtual topics, produce and consume data to them, and explore how this works.
 
@@ -29,7 +29,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/QTCNNdOqs98T61U7oBfkELtKP.svg)](https://asciinema.org/a/QTCNNdOqs98T61U7oBfkELtKP)
+[![asciicast](https://asciinema.org/a/2BDccl8ACbIdlf1pUusxzlRFj.svg)](https://asciinema.org/a/2BDccl8ACbIdlf1pUusxzlRFj)
 
 </TabItem>
 </Tabs>
@@ -279,87 +279,87 @@ docker compose up --detach --wait
 ```
  Network topic-concentration_default  Creating
  Network topic-concentration_default  Created
- Container zookeeper  Creating
  Container kafka-client  Creating
+ Container zookeeper  Creating
  Container kafka-client  Created
  Container zookeeper  Created
  Container kafka1  Creating
- Container kafka3  Creating
  Container kafka2  Creating
- Container kafka3  Created
+ Container kafka3  Creating
  Container kafka1  Created
  Container kafka2  Created
+ Container kafka3  Created
  Container gateway2  Creating
  Container schema-registry  Creating
  Container gateway1  Creating
  gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway1  Created
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway2  Created
  Container schema-registry  Created
- Container kafka-client  Starting
  Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
- Container zookeeper  Healthy
- Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka2  Started
- Container kafka3  Started
+ Container zookeeper  Healthy
+ Container kafka1  Starting
  Container kafka1  Started
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka3  Waiting
+ Container kafka3  Started
+ Container kafka2  Started
  Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container gateway2  Starting
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container schema-registry  Starting
  Container gateway1  Starting
- Container gateway1  Started
+ Container kafka2  Healthy
+ Container gateway2  Starting
+ Container kafka2  Healthy
+ Container schema-registry  Starting
  Container gateway2  Started
+ Container gateway1  Started
  Container schema-registry  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka-client  Healthy
- Container kafka2  Healthy
  Container zookeeper  Healthy
+ Container kafka-client  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Healthy
- Container gateway1  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KaFo6Wsi1sVwLybIeM8Li2GcL.svg)](https://asciinema.org/a/KaFo6Wsi1sVwLybIeM8Li2GcL)
+[![asciicast](https://asciinema.org/a/DNssOZ0VESfOdgHrf0Z1dgh1y.svg)](https://asciinema.org/a/DNssOZ0VESfOdgHrf0Z1dgh1y)
 
 </TabItem>
 </Tabs>
@@ -402,7 +402,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY2MDQ0Nn0.h5mLoTTPBaMCDZWehkXX3Z8m3TXIqF0cvDp4QwPDr1Y';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY3OTYzOX0.YqFehQofH7_a-vKu2OT2mE9K3N4fKiIyWS0vn0zvJ8s';
 
 
 ```
@@ -410,7 +410,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pKUTIExVo2YNST9DkzUBNB5O4.svg)](https://asciinema.org/a/pKUTIExVo2YNST9DkzUBNB5O4)
+[![asciicast](https://asciinema.org/a/uKGiwhsO3sd6dVNtwrTOYc9OG.svg)](https://asciinema.org/a/uKGiwhsO3sd6dVNtwrTOYc9OG)
 
 </TabItem>
 </Tabs>
@@ -446,7 +446,7 @@ Created topic hold-many-concentrated-topics.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/nVrbn9sDkhiV4eVyPtFafnxK4.svg)](https://asciinema.org/a/nVrbn9sDkhiV4eVyPtFafnxK4)
+[![asciicast](https://asciinema.org/a/pv9dv5aUbuvftCZgufDkXRfFx.svg)](https://asciinema.org/a/pv9dv5aUbuvftCZgufDkXRfFx)
 
 </TabItem>
 </Tabs>
@@ -497,7 +497,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BSJsfT2SFJBWU6xXglwKyr1ew.svg)](https://asciinema.org/a/BSJsfT2SFJBWU6xXglwKyr1ew)
+[![asciicast](https://asciinema.org/a/rJVxxLvPfFGEADisM5y8fLX1V.svg)](https://asciinema.org/a/rJVxxLvPfFGEADisM5y8fLX1V)
 
 </TabItem>
 </Tabs>
@@ -561,7 +561,7 @@ Created topic concentrated-topic-with-100-partitions.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/xmWoldjnZ1dE6MZRY5b1erj3B.svg)](https://asciinema.org/a/xmWoldjnZ1dE6MZRY5b1erj3B)
+[![asciicast](https://asciinema.org/a/zDLdTvTsHp9r7junVIIBvSEf9.svg)](https://asciinema.org/a/zDLdTvTsHp9r7junVIIBvSEf9)
 
 </TabItem>
 </Tabs>
@@ -596,7 +596,7 @@ concentrated-topic-with-50-partitions
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/utAYnarZ9PVWpA7lqWw7njwWE.svg)](https://asciinema.org/a/utAYnarZ9PVWpA7lqWw7njwWE)
+[![asciicast](https://asciinema.org/a/LylACGokM7aTkdi4I3PNfF9HQ.svg)](https://asciinema.org/a/LylACGokM7aTkdi4I3PNfF9HQ)
 
 </TabItem>
 </Tabs>
@@ -637,7 +637,7 @@ echo '{"message": "10 partitions"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zCTGBfLxGOUcQNyDVOqiF28J9.svg)](https://asciinema.org/a/zCTGBfLxGOUcQNyDVOqiF28J9)
+[![asciicast](https://asciinema.org/a/ufoeYV08dSS7K94JSMITmX27G.svg)](https://asciinema.org/a/ufoeYV08dSS7K94JSMITmX27G)
 
 </TabItem>
 </Tabs>
@@ -678,7 +678,7 @@ echo '{"message": "20 partitions"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/vdTT6XnAhVKyccFqzwjbOQ1uU.svg)](https://asciinema.org/a/vdTT6XnAhVKyccFqzwjbOQ1uU)
+[![asciicast](https://asciinema.org/a/gqgQEXLl8DO9lNGiZU6m5jtuu.svg)](https://asciinema.org/a/gqgQEXLl8DO9lNGiZU6m5jtuu)
 
 </TabItem>
 </Tabs>
@@ -719,7 +719,7 @@ echo '{"message": "50 partitions"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dBNdx3Zv83y3zwpMs1MbHwtwt.svg)](https://asciinema.org/a/dBNdx3Zv83y3zwpMs1MbHwtwt)
+[![asciicast](https://asciinema.org/a/gzXV2dBiExq81J99UQvJMQ0NR.svg)](https://asciinema.org/a/gzXV2dBiExq81J99UQvJMQ0NR)
 
 </TabItem>
 </Tabs>
@@ -760,7 +760,7 @@ echo '{"message": "100 partitions"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/5bJwlSOYThzXkRHOXz2JxpqSb.svg)](https://asciinema.org/a/5bJwlSOYThzXkRHOXz2JxpqSb)
+[![asciicast](https://asciinema.org/a/X6xGKnJtdAzIqPwrzVTeXJqfO.svg)](https://asciinema.org/a/X6xGKnJtdAzIqPwrzVTeXJqfO)
 
 </TabItem>
 </Tabs>
@@ -783,7 +783,7 @@ kafka-console-consumer \
 ```
 
 
-returns 
+returns
 
 ```json
 Processed a total of 1 messages
@@ -809,7 +809,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SqTwrgaxlzXkVIjrXfg4ARquM.svg)](https://asciinema.org/a/SqTwrgaxlzXkVIjrXfg4ARquM)
+[![asciicast](https://asciinema.org/a/edEnaaQdKJ0moK5bfjB33rJTa.svg)](https://asciinema.org/a/edEnaaQdKJ0moK5bfjB33rJTa)
 
 </TabItem>
 </Tabs>
@@ -832,7 +832,7 @@ kafka-console-consumer \
 ```
 
 
-returns 
+returns
 
 ```json
 Processed a total of 1 messages
@@ -858,7 +858,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/3HLeO9OHIGWoDODq6900aHZyR.svg)](https://asciinema.org/a/3HLeO9OHIGWoDODq6900aHZyR)
+[![asciicast](https://asciinema.org/a/HLbfmv8YHVWODR5O3B5oeHS6J.svg)](https://asciinema.org/a/HLbfmv8YHVWODR5O3B5oeHS6J)
 
 </TabItem>
 </Tabs>
@@ -881,7 +881,7 @@ kafka-console-consumer \
 ```
 
 
-returns 
+returns
 
 ```json
 Processed a total of 1 messages
@@ -907,7 +907,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sZHNVs5xHjAvn7hid5rHzxPEu.svg)](https://asciinema.org/a/sZHNVs5xHjAvn7hid5rHzxPEu)
+[![asciicast](https://asciinema.org/a/jlCrdMY4bFV7hcwJqZJ7nflmm.svg)](https://asciinema.org/a/jlCrdMY4bFV7hcwJqZJ7nflmm)
 
 </TabItem>
 </Tabs>
@@ -930,7 +930,7 @@ kafka-console-consumer \
 ```
 
 
-returns 
+returns
 
 ```json
 Processed a total of 1 messages
@@ -956,53 +956,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7jxEY4gCk3tAFsm8Tfy56wCuT.svg)](https://asciinema.org/a/7jxEY4gCk3tAFsm8Tfy56wCuT)
-
-</TabItem>
-</Tabs>
-
-## Consuming from concentrated-topic-with-100-partitions
-
-Consuming from concentrated-topic-with-100-partitions in cluster `teamA`
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic concentrated-topic-with-100-partitions \
-    --from-beginning \
-    --timeout-ms 10000 \
-    --property print.headers=true | jq
-```
-
-
-returns 
-
-```json
-jq: parse error: Invalid numeric literal at line 1, column 11
-Processed a total of 1 messages
-
-```
-
-
-
-</TabItem>
-<TabItem value="Output">
-
-```json
-jq: parse error: Invalid numeric literal at line 1, column 11
-Processed a total of 1 messages
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/3TKY3Un7dn2Z946cxKv1JBXBN.svg)](https://asciinema.org/a/3TKY3Un7dn2Z946cxKv1JBXBN)
+[![asciicast](https://asciinema.org/a/jFLDpumBiAMVUbMiNl0v4brMi.svg)](https://asciinema.org/a/jFLDpumBiAMVUbMiNl0v4brMi)
 
 </TabItem>
 </Tabs>
@@ -1021,16 +975,18 @@ kafka-console-consumer \
     --topic hold-many-concentrated-topics \
     --from-beginning \
     --timeout-ms 10000 \
-    --property print.headers=true | jq
+    --property print.headers=true 
 ```
 
 
-returns 
+returns
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 22
-Unable to write to standard out, closing consumer.
-Processed a total of 2 messages
+PDK_originalPartition:5,PDK_originalTopic:concentrated-topic-with-10-partitions	{"message": "10 partitions"}
+PDK_originalPartition:11,PDK_originalTopic:concentrated-topic-with-20-partitions	{"message": "20 partitions"}
+PDK_originalPartition:10,PDK_originalTopic:concentrated-topic-with-50-partitions	{"message": "50 partitions"}
+PDK_originalPartition:93,PDK_originalTopic:concentrated-topic-with-100-partitions	{"message": "100 partitions"}
+Processed a total of 4 messages
 
 ```
 
@@ -1039,17 +995,83 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Output">
 
-```json
-jq: parse error: Invalid numeric literal at line 1, column 22
-Unable to write to standard out, closing consumer.
-Processed a total of 2 messages
+```
+PDK_originalPartition:5,PDK_originalTopic:concentrated-topic-with-10-partitions	{"message": "10 partitions"}
+PDK_originalPartition:11,PDK_originalTopic:concentrated-topic-with-20-partitions	{"message": "20 partitions"}
+PDK_originalPartition:10,PDK_originalTopic:concentrated-topic-with-50-partitions	{"message": "50 partitions"}
+PDK_originalPartition:93,PDK_originalTopic:concentrated-topic-with-100-partitions	{"message": "100 partitions"}
+Processed a total of 4 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/I2J1yiZfXuc7fZFpW5psLLJOB.svg)](https://asciinema.org/a/I2J1yiZfXuc7fZFpW5psLLJOB)
+[![asciicast](https://asciinema.org/a/yz4mi5tGabmGy4vCSKolLo6dc.svg)](https://asciinema.org/a/yz4mi5tGabmGy4vCSKolLo6dc)
+
+</TabItem>
+</Tabs>
+
+## Tearing down the docker environment
+
+Remove all your docker processes and associated volumes
+
+* `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+docker compose down --volumes
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+ Container kafka-client  Stopping
+ Container gateway2  Stopping
+ Container schema-registry  Stopping
+ Container gateway1  Stopping
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container schema-registry  Removed
+ Container kafka2  Stopping
+ Container kafka3  Stopping
+ Container kafka1  Stopping
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Container zookeeper  Stopping
+ Container zookeeper  Stopped
+ Container zookeeper  Removing
+ Container zookeeper  Removed
+ Network topic-concentration_default  Removing
+ Network topic-concentration_default  Removed
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/Kcrc95BpS3hDRpdrzmjlW34Sy.svg)](https://asciinema.org/a/Kcrc95BpS3hDRpdrzmjlW34Sy)
 
 </TabItem>
 </Tabs>
