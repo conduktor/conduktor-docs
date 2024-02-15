@@ -23,8 +23,6 @@ Check the [Settings](https://slite.com/api/public/notes/_OtvNSKy38tOKS/redirect)
 
 The ksqlDB Cluster details page is split into multiple tabs that lets you visualize all the currently running queries as well as write your own queries or executes statements.
 
-The
-
 In particular, the following tabs are available:
 
 -   **Streams** tab lets you visualize and act on the running Streams (resulting from CREATE STREAM statements)
