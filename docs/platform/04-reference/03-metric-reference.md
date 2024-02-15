@@ -26,12 +26,17 @@ Data points are refreshed every 30 seconds.
 | **Kafka Topic & Partition Metrics**                       |                                                 |                                                                             |
 | `kafka_cluster_partition_underreplicated`                 | `cluster_id`, `topic`, `partition`              | `1` when the partition is under-replicated                                  |
 | `kafka_cluster_partition_underminisr`                     | `cluster_id`, `topic`, `partition`              | `1` when the partition is under min ISR                                     |
-| `kafka_partition_latest_offset`                           | `cluster_id`, `topic`, `partition`              | Latest offset of the current partition                                      |
-| `kafka_log_log_size`                                      | `cluster_id`, `topic`, `partition`              | Size in bytes of the current partition                                      |
+| `kafka_partition_latest_offset`                           | `cluster_id`, `topic`, `partition`              | Latest offset of the current topic-partition                                |
+| `kafka_partition_earliest_offset`                         | `cluster_id`, `topic`, `partition`              | Earliest offset of the current topic-partition                              |
+| `kafka_log_log_size`                                      | `cluster_id`, `topic`, `partition`              | Size in bytes of the current topic-partition                                |
 | **Consumer Group Metrics**                                |                                                 |                                                                             |
-| `kafka_consumergroup_group_lag_seconds`                   | `cluster_id`, `group`, `topic`, `partition`     | Lag in seconds of the consumer group on this topic/partition                |
-| `kafka_consumergroup_group_lag`                           | `cluster_id`, `group`, `topic`, `partition`     | Absolute Lag of the consumer group on this topic/partition                  |
-| `kafka_consumergroup_group_offset`                        | `cluster_id`, `group`, `topic`, `partition`     | Last commited offset of the consumer group on this topic/partition          |
+| `kafka_consumergroup_group_lag_seconds`                   | `cluster_id`, `group`, `topic`, `partition`     | Lag in seconds of the consumer group on this topic-partition                |
+| `kafka_consumergroup_group_lag`                           | `cluster_id`, `group`, `topic`, `partition`     | Absolute Lag of the consumer group on this topic-partition                  |
+| `kafka_consumergroup_group_offset`                        | `cluster_id`, `group`, `topic`, `partition`     | Last commited offset of the consumer group on this topic-partition          |
+| **Consumer Group Metrics (Aggregated)**                   |                                                 |                                                                             |
+| `kafka_consumergroup_group_topic_sum_lag`                 | `cluster_id`, `group`, `topic`                  | Sum of Absolute Lag of the consumer group on this topic (all partitions)    |
+| `kafka_consumergroup_group_sum_lag`                       | `cluster_id`, `group`                           | Sum of Absolute Lag of the consumer group (all topics)                      |
+| `kafka_consumergroup_group_max_lag_seconds`               | `cluster_id`, `group`                           | Lag in seconds of the consumer group (all topics)                           |
 | **Kafka Connect Metrics**                                 |                                                 |                                                                             |
 | `kafka_connect_total_tasks`                               | `cluster_id`, `connect_cluster_id`, `connector` | Total number of tasks configured for this Connector                         |
 | `kafka_connect_failed_tasks`                              | `cluster_id`, `connect_cluster_id`, `connector` | Number of Failed tasks for this Connector                                   |
