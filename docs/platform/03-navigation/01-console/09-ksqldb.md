@@ -14,7 +14,7 @@ Click on an element to get to the ksqlDB Cluster Details page.
 
 :::caution
 Configure** RBAC** to restrict your user access to certain ksqlDB Clusters.  
-Check the [Settings](https://slite.com/api/public/notes/_OtvNSKy38tOKS/redirect) for more info.
+Check the [Settings](/platform/navigation/settings/rbac/) for more info.
 :::
 
 ![Image](img/ksql_clusters.png)
