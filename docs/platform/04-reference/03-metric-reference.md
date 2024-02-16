@@ -17,7 +17,7 @@ Data points are refreshed every 30 seconds.
 | **Kafka Cluster & Broker Metrics**                        |                                                 |                                                                             |
 | `kafka_controller_kafkacontroller_activebrokercount`      | `cluster_id`                                    | Number of active Brokers on the Kafka cluster                               |
 | `kafka_controller_kafkacontroller_activecontrollercount`  | `cluster_id`                                    | Number of active Controllers on the Kafka cluster                           |
-| `kafka_controller_kafkacontroller_globalpartitioncount`   | `cluster_id`                                    | Total number of partition on the Kafka cluster                              |
+| `kafka_controller_kafkacontroller_globalpartitioncount`   | `cluster_id`                                    | Total number of partitions on the Kafka cluster                              |
 | `kafka_controller_kafkacontroller_offlinepartitionscount` | `cluster_id`                                    | Number of Partitions with no active Leader                                  |
 | `kafka_server_replicamanager_underminisrpartitioncount`   | `cluster_id`                                    | Number of Partitions with replicas that don't meet their minimum ISR        |
 | `kafka_server_replicamanager_underreplicatedpartitions`   | `cluster_id`                                    | Number of Partitions with replicas that don't meet their replication factor |
