@@ -931,7 +931,7 @@ curl \
 
 ## Confirm message from tom and laura are encrypted
 
-Confirm message from tom and laura are encrypted in cluster `teamA`
+Confirm messages from tom and laura are encrypted in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
@@ -1075,9 +1075,9 @@ sleep 61
 </TabItem>
 </Tabs>
 
-## Let's make sure laura data are no more readable!
+## Let's make sure laura's data is no longer readable!
 
-Let's make sure laura data are no more readable! in cluster `teamA`
+Let's make sure laura's data is no longer readable in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
@@ -1216,5 +1216,5 @@ docker compose down --volumes
 
 # Conclusion
 
-Crypto shredding help you protect your most precious information
+Crypto shredding helps you protect your most precious information.
 
