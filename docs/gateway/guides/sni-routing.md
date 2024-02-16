@@ -20,7 +20,7 @@ SNI routing reduces the number of ports/services that needs to be created for Ga
 - [Setting up SNI Routing](#setting-up-sni-routing)
     - [1. Prepare TLS Certificates](#1-prepare-tls-certificates)
     - [2. Configure Gateway](#2-configure-gateway)
-    - [*Optional.* Trust Store Configuration](#optional-trust-store-configuration)
+    - [*Optional. Trust Store Configuration*](#optional-trust-store-configuration)
 - [Debugging Tips](#useful-tips-for-debugging-and-troubleshooting)
 
 ## Relevant Context
@@ -76,7 +76,7 @@ The following table shows the environment variables used to configure Gateway, t
 | GATEWAY_SSL_KEY_TYPE                    | authenticationConfig.sslConfig.keyStore.keyStoreType      | jks, p12      | Type of the keystore. Defaults to jus                                                     |
 | GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES | authenticationConfig.sslConfig.updateContextIntervalMinutes |   |                                                                                                     |
 
-#### Optional. Trust store configuration
+#### *Optional. Trust store configuration*
 For client authentication, you can additionally configure a trust store (including path, password, and type).
 
 **Example**
