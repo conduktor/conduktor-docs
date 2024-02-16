@@ -177,7 +177,7 @@ services:
     labels:
       tag: conduktor
   gateway1:
-    image: harbor.cdkt.dev/conduktor/conduktor-gateway
+    image: conduktor/conduktor-gateway:2.6.1
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -222,7 +222,7 @@ services:
         - broker-sni-gateway1main2.gateway-sni.conduktor.local
         - broker-sni-gateway1main3.gateway-sni.conduktor.local
   gateway2:
-    image: harbor.cdkt.dev/conduktor/conduktor-gateway
+    image: conduktor/conduktor-gateway:2.6.1
     hostname: gateway2
     container_name: gateway2
     environment:
