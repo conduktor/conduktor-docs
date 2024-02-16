@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Schema validation
 description: Avoid outages from missing or badly formatted records, ensure all messages adhere to a schema
 parent: governance

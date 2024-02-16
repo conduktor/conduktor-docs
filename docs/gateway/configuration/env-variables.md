@@ -88,14 +88,16 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SSL
 
-| Environment Variable                            | Default Value                      | Description                                       |
-|-------------------------------------------------|------------------------------------|---------------------------------------------------|
-| `GATEWAY_SSL_KEY_STORE_PATH`                    | `config/kafka-proxy.keystore.jks`  | Path to a keystore for SSL connections            |
-| `GATEWAY_SSL_KEY_STORE_PASSWORD`                | `123456`                           | Password for the keystore defined above           |
-| `GATEWAY_SSL_KEY_PASSWORD`                      | `123456`                           | Password for the key contained in the store above |
-| `GATEWAY_SSL_KEY_TYPE`                          | `jks`                              | We currently only support `jks`                   |
-| `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
-| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
+| Environment Variable                          | Default Value                     | Description                                                                                     |
+|-----------------------------------------------|-----------------------------------|-------------------------------------------------------------------------------------------------|
+| `GATEWAY_SSL_KEY_STORE_PATH`                  | `config/kafka-proxy.keystore.jks` | Path to a keystore for SSL connections                                                          |
+| `GATEWAY_SSL_KEY_STORE_PASSWORD`              | `123456`                          | Password for the keystore defined above                                                         |
+| `GATEWAY_SSL_KEY_PASSWORD`                    | `123456`                          | Password for the key contained in the store above                                               |
+| `GATEWAY_SSL_KEY_TYPE`                        | `jks`                             | We currently only support `jks`                                                                 |
+| `GATEWAY_SSL_UPDATE_INTERVAL_MS`              | `600000`                          |                                                                                                 |
+| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES` | `5`                               | Interval in minutes to refresh SSL context                                                      |
+| `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES`         | `DEFAULT`                         | [See kafka](https://kafka.apache.org/documentation/#brokerconfigs_ssl.principal.mapping.rules). |
+ 
 
 | Environment Variable               | Default Value                       | Description                                                                                                                                |
 |------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|

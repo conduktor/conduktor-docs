@@ -21,7 +21,7 @@ Need to configure Gateway for your specific setup, [review the configuration opt
 
 Adding a plugin a.k.a. an interceptor, then [view the interceptors](interceptors/data-security/field-level-encryption.md) to see what there is and view examples to copy.  
 
-If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](demos/encryption/encryption.md).
+If you want to walkthrough a demo for yourself, or use it to copy configuration examples [checkout the demos](/gateway/category/encryption/).
 
 Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.   
 

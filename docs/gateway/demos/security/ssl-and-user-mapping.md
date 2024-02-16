@@ -1,11 +1,12 @@
 ---
-title: SSL and User Mapping
-description: SSL and User Mapping
+title: mTLS and User Mapping
+description: mTLS and User Mapping
+tag: security
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# SSL
+# mTLS, when SASL_SSL is not enough
 
 When passwords are not enough, you can rely on TLS client certificate
 But certificates do not host vcluster information, so let's map manually CN to vclusters.
@@ -23,7 +24,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ev27NHairtWVEbb8eyd6psv4d.svg)](https://asciinema.org/a/ev27NHairtWVEbb8eyd6psv4d)
+[![asciicast](https://asciinema.org/a/oDInGWLHLokFrNyb42QeQSkR0.svg)](https://asciinema.org/a/oDInGWLHLokFrNyb42QeQSkR0)
 
 </TabItem>
 </Tabs>
@@ -34,6 +35,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -64,6 +66,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -88,6 +92,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -112,6 +118,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -136,6 +144,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -165,8 +175,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -199,13 +211,15 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
     volumes:
     - type: bind
       source: .
       target: /config
       read_only: true
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -239,11 +253,27 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
     volumes:
     - type: bind
       source: .
       target: /config
       read_only: true
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -268,7 +298,7 @@ openssl req \
   -nodes \
   -keyout san.key \
   -out san.crt \
-  -subj '/CN=username' \
+  -subj '/CN=rJeAuf6zx0WufHQTXhkM4g' \
   -extensions san \
   -config openssl.config
 
@@ -314,8 +344,8 @@ ssl.keystore.password=123456
 <TabItem value="Output">
 
 ```
-........+.......+........+....+...+...+..+.......+++++++++++++++++++++++++++++++++++++++++++++*............+.+++++++++++++++++++++++++++++++++++++++++++++*....+.+.....+..........+...+...............+........+.........+...+.+..+.......+...+........+.......+...............+..+...+.......+...........+.+....................+.+.........+.....+.........+.+......+..+.+..+.......+......+.....+...............+....+..+................+..................+.........+..+....+.........+..........................+.......+..+............+...+................+..+..........+.....+............+.+......+..............+.........+......+..........+.....+.+...+..+.+............+........+..........+..+.+.........+..+...+......+.+......+...+.....+.+..........................+...+......+................+...+...........+...+.......+.........+..+....+.........+...........+....+............+..+.+..+.......+.....+..........+....................+..........+.....+.+++++
-..+.+..+..........+..+............+...+...+...+.+......+..+.............+++++++++++++++++++++++++++++++++++++++++++++*.....+.+..+.......+........+.+............+.........+.........+......+......+.........+...........+...+++++++++++++++++++++++++++++++++++++++++++++*.........+...+.....................+..............+..........+......+..............+......+...+............+......+...+............+.......+......+..+...................+...+.................+....+..+.......+............+.....+...............+.+...+...........+...+...+....+...+++++
+.+.........+++++++++++++++++++++++++++++++++++++++++++++*...+.+++++++++++++++++++++++++++++++++++++++++++++*...+..........+......+...+..+..........+.....+...+......+.........+....+.....+.......+.....+.........+............+.........+.+.........+......+...+..............+...+.........+.............+.....+...+............+.+..+..........+........................+.....+......+...+....+........+....+...+......+.....+....+.....+............+......+..........+..............+.+...+.................+....+...........+....+...+...........+.........+.+..+.........+....+............+.....+..........+...+.....+......+.........+......+.........+....+......+..+...+....+..+.............+........+.........................+..............+...+.+..+...............+...+.+.....+......+..........+............+...........+.+..............+..........+.....+................+...........+....+......+...+............+..............+...+.+.....+................+...+..+..................+......+.+......+.........+...+......+..+.........+.............+.....+.+......+.........+......+....................+...+.......+...........+.......+...+...+..+...+................+........+...+.......+...........+.+...+......+.................+............+..........+........+...................+...+....................+.+..+.......+..+.+....................+...+.......+..+.......+.....+.+............+........+.......+......+..............+.............+..+.+...........+.............+..+......+...............+.........+....+.........+........+....+.........+..+....+..............+.......+...+.....+.+......+........+......+...............+.+.........+........+...+....+..................+..+....+...........+......+....+...+..+......+++++
+.....+.....+.......+...+...+..+......+....+++++++++++++++++++++++++++++++++++++++++++++*.+......+...+...+....+...+.....+.+++++++++++++++++++++++++++++++++++++++++++++*..+.....+.............+............+.....+..........+...........+...+.......+..+................+......+.....+.+........+..........+........................+......+..+...+.+.........+.........+..+.+...............+...+..+.......+..+..........+...+...+.................+...+.......+.......................+...+.+.....+.+..................+.....+....+............+....................+......+............+...+...+.......+........+....+..+.........+...............+.......+..+................+..+.............+......+.....+...+...............+.+...........+...+.+........................+...+.....+....+...+...........+....+..+....+......+...+..+...+.....................+....+..+...+.+...........+......+....+.....+.+..+...+...+.+..............+......+......+....+.....+................+..+.+..............+.............+.....+...+............+.........+..................+.+..+.........+....+............+..+.......+++++
 -----
 Import du fichier de clés san.p12 vers keystore.jks...
 Certificat ajouté au fichier de clés
@@ -325,7 +355,7 @@ Certificat ajouté au fichier de clés
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hvLaKFyW8vtxAkLC0MQygeZ2c.svg)](https://asciinema.org/a/hvLaKFyW8vtxAkLC0MQygeZ2c)
+[![asciicast](https://asciinema.org/a/PPd0924e1VR8F0wKHPz4wvkxy.svg)](https://asciinema.org/a/PPd0924e1VR8F0wKHPz4wvkxy)
 
 </TabItem>
 </Tabs>
@@ -352,23 +382,27 @@ docker compose up --detach --wait
 ```
  Network ssl-and-user-mapping_default  Creating
  Network ssl-and-user-mapping_default  Created
+ Container kafka-client  Creating
  Container zookeeper  Creating
+ Container kafka-client  Created
  Container zookeeper  Created
- Container kafka3  Creating
  Container kafka1  Creating
+ Container kafka3  Creating
  Container kafka2  Creating
- Container kafka2  Created
- Container kafka3  Created
  Container kafka1  Created
- Container gateway1  Creating
- Container schema-registry  Creating
+ Container kafka3  Created
+ Container kafka2  Created
  Container gateway2  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container schema-registry  Creating
+ Container gateway1  Creating
  gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
  Container gateway2  Created
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
  Container schema-registry  Created
  Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
@@ -376,74 +410,82 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
- Container kafka1  Starting
- Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka3  Started
+ Container zookeeper  Healthy
+ Container kafka1  Starting
  Container kafka1  Started
  Container kafka2  Started
- Container kafka2  Waiting
+ Container kafka3  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka3  Healthy
- Container kafka3  Healthy
- Container gateway1  Starting
+ Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
  Container kafka3  Healthy
  Container gateway2  Starting
  Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
  Container schema-registry  Starting
+ Container kafka2  Healthy
+ Container gateway1  Starting
  Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
- Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
- Container kafka3  Healthy
+ Container kafka2  Waiting
  Container kafka1  Healthy
- Container zookeeper  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
+ Container zookeeper  Healthy
+ Container kafka-client  Healthy
  Container schema-registry  Healthy
- Container gateway1  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/obXFJZftN6JFT1WlupfHZDfiq.svg)](https://asciinema.org/a/obXFJZftN6JFT1WlupfHZDfiq)
+[![asciicast](https://asciinema.org/a/2TXivok5O7I1bkioHOIiBRScs.svg)](https://asciinema.org/a/2TXivok5O7I1bkioHOIiBRScs)
 
 </TabItem>
 </Tabs>
 
-## Adding user mapping for CN=username
+## Adding user mapping for tom on passthrough
 
 
+
+
+```json
+{
+  "username" : "tom",
+  "principal" : "CN=rJeAuf6zx0WufHQTXhkM4g"
+}
+```
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-06-user-mapping.json | jq
-
 curl \
-    --request POST 'http://localhost:8888/admin/userMappings/v1' \
+    --request POST 'http://localhost:8888/admin/userMappings/v1/vcluster/passthrough' \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent \
@@ -456,9 +498,6 @@ curl \
 
 ```json
 {
-  "username": "CN=username"
-}
-{
   "message": "User mapping is created"
 }
 
@@ -467,7 +506,60 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/vOciLLh9TOPyZWn1uTkH4XCTC.svg)](https://asciinema.org/a/vOciLLh9TOPyZWn1uTkH4XCTC)
+[![asciicast](https://asciinema.org/a/d7qlfJs9ygcnUdRudMqrZG6Hw.svg)](https://asciinema.org/a/d7qlfJs9ygcnUdRudMqrZG6Hw)
+
+</TabItem>
+</Tabs>
+
+## Adding interceptor guard-on-create-topic
+
+
+
+Creating the interceptor named `guard-on-create-topic` of the plugin `io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin` for tom using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+  "priority" : 100,
+  "config" : {
+    "numPartition" : {
+      "min" : 1,
+      "max" : 3
+    }
+  }
+}
+```
+
+Here's how to send it:
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+curl \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/passthrough/username/tom/interceptor/guard-on-create-topic" \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent \
+    --data @step-07-guard-on-create-topic.json | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "message": "guard-on-create-topic is created"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/2wY6fjEM9MqMM6bP7iWb6FvwH.svg)](https://asciinema.org/a/2wY6fjEM9MqMM6bP7iWb6FvwH)
 
 </TabItem>
 </Tabs>
@@ -492,6 +584,56 @@ kafka-topics \
     --topic foo
 ```
 
+> [!IMPORTANT]
+> We get the following exception
+>
+> ```sh
+> org.apache.kafka.common.errors.PolicyViolationException:
+>> Request parameters do not satisfy the configured policy.
+>>Topic 'foo' with number partitions is '10', must not be greater than 3
+> ```
+
+
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+Error while executing topic command : Request parameters do not satisfy the configured policy. Topic 'foo' with number partitions is '10', must not be greater than 3
+[2024-02-14 05:10:19,748] ERROR org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'foo' with number partitions is '10', must not be greater than 3
+ (kafka.admin.TopicCommand$)
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/UjsiRRyF76SRjiCHWWRPCFE9b.svg)](https://asciinema.org/a/UjsiRRyF76SRjiCHWWRPCFE9b)
+
+</TabItem>
+</Tabs>
+
+## Creating topic foo on gateway1
+
+Creating on `gateway1`:
+
+* Topic `foo` with partitions:2 and replication-factor:1
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --command-config client.config \
+    --replication-factor 1 \
+    --partitions 2 \
+    --create --if-not-exists \
+    --topic foo
+```
+
 
 </TabItem>
 <TabItem value="Output">
@@ -504,7 +646,7 @@ Created topic foo.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PSTdiK3KzYLWsEZVCGqi5YcwB.svg)](https://asciinema.org/a/PSTdiK3KzYLWsEZVCGqi5YcwB)
+[![asciicast](https://asciinema.org/a/sDkRqzhXSnSWlI2A7KD3O2v67.svg)](https://asciinema.org/a/sDkRqzhXSnSWlI2A7KD3O2v67)
 
 </TabItem>
 </Tabs>
@@ -548,7 +690,7 @@ foo
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WMzTXdvZuj48l8fN0xX9Udeym.svg)](https://asciinema.org/a/WMzTXdvZuj48l8fN0xX9Udeym)
+[![asciicast](https://asciinema.org/a/tQ2joAfYqgwQqiUqofd5jbkXe.svg)](https://asciinema.org/a/tQ2joAfYqgwQqiUqofd5jbkXe)
 
 </TabItem>
 </Tabs>
@@ -591,7 +733,7 @@ foo
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rdi7JqHk88I7U72ESUJgQQRlG.svg)](https://asciinema.org/a/rdi7JqHk88I7U72ESUJgQQRlG)
+[![asciicast](https://asciinema.org/a/FTOXICPFOQojDc76gbdYgFNet.svg)](https://asciinema.org/a/FTOXICPFOQojDc76gbdYgFNet)
 
 </TabItem>
 </Tabs>
@@ -615,8 +757,9 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
+ Container kafka-client  Stopping
  Container gateway1  Stopping
+ Container gateway2  Stopping
  Container schema-registry  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
@@ -630,15 +773,18 @@ docker compose down --volumes
  Container kafka1  Stopping
  Container kafka3  Stopping
  Container kafka2  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -651,7 +797,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Cr2zYObkQLYhrYw2iAG7G4hFp.svg)](https://asciinema.org/a/Cr2zYObkQLYhrYw2iAG7G4hFp)
+[![asciicast](https://asciinema.org/a/5niB0wFWowOcDqpsSBU6k4QsT.svg)](https://asciinema.org/a/5niB0wFWowOcDqpsSBU6k4QsT)
 
 </TabItem>
 </Tabs>

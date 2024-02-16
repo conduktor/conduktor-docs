@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Limit Connection Policy
 description: Limits connection attempts
 parent: governance

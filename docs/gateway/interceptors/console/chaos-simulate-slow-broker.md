@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Simulate slow broker
 description: Validate your application behaves correctly when there are delays in responses from the Kafka cluster.
 parent: console

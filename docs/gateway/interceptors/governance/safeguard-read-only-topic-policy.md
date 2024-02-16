@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Read only topic policy
 description: Mark a topic as readonly
 parent: governance

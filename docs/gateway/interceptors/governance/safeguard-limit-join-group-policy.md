@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Limit join group policy
 description: Avoid excessive group reblances by limiting the number of consumer group joins.
 parent: governance

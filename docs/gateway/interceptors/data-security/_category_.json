@@ -1,3 +1,6 @@
 {
-  "label": "Data Security"
+  "label": "Data Security",
+  "link": {
+    "type": "generated-index"
+  }
 }

@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Dynamic header injection
 description: Add headers to Kafka records to enhance them with metadata or other information.
 parent: governance
@@ -15,6 +15,7 @@ We support templating such as `X-CLIENT_IP: "{{userIp}} testing"`
 
 Here are the values we can expand
 
+- uuid
 - userIp
 - vcluster
 - user
@@ -28,10 +29,11 @@ Here are the values we can expand
 
 ## Configuration
 
-| config  | type   | description                                                                                                                                           |
-|:--------|:-------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
-| topic   | String | Regular expression that matches topics from your produce request                                                                                      |
-| headers | Map    | Map of header key and header value will be injected, with the header value we can use `{{userIp}}` for the user ip information we want to be injected |
+| config           | type    | description                                                                                                                                           |
+|:-----------------|:--------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
+| topic            | String  | Regular expression that matches topics from your produce request                                                                                      |
+| headers          | Map     | Map of header key and header value will be injected, with the header value we can use `{{userIp}}` for the user ip information we want to be injected |
+| overrideIfExists | boolean | Default `false`, configuration to override header on already exist                                                                                    |
 
 ## Example
 
@@ -44,7 +46,8 @@ Here are the values we can expand
     "topic": "topic.*",
     "headers": {
       "X-CLIENT_IP": "{{userIp}} testing"
-    }
+    },
+    "overrideIfExists": true
   }
 }
 ```

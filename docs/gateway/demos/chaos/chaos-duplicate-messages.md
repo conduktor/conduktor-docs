@@ -1,6 +1,7 @@
 ---
 title: Chaos Duplicate Messages
 description: Chaos Duplicate Messages
+tag: chaos
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -24,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CBl2DurxmuS1A3TgCAf6Zq5Ym.svg)](https://asciinema.org/a/CBl2DurxmuS1A3TgCAf6Zq5Ym)
+[![asciicast](https://asciinema.org/a/ZzBDr0Gqh9kOCBpYYZLXaeJ6c.svg)](https://asciinema.org/a/ZzBDr0Gqh9kOCBpYYZLXaeJ6c)
 
 </TabItem>
 </Tabs>
@@ -35,6 +36,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -65,6 +67,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -89,6 +93,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -113,6 +119,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -137,6 +145,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -166,8 +176,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -192,8 +204,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -219,6 +233,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -243,58 +273,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka3  Running
- Container kafka2  Running
- Container kafka1  Running
- Container schema-registry  Running
- Container gateway2  Running
- Container gateway1  Running
+ Network chaos-duplicate-messages_default  Creating
+ Network chaos-duplicate-messages_default  Created
+ Container kafka-client  Creating
+ Container zookeeper  Creating
+ Container zookeeper  Created
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka2  Creating
+ Container kafka-client  Created
+ Container kafka1  Created
+ Container kafka3  Created
+ Container kafka2  Created
+ Container gateway2  Creating
+ Container gateway1  Creating
+ Container schema-registry  Creating
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ Container schema-registry  Created
+ Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
+ Container kafka-client  Started
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
+ Container kafka3  Started
+ Container kafka2  Started
+ Container kafka1  Started
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka2  Healthy
+ Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka2  Healthy
  Container kafka3  Healthy
- Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container kafka2  Healthy
+ Container schema-registry  Starting
+ Container gateway2  Starting
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container gateway2  Started
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container zookeeper  Healthy
- Container gateway2  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
- Container schema-registry  Healthy
+ Container zookeeper  Healthy
  Container kafka2  Healthy
+ Container kafka-client  Healthy
+ Container kafka1  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/tKhP0NoPt00AcWR0PBcT8SrN8.svg)](https://asciinema.org/a/tKhP0NoPt00AcWR0PBcT8SrN8)
+[![asciicast](https://asciinema.org/a/vM1zrAVkcY4KsY8KsHWDPHKWY.svg)](https://asciinema.org/a/vM1zrAVkcY4KsY8KsHWDPHKWY)
 
 </TabItem>
 </Tabs>
@@ -337,7 +398,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ0MTMwM30.JL0_a8EE_Hy0_E2oH34x4bs3n95cc0FtxvfDXl8oO0E';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0NDc3Nn0.55JRwjEh2EzZ8Mf7sYRnwnMwqXIdOLQKkUd3y9HRjuE';
 
 
 ```
@@ -345,7 +406,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0FXLl6uTym94cXCS3u9Mvptef.svg)](https://asciinema.org/a/0FXLl6uTym94cXCS3u9Mvptef)
+[![asciicast](https://asciinema.org/a/Up0G9FxQ26sLIAYSvyUGiZW9D.svg)](https://asciinema.org/a/Up0G9FxQ26sLIAYSvyUGiZW9D)
 
 </TabItem>
 </Tabs>
@@ -382,7 +443,7 @@ Created topic topic-duplicate.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ClOKqFTxTvPH5SLgmV5xFxhdk.svg)](https://asciinema.org/a/ClOKqFTxTvPH5SLgmV5xFxhdk)
+[![asciicast](https://asciinema.org/a/nIf2RJ8zmV8JN6BHGeHXSpUgz.svg)](https://asciinema.org/a/nIf2RJ8zmV8JN6BHGeHXSpUgz)
 
 </TabItem>
 </Tabs>
@@ -391,13 +452,27 @@ Created topic topic-duplicate.
 
 Let's create the interceptor against the virtual cluster teamA, instructing Conduktor Gateway to inject duplicate records on produce requests.
 
+Creating the interceptor named `duplicate-messages` of the plugin `io.conduktor.gateway.interceptor.chaos.DuplicateMessagesPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.chaos.DuplicateMessagesPlugin",
+  "priority" : 100,
+  "config" : {
+    "rateInPercent" : 100,
+    "topic" : "topic-duplicate",
+    "target" : "PRODUCE"
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-07-duplicate-messages.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/duplicate-messages" \
     --header 'Content-Type: application/json' \
@@ -412,15 +487,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.chaos.DuplicateMessagesPlugin",
-  "priority": 100,
-  "config": {
-    "rateInPercent": 100,
-    "topic": "topic-duplicate",
-    "target": "PRODUCE"
-  }
-}
-{
   "message": "duplicate-messages is created"
 }
 
@@ -429,7 +495,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JBRaFhW6xtnwM2Aifs8EN5Tte.svg)](https://asciinema.org/a/JBRaFhW6xtnwM2Aifs8EN5Tte)
+[![asciicast](https://asciinema.org/a/nz99E2da4vZsnRQ7YPpdrVZoj.svg)](https://asciinema.org/a/nz99E2da4vZsnRQ7YPpdrVZoj)
 
 </TabItem>
 </Tabs>
@@ -477,7 +543,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yI6fcEpHLYrmqQ8nFB8pyrSpi.svg)](https://asciinema.org/a/yI6fcEpHLYrmqQ8nFB8pyrSpi)
+[![asciicast](https://asciinema.org/a/v8KOeyTDcfDP254PxII4PoXRp.svg)](https://asciinema.org/a/v8KOeyTDcfDP254PxII4PoXRp)
 
 </TabItem>
 </Tabs>
@@ -518,7 +584,7 @@ echo '{"message": "hello world"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Ur7tMnHLwme02njv2w62UyyED.svg)](https://asciinema.org/a/Ur7tMnHLwme02njv2w62UyyED)
+[![asciicast](https://asciinema.org/a/0U7IPRFLescERe74HFMMnaS54.svg)](https://asciinema.org/a/0U7IPRFLescERe74HFMMnaS54)
 
 </TabItem>
 </Tabs>
@@ -541,23 +607,25 @@ kafka-console-consumer \
 ```
 
 
-returns 2 events
+returns 
+
 ```json
+Processed a total of 2 messages
 {
-  "message" : "hello world"
+  "message": "hello world"
 }
 {
-  "message" : "hello world"
+  "message": "hello world"
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-01-31 02:41:58,702] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "message": "hello world"
@@ -571,7 +639,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pxjUViurowJBHJH07BhdNQzwS.svg)](https://asciinema.org/a/pxjUViurowJBHJH07BhdNQzwS)
+[![asciicast](https://asciinema.org/a/SEmC8N2YKpmKd0G6FNvysEukL.svg)](https://asciinema.org/a/SEmC8N2YKpmKd0G6FNvysEukL)
 
 </TabItem>
 </Tabs>
@@ -598,27 +666,31 @@ docker compose down --volumes
  Container gateway2  Stopping
  Container schema-registry  Stopping
  Container gateway1  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
+ Container kafka-client  Stopping
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container gateway2  Stopped
  Container gateway2  Removing
+ Container schema-registry  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway2  Removed
  Container gateway1  Removed
- Container schema-registry  Removed
+ Container kafka2  Stopping
  Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka2  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka3  Stopped
- Container kafka3  Removing
  Container kafka1  Stopped
  Container kafka1  Removing
- Container kafka3  Removed
- Container kafka2  Removed
  Container kafka1  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -631,7 +703,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kqZqxrg9ZxZpgoFMA63OyNqwF.svg)](https://asciinema.org/a/kqZqxrg9ZxZpgoFMA63OyNqwF)
+[![asciicast](https://asciinema.org/a/ED5bweA4DmBFhyvPTc8c4n2jZ.svg)](https://asciinema.org/a/ED5bweA4DmBFhyvPTc8c4n2jZ)
 
 </TabItem>
 </Tabs>

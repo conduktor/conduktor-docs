@@ -1,6 +1,7 @@
 ---
 title: ksqldb
 description: ksqldb
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -22,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SZCZbWVL2r0i1JFsg7Kc7vkuN.svg)](https://asciinema.org/a/SZCZbWVL2r0i1JFsg7Kc7vkuN)
+[![asciicast](https://asciinema.org/a/UJFIOblOlcRTfQ37cGfKrvHRu.svg)](https://asciinema.org/a/UJFIOblOlcRTfQ37cGfKrvHRu)
 
 </TabItem>
 </Tabs>
@@ -33,6 +34,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -64,6 +66,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -88,6 +92,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -112,6 +118,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -136,6 +144,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -165,8 +175,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -191,8 +203,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -218,8 +232,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
   ksqldb-server:
-    image: confluentinc/cp-ksqldb-server:7.4.3.arm64
+    image: confluentinc/cp-ksqldb-server:7.4.3
     healthcheck:
       test: curl localhost:8088/info | grep RUNNING
       interval: 5s
@@ -252,6 +280,10 @@ services:
       read_only: true
     ports:
     - 8088:8088
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -276,58 +308,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka2  Running
- Container kafka1  Running
- Container kafka3  Running
- Container gateway2  Running
- Container gateway1  Running
- Container schema-registry  Running
+ Network ksqldb_default  Creating
+ Network ksqldb_default  Created
+ Container zookeeper  Creating
+ Container kafka-client  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka2  Creating
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka1  Created
+ Container kafka3  Created
+ Container kafka2  Created
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container gateway2  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ Container schema-registry  Created
+ Container gateway2  Created
+ Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
+ Container kafka1  Starting
+ Container kafka2  Started
+ Container kafka1  Started
+ Container kafka3  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka2  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka3  Waiting
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container schema-registry  Starting
+ Container gateway2  Starting
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container gateway2  Started
  Container schema-registry  Waiting
- Container gateway1  Waiting
+ Container kafka2  Waiting
+ Container kafka-client  Waiting
  Container gateway2  Waiting
  Container zookeeper  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container schema-registry  Healthy
- Container zookeeper  Healthy
- Container gateway2  Healthy
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container gateway1  Healthy
+ Container gateway1  Waiting
  Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container zookeeper  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
+ Container schema-registry  Healthy
+ Container gateway1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/AjTvavrV8ywgImGxl7CYRUaSC.svg)](https://asciinema.org/a/AjTvavrV8ywgImGxl7CYRUaSC)
+[![asciicast](https://asciinema.org/a/CpU1aLT74C81tRXOIHVBT0OIm.svg)](https://asciinema.org/a/CpU1aLT74C81tRXOIHVBT0OIm)
 
 </TabItem>
 </Tabs>
@@ -370,7 +433,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ2MDY4M30.jNMkdATXqpG2BI8DMCCttQ2Ia-Eit5uMXUuYsv1Ime0';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MjMwNX0.4014O7aVlo-hdL6KQ6ld_-rCxPj7J0g63n15eAxGA7w';
 
 
 ```
@@ -378,7 +441,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/huw6uPSswuYLX7sUjd9wJw0DJ.svg)](https://asciinema.org/a/huw6uPSswuYLX7sUjd9wJw0DJ)
+[![asciicast](https://asciinema.org/a/3ZQl8jpdvInJGl6G3WC98UI61.svg)](https://asciinema.org/a/3ZQl8jpdvInJGl6G3WC98UI61)
 
 </TabItem>
 </Tabs>
@@ -388,14 +451,22 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 Let's tell `gateway1` that topics matching the pattern `.*` need to be concentrated into the underlying `concentrated` physical topic.
 
 > [!NOTE]
-> You don’t need to create the physical topic that backs the concentrated topics, it will automatically be created when a client topic starts using the concentrated topic.
+> You don���t need to create the physical topic that backs the concentrated topics, it will automatically be created when a client topic starts using the concentrated topic.
+
+
+```json
+{
+  "concentrated" : true,
+  "readOnly" : false,
+  "physicalTopicName" : "concentrated"
+}
+```
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-06-mapping.json | jq
 curl \
     --request POST 'http://localhost:8888/admin/vclusters/v1/vcluster/teamA/topics/.%2A' \
     --header 'Content-Type: application/json' \
@@ -410,11 +481,6 @@ curl \
 
 ```json
 {
-  "concentrated": true,
-  "readOnly": false,
-  "physicalTopicName": "concentrated"
-}
-{
   "logicalTopicName": ".*",
   "physicalTopicName": "concentrated",
   "readOnly": false,
@@ -426,7 +492,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dG7M98y7JFk0L3QadrnPQMoqI.svg)](https://asciinema.org/a/dG7M98y7JFk0L3QadrnPQMoqI)
+[![asciicast](https://asciinema.org/a/pXMBUOYaR1q0mQVaM6toa3xyx.svg)](https://asciinema.org/a/pXMBUOYaR1q0mQVaM6toa3xyx)
 
 </TabItem>
 </Tabs>
@@ -443,7 +509,7 @@ curl \
 export KSQL_BOOTSTRAP_SERVERS="localhost:6969"
 export KSQL_SECURITY_PROTOCOL="SASL_PLAINTEXT"
 export KSQL_SASL_MECHANISM="PLAIN"
-export KSQL_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ2MDM3Mn0.3HhSiXg2jYx28fBn4pRP4KlS5rPCGBbILUciVFroquc';"
+export KSQL_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MjI1OX0.Kl9stSuppDqvCOXs3noNte22PBQKuVApY-hc_ZudKuA';"
 docker compose --profile ksqldb up -d --wait
 ```
 
@@ -453,13 +519,14 @@ docker compose --profile ksqldb up -d --wait
 
 ```
  Container zookeeper  Running
- Container kafka3  Running
  Container kafka1  Running
+ Container kafka-client  Running
+ Container kafka3  Running
  Container kafka2  Running
- Container gateway2  Running
  Container schema-registry  Running
- Container ksqldb-server  Creating
+ Container gateway2  Running
  Container gateway1  Running
+ Container ksqldb-server  Creating
  ksqldb-server Published ports are discarded when using host network mode 
  Container ksqldb-server  Created
  Container zookeeper  Waiting
@@ -468,47 +535,49 @@ docker compose --profile ksqldb up -d --wait
  Container zookeeper  Healthy
  Container zookeeper  Healthy
  Container zookeeper  Healthy
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
  Container ksqldb-server  Starting
  Container ksqldb-server  Started
- Container ksqldb-server  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container schema-registry  Waiting
- Container gateway1  Waiting
  Container gateway2  Waiting
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container gateway1  Healthy
+ Container schema-registry  Waiting
+ Container kafka2  Waiting
+ Container zookeeper  Waiting
+ Container ksqldb-server  Waiting
+ Container gateway1  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka-client  Waiting
  Container schema-registry  Healthy
- Container zookeeper  Healthy
+ Container kafka3  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container kafka1  Healthy
+ Container zookeeper  Healthy
  Container ksqldb-server  Healthy
 
 ```
@@ -516,7 +585,7 @@ docker compose --profile ksqldb up -d --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/p5Q7NHP7jNc7g1RqRJTVOV0Ps.svg)](https://asciinema.org/a/p5Q7NHP7jNc7g1RqRJTVOV0Ps)
+[![asciicast](https://asciinema.org/a/QMkQMWTNQEJnYX2RbhvGM9G3N.svg)](https://asciinema.org/a/QMkQMWTNQEJnYX2RbhvGM9G3N)
 
 </TabItem>
 </Tabs>
@@ -549,7 +618,7 @@ default_ksql_processing_log
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/FPfHZ0NnrhrroXZDziMQ9XaQj.svg)](https://asciinema.org/a/FPfHZ0NnrhrroXZDziMQ9XaQj)
+[![asciicast](https://asciinema.org/a/gIuAscrHQ7pWk5go3CPd3V1Kv.svg)](https://asciinema.org/a/gIuAscrHQ7pWk5go3CPd3V1Kv)
 
 </TabItem>
 </Tabs>
@@ -593,7 +662,7 @@ concentrated
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TUzaAEeym5vTWGLX64Poweh29.svg)](https://asciinema.org/a/TUzaAEeym5vTWGLX64Poweh29)
+[![asciicast](https://asciinema.org/a/8t0LuYUN61KjB2R2FZQCuITDM.svg)](https://asciinema.org/a/8t0LuYUN61KjB2R2FZQCuITDM)
 
 </TabItem>
 </Tabs>
@@ -660,7 +729,7 @@ docker exec ksqldb-server ksql 'http://localhost:8088' -f /sql/ksql.sql
 <TabItem value="Output">
 
 ```
-Jan 31, 2024 7:05:05 AM org.jline.utils.Log logr
+Feb 14, 2024 2:05:21 AM org.jline.utils.Log logr
 WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
 Successfully changed local property 'processing.guarantee' to 'exactly_once_v2'. Use the UNSET command to revert your change.
 
@@ -699,7 +768,7 @@ EMIT CHANGES;
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zIrAhcjFKhF6o0cDxhGaX5moG.svg)](https://asciinema.org/a/zIrAhcjFKhF6o0cDxhGaX5moG)
+[![asciicast](https://asciinema.org/a/QcM56guoWYz0OW3DqHZWrNRF5.svg)](https://asciinema.org/a/QcM56guoWYz0OW3DqHZWrNRF5)
 
 </TabItem>
 </Tabs>
@@ -740,7 +809,7 @@ locations
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rEVmXDU3w46GyABrh9Cv88xNa.svg)](https://asciinema.org/a/rEVmXDU3w46GyABrh9Cv88xNa)
+[![asciicast](https://asciinema.org/a/QP4vlb7T6O7tFK6pwXESqGW4D.svg)](https://asciinema.org/a/QP4vlb7T6O7tFK6pwXESqGW4D)
 
 </TabItem>
 </Tabs>
@@ -785,7 +854,7 @@ concentrated_compacted
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ERAtX0mbtWmTtUmwB1ruNEl1f.svg)](https://asciinema.org/a/ERAtX0mbtWmTtUmwB1ruNEl1f)
+[![asciicast](https://asciinema.org/a/LLCwI1ZSungIxP0IYvjD7S5M5.svg)](https://asciinema.org/a/LLCwI1ZSungIxP0IYvjD7S5M5)
 
 </TabItem>
 </Tabs>
@@ -809,30 +878,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
+ Container gateway1  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopping
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container kafka-client  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway1  Removed
  Container gateway2  Removed
+ Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka3  Stopping
  Container kafka1  Stopping
  Container kafka2  Stopping
+ Container kafka3  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
- Container kafka1  Stopped
- Container kafka1  Removing
+ Container kafka3  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
  Container kafka1  Removed
- Container kafka3  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -845,7 +918,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RR7AcvVoHYHfLkTheU5nbPVJn.svg)](https://asciinema.org/a/RR7AcvVoHYHfLkTheU5nbPVJn)
+[![asciicast](https://asciinema.org/a/miYtAFBvefFOcgLn67gZoywIf.svg)](https://asciinema.org/a/miYtAFBvefFOcgLn67gZoywIf)
 
 </TabItem>
 </Tabs>

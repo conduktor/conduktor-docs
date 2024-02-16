@@ -1,6 +1,7 @@
 ---
 title: Schema Payload Validation for Avro
 description: Schema Payload Validation for Avro
+tag: quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -30,7 +31,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/o9yjWgX4VRexcLl5eaErDYdzs.svg)](https://asciinema.org/a/o9yjWgX4VRexcLl5eaErDYdzs)
+[![asciicast](https://asciinema.org/a/cy6m08GInWzXR2kVe3k81Bv9n.svg)](https://asciinema.org/a/cy6m08GInWzXR2kVe3k81Bv9n)
 
 </TabItem>
 </Tabs>
@@ -41,6 +42,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -71,6 +73,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -95,6 +99,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -119,6 +125,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,6 +151,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -172,8 +182,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -198,8 +210,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -225,6 +239,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -249,58 +279,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka2  Running
- Container kafka3  Running
- Container kafka1  Running
- Container gateway2  Running
- Container gateway1  Running
- Container schema-registry  Running
+ Network safeguard-validate-schema-payload-avro_default  Creating
+ Network safeguard-validate-schema-payload-avro_default  Created
+ Container zookeeper  Creating
+ Container kafka-client  Creating
+ Container zookeeper  Created
+ Container kafka-client  Created
+ Container kafka2  Creating
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka3  Created
+ Container kafka2  Created
+ Container kafka1  Created
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container gateway2  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ Container gateway1  Created
+ Container schema-registry  Created
+ Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
+ Container kafka-client  Started
  Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
- Container kafka3  Waiting
+ Container kafka1  Starting
+ Container kafka2  Started
+ Container kafka1  Started
+ Container kafka3  Started
  Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container gateway2  Starting
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container schema-registry  Starting
+ Container gateway1  Started
+ Container gateway2  Started
+ Container schema-registry  Started
+ Container zookeeper  Waiting
  Container kafka1  Waiting
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container gateway2  Healthy
+ Container kafka-client  Waiting
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
+ Container zookeeper  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
  Container schema-registry  Healthy
  Container gateway1  Healthy
- Container zookeeper  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sxCwJpL2wSBvMqmPsSrDHedvC.svg)](https://asciinema.org/a/sxCwJpL2wSBvMqmPsSrDHedvC)
+[![asciicast](https://asciinema.org/a/uoy1DYllDxaAcpF6Yhl3m077c.svg)](https://asciinema.org/a/uoy1DYllDxaAcpF6Yhl3m077c)
 
 </TabItem>
 </Tabs>
@@ -343,7 +404,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ2NTg0OH0.ULDbQEk60zMH4Lb8e8pEHkSERnEMZgKGkeoLAme1O38';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NjY4Nn0.BO3QweJqLCDgJ2NG3Sf4-w4WrMWiilC0w6AHUsbwgiI';
 
 
 ```
@@ -351,7 +412,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CkCB45T6B8EA9FrLCxRtbSEC1.svg)](https://asciinema.org/a/CkCB45T6B8EA9FrLCxRtbSEC1)
+[![asciicast](https://asciinema.org/a/Af58nh04xlFetU9aUFmCQnTax.svg)](https://asciinema.org/a/Af58nh04xlFetU9aUFmCQnTax)
 
 </TabItem>
 </Tabs>
@@ -388,7 +449,7 @@ Created topic topic-avro.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1cASl4irDuY0qpAZ21vUZgzYE.svg)](https://asciinema.org/a/1cASl4irDuY0qpAZ21vUZgzYE)
+[![asciicast](https://asciinema.org/a/5dGkhs3qycocTiUJbzvQ9S6Dd.svg)](https://asciinema.org/a/5dGkhs3qycocTiUJbzvQ9S6Dd)
 
 </TabItem>
 </Tabs>
@@ -476,7 +537,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sSx9RzN9BDsLaCxGzMCmNVxH5.svg)](https://asciinema.org/a/sSx9RzN9BDsLaCxGzMCmNVxH5)
+[![asciicast](https://asciinema.org/a/AgzKQBzClJYkwymGVkeoah28F.svg)](https://asciinema.org/a/AgzKQBzClJYkwymGVkeoah28F)
 
 </TabItem>
 </Tabs>
@@ -545,7 +606,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:30:52,400] INFO KafkaAvroSerializerConfig values: 
+[2024-02-14 04:18:08,866] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -613,7 +674,7 @@ cat invalid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ikv4HC6I38tLN9scWXwolL1Zc.svg)](https://asciinema.org/a/ikv4HC6I38tLN9scWXwolL1Zc)
+[![asciicast](https://asciinema.org/a/S66OC0105PxkIqOY7sL6rsGmy.svg)](https://asciinema.org/a/S66OC0105PxkIqOY7sL6rsGmy)
 
 </TabItem>
 </Tabs>
@@ -640,7 +701,7 @@ kafka-avro-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:30:54,161] INFO KafkaAvroDeserializerConfig values: 
+[2024-02-14 04:18:10,482] INFO KafkaAvroDeserializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.use.logical.type.converters = false
@@ -705,10 +766,6 @@ kafka-avro-console-consumer \
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.KafkaAvroDeserializerConfig:376)
 {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]}
-[2024-01-31 09:30:58,187] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
-[2024-01-31 09:30:58,187] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -716,7 +773,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Q2LXdA819TnfKbS3S3tnVWumW.svg)](https://asciinema.org/a/Q2LXdA819TnfKbS3S3tnVWumW)
+[![asciicast](https://asciinema.org/a/CW1y8WxctngLf5xVsgATvDN4a.svg)](https://asciinema.org/a/CW1y8WxctngLf5xVsgATvDN4a)
 
 </TabItem>
 </Tabs>
@@ -725,13 +782,31 @@ Processed a total of 1 messages
 
 Add Schema Payload Validation Policy Interceptor
 
+Creating the interceptor named `guard-schema-payload-validate` of the plugin `io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+  "priority" : 100,
+  "config" : {
+    "schemaRegistryConfig" : {
+      "host" : "http://schema-registry:8081"
+    },
+    "topic" : "topic-.*",
+    "schemaIdRequired" : true,
+    "validateSchema" : true,
+    "action" : "BLOCK"
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-12-guard-schema-payload-validate.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate" \
     --header 'Content-Type: application/json' \
@@ -746,19 +821,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-  "priority": 100,
-  "config": {
-    "schemaRegistryConfig": {
-      "host": "http://schema-registry:8081"
-    },
-    "topic": "topic-.*",
-    "schemaIdRequired": true,
-    "validateSchema": true,
-    "action": "BLOCK"
-  }
-}
-{
   "message": "guard-schema-payload-validate is created"
 }
 
@@ -767,7 +829,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kf8FOM7PMm3ESeSwmPuDzm7ya.svg)](https://asciinema.org/a/kf8FOM7PMm3ESeSwmPuDzm7ya)
+[![asciicast](https://asciinema.org/a/1oZRwCyF0WqvUdH2jbmiSZc50.svg)](https://asciinema.org/a/1oZRwCyF0WqvUdH2jbmiSZc50)
 
 </TabItem>
 </Tabs>
@@ -819,7 +881,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/iwlflJIUvfg6wrG6qIS6XvILF.svg)](https://asciinema.org/a/iwlflJIUvfg6wrG6qIS6XvILF)
+[![asciicast](https://asciinema.org/a/jUDvtKe6BYaQsa5KkZFWwe9ay.svg)](https://asciinema.org/a/jUDvtKe6BYaQsa5KkZFWwe9ay)
 
 </TabItem>
 </Tabs>
@@ -907,7 +969,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JqtTSESJHF0vfmJF3TzUZwbpN.svg)](https://asciinema.org/a/JqtTSESJHF0vfmJF3TzUZwbpN)
+[![asciicast](https://asciinema.org/a/cDXuO0CEBYwEDiujSWSOynDpK.svg)](https://asciinema.org/a/cDXuO0CEBYwEDiujSWSOynDpK)
 
 </TabItem>
 </Tabs>
@@ -936,7 +998,7 @@ curl -s http://localhost:8081/subjects/topic-avro/versions
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/a2Vh2fRjJZ5lFWNN6BYbMi7ui.svg)](https://asciinema.org/a/a2Vh2fRjJZ5lFWNN6BYbMi7ui)
+[![asciicast](https://asciinema.org/a/FqQ4eOV7qbtzbjFOElMLMb49D.svg)](https://asciinema.org/a/FqQ4eOV7qbtzbjFOElMLMb49D)
 
 </TabItem>
 </Tabs>
@@ -969,7 +1031,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:31:00,681] INFO KafkaAvroSerializerConfig values: 
+[2024-02-14 04:18:15,851] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -1031,9 +1093,9 @@ cat invalid-payload.json | jq -c | \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:376)
-[2024-01-31 09:31:01,955] ERROR Error when sending message to topic topic-avro with key: null, value: 99 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:18:16,618] ERROR Error when sending message to topic topic-avro with key: null, value: 99 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10
-[2024-01-31 09:31:01,955] ERROR Error when sending message to topic topic-avro with key: null, value: 99 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:18:16,618] ERROR Error when sending message to topic topic-avro with key: null, value: 99 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10
 
 ```
@@ -1041,7 +1103,7 @@ org.apache.kafka.common.errors.PolicyViolationException: Request parameters do n
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0677p6dIqycTEyzZH5rwxvljS.svg)](https://asciinema.org/a/0677p6dIqycTEyzZH5rwxvljS)
+[![asciicast](https://asciinema.org/a/f3RqKeGd2ZU4Q4yJ4KsvRGMDf.svg)](https://asciinema.org/a/f3RqKeGd2ZU4Q4yJ4KsvRGMDf)
 
 </TabItem>
 </Tabs>
@@ -1059,60 +1121,68 @@ kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
     --topic _auditLogs \
     --from-beginning \
-    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \
+    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 13 messages
 {
-  "id" : "d9fd6ff8-38aa-4cae-848b-3edc3b79d477",
-  "source" : "krn://cluster=WfJbBG-CT8WNm3NxEoBsdQ",
-  "type" : "SAFEGUARD",
-  "authenticationPrincipal" : "teamA",
-  "userName" : "sa",
-  "connection" : {
-    "localAddress" : null,
-    "remoteAddress" : "/192.168.65.1:31527"
+  "id": "8598a296-4e50-4fb6-b1c4-b0ccd314529b",
+  "source": "krn://cluster=uoYQCU0nSMSu47Q3_eO5Rw",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:62994"
   },
-  "specVersion" : "0.1.0",
-  "time" : "2024-01-31T08:24:57.800864760Z",
-  "eventData" : {
-    "level" : "error",
-    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10"
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:18:16.600811135Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10"
   }
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-{"id":"59bc3dec-f0cd-42c7-ae70-5500be50dc55","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:49331"},"specVersion":"0.1.0","time":"2024-01-31T08:30:48.547424755Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
-{"id":"58895f86-e105-48f8-a5be-a3b2623d8f84","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:34204"},"specVersion":"0.1.0","time":"2024-01-31T08:30:49.985290589Z","eventData":"SUCCESS"}
-{"id":"4c847867-1791-4ef7-b514-d3717aa7045b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:30033"},"specVersion":"0.1.0","time":"2024-01-31T08:30:50.096833673Z","eventData":"SUCCESS"}
-{"id":"b0593d15-d436-49c9-9ffa-8371114f8e04","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:34208"},"specVersion":"0.1.0","time":"2024-01-31T08:30:53.098865132Z","eventData":"SUCCESS"}
-{"id":"11d23c2a-ea35-47cb-9f36-c2fbd3189991","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:30037"},"specVersion":"0.1.0","time":"2024-01-31T08:30:53.155815757Z","eventData":"SUCCESS"}
-{"id":"4ddeedb4-66ed-4687-9b09-b23ab951d702","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:34210"},"specVersion":"0.1.0","time":"2024-01-31T08:30:54.722472592Z","eventData":"SUCCESS"}
-{"id":"aabb37ee-81ff-4be5-99cc-d54fb2ae3bef","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:30039"},"specVersion":"0.1.0","time":"2024-01-31T08:30:54.791672258Z","eventData":"SUCCESS"}
-{"id":"d9110eea-7a4f-416a-8d47-1b7daca7739c","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:30040"},"specVersion":"0.1.0","time":"2024-01-31T08:30:55.022841425Z","eventData":"SUCCESS"}
-{"id":"7a0c7a18-3cc1-4cbc-b1c5-922e2d5b2f21","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:49353"},"specVersion":"0.1.0","time":"2024-01-31T08:30:58.925613469Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
-{"id":"233dc1df-771e-400f-8642-2719af5672ee","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:49365"},"specVersion":"0.1.0","time":"2024-01-31T08:30:59.698026011Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
-{"id":"08aa52e2-be50-49eb-9249-fdacc81bc2d4","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:34230"},"specVersion":"0.1.0","time":"2024-01-31T08:31:01.495098095Z","eventData":"SUCCESS"}
-{"id":"86a2fd5f-5c0e-4501-b1c6-b4c4e262be46","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:30059"},"specVersion":"0.1.0","time":"2024-01-31T08:31:01.575416136Z","eventData":"SUCCESS"}
-{"id":"0dab63f4-8130-496b-a81f-64e70089b3ba","source":"krn://cluster=RYEZzJ4pQSyYb59a3C1RzA","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:30059"},"specVersion":"0.1.0","time":"2024-01-31T08:31:01.905503470Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10"}}
-[2024-01-31 09:31:06,640] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 13 messages
+{
+  "id": "8598a296-4e50-4fb6-b1c4-b0ccd314529b",
+  "source": "krn://cluster=uoYQCU0nSMSu47Q3_eO5Rw",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:62994"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:18:16.600811135Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10"
+  }
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NaaN57LXDp3Am1DiNeS17vnsW.svg)](https://asciinema.org/a/NaaN57LXDp3Am1DiNeS17vnsW)
+[![asciicast](https://asciinema.org/a/MujUFbDPYeGC3cEyMawTBYWNE.svg)](https://asciinema.org/a/MujUFbDPYeGC3cEyMawTBYWNE)
 
 </TabItem>
 </Tabs>
@@ -1140,7 +1210,7 @@ cat valid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:31:07,635] INFO KafkaAvroSerializerConfig values: 
+[2024-02-14 04:18:21,958] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -1208,7 +1278,7 @@ cat valid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kMHlFpjERr1M282sQbt3mV1az.svg)](https://asciinema.org/a/kMHlFpjERr1M282sQbt3mV1az)
+[![asciicast](https://asciinema.org/a/KxCVTUmm3pYVtl5azIAye9uCu.svg)](https://asciinema.org/a/KxCVTUmm3pYVtl5azIAye9uCu)
 
 </TabItem>
 </Tabs>
@@ -1235,7 +1305,7 @@ kafka-avro-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:31:09,272] INFO KafkaAvroDeserializerConfig values: 
+[2024-02-14 04:18:23,459] INFO KafkaAvroDeserializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.use.logical.type.converters = false
@@ -1301,10 +1371,6 @@ kafka-avro-console-consumer \
  (io.confluent.kafka.serializers.KafkaAvroDeserializerConfig:376)
 {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]}
 {"name":"Doe","age":17,"email":"john.doe@example.com","address":{"street":"123 Main St","city":"Anytown"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
-[2024-01-31 09:31:16,195] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
-[2024-01-31 09:31:16,195] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
 ```
@@ -1312,7 +1378,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7I9zX6Y0ZmVH3czK6LL6Tfo1b.svg)](https://asciinema.org/a/7I9zX6Y0ZmVH3czK6LL6Tfo1b)
+[![asciicast](https://asciinema.org/a/Df4DyWOzLy33qQxfqEXB4DjQu.svg)](https://asciinema.org/a/Df4DyWOzLy33qQxfqEXB4DjQu)
 
 </TabItem>
 </Tabs>
@@ -1336,30 +1402,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container schema-registry  Stopping
  Container gateway1  Stopping
  Container gateway2  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
+ Container kafka-client  Stopping
+ Container schema-registry  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
+ Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
- Container gateway1  Removed
- Container gateway2  Removed
  Container schema-registry  Removed
+ Container kafka3  Stopping
  Container kafka1  Stopping
  Container kafka2  Stopping
- Container kafka3  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka1  Removed
- Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1372,7 +1442,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CHS3YD0pacAAgqQCpT86PjDoQ.svg)](https://asciinema.org/a/CHS3YD0pacAAgqQCpT86PjDoQ)
+[![asciicast](https://asciinema.org/a/SCvro8dHWZUgwfg52uITBWCc0.svg)](https://asciinema.org/a/SCvro8dHWZUgwfg52uITBWCc0)
 
 </TabItem>
 </Tabs>
