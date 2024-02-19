@@ -43,7 +43,7 @@ Default configurations for Conduktor Gateway can be overridden by environment va
 There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
 
 The below is an example including some variables we recommend you modify in any setup you do, but is by no
-means a guarantee of sufficient requirements in your setup.
+means a guarantee of sufficient requirements in your setup. You can also checkout our [helm charts](https://helm.conduktor.io) for the deployment on Kubernetes.
 
 We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
 issues or questions please contact support at `support@conduktor.io`.
