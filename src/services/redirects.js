@@ -268,11 +268,47 @@ const redirects = [
       },
       {
         from: '/platform/configuration',
-        to: '/platform/get-started/configuration/',
+        to: '/platform/category/configuration/',
       },
       {
         from: '/platform/installation',
-        to: '/platform/get-started/installation/',
+        to: '/platform/category/installation/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/introduction/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/env-variables/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/configuration-snippets/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/cortex/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/database/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/http-proxy-configuration',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/https-configuration/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/ssl-tls-configuration/',
+      },
+      {
+        from: '/platform/configuration',
+        to: '/platform/get-started/configuration/memory-configuration/',
       }
     ],
   },
