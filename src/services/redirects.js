@@ -268,12 +268,12 @@ const redirects = [
       },
       {
         from: '/platform/configuration',
-        to: '/platform/category/configuration/',
+        to: '/platform/get-started/configuration/',
       },
       {
         from: '/platform/installation',
-        to: '/platform/category/installation/',
-      },
+        to: '/platform/get-started/installation/',
+      }
     ],
   },
 ]
