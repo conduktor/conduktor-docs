@@ -87,6 +87,6 @@ services:
 #### No slack notification alerts
 - Follow the steps to configure Slack integration on http://localhost:8080/admin/integrations page. It will ask to create a Slack App and set Oauth2 authentication token on Console. 
 - Don't forget to manually add Slack App bot into the channel integrations you want to use for alerts notifications.
-- Enable notifications on http://localhost:8080/monitoring/alerts and select the same channel as previously. See [create alert](../../03-navigation/monitoring/getting-started/create-alert.md)
+- Enable notifications on http://localhost:8080/monitoring/alerts and select the same channel as previously. See [create alert](../../navigation/monitoring/getting-started/create-alert.md)
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 

@@ -8,7 +8,7 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 The Conduktor Console can be configured using a YAML configuration file or through environment variables. The full list of configurable properties can be found [here](env-variables.md). Note that it's also possible to make some configurations (such as Kafka cluster configuration) through our [API](../../../reference/api-reference).
 
-Note you can also configure your clusters within the [Admin](../../03-navigation/04-settings/managing-clusters.md) section of Console, whereby you can also upload certificates using the [certificate store](ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+Note you can also configure your clusters within the [Admin](../../navigation/settings/managing-clusters.md) section of Console, whereby you can also upload certificates using the [certificate store](ssl-tls-configuration.md#using-the-conduktor-certificate-store).
 
 ## GitOps: Managing Cluster Configurations
 :::tip
