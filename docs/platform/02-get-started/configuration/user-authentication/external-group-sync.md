@@ -67,7 +67,7 @@ From within Admin, navigate to the `Users & Groups` screen and select the `Group
 ![](../assets/external-groups-mapping-new-group.png)
 
 In the above example, any users that are present in the group `project-c` in your IdP, will be added to the Conduktor group `Project C`, and will inherit permissions that are set against it. 
-To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../../03-navigation/04-settings/rbac.md).
+To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../../navigation/settings/rbac.md).
 
 **Map an existing Conduktor group to an external group**
 
@@ -77,4 +77,4 @@ From within the `Members` screen, select the breadcrumbs next to an existing gro
 
 The value to set depends on the IdP you use. For example, for **Azure**, you must put the `Object ID` of your groups. For **Keycloak**, this is the name of the group.
 
-Once you have mapped external groups, use Conduktor's [RBAC](../../../03-navigation/04-settings/rbac.md) system to enforce permissions.
+Once you have mapped external groups, use Conduktor's [RBAC](../../../navigation/settings/rbac.md) system to enforce permissions.
