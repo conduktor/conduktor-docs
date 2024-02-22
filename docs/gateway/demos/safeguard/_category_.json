@@ -1,3 +1,6 @@
 {
-  "label": "Safeguard"
+  "label": "Safeguard",
+  "link": {
+    "type": "generated-index"
+  }
 }

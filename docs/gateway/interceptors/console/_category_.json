@@ -1,3 +1,6 @@
 {
-  "label": "Console"
+  "label": "Console",
+  "link": {
+    "type": "generated-index"
+  }
 }

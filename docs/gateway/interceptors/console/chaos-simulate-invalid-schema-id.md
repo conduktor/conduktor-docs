@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Simulate invalid schema ID
 description: Validate your application behaves correctly when records have an invalid schema id.
 parent: console

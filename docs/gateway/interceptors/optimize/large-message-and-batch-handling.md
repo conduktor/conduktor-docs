@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Large message/batch handling
 description: Increase performance and reduce costs with cold storage of Kafka data in Amazon S3.
 parent: optimize

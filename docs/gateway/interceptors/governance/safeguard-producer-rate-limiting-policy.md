@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Producer rate limiting policy
 description: Add produce throughput quota policy
 parent: governance

@@ -1,3 +1,6 @@
 {
-  "label": "Governance"
+  "label": "Governance",
+  "link": {
+    "type": "generated-index"
+  }
 }

@@ -1,6 +1,7 @@
 ---
 title: Schema Producer Interceptor
 description: Schema Producer Interceptor
+tag: quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -30,7 +31,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/A8nkdbgb7I7NY2u7wj413svJu.svg)](https://asciinema.org/a/A8nkdbgb7I7NY2u7wj413svJu)
+[![asciicast](https://asciinema.org/a/7qKjID1cxK8xIQxTmdW0pFihN.svg)](https://asciinema.org/a/7qKjID1cxK8xIQxTmdW0pFihN)
 
 </TabItem>
 </Tabs>
@@ -41,6 +42,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -71,6 +73,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -95,6 +99,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -119,6 +125,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,6 +151,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -172,8 +182,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -198,8 +210,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -225,6 +239,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -249,58 +279,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka3  Running
- Container kafka2  Running
- Container kafka1  Running
- Container gateway1  Running
- Container schema-registry  Running
- Container gateway2  Running
+ Network safeguard-validate-schema-payload_default  Creating
+ Network safeguard-validate-schema-payload_default  Created
+ Container kafka-client  Creating
+ Container zookeeper  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka3  Creating
+ Container kafka2  Creating
+ Container kafka1  Creating
+ Container kafka1  Created
+ Container kafka3  Created
+ Container kafka2  Created
+ Container gateway2  Creating
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ Container schema-registry  Created
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
+ Container kafka2  Started
+ Container kafka3  Started
+ Container kafka1  Started
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
- Container kafka1  Healthy
- Container kafka2  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container schema-registry  Starting
+ Container kafka2  Healthy
+ Container gateway2  Starting
+ Container schema-registry  Started
+ Container gateway2  Started
+ Container gateway1  Started
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
- Container gateway2  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container gateway2  Healthy
  Container zookeeper  Healthy
  Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container kafka1  Healthy
  Container schema-registry  Healthy
  Container gateway1  Healthy
- Container kafka2  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/FAhJiztDP3abYKjp4nDKG90LE.svg)](https://asciinema.org/a/FAhJiztDP3abYKjp4nDKG90LE)
+[![asciicast](https://asciinema.org/a/2ZJOlRlstI7FnZZqUJvw3gawT.svg)](https://asciinema.org/a/2ZJOlRlstI7FnZZqUJvw3gawT)
 
 </TabItem>
 </Tabs>
@@ -343,7 +404,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ2NTQyOH0.m12bxJ6wRC5lLiXRW7SHnp6JZmNjGSbQ8my9vPKrRug';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NjMyOX0.vZ0iVQg-rFo6HZDhZk9D8jO2o76z-GYpBQydeo8_Rn8';
 
 
 ```
@@ -351,7 +412,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/6k2C67FQcejvAaBuyHn61a9uA.svg)](https://asciinema.org/a/6k2C67FQcejvAaBuyHn61a9uA)
+[![asciicast](https://asciinema.org/a/iDHcUk5zzGf8C5sG9aCh47C6e.svg)](https://asciinema.org/a/iDHcUk5zzGf8C5sG9aCh47C6e)
 
 </TabItem>
 </Tabs>
@@ -406,7 +467,7 @@ Created topic topic-protobuf.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qxfIhSLmi8ai33EjPWtXw0Z6P.svg)](https://asciinema.org/a/qxfIhSLmi8ai33EjPWtXw0Z6P)
+[![asciicast](https://asciinema.org/a/4PdxTOwebZDZi9cXAGXM6x2qx.svg)](https://asciinema.org/a/4PdxTOwebZDZi9cXAGXM6x2qx)
 
 </TabItem>
 </Tabs>
@@ -415,13 +476,31 @@ Created topic topic-protobuf.
 
 Add Schema Payload Validation Policy Interceptor
 
+Creating the interceptor named `guard-schema-payload-validate` of the plugin `io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+  "priority" : 100,
+  "config" : {
+    "schemaRegistryConfig" : {
+      "host" : "http://schema-registry:8081"
+    },
+    "topic" : "topic-.*",
+    "schemaIdRequired" : true,
+    "validateSchema" : true,
+    "action" : "BLOCK"
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-07-guard-schema-payload-validate.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate" \
     --header 'Content-Type: application/json' \
@@ -436,19 +515,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-  "priority": 100,
-  "config": {
-    "schemaRegistryConfig": {
-      "host": "http://schema-registry:8081"
-    },
-    "topic": "topic-.*",
-    "schemaIdRequired": true,
-    "validateSchema": true,
-    "action": "BLOCK"
-  }
-}
-{
   "message": "guard-schema-payload-validate is created"
 }
 
@@ -457,7 +523,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/lcNCobdoZokxI6I7GGmAKHXI3.svg)](https://asciinema.org/a/lcNCobdoZokxI6I7GGmAKHXI3)
+[![asciicast](https://asciinema.org/a/jo66tm7wc259sV3itKRzPSBNy.svg)](https://asciinema.org/a/jo66tm7wc259sV3itKRzPSBNy)
 
 </TabItem>
 </Tabs>
@@ -509,7 +575,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TzOPqYwftSs12Qm0BleY3agYQ.svg)](https://asciinema.org/a/TzOPqYwftSs12Qm0BleY3agYQ)
+[![asciicast](https://asciinema.org/a/JMScyYRYceu71Br4p0tEKeLxp.svg)](https://asciinema.org/a/JMScyYRYceu71Br4p0tEKeLxp)
 
 </TabItem>
 </Tabs>
@@ -708,7 +774,7 @@ protobufSchemaId = {"id":3}
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WSuvHNzNZRiiV8amzvsEiOsjO.svg)](https://asciinema.org/a/WSuvHNzNZRiiV8amzvsEiOsjO)
+[![asciicast](https://asciinema.org/a/22aIeeos3jNauUVuATwHfbFyl.svg)](https://asciinema.org/a/22aIeeos3jNauUVuATwHfbFyl)
 
 </TabItem>
 </Tabs>
@@ -737,7 +803,7 @@ nb schemas = 3
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/HIa2fitro2VLmTwPfAwGIJ4Y0.svg)](https://asciinema.org/a/HIa2fitro2VLmTwPfAwGIJ4Y0)
+[![asciicast](https://asciinema.org/a/Q433j2VzXM0P4hLfRyNW5TpFi.svg)](https://asciinema.org/a/Q433j2VzXM0P4hLfRyNW5TpFi)
 
 </TabItem>
 </Tabs>
@@ -765,7 +831,7 @@ echo '{"name":"Hi","age":7,"email":"john.doecom","address":{"street":"123 Main S
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:23:56,719] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-02-14 04:12:15,548] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -904,7 +970,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/DrmGf51Eswy6RdbHSg8ZNy6E7.svg)](https://asciinema.org/a/DrmGf51Eswy6RdbHSg8ZNy6E7)
+[![asciicast](https://asciinema.org/a/x3UEdZeRTld0bnYBcNGKmsU8c.svg)](https://asciinema.org/a/x3UEdZeRTld0bnYBcNGKmsU8c)
 
 </TabItem>
 </Tabs>
@@ -932,7 +998,7 @@ echo '{"name":"Hi","age":7,"email":"john.doe@example.com","address":{"street":"1
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:23:58,368] INFO KafkaAvroSerializerConfig values: 
+[2024-02-14 04:12:16,974] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -994,9 +1060,9 @@ echo '{"name":"Hi","age":7,"email":"john.doe@example.com","address":{"street":"1
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:376)
-[2024-01-31 09:23:59,272] ERROR Error when sending message to topic topic-avro with key: null, value: 88 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:12:17,711] ERROR Error when sending message to topic topic-avro with key: null, value: 88 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10
-[2024-01-31 09:23:59,272] ERROR Error when sending message to topic topic-avro with key: null, value: 88 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:12:17,711] ERROR Error when sending message to topic topic-avro with key: null, value: 88 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10
 
 ```
@@ -1004,7 +1070,7 @@ org.apache.kafka.common.errors.PolicyViolationException: Request parameters do n
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yoNVbShGFm5K91MzIs5HEXDh4.svg)](https://asciinema.org/a/yoNVbShGFm5K91MzIs5HEXDh4)
+[![asciicast](https://asciinema.org/a/0FUpu1G3lrgbBIxU4aywdSmTC.svg)](https://asciinema.org/a/0FUpu1G3lrgbBIxU4aywdSmTC)
 
 </TabItem>
 </Tabs>
@@ -1022,60 +1088,68 @@ kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
     --topic _auditLogs \
     --from-beginning \
-    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \
+    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 13 messages
 {
-  "id" : "d8ac845c-f615-4794-969a-85bd47b00022",
-  "source" : "krn://cluster=rIIQWvX1SWqdrOUUP_GlIA",
-  "type" : "SAFEGUARD",
-  "authenticationPrincipal" : "teamA",
-  "userName" : "sa",
-  "connection" : {
-    "localAddress" : null,
-    "remoteAddress" : "/192.168.65.1:23945"
+  "id": "42ff3bf1-9ec7-4a5e-9208-27bdf5f57809",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58866"
   },
-  "specVersion" : "0.1.0",
-  "time" : "2024-01-31T08:17:58.399168302Z",
-  "eventData" : {
-    "level" : "error",
-    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:17.693833427Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"
   }
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-{"id":"b2a5df40-045e-4d83-89ee-78b6a41fdcc9","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46056"},"specVersion":"0.1.0","time":"2024-01-31T08:23:48.271213922Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
-{"id":"9ba22f1f-28a7-41c9-80ad-6488c90e7c75","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30927"},"specVersion":"0.1.0","time":"2024-01-31T08:23:49.681195839Z","eventData":"SUCCESS"}
-{"id":"676a1df0-c8a0-4f4f-942d-935d630e38b8","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34101"},"specVersion":"0.1.0","time":"2024-01-31T08:23:49.775569464Z","eventData":"SUCCESS"}
-{"id":"c387a1af-a2a2-4fe0-a85e-f3a79cd02f38","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30929"},"specVersion":"0.1.0","time":"2024-01-31T08:23:51.910540674Z","eventData":"SUCCESS"}
-{"id":"c715eec4-7c45-424d-8d22-a0af17b1045f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34103"},"specVersion":"0.1.0","time":"2024-01-31T08:23:51.960808215Z","eventData":"SUCCESS"}
-{"id":"5546dc85-daff-43ab-8442-1884943a3961","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30931"},"specVersion":"0.1.0","time":"2024-01-31T08:23:53.519256924Z","eventData":"SUCCESS"}
-{"id":"4bdfb6af-7836-4055-9b5c-e655ad226568","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34105"},"specVersion":"0.1.0","time":"2024-01-31T08:23:53.552982299Z","eventData":"SUCCESS"}
-{"id":"ac131ae3-0084-4507-9598-6cb99df1f019","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46072"},"specVersion":"0.1.0","time":"2024-01-31T08:23:54.140125091Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
-{"id":"a0963a5b-b1aa-43d3-a82c-55ebe87e930c","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46073"},"specVersion":"0.1.0","time":"2024-01-31T08:23:54.705500383Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
-{"id":"0b3a28c7-c631-4cf2-9350-3d2491b1a450","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30940"},"specVersion":"0.1.0","time":"2024-01-31T08:23:57.349465134Z","eventData":"SUCCESS"}
-{"id":"4f899f43-1e6d-41c2-933b-4b12a6b00b82","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30953"},"specVersion":"0.1.0","time":"2024-01-31T08:23:58.983903344Z","eventData":"SUCCESS"}
-{"id":"5f62a0f5-d3fb-4ef3-8a41-815501df1312","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30954"},"specVersion":"0.1.0","time":"2024-01-31T08:23:59.040053760Z","eventData":"SUCCESS"}
-{"id":"e33eddb1-6485-4b9b-acc2-7f71399e734a","source":"krn://cluster=F5rpirOQQCCITt0smzh25g","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:30954"},"specVersion":"0.1.0","time":"2024-01-31T08:23:59.264697260Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"}}
-[2024-01-31 09:24:03,808] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 13 messages
+{
+  "id": "42ff3bf1-9ec7-4a5e-9208-27bdf5f57809",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58866"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:17.693833427Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"
+  }
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/VQKx4yLbTrQ3HTRLGvkEK9eQj.svg)](https://asciinema.org/a/VQKx4yLbTrQ3HTRLGvkEK9eQj)
+[![asciicast](https://asciinema.org/a/oTaRtAln5zy10fJ6wqdMBOZ3M.svg)](https://asciinema.org/a/oTaRtAln5zy10fJ6wqdMBOZ3M)
 
 </TabItem>
 </Tabs>
@@ -1103,7 +1177,7 @@ echo '{"name":"Hi","age":7,"email":"john.doe@example.com","address":{"street":"1
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:24:04,798] INFO KafkaProtobufSerializerConfig values: 
+[2024-02-14 04:12:23,053] INFO KafkaProtobufSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1165,9 +1239,9 @@ echo '{"name":"Hi","age":7,"email":"john.doe@example.com","address":{"street":"1
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializerConfig:376)
-[2024-01-31 09:24:06,171] ERROR Error when sending message to topic topic-protobuf with key: null, value: 102 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:12:24,289] ERROR Error when sending message to topic topic-protobuf with key: null, value: 102 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10
-[2024-01-31 09:24:06,171] ERROR Error when sending message to topic topic-protobuf with key: null, value: 102 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+[2024-02-14 04:12:24,289] ERROR Error when sending message to topic topic-protobuf with key: null, value: 102 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10
 
 ```
@@ -1175,7 +1249,7 @@ org.apache.kafka.common.errors.PolicyViolationException: Request parameters do n
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jcvlZkihtseQ4nMDfWuI0QymC.svg)](https://asciinema.org/a/jcvlZkihtseQ4nMDfWuI0QymC)
+[![asciicast](https://asciinema.org/a/ucMYjZvwYn84Fd8MdoMfLzJkw.svg)](https://asciinema.org/a/ucMYjZvwYn84Fd8MdoMfLzJkw)
 
 </TabItem>
 </Tabs>
@@ -1193,63 +1267,104 @@ kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
     --topic _auditLogs \
     --from-beginning \
-    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \
+    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 16 messages
 {
-  "id" : "e42b67e6-76da-46d2-afcd-8289236283e2",
-  "source" : "krn://cluster=rIIQWvX1SWqdrOUUP_GlIA",
-  "type" : "SAFEGUARD",
-  "authenticationPrincipal" : "teamA",
-  "userName" : "sa",
-  "connection" : {
-    "localAddress" : null,
-    "remoteAddress" : "/192.168.65.1:28123"
+  "id": "42ff3bf1-9ec7-4a5e-9208-27bdf5f57809",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58866"
   },
-  "specVersion" : "0.1.0",
-  "time" : "2024-01-31T08:18:03.792856179Z",
-  "eventData" : {
-    "level" : "error",
-    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:17.693833427Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"
   }
 }
+{
+  "id": "b6d3c6e8-c3f8-4f86-914c-046d793a0f30",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58872"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:24.271040805Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"
+  }
+}
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-{"id":"b2a5df40-045e-4d83-89ee-78b6a41fdcc9","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46056"},"specVersion":"0.1.0","time":"2024-01-31T08:23:48.271213922Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
-{"id":"9ba22f1f-28a7-41c9-80ad-6488c90e7c75","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30927"},"specVersion":"0.1.0","time":"2024-01-31T08:23:49.681195839Z","eventData":"SUCCESS"}
-{"id":"676a1df0-c8a0-4f4f-942d-935d630e38b8","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34101"},"specVersion":"0.1.0","time":"2024-01-31T08:23:49.775569464Z","eventData":"SUCCESS"}
-{"id":"c387a1af-a2a2-4fe0-a85e-f3a79cd02f38","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30929"},"specVersion":"0.1.0","time":"2024-01-31T08:23:51.910540674Z","eventData":"SUCCESS"}
-{"id":"c715eec4-7c45-424d-8d22-a0af17b1045f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34103"},"specVersion":"0.1.0","time":"2024-01-31T08:23:51.960808215Z","eventData":"SUCCESS"}
-{"id":"5546dc85-daff-43ab-8442-1884943a3961","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30931"},"specVersion":"0.1.0","time":"2024-01-31T08:23:53.519256924Z","eventData":"SUCCESS"}
-{"id":"4bdfb6af-7836-4055-9b5c-e655ad226568","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34105"},"specVersion":"0.1.0","time":"2024-01-31T08:23:53.552982299Z","eventData":"SUCCESS"}
-{"id":"ac131ae3-0084-4507-9598-6cb99df1f019","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46072"},"specVersion":"0.1.0","time":"2024-01-31T08:23:54.140125091Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
-{"id":"a0963a5b-b1aa-43d3-a82c-55ebe87e930c","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.20.0.7:8888","remoteAddress":"192.168.65.1:46073"},"specVersion":"0.1.0","time":"2024-01-31T08:23:54.705500383Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
-{"id":"0b3a28c7-c631-4cf2-9350-3d2491b1a450","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30940"},"specVersion":"0.1.0","time":"2024-01-31T08:23:57.349465134Z","eventData":"SUCCESS"}
-{"id":"4f899f43-1e6d-41c2-933b-4b12a6b00b82","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30953"},"specVersion":"0.1.0","time":"2024-01-31T08:23:58.983903344Z","eventData":"SUCCESS"}
-{"id":"5f62a0f5-d3fb-4ef3-8a41-815501df1312","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30954"},"specVersion":"0.1.0","time":"2024-01-31T08:23:59.040053760Z","eventData":"SUCCESS"}
-{"id":"e33eddb1-6485-4b9b-acc2-7f71399e734a","source":"krn://cluster=F5rpirOQQCCITt0smzh25g","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:30954"},"specVersion":"0.1.0","time":"2024-01-31T08:23:59.264697260Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"}}
-{"id":"6b6faaeb-f87c-45dd-8a4d-3926467c6c56","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6969","remoteAddress":"/192.168.65.1:30959"},"specVersion":"0.1.0","time":"2024-01-31T08:24:05.496998222Z","eventData":"SUCCESS"}
-{"id":"3e78b17d-98d5-4c70-ac2a-951df04dc202","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.20.0.7:6971","remoteAddress":"/192.168.65.1:34133"},"specVersion":"0.1.0","time":"2024-01-31T08:24:05.555083472Z","eventData":"SUCCESS"}
-{"id":"f6d23b25-1974-44cb-afb9-69549c02832f","source":"krn://cluster=F5rpirOQQCCITt0smzh25g","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:34133"},"specVersion":"0.1.0","time":"2024-01-31T08:24:06.137392347Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"}}
-[2024-01-31 09:24:10,740] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 16 messages
+{
+  "id": "42ff3bf1-9ec7-4a5e-9208-27bdf5f57809",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58866"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:17.693833427Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-avro' has invalid avro schema payload: name is too short (2 < 3), street is too long (11 > 10), hobbies has too few items (2 < 3), age is greater than 10, age is greater than 10"
+  }
+}
+{
+  "id": "b6d3c6e8-c3f8-4f86-914c-046d793a0f30",
+  "source": "krn://cluster=TtF1fia0TJ-2B2bjRog-gg",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:58872"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:12:24.271040805Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (2 < 3), Student.Address.street is too long (11 > 10), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"
+  }
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ApAxbEkkIp1caN8gSxnaCm4in.svg)](https://asciinema.org/a/ApAxbEkkIp1caN8gSxnaCm4in)
+[![asciicast](https://asciinema.org/a/PS7pMEM5k5yIPcqUhmSIhZpza.svg)](https://asciinema.org/a/PS7pMEM5k5yIPcqUhmSIhZpza)
 
 </TabItem>
 </Tabs>
@@ -1273,29 +1388,33 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container schema-registry  Stopping
  Container gateway2  Stopping
  Container gateway1  Stopping
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container kafka-client  Stopping
+ Container schema-registry  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
+ Container gateway1  Removed
  Container gateway2  Stopped
  Container gateway2  Removing
- Container schema-registry  Removed
  Container gateway2  Removed
- Container gateway1  Removed
- Container kafka2  Stopping
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container schema-registry  Removed
  Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
+ Container kafka2  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka1  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
  Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
@@ -1309,7 +1428,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zbySWClvv27doqIQhKjBbtbKa.svg)](https://asciinema.org/a/zbySWClvv27doqIQhKjBbtbKa)
+[![asciicast](https://asciinema.org/a/A6hA2gzlPJQb9QUiEjYhmXMFk.svg)](https://asciinema.org/a/A6hA2gzlPJQb9QUiEjYhmXMFk)
 
 </TabItem>
 </Tabs>

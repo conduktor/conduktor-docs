@@ -1,6 +1,7 @@
 ---
 title: Schema Payload Validation for Json Schema
 description: Schema Payload Validation for Json Schema
+tag: quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -30,7 +31,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dN97wXTHS5xi1ujEP2oe7p5n8.svg)](https://asciinema.org/a/dN97wXTHS5xi1ujEP2oe7p5n8)
+[![asciicast](https://asciinema.org/a/u9SMZ7QJ6RGOCLapLrT1gEdVB.svg)](https://asciinema.org/a/u9SMZ7QJ6RGOCLapLrT1gEdVB)
 
 </TabItem>
 </Tabs>
@@ -41,6 +42,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -71,6 +73,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -95,6 +99,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -119,6 +125,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,6 +151,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -172,8 +182,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -198,8 +210,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -225,6 +239,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -249,58 +279,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka3  Running
- Container kafka2  Running
- Container kafka1  Running
- Container schema-registry  Running
- Container gateway1  Running
- Container gateway2  Running
+ Network safeguard-validate-schema-payload-json_default  Creating
+ Network safeguard-validate-schema-payload-json_default  Created
+ Container kafka-client  Creating
+ Container zookeeper  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka2  Creating
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka3  Created
+ Container kafka1  Created
+ Container kafka2  Created
+ Container gateway1  Creating
+ Container schema-registry  Creating
+ Container gateway2  Creating
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Created
+ Container gateway2  Created
+ Container schema-registry  Created
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container zookeeper  Started
+ Container kafka-client  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
+ Container kafka2  Starting
+ Container kafka2  Started
+ Container kafka1  Started
+ Container kafka3  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Healthy
+ Container kafka1  Waiting
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container gateway1  Waiting
- Container gateway2  Waiting
- Container zookeeper  Waiting
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container gateway1  Starting
+ Container kafka3  Healthy
+ Container gateway2  Starting
+ Container kafka3  Healthy
+ Container schema-registry  Starting
+ Container gateway1  Started
+ Container schema-registry  Started
+ Container gateway2  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
- Container gateway2  Healthy
- Container schema-registry  Healthy
- Container zookeeper  Healthy
- Container kafka2  Healthy
- Container gateway1  Healthy
- Container kafka1  Healthy
+ Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
  Container kafka3  Healthy
+ Container zookeeper  Healthy
+ Container kafka-client  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container schema-registry  Healthy
+ Container gateway1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hm5CMgJoAIJVY3Qj9G4JYMPQN.svg)](https://asciinema.org/a/hm5CMgJoAIJVY3Qj9G4JYMPQN)
+[![asciicast](https://asciinema.org/a/t12pzW2wylchi585p893HWZ7H.svg)](https://asciinema.org/a/t12pzW2wylchi585p893HWZ7H)
 
 </TabItem>
 </Tabs>
@@ -343,7 +404,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ2NjI2Nn0.VePbmWYZocAg4CMw2R5PZi6lRpQIFuEb63rAi_D-g98';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NzA1MX0.piOqH8SVpfJFQnusyWQ7z49RS5aY2g2qNPZci8BKSCA';
 
 
 ```
@@ -351,7 +412,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9JAJFZWZYaJQ6KSfX1tsN7hB2.svg)](https://asciinema.org/a/9JAJFZWZYaJQ6KSfX1tsN7hB2)
+[![asciicast](https://asciinema.org/a/w2ckzMujAH3mvbUVgAj0qWXcY.svg)](https://asciinema.org/a/w2ckzMujAH3mvbUVgAj0qWXcY)
 
 </TabItem>
 </Tabs>
@@ -388,7 +449,7 @@ Created topic topic-json-schema.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Ee6bRl0834OBkra8dK7ICDzS2.svg)](https://asciinema.org/a/Ee6bRl0834OBkra8dK7ICDzS2)
+[![asciicast](https://asciinema.org/a/G2Uex52fEHJcK7mvbMMcQI1gR.svg)](https://asciinema.org/a/G2Uex52fEHJcK7mvbMMcQI1gR)
 
 </TabItem>
 </Tabs>
@@ -483,7 +544,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/r1iXsAEgGun7tmvwOLaqkzIg4.svg)](https://asciinema.org/a/r1iXsAEgGun7tmvwOLaqkzIg4)
+[![asciicast](https://asciinema.org/a/5omPbSaMCgWaPwnsH80Zqzgal.svg)](https://asciinema.org/a/5omPbSaMCgWaPwnsH80Zqzgal)
 
 </TabItem>
 </Tabs>
@@ -552,7 +613,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:37:49,851] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-02-14 04:24:15,279] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -691,7 +752,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/gz16zNxhNhzqJeQiRCuC5T7dr.svg)](https://asciinema.org/a/gz16zNxhNhzqJeQiRCuC5T7dr)
+[![asciicast](https://asciinema.org/a/OQeBBXglOE9rvGliaF5U16rO8.svg)](https://asciinema.org/a/OQeBBXglOE9rvGliaF5U16rO8)
 
 </TabItem>
 </Tabs>
@@ -730,7 +791,7 @@ printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JQ3FQXMqnutyaWiMViUld8OM2.svg)](https://asciinema.org/a/JQ3FQXMqnutyaWiMViUld8OM2)
+[![asciicast](https://asciinema.org/a/d9ljSYPrxYoJlqVCaR3UvtRM3.svg)](https://asciinema.org/a/d9ljSYPrxYoJlqVCaR3UvtRM3)
 
 </TabItem>
 </Tabs>
@@ -758,7 +819,7 @@ kafka-json-schema-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:37:51,614] INFO KafkaJsonSchemaDeserializerConfig values: 
+[2024-02-14 04:24:16,953] INFO KafkaJsonSchemaDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -822,7 +883,7 @@ kafka-json-schema-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig:376)
-[2024-01-31 09:37:52,437] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-02-14 04:24:17,645] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -844,7 +905,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-[2024-01-31 09:37:52,437] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-02-14 04:24:17,645] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -866,10 +927,6 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-[2024-01-31 09:37:55,440] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
-[2024-01-31 09:37:55,440] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -877,7 +934,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9rN4zjGfhOWmRqKcknR4OghzJ.svg)](https://asciinema.org/a/9rN4zjGfhOWmRqKcknR4OghzJ)
+[![asciicast](https://asciinema.org/a/UsYvWCamhEIHZXLdYhQBvUtCD.svg)](https://asciinema.org/a/UsYvWCamhEIHZXLdYhQBvUtCD)
 
 </TabItem>
 </Tabs>
@@ -886,13 +943,31 @@ Processed a total of 1 messages
 
 Add Schema Payload Validation Policy Interceptor
 
+Creating the interceptor named `guard-schema-payload-validate` of the plugin `io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+  "priority" : 100,
+  "config" : {
+    "schemaRegistryConfig" : {
+      "host" : "http://schema-registry:8081"
+    },
+    "topic" : "topic-.*",
+    "schemaIdRequired" : true,
+    "validateSchema" : true,
+    "action" : "BLOCK"
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-13-guard-schema-payload-validate.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate" \
     --header 'Content-Type: application/json' \
@@ -907,19 +982,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-  "priority": 100,
-  "config": {
-    "schemaRegistryConfig": {
-      "host": "http://schema-registry:8081"
-    },
-    "topic": "topic-.*",
-    "schemaIdRequired": true,
-    "validateSchema": true,
-    "action": "BLOCK"
-  }
-}
-{
   "message": "guard-schema-payload-validate is created"
 }
 
@@ -928,7 +990,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PEhlG2Im67IC6OKKTYFAzodMw.svg)](https://asciinema.org/a/PEhlG2Im67IC6OKKTYFAzodMw)
+[![asciicast](https://asciinema.org/a/zlzT7SX9cN11f4iFdLrCI6ng4.svg)](https://asciinema.org/a/zlzT7SX9cN11f4iFdLrCI6ng4)
 
 </TabItem>
 </Tabs>
@@ -980,7 +1042,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/32bGCvMwkDNezF1Pig3TMMiKD.svg)](https://asciinema.org/a/32bGCvMwkDNezF1Pig3TMMiKD)
+[![asciicast](https://asciinema.org/a/Z2dk7q37jAYIuQ8h9gzWqWLQH.svg)](https://asciinema.org/a/Z2dk7q37jAYIuQ8h9gzWqWLQH)
 
 </TabItem>
 </Tabs>
@@ -1020,7 +1082,7 @@ printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9qnKR0Yxaq7rMVjrW8GLMH2RG.svg)](https://asciinema.org/a/9qnKR0Yxaq7rMVjrW8GLMH2RG)
+[![asciicast](https://asciinema.org/a/CrcqF2kOF5i6wZvqtNMjU1Nmw.svg)](https://asciinema.org/a/CrcqF2kOF5i6wZvqtNMjU1Nmw)
 
 </TabItem>
 </Tabs>
@@ -1038,61 +1100,68 @@ kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
     --topic _auditLogs \
     --from-beginning \
-    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \
+    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 1 event
+returns 
+
 ```json
+Processed a total of 14 messages
 {
-  "id" : "006ee99b-e504-4de3-bdbd-9e936994a5e7",
-  "source" : "krn://cluster=uJdKvZkTT_6cDUJ-4Ovfvw",
-  "type" : "SAFEGUARD",
-  "authenticationPrincipal" : "teamA",
-  "userName" : "sa",
-  "connection" : {
-    "localAddress" : null,
-    "remoteAddress" : "/192.168.65.1:38103"
+  "id": "e5594b2c-fdb2-4f32-9ad6-4587d46bd08b",
+  "source": "krn://cluster=WR6pYN7oSpSXjdolNbdGtQ",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:21099"
   },
-  "specVersion" : "0.1.0",
-  "time" : "2024-01-31T08:32:10.139479126Z",
-  "eventData" : {
-    "level" : "error",
-    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:24:21.998097138Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"
   }
 }
+
 ```
+
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-{"id":"9a005a31-cbf3-45bb-90d7-2b644f8b4ddc","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"192.168.0.6:8888","remoteAddress":"192.168.65.1:52512"},"specVersion":"0.1.0","time":"2024-01-31T08:37:46.293318379Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
-{"id":"f609ad6d-0e28-4be9-aeda-a8dd58d5b064","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6969","remoteAddress":"/192.168.65.1:37374"},"specVersion":"0.1.0","time":"2024-01-31T08:37:47.756677630Z","eventData":"SUCCESS"}
-{"id":"e7455ba5-15e0-4e23-be91-c20171c8246b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6971","remoteAddress":"/192.168.65.1:40548"},"specVersion":"0.1.0","time":"2024-01-31T08:37:47.898855130Z","eventData":"SUCCESS"}
-{"id":"c6960596-fcde-4477-812b-42dadce3d0fd","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6969","remoteAddress":"/192.168.65.1:37378"},"specVersion":"0.1.0","time":"2024-01-31T08:37:50.429082173Z","eventData":"SUCCESS"}
-{"id":"586ec411-7656-4dfb-9438-4f3025104762","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6969","remoteAddress":"/192.168.65.1:37379"},"specVersion":"0.1.0","time":"2024-01-31T08:37:50.932187840Z","eventData":"SUCCESS"}
-{"id":"e1844b0a-1292-4cfb-b5d4-dd9c6b3d6b22","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6970","remoteAddress":"/192.168.65.1:33208"},"specVersion":"0.1.0","time":"2024-01-31T08:37:50.971200840Z","eventData":"SUCCESS"}
-{"id":"0b65e73c-9084-4bed-83db-569d6e1c2634","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6969","remoteAddress":"/192.168.65.1:37392"},"specVersion":"0.1.0","time":"2024-01-31T08:37:52.059060715Z","eventData":"SUCCESS"}
-{"id":"e68168fe-88fe-4ec8-92d7-bf6b8e11ed3e","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6970","remoteAddress":"/192.168.65.1:33221"},"specVersion":"0.1.0","time":"2024-01-31T08:37:52.114314424Z","eventData":"SUCCESS"}
-{"id":"bcd53c9a-120e-4bb3-873a-b6cca49951a4","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6970","remoteAddress":"/192.168.65.1:33222"},"specVersion":"0.1.0","time":"2024-01-31T08:37:52.263080632Z","eventData":"SUCCESS"}
-{"id":"4016a79b-44f8-4aee-9100-ae5ddc96c6f9","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"192.168.0.6:8888","remoteAddress":"192.168.65.1:52535"},"specVersion":"0.1.0","time":"2024-01-31T08:37:55.995138175Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
-{"id":"018f6f80-4a70-4a4d-8fd0-1e5316898008","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"192.168.0.6:8888","remoteAddress":"192.168.65.1:52536"},"specVersion":"0.1.0","time":"2024-01-31T08:37:56.671116509Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
-{"id":"e90a964d-119a-4fcd-b9aa-1ca56d9b11b5","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6969","remoteAddress":"/192.168.65.1:37398"},"specVersion":"0.1.0","time":"2024-01-31T08:37:56.759896426Z","eventData":"SUCCESS"}
-{"id":"8ea4aa74-2e0a-42b1-8bf2-7ca9f2899b49","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.0.6:6970","remoteAddress":"/192.168.65.1:33227"},"specVersion":"0.1.0","time":"2024-01-31T08:37:56.794110592Z","eventData":"SUCCESS"}
-{"id":"b5ec1c57-6467-4624-addf-d564832d1ea5","source":"krn://cluster=ZA0OO8RaR-6qe27lOxfNuA","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:33227"},"specVersion":"0.1.0","time":"2024-01-31T08:37:57.309365551Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"}}
-[2024-01-31 09:38:02,108] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 14 messages
+{
+  "id": "e5594b2c-fdb2-4f32-9ad6-4587d46bd08b",
+  "source": "krn://cluster=WR6pYN7oSpSXjdolNbdGtQ",
+  "type": "SAFEGUARD",
+  "authenticationPrincipal": "teamA",
+  "userName": "sa",
+  "connection": {
+    "localAddress": null,
+    "remoteAddress": "/192.168.65.1:21099"
+  },
+  "specVersion": "0.1.0",
+  "time": "2024-02-14T03:24:21.998097138Z",
+  "eventData": {
+    "level": "error",
+    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"
+  }
+}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/P0m81JXk9PNZGPKzYXV6FiOK8.svg)](https://asciinema.org/a/P0m81JXk9PNZGPKzYXV6FiOK8)
+[![asciicast](https://asciinema.org/a/yoRGjHLbBZakQoTJFIkRJpVBG.svg)](https://asciinema.org/a/yoRGjHLbBZakQoTJFIkRJpVBG)
 
 </TabItem>
 </Tabs>
@@ -1120,7 +1189,7 @@ cat valid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:38:03,380] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-02-14 04:24:27,107] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1191,7 +1260,7 @@ cat valid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JwKKmZdGr4stFzejYqnnSOugr.svg)](https://asciinema.org/a/JwKKmZdGr4stFzejYqnnSOugr)
+[![asciicast](https://asciinema.org/a/fKl4vyz8b9YqRHDeW2c1CAJ7S.svg)](https://asciinema.org/a/fKl4vyz8b9YqRHDeW2c1CAJ7S)
 
 </TabItem>
 </Tabs>
@@ -1219,7 +1288,7 @@ kafka-json-schema-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-01-31 09:38:05,181] INFO KafkaJsonSchemaDeserializerConfig values: 
+[2024-02-14 04:24:28,648] INFO KafkaJsonSchemaDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1283,7 +1352,7 @@ kafka-json-schema-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig:376)
-[2024-01-31 09:38:05,976] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-02-14 04:24:29,286] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -1305,7 +1374,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-[2024-01-31 09:38:05,976] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-02-14 04:24:29,286] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -1328,10 +1397,6 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
 {"name":"Doe","age":17,"email":"john.doe@example.com","address":{"street":"123 Main St","city":"Anytown"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
-[2024-01-31 09:38:08,981] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
-[2024-01-31 09:38:08,981] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
-org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
 ```
@@ -1339,7 +1404,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fLv4M0Buoqq2hvjIO5aFz1NBv.svg)](https://asciinema.org/a/fLv4M0Buoqq2hvjIO5aFz1NBv)
+[![asciicast](https://asciinema.org/a/qngPfb6lon4xnzkhn9krapjOg.svg)](https://asciinema.org/a/qngPfb6lon4xnzkhn9krapjOg)
 
 </TabItem>
 </Tabs>
@@ -1363,30 +1428,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
  Container schema-registry  Stopping
+ Container kafka-client  Stopping
  Container gateway1  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container gateway2  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
  Container gateway2  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container schema-registry  Removed
+ Container kafka1  Stopping
  Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka1  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
+ Container kafka2  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
- Container kafka2  Removed
  Container kafka3  Removed
- Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1399,7 +1468,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/p1WNkUNMorWlK3NHKSC9tiZmt.svg)](https://asciinema.org/a/p1WNkUNMorWlK3NHKSC9tiZmt)
+[![asciicast](https://asciinema.org/a/NPBbaTIUvqjlmhamrfWkrIzZR.svg)](https://asciinema.org/a/NPBbaTIUvqjlmhamrfWkrIzZR)
 
 </TabItem>
 </Tabs>

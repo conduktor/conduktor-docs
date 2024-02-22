@@ -1,6 +1,7 @@
 ---
 title: Chaos Simulate Slow Broker
 description: Chaos Simulate Slow Broker
+tag: chaos
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -24,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PagT5PJDW1H5RUcXzuH1DtZUg.svg)](https://asciinema.org/a/PagT5PJDW1H5RUcXzuH1DtZUg)
+[![asciicast](https://asciinema.org/a/NELFoJ8ZL1hbRlECWuOJ8dBDU.svg)](https://asciinema.org/a/NELFoJ8ZL1hbRlECWuOJ8dBDU)
 
 </TabItem>
 </Tabs>
@@ -35,6 +36,7 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 
 * gateway1
 * gateway2
+* kafka-client
 * kafka1
 * kafka2
 * kafka3
@@ -65,6 +67,8 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -89,6 +93,8 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -113,6 +119,8 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -137,6 +145,8 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -166,8 +176,10 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -192,8 +204,10 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.5.0
+    image: conduktor/conduktor-gateway:2.6.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -219,6 +233,22 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
+    labels:
+      tag: conduktor
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    labels:
+      tag: conduktor
+networks:
+  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -243,58 +273,89 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Container zookeeper  Running
- Container kafka2  Running
- Container kafka3  Running
- Container kafka1  Running
- Container gateway2  Running
- Container gateway1  Running
- Container schema-registry  Running
+ Network chaos-simulate-slow-broker_default  Creating
+ Network chaos-simulate-slow-broker_default  Created
+ Container kafka-client  Creating
+ Container zookeeper  Creating
+ Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka2  Creating
+ Container kafka3  Created
+ Container kafka1  Created
+ Container kafka2  Created
+ Container schema-registry  Creating
+ Container gateway2  Creating
+ Container gateway1  Creating
+ gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Created
+ Container gateway1  Created
+ Container schema-registry  Created
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Healthy
+ Container kafka2  Starting
  Container zookeeper  Healthy
+ Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
+ Container kafka2  Started
+ Container kafka3  Started
+ Container kafka1  Started
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
+ Container schema-registry  Starting
  Container kafka1  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container gateway2  Starting
+ Container gateway1  Starting
+ Container gateway2  Started
+ Container gateway1  Started
+ Container schema-registry  Started
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container zookeeper  Waiting
- Container gateway2  Healthy
- Container gateway1  Healthy
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka-client  Healthy
  Container zookeeper  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
- Container schema-registry  Healthy
  Container kafka3  Healthy
+ Container schema-registry  Healthy
+ Container gateway1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/wrJDaRGT7762hhMrd9kYT20sx.svg)](https://asciinema.org/a/wrJDaRGT7762hhMrd9kYT20sx)
+[![asciicast](https://asciinema.org/a/F7f4T2WblF0la3JToz5JNNn23.svg)](https://asciinema.org/a/F7f4T2WblF0la3JToz5JNNn23)
 
 </TabItem>
 </Tabs>
@@ -337,7 +398,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNDQ0MjcwMX0.tz_JTAPlZUucuIXTNdVOzkIT2kej3V3pECZUROi0rQY';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0NjIxMX0._0om4q2rYuCytMmYJALhDUycg8DLzNqoBbOoWDEdBXo';
 
 
 ```
@@ -345,7 +406,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TVXMrGnV2cPugFzlnEqV3aCnC.svg)](https://asciinema.org/a/TVXMrGnV2cPugFzlnEqV3aCnC)
+[![asciicast](https://asciinema.org/a/2iYDftcI6UKzfnkJVQpb1bbJA.svg)](https://asciinema.org/a/2iYDftcI6UKzfnkJVQpb1bbJA)
 
 </TabItem>
 </Tabs>
@@ -382,7 +443,7 @@ Created topic slow-topic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hKdOkqSDPJt01Gm59Youg1iXc.svg)](https://asciinema.org/a/hKdOkqSDPJt01Gm59Youg1iXc)
+[![asciicast](https://asciinema.org/a/n1HzYXc0qS7keX3VIH37MKf5d.svg)](https://asciinema.org/a/n1HzYXc0qS7keX3VIH37MKf5d)
 
 </TabItem>
 </Tabs>
@@ -391,13 +452,27 @@ Created topic slow-topic.
 
 Let's create the interceptor against the virtual cluster teamA, instructing Conduktor Gateway to simulate slow responses from brokers.
 
+Creating the interceptor named `simulate-slow-broker` of the plugin `io.conduktor.gateway.interceptor.chaos.SimulateSlowBrokerPlugin` using the following payload
+
+```json
+{
+  "pluginClass" : "io.conduktor.gateway.interceptor.chaos.SimulateSlowBrokerPlugin",
+  "priority" : 100,
+  "config" : {
+    "rateInPercent" : 100,
+    "minLatencyMs" : 2000,
+    "maxLatencyMs" : 2001
+  }
+}
+```
+
+Here's how to send it:
+
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-cat step-07-simulate-slow-broker.json | jq
-
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/simulate-slow-broker" \
     --header 'Content-Type: application/json' \
@@ -412,15 +487,6 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.chaos.SimulateSlowBrokerPlugin",
-  "priority": 100,
-  "config": {
-    "rateInPercent": 100,
-    "minLatencyMs": 2000,
-    "maxLatencyMs": 2001
-  }
-}
-{
   "message": "simulate-slow-broker is created"
 }
 
@@ -429,7 +495,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RIXlQP2zICsnvPG3SybPRTCFQ.svg)](https://asciinema.org/a/RIXlQP2zICsnvPG3SybPRTCFQ)
+[![asciicast](https://asciinema.org/a/TakVQR7pKY5DBvLopzttSObvf.svg)](https://asciinema.org/a/TakVQR7pKY5DBvLopzttSObvf)
 
 </TabItem>
 </Tabs>
@@ -477,7 +543,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/N8nKa7JD2MRoKPpnPPvbPYXN3.svg)](https://asciinema.org/a/N8nKa7JD2MRoKPpnPPvbPYXN3)
+[![asciicast](https://asciinema.org/a/2shLBedmOwUiwcGjTDrF8PnBe.svg)](https://asciinema.org/a/2shLBedmOwUiwcGjTDrF8PnBe)
 
 </TabItem>
 </Tabs>
@@ -510,16 +576,16 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-5 records sent, 1,0 records/sec (0,00 MB/sec), 2078,4 ms avg latency, 2240,0 ms max latency.
-5 records sent, 1,0 records/sec (0,00 MB/sec), 2023,6 ms avg latency, 2033,0 ms max latency.
-10 records sent, 0,975705 records/sec (0,00 MB/sec), 2051,00 ms avg latency, 2240,00 ms max latency, 2028 ms 50th, 2240 ms 95th, 2240 ms 99th, 2240 ms 99.9th.
+5 records sent, 1,0 records/sec (0,00 MB/sec), 2078,8 ms avg latency, 2241,0 ms max latency.
+5 records sent, 1,0 records/sec (0,00 MB/sec), 2024,4 ms avg latency, 2038,0 ms max latency.
+10 records sent, 0,975800 records/sec (0,00 MB/sec), 2051,60 ms avg latency, 2241,00 ms max latency, 2025 ms 50th, 2241 ms 95th, 2241 ms 99th, 2241 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/EyKAQG6K2mKbIy6SwgCeXqSSK.svg)](https://asciinema.org/a/EyKAQG6K2mKbIy6SwgCeXqSSK)
+[![asciicast](https://asciinema.org/a/JOCKvwx8w0dzM4lTqxkX5QL52.svg)](https://asciinema.org/a/JOCKvwx8w0dzM4lTqxkX5QL52)
 
 </TabItem>
 </Tabs>
@@ -543,30 +609,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
  Container gateway1  Stopping
+ Container kafka-client  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container gateway2  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka2  Stopping
  Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
+ Container kafka2  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
+ Container kafka2  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka2  Removed
- Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -579,7 +649,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/S4MQWAOhKhZDxgyuWiCaSL3YE.svg)](https://asciinema.org/a/S4MQWAOhKhZDxgyuWiCaSL3YE)
+[![asciicast](https://asciinema.org/a/3bLrKT0YQlrdeef4fQGeeArg7.svg)](https://asciinema.org/a/3bLrKT0YQlrdeef4fQGeeArg7)
 
 </TabItem>
 </Tabs>

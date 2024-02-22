@@ -43,7 +43,7 @@ Default configurations for Conduktor Gateway can be overridden by environment va
 There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
 
 The below is an example including some variables we recommend you modify in any setup you do, but is by no
-means a guarantee of sufficient requirements in your setup.
+means a guarantee of sufficient requirements in your setup. You can also checkout our [helm charts](https://helm.conduktor.io) for the deployment on Kubernetes.
 
 We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
 issues or questions please contact support at `support@conduktor.io`.
@@ -88,14 +88,16 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### SSL
 
-| Environment Variable                            | Default Value                      | Description                                       |
-|-------------------------------------------------|------------------------------------|---------------------------------------------------|
-| `GATEWAY_SSL_KEY_STORE_PATH`                    | `config/kafka-proxy.keystore.jks`  | Path to a keystore for SSL connections            |
-| `GATEWAY_SSL_KEY_STORE_PASSWORD`                | `123456`                           | Password for the keystore defined above           |
-| `GATEWAY_SSL_KEY_PASSWORD`                      | `123456`                           | Password for the key contained in the store above |
-| `GATEWAY_SSL_KEY_TYPE`                          | `jks`                              | We currently only support `jks`                   |
-| `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
-| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
+| Environment Variable                          | Default Value                     | Description                                                                                     |
+|-----------------------------------------------|-----------------------------------|-------------------------------------------------------------------------------------------------|
+| `GATEWAY_SSL_KEY_STORE_PATH`                  | `config/kafka-proxy.keystore.jks` | Path to a keystore for SSL connections                                                          |
+| `GATEWAY_SSL_KEY_STORE_PASSWORD`              | `123456`                          | Password for the keystore defined above                                                         |
+| `GATEWAY_SSL_KEY_PASSWORD`                    | `123456`                          | Password for the key contained in the store above                                               |
+| `GATEWAY_SSL_KEY_TYPE`                        | `jks`                             | We currently only support `jks`                                                                 |
+| `GATEWAY_SSL_UPDATE_INTERVAL_MS`              | `600000`                          |                                                                                                 |
+| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES` | `5`                               | Interval in minutes to refresh SSL context                                                      |
+| `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES`         | `DEFAULT`                         | [See kafka](https://kafka.apache.org/documentation/#brokerconfigs_ssl.principal.mapping.rules). |
+ 
 
 | Environment Variable               | Default Value                       | Description                                                                                                                                |
 |------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
@@ -170,7 +172,7 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 | Environment Variable      | Default Value                                           | Description                                                                       |
 |---------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------|
 | `GATEWAY_HTTP_PORT`       | `8888`                                                  | The port on which the gateway will present the HTTP API                  |
-| `GATEWAY_SECURED_METRICS` | `true`                                                  | Require authroised credentials to connect to the `/metrics` endpoint. See the [Monitoring page](/gateway/configuration/monitoring/) for more information. |
+| `GATEWAY_SECURED_METRICS` | `true`                                                  | Require authorised credentials to connect to the `/metrics` endpoint. See the [Monitoring page](/gateway/configuration/monitoring/) for more information. |
 | `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the API, please note that admin is required to do anything other than read |
 
 ### Internal state

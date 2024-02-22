@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Limit Commit Offset Policy
 description: Limits commit offset attempts on the same `groupId` within a minute.
 parent: governance

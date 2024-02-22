@@ -1,5 +1,5 @@
 ---
-version: 2.5.0
+version: 2.6.0
 title: Caching
 description: Cache requests to lower your costs and latency
 parent: optimize
