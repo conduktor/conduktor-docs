@@ -275,39 +275,39 @@ const redirects = [
         to: '/platform/category/installation/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/introduction/',
         to: '/platform/get-started/configuration/introduction/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/env-variables/',
         to: '/platform/get-started/configuration/env-variables/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/configuration-snippets/',
         to: '/platform/get-started/configuration/configuration-snippets/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/cortex/',
         to: '/platform/get-started/configuration/cortex/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/database/',
         to: '/platform/get-started/configuration/database/',
       },
       {
-        from: '/platform/configuration',
-        to: '/platform/get-started/configuration/http-proxy-configuration',
+        from: '/platform/configuration/http-proxy-configuration',
+        to: '/platform/get-started/configuration/http-proxy-configuration/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/https-configuration/',
         to: '/platform/get-started/configuration/https-configuration/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/ssl-tls-configuration/',
         to: '/platform/get-started/configuration/ssl-tls-configuration/',
       },
       {
-        from: '/platform/configuration',
+        from: '/platform/configuration/memory-configuration/',
         to: '/platform/get-started/configuration/memory-configuration/',
       }
     ],
