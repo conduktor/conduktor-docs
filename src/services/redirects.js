@@ -363,10 +363,6 @@ const redirects = [
         to: '/platform/get-started/configuration/user-authentication/SSO/auth0/',
       },
       {
-        from: '/platform/admin/rbac/',
-        to: '/platform/navigation/settings/rbac/',
-      },
-      {
         from: '/platform/configuration/api-overview/',
         to: '/platform/reference/api-reference/',
       },
@@ -380,7 +376,7 @@ const redirects = [
       },
       {
         from: '/platform/installation/aws/',
-        to: '/platform/get-started/installation/get-started/aws/',
+        to: '/platform/get-started/installation/get-started/AWS/',
       },
       {
         from: '/platform/installation/license-management/',
@@ -393,6 +389,10 @@ const redirects = [
       {
         from: '/platform/installation/Upgrades/',
         to: '/platform/get-started/installation/Upgrades/',
+      },
+      {
+        from: '/platform/admin/rbac/',
+        to: '/platform/navigation/settings/rbac/',
       },
     ],
   },
