@@ -372,15 +372,15 @@ const redirects = [
       },
       {
         from: '/platform/installation/docker/',
-        to: '/platform/get-started/installation/docker/',
+        to: '/platform/get-started/installation/get-started/docker/',
       },
       {
         from: '/platform/installation/kubernetes/',
-        to: '/platform/get-started/installation/kubernetes/',
+        to: '/platform/get-started/installation/get-started/kubernetes/',
       },
       {
         from: '/platform/installation/aws/',
-        to: '/platform/get-started/installation/aws/',
+        to: '/platform/get-started/installation/get-started/aws/',
       },
       {
         from: '/platform/installation/license-management/',
