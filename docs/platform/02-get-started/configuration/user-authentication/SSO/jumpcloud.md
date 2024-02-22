@@ -88,7 +88,12 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and JumpCloud:
 
-From the JumpCloud side ensure you have checked ` Email` and `Profile` under the standard scopes, that `email_verified` has a value of true and include group attribute contains the value stated in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` environmental variable on the Conduktor Console side. See example  screenshot shown below.
+From the JumpCloud side, ensure you have:
+- Checked `Email` and `Profile` under the standard scopes
+- Set the `email_verified` to true
+- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` value of your Console's configuration
+
+See example screenshot shown below.
 
 ![](../../assets/jumpcloud-figure-7.png)
 
