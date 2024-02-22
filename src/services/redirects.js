@@ -394,6 +394,10 @@ const redirects = [
         from: '/platform/admin/rbac/',
         to: '/platform/navigation/settings/rbac/',
       },
+      {
+        from: '/platform/installation/get-started/docker-compose/',
+        to: '/platform/get-started/installation/get-started/docker/',
+      },
     ],
   },
 ]
