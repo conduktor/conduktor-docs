@@ -311,16 +311,56 @@ const redirects = [
         to: '/platform/get-started/configuration/memory-configuration/',
       },
       {
-        from: '/platform/configuration/user-authentication/',
-        to: '/platform/get-started/configuration/user-authentication/',
-      },
-      {
         from: '/platform/configuration/configure-sso/',
         to: '/platform/category/configure-sso/',
       },
       {
-        from: '/platform/configuration/user-authentication/SSO/',
-        to: '/platform/get-started/configuration/user-authentication/SSO/',
+        from: '/platform/configuration/user-authentication/local-admin-and-users/',
+        to: '/platform/get-started/configuration/user-authentication/local-admin-and-users/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/external-group-sync/',
+        to: '/platform/get-started/configuration/user-authentication/external-group-sync/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/session-lifetime/',
+        to: '/platform/get-started/configuration/user-authentication/session-lifetime/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/ldap/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/ldap/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/ldaps',
+        to: '/platform/get-started/configuration/user-authentication/SSO/ldaps',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/generic-oauth2/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/azure/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/azure/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/google/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/google/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/amazon-cognito/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/amazon-cognito/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/keycloak/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/keycloak/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/okta/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/okta/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/auth0/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/auth0/',
       }
     ],
   },
