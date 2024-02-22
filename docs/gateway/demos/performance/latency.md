@@ -644,5 +644,5 @@ docker compose down --volumes
 
 # Conclusion
 
-Gateway is end to end latency is enough for all use cases!
+Gateway's end to end latency is enough for all use cases!
 
