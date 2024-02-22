@@ -274,6 +274,130 @@ const redirects = [
         from: '/platform/installation',
         to: '/platform/category/installation/',
       },
+      {
+        from: '/platform/configuration/introduction/',
+        to: '/platform/get-started/configuration/introduction/',
+      },
+      {
+        from: '/platform/configuration/env-variables/',
+        to: '/platform/get-started/configuration/env-variables/',
+      },
+      {
+        from: '/platform/configuration/configuration-snippets/',
+        to: '/platform/get-started/configuration/configuration-snippets/',
+      },
+      {
+        from: '/platform/configuration/cortex/',
+        to: '/platform/get-started/configuration/cortex/',
+      },
+      {
+        from: '/platform/configuration/database/',
+        to: '/platform/get-started/configuration/database/',
+      },
+      {
+        from: '/platform/configuration/http-proxy-configuration',
+        to: '/platform/get-started/configuration/http-proxy-configuration/',
+      },
+      {
+        from: '/platform/configuration/https-configuration/',
+        to: '/platform/get-started/configuration/https-configuration/',
+      },
+      {
+        from: '/platform/configuration/ssl-tls-configuration/',
+        to: '/platform/get-started/configuration/ssl-tls-configuration/',
+      },
+      {
+        from: '/platform/configuration/memory-configuration/',
+        to: '/platform/get-started/configuration/memory-configuration/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/configure-sso/',
+        to: '/platform/category/configure-sso/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/local-admin-and-users/',
+        to: '/platform/get-started/configuration/user-authentication/local-admin-and-users/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/external-group-sync/',
+        to: '/platform/get-started/configuration/user-authentication/external-group-sync/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/session-lifetime/',
+        to: '/platform/get-started/configuration/user-authentication/session-lifetime/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/ldap/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/ldap/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/ldaps',
+        to: '/platform/get-started/configuration/user-authentication/SSO/ldaps',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/generic-oauth2/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/azure/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/azure/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/google/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/google/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/amazon-cognito/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/amazon-cognito/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/keycloak/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/keycloak/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/okta/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/okta/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/auth0/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/auth0/',
+      },
+      {
+        from: '/platform/configuration/api-overview/',
+        to: '/platform/reference/api-reference/',
+      },
+      {
+        from: '/platform/installation/get-started/docker/',
+        to: '/platform/get-started/installation/get-started/docker/',
+      },
+      {
+        from: '/platform/installation/get-started/kubernetes/',
+        to: '/platform/get-started/installation/get-started/kubernetes/',
+      },
+      {
+        from: '/platform/installation/get-started/aws/',
+        to: '/platform/get-started/installation/get-started/AWS/',
+      },
+      {
+        from: '/platform/installation/license-management/',
+        to: '/platform/get-started/installation/license-management/',
+      },
+      {
+        from: '/platform/installation/hardware/',
+        to: '/platform/get-started/installation/hardware/',
+      },
+      {
+        from: '/platform/installation/Upgrades/',
+        to: '/platform/get-started/installation/Upgrades/',
+      },
+      {
+        from: '/platform/admin/rbac/',
+        to: '/platform/navigation/settings/rbac/',
+      },
+      {
+        from: '/platform/installation/get-started/docker-compose/',
+        to: '/platform/get-started/installation/get-started/docker/',
+      },
     ],
   },
 ]
