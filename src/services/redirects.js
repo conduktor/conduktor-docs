@@ -361,7 +361,39 @@ const redirects = [
       {
         from: '/platform/configuration/user-authentication/SSO/auth0/',
         to: '/platform/get-started/configuration/user-authentication/SSO/auth0/',
-      }
+      },
+      {
+        from: '/platform/admin/rbac/',
+        to: '/platform/navigation/settings/rbac/',
+      },
+      {
+        from: '/platform/configuration/api-overview/',
+        to: '/platform/reference/api-reference/',
+      },
+      {
+        from: '/platform/installation/docker/',
+        to: '/platform/get-started/installation/docker/',
+      },
+      {
+        from: '/platform/installation/kubernetes/',
+        to: '/platform/get-started/installation/kubernetes/',
+      },
+      {
+        from: '/platform/installation/aws/',
+        to: '/platform/get-started/installation/aws/',
+      },
+      {
+        from: '/platform/installation/license-management/',
+        to: '/platform/get-started/installation/license-management/',
+      },
+      {
+        from: '/platform/installation/hardware/',
+        to: '/platform/get-started/installation/hardware/',
+      },
+      {
+        from: '/platform/installation/Upgrades/',
+        to: '/platform/get-started/installation/Upgrades/',
+      },
     ],
   },
 ]
