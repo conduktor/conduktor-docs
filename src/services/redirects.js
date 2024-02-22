@@ -309,6 +309,18 @@ const redirects = [
       {
         from: '/platform/configuration/memory-configuration/',
         to: '/platform/get-started/configuration/memory-configuration/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/',
+        to: '/platform/get-started/configuration/user-authentication/',
+      },
+      {
+        from: '/platform/configuration/configure-sso/',
+        to: '/platform/category/configure-sso/',
+      },
+      {
+        from: '/platform/configuration/user-authentication/SSO/',
+        to: '/platform/get-started/configuration/user-authentication/SSO/',
       }
     ],
   },
