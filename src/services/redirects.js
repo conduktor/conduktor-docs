@@ -367,15 +367,15 @@ const redirects = [
         to: '/platform/reference/api-reference/',
       },
       {
-        from: '/platform/installation/docker/',
+        from: '/platform/installation/get-started/docker/',
         to: '/platform/get-started/installation/get-started/docker/',
       },
       {
-        from: '/platform/installation/kubernetes/',
+        from: '/platform/installation/get-started/kubernetes/',
         to: '/platform/get-started/installation/get-started/kubernetes/',
       },
       {
-        from: '/platform/installation/aws/',
+        from: '/platform/installation/get-started/aws/',
         to: '/platform/get-started/installation/get-started/AWS/',
       },
       {
