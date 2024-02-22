@@ -311,7 +311,7 @@ const redirects = [
         to: '/platform/get-started/configuration/memory-configuration/',
       },
       {
-        from: '/platform/configuration/configure-sso/',
+        from: '/platform/configuration/user-authentication/configure-sso/',
         to: '/platform/category/configure-sso/',
       },
       {
