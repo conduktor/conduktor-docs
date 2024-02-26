@@ -1,0 +1,24 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "^http://localhost.*"
+    },
+    {
+      "pattern": "^https://staging.conduktor.io.*"
+    },
+    {
+      "pattern": "^https://conduktor-marketplace.vercel.app/.*"
+    },
+    {
+      "pattern": "^https://staging-learn.conduktor.io/.*"
+      
+    },
+    {
+      "pattern": "^https://*.vercel.app/.*"
+    },
+    {
+      "pattern": "^https://github.com/conduktor/conduktor-gateway-interceptors/*"
+    }
+  ],
+  "aliveStatusCodes": [400, 403, 200, 503, 0, 999]
+}
