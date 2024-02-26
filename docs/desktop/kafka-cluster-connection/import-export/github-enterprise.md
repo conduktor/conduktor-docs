@@ -13,7 +13,7 @@ description: Use Github to share your clusters configuration privately among you
 2. Commit the file on a Github repository \(can be private\)
 3. Share the github URL of the file to your teammates
 
-   e.g.: [http://github.com/trobert/conduktor-configs/blob/main/config.json](http://github.com/trobert/conduktor-configs/blob/main/config.json)
+
 
 ## How to import clusters configuration from github
 
