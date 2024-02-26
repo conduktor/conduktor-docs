@@ -18,6 +18,9 @@
     },
     {
       "pattern": "^https://github.com/conduktor/conduktor-gateway-interceptors/*"
+    },
+    {
+      "pattern": "^https://asciinema.org/"
     }
   ],
   "aliveStatusCodes": [400, 403, 200, 503, 0, 999]

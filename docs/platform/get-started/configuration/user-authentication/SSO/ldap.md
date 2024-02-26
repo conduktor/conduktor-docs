@@ -95,7 +95,3 @@ To create this mapping, you have to create a group from Console, and mention the
 
 After the user logged in, we can see they've been added to the group, without any action:
 ![](../../assets/admin-egm-after-login.png)
-
-## Stack example
-
-If you need more examples, you can go to this [stack with LDAP configuration](https://github.com/conduktor/conduktor-platform/tree/main/example-sso-ldap), and you will be able to start Conduktor Console using a local LDAP, with two users and a group. You can find the credentials in the [README.md](https://github.com/conduktor/conduktor-platform/tree/main/example-sso-ldap#readme).
