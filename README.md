@@ -19,5 +19,3 @@ You have to be a member of our Vercel workspace for Vercel to build your PR/comm
 Ensure you are a member using `@conduktor.io`, not your personal email (check your Github profile).
 
 Or have someone from Vercel change this line each time as the latest commit. `Change me 0`.
-
-[deliberate broken link](https://broken.broken)
