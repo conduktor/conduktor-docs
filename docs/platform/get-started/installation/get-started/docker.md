@@ -36,7 +36,7 @@ This option pre-configures Conduktor to connect to the embedded Redpanda and Sch
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-#### OR, Launch Conduktor and connect it to your existing Kafka
+#### OR, Launch Conduktor in standalone and connect it to your existing Kafka
 
 Add your own cluster configuration from within the Conduktor UI.
 
@@ -58,7 +58,7 @@ Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration
 
 Conduktor works with all Kafka providers such as Confluent, Aiven, MSK and Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
 
-Once you complete the onboarding wizard, go to [http://localhost:8080/admin/clusters](http://localhost:8080/admin/clusters) and **add** a new cluster configuration.
+Once you complete the onboarding wizard, go to [http://localhost:8080/admin/clusters](http://localhost:8080/settings/clusters) and **add** a new cluster configuration.
 
 From within the cluster configuration screen, add the:
 
@@ -119,14 +119,14 @@ The below example shows how to configure Conduktor with the minimum configuratio
 If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](../../license-management/#into-the-configuration-file).
 You can get the list of all the properties supported [here](../../../configuration/env-variables/).
 
-```yaml title="platform-config.yaml"
+```yaml title="console-config.yaml"
 organization:
   name: "conduktor"
 
 database:
   host: 'postgresql'
   port: 5432
-  name: 'conduktor-platform'
+  name: 'conduktor-console'
   username: 'conduktor'
   password: 'change_me'
   connection_timeout: 30 # in seconds
@@ -143,15 +143,15 @@ auth:
 monitoring:
   cortex-url: http://conduktor-monitoring:9009/
   alert-manager-url: http://conduktor-monitoring:9010/
-  callback-url: http://conduktor-platform:8080/monitoring/api/
+  callback-url: http://conduktor-console:8080/monitoring/api/
   notifications-callback-url: http://localhost:8080
 
-license: "" # license key if Enterprise
+# license: "" license key if Enterprise
 ```
 
 #### Step 2: Bind the file 
 
-The below docker-compose indicates how to bind your `platform-config.yaml` file.
+The below docker-compose indicates how to bind your `console-config.yaml` file.
 
 Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it. The file is also mounted to be used from within the container.
 
@@ -163,28 +163,28 @@ services:
     image: postgres:14
     hostname: postgresql
     environment:
-      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_DB: "conduktor-console"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
 
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.20.0
+  conduktor-console:
+    image: conduktor/conduktor-console:1.21.0
     depends_on:
       - postgresql
     ports:
       - "8080:8080"
     volumes:
       - type: bind
-        source: "./platform-config.yaml"
-        target: /opt/conduktor/platform-config.yaml
+        source: "./console-config.yaml"
+        target: /opt/conduktor/console-config.yaml
         read_only: true
     environment:
-      CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+      CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.19.0
+    image: conduktor/conduktor-console-cortex:1.21.0
     environment:
-      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ```
 
 #### Step 3: Access Conduktor
@@ -222,31 +222,31 @@ services:
     image: postgres:14
     hostname: postgresql
     environment:
-      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_DB: "conduktor-console"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
 
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.20.0
+  conduktor-console:
+    image: conduktor/conduktor-console:1.21.0
     depends_on:
       - postgresql
     ports:
       - "8080:8080"
     environment:
-      CDK_LICENSE: "" # license key if Enterprise
-      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
+      # CDK_LICENSE: "" license key if Enterprise
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       CDK_ORGANIZATION_NAME: "<Your Company>"
       CDK_ADMIN_EMAIL: "<name@your_company.io>"
       CDK_ADMIN_PASSWORD: "admin"
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
-      CDK_MONITORING_CALLBACK-URL: http://conduktor-platform:8080/monitoring/api/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-platform-cortex:1.20.0
+    image: conduktor/conduktor-console-cortex:1.21.0
     environment:
-      CDK_CONSOLE-URL: "http://conduktor-platform:8080"
+      CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
 volumes:
   pg_data: {}
