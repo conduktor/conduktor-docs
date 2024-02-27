@@ -36,7 +36,7 @@ This option pre-configures Conduktor to connect to the embedded Redpanda and Sch
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-#### OR, Launch Conduktor in standalone and connect it to your existing Kafka
+#### OR, Launch Conduktor and connect it to your existing Kafka
 
 Add your own cluster configuration from within the Conduktor UI.
 
