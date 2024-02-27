@@ -70,7 +70,7 @@ services:
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex
+    image: conduktor/conduktor-console-cortex:1.21.0
     ports:
       - "9009:9009" # cortex api
       - "9010:9010" # alertmanager api
