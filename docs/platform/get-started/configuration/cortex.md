@@ -61,7 +61,7 @@ Typically, in docker compose it would look like this:
 version: '3.8'
 services:
   conduktor-console:
-    image: conduktor/conduktor-console
+    image: conduktor/conduktor-console:1.21.0
     ports:
       - "8080:8080"
     environment: 
