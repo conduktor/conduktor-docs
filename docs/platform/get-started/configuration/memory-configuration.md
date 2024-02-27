@@ -41,7 +41,7 @@ template:
   spec:
     containers:
       - name: console
-        image: conduktor/conduktor-console:latest
+        image: conduktor/conduktor-console:1.21.0
         resources:
           limits:
             memory: 8G
@@ -55,7 +55,7 @@ template:
 # docker-compose.yaml
 ...
   conduktor-console:
-    image: conduktor/conduktor-console
+    image: conduktor/conduktor-console:1.21.0
     deploy:
       resources:
         limits:
