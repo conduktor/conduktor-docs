@@ -22,8 +22,8 @@ In this example server certificate and key are stored in files `server.crt` and 
 ```yaml
 version: '3.8'
 services:
-  conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+  conduktor-console:
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     volumes: 
@@ -38,4 +38,45 @@ services:
     environment:
       CDK_PLATFORM_HTTPS_CERT_PATH: '/opt/conduktor/certs/server.crt'
       CDK_PLATFORM_HTTPS_KEY_PATH: '/opt/conduktor/certs/server.key'
+```
+
+In case of Console monitoring image `conduktor/conduktor-console-cortex` running as well, you need to provide the CA public certificate to the monitoring image to allow metrics scraping on https. 
+
+```yaml
+ version: '3.8'
+ services:
+   conduktor-console:
+     image: conduktor/conduktor-console
+     ports:
+       - 8080:8080
+     volumes:
+       - type: bind
+         source: ./server.crt
+         target: /opt/conduktor/certs/server.crt
+         read_only: true
+       - type: bind
+         source: ./server.key
+         target: /opt/conduktor/certs/server.key
+         read_only: true
+     environment:
+       # HTTPS configuration
+       CDK_PLATFORM_HTTPS_CERT_PATH: '/opt/conduktor/certs/server.crt'
+       CDK_PLATFORM_HTTPS_KEY_PATH: '/opt/conduktor/certs/server.key'
+       # monitoring configuration
+       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
+       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
+       CDK_MONITORING_CALLBACK-URL: https://conduktor-console:8080/monitoring/api/
+       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+       
+   conduktor-monitoring:
+     image: conduktor/conduktor-console-cortex
+     volumes:
+       - type: bind
+         source: ./server.crt
+         target: /opt/conduktor/certs/server.crt
+         read_only: true
+     environment:
+       CDK_CONSOLE-URL: "https://conduktor-console:8080"
+       CDK_SCRAPER_SKIPSSLCHECK: "false" # can be set to true if you don't want to check the certificate
+       CDK_SCRAPER_CAFILE: "/opt/conduktor/certs/server.crt"
 ```

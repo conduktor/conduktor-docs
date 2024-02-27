@@ -17,6 +17,6 @@ You can subscribe to release notifications [here](https://support.conduktor.io/h
 Conduktor is released as a Docker container, the process for upgrading from one release to the next is:
 
 ```sh
-docker pull conduktor/conduktor-platform
-docker restart conduktor/conduktor-platform
+docker pull conduktor/conduktor-console
+docker restart conduktor/conduktor-console
 ```

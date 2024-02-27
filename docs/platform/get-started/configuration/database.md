@@ -75,7 +75,7 @@ Example :
   -p "8080:8080" \
   -e CDK_DATABASE_URL="postgresql://user:password@host:5432/database" \
   -e LICENSE_KEY="<your-license>" \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-console:latest
 ```
 
 > **Note 1** : If all connection urls **AND** decomposed configuration fields are provided, the decomposed configuration fields take priority.

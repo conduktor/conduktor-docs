@@ -40,8 +40,8 @@ kind: Deployment
 template:
   spec:
     containers:
-      - name: platform
-        image: conduktor/conduktor-platform:1.19.0
+      - name: console
+        image: conduktor/conduktor-console:latest
         resources:
           limits:
             memory: 8G
@@ -54,8 +54,8 @@ template:
 ```yaml
 # docker-compose.yaml
 ...
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.19.0
+  conduktor-console:
+    image: conduktor/conduktor-console
     deploy:
       resources:
         limits:

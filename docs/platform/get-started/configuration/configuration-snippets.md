@@ -56,7 +56,7 @@ organization:
 database:
   host: 'postgresql'
   port: 5432
-  name: 'conduktor-platform'
+  name: 'conduktor'
   username: 'conduktor'
   password: 'change_me'
   connection_timeout: 30 # in seconds
@@ -64,7 +64,7 @@ database:
 monitoring:
   cortex-url: 'http://conduktor-monitoring:9009/'
   alert-manager-url: 'http://conduktor-monitoring:9010/'
-  callback-url: 'http://conduktor-platform:8080/monitoring/api/'
+  callback-url: 'http://conduktor-console:8080/monitoring/api/'
   notifications-callback-url: 'http://localhost:8080'
 
 admin:
@@ -105,10 +105,10 @@ license: "" # license key if Enterprise
     environment:
       CDK_ORGANIZATION_NAME: 'conduktor'
       CDK_LICENSE: '' # license key if Enterprise 
-      CDK_DATABASE_URL: 'postgresql://conduktor:change_me@postgresql:5432/conduktor-platform'
+      CDK_DATABASE_URL: 'postgresql://conduktor:change_me@postgresql:5432/conduktor'
       CDK_MONITORING_CORTEX-URL: 'http://conduktor-monitoring:9009/'
       CDK_MONITORING_ALERT-MANAGER-URL: 'http://conduktor-monitoring:9010/'
-      CDK_MONITORING_CALLBACK-URL: 'http://conduktor-platform:8080/monitoring/api/'
+      CDK_MONITORING_CALLBACK-URL: 'http://conduktor-console:8080/monitoring/api/'
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: 'http://localhost:8080'
       CDK_ADMIN_EMAIL: 'name@your_company.io'
       CDK_ADMIN_PASSWORD: 'admin'

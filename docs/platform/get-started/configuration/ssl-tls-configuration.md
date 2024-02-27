@@ -85,7 +85,7 @@ keytool  \
 
 ### Configure custom truststore on Conduktor Console
 
-For that we need to mount the truststore file into the conduktor-platform container and pass the correct environment variables
+For that we need to mount the truststore file into the conduktor-console container and pass the correct environment variables
 for locating truststore file inside the container and password if needed.
 
 Assuming that truststore file is named `truststore.jks` with password `changeit`.  
@@ -98,7 +98,7 @@ If run from docker :
    --mount "type=bind,source=$PWD/truststore.jks,target=/opt/conduktor/certs/truststore.jks" \
    -e CDK_SSL_TRUSTSTORE_PATH="/opt/conduktor/certs/truststore.jks" \
    -e CDK_SSL_TRUSTSTORE_PASSWORD="changeit" \
-  conduktor/conduktor-platform:latest
+  conduktor/conduktor-console
 ```
 
 From docker-compose :
@@ -107,8 +107,8 @@ From docker-compose :
 version: '3.8'
 
 services:
-  conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+  conduktor-console:
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     volumes:
@@ -157,20 +157,20 @@ You can paste the 2 file's contents into Conduktor, or alternatively import from
 
 ### Using Volume Mount (Alternate method)
 
-You can mount the keystore file in 'conduktor-platform' image:
+You can mount the keystore file in 'conduktor-console' image:
 
 ```yaml
 version: '3.8'
 services:
-conduktor-platform:
-image: conduktor/conduktor-platform:latest
-ports:
-  - 8080:8080
-volumes:
-  - type: bind
-source: ./keystore.jks
-target: /opt/conduktor/certs/keystore.jks
-read_only: true
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./keystore.jks
+        target: /opt/conduktor/certs/keystore.jks
+        read_only: true
 ```
 
 And then from the UI, choose the SSL Authentication method "Keystore file is mounted on the volume" and fill in the required fields
