@@ -47,13 +47,13 @@ admin:
   password: admin
 
 database:
-  url: postgresql://user:password@host:5432/database
+  url: postgresql://conduktor:change_me@host:5432/conduktor
   # OR in a decomposed way
   # host: "host"
   # port: 5432
-  # name: "database"
-  # username: "user"
-  # password: "password"
+  # name: "conduktor"
+  # username: "conduktor"
+  # password: "change_me"
   # connection_timeout: 30 # in seconds
 
 auth:
@@ -80,13 +80,13 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_DB: "conduktor"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
-  conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+  conduktor-console:
+    image: conduktor/conduktor-console
     depends_on:
       - postgresql
     ports:
@@ -115,7 +115,7 @@ For all configuration properties and environment variables see [Configuration Pr
 
 ## Environment override
 
-Since Conduktor `1.2.0`, input configuration fields can also be provided using environment variables.
+Input configuration fields can also be provided using environment variables.
 
 For more information, see [Environment Variables](../env-variables/).
 
@@ -131,13 +131,13 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "conduktor-platform"
+      POSTGRES_DB: "conduktor"
       POSTGRES_USER: "conduktor"
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
-  conduktor-platform:
-    image: conduktor/conduktor-platform:1.17.0
+  conduktor-console:
+    image: conduktor/conduktor-console
     depends_on:
       - postgresql
     ports:
@@ -151,11 +151,11 @@ services:
       timeout: 5s
       retries: 3
     environment:
-      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-platform"
-      CDK_LICENSE: "${LICENSE_TOKEN:-}"
-      CDK_ORGANIZATION_NAME: "${ORGANIZATION_NAME}"
-      CDK_ADMIN_EMAIL: "${ADMIN_EMAIL}"
-      CDK_ADMIN_PASSWORD: "${ADMIN_PSW}"
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor"
+      CDK_LICENSE: "<your license key>"
+      CDK_ORGANIZATION_NAME: "demo"
+      CDK_ADMIN_EMAIL: "admin@company.io"
+      CDK_ADMIN_PASSWORD: "admin"
 
 volumes:
   pg_data: {}
@@ -164,6 +164,6 @@ volumes:
 
 ## Container user and permissions
 
-Before version `1.8.0`, Console was running as root user. After `1.8.0`, Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
+Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
 
 All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.

@@ -147,7 +147,7 @@ Optional properties for configuring [session lifetime](../user-authentication/se
 
 ### Local users properties
 
-Optional local accounts list used to login on conduktor-platform
+Optional local accounts list used to login on Console
 
 | Property | Description | Env Variable | Mandatory | Type | Default Value |
 | --- | --- | --- | --- | --- | --- |
@@ -162,21 +162,21 @@ Before 1.18:
 - `conduktor/conduktor-platform:1.17.3` or below
 
 Starting with 1.18:
-- `conduktor/conduktor-platform:1.18.0` or above
+- `conduktor/conduktor-console:1.18.0` or above
 and
-- `conduktor/conduktor-platform-cortex:1.18.0` or above
+- `conduktor/conduktor-console-cortex:1.18.0` or above
 
 :::
 
 This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-You can choose to not deploy `conduktor/conduktor-platform-cortex` (Cortex) image. In this case, you will not be able to access to the following pages anymore:
+You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to access to the following pages anymore:
 ![](assets/monitoring-disabled.png)
 
 The configuration is split in 2 chapters: 
-- Console Configuration for Cortex `conduktor/conduktor-platform`
-- Cortex Configuration `conduktor/conduktor-platform-cortex`
+- Console Configuration for Cortex `conduktor/conduktor-console`
+- Cortex Configuration `conduktor/conduktor-console-cortex`
 
 #### Console Configuration for Cortex
 

@@ -19,8 +19,8 @@ There are 5 properties you can set to specify the proxy that will be used by the
 ```yaml
 version: '3.8'
 services:
-  conduktor-platform:
-    image: conduktor/conduktor-platform:latest
+  conduktor-console:
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     environment:
