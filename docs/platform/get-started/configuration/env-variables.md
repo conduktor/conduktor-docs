@@ -147,7 +147,7 @@ Optional properties for configuring [session lifetime](../user-authentication/se
 
 ### Local users properties
 
-Optional local accounts list used to login on conduktor-console
+Optional local accounts list used to login on Console
 
 | Property | Description | Env Variable | Mandatory | Type | Default Value |
 | --- | --- | --- | --- | --- | --- |
