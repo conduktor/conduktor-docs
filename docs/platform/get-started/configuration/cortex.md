@@ -61,7 +61,7 @@ Typically, in docker compose it would look like this:
 version: '3.8'
 services:
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     ports:
       - "8080:8080"
     environment: 
@@ -70,7 +70,7 @@ services:
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.21.0
+    image: conduktor/conduktor-console-cortex
     ports:
       - "9009:9009" # cortex api
       - "9010:9010" # alertmanager api

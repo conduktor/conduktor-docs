@@ -20,7 +20,7 @@ There are 5 properties you can set to specify the proxy that will be used by the
 version: '3.8'
 services:
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     environment:

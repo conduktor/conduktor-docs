@@ -86,7 +86,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     depends_on:
       - postgresql
     ports:
@@ -137,7 +137,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     depends_on:
       - postgresql
     ports:

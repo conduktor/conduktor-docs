@@ -23,7 +23,7 @@ In this example server certificate and key are stored in files `server.crt` and 
 version: '3.8'
 services:
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     volumes: 
@@ -46,7 +46,7 @@ In case of Console monitoring image `conduktor/conduktor-console-cortex` running
  version: '3.8'
  services:
    conduktor-console:
-     image: conduktor/conduktor-console:1.21.0
+     image: conduktor/conduktor-console
      ports:
        - 8080:8080
      volumes:
@@ -69,7 +69,7 @@ In case of Console monitoring image `conduktor/conduktor-console-cortex` running
        CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
        
    conduktor-monitoring:
-     image: conduktor/conduktor-console-cortex:1.21.0
+     image: conduktor/conduktor-console-cortex
      volumes:
        - type: bind
          source: ./server.crt

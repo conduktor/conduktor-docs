@@ -98,7 +98,7 @@ If run from docker :
    --mount "type=bind,source=$PWD/truststore.jks,target=/opt/conduktor/certs/truststore.jks" \
    -e CDK_SSL_TRUSTSTORE_PATH="/opt/conduktor/certs/truststore.jks" \
    -e CDK_SSL_TRUSTSTORE_PASSWORD="changeit" \
-  conduktor/conduktor-console:1.21.0
+  conduktor/conduktor-console
 ```
 
 From docker-compose :
@@ -108,7 +108,7 @@ version: '3.8'
 
 services:
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     volumes:
@@ -163,7 +163,7 @@ You can mount the keystore file in 'conduktor-console' image:
 version: '3.8'
 services:
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console
     ports:
       - 8080:8080
     volumes:
