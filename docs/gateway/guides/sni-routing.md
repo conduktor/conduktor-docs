@@ -11,9 +11,9 @@ description: Making the most from the ports you have
 ## What is it, what problem does it solve?
 
 
-SNI routing reduces the number of ports/services that needs to be created for Gateway. You might need to do this if you are experiencing high administrative overhead for managing ports and/or load balancers or if you are limited in how many you can control e.g. a different team manage that.
+SNI routing reduces the number of ports/services that need to be created for Gateway. You might need to do this if you are experiencing a high administrative overhead for managing ports and/or load balancers or if you are limited in how many you can control e.g. a different team manages this.
 
-*TL;DR* clients need to adress individual Kafka brokers through Gateway, when we have limited ports or they can't be updated frequently 1:1 may not work, in which case we can run multiple broker connections through a single port.
+*TL;DR* clients need to address individual Kafka brokers through Gateway, when we have limited ports or they can't be updated frequently then 1:1 may not work, in which case we can run multiple broker connections through a single port.
 
 - [Relevant Context](#relevant-context)
     - [Defining Ports](#defining-ports)
