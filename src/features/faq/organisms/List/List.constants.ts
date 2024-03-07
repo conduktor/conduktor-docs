@@ -105,4 +105,22 @@ export const items = [
     answer:
       'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionailty to allow users be able to choose between either local time and UTC on Conduktor Console.',
   },
+  {
+    question:
+      'My license permits me access to Console for 50 users - how are those users defined?',
+    answer:
+      'Conduktor considers a user as any distinct entry that is stored in the users database, regardless of whether they have ever logged in, or are attached to any existing Groups. Entries are created in the users database when the first admin account(s) are created, users are added via basic authentication, or users log in via SSO (or, are explicitly added inside the Conduktor UI prior to their first login via SSO). From within the Settings > Users list, you can see how many users exist in your organization, and remove a user by choosing the delete member option',
+  },
+  {
+    question:
+      'What happens if I exceed my user threshold?',
+    answer:
+      'Conduktor employs a soft limit to ensure that your service is not disrupted in cases whereby you onboard more users than you expected. We understand it can be difficult to plan in advance, and ask you get in contact with your Customer Success team if you exceed your user threshold. Please note this limit is a contractual agreement between Conduktor and your company, and may be subject to auditing from time to time.',
+  },
+  {
+    question:
+      'I cannot see the last active date of a user, how can I perform a clean-up?',
+    answer:
+      'This information is not currently available within Conduktor,  but is being considered for an upcoming release in the next couple of months. If you are interested in this feature, please contact your Customer Success team or our Support team who can advise on interim workarounds.'
+  }
 ]
