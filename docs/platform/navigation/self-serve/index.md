@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-title: Overview
+sidebar_position: 3
+title: Self Service
 description: Kafka Self Serve Overview
 ---
 
@@ -8,55 +8,159 @@ description: Kafka Self Serve Overview
 
 ## Overview
 
-Self-Serve standardises your foundational processes for creating and managing Kafka resources such as topics, consumer groups and subjects.
-Instead of giving free reign to teams and developers, it allows you to bring governance into your enterprise. This is achieved by defining environments, applications and using request and approval workflows to grant access to the applications. 
+Self Service helps you scale Kafka usage in your organization by facilitating collaboration between the **Central Platform Team** and **Application Teams**.  
+It simplifies and automates processes, establishes clear rules and ways of working, and standardizes the creation and management of Kafka resources.  
+This approach brings governance into your enterprise through concepts like Ownership and Applications, delegating operations to the Application Teams rather than the Central Platform Team.
 
-**Pre-requisites**
- 
-To start using Self-Serve you need:
-* Conduktor Console running
-* At least one Kafka cluster to map an environment to
-* An enterprise Conduktor license with access to Topic-as-a-Service
-* Administrator access on Conduktor Console to do the environment mapping initially.
+### Benefits for Applications Teams
+- Autonomy and responsibility over their resources
+- Isolation with Application namespaces
+- Collaboration with using Permission Delegation without any help from the Central Platform
+- Discoverability through Topic Catalog
+### Benefits for Central Platform Team
+- Define the general rules of the game
+- Enforce naming conventions
+- Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
+- Declare the Applications and their rights
+- 🍹🏖️
 
-## Concepts
+Self Service relies on a central concept, the Application which deals with 3 main concerns:
+- Ownership of the Application on **Kafka** resources
+- How **People** interract with the Application
+- Self Service & Governance **Processes**.
+  ![Image](img/application-concept.png)
 
-### Environments
+:::info
+**Conduktor Self Serve is constantly evolving!**  
+We listen to your feedback to build the most awesome Product
+:::
 
-#### What is an Environment?
+## Core Concepts
 
-An environment is a 1-1 mapping with your physical Kafka cluster environments.
-Configuring your environments is the first step in enabling Self-Serve use amongst your teams. Note this step must be completed by an administrator.
+Each concept presented here correlates to a resource that can be deployed on Self Service.  
+For the full definition of each resource, check the CLI Reference documentation
 
-Examples might be:
-If you have development, staging and production Kafka clusters, you should configure 3 environments:
-* Development
-* Staging
-* Production
+### Application
+An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka. 
+Applications give context to Kafka resources (topics, consumer groups & subjects) that directly relate to the functioning of that application or pipeline.  
 
-![figure1-concepts.png](/img/self-serve/figure1-concepts.png)
+**Example**
+````yaml
+---
+apiVersion: "v1"
+kind: "Application"
+meta:
+  name: "clickstream-app"
+spec:
+  title: "Clickstream App"
+  description: "Clickstream records user’s clicks through their journey on our website"
+  owner: "clickstream-group"            # technical-id of Console Group
+````
 
-### Applications
-#### What is an Application?
+### Application Instance
+**Applications** are generally deployed to one or more Kafka clusters, typically to align with the organization's development cycle or environments.
+We call this concept **Application Instance**:
+- It is linked to a Kafka Cluster and a Service Account
+- It has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
+- It manages the permissions
+  - On the Service Account (Kafka ACL)
+  - On the Application Team members in Console
 
-An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.
-Applications give context to Kafka resources (topics, consumer groups & subjects) that directly relate to the functioning of that application or pipeline.
+**Example**
+````yaml
+# Application Instances (environment)
+---
+apiVersion: "v1"
+kind: "AppInstance"
+meta:
+  application: "clickstream-app"
+  name: "clickstream-app-dev"
+spec:
+  cluster: "shadow-it"
+  service-account: "sa-clickstream-dev"
+  resources:
+    - resourceType: TOPIC
+      resource: "click."
+      resourcePatternType: PREFIXED
+    - resourceType: GROUP
+      resource: "click."
+      resourcePatternType: PREFIXED
+````
 
-Examples might be:
-* StockTradingApp
-* FraudDetectionApp
-* Clickstream
-* CheckoutApp
+Delegating ownership on the Kafka resources grants permissions to
+- the Application owner group in Console using RBAC (`Admin` permissions)
+- the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
 
-![figure-2-concepts.png](/img/self-serve/figure-2-concepts.png)
+This will evolve as we implement new concepts in Self Serve to better manage People permissions over the application.
 
-### Requests
-#### What is a Request?
-A request represents a user seeking the approval to create a new application within Conduktor Self-Serve, and thus manage underlying Kafka resources that match the defined prefix(es). The requests tab will show the current pending requests, the requests which have been approved/rejected and the history of all similar previous requests made by users to the administrators of your Conduktor instance(s). Note this tab is only available to those with administrator privileges.
+## Kafka Concepts
 
-Examples might be:
-* Requesting to create a new application within Self Serve is pending.
-* Requesting to create a new application within Self Serve is approved or rejected.
-* All previous requests whether approved or rejected.
+### Cross-Application Instance Permission
+While Application Instance grants the ownership on the resources, Application Instance Permissions lets teams to collaborate with each others.  
+This resource is managed by the owners of the Application and the  
+**Example**
+````yaml
+# Permission granted to other Applications
+---
+apiVersion: v1
+kind: "AppInstancePermission"
+metadata:
+  application: "clickstream-app"
+  appInstance: "clickstream-app-dev"
+  name: "clickstream-app-dev-to-another"
+spec:
+  resourceType: TOPIC
+  resource: "click.screen-events"
+  resourcePatternType: LITERAL
+  permission: READ
+  grantedTo: "heatmap-app-dev"
+````
 
-![figure3-concepts.png](/img/self-serve/figure3-concepts.png)
+## People Concepts
+### Application Teams (Sub Groups/Sub Teams ?)
+**Example**
+````yaml
+# Permissions granted to Console users in the Application
+---
+apiVersion: v1
+kind: "ApplicationTeam"
+metadata:
+  application: "clickstream-app"
+  name: "clickstream-support"
+spec:
+  title: Support Clickstream
+  description: |
+    Members of the Support Group are allowed:
+      Read access on all the resources
+      Can restart owned connectors
+      Can reset offsets
+  permissions:
+    - appInstance: clickstream-app-dev
+      resourceType: TOPIC [TOPIC, SUBSCRIBED_TOPIC]
+      resource: "*" # All owned topics
+      permissions: ["topicViewConfig", "topicConsume"]
+    - appInstance: clickstream-app-dev
+      resourceType: GROUP
+      resource: "*" # All owned consumer groups
+      permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
+    - appInstance: clickstream-app-dev
+      resourceType: CONNECTOR
+      resource: "*" # All owned connectors
+      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectPauseResume", "kafkaConnectRestart"]
+  members:
+    - user1@company.org
+    - user2@company.org
+  externalGroups:
+    - GP-COMPANY-CLICKSTREAM-SUPPORT
+
+````
+## Process & Governance Concepts
+
+### Resource Policies
+### Topic Catalog
+
+## User Interface
+For now, Self Service relies heavily on the CLI. This helps us move fast and is more aligned with the opinionated principles we have at Conduktor. We want you to manage all this using GitOps approach.
+
+The Conduktor UI will be useful as an Application & Topic Catalog.
+
