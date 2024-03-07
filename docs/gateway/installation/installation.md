@@ -1,13 +1,12 @@
 ---
 sidebar_position: 1
 title: Installation
-description: Conduktor Gateway is provided as a Docker image. This can either be deployed in a single container or a number of proxies can be deployed behind a load balancer.
+description: Conduktor Gateway is provided as a Docker image. This can be deployed however you wish within your environment.
 ---
 
 # System Requirements
 
 Conduktor Gateway is provided as a Docker image and should be deployed and managed how is best for your organisation and use case. This can either be deployed in a single container, or more likely a number of Gateway instances can be deployed behind a load balancer and scaled appropriately to meet your needs.
-We provide [helm charts](https://helm.conduktor.io) for the deployment on Kubernetes.
 
 Jump to:
 
@@ -52,7 +51,10 @@ In its most simple form Gateway can be run from a simple Docker run command with
 ```
 
 If you're interested in trying out Gateway yourself go checkout the [demos](https://github.com/conduktor/conduktor-gateway-demos).
-For more control over your deployments see the [environment variables](/gateway/configuration/env-variables/).
+No matter how you deploy Gateway the finer configuration details required are described on the [environment variables](/gateway/configuration/env-variables/) page.
+
+### Helm
+Conduktor products can be deployed using [helm charts](https://helm.conduktor.io), specifically the chart for the Gateway artefact can be found on [Github](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).
 
 ## Connecting to secured Kafka
 
