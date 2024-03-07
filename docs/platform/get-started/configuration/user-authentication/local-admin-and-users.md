@@ -6,11 +6,19 @@ description: Configure and manage local admin and users
 
 ## Configure local admin and users
 
-When you first start Conduktor Console, a **local admin** will be created using the credentials you gave (**mandatory since 1.14.0**). This admin account allows you to make some actions like creating users and groups, connecting clusters, or giving permissions, in order to initialize your instance before onboarding users.
+When you first start Conduktor Console, a **local admin** will be created using the credentials you gave. This admin account allows you to make some actions like creating users and groups, connecting clusters, or giving permissions, in order to initialize your instance before onboarding users.
 
-You can also declare some **local users** for testing purposes, to observe what other users can see with different permissions.
+You can declare **new users** from within the Console UI, via the configuration file or through environment variables.
 
-You can declare local admin and users within the **configuration file** or via **environment variables**.
+### Add users in Console UI
+
+From within the **Settings** > **Users & Groups** screen, select **create members** to add a new user.
+
+ - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
+ - Alterantively, you can add users via basic authentication
+
+![console kafka UI users](../assets/console-users.png)
+
 
 ### Configuration example
 

@@ -91,6 +91,16 @@ inter.broker.listener.name=PLAINTEXT
 
 From within the Conduktor interface, connect using the bootstrap server: `host.docker.internal:19092`
 
+### Step 4: Add additional users
+
+If you have deployed Conduktor on a central server, add new users to collaborate with them inside the Console.
+
+From within the **Settings** > **Users & Groups** screen, select **create members** to add a new user.
+
+![console kafka UI users](../../configuration/assets/console-users.png)
+
+For more information on configuring SSO see [configuring SSO](/platform/category/configure-sso/).
+
 ## Advanced Setup
 
 Conduktor can also be configured using a [configuration file](#configuration-using-a-configuration-file) `platform-config.yaml`, or through [environment variables](#configuration-using-environment-variables). This is used to set up your organization's environment.
@@ -205,6 +215,10 @@ If using [SSO](/platform/category/user-authentication/), you will see an option 
 #### Step 4: Configure your first cluster
 
 See [configuring your first cluster](#step-3-configure-your-existing-kafka-cluster)
+
+#### Step 5: Add additional users
+
+See [adding additional users](#step-4-add-additional-users)
 
 ### Configuration using environment variables
 
