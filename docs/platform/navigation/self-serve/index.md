@@ -77,11 +77,16 @@ meta:
   name: "clickstream-app-dev"
 spec:
   cluster: "shadow-it"
-  service-account: "sa-clickstream-dev"
+  
+  service-account-spec:
+    service-account: "sa-clickstream-dev"
+    permissions: []
+  people-spec:
+    maxPermissions: []
   resources:
     - resourceType: TOPIC
       resource: "click."
-      resourcePatternType: PREFIXED
+      resourcePatternType: PREFIXED [PREFIX, LITERAL]
     - resourceType: GROUP
       resource: "click."
       resourcePatternType: PREFIXED
@@ -123,7 +128,7 @@ spec:
 # Permissions granted to Console users in the Application
 ---
 apiVersion: v1
-kind: "ApplicationTeam"
+kind: "ApplicationGroup"
 metadata:
   application: "clickstream-app"
   name: "clickstream-support"
@@ -136,16 +141,19 @@ spec:
       Can reset offsets
   permissions:
     - appInstance: clickstream-app-dev
-      resourceType: TOPIC [TOPIC, SUBSCRIBED_TOPIC]
-      resource: "*" # All owned topics
+      resourceType: TOPIC
+      resourcePatternType: "LITERAL"
+      resourcePattern: "*" # All owned & subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
       resourceType: GROUP
-      resource: "*" # All owned consumer groups
+      resourcePatternType: "LITERAL"
+      resourcePattern: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
     - appInstance: clickstream-app-dev
       resourceType: CONNECTOR
-      resource: "*" # All owned connectors
+      resourcePatternType: "LITERAL"
+      resourcePattern: "*" # All owned connectors
       permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectPauseResume", "kafkaConnectRestart"]
   members:
     - user1@company.org
