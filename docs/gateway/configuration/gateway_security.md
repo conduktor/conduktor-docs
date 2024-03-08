@@ -17,6 +17,7 @@ Jump to:
   - [SASL_SSL](#sasl_ssl)
   - [DELEGATED_SASL_PLAINTEXT](#delegated_sasl_plaintext)
   - [DELEGATED_SASL_SSL](#delegated_sasl_ssl)
+  - [Automatic Security Protocol Detection (Default behavior)](#automatic-security-protocol-detection-default-behavior)
 
 There are two stages of security configuration to consider when securing your Gateway.
 
@@ -300,6 +301,56 @@ We also support Apache Kafka Re authentication as Kafka brokers.
 See [KIP-368](https://cwiki.apache.org/confluence/display/KAFKA/KIP-368%3A+Allow+SASL+Connections+to+Periodically+Re-Authenticate) for more details.
 
 ## Your client to Gateway, Authorization
+
+A principal is not enough to leverage the feature of Gateway, all connections opened should associate a **User**.
+
+Gateway authorization is the process to go from an authentication `principal` to a full Gateway `user` using some authentication information, and a **User Mapping** for the Principal , if it exists.
+
+For more on a Gateway user and user mapping, see the [user reference doc](/gateway/reference/user).
+
+### Username
+
+If a `UserMapping` exists for the `Principal` , the username mapping will be used.
+If no mapping exists, then `Principal` is used as username.
+
+### Groups
+
+Result groups are an union of groups defined on `UserMapping` if one exists for the `Principal` and those extracted from authentication source.
+
+### Virtual cluster
+
+The user's virtual cluster will be the one from the `UserMapping` , if one exists, for the `Principal`.
+
+If no mapping exists then we try to use one from authentication extraction.
+
+If no virtual cluster was detected then the user is associated to `passthrough`, a transparent virtual cluster.
+
+If you don't want users to automatically fallback into the `passthrough` transparent virtual cluster, and instead fail the connection you can set `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` to true.
+
+### Authentication specific extraction
+
+As mentioned below, the authorization process will try to detect information from the authentication source. Each authentication source is different and they can't all provide everything. This section is dedicated to explain which information can be extracted based on you authentication mechanism.
+
+**Plain**
+Virtual Cluster : ✅
+When creating a plain user with the HTTP API you can define a virtual cluster property that can be extracted by Gateway.
+Groups: ❌
+
+**OAuthbearer**
+Virtual Cluster : ✅
+If a gateway.vcluster claim is detected in the OAuth token sent by a client, it can be extracted as virtual cluster.
+Groups: ❌
+
+**mTLS**
+Virtual Cluster : ❌
+Groups: ❌
+
+**Delegated to backend Kafka**
+Virtual Cluster : ❌
+Groups: ❌
+
+
+
 
 If you are connecting to Gateway in Passthrough mode, or multitenancy mode (with virtual clusters) will provide different options.
 **Passthrough** security passes the existing Kafka credentials of the client straight through to the backing cluster with no further checks. This is great to use out of the box, or if you do not need virtual clusters.
