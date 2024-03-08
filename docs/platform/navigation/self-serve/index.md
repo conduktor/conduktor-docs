@@ -96,6 +96,9 @@ spec:
 ````
 
 ### Application Instance Policies
+:::caution
+This concept will be available in a future version
+:::
 Application Instances Policies restrict the Application Teams to create their resources following certain rules.
 The rules can be related to Kafka configs but can also apply to metadata.  
 This is what lets Platform Administrators provide a Self Serve experience that doesn't look like the Wild West
@@ -134,13 +137,14 @@ spec:
 ````
 
 
-## Kafka Concepts
+## Application Team Resources
 When Application & ApplicationInstance are defined, Application Teams can now organize and structure their application as they see wish.
 There are 2 groups of resources where Application Teams are given autonomy:
 - Kafka-related resources, allowing teams to define their Topics, Subjects, Connectors, ...
-- Console-related resources, specifically ApplicationGroup, allowing them to define internally who can do what within their Team.
+- Console-related resources, in particular ApplicationGroup, allowing them to define internally who can do what within their Team.
+
 ### Kafka resources
-This is how Application Teams can create the resources they need around Kafka
+This is how Application Teams can create the Kafka resources they need for their applications
 ````yaml
 # Topic example
 ---
@@ -176,7 +180,11 @@ spec:
 ````
 
 ### Cross-Application Instance Permission
-While Application Instance grants the ownership on the resources, Application Instance Permissions lets teams to collaborate with each others.
+Application Instance Permissions lets teams to collaborate with each others.
+Deploying this object will grant permission to the `grantedTo` Application Instance:
+- To its Service Account (Kafka ACL)
+- To the Application Team members in Console
+
 **Example**
 ````yaml
 # Read permission granted to other Heatmap Application on click.screen-events topic
@@ -196,6 +204,15 @@ spec:
 ````
 
 ### Application Group
+:::caution
+This concept will be available in a future version
+:::
+Create Application Group to directly reflect how your Application operates. 
+You can create as many Application Group as required to restrict or represent the different population that uses Console on your Application:
+- Support Team with only Read Access in Production
+- DevOps Team with extended access across all environments
+- Developpers with higer permissions in Dev
+- ...
 
 **Example**
 ````yaml
@@ -236,9 +253,6 @@ spec:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 
 ````
-:::caution
-This concept will be available in a future version
-:::
 
 ### Resource labels & annotations
 
