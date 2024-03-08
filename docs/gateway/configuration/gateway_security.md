@@ -9,7 +9,7 @@ There are two stages of security configuration to consider when securing your Ga
  - The connection between Kafka clients and the Gateway
  - The connection between the Gateway and the Kafka cluster
 
-![client-to-gateway-excalidraw](./images/gw-security/client-to-gateway-excalidraw.png)
+![gateway-security-excalidraw](./images/gw-security/gateway-security-excalidraw.png)
 
 Jump to:
 
@@ -80,6 +80,8 @@ In this case all previous configuration still applies but the authentication set
 
 # Your client to Gateway security
 You have several options when connecting clients to Gateway depending on your security requirements or design requirements.
+
+![client-to-gateway-security-excalidraw](./images/gw-security/client-to-gateway-security-excalidraw.png)
 
 If you are connecting to Gateway in Passthrough mode, or multitenancy mode (with virtual clusters) will provide different options.
 **Passthrough** security passes the existing Kafka credentials of the client straight through to the backing cluster with no further checks. This is great to use out of the box, or if you do not need virtual clusters.
