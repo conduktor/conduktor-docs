@@ -6,7 +6,7 @@ description: Securing Conduktor Gateway
 
 This part of our documentation explains Gateway security overall, authentication and authorization. Each section has specific details of the options available, how they work and how to configure them. The nature of your system's requirements, design and constraints will lead you to pick the most suitable option when working with our lovely experts as part of setting up Gateway with you.
 
-Jump to:
+Some sections are outlined below or use the Quick nav on the right hand pane of the page.
 
 - [Gateway to your Kafka Security](#gateway-to-your-kafka-security)
 - [Your Client to Gateway Security, Authentication](#your-client-to-gateway-security-authentication)
@@ -18,6 +18,11 @@ Jump to:
   - [DELEGATED_SASL_PLAINTEXT](#delegated_sasl_plaintext)
   - [DELEGATED_SASL_SSL](#delegated_sasl_ssl)
   - [Automatic Security Protocol Detection (Default behavior)](#automatic-security-protocol-detection-default-behavior)
+- [Your Client to Gateway, Authorization](#your-client-to-gateway-authorization)
+  - [Username](#username)
+  - [Groups](#groups)
+  - [Virtual Cluster](#virtual-cluster)
+  - [Authentication Specific Extraction](#authentication-specific-extraction)
 
 There are two stages of security configuration to consider when securing your Gateway.
 
@@ -317,7 +322,7 @@ If no mapping exists, then `Principal` is used as username.
 
 Result groups are an union of groups defined on `UserMapping` if one exists for the `Principal` and those extracted from authentication source.
 
-### Virtual cluster
+### Virtual Cluster
 
 The user's virtual cluster will be the one from the `UserMapping` , if one exists, for the `Principal`.
 
@@ -327,7 +332,7 @@ If no virtual cluster was detected then the user is associated to `passthrough`,
 
 If you don't want users to automatically fallback into the `passthrough` transparent virtual cluster, and instead fail the connection you can set `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` to true.
 
-### Authentication specific extraction
+### Authentication Specific Extraction
 
 As mentioned below, the authorization process will try to detect information from the authentication source. Each authentication source is different and they can't all provide everything. This section is dedicated to explain which information can be extracted based on you authentication mechanism.
 
