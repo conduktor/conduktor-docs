@@ -12,32 +12,28 @@ Self Service helps you scale Kafka usage in your organization by facilitating co
 It simplifies and automates processes, establishes clear rules and ways of working, and standardizes the creation and management of Kafka resources.  
 This approach brings governance into your enterprise through concepts like Ownership and Applications, delegating operations to the Application Teams rather than the Central Platform Team.
 
-### Benefits for Applications Teams
-- Autonomy and responsibility over their resources
-- Isolation with Application namespaces
-- Collaboration with using Permission Delegation without any help from the Central Platform
-- Discoverability through Topic Catalog
 ### Benefits for Central Platform Team
 - Define the general rules of the game
 - Enforce naming conventions
 - Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
 - Declare the Applications and their rights
 - 🍹🏖️
+### Benefits for Applications Teams
+- Autonomy and responsibility over their resources
+- Isolation with Application namespaces
+- Collaboration with using Permission Delegation without any help from the Central Platform
+- Discoverability through Topic Catalog
 
-Self Service relies on a central concept, the Application which deals with 3 main concerns:
-- Ownership of the Application on **Kafka** resources
-- How **People** interract with the Application
-- Self Service & Governance **Processes**.
+
+Self Service relies on a central concept, the **Application** which embeds with 3 main concerns:
+- Application Ownership on the **Kafka** resources
+- How **People** interact with the Application
+- Self Service **Processes** & Governance rules
   ![Image](img/application-concept.png)
 
-:::info
-**Conduktor Self Serve is constantly evolving!**  
-We listen to your feedback to build the most awesome Product
-:::
 
 Each concept presented here correlates to a resource that can be deployed on Self Service.  
 For the full definition of each resource, check the CLI Reference documentation.
-
 
 ## Administrator Resources
 
@@ -120,9 +116,8 @@ spec:
         conduktor.io/topic-visibility:
           validation-type: NonEmptyString
         business-data-classification:
-          validation-type: ValidList
-          validStrings: ["C1", "C2", "C3", "C4"]
-          
+          validation-type: ValidString
+          validStrings: ["C1", "C2", "C3", "C4"]  
     spec:
       partitions:
         validation-type: Range
@@ -136,52 +131,18 @@ spec:
         validation-type: Range
         min: 2
         max: 2
-      retention.ms:
-        optional: true
-        validation-type: Range
-        min: 60000
-        max: 604800000
-      cleanup.policy:
-        validation-type: ValidList
-        validStrings:
-          - delete
-          - compact
-  connectValidator:
-    validationConstraints:
-      key.converter:
-        validation-type: NonEmptyString
-      value.converter:
-        validation-type: NonEmptyString
-      connector.class:
-        validation-type: ValidString
-        validStrings:
-          - io.confluent.connect.jdbc.JdbcSinkConnector
-          - io.confluent.connect.jdbc.JdbcSourceConnector
-    sourceValidationConstraints:
-      producer.override.sasl.jaas.config:
-        validation-type: NonEmptyString
-    sinkValidationConstraints:
-      consumer.override.sasl.jaas.config:
-        validation-type: NonEmptyString
-    classValidationConstraints:
-      io.confluent.connect.jdbc.JdbcSourceConnector:
-        db.timezone:
-          validation-type: NonEmptyString
-      io.confluent.connect.jdbc.JdbcSinkConnector:
-        db.timezone:
-          validation-type: NonEmptyString
 ````
 
 
 ## Kafka Concepts
-When Application & ApplicationInstance are defined, Teams can now organize and structure their application as they see wish.
-There are 2 groups of resources where Teams are given autonomy:
+When Application & ApplicationInstance are defined, Application Teams can now organize and structure their application as they see wish.
+There are 2 groups of resources where Application Teams are given autonomy:
 - Kafka-related resources, allowing teams to define their Topics, Subjects, Connectors, ...
 - Console-related resources, specifically ApplicationGroup, allowing them to define internally who can do what within their Team.
 ### Kafka resources
-
+This is how Application Teams can create the resources they need around Kafka
 ````yaml
-# Topic
+# Topic example
 ---
 apiVersion: v1
 kind: "Topic"
@@ -195,14 +156,30 @@ spec:
     min.insync.replicas: "2"
     cleanup.policy: "delete"
     retention.ms: "60000"
+
+# Connector Example
+---
+apiVersion: v1
+kind: "Connector"
+metadata:
+  appInstance: "clickstream-app-dev"
+  name: click.myConnector
+spec:
+  connectCluster: myConnectCluster
+  config:
+    connector.class: myConnectorClass
+    tasks.max: '1'
+    topics: "click.screen-events"
+    file: /tmp/output.out
+    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
+
 ````
 
 ### Cross-Application Instance Permission
-While Application Instance grants the ownership on the resources, Application Instance Permissions lets teams to collaborate with each others.  
-This resource is managed by the owners of the Application and the  
+While Application Instance grants the ownership on the resources, Application Instance Permissions lets teams to collaborate with each others.
 **Example**
 ````yaml
-# Permission granted to other Applications
+# Read permission granted to other Heatmap Application on click.screen-events topic
 ---
 apiVersion: v1
 kind: "AppInstancePermission"
@@ -218,49 +195,6 @@ spec:
   grantedTo: "heatmap-app-dev"
 ````
 
-### Resource labels & annotations
-
-All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
-Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
-You can use either labels or annotations to attach metadata to resources. Labels can be used to select resources and to find collections of resources that satisfy certain conditions. In contrast, annotations are not used to identify and select resources.
-
-**Labels** will help you filter and sort your resources in Console UI / CLI.  
-**Annotations** will help you attach business meaning on your resources & drive some behaviors in Console.
-
-**Example**
-````yaml
-# Topic annotated with useful metadata
----
-apiVersion: v1
-kind: "Topic"
-metadata:
-  appInstance: "clickstream-app-dev"
-  name: clickstream.events
-  annotations:
-    description: "A description for what kind of data this topic contains."
-    business-data-classification: C2
-    business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
-    conduktor.io/topic-visibility: "public"
-  labels:
-    application-code: CLK
-    environment-code: dev
-spec:
-  replicationFactor: 3
-  partitions: 6
-  configs:
-    min.insync.replicas: "2"
-    cleanup.policy: "delete"
-    retention.ms: "60000"
-````
-
-#### Driving Console behaviors
-Here's a few examples of annotations that can drive Console:
-- Topic:
-  - `conduktor.io/catalog-access: [true/false]`: Whether to make the topic discoverable in Topic Catalog
-  - `conduktor.io/dlq-topic: [true/false]`:
-  - `conduktor.io/dlq-main: [<topic>]`:
-
-## People Concepts
 ### Application Group
 
 **Example**
@@ -305,8 +239,48 @@ spec:
 :::caution
 This concept will be available in a future version
 :::
-## Process & Governance Concepts
 
+### Resource labels & annotations
+
+All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
+Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
+You can use either labels or annotations to attach metadata to resources. Labels can be used to select resources and to find collections of resources that satisfy certain conditions. In contrast, annotations are not used to identify and select resources.
+
+**Labels** will help you filter and sort your resources in Console UI / CLI.  
+**Annotations** will help you attach business meaning on your resources & drive some behaviors in Console.
+
+**Example**
+````yaml
+# Topic annotated with useful metadata
+---
+apiVersion: v1
+kind: "Topic"
+metadata:
+  appInstance: "clickstream-app-dev"
+  name: clickstream.events
+  annotations:
+    description: "A description for what kind of data this topic contains."
+    business-data-classification: C2
+    business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
+    conduktor.io/topic-visibility: "public"
+  labels:
+    application-code: CLK
+    environment-code: dev
+spec:
+  replicationFactor: 3
+  partitions: 6
+  configs:
+    min.insync.replicas: "2"
+    cleanup.policy: "delete"
+    retention.ms: "60000"
+````
+
+#### Driving Console behaviors
+Here's a few examples of annotations that can drive Console:
+- Topic:
+  - `conduktor.io/catalog-access: [true/false]`: Whether to make the topic discoverable in Topic Catalog
+  - `conduktor.io/dlq-topic: [true/false]`:
+  - `conduktor.io/dlq-main: [<topic>]`:
 
 
 ### Topic Catalog
