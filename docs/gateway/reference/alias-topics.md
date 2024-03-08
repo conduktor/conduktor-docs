@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Alias topics
+title: Alias Topics
 description: Alias topics
 ---
 Alias topics are logical topics that target a different physical topic.

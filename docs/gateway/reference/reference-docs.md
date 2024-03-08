@@ -20,7 +20,7 @@ Here is a list of Gateway specific resources:
 
 Everything connected to those resources are managed by Gateway via the HTTP API.
 
-### Topics
+### Topic naming convention
 As we're dealing with different types of topics to the regular Kafka topic we have a common topology for these resources.
 
 * **Physical topics**: The regular Kafka topic.
