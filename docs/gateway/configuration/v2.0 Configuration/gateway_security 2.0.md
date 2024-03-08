@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Gateway Security
 description: Securing Conduktor Gateway  
 ---
@@ -9,7 +9,7 @@ There are two stages of security configuration to consider when securing your Ga
  - The connection between Kafka clients and the Gateway
  - The connection between the Gateway and the Kafka cluster
 
-![client-to-gateway-excalidraw](./images/gw-security/client-to-gateway-excalidraw.png)
+![client-to-gateway-excalidraw](./images/gw-security/gateway-security-excalidraw.png)
 
 Jump to:
 
