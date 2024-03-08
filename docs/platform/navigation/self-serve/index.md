@@ -35,10 +35,11 @@ Self Service relies on a central concept, the Application which deals with 3 mai
 We listen to your feedback to build the most awesome Product
 :::
 
-## Core Concepts
-
 Each concept presented here correlates to a resource that can be deployed on Self Service.  
-For the full definition of each resource, check the CLI Reference documentation
+For the full definition of each resource, check the CLI Reference documentation.
+
+
+## Administrator Resources
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka. 
@@ -98,8 +99,85 @@ spec:
       resourcePatternType: PREFIXED
 ````
 
+### Application Instance Policies
+Application Instances Policies restrict the Application Teams to create their resources following certain rules.
+The rules can be related to Kafka configs but can also apply to metadata.  
+This is what lets Platform Administrators provide a Self Serve experience that doesn't look like the Wild West
+**Example**
+````yaml
+# Policies that restrict the Application to certain range of configurations
+# on topic configs, but also on topic metadata
+---
+apiVersion: v1
+kind: "ApplicationInstancePolicies"
+metadata:
+  appInstance: "clickstream-app-dev"
+  name: "clickstream-dev-policies"
+spec:
+  topicConstraints:
+    metadata:
+      annotations:
+        conduktor.io/topic-visibility:
+          validation-type: NonEmptyString
+        business-data-classification:
+          validation-type: ValidList
+          validStrings: ["C1", "C2", "C3", "C4"]
+          
+    spec:
+      partitions:
+        validation-type: Range
+        min: 1
+        max: 6
+      replication.factor:
+        validation-type: Range
+        min: 3
+        max: 3
+      min.insync.replicas:
+        validation-type: Range
+        min: 2
+        max: 2
+      retention.ms:
+        optional: true
+        validation-type: Range
+        min: 60000
+        max: 604800000
+      cleanup.policy:
+        validation-type: ValidList
+        validStrings:
+          - delete
+          - compact
+  connectValidator:
+    validationConstraints:
+      key.converter:
+        validation-type: NonEmptyString
+      value.converter:
+        validation-type: NonEmptyString
+      connector.class:
+        validation-type: ValidString
+        validStrings:
+          - io.confluent.connect.jdbc.JdbcSinkConnector
+          - io.confluent.connect.jdbc.JdbcSourceConnector
+    sourceValidationConstraints:
+      producer.override.sasl.jaas.config:
+        validation-type: NonEmptyString
+    sinkValidationConstraints:
+      consumer.override.sasl.jaas.config:
+        validation-type: NonEmptyString
+    classValidationConstraints:
+      io.confluent.connect.jdbc.JdbcSourceConnector:
+        db.timezone:
+          validation-type: NonEmptyString
+      io.confluent.connect.jdbc.JdbcSinkConnector:
+        db.timezone:
+          validation-type: NonEmptyString
+````
+
+
 ## Kafka Concepts
-Once Application & ApplicationInstance 
+When Application & ApplicationInstance are defined, Teams can now organize and structure their application as they see wish.
+There are 2 groups of resources where Teams are given autonomy:
+- Kafka-related resources, allowing teams to define their Topics, Subjects, Connectors, ...
+- Console-related resources, specifically ApplicationGroup, allowing them to define internally who can do what within their Team.
 ### Kafka resources
 
 ````yaml
@@ -162,7 +240,7 @@ metadata:
     description: "A description for what kind of data this topic contains."
     business-data-classification: C2
     business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
-    conduktor.io/catalog-access: "true"
+    conduktor.io/topic-visibility: "public"
   labels:
     application-code: CLK
     environment-code: dev
@@ -229,19 +307,6 @@ This concept will be available in a future version
 :::
 ## Process & Governance Concepts
 
-### Resource Policies
-**Example**
-````yaml
-# Permissions granted to Console users in the Application
----
-apiVersion: v1
-kind: "ApplicationInstancePolicies"
-metadata:
-  application: "clickstream-app"
-  name: "clickstream-support"
-spec:
-
-````
 
 
 ### Topic Catalog
