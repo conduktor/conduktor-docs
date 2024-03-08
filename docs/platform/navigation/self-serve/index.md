@@ -64,7 +64,13 @@ We call this concept **Application Instance**:
 - It has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
 - It manages the permissions
   - On the Service Account (Kafka ACL)
-  - On the Application Team members in Console
+  - On the Application Team members in Console  
+
+Delegating ownership on the Kafka resources grants permissions to
+- the Application owner group in Console using RBAC (`Admin` permissions)
+- the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
+
+This will evolve as we implement new concepts in Self Serve to better manage People permissions over the application.
 
 **Example**
 ````yaml
@@ -92,13 +98,26 @@ spec:
       resourcePatternType: PREFIXED
 ````
 
-Delegating ownership on the Kafka resources grants permissions to
-- the Application owner group in Console using RBAC (`Admin` permissions)
-- the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
-
-This will evolve as we implement new concepts in Self Serve to better manage People permissions over the application.
-
 ## Kafka Concepts
+Once Application & ApplicationInstance 
+### Kafka resources
+
+````yaml
+# Topic
+---
+apiVersion: v1
+kind: "Topic"
+metadata:
+  appInstance: "clickstream-app-dev"
+  name: "click.screen-events"
+spec:
+  replicationFactor: 3
+  partitions: 6
+  configs:
+    min.insync.replicas: "2"
+    cleanup.policy: "delete"
+    retention.ms: "60000"
+````
 
 ### Cross-Application Instance Permission
 While Application Instance grants the ownership on the resources, Application Instance Permissions lets teams to collaborate with each others.  
@@ -121,8 +140,51 @@ spec:
   grantedTo: "heatmap-app-dev"
 ````
 
+### Resource labels & annotations
+
+All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
+Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
+You can use either labels or annotations to attach metadata to resources. Labels can be used to select resources and to find collections of resources that satisfy certain conditions. In contrast, annotations are not used to identify and select resources.
+
+**Labels** will help you filter and sort your resources in Console UI / CLI.  
+**Annotations** will help you attach business meaning on your resources & drive some behaviors in Console.
+
+**Example**
+````yaml
+# Topic annotated with useful metadata
+---
+apiVersion: v1
+kind: "Topic"
+metadata:
+  appInstance: "clickstream-app-dev"
+  name: clickstream.events
+  annotations:
+    description: "A description for what kind of data this topic contains."
+    business-data-classification: C2
+    business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
+    conduktor.io/catalog-access: "true"
+  labels:
+    application-code: CLK
+    environment-code: dev
+spec:
+  replicationFactor: 3
+  partitions: 6
+  configs:
+    min.insync.replicas: "2"
+    cleanup.policy: "delete"
+    retention.ms: "60000"
+````
+
+#### Driving Console behaviors
+Here's a few examples of annotations that can drive Console:
+- Topic:
+  - `conduktor.io/catalog-access: [true/false]`: Whether to make the topic discoverable in Topic Catalog
+  - `conduktor.io/dlq-topic: [true/false]`:
+  - `conduktor.io/dlq-main: [<topic>]`:
+
 ## People Concepts
-### Application Teams (Sub Groups/Sub Teams ?)
+### Application Group
+
 **Example**
 ````yaml
 # Permissions granted to Console users in the Application
@@ -162,13 +224,37 @@ spec:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 
 ````
+:::caution
+This concept will be available in a future version
+:::
 ## Process & Governance Concepts
 
 ### Resource Policies
+**Example**
+````yaml
+# Permissions granted to Console users in the Application
+---
+apiVersion: v1
+kind: "ApplicationInstancePolicies"
+metadata:
+  application: "clickstream-app"
+  name: "clickstream-support"
+spec:
+
+````
+
+
 ### Topic Catalog
 
-## User Interface
-For now, Self Service relies heavily on the CLI. This helps us move fast and is more aligned with the opinionated principles we have at Conduktor. We want you to manage all this using GitOps approach.
+Noticed the annotation `conduktor.io/catalog-access: "true"` in the previous example?  
+That's how you make the topic discoverable in the Topic Catalog in Console.
 
+
+## User Interface
+For now, Self Service relies entirely on the Conduktor CLI. 
+
+This helps us move fast and is more aligned with the opinionated principles we have at Conduktor: we want you to manage all this using GitOps approach.
+
+Having a UI will eventually become necessary as we add more features and connect them with Console & Gateway
 The Conduktor UI will be useful as an Application & Topic Catalog.
 
