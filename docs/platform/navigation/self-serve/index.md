@@ -24,7 +24,7 @@ This approach brings governance into your enterprise through concepts like Owner
 - Collaboration with using Permission Delegation without any help from the Central Platform
 - Discoverability through Topic Catalog
 
-
+## Concepts
 Self Service relies on a central concept, the **Application** which embeds with 3 main concerns:
 - Application Ownership on the **Kafka** resources
 - How **People** interact with the Application
@@ -80,12 +80,7 @@ meta:
   name: "clickstream-app-dev"
 spec:
   cluster: "shadow-it"
-  
-  service-account-spec:
-    service-account: "sa-clickstream-dev"
-    permissions: []
-  people-spec:
-    maxPermissions: []
+  service-account: "sa-clickstream-dev"
   resources:
     - resourceType: TOPIC
       resource: "click."
@@ -144,7 +139,8 @@ There are 2 groups of resources where Application Teams are given autonomy:
 - Console-related resources, in particular ApplicationGroup, allowing them to define internally who can do what within their Team.
 
 ### Kafka resources
-This is how Application Teams can create the Kafka resources they need for their applications
+This is how Application Teams can create the Kafka resources they need for their applications.  
+
 ````yaml
 # Topic example
 ---
