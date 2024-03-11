@@ -33,7 +33,7 @@ Self Service relies on a central concept, the **Application** which embeds with 
 
 
 Each concept presented here correlates to a resource that can be deployed on Self Service.  
-For the full definition of each resource, check the CLI Reference documentation.
+For the full definition of each resource, check the [CLI Reference documentation](/platform/reference/cli-reference).
 
 ## Administrator Resources
 
@@ -56,16 +56,18 @@ spec:
 
 ### Application Instance
 **Applications** are generally deployed to one or more Kafka clusters, typically to align with the organization's development cycle or environments.
-We call this concept **Application Instance**:
-- It is linked to a Kafka Cluster and a Service Account
-- It has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
-- It manages the permissions
+We call this concept the **Application Instance**.
+
+Each Application Instance:
+- Is linked to a Kafka Cluster and a Service Account
+- Has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
+- Manages the permissions
   - On the Service Account (Kafka ACL)
-  - On the Application Team members in Console  
+  - On the Application Team members in Conduktor Console  
 
 Delegating ownership on the Kafka resources grants permissions to
-- the Application owner group in Console using RBAC (`Admin` permissions)
-- the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
+- The Application owner group in Console using RBAC (`Admin` permissions)
+- The Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
 
 This will evolve as we implement new concepts in Self Serve to better manage People permissions over the application.
 
@@ -94,9 +96,10 @@ spec:
 :::caution
 This concept will be available in a future version
 :::
-Application Instances Policies restrict the Application Teams to create their resources following certain rules.
-The rules can be related to Kafka configs but can also apply to metadata.  
-This is what lets Platform Administrators provide a Self Serve experience that doesn't look like the Wild West
+Application Instance Policies restrict the Application Teams to create their resources following certain rules.
+These rules can be related to Kafka configs but can also apply to metadata.  
+This is what lets Platform Administrators provide a Self Serve experience that doesn't look like the Wild West.  
+
 **Example**
 ````yaml
 # Policies that restrict the Application to certain range of configurations
@@ -133,10 +136,10 @@ spec:
 
 
 ## Application Team Resources
-When Application & ApplicationInstance are defined, Application Teams can now organize and structure their application as they see wish.
+When Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
 There are 2 groups of resources where Application Teams are given autonomy:
-- Kafka-related resources, allowing teams to define their Topics, Subjects, Connectors, ...
-- Console-related resources, in particular ApplicationGroup, allowing them to define internally who can do what within their Team.
+- **Kafka-related** resources, allowing teams to define their Topics, Subjects, Connectors, ...
+- **Console-related** resources, in particular ApplicationGroup, allowing them to define internally who can do what within their Team.
 
 ### Kafka resources
 This is how Application Teams can create the Kafka resources they need for their applications.  
@@ -204,11 +207,10 @@ spec:
 This concept will be available in a future version
 :::
 Create Application Group to directly reflect how your Application operates. 
-You can create as many Application Group as required to restrict or represent the different population that uses Console on your Application:
+You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
 - DevOps Team with extended access across all environments
 - Developpers with higer permissions in Dev
-- ...
 
 **Example**
 ````yaml
@@ -250,10 +252,11 @@ spec:
 
 ````
 
-### Resource labels & annotations
+### Resource Labels & Annotations
 
 All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
-Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
+Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).  
+
 You can use either labels or annotations to attach metadata to resources. Labels can be used to select resources and to find collections of resources that satisfy certain conditions. In contrast, annotations are not used to identify and select resources.
 
 **Labels** will help you filter and sort your resources in Console UI / CLI.  
