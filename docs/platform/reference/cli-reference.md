@@ -1,25 +1,31 @@
 ---
 sidebar_position: 3
-title: Metrics Reference
+title: CLI Reference
 description: Prometheus metrics available for Console
 ---
-
-
 # CLI Reference
 
-# Conduktor CLI
+Conduktor CLI gives your the ability to perform some operations directly from your command line or a CI/CD pipeline.  
+Check for the list of supported resources and their definition below.
 
-## Download
+## Install & Configure
 
-You can download Conduktor CLI from the project's releases page on GitHub at <https://github.com/conduktor/ctl/releases>.
+You have 2 options to Install Conduktor CLI.
+- Native binary for individual use and testing
+- Docker build for integration in CI/CD pipelines
 
-[\[https://github.com/conduktor/conduktor-cli/releases\]](https://github.com/conduktor/conduktor-cli/releases)
+### Native binary
+Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
+In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)
 
-Alternatively, you can use the Docker images: harbor.cdkt.dev/conduktor/conduktorctl
+### Docker
+````
+docker pull conduktor/conduktor-ctl
+````
 
-## Install
+### Configure
 
-To use Conduktor CLI, you need to define 2 variables:
+To use Conduktor CLI, you need to define 2 environment variables:
 
 -   The URL of Conduktor Console
 -   Your API token (either a User Token or Application Token)
@@ -28,61 +34,37 @@ These variables can be defined in a dedicated Configuration file or by Environme
 
 If you define both, Environment takes precedence
 
-### Config File
-
-The CLI will look for a `.conduktor/config.yml` file in your home directory:
-
--   Windows: `C:\Users\<your-name>\.conduktor\config.yml`
--   Linux: `~/.conduktor/config.yml`
-
-It is possible to override this default location by setting the **CONDUKTOR_CONFIG** environment variable:
-
-    CONDUKTOR_CONFIG=C:\AnotherDirectory\config.yml
-    CONDUKTOR_CONFIG=/anotherDirectory/config.yml
-
-Fill the `config.yml` file with the following content:
-
-    conduktor:
-      contexts:
-        - name: dev-appA
-          context:
-            api: https://conduktor.domain.com
-            token: <my_token>
-        - name: dev-AppB
-          context:
-            api: https://conduktor.domain.com
-            token: <my_other_token>
-
-### Environment Vars
 
 Alternatively, you can set the following Environment Variables
+````yaml
+CDK_TOKEN=<admin-token>
+CDK_BASE_URL=http://localhost:8080/public/v1
+````
+## Commands Usage
+````
+Usage: conduktor [-hvV] [COMMAND]
 
-    CONDUKTOR_API=http://ns4kafka-dev-api.domain.com
-    CONDUKTOR_USER_TOKEN=${GITLAB_TOKEN}
+Description:
 
-## Usage
+These are common Kafkactl commands.
 
-    Usage: conduktor [-hvV] [COMMAND]
+Options:
+  -h, --help      Show this help message and exit.
+  -v, --verbose   Enable the verbose mode.
+  -V, --version   Print version information and exit.
 
-    Description:
+Commands:
+  apply             Create or update a resource.
+  delete            Delete a resource.
+  diff              Get differences between a new resource and a old resource.
+  get               Get resources by resource type for the current namespace.
+  actions           empty topic, reset offsets, restart connectors, ...
+````
 
-    These are common Kafkactl commands.
-
-    Options:
-      -h, --help      Show this help message and exit.
-      -v, --verbose   Enable the verbose mode.
-      -V, --version   Print version information and exit.
-
-    Commands:
-      apply             Create or update a resource.
-      delete            Delete a resource.
-      diff              Get differences between a new resource and a old resource.
-      get               Get resources by resource type for the current namespace.
-      actions           empty topic, reset offsets, restart connectors, ...
 
 ### Apply
 
-The `apply` command allows you to deploy any resource.
+The `apply` command allows you to deploy any resource.
 
     Usage: conduktor apply [-hRvV] [--dry-run] [-f=<file>] [-n=<optionalNamespace>]
 
@@ -134,7 +116,7 @@ Example:
 
 ### Delete
 
-The `delete` command allows you to delete a resource.
+The `delete` command allows you to delete a resource.
 
 Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
 
@@ -164,7 +146,7 @@ Example(s):
 
 ### Diff
 
-The `diff` command allows you to compare a new YAML descriptor with the current one deployed in, allowing you to easily identify any differences.
+The `diff` command allows you to compare a new YAML descriptor with the current one deployed in, allowing you to easily identify any differences.
 
     Usage: conduktor diff [-hRvV] [-f=<file>] [-n=<optionalNamespace>]
 
@@ -187,7 +169,7 @@ Example(s):
 
 ### Get
 
-The `get` command allows you to retrieve information about one or multiple resources.
+The `get` command allows you to retrieve information about one or multiple resources.
 
     Usage: conduktor get [-hvV] [-n=<optionalNamespace>] [-o=<output>] <resourceType> [<resourceName>]
 
@@ -205,7 +187,7 @@ The `get` command allows you to retrieve information about one or multiple res
       -v, --verbose           Enable the verbose mode.
       -V, --version           Print version information and exit.
 
--   `resourceType`: This option specifies one of the managed resources: `topic`, `connector`, `acl`, `schema`, `stream` or `all` to fetch all the resources.
+-   `resourceType`: This option specifies one of the managed resources: `topic`, `connector`, `acl`, `schema`, `stream` or `all` to fetch all the resources.
 -   `resourceName`: This option specifies the name of the resource to consult.
 
 Example(s):
@@ -356,11 +338,11 @@ spec:
       grantedTo: "ClickstreamApp-Dev"
     ---
 
--   `spec.resourceType` can be `TOPIC`, `GROUP`, `CONNECT`, or `CONNECT_CLUSTER`.
--   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
--   `spec.permission` can be `READ` or `WRITE`.
--   `spec.grantedTo` must reference a namespace on the same Kafka cluster as yours.
--   `spec.resource` must reference any “sub-resource” that you own. For example, if you are owner of the prefix “aaa”, you can grant READ or WRITE access to:
+-   `spec.resourceType` can be `TOPIC`, `GROUP`, `CONNECT`, or `CONNECT_CLUSTER`.
+-   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
+-   `spec.permission` can be `READ` or `WRITE`.
+-   `spec.grantedTo` must reference a namespace on the same Kafka cluster as yours.
+-   `spec.resource` must reference any “sub-resource” that you own. For example, if you are owner of the prefix “aaa”, you can grant READ or WRITE access to:
     -   the whole prefix: “aaa”
     -   a sub prefix: “aaa_subprefix”
     -   a literal topic name: “aaa_myTopic”
@@ -386,9 +368,9 @@ spec:
         cleanup.policy: delete
         retention.ms: '60000'
 
--   The `metadata.name` field must be part of your allowed ACLs. Visit your namespace's ACLs to understand which topics you are allowed to manage.
--   The validation of `spec` properties, and especially `spec.config` properties, depends on the topic validation rules associated with your application.
--   `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
+-   The `metadata.name` field must be part of your allowed ACLs. Visit your namespace's ACLs to understand which topics you are allowed to manage.
+-   The validation of `spec` properties, and especially `spec.config` properties, depends on the topic validation rules associated with your application.
+-   `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
 
 ### Cross Application Permission
 
@@ -422,11 +404,11 @@ To provide access to your topics to another Application Instance, you can add an
 
 Here are some points to keep in mind:
 
--   `spec.resourceType` can be `TOPIC`, `GROUP`, `CONNECT`, or `CONNECT_CLUSTER`.
--   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
--   `spec.permission` can be `READ` or `WRITE`.
--   `spec.grantedTo` must reference a namespace on the same Kafka cluster as yours.
--   `spec.resource` must reference any “sub-resource” that you own. For example, if you are owner of the prefix “aaa”, you can grant READ or WRITE access to:
+-   `spec.resourceType` can be `TOPIC`, `GROUP`, `CONNECT`, or `CONNECT_CLUSTER`.
+-   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
+-   `spec.permission` can be `READ` or `WRITE`.
+-   `spec.grantedTo` must reference a namespace on the same Kafka cluster as yours.
+-   `spec.resource` must reference any “sub-resource” that you own. For example, if you are owner of the prefix “aaa”, you can grant READ or WRITE access to:
     -   the whole prefix: “aaa”
     -   a sub prefix: “aaa_subprefix”
     -   a literal topic name: “aaa_myTopic”
@@ -449,12 +431,12 @@ Here are some points to keep in mind:
         file: /tmp/output.out
         consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
 
--   `spec.connectCluster` must refer to one of the Kafka Connect clusters authorized in your namespace. It can also refer to a Kafka Connect cluster that you have self-deployed or have been granted access to.
+-   `spec.connectCluster` must refer to one of the Kafka Connect clusters authorized in your namespace. It can also refer to a Kafka Connect cluster that you have self-deployed or have been granted access to.
 -   Everything else depend on the connect validation rules associated to your namespace.
 
 ### Schema
 
-The `Schema` resource allows you to declare subjects for your schemas. You can either reference a local `avsc` file with `spec.schemaFile`, or define your schema directly inline with `spec.schema`.
+The `Schema` resource allows you to declare subjects for your schemas. You can either reference a local `avsc` file with `spec.schemaFile`, or define your schema directly inline with `spec.schema`.
 
 **Local file**
 
@@ -510,15 +492,15 @@ If your schema references a type that is already stored in the Schema Registry, 
           subject: "commons.address-value"
           version: 1
 
-This example assumes that a subject named `commons.address-value` with version 1 is already available in the Schema Registry.
+This example assumes that a subject named `commons.address-value` with version 1 is already available in the Schema Registry.
 
-!! Your schema's permissions are inherited from your topic's permissions. If you are allowed to create a topic `myPrefix.topic`, then you are automatically allowed to create the subjects `myPrefix.topic-key` and `myPrefix.topic-value`.
+!! Your schema's permissions are inherited from your topic's permissions. If you are allowed to create a topic `myPrefix.topic`, then you are automatically allowed to create the subjects `myPrefix.topic-key` and `myPrefix.topic-value`.
 
 -
 
 # Integrate Conduktor CLI with your CI/CD
 
-Conduktor CI can be easily added to a CI/CD pipeline using the Docker images on Docker Hub.
+Conduktor CI can be easily added to a CI/CD pipeline using the Docker images on Docker Hub.
 
 This example presents 2 pipelines.
 
