@@ -61,15 +61,9 @@ We call this concept the **Application Instance**.
 Each Application Instance:
 - Is linked to a Kafka Cluster and a Service Account
 - Has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
-- Manages the permissions
-  - On the Service Account (Kafka ACL)
-  - On the Application Team members in Conduktor Console  
-
-Delegating ownership on the Kafka resources grants permissions to
-- The Application owner group in Console using RBAC (`Admin` permissions)
-- The Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
-
-This will evolve as we implement new concepts in Self Serve to better manage People permissions over the application.
+- Grants the permissions
+  - On the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
+  - On the Application owner group in Console using RBAC (`Admin` permissions)
 
 **Example**
 ````yaml
