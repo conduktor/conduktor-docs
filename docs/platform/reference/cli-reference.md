@@ -109,15 +109,18 @@ $ conduktor get app-instance clickstream-app-dev
 
 ## Administrator Resources
 
+To deploy these resources, you must use an Admin Token, generated from Settings/Api Keys.
+
 
 ### Application
+This resource defines a Self Serve Application.
 
 ````yaml
 # Application
 ---
 apiVersion: "v1"
 kind: "Application"
-meta:
+metadata:
  name: "clickstream-app"
 spec:
  title: "Clickstream App"
@@ -126,7 +129,6 @@ spec:
 ````
 
 Application checks
--   Requester MUST be allowed to create Application
 -   `spec.owner` is a valid Console Group
 -   Delete MUST fail if there are associated `AppInstance`
 
@@ -137,7 +139,7 @@ Application checks
 ---
 apiVersion: "v1"
 kind: "AppInstance"
-meta:
+metadata:
  application: "clickstream-app"
  name: "clickstream-app-dev"
 spec:
@@ -150,37 +152,18 @@ spec:
    - type: GROUP
      name: "click."
      patternType: PREFIXED
----
-apiVersion: "v1"
-kind: "AppInstance"
-meta:
- application: "clickstream-app"
- name: "clickstream-app-prod"
-spec:
- cluster: "ccloud-pkczy43"
- service-account: "sa-clicko"
- resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
 ````
 AppInstance checks:
-
--   Requester MUST be Admin to create AppInstance
--   `meta.application` is a valid Application
--   `spec.cluster` is a valid Console Cluster technical id
--   `spec.service-account` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
--   `spec.cluster` is immutable (can't update after creation)
--   `spec.resources.resourceType` can be `TOPIC`, `GROUP`, `SUBJECT`.
--   `spec.resources.resourcePatternType` can be `PREFIXED` or `LITERAL`.
--   `spec.resource` must no overlap with any other `appInstance` on the same cluster.
+- `metadata.application` is a valid Application
+- `spec.cluster` is a valid Console Cluster technical id
+- `spec.cluster` is immutable (can't update after creation)
+- `spec.service-account` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
+- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
+- `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
+- `spec.resources[].name` must no overlap with any other `appInstance` on the same cluster.
     -   ie: If there is already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click.`
         -   `cli`: Resource is a parent-resource of `click.`
--   Delete MUST fail if there are any `AppInstance` resources (topics, permissions, ...)
 
 
 ### Cross Application Permissions

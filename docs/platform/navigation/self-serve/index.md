@@ -70,20 +70,20 @@ Each Application Instance:
 # Application Instances (environment)
 ---
 apiVersion: "v1"
-kind: "AppInstance"
-meta:
+kind: "ApplicationInstance"
+metadata:
   application: "clickstream-app"
   name: "clickstream-app-dev"
 spec:
   cluster: "shadow-it"
   service-account: "sa-clickstream-dev"
   resources:
-    - resourceType: TOPIC
-      resource: "click."
-      resourcePatternType: PREFIXED [PREFIX, LITERAL]
-    - resourceType: GROUP
-      resource: "click."
-      resourcePatternType: PREFIXED
+    - type: TOPIC
+      name: "click."
+      patternType: PREFIXED
+    - type: GROUP
+      name: "click."
+      patternType: PREFIXED
 ````
 
 ### Application Instance Policies
@@ -106,13 +106,6 @@ metadata:
   name: "clickstream-dev-policies"
 spec:
   topicConstraints:
-    metadata:
-      annotations:
-        conduktor.io/topic-visibility:
-          validation-type: NonEmptyString
-        business-data-classification:
-          validation-type: ValidString
-          validStrings: ["C1", "C2", "C3", "C4"]  
     spec:
       partitions:
         validation-type: Range
@@ -132,8 +125,8 @@ spec:
 ## Application Team Resources
 When Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
 There are 2 groups of resources where Application Teams are given autonomy:
-- **Kafka-related** resources, allowing teams to define their Topics, Subjects, Connectors, ...
-- **Console-related** resources, in particular ApplicationGroup, allowing them to define internally who can do what within their Team.
+- **Kafka-related** `Topic`, `Subject`, `Connector`, `ApplicationInstancePermission` resources.
+- **Console-related** resources, in particular `ApplicationGroup`, allowing them to define internally who can do what within their Team.
 
 ### Kafka resources
 This is how Application Teams can create the Kafka resources they need for their applications.  
@@ -183,7 +176,7 @@ Deploying this object will grant permission to the `grantedTo` Application Insta
 # Read permission granted to other Heatmap Application on click.screen-events topic
 ---
 apiVersion: v1
-kind: "AppInstancePermission"
+kind: "ApplicationInstancePermission"
 metadata:
   application: "clickstream-app"
   appInstance: "clickstream-app-dev"
@@ -247,7 +240,9 @@ spec:
 ````
 
 ### Resource Labels & Annotations
-
+:::caution
+This concept will be available in a future version
+:::
 All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
 Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).  
 
@@ -282,25 +277,10 @@ spec:
     retention.ms: "60000"
 ````
 
-#### Driving Console behaviors
-Here's a few examples of annotations that can drive Console:
-- Topic:
-  - `conduktor.io/catalog-access: [true/false]`: Whether to make the topic discoverable in Topic Catalog
-  - `conduktor.io/dlq-topic: [true/false]`:
-  - `conduktor.io/dlq-main: [<topic>]`:
-
-
-### Topic Catalog
-
-Noticed the annotation `conduktor.io/catalog-access: "true"` in the previous example?  
-That's how you make the topic discoverable in the Topic Catalog in Console.
-
-
 ## User Interface
 For now, Self Service relies entirely on the Conduktor CLI. 
 
 This helps us move fast and is more aligned with the opinionated principles we have at Conduktor: we want you to manage all this using GitOps approach.
 
-Having a UI will eventually become necessary as we add more features and connect them with Console & Gateway
-The Conduktor UI will be useful as an Application & Topic Catalog.
-
+There is a Read-only UI available in Console to validate visually the Application and Application Instance concepts.
+![Application](img/application-ui.png)
