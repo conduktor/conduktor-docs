@@ -130,7 +130,7 @@ spec:
 
 Application checks
 -   `spec.owner` is a valid Console Group
--   Delete MUST fail if there are associated `AppInstance`
+-   Delete MUST fail if there are associated `ApplicationInstance`
 
 
 ### Application Instance
@@ -138,7 +138,7 @@ Application checks
 ````yaml
 ---
 apiVersion: "v1"
-kind: "AppInstance"
+kind: "ApplicationInstance"
 metadata:
  application: "clickstream-app"
  name: "clickstream-app-dev"
@@ -160,7 +160,7 @@ AppInstance checks:
 - `spec.service-account` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resources[].name` must no overlap with any other `appInstance` on the same cluster.
+- `spec.resources[].name` must no overlap with any other `ApplicationInstance` on the same cluster.
     -   ie: If there is already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click.`
         -   `cli`: Resource is a parent-resource of `click.`
@@ -171,7 +171,7 @@ AppInstance checks:
 # Permission granted to other Applications
 ---
 apiVersion: v1
-kind: "AppInstancePermission"
+kind: "ApplicationInstancePermission"
 metadata:
  application: "clickstream-app"
  appInstance: "clickstream-app-dev"
@@ -189,19 +189,16 @@ Cross Application permission checks:
 -   `spec.resourceType` can be `TOPIC`, `GROUP`, `SUBJECT`.
 -   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
 -   `spec.permission` can be `READ` or `WRITE`.
--   `spec.grantedTo` must be an `AppInstance` on the same Kafka cluster as `metadata.appInstance`.
+-   `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
 -   `spec.resource` must reference any “sub-resource” of `metadata.appInstance` .
     -   For example, if you are owner of the prefix `click.`, you can grant READ or WRITE access to:
         -   the whole prefix: `click.`
         -   a sub prefix: `click.orders.`
         -   a literal topic name: `click.orders.france`
-        -   <https://github.com/michelin/ns4kafka/blob/master/src/main/java/com/michelin/ns4kafka/controllers/acl/AclController.java#L113-L118>
 -   `spec` is immutable
-    -   <https://github.com/michelin/ns4kafka/blob/master/src/main/java/com/michelin/ns4kafka/controllers/acl/AclController.java#L129-L133>
 
 
-
-# Integrate Conduktor CLI with your CI/CD
+## Integrate Conduktor CLI with your CI/CD
 
 Conduktor CI can be easily added to a CI/CD pipeline using the Docker images on Docker Hub.
 
@@ -212,95 +209,79 @@ The first one triggers on each new PR and launches the CLI using the `--dry-run`
 The second one triggers on a push to the `main` branch, making the changes live.
 
 Consider the following folder structure:
+````
+├── resources/
+│   ├── topics.yml          # Your topics are there
+|   ├── permissions.yml     # Your permissions to other Apps are there
+````
 
-    ├── resources/
-    │   ├── topics.yml          # Your topics are there
-    |   ├── permissions.yml     # Your permissions to other Apps are there
+### Github Actions
+````
+├── .github/
+│   ├── workflows/
+│   |   ├── on-pr.yml
+│   |   ├── on-push.yml
+````
 
-## Github Actions
+````yaml title=".github/workflows/on-pr.yml"
 
-    # ├── .github/
-    # │   ├── workflows/
-    # │   |   ├── on-pr.yml
-    # │   |   ├── on-push.yml
-    # File: .github/workflows/on-pr.yml
-    name: Check PR Validity
-    on:
-      pull_request:
-        branches: [ "main" ]
-      workflow_dispatch:
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        container: conduktor/conduktor-cli:latest
-        steps:
-          - uses: actions/checkout@v3
-          - run: conduktor-cli apply -f resources/ --dry-run
-            env:
-              CONDUKTOR_API: https://conduktor.domain.com
-              CONDUKTOR_USER_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+name: Check PR Validity
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: conduktor/conduktor-cli:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: conduktor-cli apply -f resources/ --dry-run
+        env:
+          CDK_BASE_URL: https://conduktor.domain.com
+          CONDUKTOR_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+````
+````yaml title=".github/workflows/on-push.yml"
+name: Execute Commited Changes
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: conduktor/conduktor-ctl
+    steps:
+      - uses: actions/checkout@v3
+      - run: conduktor-cli apply -f resources/
+        env:
+          CDK_BASE_URL: https://conduktor.domain.com
+          CONDUKTOR_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+````
+### Gitlab CI
+````yaml title=".gitlab-ci.yml"
+conduktor-pr:
+  only:
+    - merge_requests
+  stage: check
+  image:
+    name: conduktor/conduktor-ctl
+  before_script:
+    - export CDK_BASE_URL=https://conduktor.domain.com
+    - export CONDUKTOR_TOKEN=${CONDUKTOR_TOKEN}
+  script:
+    - conduktor-ctl apply -f resources/ --dry-run
 
-    # File: .github/workflows/on-push.yml
-    name: Execute Commited Changes
-    on:
-      push:
-        branches: [ "main" ]
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        container: conduktor/conduktor-cli:latest
-        steps:
-          - uses: actions/checkout@v3
-          - run: conduktor-cli apply -f resources/
-            env:
-              CONDUKTOR_API: https://conduktor.domain.com
-              CONDUKTOR_USER_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
-
-## Gitlab CI
-
-    # File: .gitlab-ci.yml
-    conduktor-pr:
-      only:
-        - merge_requests
-      stage: check
-      image:
-        name: conduktor/conduktor-cli
-      before_script:
-        - export CONDUKTOR_API=https://conduktor.domain.com
-        - export CONDUKTOR_USER_TOKEN=${CONDUKTOR_TOKEN}
-      script:
-        - conduktor-cli apply -f resources/ --dry-run
-
-    conduktor-main:
-      only:
-        refs:
-          - master
-      stage: deploy
-      image:
-        name: conduktor/conduktor-cli
-      before_script:
-        - export CONDUKTOR_API=https://conduktor.domain.com
-        - export CONDUKTOR_USER_TOKEN=${CONDUKTOR_TOKEN}
-      script:
-        - conduktor-cli apply -f resources/
-
-# Examples
-
-## List all resources for your Application Instance
-
-```
-conduktor get all -n myNamespace
-ACL                  GRANTED_BY   GRANTED_TO   TYPE             RESOURCE  PATTERN   PERMISSION  AGE
-myTopicAcl           myNamespace  myNamespace  TOPIC            abc.      PREFIXED  OWNER       il y a 13 minutes
-myConnectAcl         myNamespace  myNamespace  CONNECT          abc.      PREFIXED  OWNER       il y a 13 minutes
-myGroupAcl           myNamespace  myNamespace  GROUP            abc.      PREFIXED  OWNER       il y a 13 minutes
-
-QUOTA  COUNT/TOPICS  COUNT/PARTITIONS  DISK/TOPICS  COUNT/CONNECTORS  USER/CONSUMER_BYTE_RATE  USER/PRODUCER_BYTE_RATE
-       1             3                 0B           0                 102400.0B/s              102400.0B/s
-
-TOPIC        RETENTION  POLICY  AGE
-abc.myTopic  7d         delete  il y a 4 minutes
-
-```
-
+conduktor-main:
+  only:
+    refs:
+      - master
+  stage: deploy
+  image:
+    name: conduktor/conduktor-ctl
+  before_script:
+    - export CDK_BASE_URL=https://conduktor.domain.com
+    - export CONDUKTOR_TOKEN=${CONDUKTOR_TOKEN}
+  script:
+    - conduktor-ctl apply -f resources/
+````
           
