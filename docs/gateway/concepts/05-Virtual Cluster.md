@@ -23,9 +23,3 @@ There is one special case, a VCluster with a prefix defined with the special nam
 Naming: passthrough VCluster is equivalent to transparent VCluster
 
 Since the prefix must be unique, a Gateway instance can only have one single passthrough VCluster.
-
-## Isolation & Namespacing
-
-TODO in Explanation section ?
-
-          
