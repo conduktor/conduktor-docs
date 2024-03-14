@@ -127,6 +127,14 @@ will be represented like this:
 
 ![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-byte-serdes.png)
 
+#### Custom Deserializer
+Check our guide on how to Install & [Configure Custom Deserializers](/platform/guides/custom-deserializers/) in Console.
+
+Once you have loaded the corresponding jar files in Console, your custom Deserializers will appear here.  
+Simply configure them using the `Properties` text and your messages will show as expected.
+![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
+
+
 ## Filter records
 
 Console give you 3 methods to define filters that will be executed on the server and will only return the records that matches. This is a very powerful feature that lets you quickly see the records that matter to you in large topics.
