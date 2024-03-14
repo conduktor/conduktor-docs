@@ -137,7 +137,7 @@ This is how Application Teams can create the Kafka resources they need for their
 apiVersion: v1
 kind: "Topic"
 metadata:
-  appInstance: "clickstream-app-dev"
+  cluster: "shadow-it"
   name: "click.screen-events"
 spec:
   replicationFactor: 3
@@ -152,7 +152,7 @@ spec:
 apiVersion: v1
 kind: "Connector"
 metadata:
-  appInstance: "clickstream-app-dev"
+  cluster: "shadow-it"
   name: click.myConnector
 spec:
   connectCluster: myConnectCluster
