@@ -186,18 +186,6 @@ When it is set
 * `KAFKA` they will be materialized as a topic.
 * `IN_MEMORY` they will be stored in memory.
 
-| Environment Variable                                             | Default Value                            | Description                                                                                  |
-|------------------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------------|
-| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`                      | `_topicMappings`                         | Name of topicMappings topic                                                                  |
-| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`                     | `_topicRegistry`                         | Name of topicRegistry topic                                                                  |
-| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`                        | `_interceptorConfigs`                    | Name of interceptorConfigs topic                                                             |
-| `GATEWAY_ACLS_STORES_BACKING_TOPIC`                              | `_acls`                                  | Name of acls topic                                                                           |
-| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                           | Name of offsetStore topic                                                                    |
-| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic` | Name of consumerGroupSubscriptionBackingTopic topic                                          |
-| `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                               | Name of license topic                                                                        |
-| `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                           | Name of the user mapping topic                                                               |
-| `GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC`                        | `_encryptionConfig`                      | Name of the topic used to store encryption information, if not stored in the message header. |
-
 | Environment Variable                   | Default Value                               | Description                                                                                  |
 |----------------------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------|
 | `GATEWAY_LICENSE_TOPIC`                | `_conduktor_gateway_license`                | Name of license topic                                                                        |
