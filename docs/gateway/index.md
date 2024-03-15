@@ -90,10 +90,10 @@ Kafka messages go through different components inside Gateway. Each of these com
 Kafka protocol requests (such as Produce requests) pass sequentially through each of the components in the pipeline, before being forwarded to the broker.
 When the broker returns a response (such as a Produce response) the components in the pipeline are invoked in the reverse order with each having the opportunity to inspect and/or manipulate the response. Eventually, a response is returned to the client.
 
-There are three types of components, with different responsibilities:
-* Authentication & Authorization: identify the principal of the request, and determine which [VCluster](concepts/05-Virtual%20Cluster.md) it belongs.
-* Interceptors: These are dynamically configured, depending on the principal and the Virtual Cluster, a chain of interceptors is built for the exchange. This allows to selectively add new behavior to Gateway. [See](concepts/06-Interceptors/01-Plugin.md)
-* Core Rebuilders: Coming last, this component implements the core features of Gateway: It rewrites broker address, performs isolation into Virtual Clusters, and translates Logical topics to physical topics.
+There are three types of components in the flow, each with different responsibilities:
+* Authentication & Authorization: identify the principal of the request, and determine which [VCluster](concepts/05-Virtual%20Cluster.md) it belongs to
+* Interceptors: These are dynamically configured, depending on both the principal and the Virtual Cluster, a chain of interceptors is built for the exchange. This allows you to selectively add new behavior to Gateway. See [Interceptors](concepts/06-Interceptors/01-Plugin.md) for more
+* Core features: Coming last, this component implements the core features of Gateway: It rewrites broker address, performs isolation into Virtual Clusters, and translates Logical topics to physical topics. See the [Topic naming convention](reference/reference-docs/#topic-naming-convention) for more on the different types of topics in Gateway
 
 
 
