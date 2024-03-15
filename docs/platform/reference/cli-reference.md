@@ -249,7 +249,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: conduktor/conduktor-ctl
+    container: conduktor/conduktorctl
     steps:
       - uses: actions/checkout@v3
       - run: conduktor-cli apply -f resources/
