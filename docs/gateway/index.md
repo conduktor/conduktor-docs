@@ -55,6 +55,48 @@ There is so much you can do with a Conduktor Gateway, just some of the features 
  ![gateway-so-many-features.png](./so-many-features.png)
 
 
+ ```mermaid
+flowchart LR
+    A[User App]
+    subgraph G [Gateway]
+        direction LR
+        Auth[Authentication & </br> Authorization]
+        subgraph I [Dynamic interceptor pipeline]
+            direction LR
+            I1(Plugin </br> priority: 1 </br> interceptor)
+            I2(Plugin </br> priority: 10 </br> interceptor1 & interceptor2)
+            I3(Plugin </br> priority: 42 </br> interceptor)
+            I1 <--> I2 <--> I3
+        end
+        subgraph Core [Core features]
+            direction TB
+            LT(Logical Topics)
+            VC(Virtual clusters)
+        end
+        Auth <--> I
+    end
+    subgraph K [Main Kafka cluster]
+    B1(broker 1)
+    B2(broker 2)
+    B3(broker 3)
+    B1 === B2 === B3
+    end
+    A <--> Auth
+    I <--> Core
+    Core <--> K
+```
+
+Kafka messages go through different components inside Gateway. Each of these components implements some logic for intercepting, inspecting and/or manipulating Kafka protocol messages.
+Kafka protocol requests (such as Produce requests) pass sequentially through each of the components in the pipeline, before being forwarded to the broker.
+When the broker returns a response (such as a Produce response) the components in the pipeline are invoked in the reverse order with each having the opportunity to inspect and/or manipulate the response. Eventually, a response is returned to the client.
+
+There are three types of components in the flow, each with different responsibilities:
+* Authentication & Authorization: identify the principal(see [client to GW security](./concepts/02-Clients.md)) of the request, and determine which [VCluster](concepts/05-Virtual%20Cluster.md) it belongs to
+* Interceptors: These are dynamically configured, depending on both the principal and the Virtual Cluster, a chain of interceptors is built for the exchange. This allows you to selectively add new behavior to Gateway. See [Interceptors](concepts/06-Interceptors-and-plugins/01-Plugins.md) for more
+* Core features: Coming last, this component implements the core features of Gateway: It rewrites broker address, performs isolation into Virtual Clusters, and translates Logical topics to physical topics. See the [Topic naming convention](reference/reference-docs/#topic-naming-convention) for more on the different types of topics in Gateway
+
+
+
 ## Resources
 
 - [Support](https://www.conduktor.io/contact/support)

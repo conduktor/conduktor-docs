@@ -4,6 +4,8 @@ title: Environment Variables
 description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
 
+# Environment Variables
+
 Configuring the environment variables is the recommended way of setting up Conduktor Gateway.
 
 
@@ -69,6 +71,7 @@ __Example Values__
 | `GATEWAY_PORT_START`      | `6969`                                 | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
 | `GATEWAY_PORT_COUNT`      | defaults to your number of brokers +2  | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
 
+
 ### Load Balancing
 
 | Environment Variable                            | Default Value      | Description                                                                                                              |
@@ -82,12 +85,15 @@ __Example Values__
 * `VCLUSTER` where your virtual clusters, credentials and ACL handled by Gateway
 
 
+### Client to Gateway Authentication
+
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
 | Environment Variable        | Default Value                         | Description                                                                                                                                   |
 |-----------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL` |
+| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` |
+| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`     | Set if authenticated users are automaticaly assigned to `passtrhough` vcluster in it's not configured. Reject authentication if set to `true` and vcluster is not configured for a principal |
 
 #### SSL
 
@@ -175,6 +181,7 @@ Conduktor needs to save state, you can choose where:
 | Environment Variable    | Default Value   | Description                         |
 |-------------------------|-----------------|-------------------------------------|
 | `GATEWAY_STORAGE_TYPE`  | `KAFKA`         | Can be `IN_MEMORY` or, `KAFKA`      |
+| `GATEWAY_GROUP_ID`      | null            | Set the group name for internal topic if not defined      |
 | `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh           |
 
 #### Topics Names
@@ -186,17 +193,17 @@ When it is set
 * `KAFKA` they will be materialized as a topic.
 * `IN_MEMORY` they will be stored in memory.
 
-| Environment Variable                                             | Default Value                            | Description                                                                                  |
-|------------------------------------------------------------------|------------------------------------------|----------------------------------------------------------------------------------------------|
-| `GATEWAY_TOPIC_STORE_MAPPING_BACKING_TOPIC`                      | `_topicMappings`                         | Name of topicMappings topic                                                                  |
-| `GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC`                     | `_topicRegistry`                         | Name of topicRegistry topic                                                                  |
-| `GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC`                        | `_interceptorConfigs`                    | Name of interceptorConfigs topic                                                             |
-| `GATEWAY_ACLS_STORES_BACKING_TOPIC`                              | `_acls`                                  | Name of acls topic                                                                           |
-| `GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC`            | `_offsetStore`                           | Name of offsetStore topic                                                                    |
-| `GATEWAY_OFFSET_STORE_CONSUMER_GROUP_SUBSCRIPTION_BACKING_TOPIC` | `_consumerGroupSubscriptionBackingTopic` | Name of consumerGroupSubscriptionBackingTopic topic                                          |
-| `GATEWAY_LICENSE_BACKING_TOPIC`                                  | `_license`                               | Name of license topic                                                                        |
-| `GATEWAY_USER_MAPPING_BACKING_TOPIC`                             | `_userMapping`                           | Name of the user mapping topic                                                               |
-| `GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC`                        | `_encryptionConfig`                      | Name of the topic used to store encryption information, if not stored in the message header. |
+| Environment Variable                   | Default Value                               | Description                                                                                  |
+|----------------------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------|
+| `GATEWAY_LICENSE_TOPIC`                | `_conduktor_gateway_license`                | Name of license topic                                                                        |
+| `GATEWAY_TOPIC_MAPPINGS_TOPIC`         | `_conduktor_gateway_topicmappings`          | Name of topicMappings topic                                                                  |
+| `GATEWAY_USER_MAPPINGS_TOPIC`          | `_conduktor_gateway_usermappings`           | Name of the user mapping topic                                                               |
+| `GATEWAY_CONSUMER_SUBSCRIPTIONS_TOPIC` | `_conduktor_gateway_consumer_subscriptions` | Name of the subscriptions for concentrated topic consumption topic                           |
+| `GATEWAY_CONSUMER_OFFSETS_TOPIC`       | `_conduktor_gateway_consumer_offsets`       | Name of the topic to store the offsets for concentrated topic consumption                    |
+| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                                             |
+| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration stopic                                                      |
+| `GATEWAY_ACLS_TOPIC`                   | `_conduktor_gateway_acls`                   | Name of the acl topic                                                                        |
+| `GATEWAY_AUDIT_LOGS_TOPIC`             | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
 
 #### `IN_MEMORY` State Configurations
 
