@@ -233,7 +233,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: conduktor/conduktor-cli:latest
+    container: conduktor/conduktorctl
     steps:
       - uses: actions/checkout@v3
       - run: conduktor-cli apply -f resources/ --dry-run
