@@ -20,7 +20,7 @@ Also, the alias topic doesn't replace the original one. If you create an alias `
 
 # Limitations
 
-ACL in delegated Kafka security (cf [SASL delegated security protocols](../01-Clients.md#delegated_sasl_plaintext)) aren't supported on alias topics
+ACL in delegated Kafka security (cf [SASL delegated security protocols](../02-Clients.md#delegated_sasl_plaintext)) aren't supported on alias topics
 
 Alias topic can't reference another alias topic
 

@@ -91,7 +91,7 @@ Kafka protocol requests (such as Produce requests) pass sequentially through e
 When the broker returns a response (such as a Produce response) the components in the pipeline are invoked in the reverse order with each having the opportunity to inspect and/or manipulate the response. Eventually, a response is returned to the client.
 
 There are three types of components in the flow, each with different responsibilities:
-* Authentication & Authorization: identify the principal of the request, and determine which [VCluster](concepts/05-Virtual%20Cluster.md) it belongs to
+* Authentication & Authorization: identify the principal(see [client to GW security](./concepts/02-Clients.md)) of the request, and determine which [VCluster](concepts/05-Virtual%20Cluster.md) it belongs to
 * Interceptors: These are dynamically configured, depending on both the principal and the Virtual Cluster, a chain of interceptors is built for the exchange. This allows you to selectively add new behavior to Gateway. See [Interceptors](concepts/06-Interceptors/01-Plugin.md) for more
 * Core features: Coming last, this component implements the core features of Gateway: It rewrites broker address, performs isolation into Virtual Clusters, and translates Logical topics to physical topics. See the [Topic naming convention](reference/reference-docs/#topic-naming-convention) for more on the different types of topics in Gateway
 

@@ -312,7 +312,7 @@ To be sure that your gateway behave the same as before here is the Gateway 3.0.0
 
 ### Migrate from `KAFKA_SECURITY`
 
-This mode was replaced in Gateway 3.0.0 by new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`. You can find more information on those in our [Security documentation](../concepts/01-Clients.md).
+This mode was replaced in Gateway 3.0.0 by new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`. You can find more information on those in our [Security documentation](../concepts/02-Clients.md).
 
 To migrate this you need to find the configured security protocol of your existing gateway.
 If you were configuring `GATEWAY_SECURITY_PROTOCOL` then it's this configuration to refer to.

@@ -1,5 +1,7 @@
 ---
+sidebar_position: 2
 title: Client to Gateway Authentication
+description: Connecting clients to Gateway 
 ---
 
 # Client to Gateway Authentication
@@ -187,7 +189,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
   password="yourPassword";
 ```
 
-Note: the password must be filled as already explained [here](01-Clients.md#plain)
+Note: the password must be filled as already explained [here](02-Clients.md#plain)
 
 ### OAuthbearer
 
