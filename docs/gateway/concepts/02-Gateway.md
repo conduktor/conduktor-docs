@@ -1,8 +1,8 @@
 ---
-title: Gateway Authentication
+title: Gateway to Kafka Authentication
 ---
 
-# Gateway Authentication
+# Gateway to Kafka Authentication
 
 ![image.png](../medias/gateway_auth.png)
 
