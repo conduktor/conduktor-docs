@@ -17,7 +17,7 @@ You can find some Kafka deserializer implementation examples in this open-source
 Console looks for jars present in folder `/opt/conduktor/plugins` during startup.
 
 :::caution warning
-Each customer deserializer must be packaged into a single jar with all its dependencies (fat jar).
+Each custom deserializer must be packaged into a single jar with all its dependencies (fat jar).
 :::
 
 If everything went well, you should see this in the Console starting:
