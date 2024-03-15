@@ -1,3 +1,8 @@
+---
+sidebar_position: 5
+title: Virtual Cluster
+description: What a virtual cluster is 
+---
 # Virtual Cluster
 
 # What is a VCluster ?

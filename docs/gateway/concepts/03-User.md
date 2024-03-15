@@ -1,3 +1,9 @@
+---
+sidebar_position: 3
+title: Gateway User
+description: What a Gateway User is
+---
+
 # User
 
 All connections on a Gateway broker will result on a `User` that defines attached information to a connection for core features.

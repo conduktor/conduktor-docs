@@ -1,5 +1,8 @@
 ---
+sidebar_position: 4
 title: Principal to Gateway User 
+description: Principal to Gateway User 
+---
 ---
 
 # Gateway User identification
