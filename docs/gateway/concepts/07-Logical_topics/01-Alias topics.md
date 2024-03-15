@@ -1,12 +1,19 @@
-# Alias topics
+---
+sidebar_position: 1
+title: Alias Topics
+description: Alias topics
+---
+
+# Alias Topics
 
 Alias topic are logical topics that target a different physical topic.
+Reminder, [topic naming convention](/gateway/reference/reference-docs/#topics).
 
-They are gateway managed logical topics that act like pointers to another physical topic.
+They are a Gateway managed logical topic that act like pointers to another physical topic.
 
 # Why ?
 
-One of Kafka limitation is that you cannot rename topics.
+One of Kafka's limitations is that you cannot rename topics.
 
 # How does it work ?
 
@@ -20,8 +27,7 @@ Also, the alias topic doesn't replace the original one. If you create an alias `
 
 # Limitations
 
-ACL in delegated Kafka security (cf [SASL delegated security protocols](../02-Clients.md#delegated_sasl_plaintext)) aren't supported on alias topics
-
-Alias topic can't reference another alias topic
+* ACLs when using delegated Kafka security ([SASL delegated security protocols](../02-Clients.md#delegated_sasl_plaintext)) aren't supported on alias topics.
+* Alias topics can't reference another alias topic
 
           
