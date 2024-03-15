@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: Virtual Cluster
 description: What a virtual cluster is 
 ---

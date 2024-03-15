@@ -31,7 +31,7 @@ Here is a quick explanation of each supported security protocol:
 * **SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
 * **DELEGATED_SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
   All communication  between the client and gateway broker is exchanged without any network security.
-  All credentials are managed by your backend kafka, we only provide [authorization](04-Authorization.md) on the Gateway side based on the exchanged principal.
+  All credentials are managed by your backend kafka, we only provide [authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
 
 
 ## Supported security protocols and authentication mechanisms
@@ -219,7 +219,7 @@ Authentication from client is mandatory but will be forwarded to Kafka for check
 
 All communication between the client and Gateway broker are exchanged without any network security.
 
-All credentials are managed by your backing Kafka, we only provide [Authorization](04-Authorization.md) on the Gateway side based on the exchanged principal.
+All credentials are managed by your backing Kafka, we only provide [Authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
 
 Supported authentication mechanisms on the backing Kafka are:
 
@@ -233,7 +233,7 @@ Authentication from the client is mandatory but will be forwarded to Kafka. Gate
 
 All communication between the client and Gateway broker will be encrypted using TLS.
 
-All credentials are managed by your backing Kafka, we only provide [Authorization](04-Authorization.md) on the Gateway side based on the exchanged principal.
+All credentials are managed by your backing Kafka, we only provide [Authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
 
 Supported authentication mechanisms on the backing Kafka are:
 

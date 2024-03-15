@@ -1,15 +1,22 @@
 ---
-sidebar_position: 4
-title: Principal to Gateway User 
-description: Principal to Gateway User 
+sidebar_position: 3
+title: Gateway User
+description: What a Gateway User is
 ---
----
 
-# Gateway User identification
+# User
 
-A `Principal` is not enough for Gateway to operate. Due to its features and internals, all connections opened should associate a [User](03-User.md) .
+All connections on a Gateway broker will apply to a `User` that defines the information used in the connection for core features.
 
-Gateway authorization is the process to go from an authentication `Principal` to a full Gateway `User` using some authentication information, and a [UserMapping](03-User.md#user-mapping) for the `Principal` , if it exists.
+A User is constituted of the following elements :
+
+-   `username` : The name of the user on Gateway, it's this one that will be used for interceptor targeting, audit, ...
+-   `vcluster` : The virtual cluster the user is associated to
+-   `principal` : The authentication principal identifying this `User`
+-   `groups` : Groups the `User`(s)
+
+Since some of this information cannot be detected based on authentication only we have to provide a way for you to be able to set this information associated with a client.
+
 
 ### Username
 
@@ -31,11 +38,11 @@ If no virtual cluster was detected then the user is associated to the the `passt
 
 If you don't want users to automatically fallback into the `passthrough` transparent virtual cluster, and instead fail the connection, you can set `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` to true.
 
-# Authentication specific extraction
+## Authentication specific extraction
 
 As mentioned below, the authorization process will try to detect information from the authentication source. Each authentication source is different and they can't all provide everything. This section is dedicated to explain which information can be extracted based on you authentication mechanism.
 
-## Plain
+### Plain
 
 -   Virtual Cluster : ✅
 
@@ -43,7 +50,7 @@ When creating a plain user with the HTTP API you can define a virtual cluster pr
 
 -   Groups: ❌
 
-## OAuthbearer
+### OAuthbearer
 
 -   Virtual Cluster : ✅
 
@@ -51,12 +58,21 @@ If a `gateway.vcluster` claim is detected in the OAuth token sent by a client, i
 
 -   Groups: ❌
 
-# Mtls
+### Mtls
 
 -   Virtual Cluster : ❌
 -   Groups: ❌
 
-# Delegated to backend Kafka
+### Delegated to backend Kafka
 
 -   Virtual Cluster : ❌
 -   Groups: ❌
+
+## User mapping
+
+User mapping is the way for you to associate some Gateway information to a `Principal `(the unique identifier of a Kafka client authenticated).
+
+It allows you to set information as an understandable username, the associated virtual clusters or groups for Kafka client.
+
+User mappings are managed using Gateway HTTP APIs and are stored in your configured storage (see storage configuration).
+          

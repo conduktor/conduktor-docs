@@ -48,14 +48,14 @@ As an example you can define that you want to configure a plugin `topicProtectio
 When a message is processed by Gateway, we have to detect and apply all `Interceptors` for that request based on the message context.
 
 For each message, interceptor resolution is based on a context containing the following elements :
- - Gateway [User](../03-User.md) 
+ - Gateway [User](../03-GatewayUser.md) 
    - VCluster
    - Username
    - Groups (Optional)
  - Kafka Message type
 
 Based on this context for all configured plugin we search if it could apply by search if there is at least one scope matching the request context.
-If a plugin have multiple matching scope we result the most precise ones (Username then Group then Virtual cluster then Global).
+If a plugin have multiple matching scope the most precise one (Username then Group then Virtual cluster then Global) will be used.
 Then for the configured plugin we load the corresponding Interceptors with the priority and the configuration of this scope.
 
 ```mermaid
