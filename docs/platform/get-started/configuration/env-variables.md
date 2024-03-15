@@ -300,66 +300,68 @@ Configuring Gateway properties will enable you to deploy and manage interceptors
 
 ### Schema registry properties
 
-| Property                                               | Description                                           | Env                                                        | Mandatory | Type                                 | Default |
-|--------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
-| `clusters[].schemaRegistry.url`                        | The schema registry URL                               | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`                        | true      | string                               | ∅       |
-| `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation                       | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                              | `false` |
-| `clusters[].schemaRegistry.properties`                 | Any schema registry configuration parameters          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`                 | false     | string where each line is a property | ∅       |
-| **Basic Authentication**                               |                                                       |                                                            |           |                                      |         |
-| `clusters[].schemaRegistry.security.username`          | Basic auth username                                   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`          | false     | string                               | ∅       |
-| `clusters[].schemaRegistry.security.password`          | Basic auth password                                   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`          | false     | string                               | ∅       |
-| **Bearer Token Authentication**                        |                                                       |                                                            |           |                                      |         |
-| `clusters[].schemaRegistry.security.token`             | Bearer auth token                                     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`             | `false`   | string                               | ∅       |
-| **mTLS Authentication**                                |                                                       |                                                            |           |                                      |         |
-| `clusters[].schemaRegistry.security.key`               | Access Key                                            | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_KEY`              | false     | string                               | ∅       |
-| `clusters[].schemaRegistry.security.certificateChain`  | Bearer token                                          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_CERTIFICATECHAIN` | false     | string                               | ∅       |
+| Property                                               | Description                                  | Env                                                        | Mandatory | Type                                 | Default |
+|--------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
+| `clusters[].schemaRegistry.url`                        | The schema registry URL                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`                        | true      | string                               | ∅       |
+| `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                              | `false` |
+| `clusters[].schemaRegistry.properties`                 | Any schema registry configuration parameters | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`                 | false     | string where each line is a property | ∅       |
+| **Basic Authentication**                               |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.username`          | Basic auth username                          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`          | false     | string                               | ∅       |
+| `clusters[].schemaRegistry.security.password`          | Basic auth password                          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`          | false     | string                               | ∅       |
+| **Bearer Token Authentication**                        |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.token`             | Bearer auth token                            | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`             | false     | string                               | ∅       |
+| **mTLS Authentication**                                |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.key`               | Access Key                                   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_KEY`               | false     | string                               | ∅       |
+| `clusters[].schemaRegistry.security.certificateChain`  | Access certificate                           | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_CERTIFICATECHAIN`  | false     | string                               | ∅       |
 
 #### Amazon Glue schema registry properties
 
-| Property                                               | Description                     | Env                                                        | Mandatory | Type   | Default | Values                                   | Since   |
-|--------------------------------------------------------|---------------------------------|------------------------------------------------------------|-----------|--------|---------|------------------------------------------|---------|
-| `clusters[].schemaRegistry.region`                     | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       | -                                        | `1.x.x` |
-| `clusters[].schemaRegistry.registryName`               | The Glue schema registry name   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       | -                                        | `1.x.x` |
-| `clusters[].schemaRegistry.amazonSecurity.type`        | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`        | true      | string | ∅       | `Credentials`, `FromContext`, `FromRole` | `1.x.x` |
-| **Credentials Security**                               |                                 |                                                            |           |        |         |                                          |         |
-| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true      | string | ∅       | `1.x.x`                                  |         |
-| `clusters[].schemaRegistry.amazonSecurity.secretKey`   | Credentials auth secret key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`   | true      | string | ∅       | `1.x.x`                                  |         |
-| **FromContext Security**                                   |                                 |                                                            |           |        |         |                                          |         |
-| `clusters[].schemaRegistry.amazonSecurity.profile`     | Authentication profile          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`     | false     | string | ∅       | `1.x.x`                                  |         |
-| **FromRole Security**                                      |                                 |                                                            |           |        |         |                                          |         |
-| `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role             | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       | `1.x.x`                                  |         |
+| Property                                               | Description                     | Env                                                        | Mandatory | Type   | Default | Values                                   |
+|--------------------------------------------------------|---------------------------------|------------------------------------------------------------|-----------|--------|---------|------------------------------------------|
+| `clusters[].schemaRegistry.region`                     | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       |                                          |
+| `clusters[].schemaRegistry.registryName`               | The Glue schema registry name   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       |                                          |
+| `clusters[].schemaRegistry.amazonSecurity.type`        | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`        | true      | string | ∅       | `Credentials`, `FromContext`, `FromRole` |
+| **Credentials Security**                               |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true      | string | ∅       |                                          |
+| `clusters[].schemaRegistry.amazonSecurity.secretKey`   | Credentials auth secret key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`   | true      | string | ∅       |                                          |
+| **FromContext Security**                               |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.profile`     | Authentication profile          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`     | false     | string | ∅       |                                          |
+| **FromRole Security**                                  |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role             | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       |                                          |
 
 ### Kafka Connect properties
 
-| Property                             | Description                                                     | Environment Variable                                        | Mandatory | Type   | Default |
-|--------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------|-----------|--------|---------|
-| `clusters[].kafkaConnects[].id`      | String used to uniquely identify your Kafka Connect             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`                         | true      | string | ∅       |
-| `clusters[].kafkaConnects[].name`    | Name your Kafka Connect                                         | `CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME`                       | true      | string | ∅       |
-| `clusters[].kafkaConnects[].url`     | The Kafka connect URL                                           | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`                        | true      | string | ∅       |
-| `clusters[].kafkaConnects[].headers` | Optional additional headers (ie: `X-API-Token=123,X-From=Test`) | `CDK_CLUSTERS_0_KAFKACONNECTS_0_HEADERS`                    | false     | string | ∅       |
-| `clusters[].kafkaConnects[].ignoreUntrustedCertificate` | Skip SSL certificate validation                                 | `CDK_CLUSTERS_0_KAFKACONNECTS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | string | ∅       |
-| **Basic Authentication**                              |                                                                 |                                                             |           |        |         |
-| `clusters[].kafkaConnects[].security.username`    | Basic auth username                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`          | false     | string | ∅       |
-| `clusters[].kafkaConnects[].security.password`    | Basic auth password                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`          | false     | string | ∅       |
-| **Bearer Token Authentication**                       |                                                                 |                                                             |           |        |         |
-| `clusters[].kafkaConnects[].security.token`       | Bearer token                                                    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_TOKEN`             | false     | string | ∅       |
-| **mTLS Authentication**                               |                                                                 |                                                             |           |        |         |
-| `clusters[].kafkaConnects[].security.key`         | Access Key                                                      | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_KEY`               | false     | string | ∅       |
-| `clusters[].kafkaConnects[].security.certificateChain` | Bearer token                                                    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_CERTIFICATECHAIN`  | false     | string | ∅       |
+| Property                                                | Description                                                     | Environment Variable                                        | Mandatory | Type    | Default |
+|---------------------------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------|-----------|---------|---------|
+| `clusters[].kafkaConnects[].id`                         | String used to uniquely identify your Kafka Connect             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`                         | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].name`                       | Name your Kafka Connect                                         | `CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME`                       | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].url`                        | The Kafka connect URL                                           | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`                        | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].headers`                    | Optional additional headers (ie: `X-API-Token=123,X-From=Test`) | `CDK_CLUSTERS_0_KAFKACONNECTS_0_HEADERS`                    | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].ignoreUntrustedCertificate` | Skip SSL certificate validation                                 | `CDK_CLUSTERS_0_KAFKACONNECTS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
+| **Basic Authentication**                                |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.username`          | Basic auth username                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`          | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].security.password`          | Basic auth password                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`          | false     | string  | ∅       |
+| **Bearer Token Authentication**                         |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.token`             | Bearer token                                                    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_TOKEN`             | false     | string  | ∅       |
+| **mTLS Authentication**                                 |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.key`               | Access key                                                      | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_KEY`               | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].security.certificateChain`  | Access certificate                                              | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
 
 ### ksqlDB properties
 
-| Property                                          | Description                                          | Environment Variable                                  | Mandatory | Type   | Default |
-|---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|--------|---------|
-| `clusters[].ksqlDBs[].id`                         | String used to uniquely identify your ksqlDB Cluster | `CDK_CLUSTERS_0_KSQLDBS_0_ID`                         | true      | string | ∅       |
-| `clusters[].ksqlDBs[].name`                       | Name of your ksqlDB Cluster                          | `CDK_CLUSTERS_0_KSQLDBS_0_NAME`                       | true      | string | ∅       |
-| `clusters[].ksqlDBs[].url`                        | The ksqlDB API URL                                   | `CDK_CLUSTERS_0_KSQLDBS_0_URL`                        | true      | string | ∅       |
-| `clusters[].ksqlDBs[].ignoreUntrustedCertificate` | Skip SSL certificate validation                      | `CDK_CLUSTERS_0_KSQLDBS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | string | ∅       |
-| **Basic Authentication**                              |                                               |                                                             |           |        |         |
-| `clusters[].ksqlDBs[].security.username`          | Basic auth username                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_USERNAME`          | false     | string | ∅       |
-| `clusters[].ksqlDBs[].security.password`          | Basic auth password                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_PASSWORD`          | false     | string | ∅       |
-| **Bearer Token Authentication**                       |                                               |                                                             |           |        |         |
-| `clusters[].ksqlDBs[].security.token`             | Bearer token                                         | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_TOKEN`             | false     | string | ∅       |
-| **mTLS Authentication**                               |                                               |                                                             |           |        |         |
-| `clusters[].ksqlDBs[].security.key`         | Access Key                                    | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string | ∅       |
-| `clusters[].ksqlDBs[].security.certificateChain` | Bearer token                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string | ∅       |
+This feature is available from version `1.21.0` of the Conduktor Console.
+
+| Property                                          | Description                                          | Environment Variable                                  | Mandatory | Type    | Default |
+|---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|---------|---------|
+| `clusters[].ksqlDBs[].id`                         | String used to uniquely identify your ksqlDB Cluster | `CDK_CLUSTERS_0_KSQLDBS_0_ID`                         | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].name`                       | Name of your ksqlDB Cluster                          | `CDK_CLUSTERS_0_KSQLDBS_0_NAME`                       | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].url`                        | The ksqlDB API URL                                   | `CDK_CLUSTERS_0_KSQLDBS_0_URL`                        | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].ignoreUntrustedCertificate` | Skip SSL certificate validation                      | `CDK_CLUSTERS_0_KSQLDBS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
+| **Basic Authentication**                          |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.username`          | Basic auth username                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_USERNAME`          | false     | string  | ∅       |
+| `clusters[].ksqlDBs[].security.password`          | Basic auth password                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_PASSWORD`          | false     | string  | ∅       |
+| **Bearer Token Authentication**                   |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.token`             | Bearer token                                         | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_TOKEN`             | false     | string  | ∅       |
+| **mTLS Authentication**                           |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.key`               | Access key                                           | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string  | ∅       |
+| `clusters[].ksqlDBs[].security.certificateChain`  | Access certificate                                   | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
