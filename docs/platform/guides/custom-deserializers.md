@@ -19,6 +19,50 @@ Console looks for jars present in folder `/opt/conduktor/plugins` during startup
 :::caution warning
 Each custom deserializer must be packaged into a single jar with all its dependencies (fat jar).
 :::
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="docker-compose" label="docker-compose">
+
+```yml
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - "8080:8080"
+    volumes:
+      - /local/custom-deserializer.jar:/opt/conduktor/plugins/custom-deserializer.jar
+```
+</TabItem>
+<TabItem value="Kubernetes" label="Kubernetes">
+
+
+First upload your jar as a ConfigMap
+```yaml
+kubectl create configmap my-deserializer-cm --from-file=/local/custom-deserializer.jar
+```
+Then mount in the Pod
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: conduktor-console
+spec:
+  containers:
+  - name: conduktor-console
+    image: conduktor/conduktor-console
+    volumeMounts:
+    - name: deserializer-mount
+      mountPath: /opt/conduktor/plugins/custom-deserializer.jar
+  volumes:
+  - name: deserializer-mount
+    configMap:
+      name: my-deserializer-cm
+```
+
+</TabItem>
+</Tabs>
+
+<hr />
 
 If everything went well, you should see this in the Console starting:
 ````
