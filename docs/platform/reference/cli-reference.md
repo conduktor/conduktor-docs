@@ -20,7 +20,7 @@ In the Assets lists, download the build that corresponds to your machine (`darwi
 
 ### Docker
 ````
-docker pull conduktor/conduktor-ctl
+docker pull conduktor/conduktorctl
 ````
 
 ### Configure
