@@ -1,4 +1,10 @@
-# Migration guide to 3.x
+---
+sidebar_position: 3
+title: Migration Guide to 3.x
+description: Migration guide to 3.x from 2.x
+---
+
+# Migration Guide to 3.x
 
 # Requirements
 
