@@ -73,7 +73,7 @@ With this configuration Gateway will load the mounted configuration file and use
 
 ### Delegated Kafka Authentication
 
-A special case for **Gateway to Kafka** connectivity is when you configure **Client to Gateway** security to delegate the authentication to Kafka. See [this section for more](https:broken.broken)
+A special case for **Gateway to Kafka** connectivity is when you configure **Client to Gateway** security to delegate the authentication to Kafka.
 
 In this case all previous configuration still applies but the authentication set in your provided configuration will not be used outside of Gateway administration tasks ( list nodes on startup, ...).
 
@@ -336,23 +336,25 @@ If you don't want users to automatically fallback into the `passthrough` transpa
 
 As mentioned below, the authorization process will try to detect information from the authentication source. Each authentication source is different and they can't all provide everything. This section is dedicated to explain which information can be extracted based on you authentication mechanism.
 
-**Plain**
-Virtual Cluster : ✅
-When creating a plain user with the HTTP API you can define a virtual cluster property that can be extracted by Gateway.
+**Plain**  
+Virtual Cluster : ✅  
+When creating a plain user with the HTTP API you can define a virtual cluster property that can be extracted by Gateway.  
+
 Groups: ❌
 
-**OAuthbearer**
-Virtual Cluster : ✅
-If a gateway.vcluster claim is detected in the OAuth token sent by a client, it can be extracted as virtual cluster.
+**OAuthbearer**  
+Virtual Cluster : ✅  
+If a `gateway.vcluster` claim is detected in the OAuth token sent by a client, it can be extracted as virtual cluster.  
+
 Groups: ❌
 
-**mTLS**
-Virtual Cluster : ❌
-Groups: ❌
+**mTLS**  
+Virtual Cluster : ❌  
+Groups: ❌  
 
-**Delegated to backend Kafka**
-Virtual Cluster : ❌
-Groups: ❌
+**Delegated to backend Kafka**  
+Virtual Cluster : ❌  
+Groups: ❌  
 
 
 
