@@ -17,7 +17,7 @@ You can find some Kafka deserializer implementation examples in this open-source
 Console looks for jars present in folder `/opt/conduktor/plugins` during startup.
 
 :::caution warning
-Each custom deserializer must be packaged into a single jar with all its dependencies (fat jar).
+**Custom deserializers must be packaged each into a single JAR with all their dependencies (Fat JAR / Uber JAR).**
 :::
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -75,6 +75,11 @@ If everything went well, you should see this in the Console starting:
 From the Consume page, open the "Value Format" filter and pick your Custom Deserializer from the list.
 - a dropdown allowing you to select your custom deserializer implementation class
 - a textarea field allowing you to pass some properties to your custom deserializer implementation (We'll call the `org.apache.kafka.common.serialization.Deserializer<T>::configure` method with these properties)
+````properties title="Properties example"
+apicurio.registry.url=https://test.serviceregistry.rhcloud.com/t/d4d411af-xxxx-4184-xxxx-342e6cd03580/apis/registry/v2
+apicurio.auth.username=srvc-acct-a95c41e8-xxxx-4e99-xxxx-217755ad7046
+apicurio.auth.password=7d94b05a-xxxx-4f70-xxxx-1e6aba25a8b4
+````
 
 ![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
 
