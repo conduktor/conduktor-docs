@@ -1,14 +1,14 @@
 ---
-title: Gateway to Kafka security
+title: Gateway Authentication
 ---
 
-# Gateway authentication
+# Gateway Authentication
 
 ![image.png](../medias/gateway_auth.png)
 
 You can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`. For these security protocols we support all SASL mechanisms; `PLAIN`, `SCRAM SHA`, `OAuthBearer`, `Kerberos` etc.
 
-there are two ways of providing your configuration on how to connect to Kafka : envrionement variables and properties configuration file.
+There are two ways of providing your configuration on how to connect to Kafka : envrionement variables and properties configuration file.
 
 ## Environment variables
 
