@@ -5,7 +5,7 @@ description: Prometheus metrics available for Console
 ---
 # CLI Reference
 
-Conduktor CLI gives your the ability to perform some operations directly from your command line or a CI/CD pipeline.  
+Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
 Check for the list of supported resources and their definition below.
 
 ## Install & Configure
