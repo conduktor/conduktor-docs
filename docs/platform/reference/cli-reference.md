@@ -264,7 +264,7 @@ conduktor-pr:
     - merge_requests
   stage: check
   image:
-    name: conduktor/conduktor-ctl
+    name: conduktor/conduktorctl
   before_script:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CONDUKTOR_TOKEN=${CONDUKTOR_TOKEN}
