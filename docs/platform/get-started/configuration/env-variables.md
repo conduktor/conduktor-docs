@@ -361,5 +361,5 @@ Configuring Gateway properties will enable you to deploy and manage interceptors
 | **Bearer Token Authentication**                       |                                               |                                                             |           |        |         |
 | `clusters[].ksqlDBs[].security.token`             | Bearer token                                         | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_TOKEN`             | false     | string | ∅       |
 | **mTLS Authentication**                               |                                               |                                                             |           |        |         |
-| `clusters[].kafkaConnects[].security.key`         | Access Key                                    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_KEY`               | false     | string | ∅       |
-| `clusters[].kafkaConnects[].security.certificateChain` | Bearer token                                  | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_CERTIFICATECHAIN`  | false     | string | ∅       |
+| `clusters[].ksqlDBs[].security.key`         | Access Key                                    | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string | ∅       |
+| `clusters[].ksqlDBs[].security.certificateChain` | Bearer token                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string | ∅       |
