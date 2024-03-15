@@ -255,10 +255,6 @@ const redirects = [
         to: '/gateway',
       },
       {
-        from: '/platform/proxy/configuration/proxy_security',
-        to: '/gateway/configuration/gateway_security',
-      },
-      {
         from: '/platform/proxy/configuration/env-variables',
         to: '/gateway/configuration/env-variables',
       },
