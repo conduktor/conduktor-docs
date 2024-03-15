@@ -1,10 +1,14 @@
+---
+sidebar_position: 1
+title: Plugins
+description: Plugins
+---
 
-
-What we commonly called `Interceptor` is actually implement by the class `Plugin`. A `Plugin` define a set of `Interceptor` to apply on a subset of [Kafka protocol's API keys](https://kafka.apache.org/0101/protocol.html#protocol_api_keys).
+What we commonly call an `Interceptor` is actually implement by the class `Plugin`. A `Plugin` defines a set of `Interceptor`s to apply on a subset of [Kafka protocol's API keys](https://kafka.apache.org/0101/protocol.html#protocol_api_keys).
 
 ![image.png](../../medias/interceptors.png)
 
-You can list all available Interceptor's plugin by calling the Gateway API:
+You can list all available Interceptor's plugins by calling the Gateway API:
 ```bash
 $ curl --request GET "http://localhost:8888/admin/plugins/v1/extended" -u admin:conduktor | jq .
 
@@ -25,15 +29,20 @@ $ curl --request GET "http://localhost:8888/admin/plugins/v1/extended" -u admin:
     ...
 ]
 ```
+## Configuring a plugin
 
-We can deploy a `Plugin` instance by configuring it. The `Plugin` configuration can choose which `Interceptor` will be applied. For instance the `AuditPlugin` generate a bunch of log when some requests are received by the Gateway.
-If we want to generate log only on Topic creation we can deployed the `AuditPlugin` with the following configuration:
+We can deploy a `Plugin` instance by configuring it. The `Plugin` configuration can choose which `Interceptor` will be applied. For instance the `AuditPlugin` generates a bunch of logs when some requests are received by the Gateway.
+If we want to generate logs only on Topic creation we can deploy the `AuditPlugin` with the following configuration:
+
 ```json
 {
     "apiKeys": ["CREATE_TOPICS"]
 }
 ```
-Then, the `AuditPlugin` will applied only the Interceptor related to `CREATE_TOPICS` api key.
+
+Then, the `AuditPlugin` will be applied only the Interceptor related to `CREATE_TOPICS` api key.
+
+### Example
 
 Here we created a new interceptor `myOwnInterceptor` by deploying an instance of `CreateTopicPolicyPlugin`. We configured it to limit the replication & topic number when creating a topic:
 ```bash
@@ -56,4 +65,4 @@ $ cat request-payload.json
 $ curl POST http://localhost:8888/admin/interceptors/v1/interceptor/myOwnInterceptor -d @request-payload.json
 ```
 
-The priority number define the order on which the set of interceptors will be applied in the request/response pipeline.
+The priority defines the order on which the set of interceptors will be applied in the request/response pipeline.

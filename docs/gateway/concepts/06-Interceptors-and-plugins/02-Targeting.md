@@ -1,24 +1,32 @@
-# Plugin targeting
+---
+sidebar_position: 2
+title: Plugins Targeting
+description: Plugin targeting
+---
 
-All plugins loaded on Gateway should not always apply for all request. The first tool is the interceptors in a plugins that targets only some Kafka api keys.  
-Plugin targeting is the Gateway feature that allow a user to define a scope to apply a plugin to.
+# Plugin Targeting
+
+All plugins loaded on Gateway should not always be applied, on all requests. 
+
+A plugin can be configured to target only specific Kafka API keys and Plugin Targeting allows you to define the Gateway scope to apply a plugin.
 
 This document outlines the various scopes and hierarchy levels at which plugins can be targeted within the Gateway system. 
-Plugins can be targeted globally, scoped to a virtual cluster or scoped for specific users or groups in a virtual cluster.
+Plugins can be targeted globally, to a specific virtual cluster, or to specific users or groups within a virtual cluster.
 
 ## Scope
 
 A scope is the functional unit that allow an administrator to enable a plugin to run with a specific configuration on a scope.
-A scope contain define the following
+A scope define contains the following:
  - `vcluster` (Optional)
  - `group` (Optional)
  - `username` (Optional)
 
-_Global Scope_ : A global scope is a scope where all scope possible values aren't defined.
+_Global Scope_ : A global scope is a scope where all possible values aren't defined.
 
-Scope were defined as a hierarchical concept. A global scope can be specialized by a vcluster scope, which can be specialized by a group or a username scope.  
-Group is, as an optional set value for Users, a special case treated as a Username one.
-We can define the scope hierarchy as the following.
+Scope has been defined as a hierarchical concept. A global scope can be specialized to a vcluster scope, which can be specialized to a group or username scope.  
+Group is as an optional value for Users, a special case and is treated as a Username scope.
+
+We can define the scope hierarchy as the following:
 ```mermaid
 flowchart TD
     Global --> vcluster[Virtual cluster]
@@ -28,10 +36,9 @@ flowchart TD
 
 ### Scope configuration
 
-A same plugin can be associated with different scope. Each scope will define for a plugin configured its configuration and execution priority.  
+A similar plugin can be associated with a different scope. Each scope will define for a plugin configured its configuration and execution priority.  
 
-As an example you can define that you want to configure a plugin `topicProtection` to apply a `CreateTopicSafeguardPlugin`. 
-And this `topicProtection` plugin should be executed with : 
+As an example you can define that you want to configure a plugin `topicProtection` to apply a `CreateTopicSafeguardPlugin`, and this `topicProtection` plugin should be executed with : 
 - Priotity `10` and configuration `X` on global scope
 - Priority `12` and configuration `Y` for the vcluster `conduktor`
 

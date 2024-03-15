@@ -301,7 +301,7 @@ guard-create-topics
 }
 ```
 
-The new interceptor targeting system is explained in a [dedicated section](../concepts/06-Interceptors/02-Targeting.md) .
+The new interceptor targeting system is explained in a [dedicated section](../concepts/06-Interceptors-and-plugins/02-Targeting.md) .
 
 # Gateway mode removal
 
