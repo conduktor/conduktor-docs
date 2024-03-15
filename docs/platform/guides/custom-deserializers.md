@@ -20,20 +20,17 @@ Console looks for jars present in folder `/opt/conduktor/plugins` during startup
 Each customer deserializer must be packaged into a single jar with all its dependencies (fat jar).
 :::
 
+If everything went well, you should see this in the Console starting:
+````
+2024-03-15T10:32:03,489Z [console] INFO  i.c.plugin.PluginResource - Loading plugin from jar: /opt/conduktor/plugins/serdes.jar
+2024-03-15T10:32:03,489Z [console] INFO  i.c.plugin.PluginResource - Register custom Kafka Deserializer: com.company.kafka.serdes.MyDeserializer
+````
 
-⚠️ Plugins are part of a cluster configuration. When you add a plugin to one of your cluster configuration, this plugin is only available to this cluster.\
-If you want to use the same plugin plugin with another cluster configured in Conduktor, you'll need to add this plugin to the configuration of this other cluster too.
+### Configure your Custom Deserializer and consume data
 
-### Step 2: Select your topics, your deserializer and consume your data
-
-Now that you added your plugin(s) containing your custom deserializer(s) to your cluster configuration, connect to your cluster, and open the "Consumer" windows.
-
-In the "Consumer" windows, select the topic you want to consume, then in "Format" sub-menu, in the "value" format selector, choose the "Custom Format" option.\
-This will open a new sub-menu named "Custom Format: Configuration".\
-In this new sub-menu, there are two fields:
-
+From the Consume page, open the "Value Format" filter and pick your Custom Deserializer from the list.
 - a dropdown allowing you to select your custom deserializer implementation class
 - a textarea field allowing you to pass some properties to your custom deserializer implementation (We'll call the `org.apache.kafka.common.serialization.Deserializer<T>::configure` method with these properties)
 
-Last thing to do is to hit the "Start" button to start the consumption of your selected topic data 🎉
+![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
 
