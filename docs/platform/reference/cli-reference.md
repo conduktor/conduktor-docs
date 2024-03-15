@@ -186,7 +186,7 @@ spec:
 ````
 Cross Application permission checks:
 
--   `spec.resourceType` can be `TOPIC`, `GROUP`, `SUBJECT`.
+-   `spec.resource.type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 -   `spec.resourcePatternType` can be `PREFIXED` or `LITERAL`.
 -   `spec.permission` can be `READ` or `WRITE`.
 -   `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
