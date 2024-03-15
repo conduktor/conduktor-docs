@@ -20,6 +20,6 @@ There is one special case, a VCluster with a prefix defined with the special nam
 
 ![image.png](../medias/passthrough.png)
 
-Naming: passthrough VCluster is equivalent to transparent VCluster
+**Naming**: The `passthrough` VCluster is equivalent to a transparent VCluster.
 
-Since the prefix must be unique, a Gateway instance can only have one single passthrough VCluster.
+Since the prefix must be unique, a Gateway instance can only have one single `passthrough` VCluster.
