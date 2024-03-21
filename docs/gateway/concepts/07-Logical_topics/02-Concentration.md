@@ -42,6 +42,6 @@ Example:
 * A concentrated topic mapping (concentration-test → concentration-backing)  is added
 * The traffic/data of concentration-test is handled physically on the concentration-backing topic. Possibly also hosting other client application's topics with a name matching the concentration rule
 
-The management of concentration rules is made through the GATEWAY HHTP REST API.
+The management of concentration rules is made through the GATEWAY HTTP REST API.
 
           
