@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
-title: Interceptors and Plugins
-description: Interceptors and Plugins
+title: Interceptors
+description: Interceptors
 ---
 
 
-# Interceptors and Plugins
+# Interceptors
 
 In the Gateway's architecture, there are interceptors and core architecture fatures.
 
