@@ -197,7 +197,7 @@ Create Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
 - DevOps Team with extended access across all environments
-- Developpers with higer permissions in Dev
+- Developers with higher permissions in Dev
 
 **Example**
 ````yaml
