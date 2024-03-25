@@ -153,7 +153,7 @@ apiVersion: v1
 kind: "Connector"
 metadata:
   cluster: "shadow-it"
-  name: click.myConnector
+  name: "click.myConnector"
 spec:
   connectCluster: myConnectCluster
   config:
