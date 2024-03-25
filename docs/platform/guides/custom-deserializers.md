@@ -5,7 +5,7 @@ description: Reference Documentation for Topic related pages
 ---
 
 ### Overview
-This guide will help you install, configure and use your Custom Kafka Deserializer with Console.  
+This guide will help you install, configure and use your Custom [Kafka Deserializer](https://kafka.apache.org/37/javadoc/org/apache/kafka/common/serialization/Deserializer.html) with Console.  
 
 Importing your Custom Deserializers will allow Console to present to your users your serialized messages in a human friendly way.
 
