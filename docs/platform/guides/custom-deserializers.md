@@ -99,7 +99,7 @@ If everything went well, you should see this in the Console starting:
 
 From the Consume page, open the "Value Format" filter and pick your Custom Deserializer from the list.
 - a dropdown allowing you to select your custom deserializer implementation class
-- a textarea field allowing you to pass some properties to your custom deserializer implementation (We'll call the `org.apache.kafka.common.serialization.Deserializer<T>::configure` method with these properties)
+- a textarea field allowing you to pass some properties to configure your custom deserializer instance (We'll call the `org.apache.kafka.common.serialization.Deserializer<T>::configure` method with these properties)
 ````properties title="Properties example"
 apicurio.registry.url=https://test.serviceregistry.rhcloud.com/t/d4d411af-xxxx-4184-xxxx-342e6cd03580/apis/registry/v2
 apicurio.auth.username=srvc-acct-a95c41e8-xxxx-4e99-xxxx-217755ad7046
