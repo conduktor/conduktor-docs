@@ -108,37 +108,6 @@ kubectl cp ./my_custom_deserializers_2.13-2.0.0.jar <console-pod>:/opt/conduktor
 ```
 
 </TabItem>
-<TabItem value="ConfigMap" label="ConfigMap">
-
-This solution is not recommended for big jar files and usually used for text files, prefer the other solutions if possible !
-
-First upload your jar as a ConfigMap
-
-```yaml
-kubectl create configmap my-deserializer-cm --from-file=/local/my_custom_deserializers_2.13-2.0.0.jar
-```
-
-Then mount in the Pod
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: conduktor-console
-spec:
-  containers:
-    - name: conduktor-console
-      image: conduktor/conduktor-console
-      volumeMounts:
-        - name: deserializer-mount
-          mountPath: /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
-  volumes:
-    - name: deserializer-mount
-      configMap:
-        name: my-deserializer-cm
-```
-
-</TabItem>
 </Tabs>
 
 </TabItem>
