@@ -25,7 +25,7 @@ This approach brings governance into your enterprise through concepts like Owner
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self Service relies on a central concept, the **Application** which embeds with 3 main concerns:
+Self Service relies on a central concept, the **Application** which incorporates 3 core concepts:
 - Application Ownership on the **Kafka** resources
 - How **People** interact with the Application
 - Self Service **Processes** & Governance rules
