@@ -46,7 +46,7 @@ Applications give business context to Kafka resources (topics, consumer groups &
 ---
 apiVersion: "v1"
 kind: "Application"
-meta:
+metadata:
   name: "clickstream-app"
 spec:
   title: "Clickstream App"

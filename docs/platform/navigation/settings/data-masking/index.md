@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 title: Data Masking
 description: Overview of the Data Masking feature
 ---
