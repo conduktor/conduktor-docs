@@ -12,7 +12,7 @@ const client = algoliasearch(
 )
 
 ;(async () => {
-  const pages = await globby(['docs/platform'], {
+  const pages = await globby(['docs/platform', 'docs/gateway'], {
     expandDirectories: {
       extensions: ['md', 'mdx'],
     },
