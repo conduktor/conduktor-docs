@@ -138,7 +138,7 @@ docker build . -t custom-console:<version>
 <hr />
 
 :::caution
-warning **If your Custom deserializers have dependencies, they must be embedded within the same JAR file (Fat JAR / Uber JAR).**
+If your Custom deserializers have dependencies, they must be embedded within the same JAR file (Fat JAR / Uber JAR).
 :::
 
 If everything went well, you should see this in the Console starting:
