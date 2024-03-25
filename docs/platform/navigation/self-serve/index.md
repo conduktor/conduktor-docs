@@ -39,7 +39,7 @@ For the full definition of each resource, check the [CLI Reference documentation
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka. 
-Applications give context to Kafka resources (topics, consumer groups & subjects) that directly relate to the functioning of that application or pipeline.  
+Applications give business context to Kafka resources (topics, consumer groups & subjects) that directly relate to the functioning of that application or pipeline.  
 
 **Example**
 ````yaml
