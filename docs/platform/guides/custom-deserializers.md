@@ -10,7 +10,11 @@ This guide will help you install, configure and use your Custom [Kafka Deseriali
 
 Importing your Custom Deserializers will allow Console to present to your users your serialized messages in a human friendly way.
 
-It assumes that you already have your Custom Deserializer available and that you know how to configure it. :::tip This is especially interesting if your Deserializer is presenting data in a JSON-ish form. This will allow you to exploit the full extend of Console's filtering and visualization capabilities. :::
+It assumes that you already have your Custom Deserializer available and that you know how to configure it.
+
+:::tip
+This is especially interesting if your Deserializer is presenting data in a JSON-ish form. This will allow you to exploit the full extend of Console's filtering and visualization capabilities.
+:::
 
 You can find some Kafka deserializer implementation examples in this open-source Github repository: [my_custom_deserializers](https://github.com/conduktor/my_custom_deserializers)
 
