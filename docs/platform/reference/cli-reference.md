@@ -29,7 +29,7 @@ To use Conduktor CLI, you need to define 2 environment variables:
 -   The URL of Conduktor Console
 -   Your API token (either a User Token or Application Token)
 ````yaml
-CDK_BASE_URL=http://localhost:8080/public/v1
+CDK_BASE_URL=http://localhost:8080
 CDK_TOKEN=<admin-token>
 ````
 ## Commands Usage
