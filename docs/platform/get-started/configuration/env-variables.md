@@ -30,6 +30,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
         - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
       - [Kafka Connect properties](#kafka-connect-properties)
       - [ksqlDB properties](#ksqldb-properties)
+      - [Indexer properties](#indexer-properties)
 
 ## Docker image environment variables
 
@@ -365,3 +366,34 @@ This feature is available from version `1.21.0` of the Conduktor Console.
 | **mTLS Authentication**                           |                                                      |                                                       |           |         |         |
 | `clusters[].ksqlDBs[].security.key`               | Access key                                           | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string  | ∅       |
 | `clusters[].ksqlDBs[].security.certificateChain`  | Access certificate                                   | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
+
+### Indexer properties
+
+The indexer is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
+You should modify these parameters only if you see an issue with the performance of the indexer.
+
+| Property                                             | Description                                                                                                                            | Environment Variable                               | Mandatory | Type | Default           |
+|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
+| **Lag exporter**                                     |                                                                                                                                        |                                                    |           |      |                   |
+| `lagexporter.frequency`                              | Frequency in seconds of the execution of the lag exporter                                                                              | `CDK_LAGEXPORTER_FREQUENCY`                        | false     | int  | `30`              |
+| `lagexporter.clusterparallelism`                     | Number of clusters indexed in parallel for the lag exporter                                                                            | `CDK_LAGEXPORTER_CLUSTERPARALLELISM`               | false     | int  | `1`               |
+| `lagexporter.indexertimeout`                         | Lag exporter timeout in seconds                                                                                                        | `CDK_LAGEXPORTER_INDEXERTIMEOUT`                   | false     | int  | `300` (5 minutes) |
+| **Metadata indexer**                                 |                                                                                                                                        |                                                    |           |      |                   |
+| `metadataindexer.frequency`                          | Frequency in seconds of the execution of the metadata indexer                                                                          | `CDK_METADATAINDEXER_FREQUENCY`                    | false     | int  | `30`              |
+| `metadataindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the metadata indexer                                                                        | `CDK_METADATAINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
+| `metadataindexer.indexertimeout`                     | Metadata indexer timeout in seconds                                                                                                    | `CDK_METADATAINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
+| **Monitoring indexer**                               |                                                                                                                                        |                                                    |           |      |                   |
+| `monitoringconfig.frequency`                         | Frequency in seconds of the execution of the monitoring indexer                                                                        | `CDK_MONITORINGCONFIG_FREQUENCY`                   | false     | int  | `30`              |
+| `monitoringconfig.clusterparallelism`                | Number of clusters indexed in parallel for the monitoring indexer                                                                      | `CDK_MONITORINGCONFIG_CLUSTERPARALLELISM`          | false     | int  | `1`               |
+| `monitoringconfig.indexertimeout`                    | Monitoring indexer timeout in seconds                                                                                                  | `CDK_MONITORINGCONFIG_INDEXERTIMEOUT`              | false     | int  | `300` (5 minutes) |
+| **Schema registry indexer**                          |                                                                                                                                        |                                                    |           |      |                   |
+| `registryindexer.frequency`                          | Frequency in seconds of the execution of the schema registry indexer                                                                   | `CDK_REGISTRYINDEXER_FREQUENCY`                    | false     | int  | `30`              |
+| `registryindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the schema registry indexer                                                                 | `CDK_REGISTRYINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
+| `registryindexer.indexertimeout`                     | Schema registry indexer timeout in seconds                                                                                             | `CDK_REGISTRYINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
+| **Kafka connect indexer**                            |                                                                                                                                        |                                                    |           |      |                   |
+| `connectindexer.frequency`                           | Frequency in seconds of the execution of the kafka connect indexer                                                                     | `CDK_CONNECTINDEXER_FREQUENCY`                     | false     | int  | `30`              |
+| `connectindexer.clusterparallelism`                  | Number of clusters indexed in parallel for the kafka connect indexer                                                                   | `CDK_CONNECTINDEXER_CLUSTERPARALLELISM`            | false     | int  | `1`               |
+| `connectindexer.indexertimeout`                      | Kafka connect indexer timeout in seconds                                                                                               | `CDK_CONNECTINDEXER_INDEXERTIMEOUT`                | false     | int  | `300` (5 minutes) |
+| **Kafka admin client configuration**                 |                                                                                                                                        |                                                    |           |      |                   |
+| `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once. | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
+| `kafka_admin.batch_parallel_size                     | Maximum of batched requests that can be sent in parallel                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
