@@ -108,5 +108,5 @@ Once you're done, you will provide us with your information:
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | `Client ID`                               | `0oaztxq9vavFnY9wh696`                                                                                                             |
 | `Client Secret`                           | `zTRaILrMOgFGHjHm5J_nrUuv3WPXTYoaj9r3jytl`                                                                                         |
-| `Provider Configuration URI`              | [https://login.your-company.com/.well-known/openid-configuration](https://trial-8228023.okta.com/.well-known/openid-configuration) |
+| `Provider Configuration URI`              | [https://login.your-company.com/.well-known/openid-configuration](https://www.okta.com/) |
 | `Domain names to redirect authentication` | `your-company.com`, `subsidiary-company.com`                                                                                       |
