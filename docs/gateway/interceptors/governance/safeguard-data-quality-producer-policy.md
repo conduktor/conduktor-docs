@@ -30,7 +30,7 @@ SELECT
 Currently
 
 - With filter records based on more than one condition, only `AND` operator current supported
-- Predicates are currently supported: =, >, >=, <, <=, <> and REGEXP (RegExp MySQL Operator)
+- Predicates are currently supported: `=, >, >=, <, <=, <>` and REGEXP (RegExp MySQL Operator)
 - Support Case Expression
 - Filtered by:
     - Record key (It supports SR):
