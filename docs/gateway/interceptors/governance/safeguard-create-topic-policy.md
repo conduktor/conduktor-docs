@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Create Topic Policy
 description: Ensuring your topic configuration adheres to your own standards.
 parent: governance

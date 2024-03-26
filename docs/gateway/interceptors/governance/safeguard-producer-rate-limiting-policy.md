@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Producer rate limiting policy
 description: Add produce throughput quota policy
 parent: governance
@@ -14,8 +14,8 @@ Throttling across the cluster is not possible using default Apache Kafka.
 
 Additionally, if you are using a hosted Kafka instance you don't have access to the Kafka configuration to set quotas.
 
-This interceptor limits throughput at a per Gateway scope, throttling producer throughput on either a global or a per vcluster basis.
-
+This interceptor improves the throttling story by limiting throughput at a per Gateway scope, throttling produce
+throughput on either a global or per vcluster(tenant) basis.
 ## Configuration
 
 | key                   | default | type              | description                                                |
@@ -42,5 +42,4 @@ This interceptor limits throughput at a per Gateway scope, throttling producer t
 }
 ```
 
-If we get produced size more than 500 bytes at 600 millisecond of a second, producer will be throttled by 400
-milliseconds.
+The maximum number of bytes that can be produced in any one second, before being throttled. In the above example only 500 bytes are allowed to be produced per second, before being throttled.

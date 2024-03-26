@@ -1,14 +1,14 @@
 ---
 version: 3.0.0
-title: SQL Topic
-description: Don't reinvent the wheel to filter and project your messages, just use SQL!
-parent: optimize
+title: Data quality producer policy
+description: Don't reinvent the wheel to assert data quality before being produced, just use SQL!
+parent: governance
 license: enterprise
 ---
 
-## Introduction
+# What is data quality producer policy ?
 
-Conduktor Gateway's SQL topic feature uses a SQL like language to filter and project messages, based on a simple SQL statement in the form.
+Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement in the form.
 
 ```sql
 SELECT
@@ -25,15 +25,12 @@ SELECT
   FROM cars
 ```
 
-This supports for FetchResponse only: i.e., resulting topic is read-only.
-
 `SELECT [list of fields] FROM [topic name] WHERE [field filter criteria]`
-
 
 Currently
 
 - With filter records based on more than one condition, only `AND` operator current supported
-- Predicates are currently supported: `=`, `>`, `>=`, `<`, `<=`, `<>` and `REGEXP` (RegExp MySQL Operator)
+- Predicates are currently supported: =, >, >=, <, <=, <> and REGEXP (RegExp MySQL Operator)
 - Support Case Expression
 - Filtered by:
     - Record key (It supports SR):
@@ -48,11 +45,13 @@ Currently
 
 ## Configuration
 
-| key                  | type                                | description                                                                                                         |
-|:---------------------|:------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| virtualTopic         | String                              | if virtualTopic exists, fetch this topic will get the data from the statement without configure it's own statement. |
-| statement            | String                              | SQL Statement                                                                                                       |
-| schemaRegistryConfig | [Schema Registry](#schema-registry) | Schema Registry Config                                                                                              |
+| key                  | type                                | description                                                         |
+|:---------------------|:------------------------------------|:--------------------------------------------------------------------|
+| statement            | String                              | SQL Statement                                                       |
+| schemaRegistryConfig | [Schema Registry](#schema-registry) | Schema Registry Config                                              |
+| action               | [Action](#action)                   | Data quality producer action                                        |
+| deadLetterTopic      | String                              | Dead letter topic.                                                  |
+| addErrorHeader       | boolean (default `true`)            | Add or not add the error information headers into dead letter topic |
 
 ### Schema Registry
 
@@ -64,41 +63,28 @@ Currently
 
 See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
+### Action
+| action                     | description                                                                                                    |
+|:---------------------------|:---------------------------------------------------------------------------------------------------------------|
+| BLOCK_WHOLE_BATCH          | If one message is invalid, block the whole batch                                                               |
+| BLOCK_ONLY_INVALID_RECORDS | If one message is invalid, block only the invalid message (all other messages in the batch are saved in kafka) |
+| AUDIT_LOG_ONLY             | If messages are invalid, audit log only (all messages still are saved in kafka)                                |
+
 ## Example
 
 ```json
 {
-  "name": "mySqlTopicPlugin",
-  "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+  "name": "myDataQualityProducerPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.DataQualityProducerPlugin",
   "priority": 100,
   "config": {
-    "virtualTopic": "legal_user",
     "statement": "SELECT * FROM users WHERE age > 18",
     "schemaRegistryConfig": {
        "host": "http://schema-registry:8081"
-    }
-  }
-}
-```
-
-### Schema Registry with secured template
-
-```json
-{
-  "name": "mySqlTopicPlugin",
-  "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
-  "priority": 100,
-  "config": {
-    "virtualTopic": "legal_user",
-    "statement": "SELECT * FROM users WHERE age > 18",
-    "schemaRegistryConfig": {
-      "host": "http://schema-registry:8081",
-      "additionalConfigs": {
-        "schema.registry.url": "${SR_URL}",
-        "basic.auth.credentials.source": "${SR_BASIC_AUTH_CRED_SRC}",
-        "basic.auth.user.info": "${SR_BASIC_AUTH_USER_INFO}"
-      }
-    }
+    },
+    "action": "BLOCK_WHOLE_BATCH",
+    "deadLetterTopic": "dead-letter-topic",
+    "addErrorHeader": false
   }
 }
 ```

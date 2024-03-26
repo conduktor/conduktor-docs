@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Duplicate Messages
 description: Validate your application behaves correctly when duplicate records arise
 parent: console

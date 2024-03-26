@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Topic required schema id policy
 description: Defend against outages by ensuring that all records produced to Kafka have a schema set.
 parent: governance

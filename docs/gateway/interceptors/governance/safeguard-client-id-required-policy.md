@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Client id required policy
 description: Block request or fill the client-id with a templating mechanism if it does not match the specified name convention
 parent: governance
