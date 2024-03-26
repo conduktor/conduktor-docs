@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Dynamic header injection
 description: Add headers to Kafka records to enhance them with metadata or other information.
 parent: governance

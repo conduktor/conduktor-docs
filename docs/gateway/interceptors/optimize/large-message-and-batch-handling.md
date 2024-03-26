@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Large message/batch handling
 description: Increase performance and reduce costs with cold storage of Kafka data in Amazon S3.
 parent: optimize
@@ -24,14 +24,18 @@ It helps to protect data or optimize storage in actual kafka.
 
 ### S3 
 
-| key                | type         | description                                                                                                      |
-|:-------------------|:-------------|:-----------------------------------------------------------------------------------------------------------------|
-| accessKey          | String       | S3 access key                                                                                                    |
-| secretKey          | String       | S3 secret key                                                                                                    |
-| bucketName         | String       | S3 bucket name                                                                                                   |
-| uri                | String       | S3 uri                                                                                                           |
-| region             | String       | S3 Region                                                                                                        |
-| localDiskDirectory | String       | Local temp storage, used when we download file from S3 while fetching messages                                   |
+By default, s3 credentials default on managed identity. They will be overwritten if a specific `basic redentials` (`accessKey` and `secretKey`) 
+or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is configured.
+
+| key                | type         | description                                                                    |
+|:-------------------|:-------------|:-------------------------------------------------------------------------------|
+| accessKey          | string       | S3 access key                                                                  |
+| secretKey          | string       | S3 secret key                                                                  |
+| sessionToken       | string       | S3 session token                                                               |
+| bucketName         | string       | S3 bucket name                                                                 |
+| uri                | string       | S3 uri                                                                         |
+| region             | string       | S3 Region                                                                      |
+| localDiskDirectory | string       | Local temp storage, used when we download file from S3 while fetching messages |
 
 ## Examples
 
@@ -39,6 +43,26 @@ It helps to protect data or optimize storage in actual kafka.
 
 Each *batch* above the minimumSizeInBytes threshold will be saved in one file on s3.
 
+With credentials default on managed identity:
+```json
+{
+  "name": "myLargeBatchHandlingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeBatchHandlingPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "topic.*",
+    "minimumSizeInBytes": 1024,
+    "s3Config": {
+      "bucketName": "myBucketName",
+      "uri": "http://myexampleuri",
+      "region": "us-east-1",
+      "localDiskDirectory": "myStorage/"
+    }
+  }
+}
+```
+
+With `basic credentials`:
 ```json
 {
   "name": "myLargeBatchHandlingPlugin",
@@ -59,10 +83,52 @@ Each *batch* above the minimumSizeInBytes threshold will be saved in one file on
 }
 ```
 
+With `session credentials`:
+```json
+{
+  "name": "myLargeBatchHandlingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeBatchHandlingPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "topic.*",
+    "minimumSizeInBytes": 1024,
+    "s3Config": {
+      "accessKey": "myAccessKey",
+      "secretKey": "mySecretKey",
+      "sessionToken": "mySessionToken",
+      "bucketName": "myBucketName",
+      "uri": "http://myexampleuri",
+      "region": "us-east-1",
+      "localDiskDirectory": "myStorage/"
+    }
+  }
+}
+```
+
 ### Large messages
 
 Each *individual message* above the minimumSizeInBytes threshold will be saved in one file on s3.
 
+With credentials default on managed identity:
+```json
+{
+  "name": "myLargeMessageHandlingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "topic.*",
+    "minimumSizeInBytes": 1024,
+    "s3Config": {
+      "bucketName": "myBucketName",
+      "uri": "http://myexampleuri",
+      "region": "us-east-1",
+      "localDiskDirectory": "myStorage/"
+    }
+  }
+}
+```
+
+With `basic credentials`:
 ```json
 {
   "name": "myLargeMessageHandlingPlugin",
@@ -74,6 +140,28 @@ Each *individual message* above the minimumSizeInBytes threshold will be saved i
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
+      "bucketName": "myBucketName",
+      "uri": "http://myexampleuri",
+      "region": "us-east-1",
+      "localDiskDirectory": "myStorage/"
+    }
+  }
+}
+```
+
+With `sessionCredentials`:
+```json
+{
+  "name": "myLargeMessageHandlingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "topic.*",
+    "minimumSizeInBytes": 1024,
+    "s3Config": {
+      "accessKey": "myAccessKey",
+      "secretKey": "mySecretKey",
+      "sessionToken": "mySessionToken",
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
