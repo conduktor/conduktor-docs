@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Producer rate limiting policy
+title: Producer Rate Limiting Policy
 description: Add produce throughput quota policy
 parent: governance
 license: enterprise

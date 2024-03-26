@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Data quality producer policy
+title: Data Quality Producer Policy
 description: Don't reinvent the wheel to assert data quality before being produced, just use SQL!
 parent: governance
 license: enterprise

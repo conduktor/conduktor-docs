@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Topic required schema id policy
+title: Topic Required Schema ID Policy
 description: Defend against outages by ensuring that all records produced to Kafka have a schema set.
 parent: governance
 license: free

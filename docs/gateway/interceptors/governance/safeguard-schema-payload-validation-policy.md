@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Schema validation
+title: Schema Validation
 description: Avoid outages from missing or badly formatted records, ensure all messages adhere to a schema
 parent: governance
 license: enterprise

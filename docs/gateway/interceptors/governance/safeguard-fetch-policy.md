@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Fetch policy
+title: Fetch Policy
 description: Increase resilience by ensuring that the fetch request adheres to the specified configuration requirements.
 parent: governance
 license: enterprise

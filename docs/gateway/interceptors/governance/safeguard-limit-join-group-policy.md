@@ -1,6 +1,6 @@
 ---
 version: 3.0.0
-title: Limit join group policy
+title: Limit Join Group Policy
 description: Avoid excessive group reblances by limiting the number of consumer group joins.
 parent: governance
 license: enterprise
