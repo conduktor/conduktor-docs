@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Simulate leader election errors
 description: Ensure that Kafka applications are resilient to errors returned during a leader election.
 parent: console

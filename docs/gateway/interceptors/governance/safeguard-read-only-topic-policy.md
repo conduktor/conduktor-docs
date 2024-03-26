@@ -1,6 +1,6 @@
 ---
-version: 2.6.0
-title: Read only topic policy
+version: 3.0.0
+title: Read Only Topic Policy
 description: Mark a topic as readonly
 parent: governance
 license: enterprise

@@ -1,6 +1,6 @@
 ---
-version: 2.6.0
-title: Produce policy
+version: 3.0.0
+title: Produce Policy
 description: Increase resilience and data quality by ensuring produced messages adhere to the specified configuration requirements.
 parent: governance
 license: enterprise

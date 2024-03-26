@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Simulate slow producers and consumers
 description: Validate your application behaves correctly when there are delays in responses from the Kafka cluster.
 parent: console
