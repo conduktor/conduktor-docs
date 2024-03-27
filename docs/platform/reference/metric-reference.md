@@ -1,3 +1,8 @@
+---
+title: Metrics Reference
+description: Prometheus metrics available for Console
+---
+
 # Metrics Reference
 
 Console exposes metrics using the Prometheus format for your Kafka resources and Console health that you can scrape and send to your external log management system.
