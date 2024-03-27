@@ -1,51 +1,49 @@
----
-title: Metrics Reference
-description: Prometheus metrics available for Console
----
-
 # Metrics Reference
 
 Console exposes metrics using the Prometheus format for your Kafka resources and Console health that you can scrape and send to your external log management system.
 
 ## Kafka Metrics Reference
 
-The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance. Data points are refreshed every 30 seconds.
+The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance.  
+Data points are refreshed every 30 seconds.
 
 | Metric Name | Metric Type | Labels | Description |
 | --- | --- | --- | --- |
 | **Consumer Group Metrics** |  |  |  |
-| `kafka_consumergroup_group_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Group offset lag of a partition |
-| `kafka_consumergroup_group_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Group time lag of a partition |
-| `kafka_consumergroup_group_offset` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Last group consumed offset of a partition |
+| `kafka_consumergroup_group_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Absolute Lag of the consumer group on this topic-partition |
+| `kafka_consumergroup_group_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Lag in seconds of the consumer group on this topic-partition |
+| `kafka_consumergroup_group_offset` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Last commited offset of the consumer group on this topic-partition |
 | **Consumer Group Metrics (Aggregated)** |  |  |  |
 | `kafka_consumergroup_group_max_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Max group offset lag |
-| `kafka_consumergroup_group_max_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group` | Max group time lag |
-| `kafka_consumergroup_group_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Sum of group offset lag |
-| `kafka_consumergroup_group_topic_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic` | Sum of group offset lag across topic partitions |
+| `kafka_consumergroup_group_max_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group` | Lag in seconds of the consumer group (all topics) |
+| `kafka_consumergroup_group_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Sum of Absolute Lag of the consumer group (all topics) |
+| `kafka_consumergroup_group_topic_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic` | Sum of Absolute Lag of the consumer group on this topic (all partitions) |
 | **Kafka Cluster & Broker Metrics** |  |  |  |
-| `kafka_controller_kafkacontroller_activebrokercount` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_controller_kafkacontroller_activebrokercount metric |
-| `kafka_controller_kafkacontroller_activecontrollercount` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_controller_kafkacontroller_activecontrollercount metric |
-| `kafka_controller_kafkacontroller_globalpartitioncount` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_controller_kafkacontroller_globalpartitioncount metric |
-| `kafka_controller_kafkacontroller_offlinepartitionscount` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_controller_kafkacontroller_offlinepartitionscount metric |
-| `kafka_server_replicamanager_leadercount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Gauge for kafka_server_replicamanager_leadercount metric |
-| `kafka_server_replicamanager_partitioncount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Gauge for kafka_server_replicamanager_partitioncount metric |
-| `kafka_server_replicamanager_underminisrpartitioncount` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_server_replicamanager_underminisrpartitioncount metric |
-| `kafka_server_replicamanager_underreplicatedpartitions` | gauge | `cluster_name`, `cluster_id` | Gauge for kafka_server_replicamanager_underreplicatedpartitions metric |
+| `kafka_controller_kafkacontroller_activebrokercount` | gauge | `cluster_name`, `cluster_id` | Number of active Brokers on the Kafka cluster |
+| `kafka_controller_kafkacontroller_activecontrollercount` | gauge | `cluster_name`, `cluster_id` | Number of active Controllers on the Kafka cluster |
+| `kafka_controller_kafkacontroller_globalpartitioncount` | gauge | `cluster_name`, `cluster_id` | Total number of partitions on the Kafka cluster |
+| `kafka_controller_kafkacontroller_offlinepartitionscount` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with no active Leader |
+| `kafka_server_replicamanager_leadercount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of Partition Leaders on this Broker |
+| `kafka_server_replicamanager_partitioncount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of Partitions on this Broker |
+| `kafka_server_replicamanager_underminisrpartitioncount` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with replicas that don't meet their minimum ISR |
+| `kafka_server_replicamanager_underreplicatedpartitions` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with replicas that don't meet their replication factor |
 | **Kafka Connect Metrics** |  |  |  |
-| `kafka_connect_failed_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Gauge for kafka_connect_failed_tasks metric |
-| `kafka_connect_total_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Gauge for kafka_connect_total_tasks metric |
+| `kafka_connect_failed_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Number of Failed tasks for this Connector |
+| `kafka_connect_total_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Total number of tasks configured for this Connector |
 | **Kafka Topic & Partition Metrics** |  |  |  |
-| `kafka_cluster_partition_underminisr` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | Gauge for kafka_cluster_partition_underminisr metric |
-| `kafka_cluster_partition_underreplicated` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | Gauge for kafka_cluster_partition_underreplicated metric |
-| `kafka_partition_earliest_offset` | gauge | `cluster_id`, `cluster_name`, `topic`, `partition` | Earliest offset of a partition |
-| `kafka_partition_latest_offset` | gauge | `cluster_id`, `cluster_name`, `topic`, `partition` | Latest offset of a partition |
+| `kafka_cluster_partition_underminisr` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | `1` when the partition is under min ISR |
+| `kafka_cluster_partition_underreplicated` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | `1` when the partition is under-replicated |
+| `kafka_partition_earliest_offset` | gauge | `cluster_id`, `cluster_name`, `topic`, `partition` | Earliest offset of the current topic-partition |
+| `kafka_partition_latest_offset` | gauge | `cluster_id`, `cluster_name`, `topic`, `partition` | Latest offset of the current topic-partition |
 | **Others** |  |  |  |
 | `kafka_consumergroup_poll_time_ms` | gauge | `cluster_id`, `cluster_name` | Group time poll time |
 | `kafka_controller_controllerstats_uncleanleaderelectionspersec_created` | gauge | `cluster_name`, `cluster_id` | Counter for kafka_controller_controllerstats_uncleanleaderelectionspersec metric |
 | `kafka_controller_controllerstats_uncleanleaderelectionspersec_total` | counter | `cluster_name`, `cluster_id` | Counter for kafka_controller_controllerstats_uncleanleaderelectionspersec metric |
-| `kafka_log_log_size` | gauge | `broker_host`, `partition`, `broker_id`, `topic`, `cluster_name`, `cluster_id` | Gauge for kafka_log_log_size metric |
+| `kafka_log_log_size` | gauge | `broker_host`, `partition`, `broker_id`, `topic`, `cluster_name`, `cluster_id` | Size in bytes of the current topic-partition |
 
-:::info Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead. :::
+:::info  
+Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead.  
+:::
 
 ## Console Reference
 
