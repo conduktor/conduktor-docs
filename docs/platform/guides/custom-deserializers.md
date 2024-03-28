@@ -56,9 +56,13 @@ platform:
   initContainers:
     - name: init-plugins
     image: curlimages/curl:latest  # Using curl image
-    command: ["sh", "-c", "curl -L https://github.com/conduktor/my_custom_deserializers/releases/download/2.0.0/my_custom_deserializers_2.13-2.0.0.jar -o /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar"]
+    args: [ "-L", "https://github.com/conduktor/my_custom_deserializers/releases/download/2.0.0/my_custom_deserializers_2.13-2.0.0.jar", "-o", "/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar" ]    
+    securityContext: # avoid permission issues and curl image not having numeral UID error
+      fsGroup: 0 # same GID as Console
+      runAsNonRoot: true
+      runAsUser: 10001 # same UID as Console
     volumeMounts:
-    - name: plugin-volume
+    - name: plugins
       mountPath: /opt/conduktor/plugins  # Mounting to the desired directory
   extraVolumes:
     - name: plugins
