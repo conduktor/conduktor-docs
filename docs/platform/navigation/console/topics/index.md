@@ -74,8 +74,7 @@ Use tags to organize your topics and facilitate searching them in Console
 
 Upon toggling the Advanced configuration, you will be shown all the available topic configurations.
 :::info
-Read more about Apache Kafka topic configuration here:  
-<https://kafka.apache.org/documentation/#topicconfigs>
+Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 :::
 ![Image](img/topic-create-advanced.png)
 

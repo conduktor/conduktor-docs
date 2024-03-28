@@ -224,7 +224,7 @@ sasl.jaas.config=com.sun.security.auth.module.Krb5LoginModule required useKeyTab
 ssl.truststore.location=C:/myfolder/trust.root.jks
 ```
 
-#### ERR: Illegal char <:>
+#### `ERR: Illegal char <:>`
 
 If you stumbled upon this error, it means you used the "\\" character in the paths (the error shows "/" but it's wrong) :
 
