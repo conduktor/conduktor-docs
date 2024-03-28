@@ -49,8 +49,8 @@
   "devDependencies": {
     "@algolia/client-search": "^4.23.2",
     "@docusaurus/module-type-aliases": "^3.0.0",
-    "@docusaurus/types": "3.0.0",
     "@docusaurus/tsconfig": "3.0.0",
+    "@docusaurus/types": "3.0.0",
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
     "globby": "^13.1.2",
