@@ -148,10 +148,10 @@ If your Custom deserializers have dependencies, they must be embedded within the
 If everything went well, you should see this in the Console starting:
 
 ```
-2024-03-23T17:29:23,852Z [console:zio-default] INFO  io.conduktor.plugins.PluginResource - Loading plugin my_custom_deserializers_2.13-2.0.0 from jar: /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
-2024-03-23T17:29:26,668Z [console:zio-default] INFO  io.conduktor.plugins.PluginResource - Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomDeserializer
-2024-03-23T17:29:26,668Z [console:zio-default] INFO  io.conduktor.plugins.PluginResource - Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomProtobufDeserializer
-2024-03-23T17:29:26,668Z [console:zio-default] INFO  io.conduktor.plugins.PluginResource - Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.constant.ConstantBoolean
+Loading plugin my_custom_deserializers_2.13-2.0.0 from jar: /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
+Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomDeserializer
+Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomProtobufDeserializer
+...
 ```
 
 ### Configure your Custom Deserializer and consume data
