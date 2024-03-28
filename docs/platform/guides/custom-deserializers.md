@@ -90,7 +90,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: default # change for one that support requested accessModes
+  storageClassName: standard # change for one that support requested accessModes
 ```
 
 Then when using [Console Helm Chart](../get-started/installation/get-started/kubernetes.md) provide created PVC as extra volume like :
