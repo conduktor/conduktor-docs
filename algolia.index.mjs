@@ -39,10 +39,20 @@ const client = algoliasearch(
   })
 
   const index = client.initIndex(process.env.REACT_APP_ALGOLIA_INDEX)
-  objects &&
-    index.clearObjects() &&
-    index.saveObjects(objects, {
-      autoGenerateObjectIDIfNotExist: true,
-    }) &&
-    console.log('\x1b[32m[SUCCESS]\x1b[0m Algolia \x1b[32msuccessfuly\x1b[0m indexed')
+  
+  await index.clearObjects()
+    .then(() => console.log("index cleared"))
+    .catch(err => console.log("error clearing index: ", err))
+
+
+  // we don't index demos because super large (causing algolia indexing errors)
+  // and probably not necessary (tons of logs and json and stuff that's not useful to search for)
+  for (const o of objects.filter(o => !o.slug.startsWith("/gateway/demos")) {
+    await index.saveObject(o, { autoGenerateObjectIDIfNotExist: true, })
+      .catch(err => {
+        console.log("error indexing " + o.slug + ": ", err);
+      });
+  }
+
+  console.log('\x1b[32m[SUCCESS]\x1b[0m Algolia \x1b[32msuccessfuly\x1b[0m indexed')
 })()
