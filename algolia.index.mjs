@@ -47,7 +47,7 @@ const client = algoliasearch(
 
   // we don't index demos because super large (causing algolia indexing errors)
   // and probably not necessary (tons of logs and json and stuff that's not useful to search for)
-  for (const o of objects.filter(o => !o.slug.startsWith("/gateway/demos")) {
+  for (const o of objects.filter(o => !o.slug.startsWith("/gateway/demos"))) {
     await index.saveObject(o, { autoGenerateObjectIDIfNotExist: true, })
       .catch(err => {
         console.log("error indexing " + o.slug + ": ", err);
