@@ -1,3 +1,8 @@
+---
+title: Migration guide to 3.x
+description: Migration guide to 3.x
+---
+
 # Migration guide to 3.x
 
 ## Steps: 
