@@ -21,7 +21,6 @@ Below outlines the audit events currently tracked by Conduktor.
   - [Console](#console)
   - [Data Masking](#data-masking)
   - [Topic as a Service](#topic-as-a-service)
-  - [Testing](#testing)
   - [Admin](#admin)
 
 ## Console
@@ -85,7 +84,7 @@ CRN `platform:/datamasking/<uuid>`
 - policy.Upserted
 - policy.Deleted
 
-## Topic as a Service
+## Self-Service
 
 ### ResourceType: `Application`
 
@@ -97,72 +96,6 @@ CRN `platform:/application/<app-slug>`
 - application.access-request.Approved
   from / to
 - application.access-request.Rejected
-
-## Testing
-
-### ResourceType: `Workspace`
-
-CRN: `testing:/workspace/<organization-id>`
-
-- testing.workspace.Created
-- testing.workspace.Updated
-- testing.workspace.Deleted
-
-### ResourceType: `Test Suite`
-
-CRN: `testing:/testsuite/<workspace-id>`
-
-- testing.testsuite.Created
-- testing.testsuite.Renamed
-- testing.testsuite.Deleted
-
-### ResourceType: `Test Scenario`
-
-CRN: `testing:/scenario/<test-suite-id>`
-
-- testing.scenario.Created
-- testing.scenario.Updated
-- testing.scenario.Deleted
-- testing.scenario.Executed
-
-### ResourceType: `Task`
-
-- CRN: `testing:/task/<scenario-id>`
-- testing.task.Created
-- testing.task.Updated
-- testing.task.Duplicated (missing resource right now)
-- testing.task.Deleted
-
-### ResourceType: `Environment`
-
-CRN: `testing:/environment/<workspace-id>`
-
-- testing.environment.Created
-- testing.environment.Updated
-- testing.environment.Deleted
-
-### ResourceType: `Environment Variable`
-
-CRN: `testing:/variableDefinition/<workspace-id>`
-
-- testing.variableDefinition.Created
-- testing.variableDefinition.Updated
-- testing.variableDefinition.Deleted
-
-### ResourceType: `Cluster`
-
-CRN: `testing:/cluster/<workspace-id>`
-
-- testing.cluster.Created
-- testing.cluster.Updated
-- testing.cluster.Deleted
-
-### ResourceType: `Agent`
-
-CRN: `testing:/agent/<agent-id>`
-
-- testing.agent.Created
-- testing.agent.Deleted
 
 ## Admin
 

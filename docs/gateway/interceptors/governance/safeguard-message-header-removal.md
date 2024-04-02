@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Message Header Removal
 description: Remove headers from Kafka records
 parent: governance

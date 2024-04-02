@@ -1,6 +1,6 @@
 ---
-version: 2.6.0
-title: Schema validation
+version: 3.0.0
+title: Schema Validation
 description: Avoid outages from missing or badly formatted records, ensure all messages adhere to a schema
 parent: governance
 license: enterprise
@@ -33,6 +33,9 @@ Schema ID validation interceptor will return the following errors when an invali
 | validateSchema       | Boolean                                             | `false` | If true, deserialize the record, validate the record structure and fields within the data itself ([see more](#schema-payload-validate)) |
 | action               | [Action](#action)                                   | `BLOCK` | Action to take if the value is outside the specified range.                                                                             |
 | schemaRegistryConfig | [Schema Registry](#schema-registry)                 |         | Schema Registry Config                                                                                                                  | 
+| celCacheSize         | int                                                 | 100     | In memory cache size for cel expressions, balancing speed and resource use, optimize performance.                                       |
+| deadLetterTopic      | String                                              |         | Dead letter topic.                                                                                                                      |
+| addErrorHeader       | Boolean                                             | `true`  | Add or not add the error information headers into dead letter topic                                                                     |
 
 ### Action
 
@@ -72,7 +75,8 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
     "schemaRegistryConfig": {
       "host": "http://schema-registry:8081"
     },
-    "action": "BLOCK"
+    "action": "BLOCK",
+    "celCacheSize": 100
   }
 }
 ```
@@ -96,7 +100,8 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
         "basic.auth.user.info": "${SR_BASIC_AUTH_USER_INFO}"
       }
     },
-    "action": "BLOCK"
+    "action": "BLOCK",
+    "celCacheSize": 100
   }
 }
 ```
@@ -116,30 +121,127 @@ Protobuf field type and it's current support constraints:
 - **STRING**: `minLength`, `maxLength`, `pattern`, `format`
 - **repeated**: `maxItems`, `minItems`
 
+Current supported String `format` values:
+- `byte`, `date`, `time`, `date-time`, `duration`, `uri`, `uri-reference`, `uri-template`, `uri`, `email`, `hostname`, `ipv4`, `ipv6`, `regex`, `uuid`, `json-pointer`, `json-pointer-uri-fragement`, `relative-json-pointer`
+
+This interceptor also supports validating payload against specific custom constraints `expression`,
+which uses a simple language familiar with devs is [CEL (Common Expression Language)](https://github.com/google/cel-spec)
+
+The Schema ID validation interceptor also supports validating payload against specific custom `metadata.rules` object in the schema 
+ using CEL, too.
+
+### Metadata rule
+
+| key        | type   | description                                                                                                     |
+|:-----------|:-------|:----------------------------------------------------------------------------------------------------------------|
+| name       | string | Rule name                                                                                                       |
+| expression | string | CEL expression for validation, must return `BOOLEAN`                                                            |
+| message    | string | Error message if payload not matches the `expression` with namespace `message.` represents for produced message |
+
+### Json Schema Example
+
+In Json Schema, constraints and rules are defined directly in the schema. Here's an example that includes various validations:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50,
+      "expression": "size(name) >= 3"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 120,
+      "expression": "age >= 0 && age <= 120"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "expression": "email.contains('foo')"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 10,
+          "expression": "size(street) >= 5 && size(street) <= 10"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50
+        }
+      },
+      "expression": "size(address.street) > 1 && address.street.contains('paris') || address.city == 'paris'"
+    },
+    "hobbies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 3,
+      "expression": "size(hobbies) >= 3"
+    }
+  },
+  "metadata": {
+    "rules": [
+      {
+        "name": "check hobbies size and name",
+        "expression": "size(message.hobbies) == 3 && size(message.name) > 3",
+        "message": "hobbies must have 3 items"
+      },
+      {
+        "name": "checkAge",
+        "expression": "message.age >= 18",
+        "message": "age must be greater than or equal to 18"
+      },
+      {
+        "name": "check email",
+        "expression": "message.email.endsWith('yahoo.com')",
+        "message": "email should end with 'yahoo.com'"
+      },
+      {
+        "name": "check street",
+        "expression": "size(message.address.street) >= 3",
+        "message": "address.street length must be greater than equal to 3"
+      }
+    ]
+  }
+}
+```
+
 ### Avro Schema Example
 
-In Avro, constraints are defined directly in the schema. Here's an example that includes various validations:
+In Avro, constraints and rules are defined directly in the schema. Here's an example that includes various validations:
 
 ```json
 {
   "type": "record",
   "name": "User",
   "fields": [
-    {"name": "name", "type": "string", "minLength": 3, "maxLength": 50},
-    {"name": "age", "type": "int", "minimum": 0, "maximum": 120},
-    {"name": "email", "type": "string", "format": "email"},
+    {"name": "name", "type": "string", "minLength": 3, "maxLength": 50, "expression": "size(name) >= 3 && size(name) <= 50"},
+    {"name": "age", "type": "int", "minimum": 0, "maximum": 120, "expression": "age >= 0 && age <= 120"},
+    {"name": "email", "type": "string", "format": "email", "expression": "email.contains('foo')"},
     {
       "name": "address",
       "type": {
         "type": "record",
         "name": "AddressRecord",
         "fields": [
-          {"name": "street", "type": "string", "minLength": 5, "maxLength": 100},
+          {"name": "street", "type": "string", "minLength": 5, "maxLength": 100, "expression": "size(street) >= 5 && size(street) <= 10"},
           {"name": "city", "type": "string", "minLength": 2, "maxLength": 50}
         ]
-      }
+      },
+      "expression": "size(address.street) >= 5 && address.street.contains('paris') || address.city == 'paris'"
     },
-    {"name": "hobbies", "type": {"type": "array", "items": "string"}, "minItems": 3},
+    {"name": "hobbies", "type": {"type": "array", "items": "string"}, "minItems": 3, "expression": "size(hobbies) >= 3"},
     {
       "name": "friends",
       "type": {
@@ -148,20 +250,45 @@ In Avro, constraints are defined directly in the schema. Here's an example that 
           "type": "record",
           "name": "Friend",
           "fields": [
-            {"name": "name", "type": "string"},
+            {"name": "name", "type": "string", "expression": "size(name) < 3"},
             {"name": "age", "type": "int", "minimum": 2, "maximum": 10}
           ]
         }
       }
     }
-  ]
+  ],
+  "metadata": {
+    "rules": [
+      {
+        "name": "check hobbies size and name",
+        "expression": "size(message.hobbies) == 3 && size(message.name) > 3",
+        "message": "hobbies must have 3 items"
+      },
+      {
+        "name": "checkAge",
+        "expression": "message.age >= 18",
+        "message": "age must be greater than or equal to 18"
+      },
+      {
+        "name": "check email",
+        "expression": "message.email.endsWith('yahoo.com')",
+        "message": "email should end with 'yahoo.com'"
+      },
+      {
+        "name": "check street",
+        "expression": "size(message.address.street) >= 3",
+        "message": "address.street length must be greater than equal to 3"
+      }
+    ]
+  }
 }
 ```
 
 ### Protobuf Schema Example
 
 In Protobuf, since we are using the Confluent Schema Registry, we use the `(confluent.field_meta).params` (with type `map<string, string`) 
-for field options. Here's how it can be defined:
+for field options. and `(confluent.message_meta).params` for message options for `metadata.rules`.
+Here's how it can be defined:
 
 ```protobuf
 syntax = "proto3";
@@ -170,21 +297,29 @@ option java_package = "schema.protobuf";
 option java_outer_classname = "User";
 
 message Student {
-  string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "50"}];
-  int32 age = 2 [(confluent.field_meta).params = {minimum: "3", maximum: "120"}];
-  string email = 3 [(confluent.field_meta).params = {format: "email"}];
+  option (confluent.message_meta).params = {
+    metadata: "{\"rules\":[{\"name\":\"check name\",\"expression\":\"size(message.name) > 2\",\"message\":\"name length must greater than 2\"},{\"name\":\"checkAge\",\"expression\":\"message.age >= 18\",\"message\":\"age must be greater than or equal to 18\"}]}"
+  };
+  
+  string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "50", expression: "size(name) >= 3 && size(name) <= 50"}];
+  int32 age = 2 [(confluent.field_meta).params = {minimum: "3", maximum: "120", expression: "age >= 3 && age <= 120"}];
+  string email = 3 [(confluent.field_meta).params = {format: "email", expression: "email.contains('foo')"}];
   Address address = 4;
-  repeated string hobbies = 5 [(confluent.field_meta).params = {minItems: "2"}];
+  repeated string hobbies = 5 [(confluent.field_meta).params = {minItems: "2", expression: "size(hobbies) >= 2"}];
   repeated Friend friends = 6;
 
   message Address {
-    string street = 1 [(confluent.field_meta).params = {minLength: "5", maxLength: "10"}];
+   option (confluent.message_meta).params = {
+    expression: "size(address.street) >= 5 && address.street.contains('paris') || address.city == 'paris'"
+   };
+   
+    string street = 1 [(confluent.field_meta).params = {minLength: "5", maxLength: "10", expression: "size(street) >= 5 && size(street) <= 10"}];
     string city = 2 [(confluent.field_meta).params = {minLength: "2", maxLength: "10"}];
   }
 
   message Friend {
     string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "10"}];
-    int32 age = 2 [(confluent.field_meta).params = {minimum: "2", maximum: "10"}];
+    int32 age = 2 [(confluent.field_meta).params = {minimum: "2", maximum: "10", expression: "age >= 2 && age <= 10"}];
   }
 }
 ```

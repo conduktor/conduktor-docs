@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Migration guide to 3.x
-description: MIgrating from a deployed 2.x to a 3.x version of Gateway
+description: Migrating from a deployed 2.x to a 3.x version of Gateway
 ---
 # Migration guide to 3.x
 

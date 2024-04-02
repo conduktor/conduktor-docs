@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Broken brokers
 description: Validate your application behaves correctly when broker errors occur.
 parent: console

@@ -1,5 +1,5 @@
 ---
-version: 2.6.0
+version: 3.0.0
 title: Data masking
 description: Mask fields in records to hide sensitive data.
 parent: data-security

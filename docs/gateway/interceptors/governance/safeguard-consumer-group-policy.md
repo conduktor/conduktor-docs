@@ -1,6 +1,6 @@
 ---
-version: 2.6.0
-title: Consumer group policy
+version: 3.0.0
+title: Consumer Group Policy
 description: Ensure smooth Kafka consumer group operation by enforcing configuration policies.
 parent: governance
 license: enterprise
