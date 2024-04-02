@@ -1,8 +1,8 @@
 ---
+sidebar_position: 1
 title: Logical topics
-description: What are logical topics?
+description: A logical representation of a topic that a Gateway client will see
 ---
-
 # Logical topics
 
 Virtual topics are logical mappings managed in Gateway for users on top of another Kafka topic.
