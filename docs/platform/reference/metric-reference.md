@@ -75,71 +75,74 @@ The metrics endpoint is located on `/api/metrics` of your deployed Console insta
 | `console_cache_schema_registry_clients_misses_total` | counter |  | Number of cache miss for schema_registry_clients |
 | `console_cache_schema_registry_clients_size` | gauge |  | Total cache size for schema_registry_clients |
 | **Kafka cluster indexing** |  |  |  |
-| `console_indexer_kafka_cluster_duration` | histogram |  |  |
+| `console_indexer_kafka_cluster_duration` | histogram |  | Duration in milliseconds to index Kafka cluster |
 | `console_indexer_kafka_cluster_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_cluster_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_cluster_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_cluster_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_cluster_failed_count` | gauge |  |  |
-| `console_indexer_kafka_cluster_skipped_count` | gauge |  |  |
-| `console_indexer_kafka_cluster_succeeded_count` | gauge |  |  |
-| `console_indexer_kafka_cluster_timeout_count` | gauge |  |  |
-| `console_indexer_kafka_describe_topics_duration` | histogram |  |  |
+| `console_indexer_kafka_cluster_failed_count` | gauge |  | Number of failed Kafka cluster indexing tasks |
+| `console_indexer_kafka_cluster_skipped_count` | gauge |  | Number of skipped Kafka cluster indexing tasks |
+| `console_indexer_kafka_cluster_succeeded_count` | gauge |  | Number of succeeded Kafka cluster indexing tasks |
+| `console_indexer_kafka_cluster_timeout_count` | gauge |  | Number of timed out Kafka cluster indexing tasks |
+| `console_indexer_kafka_describe_topics_duration` | histogram |  | Duration in milliseconds to describes all topics per Kafka cluster |
 | `console_indexer_kafka_describe_topics_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_describe_topics_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_describe_topics_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_describe_topics_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_get_consumers_groups_duration` | histogram |  |  |
+| `console_indexer_kafka_get_consumers_groups_duration` | histogram |  | Duration in milliseconds to get all consumers groups state per Kafka cluster |
 | `console_indexer_kafka_get_consumers_groups_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_consumers_groups_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_consumers_groups_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_consumers_groups_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_get_deployed_connectors_duration` | histogram |  |  |
+| `console_indexer_kafka_get_deployed_connectors_duration` | histogram |  | Duration in milliseconds to list all deployed connector per Kafka cluster |
 | `console_indexer_kafka_get_deployed_connectors_duration_count` |  | `time_unit`, `technical_id`, `cluster_type`, `kafka_connect` |  |
 | `console_indexer_kafka_get_deployed_connectors_duration_max` |  | `time_unit`, `technical_id`, `cluster_type`, `kafka_connect` |  |
 | `console_indexer_kafka_get_deployed_connectors_duration_min` |  | `time_unit`, `technical_id`, `cluster_type`, `kafka_connect` |  |
 | `console_indexer_kafka_get_deployed_connectors_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type`, `kafka_connect` |  |
-| `console_indexer_kafka_get_topics_configs_duration` | histogram |  |  |
+| `console_indexer_kafka_get_topics_configs_duration` | histogram |  | Duration in milliseconds to get all topics topics configuration per Kafka cluster |
 | `console_indexer_kafka_get_topics_configs_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_configs_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_configs_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_configs_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_get_topics_partitions_duration` | histogram |  |  |
+| `console_indexer_kafka_get_topics_partitions_duration` | histogram |  | Duration in milliseconds to get all topics partitions state per Kafka cluster |
 | `console_indexer_kafka_get_topics_partitions_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_partitions_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_partitions_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_get_topics_partitions_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_init_cluster_connection_duration` | histogram |  |  |
+| `console_indexer_kafka_init_cluster_connection_duration` | histogram |  | Duration in milliseconds to initialize the connection per Kafka cluster |
 | `console_indexer_kafka_init_cluster_connection_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_init_cluster_connection_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_init_cluster_connection_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_init_cluster_connection_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_list_topics_duration` | histogram |  |  |
+| `console_indexer_kafka_list_topics_duration` | histogram |  | Duration in milliseconds to list topics per Kafka cluster |
 | `console_indexer_kafka_list_topics_duration_count` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_list_topics_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_list_topics_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_list_topics_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_total_duration` | histogram |  |  |
+| `console_indexer_kafka_total_clusters_count` | gauge |  | Total number of Kafka cluster |
+| `console_indexer_kafka_total_duration` | histogram |  | Total duration in milliseconds to index Kafka cluster |
 | `console_indexer_kafka_total_duration_count` |  | `time_unit` |  |
 | `console_indexer_kafka_total_duration_max` |  | `time_unit` |  |
 | `console_indexer_kafka_total_duration_min` |  | `time_unit` |  |
 | `console_indexer_kafka_total_duration_sum` |  | `time_unit` |  |
 | **Kafka connect indexing** |  |  |  |
-| `console_indexer_kafka_connect_cluster_failed_count` | gauge |  |  |
-| `console_indexer_kafka_connect_cluster_skipped_count` | gauge |  |  |
-| `console_indexer_kafka_connect_cluster_succeeded_count` | gauge |  |  |
-| `console_indexer_kafka_connect_cluster_timeout_count` | gauge |  |  |
-| `console_indexer_kafka_connect_total_duration` | histogram |  |  |
+| `console_indexer_kafka_connect_cluster_failed_count` | gauge |  | Number of failed Kafka Connect server indexing tasks |
+| `console_indexer_kafka_connect_cluster_skipped_count` | gauge |  | Number of skipped Kafka Connect server indexing tasks |
+| `console_indexer_kafka_connect_cluster_succeeded_count` | gauge |  | Number of succeeded Kafka Connect server indexing tasks |
+| `console_indexer_kafka_connect_cluster_timeout_count` | gauge |  | Number of timed out Kafka Connect server indexing tasks |
+| `console_indexer_kafka_connect_total_clusters_count` | gauge |  | Total number of Kafka Connect server |
+| `console_indexer_kafka_connect_total_duration` | histogram |  | Total duration in milliseconds to index Kafka Connect server |
 | `console_indexer_kafka_connect_total_duration_count` |  | `time_unit` |  |
 | `console_indexer_kafka_connect_total_duration_max` |  | `time_unit` |  |
 | `console_indexer_kafka_connect_total_duration_min` |  | `time_unit` |  |
 | `console_indexer_kafka_connect_total_duration_sum` |  | `time_unit` |  |
 | **Schema registry indexing** |  |  |  |
-| `console_indexer_schema_registry_cluster_failed_count` | gauge |  |  |
-| `console_indexer_schema_registry_cluster_skipped_count` | gauge |  |  |
-| `console_indexer_schema_registry_cluster_succeeded_count` | gauge |  |  |
-| `console_indexer_schema_registry_cluster_timeout_count` | gauge |  |  |
-| `console_indexer_schema_registry_total_duration` | histogram |  |  |
+| `console_indexer_schema_registry_cluster_failed_count` | gauge |  | Number of failed Schema Registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_skipped_count` | gauge |  | Number of skipped Schema Registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_succeeded_count` | gauge |  | Number of succeeded Schema Registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_timeout_count` | gauge |  | Number of timed out Schema Registry server indexing tasks |
+| `console_indexer_schema_registry_total_clusters_count` | gauge |  | Total number of Schema Registry server |
+| `console_indexer_schema_registry_total_duration` | histogram |  | Total duration in milliseconds to index Schema Registry server |
 | `console_indexer_schema_registry_total_duration_count` |  | `time_unit` |  |
 | `console_indexer_schema_registry_total_duration_max` |  | `time_unit` |  |
 | `console_indexer_schema_registry_total_duration_min` |  | `time_unit` |  |
