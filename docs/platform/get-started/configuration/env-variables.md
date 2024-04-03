@@ -11,24 +11,26 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
   - [Platform properties reference](#platform-properties-reference)
       - [Support of shell expansion in yaml configuration file](#support-of-shell-expansion-in-yaml-configuration-file)
       - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
-    - [Global properties](#global-properties)
-    - [Database properties](#database-properties)
-    - [Session Lifetime Properties](#session-lifetime-properties)
-    - [Local users properties](#local-users-properties)
-    - [Monitoring properties](#monitoring-properties)
-      - [Console Configuration for Cortex](#console-configuration-for-cortex)
-    - [Cortex Configuration](#cortex-configuration)
-    - [SSO properties](#sso-properties)
-      - [LDAP properties](#ldap-properties)
-      - [Oauth2 properties](#oauth2-properties)
-    - [Kafka clusters properties](#kafka-clusters-properties)
-    - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
-      - [Confluent Cloud](#confluent-cloud)
-      - [Aiven](#aiven-)
-      - [Conduktor Gateway](#conduktor-gateway)
-    - [Schema registry properties](#schema-registry-properties)
-      - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
-    - [Kafka Connect properties](#kafka-connect-properties)
+      - [Global properties](#global-properties)
+      - [Database properties](#database-properties)
+      - [Session Lifetime Properties](#session-lifetime-properties)
+      - [Local users properties](#local-users-properties)
+      - [Monitoring properties](#monitoring-properties)
+        - [Console Configuration for Cortex](#console-configuration-for-cortex)
+      - [Cortex Configuration](#cortex-configuration)
+      - [SSO properties](#sso-properties)
+        - [LDAP properties](#ldap-properties)
+        - [Oauth2 properties](#oauth2-properties)
+      - [Kafka clusters properties](#kafka-clusters-properties)
+      - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
+        - [Confluent Cloud](#confluent-cloud)
+        - [Aiven](#aiven-)
+        - [Conduktor Gateway](#conduktor-gateway)
+      - [Schema registry properties](#schema-registry-properties)
+        - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
+      - [Kafka Connect properties](#kafka-connect-properties)
+      - [ksqlDB properties](#ksqldb-properties)
+      - [Indexer properties](#indexer-properties)
 
 ## Docker image environment variables
 
@@ -299,60 +301,99 @@ Configuring Gateway properties will enable you to deploy and manage interceptors
 
 ### Schema registry properties
 
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.id` | String used to uniquely identify your schema registry | `CDK_CLUSTERS_0_SCHEMAREGISTRY_ID` | true | string | ∅ |
-| `clusters[].schemaRegistry.url` | The schema registry URL | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL` | true | string | ∅ |
-| `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
-| `clusters[].schemaRegistry.properties` | Any schema registry configuration parameters | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES` | false | string where each line is a property | ∅ |
-
-If you need to authenticate with basic auth, you can use the following properties:
-
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| clusters[].schemaRegistry.security.username | Basic auth username | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME` | false | string | ∅ |
-| clusters[].schemaRegistry.security.password | Basic auth password | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD` | false | string | ∅ |
-
-If you need to authenticate with bearer auth, you can use the following property:
-
-| Property | Description | Environment Variable | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.security.token` | Bearer auth token | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN` | `false` | string | ∅ |
+| Property                                               | Description                                  | Env                                                        | Mandatory | Type                                 | Default |
+|--------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
+| `clusters[].schemaRegistry.url`                        | The schema registry URL                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`                        | true      | string                               | ∅       |
+| `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                              | `false` |
+| `clusters[].schemaRegistry.properties`                 | Any schema registry configuration parameters | `CDK_CLUSTERS_0_SCHEMAREGISTRY_PROPERTIES`                 | false     | string where each line is a property | ∅       |
+| **Basic Authentication**                               |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.username`          | Basic auth username                          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME`          | false     | string                               | ∅       |
+| `clusters[].schemaRegistry.security.password`          | Basic auth password                          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD`          | false     | string                               | ∅       |
+| **Bearer Token Authentication**                        |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.token`             | Bearer auth token                            | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_TOKEN`             | false     | string                               | ∅       |
+| **mTLS Authentication**                                |                                              |                                                            |           |                                      |         |
+| `clusters[].schemaRegistry.security.key`               | Access Key                                   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_KEY`               | false     | string                               | ∅       |
+| `clusters[].schemaRegistry.security.certificateChain`  | Access certificate                           | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_CERTIFICATECHAIN`  | false     | string                               | ∅       |
 
 #### Amazon Glue schema registry properties
 
-| Property | Description | Env | Mandatory | Type | Default | Values | Since |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.region` | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION` | true | string | ∅ | - | `1.x.x` |
-| `clusters[].schemaRegistry.registryName` | The Glue schema registry name | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME` | false | string | ∅ | - | `1.x.x` |
-| `clusters[].schemaRegistry.amazonSecurity.type` | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE` | true | string | ∅ | `Credentials`, `FromContext`, `FromRole` | `1.x.x` |
-
-If `amazonSecurity.type` is `Credentials`, you must use the following properties:
-
-| Property | Description | Env | Mandatory | Type | Default | Since |
-| --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true | string | ∅ | `1.x.x` |
-| `clusters[].schemaRegistry.amazonSecurity.secretKey` | Credentials auth secret key | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY` | true | string | ∅ | `1.x.x` |
-
-If `amazonSecurity.type` is `FromContext`, you must use the following properties:
-
-| Property | Description | Env | Mandatory | Type | Default | Since |
-| --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.amazonSecurity.profile` | Authentication profile | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE` | false | string | ∅ | `1.x.x` |
-
-If `amazonSecurity.type` is `FromRole`, you must use the following properties:
-
-| Property | Description | Env | Mandatory | Type | Default | Since |
-| --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].schemaRegistry.amazonSecurity.role` | Authentication role | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE` | true | string | ∅ | `1.x.x` |
+| Property                                               | Description                     | Env                                                        | Mandatory | Type   | Default | Values                                   |
+|--------------------------------------------------------|---------------------------------|------------------------------------------------------------|-----------|--------|---------|------------------------------------------|
+| `clusters[].schemaRegistry.region`                     | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       |                                          |
+| `clusters[].schemaRegistry.registryName`               | The Glue schema registry name   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       |                                          |
+| `clusters[].schemaRegistry.amazonSecurity.type`        | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`        | true      | string | ∅       | `Credentials`, `FromContext`, `FromRole` |
+| **Credentials Security**                               |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true      | string | ∅       |                                          |
+| `clusters[].schemaRegistry.amazonSecurity.secretKey`   | Credentials auth secret key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`   | true      | string | ∅       |                                          |
+| **FromContext Security**                               |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.profile`     | Authentication profile          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`     | false     | string | ∅       |                                          |
+| **FromRole Security**                                  |                                 |                                                            |           |        |         |                                          |         
+| `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role             | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       |                                          |
 
 ### Kafka Connect properties
 
-| Property | Description | Environment Variable | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `clusters[].kafkaConnects[].id` | String used to uniquely identify your Kafka Connect | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID` | true | string | ∅ |
-| `clusters[].kafkaConnects[].url` | The Kafka connect URL | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL` | true | string | ∅ |
-| `clusters[].kafkaConnects[].security.username` | Basic auth username | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME` | false | string | ∅ |
-| `clusters[].kafkaConnects[].security.password` | Basic auth password | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD` | false | string | ∅ |
-| `clusters[].kafkaConnects[].security.token` | Bearer token | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_TOKEN` | false | string | ∅ |
-| `clusters[].kafkaConnects[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_KAFKACONNECTS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | string | ∅ |
+| Property                                                | Description                                                     | Environment Variable                                        | Mandatory | Type    | Default |
+|---------------------------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------|-----------|---------|---------|
+| `clusters[].kafkaConnects[].id`                         | String used to uniquely identify your Kafka Connect             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`                         | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].name`                       | Name your Kafka Connect                                         | `CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME`                       | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].url`                        | The Kafka connect URL                                           | `CDK_CLUSTERS_0_KAFKACONNECTS_0_URL`                        | true      | string  | ∅       |
+| `clusters[].kafkaConnects[].headers`                    | Optional additional headers (ie: `X-API-Token=123,X-From=Test`) | `CDK_CLUSTERS_0_KAFKACONNECTS_0_HEADERS`                    | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].ignoreUntrustedCertificate` | Skip SSL certificate validation                                 | `CDK_CLUSTERS_0_KAFKACONNECTS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
+| **Basic Authentication**                                |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.username`          | Basic auth username                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME`          | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].security.password`          | Basic auth password                                             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD`          | false     | string  | ∅       |
+| **Bearer Token Authentication**                         |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.token`             | Bearer token                                                    | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_TOKEN`             | false     | string  | ∅       |
+| **mTLS Authentication**                                 |                                                                 |                                                             |           |         |         |
+| `clusters[].kafkaConnects[].security.key`               | Access key                                                      | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_KEY`               | false     | string  | ∅       |
+| `clusters[].kafkaConnects[].security.certificateChain`  | Access certificate                                              | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
+
+### ksqlDB properties
+
+This feature is available from version `1.21.0` of the Conduktor Console.
+
+| Property                                          | Description                                          | Environment Variable                                  | Mandatory | Type    | Default |
+|---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|---------|---------|
+| `clusters[].ksqlDBs[].id`                         | String used to uniquely identify your ksqlDB Cluster | `CDK_CLUSTERS_0_KSQLDBS_0_ID`                         | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].name`                       | Name of your ksqlDB Cluster                          | `CDK_CLUSTERS_0_KSQLDBS_0_NAME`                       | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].url`                        | The ksqlDB API URL                                   | `CDK_CLUSTERS_0_KSQLDBS_0_URL`                        | true      | string  | ∅       |
+| `clusters[].ksqlDBs[].ignoreUntrustedCertificate` | Skip SSL certificate validation                      | `CDK_CLUSTERS_0_KSQLDBS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
+| **Basic Authentication**                          |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.username`          | Basic auth username                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_USERNAME`          | false     | string  | ∅       |
+| `clusters[].ksqlDBs[].security.password`          | Basic auth password                                  | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_PASSWORD`          | false     | string  | ∅       |
+| **Bearer Token Authentication**                   |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.token`             | Bearer token                                         | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_TOKEN`             | false     | string  | ∅       |
+| **mTLS Authentication**                           |                                                      |                                                       |           |         |         |
+| `clusters[].ksqlDBs[].security.key`               | Access key                                           | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string  | ∅       |
+| `clusters[].ksqlDBs[].security.certificateChain`  | Access certificate                                   | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
+
+### Indexer properties
+
+The indexer is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
+You should modify these parameters only if you see an issue with the performance of the indexer.
+
+| Property                                             | Description                                                                                                                            | Environment Variable                               | Mandatory | Type | Default           |
+|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
+| **Lag exporter**                                     |                                                                                                                                        |                                                    |           |      |                   |
+| `lagexporter.frequency`                              | Frequency in seconds of the execution of the lag exporter                                                                              | `CDK_LAGEXPORTER_FREQUENCY`                        | false     | int  | `30`              |
+| `lagexporter.clusterparallelism`                     | Number of clusters indexed in parallel for the lag exporter                                                                            | `CDK_LAGEXPORTER_CLUSTERPARALLELISM`               | false     | int  | `1`               |
+| `lagexporter.indexertimeout`                         | Lag exporter timeout in seconds                                                                                                        | `CDK_LAGEXPORTER_INDEXERTIMEOUT`                   | false     | int  | `300` (5 minutes) |
+| **Metadata indexer**                                 |                                                                                                                                        |                                                    |           |      |                   |
+| `metadataindexer.frequency`                          | Frequency in seconds of the execution of the metadata indexer                                                                          | `CDK_METADATAINDEXER_FREQUENCY`                    | false     | int  | `30`              |
+| `metadataindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the metadata indexer                                                                        | `CDK_METADATAINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
+| `metadataindexer.indexertimeout`                     | Metadata indexer timeout in seconds                                                                                                    | `CDK_METADATAINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
+| **Monitoring indexer**                               |                                                                                                                                        |                                                    |           |      |                   |
+| `monitoringconfig.frequency`                         | Frequency in seconds of the execution of the monitoring indexer                                                                        | `CDK_MONITORINGCONFIG_FREQUENCY`                   | false     | int  | `30`              |
+| `monitoringconfig.clusterparallelism`                | Number of clusters indexed in parallel for the monitoring indexer                                                                      | `CDK_MONITORINGCONFIG_CLUSTERPARALLELISM`          | false     | int  | `1`               |
+| `monitoringconfig.indexertimeout`                    | Monitoring indexer timeout in seconds                                                                                                  | `CDK_MONITORINGCONFIG_INDEXERTIMEOUT`              | false     | int  | `300` (5 minutes) |
+| **Schema registry indexer**                          |                                                                                                                                        |                                                    |           |      |                   |
+| `registryindexer.frequency`                          | Frequency in seconds of the execution of the schema registry indexer                                                                   | `CDK_REGISTRYINDEXER_FREQUENCY`                    | false     | int  | `30`              |
+| `registryindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the schema registry indexer                                                                 | `CDK_REGISTRYINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
+| `registryindexer.indexertimeout`                     | Schema registry indexer timeout in seconds                                                                                             | `CDK_REGISTRYINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
+| **Kafka connect indexer**                            |                                                                                                                                        |                                                    |           |      |                   |
+| `connectindexer.frequency`                           | Frequency in seconds of the execution of the kafka connect indexer                                                                     | `CDK_CONNECTINDEXER_FREQUENCY`                     | false     | int  | `30`              |
+| `connectindexer.clusterparallelism`                  | Number of clusters indexed in parallel for the kafka connect indexer                                                                   | `CDK_CONNECTINDEXER_CLUSTERPARALLELISM`            | false     | int  | `1`               |
+| `connectindexer.indexertimeout`                      | Kafka connect indexer timeout in seconds                                                                                               | `CDK_CONNECTINDEXER_INDEXERTIMEOUT`                | false     | int  | `300` (5 minutes) |
+| **Kafka admin client configuration**                 |                                                                                                                                        |                                                    |           |      |                   |
+| `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once. | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
+| `kafka_admin.batch_parallel_size                     | Maximum of batched requests that can be sent in parallel                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
