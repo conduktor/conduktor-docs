@@ -81,7 +81,7 @@ Possible choices are:
 
 ![Capture d’écran 2023-12-12 à 11.07.23.png](img/topic-deser.png)
 
-### Automatic Deserializer
+#### Automatic Deserializer
 
 This is the default deserializer. **Automatic** infers the correct deserializer in the following order:
 
@@ -96,6 +96,14 @@ Automatic deserializer applies independently to each record. If messages have be
 The following captures show the same records deserialized using ByteDeserializer, then Automatic Deserializer  
 ![img.png](img/topic-byte-serdes.png)
 ![Capture d’écran 2023-12-12 à 11.48.59.png](img/topic-3-deser.png)
+
+#### Custom Deserializer
+If you have installed them, your Custom Deserializers will appear here.  
+Optionally configure them using the `Properties` text and your messages will show as expected.  
+
+Check our guide on how to [Install & Configure Custom Deserializers](/platform/guides/custom-deserializers/) in Console.
+![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
+
 
 #### JSON Deserializer
 
@@ -126,6 +134,7 @@ will be represented like this:
 ```
 
 ![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-byte-serdes.png)
+
 
 ## Filter records
 
