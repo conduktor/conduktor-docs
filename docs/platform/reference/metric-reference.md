@@ -1,4 +1,5 @@
 ---
+sidebar_position: 4
 title: Metrics Reference
 description: Prometheus metrics available for Console
 ---

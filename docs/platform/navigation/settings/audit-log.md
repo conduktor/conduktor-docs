@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 title: Audit Log
 description: List of the Audit Log events tracked throughout the Platform
 ---
