@@ -15,19 +15,24 @@ You have 2 options to Install Conduktor CLI.
 - Docker build for integration in CI/CD pipelines
 
 ### Native binary
+**From Github (Windows, Linux, MacOS)**  
 Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
-In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)
-
+In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)  
+  
+**Brew (MacOS)**
+````
+brew install conduktor/brew/conduktor-cli
+````
 ### Docker
 ````
-docker pull conduktor/conduktorctl
+docker pull conduktor/conduktor-ctl
 ````
 
 ### Configure
 
 To use Conduktor CLI, you need to define 2 environment variables:
--   The URL of Conduktor Console
--   Your API token (either a User Token or Application Token)
+- The URL of Conduktor Console
+- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application Token)
 ````yaml
 CDK_BASE_URL=http://localhost:8080
 CDK_TOKEN=<admin-token>
@@ -200,10 +205,9 @@ Cross Application permission checks:
         -   a literal topic name: `click.orders.france`
 
 
-
 ## Integrate Conduktor CLI with your CI/CD
 
-Conduktor CI can be easily added to a CI/CD pipeline using the Docker images on Docker Hub.
+Conduktor CLI can be easily integrated to a CI/CD pipeline.
 
 This example presents 2 pipelines.
 
@@ -242,7 +246,7 @@ jobs:
       - run: conduktor-cli apply -f resources/ --dry-run
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CONDUKTOR_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
 ````
 ````yaml title=".github/workflows/on-push.yml"
 name: Execute Commited Changes
@@ -258,7 +262,7 @@ jobs:
       - run: conduktor-cli apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CONDUKTOR_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
 ````
 ### Gitlab CI
 ````yaml title=".gitlab-ci.yml"
@@ -270,7 +274,7 @@ conduktor-pr:
     name: conduktor/conduktorctl
   before_script:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CONDUKTOR_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
     - conduktor-ctl apply -f resources/ --dry-run
 
@@ -283,7 +287,7 @@ conduktor-main:
     name: conduktor/conduktorctl
   before_script:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CONDUKTOR_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
     - conduktor-ctl apply -f resources/
 ````
