@@ -76,7 +76,7 @@ metadata:
   name: "clickstream-app-dev"
 spec:
   cluster: "shadow-it"
-  service-account: "sa-clickstream-dev"
+  serviceAccount: "sa-clickstream-dev"
   resources:
     - type: TOPIC
       name: "click."
