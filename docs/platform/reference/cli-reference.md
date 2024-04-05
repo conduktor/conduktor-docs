@@ -126,11 +126,11 @@ This resource defines a Self Serve Application.
 apiVersion: "v1"
 kind: "Application"
 metadata:
- name: "clickstream-app"
+  name: "clickstream-app"
 spec:
- title: "Clickstream App"
- description: "FreeForm text, probably multiline markdown"
- owner: "groupA" # technical-id of Console Group
+  title: "Clickstream App"
+  description: "FreeForm text, probably multiline markdown"
+  owner: "groupA" # technical-id of Console Group
 ````
 
 Application checks
@@ -145,24 +145,24 @@ Application checks
 apiVersion: "v1"
 kind: "ApplicationInstance"
 metadata:
- application: "clickstream-app"
- name: "clickstream-app-dev"
+  application: "clickstream-app"
+  name: "clickstream-app-dev"
 spec:
- cluster: "shadow-it"
- service-account: "sa-clicko"
- resources:
-   - type: TOPIC
-     name: "click."
-     patternType: PREFIXED
-   - type: GROUP
-     name: "click."
-     patternType: PREFIXED
+  cluster: "shadow-it"
+  serviceAccount: "sa-clicko"
+  resources:
+  - type: TOPIC
+    name: "click."
+    patternType: PREFIXED
+  - type: GROUP
+    name: "click."
+    patternType: PREFIXED
 ````
 AppInstance checks:
 - `metadata.application` is a valid Application
 - `spec.cluster` is a valid Console Cluster technical id
 - `spec.cluster` is immutable (can't update after creation)
-- `spec.service-account` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
+- `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
 - `spec.resources[].name` must no overlap with any other `ApplicationInstance` on the same cluster.
@@ -178,16 +178,16 @@ AppInstance checks:
 apiVersion: v1
 kind: "ApplicationInstancePermission"
 metadata:
- application: "clickstream-app"
- appInstance: "clickstream-app-dev"
- name: "clickstream-app-dev-to-another"
+  application: "clickstream-app"
+  appInstance: "clickstream-app-dev"
+  name: "clickstream-app-dev-to-another"
 spec:
- resource:
-   type: TOPIC
-   name: "click."
-   patternType: PREFIX
- permission: READ
- grantedTo: "another-appinstance-dev"
+  resource:
+    type: TOPIC
+    name: "click."
+    patternType: PREFIX
+  permission: READ
+  grantedTo: "another-appinstance-dev"
 ````
 Cross Application permission checks:
 
