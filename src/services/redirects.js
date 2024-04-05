@@ -394,6 +394,10 @@ const redirects = [
         from: '/platform/installation/get-started/docker-compose/',
         to: '/platform/get-started/installation/get-started/docker/',
       },
+      {
+        from: '/platform/navigation/self-serve/getting-started/',
+        to: '/platform/navigation/self-serve/',
+      },
     ],
   },
 ]
