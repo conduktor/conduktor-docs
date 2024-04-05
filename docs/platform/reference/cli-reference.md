@@ -196,7 +196,7 @@ Cross Application permission checks:
     - To edit this resource, delete and recreate it.
 - `spec.resource.type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 - `spec.resource.patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resource.name` must reference any “sub-resource” of `metadata.appInstance` .
+- `spec.resource.name` must reference any "sub-resource" of `metadata.appInstance` .
     - For example, if you are owner of the prefix `click.`, you can grant READ or WRITE access to:
         -   the whole prefix: `click.`
         -   a sub prefix: `click.orders.`
