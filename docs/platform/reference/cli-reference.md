@@ -186,7 +186,7 @@ spec:
   resource:
     type: TOPIC
     name: "click."
-    patternType: PREFIX
+    patternType: PREFIXED
   permission: READ
   grantedTo: "another-appinstance-dev"
 ````
