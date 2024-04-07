@@ -241,10 +241,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: conduktor/conduktorctl
+    container: conduktor/conduktor-ctl
     steps:
       - uses: actions/checkout@v3
-      - run: conduktor-cli apply -f resources/ --dry-run
+      - run: /bin/conduktor apply -f resources/ --dry-run
         env:
           CDK_BASE_URL: https://conduktor.domain.com
           CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
@@ -257,10 +257,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: conduktor/conduktorctl
+    container: conduktor/conduktor-ctl
     steps:
       - uses: actions/checkout@v3
-      - run: conduktor-cli apply -f resources/
+      - run: /bin/conduktor apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
           CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
@@ -272,12 +272,12 @@ conduktor-pr:
     - merge_requests
   stage: check
   image:
-    name: conduktor/conduktorctl
+    name: conduktor/conduktor-ctl
   before_script:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
-    - conduktor-ctl apply -f resources/ --dry-run
+    - /bin/conduktor apply -f resources/ --dry-run
 
 conduktor-main:
   only:
@@ -285,11 +285,11 @@ conduktor-main:
       - master
   stage: deploy
   image:
-    name: conduktor/conduktorctl
+    name: conduktor/conduktor-ctl
   before_script:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
-    - conduktor-ctl apply -f resources/
+    - /bin/conduktor apply -f resources/ --dry-run
 ````
           
