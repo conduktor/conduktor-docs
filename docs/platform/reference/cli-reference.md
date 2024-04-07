@@ -210,11 +210,9 @@ Cross Application permission checks:
 
 Conduktor CLI can be easily integrated to a CI/CD pipeline.
 
-This example presents 2 pipelines.
-
-The first one triggers on each new PR and launches the CLI using the `--dry-run` flag, generating a report confirming that the resources can be successfully created or modified.
-
-The second one triggers on a push to the `main` branch, making the changes live.
+This example presents 2 pipelines:
+- The first one triggers on each new PR and launches the CLI using the `--dry-run` flag, generating a report confirming that the resources can be successfully created or modified.
+- The second one triggers on a push to the `main` branch, making the changes live.
 
 Consider the following folder structure:
 ````
@@ -223,15 +221,15 @@ Consider the following folder structure:
 |   ├── permissions.yml     # Your permissions to other Apps are there
 ````
 
-### Github Actions
-````
-├── .github/
-│   ├── workflows/
-│   |   ├── on-pr.yml
-│   |   ├── on-push.yml
-````
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-````yaml title=".github/workflows/on-pr.yml"
+
+<Tabs>
+<TabItem value="github" label="Github Actions">
+
+
+```yaml title=".github/workflows/on-pr.yml"
 
 name: Check PR Validity
 on:
@@ -248,8 +246,9 @@ jobs:
         env:
           CDK_BASE_URL: https://conduktor.domain.com
           CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
-````
-````yaml title=".github/workflows/on-push.yml"
+```
+
+```yaml title=".github/workflows/on-push.yml"
 name: Execute Commited Changes
 on:
   push:
@@ -260,20 +259,26 @@ jobs:
     container: conduktor/conduktor-ctl
     steps:
       - uses: actions/checkout@v3
+      // highlight-next-line
       - run: /bin/conduktor apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
           CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
-````
-### Gitlab CI
-````yaml title=".gitlab-ci.yml"
+```
+
+</TabItem>
+<TabItem value="gitlab" label="Gitlab CI/CD">
+    
+
+```yaml title=".gitlab-ci.yml"
 conduktor-pr:
   only:
     - merge_requests
-  stage: check
+  stage: deploy
   image:
     name: conduktor/conduktor-ctl
-  before_script:
+    entrypoint: [""] 
+  variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
@@ -282,14 +287,20 @@ conduktor-pr:
 conduktor-main:
   only:
     refs:
-      - master
+      - main
   stage: deploy
   image:
     name: conduktor/conduktor-ctl
-  before_script:
+    entrypoint: [""] 
+  variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_TOKEN=${CONDUKTOR_TOKEN}
   script:
-    - /bin/conduktor apply -f resources/ --dry-run
-````
-          
+    - /bin/conduktor apply -f resources/
+```
+    
+
+</TabItem>
+</Tabs>
+
+
