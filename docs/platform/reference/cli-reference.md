@@ -7,6 +7,13 @@ description: Prometheus metrics available for Console
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
 Check for the list of supported resources and their definition below.
+- [Platform Team Resources](#platform-team-resources)
+  - [Application](#application)
+  - [ApplicationInstance](#application-instance)
+  - [TopicPolicy](#topic-policy)
+- [Application Team Resources](#application-team-resources)
+  - [Cross Application Permissions](#cross-application-permissions)
+  - [Topic](#topic)
 
 ## Install & Configure
 
@@ -113,7 +120,7 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ````
 
-## Administrator Resources
+## Platform Team Resources
 
 To deploy these resources, you must use an Admin Token, generated from Settings/Api Keys.
 
@@ -151,6 +158,9 @@ metadata:
 spec:
   cluster: "shadow-it"
   serviceAccount: "sa-clicko"
+  topicPolicyRef:
+    - "generic-dev-topic"
+    - "clickstream-naming-rule"
   resources:
   - type: TOPIC
     name: "click."
@@ -164,6 +174,7 @@ AppInstance checks:
 - `spec.cluster` is a valid Console Cluster technical id
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
+- `spec.topicPolicyRef` is **optional**, and if present must be a valid list of TopicPolicy
 - `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
 - `spec.resources[].name` must no overlap with any other `ApplicationInstance` on the same cluster.
@@ -171,6 +182,61 @@ AppInstance checks:
         -   `click.orders.`: Resource is a child-resource of `click.`
         -   `cli`: Resource is a parent-resource of `click.`
 
+### Topic Policy
+
+````yaml
+---
+apiVersion: "v1"
+kind: "TopicPolicy"
+metadata:
+  name: "generic-dev-topic"
+spec:
+  policies:
+    metadata.labels.conduktor.io/public-visibility:
+      constraint: ValidString
+      values: ["true", "false"]
+    spec.configs.retention.ms: 
+      constraint: "Range"
+      max: 42,
+      min: 3,
+      required: false
+    spec.replication.factor:
+      constraint: ValidString
+      values: ["3"]
+    spec.cleanup.policy: 
+      constraint: NonEmpty
+---
+apiVersion: "v1"
+kind: "TopicPolicy"
+metadata:
+  name: "wiki-naming-rule"
+spec:
+  policies:
+    metadata.name:
+      constraint: Match
+      pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
+````
+
+### Topic Policy
+
+````yaml
+---
+apiVersion: "v1"
+kind: "TopicPolicy"
+metadata:
+  name: "clickstream-app-dev"
+spec:
+  cluster: "shadow-it"
+  serviceAccount: "sa-clicko"
+  resources:
+  - type: TOPIC
+    name: "click."
+    patternType: PREFIXED
+  - type: GROUP
+    name: "click."
+    patternType: PREFIXED
+````
+## Application Team resources
 
 ### Cross Application Permissions
 ````yaml
@@ -204,6 +270,26 @@ Cross Application permission checks:
         -   a literal topic name: `click.orders.france`
 - `spec.permission` can be `READ` or `WRITE`.
 - `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
+
+### Topic
+````yaml
+---
+apiVersion: v1
+kind: Topic
+metadata:
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    min.insync.replicas: '2'
+    cleanup.policy: delete
+    retention.ms: '60000'
+````
+Topic checks:
+- `metadata.name` must belong to the Application Instance.
+- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
+- All other properties are validated if your Application Instance has [TopicPolicies](#topic-policy) attached.
 
 
 ## Integrate Conduktor CLI with your CI/CD
