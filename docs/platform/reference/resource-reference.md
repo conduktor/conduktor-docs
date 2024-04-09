@@ -4,36 +4,42 @@ title: Resources Reference
 description: All Conduktor resources
 ---
 
-# Resources Reference
+import Admonition from '@theme/Admonition';
 
 export const Highlight = ({children, color}) => (
-    <span
-        style={{
-        backgroundColor: color,
-        borderRadius: '4px',
-        color: '#fff',
-        padding: '0.2rem',
-    }}>
-    {children}
-    </span>
-    );
+<span
+style={{
+backgroundColor: color,
+borderRadius: '4px',
+color: '#fff',
+padding: '0.2rem',
+}}>
+{children}
+</span>
+);
+
+The resources presented here can be managed from the CLI, the Public API, or the Console UI.  
+- CLI and Public API uses an API Key to validate permissions.
+- Console UI relies on RBAC model to validate what the user can do.
+
+:::caution Work In Progress...
+We're working hard to bring consistent experience using the CLI, API, and Console UI, but it is not the case today.
+:::
+We'll inform you about the compatibility matrix for each resource using the following labels: <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
 
 
-- [Platform Team Resources](#platform-team-resources)
-  - [Application](#application)
-  - [ApplicationInstance](#application-instance)
-  - [TopicPolicy](#topic-policy)
-- [Application Team Resources](#application-team-resources)
-  - [Cross Application Permissions](#cross-application-permissions)
-  - [Topic](#topic)
+There are two kind of API Key to use with the API or CLI:
+- <Highlight color="#25c2a0">Admin Token</Highlight> have all permissions over all resources in Console
+- <Highlight color="#1877F2">Application Token</Highlight> permission are scoped to Application instances defined in Self Serve
+
+In general, <Highlight color="#25c2a0">Admin Token</Highlight> can bypass Application owners and "act" as an <Highlight color="#1877F2">Application Token</Highlight>
 
 ## Self Serve Resources
 
-To deploy these resources, you must use an Admin Token, generated from Settings/Api Keys.
-
 ### Application
 This resource defines a Self Serve Application.  
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
 
 ````yaml
 # Application
@@ -57,7 +63,8 @@ None.
 Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
 
 ````yaml
 ---
@@ -128,7 +135,8 @@ spec:
 
 
 ### Topic Policy
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
@@ -169,10 +177,15 @@ spec:
       pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
 ```
 
-### ApplicationInstancePermission Policy
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
+### Cross Application Permission Policy
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
 
-ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources
+ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources.  
+
 Typical use case include:
   - Enforcing metadata to track the intention or justification behind the cross application permission
 
@@ -232,7 +245,12 @@ spec:
         - WRITE: READ, WRITE, DESCRIBE_CONFIGS
 
 ### Application Group
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
 
 Create Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
@@ -240,9 +258,6 @@ You can create as many Application Groups as required to restrict or represent t
 - DevOps Team with extended access across all environments
 - Developers with higher permissions in Dev
 
-:::caution Not implemented yet
-  This concept will be available in a future version
-:::
 **Example**
 ````yaml
 # Permissions granted to Console users in the Application
@@ -285,11 +300,16 @@ spec:
 
 ## Kafka Resources
 
+At the moment, Kafka resources are only managed through <Highlight color="#8157ff">Console UI</Highlight>
+
 ### Topic
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
+
+
 ````yaml
 ---
 apiVersion: v1
@@ -310,19 +330,17 @@ spec:
 - All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
 
 **Side effect in Console & Kafka:**
-- Console
-  - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
 - Kafka
-  - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the permission:
-    - READ: READ, DESCRIBE_CONFIGS
-    - WRITE: READ, WRITE, DESCRIBE_CONFIGS
+  - Topic is created / updated.
 
 ### Subject
-
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
+
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>
+
 **Local file**
 
 ```yaml
@@ -382,10 +400,12 @@ spec:
 ```
 
 ### Connector
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
+**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
+
 ```yaml
 ---
 apiVersion: v1
@@ -404,14 +424,13 @@ spec:
 ```
 
 ## Console Resources
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
+**Managed with:** <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>
+
 ### KafkaCluster
 ### KafkaConnectCluster
 ### KsqlDBCluster
-### Group
-### User
+### ConsoleGroup
+### ConsoleUser
 ### Alert
 ### MaskingRule
