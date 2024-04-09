@@ -33,7 +33,7 @@ To deploy these resources, you must use an Admin Token, generated from Settings/
 
 ### Application
 This resource defines a Self Serve Application.  
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
 
 ````yaml
 # Application
@@ -57,7 +57,7 @@ None.
 Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
 
 ````yaml
 ---
@@ -128,7 +128,7 @@ spec:
 
 
 ### Topic Policy
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
@@ -170,7 +170,7 @@ spec:
 ```
 
 ### ApplicationInstancePermission Policy
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
 
 ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources
 Typical use case include:
@@ -189,7 +189,7 @@ spec:
 ```
 
 ### Cross Application Permissions
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
 
 ````yaml
 # Permission granted to other Applications
@@ -232,17 +232,17 @@ spec:
         - WRITE: READ, WRITE, DESCRIBE_CONFIGS
 
 ### Application Group
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
 
-:::caution
-This concept will be available in a future version
-:::
 Create Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
 - DevOps Team with extended access across all environments
 - Developers with higher permissions in Dev
 
+:::caution Not implemented yet
+  This concept will be available in a future version
+:::
 **Example**
 ````yaml
 # Permissions granted to Console users in the Application
@@ -286,8 +286,10 @@ spec:
 ## Kafka Resources
 
 ### Topic
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
-
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 ````yaml
 ---
 apiVersion: v1
@@ -317,16 +319,18 @@ spec:
 
 ### Subject
 
-API Keys: <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
-
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 **Local file**
 
 ```yaml
 ---
 apiVersion: v1
-kind: Schema
+kind: Subject
 metadata:
-  name: myPrefix.topic-value # your subject name
+  name: myPrefix.topic-value
 spec:
   schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
 ```
@@ -336,7 +340,7 @@ spec:
 ```yaml
 ---
 apiVersion: v1
-kind: Schema
+kind: Subject
 metadata:
   name: myPrefix.topic-value
 spec:
@@ -351,7 +355,7 @@ spec:
 ```yaml
 ---
 apiVersion: v1
-kind: Schema
+kind: Subject
 metadata:
   name: myPrefix.topic-value
 spec:
@@ -377,7 +381,33 @@ spec:
       version: 1
 ```
 
+### Connector
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+```yaml
+---
+apiVersion: v1
+kind: Connector
+metadata:
+  name: myPrefix.myConnector
+spec:
+  connectCluster: myConnectCluster
+  config:
+    connector.class: io.connect.jdbc.JdbcSourceConnector
+    tasks.max: '1'
+    topics: myPrefix.myTopic
+    connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
+    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
+
+```
+
 ## Console Resources
+**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 ### KafkaCluster
 ### KafkaConnectCluster
 ### KsqlDBCluster
