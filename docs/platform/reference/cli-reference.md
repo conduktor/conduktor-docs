@@ -3,6 +3,10 @@ sidebar_position: 3
 title: CLI Reference
 description: Prometheus metrics available for Console
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # CLI Reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
@@ -141,10 +145,13 @@ spec:
   owner: "groupA" # technical-id of Console Group
 ````
 
-Application checks
+**Application checks:**
 -   `spec.owner` is a valid Console Group
 -   Delete MUST fail if there are associated `ApplicationInstance`
 
+**Side effect in Console & Kafka:**  
+None.  
+Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
 
@@ -169,7 +176,7 @@ spec:
     name: "click."
     patternType: PREFIXED
 ````
-AppInstance checks:
+**AppInstance checks:**
 - `metadata.application` is a valid Application
 - `spec.cluster` is a valid Console Cluster technical id
 - `spec.cluster` is immutable (can't update after creation)
@@ -181,6 +188,15 @@ AppInstance checks:
     -   ie: If there is already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click.`
         -   `cli`: Resource is a parent-resource of `click.`
+
+**Side effect in Console & Kafka:**
+- Console
+  - Members of the Owner Group are given all permissions in the UI over the owned resources
+- Kafka
+  - Service Account is granted the following ACLs over the declared resources depending on the type:
+    - Topic: READ, WRITE, DESCRIBE_CONFIGS
+    - ConsumerGroup: READ
+
 
 ### Topic Policy
 
@@ -217,25 +233,6 @@ spec:
       pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
 ````
 
-### Topic Policy
-
-````yaml
----
-apiVersion: "v1"
-kind: "TopicPolicy"
-metadata:
-  name: "clickstream-app-dev"
-spec:
-  cluster: "shadow-it"
-  serviceAccount: "sa-clicko"
-  resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
-````
 ## Application Team resources
 
 ### Cross Application Permissions
@@ -256,7 +253,7 @@ spec:
   permission: READ
   grantedTo: "another-appinstance-dev"
 ````
-Cross Application permission checks:
+**Cross Application permission checks:**
 - `spec` is immutable
     - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application.**
     - Remember this resource affects target ApplicationInstance's Kafka service account ACLs.
@@ -270,6 +267,15 @@ Cross Application permission checks:
         -   a literal topic name: `click.orders.france`
 - `spec.permission` can be `READ` or `WRITE`.
 - `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
+
+**Side effect in Console & Kafka:**
+- Console
+    - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
+- Kafka
+    - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the permission:
+        - READ: READ, DESCRIBE_CONFIGS
+        - WRITE: READ, WRITE, DESCRIBE_CONFIGS
+
 
 ### Topic
 ````yaml
@@ -286,11 +292,18 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'
 ````
-Topic checks:
+**Topic checks:**
 - `metadata.name` must belong to the Application Instance.
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
-- All other properties are validated if your Application Instance has [TopicPolicies](#topic-policy) attached.
+- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
 
+**Side effect in Console & Kafka:**
+- Console
+  - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
+- Kafka
+  - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the permission:
+    - READ: READ, DESCRIBE_CONFIGS
+    - WRITE: READ, WRITE, DESCRIBE_CONFIGS
 
 ## Integrate Conduktor CLI with your CI/CD
 
@@ -307,8 +320,7 @@ Consider the following folder structure:
 |   ├── permissions.yml     # Your permissions to other Apps are there
 ````
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+
 
 
 <Tabs>
