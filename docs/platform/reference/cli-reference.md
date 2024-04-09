@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 # CLI Reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated [Resources Reference](../resource-reference) page.
+Check for the list of supported resources and their definition in the dedicated [Resources Reference](./resource-reference) page.
 
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self Service.
