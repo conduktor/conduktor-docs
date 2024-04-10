@@ -198,7 +198,8 @@ metadata:
 spec:
   policies:
     metadata.labels.bankart.si/jira-ticket:
-      constraint: NonEmpty
+      constraint: Match
+      pattern: "KAFKA-ACCESS-[0-9]+"
 ```
 
 ### Cross Application Permissions
