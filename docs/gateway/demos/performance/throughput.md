@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/x0X6mxCncWMtWezsNER0NSCti.svg)](https://asciinema.org/a/x0X6mxCncWMtWezsNER0NSCti)
+[![asciicast](https://asciinema.org/a/Zn6CEny94fAuomA31kVknPATD.svg)](https://asciinema.org/a/Zn6CEny94fAuomA31kVknPATD)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -277,17 +261,15 @@ docker compose up --detach --wait
  Container kafka-client  Creating
  Container kafka-client  Created
  Container zookeeper  Created
- Container kafka2  Creating
  Container kafka3  Creating
+ Container kafka2  Creating
  Container kafka1  Creating
- Container kafka2  Created
  Container kafka3  Created
+ Container kafka2  Created
  Container kafka1  Created
+ Container gateway2  Creating
  Container gateway1  Creating
  Container schema-registry  Creating
- Container gateway2  Creating
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway1  Created
  Container gateway2  Created
  Container schema-registry  Created
@@ -305,55 +287,55 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka1  Starting
  Container kafka2  Started
- Container kafka1  Started
  Container kafka3  Started
+ Container kafka1  Started
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka2  Healthy
  Container kafka2  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container kafka1  Healthy
  Container schema-registry  Starting
  Container kafka1  Healthy
- Container kafka3  Healthy
  Container gateway2  Starting
- Container kafka3  Healthy
- Container gateway1  Starting
- Container schema-registry  Started
- Container gateway2  Started
  Container gateway1  Started
+ Container gateway2  Started
+ Container schema-registry  Started
+ Container kafka-client  Waiting
+ Container zookeeper  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
- Container kafka-client  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Healthy
- Container zookeeper  Healthy
- Container kafka1  Healthy
- Container kafka-client  Healthy
  Container kafka3  Healthy
- Container schema-registry  Healthy
- Container gateway1  Healthy
+ Container zookeeper  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
+ Container kafka1  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TouC4ZNPCZXw8VpUJm0Y9JGTN.svg)](https://asciinema.org/a/TouC4ZNPCZXw8VpUJm0Y9JGTN)
+[![asciicast](https://asciinema.org/a/JGXBuEeY3XyTASoQMBdpr7eJX.svg)](https://asciinema.org/a/JGXBuEeY3XyTASoQMBdpr7eJX)
 
 </TabItem>
 </Tabs>
@@ -389,7 +371,7 @@ Created topic physical-kafka.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0Bu7OzkLh6uLbLrvesAy7pIF0.svg)](https://asciinema.org/a/0Bu7OzkLh6uLbLrvesAy7pIF0)
+[![asciicast](https://asciinema.org/a/DeA1IcwJjIoVCIHy6Wv3MUzLJ.svg)](https://asciinema.org/a/DeA1IcwJjIoVCIHy6Wv3MUzLJ)
 
 </TabItem>
 </Tabs>
@@ -416,15 +398,18 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-1831469 records sent, 366293,8 records/sec (89,08 MB/sec), 31,6 ms avg latency, 235,0 ms max latency.
-2500000 records sent, 377301,539390 records/sec (91,75 MB/sec), 24,85 ms avg latency, 235,00 ms max latency, 6 ms 50th, 130 ms 95th, 169 ms 99th, 221 ms 99.9th.
+692839 records sent, 138457,0 records/sec (33,67 MB/sec), 323,6 ms avg latency, 852,0 ms max latency.
+553186 records sent, 110615,1 records/sec (26,90 MB/sec), 315,8 ms avg latency, 942,0 ms max latency.
+348127 records sent, 69625,4 records/sec (16,93 MB/sec), 1306,7 ms avg latency, 2634,0 ms max latency.
+431209 records sent, 86069,7 records/sec (20,93 MB/sec), 1263,7 ms avg latency, 2899,0 ms max latency.
+2500000 records sent, 103284,445363 records/sec (25,12 MB/sec), 638,35 ms avg latency, 2899,00 ms max latency, 387 ms 50th, 2051 ms 95th, 2663 ms 99th, 2788 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/mNp5pC8UYeyBGH51eCTAnLIpO.svg)](https://asciinema.org/a/mNp5pC8UYeyBGH51eCTAnLIpO)
+[![asciicast](https://asciinema.org/a/dP12htVdfzrJNFDwSWMwdM2A3.svg)](https://asciinema.org/a/dP12htVdfzrJNFDwSWMwdM2A3)
 
 </TabItem>
 </Tabs>
@@ -467,7 +452,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY2MDEzNn0.BlTHQkKSZueueDmWrwGY2GUWzoVR-9cWx4wGk6dcYws';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4NjE5N30.sWSMYhOOKLf7wLou5Gce9IeAlna8LUuqMmpi-3CxIPc';
 
 
 ```
@@ -475,7 +460,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CbBhqUwIh3MaiV2wDmDNabVww.svg)](https://asciinema.org/a/CbBhqUwIh3MaiV2wDmDNabVww)
+[![asciicast](https://asciinema.org/a/r1mKnCcUIsol6O56BUGv9tJjW.svg)](https://asciinema.org/a/r1mKnCcUIsol6O56BUGv9tJjW)
 
 </TabItem>
 </Tabs>
@@ -512,7 +497,7 @@ Created topic via-gateway.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LfIqmLw5JbeUEnlAvx6V5LXhK.svg)](https://asciinema.org/a/LfIqmLw5JbeUEnlAvx6V5LXhK)
+[![asciicast](https://asciinema.org/a/RqssIFhDjVTiZSmzBybXuDFeW.svg)](https://asciinema.org/a/RqssIFhDjVTiZSmzBybXuDFeW)
 
 </TabItem>
 </Tabs>
@@ -540,16 +525,19 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-522405 records sent, 104481,0 records/sec (25,41 MB/sec), 1015,3 ms avg latency, 1986,0 ms max latency.
-959612 records sent, 191654,1 records/sec (46,61 MB/sec), 463,7 ms avg latency, 1198,0 ms max latency.
-2500000 records sent, 172081,497797 records/sec (41,85 MB/sec), 514,13 ms avg latency, 1986,00 ms max latency, 388 ms 50th, 1517 ms 95th, 1784 ms 99th, 1924 ms 99.9th.
+156832 records sent, 31366,4 records/sec (7,63 MB/sec), 1507,7 ms avg latency, 2248,0 ms max latency.
+370575 records sent, 73981,8 records/sec (17,99 MB/sec), 1596,6 ms avg latency, 2494,0 ms max latency.
+423218 records sent, 84626,7 records/sec (20,58 MB/sec), 1574,5 ms avg latency, 2510,0 ms max latency.
+428281 records sent, 85230,0 records/sec (20,73 MB/sec), 1447,0 ms avg latency, 2375,0 ms max latency.
+556076 records sent, 111193,0 records/sec (27,04 MB/sec), 1054,5 ms avg latency, 2006,0 ms max latency.
+2500000 records sent, 83901,063865 records/sec (20,40 MB/sec), 1174,85 ms avg latency, 2510,00 ms max latency, 1174 ms 50th, 2169 ms 95th, 2368 ms 99th, 2479 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JrAWXPxcqIDNOZUolqGNUvsB5.svg)](https://asciinema.org/a/JrAWXPxcqIDNOZUolqGNUvsB5)
+[![asciicast](https://asciinema.org/a/xYFzzRoTqZCKW012xvb019atd.svg)](https://asciinema.org/a/xYFzzRoTqZCKW012xvb019atd)
 
 </TabItem>
 </Tabs>
@@ -574,33 +562,33 @@ docker compose down --volumes
 
 ```
  Container kafka-client  Stopping
- Container gateway1  Stopping
  Container gateway2  Stopping
+ Container gateway1  Stopping
  Container schema-registry  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway2  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
+ Container gateway2  Removed
  Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka3  Stopping
- Container kafka2  Stopping
  Container kafka1  Stopping
+ Container kafka2  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -613,7 +601,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GzZds61jUvwpn5G7yso1TTZVG.svg)](https://asciinema.org/a/GzZds61jUvwpn5G7yso1TTZVG)
+[![asciicast](https://asciinema.org/a/wJ9VFy5e7OjRxdIRu8rfXVIqq.svg)](https://asciinema.org/a/wJ9VFy5e7OjRxdIRu8rfXVIqq)
 
 </TabItem>
 </Tabs>

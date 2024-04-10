@@ -1,7 +1,7 @@
 ---
 title: Schema Payload Validation for Json Schema
 description: Schema Payload Validation for Json Schema
-tag: quality
+tag: data-quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -18,6 +18,12 @@ This is similar to the validations provided by JsonSchema, such as:
 - **String**: `minLength`, `maxLength`, `pattern`, `format`
 - **Collections**: `maxItems`, `minItems`
 
+This interceptor also supports validating payload against specific custom constraints `expression`,
+which uses a simple language familiar with devs is [CEL (Common Expression Language)](https://github.com/google/cel-spec)
+
+This interceptor also supports validating payload against specific custom `metadata.rules` object in the schema
+using CEL, too.
+
 ## View the full demo in realtime
 
 
@@ -31,7 +37,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/u9SMZ7QJ6RGOCLapLrT1gEdVB.svg)](https://asciinema.org/a/u9SMZ7QJ6RGOCLapLrT1gEdVB)
+[![asciicast](https://asciinema.org/a/Fr2xJvjAXUOZUKKmkW9KRx99K.svg)](https://asciinema.org/a/Fr2xJvjAXUOZUKKmkW9KRx99K)
 
 </TabItem>
 </Tabs>
@@ -73,8 +79,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -99,8 +103,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -125,8 +127,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -151,8 +151,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -182,10 +180,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -210,10 +206,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -239,8 +233,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -251,8 +243,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -283,21 +273,19 @@ docker compose up --detach --wait
  Network safeguard-validate-schema-payload-json_default  Created
  Container kafka-client  Creating
  Container zookeeper  Creating
- Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka-client  Created
  Container kafka2  Creating
- Container kafka3  Creating
  Container kafka1  Creating
- Container kafka3  Created
- Container kafka1  Created
+ Container kafka3  Creating
  Container kafka2  Created
- Container gateway1  Creating
- Container schema-registry  Creating
+ Container kafka1  Created
+ Container kafka3  Created
  Container gateway2  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
+ Container schema-registry  Creating
+ Container gateway1  Creating
  Container gateway2  Created
+ Container gateway1  Created
  Container schema-registry  Created
  Container kafka-client  Starting
  Container zookeeper  Starting
@@ -309,59 +297,59 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka1  Starting
  Container zookeeper  Healthy
- Container kafka3  Starting
- Container zookeeper  Healthy
  Container kafka2  Starting
- Container kafka2  Started
+ Container zookeeper  Healthy
+ Container kafka3  Starting
  Container kafka1  Started
  Container kafka3  Started
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka2  Waiting
+ Container kafka2  Started
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
+ Container kafka2  Waiting
  Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container gateway1  Starting
  Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
  Container gateway2  Starting
- Container kafka3  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Starting
- Container gateway1  Started
+ Container kafka2  Healthy
+ Container gateway1  Starting
  Container schema-registry  Started
  Container gateway2  Started
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container gateway1  Started
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Healthy
  Container kafka3  Healthy
  Container zookeeper  Healthy
- Container kafka-client  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container schema-registry  Healthy
+ Container kafka-client  Healthy
  Container gateway1  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/t12pzW2wylchi585p893HWZ7H.svg)](https://asciinema.org/a/t12pzW2wylchi585p893HWZ7H)
+[![asciicast](https://asciinema.org/a/6fP6i8sWLX3gBSPcWOMbSPCFD.svg)](https://asciinema.org/a/6fP6i8sWLX3gBSPcWOMbSPCFD)
 
 </TabItem>
 </Tabs>
@@ -404,7 +392,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NzA1MX0.piOqH8SVpfJFQnusyWQ7z49RS5aY2g2qNPZci8BKSCA';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4Mjc1Mn0.MFmU34I8a3o6MTjFpJFFvaWvpBWxKmAqNXP69VU3tB0';
 
 
 ```
@@ -412,7 +400,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/w2ckzMujAH3mvbUVgAj0qWXcY.svg)](https://asciinema.org/a/w2ckzMujAH3mvbUVgAj0qWXcY)
+[![asciicast](https://asciinema.org/a/uHYsNn08qs4NfHhGWX54Blrxa.svg)](https://asciinema.org/a/uHYsNn08qs4NfHhGWX54Blrxa)
 
 </TabItem>
 </Tabs>
@@ -449,7 +437,7 @@ Created topic topic-json-schema.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/G2Uex52fEHJcK7mvbMMcQI1gR.svg)](https://asciinema.org/a/G2Uex52fEHJcK7mvbMMcQI1gR)
+[![asciicast](https://asciinema.org/a/TgM9AmKN5Gy2f0zlhDSaYucgr.svg)](https://asciinema.org/a/TgM9AmKN5Gy2f0zlhDSaYucgr)
 
 </TabItem>
 </Tabs>
@@ -470,23 +458,25 @@ cat user-schema-with-validation-rules.json
 
 ```json
 {
-  "$id":"https://example.com/user-schema.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
       "minLength": 3,
-      "maxLength": 50
+      "maxLength": 50,
+      "expression": "size(name) >= 3"
     },
     "age": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 120
+      "maximum": 120,
+      "expression": "age >= 0 && age <= 120"
     },
     "email": {
       "type": "string",
-      "format": "email"
+      "format": "email",
+      "expression": "email.contains('foo')"
     },
     "address": {
       "type": "object",
@@ -494,22 +484,49 @@ cat user-schema-with-validation-rules.json
         "street": {
           "type": "string",
           "minLength": 5,
-          "maxLength": 15
+          "maxLength": 15,
+          "expression": "size(street) >= 5 && size(street) <= 15"
         },
         "city": {
           "type": "string",
           "minLength": 2,
           "maxLength": 50
         }
-      }
+      },
+      "expression": "size(address.street) > 1 && address.street.contains('paris') || address.city == 'paris'"
     },
     "hobbies": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "minItems": 2
+      "minItems": 2,
+      "expression": "size(hobbies) >= 2"
     }
+  },
+  "metadata": {
+    "rules": [
+      {
+        "name": "check hobbies size",
+        "expression": "size(message.hobbies) == 2",
+        "message": "hobbies must have 2 items"
+      },
+      {
+        "name": "checkAge",
+        "expression": "message.age >= 18",
+        "message": "age must be greater than or equal to 18"
+      },
+      {
+        "name": "check email",
+        "expression": "message.email.endsWith('example.com')",
+        "message": "email should end with 'example.com'"
+      },
+      {
+        "name": "check street",
+        "expression": "size(message.address.street) >= 3",
+        "message": "address.street length must be greater than equal to 3"
+      }
+    ]
   }
 }
 ```
@@ -544,7 +561,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/5omPbSaMCgWaPwnsH80Zqzgal.svg)](https://asciinema.org/a/5omPbSaMCgWaPwnsH80Zqzgal)
+[![asciicast](https://asciinema.org/a/33ATxct1Xu6apdaAl4hDCROwk.svg)](https://asciinema.org/a/33ATxct1Xu6apdaAl4hDCROwk)
 
 </TabItem>
 </Tabs>
@@ -613,7 +630,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:24:15,279] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-04-10 03:52:34,611] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -752,7 +769,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OQeBBXglOE9rvGliaF5U16rO8.svg)](https://asciinema.org/a/OQeBBXglOE9rvGliaF5U16rO8)
+[![asciicast](https://asciinema.org/a/l3F6ZlBoCK4DG8pDLGkxVrXdM.svg)](https://asciinema.org/a/l3F6ZlBoCK4DG8pDLGkxVrXdM)
 
 </TabItem>
 </Tabs>
@@ -766,12 +783,12 @@ Unfortunately the message went through
 
 
 ```sh
-MAGIC_BYTE="\x00"
-SCHEMA_ID="\x00\x00\x00\x01"
+MAGIC_BYTE="\000"
+SCHEMA_ID="\000\000\000\001"
 JSON_PAYLOAD=$(cat invalid-payload.json | jq -c)
 printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
   kcat \
-    -b  localhost:6969 \
+    -b localhost:6969 \
     -X security.protocol=SASL_PLAINTEXT \
     -X sasl.mechanism=PLAIN \
     -X sasl.username=sa \
@@ -791,7 +808,7 @@ printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/d9ljSYPrxYoJlqVCaR3UvtRM3.svg)](https://asciinema.org/a/d9ljSYPrxYoJlqVCaR3UvtRM3)
+[![asciicast](https://asciinema.org/a/IPxK5cNrVop31Oq97zINvs3P8.svg)](https://asciinema.org/a/IPxK5cNrVop31Oq97zINvs3P8)
 
 </TabItem>
 </Tabs>
@@ -819,7 +836,7 @@ kafka-json-schema-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:24:16,953] INFO KafkaJsonSchemaDeserializerConfig values: 
+[2024-04-10 03:52:36,140] INFO KafkaJsonSchemaDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -883,7 +900,7 @@ kafka-json-schema-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig:376)
-[2024-02-14 04:24:17,645] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-04-10 03:52:36,838] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -894,7 +911,7 @@ org.apache.kafka.common.errors.SerializationException: Error deserializing JSON 
 	at kafka.tools.ConsoleConsumer$.run(ConsoleConsumer.scala:76)
 	at kafka.tools.ConsoleConsumer$.main(ConsoleConsumer.scala:53)
 	at kafka.tools.ConsoleConsumer.main(ConsoleConsumer.scala)
-Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$id":"https://example.com/user-schema.json","$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50},"age":{"type":"integer","minimum":0,"maximum":120},"email":{"type":"string","format":"email"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15},"city":{"type":"string","minLength":2,"maxLength":50}}},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2}}}
+Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50,"expression":"size(name) >= 3"},"age":{"type":"integer","minimum":0,"maximum":120,"expression":"age >= 0 step-12-SH-OUTPUTstep-12-SH-OUTPUT age <= 120"},"email":{"type":"string","format":"email","expression":"email.contains('foo')"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15,"expression":"size(street) >= 5 step-12-SH-OUTPUTstep-12-SH-OUTPUT size(street) <= 15"},"city":{"type":"string","minLength":2,"maxLength":50}},"expression":"size(address.street) > 1 step-12-SH-OUTPUTstep-12-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'"},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2,"expression":"size(hobbies) >= 2"}},"metadata":{"rules":[{"name":"check hobbies size","expression":"size(message.hobbies) == 2","message":"hobbies must have 2 items"},{"name":"checkAge","expression":"message.age >= 18","message":"age must be greater than or equal to 18"},{"name":"check email","expression":"message.email.endsWith('example.com')","message":"email should end with 'example.com'"},{"name":"check street","expression":"size(message.address.street) >= 3","message":"address.street length must be greater than equal to 3"}]}}
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:183)
 	... 8 more
 Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations found
@@ -905,7 +922,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-[2024-02-14 04:24:17,645] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-04-10 03:52:36,838] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -916,7 +933,7 @@ org.apache.kafka.common.errors.SerializationException: Error deserializing JSON 
 	at kafka.tools.ConsoleConsumer$.run(ConsoleConsumer.scala:76)
 	at kafka.tools.ConsoleConsumer$.main(ConsoleConsumer.scala:53)
 	at kafka.tools.ConsoleConsumer.main(ConsoleConsumer.scala)
-Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$id":"https://example.com/user-schema.json","$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50},"age":{"type":"integer","minimum":0,"maximum":120},"email":{"type":"string","format":"email"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15},"city":{"type":"string","minLength":2,"maxLength":50}}},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2}}}
+Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50,"expression":"size(name) >= 3"},"age":{"type":"integer","minimum":0,"maximum":120,"expression":"age >= 0 step-12-SH-OUTPUTstep-12-SH-OUTPUT age <= 120"},"email":{"type":"string","format":"email","expression":"email.contains('foo')"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15,"expression":"size(street) >= 5 step-12-SH-OUTPUTstep-12-SH-OUTPUT size(street) <= 15"},"city":{"type":"string","minLength":2,"maxLength":50}},"expression":"size(address.street) > 1 step-12-SH-OUTPUTstep-12-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'"},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2,"expression":"size(hobbies) >= 2"}},"metadata":{"rules":[{"name":"check hobbies size","expression":"size(message.hobbies) == 2","message":"hobbies must have 2 items"},{"name":"checkAge","expression":"message.age >= 18","message":"age must be greater than or equal to 18"},{"name":"check email","expression":"message.email.endsWith('example.com')","message":"email should end with 'example.com'"},{"name":"check street","expression":"size(message.address.street) >= 3","message":"address.street length must be greater than equal to 3"}]}}
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:183)
 	... 8 more
 Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations found
@@ -927,6 +944,10 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
+[2024-04-10 03:52:39,846] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
+[2024-04-10 03:52:39,846] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -934,7 +955,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/UsYvWCamhEIHZXLdYhQBvUtCD.svg)](https://asciinema.org/a/UsYvWCamhEIHZXLdYhQBvUtCD)
+[![asciicast](https://asciinema.org/a/BBZ4CogSA2YXGp9mYIhGLl7rt.svg)](https://asciinema.org/a/BBZ4CogSA2YXGp9mYIhGLl7rt)
 
 </TabItem>
 </Tabs>
@@ -943,31 +964,13 @@ Processed a total of 1 messages
 
 Add Schema Payload Validation Policy Interceptor
 
-Creating the interceptor named `guard-schema-payload-validate` of the plugin `io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-  "priority" : 100,
-  "config" : {
-    "schemaRegistryConfig" : {
-      "host" : "http://schema-registry:8081"
-    },
-    "topic" : "topic-.*",
-    "schemaIdRequired" : true,
-    "validateSchema" : true,
-    "action" : "BLOCK"
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-13-guard-schema-payload-validate.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate" \
     --header 'Content-Type: application/json' \
@@ -982,6 +985,19 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+  "priority": 100,
+  "config": {
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081"
+    },
+    "topic": "topic-.*",
+    "schemaIdRequired": true,
+    "validateSchema": true,
+    "action": "BLOCK"
+  }
+}
+{
   "message": "guard-schema-payload-validate is created"
 }
 
@@ -990,7 +1006,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zlzT7SX9cN11f4iFdLrCI6ng4.svg)](https://asciinema.org/a/zlzT7SX9cN11f4iFdLrCI6ng4)
+[![asciicast](https://asciinema.org/a/PiLl4DHIwuiZPd2NO2GeduTle.svg)](https://asciinema.org/a/PiLl4DHIwuiZPd2NO2GeduTle)
 
 </TabItem>
 </Tabs>
@@ -1021,7 +1037,6 @@ curl \
     {
       "name": "guard-schema-payload-validate",
       "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -1042,7 +1057,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Z2dk7q37jAYIuQ8h9gzWqWLQH.svg)](https://asciinema.org/a/Z2dk7q37jAYIuQ8h9gzWqWLQH)
+[![asciicast](https://asciinema.org/a/lSE5loSH2mdwIR2NEAvgjChTG.svg)](https://asciinema.org/a/lSE5loSH2mdwIR2NEAvgjChTG)
 
 </TabItem>
 </Tabs>
@@ -1056,12 +1071,12 @@ Perfect our interceptor did its magic and validated our rules
 
 
 ```sh
-MAGIC_BYTE="\x00"
-SCHEMA_ID="\x00\x00\x00\x01"
+MAGIC_BYTE="\000"
+SCHEMA_ID="\000\000\000\001"
 JSON_PAYLOAD=$(cat invalid-payload.json | jq -c)
 printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
   kcat \
-    -b  localhost:6969 \
+    -b localhost:6969 \
     -X security.protocol=SASL_PLAINTEXT \
     -X sasl.mechanism=PLAIN \
     -X sasl.username=sa \
@@ -1082,7 +1097,7 @@ printf "${MAGIC_BYTE}${SCHEMA_ID}${JSON_PAYLOAD}" | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CrcqF2kOF5i6wZvqtNMjU1Nmw.svg)](https://asciinema.org/a/CrcqF2kOF5i6wZvqtNMjU1Nmw)
+[![asciicast](https://asciinema.org/a/hkWebD7BEVe5RM7gxmLFqfXWc.svg)](https://asciinema.org/a/hkWebD7BEVe5RM7gxmLFqfXWc)
 
 </TabItem>
 </Tabs>
@@ -1098,70 +1113,61 @@ Check in the audit log that message was denied in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --topic _auditLogs \
+    --topic _conduktor_gateway_auditlogs \
     --from-beginning \
-    --timeout-ms 3000 \
-    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 14 messages
 {
-  "id": "e5594b2c-fdb2-4f32-9ad6-4587d46bd08b",
-  "source": "krn://cluster=WR6pYN7oSpSXjdolNbdGtQ",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21099"
+  "id" : "d425a57d-2b48-45df-9f28-5365fd8c0e42",
+  "source" : "krn://cluster=7LQ3kqW2T9-c-6VmovJgow",
+  "type" : "SAFEGUARD",
+  "authenticationPrincipal" : "teamA",
+  "userName" : "sa",
+  "connection" : {
+    "localAddress" : null,
+    "remoteAddress" : "/192.168.65.1:28612"
   },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:24:21.998097138Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"
+  "specVersion" : "0.1.0",
+  "time" : "2024-04-09T23:51:58.694086930Z",
+  "eventData" : {
+    "level" : "error",
+    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: hobbies must have 2 items, age must be greater than or equal to 18, email should end with 'example.com', #/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56, street does not match expression 'size(street) >= 5 && size(street) <= 15', address does not match expression 'size(address.street) > 1 && address.street.contains('paris') || address.city == 'paris'', hobbies does not match expression 'size(hobbies) >= 2', name does not match expression 'size(name) >= 3', email does not match expression 'email.contains('foo')'"
   }
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-Processed a total of 14 messages
-{
-  "id": "e5594b2c-fdb2-4f32-9ad6-4587d46bd08b",
-  "source": "krn://cluster=WR6pYN7oSpSXjdolNbdGtQ",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21099"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:24:21.998097138Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: [#/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56]"
-  }
-}
+{"id":"6ccf55dd-3b94-40b7-9bd2-d6a5c039f97d","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.21.0.7:8888","remoteAddress":"192.168.65.1:40417"},"specVersion":"0.1.0","time":"2024-04-09T23:52:32.004586625Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
+{"id":"50171456-93a7-410d-af1b-9738fd2aeee0","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:28995"},"specVersion":"0.1.0","time":"2024-04-09T23:52:32.873205834Z","eventData":"SUCCESS"}
+{"id":"bc183eb1-3532-4488-acb2-8367c889cf55","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6971","remoteAddress":"/192.168.65.1:56266"},"specVersion":"0.1.0","time":"2024-04-09T23:52:32.921435292Z","eventData":"SUCCESS"}
+{"id":"2924a533-3c4f-4a68-8033-5815b57d2b98","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:28999"},"specVersion":"0.1.0","time":"2024-04-09T23:52:35.067017918Z","eventData":"SUCCESS"}
+{"id":"653d646b-2179-4e00-8b31-1f04e5c42a9f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:29000"},"specVersion":"0.1.0","time":"2024-04-09T23:52:35.619823210Z","eventData":"SUCCESS"}
+{"id":"7e9f777e-1abf-4f3f-b3ab-480a43a59513","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:29001"},"specVersion":"0.1.0","time":"2024-04-09T23:52:36.505910586Z","eventData":"SUCCESS"}
+{"id":"440b23b8-fa95-49f3-aada-7cba64235526","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:29002"},"specVersion":"0.1.0","time":"2024-04-09T23:52:36.535630461Z","eventData":"SUCCESS"}
+{"id":"a41fe1c5-4e6b-4583-b9ec-b0a4f57b003c","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:29003"},"specVersion":"0.1.0","time":"2024-04-09T23:52:36.692598002Z","eventData":"SUCCESS"}
+{"id":"0c5c0862-91c9-4c81-940e-055ff937c348","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.21.0.7:8888","remoteAddress":"192.168.65.1:40452"},"specVersion":"0.1.0","time":"2024-04-09T23:52:40.384161129Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
+{"id":"870af38b-08cc-4338-967a-65aa28396f19","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.21.0.7:8888","remoteAddress":"192.168.65.1:40453"},"specVersion":"0.1.0","time":"2024-04-09T23:52:40.594064671Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
+{"id":"d9507f14-9927-42bd-8bf5-7fcbb95af5ff","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.21.0.7:6969","remoteAddress":"/192.168.65.1:29031"},"specVersion":"0.1.0","time":"2024-04-09T23:52:40.648801046Z","eventData":"SUCCESS"}
+{"id":"3bf82e7f-bbf6-47fe-ba56-117c499a7b97","source":"krn://cluster=mDZUqGpoRBeALgtL8gSIxg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:29031"},"specVersion":"0.1.0","time":"2024-04-09T23:52:40.953458421Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-json-schema' has invalid json schema payload: hobbies must have 2 items, age must be greater than or equal to 18, email should end with 'example.com', #/hobbies: expected minimum item count: 2, found: 1, #/name: expected minLength: 3, actual: 1, #/email: [bad email] is not a valid email address, #/address/city: expected minLength: 2, actual: 0, #/address/street: expected maxLength: 15, actual: 56, street does not match expression 'size(street) >= 5 step-16-AUDITLOG-OUTPUTstep-16-AUDITLOG-OUTPUT size(street) <= 15', address does not match expression 'size(address.street) > 1 step-16-AUDITLOG-OUTPUTstep-16-AUDITLOG-OUTPUT address.street.contains('paris') || address.city == 'paris'', hobbies does not match expression 'size(hobbies) >= 2', name does not match expression 'size(name) >= 3', email does not match expression 'email.contains('foo')'"}}
+[2024-04-10 03:52:45,201] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
+Processed a total of 12 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yoRGjHLbBZakQoTJFIkRJpVBG.svg)](https://asciinema.org/a/yoRGjHLbBZakQoTJFIkRJpVBG)
+[![asciicast](https://asciinema.org/a/G7y9EbXH9rfb5HvdjXa41ISYn.svg)](https://asciinema.org/a/G7y9EbXH9rfb5HvdjXa41ISYn)
 
 </TabItem>
 </Tabs>
@@ -1189,7 +1195,7 @@ cat valid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:24:27,107] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-04-10 03:52:46,242] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1260,7 +1266,7 @@ cat valid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fKl4vyz8b9YqRHDeW2c1CAJ7S.svg)](https://asciinema.org/a/fKl4vyz8b9YqRHDeW2c1CAJ7S)
+[![asciicast](https://asciinema.org/a/erFciRmwaUZIrmeaVmTRBlHtA.svg)](https://asciinema.org/a/erFciRmwaUZIrmeaVmTRBlHtA)
 
 </TabItem>
 </Tabs>
@@ -1288,7 +1294,7 @@ kafka-json-schema-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:24:28,648] INFO KafkaJsonSchemaDeserializerConfig values: 
+[2024-04-10 03:52:47,806] INFO KafkaJsonSchemaDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1352,7 +1358,7 @@ kafka-json-schema-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig:376)
-[2024-02-14 04:24:29,286] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-04-10 03:52:48,428] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -1363,7 +1369,7 @@ org.apache.kafka.common.errors.SerializationException: Error deserializing JSON 
 	at kafka.tools.ConsoleConsumer$.run(ConsoleConsumer.scala:76)
 	at kafka.tools.ConsoleConsumer$.main(ConsoleConsumer.scala:53)
 	at kafka.tools.ConsoleConsumer.main(ConsoleConsumer.scala)
-Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$id":"https://example.com/user-schema.json","$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50},"age":{"type":"integer","minimum":0,"maximum":120},"email":{"type":"string","format":"email"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15},"city":{"type":"string","minLength":2,"maxLength":50}}},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2}}}
+Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50,"expression":"size(name) >= 3"},"age":{"type":"integer","minimum":0,"maximum":120,"expression":"age >= 0 step-18-SH-OUTPUTstep-18-SH-OUTPUT age <= 120"},"email":{"type":"string","format":"email","expression":"email.contains('foo')"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15,"expression":"size(street) >= 5 step-18-SH-OUTPUTstep-18-SH-OUTPUT size(street) <= 15"},"city":{"type":"string","minLength":2,"maxLength":50}},"expression":"size(address.street) > 1 step-18-SH-OUTPUTstep-18-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'"},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2,"expression":"size(hobbies) >= 2"}},"metadata":{"rules":[{"name":"check hobbies size","expression":"size(message.hobbies) == 2","message":"hobbies must have 2 items"},{"name":"checkAge","expression":"message.age >= 18","message":"age must be greater than or equal to 18"},{"name":"check email","expression":"message.email.endsWith('example.com')","message":"email should end with 'example.com'"},{"name":"check street","expression":"size(message.address.street) >= 3","message":"address.street length must be greater than equal to 3"}]}}
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:183)
 	... 8 more
 Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations found
@@ -1374,7 +1380,7 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-[2024-02-14 04:24:29,286] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
+[2024-04-10 03:52:48,428] ERROR Error processing message, skipping this message:  (kafka.tools.ConsoleConsumer$:44)
 org.apache.kafka.common.errors.SerializationException: Error deserializing JSON message for id 1
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:236)
 	at io.confluent.kafka.formatter.json.JsonSchemaMessageFormatter$JsonSchemaMessageDeserializer.deserialize(JsonSchemaMessageFormatter.java:135)
@@ -1385,7 +1391,7 @@ org.apache.kafka.common.errors.SerializationException: Error deserializing JSON 
 	at kafka.tools.ConsoleConsumer$.run(ConsoleConsumer.scala:76)
 	at kafka.tools.ConsoleConsumer$.main(ConsoleConsumer.scala:53)
 	at kafka.tools.ConsoleConsumer.main(ConsoleConsumer.scala)
-Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$id":"https://example.com/user-schema.json","$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50},"age":{"type":"integer","minimum":0,"maximum":120},"email":{"type":"string","format":"email"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15},"city":{"type":"string","minLength":2,"maxLength":50}}},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2}}}
+Caused by: org.apache.kafka.common.errors.SerializationException: JSON {"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]} does not match schema {"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"name":{"type":"string","minLength":3,"maxLength":50,"expression":"size(name) >= 3"},"age":{"type":"integer","minimum":0,"maximum":120,"expression":"age >= 0 step-18-SH-OUTPUTstep-18-SH-OUTPUT age <= 120"},"email":{"type":"string","format":"email","expression":"email.contains('foo')"},"address":{"type":"object","properties":{"street":{"type":"string","minLength":5,"maxLength":15,"expression":"size(street) >= 5 step-18-SH-OUTPUTstep-18-SH-OUTPUT size(street) <= 15"},"city":{"type":"string","minLength":2,"maxLength":50}},"expression":"size(address.street) > 1 step-18-SH-OUTPUTstep-18-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'"},"hobbies":{"type":"array","items":{"type":"string"},"minItems":2,"expression":"size(hobbies) >= 2"}},"metadata":{"rules":[{"name":"check hobbies size","expression":"size(message.hobbies) == 2","message":"hobbies must have 2 items"},{"name":"checkAge","expression":"message.age >= 18","message":"age must be greater than or equal to 18"},{"name":"check email","expression":"message.email.endsWith('example.com')","message":"email should end with 'example.com'"},{"name":"check street","expression":"size(message.address.street) >= 3","message":"address.street length must be greater than equal to 3"}]}}
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:183)
 	... 8 more
 Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations found
@@ -1396,7 +1402,11 @@ Caused by: org.everit.json.schema.ValidationException: #: 5 schema violations fo
 	at io.confluent.kafka.schemaregistry.json.JsonSchema.validate(JsonSchema.java:409)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:178)
 	... 8 more
-{"name":"Doe","age":17,"email":"john.doe@example.com","address":{"street":"123 Main St","city":"Anytown"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
+{"name":"Doe","age":18,"email":"foo.doe@example.com","address":{"street":"123 Main paris","city":"Anytown paris"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
+[2024-04-10 03:52:51,432] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
+[2024-04-10 03:52:51,432] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
 ```
@@ -1404,7 +1414,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qngPfb6lon4xnzkhn9krapjOg.svg)](https://asciinema.org/a/qngPfb6lon4xnzkhn9krapjOg)
+[![asciicast](https://asciinema.org/a/Cl6T3re8CPYtc147GuznYe3Fz.svg)](https://asciinema.org/a/Cl6T3re8CPYtc147GuznYe3Fz)
 
 </TabItem>
 </Tabs>
@@ -1428,28 +1438,28 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container schema-registry  Stopping
- Container kafka-client  Stopping
  Container gateway1  Stopping
+ Container kafka-client  Stopping
  Container gateway2  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container gateway1  Removed
+ Container schema-registry  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
- Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
+ Container kafka2  Stopping
+ Container kafka1  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka2  Stopped
+ Container kafka2  Removing
  Container kafka1  Removed
+ Container kafka2  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
@@ -1468,7 +1478,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NPBbaTIUvqjlmhamrfWkrIzZR.svg)](https://asciinema.org/a/NPBbaTIUvqjlmhamrfWkrIzZR)
+[![asciicast](https://asciinema.org/a/aYrJyZtUXCZIRu3k80EQvZ8ea.svg)](https://asciinema.org/a/aYrJyZtUXCZIRu3k80EQvZ8ea)
 
 </TabItem>
 </Tabs>

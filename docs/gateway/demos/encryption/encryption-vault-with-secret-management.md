@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/xYzfxGBC461pSofdhi4yrxfoW.svg)](https://asciinema.org/a/xYzfxGBC461pSofdhi4yrxfoW)
+[![asciicast](https://asciinema.org/a/FbsCtrpkMJATRa5dflEaIONTJ.svg)](https://asciinema.org/a/FbsCtrpkMJATRa5dflEaIONTJ)
 
 </TabItem>
 </Tabs>
@@ -66,8 +66,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -92,8 +90,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -118,8 +114,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -144,8 +138,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -175,10 +167,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -204,10 +194,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -234,8 +222,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -246,8 +232,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
   vault:
     image: hashicorp/vault
     healthcheck:
@@ -296,93 +280,91 @@ docker compose up --detach --wait
 ```
  Network encryption-vault-with-secret-management_default  Creating
  Network encryption-vault-with-secret-management_default  Created
+ Container kafka-client  Creating
  Container zookeeper  Creating
  Container vault  Creating
- Container kafka-client  Creating
+ Container kafka-client  Created
  Container vault  Created
  Container zookeeper  Created
- Container kafka3  Creating
- Container kafka2  Creating
  Container kafka1  Creating
- Container kafka-client  Created
- Container kafka1  Created
- Container kafka3  Created
+ Container kafka2  Creating
+ Container kafka3  Creating
  Container kafka2  Created
- Container gateway2  Creating
+ Container kafka3  Created
+ Container kafka1  Created
  Container gateway1  Creating
  Container schema-registry  Creating
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Creating
  Container gateway2  Created
  Container gateway1  Created
  Container schema-registry  Created
+ Container zookeeper  Starting
  Container kafka-client  Starting
  Container vault  Starting
- Container zookeeper  Starting
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
  Container vault  Started
+ Container kafka-client  Started
+ Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka1  Starting
- Container zookeeper  Healthy
- Container kafka3  Starting
- Container kafka3  Started
  Container kafka1  Started
+ Container kafka3  Started
  Container kafka2  Started
- Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
  Container kafka1  Healthy
- Container gateway1  Starting
  Container kafka3  Healthy
- Container gateway2  Starting
- Container kafka1  Healthy
  Container schema-registry  Starting
- Container gateway1  Started
- Container gateway2  Started
+ Container kafka3  Healthy
+ Container gateway1  Starting
+ Container kafka2  Healthy
+ Container gateway2  Starting
  Container schema-registry  Started
- Container schema-registry  Waiting
- Container gateway2  Waiting
+ Container gateway2  Started
+ Container gateway1  Started
  Container kafka3  Waiting
+ Container gateway2  Waiting
  Container vault  Waiting
- Container zookeeper  Waiting
  Container gateway1  Waiting
+ Container schema-registry  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
+ Container zookeeper  Waiting
  Container kafka-client  Waiting
- Container kafka3  Healthy
- Container zookeeper  Healthy
  Container vault  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka-client  Healthy
- Container schema-registry  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container zookeeper  Healthy
  Container gateway1  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/QavW3x5o51wL3TFgFc4cBl3NT.svg)](https://asciinema.org/a/QavW3x5o51wL3TFgFc4cBl3NT)
+[![asciicast](https://asciinema.org/a/zfao7LJOqjL9pGIj5ClcjqsoK.svg)](https://asciinema.org/a/zfao7LJOqjL9pGIj5ClcjqsoK)
 
 </TabItem>
 </Tabs>
@@ -425,7 +407,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MTYzM30.DdcVl4fNbkztvda_0H74BMGh1FnzJ_usrdGW_zVxL7c';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3NjEwMX0.0KXNru_-jobj-zkWIBGATrSyzqIvH3rqhKghcXtx8bQ';
 
 
 ```
@@ -433,7 +415,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/c7zkTbglZ0sRYxIjSA8Mz2TBf.svg)](https://asciinema.org/a/c7zkTbglZ0sRYxIjSA8Mz2TBf)
+[![asciicast](https://asciinema.org/a/Cpfdv2DRVAFMphYW1vibywx1d.svg)](https://asciinema.org/a/Cpfdv2DRVAFMphYW1vibywx1d)
 
 </TabItem>
 </Tabs>
@@ -470,7 +452,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kEavxbKHODtOQomjlWjXiByU3.svg)](https://asciinema.org/a/kEavxbKHODtOQomjlWjXiByU3)
+[![asciicast](https://asciinema.org/a/bY8YtKqOcKN0l8yqXgrOX0EP3.svg)](https://asciinema.org/a/bY8YtKqOcKN0l8yqXgrOX0EP3)
 
 </TabItem>
 </Tabs>
@@ -502,7 +484,7 @@ customers
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/xkdHMnRK8n3fLO7KlmRluge0S.svg)](https://asciinema.org/a/xkdHMnRK8n3fLO7KlmRluge0S)
+[![asciicast](https://asciinema.org/a/lpSINWubhon9oyqpa5Ed9tGpP.svg)](https://asciinema.org/a/lpSINWubhon9oyqpa5Ed9tGpP)
 
 </TabItem>
 </Tabs>
@@ -512,47 +494,13 @@ customers
 Let's ask gateway to encrypt messages using vault and secret management.
 The vault token is retrieved from your env variable `${VAULT_TOKEN}`.
 
-Creating the interceptor named `crypto-shredding-encrypt` of the plugin `io.conduktor.gateway.interceptor.EncryptPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.EncryptPlugin",
-  "priority" : 100,
-  "config" : {
-    "topic" : "customers",
-    "kmsConfig" : {
-      "vault" : {
-        "uri" : "http://vault:8200",
-        "token" : "${VAULT_TOKEN}",
-        "version" : 1
-      }
-    },
-    "fields" : [ {
-      "fieldName" : "password",
-      "keySecretId" : "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-      "algorithm" : {
-        "type" : "AES_GCM",
-        "kms" : "VAULT"
-      }
-    }, {
-      "fieldName" : "visa",
-      "keySecretId" : "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-      "algorithm" : {
-        "type" : "AES_GCM",
-        "kms" : "VAULT"
-      }
-    } ]
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-08-crypto-shredding-encrypt.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/crypto-shredding-encrypt" \
     --header 'Content-Type: application/json' \
@@ -567,6 +515,32 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "customers",
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "${VAULT_TOKEN}",
+        "version": 1
+      }
+    },
+    "fields": [
+      {
+        "fieldName": "password",
+        "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+        "algorithm": "AES_GCM"
+      },
+      {
+        "fieldName": "visa",
+        "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+        "algorithm": "AES_GCM"
+      }
+    ]
+  }
+}
+{
   "message": "crypto-shredding-encrypt is created"
 }
 
@@ -575,7 +549,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CbMYkPolYm3q1hJhSiq4jcLHw.svg)](https://asciinema.org/a/CbMYkPolYm3q1hJhSiq4jcLHw)
+[![asciicast](https://asciinema.org/a/ExGordjORzZKUTke8Vsw0B2IC.svg)](https://asciinema.org/a/ExGordjORzZKUTke8Vsw0B2IC)
 
 </TabItem>
 </Tabs>
@@ -606,7 +580,6 @@ curl \
     {
       "name": "crypto-shredding-encrypt",
       "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -622,18 +595,12 @@ curl \
           {
             "fieldName": "password",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": {
-              "type": "AES_GCM",
-              "kms": "VAULT"
-            }
+            "algorithm": "AES_GCM"
           },
           {
             "fieldName": "visa",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": {
-              "type": "AES_GCM",
-              "kms": "VAULT"
-            }
+            "algorithm": "AES_GCM"
           }
         ]
       }
@@ -646,7 +613,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OSoYTMnE4YfC1uMiYpXAcJCyC.svg)](https://asciinema.org/a/OSoYTMnE4YfC1uMiYpXAcJCyC)
+[![asciicast](https://asciinema.org/a/BdbHOBRvcQZUR86GoZZ4Dld31.svg)](https://asciinema.org/a/BdbHOBRvcQZUR86GoZZ4Dld31)
 
 </TabItem>
 </Tabs>
@@ -704,7 +671,7 @@ echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NUTFCs6ICiBmdAV4XA5I2xZa4.svg)](https://asciinema.org/a/NUTFCs6ICiBmdAV4XA5I2xZa4)
+[![asciicast](https://asciinema.org/a/xQ11DJLhTsLleJOLxR0xcL1Mf.svg)](https://asciinema.org/a/xQ11DJLhTsLleJOLxR0xcL1Mf)
 
 </TabItem>
 </Tabs>
@@ -727,46 +694,44 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-Processed a total of 2 messages
 {
-  "name": "laura",
-  "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6RVAxY1VubEI2cU41MXpKUW4wQmNEQnUwa0tHTU5uM1lRb291NW5paUhvT3NRdFlPb3ZEWXJuOWxCYVE4QVE9PVYYcgXVpBV3pyQVHnntJBqNnTw79o4fUKHG6lgN5QwjOmKTz59NioT0aeA=",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6RVAxY1VubEI2cU41MXpKUW4wQmNEQnUwa0tHTU5uM1lRb291NW5paUhvT3NRdFlPb3ZEWXJuOWxCYVE4QVE9PY/OXNk+GvwsEqG0nKxa6AeMe0TH3VLGJnSbzwEaH6BvMUM1XTmq0dKLKXsN",
-  "address": "Dubai, UAE"
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6LzN5WTVNVzJZdDVEMkNIZ2JNRjA4akRXL0wwS2VVL2JXZGV6Ryt5UkFyR3FCWFB0bXNqZVV1b0ZUbUxjRGc9PZ6QsOyTVE0JFze6hCkZN6/ZvnNn+vjMEtxlDcSB2LouMiYlbpF/hk38EPw=",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6LzN5WTVNVzJZdDVEMkNIZ2JNRjA4akRXL0wwS2VVL2JXZGV6Ryt5UkFyR3FCWFB0bXNqZVV1b0ZUbUxjRGc9PfwlVRpVwL6k9MEyHSG6WJXSSSve2ubnINjYQFM52HXR10AFL+k8IuBuQ2CR",
+  "address" : "Dubai, UAE"
 }
 {
-  "name": "tom",
-  "username": "tom@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6OHJ0d2h2QWpZRjZ0T2JpN2VUczV4YTNSVTVLOWUzeWE3dU02aVNMNnJOdGUxZ0FrMXZZLzBDbjNEUnRkNmc9PTxLcMJyl9fqSYA6KpgtT+x337836RN1YZ5t3J9wTnKivalKNv/e6GhzLxtu",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6OHJ0d2h2QWpZRjZ0T2JpN2VUczV4YTNSVTVLOWUzeWE3dU02aVNMNnJOdGUxZ0FrMXZZLzBDbjNEUnRkNmc9PQ8Dks4xy/g+xkBKHSLhZqp9UEu9CoafMue8/a46rcgFQ0p7smSvT3qLJg==",
-  "address": "Chancery lane, London"
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6MEpTMEJEV2sybUN1OWg5cDgzNElkeVVBZVVFV0NDTXZlNlI0WFA1TUk2Q1VyakNiYkp3a1haeld3bml2dFE9PU/0AZYmzS0Mg4MDuCv9zrBOHXjHqv/buw7ifBs1+hXe2sfKokQOeaEsJmrH",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6MEpTMEJEV2sybUN1OWg5cDgzNElkeVVBZVVFV0NDTXZlNlI0WFA1TUk2Q1VyakNiYkp3a1haeld3bml2dFE9Pc5xlMwSiszb2SujkrWVCPemgoqlDTL/qnFx1IdDz20Xlb9UdZgrfoAdtg==",
+  "address" : "Chancery lane, London"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 02:01:59,514] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "laura",
   "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6RVAxY1VubEI2cU41MXpKUW4wQmNEQnUwa0tHTU5uM1lRb291NW5paUhvT3NRdFlPb3ZEWXJuOWxCYVE4QVE9PVYYcgXVpBV3pyQVHnntJBqNnTw79o4fUKHG6lgN5QwjOmKTz59NioT0aeA=",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6RVAxY1VubEI2cU41MXpKUW4wQmNEQnUwa0tHTU5uM1lRb291NW5paUhvT3NRdFlPb3ZEWXJuOWxCYVE4QVE9PY/OXNk+GvwsEqG0nKxa6AeMe0TH3VLGJnSbzwEaH6BvMUM1XTmq0dKLKXsN",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6bzdFdmVxSEEvVVBPSHdjSi93WkZ0NUFMMmRORC9aMEhpc1dncmtabkZwVGlsUGl2ekFJTGYyNGpwN2JrU2c9PS3I5hL2w7YKmTgTBvfRFrg7puvYvXz4bspWKwmpD3ZdadzVI5p9EX9vzUw=",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6bzdFdmVxSEEvVVBPSHdjSi93WkZ0NUFMMmRORC9aMEhpc1dncmtabkZwVGlsUGl2ekFJTGYyNGpwN2JrU2c9PUl3AIAtkm7IC09QX/SFMlvVYUnQFxIkULguQpH4HaWiXeXaJpDEy3QYShXp",
   "address": "Dubai, UAE"
 }
 {
   "name": "tom",
   "username": "tom@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6OHJ0d2h2QWpZRjZ0T2JpN2VUczV4YTNSVTVLOWUzeWE3dU02aVNMNnJOdGUxZ0FrMXZZLzBDbjNEUnRkNmc9PTxLcMJyl9fqSYA6KpgtT+x337836RN1YZ5t3J9wTnKivalKNv/e6GhzLxtu",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6OHJ0d2h2QWpZRjZ0T2JpN2VUczV4YTNSVTVLOWUzeWE3dU02aVNMNnJOdGUxZ0FrMXZZLzBDbjNEUnRkNmc9PQ8Dks4xy/g+xkBKHSLhZqp9UEu9CoafMue8/a46rcgFQ0p7smSvT3qLJg==",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6UGN2ZWdYSEY0OXdOck1ZWGZwRmtDZUxaYzYwMDlyUlVQSENHSmJlTHJWOGRwamVEL2ZRTkdUQVpLNnk2MWc9PfJ/X2/EtJ0QpAcyJjeZJq4UWEwNtAOsmRBMICAZ7Co6cqnR8BMZsbNGMtSm",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6UGN2ZWdYSEY0OXdOck1ZWGZwRmtDZUxaYzYwMDlyUlVQSENHSmJlTHJWOGRwamVEL2ZRTkdUQVpLNnk2MWc9PYxnBe+5gmjwiO23f8fLmiUGtW395i7IDhLHBz/Jy+FSOs8Id7TquxcZog==",
   "address": "Chancery lane, London"
 }
 
@@ -775,7 +740,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/UUowbt4tFWihUSuzGOK7bvBhL.svg)](https://asciinema.org/a/UUowbt4tFWihUSuzGOK7bvBhL)
+[![asciicast](https://asciinema.org/a/F5o1sSNXBYaihyNjujjGfgTeE.svg)](https://asciinema.org/a/F5o1sSNXBYaihyNjujjGfgTeE)
 
 </TabItem>
 </Tabs>
@@ -785,32 +750,13 @@ Processed a total of 2 messages
 Let's add the decrypt interceptor to decipher messages.
 The vault token is retrieved from your env variable `${VAULT_TOKEN}`.
 
-Creating the interceptor named `crypto-shredding-decrypt` of the plugin `io.conduktor.gateway.interceptor.DecryptPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.DecryptPlugin",
-  "priority" : 100,
-  "config" : {
-    "topic" : "customers",
-    "kmsConfig" : {
-      "vault" : {
-        "uri" : "http://vault:8200",
-        "token" : "${VAULT_TOKEN}",
-        "version" : 1
-      }
-    }
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-12-crypto-shredding-decrypt.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/crypto-shredding-decrypt" \
     --header 'Content-Type: application/json' \
@@ -825,6 +771,20 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "customers",
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "${VAULT_TOKEN}",
+        "version": 1
+      }
+    }
+  }
+}
+{
   "message": "crypto-shredding-decrypt is created"
 }
 
@@ -833,7 +793,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RQ24FZSE6nG8RTNWUSIaOENvE.svg)](https://asciinema.org/a/RQ24FZSE6nG8RTNWUSIaOENvE)
+[![asciicast](https://asciinema.org/a/hVktcWzHHKSHRWDjUmzSa4MP5.svg)](https://asciinema.org/a/hVktcWzHHKSHRWDjUmzSa4MP5)
 
 </TabItem>
 </Tabs>
@@ -862,26 +822,8 @@ curl \
 {
   "interceptors": [
     {
-      "name": "crypto-shredding-decrypt",
-      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
-      "apiKey": null,
-      "priority": 100,
-      "timeoutMs": 9223372036854775807,
-      "config": {
-        "topic": "customers",
-        "kmsConfig": {
-          "vault": {
-            "uri": "http://vault:8200",
-            "token": "${VAULT_TOKEN}",
-            "version": 1
-          }
-        }
-      }
-    },
-    {
       "name": "crypto-shredding-encrypt",
       "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -897,20 +839,30 @@ curl \
           {
             "fieldName": "password",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": {
-              "type": "AES_GCM",
-              "kms": "VAULT"
-            }
+            "algorithm": "AES_GCM"
           },
           {
             "fieldName": "visa",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": {
-              "type": "AES_GCM",
-              "kms": "VAULT"
-            }
+            "algorithm": "AES_GCM"
           }
         ]
+      }
+    },
+    {
+      "name": "crypto-shredding-decrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "topic": "customers",
+        "kmsConfig": {
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "${VAULT_TOKEN}",
+            "version": 1
+          }
+        }
       }
     }
   ]
@@ -921,7 +873,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uNtj4e1W8gblzCDLafXEt9Gl9.svg)](https://asciinema.org/a/uNtj4e1W8gblzCDLafXEt9Gl9)
+[![asciicast](https://asciinema.org/a/E6jnnbt6jbAANx489y0XfBjNi.svg)](https://asciinema.org/a/E6jnnbt6jbAANx489y0XfBjNi)
 
 </TabItem>
 </Tabs>
@@ -944,33 +896,31 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-Processed a total of 2 messages
 {
-  "name": "laura",
-  "username": "laura@conduktor.io",
-  "password": "kitesurf",
-  "visa": "#888999XZ",
-  "address": "Dubai, UAE"
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ",
+  "address" : "Dubai, UAE"
 }
 {
-  "name": "tom",
-  "username": "tom@conduktor.io",
-  "password": "motorhead",
-  "visa": "#abc123",
-  "address": "Chancery lane, London"
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 02:02:11,671] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "laura",
@@ -992,7 +942,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/8uEiKd1mT6SCmYksqffizeFzR.svg)](https://asciinema.org/a/8uEiKd1mT6SCmYksqffizeFzR)
+[![asciicast](https://asciinema.org/a/aUqp2uunoY3be3XombFE2Gfk8.svg)](https://asciinema.org/a/aUqp2uunoY3be3XombFE2Gfk8)
 
 </TabItem>
 </Tabs>
@@ -1016,11 +966,11 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
  Container kafka-client  Stopping
- Container vault  Stopping
  Container gateway1  Stopping
+ Container vault  Stopping
  Container schema-registry  Stopping
+ Container gateway2  Stopping
  Container vault  Stopped
  Container vault  Removing
  Container vault  Removed
@@ -1033,21 +983,21 @@ docker compose down --volumes
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
- Container kafka2  Stopping
  Container kafka3  Stopping
+ Container kafka2  Stopping
+ Container kafka1  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1060,7 +1010,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/vdvdM4Uis0mzEawyI8ijkKjYf.svg)](https://asciinema.org/a/vdvdM4Uis0mzEawyI8ijkKjYf)
+[![asciicast](https://asciinema.org/a/pfERWy32aqHvCsCOftxY7LDrk.svg)](https://asciinema.org/a/pfERWy32aqHvCsCOftxY7LDrk)
 
 </TabItem>
 </Tabs>
