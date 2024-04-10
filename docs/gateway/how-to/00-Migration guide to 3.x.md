@@ -35,7 +35,7 @@ As a consequence, existing 2.x topics must be explicitly given via the environme
 | GATEWAY_CONSUMER_OFFSETS_TOPIC      | _offsetStore                                                   | Value of former  <br/>GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC      |
 | GATEWAY_ENCRYPTION_CONFIGS_TOPIC    | _encryptionConfig                                              | Value of former <br/>GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC                   |
 | GATEWAY_ACLS_TOPIC                  | _acls                                                          | Value of former <br/>GATEWAY_ACLS_STORES_BACKING_TOPIC                         |
-| GATEWAY_AUDIT_LOGS_TOPIC            | _auditLogs                                                     | Value of former <br/>GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC                   |
+| GATEWAY_AUDIT_LOG_TOPIC            | _auditLogs                                                     | Value of former <br/>GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC                   |
 
 
 
