@@ -15,7 +15,6 @@ Jump to:
 - [Gateway Environment Variables](#gateway-environment-variables)
   - [Host/Port](#hostport)
   - [Load Balancing](#load-balancing)
-  - [Gateway Mode](#gateway-mode)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Security Provider](#security-provider)
   - [Secret management](#secret-management)
