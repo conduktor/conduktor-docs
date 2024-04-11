@@ -4,42 +4,72 @@ title: Resources Reference
 description: All Conduktor resources
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 import Admonition from '@theme/Admonition';
 
 export const Highlight = ({children, color}) => (
-<span
-style={{
-backgroundColor: color,
-borderRadius: '4px',
-color: '#fff',
-padding: '0.2rem',
-}}>
-{children}
+<span style={{ backgroundColor: color, borderRadius: '4px', color: '#fff', padding: '0.2rem' }}>
+    {children}
 </span>
 );
 
-The resources presented here can be managed from the CLI, the Public API, or the Console UI.  
-- CLI and Public API uses an API Key to validate permissions.
+export const CLI = () => (
+<Highlight color="#6246B7">🔌 CLI</Highlight>
+);
+
+export const API = () => (
+<Highlight color="#29A383">🔌 API</Highlight>
+);
+
+export const TF = () => (
+<Highlight color="#C24693">🔌 Terraform</Highlight>
+);
+
+export const GUI = () => (
+<Highlight color="#CAC048">🔌 Console UI</Highlight>
+);
+
+export const AdminToken = () => (
+<Highlight color="#71B2B0">🔒 Admin Token</Highlight>
+);
+
+export const AppToken = () => (
+<Highlight color="#C24655">🔒 Application Token</Highlight>
+);
+
+
+
+The resources presented here can be managed from the CLI, the Public API, Terraform, or the Console UI.  
+- CLI, Terraform and Public API uses an API Key to validate permissions.
 - Console UI relies on RBAC model to validate what the user can do.
 
 :::caution Work In Progress...
 We're working hard to bring consistent experience using the CLI, API, and Console UI, but it is not the case today.
 :::
-We'll inform you about the compatibility matrix for each resource using the following labels: <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
+We'll inform you about the availability matrix for each resource using the following labels: 
+- <CLI />
+- <API /> 
+- <TF />
+- <GUI />  
 
 
-There are two kind of API Key to use with the API or CLI:
-- <Highlight color="#25c2a0">Admin Token</Highlight> have all permissions over all resources in Console
-- <Highlight color="#1877F2">Application Token</Highlight> permission are scoped to Application instances defined in Self Serve
+There are two kind of API Key to use with the CLI, Terraform and Public API:
+- <AdminToken /> have all permissions over all resources in Console
+- <AppToken /> permission are scoped to Application instances defined in Self Serve
 
-In general, <Highlight color="#25c2a0">Admin Token</Highlight> can bypass Application owners and "act" as an <Highlight color="#1877F2">Application Token</Highlight>
+In general, <AdminToken /> can bypass Application owners and "act" as an <AppToken />
 
 ## Self Serve Resources
 
 ### Application
 This resource defines a Self Serve Application.  
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API />
+
+<Tabs>
+<TabItem value="CLI" label="CLI">
 
 ````yaml
 # Application
@@ -54,6 +84,47 @@ spec:
   owner: "groupA" # technical-id of Console Group
 ````
 
+</TabItem>
+<TabItem value="API" label="API">
+
+````json
+PUT /public/v1/application
+
+{
+  "metadata": {
+    "name": "clickstream-app"
+  },
+  "spec": {
+    "title": "Clickstream App",
+    "description": "FreeForm text, probably multiline markdown",
+    "owner": "groupA"
+  }
+}
+````
+
+</TabItem>
+<TabItem value="TF" label="🏗️️ Terraform">
+
+:::caution Work in progress...
+This resource is not available yet
+:::
+
+```tf
+resource "conduktor" "application" {
+  metadata {
+    name = "clickstream-app"
+  }
+  spec {
+    title         = "Clickstream App"
+    description   = "FreeForm text, probably multiline markdown"
+    owner         = "groupA"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 **Application checks:**
 -   `spec.owner` is a valid Console Group
 -   Delete MUST fail if there are associated `ApplicationInstance`
@@ -63,8 +134,8 @@ None.
 Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API />
 
 ````yaml
 ---
@@ -135,8 +206,8 @@ spec:
 
 
 ### Topic Policy
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API />
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
@@ -181,8 +252,8 @@ spec:
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API />
 
 ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources.  
 
@@ -203,7 +274,7 @@ spec:
 ```
 
 ### Cross Application Permissions
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>
+**API Keys:** <AdminToken />  <AppToken />
 
 ````yaml
 # Permission granted to other Applications
@@ -250,8 +321,8 @@ spec:
 This concept will be available in a future version
 :::
 
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight>
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API />
 
 Create Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
@@ -301,14 +372,14 @@ spec:
 
 ## Kafka Resources
 
-At the moment, Kafka resources are only managed through <Highlight color="#8157ff">Console UI</Highlight>
+At the moment, Kafka resources are only managed through <GUI />
 
 ### Topic
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />  
 
 
 ````yaml
@@ -316,6 +387,7 @@ This concept will be available in a future version
 apiVersion: v1
 kind: Topic
 metadata:
+  cluster: shadow-it
   name: click.event-stream.avro
 spec:
   replicationFactor: 3
@@ -326,6 +398,7 @@ spec:
     retention.ms: '60000'
 ````
 **Topic checks:**
+- `spec.cluster` is a valid Cluster Technical Id
 - `metadata.name` must belong to the Application Instance.
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
 - All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
@@ -339,8 +412,8 @@ spec:
 This concept will be available in a future version
 :::
 
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />
 
 **Local file**
 
@@ -349,6 +422,7 @@ This concept will be available in a future version
 apiVersion: v1
 kind: Subject
 metadata:
+  cluster: shadow-it
   name: myPrefix.topic-value
 spec:
   schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
@@ -404,8 +478,8 @@ spec:
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  <Highlight color="#1877F2">Application Token</Highlight>  
-**Managed with:** <Highlight color="#edb009">CLI</Highlight> <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>  
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />  
 
 ```yaml
 ---
@@ -425,8 +499,8 @@ spec:
 ```
 
 ## Console Resources
-**API Keys:** <Highlight color="#25c2a0">Admin Token</Highlight>  
-**Managed with:** <Highlight color="#098aed">API</Highlight> <Highlight color="#8157ff">Console UI</Highlight>
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <GUI />
 
 ### KafkaCluster
 ### KafkaConnectCluster
