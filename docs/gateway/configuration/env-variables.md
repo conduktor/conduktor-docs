@@ -15,7 +15,6 @@ Jump to:
 - [Gateway Environment Variables](#gateway-environment-variables)
   - [Host/Port](#hostport)
   - [Load Balancing](#load-balancing)
-  - [Gateway Mode](#gateway-mode)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Security Provider](#security-provider)
   - [Secret management](#secret-management)
@@ -203,7 +202,7 @@ When it is set
 | `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                                             |
 | `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration stopic                                                      |
 | `GATEWAY_ACLS_TOPIC`                   | `_conduktor_gateway_acls`                   | Name of the acl topic                                                                        |
-| `GATEWAY_AUDIT_LOGS_TOPIC`             | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
+| `GATEWAY_AUDIT_LOG_TOPIC`             | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
 
 #### `IN_MEMORY` State Configurations
 
