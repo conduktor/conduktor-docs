@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fY7m5ZNGrDEg31qKWrmF028L0.svg)](https://asciinema.org/a/fY7m5ZNGrDEg31qKWrmF028L0)
+[![asciicast](https://asciinema.org/a/88s2wIb9RRrb1jmntgoE2VAfv.svg)](https://asciinema.org/a/88s2wIb9RRrb1jmntgoE2VAfv)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -277,61 +261,58 @@ docker compose up --detach --wait
  Container kafka-client  Creating
  Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka2  Creating
  Container kafka1  Creating
  Container kafka3  Creating
- Container kafka2  Creating
- Container kafka2  Created
- Container kafka3  Created
  Container kafka1  Created
- Container schema-registry  Creating
+ Container kafka3  Created
+ Container kafka2  Created
  Container gateway2  Creating
+ Container schema-registry  Creating
  Container gateway1  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
  Container gateway2  Created
+ Container gateway1  Created
  Container schema-registry  Created
  Container zookeeper  Starting
  Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
- Container zookeeper  Healthy
- Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
+ Container zookeeper  Healthy
+ Container kafka1  Starting
+ Container kafka2  Started
  Container kafka1  Started
  Container kafka3  Started
- Container kafka2  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka1  Healthy
- Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container gateway1  Starting
+ Container kafka3  Healthy
  Container gateway2  Starting
  Container kafka2  Healthy
- Container gateway1  Starting
+ Container kafka3  Healthy
  Container schema-registry  Starting
  Container gateway1  Started
  Container schema-registry  Started
  Container gateway2  Started
- Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
@@ -339,11 +320,12 @@ docker compose up --detach --wait
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
- Container zookeeper  Healthy
+ Container gateway2  Waiting
+ Container kafka-client  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka-client  Healthy
+ Container zookeeper  Healthy
  Container schema-registry  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
@@ -353,7 +335,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KEO4VE61YySTVLxp1tHR3ZKKY.svg)](https://asciinema.org/a/KEO4VE61YySTVLxp1tHR3ZKKY)
+[![asciicast](https://asciinema.org/a/4NTlePh1ySKRmsO9o3hlLyvU3.svg)](https://asciinema.org/a/4NTlePh1ySKRmsO9o3hlLyvU3)
 
 </TabItem>
 </Tabs>
@@ -389,18 +371,18 @@ Created topic physical-kafka.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dyYazh17cp9nkSLMnKE45h5Xk.svg)](https://asciinema.org/a/dyYazh17cp9nkSLMnKE45h5Xk)
+[![asciicast](https://asciinema.org/a/D3fGfLPs78pUX6XZzyotVBhp1.svg)](https://asciinema.org/a/D3fGfLPs78pUX6XZzyotVBhp1)
 
 </TabItem>
 </Tabs>
 
 ## Let's use EndToEndLatency that comes bundled with Kafka
 
-* arg1: broker_list 
-* arg2: topic 
-* arg3: num_messages 
-* arg4: producer_acks
-* arg5: message_size_bytes
+arg1: broker_list 
+arg2: topic 
+arg3: num_messages 
+arg4: producer_acks
+arg5: message_size_bytes
 
 <Tabs>
 <TabItem value="Command">
@@ -418,25 +400,25 @@ kafka-run-class kafka.tools.EndToEndLatency \
 
 ```
 WARNING: The 'kafka.tools' package is deprecated and will change to 'org.apache.kafka.tools' in the next major release.
-0	46.612625
-1000	1.80125
-2000	1.049125
-3000	1.009875
-4000	1.0112910000000002
-5000	1.18
-6000	0.7606660000000001
-7000	1.242125
-8000	0.804667
-9000	0.72125
-Avg latency: 1,1827 ms
-Percentiles: 50th = 1, 99th = 3, 99.9th = 8
+0	47.436082999999996
+1000	3.0687919999999997
+2000	1.7105409999999999
+3000	1.9645
+4000	1.258417
+5000	1.179958
+6000	1.061375
+7000	0.779625
+8000	3.82475
+9000	0.947708
+Avg latency: 1,8176 ms
+Percentiles: 50th = 1, 99th = 8, 99.9th = 24
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kuYgJjyVe1BdvFUfWDI7JfTQt.svg)](https://asciinema.org/a/kuYgJjyVe1BdvFUfWDI7JfTQt)
+[![asciicast](https://asciinema.org/a/2eobsEjPVeL0rKXd6L9DGwWEP.svg)](https://asciinema.org/a/2eobsEjPVeL0rKXd6L9DGwWEP)
 
 </TabItem>
 </Tabs>
@@ -479,7 +461,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MzA3OX0.7jDPXJr3KdverXLYmmMYmcxoAfbnRccGlHC6cZ6LSko';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3NzYzN30.hgWWOZ0NO2YCqrFBhWC0Sonpn2PSg6R4FmVdYeZSIMs';
 
 
 ```
@@ -487,7 +469,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/98ZyPfNdDMbnQJaEFI7qJRotX.svg)](https://asciinema.org/a/98ZyPfNdDMbnQJaEFI7qJRotX)
+[![asciicast](https://asciinema.org/a/LxjZs3SmIe0DUGYe4WRI7s5Ut.svg)](https://asciinema.org/a/LxjZs3SmIe0DUGYe4WRI7s5Ut)
 
 </TabItem>
 </Tabs>
@@ -524,7 +506,7 @@ Created topic via-gateway.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ttHkc4gcwHvH72QzzveBvOUaO.svg)](https://asciinema.org/a/ttHkc4gcwHvH72QzzveBvOUaO)
+[![asciicast](https://asciinema.org/a/g3W00a7NgpFGhb9gtW2KEUcUf.svg)](https://asciinema.org/a/g3W00a7NgpFGhb9gtW2KEUcUf)
 
 </TabItem>
 </Tabs>
@@ -555,25 +537,25 @@ kafka-run-class kafka.tools.EndToEndLatency \
 
 ```
 WARNING: The 'kafka.tools' package is deprecated and will change to 'org.apache.kafka.tools' in the next major release.
-0	124.02195900000001
-1000	2.229416
-2000	1.746833
-3000	1.7087080000000001
-4000	1.8542919999999998
-5000	1.648875
-6000	1.82125
-7000	1.826625
-8000	1.674083
-9000	1.639083
-Avg latency: 2,4588 ms
-Percentiles: 50th = 1, 99th = 11, 99.9th = 44
+0	76.104875
+1000	3.2898330000000002
+2000	1.66875
+3000	2.243625
+4000	1.8816659999999998
+5000	2.032
+6000	1.718
+7000	1.838209
+8000	2.036
+9000	1.6083340000000002
+Avg latency: 2,6374 ms
+Percentiles: 50th = 1, 99th = 12, 99.9th = 38
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rYCq89OOqhqSbrYvTgGg5uWLO.svg)](https://asciinema.org/a/rYCq89OOqhqSbrYvTgGg5uWLO)
+[![asciicast](https://asciinema.org/a/wyofDkZpzFRycyhdUT4pAsICZ.svg)](https://asciinema.org/a/wyofDkZpzFRycyhdUT4pAsICZ)
 
 </TabItem>
 </Tabs>
@@ -597,10 +579,10 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
- Container kafka-client  Stopping
  Container schema-registry  Stopping
  Container gateway1  Stopping
+ Container gateway2  Stopping
+ Container kafka-client  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -637,12 +619,12 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bJVQvTYHhLg3fCthu577aysEq.svg)](https://asciinema.org/a/bJVQvTYHhLg3fCthu577aysEq)
+[![asciicast](https://asciinema.org/a/0KQypt68t57zDqcfVXb5J0vGX.svg)](https://asciinema.org/a/0KQypt68t57zDqcfVXb5J0vGX)
 
 </TabItem>
 </Tabs>
 
 # Conclusion
 
-Gateway's end to end latency is enough for all use cases!
+Gateway is end to end latency is enough for all use cases!
 

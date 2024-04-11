@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/w3zEK84x6MWlLeWj5wqO1hDIR.svg)](https://asciinema.org/a/w3zEK84x6MWlLeWj5wqO1hDIR)
+[![asciicast](https://asciinema.org/a/BxcusMZqkq6pDzWfhTaP8k14J.svg)](https://asciinema.org/a/BxcusMZqkq6pDzWfhTaP8k14J)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -275,29 +259,27 @@ docker compose up --detach --wait
  Network multi-tenancy_default  Created
  Container kafka-client  Creating
  Container zookeeper  Creating
- Container zookeeper  Created
  Container kafka-client  Created
+ Container zookeeper  Created
+ Container kafka3  Creating
  Container kafka1  Creating
  Container kafka2  Creating
- Container kafka3  Creating
  Container kafka2  Created
  Container kafka3  Created
  Container kafka1  Created
- Container gateway1  Creating
  Container schema-registry  Creating
  Container gateway2  Creating
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Creating
  Container gateway2  Created
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container schema-registry  Created
  Container gateway1  Created
- Container kafka-client  Starting
+ Container schema-registry  Created
  Container zookeeper  Starting
+ Container kafka-client  Starting
  Container zookeeper  Started
  Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Waiting
  Container kafka-client  Started
+ Container zookeeper  Waiting
+ Container zookeeper  Waiting
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
@@ -305,32 +287,32 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka3  Starting
  Container kafka3  Started
- Container kafka2  Started
  Container kafka1  Started
- Container kafka3  Waiting
- Container kafka1  Waiting
+ Container kafka2  Started
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
+ Container kafka1  Waiting
  Container kafka3  Healthy
  Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container gateway2  Starting
  Container kafka1  Healthy
  Container schema-registry  Starting
  Container kafka1  Healthy
+ Container kafka3  Healthy
  Container gateway1  Starting
- Container kafka1  Healthy
- Container gateway2  Starting
+ Container gateway1  Started
  Container schema-registry  Started
  Container gateway2  Started
- Container gateway1  Started
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
@@ -339,13 +321,13 @@ docker compose up --detach --wait
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
- Container kafka-client  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
  Container kafka2  Healthy
  Container zookeeper  Healthy
- Container schema-registry  Healthy
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
  Container gateway1  Healthy
 
 ```
@@ -353,7 +335,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bxdNcP7oJTsMJWt5VVV305xPX.svg)](https://asciinema.org/a/bxdNcP7oJTsMJWt5VVV305xPX)
+[![asciicast](https://asciinema.org/a/q9odKF9dSc2ma1t2uSZ9879p1.svg)](https://asciinema.org/a/q9odKF9dSc2ma1t2uSZ9879p1)
 
 </TabItem>
 </Tabs>
@@ -378,24 +360,23 @@ kafka-topics \
 
 ```
 __consumer_offsets
-_acls
-_auditLogs
-_consumerGroupSubscriptionBackingTopic
-_encryptionConfig
-_interceptorConfigs
-_license
-_offsetStore
+_conduktor_gateway_acls
+_conduktor_gateway_auditlogs
+_conduktor_gateway_consumer_offsets
+_conduktor_gateway_consumer_subscriptions
+_conduktor_gateway_encryption_configs
+_conduktor_gateway_interceptor_configs
+_conduktor_gateway_license
+_conduktor_gateway_topicmappings
+_conduktor_gateway_usermappings
 _schemas
-_topicMappings
-_topicRegistry
-_userMapping
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/C7aaAZ3gwXjhXLuypUByKfwdE.svg)](https://asciinema.org/a/C7aaAZ3gwXjhXLuypUByKfwdE)
+[![asciicast](https://asciinema.org/a/R7oOgiaVPUhPo6iVaHlC0upG7.svg)](https://asciinema.org/a/R7oOgiaVPUhPo6iVaHlC0upG7)
 
 </TabItem>
 </Tabs>
@@ -438,7 +419,7 @@ cat london-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJsb25kb24iLCJleHAiOjE3MTU2NTM4OTd9.foYY2O4AO-Iua6QbGrT-Rx697RSZzb30KmOqa-Hh2G8';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJsb25kb24iLCJleHAiOjE3MjA0Nzg1MTl9.AXgPo-n9UAsw1TCj1F0rMVXHsQfYhAAkZYwDlhyiHSU';
 
 
 ```
@@ -446,7 +427,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/2PSkJdKm2pV1JXDpzj54YCoEc.svg)](https://asciinema.org/a/2PSkJdKm2pV1JXDpzj54YCoEc)
+[![asciicast](https://asciinema.org/a/fCr9umhRp9ioqhJh1QjzsNhss.svg)](https://asciinema.org/a/fCr9umhRp9ioqhJh1QjzsNhss)
 
 </TabItem>
 </Tabs>
@@ -489,7 +470,7 @@ cat paris-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJwYXJpcyIsImV4cCI6MTcxNTY1Mzg5N30.XjlsaX7c0DkbzeKorDRhCGKSV1KJgVoxiEmPOcQueb4';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJwYXJpcyIsImV4cCI6MTcyMDQ3ODUxOX0.Jb9TRqossTJCuCkXBh-CmW7AUI-TgTJ8Ap-GGDIP1kE';
 
 
 ```
@@ -497,7 +478,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fg8kA5GOLm2WIRejTmIkRiuo9.svg)](https://asciinema.org/a/fg8kA5GOLm2WIRejTmIkRiuo9)
+[![asciicast](https://asciinema.org/a/ZRtCCTYE7ZjdgLteUt89XcFbS.svg)](https://asciinema.org/a/ZRtCCTYE7ZjdgLteUt89XcFbS)
 
 </TabItem>
 </Tabs>
@@ -534,7 +515,7 @@ Created topic londonTopic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/25FmBkX1YDsqosKryb4Rvjjbz.svg)](https://asciinema.org/a/25FmBkX1YDsqosKryb4Rvjjbz)
+[![asciicast](https://asciinema.org/a/nxiwufKqVdG3ws1xx6ZsWusfh.svg)](https://asciinema.org/a/nxiwufKqVdG3ws1xx6ZsWusfh)
 
 </TabItem>
 </Tabs>
@@ -571,7 +552,7 @@ Created topic parisTopic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/6z7F11FLWnTKiNKfZ2vNMe0Zo.svg)](https://asciinema.org/a/6z7F11FLWnTKiNKfZ2vNMe0Zo)
+[![asciicast](https://asciinema.org/a/hkZfW64HExTAe9vxC5PcQfsNK.svg)](https://asciinema.org/a/hkZfW64HExTAe9vxC5PcQfsNK)
 
 </TabItem>
 </Tabs>
@@ -603,7 +584,7 @@ londonTopic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RWDbsJL1RSjnWPF5HQpGZXKBO.svg)](https://asciinema.org/a/RWDbsJL1RSjnWPF5HQpGZXKBO)
+[![asciicast](https://asciinema.org/a/kcmqVlrIGPEJgq8wWU568pOdw.svg)](https://asciinema.org/a/kcmqVlrIGPEJgq8wWU568pOdw)
 
 </TabItem>
 </Tabs>
@@ -635,7 +616,7 @@ parisTopic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GK0peMYGPBJJBV8Pr7bYO55cC.svg)](https://asciinema.org/a/GK0peMYGPBJJBV8Pr7bYO55cC)
+[![asciicast](https://asciinema.org/a/OJp6TPM7u2gQhkw9EMCR6C7Ko.svg)](https://asciinema.org/a/OJp6TPM7u2gQhkw9EMCR6C7Ko)
 
 </TabItem>
 </Tabs>
@@ -650,15 +631,13 @@ Producing 1 message in `londonTopic` in cluster `london`
 
 Sending 1 event
 ```json
-{
-  "message" : "Hello from London"
-}
+{"message: "Hello from London"}
 ```
 with
 
 
 ```sh
-echo '{"message": "Hello from London"}' | \
+echo '{"message: "Hello from London"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
         --producer.config london-sa.properties \
@@ -676,7 +655,7 @@ echo '{"message": "Hello from London"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1uXWNmrYruu08hvzuD6MiToel.svg)](https://asciinema.org/a/1uXWNmrYruu08hvzuD6MiToel)
+[![asciicast](https://asciinema.org/a/w1bygJbaU6Yj341ujK4pEXCAy.svg)](https://asciinema.org/a/w1bygJbaU6Yj341ujK4pEXCAy)
 
 </TabItem>
 </Tabs>
@@ -699,33 +678,21 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
-```json
-Processed a total of 1 messages
-{
-  "message": "Hello from London"
-}
-
-```
-
-
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
+jq: parse error: Invalid numeric literal at line 1, column 18
+[2024-04-10 02:42:17,493] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
-{
-  "message": "Hello from London"
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/MNddGIBxryXSsztkuTFMvFS5t.svg)](https://asciinema.org/a/MNddGIBxryXSsztkuTFMvFS5t)
+[![asciicast](https://asciinema.org/a/9xGXP85o79CWsFfKhyiNiPedi.svg)](https://asciinema.org/a/9xGXP85o79CWsFfKhyiNiPedi)
 
 </TabItem>
 </Tabs>
@@ -740,15 +707,13 @@ Producing 1 message in `parisTopic` in cluster `paris`
 
 Sending 1 event
 ```json
-{
-  "message" : "Bonjour depuis Paris"
-}
+{"message: "Bonjour depuis Paris"}
 ```
 with
 
 
 ```sh
-echo '{"message": "Bonjour depuis Paris"}' | \
+echo '{"message: "Bonjour depuis Paris"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
         --producer.config paris-sa.properties \
@@ -766,7 +731,7 @@ echo '{"message": "Bonjour depuis Paris"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SI1j1CCQjydJD7mkGYQjKoFDq.svg)](https://asciinema.org/a/SI1j1CCQjydJD7mkGYQjKoFDq)
+[![asciicast](https://asciinema.org/a/cLnHulqyLBBQHfgkbtUAtaJ50.svg)](https://asciinema.org/a/cLnHulqyLBBQHfgkbtUAtaJ50)
 
 </TabItem>
 </Tabs>
@@ -789,33 +754,21 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
-```json
-Processed a total of 1 messages
-{
-  "message": "Bonjour depuis Paris"
-}
-
-```
-
-
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
+jq: parse error: Invalid numeric literal at line 1, column 20
+[2024-04-10 02:42:30,664] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
-{
-  "message": "Bonjour depuis Paris"
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OjhBII53Dwy2JpavGIDYpwZMm.svg)](https://asciinema.org/a/OjhBII53Dwy2JpavGIDYpwZMm)
+[![asciicast](https://asciinema.org/a/XCPoD3xWTMjBuGHKsYL0MA3Rg.svg)](https://asciinema.org/a/XCPoD3xWTMjBuGHKsYL0MA3Rg)
 
 </TabItem>
 </Tabs>
@@ -851,7 +804,7 @@ Created topic existingLondonTopic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KRymlrIhecui4sTx0lfSG4STc.svg)](https://asciinema.org/a/KRymlrIhecui4sTx0lfSG4STc)
+[![asciicast](https://asciinema.org/a/Ch3dkjByEnX4zjCS7tmfPaFQB.svg)](https://asciinema.org/a/Ch3dkjByEnX4zjCS7tmfPaFQB)
 
 </TabItem>
 </Tabs>
@@ -866,15 +819,13 @@ Producing 1 message in `existingLondonTopic` in cluster `kafka1`
 
 Sending 1 event
 ```json
-{
-  "message" : "Hello from London"
-}
+{"message: "Hello from London"}
 ```
 with
 
 
 ```sh
-echo '{"message": "Hello from London"}' | \
+echo '{"message: "Hello from London"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
         --topic existingLondonTopic
@@ -891,7 +842,7 @@ echo '{"message": "Hello from London"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/XO7xveHvdjdHiXE9DeaulSHkA.svg)](https://asciinema.org/a/XO7xveHvdjdHiXE9DeaulSHkA)
+[![asciicast](https://asciinema.org/a/VOKC5FDiTVHfYA4MfaBLqijRW.svg)](https://asciinema.org/a/VOKC5FDiTVHfYA4MfaBLqijRW)
 
 </TabItem>
 </Tabs>
@@ -913,7 +864,7 @@ curl \
   --data-raw '{
       "physicalTopicName": "existingLondonTopic",
       "readOnly": false,
-      "concentrated": false
+      "type": "alias"
     }' | jq
 ```
 
@@ -924,9 +875,10 @@ curl \
 ```json
 {
   "logicalTopicName": "existingLondonTopic",
+  "clusterId": "main",
   "physicalTopicName": "existingLondonTopic",
   "readOnly": false,
-  "concentrated": false
+  "type": "ALIAS"
 }
 
 ```
@@ -934,7 +886,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rIk3BJ8oBLDremOTqGXYGr8HC.svg)](https://asciinema.org/a/rIk3BJ8oBLDremOTqGXYGr8HC)
+[![asciicast](https://asciinema.org/a/zXS1hytiuvS9Hf6jsPG3BKrvD.svg)](https://asciinema.org/a/zXS1hytiuvS9Hf6jsPG3BKrvD)
 
 </TabItem>
 </Tabs>
@@ -967,7 +919,7 @@ londonTopic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/lzuOOCwOBc0vFZ4OCGoipUl6l.svg)](https://asciinema.org/a/lzuOOCwOBc0vFZ4OCGoipUl6l)
+[![asciicast](https://asciinema.org/a/6X4EFSLWilXJU346ll9sfewRY.svg)](https://asciinema.org/a/6X4EFSLWilXJU346ll9sfewRY)
 
 </TabItem>
 </Tabs>
@@ -1003,7 +955,7 @@ Created topic existingSharedTopic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/K4At61JIhH728pCGoe14Y8wjD.svg)](https://asciinema.org/a/K4At61JIhH728pCGoe14Y8wjD)
+[![asciicast](https://asciinema.org/a/RX6GN68lQHWNSNlb8DViA5gf8.svg)](https://asciinema.org/a/RX6GN68lQHWNSNlb8DViA5gf8)
 
 </TabItem>
 </Tabs>
@@ -1043,7 +995,7 @@ echo '{"message": "Existing shared message"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/XAvHWHmtYuj4MR1ir0Laht65T.svg)](https://asciinema.org/a/XAvHWHmtYuj4MR1ir0Laht65T)
+[![asciicast](https://asciinema.org/a/zSR2Mju7o2rPp5wIUmZxuqNwO.svg)](https://asciinema.org/a/zSR2Mju7o2rPp5wIUmZxuqNwO)
 
 </TabItem>
 </Tabs>
@@ -1065,7 +1017,7 @@ curl \
   --data-raw '{
     "physicalTopicName": "existingSharedTopic",
     "readOnly": false,
-    "concentrated": false
+    "type": "alias"
   }' | jq
 ```
 
@@ -1076,9 +1028,10 @@ curl \
 ```json
 {
   "logicalTopicName": "existingSharedTopic",
+  "clusterId": "main",
   "physicalTopicName": "existingSharedTopic",
   "readOnly": false,
-  "concentrated": false
+  "type": "ALIAS"
 }
 
 ```
@@ -1086,7 +1039,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/79OaXqo1tngu3buLDYhIDczBG.svg)](https://asciinema.org/a/79OaXqo1tngu3buLDYhIDczBG)
+[![asciicast](https://asciinema.org/a/UtXNCrUnT9Tkx4kBRfke9VEhZ.svg)](https://asciinema.org/a/UtXNCrUnT9Tkx4kBRfke9VEhZ)
 
 </TabItem>
 </Tabs>
@@ -1120,7 +1073,7 @@ londonTopic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/c0TpbMc8YNu866sKNdqHnPm3a.svg)](https://asciinema.org/a/c0TpbMc8YNu866sKNdqHnPm3a)
+[![asciicast](https://asciinema.org/a/lcDRxNkXkyifLTqAsAaNMvT1M.svg)](https://asciinema.org/a/lcDRxNkXkyifLTqAsAaNMvT1M)
 
 </TabItem>
 </Tabs>
@@ -1143,33 +1096,27 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 1 messages
-{
-  "message": "Hello from London"
-}
-
+{"message: "Hello from London"}
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+jq: parse error: Invalid numeric literal at line 1, column 18
+[2024-04-10 02:42:50,507] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
-{
-  "message": "Hello from London"
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CLxBQOmGnGXkVdnVZLpZGTyIm.svg)](https://asciinema.org/a/CLxBQOmGnGXkVdnVZLpZGTyIm)
+[![asciicast](https://asciinema.org/a/Qx9jaotXWAh4cIWnjS59zq4UQ.svg)](https://asciinema.org/a/Qx9jaotXWAh4cIWnjS59zq4UQ)
 
 </TabItem>
 </Tabs>
@@ -1192,22 +1139,20 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 1 messages
 {
-  "message": "Existing shared message"
+  "message" : "Existing shared message"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 02:43:02,246] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 {
   "message": "Existing shared message"
@@ -1218,7 +1163,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uElsWLPTY3BYx87XDstGHIWkV.svg)](https://asciinema.org/a/uElsWLPTY3BYx87XDstGHIWkV)
+[![asciicast](https://asciinema.org/a/dBqLCQDwhoeZBf8tS5Mj72XGS.svg)](https://asciinema.org/a/dBqLCQDwhoeZBf8tS5Mj72XGS)
 
 </TabItem>
 </Tabs>
@@ -1240,7 +1185,7 @@ curl \
   --data-raw '{
     "physicalTopicName": "existingSharedTopic",
     "readOnly": false,
-    "concentrated": false
+    "type": "alias"
   }' | jq
 ```
 
@@ -1251,9 +1196,10 @@ curl \
 ```json
 {
   "logicalTopicName": "existingSharedTopic",
+  "clusterId": "main",
   "physicalTopicName": "existingSharedTopic",
   "readOnly": false,
-  "concentrated": false
+  "type": "ALIAS"
 }
 
 ```
@@ -1261,7 +1207,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sW1piNUz2oesC0o1bc7m77E2k.svg)](https://asciinema.org/a/sW1piNUz2oesC0o1bc7m77E2k)
+[![asciicast](https://asciinema.org/a/wwOaFirWQJPUQdQpTgxggFONy.svg)](https://asciinema.org/a/wwOaFirWQJPUQdQpTgxggFONy)
 
 </TabItem>
 </Tabs>
@@ -1294,7 +1240,7 @@ parisTopic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hs68iB1N0DJCrjAKQZ0y8dCi0.svg)](https://asciinema.org/a/hs68iB1N0DJCrjAKQZ0y8dCi0)
+[![asciicast](https://asciinema.org/a/3T7iwV04yIL0PZv0PhwfcQ78j.svg)](https://asciinema.org/a/3T7iwV04yIL0PZv0PhwfcQ78j)
 
 </TabItem>
 </Tabs>
@@ -1317,22 +1263,20 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 1 messages
 {
-  "message": "Existing shared message"
+  "message" : "Existing shared message"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 02:43:15,440] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 {
   "message": "Existing shared message"
@@ -1343,7 +1287,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/VFgs0LAAUzvD3aNjknGJV3UtM.svg)](https://asciinema.org/a/VFgs0LAAUzvD3aNjknGJV3UtM)
+[![asciicast](https://asciinema.org/a/8Jbrt9HBATzt36wWEFxQsgR5U.svg)](https://asciinema.org/a/8Jbrt9HBATzt36wWEFxQsgR5U)
 
 </TabItem>
 </Tabs>
@@ -1368,33 +1312,33 @@ docker compose down --volumes
 
 ```
  Container kafka-client  Stopping
- Container gateway2  Stopping
- Container schema-registry  Stopping
  Container gateway1  Stopping
- Container schema-registry  Stopped
- Container schema-registry  Removing
- Container gateway1  Stopped
- Container gateway1  Removing
- Container schema-registry  Removed
- Container gateway1  Removed
+ Container schema-registry  Stopping
+ Container gateway2  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container schema-registry  Removed
+ Container kafka2  Stopping
  Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka2  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1407,7 +1351,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7M7Zc7qhFxKE7gunOlI7SxswH.svg)](https://asciinema.org/a/7M7Zc7qhFxKE7gunOlI7SxswH)
+[![asciicast](https://asciinema.org/a/oZcLSk2xWfzD2St8NQAXpEII8.svg)](https://asciinema.org/a/oZcLSk2xWfzD2St8NQAXpEII8)
 
 </TabItem>
 </Tabs>
