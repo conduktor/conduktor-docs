@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/XN9Nll6IozNokSgVSaGzQfG5D.svg)](https://asciinema.org/a/XN9Nll6IozNokSgVSaGzQfG5D)
+[![asciicast](https://asciinema.org/a/2Qbe9IXzXHu4LNWa6NolIO4ms.svg)](https://asciinema.org/a/2Qbe9IXzXHu4LNWa6NolIO4ms)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -275,20 +259,18 @@ docker compose up --detach --wait
  Network acls-vcluster_default  Created
  Container zookeeper  Creating
  Container kafka-client  Creating
- Container kafka-client  Created
  Container zookeeper  Created
- Container kafka1  Creating
- Container kafka2  Creating
  Container kafka3  Creating
- Container kafka2  Created
+ Container kafka1  Creating
+ Container kafka-client  Created
+ Container kafka2  Creating
  Container kafka1  Created
  Container kafka3  Created
+ Container kafka2  Created
+ Container schema-registry  Creating
  Container gateway2  Creating
  Container gateway1  Creating
- Container schema-registry  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway1  Created
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway2  Created
  Container schema-registry  Created
  Container kafka-client  Starting
@@ -299,53 +281,53 @@ docker compose up --detach --wait
  Container zookeeper  Waiting
  Container kafka-client  Started
  Container zookeeper  Healthy
- Container kafka3  Starting
  Container zookeeper  Healthy
- Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka1  Starting
+ Container kafka2  Starting
+ Container kafka3  Starting
  Container kafka1  Started
  Container kafka2  Started
  Container kafka3  Started
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka1  Healthy
+ Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container gateway1  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
+ Container kafka2  Healthy
  Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Starting
- Container schema-registry  Started
+ Container gateway1  Starting
  Container gateway1  Started
  Container gateway2  Started
+ Container schema-registry  Started
+ Container zookeeper  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
  Container kafka1  Healthy
- Container zookeeper  Healthy
- Container kafka2  Healthy
  Container kafka-client  Healthy
  Container kafka3  Healthy
- Container gateway2  Healthy
+ Container zookeeper  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Healthy
+ Container gateway2  Healthy
  Container gateway1  Healthy
 
 ```
@@ -353,7 +335,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Nz8e6YYCoaENlWNLiLMTLABw5.svg)](https://asciinema.org/a/Nz8e6YYCoaENlWNLiLMTLABw5)
+[![asciicast](https://asciinema.org/a/qjN1FNOLPkUWDIkpAZxzmgiUa.svg)](https://asciinema.org/a/qjN1FNOLPkUWDIkpAZxzmgiUa)
 
 </TabItem>
 </Tabs>
@@ -396,7 +378,7 @@ cat aclCluster-admin.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='admin' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzE1NjQ0MDk5fQ.cdfKSNzHUfaAhMqIQ_i5ewAy30jDkedVjCxEXZy8KN0';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='admin' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzIwNDY4MDg1fQ.zRSsdDqs5_XwemsC3lN0L73qlQI4mmdy-jNOhZifhHc';
 
 
 ```
@@ -404,7 +386,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/N5g0l2YWtJbk77wMaxHxkhU7Z.svg)](https://asciinema.org/a/N5g0l2YWtJbk77wMaxHxkhU7Z)
+[![asciicast](https://asciinema.org/a/utwIhyaVh9SxRG9o2fgl9Gjmw.svg)](https://asciinema.org/a/utwIhyaVh9SxRG9o2fgl9Gjmw)
 
 </TabItem>
 </Tabs>
@@ -447,7 +429,7 @@ cat aclCluster-producer.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='producer' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InByb2R1Y2VyIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzE1NjQ0MDk5fQ.xtTIs0TWLeM3xC0VYgphPQW9A-qpy-Fhu2PViYXdcos';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='producer' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InByb2R1Y2VyIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzIwNDY4MDg1fQ.b1qXJ6TSiDFhslfgULEVL443-OMH7Fa9D55TOb2E1Xk';
 
 
 ```
@@ -455,7 +437,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WOTYA5PedImhQvzaRJoHaskSC.svg)](https://asciinema.org/a/WOTYA5PedImhQvzaRJoHaskSC)
+[![asciicast](https://asciinema.org/a/drbPQCH5McVAjxrOf5h0gmCoZ.svg)](https://asciinema.org/a/drbPQCH5McVAjxrOf5h0gmCoZ)
 
 </TabItem>
 </Tabs>
@@ -498,7 +480,7 @@ cat aclCluster-consumer.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='consumer' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImNvbnN1bWVyIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzE1NjQ0MDk5fQ.rYK0b6bOUdFp1eJD_A0C0hzPKB6wTdoQjz0K1Cwi-3Q';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='consumer' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImNvbnN1bWVyIiwidmNsdXN0ZXIiOiJhY2xDbHVzdGVyIiwiZXhwIjoxNzIwNDY4MDg1fQ.nrn8-iIg6NVJ1geYR5yHt__b2r8xSlwy5qs0x7d7z7s';
 
 
 ```
@@ -506,7 +488,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/P03LOajELjfq0Ru1VskgJ5hb7.svg)](https://asciinema.org/a/P03LOajELjfq0Ru1VskgJ5hb7)
+[![asciicast](https://asciinema.org/a/oMU5DDm4eCK6ZgUeBbdmVzHen.svg)](https://asciinema.org/a/oMU5DDm4eCK6ZgUeBbdmVzHen)
 
 </TabItem>
 </Tabs>
@@ -515,23 +497,13 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 Add ACL interceptor
 
-Creating the interceptor named `acl` of the plugin `io.conduktor.gateway.interceptor.AclsInterceptorPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.AclsInterceptorPlugin",
-  "priority" : 100,
-  "config" : { }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-08-acl.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/aclCluster/interceptor/acl" \
     --header 'Content-Type: application/json' \
@@ -546,6 +518,11 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.AclsInterceptorPlugin",
+  "priority": 100,
+  "config": {}
+}
+{
   "message": "acl is created"
 }
 
@@ -554,7 +531,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/G8lcgp6vWEz4p7qsGaIyGIfL4.svg)](https://asciinema.org/a/G8lcgp6vWEz4p7qsGaIyGIfL4)
+[![asciicast](https://asciinema.org/a/YI3BGHXaU8gIIswZzB3f6aoJj.svg)](https://asciinema.org/a/YI3BGHXaU8gIIswZzB3f6aoJj)
 
 </TabItem>
 </Tabs>
@@ -595,15 +572,15 @@ kafka-topics \
 
 ```
 Error while executing topic command : Cluster not authorized
-[2024-02-14 00:48:20,895] ERROR org.apache.kafka.common.errors.ClusterAuthorizationException: Cluster not authorized
- (kafka.admin.TopicCommand$)
+[2024-04-09 23:48:06,885] ERROR org.apache.kafka.common.errors.ClusterAuthorizationException: Cluster not authorized
+ (org.apache.kafka.tools.TopicCommand)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uGL4XKEZa32IT3YUmoYoS5r75.svg)](https://asciinema.org/a/uGL4XKEZa32IT3YUmoYoS5r75)
+[![asciicast](https://asciinema.org/a/24HaHKBjCoUdhJqecksuVQ8C3.svg)](https://asciinema.org/a/24HaHKBjCoUdhJqecksuVQ8C3)
 
 </TabItem>
 </Tabs>
@@ -640,7 +617,7 @@ Created topic restricted-topic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/luKcWQ8vXHk9TatD41PGcMppH.svg)](https://asciinema.org/a/luKcWQ8vXHk9TatD41PGcMppH)
+[![asciicast](https://asciinema.org/a/2Pqn3PL7XP4GRLugShU6vYJEi.svg)](https://asciinema.org/a/2Pqn3PL7XP4GRLugShU6vYJEi)
 
 </TabItem>
 </Tabs>
@@ -671,7 +648,7 @@ kafka-topics \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PD4bNgp7TOTGl2424TXjYiJfC.svg)](https://asciinema.org/a/PD4bNgp7TOTGl2424TXjYiJfC)
+[![asciicast](https://asciinema.org/a/Gv5W8ExV6ntGXkHTtnV5GlLeC.svg)](https://asciinema.org/a/Gv5W8ExV6ntGXkHTtnV5GlLeC)
 
 </TabItem>
 </Tabs>
@@ -711,14 +688,14 @@ Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=restricted-t
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/eiZsSJNA73ScdisQZ45Wmbvba.svg)](https://asciinema.org/a/eiZsSJNA73ScdisQZ45Wmbvba)
+[![asciicast](https://asciinema.org/a/QjfQkBpBYl6Bf6neLZfuPKNEE.svg)](https://asciinema.org/a/QjfQkBpBYl6Bf6neLZfuPKNEE)
 
 </TabItem>
 </Tabs>
 
-## Consuming from _acls
+## Consuming from _conduktor_gateway_acls
 
-Consuming from _acls in cluster `kafka1`
+Consuming from _conduktor_gateway_acls in cluster `kafka1`
 
 <Tabs>
 <TabItem value="Command">
@@ -727,38 +704,28 @@ Consuming from _acls in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --topic _acls \
+    --topic _conduktor_gateway_acls \
     --from-beginning \
     --timeout-ms 10000 \
     --property print.key=true | jq
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 1 messages
 {
-  "tenant": "aclCluster",
-  "principal": "User:consumer",
-  "host": "*",
-  "resource": {
-    "name": "restricted-topic",
-    "resourceType": "TOPIC",
-    "patternType": "LITERAL"
-  },
-  "operation": "READ"
+  "key" : "{\"tenant\":\"aclCluster\",\"principal\":\"User:consumer\",\"host\":\"*\",\"resource\":{\"name\":\"restricted-topic\",\"resourceType\":\"TOPIC\",\"patternType\":\"LITERAL\"},\"operation\":\"READ\"}",
+  "value" : true
 }
-true
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-09 23:48:23,927] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 {
   "tenant": "aclCluster",
@@ -778,7 +745,7 @@ true
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dhK9MbV8aW4HmtpVf2Cbtaom8.svg)](https://asciinema.org/a/dhK9MbV8aW4HmtpVf2Cbtaom8)
+[![asciicast](https://asciinema.org/a/JpDyATqECyBNDwITNzQkGJvTA.svg)](https://asciinema.org/a/JpDyATqECyBNDwITNzQkGJvTA)
 
 </TabItem>
 </Tabs>
@@ -819,7 +786,7 @@ Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=console-cons
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/n6lbxmB8SeyTJxbzEx1YcF533.svg)](https://asciinema.org/a/n6lbxmB8SeyTJxbzEx1YcF533)
+[![asciicast](https://asciinema.org/a/mJyzUW5VxnjP8aOcRUiXUmbqI.svg)](https://asciinema.org/a/mJyzUW5VxnjP8aOcRUiXUmbqI)
 
 </TabItem>
 </Tabs>
@@ -851,7 +818,7 @@ restricted-topic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/FnMiuY0NM5nBP1zuigqVwXzXQ.svg)](https://asciinema.org/a/FnMiuY0NM5nBP1zuigqVwXzXQ)
+[![asciicast](https://asciinema.org/a/kZmEa0IdEQVHsHv1DZN3Lonkv.svg)](https://asciinema.org/a/kZmEa0IdEQVHsHv1DZN3Lonkv)
 
 </TabItem>
 </Tabs>
@@ -883,8 +850,8 @@ Adding ACLs for resource `ResourcePattern(resourceType=TOPIC, name=restricted-to
  	(principal=User:producer, host=*, operation=WRITE, permissionType=ALLOW) 
 
 Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=restricted-topic, patternType=LITERAL)`: 
- 	(principal=User:consumer, host=*, operation=READ, permissionType=ALLOW)
-	(principal=User:producer, host=*, operation=WRITE, permissionType=ALLOW) 
+ 	(principal=User:producer, host=*, operation=WRITE, permissionType=ALLOW)
+	(principal=User:consumer, host=*, operation=READ, permissionType=ALLOW) 
 
 
 ```
@@ -892,7 +859,7 @@ Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=restricted-t
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uFifSmmSIhO5lQol4UsaBXQSZ.svg)](https://asciinema.org/a/uFifSmmSIhO5lQol4UsaBXQSZ)
+[![asciicast](https://asciinema.org/a/TJwmqJzNIDpkUDIgKtea7YpN4.svg)](https://asciinema.org/a/TJwmqJzNIDpkUDIgKtea7YpN4)
 
 </TabItem>
 </Tabs>
@@ -924,7 +891,7 @@ restricted-topic
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/4WfI1czlniXN0LRADylxUcgDr.svg)](https://asciinema.org/a/4WfI1czlniXN0LRADylxUcgDr)
+[![asciicast](https://asciinema.org/a/WuClDJRoESbKkVqPak07bXtGO.svg)](https://asciinema.org/a/WuClDJRoESbKkVqPak07bXtGO)
 
 </TabItem>
 </Tabs>
@@ -965,7 +932,7 @@ echo '{"msg":"test message"}' | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/wWTlCOGpkdhVkxHOhEpCFD2ep.svg)](https://asciinema.org/a/wWTlCOGpkdhVkxHOhEpCFD2ep)
+[![asciicast](https://asciinema.org/a/r6puqV0bJ65wg3PQ0SrEWYsq8.svg)](https://asciinema.org/a/r6puqV0bJ65wg3PQ0SrEWYsq8)
 
 </TabItem>
 </Tabs>
@@ -988,22 +955,20 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 1 messages
 {
-  "msg": "test message"
+  "msg" : "test message"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-09 23:48:46,020] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 {
   "msg": "test message"
@@ -1014,7 +979,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yBmnctVlMGnzWJ7A9Vb7HmXVN.svg)](https://asciinema.org/a/yBmnctVlMGnzWJ7A9Vb7HmXVN)
+[![asciicast](https://asciinema.org/a/PpQkT6TGSLyzu5JCz9hRv9nAY.svg)](https://asciinema.org/a/PpQkT6TGSLyzu5JCz9hRv9nAY)
 
 </TabItem>
 </Tabs>
@@ -1059,9 +1024,9 @@ echo '{"msg":"I would be surprised if it would work!"}' | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 00:48:57,035] ERROR [Producer clientId=console-producer] Aborting producer batches due to fatal error (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-09 23:48:47,707] ERROR [Producer clientId=console-producer] Aborting producer batches due to fatal error (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.TransactionalIdAuthorizationException: Transactional Id authorization failed.
-[2024-02-14 00:48:57,036] ERROR Error when sending message to topic restricted-topic with key: null, value: 48 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
+[2024-04-09 23:48:47,708] ERROR Error when sending message to topic restricted-topic with key: null, value: 48 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
 org.apache.kafka.common.errors.TransactionalIdAuthorizationException: Transactional Id authorization failed.
 
 ```
@@ -1069,7 +1034,7 @@ org.apache.kafka.common.errors.TransactionalIdAuthorizationException: Transactio
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1n6HxEQTrLHKHmrgmBI4M0Ih0.svg)](https://asciinema.org/a/1n6HxEQTrLHKHmrgmBI4M0Ih0)
+[![asciicast](https://asciinema.org/a/EbB2rafo5mQUdZRFJjm7fAokf.svg)](https://asciinema.org/a/EbB2rafo5mQUdZRFJjm7fAokf)
 
 </TabItem>
 </Tabs>
@@ -1093,34 +1058,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
- Container gateway2  Stopping
  Container kafka-client  Stopping
  Container schema-registry  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway2  Removed
+ Container gateway1  Stopping
+ Container gateway2  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka1  Stopping
- Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
+ Container kafka2  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1133,7 +1098,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/StwOvyCZUjdF4053qRr87k2T1.svg)](https://asciinema.org/a/StwOvyCZUjdF4053qRr87k2T1)
+[![asciicast](https://asciinema.org/a/If6c4HQRTQkts1JJrMRuJVzJu.svg)](https://asciinema.org/a/If6c4HQRTQkts1JJrMRuJVzJu)
 
 </TabItem>
 </Tabs>

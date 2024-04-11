@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/AGTh1d60KI8MjOVqiMfdRmgko.svg)](https://asciinema.org/a/AGTh1d60KI8MjOVqiMfdRmgko)
+[![asciicast](https://asciinema.org/a/Jpa49o3agxQ176CKz1IUgi4yg.svg)](https://asciinema.org/a/Jpa49o3agxQ176CKz1IUgi4yg)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -273,40 +257,38 @@ docker compose up --detach --wait
 ```
  Network safeguard-client-id_default  Creating
  Network safeguard-client-id_default  Created
- Container kafka-client  Creating
  Container zookeeper  Creating
+ Container kafka-client  Creating
  Container kafka-client  Created
  Container zookeeper  Created
- Container kafka1  Creating
  Container kafka3  Creating
  Container kafka2  Creating
+ Container kafka1  Creating
  Container kafka3  Created
  Container kafka1  Created
  Container kafka2  Created
- Container schema-registry  Creating
- Container gateway1  Creating
  Container gateway2  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway1  Creating
+ Container schema-registry  Creating
  Container gateway1  Created
  Container gateway2  Created
  Container schema-registry  Created
  Container zookeeper  Starting
  Container kafka-client  Starting
- Container zookeeper  Started
  Container kafka-client  Started
+ Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container zookeeper  Healthy
- Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
+ Container zookeeper  Healthy
+ Container kafka1  Starting
+ Container kafka3  Started
  Container kafka2  Started
  Container kafka1  Started
- Container kafka3  Started
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
@@ -316,44 +298,44 @@ docker compose up --detach --wait
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
  Container kafka3  Healthy
- Container gateway1  Starting
+ Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container gateway2  Starting
  Container kafka3  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Starting
  Container kafka3  Healthy
  Container kafka1  Healthy
- Container gateway2  Starting
+ Container kafka2  Healthy
+ Container gateway1  Starting
  Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka3  Healthy
- Container zookeeper  Healthy
  Container kafka1  Healthy
- Container kafka-client  Healthy
+ Container zookeeper  Healthy
  Container kafka2  Healthy
- Container schema-registry  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GbKdoN9ReUWFsDKWqO6yWesbu.svg)](https://asciinema.org/a/GbKdoN9ReUWFsDKWqO6yWesbu)
+[![asciicast](https://asciinema.org/a/J7vjTNtu8IAr3ZxALLOY5EW7s.svg)](https://asciinema.org/a/J7vjTNtu8IAr3ZxALLOY5EW7s)
 
 </TabItem>
 </Tabs>
@@ -396,7 +378,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NDcyNH0.4KipfLjU5dnD-eEZGWch4nuQCDv368Gu-UK346LQv-M';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MDEzOH0.hGXNV3aTV9TNMgWU3RUsQwJtc0z6Z1hA4GsvAd0SJyQ';
 
 
 ```
@@ -404,7 +386,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/h3Ly6MmdSbwUQjJc2jAe8umsh.svg)](https://asciinema.org/a/h3Ly6MmdSbwUQjJc2jAe8umsh)
+[![asciicast](https://asciinema.org/a/HM2HWI0XrfhoyQ34ZWCn5S49g.svg)](https://asciinema.org/a/HM2HWI0XrfhoyQ34ZWCn5S49g)
 
 </TabItem>
 </Tabs>
@@ -441,7 +423,7 @@ Created topic users.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bp2zJzmgkwTb07sKfIvaSmwbz.svg)](https://asciinema.org/a/bp2zJzmgkwTb07sKfIvaSmwbz)
+[![asciicast](https://asciinema.org/a/JsfRICS3TYP4gyL66vOt8sMgv.svg)](https://asciinema.org/a/JsfRICS3TYP4gyL66vOt8sMgv)
 
 </TabItem>
 </Tabs>
@@ -473,7 +455,7 @@ users
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kKSba7Y2HNXvUhjxoQSJWh7Td.svg)](https://asciinema.org/a/kKSba7Y2HNXvUhjxoQSJWh7Td)
+[![asciicast](https://asciinema.org/a/ORBGV6pstTIzBErnESqbXDXpk.svg)](https://asciinema.org/a/ORBGV6pstTIzBErnESqbXDXpk)
 
 </TabItem>
 </Tabs>
@@ -482,25 +464,13 @@ users
 
 
 
-Creating the interceptor named `client-id` of the plugin `io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-  "priority" : 100,
-  "config" : {
-    "namingConvention" : "naming-convention-.*"
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-08-client-id.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/client-id" \
     --header 'Content-Type: application/json' \
@@ -515,6 +485,13 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
+  "priority": 100,
+  "config": {
+    "namingConvention": "naming-convention-.*"
+  }
+}
+{
   "message": "client-id is created"
 }
 
@@ -523,7 +500,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1E8tRxGsKZiFYtz4We6tONLUa.svg)](https://asciinema.org/a/1E8tRxGsKZiFYtz4We6tONLUa)
+[![asciicast](https://asciinema.org/a/NB45xTNBy9TAtQZdLW0iiwJfB.svg)](https://asciinema.org/a/NB45xTNBy9TAtQZdLW0iiwJfB)
 
 </TabItem>
 </Tabs>
@@ -554,7 +531,6 @@ curl \
     {
       "name": "client-id",
       "pluginClass": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -569,7 +545,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/eOjazwzAyA70D2892cAAU4GsC.svg)](https://asciinema.org/a/eOjazwzAyA70D2892cAAU4GsC)
+[![asciicast](https://asciinema.org/a/j3UhMm6IRcZKFBdv4ghBOcv4W.svg)](https://asciinema.org/a/j3UhMm6IRcZKFBdv4ghBOcv4W)
 
 </TabItem>
 </Tabs>
@@ -599,7 +575,7 @@ kafka-topics \
 >
 > ```sh
 > org.apache.kafka.common.errors.PolicyViolationException:
->> clientId 'adminclient-41' is invalid, naming convention must match with regular expression 'naming-convention-.*'
+>> clientId 'adminclient-16' is invalid, naming convention must match with regular expression 'naming-convention-.*'
 > ```
 
 
@@ -609,75 +585,79 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-[2024-02-14 03:45:29,923] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 0. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:30,046] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 1. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:30,168] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 2. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:30,517] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 3. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:31,072] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 4. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:32,153] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 5. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:33,117] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 6. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:34,287] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 7. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:35,538] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 8. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:36,479] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 9. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:37,535] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 10. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:38,601] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 11. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:39,647] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 12. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:40,708] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 13. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:41,989] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 14. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:43,254] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 15. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:44,523] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 16. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:45,775] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 17. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:46,942] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 18. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:47,780] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 19. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:49,038] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 20. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:49,913] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 21. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:51,182] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 22. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:52,121] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 23. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:53,293] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 24. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:54,240] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 25. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:55,383] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 26. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:56,246] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 27. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:57,115] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 28. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:57,975] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 29. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:45:59,024] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 30. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:00,102] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 31. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:01,286] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 32. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:02,255] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 33. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:03,525] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 34. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:04,507] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 35. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:05,574] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 36. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:06,737] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 37. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:07,803] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 38. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:08,982] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 39. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:09,934] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 40. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:10,989] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 41. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:11,863] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 42. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:12,842] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 43. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:14,083] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 44. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:15,023] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 45. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:16,064] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 46. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:16,919] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 47. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:18,083] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 48. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:19,332] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 49. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:20,382] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 50. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:21,418] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 51. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:22,463] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 52. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:23,637] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 53. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:24,616] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 54. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:25,560] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 55. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:26,709] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 56. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:27,645] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 57. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:28,698] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 58. Disconnecting. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 03:46:29,550] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 59. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:02,563] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 0. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:02,689] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 1. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:02,806] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 2. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:03,047] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 3. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:03,476] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 4. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:04,313] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 5. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:05,360] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 6. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:06,411] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 7. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:07,484] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 8. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:08,557] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 9. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:09,619] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 10. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:10,668] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 11. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:11,738] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 12. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:12,784] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 13. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:13,829] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 14. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:14,891] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 15. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:15,940] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 16. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:16,988] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 17. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:18,038] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 18. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:18,981] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 19. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:20,023] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 20. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:21,079] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 21. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:22,126] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 22. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:23,067] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 23. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:24,106] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 24. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:25,068] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 25. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:26,008] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 26. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:26,977] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 27. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:28,011] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 28. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:29,046] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 29. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:29,974] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 30. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:31,032] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 31. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:32,087] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 32. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:33,135] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 33. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:34,074] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 34. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:35,123] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 35. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:36,168] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 36. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:37,120] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 37. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:38,154] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 38. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:39,201] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 39. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:40,256] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 40. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:41,308] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 41. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:42,370] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 42. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:43,425] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 43. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:44,486] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 44. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:45,513] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 45. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:46,444] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 46. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:47,384] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 47. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:48,415] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 48. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:49,462] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 49. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:50,509] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 50. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:51,562] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 51. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:52,504] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 52. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:53,456] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 53. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:54,490] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 54. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:55,534] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 55. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:56,476] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 56. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:57,409] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 57. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:58,446] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 58. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:09:59,490] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 59. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:10:00,547] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 60. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:10:01,376] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 61. Disconnecting. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 03:10:02,409] WARN [AdminClient clientId=adminclient-1] Received error POLICY_VIOLATION from node -1 when making an ApiVersionsRequest with correlation id 62. Disconnecting. (org.apache.kafka.clients.NetworkClient)
 Error while executing topic command : Timed out waiting for a node assignment. Call: createTopics
- (kafka.admin.TopicCommand$)
+[2024-04-10 03:10:02,418] ERROR org.apache.kafka.common.errors.TimeoutException: Timed out waiting for a node assignment. Call: createTopics
+ (org.apache.kafka.tools.TopicCommand)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/AhAR8kxybok9Mxt74erO1829u.svg)](https://asciinema.org/a/AhAR8kxybok9Mxt74erO1829u)
+[![asciicast](https://asciinema.org/a/scj562M8MBgbnKR2IGzJcfxVz.svg)](https://asciinema.org/a/scj562M8MBgbnKR2IGzJcfxVz)
 
 </TabItem>
 </Tabs>
@@ -706,7 +686,7 @@ echo "client.id=naming-convention-for-this-application" >> teamA-sa.properties
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/5PGucdLxxzOznxqNE8aPxyAmp.svg)](https://asciinema.org/a/5PGucdLxxzOznxqNE8aPxyAmp)
+[![asciicast](https://asciinema.org/a/KAEWiUTWWJ7RRKyFg0zrV9Uz8.svg)](https://asciinema.org/a/KAEWiUTWWJ7RRKyFg0zrV9Uz8)
 
 </TabItem>
 </Tabs>
@@ -743,7 +723,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Bivoitxh1AAQ69OyPiMXV7EY5.svg)](https://asciinema.org/a/Bivoitxh1AAQ69OyPiMXV7EY5)
+[![asciicast](https://asciinema.org/a/5cu43XG4Yym0h8Bc1wVu9Nj36.svg)](https://asciinema.org/a/5cu43XG4Yym0h8Bc1wVu9Nj36)
 
 </TabItem>
 </Tabs>
@@ -759,2194 +739,184 @@ Check in the audit log that produce was denied in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --topic _auditLogs \
+    --topic _conduktor_gateway_auditlogs \
     --from-beginning \
-    --timeout-ms 3000 \
-    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin")'
+    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin")'
 ```
 
 
-returns 
-
+returns 1 event
 ```json
 {
-  "id": "efe53d60-f3ab-4d05-9164-706dfb2f93c8",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21282"
+  "id" : "91c45f36-e265-4941-b796-af3078b4f731",
+  "source" : "krn://cluster=eG1hLB1OQfiiMLDC-ra_qw",
+  "type" : "SAFEGUARD",
+  "authenticationPrincipal" : "teamA",
+  "userName" : "sa",
+  "connection" : {
+    "localAddress" : null,
+    "remoteAddress" : "/192.168.65.1:19753"
   },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:29.910817294Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
+  "specVersion" : "0.1.0",
+  "time" : "2024-04-09T23:08:31.898847376Z",
+  "eventData" : {
+    "level" : "error",
+    "plugin" : "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
+    "message" : "clientId 'adminclient-16' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
   }
 }
-{
-  "id": "8310e4d9-85dd-41e7-b3aa-ec6daecb9fb3",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21283"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.043989211Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "137e6444-24d8-4389-8069-c51e86b0b5b6",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21284"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.166534544Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b8f18bde-f955-4704-90b3-7039c97425f6",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21285"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.512608253Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "2bb290da-e53f-4213-a901-3a493d8a4925",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21286"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:31.069923170Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "1a185e53-d205-4284-8790-c5a3983beb80",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21287"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:32.149766503Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "e9de8c4c-714c-41d5-9cfe-fae1cc82f531",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21288"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:33.112290712Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b30e7912-6e72-41d4-9187-184887ec0b1d",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21289"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:34.282501338Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "2892a987-0b6d-4c8d-bcf1-db1b1b171a75",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21290"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:35.535846713Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "810e8502-1ddf-4dba-81f6-4ecdc11f731b",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21291"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:36.476799297Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6e7ffe11-3b3a-445b-8fe3-fdc512c07d8b",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21292"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:37.532466756Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "61d624cb-1f54-4fdf-bbab-7924adde0726",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21317"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:38.596960465Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "e05fb171-7bec-44ec-848c-d3de400b1173",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21318"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:39.645722924Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "708e26d3-d924-41c3-8656-5fa031f08b6e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21319"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:40.704392841Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ecf6acfd-46bc-4254-aa17-d5c5095dc041",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21320"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:41.984330925Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6cdb0c5f-5257-4bd2-af23-9d69afb13314",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21321"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:43.250322384Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9d380806-548c-4e91-8d76-33bbc1731b74",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21322"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:44.519505176Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "c40e946c-46d4-401e-a6ef-78e7bc36f967",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21323"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:45.772924760Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "452aa101-12c6-44d4-927a-8830d3517421",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21324"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:46.936088552Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "dda8c22d-a314-4cec-b79e-46ee1a477dd2",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21349"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:47.778435928Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "44fe0104-0f0d-4eb4-bc8f-0330df5d281c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21350"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:49.035611011Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0a482281-5ba3-46b6-b75c-81c10f14e6cd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21351"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:49.907622054Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "4d3a3629-a137-4af3-ae1b-195e6ff7d53a",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21352"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:51.173731012Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "19bec7af-2194-4175-9f49-ccd9c5214c72",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21353"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:52.118219846Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "67442f18-477b-4a38-82b8-83fbfafb37cd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21354"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:53.289382472Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "856fc9db-9ef0-4bad-a0cb-2efb92e8d5e5",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21355"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:54.236755958Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "d83d0a84-19ec-4d8f-9271-7250ce5c69f9",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21356"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:55.381377292Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "be8c0647-b758-4150-a253-d3ee1c39714c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21357"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:56.242504876Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "8ec268cf-2307-4650-8041-29a6f31829fd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21358"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:57.111267209Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "dafaa7f3-f179-4fb9-a366-f8f910399e39",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21383"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:57.971228585Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "106be1a5-e0fb-4196-b597-fa3224f67666",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21384"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:59.019497210Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "23af2bde-d054-42a0-9584-2a4d16fa0c81",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21385"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:00.099085711Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "14503b5b-4fa6-404a-8556-34f125fba626",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21386"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:01.281550753Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "977e8858-3514-445f-a9fd-fdc748daba70",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21387"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:02.248309628Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a4872262-5a11-4493-bb20-672a7dadf18a",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21388"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:03.523160504Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b8ea80e9-520e-4336-8a16-c619fc432511",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21389"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:04.503153880Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "47088125-c261-477b-89db-0c2029f21fed",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21390"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:05.572303005Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "00dcbbe5-af7b-4cf2-86f6-da557b950b5c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21391"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:06.731559922Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ec64fcb7-bf4d-415f-9b81-e0fdb189aba0",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21416"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:07.799452881Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "57d06014-91f8-4d64-a8d9-b73545d4667c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21417"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:08.976265965Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "5396baa4-4481-45cc-b6a0-d7ceb6afb144",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21418"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:09.931241215Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "fa3783b7-71b2-42ac-b0cb-d7656465ba92",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21419"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:10.986234174Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ac8364b6-3851-4458-974b-c9565f78e846",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21420"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:11.860032550Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0c3ae726-1df6-4338-965e-a91fbe51329e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21421"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:12.837210508Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6114c194-29f4-4024-b3ed-8813646c5dea",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21422"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:14.080517176Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9be903d4-0cd8-40a5-bf34-20f727de9177",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21423"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:15.021202885Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9f8f93c3-1092-42d3-a507-7fc5226523f7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21424"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:16.062003927Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "88cf8957-a4ab-4c2b-bf09-b9b03b2c21dd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21425"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:16.915728927Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "1790abb1-36b4-4291-91f2-e339dd497786",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21450"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:18.079423219Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a2afb275-0c10-4e2b-8b66-002e565a2c9d",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21451"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:19.329546512Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "55aef285-ef8e-4b4a-8a0a-d5be4d95adc4",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21452"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:20.378826887Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a9e91210-31ad-476b-9b1b-8b02a45b22e7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21453"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:21.415936263Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "f6ef1f4e-529c-4ec5-a34e-bc25de9303a7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21454"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:22.460680471Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0e739676-5e11-46a0-aad6-62d9adb3377e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21455"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:23.632740889Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-Processed a total of 129 messages
-ientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ef6cbf90-b7ca-4c6f-b139-adb735637139",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21456"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:24.611977Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6f6daac7-4a92-4b39-ad61-8e2ba7378517",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21457"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:25.556874792Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0cb5e6f7-d62d-4d3d-b87a-e8ab925a58cf",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21458"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:26.706456459Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "969c25ff-2ffc-47ec-b7e8-281e8db26f21",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21483"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:27.644283793Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "7f729236-c0f9-432f-94d7-fd5f1c931ed5",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21484"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:28.696353960Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "d99e20a8-f61e-455d-84c6-b66996fc7093",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21485"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:29.548459169Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-{
-  "id": "efe53d60-f3ab-4d05-9164-706dfb2f93c8",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21282"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:29.910817294Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "8310e4d9-85dd-41e7-b3aa-ec6daecb9fb3",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21283"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.043989211Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "137e6444-24d8-4389-8069-c51e86b0b5b6",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21284"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.166534544Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b8f18bde-f955-4704-90b3-7039c97425f6",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21285"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:30.512608253Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "2bb290da-e53f-4213-a901-3a493d8a4925",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21286"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:31.069923170Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "1a185e53-d205-4284-8790-c5a3983beb80",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21287"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:32.149766503Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "e9de8c4c-714c-41d5-9cfe-fae1cc82f531",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21288"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:33.112290712Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b30e7912-6e72-41d4-9187-184887ec0b1d",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21289"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:34.282501338Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "2892a987-0b6d-4c8d-bcf1-db1b1b171a75",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21290"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:35.535846713Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "810e8502-1ddf-4dba-81f6-4ecdc11f731b",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21291"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:36.476799297Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6e7ffe11-3b3a-445b-8fe3-fdc512c07d8b",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21292"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:37.532466756Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "61d624cb-1f54-4fdf-bbab-7924adde0726",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21317"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:38.596960465Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "e05fb171-7bec-44ec-848c-d3de400b1173",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21318"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:39.645722924Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "708e26d3-d924-41c3-8656-5fa031f08b6e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21319"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:40.704392841Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ecf6acfd-46bc-4254-aa17-d5c5095dc041",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21320"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:41.984330925Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6cdb0c5f-5257-4bd2-af23-9d69afb13314",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21321"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:43.250322384Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9d380806-548c-4e91-8d76-33bbc1731b74",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21322"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:44.519505176Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "c40e946c-46d4-401e-a6ef-78e7bc36f967",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21323"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:45.772924760Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "452aa101-12c6-44d4-927a-8830d3517421",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21324"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:46.936088552Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "dda8c22d-a314-4cec-b79e-46ee1a477dd2",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21349"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:47.778435928Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "44fe0104-0f0d-4eb4-bc8f-0330df5d281c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21350"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:49.035611011Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0a482281-5ba3-46b6-b75c-81c10f14e6cd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21351"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:49.907622054Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "4d3a3629-a137-4af3-ae1b-195e6ff7d53a",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21352"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:51.173731012Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "19bec7af-2194-4175-9f49-ccd9c5214c72",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21353"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:52.118219846Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "67442f18-477b-4a38-82b8-83fbfafb37cd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21354"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:53.289382472Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "856fc9db-9ef0-4bad-a0cb-2efb92e8d5e5",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21355"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:54.236755958Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "d83d0a84-19ec-4d8f-9271-7250ce5c69f9",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21356"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:55.381377292Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "be8c0647-b758-4150-a253-d3ee1c39714c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21357"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:56.242504876Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "8ec268cf-2307-4650-8041-29a6f31829fd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21358"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:57.111267209Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "dafaa7f3-f179-4fb9-a366-f8f910399e39",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21383"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:57.971228585Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "106be1a5-e0fb-4196-b597-fa3224f67666",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21384"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:45:59.019497210Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "23af2bde-d054-42a0-9584-2a4d16fa0c81",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21385"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:00.099085711Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "14503b5b-4fa6-404a-8556-34f125fba626",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21386"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:01.281550753Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "977e8858-3514-445f-a9fd-fdc748daba70",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21387"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:02.248309628Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a4872262-5a11-4493-bb20-672a7dadf18a",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21388"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:03.523160504Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "b8ea80e9-520e-4336-8a16-c619fc432511",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21389"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:04.503153880Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "47088125-c261-477b-89db-0c2029f21fed",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21390"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:05.572303005Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "00dcbbe5-af7b-4cf2-86f6-da557b950b5c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21391"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:06.731559922Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ec64fcb7-bf4d-415f-9b81-e0fdb189aba0",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21416"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:07.799452881Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "57d06014-91f8-4d64-a8d9-b73545d4667c",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21417"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:08.976265965Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "5396baa4-4481-45cc-b6a0-d7ceb6afb144",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21418"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:09.931241215Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "fa3783b7-71b2-42ac-b0cb-d7656465ba92",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21419"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:10.986234174Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ac8364b6-3851-4458-974b-c9565f78e846",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21420"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:11.860032550Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0c3ae726-1df6-4338-965e-a91fbe51329e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21421"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:12.837210508Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6114c194-29f4-4024-b3ed-8813646c5dea",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21422"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:14.080517176Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9be903d4-0cd8-40a5-bf34-20f727de9177",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21423"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:15.021202885Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "9f8f93c3-1092-42d3-a507-7fc5226523f7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21424"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:16.062003927Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "88cf8957-a4ab-4c2b-bf09-b9b03b2c21dd",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21425"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:16.915728927Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "1790abb1-36b4-4291-91f2-e339dd497786",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21450"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:18.079423219Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a2afb275-0c10-4e2b-8b66-002e565a2c9d",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21451"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:19.329546512Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "55aef285-ef8e-4b4a-8a0a-d5be4d95adc4",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21452"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:20.378826887Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "a9e91210-31ad-476b-9b1b-8b02a45b22e7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21453"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:21.415936263Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "f6ef1f4e-529c-4ec5-a34e-bc25de9303a7",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21454"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:22.460680471Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0e739676-5e11-46a0-aad6-62d9adb3377e",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21455"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:23.632740889Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-Processed a total of 129 messages
-ientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "ef6cbf90-b7ca-4c6f-b139-adb735637139",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21456"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:24.611977Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "6f6daac7-4a92-4b39-ad61-8e2ba7378517",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21457"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:25.556874792Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "0cb5e6f7-d62d-4d3d-b87a-e8ab925a58cf",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21458"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:26.706456459Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "969c25ff-2ffc-47ec-b7e8-281e8db26f21",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21483"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:27.644283793Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "7f729236-c0f9-432f-94d7-fd5f1c931ed5",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21484"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:28.696353960Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
-{
-  "id": "d99e20a8-f61e-455d-84c6-b66996fc7093",
-  "source": "krn://cluster=ve2_D0wASJCkMMPKrG6gGw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:21485"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T02:46:29.548459169Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin",
-    "message": "clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"
-  }
-}
+{"id":"fc31b8ea-6b5b-432f-8f87-448da6b5d8cd","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.23.0.8:8888","remoteAddress":"192.168.65.1:31542"},"specVersion":"0.1.0","time":"2024-04-09T23:08:58.836842680Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
+{"id":"e089143f-b6cc-41c3-81fe-0c5d550db5ae","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20120"},"specVersion":"0.1.0","time":"2024-04-09T23:08:59.811710833Z","eventData":"SUCCESS"}
+{"id":"d5b428cf-4f6d-48ea-820a-6c2b7c1dd005","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6970","remoteAddress":"/192.168.65.1:36011"},"specVersion":"0.1.0","time":"2024-04-09T23:08:59.867349041Z","eventData":"SUCCESS"}
+{"id":"848abec4-2cd8-458b-a9f1-a915d31498cc","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20122"},"specVersion":"0.1.0","time":"2024-04-09T23:09:01.126586459Z","eventData":"SUCCESS"}
+{"id":"5a9e2144-21df-41e1-8752-db8c6541e69b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6970","remoteAddress":"/192.168.65.1:36013"},"specVersion":"0.1.0","time":"2024-04-09T23:09:01.153179250Z","eventData":"SUCCESS"}
+{"id":"d10cbb53-b18a-4faf-b72c-ab9903b0c1d7","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.23.0.8:8888","remoteAddress":"192.168.65.1:31547"},"specVersion":"0.1.0","time":"2024-04-09T23:09:01.654008459Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/client-id","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"namingConvention\" : \"naming-convention-.*\"  }}"}}
+{"id":"cba27a90-65a9-406c-82c1-d59d83cb7413","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.23.0.8:8888","remoteAddress":"192.168.65.1:31548"},"specVersion":"0.1.0","time":"2024-04-09T23:09:01.762245917Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
+{"id":"b947e003-dcdf-4c61-a009-0502a325b917","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20126"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.546377043Z","eventData":"SUCCESS"}
+{"id":"f139cecb-1d08-49d4-9b82-2330c7cecb9c","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20126"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.555821209Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"aa7c82fb-ef1e-4c8c-b31c-21228d38c47f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20127"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.683298918Z","eventData":"SUCCESS"}
+{"id":"104cdf1d-3ab2-4bb0-b30a-5ef329e93df2","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20127"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.686989668Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"24e18fef-1a1d-4a5e-85ec-81acf83363a2","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20128"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.801116459Z","eventData":"SUCCESS"}
+{"id":"24ee215c-0041-44d4-813e-45205dbca257","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20128"},"specVersion":"0.1.0","time":"2024-04-09T23:09:02.804430668Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"28518b92-be26-4f54-9868-257511d00122","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20129"},"specVersion":"0.1.0","time":"2024-04-09T23:09:03.040759626Z","eventData":"SUCCESS"}
+{"id":"544abc7d-2cdd-4811-8672-0231f9ac5614","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20129"},"specVersion":"0.1.0","time":"2024-04-09T23:09:03.044805460Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"978eabc7-cb61-4ff0-bc08-5598a71fd5a6","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20130"},"specVersion":"0.1.0","time":"2024-04-09T23:09:03.467672835Z","eventData":"SUCCESS"}
+{"id":"5943bbb0-6444-41a1-9912-4f5d81fac3a3","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20130"},"specVersion":"0.1.0","time":"2024-04-09T23:09:03.472944710Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"14db9337-0422-4767-9eba-bfcae8bfe763","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20131"},"specVersion":"0.1.0","time":"2024-04-09T23:09:04.306340043Z","eventData":"SUCCESS"}
+{"id":"cfda6756-4520-48a4-b24e-f5deaa109935","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20131"},"specVersion":"0.1.0","time":"2024-04-09T23:09:04.310841418Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"744e1f5f-7daf-4646-a2ad-8b84a682be00","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20132"},"specVersion":"0.1.0","time":"2024-04-09T23:09:05.353869252Z","eventData":"SUCCESS"}
+{"id":"c350879c-da08-4462-b569-9227c5007b5f","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20132"},"specVersion":"0.1.0","time":"2024-04-09T23:09:05.357649711Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"a4e8609a-7ad4-41fe-b0f5-41905e7ca349","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20133"},"specVersion":"0.1.0","time":"2024-04-09T23:09:06.402573919Z","eventData":"SUCCESS"}
+{"id":"20d037a9-0061-48b7-8170-e29343f54567","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20133"},"specVersion":"0.1.0","time":"2024-04-09T23:09:06.407965503Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"f78e06ba-1b97-49cd-a7bd-731866cf8ff9","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20134"},"specVersion":"0.1.0","time":"2024-04-09T23:09:07.461732462Z","eventData":"SUCCESS"}
+{"id":"4dc6462a-ba4a-4cb4-8687-1e61a6a1d940","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20134"},"specVersion":"0.1.0","time":"2024-04-09T23:09:07.481773128Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"99a1060e-4c2f-4922-a605-893637ebba15","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20159"},"specVersion":"0.1.0","time":"2024-04-09T23:09:08.542121129Z","eventData":"SUCCESS"}
+{"id":"31dddbed-ad15-4e8c-ac53-cd5fc1259b00","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20159"},"specVersion":"0.1.0","time":"2024-04-09T23:09:08.553854504Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"330ace5f-9f19-49ed-aa7b-cb663ba53c93","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20160"},"specVersion":"0.1.0","time":"2024-04-09T23:09:09.608932463Z","eventData":"SUCCESS"}
+{"id":"98865dbc-3335-44b6-87fe-aae202a43da2","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20160"},"specVersion":"0.1.0","time":"2024-04-09T23:09:09.615198838Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"bc4ca401-b166-4162-bdea-c203f2d4ff2d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20161"},"specVersion":"0.1.0","time":"2024-04-09T23:09:10.653495255Z","eventData":"SUCCESS"}
+{"id":"f4f83d56-3160-4b42-92af-0ebc5bc62af1","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20161"},"specVersion":"0.1.0","time":"2024-04-09T23:09:10.659489088Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"a05a221b-c2ac-496d-9037-0e5c841329fb","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20162"},"specVersion":"0.1.0","time":"2024-04-09T23:09:11.724711547Z","eventData":"SUCCESS"}
+{"id":"32b23f21-8e2f-4b23-9135-c1854c079ba4","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20162"},"specVersion":"0.1.0","time":"2024-04-09T23:09:11.733973005Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"dbd39024-77d7-4b05-a04d-57ee0dddf081","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20163"},"specVersion":"0.1.0","time":"2024-04-09T23:09:12.771706548Z","eventData":"SUCCESS"}
+{"id":"c8c2e8fc-ca14-40e5-a3d0-23828b264952","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20163"},"specVersion":"0.1.0","time":"2024-04-09T23:09:12.774950214Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"703b63f1-b4b2-4678-acd0-d357b91825af","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20164"},"specVersion":"0.1.0","time":"2024-04-09T23:09:13.820804465Z","eventData":"SUCCESS"}
+{"id":"6e535df9-8726-4105-8459-94f1e51c6545","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20164"},"specVersion":"0.1.0","time":"2024-04-09T23:09:13.825875381Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"9a06fbbd-4333-4c33-a41f-036e2e8bb668","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20165"},"specVersion":"0.1.0","time":"2024-04-09T23:09:14.883042340Z","eventData":"SUCCESS"}
+{"id":"140fd6ea-cbd3-47c6-a093-0d2854cd1735","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20165"},"specVersion":"0.1.0","time":"2024-04-09T23:09:14.888253507Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"4dc530f1-a36b-4559-882f-4cc8136df4f2","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20166"},"specVersion":"0.1.0","time":"2024-04-09T23:09:15.932068091Z","eventData":"SUCCESS"}
+{"id":"e7138373-6bc7-4c89-b2b9-32720e8be17b","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20166"},"specVersion":"0.1.0","time":"2024-04-09T23:09:15.936781091Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"4212a717-d4f7-45fd-961e-892113a0defd","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20167"},"specVersion":"0.1.0","time":"2024-04-09T23:09:16.977738675Z","eventData":"SUCCESS"}
+{"id":"43bbb36d-ae5c-4362-af26-55bcd703ad5f","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20167"},"specVersion":"0.1.0","time":"2024-04-09T23:09:16.982852050Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"4a91a3ba-9236-4bef-8d95-7256046b8795","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20180"},"specVersion":"0.1.0","time":"2024-04-09T23:09:18.021041967Z","eventData":"SUCCESS"}
+{"id":"6d134748-7819-4862-b740-f4c36ba3aeb7","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20180"},"specVersion":"0.1.0","time":"2024-04-09T23:09:18.035556633Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"7efaa6f8-858f-4ec5-98a8-70e784d227e0","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20193"},"specVersion":"0.1.0","time":"2024-04-09T23:09:18.972826467Z","eventData":"SUCCESS"}
+{"id":"c0d27232-1c4a-436b-b71c-eaee05a5bad3","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20193"},"specVersion":"0.1.0","time":"2024-04-09T23:09:18.978516425Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"807e7922-f9b9-4e18-b2a9-2e4d8b91378f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20194"},"specVersion":"0.1.0","time":"2024-04-09T23:09:20.014942176Z","eventData":"SUCCESS"}
+{"id":"74006eea-a2d9-4a03-91e9-727153437727","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20194"},"specVersion":"0.1.0","time":"2024-04-09T23:09:20.020215384Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"b005a991-bf61-4b14-bd51-1abda0dce2c5","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20195"},"specVersion":"0.1.0","time":"2024-04-09T23:09:21.070354260Z","eventData":"SUCCESS"}
+{"id":"04fc9259-ea81-4d0f-bfca-d4debc617606","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20195"},"specVersion":"0.1.0","time":"2024-04-09T23:09:21.075887926Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"7a47d388-d3a7-4212-852e-ffe46595c6e4","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20196"},"specVersion":"0.1.0","time":"2024-04-09T23:09:22.122334219Z","eventData":"SUCCESS"}
+{"id":"51e781ec-6862-4773-9808-71175ae9fa58","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20196"},"specVersion":"0.1.0","time":"2024-04-09T23:09:22.124761344Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"f58da823-7a6a-4e46-b29c-e8d07d07bd8d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20197"},"specVersion":"0.1.0","time":"2024-04-09T23:09:23.059829969Z","eventData":"SUCCESS"}
+{"id":"dcff6035-6da7-43a0-9a14-54ff7ee781a7","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20197"},"specVersion":"0.1.0","time":"2024-04-09T23:09:23.064491386Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"eacdcbe6-c260-458c-8f02-2b3baa39411d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20198"},"specVersion":"0.1.0","time":"2024-04-09T23:09:24.098265428Z","eventData":"SUCCESS"}
+{"id":"04adbfb4-94b9-4c42-9853-7576eca00fae","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20198"},"specVersion":"0.1.0","time":"2024-04-09T23:09:24.103639261Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"3381de6f-48d7-4ce4-a2a7-9954e361d71f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20199"},"specVersion":"0.1.0","time":"2024-04-09T23:09:25.059878387Z","eventData":"SUCCESS"}
+{"id":"093cf8de-9788-4808-a694-833a8a5e1abc","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20199"},"specVersion":"0.1.0","time":"2024-04-09T23:09:25.064730553Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"de86a42a-3a2e-4163-8d93-e2ec1d4be587","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20200"},"specVersion":"0.1.0","time":"2024-04-09T23:09:26.000083679Z","eventData":"SUCCESS"}
+{"id":"689ba89b-246c-4c0d-8e25-ac16310117cd","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20200"},"specVersion":"0.1.0","time":"2024-04-09T23:09:26.004666804Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"4ac67267-21bf-49ef-8e09-fe589609efaf","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20201"},"specVersion":"0.1.0","time":"2024-04-09T23:09:26.967065971Z","eventData":"SUCCESS"}
+{"id":"ae74408a-3b85-4d06-8357-6c6b4c3d9fad","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20201"},"specVersion":"0.1.0","time":"2024-04-09T23:09:26.973353846Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"6fe8a626-4275-439b-ab44-e9e3773ae146","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20214"},"specVersion":"0.1.0","time":"2024-04-09T23:09:28.004792680Z","eventData":"SUCCESS"}
+{"id":"15ac7e33-c29c-4fac-929f-9c74d1fa8f5a","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20214"},"specVersion":"0.1.0","time":"2024-04-09T23:09:28.008884805Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"2adf839c-eb35-4ebb-9ce0-eaf83388929d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20227"},"specVersion":"0.1.0","time":"2024-04-09T23:09:29.041644055Z","eventData":"SUCCESS"}
+{"id":"4b48916a-39e4-4468-be65-91f9e7374d1f","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20227"},"specVersion":"0.1.0","time":"2024-04-09T23:09:29.044621847Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"bae1fa04-19cb-44d5-8a94-fe53378bb615","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20228"},"specVersion":"0.1.0","time":"2024-04-09T23:09:29.966305791Z","eventData":"SUCCESS"}
+{"id":"9e203f2f-c36d-46aa-a8ea-5d5f2380c8c0","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20228"},"specVersion":"0.1.0","time":"2024-04-09T23:09:29.968505Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"26aaf7f5-e666-48e2-a5b0-b5af63dcddd5","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20229"},"specVersion":"0.1.0","time":"2024-04-09T23:09:31.020777542Z","eventData":"SUCCESS"}
+{"id":"a86edb2c-a0e4-42dc-833b-7b36cf5ce60d","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20229"},"specVersion":"0.1.0","time":"2024-04-09T23:09:31.025440917Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"4c69361e-800a-4d0d-ab63-50db58ce2a4c","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20230"},"specVersion":"0.1.0","time":"2024-04-09T23:09:32.071779042Z","eventData":"SUCCESS"}
+{"id":"58502afe-7ef6-41d2-bd81-bc3871cc3aad","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20230"},"specVersion":"0.1.0","time":"2024-04-09T23:09:32.078063542Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"b6cbde9f-3d70-4a3b-9cae-2a4658f6f43a","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20231"},"specVersion":"0.1.0","time":"2024-04-09T23:09:33.126890001Z","eventData":"SUCCESS"}
+{"id":"58d00865-d189-4a9f-8e7b-d47d74a811c5","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20231"},"specVersion":"0.1.0","time":"2024-04-09T23:09:33.129547460Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"faafee5a-ead5-4bc2-9df5-a0ca797c31c5","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20232"},"specVersion":"0.1.0","time":"2024-04-09T23:09:34.063020752Z","eventData":"SUCCESS"}
+{"id":"4ccc796c-29e4-40e4-b074-4c320f944521","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20232"},"specVersion":"0.1.0","time":"2024-04-09T23:09:34.067340710Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"2ac2aa75-4f55-4386-8dc6-4d0c8821d46b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20233"},"specVersion":"0.1.0","time":"2024-04-09T23:09:35.110253294Z","eventData":"SUCCESS"}
+{"id":"6a1e1d1c-5151-4f6b-8394-84b64b1ee663","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20233"},"specVersion":"0.1.0","time":"2024-04-09T23:09:35.114732336Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"b5e8b61c-1193-45d2-856b-4da0d36b7cea","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20234"},"specVersion":"0.1.0","time":"2024-04-09T23:09:36.155828919Z","eventData":"SUCCESS"}
+{"id":"81809090-3a86-48dc-9861-63e5af75be64","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20234"},"specVersion":"0.1.0","time":"2024-04-09T23:09:36.160443836Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"ff891f9d-18a2-48d5-8ce9-8cdcda813f3d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20235"},"specVersion":"0.1.0","time":"2024-04-09T23:09:37.106920503Z","eventData":"SUCCESS"}
+{"id":"efaa780d-6158-4015-b7ca-a9db22321327","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20235"},"specVersion":"0.1.0","time":"2024-04-09T23:09:37.111953920Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"66bfd839-0791-48da-991f-b5f24e4b0742","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20248"},"specVersion":"0.1.0","time":"2024-04-09T23:09:38.141417045Z","eventData":"SUCCESS"}
+{"id":"42212e4b-2175-48d0-8660-079061f7012d","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20248"},"specVersion":"0.1.0","time":"2024-04-09T23:09:38.148142920Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"5d39d817-2267-4dc0-b470-d03f7115d682","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20261"},"specVersion":"0.1.0","time":"2024-04-09T23:09:39.186748129Z","eventData":"SUCCESS"}
+{"id":"eb4aea95-c46b-4e60-8569-75924f0edf49","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20261"},"specVersion":"0.1.0","time":"2024-04-09T23:09:39.192506587Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"63ea5edb-b3ab-4edf-b99c-a3bc16bec9e6","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20262"},"specVersion":"0.1.0","time":"2024-04-09T23:09:40.240773088Z","eventData":"SUCCESS"}
+{"id":"6d9d37d4-7ff1-434e-bec2-866aa05f3156","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20262"},"specVersion":"0.1.0","time":"2024-04-09T23:09:40.249178796Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"f712ac67-1781-4cc4-825c-041eddf879e8","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20263"},"specVersion":"0.1.0","time":"2024-04-09T23:09:41.299118880Z","eventData":"SUCCESS"}
+{"id":"f62a50b9-c046-425e-a090-dcaac9f93d29","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20263"},"specVersion":"0.1.0","time":"2024-04-09T23:09:41.302156797Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"e6bf280a-b2cf-4073-9e80-b85fdff1e063","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20264"},"specVersion":"0.1.0","time":"2024-04-09T23:09:42.357143381Z","eventData":"SUCCESS"}
+{"id":"2c154dbc-c7c2-4dee-b3bd-2c87f01ce44a","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20264"},"specVersion":"0.1.0","time":"2024-04-09T23:09:42.362546631Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"cfc80b4b-9dab-423d-a82f-33a45f5d8120","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20265"},"specVersion":"0.1.0","time":"2024-04-09T23:09:43.411806131Z","eventData":"SUCCESS"}
+{"id":"7a7ae415-9aa9-4ae0-b294-855acaca9895","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20265"},"specVersion":"0.1.0","time":"2024-04-09T23:09:43.417888173Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"d2ab9d1e-8d45-4ae8-a2e3-05f8220cdce8","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20266"},"specVersion":"0.1.0","time":"2024-04-09T23:09:44.468970715Z","eventData":"SUCCESS"}
+{"id":"c77e5796-e6bd-41a2-a247-3e69ef056f9a","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20266"},"specVersion":"0.1.0","time":"2024-04-09T23:09:44.479822548Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"7649ad2d-d3fa-4b7e-88f9-31d8b03e42c1","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20267"},"specVersion":"0.1.0","time":"2024-04-09T23:09:45.504890257Z","eventData":"SUCCESS"}
+{"id":"f7dd4598-92b5-4cc9-a3aa-aba063398a37","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20267"},"specVersion":"0.1.0","time":"2024-04-09T23:09:45.507338799Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"1e827745-44d6-4d7d-af20-ba83c5161a1b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20268"},"specVersion":"0.1.0","time":"2024-04-09T23:09:46.431372049Z","eventData":"SUCCESS"}
+{"id":"fdd32c16-6d71-4972-bf92-1e9ed6313c33","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20268"},"specVersion":"0.1.0","time":"2024-04-09T23:09:46.436297591Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"32ce9f75-fa63-46de-9127-8110e2aa3e68","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20269"},"specVersion":"0.1.0","time":"2024-04-09T23:09:47.375119675Z","eventData":"SUCCESS"}
+{"id":"609953b0-e7d0-4fdf-a5ca-c320255b7d4e","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20269"},"specVersion":"0.1.0","time":"2024-04-09T23:09:47.377839300Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"3a53611a-7aec-4683-a260-a58c80d97b6a","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20282"},"specVersion":"0.1.0","time":"2024-04-09T23:09:48.405223509Z","eventData":"SUCCESS"}
+{"id":"9512aa79-a2a2-4ade-b57a-55ee91117b0e","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20282"},"specVersion":"0.1.0","time":"2024-04-09T23:09:48.408932467Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"33b7f6fd-00ad-4ead-a30b-39e75daf1f5c","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20295"},"specVersion":"0.1.0","time":"2024-04-09T23:09:49.448602467Z","eventData":"SUCCESS"}
+{"id":"7fd86aab-1a02-471b-af70-2c52c22759e1","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20295"},"specVersion":"0.1.0","time":"2024-04-09T23:09:49.454952426Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"9302749e-708b-40d4-9098-2dbedb73c088","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20296"},"specVersion":"0.1.0","time":"2024-04-09T23:09:50.496302218Z","eventData":"SUCCESS"}
+{"id":"c6c42a80-6534-4423-ab25-c76e29bef8a9","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20296"},"specVersion":"0.1.0","time":"2024-04-09T23:09:50.502023010Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"d7184b39-a254-48cd-abd8-ae08073e0e6f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20297"},"specVersion":"0.1.0","time":"2024-04-09T23:09:51.552708177Z","eventData":"SUCCESS"}
+{"id":"4c26e3ee-cfdc-4b88-b865-4d161d53e518","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20297"},"specVersion":"0.1.0","time":"2024-04-09T23:09:51.555635718Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"6d955a5c-e6b9-4662-a684-29896a1ba8ec","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20298"},"specVersion":"0.1.0","time":"2024-04-09T23:09:52.489401969Z","eventData":"SUCCESS"}
+{"id":"bafa0b9e-567f-4cc6-af7a-51977fd4d12e","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20298"},"specVersion":"0.1.0","time":"2024-04-09T23:09:52.496663677Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"a9e105ee-37f6-44f0-970f-50d493210cb1","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20299"},"specVersion":"0.1.0","time":"2024-04-09T23:09:53.429193761Z","eventData":"SUCCESS"}
+{"id":"ef70be44-0307-49f4-8313-f04d73a3fdc1","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20299"},"specVersion":"0.1.0","time":"2024-04-09T23:09:53.446374053Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"0bcd4d8e-99e3-4610-b3c1-4c05fc9b0f6f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20300"},"specVersion":"0.1.0","time":"2024-04-09T23:09:54.480242595Z","eventData":"SUCCESS"}
+{"id":"22ce63b6-f0bb-4432-af4e-35c0ff22d039","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20300"},"specVersion":"0.1.0","time":"2024-04-09T23:09:54.483664678Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"ba9c926c-14f5-4eed-ad8e-242c132b26a4","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20301"},"specVersion":"0.1.0","time":"2024-04-09T23:09:55.520595720Z","eventData":"SUCCESS"}
+{"id":"8ee65270-8ed1-4b35-99b6-5aea6d694951","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20301"},"specVersion":"0.1.0","time":"2024-04-09T23:09:55.526192179Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"d01ba5e6-7e74-4f01-9a03-0aca458892f8","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20302"},"specVersion":"0.1.0","time":"2024-04-09T23:09:56.463703179Z","eventData":"SUCCESS"}
+{"id":"5774d914-74ab-4a7a-ab01-8d3c115f18fc","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20302"},"specVersion":"0.1.0","time":"2024-04-09T23:09:56.468913346Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"424f1ac2-593d-4185-b604-924e01571161","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20303"},"specVersion":"0.1.0","time":"2024-04-09T23:09:57.399816554Z","eventData":"SUCCESS"}
+{"id":"bd283708-71b4-433b-a0c4-9bd2501e426c","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20303"},"specVersion":"0.1.0","time":"2024-04-09T23:09:57.402670096Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"21a5fd43-d723-42f4-9456-ee34ad5d36d5","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20328"},"specVersion":"0.1.0","time":"2024-04-09T23:09:58.436008972Z","eventData":"SUCCESS"}
+{"id":"1cab81b7-2320-41a9-866c-8ab75f5b476a","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20328"},"specVersion":"0.1.0","time":"2024-04-09T23:09:58.439589680Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"262dc105-affe-4919-a0e6-27c4006a9375","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20329"},"specVersion":"0.1.0","time":"2024-04-09T23:09:59.475524930Z","eventData":"SUCCESS"}
+{"id":"33086e6c-73ee-463c-976e-64feb810174c","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20329"},"specVersion":"0.1.0","time":"2024-04-09T23:09:59.483149722Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"c22fbaef-3097-45b3-b0c0-e3c21943ae48","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20330"},"specVersion":"0.1.0","time":"2024-04-09T23:10:00.530822542Z","eventData":"SUCCESS"}
+{"id":"4ba878bb-fa90-452e-8591-e8c209e0be8b","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20330"},"specVersion":"0.1.0","time":"2024-04-09T23:10:00.546296167Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"b33323a6-357a-48b6-8eba-70ccdbd83576","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20331"},"specVersion":"0.1.0","time":"2024-04-09T23:10:01.373270167Z","eventData":"SUCCESS"}
+{"id":"c5e5333a-804c-4453-b5c7-7f654f5730eb","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20331"},"specVersion":"0.1.0","time":"2024-04-09T23:10:01.375501125Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"48839639-7216-4321-abbe-be2922a84c4a","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20332"},"specVersion":"0.1.0","time":"2024-04-09T23:10:02.404853293Z","eventData":"SUCCESS"}
+{"id":"9f49e892-c518-489e-86c4-54eb5dfc904b","source":"krn://cluster=gMNHV-4RQaKxsx3YNGWhIg","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:20332"},"specVersion":"0.1.0","time":"2024-04-09T23:10:02.407692834Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.ClientIdRequiredPolicyPlugin","message":"clientId 'adminclient-1' is invalid, naming convention must match with regular expression 'naming-convention-.*'"}}
+{"id":"a2200bda-a3e5-4c15-bda2-a38c2e9eb584","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6969","remoteAddress":"/192.168.65.1:20333"},"specVersion":"0.1.0","time":"2024-04-09T23:10:03.714217668Z","eventData":"SUCCESS"}
+{"id":"7c1d1677-b322-4534-bfff-7073b2d6661b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.23.0.8:6970","remoteAddress":"/192.168.65.1:36224"},"specVersion":"0.1.0","time":"2024-04-09T23:10:03.743503252Z","eventData":"SUCCESS"}
+[2024-04-10 03:10:08,231] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
+Processed a total of 135 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/o9siq3cI1rgfveNguB1EKfYMq.svg)](https://asciinema.org/a/o9siq3cI1rgfveNguB1EKfYMq)
+[![asciicast](https://asciinema.org/a/mf6VjPQPqtFTsm5GdUSQSME0J.svg)](https://asciinema.org/a/mf6VjPQPqtFTsm5GdUSQSME0J)
 
 </TabItem>
 </Tabs>
@@ -2971,21 +941,21 @@ docker compose down --volumes
 
 ```
  Container gateway1  Stopping
- Container kafka-client  Stopping
- Container schema-registry  Stopping
  Container gateway2  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway2  Removed
+ Container schema-registry  Stopping
+ Container kafka-client  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka2  Stopping
- Container kafka3  Stopping
  Container kafka1  Stopping
+ Container kafka3  Stopping
+ Container kafka2  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
@@ -3010,7 +980,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bSdG35aknIi9KOVhNU4G7pE2w.svg)](https://asciinema.org/a/bSdG35aknIi9KOVhNU4G7pE2w)
+[![asciicast](https://asciinema.org/a/2sjEvgo6eo9eqWOw8PZPfSR73.svg)](https://asciinema.org/a/2sjEvgo6eo9eqWOw8PZPfSR73)
 
 </TabItem>
 </Tabs>

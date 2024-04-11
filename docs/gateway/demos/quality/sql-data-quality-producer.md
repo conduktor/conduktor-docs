@@ -1,7 +1,7 @@
 ---
 title: SQL Based Data Quality Producer
 description: SQL Based Data Quality Producer
-tag: quality
+tag: data-quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fV9XdLb49NkOdQKL4lAtZEmld.svg)](https://asciinema.org/a/fV9XdLb49NkOdQKL4lAtZEmld)
+[![asciicast](https://asciinema.org/a/5YQHt3unOCjNEtoAnTEbA2y3g.svg)](https://asciinema.org/a/5YQHt3unOCjNEtoAnTEbA2y3g)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -280,80 +264,78 @@ docker compose up --detach --wait
  Container kafka3  Creating
  Container kafka1  Creating
  Container kafka2  Creating
- Container kafka3  Created
  Container kafka1  Created
  Container kafka2  Created
+ Container kafka3  Created
+ Container gateway2  Creating
  Container schema-registry  Creating
  Container gateway1  Creating
- Container gateway2  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway2  Created
  Container gateway1  Created
+ Container gateway2  Created
  Container schema-registry  Created
- Container kafka-client  Starting
  Container zookeeper  Starting
+ Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
- Container zookeeper  Healthy
- Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
+ Container zookeeper  Healthy
+ Container kafka1  Starting
  Container kafka2  Started
- Container kafka3  Started
  Container kafka1  Started
+ Container kafka3  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka2  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Healthy
  Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka3  Healthy
- Container schema-registry  Starting
  Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
  Container kafka1  Healthy
  Container gateway2  Starting
+ Container kafka1  Healthy
  Container kafka3  Healthy
- Container gateway1  Starting
+ Container kafka2  Healthy
+ Container schema-registry  Starting
  Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container schema-registry  Waiting
- Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container zookeeper  Healthy
- Container kafka2  Healthy
  Container kafka-client  Healthy
- Container schema-registry  Healthy
+ Container zookeeper  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/mMChPHhYW38sIfJM9Cuz1ziQp.svg)](https://asciinema.org/a/mMChPHhYW38sIfJM9Cuz1ziQp)
+[![asciicast](https://asciinema.org/a/Ap3f9c3nNsVDiuzOjWjXuoJHE.svg)](https://asciinema.org/a/Ap3f9c3nNsVDiuzOjWjXuoJHE)
 
 </TabItem>
 </Tabs>
@@ -396,7 +378,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1Nzk5OH0.X4c9Be9T0zzxtPGXHPH6bDEYX2SwsoYNiXIRIe32CBI';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MzcxMn0.tLGKqdV7qhQ1C_BoO1nepMesNQNgKaojH24eBsXW3Go';
 
 
 ```
@@ -404,7 +386,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/VKPtPUhEJTA6t2QkcakMeOlz3.svg)](https://asciinema.org/a/VKPtPUhEJTA6t2QkcakMeOlz3)
+[![asciicast](https://asciinema.org/a/BwVzLB3BXkTc4ZuBjqt8F52A9.svg)](https://asciinema.org/a/BwVzLB3BXkTc4ZuBjqt8F52A9)
 
 </TabItem>
 </Tabs>
@@ -441,7 +423,7 @@ Created topic cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BImwyUegtfLfa8fpKTauiCknK.svg)](https://asciinema.org/a/BImwyUegtfLfa8fpKTauiCknK)
+[![asciicast](https://asciinema.org/a/Nq3PjZE0kojte6mTkMhfYCc0n.svg)](https://asciinema.org/a/Nq3PjZE0kojte6mTkMhfYCc0n)
 
 </TabItem>
 </Tabs>
@@ -450,27 +432,13 @@ Created topic cars.
 
 Let's create an interceptor to ensure the data produced is valid.
 
-Creating the interceptor named `cars-quality` of the plugin `io.conduktor.gateway.interceptor.DataQualityProducerPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.DataQualityProducerPlugin",
-  "priority" : 100,
-  "config" : {
-    "statement" : "SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020",
-    "action" : "BLOCK_WHOLE_BATCH",
-    "deadLetterTopic" : "dead-letter-topic"
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-07-cars-quality.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/cars-quality" \
     --header 'Content-Type: application/json' \
@@ -485,6 +453,15 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.DataQualityProducerPlugin",
+  "priority": 100,
+  "config": {
+    "statement": "SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020",
+    "action": "BLOCK_WHOLE_BATCH",
+    "deadLetterTopic": "dead-letter-topic"
+  }
+}
+{
   "message": "cars-quality is created"
 }
 
@@ -493,7 +470,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/MmvIY5p8Y5Bel7ADx9a6ibi95.svg)](https://asciinema.org/a/MmvIY5p8Y5Bel7ADx9a6ibi95)
+[![asciicast](https://asciinema.org/a/PsNg7DRFxof1ajszGyT14WxZl.svg)](https://asciinema.org/a/PsNg7DRFxof1ajszGyT14WxZl)
 
 </TabItem>
 </Tabs>
@@ -540,7 +517,7 @@ echo '{"type":"SUV","price":2000,"color":"blue"}' | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:40:02,341] ERROR Error when sending message to topic cars with key: null, value: 42 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
+[2024-04-10 04:08:35,463] ERROR Error when sending message to topic cars with key: null, value: 42 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy: Data quality policy is violated.
 
 ```
@@ -548,7 +525,7 @@ org.apache.kafka.common.errors.PolicyViolationException: Request parameters do n
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/THX2pX8KXOZicyNLwQ2xSeEMZ.svg)](https://asciinema.org/a/THX2pX8KXOZicyNLwQ2xSeEMZ)
+[![asciicast](https://asciinema.org/a/0k43ezUJfcAHnfIueUKh4nNUf.svg)](https://asciinema.org/a/0k43ezUJfcAHnfIueUKh4nNUf)
 
 </TabItem>
 </Tabs>
@@ -564,9 +541,12 @@ Produce invalid record to the cars topic (record is not produced because year is
 Sending 1 event
 ```json
 {
-  "headers" : { },
   "key" : "{\"year\":2010,\"make\":\"BMW\"}",
-  "value" : "{\"type\":\"Sports\",\"price\":1000,\"color\":\"red\"}"
+  "value" : {
+    "type" : "Sports",
+    "price" : 1000,
+    "color" : "red"
+  }
 }
 ```
 with
@@ -596,7 +576,7 @@ echo '{"year":2010,"make":"BMW"}\t{"type":"Sports","price":1000,"color":"red"}' 
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:40:03,663] ERROR Error when sending message to topic cars with key: 26 bytes, value: 44 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
+[2024-04-10 04:08:36,877] ERROR Error when sending message to topic cars with key: 26 bytes, value: 44 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy: Data quality policy is violated.
 
 ```
@@ -604,7 +584,7 @@ org.apache.kafka.common.errors.PolicyViolationException: Request parameters do n
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/6Ds1vgVTptxjq52dq1ogAxmTk.svg)](https://asciinema.org/a/6Ds1vgVTptxjq52dq1ogAxmTk)
+[![asciicast](https://asciinema.org/a/1u4N9mzZRmNxkrU8fqJLeGrf4.svg)](https://asciinema.org/a/1u4N9mzZRmNxkrU8fqJLeGrf4)
 
 </TabItem>
 </Tabs>
@@ -625,7 +605,11 @@ Sending 1 event
     "X-HEADER-2" : "value2"
   },
   "key" : "{\"year\":2023,\"make\":\"Vinfast\"}",
-  "value" : "{\"type\":\"Trucks\",\"price\":2500,\"color\":\"red\"}"
+  "value" : {
+    "type" : "Trucks",
+    "price" : 2500,
+    "color" : "red"
+  }
 }
 ```
 with
@@ -652,7 +636,7 @@ echo 'X-HEADER-1:value1,X-HEADER-2:value2\t{"year":2023,"make":"Vinfast"}\t{"typ
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Rdjp6JNZ08Lt9i5kkOZOq4fjV.svg)](https://asciinema.org/a/Rdjp6JNZ08Lt9i5kkOZOq4fjV)
+[![asciicast](https://asciinema.org/a/cgUKejPyvbs2IhHr6morfKuL5.svg)](https://asciinema.org/a/cgUKejPyvbs2IhHr6morfKuL5)
 
 </TabItem>
 </Tabs>
@@ -678,14 +662,21 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 11
-Processed a total of 1 messages
-
+{
+  "headers" : {
+    "X-HEADER-1" : "value1",
+    "X-HEADER-2" : "value2"
+  },
+  "key" : "{\"year\":2023,\"make\":\"Vinfast\"}",
+  "value" : {
+    "type" : "Trucks",
+    "price" : 2500,
+    "color" : "red"
+  }
+}
 ```
-
 
 
 </TabItem>
@@ -700,7 +691,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/b3yfaWiM5SO0VhY06hx50Hnxz.svg)](https://asciinema.org/a/b3yfaWiM5SO0VhY06hx50Hnxz)
+[![asciicast](https://asciinema.org/a/weeuEshLxExHNqknMeXZeYSYe.svg)](https://asciinema.org/a/weeuEshLxExHNqknMeXZeYSYe)
 
 </TabItem>
 </Tabs>
@@ -725,28 +716,45 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-[2024-02-14 04:40:08,192] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,192] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,294] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Connection to node -2 (localhost/127.0.0.1:29093) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,294] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Bootstrap broker localhost:29093 (id: -2 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
-jq: parse error: Invalid numeric literal at line 1, column 12
-Processed a total of 2 messages
-
+{
+  "headers" : {
+    "X-ERROR-MSG" : "Message does not match the statement [SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020]",
+    "X-TOPIC" : "cars",
+    "X-PARTITION" : "0"
+  },
+  "key" : null,
+  "value" : {
+    "type" : "SUV",
+    "price" : 2000,
+    "color" : "blue"
+  }
+}
+{
+  "headers" : {
+    "X-ERROR-MSG" : "Message does not match the statement [SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020]",
+    "X-TOPIC" : "cars",
+    "X-PARTITION" : "0"
+  },
+  "key" : "{\"year\":2010,\"make\":\"BMW\"}",
+  "value" : {
+    "type" : "Sports",
+    "price" : 1000,
+    "color" : "red"
+  }
+}
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-02-14 04:40:08,192] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,192] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,294] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Connection to node -2 (localhost/127.0.0.1:29093) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:08,294] WARN [Consumer clientId=console-consumer, groupId=console-consumer-77413] Bootstrap broker localhost:29093 (id: -2 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:41,900] WARN [Consumer clientId=console-consumer, groupId=console-consumer-7741] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:41,900] WARN [Consumer clientId=console-consumer, groupId=console-consumer-7741] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:42,088] WARN [Consumer clientId=console-consumer, groupId=console-consumer-7741] Connection to node -2 (localhost/127.0.0.1:29093) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:42,089] WARN [Consumer clientId=console-consumer, groupId=console-consumer-7741] Bootstrap broker localhost:29093 (id: -2 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
 jq: parse error: Invalid numeric literal at line 1, column 12
 Processed a total of 2 messages
 
@@ -755,7 +763,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/VJEH3OVHPKw90scjc4iRb8kCn.svg)](https://asciinema.org/a/VJEH3OVHPKw90scjc4iRb8kCn)
+[![asciicast](https://asciinema.org/a/V0ZLCkvWUv9PvIUlmpPHs75XX.svg)](https://asciinema.org/a/V0ZLCkvWUv9PvIUlmpPHs75XX)
 
 </TabItem>
 </Tabs>
@@ -771,110 +779,86 @@ Check in the audit log that messages denial were captured in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:29093,localhost:29094 \
-    --topic _auditLogs \
+    --topic _conduktor_gateway_auditlogs \
     --from-beginning \
-    --timeout-ms 3000 \
-    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.DataQualityProducerInterceptor")'
+    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.DataQualityProducerInterceptor")'
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-[2024-02-14 04:40:10,285] WARN [Consumer clientId=console-consumer, groupId=console-consumer-79560] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:10,285] WARN [Consumer clientId=console-consumer, groupId=console-consumer-79560] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
-Processed a total of 15 messages
 {
-  "id": "b614ab23-d5bb-4ce9-b4dc-2f11945df53c",
-  "source": "krn://cluster=i8_E-a17RG6Aat716F1btw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:32870"
+  "id" : "b2693ce3-caf0-4d91-9b93-2859471f59b3",
+  "source" : "krn://cluster=nSt2mo06R-2NR0ooxfyFlA",
+  "type" : "SAFEGUARD",
+  "authenticationPrincipal" : "teamA",
+  "userName" : "sa",
+  "connection" : {
+    "localAddress" : null,
+    "remoteAddress" : "/192.168.65.1:34776"
   },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:40:02.319943378Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.DataQualityProducerInterceptor",
-    "message": "Request parameters do not satisfy the configured policy: Data quality policy is violated."
+  "specVersion" : "0.1.0",
+  "time" : "2024-04-10T00:08:00.329972388Z",
+  "eventData" : {
+    "level" : "error",
+    "plugin" : "io.conduktor.gateway.interceptor.safeguard.DataQualityProducerInterceptor",
+    "message" : "Request parameters do not satisfy the configured policy: Data quality policy is violated."
   }
 }
 {
-  "id": "18ffee64-e7b2-4daa-8875-519090c990b7",
-  "source": "krn://cluster=i8_E-a17RG6Aat716F1btw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:32872"
+  "id" : "d94ee6e1-cbb8-43f1-bdc6-c510bc5c2331",
+  "source" : "krn://cluster=nSt2mo06R-2NR0ooxfyFlA",
+  "type" : "SAFEGUARD",
+  "authenticationPrincipal" : "teamA",
+  "userName" : "sa",
+  "connection" : {
+    "localAddress" : null,
+    "remoteAddress" : "/192.168.65.1:34776"
   },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:40:03.656667170Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.DataQualityProducerInterceptor",
-    "message": "Request parameters do not satisfy the configured policy: Data quality policy is violated."
+  "specVersion" : "0.1.0",
+  "time" : "2024-04-10T00:08:00.353672972Z",
+  "eventData" : {
+    "level" : "error",
+    "plugin" : "io.conduktor.gateway.interceptor.safeguard.DataQualityProducerInterceptor",
+    "message" : "Request parameters do not satisfy the configured policy: Data quality policy is violated."
   }
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:40:10,285] WARN [Consumer clientId=console-consumer, groupId=console-consumer-79560] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-[2024-02-14 04:40:10,285] WARN [Consumer clientId=console-consumer, groupId=console-consumer-79560] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:43,911] WARN [Consumer clientId=console-consumer, groupId=console-consumer-87708] Connection to node -3 (localhost/127.0.0.1:29094) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:43,911] WARN [Consumer clientId=console-consumer, groupId=console-consumer-87708] Bootstrap broker localhost:29094 (id: -3 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:44,018] WARN [Consumer clientId=console-consumer, groupId=console-consumer-87708] Connection to node -2 (localhost/127.0.0.1:29093) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2024-04-10 04:08:44,018] WARN [Consumer clientId=console-consumer, groupId=console-consumer-87708] Bootstrap broker localhost:29093 (id: -2 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+{"id":"6c7f6860-4403-4253-b13c-3fc51d977632","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"192.168.48.8:8888","remoteAddress":"192.168.65.1:46656"},"specVersion":"0.1.0","time":"2024-04-10T00:08:32.650267792Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
+{"id":"8e821d2b-029d-42ca-a677-4ff61beaaf3f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35234"},"specVersion":"0.1.0","time":"2024-04-10T00:08:33.540589667Z","eventData":"SUCCESS"}
+{"id":"2df26e95-7b06-4a24-9495-f074ce51594c","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35235"},"specVersion":"0.1.0","time":"2024-04-10T00:08:33.588269542Z","eventData":"SUCCESS"}
+{"id":"9a58f35f-09fe-4707-aa07-f0e14a2a2777","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"192.168.48.8:8888","remoteAddress":"192.168.65.1:46659"},"specVersion":"0.1.0","time":"2024-04-10T00:08:34.210227418Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/cars-quality","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.DataQualityProducerPlugin\",  \"priority\" : 100,  \"config\" : {    \"statement\" : \"SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020\",    \"action\" : \"BLOCK_WHOLE_BATCH\",    \"deadLetterTopic\" : \"dead-letter-topic\"  }}"}}
+{"id":"e5661af1-cf99-4075-90c2-34b97d0e289b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35237"},"specVersion":"0.1.0","time":"2024-04-10T00:08:35.322850168Z","eventData":"SUCCESS"}
+{"id":"dc94be91-b72b-4cb8-88f9-3b9d1cf62540","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6970","remoteAddress":"/192.168.65.1:51128"},"specVersion":"0.1.0","time":"2024-04-10T00:08:35.359787668Z","eventData":"SUCCESS"}
+{"id":"36373c42-7493-490d-8395-d381273a9bb8","source":"krn://cluster=RMTRS07ST_mTPTcHEbuQAA","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:51128"},"specVersion":"0.1.0","time":"2024-04-10T00:08:35.449398252Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.DataQualityProducerInterceptor","message":"Request parameters do not satisfy the configured policy: Data quality policy is violated."}}
+{"id":"a79b073c-7122-4755-80e1-801a4787dd06","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35239"},"specVersion":"0.1.0","time":"2024-04-10T00:08:36.818979419Z","eventData":"SUCCESS"}
+{"id":"46c7e5ff-2f63-4255-b448-26a6fac4072b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6970","remoteAddress":"/192.168.65.1:51130"},"specVersion":"0.1.0","time":"2024-04-10T00:08:36.855387919Z","eventData":"SUCCESS"}
+{"id":"f2b184e5-a176-47b7-a16a-e0e3c2bbdd6c","source":"krn://cluster=RMTRS07ST_mTPTcHEbuQAA","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:51130"},"specVersion":"0.1.0","time":"2024-04-10T00:08:36.871083794Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.DataQualityProducerInterceptor","message":"Request parameters do not satisfy the configured policy: Data quality policy is violated."}}
+{"id":"3ddb65c5-27e7-4995-9a32-41a7377e2a97","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35241"},"specVersion":"0.1.0","time":"2024-04-10T00:08:38.218480295Z","eventData":"SUCCESS"}
+{"id":"0b1c15f5-edd9-44cc-bd9d-3f9e8909aae1","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6970","remoteAddress":"/192.168.65.1:51132"},"specVersion":"0.1.0","time":"2024-04-10T00:08:38.263550128Z","eventData":"SUCCESS"}
+{"id":"c21aee68-d965-45dc-97bd-b1260f531817","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35243"},"specVersion":"0.1.0","time":"2024-04-10T00:08:39.618044045Z","eventData":"SUCCESS"}
+{"id":"bbd92249-57b8-4cef-9cf4-8163222b09fb","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6969","remoteAddress":"/192.168.65.1:35244"},"specVersion":"0.1.0","time":"2024-04-10T00:08:39.646500962Z","eventData":"SUCCESS"}
+{"id":"67b76bc9-ca15-460c-8ab9-5853e54c3b25","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/192.168.48.8:6970","remoteAddress":"/192.168.65.1:51135"},"specVersion":"0.1.0","time":"2024-04-10T00:08:39.753931129Z","eventData":"SUCCESS"}
+[2024-04-10 04:08:47,390] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 15 messages
-{
-  "id": "b614ab23-d5bb-4ce9-b4dc-2f11945df53c",
-  "source": "krn://cluster=i8_E-a17RG6Aat716F1btw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:32870"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:40:02.319943378Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.DataQualityProducerInterceptor",
-    "message": "Request parameters do not satisfy the configured policy: Data quality policy is violated."
-  }
-}
-{
-  "id": "18ffee64-e7b2-4daa-8875-519090c990b7",
-  "source": "krn://cluster=i8_E-a17RG6Aat716F1btw",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:32872"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:40:03.656667170Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.DataQualityProducerInterceptor",
-    "message": "Request parameters do not satisfy the configured policy: Data quality policy is violated."
-  }
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/3yeCGmHxoik0Jq2ebLhGn5dtt.svg)](https://asciinema.org/a/3yeCGmHxoik0Jq2ebLhGn5dtt)
+[![asciicast](https://asciinema.org/a/Wcw8dTnWD0O6ICakMzq3j4geV.svg)](https://asciinema.org/a/Wcw8dTnWD0O6ICakMzq3j4geV)
 
 </TabItem>
 </Tabs>
@@ -898,10 +882,10 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
- Container kafka-client  Stopping
- Container schema-registry  Stopping
  Container gateway1  Stopping
+ Container kafka-client  Stopping
+ Container gateway2  Stopping
+ Container schema-registry  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -911,21 +895,21 @@ docker compose down --volumes
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
+ Container kafka2  Stopping
  Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka2  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -938,7 +922,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/tAHgTu6vtt33q99hG5uTNHxrN.svg)](https://asciinema.org/a/tAHgTu6vtt33q99hG5uTNHxrN)
+[![asciicast](https://asciinema.org/a/1DCfyHYIv0B8vIwbUNwrNc3Fd.svg)](https://asciinema.org/a/1DCfyHYIv0B8vIwbUNwrNc3Fd)
 
 </TabItem>
 </Tabs>

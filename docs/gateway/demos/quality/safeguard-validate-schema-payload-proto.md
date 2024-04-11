@@ -1,7 +1,7 @@
 ---
 title: Schema Payload Validation for Protocol Buffer
 description: Schema Payload Validation for Protocol Buffer
-tag: quality
+tag: data-quality
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -18,6 +18,12 @@ This is similar to the validations provided by JsonSchema, such as:
 - **String**: `minLength`, `maxLength`, `pattern`, `format`
 - **Collections**: `maxItems`, `minItems`
 
+This interceptor also supports validating payload against specific custom constraints `expression`,
+which uses a simple language familiar with devs is [CEL (Common Expression Language)](https://github.com/google/cel-spec)
+
+This interceptor also supports validating payload against specific custom `metadata.rules` object in the schema
+using CEL, too.
+
 ## View the full demo in realtime
 
 
@@ -31,7 +37,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/8UWeC2la3o70YHwEhNWx07v26.svg)](https://asciinema.org/a/8UWeC2la3o70YHwEhNWx07v26)
+[![asciicast](https://asciinema.org/a/NnXEByQG6rEz7FzL3qFxCIIRS.svg)](https://asciinema.org/a/NnXEByQG6rEz7FzL3qFxCIIRS)
 
 </TabItem>
 </Tabs>
@@ -73,8 +79,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -99,8 +103,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -125,8 +127,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -151,8 +151,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -182,10 +180,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -210,10 +206,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -239,8 +233,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -251,8 +243,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -285,17 +275,15 @@ docker compose up --detach --wait
  Container zookeeper  Creating
  Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka1  Creating
  Container kafka3  Creating
  Container kafka2  Creating
- Container kafka1  Creating
  Container kafka1  Created
- Container kafka2  Created
  Container kafka3  Created
+ Container kafka2  Created
  Container gateway2  Creating
  Container schema-registry  Creating
  Container gateway1  Creating
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway2  Created
  Container gateway1  Created
  Container schema-registry  Created
@@ -309,37 +297,36 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka1  Starting
  Container zookeeper  Healthy
+ Container kafka3  Starting
  Container zookeeper  Healthy
  Container kafka2  Starting
- Container kafka3  Starting
- Container kafka3  Started
- Container kafka2  Started
  Container kafka1  Started
- Container kafka1  Waiting
- Container kafka1  Waiting
+ Container kafka2  Started
+ Container kafka3  Started
  Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container gateway1  Starting
+ Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka2  Healthy
  Container gateway2  Starting
  Container kafka2  Healthy
  Container schema-registry  Starting
- Container schema-registry  Started
+ Container kafka3  Healthy
+ Container gateway1  Starting
  Container gateway1  Started
  Container gateway2  Started
- Container kafka-client  Waiting
+ Container schema-registry  Started
  Container zookeeper  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
@@ -347,13 +334,14 @@ docker compose up --detach --wait
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container kafka3  Healthy
  Container kafka1  Healthy
+ Container kafka-client  Healthy
  Container kafka2  Healthy
  Container zookeeper  Healthy
- Container kafka-client  Healthy
- Container kafka3  Healthy
- Container schema-registry  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
  Container gateway2  Healthy
 
 ```
@@ -361,7 +349,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/4TA6Mio9DcqLzTArYG67JejEW.svg)](https://asciinema.org/a/4TA6Mio9DcqLzTArYG67JejEW)
+[![asciicast](https://asciinema.org/a/ZzLGMgKEF4JZ0EBpGtmJHQkwq.svg)](https://asciinema.org/a/ZzLGMgKEF4JZ0EBpGtmJHQkwq)
 
 </TabItem>
 </Tabs>
@@ -404,7 +392,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1NzQxMn0.TyjbURougcZVjy0culL6cwYVYKcESI9_jka1VT2_nTU';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MzExMH0.3OYpRHHjWQPiAyE1C7mqbNWpNJ3SjTPUOWx3VCE6fFA';
 
 
 ```
@@ -412,7 +400,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/iKi8xTYC4E0AyukeXpUTBTS64.svg)](https://asciinema.org/a/iKi8xTYC4E0AyukeXpUTBTS64)
+[![asciicast](https://asciinema.org/a/KmxCGQvVHFjcrG8sLWRkVLSsN.svg)](https://asciinema.org/a/KmxCGQvVHFjcrG8sLWRkVLSsN)
 
 </TabItem>
 </Tabs>
@@ -449,7 +437,7 @@ Created topic topic-protobuf.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PoQ1MWDZrAbafSFPEscgkIVCr.svg)](https://asciinema.org/a/PoQ1MWDZrAbafSFPEscgkIVCr)
+[![asciicast](https://asciinema.org/a/kDRt13muJfPDrrCh4DC0txnHH.svg)](https://asciinema.org/a/kDRt13muJfPDrrCh4DC0txnHH)
 
 </TabItem>
 </Tabs>
@@ -524,7 +512,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jHPk6oetn3JfZw8eoguGxCjmY.svg)](https://asciinema.org/a/jHPk6oetn3JfZw8eoguGxCjmY)
+[![asciicast](https://asciinema.org/a/sbdLKPueB7mtM0YMQhBFeBN0v.svg)](https://asciinema.org/a/sbdLKPueB7mtM0YMQhBFeBN0v)
 
 </TabItem>
 </Tabs>
@@ -557,11 +545,11 @@ cat invalid-payload.json
   ],
   "friends": [
     {
-      "name": "Tom",
+      "name": "Tommy",
       "age": 17
     },
     {
-      "name": "Emma",
+      "name": "Emma Watson",
       "age": 18
     }
   ]
@@ -593,7 +581,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:30:15,522] INFO KafkaProtobufSerializerConfig values: 
+[2024-04-10 03:58:32,915] INFO KafkaProtobufSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -661,7 +649,7 @@ cat invalid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/B07m6OLKUIRDT1uBvlfPAx17n.svg)](https://asciinema.org/a/B07m6OLKUIRDT1uBvlfPAx17n)
+[![asciicast](https://asciinema.org/a/C6IbyWJTLgMC18CskcA9xkIac.svg)](https://asciinema.org/a/C6IbyWJTLgMC18CskcA9xkIac)
 
 </TabItem>
 </Tabs>
@@ -688,7 +676,7 @@ kafka-protobuf-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:30:17,146] INFO KafkaProtobufDeserializerConfig values: 
+[2024-04-10 03:58:34,463] INFO KafkaProtobufDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -750,7 +738,11 @@ kafka-protobuf-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializerConfig:376)
-{"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]}
+{"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tommy","age":17},{"name":"Emma Watson","age":18}]}
+[2024-04-10 03:58:38,194] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
+[2024-04-10 03:58:38,194] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -758,7 +750,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/IrW6gLrx5Z2zX33PEp6VY6Uj6.svg)](https://asciinema.org/a/IrW6gLrx5Z2zX33PEp6VY6Uj6)
+[![asciicast](https://asciinema.org/a/p4tpVL9372WCfgc3bNRJq6H8H.svg)](https://asciinema.org/a/p4tpVL9372WCfgc3bNRJq6H8H)
 
 </TabItem>
 </Tabs>
@@ -767,31 +759,13 @@ Processed a total of 1 messages
 
 Add Schema Payload Validation Policy Interceptor
 
-Creating the interceptor named `guard-schema-payload-validate` of the plugin `io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-  "priority" : 100,
-  "config" : {
-    "schemaRegistryConfig" : {
-      "host" : "http://schema-registry:8081"
-    },
-    "topic" : "topic-.*",
-    "schemaIdRequired" : true,
-    "validateSchema" : true,
-    "action" : "BLOCK"
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-12-guard-schema-payload-validate.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate" \
     --header 'Content-Type: application/json' \
@@ -806,6 +780,19 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+  "priority": 100,
+  "config": {
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081"
+    },
+    "topic": "topic-.*",
+    "schemaIdRequired": true,
+    "validateSchema": true,
+    "action": "BLOCK"
+  }
+}
+{
   "message": "guard-schema-payload-validate is created"
 }
 
@@ -814,7 +801,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LKaALCVSRDMxVptrBk2Dixjvy.svg)](https://asciinema.org/a/LKaALCVSRDMxVptrBk2Dixjvy)
+[![asciicast](https://asciinema.org/a/t74Nh6pKDqzxJ54wcWcrw3SuV.svg)](https://asciinema.org/a/t74Nh6pKDqzxJ54wcWcrw3SuV)
 
 </TabItem>
 </Tabs>
@@ -845,7 +832,6 @@ curl \
     {
       "name": "guard-schema-payload-validate",
       "pluginClass": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -866,7 +852,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CgO5uX8nsrj3g1wOAyikOxkIP.svg)](https://asciinema.org/a/CgO5uX8nsrj3g1wOAyikOxkIP)
+[![asciicast](https://asciinema.org/a/97diY9tX0MLdr0MWDfAImV6il.svg)](https://asciinema.org/a/97diY9tX0MLdr0MWDfAImV6il)
 
 </TabItem>
 </Tabs>
@@ -892,21 +878,29 @@ option java_package = "schema.protobuf";
 option java_outer_classname = "User";
 
 message Student {
-  string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "50"}];
-  int32 age = 2 [(confluent.field_meta).params = {minimum: "3", maximum: "120"}];
-  string email = 3 [(confluent.field_meta).params = {format: "email"}];
+  option (confluent.message_meta).params = {
+    metadata: "{\"rules\":[{\"name\":\"check name\",\"expression\":\"size(message.name) > 2\",\"message\":\"name length must greater than 2\"},{\"name\":\"checkAge\",\"expression\":\"message.age >= 18\",\"message\":\"age must be greater than or equal to 18\"}]}"
+  };
+
+  string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "50", expression: "size(name) >= 3 && size(name) <= 50"}];
+  int32 age = 2 [(confluent.field_meta).params = {minimum: "3", maximum: "120", expression: "age >= 3 && age <= 120"}];
+  string email = 3 [(confluent.field_meta).params = {format: "email", expression: "email.contains('foo')"}];
   Address address = 4;
-  repeated string hobbies = 5 [(confluent.field_meta).params = {minItems: "2"}];
+  repeated string hobbies = 5 [(confluent.field_meta).params = {minItems: "2", expression: "size(hobbies) >= 2"}];
   repeated Friend friends = 6;
 
   message Address {
-    string street = 1 [(confluent.field_meta).params = {minLength: "5", maxLength: "15"}];
-    string city = 2 [(confluent.field_meta).params = {minLength: "2", maxLength: "50"}];
+    option (confluent.message_meta).params = {
+      expression: "size(address.street) >= 5 && address.street.contains('paris') || address.city == 'paris'"
+    };
+
+    string street = 1 [(confluent.field_meta).params = {minLength: "5", maxLength: "10", expression: "size(street) >= 5 && size(street) <= 10"}];
+    string city = 2 [(confluent.field_meta).params = {minLength: "2", maxLength: "10"}];
   }
 
   message Friend {
-    string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "10"}];
-    int32 age = 2 [(confluent.field_meta).params = {minimum: "2", maximum: "10"}];
+    string name = 1 [(confluent.field_meta).params = {minLength: "3", maxLength: "10", expression: "size(name) >= 3 && size(name) <= 10"}];
+    int32 age = 2 [(confluent.field_meta).params = {minimum: "2", maximum: "10", expression: "age >= 2 && age <= 10"}];
   }
 }
 ```
@@ -941,7 +935,7 @@ curl -s \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/WQMgx6ICV4GkvRsJBCJBG1Lji.svg)](https://asciinema.org/a/WQMgx6ICV4GkvRsJBCJBG1Lji)
+[![asciicast](https://asciinema.org/a/H6egrwrtnjvVi8ZHZlGC8OkrL.svg)](https://asciinema.org/a/H6egrwrtnjvVi8ZHZlGC8OkrL)
 
 </TabItem>
 </Tabs>
@@ -970,7 +964,7 @@ curl -s http://localhost:8081/subjects/topic-protobuf/versions
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KZwcifbOVIZsxQyTkZxxwravI.svg)](https://asciinema.org/a/KZwcifbOVIZsxQyTkZxxwravI)
+[![asciicast](https://asciinema.org/a/GDbYtQcEH7USfmULZR4eWhHDJ.svg)](https://asciinema.org/a/GDbYtQcEH7USfmULZR4eWhHDJ)
 
 </TabItem>
 </Tabs>
@@ -981,7 +975,7 @@ The payload has been rejected with useful errors
 
 ```
 org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. 
-Topic 'topic-protobuf' has invalid protobuf schema payload: name is too short (1 < 3), email does not match format 'email', street is too long (56 > 15), city is too short (0 < 2), hobbies has too few items (1 < 2), age is greater than 10, age is greater than 10
+Topic 'topic-protobuf' has invalid protobuf schema payload: name length must greater than 2, age must be greater than or equal to 18, Student.name is too short (1 < 3), Student.name does not match expression 'size(name) >= 3 && size(name) <= 50', Student.email does not match format 'email', Student.email does not match expression 'email.contains('foo')', Student.Address.street is too long (56 > 10), Student.Address.street does not match expression 'size(street) >= 5 && size(street) <= 10', Student.Address.city is too short (0 < 2), Student.address does not match expression 'size(address.street) >= 5 && address.street.contains('paris') || address.city == 'paris'', Student.hobbies has too few items (1 < 2), Student.hobbies does not match expression 'size(hobbies) >= 2', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 && age <= 10', Student.Friend.name is too long (11 > 10), Student.Friend.name does not match expression 'size(name) >= 3 && size(name) <= 10', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 && age <= 10'
 ```
 
 <Tabs>
@@ -1003,7 +997,7 @@ cat invalid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:30:25,519] INFO KafkaProtobufSerializerConfig values: 
+[2024-04-10 03:58:39,565] INFO KafkaProtobufSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1065,17 +1059,17 @@ cat invalid-payload.json | jq -c | \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializerConfig:376)
-[2024-02-14 04:30:26,594] ERROR Error when sending message to topic topic-protobuf with key: null, value: 110 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
-org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (1 < 3), Student.email does not match format 'email', Student.Address.street is too long (56 > 15), Student.Address.city is too short (0 < 2), Student.hobbies has too few items (1 < 2), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10
-[2024-02-14 04:30:26,594] ERROR Error when sending message to topic topic-protobuf with key: null, value: 110 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
-org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (1 < 3), Student.email does not match format 'email', Student.Address.street is too long (56 > 15), Student.Address.city is too short (0 < 2), Student.hobbies has too few items (1 < 2), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10
+[2024-04-10 03:58:40,601] ERROR Error when sending message to topic topic-protobuf with key: null, value: 119 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: name length must greater than 2, age must be greater than or equal to 18, Student.name is too short (1 < 3), Student.name does not match expression 'size(name) >= 3 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(name) <= 50', Student.email does not match format 'email', Student.email does not match expression 'email.contains('foo')', Student.Address.street is too long (56 > 10), Student.Address.street does not match expression 'size(street) >= 5 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(street) <= 10', Student.Address.city is too short (0 < 2), Student.address does not match expression 'size(address.street) >= 5 step-17-SH-OUTPUTstep-17-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'', Student.hobbies has too few items (1 < 2), Student.hobbies does not match expression 'size(hobbies) >= 2', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-17-SH-OUTPUTstep-17-SH-OUTPUT age <= 10', Student.Friend.name is too long (11 > 10), Student.Friend.name does not match expression 'size(name) >= 3 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(name) <= 10', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-17-SH-OUTPUTstep-17-SH-OUTPUT age <= 10'
+[2024-04-10 03:58:40,601] ERROR Error when sending message to topic topic-protobuf with key: null, value: 119 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback:52)
+org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: name length must greater than 2, age must be greater than or equal to 18, Student.name is too short (1 < 3), Student.name does not match expression 'size(name) >= 3 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(name) <= 50', Student.email does not match format 'email', Student.email does not match expression 'email.contains('foo')', Student.Address.street is too long (56 > 10), Student.Address.street does not match expression 'size(street) >= 5 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(street) <= 10', Student.Address.city is too short (0 < 2), Student.address does not match expression 'size(address.street) >= 5 step-17-SH-OUTPUTstep-17-SH-OUTPUT address.street.contains('paris') || address.city == 'paris'', Student.hobbies has too few items (1 < 2), Student.hobbies does not match expression 'size(hobbies) >= 2', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-17-SH-OUTPUTstep-17-SH-OUTPUT age <= 10', Student.Friend.name is too long (11 > 10), Student.Friend.name does not match expression 'size(name) >= 3 step-17-SH-OUTPUTstep-17-SH-OUTPUT size(name) <= 10', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-17-SH-OUTPUTstep-17-SH-OUTPUT age <= 10'
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uLbrAAiUvvy2jdFc0q45xXtDL.svg)](https://asciinema.org/a/uLbrAAiUvvy2jdFc0q45xXtDL)
+[![asciicast](https://asciinema.org/a/EccR3TwsqodNeUnmAcOfjTFIF.svg)](https://asciinema.org/a/EccR3TwsqodNeUnmAcOfjTFIF)
 
 </TabItem>
 </Tabs>
@@ -1091,70 +1085,62 @@ Check in the audit log that message was denied in cluster `kafka1`
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
-    --topic _auditLogs \
+    --topic _conduktor_gateway_auditlogs \
     --from-beginning \
-    --timeout-ms 3000 \
-    | jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
+    --timeout-ms 3000 \| jq 'select(.type=="SAFEGUARD" and .eventData.plugin=="io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin")'
 ```
 
 
-returns 
-
+returns 1 event
 ```json
-Processed a total of 13 messages
 {
-  "id": "d069939b-435f-4b3f-8085-d55970599b0d",
-  "source": "krn://cluster=L3XlroJNSCSTpcd_4vr-Eg",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:25210"
+  "id" : "ca499d6a-7fa1-49f1-8a01-a7bf3a939554",
+  "source" : "krn://cluster=ECCAV3HlS5uwR_NIedQ4Kw",
+  "type" : "SAFEGUARD",
+  "authenticationPrincipal" : "teamA",
+  "userName" : "sa",
+  "connection" : {
+    "localAddress" : null,
+    "remoteAddress" : "/192.168.65.1:30697"
   },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:30:26.570210125Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (1 < 3), Student.email does not match format 'email', Student.Address.street is too long (56 > 15), Student.Address.city is too short (0 < 2), Student.hobbies has too few items (1 < 2), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"
+  "specVersion" : "0.1.0",
+  "time" : "2024-04-09T23:57:56.097380762Z",
+  "eventData" : {
+    "level" : "error",
+    "plugin" : "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
+    "message" : "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: name length must greater than 2, age must be greater than or equal to 18, Student.name is too short (1 < 3), Student.name does not match expression 'size(name) >= 3 && size(name) <= 50', Student.email does not match format 'email', Student.email does not match expression 'email.contains('foo')', Student.Address.street is too long (56 > 10), Student.Address.street does not match expression 'size(street) >= 5 && size(street) <= 10', Student.Address.city is too short (0 < 2), Student.address does not match expression 'size(address.street) >= 5 && address.street.contains('paris') || address.city == 'paris'', Student.hobbies has too few items (1 < 2), Student.hobbies does not match expression 'size(hobbies) >= 2', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 && age <= 10', Student.Friend.name is too long (11 > 10), Student.Friend.name does not match expression 'size(name) >= 3 && size(name) <= 10', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 && age <= 10'"
   }
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
+{"id":"4de07bcd-aa18-4e97-80a1-9d68b273c05e","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:42508"},"specVersion":"0.1.0","time":"2024-04-09T23:58:30.367585597Z","eventData":{"method":"POST","path":"/admin/vclusters/v1/vcluster/teamA/username/sa","body":"{\"lifeTimeSeconds\": 7776000}"}}
+{"id":"cd234acf-c8e9-4866-87a3-340a350d3724","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:31086"},"specVersion":"0.1.0","time":"2024-04-09T23:58:31.363143875Z","eventData":"SUCCESS"}
+{"id":"03e99a92-8a6e-4054-91c8-36d5270ea2df","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:46977"},"specVersion":"0.1.0","time":"2024-04-09T23:58:31.413829500Z","eventData":"SUCCESS"}
+{"id":"182848f1-7937-4ee8-baeb-4905c62bae3b","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:31090"},"specVersion":"0.1.0","time":"2024-04-09T23:58:33.494260709Z","eventData":"SUCCESS"}
+{"id":"a4707309-6864-4404-8c1e-01c5f0d5bd41","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:46981"},"specVersion":"0.1.0","time":"2024-04-09T23:58:33.538718459Z","eventData":"SUCCESS"}
+{"id":"caddb245-6a3a-4002-a76d-c7929fe842c3","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:31092"},"specVersion":"0.1.0","time":"2024-04-09T23:58:34.867617751Z","eventData":"SUCCESS"}
+{"id":"9b34d84b-8b79-4ce4-8828-4e9e0758844f","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:31093"},"specVersion":"0.1.0","time":"2024-04-09T23:58:34.896960543Z","eventData":"SUCCESS"}
+{"id":"251f9ad1-194c-49f6-952b-67f981384a7d","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:46984"},"specVersion":"0.1.0","time":"2024-04-09T23:58:35.014358501Z","eventData":"SUCCESS"}
+{"id":"e39e190b-e21d-402d-b54a-ef30cc90a1ff","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:42519"},"specVersion":"0.1.0","time":"2024-04-09T23:58:38.775735670Z","eventData":{"method":"POST","path":"/admin/interceptors/v1/vcluster/teamA/interceptor/guard-schema-payload-validate","body":"{  \"pluginClass\" : \"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin\",  \"priority\" : 100,  \"config\" : {    \"schemaRegistryConfig\" : {      \"host\" : \"http://schema-registry:8081\"    },    \"topic\" : \"topic-.*\",    \"schemaIdRequired\" : true,    \"validateSchema\" : true,    \"action\" : \"BLOCK\"  }}"}}
+{"id":"d4c36bf3-aa37-43f4-a933-6b33c0b2695e","source":"Optional.empty","type":"REST_API","authenticationPrincipal":"admin","userName":null,"connection":{"localAddress":"172.27.0.7:8888","remoteAddress":"192.168.65.1:42520"},"specVersion":"0.1.0","time":"2024-04-09T23:58:38.993876753Z","eventData":{"method":"GET","path":"/admin/interceptors/v1/vcluster/teamA","body":null}}
+{"id":"481e18b8-5a86-4d66-ad82-5deee130df36","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6969","remoteAddress":"/192.168.65.1:31125"},"specVersion":"0.1.0","time":"2024-04-09T23:58:40.134200546Z","eventData":"SUCCESS"}
+{"id":"d74c7c27-59a4-41f1-a699-587dcda33be7","source":null,"type":"AUTHENTICATION","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":"/172.27.0.7:6970","remoteAddress":"/192.168.65.1:47016"},"specVersion":"0.1.0","time":"2024-04-09T23:58:40.170864629Z","eventData":"SUCCESS"}
+{"id":"a551f930-b667-4467-b847-35ab9568e6db","source":"krn://cluster=cF6kjeBGRHqbhzEb4VaZEw","type":"SAFEGUARD","authenticationPrincipal":"teamA","userName":"sa","connection":{"localAddress":null,"remoteAddress":"/192.168.65.1:47016"},"specVersion":"0.1.0","time":"2024-04-09T23:58:40.580200046Z","eventData":{"level":"error","plugin":"io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin","message":"Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: name length must greater than 2, age must be greater than or equal to 18, Student.name is too short (1 < 3), Student.name does not match expression 'size(name) >= 3 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT size(name) <= 50', Student.email does not match format 'email', Student.email does not match expression 'email.contains('foo')', Student.Address.street is too long (56 > 10), Student.Address.street does not match expression 'size(street) >= 5 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT size(street) <= 10', Student.Address.city is too short (0 < 2), Student.address does not match expression 'size(address.street) >= 5 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT address.street.contains('paris') || address.city == 'paris'', Student.hobbies has too few items (1 < 2), Student.hobbies does not match expression 'size(hobbies) >= 2', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT age <= 10', Student.Friend.name is too long (11 > 10), Student.Friend.name does not match expression 'size(name) >= 3 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT size(name) <= 10', Student.Friend.age is greater than 10, Student.Friend.age does not match expression 'age >= 2 step-18-AUDITLOG-OUTPUTstep-18-AUDITLOG-OUTPUT age <= 10'"}}
+[2024-04-10 03:58:45,120] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 13 messages
-{
-  "id": "d069939b-435f-4b3f-8085-d55970599b0d",
-  "source": "krn://cluster=L3XlroJNSCSTpcd_4vr-Eg",
-  "type": "SAFEGUARD",
-  "authenticationPrincipal": "teamA",
-  "userName": "sa",
-  "connection": {
-    "localAddress": null,
-    "remoteAddress": "/192.168.65.1:25210"
-  },
-  "specVersion": "0.1.0",
-  "time": "2024-02-14T03:30:26.570210125Z",
-  "eventData": {
-    "level": "error",
-    "plugin": "io.conduktor.gateway.interceptor.safeguard.SchemaPayloadValidationPolicyPlugin",
-    "message": "Request parameters do not satisfy the configured policy. Topic 'topic-protobuf' has invalid protobuf schema payload: Student.name is too short (1 < 3), Student.email does not match format 'email', Student.Address.street is too long (56 > 15), Student.Address.city is too short (0 < 2), Student.hobbies has too few items (1 < 2), Student.Friend.age is greater than 10, Student.Friend.age is greater than 10"
-  }
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/s6tuQCOcGhKhNrDAzaDh3svgY.svg)](https://asciinema.org/a/s6tuQCOcGhKhNrDAzaDh3svgY)
+[![asciicast](https://asciinema.org/a/6A8vixh4IaqnhdCgBpFuQSehC.svg)](https://asciinema.org/a/6A8vixh4IaqnhdCgBpFuQSehC)
 
 </TabItem>
 </Tabs>
@@ -1182,7 +1168,7 @@ cat valid-payload.json | jq -c | \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:30:32,025] INFO KafkaProtobufSerializerConfig values: 
+[2024-04-10 03:58:46,139] INFO KafkaProtobufSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1250,7 +1236,7 @@ cat valid-payload.json | jq -c | \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/T7O5vcNuBTyR8yw04Bhe1bT6y.svg)](https://asciinema.org/a/T7O5vcNuBTyR8yw04Bhe1bT6y)
+[![asciicast](https://asciinema.org/a/t9Y1W0Qu5jvZcSEdZsPeWuZrQ.svg)](https://asciinema.org/a/t9Y1W0Qu5jvZcSEdZsPeWuZrQ)
 
 </TabItem>
 </Tabs>
@@ -1277,7 +1263,7 @@ kafka-protobuf-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-02-14 04:30:33,560] INFO KafkaProtobufDeserializerConfig values: 
+[2024-04-10 03:58:47,643] INFO KafkaProtobufDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -1339,8 +1325,12 @@ kafka-protobuf-console-consumer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializerConfig:376)
-{"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tom","age":17},{"name":"Emma","age":18}]}
-{"name":"Doe","age":17,"email":"john.doe@example.com","address":{"street":"123 Main St","city":"Anytown"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
+{"name":"D","age":17,"email":"bad email","address":{"street":"a way too lond adress that will not fit in your database","city":""},"hobbies":["reading"],"friends":[{"name":"Tommy","age":17},{"name":"Emma Watson","age":18}]}
+{"name":"Doe","age":18,"email":"foo.doe@example.com","address":{"street":"123 paris","city":"Any paris"},"hobbies":["reading","cycling"],"friends":[{"name":"Tom","age":9},{"name":"Emma","age":10}]}
+[2024-04-10 03:58:51,371] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
+[2024-04-10 03:58:51,371] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$:44)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
 ```
@@ -1348,7 +1338,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/vXldO9GE2A3OUaWUV2KbrFHpb.svg)](https://asciinema.org/a/vXldO9GE2A3OUaWUV2KbrFHpb)
+[![asciicast](https://asciinema.org/a/PTz9DX2nbqjFXOInUs0S9Ls7N.svg)](https://asciinema.org/a/PTz9DX2nbqjFXOInUs0S9Ls7N)
 
 </TabItem>
 </Tabs>
@@ -1372,9 +1362,9 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway2  Stopping
- Container kafka-client  Stopping
  Container schema-registry  Stopping
+ Container kafka-client  Stopping
+ Container gateway2  Stopping
  Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
@@ -1385,21 +1375,21 @@ docker compose down --volumes
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
+ Container kafka3  Stopping
  Container kafka2  Stopping
  Container kafka1  Stopping
- Container kafka3  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -1412,7 +1402,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SEGGtP3nM4Ky16m9tK84shU1V.svg)](https://asciinema.org/a/SEGGtP3nM4Ky16m9tK84shU1V)
+[![asciicast](https://asciinema.org/a/734EJohHd5LeHgmheZNdcSZcE.svg)](https://asciinema.org/a/734EJohHd5LeHgmheZNdcSZcE)
 
 </TabItem>
 </Tabs>
