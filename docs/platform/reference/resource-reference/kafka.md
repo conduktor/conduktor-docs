@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Kafka Resources
+description: Kafka resources
 ---
 
 
