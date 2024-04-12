@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
 title: Self Service
-description: Kafka Self Serve Overview
+description: Kafka Self Service Overview
 ---
 
-# Kafka Self-Serve
+# Kafka Self-Service
 
 ## Overview
 
