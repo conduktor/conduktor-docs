@@ -230,6 +230,7 @@ none
 | Environment Variable              | Default Value | Description                                                    |
 |-----------------------------------| ------------- |----------------------------------------------------------------|
 | `GATEWAY_UPSTREAM_NUM_CONNECTION` | `10`          | The number of connections between Conduktor Gateway and Kafka  |
+| `GATEWAY_UPSTREAM_CONNECTION_POOL_TYPE` | `NONE`          | Upstream connection pool type. Possible values are `NONE` (no connection pool), `ROUND_ROBIN` (Round robin selected connection pool)  |
 
 ### Feature Flags
 
