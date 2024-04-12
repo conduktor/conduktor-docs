@@ -1,7 +1,6 @@
 ---
-sidebar_position: 4
-title: Resources Reference
-description: All Conduktor resources
+sidebar_position: 3
+title: Self-Service Resources
 ---
 
 import Tabs from '@theme/Tabs';
@@ -11,7 +10,7 @@ import Admonition from '@theme/Admonition';
 
 export const Highlight = ({children, color, text}) => (
 <span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
-    {children}
+{children}
 </span>
 );
 
@@ -41,26 +40,6 @@ export const AdminToken = () => (
 );
 
 
-
-The resources presented here can be managed from the CLI, the Public API, Terraform, or the Console UI.  
-- CLI, Terraform and Public API uses an API Key to validate permissions.
-- Console UI relies on RBAC model to validate what the user can do.
-
-:::caution Work In Progress...
-We're working hard to bring consistent experience using the CLI, API, and Console UI, but it is not the case today.
-:::
-We'll inform you about the availability matrix for each resource using the following labels: 
-- <CLI />
-- <API /> 
-- <TF />
-- <GUI />  
-
-
-There are two kind of API Key to use with the CLI, Terraform and Public API:
-- <AdminToken /> have all permissions over all resources in Console
-- <AppToken /> permission are scoped to Application instances defined in Self Serve
-
-In general, <AdminToken /> can bypass Application owners and "act" as an <AppToken />
 
 ## Self Serve Resources
 
@@ -199,11 +178,11 @@ spec:
 
 **Side effect in Console & Kafka:**
 - Console
-  - Members of the Owner Group are given all permissions in the UI over the owned resources
+    - Members of the Owner Group are given all permissions in the UI over the owned resources
 - Kafka
-  - Service Account is granted the following ACLs over the declared resources depending on the type:
-    - Topic: READ, WRITE, DESCRIBE_CONFIGS
-    - ConsumerGroup: READ
+    - Service Account is granted the following ACLs over the declared resources depending on the type:
+        - Topic: READ, WRITE, DESCRIBE_CONFIGS
+        - ConsumerGroup: READ
 
 
 ### Topic Policy
@@ -256,10 +235,10 @@ This concept will be available in a future version
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
-ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources.  
+ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources.
 
 Typical use case include:
-  - Enforcing metadata to track the intention or justification behind the cross application permission
+- Enforcing metadata to track the intention or justification behind the cross application permission
 
 ```yaml
 ---
@@ -370,143 +349,3 @@ spec:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 
 ````
-
-## Kafka Resources
-
-At the moment, Kafka resources are only managed through <GUI />
-
-### Topic
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
-
-
-````yaml
----
-apiVersion: v1
-kind: Topic
-metadata:
-  cluster: shadow-it
-  name: click.event-stream.avro
-spec:
-  replicationFactor: 3
-  partitions: 3
-  configs:
-    min.insync.replicas: '2'
-    cleanup.policy: delete
-    retention.ms: '60000'
-````
-**Topic checks:**
-- `spec.cluster` is a valid Cluster Technical Id
-- `metadata.name` must belong to the Application Instance.
-- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
-- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
-
-**Side effect in Console & Kafka:**
-- Kafka
-  - Topic is created / updated.
-
-### Subject
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
-
-**Local file**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  cluster: shadow-it
-  name: myPrefix.topic-value
-spec:
-  schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
-```
-
-**Inline**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  name: myPrefix.topic-value
-spec:
-  schema: |
-    {
-      "type": "long"
-    }
-```
-
-**Schema Reference**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  name: myPrefix.topic-value
-spec:
-  schema: |
-    {
-      "type": "record",
-      "namespace": "com.schema.avro",
-      "name": "Client",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "address",
-          "type": "com.schema.avro.Address"
-        }
-      ]
-    }
-  references:
-    - name: com.schema.avro.Address
-      subject: commons.address-value
-      version: 1
-```
-
-### Connector
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
-
-```yaml
----
-apiVersion: v1
-kind: Connector
-metadata:
-  name: myPrefix.myConnector
-spec:
-  connectCluster: myConnectCluster
-  config:
-    connector.class: io.connect.jdbc.JdbcSourceConnector
-    tasks.max: '1'
-    topics: myPrefix.myTopic
-    connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
-    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
-
-```
-
-## Console Resources
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <GUI />
-
-### KafkaCluster
-### KafkaConnectCluster
-### KsqlDBCluster
-### ConsoleGroup
-### ConsoleUser
-### Alert
-### MaskingRule

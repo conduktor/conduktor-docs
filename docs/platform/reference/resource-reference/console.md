@@ -1,0 +1,172 @@
+---
+sidebar_position: 1
+title: Console Resources
+---
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import Admonition from '@theme/Admonition';
+
+export const Highlight = ({children, color, text}) => (
+<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
+{children}
+</span>
+);
+
+export const CLI = () => (
+<Highlight color="#F8F1EE" text="#7D5E54">CLI</Highlight>
+);
+
+export const API = () => (
+<Highlight color="#E7F9F5" text="#067A6F">API</Highlight>
+);
+
+export const TF = () => (
+<Highlight color="#FCEFFC" text="#9C2BAD">Terraform</Highlight>
+);
+
+export const GUI = () => (
+<Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
+);
+
+
+export const AppToken = () => (
+<Highlight color="#F0F4FF" text="#3451B2">Application Token</Highlight>
+);
+
+export const AdminToken = () => (
+<Highlight color="#FEEFF6" text="#CB1D63">Admin Token</Highlight>
+);
+
+
+
+
+## Kafka Resources
+
+At the moment, Kafka resources are only managed through <GUI />
+
+### Topic
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />
+
+
+````yaml
+---
+apiVersion: v1
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    min.insync.replicas: '2'
+    cleanup.policy: delete
+    retention.ms: '60000'
+````
+**Topic checks:**
+- `spec.cluster` is a valid Cluster Technical Id
+- `metadata.name` must belong to the Application Instance.
+- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
+- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
+
+**Side effect in Console & Kafka:**
+- Kafka
+    - Topic is created / updated.
+
+### Subject
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />
+
+**Local file**
+
+```yaml
+---
+apiVersion: v1
+kind: Subject
+metadata:
+  cluster: shadow-it
+  name: myPrefix.topic-value
+spec:
+  schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
+```
+
+**Inline**
+
+```yaml
+---
+apiVersion: v1
+kind: Subject
+metadata:
+  name: myPrefix.topic-value
+spec:
+  schema: |
+    {
+      "type": "long"
+    }
+```
+
+**Schema Reference**
+
+```yaml
+---
+apiVersion: v1
+kind: Subject
+metadata:
+  name: myPrefix.topic-value
+spec:
+  schema: |
+    {
+      "type": "record",
+      "namespace": "com.schema.avro",
+      "name": "Client",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "address",
+          "type": "com.schema.avro.Address"
+        }
+      ]
+    }
+  references:
+    - name: com.schema.avro.Address
+      subject: commons.address-value
+      version: 1
+```
+
+### Connector
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API /> <GUI />
+
+```yaml
+---
+apiVersion: v1
+kind: Connector
+metadata:
+  name: myPrefix.myConnector
+spec:
+  connectCluster: myConnectCluster
+  config:
+    connector.class: io.connect.jdbc.JdbcSourceConnector
+    tasks.max: '1'
+    topics: myPrefix.myTopic
+    connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
+    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
+
+```
