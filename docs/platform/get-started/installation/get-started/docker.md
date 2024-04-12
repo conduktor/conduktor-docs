@@ -178,7 +178,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console:1.22.0
     depends_on:
       - postgresql
     ports:
@@ -192,7 +192,7 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.21.0
+    image: conduktor/conduktor-console-cortex:1.22.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ```
@@ -241,7 +241,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.21.0
+    image: conduktor/conduktor-console:1.22.0
     depends_on:
       - postgresql
     ports:
@@ -258,7 +258,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.21.0
+    image: conduktor/conduktor-console-cortex:1.22.0
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 

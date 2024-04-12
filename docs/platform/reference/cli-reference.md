@@ -13,6 +13,8 @@ Conduktor CLI gives you the ability to perform some operations directly from you
 Check for the list of supported resources and their definition in the dedicated [Resources Reference](../resource-reference) page.
 
 
+[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self Service.
+
 ## Install & Configure
 
 You have 2 options to Install Conduktor CLI.
