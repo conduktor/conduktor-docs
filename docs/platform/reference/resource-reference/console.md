@@ -42,132 +42,14 @@ export const AdminToken = () => (
 );
 
 
+## Console Resources
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <GUI />
 
-
-## Kafka Resources
-
-At the moment, Kafka resources are only managed through <GUI />
-
-### Topic
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
-
-
-````yaml
----
-apiVersion: v1
-kind: Topic
-metadata:
-  cluster: shadow-it
-  name: click.event-stream.avro
-spec:
-  replicationFactor: 3
-  partitions: 3
-  configs:
-    min.insync.replicas: '2'
-    cleanup.policy: delete
-    retention.ms: '60000'
-````
-**Topic checks:**
-- `spec.cluster` is a valid Cluster Technical Id
-- `metadata.name` must belong to the Application Instance.
-- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
-- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
-
-**Side effect in Console & Kafka:**
-- Kafka
-    - Topic is created / updated.
-
-### Subject
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
-
-**Local file**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  cluster: shadow-it
-  name: myPrefix.topic-value
-spec:
-  schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
-```
-
-**Inline**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  name: myPrefix.topic-value
-spec:
-  schema: |
-    {
-      "type": "long"
-    }
-```
-
-**Schema Reference**
-
-```yaml
----
-apiVersion: v1
-kind: Subject
-metadata:
-  name: myPrefix.topic-value
-spec:
-  schema: |
-    {
-      "type": "record",
-      "namespace": "com.schema.avro",
-      "name": "Client",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "address",
-          "type": "com.schema.avro.Address"
-        }
-      ]
-    }
-  references:
-    - name: com.schema.avro.Address
-      subject: commons.address-value
-      version: 1
-```
-
-### Connector
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
-
-```yaml
----
-apiVersion: v1
-kind: Connector
-metadata:
-  name: myPrefix.myConnector
-spec:
-  connectCluster: myConnectCluster
-  config:
-    connector.class: io.connect.jdbc.JdbcSourceConnector
-    tasks.max: '1'
-    topics: myPrefix.myTopic
-    connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
-    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
-
-```
+### KafkaCluster
+### KafkaConnectCluster
+### KsqlDBCluster
+### ConsoleGroup
+### ConsoleUser
+### Alert
+### MaskingRule
