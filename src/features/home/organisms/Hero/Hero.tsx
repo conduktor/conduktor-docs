@@ -11,11 +11,7 @@ interface HeroProps {}
 const Hero: React.FunctionComponent<HeroProps> = () => {
   return (
     <section className={styles.StyledHero}>
-      <img
-        className={styles.LightbeamVisual}
-        src="/assets/visuals/lightBeams1.webp"
-        alt="Light Beams"
-      />
+      
       <GridBackground>
         <div className={styles.ContentContainer}>
           <Container>

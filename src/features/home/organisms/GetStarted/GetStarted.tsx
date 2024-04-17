@@ -11,7 +11,7 @@ const GetStarted: React.FunctionComponent<GetStartedProps> = () => {
       <Container>
         <div className={styles.Card}>
           <div className={styles.CardContent}>
-            <h2 className={styles.CardTitle}>Get Started</h2>
+            <h3 className={styles.CardTitle}>Get Started</h3>
             <p className={styles.CardParagraph}>
             Get started with Conduktor Console. The installation and configuration process takes only a few minutes.
             </p>
