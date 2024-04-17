@@ -52,4 +52,4 @@ export const AdminToken = () => (
 ### ConsoleGroup
 ### ConsoleUser
 ### Alert
-### MaskingRule
+### DataMaskingPolicy

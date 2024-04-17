@@ -205,15 +205,15 @@ metadata:
 spec:
   policies:
     metadata.labels.conduktor.io/public-visibility:
-      constraint: ValidString
+      constraint: OneOf
       values: ["true", "false"]
     spec.configs.retention.ms: 
       constraint: "Range"
-      max: 42,
-      min: 3,
+      max: 42
+      min: 3
       required: false
     spec.replication.factor:
-      constraint: ValidString
+      constraint: OneOf
       values: ["3"]
     spec.cleanup.policy: 
       constraint: NonEmpty
@@ -228,6 +228,93 @@ spec:
       constraint: Match
       pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
 ```
+
+#### Available Constraints
+**Range**  
+Validates the property belongs to a range of numbers (inclusive)
+```yaml
+spec.configs.retention.ms:
+  constraint: "Range"
+  min:   3600000 # 1 hour in ms
+  max: 604800000 # 7 days in ms
+```
+Validation will succeed with these inputs:
+- 3600000 (min)
+- 36000000 (between min & max)
+- 604800000 (max)
+Validation will fail with these inputs:
+- 60000 (below min)
+- 999999999 (above max)
+
+**OneOf**
+Validates the property is one of the expected values
+```yaml
+spec.configs.cleanup.policy:
+  constraint: OneOf
+  required: true
+  values: ["delete", "compact"]
+```
+Validation will succeed with these inputs:
+- `delete`
+- `compact`
+Validation will fail with these inputs:
+- `delete, compact` (Valid in Kafka but not allowed by policy)
+- `deleet` (typo)
+
+**Match**  
+Validates the property against a Regular Expression
+```yaml
+metadata.name:
+  constraint: Match
+  pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
+```
+Validation will succeed with these inputs:
+- `wikipedia.links.avro`
+- `wikipedia.products.json`
+Validation will fail with these inputs
+- `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern 
+- `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
+
+**Optional Flag**
+Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
+Example:
+```yaml
+spec.configs.min.insync.replicas:
+  constraint: ValidString
+  optional: true
+  values: ["2"]
+```
+This object will pass the validation
+````yaml
+---
+apiVersion: v1
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    cleanup.policy: delete
+    retention.ms: '60000'
+````
+This object will fail the validation
+````yaml
+---
+apiVersion: v1
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    min.insync.replicas: 3
+    cleanup.policy: delete
+    retention.ms: '60000'
+````
 
 ### Cross Application Permission Policy
 :::caution Not implemented yet
