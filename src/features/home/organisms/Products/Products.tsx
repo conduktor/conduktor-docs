@@ -13,7 +13,7 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
     <section>
       <Container>
         <div className={styles.HeadingContainer}>
-          <Heading>Browse by product artefact</Heading>
+          <Heading>Browse by tools</Heading>
         </div>
         <ul className={styles.List}>
           {items.map((item, itemIndex) => (
