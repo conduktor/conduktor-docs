@@ -45,7 +45,7 @@ export const AdminToken = () => (
 ## Self Serve Resources
 
 ### Application
-This resource defines a Self Serve Application.  
+An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 

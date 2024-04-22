@@ -43,8 +43,6 @@ export const AdminToken = () => (
 
 ## Kafka Resources
 
-At the moment, Kafka resources are only managed through <GUI />
-
 ### Topic
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -67,7 +65,7 @@ spec:
     retention.ms: '60000'
 ````
 **Topic checks:**
-- `spec.cluster` is a valid Cluster Technical Id
+- `spec.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instance.
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
 - All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
