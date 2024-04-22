@@ -180,6 +180,7 @@ spec:
 **Side effect in Console & Kafka:**
 - Console
     - Members of the Owner Group are given all permissions in the UI over the owned resources
+    - Members of the Owner Group can create Application Token from the UI
 - Kafka
     - Service Account is granted the following ACLs over the declared resources depending on the type:
         - Topic: READ, WRITE, DESCRIBE_CONFIGS
@@ -242,11 +243,12 @@ Validation will succeed with these inputs:
 - 3600000 (min)
 - 36000000 (between min & max)
 - 604800000 (max)
+
 Validation will fail with these inputs:
 - 60000 (below min)
 - 999999999 (above max)
 
-**OneOf**
+**OneOf**  
 Validates the property is one of the expected values
 ```yaml
 spec.configs.cleanup.policy:
@@ -256,7 +258,8 @@ spec.configs.cleanup.policy:
 ```
 Validation will succeed with these inputs:
 - `delete`
-- `compact`
+- `compact`  
+
 Validation will fail with these inputs:
 - `delete, compact` (Valid in Kafka but not allowed by policy)
 - `deleet` (typo)
@@ -271,11 +274,12 @@ metadata.name:
 Validation will succeed with these inputs:
 - `wikipedia.links.avro`
 - `wikipedia.products.json`
+
 Validation will fail with these inputs
 - `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern 
 - `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
 
-**Optional Flag**
+**Optional Flag**  
 Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
 Example:
 ```yaml
@@ -366,7 +370,7 @@ spec:
     - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application.**
     - Remember this resource affects target ApplicationInstance's Kafka service account ACLs.
     - To edit this resource, delete and recreate it.
-- `spec.resource.type` can be `TOPIC`, `GROUP`, `SUBJECT`.
+- `spec.resource.type` can be `TOPIC`.
 - `spec.resource.patternType` can be `PREFIXED` or `LITERAL`.
 - `spec.resource.name` must reference any "sub-resource" of `metadata.appInstance` .
     - For example, if you are owner of the prefix `click.`, you can grant READ or WRITE access to:
@@ -380,7 +384,7 @@ spec:
 - Console
     - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
 - Kafka
-    - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the permission:
+    - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the `spec.permission`:
         - READ: READ, DESCRIBE_CONFIGS
         - WRITE: READ, WRITE, DESCRIBE_CONFIGS
 

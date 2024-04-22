@@ -1,6 +1,6 @@
 ---
-sidebar_position: 9
-title: Migrating / Onboarding Applications
+sidebar_position: 2
+title: Topic Catalog
 description: Kafka Self Serve Overview
 ---
 

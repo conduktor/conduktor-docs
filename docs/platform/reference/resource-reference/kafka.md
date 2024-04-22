@@ -46,9 +46,7 @@ export const AdminToken = () => (
 At the moment, Kafka resources are only managed through <GUI />
 
 ### Topic
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
+
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API /> <GUI />
 

@@ -35,7 +35,7 @@ Self Service relies on a central concept, the **Application** which incorporates
 Each concept presented here correlates to a resource that can be deployed on Self Service.  
 For the full definition of each resource, check the [CLI Reference documentation](/platform/reference/cli-reference).
 
-## Administrator Resources
+## Central Platform Team Resources
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka. 
