@@ -49,9 +49,6 @@ An application represents a streaming app or data pipeline that is responsible f
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
-<Tabs>
-<TabItem value="CLI" label="CLI">
-
 ````yaml
 # Application
 ---
@@ -64,47 +61,6 @@ spec:
   description: "FreeForm text, probably multiline markdown"
   owner: "groupA" # technical-id of Console Group
 ````
-
-</TabItem>
-<TabItem value="API" label="API">
-
-````json
-PUT /public/v1/application
-
-{
-  "metadata": {
-    "name": "clickstream-app"
-  },
-  "spec": {
-    "title": "Clickstream App",
-    "description": "FreeForm text, probably multiline markdown",
-    "owner": "groupA"
-  }
-}
-````
-
-</TabItem>
-<TabItem value="TF" label="🏗️️ Terraform">
-
-:::caution Work in progress...
-This resource is not available yet
-:::
-
-```tf
-resource "conduktor" "application" {
-  metadata {
-    name = "clickstream-app"
-  }
-  spec {
-    title         = "Clickstream App"
-    description   = "FreeForm text, probably multiline markdown"
-    owner         = "groupA"
-  }
-}
-```
-
-</TabItem>
-</Tabs>
 
 **Application checks:**
 -   `spec.owner` is a valid Console Group
