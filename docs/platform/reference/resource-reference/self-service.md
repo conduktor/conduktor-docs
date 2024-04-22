@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Self-Service Resources
-description: Self-Services resources
+title: Self Service Resources
+description: Self Services resources
 ---
 
 import Tabs from '@theme/Tabs';
