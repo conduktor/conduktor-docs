@@ -102,7 +102,7 @@ Replace the following placeholders with the actual topic names:
 
 ```bash
     docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
-     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.0 \
+     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.1 \
      topic -t={targetTopicMappingsTopicName} \
      --topicMappingsTopic={sourceTopicMappingTopicName} \
      --topicRegistryTopic={sourceTopicRegistryTopicName} \
@@ -125,7 +125,7 @@ Replace the following placeholders with the actual topic names:
  
 ```bash
     docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
-     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.0 \
+     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.1 \
      interceptor -t={targetInterceptorsTopicName} \
      --topicInterceptorConfigs={sourceInterceptorsTopicName} \
      /tmp/my-kafka.properties
