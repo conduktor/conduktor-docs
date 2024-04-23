@@ -276,31 +276,6 @@ spec:
     retention.ms: '60000'
 ````
 
-### Cross Application Permission Policy
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />
-
-ApplicationInstancePermission Policies force Application Teams to respect a set of rules when they declare ApplicationInstancePermission resources.
-
-Typical use case include:
-- Enforcing metadata to track the intention or justification behind the cross application permission
-
-```yaml
----
-apiVersion: "v1"
-kind: "ApplicationInstancePermissionPolicy"
-metadata:
-  name: "must-have-jira"
-spec:
-  policies:
-    metadata.labels.bankart.si/jira-ticket:
-      constraint: Match
-      pattern: "KAFKA-ACCESS-[0-9]+"
-```
-
 ### Cross Application Permissions
 **API Keys:** <AdminToken />  <AppToken />
 
