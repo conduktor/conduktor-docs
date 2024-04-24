@@ -1,22 +1,22 @@
 ---
 sidebar_position: 1
 title: Introduction
-description: Conduktor can be configured using an input yaml file
+description: Conduktor can be configured using an input YAML file
 ---
 
 # Introduction
 
-Conduktor can be configured using either a configuration file `platform-config.yaml` or **environment variables**. This is used to setup your organizations environment. Configuration can be used to declare:
+Conduktor can be configured using either a configuration file `platform-config.yaml` or **environment variables**. This is used to set up your organization's environment. Configuration can be used to declare:
 
 - Organization name
-- External database (**required for production environments**)
+- External database (**required**)
 - User authentication (Basic or SSO)
 - Console license
 
 :::info
 The **recommended** way to configure Kafka Cluster, Schema Registry and Kafka Connect is using Conduktor Console UI.
 
-The Manage Clusters page (`/admin/clusters`) has several advantages over the YAML configuration:
+The Manage Clusters page (`/settings/clusters`) has several advantages over the YAML configuration:
 
 - Intuitive interface with live update capabilities
 - Centralized and secured with RBAC and Audit Logs Events
@@ -71,8 +71,6 @@ The below docker-compose indicates how to bind your `platform-config.yaml` file.
 Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it.
 
 ```yaml title="docker-compose.yaml"
-version: '3.8'
-
 services:  
   postgresql:
     image: postgres:14
@@ -119,11 +117,9 @@ Input configuration fields can also be provided using environment variables.
 
 For more information, see [Environment Variables](../env-variables/).
 
-Below shows an example docker-compose that uses environment variables for configuration.
+Below is an example of docker-compose that uses environment variables for configuration.
 
 ```yaml title="docker-compose.yaml
-version: '3.8'
-
 services:  
   postgresql:
     image: postgres:14

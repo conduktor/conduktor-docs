@@ -7,7 +7,7 @@ description: Specify proxy settings that Conduktor should use to access the Inte
 # HTTP Proxy Configuration
 Specify proxy settings that Conduktor should use to access the Internet. The HTTP proxy works for both HTTP and HTTPS connections.
 
-There are 5 properties you can set to specify the proxy that will be used by the http protocol handler:
+There are 5 properties you can set to specify the proxy that will be used by the HTTP protocol handler:
 
 `CDK_HTTP_PROXY_HOST`: the host name of the proxy server  
 `CDK_HTTP_PROXY_PORT`: the port number, the default value being 80.  
@@ -17,7 +17,6 @@ There are 5 properties you can set to specify the proxy that will be used by the
 
 ## Example
 ```yaml
-version: '3.8'
 services:
   conduktor-console:
     image: conduktor/conduktor-console

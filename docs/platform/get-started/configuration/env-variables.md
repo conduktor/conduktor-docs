@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Configuration Properties & Environment Variables
-description: Starting from Conduktor Platform 1.2.0 input configuration fields can be provided using environment variables.
+description: Starting from Conduktor Console 1.2.0 input configuration fields can be provided using environment variables.
 ---
 
 # Configuration Properties and Environment Variables
@@ -9,7 +9,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 - [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
   - [Docker image environment variables](#docker-image-environment-variables)
   - [Platform properties reference](#platform-properties-reference)
-      - [Support of shell expansion in yaml configuration file](#support-of-shell-expansion-in-yaml-configuration-file)
+      - [Support of shell expansion in YAML configuration file](#support-of-shell-expansion-in-yaml-configuration-file)
       - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
       - [Global properties](#global-properties)
       - [Database properties](#database-properties)
@@ -34,24 +34,24 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 
 ## Docker image environment variables
 
-| ENV | Since Version | Until Version | Default Value                                                                        |                                                                                                                                                                                                      |
+| Environment Variable | Since Version | Until Version | Default Value                                                                        |                                                                                                                                                                                                      |
 | --- |---------------| --- |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`CDK_DEBUG`** | 1.0.0         | latest | `false`                                                                              | Flag to enable platform debug logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details.                                                                               |
-| **`CDK_VOLUME_DIR`** | 1.0.2         | latest | `/var/conduktor`                                                                     | Volume directory where Conduktor platform store data                                                                                                                                       |
-| **`CDK_IN_CONF_FILE`** | 1.0.2         | latest | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file)) | Conduktor platform configuration file location                                                                                                                                              |
+| **`CDK_DEBUG`** | 1.0.0         | latest | `false`                                                                              | Flag to enable platform debug logs. See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                                               |
+| **`CDK_VOLUME_DIR`** | 1.0.2         | latest | `/var/conduktor`                                                                     | Volume directory where Conduktor Console store data                                                                                                                                       |
+| **`CDK_IN_CONF_FILE`** | 1.0.2         | latest | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file)) | Conduktor Console configuration file location                                                                                                                                              |
 | **`CDK_LISTENING_PORT`** | 1.2.0         | latest | `8080`                                                                               | Platform listening port                                                                                                                                                                         |
-| **`CDK_SSL_TRUSTSTORE_PATH`** | 1.5.0         | latest | None                                                                                 | Truststore file path used by platform kafka, SSO, S3, ... clients SSL/TLS verification                                                                                                               |
+| **`CDK_SSL_TRUSTSTORE_PATH`** | 1.5.0         | latest | None                                                                                 | Truststore file path used by platform Kafka, SSO, S3, ... clients SSL/TLS verification                                                                                                               |
 | **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest | None                                                                                 | Truststore password (optional)                                                                                                                                                                       |
 | **`CDK_SSL_TRUSTSTORE_TYPE`** | 1.5.0         | latest | `jks`                                                                                | Truststore type (optional)                                                                                                                                                                           |
 | **`CDK_SSL_DEBUG`** | 1.9.0         | latest | `false`                                                                              | Enable SSL/TLS debug logs                                                                                                                                                                            |
-| **`CDK_HTTP_PROXY_HOST`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Platform should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_PORT`** | 1.10.0        | latest | `80`                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Platform should use to access the Internet                                                                                      |
-| **`CDK_HTTP_NON_PROXY_HOSTS`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Platform should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_USERNAME`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Platform should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_PASSWORD`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Platform should use to access the Internet                                                                                      |
+| **`CDK_HTTP_PROXY_HOST`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
+| **`CDK_HTTP_PROXY_PORT`** | 1.10.0        | latest | `80`                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
+| **`CDK_HTTP_NON_PROXY_HOSTS`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
+| **`CDK_HTTP_PROXY_USERNAME`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
+| **`CDK_HTTP_PROXY_PASSWORD`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
 | **`CDK_GLOBAL_JAVA_OPTS`** | 1.10.0        | latest | None                                                                                 | Custom JAVA_OPTS parameters passed to platform modules.                                                                                                                                              |
-| **`CDK_ROOT_LOG_LEVEL`** | 1.11.0        | latest | `INFO`                                                                               | Set the platform global log level (DEBUG, INFO, WARN, ERROR). See [log configuration](../troubleshooting/logs-configuration.md) for mor details.                                                     |
-| **`CDK_ROOT_LOG_COLOR`** | 1.11.0        | latest | `true`                                                                               | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for mor details.                                                                            |
+| **`CDK_ROOT_LOG_LEVEL`** | 1.11.0        | latest | `INFO`                                                                               | Set the platform global log level (DEBUG, INFO, WARN, ERROR). See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                     |
+| **`CDK_ROOT_LOG_COLOR`** | 1.11.0        | latest | `true`                                                                               | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                                            |
 | **`CDK_ONBOARDING_MODE`** | 1.14.0        | latest | `auto`                                                                               | Specify whether to start Conduktor with the onboarding wizard enabled. Accepted values: `auto`, `never`, `always`. Defaults to `auto`  that will start onboarding when no configuration is provided. |
 | **`PROXY_BUFFER_SIZE`** | 1.16.0        | latest | `8k`                                                                                 | Tune internal Nginx `proxy_buffer_size`.                                                                                                                                                             |
 | **`CONSOLE_MEMORY_OPTS`** | 1.18.0        | latest | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80`                                   | Configure memory Java options for Console module. See [memory setup page](memory-configuration.md) for more details                                                                                  |
@@ -59,7 +59,7 @@ description: Starting from Conduktor Platform 1.2.0 input configuration fields c
 
 ## Platform properties reference
 
-Starting from Conduktor Platform `1.2.0` input configuration fields can be provided using environment variables.
+Starting from Conduktor Console `1.2.0` input configuration fields can be provided using environment variables.
 
 Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
 
@@ -91,10 +91,10 @@ database:
 ```
 :::note
 If you want to escape the shell expansion in YAML file, you can use the following syntax: `$$`.
-For example if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
+For example, if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
 
 Also note that values provided using environment variables will not be expended by Console.
-So for example if you use `CDK_ADMIN_PASSWORD` to set password like `secret$123`, it will be set as is. 
+So for example, if you use `CDK_ADMIN_PASSWORD` to set password like `secret$123`, it will be set as is. 
 :::
 
 #### Support of `*_FILE` environment variables
@@ -118,10 +118,10 @@ Exception: `CDK_IN_CONF_FILE` is not supported
 | `platform.external.url` | Force Platform external URL. Useful for SSO callback URL when using a reverse proxy. By default, the platform will try to guess it automatically using X-Forwarded-\* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL` | false | string | ∅ |
 | `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
 | `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
-| `enable_product_metrics` | In order to improve Conduktor Platform, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
+| `enable_product_metrics` | In order to improve Conduktor Console, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
 
 :::tip
-If you need more that what free plan offer, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
+If you need more than what the free plan offers, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 :::
 
 ### Database properties
@@ -150,7 +150,7 @@ Optional properties for configuring [session lifetime](../user-authentication/se
 
 ### Local users properties
 
-Optional local accounts list used to login on Console
+Optional local accounts list used to log on Console
 
 | Property | Description | Env Variable | Mandatory | Type | Default Value |
 | --- | --- | --- | --- | --- | --- |
@@ -258,8 +258,8 @@ You can find sample configurations on the [Configuration Snippets](configuration
 | `clusters[].bootstrapServers` | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS` | true | string | ∅ |
 | `clusters[].zookeeperServer` | Zookeeper server url | `CDK_CLUSTERS_0_ZOOKEEPERSERVER` | false | string | ∅ |
 | `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
-| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
-| `clusters[].nodeScrapePort` | Node-exporter port used to scrape kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
+| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape Kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
+| `clusters[].nodeScrapePort` | Node-exporter port used to scrape Kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
 
 ### Kafka vendor specific properties
 
@@ -397,4 +397,4 @@ You should modify these parameters only if you see an issue with the performance
 | `connectindexer.indexertimeout`                      | Kafka connect indexer timeout in seconds                                                                                               | `CDK_CONNECTINDEXER_INDEXERTIMEOUT`                | false     | int  | `300` (5 minutes) |
 | **Kafka admin client configuration**                 |                                                                                                                                        |                                                    |           |      |                   |
 | `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once. | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
-| `kafka_admin.batch_parallel_size                     | Maximum of batched requests that can be sent in parallel                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
+| `kafka_admin.batch_parallel_size                     | Maximum of batched requests that can be sent in parallel`                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |

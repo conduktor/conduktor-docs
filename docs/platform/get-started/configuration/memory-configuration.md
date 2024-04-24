@@ -6,13 +6,13 @@ description: Fine tune memory usage of Conduktor
 # Memory configuration (1.19 and later)
 
 **RUN_MODE** is gone!  
-We now rely on container CGroups limits and use up to 80% of container memory limit for JVM max heap size.
+We now rely on container CGroups limits and use up to 80% of the container memory limit for JVM max heap size.
 Our settings are the following
-```` shell
+```bash
 -XX:+UseContainerSupport -XX:MaxRAMPercentage=80
-````
+```
 
-You now only need to care about the limits that you set to your container.  
+You now only need to care about the limits that you set on your container.  
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -85,16 +85,16 @@ This means that Conduktor Console won't start if the container **CGroup memory l
 :::
 
 #### Modules memory usage
-- **Console** : contains administation, RBAC and kafka resources exploration. Should scale with the number of users and kafka resources. 
-- **Governance** : contains data-masking engine, kafka indexer and kafka metrics exporter. Should scale for large kafka cluster to index.
+- **Console** : contains administration, RBAC and Kafka resources exploration. Should scale with the number of users and kafka resources. 
+- **Governance** : contains Data Masking engine, Kafka indexer and Kafka metrics exporter. Should scale for large Kafka cluster to index.
 - **Authenticator** : Authentication module to interface SSO/LDAP and local users. Scale on internal user list size and number of concurrent users connected.
 
 ### Override specific module memory settings
 
-All modules memory presets can be overridden using following the environment variables :
+All modules' memory presets can be overridden using following the environment variables :
 
 - **`CONSOLE_MEMORY_OPTS`** : Used by Console module
-- **`GOVERNANCE_MEMORY_OPTS`** : Used by governance  module
+- **`GOVERNANCE_MEMORY_OPTS`** : Used by governance module
 - **`AUTHENTICATOR_MEMORY_OPTS`** : Used by authenticator module
 
 The other modules will still use the preset from the `RUN_MODE` value.
@@ -105,7 +105,7 @@ The other modules will still use the preset from the `RUN_MODE` value.
 RUN_MODE=small
 GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 ``` 
-In this example we set around 5GB of RAM for Governance and leave other modules like Console and Authenticator with `small` memory presets. 
+In this example, we set around 5GB of RAM for Governance and leave other modules like Console and Authenticator with `small` memory presets. 
 
 :::caution   
 Be aware that in this example the target RAM usage is increased from 4GB to 8-9GB and **container CGroup memory limit** should be set accordingly.   
@@ -127,9 +127,9 @@ CONSOLE_MEMORY_OPTS="-Xms2048m -Xmx8000m"
 GOVERNANCE_MEMORY_OPTS="-Xms1025m -Xmx5000m"
 AUTHENTICATOR_MEMORY_OPTS="-Xms128m -Xmx512m"
 ``` 
-In this example we set around 8GB for Console, 5GB for Governance and 512MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
+In this example, we set around 8GB for Console, 5GB for Governance and 512MB for Authenticator leaving a safety margin of 2.5GB for other JVM memory pools and extra internal modules.
 
 
 :::caution     
-In `custom` mode, Conduktor will not check CGroup memory limits to prevent under provisioning that could lead to an unexpected crash.  
+In `custom` mode, Conduktor will not check CGroup memory limits to prevent under-provisioning that could lead to an unexpected crash.  
 :::

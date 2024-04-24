@@ -6,17 +6,17 @@ description: Depending on the environment, Conduktor might need to access extern
 
 # SSL/TLS configuration
 
-Depending on the environment, Conduktor might need to access external services like Kafka clusters, SSO servers, database, or object-storage that require custom certificate for SSL/TLS communication.
+Depending on the environment, Conduktor might need to access external services like Kafka clusters, SSO servers, database, or object storage that require a custom certificate for SSL/TLS communication.
 
 The following table gives you an overview of what's currently supported and the methods to configure it:
 
-- **From the UI (recommended)**: From Conduktor Console, you can manage you certificates in a dedicated screen. You can also configure SSL authentication from the broker setup wizard.
+- **From the UI (recommended)**: From Conduktor Console, you can manage your certificates on a dedicated screen. You can also configure SSL authentication from the broker setup wizard.
 - **Volume mount**: This method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
 
-|                                | Kafka Clusters | Schema Registry / Kafka Connect |  LDAPS, OIDC               |
-| ---------------- |----------------|------------- | ---------------- |
-| SSL to secure data in transit  | ✅ UI           | ✅ UI         | ✅ UI |
-| SSL to authenticate the client | ✅ UI           | ✅ UI         | 🚫 Unsupported            |
+|                                | Kafka Clusters | Schema Registry / Kafka Connect | LDAPS, OIDC     |
+| ------------------------------ | -------------- | ------------------------------- | --------------- |
+| SSL to secure data in transit  | ✅ UI          | ✅ UI                           | ✅ UI            |
+| SSL to authenticate the client | ✅ UI          | ✅ UI                           | 🚫 Not supported |
 
 Jump to:
 
@@ -49,7 +49,7 @@ If the response indicates the certificate is not issued by a valid authority, yo
 
 ![admin-ssl-2.png](/img/admin/admin-ssl-2.png)
 
-Upon uploading the certificate, you should then see the green icon indicating **connection is secure**.
+Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
 
 ![admin-ssl-3.png](/img/admin/admin-ssl-3.png)
 
@@ -65,11 +65,11 @@ Simply add all of your certificates by uploading them or pasting them as text. I
 
 Since version `1.5.0` Conduktor supports SSL/TLS connections using Java Truststore. The below details how to mount a custom truststore when starting Conduktor.
 
-### Create TrustStore (jks) from certificate in pem format
+### Create TrustStore (JKS) from certificate in PEM format
 
 If you already have a truststore, you can ignore this step.
 
-For that you need a `keytool` program that is usually packaged on JDK distributions and a certificate in PEM format (`.pem` or `.crt`).
+For that, you need a `keytool` program that is usually packaged on JDK distributions and a certificate in PEM format (`.pem` or `.crt`).
 
 ```bash
 keytool  \
@@ -173,5 +173,5 @@ services:
         read_only: true
 ```
 
-And then from the UI, choose the SSL Authentication method "Keystore file is mounted on the volume" and fill in the required fields
+Then from the UI, choose the SSL Authentication method "Keystore file is mounted on the volume" and fill in the required fields
 ![mtls-5.png](assets/mtls-5.png)
