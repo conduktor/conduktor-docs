@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Get Started with Self Service
-description: Get Started with Self Service
+title: Get Started with Self-service
+description: Get Started with Self-service
 ---
 
 ## Overview
@@ -23,10 +23,10 @@ This approach brings governance into your enterprise through concepts like Owner
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self Service relies on a central concept, the **Application** which incorporates 3 core concepts:
+Self-service relies on a central concept, the **Application** which incorporates 3 core concepts:
 - Application Ownership on the **Kafka** resources
 - How **People** interact with the Application
-- Self Service **Processes** & Governance rules
+- Self-service **Processes** & Governance rules
   ![Image](img/application-concept.png)
 
 ## Central Platform Team Resources
@@ -83,7 +83,7 @@ spec:
 ### Application Instance Policies
 Application Instance Policies restrict the Application Teams to create their resources following certain rules.
 These rules can be related to Kafka configs but can also apply to metadata.  
-This is what lets Platform Administrators provide a Self Serve experience that doesn't look like the Wild West.
+This is what lets Platform Administrators provide a Self-service experience that doesn't look like the Wild West.
 
 **Example**
 ````yaml

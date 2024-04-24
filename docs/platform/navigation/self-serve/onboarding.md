@@ -1,17 +1,17 @@
 ---
 sidebar_position: 9
 title: Migrating / Onboarding Applications
-description: Kafka Self Serve Overview
+description: Kafka Self-service Overview
 ---
 
-As you progressively onboard new Application Teams to Self Service, you will eventually be confronted to the following scenario:
-- Application `Wikipedia` is onboarded in Self Service.
-- Application `Clickstream` hasn't migrated to Self Service yet.
+As you progressively onboard new Application Teams to Self-service, you will eventually be confronted to the following scenario:
+- Application `Wikipedia` is onboarded in Self-service.
+- Application `Clickstream` hasn't migrated to Self-service yet.
 - Application `Wikipedia` needs to access Application `Clickstream`'s topic.
 - 😱
 
 Don't worry, there's a hidden rule for Platform Administrators.  
-Un-owned resources in Self Service (that is, all resources that are not linked to Application declared in Self Service) are owned by Platform Administrator.
+Un-owned resources in Self-service (that is, all resources that are not linked to Application declared in Self-service) are owned by Platform Administrator.
 
 What is means, is that as a Platform Administrator, you can deploy the following resource:
 ```yaml

@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
 title: Application Catalog
-description: Kafka Self Serve Overview
+description: Kafka Self-service Overview
 ---
 
 :::tip 
-The Self-Service UI is almost entirely Read-only for now.  
+Self-service UI is almost entirely Read-only for now.  
 Use the CLI to interact with the product.
 :::
 

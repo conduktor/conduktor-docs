@@ -1,37 +1,18 @@
 ---
 sidebar_position: 2
 title: Topic Catalog
-description: Kafka Self Serve Overview
+description: Kafka Self-service Overview
 ---
 
-As you progressively onboard new Application Teams to Self Service, you will eventually be confronted to the following scenario:
-- Application `Wikipedia` is onboarded in Self Service.
-- Application `Clickstream` hasn't migrated to Self Service yet.
-- Application `Wikipedia` needs to access Application `Clickstream`'s topic.
-- 😱
+:::tip
+Self-service UI is almost entirely Read-only for now.  
+Use the CLI to interact with the product.
+:::
 
-Don't worry, there's a hidden rule for Platform Administrators.  
-Un-owned resources in Self Service (that is, all resources that are not linked to Application declared in Self Service) are owned by Platform Administrator.
+## Topic Catalog Page
 
-What is means, is that as a Platform Administrator, you can deploy the following resource:
-```yaml
----
-apiVersion: "v1"
-kind: "ApplicationInstancePermission"
-metadata:
-  application: "UNASSIGNED"
-  name: "clickstream-app-prod-to-wiki"
-spec:
-  resource:
-    type: TOPIC
-    name: "clickstream.topic"
-    patternType: LITERAL
-  permission: READ
-  grantedTo: wiki-app-prod
+The Application Catalog lets you search through the Topics marked as public deployed in your organization.
 
-```
+You can filter by multiple dimensions: Application, Kafka Cluster, and also the Topic metadata.
 
-As soon as `Clickstream` application will get onboarded, because their ApplicationInstance will assign ownership on topic `clickstream.`, then automatically 
-- the declared ApplicationInstancePermission will become theirs to manage
-- the Platform Administrator Team will loose control of the ApplicationInstancePermission
-- 🚀
+![TopicCatalog](img/topic-catalog.png)

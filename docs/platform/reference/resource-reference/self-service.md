@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Self Service Resources
-description: Self Services resources
+title: Self-service Resources
+description: Self-service resources
 ---
 
 import Tabs from '@theme/Tabs';
@@ -42,7 +42,7 @@ export const AdminToken = () => (
 
 
 
-## Self Serve Resources
+## Self-service Resources
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
