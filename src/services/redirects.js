@@ -384,7 +384,7 @@ const redirects = [
       },
       {
         from: '/platform/installation/Upgrades/',
-        to: '/platform/get-started/installation/Upgrades/',
+        to: '/platform/get-started/installation/upgrading/',
       },
       {
         from: '/platform/admin/rbac/',
