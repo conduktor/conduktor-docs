@@ -85,7 +85,7 @@ This means that Conduktor Console won't start if the container **CGroup memory l
 :::
 
 #### Modules memory usage
-- **Console** : contains administration, RBAC and Kafka resources exploration. Should scale with the number of users and kafka resources. 
+- **Console** : contains administration, RBAC and Kafka resources exploration. Should scale with the number of users and Kafka resources. 
 - **Governance** : contains Data Masking engine, Kafka indexer and Kafka metrics exporter. Should scale for large Kafka cluster to index.
 - **Authenticator** : Authentication module to interface SSO/LDAP and local users. Scale on internal user list size and number of concurrent users connected.
 
