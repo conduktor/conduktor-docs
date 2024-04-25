@@ -10,16 +10,14 @@ description: Conduktor API health endpoints
 
 `/platform/api/modules/health/live`
 
-Return a status 200 when platform-api http server is up.
+Return a status 200 when platform-api HTTP server is up.
 
-Curl example :
-
-```shell
-$ curl -s  http://localhost:8080/platform/api/modules/health/live | jq .
-#"Ok"
+```shell title="cURL example"
+curl -s  http://localhost:8080/platform/api/modules/health/live
+# "Ok"
 ```
 
-Could be used to setup probes on kubernetes or docker-compose.
+Could be used to set up probes on Kubernetes or docker-compose.
 
 #### docker-compose probe setup
 
@@ -38,18 +36,14 @@ healthcheck:
 
 #### Kubernetes liveness probe
 
-Port configuration
-
-```yaml
+```yaml title="Port configuration"
 ports:
   - containerPort: 8080
     protocol: TCP
     name: httpprobe
 ```
 
-Probe configuration
-
-```yaml
+```yaml title="Probe configuration"
 livenessProbe:
   httpGet:
     path: /platform/api/modules/health/live
@@ -59,7 +53,7 @@ livenessProbe:
   timeoutSeconds: 5
 ```
 
-### Readyness/startup endpoint
+### Readiness/startup endpoint
 
 `/platform/api/modules/health/ready`
 
@@ -71,32 +65,29 @@ Modules status :
 - `DOWN`
 - `DISABLED` (disabled modules by license or manually)
 
-This endpoint return 200 statusCode if all modules are in `UP` or `DISABLED` state.
-Otherwise, return 503 ("Service Unavailable") if at least one module is in `STARTING` or `DOWN` state.
+This endpoint returns a 200 status code if all modules are in `UP` or `DISABLED` state.
 
-Curl example :
+Otherwise, it returns 503 ("Service Unavailable") if at least one module is in `STARTING` or `DOWN` state.
 
-```shell
-$ curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
-#{
-#  "console": "DOWN",
-#  "monitoring": "UP",
-#  "governance": "UP",
-#  "is_ready": true
-#}
+```shell title="cURL example"
+curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
+# {
+#   "console": "UP",
+#   "is_ready": true
+# }
 ```
 
 #### Kubernetes startup probe
 
-Port configuration
+```yaml title="Port configuration"
 
-````yaml
 ports:
   - containerPort: 8080
     protocol: TCP
     name: httpprobe
+```
 
-```yaml
+```yaml title="Probe configuration"
 startupProbe:
     httpGet:
         path: /platform/api/modules/health/ready
@@ -105,7 +96,7 @@ startupProbe:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 30
-````
+```
 
 ## Console Information
 
@@ -113,16 +104,13 @@ startupProbe:
 
 `/platform/api/modules/versions`
 
-This endpoint expose module versions used to build the Console along with the overall Console version.
+This endpoint exposes module versions used to build the Console along with the overall Console version.
 
-Curl example :
-
-```shell
+```shell title="cURL example"
 curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 # {
-#  "platform": "1.19.0",
-#  "console": "39db3b4b8a968b54549ce29194947c10697961aa",
-#  "console_web": "8c3693ac3b32fa2bf5f2e9177951732fec8c1bac",
-#  "monitoring": "0.72.0"
+#  "platform": "1.21.0",
+#  "console": "059af990fff39541c76c0187edb5ea4e9f9ff69a",
+#  "console_web": "4786261ab99e5048d997b4ff2538c4747f285a2b",
 # }
 ```

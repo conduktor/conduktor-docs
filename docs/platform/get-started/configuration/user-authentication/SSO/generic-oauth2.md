@@ -14,7 +14,7 @@ There are many OIDC (OpenID Connect) providers available, we already have guides
 - [Okta](okta.md)
 - [Auth0](auth0.md)
 
-For other providers, you can follow this guide that will explain the general steps to follow.
+For other providers, you can follow this guide which will explain the general steps to follow.
 
 ## OAuth2 Provider Configuration
 
@@ -29,7 +29,7 @@ This is called the `redirect URI` or `callback URI`.
 The redirect URI will look like this:    
 `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
-Where `<Console host>` and `<Console port>` depends on the Console external URL used and/or configured, and `<OAuth2 config name>` is the name of the OAuth2 configuration in your Console configuration file see [Console configuration](#console-configuration) step.
+Where `<Console host>` and `<Console port>` depend on the Console external URL used and/or configured, and `<OAuth2 config name>` is the name of the OAuth2 configuration in your Console configuration file see [Console configuration](#console-configuration) step.
 
 #### More details on Console external URL
 When Console initiate the OAuth2 authorization code flow, it tells the OIDC provider where to redirect the user after the authentication process.
@@ -40,11 +40,11 @@ But to forge this redirect URI, Console has several choices:
 
 If the Console external URL is configured using environment variable `CDK_PLATFORM_EXTERNAL_URL` or configuration `platform.external.url`, it will use it.    
 **But SSO will work ONLY if Console is accessed using this URL.** 
-If you try to login from the second URL you will be redirected to the first URL and then lose browser authentication cookies meaning the SSO will not work.
+If you try to log in from the second URL you will be redirected to the first URL and then lose browser authentication cookies meaning the SSO will not work.
 
 ##### Console external URL is NOT configured
 
-When no external Console URL is enforced, Console will use requests headers to resolve is external URL.
+When no external Console URL is enforced, Console will use requests headers to resolve this external URL.
 This is recommended if Console is accessed using multiple URLs (internal, external, etc) and have SSO on each of them.
 
 The resolution strategy is the following:
@@ -74,7 +74,7 @@ Required properties are:
 Optionally, you can configure the following properties:
 - `sso.oauth2.scopes`: the list of scopes to request during the authorization code flow.
 
-For detailed list of OAuth2 configurations supported by Console please refer to [this page](../../env-variables.md#oauth2-properties).
+For a detailed list of OAuth2 configurations supported by Console please refer to [this page](../../env-variables.md#oauth2-properties).
 
 ### Example
 Here is an example of a configuration file for a generic OIDC provider:
@@ -109,4 +109,4 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<oidc domain>/"
 </TabItem>
 </Tabs>
 
-The provider expose its configuration using well-known endpoint: `https://<oidc domain>/.well-known/openid-configuration`.
+The provider exposes its configuration using the well-known endpoint: `https://<oidc domain>/.well-known/openid-configuration`.

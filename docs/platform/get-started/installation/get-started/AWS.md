@@ -27,14 +27,14 @@ Before you proceed, it is important to make sure that you have either already cr
 
 ## Deployment Steps
 
- - [Step 1: Create a PostgreSQL databse via Amazon RDS](#step-1-create-a-postgresql-databse-via-amazon-rds)
+ - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
  - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
  - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
  - [Step 4: Access Conduktor and Configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
  - [Step 5: Onboard your team](#step-5-onboard-your-team)
 
 
-### Step 1: Create a PostgreSQL databse via Amazon RDS
+### Step 1: Create a PostgreSQL database via Amazon RDS
 
 :::info
 You can skip this step if you already have an RDS database running you want to use.
@@ -42,7 +42,8 @@ You can skip this step if you already have an RDS database running you want to u
 
 Let's start by deploying a database on RDS that Conduktor will use to store its state. 
 
-As per the [system requirements](../hardware.md), the PostgreSQL db must be engine version **13+**. Note that Console will not work with all Postgresql engines within RDS, it will only work with engine version 14.8+ / 15.3+, other versions are not fully supported.
+As per the [system requirements](../hardware.md), the PostgreSQL DB needs to be version **13 or higher**. 
+Please be aware that Console is compatible only with PostgreSQL engines of version 14.8 or 15.3 and above **within RDS**; other versions may not be fully supported.
 
 Go to the RDS menu and create a new database.
  - Select **PostgreSQL**
@@ -81,14 +82,14 @@ In the **Infrastructure Requirements** section:
 ### Step 2.1: Add the core console container
 
 In the **Container Details** section:
- - Define the name of the container to conduktor-console
+ - Define the name of the container to `conduktor-console`
  - Specify the Image URI and version for Conduktor Console. You should use the most recent major/minor version.
     - eg: `conduktor/conduktor-console:<tag>`
  - Add a Port mapping on **8080**. This is the port of the UI of Conduktor Console.
 
 ![AWS Guide RDS Container](assets/aws-guide-3.png)
 
-In the **Environment variables** section, add the essential environment variables required to run Conduktor and connect to its PostgreSQL database on RDS.
+In the **Environment Variables** section, add the essential environment variables required to run Conduktor and connect to its PostgreSQL database on RDS.
 
  - `CDK_ADMIN_EMAIL`: yourname@yourcompany.com
  - `CDK_ADMIN_PASSWORD`: admin
@@ -115,7 +116,7 @@ Note that you can also add your Kafka cluster, Schema Registry, Connect and ksql
 Underneath your first container definition, select **+ Add container** so we can also specify the docker image required to get monitoring benefits inside Conduktor.
 
 In the **Container Details** section:
- - Define the name of the container to conduktor-monitoring
+ - Define the name of the container to `conduktor-monitoring`
  - Specify the Image URI and version for conduktor monitoring. You should use the most recent major/minor version.
     - eg: `conduktor/conduktor-console-cortex:<tag>`
 
@@ -172,7 +173,7 @@ Click on the **External** link to open the Console application.
 
 ![AWS Guide Network Bindings](assets/aws-guide-9.png)
 
-In our example, our application is running at 3.122.113.99:8080.
+In our example, our application is running at `3.122.113.99:8080`.
 
 You can now log in as admin with the credentials previously defined in the environment variables:
 - e.g. `yourname@yourcompany.com` / `admin`
@@ -183,7 +184,7 @@ Select the **Connect your Kafka clusters** option and start adding your Kafka cl
 
 ### Step 5: Onboard your team
 
-Now that you have an up and running deployment of Console, it's time to invite your team!
+Now that you have an up-and-running deployment of Console, it's time to invite your team!
 
  - [Configure SSO](/platform/category/configure-sso/) to easily onboard users
  - Configure [local users](../../../configuration/user-authentication/local-admin-and-users/) if you are not using SSO

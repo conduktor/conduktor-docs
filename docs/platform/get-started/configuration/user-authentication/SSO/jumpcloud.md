@@ -17,26 +17,26 @@ On the JumpCloud side, you'll have to create a new application:
 - **Step 2**: Select a `Custom Application` as shown below.
 ![](../../assets/jumpcloud-figure-2.png)
 
-Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in screenshot below.
+Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in the screenshot below.
 ![](../../assets/jumpcloud-figure-3.png)
 
-Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in screenshot below and configure this application.
+Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in the screenshot below and configure this application.
 
 ![](../../assets/jumpcloud-figure-4.png)
 
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
 
-The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the the URL users need to log into this application. 
+The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application. 
 
 Enter the redirect URI in the following way:
 
 `http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `jumpcloud` in your configuration file, you can use
-`https://localhost:8080/oauth/callback/jumpcloud`, as seen on the screenshot below.
+`https://localhost:8080/oauth/callback/jumpcloud`, as seen in the screenshot below.
 
-Enter the Login URL, which is the URL users need to log into this application, in example below this is `https://localhost:8080` .
+Enter the Login URL, which is the URL users need to log into this application. In the example below, this is `https://localhost:8080` .
 
 ![](../../assets/jumpcloud-figure-5.png)
 
@@ -56,7 +56,7 @@ You need to keep the `Client Secret` somewhere safe, as you will not have access
 
 ## Conduktor Console Configuration
 
-On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown during the steps 3 and 4. 
+On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
 
 :::tip
 You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
@@ -93,11 +93,11 @@ From the JumpCloud side, ensure you have:
 - Set the `email_verified` to true
 - The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` value of your Console's configuration
 
-See example screenshot shown below.
+See the example screenshot shown below.
 
 ![](../../assets/jumpcloud-figure-7.png)
 
-From the Conduktor Console side you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
+From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
 Below is the full snippet for your configuration file:
 
 ```yaml title="platform-config.yaml"
@@ -125,6 +125,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](https://docs.conduktor.io/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between JumpCloud and Conduktor Console groups. This way, when a user logs in, they will be automatically added to the corresponding Conduktor Console groups, based on the groups they belong to in JumpCloud.
+Now that your configuration is finished, you can [set up the mapping](https://docs.conduktor.io/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between JumpCloud and Conduktor Console groups. This way, when a user logs in, they will be automatically added to the corresponding Conduktor Console groups, based on the groups they belong to in JumpCloud.
 
-The value you need to put as external group is the name of the JumpCloud group.
+The value you need to put as an external group is the name of the JumpCloud group.

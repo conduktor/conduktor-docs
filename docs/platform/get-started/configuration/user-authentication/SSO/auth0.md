@@ -18,7 +18,7 @@ On Auth0 side, you'll have to create a new application:
 
 The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
-For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`, like on the screenshot below.
+For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`, like in the screenshot below.
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
@@ -34,7 +34,7 @@ Do not forget to select how you want to connect via the **Connections** tab of y
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, by what you got during the step 2.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, with what you got during step 2.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
