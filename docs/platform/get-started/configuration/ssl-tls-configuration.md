@@ -63,7 +63,7 @@ Simply add all of your certificates by uploading them or pasting them as text. I
 
 ## Mounting Custom Truststore
 
-Since version `1.5.0` Conduktor supports SSL/TLS connections using Java Truststore. The below details how to mount a custom truststore when starting Conduktor.
+Conduktor supports SSL/TLS connections using Java Truststore. The below details how to mount a custom truststore when starting Conduktor.
 
 ### Create TrustStore (JKS) from certificate in PEM format
 
