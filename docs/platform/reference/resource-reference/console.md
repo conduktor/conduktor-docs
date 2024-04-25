@@ -43,12 +43,143 @@ export const AdminToken = () => (
 
 
 ## Console Resources
+
+### KafkaCluster
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <GUI />
 
-### KafkaCluster
+Creates a Kafka Cluster Definition in Console.
+````yaml
+---
+apiVersion: v1
+kind: KafkaCluster
+metadata:
+  name: julien-cloud
+spec:
+  displayName: "Julien's cloud"
+  icon: "poop"
+  color: "#C90000"
+  bootstrapServers: "34.140.204.135:12092"
+  ignoreUntrustedCertificate: false
+  properties:
+    sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
+    kafka.ssl.truststore.certificate.chain: |
+      -----BEGIN CERTIFICATE-----
+      MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+      RjELMAkGA1UEBhMCVVMxIjAgBgNVBAoTGUdvb2dsZSBUcnVzdCBTZXJ2aWNlcyBM
+      TEMxEzARBgNVBAMTCkdUUyBDQSAxQzMwHhcNMjQwMzE4MTkzNzE5WhcNMjQwNjEw
+      MTkzNzE4WjAXMRUwEwYDVQQDDAwqLmdvb2dsZS5jb20wWTATBgcqhkjOPQIBBggq
+      ...
+      8/s+YDKveNdoeQoAmGQpUmxhvJ9rbNYj+4jiaujkfxT/6WtFN8N95r+k3W/1K4hs
+      IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+      -----END CERTIFICATE-----
+  schemaRegistry:
+    type: "CONFLUENT"
+    url: http://34.140.204.135/registry/
+    security:
+      username: superUser
+      password: superUser
+    properties:
+    ignoreUntrustedCertificate: false
+  amazonSecurity:
+    type: "CREDENTIALS"
+    accessKeyId: "string"
+    secretKey: "string"
+  kafkaFlavor:
+    type: "CONFLUENT"
+    key: "string"
+    secret: "string"
+    confluentEnvironmentId: "string"
+    confluentClusterId: "string"
+````
 ### KafkaConnectCluster
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <GUI />
+
+Creates a Kafka Connect Cluster Definition in Console.
+````yaml
+---
+apiVersion: v1
+kind: KafkaConnectCluster
+metadata:
+  name: connect-1
+  cluster: julien-cloud
+spec:
+  displayName: "Connect 1"
+  url: "http://34.140.204.135/connect/"
+  headers:
+    a: b
+    c: d
+  ignoreUntrustedCertificate: false
+  security: SEE BELOW
+########  
+  security:
+    type: "BasicAuth"
+    username: "toto"
+    password: "my-secret"
+
+  security:
+    type: "BearerToken"
+    token: "toto"
+
+  security:
+    type: "NoSecurity"
+
+  security:
+    type: "SSLAuth"
+    key: "toto"
+    certificateChain: "tata"
+````
 ### KsqlDBCluster
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <GUI />
+
+Creates a ksqlDB Cluster Definition in Console.
+````yaml
+---
+apiVersion: v1
+kind: KsqlDBCluster
+metadata:
+  name: connect-1
+  cluster: julien-cloud
+spec:
+  displayName: "Connect 1"
+  url: "http://34.140.204.135/connect/"
+  headers:
+    a: b
+    c: d
+  ignoreUntrustedCertificate: false
+  security: SEE BELOW
+########  
+  security:
+    type: "BasicAuth"
+    username: "toto"
+    password: "my-secret"
+
+  security:
+    type: "BearerToken"
+    token: "toto"
+
+  security:
+    type: "NoSecurity"
+
+  security:
+    type: "SSLAuth"
+    key: "toto"
+    certificateChain: "tata"
+````
 ### ConsoleGroup
 ### ConsoleUser
 ### Alert

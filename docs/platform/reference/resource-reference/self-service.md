@@ -46,6 +46,8 @@ export const AdminToken = () => (
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
+In Self-service, it is used as a means to organize and regroup multiple deployment of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
+
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
@@ -71,6 +73,13 @@ None.
 Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
+Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.  
+This is the core concept of Self-service as it ties everything together:
+- Kafka cluster
+- Service Account
+- Ownership on resources
+- Policies on resources
+
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
@@ -144,14 +153,14 @@ spec:
 
 
 ### Topic Policy
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />
-
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
 - Safeguarding from invalid or risky Topic Configuration
 - Enforcing naming convention
 - Enforcing metadata
+
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API />  
 
 ```yaml
 ---
@@ -165,15 +174,12 @@ spec:
       constraint: OneOf
       values: ["true", "false"]
     spec.configs.retention.ms: 
-      constraint: "Range"
+      constraint: Range
       max: 42
       min: 3
-      required: false
     spec.replication.factor:
       constraint: OneOf
       values: ["3"]
-    spec.cleanup.policy: 
-      constraint: NonEmpty
 ---
 apiVersion: "v1"
 kind: "TopicPolicy"
@@ -209,7 +215,6 @@ Validates the property is one of the expected values
 ```yaml
 spec.configs.cleanup.policy:
   constraint: OneOf
-  required: true
   values: ["delete", "compact"]
 ```
 Validation will succeed with these inputs:
@@ -277,7 +282,10 @@ spec:
 ````
 
 ### Cross Application Permissions
-**API Keys:** <AdminToken />  <AppToken />
+Application Instance Permissions lets teams to collaborate with each others.
+
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <CLI /> <API />  
 
 ````yaml
 # Permission granted to other Applications
@@ -291,8 +299,8 @@ metadata:
 spec:
   resource:
     type: TOPIC
-    name: "click."
-    patternType: PREFIXED
+    name: "click.event-stream.avro"
+    patternType: LITERAL
   permission: READ
   grantedTo: "another-appinstance-dev"
 ````
@@ -313,11 +321,11 @@ spec:
 
 **Side effect in Console & Kafka:**
 - Console
-    - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
+  - Members of the `grantedTo` ApplicationInstance are given the associated permissions (Read/Write) in the UI over the resources
 - Kafka
-    - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the `spec.permission`:
-        - READ: READ, DESCRIBE_CONFIGS
-        - WRITE: READ, WRITE, DESCRIBE_CONFIGS
+  - Service Account of the `grantedTo` ApplicationInstance is granted the following ACLs over the `resource` depending on the `spec.permission`:
+    - `READ`: READ, DESCRIBE_CONFIGS
+    - `WRITE`: READ, WRITE, DESCRIBE_CONFIGS
 
 ### Application Group
 :::caution Not implemented yet

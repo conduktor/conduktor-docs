@@ -160,18 +160,19 @@ Deploying this object will grant permission to the `grantedTo` Application Insta
 ````yaml
 # Read permission granted to other Heatmap Application on click.screen-events topic
 ---
-apiVersion: v1
+apiVersion: "v1"
 kind: "ApplicationInstancePermission"
 metadata:
   application: "clickstream-app"
   appInstance: "clickstream-app-dev"
-  name: "clickstream-app-dev-to-another"
+  name: "clickstream-app-dev-to-heatmap"
 spec:
-  resourceType: TOPIC
-  resource: "click.screen-events"
-  resourcePatternType: LITERAL
+  resource:
+    type: TOPIC
+    name: "click.screen-events"
+    patternType: LITERAL
   permission: READ
-  grantedTo: "heatmap-app-dev"
+  grantedTo: heatmap-app-dev
 ````
 
 ### Application Group
@@ -224,17 +225,12 @@ spec:
 
 ````
 
-### Resource Labels & Annotations
-:::caution
-This concept will be available in a future version
-:::
-All resources that can be created using the Conduktor CLI can store internal metadata in the form of labels and annotations.
-Labels and Annotations are to be used in the same manner as stated in [Kubernetes Concept documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
+### Resource Labels
 
-You can use either labels or annotations to attach metadata to resources. Labels can be used to select resources and to find collections of resources that satisfy certain conditions. In contrast, annotations are not used to identify and select resources.
+All resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels.
 
-**Labels** will help you filter and sort your resources in Console UI / CLI.  
-**Annotations** will help you attach business meaning on your resources & drive some behaviors in Console.
+Labels are key value pairs with no constraint except for the reserved prefix `conduktor.io/` which Conduktor uses to create deeper interaction with the UI.
+For now, a single Conduktor specific annotation exists, `conduktor.io/topic-visibility`. When the value is `public`, the Topic will appear in the Conduktor Topic Catalog.
 
 **Example**
 ````yaml
@@ -243,14 +239,13 @@ You can use either labels or annotations to attach metadata to resources. Labels
 apiVersion: v1
 kind: "Topic"
 metadata:
-  appInstance: "clickstream-app-dev"
+  cluster: "shadow-it"
   name: clickstream.events
-  annotations:
+  labels:
+    conduktor.io/topic-visibility: "public"
     description: "A description for what kind of data this topic contains."
     business-data-classification: C2
     business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
-    conduktor.io/topic-visibility: "public"
-  labels:
     application-code: CLK
     environment-code: dev
 spec:
