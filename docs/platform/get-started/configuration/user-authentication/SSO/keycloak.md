@@ -22,7 +22,7 @@ On Keycloak side, you'll have to create a new application:
 
 You can configure it as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
-For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like on the screenshot below.
+For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like in the screenshot below.
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
@@ -38,7 +38,7 @@ You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, by what you got during the previous steps.
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during the previous steps.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -120,9 +120,9 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<r
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
+Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
 
-The value you need to put as external group is the name of the Keycloak group.
+The value you need to put as an external group is the name of the Keycloak group.
 
 :::caution
 If you've selected `Full group path` in the mapper details of the scope, you will need to use the full path instead of the name of the group.

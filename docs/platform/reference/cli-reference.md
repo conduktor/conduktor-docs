@@ -15,6 +15,8 @@ Check for the list of supported resources and their definition in the dedicated 
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
 
+[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self Service.
+
 ## Install & Configure
 
 You have 2 options to Install Conduktor CLI.

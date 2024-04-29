@@ -58,7 +58,7 @@ Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration
 
 Conduktor works with all Kafka providers such as Confluent, Aiven, MSK and Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
 
-Once you complete the onboarding wizard, go to [http://localhost:8080/admin/clusters](http://localhost:8080/settings/clusters) and **add** a new cluster configuration.
+Once you complete the onboarding wizard, go to [http://localhost:8080/settings/clusters](http://localhost:8080/settings/clusters) and **add** a new cluster configuration.
 
 From within the cluster configuration screen, add the:
 
@@ -68,7 +68,7 @@ From within the cluster configuration screen, add the:
 
 Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificate Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store).
 
-![Admin Cluster Config](/img/get-started/admin-cluster-config.png)
+![Admin Cluster Config](assets/settings-cluster-config.png)
 
 #### How to connect to Kafka running on localhost:9092?
 
@@ -95,7 +95,7 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 If you have deployed Conduktor on a central server, add new users to collaborate with them inside the Console.
 
-From within the **Settings** > **Users & Groups** screen, select **create members** to add a new user.
+From within the **Settings** > **Users & Groups** screen, select **Create Members** to add a new user.
 
 ![console kafka UI users](../../configuration/assets/console-users.png)
 
@@ -166,8 +166,6 @@ The below docker-compose indicates how to bind your `console-config.yaml` file.
 Note that the environment variable `CDK_IN_CONF_FILE` is used to indicate that a configuration file is being used, and the location to find it. The file is also mounted to be used from within the container.
 
 ```yaml title="docker-compose.yaml"
-version: '3.8'
-
 services:  
   postgresql:
     image: postgres:14
@@ -229,8 +227,6 @@ If you need some help converting this file into environment variables, feel free
 Below is an example of the same deployment that uses environment variables for the Conduktor Console configuration.
 
 ```yaml title="docker-compose.yaml"
-version: '3.8'
-
 services:  
   postgresql:
     image: postgres:14

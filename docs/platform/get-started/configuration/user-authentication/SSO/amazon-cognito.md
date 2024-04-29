@@ -18,11 +18,11 @@ On Amazon Cognito side, you'll have to create a user pool with an application:
 
 You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
-For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`, like on the screenshot below.
+For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`, like in the screenshot below.
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-Make sure that a client secret will be generate. You can select `Confidential client` for that.
+Make sure that a client secret will be generated. You can select `Confidential client` for that.
 
 ![](../../assets/cognito-app-client.png)
 
@@ -42,7 +42,7 @@ You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<us
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, `region`, and `pool ID`, by what you got during the step 4.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, `region`, and `pool ID`, with what you got during step 4.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -110,6 +110,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
+Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
 
-The value you need to put as external group is the `Object ID` of the Amazon Cognito group.
+The value you need to put as an external group is the `Object ID` of the Amazon Cognito group.

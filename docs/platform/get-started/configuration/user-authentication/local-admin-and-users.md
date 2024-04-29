@@ -12,17 +12,17 @@ You can declare **new users** from within the Console UI, via the configuration 
 
 ### Add users in Console UI
 
-From within the **Settings** > **Users & Groups** screen, select **create members** to add a new user.
+From within the **Settings** > **Users & Groups** screen, select **Create members** to add a new user.
 
  - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
- - Alterantively, you can add users via basic authentication
+ - Alternatively, you can add users via basic authentication
 
 ![console kafka UI users](../assets/console-users.png)
 
 
 ### Configuration example
 
-Here is an example of snippet you can use in your configuration file to declare the root administrator `admin@conduktor.io`, and two local users `alice@conduktor.io`, and `bob@conduktor.io`.
+Here is an example of a snippet you can use in your configuration file to declare the root administrator `admin@conduktor.io`, and two local users `alice@conduktor.io`, and `bob@conduktor.io`.
 
 ```yaml title="platform-config.yaml"
 admin:
@@ -50,14 +50,14 @@ CDK_AUTH_LOCAL-USERS_1_PASSWORD="bob-secret"
 
 ## Configure SSO
 
-In addition to these local admin and users, you can setup **Single Sign-On (SSO)** so your users can login using your company **LDAP** or **OIDC** identity provider.
+In addition to these local admin and users, you can set up **Single Sign-On (SSO)** so your users can log in using your company **LDAP** or **OIDC** identity provider.
 
 :::info
 This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
 :::
 
 
-## Manage permissions of users before they login
+## Manage permissions of users before they log in
 
 To appear in the `Users` list, a user must **first log in**. But sometimes, you'd like to **manage their permissions and groups upstream**. 
 For that, you can `Create members` using their **email address**. That way, when they will log in via SSO, they will be synchronised with this account.
@@ -69,7 +69,7 @@ Here are the steps to follow:
 - Enter the email of the user you want to create, then click on `Create users`.
 
 ![](../assets/admin-create-members-2.png)
-- Finally, you can add them to a group by going in the `Groups` section, clicking on a group, and adding the user you just created.
+- Finally, you can add them to a group by going into the `Groups` section, clicking on a group, and adding the user you just created.
 
 ![](../assets/admin-select-group.png)
 ![](../assets/admin-add-user-to-group.png)

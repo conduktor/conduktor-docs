@@ -15,9 +15,9 @@ Note you can also configure your clusters within the [Admin](../../navigation/se
 Our recommendation is to use the Console [API](../../../reference/api-reference) if you wish to configure clusters with a GitOps approach. 
 :::
 
-Note that from Console version `1.19`, if you are configuring clusters through the YAML file, this will act as the source of truth for cluster definition. Meaning, if you make changes to the cluster using the UI, they would be overriden on the next restart containing a reference to your configuration file. 
+Note that from Console version `1.19`, if you are configuring clusters through the YAML file, this will act as the source of truth for cluster definition. Meaning, if you make changes to the cluster using the UI, they will be overridden on the next restart containing a reference to your configuration file. 
 
-If you created your cluster configurations from within the Console UI, they will not be impacted by a restart. Removing the YAML block entirely will not remove existing clusters from the UI.
+If you've created your cluster configurations from within the Console UI, they will not be impacted by a restart. Removing the YAML block entirely will not remove existing clusters from the UI.
 
 ## Configuration Examples
 The below outlines reusable snippets for common configurations such as:
@@ -293,17 +293,21 @@ clusters:
 </Tabs>
 
 On top of that, you can override either the `default` profile or the role to assume.
-Override Profile
+
+<Tabs>
+<TabItem value="Override Profile" label="Override Profile">
 
 ```
 sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsProfileName="other-profile";
 ```
-
-Override Role
+</TabItem>
+<TabItem value="Override Role" label="Override Role">
 
 ```
 sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleArn="arn:aws:iam::123456789012:role/msk_client_role";
 ```
+</TabItem>
+</Tabs>
 
 ## Amazon MSK with Glue Schema Registry
 

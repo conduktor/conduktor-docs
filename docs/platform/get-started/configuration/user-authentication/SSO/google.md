@@ -17,7 +17,7 @@ The scopes needed are `email`, `profile`, and `openid`.
 ![](../../assets/google-scopes.png)
 
 
-- **Step 2**: Restrict the access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
+- **Step 2**: Restrict access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
 
 ![](../../assets/google-user-type-internal.png)
 
@@ -47,7 +47,7 @@ If you need to add an **authorized domain** to your Google account, you can foll
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret by what you got during the step 4.
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret with what you got during the step 4.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
