@@ -7,7 +7,7 @@ import {
   useThemeConfig,
 } from '@docusaurus/theme-common'
 import {
-  findFirstCategoryLink,
+  findFirstSidebarItemLink,
   isActiveSidebarItem,
   isSamePath,
   useDocSidebarItemsExpandedState,
@@ -48,7 +48,7 @@ function useCategoryHrefWithSSRFallback(item) {
     if (isBrowser || !item.collapsible) {
       return undefined
     }
-    return findFirstCategoryLink(item)
+    return findFirstSidebarItemLink(item)
   }, [item, isBrowser])
 }
 function CollapseButton({ categoryLabel, onClick, collapsed }) {
