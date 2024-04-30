@@ -90,41 +90,20 @@ apiVersion: "v1"
 kind: "ApplicationInstance"
 metadata:
   application: "clickstream-app"
-  name: "clickstream-microservice1-dev"
+  name: "clickstream-dev"
 spec:
   cluster: "shadow-it"
-  serviceAccount: "sa-clicko2"
+  serviceAccount: "sa-clicko"
   topicPolicyRef:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
   resources:
   - type: TOPIC
-    name: "click.micro1."
+    name: "click."
     patternType: PREFIXED
   - type: GROUP
-    name: "click.micro1."
+    name: "click."
     patternType: PREFIXED
----
-apiVersion: "v1"
-kind: "ApplicationInstance"
-metadata:
-  application: "clickstream-app"
-  name: "clickstream-microservice2-dev"
-spec:
-  cluster: "shadow-it"
-  serviceAccount: "sa-clicko2"
-  topicPolicyRef:
-    - "generic-dev-topic"
-    - "clickstream-naming-rule"
-  appInstancePermissionPolicy:
-    - "must-have-jira"
-  resources:
-    - type: TOPIC
-      name: "click.micro2."
-      patternType: PREFIXED
-    - type: GROUP
-      name: "click.micro2."
-      patternType: PREFIXED
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -172,110 +151,48 @@ spec:
       values: ["C0", "C1", "C2"]
     spec.configs.retention.ms: 
       constraint: Range
-      max: 42
-      min: 3
-    spec.replication.factor:
+      max: 3600000
+      min: 60000
+    spec.replicationFactor:
       constraint: OneOf
       values: ["3"]
 ---
 apiVersion: "v1"
 kind: "TopicPolicy"
 metadata:
-  name: "wiki-naming-rule"
+  name: "clickstream-naming-rule"
 spec:
   policies:
     metadata.name:
       constraint: Match
-      pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
+      pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
 ```
+**TopicPolicy checks:**
+- `spec.policies` requires YAML paths that are paths to the [Topic resource](../kafka#topic) YAML. For example:
+  - `metadata.name` to create constraints on Topic name
+  - `metadata.labels.<key>` to create constraints on Topic label `<key>`
+  - `spec.partitions` to create constraints on Partitions number
+  - `spec.replicationFactor` to create constraints on Replication Factor
+  - `spec.configs.<key>` to create constraints on Topic config `<key>`
+- `spec.policies.<key>.constraint` can be `Range`, `OneOf` or `Match`
+  - Read the [Policy Constraints](#policy-constraints) section for each constraint's specification
 
-#### Available Constraints
-**Range**  
-Validates the property belongs to a range of numbers (inclusive)
-```yaml
-spec.configs.retention.ms:
-  constraint: "Range"
-  min:   3600000 # 1 hour in ms
-  max: 604800000 # 7 days in ms
-```
-Validation will succeed with these inputs:
-- 3600000 (min)
-- 36000000 (between min & max)
-- 604800000 (max)
-
-Validation will fail with these inputs:
-- 60000 (below min)
-- 999999999 (above max)
-
-**OneOf**  
-Validates the property is one of the expected values
-```yaml
-spec.configs.cleanup.policy:
-  constraint: OneOf
-  values: ["delete", "compact"]
-```
-Validation will succeed with these inputs:
-- `delete`
-- `compact`  
-
-Validation will fail with these inputs:
-- `delete, compact` (Valid in Kafka but not allowed by policy)
-- `deleet` (typo)
-
-**Match**  
-Validates the property against a Regular Expression
-```yaml
-metadata.name:
-  constraint: Match
-  pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
-```
-Validation will succeed with these inputs:
-- `wikipedia.links.avro`
-- `wikipedia.products.json`
-
-Validation will fail with these inputs
-- `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern 
-- `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
-
-**Optional Flag**  
-Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
-Example:
-```yaml
-spec.configs.min.insync.replicas:
-  constraint: ValidString
-  optional: true
-  values: ["2"]
-```
-This object will pass the validation
+With the two Topic policies declared above, the following Topic resource would succeed validation:
 ````yaml
 ---
-apiVersion: v1
+apiVersion: v2
 kind: Topic
 metadata:
   cluster: shadow-it
-  name: click.event-stream.avro
+  name: click.event-stream.avro  # Checked by Match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$ on `metadata.name`
+  labels:
+    data-criticality: C2         # Checked by OneOf ["C0", "C1", "C2"] on `metadata.labels.data-criticality`
 spec:
-  replicationFactor: 3
+  replicationFactor: 3           # Checked by OneOf ["3"] on `spec.replicationFactor`
   partitions: 3
   configs:
     cleanup.policy: delete
-    retention.ms: '60000'
-````
-This object will fail the validation due to a new incorrect definition of `insync.replicas`
-````yaml
----
-apiVersion: v1
-kind: Topic
-metadata:
-  cluster: shadow-it
-  name: click.event-stream.avro
-spec:
-  replicationFactor: 3
-  partitions: 3
-  configs:
-    min.insync.replicas: 3
-    cleanup.policy: delete
-    retention.ms: '60000'
+    retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ````
 
 ### Cross Application Permissions
@@ -376,4 +293,100 @@ spec:
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 
+````
+
+
+### Policy Constraints
+
+There are currently 3 available constraints:
+- `Range` validates a range of numbers
+- `OneOf` validates against a list of predefined options
+- `Match` validates using Regular Expression
+
+**Range**  
+Validates the property belongs to a range of numbers (inclusive)
+```yaml
+spec.configs.retention.ms:
+  constraint: "Range"
+  min:   3600000 # 1 hour in ms
+  max: 604800000 # 7 days in ms
+```
+Validation will succeed with these inputs:
+- 3600000 (min)
+- 36000000 (between min & max)
+- 604800000 (max)
+
+Validation will fail with these inputs:
+- 60000 (below min)
+- 999999999 (above max)
+
+**OneOf**  
+Validates the property is one of the expected values
+```yaml
+spec.configs.cleanup.policy:
+  constraint: OneOf
+  values: ["delete", "compact"]
+```
+Validation will succeed with these inputs:
+- `delete`
+- `compact`
+
+Validation will fail with these inputs:
+- `delete, compact` (Valid in Kafka but not allowed by policy)
+- `deleet` (typo)
+
+**Match**  
+Validates the property against a Regular Expression
+```yaml
+metadata.name:
+  constraint: Match
+  pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
+```
+Validation will succeed with these inputs:
+- `wikipedia.links.avro`
+- `wikipedia.products.json`
+
+Validation will fail with these inputs
+- `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern
+- `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
+
+**Optional Flag**  
+Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
+Example:
+```yaml
+spec.configs.min.insync.replicas:
+  constraint: ValidString
+  optional: true
+  values: ["2"]
+```
+This object will pass the validation
+````yaml
+---
+apiVersion: v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    cleanup.policy: delete
+    retention.ms: '60000'
+````
+This object will fail the validation due to a new incorrect definition of `insync.replicas`
+````yaml
+---
+apiVersion: v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    min.insync.replicas: 3
+    cleanup.policy: delete
+    retention.ms: '60000'
 ````

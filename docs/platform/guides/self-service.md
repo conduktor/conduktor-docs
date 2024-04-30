@@ -120,7 +120,7 @@ This is how Application Teams can create the Kafka resources they need for their
 ````yaml
 # Topic example
 ---
-apiVersion: v1
+apiVersion: v2
 kind: "Topic"
 metadata:
   cluster: "shadow-it"
@@ -221,7 +221,7 @@ For now, a single Conduktor specific annotation exists, `conduktor.io/topic-visi
 ````yaml
 # Topic annotated with useful metadata
 ---
-apiVersion: v1
+apiVersion: v2
 kind: "Topic"
 metadata:
   cluster: "shadow-it"

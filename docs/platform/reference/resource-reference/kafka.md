@@ -52,7 +52,7 @@ Creates a Topic in Kafka.
 
 ````yaml
 ---
-apiVersion: v1
+apiVersion: v2
 kind: Topic
 metadata:
   cluster: shadow-it
