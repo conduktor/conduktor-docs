@@ -156,7 +156,7 @@ spec:
 ### Topic Policy
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
-- Safeguarding from invalid or risky Topic Configuration
+- Safeguarding from invalid or risky Topic configuration
 - Enforcing naming convention
 - Enforcing metadata
 
