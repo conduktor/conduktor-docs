@@ -71,7 +71,7 @@ spec:
 
 **Side effect in Console & Kafka:**  
 None.  
-Deploying this object only create the Application in Console. It can be viewed in the Application Catalog
+Deploying this object will only create the Application in Console. It can be viewed in the Application Catalog
 
 ### Application Instance
 Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.  
