@@ -67,14 +67,14 @@ spec:
 ````
 **Topic checks:**
 - `spec.cluster` is a valid Kafka Cluster
-- `metadata.name` must belong to the Application Instance
+- `metadata.name` must belong to the Application Instances
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created
-- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached
-- In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+- All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
 **Side effect in Console & Kafka:**
 - Kafka
-    - Topic is created / updated
+  - Topic is created / updated.
+  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 ### Subject
 :::caution Not implemented yet
@@ -156,13 +156,12 @@ spec:
 - `spec.compatibility` is optional. Defines the subject compatibility mode: GLOBAL (default), BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
   - Use `GLOBAL` if you want the compatibility mode to be the one defined at the Schema Registry global level
 - `spec.references` is optional. It specifies the names of referenced schemas
-- In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility)
 
 
 **Side effect in Console & Kafka:**
 - Kafka / Schema Registry
   - Subject is created / updated
-  - To 
+  - In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
 
 ### Connector
 :::caution Not implemented yet

@@ -306,18 +306,18 @@ spec:
 ````
 **Cross Application permission checks:**
 - `spec` is immutable
-    - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application.**
-    - Remember this resource affects target ApplicationInstance's Kafka service account ACLs.
-    - To edit this resource, delete and recreate it.
-- `spec.resource.type` can be `TOPIC`.
-- `spec.resource.patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resource.name` must reference any "sub-resource" of `metadata.appInstance` .
+    - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application**
+    - Remember this resource affects target ApplicationInstance's Kafka service account ACLs
+    - To edit this resource, delete and recreate it
+- `spec.resource.type` can be `TOPIC`
+- `spec.resource.patternType` can be `PREFIXED` or `LITERAL`
+- `spec.resource.name` must reference any "sub-resource" of `metadata.appInstance`
     - For example, if you are owner of the prefix `click.`, you can grant READ or WRITE access to:
         -   the whole prefix: `click.`
         -   a sub prefix: `click.orders.`
         -   a literal topic name: `click.orders.france`
-- `spec.permission` can be `READ` or `WRITE`.
-- `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
+- `spec.permission` can be `READ` or `WRITE`
+- `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`
 
 **Side effect in Console & Kafka:**
 - Console
