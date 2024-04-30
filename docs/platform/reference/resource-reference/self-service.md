@@ -104,7 +104,6 @@ spec:
   - type: TOPIC
     name: "click.micro1."
     patternType: PREFIXED
-    ownerShipPermission: ["TopicRead", "TopicWrite"] # Impacts the ServiceAccount & Console
   - type: GROUP
     name: "click.micro1."
     patternType: PREFIXED
