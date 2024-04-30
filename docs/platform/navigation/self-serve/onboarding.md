@@ -4,7 +4,7 @@ title: Migrating / Onboarding Applications
 description: Kafka Self-service Overview
 ---
 
-As you progressively onboard new Application Teams to Self-service, you will eventually be confronted to the following scenario:
+As you progressively onboard new Application Teams to Self-service, you will eventually be confronted with the following scenario:
 - Application `Wikipedia` is onboarded in Self-service.
 - Application `Clickstream` hasn't migrated to Self-service yet.
 - Application `Wikipedia` needs to access Application `Clickstream`'s topic.
