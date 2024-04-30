@@ -138,7 +138,7 @@ spec:
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of TopicPolicy
 - `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resources[].name` must no overlap with any other `ApplicationInstance` on the same cluster.
+- `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster.
     -   ie: If there is already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click.`
         -   `cli`: Resource is a parent-resource of `click.`
