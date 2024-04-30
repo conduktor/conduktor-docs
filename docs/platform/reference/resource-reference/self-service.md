@@ -46,6 +46,7 @@ export const AdminToken = () => (
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
+
 In Self-service, it is used as a means to organize and regroup multiple deployment of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
 
 **API Keys:** <AdminToken />  
