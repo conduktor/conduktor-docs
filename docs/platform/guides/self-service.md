@@ -8,6 +8,7 @@ description: Get Started with Self-service
 Self-Service helps you scale Kafka usage in your organization by facilitating collaboration between the **Central Platform Team** and **Application Teams**.  
 
 It simplifies and automates processes, establishes clear rules and ways of working, and standardizes the creation and management of Kafka resources.  
+
 This approach brings governance into your enterprise through concepts like Ownership and Applications, delegating operations to the Application Teams rather than the Central Platform Team.
 
 
