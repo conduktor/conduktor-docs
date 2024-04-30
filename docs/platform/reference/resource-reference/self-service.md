@@ -283,7 +283,7 @@ spec:
 ````
 
 ### Cross Application Permissions
-Application Instance Permissions lets teams to collaborate with each others.
+Application Instance Permissions lets teams collaborate with each other.
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />  
