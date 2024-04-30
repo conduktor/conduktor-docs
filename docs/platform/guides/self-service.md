@@ -98,14 +98,13 @@ metadata:
   name: "generic-dev-topic"
 spec:
   policies:
-    metadata.labels.conduktor.io/public-visibility:
+    metadata.labels.data-criticality:
       constraint: OneOf
-      values: ["true", "false"]
+      values: ["C0", "C1", "C2"]
     spec.configs.retention.ms:
       constraint: "Range"
       max: 42
       min: 3
-      required: false
 ````
 
 
@@ -133,22 +132,6 @@ spec:
     min.insync.replicas: "2"
     cleanup.policy: "delete"
     retention.ms: "60000"
-
-# Connector Example
----
-apiVersion: v1
-kind: "Connector"
-metadata:
-  cluster: "shadow-it"
-  name: "click.myConnector"
-spec:
-  connectCluster: myConnectCluster
-  config:
-    connector.class: myConnectorClass
-    tasks.max: '1'
-    topics: "click.screen-events"
-    file: /tmp/output.out
-    consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
 
 ````
 
@@ -244,7 +227,6 @@ metadata:
   cluster: "shadow-it"
   name: clickstream.events
   labels:
-    conduktor.io/topic-visibility: "public"
     description: "A description for what kind of data this topic contains."
     business-data-classification: C2
     business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"

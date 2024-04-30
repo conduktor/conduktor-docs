@@ -91,9 +91,6 @@ kind: "ApplicationInstance"
 metadata:
   application: "clickstream-app"
   name: "clickstream-microservice1-dev"
-  labels:
-    conduktor.io/service-account-all-permissions-topics: true # Allows the SA to create/delete internal topics - gateway to validate
-    conduktor.io/gitops-only: true # Prevents updates from the UI
 spec:
   cluster: "shadow-it"
   serviceAccount: "sa-clicko2"
@@ -170,9 +167,9 @@ metadata:
   name: "generic-dev-topic"
 spec:
   policies:
-    metadata.labels.conduktor.io/public-visibility:
+    metadata.labels.data-criticality:
       constraint: OneOf
-      values: ["true", "false"]
+      values: ["C0", "C1", "C2"]
     spec.configs.retention.ms: 
       constraint: Range
       max: 42
