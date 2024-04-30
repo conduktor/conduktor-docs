@@ -62,7 +62,7 @@ metadata:
 spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of Console Group
+  owner: "groupA" # technical-id of the Conduktor Console Group
 ````
 
 **Application checks:**
@@ -71,7 +71,7 @@ spec:
 
 **Side effect in Console & Kafka:**  
 None.  
-Deploying this object will only create the Application in Console. It can be viewed in the Application Catalog
+Deploying this object will only create the Application in Console. It can be viewed in the Application Catalog.
 
 ### Application Instance
 Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.  
@@ -135,12 +135,12 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of TopicPolicy
-- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
-- `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster.
+- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`
+- `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
+- `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
     -   ie: If there is already an owner for `click.` this is forbidden:
-        -   `click.orders.`: Resource is a child-resource of `click.`
-        -   `cli`: Resource is a parent-resource of `click.`
+        -   `click.orders.`: Resource is a child-resource of `click`
+        -   `cli`: Resource is a parent-resource of `click`
 
 **Side effect in Console & Kafka:**
 - Console
@@ -264,7 +264,7 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'
 ````
-This object will fail the validation
+This object will fail the validation due to a new incorrect definition of `insync.replicas`
 ````yaml
 ---
 apiVersion: v1

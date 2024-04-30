@@ -47,7 +47,7 @@ metadata:
 spec:
   title: "Clickstream App"
   description: "Clickstream records user’s clicks through their journey on our website"
-  owner: "clickstream-group"            # technical-id of Console Group
+  owner: "clickstream-group"            # technical-id of the Console Group
 ````
 
 ### Application Instance
@@ -59,11 +59,11 @@ Each Application Instance:
 - Has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
 - Grants the permissions
     - On the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
-    - On the Application owner group in Console using RBAC (`Admin` permissions)
+    - On the Application owner group in Conduktor Console using RBAC (`Admin` permissions)
 
 **Example**
 ````yaml
-# Application Instances (environment)
+# Application Instance (dev environment)
 ---
 apiVersion: "v1"
 kind: "ApplicationInstance"
@@ -89,7 +89,7 @@ This is what lets Platform Administrators provide a Self-service experience that
 
 **Example**
 ````yaml
-# Policies that restrict the Application to certain range of configurations
+# Policies that restrict the Application to a certain range of configurations
 # on topic configs, but also on topic metadata
 ---
 apiVersion: "v1"
@@ -110,9 +110,9 @@ spec:
 
 
 ## Application Team Resources
-When Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
-There are 2 groups of resources where Application Teams are given autonomy:
-- **Kafka-related** `Topic`, `Subject`, `Connector`, `ApplicationInstancePermission` resources.
+Once an Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
+There are two groups of resources where Application Teams are given autonomy:
+- **Kafka-related** resources, `Topic`, `Subject`, `Connector`, `ApplicationInstancePermission`.
 - **Console-related** resources, in particular `ApplicationGroup`, allowing them to define internally who can do what within their Team.
 
 ### Kafka resources
@@ -156,11 +156,11 @@ spec:
 Application Instance Permissions lets teams to collaborate with each others.
 Deploying this object will grant permission to the `grantedTo` Application Instance:
 - To its Service Account (Kafka ACL)
-- To the Application Team members in Console
+- To the Application Team members in Conduktor Console
 
 **Example**
 ````yaml
-# Read permission granted to other Heatmap Application on click.screen-events topic
+# Read permission granted to the Heatmap Application on click.screen-events topic
 ---
 apiVersion: "v1"
 kind: "ApplicationInstancePermission"
@@ -181,7 +181,7 @@ spec:
 :::caution
 This concept will be available in a future version
 :::
-Create Application Group to directly reflect how your Application operates.
+Create an Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
 - DevOps Team with extended access across all environments
@@ -189,7 +189,7 @@ You can create as many Application Groups as required to restrict or represent t
 
 **Example**
 ````yaml
-# Permissions granted to Console users in the Application
+# Permissions granted to Console users in the group, CP-COMPANY-CLICKSTREAM-SUPPORT, for the clickstream-app Application
 ---
 apiVersion: v1
 kind: "ApplicationGroup"

@@ -67,14 +67,14 @@ spec:
 ````
 **Topic checks:**
 - `spec.cluster` is a valid Kafka Cluster
-- `metadata.name` must belong to the Application Instance.
-- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created.
-- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached.
+- `metadata.name` must belong to the Application Instance
+- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created
+- All other properties are validated if Application Instance has [TopicPolicies](#topic-policy) attached
 - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 **Side effect in Console & Kafka:**
 - Kafka
-    - Topic is created / updated.
+    - Topic is created / updated
 
 ### Subject
 :::caution Not implemented yet
@@ -150,18 +150,18 @@ spec:
 
 **Subject checks:**
 - `metadata.cluster` is a valid Kafka Cluster
-- `metadata.name` must belong to the Application Instance.
-- One of `spec.schema` or `spec.schemaFile` must be present. `schema` requires an inline schema, `schemaFile` requires a path to a file that contains the schema (relative to the CLI execution path).
-- `spec.format` is optional. Defines the schema format: AVRO (default), PROTOBUF, JSON.
+- `metadata.name` must belong to the Application Instance
+- One of `spec.schema` or `spec.schemaFile` must be present. `schema` requires an inline schema, `schemaFile` requires a path to a file that contains the schema (relative to the CLI execution path)
+- `spec.format` is optional. Defines the schema format: AVRO (default), PROTOBUF, JSON
 - `spec.compatibility` is optional. Defines the subject compatibility mode: GLOBAL (default), BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
-  - Use `GLOBAL` if you want the compatibility mode to be the one defined at the Schema Registry global level.
-- `spec.references` is optional. It specifies the names of referenced schemas.
+  - Use `GLOBAL` if you want the compatibility mode to be the one defined at the Schema Registry global level
+- `spec.references` is optional. It specifies the names of referenced schemas
 - In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility)
 
 
 **Side effect in Console & Kafka:**
 - Kafka / Schema Registry
-  - Subject is created / updated.
+  - Subject is created / updated
   - To 
 
 ### Connector

@@ -13,7 +13,7 @@ Use the CLI to interact with the product.
 
 The Application Catalog lets you search through the Applications deployed in your organization.  
 
-You can filter by any element available in the list: Name, Description, Owner.
+You can search by any element available in the list: Name, Description, Owner.
 
 You can click on an Application to get to its details page.
 
@@ -21,7 +21,7 @@ You can click on an Application to get to its details page.
 
 ## Application Details
 
-Application Details page summarize all the information that relates to the Application:
+The Application Details page summarizes all the information that relates to the Application:
 - Application General information
 - Application Instances & Ownership
 - Subscribed topics
