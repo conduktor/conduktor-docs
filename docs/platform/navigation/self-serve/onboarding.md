@@ -11,6 +11,7 @@ As you progressively onboard new Application Teams to Self-service, you will eve
 - 😱
 
 Don't worry, there's a hidden rule for Platform Administrators.  
+
 Un-owned resources in Self-service (that is, all resources that are not linked to Application declared in Self-service) are owned by Platform Administrator.
 
 What is means, is that as a Platform Administrator, you can deploy the following resource:
