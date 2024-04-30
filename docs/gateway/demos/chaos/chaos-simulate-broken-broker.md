@@ -25,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/gz0XslNYl4toq6ZMG9dBvNpSO.svg)](https://asciinema.org/a/gz0XslNYl4toq6ZMG9dBvNpSO)
+[![asciicast](https://asciinema.org/a/o1mNOmo1rF0ylY1WjKkZaXm6r.svg)](https://asciinema.org/a/o1mNOmo1rF0ylY1WjKkZaXm6r)
 
 </TabItem>
 </Tabs>
@@ -67,8 +67,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -93,8 +91,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -119,8 +115,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -145,8 +139,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -176,10 +168,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -204,10 +194,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -233,8 +221,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -245,8 +231,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -277,24 +261,22 @@ docker compose up --detach --wait
  Network chaos-simulate-broken-broker_default  Created
  Container zookeeper  Creating
  Container kafka-client  Creating
- Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka-client  Created
+ Container kafka2  Creating
  Container kafka3  Creating
  Container kafka1  Creating
- Container kafka2  Creating
  Container kafka1  Created
- Container kafka2  Created
  Container kafka3  Created
+ Container kafka2  Created
  Container gateway2  Creating
  Container schema-registry  Creating
  Container gateway1  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
  Container gateway2  Created
+ Container gateway1  Created
  Container schema-registry  Created
- Container zookeeper  Starting
  Container kafka-client  Starting
+ Container zookeeper  Starting
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
@@ -303,59 +285,59 @@ docker compose up --detach --wait
  Container zookeeper  Healthy
  Container kafka1  Starting
  Container zookeeper  Healthy
- Container kafka2  Starting
- Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka2  Started
+ Container zookeeper  Healthy
+ Container kafka2  Starting
  Container kafka3  Started
  Container kafka1  Started
+ Container kafka2  Started
+ Container kafka3  Waiting
  Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container kafka3  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka2  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka1  Healthy
- Container schema-registry  Starting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container gateway1  Starting
  Container gateway2  Starting
- Container gateway2  Started
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container schema-registry  Starting
  Container schema-registry  Started
+ Container gateway2  Started
  Container gateway1  Started
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container schema-registry  Waiting
- Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container zookeeper  Healthy
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
  Container kafka-client  Healthy
  Container kafka1  Healthy
- Container gateway1  Healthy
- Container schema-registry  Healthy
+ Container kafka3  Healthy
+ Container zookeeper  Healthy
+ Container kafka2  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
+ Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zctBVg2JzoIMSD9S9PoERphyO.svg)](https://asciinema.org/a/zctBVg2JzoIMSD9S9PoERphyO)
+[![asciicast](https://asciinema.org/a/ABbSpgSU4kURCmHWfvyStSRz5.svg)](https://asciinema.org/a/ABbSpgSU4kURCmHWfvyStSRz5)
 
 </TabItem>
 </Tabs>
@@ -398,7 +380,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0NTA3M30.Df1klq7Gj-BkEC23aFbIkw7rIk_duD7LyLFsQ0kuuss';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ2OTE4NX0.MzNJ6obH4kQ-q-fcqoCi2IvqmZ6KOzkP7fD75oJ32mc';
 
 
 ```
@@ -406,7 +388,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OBJrwDQACOgFbdcpFsA7kbTXo.svg)](https://asciinema.org/a/OBJrwDQACOgFbdcpFsA7kbTXo)
+[![asciicast](https://asciinema.org/a/8K7nVRbP5rDJ42eenAdOvk5qu.svg)](https://asciinema.org/a/8K7nVRbP5rDJ42eenAdOvk5qu)
 
 </TabItem>
 </Tabs>
@@ -443,7 +425,7 @@ Created topic my-topic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ivfS087xx9KS7cr9DyV1Y7qc2.svg)](https://asciinema.org/a/ivfS087xx9KS7cr9DyV1Y7qc2)
+[![asciicast](https://asciinema.org/a/1VWEagSr8l3r9osMMrl1zDMFs.svg)](https://asciinema.org/a/1VWEagSr8l3r9osMMrl1zDMFs)
 
 </TabItem>
 </Tabs>
@@ -452,29 +434,13 @@ Created topic my-topic.
 
 Let's create the interceptor against the virtual cluster teamA, instructing Conduktor Gateway to inject failures for some Produce requests that are consistent with broker side issues.
 
-Creating the interceptor named `simulate-broken-brokers` of the plugin `io.conduktor.gateway.interceptor.chaos.SimulateBrokenBrokersPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.chaos.SimulateBrokenBrokersPlugin",
-  "priority" : 100,
-  "config" : {
-    "rateInPercent" : 100,
-    "errorMap" : {
-      "FETCH" : "UNKNOWN_SERVER_ERROR",
-      "PRODUCE" : "CORRUPT_MESSAGE"
-    }
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-07-simulate-broken-brokers.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/simulate-broken-brokers" \
     --header 'Content-Type: application/json' \
@@ -489,6 +455,17 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.chaos.SimulateBrokenBrokersPlugin",
+  "priority": 100,
+  "config": {
+    "rateInPercent": 100,
+    "errorMap": {
+      "FETCH": "UNKNOWN_SERVER_ERROR",
+      "PRODUCE": "CORRUPT_MESSAGE"
+    }
+  }
+}
+{
   "message": "simulate-broken-brokers is created"
 }
 
@@ -497,7 +474,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/DIPOUuOzg9AOoQaX2fmOXZLen.svg)](https://asciinema.org/a/DIPOUuOzg9AOoQaX2fmOXZLen)
+[![asciicast](https://asciinema.org/a/dsSdJVeKCFlM5LK35pBF1FEVi.svg)](https://asciinema.org/a/dsSdJVeKCFlM5LK35pBF1FEVi)
 
 </TabItem>
 </Tabs>
@@ -528,7 +505,6 @@ curl \
     {
       "name": "simulate-broken-brokers",
       "pluginClass": "io.conduktor.gateway.interceptor.chaos.SimulateBrokenBrokersPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -547,7 +523,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/B0mXrDaGLh0bVtD7mKCytOLs6.svg)](https://asciinema.org/a/B0mXrDaGLh0bVtD7mKCytOLs6)
+[![asciicast](https://asciinema.org/a/SVkFIg1SGgmSJ1LSfwrxpO1Wh.svg)](https://asciinema.org/a/SVkFIg1SGgmSJ1LSfwrxpO1Wh)
 
 </TabItem>
 </Tabs>
@@ -580,60 +556,45 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-[2024-02-14 01:04:36,933] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 4 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:37,037] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 5 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:37,144] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 6 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:37,253] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 7 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:37,369] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 8 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:28,616] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 5 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:28,734] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 6 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:28,957] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 7 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:29,414] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 8 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:30,171] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 9 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:30,171] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 10 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:37,905] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 10 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:38,015] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 11 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:38,127] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 12 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:38,237] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 13 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:38,345] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 14 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:31,102] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 12 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:31,102] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 13 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:31,339] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 14 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:31,780] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 15 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:32,660] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 16 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:38,932] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 16 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:39,041] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 17 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:39,154] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 18 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:39,261] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 19 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:39,378] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 20 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:33,681] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 18 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:33,682] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 19 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:33,920] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 20 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:34,379] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 21 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:35,250] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 22 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:39,936] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 22 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:40,056] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 23 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:40,173] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 24 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:40,299] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 25 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:40,437] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 26 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:36,283] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 24 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:36,284] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 25 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:36,539] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 26 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:36,982] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 27 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:37,911] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 28 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:40,949] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 28 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:41,074] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 29 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:41,183] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 30 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:41,292] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 31 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:41,401] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 32 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:41,985] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 34 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:42,096] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 35 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:42,204] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 36 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:42,314] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 37 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:42,424] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 38 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:42,962] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 40 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:43,072] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 41 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:43,181] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 42 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:43,287] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 43 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:43,396] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 44 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:38,939] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 30 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:38,941] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 31 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:39,161] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 32 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:39,618] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 33 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:40,483] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 34 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:43,975] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 46 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:44,094] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 47 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:44,213] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 48 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:44,324] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 49 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:44,444] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 50 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
-[2024-02-14 01:04:45,003] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 52 on topic-partition my-topic-0, retrying (4 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:45,118] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 53 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:45,226] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 54 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:45,342] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 55 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
-[2024-02-14 01:04:45,469] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 56 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:41,519] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 36 on topic-partition my-topic-0, retrying (3 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:41,764] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 37 on topic-partition my-topic-0, retrying (2 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:42,221] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 38 on topic-partition my-topic-0, retrying (1 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
+[2024-04-10 00:06:43,107] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 39 on topic-partition my-topic-0, retrying (0 attempts left). Error: CORRUPT_MESSAGE (org.apache.kafka.clients.producer.internals.Sender)
 org.apache.kafka.common.errors.CorruptRecordException: This message has failed its CRC checksum, exceeds the valid size, has a null key for a compacted topic, or is otherwise corrupt.
 0 records sent, 0,000000 records/sec (0,00 MB/sec), NaN ms avg latency, 0,00 ms max latency, 0 ms 50th, 0 ms 95th, 0 ms 99th, 0 ms 99.9th.
 
@@ -642,7 +603,7 @@ org.apache.kafka.common.errors.CorruptRecordException: This message has failed i
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dikxVAC0JmhsWaJ44bO37BpW6.svg)](https://asciinema.org/a/dikxVAC0JmhsWaJ44bO37BpW6)
+[![asciicast](https://asciinema.org/a/7FPaRV9wMb2My10E0XCtd1fas.svg)](https://asciinema.org/a/7FPaRV9wMb2My10E0XCtd1fas)
 
 </TabItem>
 </Tabs>
@@ -674,7 +635,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/iZRilf9qjXo9mSIkz7twkDtrU.svg)](https://asciinema.org/a/iZRilf9qjXo9mSIkz7twkDtrU)
+[![asciicast](https://asciinema.org/a/roF0AKtMphazd9d1h0pB7dAqH.svg)](https://asciinema.org/a/roF0AKtMphazd9d1h0pB7dAqH)
 
 </TabItem>
 </Tabs>
@@ -709,7 +670,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/YSEyIgTgb0E44wfTfxMJBnTEI.svg)](https://asciinema.org/a/YSEyIgTgb0E44wfTfxMJBnTEI)
+[![asciicast](https://asciinema.org/a/IRRg9CCkswIqcdjpYlnrWEjga.svg)](https://asciinema.org/a/IRRg9CCkswIqcdjpYlnrWEjga)
 
 </TabItem>
 </Tabs>
@@ -736,15 +697,15 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-7 records sent, 1,3 records/sec (0,00 MB/sec), 48,9 ms avg latency, 205,0 ms max latency.
-10 records sent, 1,081783 records/sec (0,00 MB/sec), 40,80 ms avg latency, 205,00 ms max latency, 26 ms 50th, 205 ms 95th, 205 ms 99th, 205 ms 99.9th.
+7 records sent, 1,3 records/sec (0,00 MB/sec), 56,7 ms avg latency, 259,0 ms max latency.
+10 records sent, 1,077702 records/sec (0,00 MB/sec), 43,60 ms avg latency, 259,00 ms max latency, 18 ms 50th, 259 ms 95th, 259 ms 99th, 259 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/s0GCzsl6LLk433rSpFmn1m1BL.svg)](https://asciinema.org/a/s0GCzsl6LLk433rSpFmn1m1BL)
+[![asciicast](https://asciinema.org/a/yZtitt2oGX44FX8prmNlYyOQY.svg)](https://asciinema.org/a/yZtitt2oGX44FX8prmNlYyOQY)
 
 </TabItem>
 </Tabs>
@@ -769,9 +730,9 @@ docker compose down --volumes
 
 ```
  Container kafka-client  Stopping
- Container gateway2  Stopping
  Container schema-registry  Stopping
  Container gateway1  Stopping
+ Container gateway2  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
@@ -781,9 +742,9 @@ docker compose down --volumes
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
+ Container kafka1  Stopping
  Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka1  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
@@ -808,7 +769,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ezrLXhWg9DOFWefgO3PTAAvkf.svg)](https://asciinema.org/a/ezrLXhWg9DOFWefgO3PTAAvkf)
+[![asciicast](https://asciinema.org/a/l9T5usIyKUlcX89eIryHtfvN3.svg)](https://asciinema.org/a/l9T5usIyKUlcX89eIryHtfvN3)
 
 </TabItem>
 </Tabs>

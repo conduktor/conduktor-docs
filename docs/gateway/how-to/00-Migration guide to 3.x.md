@@ -1,3 +1,8 @@
+---
+sidebar_position: 2
+title: Migration guide to 3.x
+description: Migrating from a deployed 2.x to a 3.x version of Gateway
+---
 # Migration guide to 3.x
 
 ## Steps: 
@@ -30,7 +35,7 @@ As a consequence, existing 2.x topics must be explicitly given via the environme
 | GATEWAY_CONSUMER_OFFSETS_TOPIC      | _offsetStore                                                   | Value of former  <br/>GATEWAY_OFFSET_STORE_COMMITTED_OFFSET_BACKING_TOPIC      |
 | GATEWAY_ENCRYPTION_CONFIGS_TOPIC    | _encryptionConfig                                              | Value of former <br/>GATEWAY_ENCRYPTION_CONFIG_BACKING_TOPIC                   |
 | GATEWAY_ACLS_TOPIC                  | _acls                                                          | Value of former <br/>GATEWAY_ACLS_STORES_BACKING_TOPIC                         |
-| GATEWAY_AUDIT_LOGS_TOPIC            | _auditLogs                                                     | Value of former <br/>GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC                   |
+| GATEWAY_AUDIT_LOG_TOPIC            | _auditLogs                                                     | Value of former <br/>GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC                   |
 
 
 
@@ -96,17 +101,16 @@ Replace the following placeholders with the actual topic names:
 * sourceTopicRegistryTopicName = value of GATEWAY_TOPIC_STORE_REGISTRY_BACKING_TOPIC environment variable
 
 ```bash
-    docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
-     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.0 \
-     topic -t={targetTopicMappingsTopicName} \
-     --topicMappingsTopic={sourceTopicMappingTopicName} \
-     --topicRegistryTopic={sourceTopicRegistryTopicName} \
-     /tmp/my-kafka.properties
+docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
+    harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.1 \
+    topic -t={targetTopicMappingsTopicName} \
+    --topicMappingsTopic={sourceTopicMappingTopicName} \
+    --topicRegistryTopic={sourceTopicRegistryTopicName} \
+    /tmp/my-kafka.properties
 ```
 
 Expected output:
 ```bash
-  
 2024-03-19T09:53:34.843+0000 [      main] [INFO ] [TopicMappingRegistryCommand:83] - Loading topic mapping from source topic _topicMappings
 2024-03-19T09:53:35.186+0000 [      main] [INFO ] [TopicMappingRegistryCommand:85] - Loading topic registry from source topic _topicRegistry
 2024-03-19T09:53:35.252+0000 [      main] [INFO ] [TopicMappingRegistryCommand:90] - Insert in target topic _logicalTopicMappings new configurations
@@ -119,11 +123,11 @@ Replace the following placeholders with the actual topic names:
 * sourceInterceptorsTopicName = value of GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC environment variable
  
 ```bash
-    docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
-     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.0 \
-     interceptor -t={targetInterceptorsTopicName} \
-     --topicInterceptorConfigs={sourceInterceptorsTopicName} \
-     /tmp/my-kafka.properties
+docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
+    harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.1 \
+    interceptor -t={targetInterceptorsTopicName} \
+    --topicInterceptorConfigs={sourceInterceptorsTopicName} \
+    /tmp/my-kafka.properties
 ```
 
 Expected output:

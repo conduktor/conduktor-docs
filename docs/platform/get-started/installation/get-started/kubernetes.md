@@ -38,15 +38,15 @@ export NAMESPACE="<your_kubernetes_namespace>"
 
 # Deploy helm chart
 helm install console conduktor/console \
-    --create-namespace -n ${NAMESPACE} \
-    --set config.organization.name="${ORG_NAME}" \
-    --set config.admin.email="${ADMIN_EMAIL}" \
-    --set config.admin.password="${ADMIN_PASSWORD}" \
-    --set config.database.password="<your_postgres_password>" \
-    --set config.database.username="<your_postgres_user>" \
-    --set config.database.host="<your_postgres_host>" \
-    --set config.database.port="5432" \
-    --set config.license="${LICENSE}" # can be omitted if deploying the free tier
+  --create-namespace -n ${NAMESPACE} \
+  --set config.organization.name="${ORG_NAME}" \
+  --set config.admin.email="${ADMIN_EMAIL}" \
+  --set config.admin.password="${ADMIN_PASSWORD}" \
+  --set config.database.password="<your_postgres_password>" \
+  --set config.database.username="<your_postgres_user>" \
+  --set config.database.host="<your_postgres_host>" \
+  --set config.database.port="5432" \
+  --set config.license="${LICENSE}" # can be omitted if deploying the free tier
     
 # Port forward to access Conduktor
 kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
@@ -63,8 +63,8 @@ open http://localhost:8080
 ## Production requirements
 For production environments, this is  **mandatory**:
 
-* To setup an [external PostgreSQL (13+) database](../../configuration/database.md) with appropriate backup policy
-* To setup an [external S3 Bucket](../../configuration/env-variables.md#monitoring-properties)
+* To set up an [external PostgreSQL (13+) database](../../configuration/database.md) with an appropriate backup policy
+* To set up an [external S3 Bucket](../../configuration/env-variables.md#monitoring-properties)
 * Enough resources to run Conduktor with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ## Getting started
@@ -80,8 +80,7 @@ helm repo update
 
 Configure the Console with the following values:
 
-```shell
-# values.yaml
+```yaml title="values.yaml"
 config:
   organization:
     name: "<your_org_name>"
@@ -104,9 +103,9 @@ Install the chart on your cluster:
 
 ```shell
 helm install console conduktor/console \
-    --create-namespace -n conduktor \
-    --values values.yaml \
-    --set config.license="${LICENSE}" # can be omitted if deploying the free tier
+  --create-namespace -n conduktor \
+  --values values.yaml \
+  --set config.license="${LICENSE}" # can be omitted if deploying the free tier
 ``` 
 
 Once deployed, you will be able to access Conduktor on 
@@ -122,9 +121,9 @@ kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 
 ### Fresh install
 
-You can configure the Console by inserting into the `config` section of the
+You can configure the Console by inserting it into the `config` section of the
 `values.yaml` file the configuration of Console you want to apply. You can 
-find available configuration in the [configuration section](../../configuration/env-variables.md)
+find available configurations in the [configuration section](../../configuration/env-variables.md)
 
 
 ### Based on a docker configuration
@@ -132,8 +131,7 @@ find available configuration in the [configuration section](../../configuration/
 If you already have a configuration file that you were using within docker,
 you can use it by giving it to the helm chart with the following command:
 
-```shell
-# values.yaml
+```yaml title="values.yaml"
 config:
   organization:
     name: "<your_org_name>"
@@ -154,8 +152,7 @@ config:
 
 ### Configure with an enterprise license
 
-```yaml
-# values.yaml
+```yaml title="values.yaml"
 config:
   organization:
     name: "<your_org_name>"

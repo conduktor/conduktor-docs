@@ -6,7 +6,7 @@ description: Configure Azure AD as SSO for Conduktor Console.
 
 # Configure Azure AD / Entra ID as SSO
 
-In this doc, we will name it Azure AD, but the product has been renamed as Entra ID recently.
+In this doc, we will name it Azure AD, but the product has been renamed Entra ID recently.
 
 ## Azure AD Configuration
 
@@ -40,7 +40,7 @@ You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, by what you got during the steps 2 and 3.
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during steps 2 and 3.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -116,6 +116,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
+Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
 
-The value you need to put as external group is the `Object ID` of the Azure AD group.
+The value you need to put as an external group is the `Object ID` of the Azure AD group.

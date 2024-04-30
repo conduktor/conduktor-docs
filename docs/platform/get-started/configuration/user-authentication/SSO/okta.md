@@ -19,7 +19,7 @@ On Okta side, you'll have to create a new application:
 
 The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
-For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like on the screenshot below.
+For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like in the screenshot below.
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
@@ -43,7 +43,7 @@ You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-c
 
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, by what you got during the steps 4 and 5.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, with what you got during steps 4 and 5.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 

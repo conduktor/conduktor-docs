@@ -26,9 +26,9 @@ This template will create all the resources on a public subnet. However, the DB 
 
 ## Deployment Steps
 
-1. Go to `https://\<region>.console.aws.amazon.com/cloudformation`.
+1. Go to `https://<region>.console.aws.amazon.com/cloudformation`.
 
-1. Click on "create stack" button and choose the "With new resources" option.
+1. Click on "Create stack" button and choose the "With new resources" option.
 
     ![Alt Cloudformation](assets/cloudformation-guide-1.png)
 
@@ -38,13 +38,13 @@ This template will create all the resources on a public subnet. However, the DB 
 
 1. Upload one of our templates:
 
-    > Decide if you want to deploy console using your own resources (cluster, DB, etc.) or if you want us to deploy all resource dependencies alongside console as well.
+    > Decide if you want to deploy Console using your own resources (cluster, DB, etc.) or if you want us to deploy all resource dependencies alongside Console as well.
 
-    To deploy console **only**, you can use the following template:
+    To deploy Console **only**, you can use the following template:
 
     - [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml)
 
-    To deploy console and all resources needed (e.g. DB), you can use the following template:
+    To deploy Console and all resources needed (e.g. DB), you can use the following template:
 
     - [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml)
 
@@ -61,15 +61,15 @@ This template will create all the resources on a public subnet. However, the DB 
     | `ClusterArn` | The ARN of the cluster you want to deploy your ECS service on. |
     | `DatabaseEndpoint` | The endpoint of your DB instance. |
     | `DatabaseName` | The name of your DB instance. |
-    | `DatabaseUsername` | The username for above DB instance. |
-    | `DatabasePassword` | The password for above DB instance. |
+    | `DatabaseUsername` | The username for the above DB instance. |
+    | `DatabasePassword` | The password for the above DB instance. |
 
     ![Alt Config](assets/cloudformation-guide-3.png)
 
     - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you may override the default ones.
 
     :::warning
-    Note the default value for region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
+    Note the default value for the region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
     :::
 
     ![Alt Config](assets/cloudformation-guide-4.png)

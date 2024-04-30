@@ -15,7 +15,6 @@ Jump to:
 - [Gateway Environment Variables](#gateway-environment-variables)
   - [Host/Port](#hostport)
   - [Load Balancing](#load-balancing)
-  - [Gateway Mode](#gateway-mode)
   - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Security Provider](#security-provider)
   - [Secret management](#secret-management)
@@ -34,7 +33,7 @@ Conduktor Gateway's connection to Kafka are configured by the `KAFKA_` environme
 When translating Kafka's properties, use upper case instead and replace the `.` with `_`.  
 
 For example;  
-When defining Gateway's Kafka property `bootstrap.servers` , declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`.
+When defining Gateway's Kafka property `bootstrap.servers`, declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`.
 
 Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway.
 
@@ -93,7 +92,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | Environment Variable        | Default Value                         | Description                                                                                                                                   |
 |-----------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` |
-| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`     | Set if authenticated users are automaticaly assigned to `passtrhough` vcluster in it's not configured. Reject authentication if set to `true` and vcluster is not configured for a principal |
+| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`     | Set if authenticated users are automatically assigned to `passthrough` vcluster if it's not configured. Reject authentication if set to `true` and vcluster is not configured for a principal |
 
 #### SSL
 
@@ -122,6 +121,15 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
 | `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
 
+#### MTLS
+
+more context for MTLS [here](/gateway/concepts/Clients/)
+
+| Environment Variable                  | Default Value     | Description                                       |
+|---------------------------------------|-------------------|---------------------------------------------------|
+| `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` | extracts the `CN` |  mTLS leverages SSL mutual authentication to identify a Kafka client. Principal for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) |
+
+
 #### OAuthbearer
 
 Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
@@ -148,7 +156,7 @@ Please note that `CONSCRYPT` does not support Mac OS with aarch64.
 
 #### SECRET MANAGEMENT
 
-Secrets may be passed from configuration to Gateway using environement variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. 
+Secrets may be passed from configuration to Gateway using environment variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. 
 
 * `SCHEMA_REGISTRY_LOGIN`
 * `SCHEMA_REGISTRY_PASSWORD`
@@ -201,9 +209,9 @@ When it is set
 | `GATEWAY_CONSUMER_SUBSCRIPTIONS_TOPIC` | `_conduktor_gateway_consumer_subscriptions` | Name of the subscriptions for concentrated topic consumption topic                           |
 | `GATEWAY_CONSUMER_OFFSETS_TOPIC`       | `_conduktor_gateway_consumer_offsets`       | Name of the topic to store the offsets for concentrated topic consumption                    |
 | `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                                             |
-| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration stopic                                                      |
+| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration topic                                                       |
 | `GATEWAY_ACLS_TOPIC`                   | `_conduktor_gateway_acls`                   | Name of the acl topic                                                                        |
-| `GATEWAY_AUDIT_LOGS_TOPIC`             | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
+| `GATEWAY_AUDIT_LOG_TOPIC`              | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
 
 #### `IN_MEMORY` State Configurations
 
@@ -231,6 +239,7 @@ none
 | Environment Variable              | Default Value | Description                                                    |
 |-----------------------------------| ------------- |----------------------------------------------------------------|
 | `GATEWAY_UPSTREAM_NUM_CONNECTION` | `10`          | The number of connections between Conduktor Gateway and Kafka  |
+| `GATEWAY_UPSTREAM_CONNECTION_POOL_TYPE` | `NONE`          | Upstream connection pool type. Possible values are `NONE` (no connection pool), `ROUND_ROBIN` (Round robin selected connection pool)  |
 
 ### Feature Flags
 

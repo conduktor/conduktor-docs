@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/yaAKjPlh8PkiCQ6hZs5DYzeey.svg)](https://asciinema.org/a/yaAKjPlh8PkiCQ6hZs5DYzeey)
+[![asciicast](https://asciinema.org/a/a755pAhxU5qYqO9bNyr2qzy4e.svg)](https://asciinema.org/a/a755pAhxU5qYqO9bNyr2qzy4e)
 
 </TabItem>
 </Tabs>
@@ -65,8 +65,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -91,8 +89,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -117,8 +113,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -143,8 +137,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -174,10 +166,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -202,10 +192,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -231,8 +219,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -243,8 +229,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -273,64 +257,63 @@ docker compose up --detach --wait
 ```
  Network data-masking_default  Creating
  Network data-masking_default  Created
- Container zookeeper  Creating
  Container kafka-client  Creating
+ Container zookeeper  Creating
  Container kafka-client  Created
  Container zookeeper  Created
  Container kafka2  Creating
- Container kafka1  Creating
  Container kafka3  Creating
- Container kafka3  Created
- Container kafka2  Created
+ Container kafka1  Creating
  Container kafka1  Created
- Container schema-registry  Creating
+ Container kafka2  Created
+ Container kafka3  Created
  Container gateway1  Creating
+ Container schema-registry  Creating
  Container gateway2  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container gateway1  Created
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
  Container gateway2  Created
  Container schema-registry  Created
- Container zookeeper  Starting
+ Container gateway1  Created
  Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
- Container kafka3  Starting
- Container zookeeper  Healthy
  Container kafka1  Starting
- Container kafka1  Started
+ Container zookeeper  Healthy
+ Container kafka3  Starting
  Container kafka2  Started
+ Container kafka1  Started
  Container kafka3  Started
- Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka1  Healthy
- Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container schema-registry  Starting
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container gateway1  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
- Container kafka2  Healthy
- Container gateway1  Starting
- Container kafka3  Healthy
- Container schema-registry  Starting
- Container gateway1  Started
- Container schema-registry  Started
  Container gateway2  Started
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container kafka-client  Waiting
  Container zookeeper  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
@@ -338,22 +321,21 @@ docker compose up --detach --wait
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
- Container kafka-client  Waiting
- Container kafka3  Healthy
- Container zookeeper  Healthy
- Container kafka-client  Healthy
- Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container zookeeper  Healthy
+ Container kafka3  Healthy
+ Container kafka-client  Healthy
  Container schema-registry  Healthy
- Container gateway1  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/IzkmJx0sjyB8Oy0MLp7w88tBw.svg)](https://asciinema.org/a/IzkmJx0sjyB8Oy0MLp7w88tBw)
+[![asciicast](https://asciinema.org/a/FdprG7fLhTIDP5GY2biKw7VUk.svg)](https://asciinema.org/a/FdprG7fLhTIDP5GY2biKw7VUk)
 
 </TabItem>
 </Tabs>
@@ -396,7 +378,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY0NzIzMX0.fYEbpXgE-OgvNoXiGpevY9E0XIPr6IcyG7ZEijQOlSk';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3MTU5OX0.yYJUqhlGN3JPYoLxZs8SracYxcrY6XpJsDfi8slfmnI';
 
 
 ```
@@ -404,7 +386,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/o7wVaDkFtUCHeraivCfAWI9dD.svg)](https://asciinema.org/a/o7wVaDkFtUCHeraivCfAWI9dD)
+[![asciicast](https://asciinema.org/a/h4mimzLsfQecXWQYNzR5oXbMl.svg)](https://asciinema.org/a/h4mimzLsfQecXWQYNzR5oXbMl)
 
 </TabItem>
 </Tabs>
@@ -441,7 +423,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PqogA0Uuv81xUjmkcfXsPY0BT.svg)](https://asciinema.org/a/PqogA0Uuv81xUjmkcfXsPY0BT)
+[![asciicast](https://asciinema.org/a/MVbPUqwFIQZZTcwBa4Oy9LJqs.svg)](https://asciinema.org/a/MVbPUqwFIQZZTcwBa4Oy9LJqs)
 
 </TabItem>
 </Tabs>
@@ -450,39 +432,13 @@ Created topic customers.
 
 We want to data masking only two fields, with an in memory KMS.
 
-Creating the interceptor named `data-masking` of the plugin `io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
-  "priority" : 100,
-  "config" : {
-    "policies" : [ {
-      "name" : "Mask password",
-      "rule" : {
-        "type" : "MASK_ALL"
-      },
-      "fields" : [ "password" ]
-    }, {
-      "name" : "Mask visa",
-      "rule" : {
-        "type" : "MASK_LAST_N",
-        "maskingChar" : "X",
-        "numberOfChars" : 4
-      },
-      "fields" : [ "visa", "a.b.c", "visa3" ]
-    } ]
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-07-data-masking.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/data-masking" \
     --header 'Content-Type: application/json' \
@@ -497,6 +453,36 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
+  "priority": 100,
+  "config": {
+    "policies": [
+      {
+        "name": "Mask password",
+        "rule": {
+          "type": "MASK_ALL"
+        },
+        "fields": [
+          "password"
+        ]
+      },
+      {
+        "name": "Mask visa",
+        "rule": {
+          "type": "MASK_LAST_N",
+          "maskingChar": "X",
+          "numberOfChars": 4
+        },
+        "fields": [
+          "visa",
+          "a.b.c",
+          "visa3"
+        ]
+      }
+    ]
+  }
+}
+{
   "message": "data-masking is created"
 }
 
@@ -505,7 +491,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/FDWoXRRE17FKQmlFE82yyZU1M.svg)](https://asciinema.org/a/FDWoXRRE17FKQmlFE82yyZU1M)
+[![asciicast](https://asciinema.org/a/v2Y9z6Ed4h198EL37wjcKjWRt.svg)](https://asciinema.org/a/v2Y9z6Ed4h198EL37wjcKjWRt)
 
 </TabItem>
 </Tabs>
@@ -536,7 +522,6 @@ curl \
     {
       "name": "data-masking",
       "pluginClass": "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
-      "apiKey": null,
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
@@ -574,7 +559,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jZmmybkvogUifTCUL6uOiL6MP.svg)](https://asciinema.org/a/jZmmybkvogUifTCUL6uOiL6MP)
+[![asciicast](https://asciinema.org/a/VpGQEa2twjqrgTsHXZZyOuzbl.svg)](https://asciinema.org/a/VpGQEa2twjqrgTsHXZZyOuzbl)
 
 </TabItem>
 </Tabs>
@@ -632,7 +617,7 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/A3CgJ5C2SnmVFLpVuUdGfgtDx.svg)](https://asciinema.org/a/A3CgJ5C2SnmVFLpVuUdGfgtDx)
+[![asciicast](https://asciinema.org/a/kaRpkGiX8Gf9HBhrej0zXn1Fz.svg)](https://asciinema.org/a/kaRpkGiX8Gf9HBhrej0zXn1Fz)
 
 </TabItem>
 </Tabs>
@@ -655,33 +640,31 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-Processed a total of 2 messages
 {
-  "name": "tom",
-  "username": "tom@conduktor.io",
-  "password": "********",
-  "visa": "#abXXXX",
-  "address": "Chancery lane, London"
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "********",
+  "visa" : "#abXXXX",
+  "address" : "Chancery lane, London"
 }
 {
-  "name": "laura",
-  "username": "laura@conduktor.io",
-  "password": "********",
-  "visa": "#88899XXXX",
-  "address": "Dubai, UAE"
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "********",
+  "visa" : "#88899XXXX",
+  "address" : "Dubai, UAE"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 00:46:56,947] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "tom",
@@ -703,7 +686,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sV6npebRLIfnmd9tlsEjq8CZq.svg)](https://asciinema.org/a/sV6npebRLIfnmd9tlsEjq8CZq)
+[![asciicast](https://asciinema.org/a/tHk2JmmepkBmqVEZyS5rDDRnW.svg)](https://asciinema.org/a/tHk2JmmepkBmqVEZyS5rDDRnW)
 
 </TabItem>
 </Tabs>
@@ -735,7 +718,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/UZO0BXywwZMtEOnd7G2fDSnLu.svg)](https://asciinema.org/a/UZO0BXywwZMtEOnd7G2fDSnLu)
+[![asciicast](https://asciinema.org/a/nnYcJVgTQeauajJGkfvkIXfSW.svg)](https://asciinema.org/a/nnYcJVgTQeauajJGkfvkIXfSW)
 
 </TabItem>
 </Tabs>
@@ -758,33 +741,31 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
+returns 2 events
 ```json
-Processed a total of 2 messages
 {
-  "name": "tom",
-  "username": "tom@conduktor.io",
-  "password": "motorhead",
-  "visa": "#abc123",
-  "address": "Chancery lane, London"
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
 }
 {
-  "name": "laura",
-  "username": "laura@conduktor.io",
-  "password": "kitesurf",
-  "visa": "#888999XZ;",
-  "address": "Dubai, UAE"
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ;",
+  "address" : "Dubai, UAE"
 }
-
 ```
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-04-10 00:47:09,656] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "tom",
@@ -806,7 +787,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uPYnagmzRDjpZGNamVXNdllLT.svg)](https://asciinema.org/a/uPYnagmzRDjpZGNamVXNdllLT)
+[![asciicast](https://asciinema.org/a/LmQNqldaAOADilQWuQMWYMjSW.svg)](https://asciinema.org/a/LmQNqldaAOADilQWuQMWYMjSW)
 
 </TabItem>
 </Tabs>
@@ -830,34 +811,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container schema-registry  Stopping
  Container gateway1  Stopping
  Container kafka-client  Stopping
  Container gateway2  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway2  Removed
+ Container schema-registry  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
+ Container gateway2  Stopped
+ Container gateway2  Removing
  Container gateway1  Removed
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka2  Stopping
- Container kafka3  Stopping
  Container kafka1  Stopping
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
+ Container kafka3  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -870,7 +851,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/gGf0ayMjZqlsR5dYdprBolAgj.svg)](https://asciinema.org/a/gGf0ayMjZqlsR5dYdprBolAgj)
+[![asciicast](https://asciinema.org/a/QA8i2IdezrJPQXHIFnpsvtu4I.svg)](https://asciinema.org/a/QA8i2IdezrJPQXHIFnpsvtu4I)
 
 </TabItem>
 </Tabs>

@@ -37,9 +37,9 @@
 
 .CardTitle {
   color: var(--colors-mauve12);
-  font-size: var(--fontSizes-fontSize12);
+  font-size: var(--fontSizes-fontSize8);
   font-weight: var(--fontWeights-semi);
-  margin-bottom: var(--space-space6);
+  margin-bottom: var(--space-space3);
   line-height: 45px;
 
   @media only screen and (max-width: 768px) {
@@ -50,7 +50,7 @@
 .CardParagraph {
   color: var(--colors-mauve11);
   font-size: var(--fontSizes-fontSize4);
-  margin-bottom: var(--space-space10);
+  margin-bottom: var(--space-space8);
   display: block;
 
   @media only screen and (max-width: 768px) {

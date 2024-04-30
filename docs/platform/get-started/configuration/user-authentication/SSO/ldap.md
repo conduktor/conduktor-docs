@@ -54,12 +54,12 @@ CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 </Tabs>
 
 :::tip
-If your LDAP server is **Active Directory** and you get "invalid user" error when trying to log-in, try setting your `search-filter` to `'(sAMAccountName={0})'`.
+If your LDAP server is **Active Directory** and you get an "invalid user" error when trying to log in, try setting your `search-filter` to `'(sAMAccountName={0})'`.
 :::
 
 ## Users information
 
-Here is the mapping between LDAP users information and Conduktor Console:
+Here is the mapping between LDAP user's information and Conduktor Console:
 
 | LDAP              | Conduktor Console                         |
 | ----------------- | ----------------------------------------- |
@@ -72,7 +72,7 @@ Here is the mapping between LDAP users information and Conduktor Console:
 
 ## Groups
 
-To retrieve the groups each user belongs to, you have to set `groups-enabled` to `true`, and populate the attributes `groups-base` and `groups-filter`. You can find an example of snippet in the [TL;DR](#tldr).
+To retrieve the groups each user belongs to, you have to set `groups-enabled` to `true`, and populate the attributes `groups-base` and `groups-filter`. You can find an example of a snippet in the [TL;DR](#tldr).
 
 :::caution
 Be aware that depending on your LDAP `objectClass`, the attribute used to filter groups might be changed. 
@@ -87,7 +87,7 @@ For example:
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can setup a **mapping** between your LDAP groups and your Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on their LDAP groups.
+Now that your configuration is finished, you can set up a **mapping** between your LDAP groups and your Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on their LDAP groups.
 
 To create this mapping, you have to create a group from Console, and mention the ID of the group on your LDAP (you should find it in the attribute you mentioned as `groups-base`).
 

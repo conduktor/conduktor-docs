@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/nQDwV6Bld4WpIhI9BLR5G1JVA.svg)](https://asciinema.org/a/nQDwV6Bld4WpIhI9BLR5G1JVA)
+[![asciicast](https://asciinema.org/a/uzc57YiIXGRDSnFWxc8S84E4b.svg)](https://asciinema.org/a/uzc57YiIXGRDSnFWxc8S84E4b)
 
 </TabItem>
 </Tabs>
@@ -67,8 +67,6 @@ services:
       test: nc -zv 0.0.0.0 2801 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka1:
     hostname: kafka1
     container_name: kafka1
@@ -93,8 +91,6 @@ services:
       test: nc -zv kafka1 9092 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka2:
     hostname: kafka2
     container_name: kafka2
@@ -119,8 +115,6 @@ services:
       test: nc -zv kafka2 9093 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka3
@@ -145,8 +139,6 @@ services:
       test: nc -zv kafka3 9094 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
@@ -176,10 +168,8 @@ services:
       test: nc -zv schema-registry 8081 || exit 1
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway1:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -204,10 +194,8 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   gateway2:
-    image: conduktor/conduktor-gateway:2.6.0
+    image: conduktor/conduktor-gateway:3.0.0
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -233,8 +221,6 @@ services:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
-    labels:
-      tag: conduktor
   kafka-client:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-client
@@ -245,8 +231,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-    labels:
-      tag: conduktor
   minio:
     image: quay.io/minio/minio
     hostname: minio
@@ -259,8 +243,6 @@ services:
     ports:
     - 9000:9000
     command: minio server /data
-    labels:
-      tag: conduktor
   cli-aws:
     image: amazon/aws-cli
     hostname: cli-aws
@@ -271,8 +253,6 @@ services:
       source: credentials
       target: /root/.aws/credentials
       read_only: true
-    labels:
-      tag: conduktor
 networks:
   demo: null
 ```
@@ -302,98 +282,96 @@ docker compose up --detach --wait
  Network large-messages_default  Creating
  Network large-messages_default  Created
  Container minio  Creating
- Container cli-aws  Creating
  Container kafka-client  Creating
+ Container cli-aws  Creating
  Container zookeeper  Creating
- Container cli-aws  Created
  Container minio  Created
+ Container cli-aws  Created
+ Container kafka-client  Created
  Container zookeeper  Created
  Container kafka1  Creating
- Container kafka2  Creating
  Container kafka3  Creating
- Container kafka-client  Created
- Container kafka3  Created
- Container kafka1  Created
+ Container kafka2  Creating
  Container kafka2  Created
- Container gateway1  Creating
- Container gateway2  Creating
+ Container kafka1  Created
+ Container kafka3  Created
  Container schema-registry  Creating
- gateway1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+ Container gateway2  Creating
+ Container gateway1  Creating
  Container gateway1  Created
- gateway2 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
- Container schema-registry  Created
  Container gateway2  Created
+ Container schema-registry  Created
  Container minio  Starting
- Container zookeeper  Starting
- Container kafka-client  Starting
  Container cli-aws  Starting
+ Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container minio  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container minio  Started
- Container kafka-client  Started
  Container cli-aws  Started
+ Container kafka-client  Started
  Container zookeeper  Healthy
- Container kafka3  Starting
- Container zookeeper  Healthy
- Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka1  Starting
+ Container kafka2  Starting
+ Container zookeeper  Healthy
+ Container kafka3  Starting
  Container kafka3  Started
- Container kafka2  Started
  Container kafka1  Started
+ Container kafka2  Started
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka1  Waiting
  Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
+ Container gateway1  Starting
  Container kafka2  Healthy
  Container schema-registry  Starting
- Container kafka1  Healthy
- Container gateway1  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
  Container gateway1  Started
  Container gateway2  Started
  Container schema-registry  Started
- Container cli-aws  Waiting
+ Container kafka3  Waiting
+ Container kafka-client  Waiting
+ Container gateway2  Waiting
+ Container minio  Waiting
+ Container gateway1  Waiting
+ Container kafka2  Waiting
  Container kafka1  Waiting
  Container zookeeper  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container gateway1  Waiting
- Container kafka-client  Waiting
- Container minio  Waiting
  Container schema-registry  Waiting
- Container gateway2  Waiting
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container cli-aws  Healthy
- Container zookeeper  Healthy
- Container kafka2  Healthy
+ Container cli-aws  Waiting
  Container minio  Healthy
+ Container cli-aws  Healthy
  Container kafka-client  Healthy
- Container schema-registry  Healthy
- Container gateway1  Healthy
+ Container zookeeper  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/c1cMWG6lEOAQ6Q36YzC95fWDF.svg)](https://asciinema.org/a/c1cMWG6lEOAQ6Q36YzC95fWDF)
+[![asciicast](https://asciinema.org/a/3iZEu2e2kNbyalUBYxxGzc2Yt.svg)](https://asciinema.org/a/3iZEu2e2kNbyalUBYxxGzc2Yt)
 
 </TabItem>
 </Tabs>
@@ -436,7 +414,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcxNTY1MjY0MH0.cRocKWM1Dtg1vnc7UFK1zbTumH4rqPvBfj-OhuNhE50';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3NzE4Mn0.Sqku85l5xsVk1N4BniIZpvR4JjwiDNXtdbnwZL8IfDM';
 
 
 ```
@@ -444,7 +422,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/OpE9FS5wImdgml3FUSxDtVUh0.svg)](https://asciinema.org/a/OpE9FS5wImdgml3FUSxDtVUh0)
+[![asciicast](https://asciinema.org/a/04ShGLEf5H83mdxhAxovv8fqI.svg)](https://asciinema.org/a/04ShGLEf5H83mdxhAxovv8fqI)
 
 </TabItem>
 </Tabs>
@@ -503,7 +481,7 @@ docker compose exec cli-aws \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/MOK1oh8ZMuLON6hH5vxB93zTj.svg)](https://asciinema.org/a/MOK1oh8ZMuLON6hH5vxB93zTj)
+[![asciicast](https://asciinema.org/a/62u3FVVktd0Fd2e6xq1IaWACe.svg)](https://asciinema.org/a/62u3FVVktd0Fd2e6xq1IaWACe)
 
 </TabItem>
 </Tabs>
@@ -540,7 +518,7 @@ Created topic large-messages.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BikBq9aS8EVsQZ28cO17XIZOd.svg)](https://asciinema.org/a/BikBq9aS8EVsQZ28cO17XIZOd)
+[![asciicast](https://asciinema.org/a/chet0Hapir1YZ71iOgSuRWvb3.svg)](https://asciinema.org/a/chet0Hapir1YZ71iOgSuRWvb3)
 
 </TabItem>
 </Tabs>
@@ -549,32 +527,13 @@ Created topic large-messages.
 
 Let's ask Gateway to offload large messages to S3
 
-Creating the interceptor named `large-messages` of the plugin `io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin` using the following payload
-
-```json
-{
-  "pluginClass" : "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
-  "priority" : 100,
-  "config" : {
-    "topic" : "large-messages",
-    "s3Config" : {
-      "accessKey" : "minio",
-      "secretKey" : "minio123",
-      "bucketName" : "bucket",
-      "region" : "eu-south-1",
-      "uri" : "http://minio:9000"
-    }
-  }
-}
-```
-
-Here's how to send it:
-
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
+cat step-09-large-messages.json | jq
+
 curl \
     --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/large-messages" \
     --header 'Content-Type: application/json' \
@@ -589,6 +548,20 @@ curl \
 
 ```json
 {
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "large-messages",
+    "s3Config": {
+      "accessKey": "minio",
+      "secretKey": "minio123",
+      "bucketName": "bucket",
+      "region": "eu-south-1",
+      "uri": "http://minio:9000"
+    }
+  }
+}
+{
   "message": "large-messages is created"
 }
 
@@ -597,7 +570,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/TRE5EZLNlxMmE7oKLE92h4XTq.svg)](https://asciinema.org/a/TRE5EZLNlxMmE7oKLE92h4XTq)
+[![asciicast](https://asciinema.org/a/Iwx7sV72ON3aL4pdEGRY7LAdL.svg)](https://asciinema.org/a/Iwx7sV72ON3aL4pdEGRY7LAdL)
 
 </TabItem>
 </Tabs>
@@ -620,14 +593,14 @@ ls -lh large-message.bin
 <TabItem value="Output">
 
 ```
--rw-r--r--  1 framiere  staff    40M Feb 14 03:10 large-message.bin
+-rw-r--r--@ 1 framiere  staff    40M 10 avr 02:19 large-message.bin
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PUu5CdxDZh2dQfrKlPAHxHqlq.svg)](https://asciinema.org/a/PUu5CdxDZh2dQfrKlPAHxHqlq)
+[![asciicast](https://asciinema.org/a/OUw9U37AgNGdxBK86G2BKVHtI.svg)](https://asciinema.org/a/OUw9U37AgNGdxBK86G2BKVHtI)
 
 </TabItem>
 </Tabs>
@@ -660,16 +633,16 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-Reading payloads from: /Users/framiere/conduktor/conduktor-gateway-functional-testing/target/2024.02.14-00:39:58/large-messages/large-message.bin
+Reading payloads from: /Users/framiere/conduktor/conduktor-proxy/functional-testing/target/2024.04.10-01:54:14/large-messages/large-message.bin
 Number of messages read: 1
-1 records sent, 0,458085 records/sec (18,32 MB/sec), 2178,00 ms avg latency, 2178,00 ms max latency, 2178 ms 50th, 2178 ms 95th, 2178 ms 99th, 2178 ms 99.9th.
+1 records sent, 0,674764 records/sec (26,99 MB/sec), 1474,00 ms avg latency, 1474,00 ms max latency, 1474 ms 50th, 1474 ms 95th, 1474 ms 99th, 1474 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/3cH6lWGvqUEuiZV2UIxualuzY.svg)](https://asciinema.org/a/3cH6lWGvqUEuiZV2UIxualuzY)
+[![asciicast](https://asciinema.org/a/W88EKtd4a8zJYD1ZJqKEJXpgd.svg)](https://asciinema.org/a/W88EKtd4a8zJYD1ZJqKEJXpgd)
 
 </TabItem>
 </Tabs>
@@ -683,7 +656,7 @@ Number of messages read: 1
 
 
 ```sh
-kafka-console-consumer \
+kafka-console-consumer  \
   --bootstrap-server localhost:6969 \
   --consumer.config teamA-sa.properties \
   --topic large-messages \
@@ -703,7 +676,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GvqplvPC8T9GhxdJyMVp2ikgI.svg)](https://asciinema.org/a/GvqplvPC8T9GhxdJyMVp2ikgI)
+[![asciicast](https://asciinema.org/a/nAAnVQ48O3EsSKZLN2FVdt3vw.svg)](https://asciinema.org/a/nAAnVQ48O3EsSKZLN2FVdt3vw)
 
 </TabItem>
 </Tabs>
@@ -725,15 +698,15 @@ ls -lH *bin
 <TabItem value="Output">
 
 ```
--rw-r--r--  1 framiere  staff  41943041 Feb 14 03:10 from-kafka.bin
--rw-r--r--  1 framiere  staff  41943041 Feb 14 03:10 large-message.bin
+-rw-r--r--@ 1 framiere  staff  41943041 10 avr 02:19 from-kafka.bin
+-rw-r--r--@ 1 framiere  staff  41943041 10 avr 02:19 large-message.bin
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/iFcXsZ0Dd5ycqgHDPTnbQFpUJ.svg)](https://asciinema.org/a/iFcXsZ0Dd5ycqgHDPTnbQFpUJ)
+[![asciicast](https://asciinema.org/a/CctyDIDDANHyrKoRrEBOnB8Rk.svg)](https://asciinema.org/a/CctyDIDDANHyrKoRrEBOnB8Rk)
 
 </TabItem>
 </Tabs>
@@ -761,14 +734,14 @@ docker compose exec cli-aws \
 <TabItem value="Output">
 
 ```
-2024-02-14 02:10:48   40.0 MiB large-messages/3038059a-340d-4fac-bbd2-2dfe65c39b68
+2024-04-09 22:19:49   40.0 MiB large-messages/84a95586-c2ea-407b-99e5-8cd921f58ae7
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Jzl098GBzQ6QtBb5MG7tj3oqV.svg)](https://asciinema.org/a/Jzl098GBzQ6QtBb5MG7tj3oqV)
+[![asciicast](https://asciinema.org/a/gdiPpioZ6vrTU6WCf2B6lHl87.svg)](https://asciinema.org/a/gdiPpioZ6vrTU6WCf2B6lHl87)
 
 </TabItem>
 </Tabs>
@@ -791,21 +764,13 @@ kafka-console-consumer \
 ```
 
 
-returns 
-
-```json
-jq: parse error: Invalid numeric literal at line 1, column 17
-Processed a total of 1 messages
-
-```
-
-
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
 jq: parse error: Invalid numeric literal at line 1, column 17
+[2024-04-10 02:20:04,392] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
 ```
@@ -813,7 +778,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sPVRXNnzy2WTrR1KMzEgyZ5uC.svg)](https://asciinema.org/a/sPVRXNnzy2WTrR1KMzEgyZ5uC)
+[![asciicast](https://asciinema.org/a/YdP2vSpmWQUa7YTg7do4QaAyQ.svg)](https://asciinema.org/a/YdP2vSpmWQUa7YTg7do4QaAyQ)
 
 </TabItem>
 </Tabs>
@@ -837,12 +802,12 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container cli-aws  Stopping
  Container minio  Stopping
- Container gateway1  Stopping
- Container schema-registry  Stopping
- Container gateway2  Stopping
  Container kafka-client  Stopping
+ Container schema-registry  Stopping
+ Container gateway1  Stopping
+ Container gateway2  Stopping
+ Container cli-aws  Stopping
  Container minio  Stopped
  Container minio  Removing
  Container minio  Removed
@@ -855,24 +820,24 @@ docker compose down --volumes
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
  Container kafka3  Stopping
+ Container kafka1  Stopping
  Container kafka2  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
- Container cli-aws  Stopped
- Container cli-aws  Removing
- Container cli-aws  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container cli-aws  Stopped
+ Container cli-aws  Removing
+ Container cli-aws  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
@@ -885,7 +850,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/2sOwDleBWgD4dmflaEy2RHoSi.svg)](https://asciinema.org/a/2sOwDleBWgD4dmflaEy2RHoSi)
+[![asciicast](https://asciinema.org/a/l49f6YWoei8DsQld1EEZmxja2.svg)](https://asciinema.org/a/l49f6YWoei8DsQld1EEZmxja2)
 
 </TabItem>
 </Tabs>
