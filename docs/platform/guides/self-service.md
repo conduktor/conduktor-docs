@@ -21,7 +21,7 @@ This approach brings governance into your enterprise through concepts like Owner
 ### Benefits for Applications Teams
 - Autonomy and responsibility over their resources
 - Isolation with Application namespaces
-- Collaboration with using Permission Delegation without any help from the Central Platform
+- Collaboration through permission delegation without any help from the Central Platform team
 - Discoverability through Topic Catalog
 
 ## Concepts
