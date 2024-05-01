@@ -90,7 +90,7 @@ You can run Push or Pull queries there. The records will appears in a streaming 
 
 This will send requests to the `/query-stream` endpoint of ksqlDB.
 
-<https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/>
+[https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/)
 
 ![Image](img/ksql_editor_query.png)
 
@@ -98,6 +98,6 @@ This will send requests to the `/query-stream` endpoint of ksqlDB.
 
 Alternatively, select the "Execute a statement" option from the dropdown to run a sequence of SQL statements. The `/ksql` endpoint of ksqlDB will be used.
 
-<https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/ksql-endpoint/>
+[https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/ksql-endpoint/](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/ksql-endpoint/)
 
 ![Image](img/ksql_editor_statement.png)
