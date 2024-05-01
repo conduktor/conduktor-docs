@@ -142,7 +142,7 @@ Use `fields` for field level encryption, use `payload` when encrypting the full 
 
 | key     | type                   | description                                    |
 |:--------|:-----------------------|:-----------------------------------------------|
-| fields  | List<[Field](#fields)> | List of fields to be encrypted                 |
+| fields  | List [Field](#fields) | List of fields to be encrypted                 |
 | payload | [Payload](#payload)    | Configuration of encrypting the entire payload |
 
 ### HeaderEncryptionConfig
@@ -152,7 +152,7 @@ Use `fields` for field level encryption, use `payload` when encrypting the full 
 | key     | type                   | description                                                                                                                           |
 |:--------|:-----------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
 | header  | String                 | Headers that match this regex will have the interceptor applied.<br/> _Warning: it can encrypt all headers including gateway headers_ |
-| fields  | List<[Field](#fields)> | List of fields to be encrypted                                                                                                        |
+| fields  | List [Field](#fields) | List of fields to be encrypted                                                                                                        |
 | payload | [Payload](#payload)    | Configuration of full payload encryption                                                                                              |
 
 ## Decryption configuration

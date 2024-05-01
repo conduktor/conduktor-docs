@@ -36,7 +36,7 @@ This can happen due to many reasons. Here are a few:
     - [Internet Proxy](/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy)
   - You may need to add a **trusted certificate** to Conduktor:&#x20;
     - [Certificates FAQ](/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq)
-- **Browser plugins** can redirect http calls to httpS. The last step of our identification flow is a call to a local temporary http server (http://localhost:5xxx), so if something in the browser forces a redirect from http to https, the flow will never complete.
+- **Browser plugins** can redirect http calls to httpS. The last step of our identification flow is a call to a local temporary http server (`http://localhost:5xxx`), so if something in the browser forces a redirect from http to https, the flow will never complete.
 - If you're using a **VPN**, you may have to configure it to not alter communication to \*.conduktor.io or add a certificate into Conduktor (if you VPN adds its own security layer with a self-signed certificate..)
   - Using **ZScaler** ? Download the ZScaler certificate and import it into Conduktor
     - [Certificates FAQ](/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq)
