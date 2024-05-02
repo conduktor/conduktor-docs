@@ -33,11 +33,11 @@ export const GUI = () => (
 
 
 export const AppToken = () => (
-<Highlight color="#F0F4FF" text="#3451B2">Application Token</Highlight>
+<Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
 );
 
 export const AdminToken = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">Admin Token</Highlight>
+<Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
 
@@ -121,7 +121,7 @@ spec:
 **Side effect in Console & Kafka:**
 - Console
     - Members of the Owner Group are given all permissions in the UI over the owned resources
-    - Members of the Owner Group can create Application Token from the UI
+    - Members of the Owner Group can create Application API Keys from the UI
 - Kafka
     - Service Account is granted the following ACLs over the declared resources depending on the type:
         - Topic: READ, WRITE, DESCRIBE_CONFIGS

@@ -38,10 +38,10 @@ docker pull conduktor/conduktor-ctl
 
 To use Conduktor CLI, you need to define 2 environment variables:
 - The URL of Conduktor Console
-- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application Token)
+- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application API Key)
 ````yaml
 export CDK_BASE_URL=http://localhost:8080
-export CDK_TOKEN=<admin-token>
+export CDK_TOKEN=<api-key>
 ````
 
 ## Commands Usage

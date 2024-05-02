@@ -33,11 +33,11 @@ export const GUI = () => (
 
 
 export const AppToken = () => (
-<Highlight color="#F0F4FF" text="#3451B2">Application Token</Highlight>
+<Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
 );
 
 export const AdminToken = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">Admin Token</Highlight>
+<Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
 ## Overview

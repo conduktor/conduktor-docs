@@ -27,6 +27,6 @@ The Application Details page summarizes all the information that relates to the 
 - Subscribed topics
 - Shared topics
 
-Additionally, if you belong to the owner Group of the Application, you can generate Application Instance Tokens to use with the CLI to create resources.
+Additionally, if you belong to the owner Group of the Application, you can generate Application Instance API Keys to use with the CLI to create resources.
 
 ![AppCatalogDetails](img/app-catalog-details.png)
