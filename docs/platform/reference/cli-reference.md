@@ -41,7 +41,7 @@ To use Conduktor CLI, you need to define 2 environment variables:
 - Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application API Key)
 ````yaml
 export CDK_BASE_URL=http://localhost:8080
-export CDK_TOKEN=<api-key>
+export CDK_API_KEY=<api-key>
 ````
 
 ## Commands Usage
@@ -157,7 +157,7 @@ jobs:
       - run: /bin/conduktor apply -f resources/ --dry-run
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_API_KEY: ${{ secrets.CONDUKTOR_TOKEN }}
 ```
 
 ```yaml title=".github/workflows/on-push.yml"
@@ -175,7 +175,7 @@ jobs:
       - run: /bin/conduktor apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_API_KEY: ${{ secrets.CONDUKTOR_TOKEN }}
 ```
 
 </TabItem>
@@ -192,7 +192,7 @@ conduktor-pr:
     entrypoint: [""] 
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_API_KEY=${CONDUKTOR_TOKEN}
   script:
     - /bin/conduktor apply -f resources/ --dry-run
 
@@ -206,7 +206,7 @@ conduktor-main:
     entrypoint: [""] 
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_API_KEY=${CONDUKTOR_TOKEN}
   script:
     - /bin/conduktor apply -f resources/
 ```
