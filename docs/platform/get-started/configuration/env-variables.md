@@ -231,17 +231,18 @@ SSO authentication properties (only on enterprise and team plans). See [authenti
 
 #### Oauth2 properties
 
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `sso.oauth2[].name` | Oauth2 connection name | `CDK_SSO_OAUTH2_0_NAME` | true | string | ∅ |
-| `sso.oauth2[].default` | Use as default | `CDK_SSO_OAUTH2_0_DEFAULT` | true | boolean | ∅ |
-| `sso.oauth2[].client-id` | Oauth2 client id | `CDK_SSO_OAUTH2_0_CLIENT-ID` | true | string | ∅ |
-| `sso.oauth2[].client-secret` | Oauth2 client secret | `CDK_SSO_OAUTH2_0_CLIENT-SECRET` | true | string | ∅ |
-| `sso.oauth2[].openid.issuer` | Issuer to check on token | `CDK_SSO_OAUTH2_0_OPENID_ISSUER` | true | string | ∅ |
-| `sso.oauth2[].scopes` | Scope to be requested in the client credentials request. | `CDK_SSO_OAUTH2_0_SCOPES` | true | string | `[]` |
-| `sso.oauth2[].groups-claim ` | Configure Group Claims | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` | false | string | ∅ |
-| `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens | `CDK_SSO_OAUTH2_0_ALLOW-UNSIGNED-ID-TOKENS` | false | boolean | false |
-| `sso.oauth2[].preferred-jws-algorithm ` | Configure preferred JWS algorithm | `CDK_SSO_OAUTH2_0_PREFERRED-JWS-ALGORITHM` | false | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅ |
+| Property                                 | Description                                              | Env                                         | Mandatory | Type                                                                                                                                         | Default |
+|------------------------------------------|----------------------------------------------------------|---------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| `sso.oauth2[].name`                      | Oauth2 connection name                                   | `CDK_SSO_OAUTH2_0_NAME`                     | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].default`                   | Use as default                                           | `CDK_SSO_OAUTH2_0_DEFAULT`                  | true      | boolean                                                                                                                                      | ∅       |
+| `sso.oauth2[].client-id`                 | Oauth2 client id                                         | `CDK_SSO_OAUTH2_0_CLIENT-ID`                | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].client-secret`             | Oauth2 client secret                                     | `CDK_SSO_OAUTH2_0_CLIENT-SECRET`            | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].openid.issuer`             | Issuer to check on token                                 | `CDK_SSO_OAUTH2_0_OPENID_ISSUER`            | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].scopes`                    | Scope to be requested in the client credentials request. | `CDK_SSO_OAUTH2_0_SCOPES`                   | true      | string                                                                                                                                       | `[]`    |
+| `sso.oauth2[].groups-claim `             | Configure Group Claims                                   | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM`             | false     | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens                                 | `CDK_SSO_OAUTH2_0_ALLOW-UNSIGNED-ID-TOKENS` | false     | boolean                                                                                                                                      | false   |
+| `sso.oauth2[].preferred-jws-algorithm `  | Configure preferred JWS algorithm                        | `CDK_SSO_OAUTH2_0_PREFERRED-JWS-ALGORITHM`  | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
+| `sso.oauth2-logout `                     | Sets if central IdP logout should be called              | `CDK_SSO_OAUTH2LOGOUT`                      | false     | boolean                                                                                                                                      | true    |
 
 ### Kafka clusters properties
 
