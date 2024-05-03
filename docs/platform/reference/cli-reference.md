@@ -1,14 +1,18 @@
 ---
 sidebar_position: 3
 title: CLI Reference
-description: Prometheus metrics available for Console
+description: CLI Reference
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # CLI Reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition below.
+Check for the list of supported resources and their definition in the dedicated [Resources Reference](../resource-reference) page.
 
-[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self Service.
+[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
 
 ## Install & Configure
 
@@ -34,10 +38,10 @@ docker pull conduktor/conduktor-ctl
 
 To use Conduktor CLI, you need to define 2 environment variables:
 - The URL of Conduktor Console
-- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application Token)
+- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application API Key)
 ````yaml
 export CDK_BASE_URL=http://localhost:8080
-export CDK_TOKEN=<admin-token>
+export CDK_API_KEY=<api-key>
 ````
 
 ## Commands Usage
@@ -115,99 +119,6 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ````
 
-## Administrator Resources
-
-To deploy these resources, you must use an Admin Token, generated from Settings/Api Keys.
-
-
-### Application
-This resource defines a Self Serve Application.
-
-````yaml
-# Application
----
-apiVersion: "v1"
-kind: "Application"
-metadata:
-  name: "clickstream-app"
-spec:
-  title: "Clickstream App"
-  description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of Console Group
-````
-
-Application checks
--   `spec.owner` is a valid Console Group
--   Delete MUST fail if there are associated `ApplicationInstance`
-
-
-### Application Instance
-
-````yaml
----
-apiVersion: "v1"
-kind: "ApplicationInstance"
-metadata:
-  application: "clickstream-app"
-  name: "clickstream-app-dev"
-spec:
-  cluster: "shadow-it"
-  serviceAccount: "sa-clicko"
-  resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
-````
-AppInstance checks:
-- `metadata.application` is a valid Application
-- `spec.cluster` is a valid Console Cluster technical id
-- `spec.cluster` is immutable (can't update after creation)
-- `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
-- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`.
-- `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resources[].name` must no overlap with any other `ApplicationInstance` on the same cluster.
-    -   ie: If there is already an owner for `click.` this is forbidden:
-        -   `click.orders.`: Resource is a child-resource of `click.`
-        -   `cli`: Resource is a parent-resource of `click.`
-
-
-### Cross Application Permissions
-````yaml
-# Permission granted to other Applications
----
-apiVersion: v1
-kind: "ApplicationInstancePermission"
-metadata:
-  application: "clickstream-app"
-  appInstance: "clickstream-app-dev"
-  name: "clickstream-app-dev-to-another"
-spec:
-  resource:
-    type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  permission: READ
-  grantedTo: "another-appinstance-dev"
-````
-Cross Application permission checks:
-- `spec` is immutable
-    - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application.**
-    - Remember this resource affects target ApplicationInstance's Kafka service account ACLs.
-    - To edit this resource, delete and recreate it.
-- `spec.resource.type` can be `TOPIC`, `GROUP`, `SUBJECT`.
-- `spec.resource.patternType` can be `PREFIXED` or `LITERAL`.
-- `spec.resource.name` must reference any "sub-resource" of `metadata.appInstance` .
-    - For example, if you are owner of the prefix `click.`, you can grant READ or WRITE access to:
-        -   the whole prefix: `click.`
-        -   a sub prefix: `click.orders.`
-        -   a literal topic name: `click.orders.france`
-- `spec.permission` can be `READ` or `WRITE`.
-- `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`.
-
-
 ## Integrate Conduktor CLI with your CI/CD
 
 Conduktor CLI can be easily integrated to a CI/CD pipeline.
@@ -223,8 +134,7 @@ Consider the following folder structure:
 |   ├── permissions.yml     # Your permissions to other Apps are there
 ````
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+
 
 
 <Tabs>
@@ -247,7 +157,7 @@ jobs:
       - run: /bin/conduktor apply -f resources/ --dry-run
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_API_KEY: ${{ secrets.CONDUKTOR_TOKEN }}
 ```
 
 ```yaml title=".github/workflows/on-push.yml"
@@ -265,7 +175,7 @@ jobs:
       - run: /bin/conduktor apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
-          CDK_TOKEN: ${{ secrets.CONDUKTOR_TOKEN }}
+          CDK_API_KEY: ${{ secrets.CONDUKTOR_TOKEN }}
 ```
 
 </TabItem>
@@ -282,7 +192,7 @@ conduktor-pr:
     entrypoint: [""] 
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_API_KEY=${CONDUKTOR_TOKEN}
   script:
     - /bin/conduktor apply -f resources/ --dry-run
 
@@ -296,7 +206,7 @@ conduktor-main:
     entrypoint: [""] 
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
-    - export CDK_TOKEN=${CONDUKTOR_TOKEN}
+    - export CDK_API_KEY=${CONDUKTOR_TOKEN}
   script:
     - /bin/conduktor apply -f resources/
 ```

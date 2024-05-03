@@ -31,7 +31,7 @@ The Conduktor Console is a powerful UI for Apache Kafka. The Console equips user
 
 **Access and Manage Kafka resource**. Explore topics, reset consumer offsets, manage ACLs, deploy & restart connectors, are just some of the things you can do.
 
-**Self service**. Solve some of the most recurring problems associated with working with Kafka at scale. Ownership of resources, access request management, topic discvoerability, governance policies, and much more!
+**Self-service**. Solve some of the most recurring problems associated with working with Kafka at scale. Ownership of resources, access request management, topic discvoerability, governance policies, and much more!
 
 **Secure Kafka**. Import your existing groups, configure detailed permissions for your users, set up your external integrations, review audit logs as well as much more.
 
