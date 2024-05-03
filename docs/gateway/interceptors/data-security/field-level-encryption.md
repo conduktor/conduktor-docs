@@ -214,7 +214,7 @@ If you want to use KMS to manage the secret key, you can use the following forma
 
 | KMS       | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
 |:----------|-----------------------|:-----------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------|
-| Vault     | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://http://vault:8200/transit/keys/password-key-id`                                       |
+| Vault     | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                       |
 | Azure     | azure-kms://          | `azure-kms://<key-vault-name>.vault.azure.net/keys/<key-id>`                                         | `azure-kms://my-key-vault.vault.azure.net/keys/password-key-id`                                    |
 | AWS       | aws-kms://            | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
 | GCP       | gcp-kms://            | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
