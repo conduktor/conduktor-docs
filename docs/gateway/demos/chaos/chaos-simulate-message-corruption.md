@@ -169,7 +169,7 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.0
+    image: conduktor/conduktor-gateway:3.0.2
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -195,7 +195,7 @@ services:
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.0
+    image: conduktor/conduktor-gateway:3.0.2
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -591,7 +591,7 @@ kafka-console-consumer \
 <TabItem value="Output">
 
 ```
-ÃMJ%ò„ØÞ•¦{"message": "hello world"}
+ï¿½MJ%ï¿½ï¿½Þ•ï¿½{"message": "hello world"}
 [2024-04-10 00:22:17,541] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
