@@ -173,7 +173,7 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.0
+    image: conduktor/conduktor-gateway:3.0.2
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -199,7 +199,7 @@ services:
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.0
+    image: conduktor/conduktor-gateway:3.0.2
     hostname: gateway2
     container_name: gateway2
     environment:
