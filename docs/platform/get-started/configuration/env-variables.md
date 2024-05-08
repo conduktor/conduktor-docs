@@ -6,119 +6,124 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
 
 # Configuration Properties and Environment Variables
 
-- [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
-  - [Docker image environment variables](#docker-image-environment-variables)
-  - [Platform properties reference](#platform-properties-reference)
-      - [Support of shell expansion in YAML configuration file](#support-of-shell-expansion-in-yaml-configuration-file)
-      - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
-      - [Global properties](#global-properties)
-      - [Database properties](#database-properties)
-      - [Session Lifetime Properties](#session-lifetime-properties)
-      - [Local users properties](#local-users-properties)
-      - [Monitoring properties](#monitoring-properties)
-        - [Console Configuration for Cortex](#console-configuration-for-cortex)
-      - [Cortex Configuration](#cortex-configuration)
-      - [SSO properties](#sso-properties)
-        - [LDAP properties](#ldap-properties)
-        - [Oauth2 properties](#oauth2-properties)
-      - [Kafka clusters properties](#kafka-clusters-properties)
-      - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
-        - [Confluent Cloud](#confluent-cloud)
-        - [Aiven](#aiven-)
-        - [Conduktor Gateway](#conduktor-gateway)
-      - [Schema registry properties](#schema-registry-properties)
-        - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
-      - [Kafka Connect properties](#kafka-connect-properties)
-      - [ksqlDB properties](#ksqldb-properties)
-      - [Indexer properties](#indexer-properties)
+- [Docker image environment variables](#docker-image-environment-variables)
+- [Console properties reference](#console-properties-reference)
+  - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
+  - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
+  - [Global properties](#global-properties)
+  - [Database properties](#database-properties)
+  - [Session Lifetime Properties](#session-lifetime-properties)
+  - [Local users properties](#local-users-properties)
+  - [Monitoring properties](#monitoring-properties)
+    - [Console Configuration for Cortex](#console-configuration-for-cortex)
+    - [Cortex Configuration](#cortex-configuration)
+  - [SSO properties](#sso-properties)
+    - [LDAP properties](#ldap-properties)
+    - [OAuth2 properties](#oauth2-properties)
+  - [Kafka clusters properties](#kafka-clusters-properties)
+  - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
+  - [Schema registry properties](#schema-registry-properties)
+    - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
+  - [Kafka Connect properties](#kafka-connect-properties)
+  - [ksqlDB properties](#ksqldb-properties)
+  - [Indexer properties](#indexer-properties)
 
 ## Docker image environment variables
 
-| Environment Variable | Since Version | Until Version | Default Value                                                                        |                                                                                                                                                                                                      |
-| --- |---------------| --- |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`CDK_DEBUG`** | 1.0.0         | latest | `false`                                                                              | Flag to enable platform debug logs. See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                                               |
-| **`CDK_VOLUME_DIR`** | 1.0.2         | latest | `/var/conduktor`                                                                     | Volume directory where Conduktor Console store data                                                                                                                                       |
-| **`CDK_IN_CONF_FILE`** | 1.0.2         | latest | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file)) | Conduktor Console configuration file location                                                                                                                                              |
-| **`CDK_LISTENING_PORT`** | 1.2.0         | latest | `8080`                                                                               | Platform listening port                                                                                                                                                                         |
-| **`CDK_SSL_TRUSTSTORE_PATH`** | 1.5.0         | latest | None                                                                                 | Truststore file path used by platform Kafka, SSO, S3, ... clients SSL/TLS verification                                                                                                               |
-| **`CDK_SSL_TRUSTSTORE_PASSWORD`** | 1.5.0         | latest | None                                                                                 | Truststore password (optional)                                                                                                                                                                       |
-| **`CDK_SSL_TRUSTSTORE_TYPE`** | 1.5.0         | latest | `jks`                                                                                | Truststore type (optional)                                                                                                                                                                           |
-| **`CDK_SSL_DEBUG`** | 1.9.0         | latest | `false`                                                                              | Enable SSL/TLS debug logs                                                                                                                                                                            |
-| **`CDK_HTTP_PROXY_HOST`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_PORT`** | 1.10.0        | latest | `80`                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
-| **`CDK_HTTP_NON_PROXY_HOSTS`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_USERNAME`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
-| **`CDK_HTTP_PROXY_PASSWORD`** | 1.10.0        | latest | None                                                                                 | Specify [proxy settings](http-proxy-configuration.md) that Conduktor Console should use to access the Internet                                                                                      |
-| **`CDK_GLOBAL_JAVA_OPTS`** | 1.10.0        | latest | None                                                                                 | Custom JAVA_OPTS parameters passed to platform modules.                                                                                                                                              |
-| **`CDK_ROOT_LOG_LEVEL`** | 1.11.0        | latest | `INFO`                                                                               | Set the platform global log level (DEBUG, INFO, WARN, ERROR). See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                     |
-| **`CDK_ROOT_LOG_COLOR`** | 1.11.0        | latest | `true`                                                                               | Enable or disable ANSI colors in logs. See [log configuration](../troubleshooting/logs-configuration.md) for more details.                                                                            |
-| **`CDK_ONBOARDING_MODE`** | 1.14.0        | latest | `auto`                                                                               | Specify whether to start Conduktor with the onboarding wizard enabled. Accepted values: `auto`, `never`, `always`. Defaults to `auto`  that will start onboarding when no configuration is provided. |
-| **`PROXY_BUFFER_SIZE`** | 1.16.0        | latest | `8k`                                                                                 | Tune internal Nginx `proxy_buffer_size`.                                                                                                                                                             |
-| **`CONSOLE_MEMORY_OPTS`** | 1.18.0        | latest | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80`                                   | Configure memory Java options for Console module. See [memory setup page](memory-configuration.md) for more details                                                                                  |
-| **`CDK_PLUGINS_DIR`** | 1.22.0        | latest | `/opt/conduktor/plugins`                                                             | Volume directory for Custom Deserializers                                                                                                                                                    |
+| Environment Variable                                                                 | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------- |
+| **[Logs](../troubleshooting/logs-configuration.md)**                                 |                                                                                                                                                             |                                                                                     |               |
+| `CDK_DEBUG`                                                                          | Enable Console debug logs (equivalent to `CDK_ROOT_LOG_LEVEL=DEBUG`)                                                                                        | `false`                                                                             | 1.0.0         |
+| `CDK_ROOT_LOG_LEVEL`                                                                 | Set the Console global log level (one of `DEBUG`, `INFO`, `WARN`, `ERROR`)                                                                                  | `INFO`                                                                              | 1.11.0        |
+| `CDK_ROOT_LOG_COLOR`                                                                 | Enable ANSI colors in logs                                                                                                                                  | `true`                                                                              | 1.11.0        |
+| **[Proxy settings](http-proxy-configuration.md)**                                    |                                                                                                                                                             |                                                                                     |               |
+| `CDK_HTTP_PROXY_HOST`                                                                | Proxy hostname                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_PORT`                                                                | Proxy port                                                                                                                                                  | `80`                                                                                | 1.10.0        |
+| `CDK_HTTP_NON_PROXY_HOSTS`                                                           | List of hosts that should be reached directly, bypassing the proxy. Hosts must be separated by `\|`, end with a `*` for wildcards, and not contain any `/`. | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_USERNAME`                                                            | Proxy username                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_PASSWORD`                                                            | Proxy password                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| **[SSL](ssl-tls-configuration.md#configure-custom-truststore-on-conduktor-console)** |                                                                                                                                                             |                                                                                     |               |
+| `CDK_SSL_TRUSTSTORE_PATH`                                                            | Truststore file path used by Console for Kafka, SSO, S3,... clients SSL/TLS verification                                                                    | ∅                                                                                   | 1.5.0         |
+| `CDK_SSL_TRUSTSTORE_PASSWORD`                                                        | Truststore password (optional)                                                                                                                              | ∅                                                                                   | 1.5.0         |
+| `CDK_SSL_TRUSTSTORE_TYPE`                                                            | Truststore type (optional)                                                                                                                                  | `jks`                                                                               | 1.5.0         |
+| `CDK_SSL_DEBUG`                                                                      | Enable SSL/TLS debug logs                                                                                                                                   | `false`                                                                             | 1.9.0         |
+| **Java**                                                                             |                                                                                                                                                             |                                                                                     |               |
+| `CDK_GLOBAL_JAVA_OPTS`                                                               | Custom JAVA_OPTS parameters passed to Console                                                                                                               | ∅                                                                                   | 1.10.0        |
+| `CONSOLE_MEMORY_OPTS`                                                                | Configure [Java memory options](memory-configuration.md)                                                                                                    | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80`                                  | 1.18.0        |
+| **Console**                                                                          |                                                                                                                                                             |                                                                                     |               |
+| `CDK_LISTENING_PORT`                                                                 | Console listening port                                                                                                                                      | `8080`                                                                              | 1.2.0         |
+| `CDK_VOLUME_DIR`                                                                     | Volume directory where Console stores data                                                                                                                  | `/var/conduktor`                                                                    | 1.0.2         |
+| `CDK_IN_CONF_FILE`                                                                   | Console configuration file location                                                                                                                         | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file) | 1.0.2         |
+| `CDK_PLUGINS_DIR`                                                                    | Volume directory for [Custom Deserializers](/platform/guides/custom-deserializers/) plugins                                                                 | `/opt/conduktor/plugins`                                                            | 1.22.0        |
+| **Nginx**                                                                            |                                                                                                                                                             |                                                                                     |               |
+| `PROXY_BUFFER_SIZE`                                                                  | Tune internal Nginx `proxy_buffer_size`                                                                                                                     | `8k`                                                                                | 1.16.0        |
 
-## Platform properties reference
+## Console properties reference
 
-Starting from Conduktor Console `1.2.0` input configuration fields can be provided using environment variables.
+You have multiple options to configure Console: either via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
 
-Below shows the mapping of configuration fields in the `platform-config.yaml` to environment variables.
+In case you set both environment variable and YAML value for a specific field, the environment variable will take precedence.
 
 :::note
 Lists start at index 0 and are provided using `_idx_` syntax.
 :::
 
-#### Support of shell expansion in yaml configuration file
+### Support of shell expansion in the YAML configuration file
 
-Console support shell expansion for environment variable and home tilde `~` in YAML configuration file. 
+Console supports shell expansion for environment variables and home tilde `~`. 
 This is useful if you have to use custom environment variables in your configuration.
 
-For example, you can use the following syntax to use environment variables in your configuration file:
-```yaml
+For example, you can use the following syntax:
 
+```yaml title="YAML configuration file"
 database:
   url: "jdbc:postgresql://${DB_LOGIN}:${DB_PWD}@${DB_HOST}:${DB_PORT:-5432}/${DB_NAME}"
 ```
-with the following environment variables:
-- `DB_LOGIN`: `usr`
-- `DB_PWD`: `pwd`
-- `DB_HOST`: `some_host`
-- `DB_NAME`: `cdk`
 
-It will be expanded into the following configuration before being parsed by Console:
-```yaml
+with the following environment variables:
+
+| Environment Variable | Value       |
+| -------------------- | ----------- |
+| `DB_LOGIN`           | `usr`       |
+| `DB_PWD`             | `pwd`       |
+| `DB_HOST`            | `some_host` |
+| `DB_NAME`            | `cdk`       |
+
+
+This will be expanded to:
+
+```yaml title="Expanded configuration"
 database:
   url: "jdbc:postgresql://usr:pwd@some_host:5432/cdk"
 ```
-:::note
-If you want to escape the shell expansion in YAML file, you can use the following syntax: `$$`.
-For example, if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
 
-Also note that values provided using environment variables will not be expended by Console.
-So for example, if you use `CDK_ADMIN_PASSWORD` to set password like `secret$123`, it will be set as is. 
+:::note
+If you want to escape the shell expansion, you can use the following syntax: `$$`.
+For example, if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
 :::
 
-#### Support of `*_FILE` environment variables
+### Support of `*_FILE` environment variables
 
-Since release `1.10.0`, setting an environment variable matching `*_FILE` to a file path, the prefixed environment variable will be overridden with the value specified in that file.
+When an environment variable ending with `_FILE` is set to a file path, its corresponding unprefixed environment variable will be replaced with the content of that file.
 
-For example, setting `CDK_LICENSE_FILE` to `/run/secrets/license` will override `CDK_LICENSE` with the content of the file `/run/secrets/license`.
+For instance, if you set `CDK_LICENSE_FILE=/run/secrets/license`, the value of `CDK_LICENSE` will be overridden by the content of the file located at `/run/secrets/license`.
 
 :::warning
-Exception: `CDK_IN_CONF_FILE` is not supported
+Exception: `CDK_IN_CONF_FILE` is not supported.
 :::
 
 ### Global properties
 
-| Property | Description | Environment Variable | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `organization.name` | Your organization's name | `CDK_ORGANIZATION_NAME` | true | string | `"default"` |
-| `admin.email` | Your organization's root administrator account email | `CDK_ADMIN_EMAIL` | true | string | ∅ |
-| `admin.password` | Your organization's root administrator account password | `CDK_ADMIN_PASSWORD` | true | string | ∅ |
-| `license` | Enterprise license key. If not provided, fallback to free plan. | CDK_LICENSE or LICENSE_KEY | false | string | ∅ |
-| `platform.external.url` | Force Platform external URL. Useful for SSO callback URL when using a reverse proxy. By default, the platform will try to guess it automatically using X-Forwarded-\* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL` | false | string | ∅ |
-| `platform.https.cert.path` | Path to the SSL certificate file. | `CDK_PLATFORM_HTTPS_CERT_PATH` | false | string | ∅ |
-| `platform.https.key.path` | Path to the SSL private key file. | `CDK_PLATFORM_HTTPS_KEY_PATH` | false | string | ∅ |
-| `enable_product_metrics` | In order to improve Conduktor Console, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection. | `CDK_ENABLE_PRODUCT_METRICS` | false | boolean | `true` |
+| Property                   | Description                                                                                                                                                                                                 | Environment Variable           | Mandatory | Type    | Default     |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | --------- | ------- | ----------- |
+| `organization.name`        | Your organization's name                                                                                                                                                                                    | `CDK_ORGANIZATION_NAME`        | false     | string  | `"default"` |
+| `admin.email`              | Your organization's root administrator account email                                                                                                                                                        | `CDK_ADMIN_EMAIL`              | true      | string  | ∅           |
+| `admin.password`           | Your organization's root administrator account password                                                                                                                                                     | `CDK_ADMIN_PASSWORD`           | true      | string  | ∅           |
+| `license`                  | Enterprise license key. If not provided, fallback to free plan.                                                                                                                                             | `CDK_LICENSE` or `LICENSE_KEY` | false     | string  | ∅           |
+| `platform.external.url`    | Force Console external URL. Useful for SSO callback URL when using a reverse proxy. By default, Console will try to guess it automatically using X-Forwarded-\* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL`    | false     | string  | ∅           |
+| `platform.https.cert.path` | Path to the SSL certificate file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_CERT_PATH` | false     | string  | ∅           |
+| `platform.https.key.path`  | Path to the SSL private key file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_KEY_PATH`  | false     | string  | ∅           |
+| `enable_product_metrics`   | In order to improve Conduktor Console, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection.                                                        | `CDK_ENABLE_PRODUCT_METRICS`   | false     | boolean | `true`      |
 
 :::tip
 If you need more than what the free plan offers, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
@@ -126,36 +131,35 @@ If you need more than what the free plan offers, you can [contact us](https://ww
 
 ### Database properties
 
-See database configuration [documentation](../database) for more info
+See database configuration [documentation](../database) for more info.
 
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `database.url` | External Postgresql configuration URL | CDK_DATABASE_URL | false | string | ∅ |
-|  | in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` |  |  |  |  |
-| `database.host` | External Postgresql server hostname | `CDK_DATABASE_HOST` | false | string | ∅ |
-| `database.port` | External Postgresql server port | `CDK_DATABASE_PORT` | false | int | ∅ |
-| `database.name` | External Postgresql database name | `CDK_DATABASE_NAME` | false | string | ∅ |
-| `database.username` | External Postgresql login role | `CDK_DATABASE_USERNAME` | false | string | ∅ |
-| `database.password` | External Postgresql login password | `CDK_DATABASE_PASSWORD` | false | string | ∅ |
-| `database.connection_timeout` | External Postgresql connection timeout in seconds | `CDK_DATABASE_CONNECTIONTIMEOUT` | false | int | ∅ |
+| Property                      | Description                                                                                                                            | Environment Variable             | Mandatory | Type   | Default |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------- | ------ | ------- |
+| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_DATABASE_URL`               | false     | string | ∅       |
+| `database.host`               | External PostgreSQL server hostname                                                                                                    | `CDK_DATABASE_HOST`              | false     | string | ∅       |
+| `database.port`               | External PostgreSQL server port                                                                                                        | `CDK_DATABASE_PORT`              | false     | int    | ∅       |
+| `database.name`               | External PostgreSQL database name                                                                                                      | `CDK_DATABASE_NAME`              | false     | string | ∅       |
+| `database.username`           | External PostgreSQL login role                                                                                                         | `CDK_DATABASE_USERNAME`          | false     | string | ∅       |
+| `database.password`           | External PostgreSQL login password                                                                                                     | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
+| `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                      | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
 ### Session Lifetime Properties
 
 Optional properties for configuring [session lifetime](../user-authentication/session-lifetime).
 
-| Property | Description | Env Variable | Mandatory | Type | Default Value |
-| --- | --- | --- | --- | --- | --- |
-| `auth.sessionLifetime` | Max session lifetime in seconds | `CDK_AUTH_SESSIONLIFETIME` | false | int | 259200 |
-| `auth.idleTimeout` | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT` | false | int | 259200 |
+| Property               | Description                                                                                           | Environment Variable       | Mandatory | Type | Default Value |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------- | --------- | ---- | ------------- |
+| `auth.sessionLifetime` | Max session lifetime in seconds                                                                       | `CDK_AUTH_SESSIONLIFETIME` | false     | int  | `259200`      |
+| `auth.idleTimeout`     | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT`     | false     | int  | `259200`      |
 
 ### Local users properties
 
 Optional local accounts list used to log on Console
 
-| Property | Description | Env Variable | Mandatory | Type | Default Value |
-| --- | --- | --- | --- | --- | --- |
-| `auth.local-users[].email` | User login | `CDK_AUTH_LOCAL-USERS_0_EMAIL` | true | string | `"admin@conduktor.io"` |
-| `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL-USERS_0_PASSWORD` | true | string | `"admin"` |
+| Property                      | Description   | Environment Variable              | Mandatory | Type   | Default Value          |
+| ----------------------------- | ------------- | --------------------------------- | --------- | ------ | ---------------------- |
+| `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCAL_USERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
+| `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL_USERS_0_PASSWORD` | true      | string | `"admin"`              |
 
 ### Monitoring properties
 :::caution
@@ -175,7 +179,7 @@ This new image is based on [Cortex](https://github.com/cortexproject/cortex) and
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to access to the following pages anymore:
-![](assets/monitoring-disabled.png)
+![](assets/monitoring-menu.png)
 
 The configuration is split in 2 chapters: 
 - Console Configuration for Cortex `conduktor/conduktor-console`
@@ -188,122 +192,109 @@ Cortex ports are configured like this by default:
 - Query port 9009
 - Alert Manager port 9010
 
-| Property                                  | Description                                    | Env                                        | Mandatory | Type   | Default | Since    |
-|-------------------------------------------|------------------------------------------------|--------------------------------------------|-----------|--------|---------|----------|
-| `monitoring.cortex-url`                   | Cortex Search Query URL with port 9009         | `CDK_MONITORING_CORTEX-URL`                | true      | string | ∅       | `1.18.0` |
-| `monitoring.alert-manager-url`            | Cortex Alert Manager URL with port 9010        | `CDK_MONITORING_ALERT-MANAGER-URL`         | true      | string | ∅       | `1.18.0` |
-| `monitoring.callback-url`                 | Console API                                    | `CDK_MONITORING_CALLBACK-URL`              | true      | string | ∅       | `1.18.0` |
-| `monitoring.notifications-callback-url`    | Where the Slack notification should redirect   | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL`| true      | string | ∅       | `1.18.0` |
-| `monitoring.clusters-refresh-interval`    | Refresh rate in seconds for metrics (Optional) | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL` | false     | int    | 60      | `1.18.0` |
 
-### Cortex Configuration
+| Property                                | Description                                  | Environment Variable                        | Mandatory | Type   | Default |
+| --------------------------------------- | -------------------------------------------- | ------------------------------------------- | --------- | ------ | ------- |
+| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009       | `CDK_MONITORING_CORTEX-URL`                 | true      | string | ∅       |
+| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010      | `CDK_MONITORING_ALERT-MANAGER-URL`          | true      | string | ∅       |
+| `monitoring.callback-url`               | Console API                                  | `CDK_MONITORING_CALLBACK-URL`               | true      | string | ∅       |
+| `monitoring.notifications-callback-url` | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL` | true      | string | ∅       |
+| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics          | `CDK_MONITORING_CLUSTERS-REFRESH-INTERVAL`  | false     | int    | `60`    |
 
-See [Cortex configuration page](../cortex/) for more info
+
+#### Cortex Configuration
+
+See [Cortex configuration page](../cortex/) for more info.
 
 ### SSO properties
 
-SSO authentication properties (only on enterprise and team plans). See [authentication documentation](/platform/category/configure-sso/) for snippets.
+See [authentication documentation](/platform/category/configure-sso/) for snippets.
 
-| Property | Description | Env | Mandatory | Type | Default | Since |
-| --- | --- | --- | --- | --- | --- | --- |
-| `sso.ignoreUntrustedCertificate` | Disable SSL checks. | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` | `1.3.0`  |
-| `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and Oauth2) as PEM format. | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       | `1.14.0` |
+| Property                         | Description                                                              | Environment Variable                 | Mandatory | Type    | Default |
+| -------------------------------- | ------------------------------------------------------------------------ | ------------------------------------ | --------- | ------- | ------- |
+| `sso.ignoreUntrustedCertificate` | Disable SSL checks                                                       | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
+| `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and OAuth2) as PEM | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       |
 
 #### LDAP properties
 
-| Property | Description | Env | Mandatory | Type | Default | Since |
-| --- | --- | --- | --- | --- | --- | --- |
-| `sso.ldap[].name` | Ldap connection name | `CDK_SSO_LDAP_0_NAME` | true | string | ∅ |  |
-| `sso.ldap[].server` | Ldap server host and port | `CDK_SSO_LDAP_0_SERVER` | true | string | ∅ |  |
-| `sso.ldap[].managerDn` | Sets the manager DN | `CDK_SSO_LDAP_0_MANAGERDN` | true | string | ∅ |  |
-| `sso.ldap[].managerPassword` | Sets the manager password | `CDK_SSO_LDAP_0_MANAGERPASSWORD` | true | string | ∅ |  |
-| `sso.ldap[].search-subtree` | Sets if the subtree should be searched. | `CDK_SSO_LDAP_0_SEARCH-SUBTREE` | false | boolean | `true` | `1.5.0` |
-| `sso.ldap[].search-base` | Sets the base DN to search. | `CDK_SSO_LDAP_0_SEARCH-BASE` | true | string | ∅ |  |
-| `sso.ldap[].search-filter` | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`. | `CDK_SSO_LDAP_0_SEARCH-FILTER` | false | string | `"(uid={0})"` | `1.5.0` |
-| `sso.ldap[].search-attributes` | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token. | `CDK_SSO_LDAP_0_SEARCH-ATTRIBUTES` | false | string array | `[]` | `1.5.0` |
-| `sso.ldap[].groups-enabled` | Sets if group search is enabled. | `CDK_SSO_LDAP_0_GROUPS-ENABLED` | false | boolean | `false` | `1.5.0` |
-| `sso.ldap[].groups-subtree` | Sets if the subtree should be searched. | `CDK_SSO_LDAP_0_GROUPS-SUBTREE` | false | boolean | `true` | `1.5.0` |
-| `sso.ldap[].groups-base` | Sets the base DN to search from. | `CDK_SSO_LDAP_0_GROUPS-BASE` | true | string | ∅ |  |
-| `sso.ldap[].groups-filter` | Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`. By default, the filter is set to `"uniqueMember={0}"`. | `CDK_SSO_LDAP_0_GROUPS-FILTER` | false | string | `"uniquemember={0}"` | `1.5.0` |
-| `sso.ldap[].groups-filter-attribute` | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN. | `CDK_SSO_LDAP_0_GROUPS-FILTER-ATTRIBUTE` | false | string | ∅ | `1.5.0` |
-| `sso.ldap[].groups-attribute` | Sets the group attribute name. Defaults to `cn`. | `CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE` | false | string | `"cn"` | `1.5.0` |
-| `sso.ldap[].properties` | Additional properties that will be passed to identity provider context. | `CDK_SSO_LDAP_0_PROPERTIES` | false | dictionary | ∅ | `1.11.0` |
+| Property                             | Description                                                                                                                                                                                        | Environment Variable                   | Mandatory | Type         | Default              |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | --------- | ------------ | -------------------- |
+| `sso.ldap[].name`                    | Ldap connection name                                                                                                                                                                               | `CDK_SSO_LDAP_0_NAME`                  | true      | string       | ∅                    |
+| `sso.ldap[].server`                  | Ldap server host and port                                                                                                                                                                          | `CDK_SSO_LDAP_0_SERVER`                | true      | string       | ∅                    |
+| `sso.ldap[].managerDn`               | Sets the manager DN                                                                                                                                                                                | `CDK_SSO_LDAP_0_MANAGERDN`             | true      | string       | ∅                    |
+| `sso.ldap[].managerPassword`         | Sets the manager password                                                                                                                                                                          | `CDK_SSO_LDAP_0_MANAGERPASSWORD`       | true      | string       | ∅                    |
+| `sso.ldap[].search-subtree`          | Sets if the subtree should be searched.                                                                                                                                                            | `CDK_SSO_LDAP_0_SEARCHSUBTREE`         | false     | boolean      | `true`               |
+| `sso.ldap[].search-base`             | Sets the base DN to search.                                                                                                                                                                        | `CDK_SSO_LDAP_0_SEARCHBASE`            | true      | string       | ∅                    |
+| `sso.ldap[].search-filter`           | Sets the search filter. By default, the filter is set to `(uid={0})` for users using class type `InetOrgPerson`.                                                                                   | `CDK_SSO_LDAP_0_SEARCHFILTER`          | false     | string       | `"(uid={0})"`        |
+| `sso.ldap[].search-attributes`       | Sets the attributes list to return. By default, all attributes are returned. Platform search for `uid`, `cn`, `mail`, `email`, `givenName`, `sn`, `displayName` attributes to map into user token. | `CDK_SSO_LDAP_0_SEARCHATTRIBUTES`      | false     | string array | `[]`                 |
+| `sso.ldap[].groups-enabled`          | Sets if group search is enabled.                                                                                                                                                                   | `CDK_SSO_LDAP_0_GROUPSENABLED`         | false     | boolean      | `false`              |
+| `sso.ldap[].groups-subtree`          | Sets if the subtree should be searched.                                                                                                                                                            | `CDK_SSO_LDAP_0_GROUPSSUBTREE`         | false     | boolean      | `true`               |
+| `sso.ldap[].groups-base`             | Sets the base DN to search from.                                                                                                                                                                   | `CDK_SSO_LDAP_0_GROUPSBASE`            | true      | string       | ∅                    |
+| `sso.ldap[].groups-filter`           | Sets the group search filter. If using group class type `GroupOfUniqueNames` use the filter `"uniqueMember={0}"`. For group class `GroupOfNames` use `"member={0}"`.                               | `CDK_SSO_LDAP_0_GROUPSFILTER`          | false     | string       | `"uniquemember={0}"` |
+| `sso.ldap[].groups-filter-attribute` | Sets the name of the user attribute to bind to the group search filter. Defaults to the user’s DN.                                                                                                 | `CDK_SSO_LDAP_0_GROUPSFILTERATTRIBUTE` | false     | string       | ∅                    |
+| `sso.ldap[].groups-attribute`        | Sets the group attribute name. Defaults to `cn`.                                                                                                                                                   | `CDK_SSO_LDAP_0_GROUPSATTRIBUTE`       | false     | string       | `"cn"`               |
+| `sso.ldap[].properties`              | Additional properties that will be passed to identity provider context.                                                                                                                            | `CDK_SSO_LDAP_0_PROPERTIES`            | false     | dictionary   | ∅                    |
 
-#### Oauth2 properties
+#### OAuth2 properties
 
-| Property                                 | Description                                              | Env                                         | Mandatory | Type                                                                                                                                         | Default |
-|------------------------------------------|----------------------------------------------------------|---------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| `sso.oauth2[].name`                      | Oauth2 connection name                                   | `CDK_SSO_OAUTH2_0_NAME`                     | true      | string                                                                                                                                       | ∅       |
-| `sso.oauth2[].default`                   | Use as default                                           | `CDK_SSO_OAUTH2_0_DEFAULT`                  | true      | boolean                                                                                                                                      | ∅       |
-| `sso.oauth2[].client-id`                 | Oauth2 client id                                         | `CDK_SSO_OAUTH2_0_CLIENT-ID`                | true      | string                                                                                                                                       | ∅       |
-| `sso.oauth2[].client-secret`             | Oauth2 client secret                                     | `CDK_SSO_OAUTH2_0_CLIENT-SECRET`            | true      | string                                                                                                                                       | ∅       |
-| `sso.oauth2[].openid.issuer`             | Issuer to check on token                                 | `CDK_SSO_OAUTH2_0_OPENID_ISSUER`            | true      | string                                                                                                                                       | ∅       |
-| `sso.oauth2[].scopes`                    | Scope to be requested in the client credentials request. | `CDK_SSO_OAUTH2_0_SCOPES`                   | true      | string                                                                                                                                       | `[]`    |
-| `sso.oauth2[].groups-claim `             | Configure Group Claims                                   | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM`             | false     | string                                                                                                                                       | ∅       |
-| `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens                                 | `CDK_SSO_OAUTH2_0_ALLOW-UNSIGNED-ID-TOKENS` | false     | boolean                                                                                                                                      | false   |
-| `sso.oauth2[].preferred-jws-algorithm `  | Configure preferred JWS algorithm                        | `CDK_SSO_OAUTH2_0_PREFERRED-JWS-ALGORITHM`  | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
-| `sso.oauth2-logout `                     | Sets if central IdP logout should be called              | `CDK_SSO_OAUTH2LOGOUT`                      | false     | boolean                                                                                                                                      | true    |
+| Property                                 | Description                                                         | Environment Variable                     | Mandatory | Type                                                                                                                                         | Default |
+| ---------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `sso.oauth2[].name`                      | OAuth2 connection name                                              | `CDK_SSO_OAUTH2_0_NAME`                  | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].default`                   | Use as default                                                      | `CDK_SSO_OAUTH2_0_DEFAULT`               | true      | boolean                                                                                                                                      | ∅       |
+| `sso.oauth2[].client-id`                 | OAuth2 client ID                                                    | `CDK_SSO_OAUTH2_0_CLIENTID`              | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].client-secret`             | OAuth2 client secret                                                | `CDK_SSO_OAUTH2_0_CLIENTSECRET`          | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].openid.issuer`             | Issuer to check on token                                            | `CDK_SSO_OAUTH2_0_OPENID_ISSUER`         | true      | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].scopes`                    | Scopes to be requested in the client credentials request            | `CDK_SSO_OAUTH2_0_SCOPES`                | true      | string                                                                                                                                       | `[]`    |
+| `sso.oauth2[].groups-claim `             | Group attribute from your identity provider                         | `CDK_SSO_OAUTH2_0_GROUPS-CLAIM`          | false     | string                                                                                                                                       | ∅       |
+| `sso.oauth2[].allow-unsigned-id-tokens ` | Allow unsigned ID tokens                                            | `CDK_SSO_OAUTH2_0_ALLOWUNSIGNEDIDTOKENS` | false     | boolean                                                                                                                                      | false   |
+| `sso.oauth2[].preferred-jws-algorithm `  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
+| `sso.oauth2-logout `                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
 
 ### Kafka clusters properties
 
 For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster Configurations](configuration-snippets.md#gitops-managing-cluster-configurations).
 
-You can find sample configurations on the [Configuration Snippets](configuration-snippets.md) page
+You can find sample configurations on the [Configuration Snippets](configuration-snippets.md) page.
 
-| Property | Description | Env | Mandatory | Type | Default |
-| --- | --- | --- | --- | --- | --- |
-| `clusters[].id` | String used to uniquely identify your Kafka cluster | `CDK_CLUSTERS_0_ID` | true | string | ∅ |
-| `clusters[].name` | Alias or user-friendly name for your Kafka cluster | `CDK_CLUSTERS_0_NAME` | true | string | ∅ |
-| `clusters[].color` | Attach a color to associate with your cluster in the UI | `CDK_CLUSTERS_0_COLOR` | false | string in hexadecimal format (`#FFFFFF`) | random |
-| `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false | boolean | `false` |
-| `clusters[].bootstrapServers` | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS` | true | string | ∅ |
-| `clusters[].zookeeperServer` | Zookeeper server url | `CDK_CLUSTERS_0_ZOOKEEPERSERVER` | false | string | ∅ |
-| `clusters[].properties` | Any cluster configuration properties. | `CDK_CLUSTERS_0_PROPERTIES` | false | string where each line is a property | ∅ |
-| `clusters[].jmxScrapePort` | JMX-exporter port used to scrape Kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT` | false | int | `9101` |
-| `clusters[].nodeScrapePort` | Node-exporter port used to scrape Kafka host metrics for monitoring | `CDK_CLUSTERS_0_NODESCRAPEPORT` | false | int | `9100` |
+| Property                                | Description                                                          | Environment Variable                        | Mandatory | Type                                     | Default |
+| --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------- | --------- | ---------------------------------------- | ------- |
+| `clusters[].id`                         | String used to uniquely identify your Kafka cluster                  | `CDK_CLUSTERS_0_ID`                         | true      | string                                   | ∅       |
+| `clusters[].name`                       | Alias or user-friendly name for your Kafka cluster                   | `CDK_CLUSTERS_0_NAME`                       | true      | string                                   | ∅       |
+| `clusters[].color`                      | Attach a color to associate with your cluster in the UI              | `CDK_CLUSTERS_0_COLOR`                      | false     | string in hexadecimal format (`#FFFFFF`) | random  |
+| `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation                                      | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                                  | `false` |
+| `clusters[].bootstrapServers`           | List of host:port for your Kafka brokers separated by coma `,`       | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS`           | true      | string                                   | ∅       |
+| `clusters[].zookeeperServer`            | Zookeeper server url                                                 | `CDK_CLUSTERS_0_ZOOKEEPERSERVER`            | false     | string                                   | ∅       |
+| `clusters[].properties`                 | Any cluster configuration properties                                 | `CDK_CLUSTERS_0_PROPERTIES`                 | false     | string where each line is a property     | ∅       |
+| `clusters[].jmxScrapePort`              | JMX-exporter port used to scrape Kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT`              | false     | int                                      | `9101`  |
+| `clusters[].nodeScrapePort`             | Node-exporter port used to scrape Kafka host metrics for monitoring  | `CDK_CLUSTERS_0_NODESCRAPEPORT`             | false     | int                                      | `9100`  |
 
 ### Kafka vendor specific properties
 
-Note that you do not need to set any of these additional properties to use the core features of the Console. However, by setting them you can get additional benefits such as managing service accounts and ACLs through Conduktor.
+Note that you only need to set the [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. 
 
-#### Confluent Cloud
+However, you can get additional benefits by setting the flavor of your cluster. This corresponds to the `Provider` tab of your cluster configuration in Console.
 
-Note you need only set [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. Setting these additional properties will enable you to manage Confluent Cloud service accounts, API keys and ACLs.
-
-| Property | Description | Env | Mandatory | Type | Default | Values | Since |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Confluent Cloud | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
-| `clusters[].kafkaFlavor.key` | Confluent Cloud API Key | `CDK_CLUSTERS_0_KAFKAFLAVOR_KEY` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.secret` | Confluent Cloud API Secret | `CDK_CLUSTERS_0_KAFKAFLAVOR_SECRET` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.confluentEnvironmentId` | Confluent Environment Id | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTENVIRONMENTID` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.confluentClusterId` | Confluent Cluster Id | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID` | true | string | ∅ | - | `1.19.x` |
-
-#### Aiven 
-
-Note you need only set [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. Setting these additional properties will enable you to manage Aiven service accounts and ACLs.
-
-| Property | Description | Env | Mandatory | Type | Default | Values | Since |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Aiven | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
-| `clusters[].kafkaFlavor.apiToken` | Aiven API token | `CDK_CLUSTERS_0_KAFKAFLAVOR_APITOKEN` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.project` | Aiven project | `CDK_CLUSTERS_0_KAFKAFLAVOR_PROJECT` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.serviceName` | Aiven service name | `CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME` | true | string | ∅ | - | `1.19.x` |
-
-#### Conduktor Gateway
-
-Configuring Gateway properties will enable you to deploy and manage interceptors on your virtual clusters.
-
-| Property | Description | Env | Mandatory | Type | Default | Values | Since |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `clusters[].kafkaFlavor.type` | Kafka flavor type indicating the cluster is Gateway | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE` | false | string | ∅ | `Confluent`, `Aiven`, `Gateway` | `1.19.x` |
-| `clusters[].kafkaFlavor.url` | Gateway endpoint URL | `CDK_CLUSTERS_0_KAFKAFLAVOR_URL` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.user` | Gateway username | `CDK_CLUSTERS_0_KAFKAFLAVOR_USER` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.password` | Gateway password | `CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD` | true | string | ∅ | - | `1.19.x` |
-| `clusters[].kafkaFlavor.virtualCluster` | Gateway virtual cluster | `CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER` | true | string | ∅ | - | `1.19.x` |
+| Property                                        | Description                                                 | Environment Variable                                | Mandatory | Type   | Default |
+| ----------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------- | --------- | ------ | ------- |
+| `clusters[].kafkaFlavor.type`                   | Kafka flavor type, one of `Confluent`, `Aiven`, `Gateway`   | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE`                   | false     | string | ∅       |
+| **Flavor is `Confluent`**                       | Manage Confluent Cloud service accounts, API keys, and ACLs |                                                     |           |        |         |
+| `clusters[].kafkaFlavor.key`                    | Confluent Cloud API Key                                     | `CDK_CLUSTERS_0_KAFKAFLAVOR_KEY`                    | true      | string | ∅       |
+| `clusters[].kafkaFlavor.secret`                 | Confluent Cloud API Secret                                  | `CDK_CLUSTERS_0_KAFKAFLAVOR_SECRET`                 | true      | string | ∅       |
+| `clusters[].kafkaFlavor.confluentEnvironmentId` | Confluent Environment ID                                    | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTENVIRONMENTID` | true      | string | ∅       |
+| `clusters[].kafkaFlavor.confluentClusterId`     | Confluent Cluster ID                                        | `CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID`     | true      | string | ∅       |
+| **Flavor is `Aiven`**                           | Manage Aiven service accounts and ACLs                      |                                                     |           |        |         |
+| `clusters[].kafkaFlavor.apiToken`               | Aiven API token                                             | `CDK_CLUSTERS_0_KAFKAFLAVOR_APITOKEN`               | true      | string | ∅       |
+| `clusters[].kafkaFlavor.project`                | Aiven project                                               | `CDK_CLUSTERS_0_KAFKAFLAVOR_PROJECT`                | true      | string | ∅       |
+| `clusters[].kafkaFlavor.serviceName`            | Aiven service name                                          | `CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME`            | true      | string | ∅       |
+| **Flavor is `Gateway`**                         | Manage Conduktor Gateway interceptors                       |                                                     |           |        |         |
+| `clusters[].kafkaFlavor.url`                    | Gateway API endpoint URL                                    | `CDK_CLUSTERS_0_KAFKAFLAVOR_URL`                    | true      | string | ∅       |
+| `clusters[].kafkaFlavor.user`                   | Gateway API username                                        | `CDK_CLUSTERS_0_KAFKAFLAVOR_USER`                   | true      | string | ∅       |
+| `clusters[].kafkaFlavor.password`               | Gateway API password                                        | `CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD`               | true      | string | ∅       |
+| `clusters[].kafkaFlavor.virtualCluster`         | Gateway virtual cluster                                     | `CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER`         | true      | string | ∅       |
 
 ### Schema registry properties
 
-| Property                                               | Description                                  | Env                                                        | Mandatory | Type                                 | Default |
+| Property                                               | Description                                  | Environment Variable                                       | Mandatory | Type                                 | Default |
 |--------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
 | `clusters[].schemaRegistry.url`                        | The schema registry URL                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`                        | true      | string                               | ∅       |
 | `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                              | `false` |
@@ -319,18 +310,18 @@ Configuring Gateway properties will enable you to deploy and manage interceptors
 
 #### Amazon Glue schema registry properties
 
-| Property                                               | Description                     | Env                                                        | Mandatory | Type   | Default | Values                                   |
-|--------------------------------------------------------|---------------------------------|------------------------------------------------------------|-----------|--------|---------|------------------------------------------|
-| `clusters[].schemaRegistry.region`                     | The Glue schema registry region | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       |                                          |
-| `clusters[].schemaRegistry.registryName`               | The Glue schema registry name   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       |                                          |
-| `clusters[].schemaRegistry.amazonSecurity.type`        | Authentication with credentials | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`        | true      | string | ∅       | `Credentials`, `FromContext`, `FromRole` |
-| **Credentials Security**                               |                                 |                                                            |           |        |         |                                          |         
-| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true      | string | ∅       |                                          |
-| `clusters[].schemaRegistry.amazonSecurity.secretKey`   | Credentials auth secret key     | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`   | true      | string | ∅       |                                          |
-| **FromContext Security**                               |                                 |                                                            |           |        |         |                                          |         
-| `clusters[].schemaRegistry.amazonSecurity.profile`     | Authentication profile          | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`     | false     | string | ∅       |                                          |
-| **FromRole Security**                                  |                                 |                                                            |           |        |         |                                          |         
-| `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role             | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       |                                          |
+| Property                                               | Description                                                                      | Environment Variable                                       | Mandatory | Type   | Default |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------- | --------- | ------ | ------- |
+| `clusters[].schemaRegistry.region`                     | The Glue schema registry region                                                  | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       |
+| `clusters[].schemaRegistry.registryName`               | The Glue schema registry name                                                    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       |
+| `clusters[].schemaRegistry.amazonSecurity.type`        | Authentication with credentials, one of `Credentials`, `FromContext`, `FromRole` | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE`        | true      | string | ∅       |
+| **Credentials Security**                               |                                                                                  |                                                            |           |        |         |
+| `clusters[].schemaRegistry.amazonSecurity.accessKeyId` | Credentials auth access key                                                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID` | true      | string | ∅       |
+| `clusters[].schemaRegistry.amazonSecurity.secretKey`   | Credentials auth secret key                                                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY`   | true      | string | ∅       |
+| **FromContext Security**                               |                                                                                  |                                                            |           |        |         |
+| `clusters[].schemaRegistry.amazonSecurity.profile`     | Authentication profile                                                           | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE`     | false     | string | ∅       |
+| **FromRole Security**                                  |                                                                                  |                                                            |           |        |         |
+| `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role                                                              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       |
 
 ### Kafka Connect properties
 
@@ -352,7 +343,7 @@ Configuring Gateway properties will enable you to deploy and manage interceptors
 
 ### ksqlDB properties
 
-This feature is available from version `1.21.0` of the Conduktor Console.
+We support ksqlDB integration as of Conduktor Console `1.21.0`.
 
 | Property                                          | Description                                          | Environment Variable                                  | Mandatory | Type    | Default |
 |---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|---------|---------|
@@ -371,11 +362,11 @@ This feature is available from version `1.21.0` of the Conduktor Console.
 
 ### Indexer properties
 
-The indexer is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
+The [indexer](/platform/navigation/console/about-indexing/) is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
 You should modify these parameters only if you see an issue with the performance of the indexer.
 
 | Property                                             | Description                                                                                                                            | Environment Variable                               | Mandatory | Type | Default           |
-|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --------- | ---- | ----------------- |
 | **Lag exporter**                                     |                                                                                                                                        |                                                    |           |      |                   |
 | `lagexporter.frequency`                              | Frequency in seconds of the execution of the lag exporter                                                                              | `CDK_LAGEXPORTER_FREQUENCY`                        | false     | int  | `30`              |
 | `lagexporter.clusterparallelism`                     | Number of clusters indexed in parallel for the lag exporter                                                                            | `CDK_LAGEXPORTER_CLUSTERPARALLELISM`               | false     | int  | `1`               |
@@ -398,4 +389,4 @@ You should modify these parameters only if you see an issue with the performance
 | `connectindexer.indexertimeout`                      | Kafka connect indexer timeout in seconds                                                                                               | `CDK_CONNECTINDEXER_INDEXERTIMEOUT`                | false     | int  | `300` (5 minutes) |
 | **Kafka admin client configuration**                 |                                                                                                                                        |                                                    |           |      |                   |
 | `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once. | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
-| `kafka_admin.batch_parallel_size                     | Maximum of batched requests that can be sent in parallel`                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
+| `kafka_admin.batch_parallel_size`                    | Maximum of batched requests that can be sent in parallel                                                                               | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
