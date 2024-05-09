@@ -22,7 +22,7 @@ Use the variables that start with a `KAFKA_` prefix as it is Gateway's connectio
 
 ```yaml
     conduktor-gateway:
-        image: conduktor/conduktor-gateway:3.0.2
+        image: conduktor/conduktor-gateway:3.0.3
         environment:
           KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9092
           KAFKA_SASL_MECHANISM: PLAIN
