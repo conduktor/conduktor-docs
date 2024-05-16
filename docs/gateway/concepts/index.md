@@ -74,9 +74,12 @@ spec:
 Interceptors combine with each other in 3 different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Targeting** & **Overriding**.
 
 **Interceptor Chaining** lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
+The order of execution is determined by the priority of each interceptor. Lower numbers gets executed first.
 ![chaining](img/interceptors.png)
 
-**Interceptor Targeting** lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors. There are multiple ways to configure the scope of an interceptors. Check the Reference Documentation for more details.
+**Interceptor Targeting** lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors. 
+There are 4 targeting scopes available: Global, VirtualCluster, Group & ServiceAccount.  
+Check the Reference Documentation for more details.
 ````yaml
 # This interceptors only triggers for service account 'sa-clickstream'
 ---
@@ -95,29 +98,94 @@ spec:
       action: "BLOCK"
 ````
 
-**Interceptor Overriding** lets you change the behavior of an interceptor, by redeploying it with the same name, but under a different scope. This effectively overrides the effect of the interceptor above it by the new one for this particular scope.
+**Interceptor Overriding** lets you change the behavior of an interceptor, by redeploying it with the **same name**, but under a different scope. This effectively overrides the effect of the interceptors with lower precedence.  
 
 :::info
-In the two examples above, the interceptors have the same name but with 2 different scope.
-The first one is global, second one is targeting user `sa-clickstream`.
-They are not chained together, but instead the second one is overriding the first one.
-`sa-clickstream` will be allowed to create topics with 1 to 20 partitions while other service accounts will be limited to 1 to 6.
-
-If they had different names, they would be chained, and the first one (less permissive) would always restrict to 1 to 6 partitions.
+The order of precedence from lowest (most easily overridden) to highest (overrides all others) is:
+- Global
+- VirtualCluster (More on this below)
+- Group (More on this below)
+- ServiceAccount
 :::
+
+**Example**  
+In the example below, we can see how **Chaining**, **Targeting** & **Overriding** interact with each other.
+- `interceptor-C` is deployed only for Alice. (Targeting)
+- `interceptor-D` is deployed globally, but also deployed specifically for Bob (Overriding)
+- `interceptor-A` and `interceptor-B` are deployed globally and finally the priorities are considered for the execution order (Chaining)
+![Interceptor example](img/interceptor-example.png)
+
+When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
 
 
 ## Gateway Service Accounts
 
-When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
+Gateway Service Account are tightly coupled to the Authentication method you choose to connect your clients to the Gateway.
+There are 3 ways to authenticate users with the Gateway:
+- Using the same credentials as the backing cluster (Confluent Cloud API Keys for instance)
+- Using an external source of authentication or an IdP like OAuth, mTLS or LDAP
+- Using Gateway Local users
 
-Conduktor Gateway provide a range of capabilities to accommodate with most situations you may have on your backing cluster.
+When the authentication is not managed directly in the Gateway, it will simply validate the result of the authentication.
+- For OAuth/OIDC, it will validate the JWT claim
+- For mTLS, Gateway will verify the client certificate against the truststore
+- For delegated (backing cluster) authentication, it will initiate and maintain the connection to the backing cluster using the provided credentials
 
-There are 3 types of Service Accounts on the Gateway: DELEGATED, EXTERNAL, and LOCAL.
 :::info
-Service Accounts are 
-Those types of authentication are no the `security.protocol` and `sasl.mechanism` that are used to
+In most typical configurations, nothing is further necessary regarding Service Accounts. 
+
+There are a few exceptions where it can be necessary to declare GatewayServiceAccount resources namely **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**, each explained below.
 :::
-- **DELEGATED** Service Account are defined in the backing cluster. Gateway as source of authentication.
-- **EXTERNAL** Authentication relies on an external source of users such as OIDC, LDAP, or mTLS
-The result of the Authentication gives Gateway a 
+
+**Local Gateway Users**  
+If you don't use any form of external authentication (delegated, Oauth, mTLS, ...), but still want authentication (you can also stay with unauthenticated users), then you can declare Local Gateway users.
+````yaml
+---
+kind: GatewayServiceAccount
+metadata:
+  name: alice
+spec:
+  type: LOCAL
+---
+kind: GatewayServiceAccount
+metadata:
+ name: bob
+spec:
+ type: LOCAL
+````
+You can then generate password using the dedicated endpoint.
+````json
+PUT /v2/token
+{
+  "name": "alice"
+  "ttl": "3days"
+}
+````
+
+**Service Account mapping**  
+Sometimes, you don't have control on the JWT generated by your OIDC provider and you need to associate the subject of the claim to a more friendly and recognizable name in Kafka.
+````json
+{
+  "aud": "https://myapi.example.com",
+  "iss": "https://login.microsoftonline.com/{tenant_id}/v2.0",
+  "sub": "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858",
+  "exp": 1643482800,
+  "nbf": 1643479200,
+  "iat": 1643479200,
+  "nonce": "12345"
+}
+````
+Given this JWT token, deploying this `GatewayServiceAccount` resource will map the unreadable sub into a clear name `alice`, which you will then use for Interceptor Targeting, ACLs, ...
+````yaml
+kind: GatewayServiceAccount
+metadata:
+  name: alice
+spec:
+  type: EXTERNAL
+  externalMapping: "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858"
+````
+
+**Virtual Cluster mapping**  
+
+
+## Virtual Clusters
