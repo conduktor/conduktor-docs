@@ -11,20 +11,29 @@ If you already understand Conduktor Gateway's concepts and you are looking for a
 
 ## Conduktor Gateway
 
-The Conduktor Gateway itself is a proxy that sits between your Kafka and your clients. It extends the capabilities of Kafka while maintaining a strict compatibility with the Kafka protocol, thus requiring no change on the Kafka clients or the Kafka brokers
+Conduktor Gateway is a proxy that sits between your Kafka cluster and your clients. It extends the capabilities of Kafka while maintaining a strict compatibility with the Kafka protocol.   
 
-There are 2 ways Kafka can be extended by Conduktor Gateway to provide new functionalities.
-- **Core functionalities** like authentication, virtual clusters isolation or failover are installation or deployment options that impact the whole Conduktor Gateway and are generally (but not always) configured at installation time.
-- **Interceptors** are pluggable components that augment Kafka by intercepting requests of the Kafka protocol and applying operations to it.
+Once configured, the only required change on the Kafka clients is to update the `bootstrap.servers` property to point to the Gateway instead of the upstream Kafka.  
+We call the upstream kafka the backing kafka or backing cluster.
 
-- TODO this to reflect explanation better ?
+Conduktor Gateway extends Kafka to provide new functionalities with different techniques:
+- **Interceptors** are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
+- **Core features** like Authentication, Virtual clusters, Logical Topics, Failover... are features that blend much more deeply the Kafka protocol. For that reason we decided should be experienced as a dedicated feature for simplicity and ease of understanding (as opposed to pluggable Interceptors).
+
+Most core features and all interceptors can be configured using the Gateway HTTP API or using the Conduktor CLI.
+
+![gateway](img/gateway.png)
 
 ## Interceptors
-Interceptors are pluggable components that augment Kafka by intercepting any request of the Kafka protocol and applying operations to it.
-- For example, you can apply encryption on the messages during Produce and decryption during Fetch (consume) without any modification of the Kafka Client.
-- Another example is to deploy an interceptor to enforce or limit configurations during a CreateTopic request, such as replication factor or naming convention.
 
-Conduktor Gateway has a massive list of Interceptors available. Check our Interceptor Catalog for more details.
+Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
+
+A few examples:
+- Full-body or field-level Encryption & Decryption
+- Reject (during produce) or Skip (during consume) records that don't match some business data quality rules
+- Enforce producer configurations such as acks or compression
+- Enforce or override configurations during a CreateTopic requests, such as replication factor or naming convention
+
 
 To deploy an Interceptor, you need to prepare its configuration. The configuration of an interceptor is a little similar to configuring a Kafka Connect Connector.
 
@@ -65,6 +74,7 @@ spec:
 Interceptors combine with each other in 3 different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Targeting** & **Overriding**.
 
 **Interceptor Chaining** lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
+![chaining](img/interceptors.png)
 
 **Interceptor Targeting** lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors. There are multiple ways to configure the scope of an interceptors. Check the Reference Documentation for more details.
 ````yaml
@@ -99,10 +109,15 @@ If they had different names, they would be chained, and the first one (less perm
 
 ## Gateway Service Accounts
 
-Gateway Service Accounts 
+When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
+
+Conduktor Gateway provide a range of capabilities to accommodate with most situations you may have on your backing cluster.
 
 There are 3 types of Service Accounts on the Gateway: DELEGATED, EXTERNAL, and LOCAL.
+:::info
+Service Accounts are 
 Those types of authentication are no the `security.protocol` and `sasl.mechanism` that are used to
+:::
 - **DELEGATED** Service Account are defined in the backing cluster. Gateway as source of authentication.
 - **EXTERNAL** Authentication relies on an external source of users such as OIDC, LDAP, or mTLS
 The result of the Authentication gives Gateway a 
