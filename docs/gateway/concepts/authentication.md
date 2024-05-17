@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
-title: Client to Gateway Authentication
+sidebar_position: 3
+title: Authentication
 description: Connecting clients to Gateway 
 ---
 
@@ -31,7 +31,7 @@ Here is a quick explanation of each supported security protocol:
 * **SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
 * **DELEGATED_SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
   All communication  between the client and gateway broker is exchanged without any network security.
-  All credentials are managed by your backend kafka, we only provide [authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
+  All credentials are managed by your backend kafka, we only provide [authorization](../service-accounts) on the Gateway side based on the exchanged principal.
 
 
 ## Supported security protocols and authentication mechanisms
@@ -189,7 +189,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
   password="yourPassword";
 ```
 
-Note: the password must be filled as already explained [here](02-Clients.md#plain)
+Note: the password must be filled as already explained [here](../authentication#plain)
 
 ### OAuthbearer
 
@@ -219,7 +219,7 @@ Authentication from client is mandatory but will be forwarded to Kafka for check
 
 All communication between the client and Gateway broker are exchanged without any network security.
 
-All credentials are managed by your backing Kafka, we only provide [Authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
+All credentials are managed by your backing Kafka, we only provide [Authorization](../service-accounts) on the Gateway side based on the exchanged principal.
 
 Supported authentication mechanisms on the backing Kafka are:
 
@@ -233,7 +233,7 @@ Authentication from the client is mandatory but will be forwarded to Kafka. Gate
 
 All communication between the client and Gateway broker will be encrypted using TLS.
 
-All credentials are managed by your backing Kafka, we only provide [Authorization](03-GatewayUser.md) on the Gateway side based on the exchanged principal.
+All credentials are managed by your backing Kafka, we only provide [Authorization](../service-accounts) on the Gateway side based on the exchanged principal.
 
 Supported authentication mechanisms on the backing Kafka are:
 

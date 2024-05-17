@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-title: Gateway to Kafka Authentication
+sidebar_position: 99
+title: OLD Gateway to Kafka Authentication
 description: Connecting Gateway to Kafka
 ---
 
@@ -49,7 +49,7 @@ With this configuration Gateway will load the mounted configuration file and use
 
 # Delegated Kafka authentication
 
-A special case for Gateway to Kafka connectivity is when you configure Client to Gateway security to delegate the authentication to Kafka (See [this doc](02-Clients.md#delegated_sasl_plaintext) )
+A special case for Gateway to Kafka connectivity is when you configure Client to Gateway security to delegate the authentication to Kafka (See [this doc](../authentication#delegated_sasl_plaintext) )
 
 All previous configuration still applies but the authentication set in your provided configuration will not be used outside of Gateway administration tasks ( list nodes on startup, ...)
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Gateway User
-description: What a Gateway User is
+title: Service Accounts
+description: What a Gateway Service Accounts is
 ---
 
 # User

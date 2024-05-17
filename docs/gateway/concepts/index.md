@@ -35,7 +35,7 @@ A few examples:
 - Enforce or override configurations during a CreateTopic requests, such as replication factor or naming convention
 
 
-To deploy an Interceptor, you need to prepare its configuration. The configuration of an interceptor is a little similar to configuring a Kafka Connect Connector.
+To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
 
 Here's an example for an interceptor whose responsibility is to prevent creation of topics with more than 6 partitions:
 TODO (tabbed view for API vs CLI)
@@ -71,7 +71,7 @@ spec:
       action: "BLOCK"
 ````
 
-Interceptors combine with each other in 3 different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Targeting** & **Overriding**.
+Interceptors combine with each others in 3 different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Targeting** & **Overriding**.
 
 **Interceptor Chaining** lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
 The order of execution is determined by the priority of each interceptor. Lower numbers gets executed first.
@@ -118,27 +118,41 @@ In the example below, we can see how **Chaining**, **Targeting** & **Overriding*
 When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
 
 
-## Gateway Service Accounts
+## Gateway Service Accounts & Authentication
 
-Gateway Service Account are tightly coupled to the Authentication method you choose to connect your clients to the Gateway.
-There are 3 ways to authenticate users with the Gateway:
-- Using the same credentials as the backing cluster (Confluent Cloud API Keys for instance)
-- Using an external source of authentication or an IdP like OAuth, mTLS or LDAP
-- Using Gateway Local users
-
-When the authentication is not managed directly in the Gateway, it will simply validate the result of the authentication.
-- For OAuth/OIDC, it will validate the JWT claim
-- For mTLS, Gateway will verify the client certificate against the truststore
-- For delegated (backing cluster) authentication, it will initiate and maintain the connection to the backing cluster using the provided credentials
+Gateway Service Accounts are tightly coupled to the Authentication method you choose to connect your clients to the Gateway.
 
 :::info
-In most typical configurations, nothing is further necessary regarding Service Accounts. 
-
-There are a few exceptions where it can be necessary to declare GatewayServiceAccount resources namely **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**, each explained below.
+The objective of Authentication, whatever the method used, is to provide Conduktor Gateway with a Service Account **name** to be used in Kafka, and optionally a **set of Groups** and a **Virtual Cluster** to associate to the Service Account.
 :::
 
+There are 3 ways to authenticate users with the Gateway:
+- **Delegating** authentication to the backing cluster (Confluent Cloud API Keys for instance)
+- Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
+- Using Gateway **Local** Service Accounts
+
+Check the dedicated [Authentication page](/gateway/concepts/Clients/) to understand how to configure them for Conduktor Gateway.
+
+Each method has its own advantages and limitations, due to the structure of the object returned by the authentication process:
+
+| Authentication | Source of Name | Source of Groups | Source of Virtual Cluster |
+|----------------|----------------|------------------|---------------------------|
+| Delegated      | ✅              | 🚫               | 🚫                        |
+| mTLS           | ✅               | 🚫                 | 🚫                          |
+| External Oauth | ✅              | ✅                | ✅                         |
+| Local          | ✅              | ✅                | ✅                        |
+
+:::tip
+Once Authentication is configured, if you don't need Group or Virtual Cluster, then no further step is necessary regarding Service Accounts.
+:::
+
+There are a few cases where it's necessary to declare GatewayServiceAccount resources: **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**.
+
+Check the dedicated [Service Accounts](/gateway/concepts/service-accounts) page for more details
+
+
 **Local Gateway Users**  
-If you don't use any form of external authentication (delegated, Oauth, mTLS, ...), but still want authentication (you can also stay with unauthenticated users), then you can declare Local Gateway users.
+If you don't use any form of external authentication (delegated, Oauth, mTLS, ...), but still want authentication (you can also stay with unauthenticated users), then you must declare Local Gateway users.
 ````yaml
 ---
 kind: GatewayServiceAccount
@@ -163,7 +177,7 @@ PUT /v2/token
 ````
 
 **Service Account mapping**  
-Sometimes, you don't have control on the JWT generated by your OIDC provider and you need to associate the subject of the claim to a more friendly and recognizable name in Kafka.
+When you don't have any control on the JWT generated by your OIDC provider, and you need map the `sub` of the claim to a more friendly and recognizable name in Kafka.
 ````json
 {
   "aud": "https://myapi.example.com",
@@ -186,6 +200,28 @@ spec:
 ````
 
 **Virtual Cluster mapping**  
+If you want to use Virtual Cluster feature, deploying this resource will link the service account to the specified Virtual Cluster `vc-alice`.
+
+
+
+````yaml
+kind: GatewayServiceAccount
+metadata:
+  name: alice
+  vcluster: vc-alice
+spec:
+  type: EXTERNAL
+  externalMapping: "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858"
+````
+
 
 
 ## Virtual Clusters
+
+A Virtual Cluster is a logical representation of a Kafka cluster in Conduktor Gateway. Thanks to this concept, Conduktor Gateway enables Kafka users to create as many (virtual) clusters as they wish while having only a single physical kafka cluster deployed.
+![image.png](../medias/vclusters.png)
+The primary goal of VClusters is to multiplex several logical Kafka clusters on a single physical Kafka clusters. For that we need to ensure isolation between the different VClusters (like if we enabled multitenancy in Kafka).
+
+To achieve isolation every VCluster has a prefix.
+
+The principle is that any kafka resource (topic, group id, transactional id) whose key starts with a VCluster's prefix will be accessible from this VCluster.
