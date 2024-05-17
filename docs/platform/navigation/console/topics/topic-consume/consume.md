@@ -6,15 +6,39 @@ description: Reference Documentation for Topic related pages
 
 
 - [Configure the Kafka Consumer](#configure-the-kafka-consumer)
+  - [Show From](#show-from)
+  - [Limit](#limit)
+  - [Partitions](#partitions)
+  - [Key \& Value Format](#key--value-format)
+    - [Automatic Deserializer](#automatic-deserializer)
+    - [Custom Deserializer](#custom-deserializer)
+    - [JSON Deserializer](#json-deserializer)
+    - [Bytes Deserializer](#bytes-deserializer)
 - [Filter records](#filter-records)
+  - [Global Search](#global-search)
+  - [Search in a Specific Field](#search-in-a-specific-field)
+  - [JS Search](#js-search)
+  - [Statistics pop-up](#statistics-pop-up)
 - [Browse records](#browse-records)
+  - [From the main table](#from-the-main-table)
+  - [Individual records](#individual-records)
+  - [Data tab](#data-tab)
+    - [Table View](#table-view)
+    - [JSON View](#json-view)
+  - [Headers tab](#headers-tab)
+  - [Metadata tab](#metadata-tab)
 - [Operations](#operations)
+  - [Export Records in CSV \& JSON](#export-records-in-csv--json)
+  - [Reprocess Record](#reprocess-record)
+  - [Save \& Load Filter Templates](#save--load-filter-templates)
 
 :::info
+
 **Checkout our video that presents the most important features of Topic Consume**  
 
 [Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
-:::info
+:::
+
 
 
 ## Configure the Kafka Consumer
@@ -151,7 +175,7 @@ Global Search is the most simple type of filter you can use.
 :::info
 Internally, this will treat the record Key or Value as text to apply the operation (contains, equals, ...).  
 This might not be the preferred approach if your record is JSON-ish
-:::info
+:::
 
 ![Capture d’écran 2023-12-13 à 10.07.05.png](img/topic-global-filter.png)
 
@@ -165,14 +189,14 @@ Examples:
 `data.event.name`  
 `data.event["correlation-id"]`  
 `data.clientAddress[0].ip`  
-:::info
+:::
 ### JS Search
 
 If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.  
 Check this article on [JS Filters syntax](../js-filter-syntax/) to get examples and syntax around this filter.
 :::caution
 While it is the option that can potentially address the most complex use-cases, it is not the recommended or the fastest one.
-:::caution
+:::
 
 ### Statistics pop-up
 
@@ -192,13 +216,15 @@ Note that the Timestamp column takes the **local timezone** of the user.
 For example, if you are producing a message from Dublin, Ireland (UTC+1) at `14:57:38 local time`, and you then consume this message from your browser (in Dublin), you will see `14:57:38`.  
 However, if another user consumes the same message in Console but from Paris, France (UTC+2), they will see `15:57:38`.  
 Please be aware that this isn't a mistake from Kafka itself, you are simply seeing messages displayed in your local timezone.  
-:::info
+:::
 
 ### Individual records
 Upon clicking on a record from the list, a side bar will open on the right to display the entire record.
+
 :::info
 Use the arrow keys to navigate between messages: ⬆️ ⬇️
-:::info
+:::
+
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
 ![img_2.png](img/topic-browse.png)
 ### Data tab
@@ -244,10 +270,12 @@ The headers tab show you all the headers of your Kafka record, and lets you find
 ![img_5.png](img/topic-header-funnel.png)
 The resulting filter will be created:
 ![Capture d’écran 2024-01-12 à 12.12.14.png](img/topic-header-filter.png)
+
 :::caution
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
 If your producer doesn't write header values as UTF8 String, this tab might not render properly, and header filter might not work as expected.
 :::
+
 ### Metadata tab
 
 The metadata tab gives you all the other information regarding your record that could be useful under certain circumstances. The informations presented are as follow:
