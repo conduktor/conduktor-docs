@@ -10,7 +10,7 @@ The Topic page lets you search for any topic on your currently selected Kafka cl
 :::caution
 Configure** RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
-:::caution
+:::
 Multiple search capabilities can be combined to help you find to the topic you want faster.
 
 **Filtering** is possible on:
@@ -27,7 +27,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 
 :::info
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
-:::info
+:::
 ![img.png](img/topic-list.png)
 
 ## Operations
