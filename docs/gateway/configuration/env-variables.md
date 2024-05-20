@@ -123,7 +123,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### MTLS
 
-more context for MTLS [here](/gateway/concepts/Clients/)
+more context for MTLS [here](/gateway/concepts/authentication/)
 
 | Environment Variable                  | Default Value     | Description                                       |
 |---------------------------------------|-------------------|---------------------------------------------------|

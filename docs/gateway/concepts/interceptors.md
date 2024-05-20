@@ -147,7 +147,7 @@ As an example you can define that you want to configure an interceptor `topicPro
 When a message is processed by Gateway, we have to detect and apply all `Interceptors` for that request based on the message context.
 
 For each message, interceptor resolution is based on a context containing the following elements :
- - Gateway [User](service-accounts) 
+ - Gateway [User](../service-accounts) 
    - VCluster
    - Username
    - Groups (Optional)
