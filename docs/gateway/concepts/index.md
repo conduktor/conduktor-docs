@@ -71,51 +71,14 @@ spec:
       action: "BLOCK"
 ````
 
-Interceptors combine with each others in 3 different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Targeting** & **Overriding**.
+Interceptors also combine with each other to create very powerful interactions and solve many interesting use-cases in different ways.
 
-**Interceptor Chaining** lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
-The order of execution is determined by the priority of each interceptor. Lower numbers gets executed first.
+The most basic possibility is to chain them together so that each interceptor performs its action sequentially and independently, and pass its result to the next.
+The order of execution is determined by the **priority** of each interceptor. Lower numbers gets executed first.
 ![chaining](img/interceptors.png)
 
-**Interceptor Targeting** lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors. 
-There are 4 targeting scopes available: Global, VirtualCluster, Group & ServiceAccount.  
-Check the Reference Documentation for more details.
-````yaml
-# This interceptors only triggers for service account 'sa-clickstream'
----
-kind: Interceptor
-metadata:
-  user: sa-clickstream
-  name: enforce-partition-limit
-spec:
-  pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
-  priority: 100,
-  config:
-    topics: ".*"
-    numPartition:
-      min: 1,
-      max: 20,
-      action: "BLOCK"
-````
+More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page
 
-**Interceptor Overriding** lets you change the behavior of an interceptor, by redeploying it with the **same name**, but under a different scope. This effectively overrides the effect of the interceptors with lower precedence.  
-
-:::info
-The order of precedence from lowest (most easily overridden) to highest (overrides all others) is:
-- Global
-- VirtualCluster (More on this below)
-- Group (More on this below)
-- ServiceAccount
-:::
-
-**Example**  
-In the example below, we can see how **Chaining**, **Targeting** & **Overriding** interact with each other.
-- `interceptor-C` is deployed only for Alice. (Targeting)
-- `interceptor-D` is deployed globally, but also deployed specifically for Bob (Overriding)
-- `interceptor-A` and `interceptor-B` are deployed globally and finally the priorities are considered for the execution order (Chaining)
-![Interceptor example](img/interceptor-example.png)
-
-When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
 
 
 ## Gateway Service Accounts & Authentication
@@ -131,97 +94,14 @@ There are 3 ways to authenticate users with the Gateway:
 - Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
 - Using Gateway **Local** Service Accounts
 
-Check the dedicated [Authentication page](/gateway/concepts/Clients/) to understand how to configure them for Conduktor Gateway.
-
-Each method has its own advantages and limitations, due to the structure of the object returned by the authentication process:
-
-| Authentication | Source of Name | Source of Groups | Source of Virtual Cluster |
-|----------------|----------------|------------------|---------------------------|
-| Delegated      | ✅              | 🚫               | 🚫                        |
-| mTLS           | ✅               | 🚫                 | 🚫                          |
-| External Oauth | ✅              | ✅                | ✅                         |
-| Local          | ✅              | ✅                | ✅                        |
-
-:::tip
-Once Authentication is configured, if you don't need Group or Virtual Cluster, then no further step is necessary regarding Service Accounts.
-:::
-
-There are a few cases where it's necessary to declare GatewayServiceAccount resources: **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**.
-
-Check the dedicated [Service Accounts](/gateway/concepts/service-accounts) page for more details
-
-
-**Local Gateway Users**  
-If you don't use any form of external authentication (delegated, Oauth, mTLS, ...), but still want authentication (you can also stay with unauthenticated users), then you must declare Local Gateway users.
-````yaml
----
-kind: GatewayServiceAccount
-metadata:
-  name: alice
-spec:
-  type: LOCAL
----
-kind: GatewayServiceAccount
-metadata:
- name: bob
-spec:
- type: LOCAL
-````
-You can then generate password using the dedicated endpoint.
-````json
-PUT /v2/token
-{
-  "name": "alice"
-  "ttl": "3days"
-}
-````
-
-**Service Account mapping**  
-When you don't have any control on the JWT generated by your OIDC provider, and you need map the `sub` of the claim to a more friendly and recognizable name in Kafka.
-````json
-{
-  "aud": "https://myapi.example.com",
-  "iss": "https://login.microsoftonline.com/{tenant_id}/v2.0",
-  "sub": "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858",
-  "exp": 1643482800,
-  "nbf": 1643479200,
-  "iat": 1643479200,
-  "nonce": "12345"
-}
-````
-Given this JWT token, deploying this `GatewayServiceAccount` resource will map the unreadable sub into a clear name `alice`, which you will then use for Interceptor Targeting, ACLs, ...
-````yaml
-kind: GatewayServiceAccount
-metadata:
-  name: alice
-spec:
-  type: EXTERNAL
-  externalMapping: "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858"
-````
-
-**Virtual Cluster mapping**  
-If you want to use Virtual Cluster feature, deploying this resource will link the service account to the specified Virtual Cluster `vc-alice`.
-
-
-
-````yaml
-kind: GatewayServiceAccount
-metadata:
-  name: alice
-  vcluster: vc-alice
-spec:
-  type: EXTERNAL
-  externalMapping: "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858"
-````
-
-
+Check the dedicated [Authentication page](/gateway/concepts/authentication) to understand how to configure them for Conduktor Gateway.
 
 ## Virtual Clusters
 
-A Virtual Cluster is a logical representation of a Kafka cluster in Conduktor Gateway. Thanks to this concept, Conduktor Gateway enables Kafka users to create as many (virtual) clusters as they wish while having only a single physical kafka cluster deployed.
+A Virtual Cluster in Conduktor Gateway is a logical representation of a Kafka cluster. This innovative concept allows users to create multiple virtual clusters while maintaining just a single physical Kafka cluster. Essentially, it enables the simulation of multiple Kafka environments on a single physical infrastructure.
 ![image.png](../medias/vclusters.png)
-The primary goal of VClusters is to multiplex several logical Kafka clusters on a single physical Kafka clusters. For that we need to ensure isolation between the different VClusters (like if we enabled multitenancy in Kafka).
+:::info
+Virtual Cluster concept is entirely optional. If you choose not to configure any Virtual Clusters, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This default mode, all topics and resources will be visible and accessible as usual, without any additional configuration.
+:::
 
-To achieve isolation every VCluster has a prefix.
-
-The principle is that any kafka resource (topic, group id, transactional id) whose key starts with a VCluster's prefix will be accessible from this VCluster.
+Check the detailed [Virtual Clusters Concept page](/gateway/concepts/virtual-clusters) for more details

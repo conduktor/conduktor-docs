@@ -4,8 +4,103 @@ title: Interceptors
 description: Interceptors
 ---
 
+## Interceptors
 
-# Interceptors
+Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
+
+A few examples:
+- Full-body or field-level Encryption & Decryption
+- Reject (during produce) or Skip (during consume) records that don't match some business data quality rules
+- Enforce producer configurations such as acks or compression
+- Enforce or override configurations during a CreateTopic requests, such as replication factor or naming convention
+
+
+To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
+
+Here's an example for an interceptor whose responsibility is to prevent creation of topics with more than 6 partitions:
+TODO (tabbed view for API vs CLI)
+- Using the API `POST /interceptors`
+````json
+{
+  "name": "enforce-partition-limit",
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "numPartition": {
+      "min": 1,
+      "max": 6,
+      "action": "BLOCK"
+    }
+}
+````
+- Using the CLI conduktor gateway apply -f file.yml
+````yaml
+---
+kind: Interceptor
+metadata:
+  name: enforce-partition-limit
+spec:
+  pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+  priority: 100,
+  config:
+    topics: ".*"
+    numPartition:
+      min: 1,
+      max: 6,
+      action: "BLOCK"
+````
+
+Interceptors combine with each other's in multiple different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Scoping** & **Overriding**.
+
+**Interceptor Chaining** lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
+The order of execution is determined by the priority of each interceptor. Lower numbers gets executed first.
+![chaining](img/interceptors.png)
+
+**Interceptor Scoping** lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors.
+There are 4 targeting scopes available: Global, VirtualCluster, Group & ServiceAccount.  
+Check the Reference Documentation for more details.
+````yaml
+# This interceptors only triggers for service account 'sa-clickstream'
+---
+kind: Interceptor
+metadata:
+  user: sa-clickstream
+  name: enforce-partition-limit
+spec:
+  pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+  priority: 100,
+  config:
+    topics: ".*"
+    numPartition:
+      min: 1,
+      max: 20,
+      action: "BLOCK"
+````
+
+**Interceptor Overriding** lets you change the behavior of an interceptor, by redeploying it with the **same name**, but under a different scope. This effectively overrides the effect of the interceptors with lower precedence.
+
+:::info
+The order of precedence from lowest (most easily overridden) to highest (overrides all others) is:
+- Global
+- VirtualCluster
+- Group
+- ServiceAccount
+  :::
+
+**Example**  
+In the example below, we can see how **Chaining**, **Targeting** & **Overriding** interact with each other.
+- `interceptor-C` is deployed only for Alice. (Targeting)
+- `interceptor-D` is deployed globally, but also deployed specifically for Bob (Overriding)
+- `interceptor-A` and `interceptor-B` are deployed globally and finally the priorities are considered for the execution order (Chaining)
+  ![Interceptor example](img/interceptor-example.png)
+
+When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
+
+
+
+
+# Interceptors_OLD
 
 Interceptors are used to add technical and business logic, such as message encryption, inside your Gateway deployment. 
 
