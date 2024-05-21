@@ -10,7 +10,7 @@ description: Connecting Gateway to Kafka
 
 You can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`. For these security protocols we support all SASL mechanisms; `PLAIN`, `SCRAM SHA`, `OAuthBearer`, `Kerberos` etc.
 
-There are two ways of providing your configuration on how to connect to Kafka : envrionement variables and properties configuration file.
+There are two ways of providing your configuration on how to connect to Kafka: environment variables and properties configuration file.
 
 ## Environment variables
 
@@ -35,7 +35,7 @@ Use the variables that start with a `KAFKA_` prefix as it is Gateway's connectio
 You can edit the Gateway configuration to point to a property file to use for your Kafka connection.
 ```yaml
     conduktor-gateway:
-        image: conduktor/conduktor-gateway:2.3.0
+        image: conduktor/conduktor-gateway:3.0.3
         environment:
           GATEWAY_BACKEND_KAFKA_SELECTOR: '{ file : { path: /kafka.properties } }'
         volumes:
@@ -45,7 +45,8 @@ You can edit the Gateway configuration to point to a property file to use for yo
             read_only: true
 ```
 
-With this configuration Gateway will load the mounted configuration file and use it as property source to the Kafka connectivity.
+
+With this configuration, Gateway will load the mounted configuration file and use it as property source to the Kafka connectivity.
 
 # Delegated Kafka authentication
 
