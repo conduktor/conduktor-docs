@@ -105,3 +105,15 @@ Virtual Cluster concept is entirely optional. If you choose not to configure any
 :::
 
 Check the detailed [Virtual Clusters Concept page](/gateway/concepts/virtual-clusters) for more details
+
+## Other interesting features
+
+There are several other interesting features available with Conduktor Gateway.
+
+Check their dedicated Concept pages for more details.
+
+**Logical Topics** are abstractions over real Kafka topics to provide additional functionalities not possible by default.  
+We offer 3 kinds of Logical Topic so far:
+- Alias topics are topics that can be accessed with a name, but really points to another real topic behind the scenes. It can be useful in a few scenarios such a topic renaming or cross virtual cluster topic sharing.
+- Concentrated topics allows co-locating multiple topics in the same physical topic behind the scenes. It's very useful when you want to regroup many topics with low-volume but a large number of partitions.
+- SQL topics are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.

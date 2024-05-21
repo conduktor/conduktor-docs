@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-title: Logical topics
+sidebar_position: 3
+title: SQL Topics
 description: A logical representation of a topic that a Gateway client will see
 ---
 # Logical topics
