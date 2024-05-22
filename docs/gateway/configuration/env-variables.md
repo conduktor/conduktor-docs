@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 99
 title: Environment Variables
 description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
