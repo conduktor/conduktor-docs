@@ -26,7 +26,7 @@ Each method has its own advantages and limitations, due to the structure of the 
 | External Oauth | ✅              | ✅                | ✅                         |
 | Local          | ✅              | ✅                | ✅                        |
 
-Check the dedicated [Authentication Configuration page](/gateway/configuration/authentication) to understand how to configure each method.
+Check the dedicated [Authentication Configuration page](/gateway/configuration/client-authentication) to understand how to configure each method.
 
 
 :::tip
