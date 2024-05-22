@@ -158,8 +158,8 @@ Optional local accounts list used to log on Console
 
 | Property                      | Description   | Environment Variable              | Mandatory | Type   | Default Value          |
 | ----------------------------- | ------------- | --------------------------------- | --------- | ------ | ---------------------- |
-| `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCAL_USERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
-| `auth.local-users[].password` | User password | `CDK_AUTH_LOCAL_USERS_0_PASSWORD` | true      | string | `"admin"`              |
+| `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCALUSERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
+| `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |
 
 ### Monitoring properties
 :::caution
