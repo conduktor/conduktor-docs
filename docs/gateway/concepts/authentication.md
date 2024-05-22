@@ -17,8 +17,6 @@ There are 3 ways to authenticate users with the Gateway:
 - Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
 - Using Gateway **Local** Service Accounts
 
-Check the dedicated [Authentication page](/gateway/concepts/authentication) to understand how to configure them for Conduktor Gateway.
-
 Each method has its own advantages and limitations, due to the structure of the object returned by the authentication process:
 
 | Authentication | Source of Name | Source of Groups | Source of Virtual Cluster |
@@ -28,13 +26,14 @@ Each method has its own advantages and limitations, due to the structure of the 
 | External Oauth | ✅              | ✅                | ✅                         |
 | Local          | ✅              | ✅                | ✅                        |
 
+Check the dedicated [Authentication Configuration page](/gateway/configuration/v2.x%20Configuration/gateway_security%202.0) to understand how to configure each method.
+
+
 :::tip
 Once Authentication is configured, if you don't need Group or Virtual Cluster, then no further step is necessary regarding Service Accounts.
 :::
 
 There are a few cases where it's necessary to declare GatewayServiceAccount resources: **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**.
-
-Check the dedicated [Service Accounts](/gateway/concepts/service-accounts) page for more details
 
 
 **Local Gateway Users**  

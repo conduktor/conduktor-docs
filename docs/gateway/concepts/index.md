@@ -11,10 +11,9 @@ If you already understand Conduktor Gateway's concepts and you are looking for a
 
 ## Conduktor Gateway
 
-Conduktor Gateway is a proxy that sits between your Kafka cluster and your clients. It extends the capabilities of Kafka while maintaining a strict compatibility with the Kafka protocol.   
+Conduktor Gateway is deployed between your client applications and existing Kafka clusters. As it's Kafka protocol compliant, there are minimal adjustments required for clients other than pointing to a new bootstrap server.
 
-Once configured, the only required change on the Kafka clients is to update the `bootstrap.servers` property to point to the Gateway instead of the upstream Kafka.  
-We call the upstream kafka the backing kafka or backing cluster.
+![conduktor-gateway](../medias/conduktor-gateway.svg)
 
 Conduktor Gateway extends Kafka to provide new functionalities with different techniques:
 - **Interceptors** are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
@@ -38,9 +37,8 @@ A few examples:
 To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
 
 Here's an example for an interceptor whose responsibility is to prevent creation of topics with more than 6 partitions:
-TODO (tabbed view for API vs CLI)
-- Using the API `POST /interceptors`
 ````json
+PUT /gateway/v2/interceptors
 {
   "name": "enforce-partition-limit",
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
@@ -53,22 +51,6 @@ TODO (tabbed view for API vs CLI)
       "action": "BLOCK"
     }
 }
-````
-- Using the CLI conduktor gateway apply -f file.yml
-````yaml
----
-kind: Interceptor
-metadata:
-  name: enforce-partition-limit
-spec:
-  pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
-  priority: 100,
-  config:
-    topics: ".*"
-    numPartition:
-      min: 1,
-      max: 6,
-      action: "BLOCK"
 ````
 
 Interceptors also combine with each other to create very powerful interactions and solve many interesting use-cases in different ways.

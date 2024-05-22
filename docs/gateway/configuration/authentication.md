@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Gateway Security
+title: Authentication
 description: Securing Conduktor Gateway  
 ---
 
@@ -136,7 +136,7 @@ Virtual cluster mode supports;
 * `SASL_SSL` (with `mTLS` option)
 * `SSL`
 
-![tenant-user.png](./images/gw-security/tenant-user-london.png)
+![tenant-user.png](images/gw-security/tenant-user-london.png)
 
 ### Enable virtual clusters with the environment variables
 ```yaml
