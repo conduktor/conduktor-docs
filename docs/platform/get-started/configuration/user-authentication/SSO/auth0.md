@@ -45,7 +45,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 sso:
   oauth2:
     - name: "auth0"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       openid:

@@ -49,7 +49,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 sso:
   oauth2:
     - name: "keycloak"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       openid:
@@ -94,7 +93,6 @@ Then, you must set the property `groups-claim` to `"groups"` in the Console conf
 sso:
   oauth2:
     - name: "keycloak"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       groups-claim: "groups"

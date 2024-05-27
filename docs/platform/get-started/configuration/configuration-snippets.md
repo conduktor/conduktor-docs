@@ -74,7 +74,6 @@ admin:
 sso:
   oauth2:
     - name: 'auth0'
-      default: true
       client-id: '<client ID>'
       client-secret: '<client secret>'
       openid:
@@ -113,7 +112,6 @@ license: "" # license key if Enterprise
       CDK_ADMIN_EMAIL: 'name@your_company.io'
       CDK_ADMIN_PASSWORD: 'admin'
       CDK_SSO_OAUTH2_0_NAME: 'auth0'
-      CDK_SSO_OAUTH2_0_DEFAULT: true
       CDK_SSO_OAUTH2_0_CLIENT-ID: '<client ID>'
       CDK_SSO_OAUTH2_0_CLIENT-SECRET: '<client secret>'
       CDK_SSO_OAUTH2_0_OPENID_ISSUER: 'https://<domain>'

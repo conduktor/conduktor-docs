@@ -88,7 +88,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 sso:
   oauth2:
     - name: "oidc-provider"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client ID>"
       openid:

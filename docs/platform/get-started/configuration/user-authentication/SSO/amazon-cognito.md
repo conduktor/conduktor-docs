@@ -53,7 +53,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 sso:
   oauth2:
     - name: "cognito"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       openid:
@@ -85,7 +84,6 @@ If you want to use the `external groups mapping` to map groups between your Cond
 sso:
   oauth2:
     - name: "cognito"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       groups-claim: "cognito:groups"
