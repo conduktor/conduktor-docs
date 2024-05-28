@@ -34,7 +34,7 @@ A few examples:
 
 To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
 
-Here's an example for an interceptor whose responsibility is to prevent creation of topics with more than 6 partitions:
+Here's an example for an interceptor that will block the creation of topics with more than 6 partitions:
 ````json
 PUT /gateway/v2/interceptors
 {
