@@ -12,7 +12,7 @@ A few examples:
 - Full-body or field-level Encryption & Decryption
 - Reject (during produce) or Skip (during consume) records that don't match some business data quality rules
 - Enforce producer configurations such as acks or compression
-- Enforce or override configurations during a CreateTopic requests, such as replication factor or naming convention
+- Enforce or override configurations during a CreateTopic request, such as replication factor or naming convention
 
 
 To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
