@@ -43,7 +43,7 @@ The order of execution is determined by the priority of each interceptor. Lower 
 :::info
 The order of execution is always calculated after scoping and overriding, such that overridden interceptor can have a different priority from its parent.
 :::
-![chaining](img/interceptors.png)
+
 
 ### Scoping
 Interceptor Scoping lets you define which Kafka Clients (ultimately resolved as Service Accounts) must be affected by those interceptors.
