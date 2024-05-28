@@ -21,8 +21,6 @@ Conduktor Gateway extends Kafka to provide new functionalities with different te
 
 Most core features and all interceptors can be configured using the Gateway HTTP API or using the Conduktor CLI.
 
-![gateway](img/gateway.png)
-
 ## Interceptors
 
 Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
@@ -57,7 +55,38 @@ Interceptors also combine with each other to create very powerful interactions a
 
 The most basic possibility is to chain them together so that each interceptor performs its action sequentially and independently, and pass its result to the next.
 The order of execution is determined by the **priority** of each interceptor. Lower numbers gets executed first.
-![chaining](img/interceptors.png)
+
+
+ ```mermaid
+flowchart LR
+    A[User App]
+    subgraph G [Gateway]
+        direction LR
+        Auth[Authentication & </br> Authorization]
+        subgraph I [Dynamic interceptor pipeline]
+            direction LR
+            I1(Plugin </br> priority: 1 </br> interceptor)
+            I2(Plugin </br> priority: 10 </br> interceptor1 & interceptor2)
+            I3(Plugin </br> priority: 42 </br> interceptor)
+            I1 <--> I2 <--> I3
+        end
+        subgraph Core [Core features]
+            direction TB
+            LT(Logical Topics)
+            VC(Virtual clusters)
+        end
+        Auth <--> I
+    end
+    subgraph K [Main Kafka cluster]
+    B1(broker 1)
+    B2(broker 2)
+    B3(broker 3)
+    B1 === B2 === B3
+    end
+    A --> Auth
+    I <--> Core
+    Core <--> K
+```
 
 More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page
 
@@ -76,7 +105,7 @@ There are 3 ways to authenticate users with the Gateway:
 - Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
 - Using Gateway **Local** Service Accounts
 
-Check the dedicated [Authentication page](/gateway/concepts/authentication) to understand how to configure them for Conduktor Gateway.
+Check the dedicated [Authentication page](/gateway/concepts/authentication) for more details.
 
 ## Virtual Clusters
 
@@ -86,7 +115,7 @@ A Virtual Cluster in Conduktor Gateway is a logical representation of a Kafka cl
 Virtual Cluster concept is entirely optional. If you choose not to configure any Virtual Clusters, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This default mode, all topics and resources will be visible and accessible as usual, without any additional configuration.
 :::
 
-Check the detailed [Virtual Clusters Concept page](/gateway/concepts/virtual-clusters) for more details
+Check the detailed [Virtual Clusters Concept page](/gateway/concepts/virtual-clusters) for more details.
 
 ## Other interesting features
 
@@ -96,6 +125,6 @@ Check their dedicated Concept pages for more details.
 
 **Logical Topics** are abstractions over real Kafka topics to provide additional functionalities not possible by default.  
 We offer 3 kinds of Logical Topic so far:
-- Alias topics are topics that can be accessed with a name, but really points to another real topic behind the scenes. It can be useful in a few scenarios such a topic renaming or cross virtual cluster topic sharing.
-- Concentrated topics allows co-locating multiple topics in the same physical topic behind the scenes. It's very useful when you want to regroup many topics with low-volume but a large number of partitions.
-- SQL topics are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.
+- [Alias topics](/gateway/concepts/logical-topics/alias-topics/) are topics that can be accessed with a name, but really points to another real topic behind the scenes. It can be useful in a few scenarios such a topic renaming or cross virtual cluster topic sharing.
+- [Concentrated topics](/gateway/concepts/logical-topics/concentrated-topics/) allows co-locating multiple topics in the same physical topic behind the scenes. It's very useful when you want to regroup many topics with low-volume but a large number of partitions.
+- [SQL topics](/gateway/concepts/logical-topics/sql-topics/) are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.

@@ -3,45 +3,70 @@ sidebar_position: 2
 title: Concentrated Topics
 description: Concentrated topics
 ---
-# Concentrated Topics
 
-Concentration is feature offered by Conduktor Gateway to multiplex several virtual Kafka topics (concentrated topics) into a single physical Kafka topic.
+Topic Concentration helps reduce costs on low-volume topics by co-locating the messages from different unrelated topics on the same physical topic-partitions behind the scenes.  
 
-For client applications, concentrated topics are totally like regular Kafka topics, they are just backed under the hood by a single physical topic.
+This is totally transparent for consumers and producers that continue to write into topics normally.  
 
-Topic Concentration helps reduce costs on low-volume topics by co-locating the messages from different unrelated topics on the same physical topic-partitions behind the scenes.  The topic the client is seeing and using is the concentrated topic, a flavour of Conduktor's logical topics, reminder of the [topic naming convention](/gateway/reference/reference-docs/#topics).
+One advantage is the ability to emulate a higher or lower number of partitions irrespective of the backing topic's actual number of partitions.  
 
-# Concentrated TopicMapping
+## Limitations
+### Configuration
+Only the following topic configs are allowed
+- `partitions` 
+- `cleanup.policy`
+- `retention.ms`
+- `retention.bytes`
+- `delete.retention.ms`
 
-To achieve concentration we need to define a relationship (a mapping) between a client applications topic and its backing physical topic.
+`retention.ms` and `retention.bytes` values must not exceed the backing topic's configuration unless `autoManaged` is set to true.
+Any other config defined during the topic creation will fail the topic creation (unless they have the same value as the backing cluster)
 
-Such a relationship is called a C**oncentrated topic mapping**. It consists of an association between logical topic name and the physical topic.
+:::info
+With Concentrated Topics, the true retention is the one from the backing cluster's topic, not the retention requested during the concentrated topic creation.
 
-Along the lifecycle of the topic (produce, consume etc), the Gateway will manage offsets and partitions mapping to provide the same experience as a classical topic for end users.
+retention.ms and retention.bytes are not cleanup guarantees. They are retention guarantees.
+:::
+### Performance
+Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
 
-### Limitations
+### Message Count & Lag, Offset (in)correctness
+Concentrated topics & SQL topics are not real and that doesn't work nicely with the tools available in the Kafka Ecosystem (Conduktor included) that rely on topic metadata to generate reports, graphs or calculations based on that metadata.
+Right now, the 2 most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that rely on partition **EndOffset**.
 
-* The physical topic must preexist
-* ACL in delegated Kafka security aren't supported on Concentrated topics
-* Topic configurations: must be compatible with the physical topic. Hence it is very important to think about it beforehand
-    * `retention.ms` of the logical topic cannot exceed the retention of the backing physical topic
-    * Other topic creation configs must be omitted or equal to the physical topic configs
+![Image](img/offset-correct.png)
 
-## Concentration Rule
-A concentration rule is a regex pattern applied on a newly created topic that defines which physical topic the new concentrated topic will be redirected to.
+Any tooling will currently display the message count of the backing topic, and the lag relative to the EndOffset of the backing topic.
+In some situations, for instance when a concentrated topic just created (so is empty), it causes a lot of confusion to customers displaying numbers that are totally wrong.
 
-Example:
+:::tip
+We are working to address that limitation in the near-future. Contact us to get more information.
+:::
 
-**Given** the following concentration rule:
-* pattern = "concentration-*"
-* physical topic = "concentration-backing"
+## Usage
+To configure a Concentrated Topic rule as a Gateway Admin, configure a dedicated prefix of topic names to become concentrated using the API.  
 
-**When** a topic whose name matches "concentration-*" (example: concentration-test) is created
+````json
+POST /admin/vclusters/v1/vcluster/{vcluster}/concentration-rules
+{
+  "pattern": "concentrated-",
+  "physicalTopicName": "concentrated",
+  "autoManaged" : false
+}
+````
 
-**Then**
-* A concentrated topic mapping (concentration-test → concentration-backing)  is added
-* The traffic/data of concentration-test is handled physically on the concentration-backing topic. Possibly also hosting other client application's topics with a name matching the concentration rule
+Then, to create a Concentrated Topics, simply use the AdminClient as usual with a name that matches the Concentrated Topic Rule set by the Gateway Admin.
 
-The management of concentration rules is made through the GATEWAY HTTP REST API.
+```shell
+kafka-topics --bootstrap-server gateway:6969 --topic concentrated-topicA --partitions 10
+```
 
-          
+## Auto-Manage Flag
+When enabled, Gateway will automatically create the 3 backing topics using the backing cluster's default configuration and default number of partitions ( settings `num.partitions`).
+
+When enabled, Concentrated Topics created with a higher `retention.ms` and `retention.bytes` (than the one of the broker) will cause the associated backing topic to be updated to guarantee that new configuration.
+
+:::caution
+Use AutoExtendTopics at your own risk. We recommend that you don't use autoManageBackingTopics.
+Any Concentrated topic created with a retention.ms of -1 will cause the backing topic to be Infinite storage (beware FS Full)
+:::
