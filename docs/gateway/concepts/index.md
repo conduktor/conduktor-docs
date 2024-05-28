@@ -88,7 +88,7 @@ flowchart LR
     Core <--> K
 ```
 
-More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page
+More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page.
 
 
 
