@@ -23,7 +23,7 @@ Most core features and all interceptors can be configured using the Gateway HTTP
 
 ## Interceptors
 
-Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
+Conduktor Gateway has a significant number of Interceptors available to satisfy many different use-cases. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
 
 A few examples:
 - Full-body or field-level Encryption & Decryption
