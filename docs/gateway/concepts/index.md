@@ -19,7 +19,7 @@ Conduktor Gateway extends Kafka to provide new functionalities with different te
 - **Interceptors** are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
 - **Core features** like Authentication, Virtual clusters, Logical Topics and Failover are features that blend much more deeply the Kafka protocol. For that reason, we decided they should be experienced as dedicated features for simplicity and ease of understanding (as opposed to pluggable Interceptors).
 
-Most core features and all interceptors can be configured using the Gateway HTTP API or using the Conduktor CLI.
+Most core features and all interceptors can be configured using the Gateway [HTTP API](https://developers.conduktor.io/).
 
 ## Interceptors
 
