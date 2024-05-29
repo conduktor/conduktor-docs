@@ -5,6 +5,6 @@ description: A logical representation of a topic that a Gateway client will see
 ---
 
 :::caution under enhancement
-We are reworking this part of the documentation at the moment, for now this is the page to use
+We are currently reworking this part of the documentation, for now please use 
 [SQL Topics](/gateway/interceptors/optimize/virtual-sql-topic/)
 :::

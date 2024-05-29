@@ -4,7 +4,7 @@ title: Concentrated Topics
 description: Concentrated topics
 ---
 
-Topic Concentration helps reduce costs on low-volume topics by co-locating the messages from different unrelated topics on the same physical topic-partitions behind the scenes.  
+Topic Concentration helps reduce costs on low-volume topics. It does this by co-locating messages from multiple topics on the same physical topic behind the scenes.  
 
 This is totally transparent for consumers and producers that continue to write into topics normally.  
 
@@ -20,7 +20,7 @@ Only the following topic configs are allowed
 - `delete.retention.ms`
 
 `retention.ms` and `retention.bytes` values must not exceed the backing topic's configuration unless `autoManaged` is set to true.
-Any other config defined during the topic creation will fail the topic creation (unless they have the same value as the backing cluster)
+Any other config defined during the topic creation will fail the topic creation (unless they have the same value as the backing cluster).
 
 :::info
 With Concentrated Topics, the true retention is the one from the backing cluster's topic, not the retention requested during the concentrated topic creation.
