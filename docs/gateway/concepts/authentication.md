@@ -76,8 +76,8 @@ If you want to use Virtual Cluster feature, deploying this resource will link th
 POST /admin/userMappings/v1/vcluster/vc-alice
 {
   "username": "alice",
-  "principal": "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858",
-}s
+  "principal": "8d5e86b4-6a41-4e94-b6a8-1e5b7723e858"
+}
 ````
 
 

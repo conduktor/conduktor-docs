@@ -30,8 +30,8 @@ POST /admin/interceptors/v1/interceptor/enforce-partition-limit
       "min": 1,
       "max": 6,
       "action": "BLOCK"
-    }
   }
+}
 ````
 
 Interceptors combine with each other's in multiple different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Scoping** & **Overriding**.
@@ -61,8 +61,8 @@ POST /admin/interceptors/v1/username/sa-clickstream/interceptor/enforce-partitio
       "min": 1,
       "max": 20,
       "action": "BLOCK"
-    }
   }
+}
 ````
 
 ### Overriding
