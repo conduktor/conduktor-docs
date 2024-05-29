@@ -116,7 +116,7 @@ Virtual Cluster concept is entirely optional. If you choose not to configure any
 
 Check the detailed [Virtual Clusters Concept page](/gateway/concepts/virtual-clusters) for more details.
 
-## Other interesting features
+## Additional Features
 
 There are several other interesting features available with Conduktor Gateway.
 
