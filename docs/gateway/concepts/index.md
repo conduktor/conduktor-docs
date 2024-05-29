@@ -5,8 +5,7 @@ description: Introduction to the different concepts of Conduktor Gateway
 ---
 
 :::info
-Use this document to understand each concept of Conduktor Gateway at a high-level, diving deeper into each child page as necessary.```
-If you already understand Conduktor Gateway's concepts and you are looking for a detailed reference, check this page instead: Gateway Resource Reference(todo)
+Use this document to understand each concept of Conduktor Gateway at a high-level, diving deeper into each child page as necessary.
 :::
 
 ## Conduktor Gateway
