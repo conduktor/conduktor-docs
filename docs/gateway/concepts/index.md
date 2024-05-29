@@ -5,8 +5,7 @@ description: Introduction to the different concepts of Conduktor Gateway
 ---
 
 :::info
-The objective of this document is to introduce each concept individually and gradually while keeping the complexity and details to a minimum. 
-If you already understand Conduktor Gateway's concepts and you are looking for a detailed reference, check this page instead: Gateway Resource Reference(todo)
+Use this document to understand each concept of Conduktor Gateway at a high-level, diving deeper into each child page as necessary.
 :::
 
 ## Conduktor Gateway
@@ -17,24 +16,24 @@ Conduktor Gateway is deployed between your client applications and existing Kafk
 
 Conduktor Gateway extends Kafka to provide new functionalities with different techniques:
 - **Interceptors** are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
-- **Core features** like Authentication, Virtual clusters, Logical Topics, Failover... are features that blend much more deeply the Kafka protocol. For that reason we decided should be experienced as a dedicated feature for simplicity and ease of understanding (as opposed to pluggable Interceptors).
+- **Core features** like Authentication, Virtual clusters, Logical Topics and Failover are features that blend much more deeply the Kafka protocol. For that reason, we decided they should be experienced as dedicated features for simplicity and ease of understanding (as opposed to pluggable Interceptors).
 
-Most core features and all interceptors can be configured using the Gateway HTTP API or using the Conduktor CLI.
+Most core features and all interceptors can be configured using the Gateway [HTTP API](https://developers.conduktor.io/).
 
 ## Interceptors
 
-Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
+Conduktor Gateway has a significant number of Interceptors available to satisfy many different use-cases. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
 
 A few examples:
 - Full-body or field-level Encryption & Decryption
-- Reject (during produce) or Skip (during consume) records that don't match some business data quality rules
+- Reject (during produce) or Skip (during consume) records that don't match business data quality rules
 - Enforce producer configurations such as acks or compression
-- Enforce or override configurations during a CreateTopic requests, such as replication factor or naming convention
+- Enforce or override configurations during a CreateTopic request, such as replication factor or naming convention
 
 
 To deploy an Interceptor, you need to prepare its configuration. Configuring and deploying an interceptor is a bit similar to what you'd do with Kafka Connect Connectors.
 
-Here's an example for an interceptor whose responsibility is to prevent creation of topics with more than 6 partitions:
+Here's an example for an interceptor that will block the creation of topics with more than 6 partitions:
 ````json
 PUT /gateway/v2/interceptors
 {
@@ -88,7 +87,7 @@ flowchart LR
     Core <--> K
 ```
 
-More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page
+More advanced behaviors can also be configured such as **Scoping** and **Overriding**. They are presented in the detailed [Interceptor Concept](/gateway/concepts/interceptors) page.
 
 
 

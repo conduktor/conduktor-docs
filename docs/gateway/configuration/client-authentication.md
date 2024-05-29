@@ -399,7 +399,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 <u>_Note on the password :_</u>
 
-It must contain a token that is obtained by a Gateway admin via the REST API as follows:
+It must contain a token that is obtained by a Gateway admin via the HTTP API as follows:
 
 ```bash
  curl \                                                                                                   --silent \
