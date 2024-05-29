@@ -12,10 +12,15 @@ This page will help you understand both options and determine which solution bes
 ## Port-Based Routing
 In Port-Based Routing, Gateway listens on as many ports as there are Kafka brokers. Each Kafka broker is assigned a unique port number, and clients connect to the appropriate port to access the desired broker.
 
+Configure port-based routing using [environment variables](../configuration/env-variables.md#hostport):
+ - `GATEWAY_PORT_START`
+ - `GATEWAY_PORT_COUNT`
+
 
 ## Host-Based Routing (SNI)
 Host-Based Routing, Gateway listens on a single port and leverages Server Name Indication (SNI), an extension to the TLS protocol, to route traffic based on the hostname specified in the TLS handshake to determine the target Kafka broker, requiring valid TLS certificates, proper DNS setup, and DNS resolution.
 
+Read about [setting up SNI routing](../how-to/sni-routing.md#setting-up-sni-routing).
 
 ## Conclusion
 

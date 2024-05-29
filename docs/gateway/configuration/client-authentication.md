@@ -4,11 +4,9 @@ title: Client to Gateway Configuration
 description: Securing Conduktor Gateway
 ---
 
-
-
 ![client-to-gateway-excalidraw](./images/gw-security/gateway-security-excalidraw.png)
 
-# Your client to Gateway security
+## Your client to Gateway security
 You have several options when connecting clients to Gateway depending on your security requirements or design requirements.
 
 If you are connecting to Gateway in Passthrough mode, or multitenancy mode (with virtual clusters) will provide different options.
