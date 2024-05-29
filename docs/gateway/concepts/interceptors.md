@@ -20,9 +20,8 @@ To deploy an Interceptor, you need to prepare its configuration. Configuring and
 Here's an example for an interceptor that will block the creation of topics with more than 6 partitions:
 
 ````json
-PUT /gateway/v2/interceptors
+POST /admin/interceptors/v1/interceptor/enforce-partition-limit
 {
-  "name": "enforce-partition-limit",
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
   "priority": 100,
   "config": {
@@ -32,7 +31,7 @@ PUT /gateway/v2/interceptors
       "max": 6,
       "action": "BLOCK"
     }
-}
+  }
 ````
 
 Interceptors combine with each other's in multiple different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Scoping** & **Overriding**.
@@ -51,13 +50,9 @@ There are 4 targeting scopes available: Global, VirtualCluster, Group & ServiceA
 Check the Reference Documentation for more details.
 
 ````json
-// This interceptors only triggers for service account 'sa-clickstream'
-PUT /gateway/v2/interceptors
+// This interceptors only applies to service account 'sa-clickstream'
+POST /admin/interceptors/v1/username/sa-clickstream/interceptor/enforce-partition-limit
 {
-  "name": "enforce-partition-limit",
-  "scope": {
-    "username": "sa-clickstream"
-  },
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
   "priority": 100,
   "config": {
