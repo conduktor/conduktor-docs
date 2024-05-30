@@ -135,7 +135,7 @@ spec:
 
 ````
 
-### Cross-Application Instance Permission
+### Application Instance Permission
 Application Instance Permissions lets teams to collaborate with each others.
 Deploying this object will grant permission to the `grantedTo` Application Instance:
 - To its Service Account (Kafka ACL)

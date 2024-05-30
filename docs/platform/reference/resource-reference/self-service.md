@@ -195,7 +195,7 @@ spec:
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ````
 
-### Cross Application Permissions
+### Application Instance Permissions
 Application Instance Permissions lets teams collaborate with each other.
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -218,7 +218,7 @@ spec:
   permission: READ
   grantedTo: "another-appinstance-dev"
 ````
-**Cross Application permission checks:**
+**Application instance permission checks:**
 - `spec` is immutable
     - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application**
     - Remember this resource affects target ApplicationInstance's Kafka service account ACLs
