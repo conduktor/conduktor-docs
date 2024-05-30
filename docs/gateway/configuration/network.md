@@ -13,7 +13,7 @@ This page will help you understand both options and determine which solution bes
 In Port-Based Routing, Gateway listens on as many ports as there are Kafka brokers. Each Kafka broker is assigned a unique port number, and clients connect to the appropriate port to access the desired broker.
 
 Configure port-based routing using [environment variables](../configuration/env-variables.md#hostport):
- - `GATEWAY_ADVERTISIED_HOST` 
+ - `GATEWAY_ADVERTISED_HOST` 
  - `GATEWAY_PORT_START`
  - `GATEWAY_PORT_COUNT`
 
