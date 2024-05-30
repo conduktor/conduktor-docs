@@ -46,7 +46,7 @@ $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.propertie
 orders
 
 # If we contact directly the backing cluster instead of the gateway, 
-# we can see both topics under a different name. Their true name in the backing Kafka.
+# we can see both topics under a different name. This is the actual topic name on the Kafka cluster, which is observed when not interacting through the Gateway.
 $ kafka-topics.sh --bootstrap-server=backing-kafka:9092  --list
 vc-alice.orders
 vc-bob.orders
