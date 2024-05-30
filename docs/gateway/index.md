@@ -28,7 +28,7 @@ Conduktor Gateway is deployed between your client applications and existing Kafk
 
 ### Authentication
 
-Much like Kafka brokers, Gateway supports multiple security protocols for Kafka client to Gateway authentication, such as PLAINTEXT, SSL, SASL SSL, mTLS. Equally, Gateway supports all Kafka security protocols for Gateway to Kafka authentication. Read more about [Gateway to Kafka Authentication](https://docs.conduktor.io/gateway/concepts/Gateway/) or [Client to Gateway Authentication](https://docs.conduktor.io/gateway/concepts/Clients/).
+Much like Kafka brokers, Gateway supports multiple security protocols for Kafka client to Gateway authentication, such as PLAINTEXT, SSL, SASL SSL, mTLS. Equally, Gateway supports all Kafka security protocols for Gateway to Kafka authentication. Read more about [Gateway to Kafka Authentication](/gateway/configuration/kafka-authentication/) or [Client to Gateway Authentication](/gateway/configuration/client-authentication/).
 
 ### Interceptors
 
