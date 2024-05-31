@@ -110,7 +110,7 @@ spec:
 - `spec.cluster` is a valid Console Cluster technical id
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
-- `spec.topicPolicyRef` is **optional**, and if present must be a valid list of TopicPolicy
+- `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
 - `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
@@ -134,6 +134,11 @@ Typical use case include:
 - Safeguarding from invalid or risky Topic configuration
 - Enforcing naming convention
 - Enforcing metadata
+
+:::caution
+Topic policies are not applied automatically.  
+You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.topicPolicyRef`.
+:::
 
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />  
