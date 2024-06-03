@@ -374,6 +374,34 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `kafkaConnectRestart`              | Permission to restart connectors. |
 
 
+#### Cluster Permissions
+```yaml
+# Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
+- resourceType: Cluster
+  name: shadow-it
+  permissions:
+    - clusterViewBroker
+    - clusterEditSRCompatibility
+    - clusterEditBroker
+    - clusterViewACL
+    - clusterManageACL
+```
+
+- `resourceType`: `Cluster`
+- `name` is the name of the cluster to apply the permissions to
+  - Use `*` for all clusters
+- `permissions` is a list of valid cluster permissions (See Table)
+
+| Available Cluster Permissions | Description |
+|-------------------------------|--------|
+| `clusterViewBroker`           | Permission to view broker details. |
+| `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
+| `clusterEditBroker`          | Permission to edit broker configuration. |
+| `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
+| `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
+
+
+
 ### Icon Sets
 
 | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M352 351.1h-71.25l47.44-105.4c3.062-6.781 1.031-14.81-4.906-19.31c-5.969-4.469-14.22-4.312-19.94 .4687l-153.6 128c-5.156 4.312-7.094 11.41-4.781 17.72c2.281 6.344 8.281 10.56 15.03 10.56h71.25l-47.44 105.4c-3.062 6.781-1.031 14.81 4.906 19.31C191.6 510.9 194.1 512 198.4 512c3.656 0 7.281-1.25 10.25-3.719l153.6-128c5.156-4.312 7.094-11.41 4.781-17.72C364.8 356.2 358.8 351.1 352 351.1zM416 128c-.625 0-1.125 .25-1.625 .25C415.5 123 416 117.6 416 112C416 67.75 380.3 32 336 32c-24.62 0-46.25 11.25-61 28.75C256.4 24.75 219.3 0 176 0C114.1 0 64 50.13 64 112c0 7.25 .75 14.25 2.125 21.25C27.75 145.8 0 181.5 0 224c0 53 43 96 96 96h46.63l140.2-116.8c8.605-7.195 19.53-11.16 30.76-11.16c10.34 0 20.6 3.416 29.03 9.734c17.96 13.61 24.02 37.45 14.76 57.95L330.2 320H416c53 0 96-43 96-96S469 128 416 128z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M430.8 304.9c10 5.625 19 12.37 27 20.37C487.1 292.8 529 272 576 272v-64c-61 0-116.2 24.62-156.8 64.25C424.9 282.2 429 293.2 430.8 304.9zM399.2 325.6C399.4 323.8 400 321.9 400 320c0-35.25-28.75-64-64-64c-12.62 0-24.25 3.75-34.13 10C284.2 227.1 245.4 200 200 200c-61.88 0-112 50.12-112 112c0 3 .75 5.75 .875 8.75C39.25 324.4 0 365.4 0 416c0 53 43 96 96 96h272c53 0 96-43 96-96C464 374 436.8 338.6 399.2 325.6zM238.6 173.6c21 5.875 40.38 16.5 56.62 31C359.6 119.4 461.2 64 576 64V0C437.1 0 314.2 68.75 238.6 173.6zM325.8 225.1C333.2 224.2 362.5 219.8 394.2 244C440.6 197.2 504.9 168 576 168v-64C474.8 104 384.4 151.4 325.8 225.1z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M96.2 200.1C96.07 197.4 96 194.7 96 192C96 103.6 167.6 32 256 32C315.3 32 367 64.25 394.7 112.2C409.9 101.1 428.3 96 448 96C501 96 544 138.1 544 192C544 204.2 541.7 215.8 537.6 226.6C596 238.4 640 290.1 640 352C640 422.7 582.7 480 512 480H144C64.47 480 0 415.5 0 336C0 273.2 40.17 219.8 96.2 200.1z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M475.6 384.1C469.7 394.3 458.9 400 447.9 400c-5.488 0-11.04-1.406-16.13-4.375l-25.09-14.64l5.379 20.29c3.393 12.81-4.256 25.97-17.08 29.34c-2.064 .5625-4.129 .8125-6.164 .8125c-10.63 0-20.36-7.094-23.21-17.84l-17.74-66.92L288 311.7l.0002 70.5l48.38 48.88c9.338 9.438 9.244 24.62-.1875 33.94C331.5 469.7 325.4 472 319.3 472c-6.193 0-12.39-2.375-17.08-7.125l-14.22-14.37L288 480c0 17.69-14.34 32-32.03 32s-32.03-14.31-32.03-32l-.0002-29.5l-14.22 14.37c-9.322 9.438-24.53 9.5-33.97 .1875c-9.432-9.312-9.525-24.5-.1875-33.94l48.38-48.88L223.1 311.7l-59.87 34.93l-17.74 66.92c-2.848 10.75-12.58 17.84-23.21 17.84c-2.035 0-4.1-.25-6.164-.8125c-12.82-3.375-20.47-16.53-17.08-29.34l5.379-20.29l-25.09 14.64C75.11 398.6 69.56 400 64.07 400c-11.01 0-21.74-5.688-27.69-15.88c-8.932-15.25-3.785-34.84 11.5-43.75l25.96-15.15l-20.33-5.508C40.7 316.3 33.15 303.1 36.62 290.3S53.23 270 66.09 273.4L132 291.3L192.5 256L132 220.7L66.09 238.6c-2.111 .5625-4.225 .8438-6.305 .8438c-10.57 0-20.27-7.031-23.16-17.72C33.15 208.9 40.7 195.8 53.51 192.3l20.33-5.508L47.88 171.6c-15.28-8.906-20.43-28.5-11.5-43.75c8.885-15.28 28.5-20.44 43.81-11.5l25.09 14.64L99.9 110.7C96.51 97.91 104.2 84.75 116.1 81.38C129.9 77.91 142.1 85.63 146.4 98.41l17.74 66.92L223.1 200.3l-.0002-70.5L175.6 80.88C166.3 71.44 166.3 56.25 175.8 46.94C185.2 37.59 200.4 37.72 209.8 47.13l14.22 14.37L223.1 32c0-17.69 14.34-32 32.03-32s32.03 14.31 32.03 32l.0002 29.5l14.22-14.37c9.307-9.406 24.51-9.531 33.97-.1875c9.432 9.312 9.525 24.5 .1875 33.94l-48.38 48.88L288 200.3l59.87-34.93l17.74-66.92c3.395-12.78 16.56-20.5 29.38-17.03c12.82 3.375 20.47 16.53 17.08 29.34l-5.379 20.29l25.09-14.64c15.28-8.906 34.91-3.75 43.81 11.5c8.932 15.25 3.785 34.84-11.5 43.75l-25.96 15.15l20.33 5.508c12.81 3.469 20.37 16.66 16.89 29.44c-2.895 10.69-12.59 17.72-23.16 17.72c-2.08 0-4.193-.2813-6.305-.8438L379.1 220.7L319.5 256l60.46 35.28l65.95-17.87C458.8 270 471.9 277.5 475.4 290.3c3.473 12.78-4.082 25.97-16.89 29.44l-20.33 5.508l25.96 15.15C479.4 349.3 484.5 368.9 475.6 384.1z"></path></svg> |
