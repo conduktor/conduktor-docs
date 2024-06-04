@@ -296,7 +296,7 @@ networks:
 
 ### 1. Start the Docker environment
 
-Start all your docker processes, wait for them to be up and ready, then run in background:
+Start all your docker services, wait for them to be up and ready, then run in background:
 
 * `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
 * `--detach`: Detached mode: Run containers in the background
