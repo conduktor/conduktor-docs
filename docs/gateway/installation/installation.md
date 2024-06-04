@@ -47,7 +47,7 @@ In its most simple form Gateway can be run from a simple Docker run command with
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
   -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";' \
-  conduktor/conduktor-gateway:3.0.3
+  conduktor/conduktor-gateway:3.0.5
 ```
 
 If you're interested in trying out Gateway yourself go checkout the [demos](https://github.com/conduktor/conduktor-gateway-demos).
