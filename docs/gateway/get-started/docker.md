@@ -19,6 +19,7 @@ Jump to:
 - [Running the Gateway](#running-the-gateway)
    - [Connecting to secured Kafka](#connecting-to-secured-kafka)
    - [Confluent Cloud example](#confluent-cloud-example)
+   - [Connecting your clients](#connecting-your-clients)
 - [Quick Start - Docker Compose](#connecting-to-secured-kafka)
 - [Connecting to a secured Kafka](#connecting-to-secured-kafka)
 
