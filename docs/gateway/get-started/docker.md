@@ -17,8 +17,9 @@ Use this quick start guide to help you get started.
 Jump to:
 
 - [Running the Gateway](#running-the-gateway)
+   - [Connecting to secured Kafka](#connecting-to-secured-kafka)
+   - [Confluent Cloud example](#confluent-cloud-example)
 - [Quick Start - Docker Compose](#connecting-to-secured-kafka)
-- [Helm Chart](#helm)
 - [Connecting to a secured Kafka](#connecting-to-secured-kafka)
 
 ## Running the Gateway
