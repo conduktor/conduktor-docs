@@ -37,7 +37,7 @@ Your Kafka's bootstrap server, along with its [authentication method](../configu
 
 ```bash
  docker run \
-  -e KAFKA_BOOTSTRAP_SERVERS= {"YOUR_KAFKA_CLUSTER_BOOTSTRAP_SERVER"} \
+  -e KAFKA_BOOTSTRAP_SERVERS=$YOUR_KAFKA_CLUSTER_BOOTSTRAP_SERVER \
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
   -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="password";' \
