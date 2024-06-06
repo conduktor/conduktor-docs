@@ -53,17 +53,17 @@ Creates a Kafka Cluster Definition in Console.
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <GUI />
 
-````yaml
+```yaml title="KafkaCluster"
 ---
 apiVersion: v1
 kind: KafkaCluster
 metadata:
   name: shadow-julien
 spec:
-  displayName: "Julien's cloud - Kafka"
-  icon: "kafka"
-  color: "#000000"
-  bootstrapServers: "34.140.204.135:12092"
+  displayName: Julien's cloud - Kafka
+  icon: kafka
+  color: '#000000'
+  bootstrapServers: '34.140.204.135:12092'
   ignoreUntrustedCertificate: false
   properties:
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
@@ -78,24 +78,24 @@ spec:
       IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
       -----END CERTIFICATE-----
   schemaRegistry:
-    type: "CONFLUENT"
-    url: http://34.140.204.135/registry/
+    type: CONFLUENT
+    url: 'http://34.140.204.135/registry/'
     security:
       username: superUser
       password: superUser
-    properties:
+    properties: null
     ignoreUntrustedCertificate: false
   amazonSecurity:
-    type: "CREDENTIALS"
-    accessKeyId: "string"
-    secretKey: "string"
+    type: CREDENTIALS
+    accessKeyId: string
+    secretKey: string
   kafkaFlavor:
-    type: "CONFLUENT"
-    key: "string"
-    secret: "string"
-    confluentEnvironmentId: "string"
-    confluentClusterId: "string"
-````
+    type: CONFLUENT
+    key: string
+    secret: string
+    confluentEnvironmentId: string
+    confluentClusterId: string
+```
 :::info
 `metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
 ![Cluster identity](../img/cluster-visual-identity.png)
@@ -124,7 +124,7 @@ Creates a Kafka Connect Cluster Definition in Console.
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <GUI />
 
-````yaml
+```yaml title="KafkaConnectCluster"
 ---
 apiVersion: v1
 kind: KafkaConnectCluster
@@ -132,8 +132,8 @@ metadata:
   name: connect-1
   cluster: julien-cloud
 spec:
-  displayName: "Connect 1"
-  url: "http://34.140.204.135/connect/"
+  displayName: Connect 1
+  url: 'http://34.140.204.135/connect/'
   headers:
     a: b
     c: d
@@ -141,22 +141,23 @@ spec:
   security: SEE BELOW
 ########  
   security:
-    type: "BasicAuth"
-    username: "toto"
-    password: "my-secret"
+    type: BasicAuth
+    username: toto
+    password: my-secret
 
   security:
-    type: "BearerToken"
-    token: "toto"
+    type: BearerToken
+    token: toto
 
   security:
-    type: "NoSecurity"
+    type: NoSecurity
 
   security:
-    type: "SSLAuth"
-    key: "toto"
-    certificateChain: "tata"
-````
+    type: SSLAuth
+    key: toto
+    certificateChain: tata
+```
+
 ### KsqlDBCluster
 :::caution Not implemented yet
 This concept will be available in a future version
@@ -166,16 +167,16 @@ This concept will be available in a future version
 **Managed with:** <API /> <GUI />
 
 Creates a ksqlDB Cluster Definition in Console.
-````yaml
+```yaml title="KsqlDBCluster"
 ---
 apiVersion: v1
 kind: KsqlDBCluster
 metadata:
-  name: connect-1
+  name: ksqldb-1
   cluster: julien-cloud
 spec:
-  displayName: "Connect 1"
-  url: "http://34.140.204.135/connect/"
+  displayName: "ksqlDB 1"
+  url: "http://34.140.204.135:8088"
   headers:
     a: b
     c: d
@@ -183,27 +184,26 @@ spec:
   security: SEE BELOW
 ########  
   security:
-    type: "BasicAuth"
-    username: "toto"
-    password: "my-secret"
+    type: BasicAuth
+    username: toto
+    password: my-secret
 
   security:
-    type: "BearerToken"
-    token: "toto"
+    type: BearerToken
+    token: toto
 
   security:
-    type: "NoSecurity"
+    type: NoSecurity
 
   security:
-    type: "SSLAuth"
-    key: "toto"
-    certificateChain: "tata"
-````
+    type: SSLAuth
+    key: toto
+    certificateChain: tata
+```
 ### ConsoleGroup
 ### ConsoleUser
 ### Alert
 ### DataMaskingPolicy
-
 
 ### Icon Sets
 
