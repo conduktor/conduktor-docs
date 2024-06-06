@@ -52,18 +52,17 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
-````yaml
-# Application
+```yaml title="Application"
 ---
-apiVersion: "v1"
-kind: "Application"
+apiVersion: v1
+kind: Application
 metadata:
-  name: "clickstream-app"
+  name: clickstream-app
 spec:
-  title: "Clickstream App"
-  description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of the Conduktor Console Group
-````
+  title: Clickstream App
+  description: FreeForm text, probably multiline markdown
+  owner: group-a # technical-id of the Conduktor Console Group
+```
 
 **Application checks:**
 -   `spec.owner` is a valid Console Group
@@ -84,27 +83,27 @@ This is the core concept of Self-service as it ties everything together:
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />
 
-````yaml
+```yaml
 ---
-apiVersion: "v1"
-kind: "ApplicationInstance"
+apiVersion: v1
+kind: ApplicationInstance
 metadata:
-  application: "clickstream-app"
-  name: "clickstream-dev"
+  application: clickstream-app
+  name: clickstream-dev
 spec:
-  cluster: "shadow-it"
-  serviceAccount: "sa-clicko"
+  cluster: shadow-it
+  serviceAccount: sa-clicko
   topicPolicyRef:
-    - "generic-dev-topic"
-    - "clickstream-naming-rule"
+    - generic-dev-topic
+    - clickstream-naming-rule
   resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
-````
+    - type: TOPIC
+      name: click.
+      patternType: PREFIXED
+    - type: GROUP
+      name: click.
+      patternType: PREFIXED
+```
 **AppInstance checks:**
 - `metadata.application` is a valid Application
 - `spec.cluster` is a valid Console Cluster technical id
@@ -143,35 +142,40 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />  
 
-```yaml
+```yaml title="TopicPolicy"
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: v1
+kind: TopicPolicy
 metadata:
-  name: "generic-dev-topic"
+  name: generic-dev-topic
 spec:
   policies:
     metadata.labels.data-criticality:
       constraint: OneOf
-      values: ["C0", "C1", "C2"]
-    spec.configs.retention.ms: 
+      values:
+        - C0
+        - C1
+        - C2
+    spec.configs.retention.ms:
       constraint: Range
       max: 3600000
       min: 60000
     spec.replicationFactor:
       constraint: OneOf
-      values: ["3"]
+      values:
+        - '3'
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: v1
+kind: TopicPolicy
 metadata:
-  name: "clickstream-naming-rule"
+  name: clickstream-naming-rule
 spec:
   policies:
     metadata.name:
       constraint: Match
-      pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+      pattern: '^click\.(?<event>[a-z0-9-]+)\.(avro|json)$'
 ```
+
 **TopicPolicy checks:**
 - `spec.policies` requires YAML paths that are paths to the [Topic resource](../kafka#topic) YAML. For example:
   - `metadata.name` to create constraints on Topic name
@@ -183,22 +187,22 @@ spec:
   - Read the [Policy Constraints](#policy-constraints) section for each constraint's specification
 
 With the two Topic policies declared above, the following Topic resource would succeed validation:
-````yaml
+```yaml
 ---
 apiVersion: v2
 kind: Topic
 metadata:
   cluster: shadow-it
-  name: click.event-stream.avro  # Checked by Match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$ on `metadata.name`
+  name: click.event-stream.avro # Checked by Match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$ on `metadata.name`
   labels:
-    data-criticality: C2         # Checked by OneOf ["C0", "C1", "C2"] on `metadata.labels.data-criticality`
+    data-criticality: C2        # Checked by OneOf ["C0", "C1", "C2"] on `metadata.labels.data-criticality`
 spec:
-  replicationFactor: 3           # Checked by OneOf ["3"] on `spec.replicationFactor`
+  replicationFactor: 3          # Checked by OneOf ["3"] on `spec.replicationFactor`
   partitions: 3
   configs:
     cleanup.policy: delete
-    retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
-````
+    retention.ms: '60000'       # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
+```
 
 ### Application Instance Permissions
 Application Instance Permissions lets teams collaborate with each other.
@@ -206,23 +210,23 @@ Application Instance Permissions lets teams collaborate with each other.
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />  
 
-````yaml
+```yaml title="ApplicationInstancePermission"
 # Permission granted to other Applications
 ---
 apiVersion: v1
-kind: "ApplicationInstancePermission"
+kind: ApplicationInstancePermission
 metadata:
-  application: "clickstream-app"
-  appInstance: "clickstream-app-dev"
-  name: "clickstream-app-dev-to-another"
+  application: clickstream-app
+  appInstance: clickstream-app-dev
+  name: clickstream-app-dev-to-another
 spec:
   resource:
     type: TOPIC
-    name: "click.event-stream.avro"
+    name: click.event-stream.avro
     patternType: LITERAL
   permission: READ
-  grantedTo: "another-appinstance-dev"
-````
+  grantedTo: another-appinstance-dev
+```
 **Application instance permission checks:**
 - `spec` is immutable
     - Once created, you will only be able to update its metadata. **This is to protect you from making a change that could impact an external application**
@@ -261,14 +265,14 @@ You can create as many Application Groups as required to restrict or represent t
 - Developers with higher permissions in Dev
 
 **Example**
-````yaml
+```yaml title="ApplicationGroup"
 # Permissions granted to Console users in the Application
 ---
 apiVersion: v1
-kind: "ApplicationGroup"
+kind: ApplicationGroup
 metadata:
-  application: "clickstream-app"
-  name: "clickstream-support"
+  application: clickstream-app
+  name: clickstream-support
 spec:
   title: Support Clickstream
   description: |
@@ -279,27 +283,35 @@ spec:
   permissions:
     - appInstance: clickstream-app-dev
       resourceType: TOPIC
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned & subscribed topics
-      permissions: ["topicViewConfig", "topicConsume"]
+      resourcePatternType: LITERAL
+      resourcePattern: '*'  # All owned & subscribed topics
+      permissions:
+        - topicViewConfig
+        - topicConsume
     - appInstance: clickstream-app-dev
       resourceType: GROUP
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned consumer groups
-      permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
+      resourcePatternType: LITERAL
+      resourcePattern: '*'  # All owned consumer groups
+      permissions:
+        - consumerGroupCreate
+        - consumerGroupReset
+        - consumerGroupDelete
+        - consumerGroupView
     - appInstance: clickstream-app-dev
       resourceType: CONNECTOR
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned connectors
-      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectPauseResume", "kafkaConnectRestart"]
+      resourcePatternType: LITERAL
+      resourcePattern: '*'  # All owned connectors
+      permissions:
+        - kafkaConnectorViewConfig
+        - kafkaConnectorStatus
+        - kafkaConnectPauseResume
+        - kafkaConnectRestart
   members:
     - user1@company.org
     - user2@company.org
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
-
-````
-
+```
 
 ### Policy Constraints
 
@@ -310,11 +322,11 @@ There are currently 3 available constraints:
 
 **Range**  
 Validates the property belongs to a range of numbers (inclusive)
-```yaml
+```yaml title="Range Constraint"
 spec.configs.retention.ms:
-  constraint: "Range"
-  min:   3600000 # 1 hour in ms
-  max: 604800000 # 7 days in ms
+  constraint: Range
+  min: 3600000    # 1 hour in ms
+  max: 604800000  # 7 days in ms
 ```
 Validation will succeed with these inputs:
 - 3600000 (min)
@@ -327,10 +339,12 @@ Validation will fail with these inputs:
 
 **OneOf**  
 Validates the property is one of the expected values
-```yaml
+```yaml title="OneOf Constraint"
 spec.configs.cleanup.policy:
   constraint: OneOf
-  values: ["delete", "compact"]
+  values:
+    - delete
+    - compact
 ```
 Validation will succeed with these inputs:
 - `delete`
@@ -342,10 +356,10 @@ Validation will fail with these inputs:
 
 **Match**  
 Validates the property against a Regular Expression
-```yaml
+```yaml title="Match Constraint"
 metadata.name:
   constraint: Match
-  pattern: ^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$
+  pattern: '^wikipedia\.(?<event>[a-z0-9]+)\.(avro|json)$'
 ```
 Validation will succeed with these inputs:
 - `wikipedia.links.avro`
@@ -358,14 +372,16 @@ Validation will fail with these inputs
 **Optional Flag**  
 Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
 Example:
-```yaml
+```yaml title="Optional Constraint"
 spec.configs.min.insync.replicas:
   constraint: ValidString
   optional: true
-  values: ["2"]
+  values:
+    - '2'
 ```
+
 This object will pass the validation
-````yaml
+```yaml title="Success Example"
 ---
 apiVersion: v2
 kind: Topic
@@ -378,9 +394,10 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'
-````
-This object will fail the validation due to a new incorrect definition of `insync.replicas`
-````yaml
+```
+
+This object will fail the validation due to a new incorrect definition of `min.insync.replicas`
+```yaml title="Fail Example"
 ---
 apiVersion: v2
 kind: Topic
@@ -394,4 +411,4 @@ spec:
     min.insync.replicas: 3
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
