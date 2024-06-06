@@ -176,7 +176,7 @@ metadata:
   cluster: julien-cloud
 spec:
   displayName: "ksqlDB 1"
-  url: 'http://34.140.204.135:8088'
+  url: 'http://ksql-host:8088'
   headers:
     a: b
     c: d
