@@ -50,7 +50,7 @@ Creates a Topic in Kafka.
 **Managed with:** <CLI /> <API /> <GUI />
 
 
-````yaml
+```yaml title="Topic"
 ---
 apiVersion: v2
 kind: Topic
@@ -64,7 +64,7 @@ spec:
     min.insync.replicas: '2'
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 **Topic checks:**
 - `spec.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances
@@ -87,7 +87,7 @@ Creates a Subject in the Schema Registry.
 
 **Local file**
 
-```yaml
+```yaml title="Subject with schema file"
 ---
 apiVersion: v1
 kind: Subject
@@ -102,7 +102,7 @@ spec:
 
 **Inline**
 
-```yaml
+```yaml title="Subject with inline schema"
 ---
 apiVersion: v1
 kind: Subject
@@ -118,7 +118,7 @@ spec:
 
 **Schema Reference**
 
-```yaml
+```yaml title="Subject with schema reference"
 ---
 apiVersion: v1
 kind: Subject
@@ -170,7 +170,7 @@ This concept will be available in a future version
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API /> <GUI />
 
-```yaml
+```yaml title="Connector"
 ---
 apiVersion: v1
 kind: Connector
@@ -184,5 +184,4 @@ spec:
     topics: myPrefix.myTopic
     connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
     consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
-
 ```
