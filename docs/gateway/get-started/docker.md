@@ -67,7 +67,7 @@ At this stage you have:
 
 Your clients can now interact with Conduktor Gateway like any other Kafka cluster.
 
-Example: creating a topic using the Apache Kafka command line client:
+Example: creating a topic via Gateway using the Apache Kafka command line client:
 
 ```sh
 bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
