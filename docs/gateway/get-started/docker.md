@@ -19,32 +19,69 @@ Jump to:
 - [Running the Gateway](#running-the-gateway)
    - [Connecting to secured Kafka](#connecting-to-secured-kafka)
    - [Confluent Cloud example](#confluent-cloud-example)
-   - [Connecting your clients](#connecting-your-clients)
-- [Quick Start - Docker Compose](#connecting-to-secured-kafka)
-- [Connecting to a secured Kafka](#connecting-to-secured-kafka)
+- [Docker Compose](#docker-compose)
 
 ## Running the Gateway
 
 :::info
-Pre-requisite: You will need a running Kafka cluster for Conduktor Gateway to proxy. 
-
-Alternatively, see the [Docker Compose](#quick-start---docker-compose) for a quick start.
+For a fully self-contained quick-start, see the [Docker Compose](#quick-start---docker-compose).
 :::
 
 In its simplest form, Gateway can be run from a simple Docker run command with the credentials to connect to your existing Kafka cluster. 
 
-Your Kafka's bootstrap server, along with its [authentication method](../configuration/kafka-authentication.md) should be configured using [environment variables](../configuration/env-variables.md).
+#### Start a local Kafka 
 
-```bash
- docker run \
-  -e KAFKA_BOOTSTRAP_SERVERS=$YOUR_KAFKA_CLUSTER_BOOTSTRAP_SERVER \
-  -e KAFKA_SASL_MECHANISM=PLAIN \
-  -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
-  -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="password";' \
+Create a new directory (note the docker network will be derived from the directory name):
+```sh
+mkdir gateway-quick-start
+```
+
+Run the below command to start a single node Kafka and ZooKeeper:
+
+```sh
+curl -L https://releases.conduktor.io/single-kafka -o docker-compose.yml && docker compose up -d 
+```
+
+#### Start Conduktor Gateway 
+
+Run the below command to start Conduktor Gateway and configure Docker networking between the two containers:
+
+```sh
+  docker run \
+  --network gateway-quick-start_default \
+  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:29092 \
+  -e GATEWAY_ADVERTISED_HOST=localhost \
+  -e GATEWAY_PORT_START=9099 \
+  -e GATEWAY_PORT_COUNT=1 \
+  -p 9099:9099 \
   conduktor/conduktor-gateway:3.0.5
 ```
 
+By default, the Gateway uses [port-based routing](../configuration/network.md) and listens on as many ports as there are Kafka brokers. In this case, we started a single-node Kafka cluster and opened 1 port. 
+
+At this stage you have:
+ - Kafka running and its brokers available on `localhost:9092`
+ - Gateway acting as a proxy to the backing Kafka cluster, accessible at `loalhost:9099`
+
+#### Connecting your clients 
+
+Your clients can now interact with Conduktor Gateway like any other Kafka cluster.
+
+Example: creating a topic using the Apache Kafka command line client:
+
+```sh
+bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
+```
+
+#### Next Steps
+
+This quick start shows the basics, demonstrating Conduktor Gateway acting as a network proxy for Kafka. However, the real value comes with configuring [interceptors](../concepts/interceptors.md), which are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
+
+View [demos](../demos/demos.md) that demonstrate how interceptors are used to satisfy specific use cases such as encryption, data quality and safeguarding your cluster with technical and business rules. 
+
 ### Connecting to secured Kafka
+
+Your Kafka's bootstrap server, along with its [authentication method](../configuration/kafka-authentication.md) should be configured using [environment variables](../configuration/env-variables.md).
 
 Conduktor Gateway connects to Kafka just like any other client. 
 
@@ -63,9 +100,6 @@ becomes:
 KAFKA_SSL_TRUSTSTORE_LOCATION
 ```
 
-For all configuration options, see [environment variables](/gateway/configuration/env-variables/).
-
-
 ### Confluent Cloud Example
 
 Below shows the most simple way to get started with Confluent Cloud. 
@@ -77,28 +111,25 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
 :::
 
 ```bash
- docker run \
+  docker run \
   -e KAFKA_BOOTSTRAP_SERVERS=$CONFLUENT_CLOUD_KAFKA_BOOTSTRAP_SERVER \
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-  -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="{username}" password="{password}' \
+  -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="$USERNAME" password="$PASSWORD' \
   -e GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_PLAINTEXT \
+  -e GATEWAY_ADVERTISED_HOST=localhost \
+  -e GATEWAY_CLUSTER_ID=test \
+  -p 6969-6999:6969-6999 \
   conduktor/conduktor-gateway:3.0.5
 ```
 
 Note that if you wish to maintain the SSL/TLS connection between clients and Conduktor Gateway, see [Client to Gateway Configuration](../configuration/client-authentication.md).
 
+By default, the Gateway uses [port-based routing](../configuration/network.md) and listens on as many ports as there are Kafka brokers. In this case, we open 30 ports to account for Confluent Cloud clusters with many brokers. However, you may need to open more ports depending on the size of your cluster. 
 
-### Connecting your clients
+If you need support with your configuration, please [contact us](https://support.conduktor.io/) for support.
 
-Once configured, your clients should point to the **bootstrap address of Conduktor Gateway** (defaults to `localhost:6969`), rather than the backing Kafka cluster.
-
-**Example:** creating a topic using the Apache Kafka command line client:
-```sh
-bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:6969 --command-config config.properties
-```
-
-## Quick Start - Docker Compose
+## Docker Compose
 
 The below example demonstrates an environment consisting of:
  - Zookeeper and a 3-node Kafka cluster
