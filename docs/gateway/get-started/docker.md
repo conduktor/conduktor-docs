@@ -24,7 +24,7 @@ Jump to:
 ## Running the Gateway
 
 :::info
-For a fully self-contained quick-start, see the [Docker Compose](#quick-start---docker-compose).
+For a fully self-contained quick-start, see the [Docker Compose](#docker-compose).
 :::
 
 In its simplest form, Gateway can be run from a simple Docker run command with the credentials to connect to your existing Kafka cluster. 
