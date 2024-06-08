@@ -4,7 +4,7 @@ title: Kubernetes
 description: Conduktor Gateway is provided as a Docker image and Helm chart.
 ---
 
-## Helm Chart
+# Helm Chart
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io), containing a chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 
