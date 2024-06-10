@@ -10,7 +10,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 Conduktor Gateway is provided as a Docker image and [Helm chart](../kubernetes).
 
-It should be deployed and managed how is best for your organisation and use case(s). This could be a single container, or more likely a number of Gateway instances should be deployed and scaled to meet your needs. Optionally, the instances could be deployed behind a [load balancer](../reference/load-balancing.md) .
+It should be deployed and managed how is best for your organisation and use case(s). This could be a single container, or more likely a number of Gateway instances should be deployed and scaled to meet your needs. Optionally, the instances could be deployed behind a [load balancer](../reference/load-balancing.md).
 
 Use this quick start guide to help you get started.
 
@@ -33,7 +33,7 @@ In its simplest form, Gateway can be run from a simple Docker run command with t
 
 Create a new directory (note the docker network will be derived from the directory name):
 ```sh
-mkdir gateway-quick-start && cd gateway-quick-start```
+mkdir gateway-quick-start && cd gateway-quick-start
 ```
 
 Run the below command to start a single node Kafka and ZooKeeper:
