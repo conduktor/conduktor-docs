@@ -55,8 +55,8 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 ````yaml
 # Application
 ---
-apiVersion: "v1"
-kind: "Application"
+apiVersion: v1
+kind: Application
 metadata:
   name: "clickstream-app"
 spec:
@@ -86,8 +86,8 @@ This is the core concept of Self-service as it ties everything together:
 
 ````yaml
 ---
-apiVersion: "v1"
-kind: "ApplicationInstance"
+apiVersion: v1
+kind: ApplicationInstance
 metadata:
   application: "clickstream-app"
   name: "clickstream-dev"
@@ -98,12 +98,12 @@ spec:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
   resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
+    - type: TOPIC
+      name: "click."
+      patternType: PREFIXED
+    - type: GROUP
+      name: "click."
+      patternType: PREFIXED
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -145,8 +145,8 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 
 ```yaml
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: v1
+kind: TopicPolicy
 metadata:
   name: "generic-dev-topic"
 spec:
@@ -162,8 +162,8 @@ spec:
       constraint: OneOf
       values: ["3"]
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: v1
+kind: TopicPolicy
 metadata:
   name: "clickstream-naming-rule"
 spec:
@@ -210,7 +210,7 @@ Application Instance Permissions lets teams collaborate with each other.
 # Permission granted to other Applications
 ---
 apiVersion: v1
-kind: "ApplicationInstancePermission"
+kind: ApplicationInstancePermission
 metadata:
   application: "clickstream-app"
   appInstance: "clickstream-app-dev"
@@ -265,7 +265,7 @@ You can create as many Application Groups as required to restrict or represent t
 # Permissions granted to Console users in the Application
 ---
 apiVersion: v1
-kind: "ApplicationGroup"
+kind: ApplicationGroup
 metadata:
   application: "clickstream-app"
   name: "clickstream-support"
