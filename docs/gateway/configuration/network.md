@@ -26,11 +26,11 @@ Read about [setting up SNI routing](../how-to/sni-routing.md#setting-up-sni-rout
 ## Conclusion
 
 Choose **Port-Based Routing** if your environment:
-- Does not require TLS encryption.
-- Has flexible network port management capabilities.
-- Prefers a simpler, straightforward configuration without DNS complexities.
+- Does not require TLS encryption
+- Has flexible network port management capabilities
+- Prefers a simpler, straightforward configuration without DNS complexities
 
 Choose **Host-Based Routing (SNI)** if your environment:
-- Requires TLS encrypted connections for secure communication.
-- Faces challenges with managing multiple network ports.
-- Seeks a scalable solution with easier management of routing through DNS and hostnames.
+- Requires TLS encrypted connections for secure communication
+- Faces challenges with managing multiple network ports
+- Seeks a scalable solution with easier management of routing through DNS and hostnames

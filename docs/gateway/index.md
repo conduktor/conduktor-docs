@@ -80,7 +80,7 @@ By default, the Gateway operates with minimal impact on performance, typically a
 
 ## Resources
 
-- [Get Started](https://docs.conduktor.io/gateway/installation/)
+- [Get Started](./get-started/docker.md)
 - [Concepts](./concepts/index.md)
 - [Configuration](./configuration/index.md)
 - [Support](https://www.conduktor.io/contact/support)
