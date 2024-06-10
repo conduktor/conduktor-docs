@@ -8,7 +8,7 @@ description: Hardware and Kafka requirements for running Conduktor Gateway.
 
 Conduktor Gateway is provided as a [Docker image](#running-the-gateway) and [Helm chart](../kubernetes).
 
-Below outlines the [Hardware Requirements](#hardware-requirements) and [Kafka Requirements](#kafka-requirements) for running Conduktor Gateway.
+Below outlines both the Hardware and Kafka Requirements for running Conduktor Gateway.
 
 ## Hardware Requirements
 
