@@ -44,6 +44,275 @@ export const AdminToken = () => (
 
 ## Console Resources
 
+### ConsoleGroup
+
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <CLI /> <GUI />
+
+Creates a Group with members and permissions in Console
+````yaml
+---
+apiVersion: v2
+kind: Group
+metadata:
+  name: developers-a
+spec:
+  displayName: "Developers Team A"
+  description: "Members of the Team A - Developers"
+  externalGroups: 
+    - "LDAP-GRP-A-DEV"
+  members:
+    - member1@company.org
+    - member2@company.org
+  permissions:
+    - resourceType: Topic
+      cluster: shadow-it
+      patternType: PREFIX
+      name: toto-
+      permissions:
+        - topicViewConfig
+        - topicConsume
+        - topicProduce
+````
+**Groups checks:**
+- `spec.description` is **optional**
+- `spec.externalGroups` is a list of LDAP or OIDC groups whose members will be automatically added or removed upon login.
+  - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead.
+- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
+- `spec.members` must be email addresses of members you wish to add to this group.
+- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
+
+**Side effect in Console & Kafka:**
+- Kafka
+  - Topic is created / updated.
+  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+
+### ConsoleUser
+
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <CLI /> <GUI />
+
+Sets a User with permissions in Console
+````yaml
+---
+apiVersion: v2
+kind: User
+metadata:
+  name: john.doe@company.org
+spec:
+  firstName: "John"
+  lastName: "Doe"
+  permissions:
+    - resourceType: Topic
+      cluster: shadow-it
+      patternType: PREFIX
+      name: toto-
+      permissions:
+        - topicViewConfig
+        - topicConsume
+        - topicProduce
+````
+
+### Permissions
+
+Permissions are used in [Groups](#consolegroup) and [Users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
+
+A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
+
+- [Topic Permissions](#topic-permissions)
+- [Subject Permissions](#subject-permissions)
+- [ConsumerGroup Permissions](#consumergroup-permissions)
+- [Cluster Permissions](#cluster-permissions)
+- [KafkaConnect Permissions](#kafkaconnect-permissions)
+- [KsqlDB Permissions](#ksqldb-permissions)
+- [Platform Permissions](#platform-permissions)
+
+#### Topic Permissions
+````yaml
+# Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
+- resourceType: Topic
+  cluster: shadow-it
+  patternType: PREFIX
+  name: toto-
+  permissions:
+    - topicViewConfig
+    - topicConsume
+    - topicProduce
+````
+
+- `resourceType`: `Topic`
+- `cluster` is a valid Kafka cluster
+- `patternType` is either `PREFIX` or `LITERAL`
+- `name` is the name of the topic or topic prefix to apply the permissions to
+- `permissions` is a list of valid topic permissions (See Table)
+
+| Available Topic Permissions | Description |
+|-----------------------------|--------|
+| `topicConsume`              | Permission to consume messages from the topic. |
+| `topicProduce`              | Permission to produce (write) messages to the topic. |
+| `topicViewConfig`           | Permission to view the topic configuration. |
+| `topicEditConfig`           | Permission to edit the topic configuration. |
+| `topicCreate`               | Permission to create a new topic. |
+| `topicDelete`               | Permission to delete the topic. |
+| `topicAddPartition`         | Permission to add partitions to the topic. |
+| `topicEmpty`                | Permission to empty (delete all messages from) the topic. |
+
+
+#### Subject Permissions
+````yaml
+# Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
+- resourceType: Subject
+  cluster: shadow-it
+  patternType: PREFIX
+  name: sub-
+  permissions:
+    - subjectView
+    - subjectEditCompatibility
+````
+
+- `resourceType`: `Subject`
+- `cluster` is a valid Kafka cluster
+- `patternType` is either `PREFIX` or `LITERAL`
+- `name` is the name of the subject or subject prefix to apply the permissions to
+- `permissions` is a list of valid subject permissions (See Table)
+
+| Available Subject Permissions      | Description |
+|------------------------------------|--------|
+| `subjectCreateUpdate`              | Permission to create or update the subject. |
+| `subjectDelete`                    | Permission to delete the subject. |
+| `subjectEditCompatibility`         | Permission to edit the subject compatibility settings. |
+| `subjectView`                      | Permission to view the subject details. |
+
+#### ConsumerGroup Permissions
+````yaml
+# Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
+- resourceType: ConsumerGroup
+  cluster: shadow-it
+  patternType: PREFIX
+  name: group-
+  permissions:
+    - consumerGroupView
+    - consumerGroupReset
+````
+
+- `resourceType`: `ConsumerGroup`
+- `cluster` is a valid Kafka cluster
+- `patternType` is either `PREFIX` or `LITERAL`
+- `name` is the name of the consumer group or consumer group prefix to apply the permissions to
+- `permissions` is a list of valid consumer group permissions (See Table)
+
+| Available ConsumerGroup Permissions | Description |
+|-------------------------------------|--------|
+| `consumerGroupCreate`               | Permission to create a new consumer group. |
+| `consumerGroupReset`                | Permission to reset the consumer group. |
+| `consumerGroupDelete`               | Permission to delete the consumer group. |
+| `consumerGroupView`                 | Permission to view the consumer group details. |
+
+#### Cluster Permissions
+```yaml
+# Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
+- resourceType: Cluster
+  name: shadow-it
+  permissions:
+    - clusterViewBroker
+    - clusterEditSRCompatibility
+    - clusterEditBroker
+    - clusterViewACL
+    - clusterManageACL
+```
+
+- `resourceType`: `Cluster`
+- `name` is the name of the cluster to apply the permissions to
+  - Use `*` for all clusters
+- `permissions` is a list of valid cluster permissions (See Table)
+
+| Available Cluster Permissions | Description |
+|-------------------------------|--------|
+| `clusterViewBroker`           | Permission to view broker details. |
+| `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
+| `clusterEditBroker`          | Permission to edit broker configuration. |
+| `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
+| `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
+
+
+#### KafkaConnect Permissions
+```yaml
+# Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
+- resourceType: KafkaConnect
+  cluster: shadow-it
+  kafkaConnect: kafka-connect-cluster
+  patternType: PREFIX
+  name: connector-
+  permissions:
+    - kafkaConnectorCreate
+    - kafkaConnectorDelete
+```
+
+- `resourceType`: `KafkaConnect`
+- `cluster` is a valid Kafka cluster
+- `kafkaConnect` is a valid Kafka Connect cluster
+- `patternType` is either `PREFIX` or `LITERAL`
+- `name` is the name of the connector or connector prefix to apply the permissions to
+- `permissions` is a list of valid Kafka Connect permissions (See Table)
+
+| Available KafkaConnect Permissions | Description |
+|------------------------------------|--------|
+| `kafkaConnectorViewConfig`         | Permission to view the Kafka Connect configuration. |
+| `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
+| `kafkaConnectorEditConfig`         | Permission to edit the Kafka Connect configuration. |
+| `kafkaConnectorDelete`             | Permission to delete connectors. |
+| `kafkaConnectorUpdate`             | Permission to update connectors. |
+| `kafkaConnectorCreate`             | Permission to create new connectors. |
+| `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
+| `kafkaConnectRestart`              | Permission to restart connectors. |
+
+
+#### KsqlDB Permissions
+```yaml
+# Grants all permissions on KsqlDB cluster ksql-cluster
+- resourceType: KsqlDB
+  cluster: shadow-it
+  ksqlDB: ksql-cluster
+  permissions:
+    - ksqldbAccess
+```
+
+- `resourceType`: `KsqlDB`
+- `cluster` is a valid Kafka cluster
+- `ksqlDB` is a valid Kafka Connect cluster
+- `permissions` is a list of valid KsqlDB permissions (See Table)
+
+| Available KafkaConnect Permissions | Description                                                                          |
+|------------------------------------|--------------------------------------------------------------------------------------|
+| `ksqldbAccess`         | Grants all permissions on the KsqlDB Cluster. |
+
+
+#### Platform Permissions
+```yaml
+# Grants Platform permissions
+- resourceType: Platform
+  permissions:
+    - userView
+    - datamaskingView
+```
+
+- `resourceType`: `Platform`
+- `permissions` is a list of valid Platform permissions (See Table)
+
+| Available KafkaConnect Permissions | Description                                                   |
+|------------------------------------|---------------------------------------------------------------|
+| `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                       | Permission to manage Console users, groups & permissions      |
+| `userView`                         | Permission to view Console users, groups & permissions        |
+| `datamaskingManage`                | Permission to manage Data policies (masking rules)            |
+| `datamaskingView`                  | Permission to view Data policies                              |
+| `notificationChannelManage`        | Permission to manage Integration channels                     |
+| `notificationChannelView`          | Permission to view Integration channels                       |
+| `auditLogView`                     | Permission to browse audit log                                |
+
+
+
 ### KafkaCluster
 :::caution Not implemented yet
 This concept will be available in a future version
@@ -199,206 +468,9 @@ spec:
     key: "toto"
     certificateChain: "tata"
 ````
-### ConsoleGroup
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
-
-Creates a Group with members and permissions in Console
-````yaml
----
-apiVersion: v1
-kind: Group
-metadata:
-  name: developers-a
-spec:
-  displayName: "Developers Team A"
-  description: "Members of the Team A - Developers"
-  externalGroups: 
-    - "LDAP-GRP-A-DEV"
-  members:
-    - member1@company.org
-    - member2@company.org
-  permissions:
-    - resourceType: Topic
-      cluster: shadow-it
-      patternType: PREFIX
-      name: toto-
-      permissions:
-        - topicViewConfig
-        - topicConsume
-        - topicProduce
-````
-**Groups checks:**
-- `spec.description` is **optional**
-- `spec.externalGroups` is a list of LDAP or OIDC groups whose members will be automatically maintained. 
-  - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead.
-- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
-- `spec.members` must be email addresses of members you wish to add to this group.
-- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
-
-**Side effect in Console & Kafka:**
-- Kafka
-  - Topic is created / updated.
-  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
-
-### ConsoleUser
 ### Alert
 ### DataMaskingPolicy
-
-### Permissions
-
-Permissions are used in [Groups](#consolegroup) and [Users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
-
-A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.  
-
-- [Topic Permissions](#topic-permissions)
-- [Subject Permissions](#subject-permissions)
-- [ConsumerGroup Permissions](#consumergroup-permissions)
-- [Cluster Permissions](#cluster-permissions)
-- [KafkaConnect Permissions](#kafkaconnect-permissions)
-- [KsqlDB Permissions](#ksqldb-permissions)
-- [Platform Permissions](#platform-permissions)
-
-#### Topic Permissions
-````yaml
-# Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
-- resourceType: Topic
-  cluster: shadow-it
-  patternType: PREFIX
-  name: toto-
-  permissions:
-    - topicViewConfig
-    - topicConsume
-    - topicProduce
-````
-
-- `resourceType`: `Topic`
-- `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
-- `name` is the name of the topic or topic prefix to apply the permissions to
-- `permissions` is a list of valid topic permissions (See Table)
-
-| Available Topic Permissions | Description |
-|-----------------------------|--------|
-| `topicConsume`              | Permission to consume messages from the topic. |
-| `topicProduce`              | Permission to produce (write) messages to the topic. |
-| `topicViewConfig`           | Permission to view the topic configuration. |
-| `topicEditConfig`           | Permission to edit the topic configuration. |
-| `topicCreate`               | Permission to create a new topic. |
-| `topicDelete`               | Permission to delete the topic. |
-| `topicAddPartition`         | Permission to add partitions to the topic. |
-| `topicEmpty`                | Permission to empty (delete all messages from) the topic. |
-
-
-#### Subject Permissions
-````yaml
-# Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
-- resourceType: Subject
-  cluster: shadow-it
-  patternType: PREFIX
-  name: sub-
-  permissions:
-    - subjectView
-    - subjectEditCompatibility
-````
-
-- `resourceType`: `Subject`
-- `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
-- `name` is the name of the subject or subject prefix to apply the permissions to
-- `permissions` is a list of valid subject permissions (See Table)
-
-| Available Subject Permissions      | Description |
-|------------------------------------|--------|
-| `subjectCreateUpdate`              | Permission to create or update the subject. |
-| `subjectDelete`                    | Permission to delete the subject. |
-| `subjectEditCompatibility`         | Permission to edit the subject compatibility settings. |
-| `subjectView`                      | Permission to view the subject details. |
-
-#### ConsumerGroup Permissions
-````yaml
-# Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
-- resourceType: ConsumerGroup
-  cluster: shadow-it
-  patternType: PREFIX
-  name: group-
-  permissions:
-    - consumerGroupView
-    - consumerGroupReset
-````
-
-- `resourceType`: `ConsumerGroup`
-- `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
-- `name` is the name of the consumer group or consumer group prefix to apply the permissions to
-- `permissions` is a list of valid consumer group permissions (See Table)
-
-| Available ConsumerGroup Permissions | Description |
-|-------------------------------------|--------|
-| `consumerGroupCreate`               | Permission to create a new consumer group. |
-| `consumerGroupReset`                | Permission to reset the consumer group. |
-| `consumerGroupDelete`               | Permission to delete the consumer group. |
-| `consumerGroupView`                 | Permission to view the consumer group details. |
-
-
-#### KafkaConnect Permissions
-```yaml
-# Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
-- resourceType: KafkaConnect
-  cluster: shadow-it
-  kafkaConnect: kafka-connect-cluster
-  patternType: PREFIX
-  name: connector-
-  permissions:
-    - kafkaConnectorCreate
-    - kafkaConnectorDelete
-```
-
-- `resourceType`: `KafkaConnect`
-- `cluster` is a valid Kafka cluster
-- `kafkaConnect` is a valid Kafka Connect cluster
-- `patternType` is either `PREFIX` or `LITERAL`
-- `name` is the name of the connector or connector prefix to apply the permissions to
-- `permissions` is a list of valid Kafka Connect permissions (See Table)
-
-| Available KafkaConnect Permissions | Description |
-|------------------------------------|--------|
-| `kafkaConnectorViewConfig`         | Permission to view the Kafka Connect configuration. |
-| `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
-| `kafkaConnectorEditConfig`         | Permission to edit the Kafka Connect configuration. |
-| `kafkaConnectorDelete`             | Permission to delete connectors. |
-| `kafkaConnectorUpdate`             | Permission to update connectors. |
-| `kafkaConnectorCreate`             | Permission to create new connectors. |
-| `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
-| `kafkaConnectRestart`              | Permission to restart connectors. |
-
-
-#### Cluster Permissions
-```yaml
-# Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
-- resourceType: Cluster
-  name: shadow-it
-  permissions:
-    - clusterViewBroker
-    - clusterEditSRCompatibility
-    - clusterEditBroker
-    - clusterViewACL
-    - clusterManageACL
-```
-
-- `resourceType`: `Cluster`
-- `name` is the name of the cluster to apply the permissions to
-  - Use `*` for all clusters
-- `permissions` is a list of valid cluster permissions (See Table)
-
-| Available Cluster Permissions | Description |
-|-------------------------------|--------|
-| `clusterViewBroker`           | Permission to view broker details. |
-| `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
-| `clusterEditBroker`          | Permission to edit broker configuration. |
-| `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
-| `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
 
 
 
