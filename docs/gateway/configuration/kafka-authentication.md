@@ -45,4 +45,4 @@ This Service Account must have all the necessary ACLs to perform not only the Ga
 ... but also all the permissions necessary to serve all Gateway users.
 
 If necessary, you can enable ACLs for Non-Delegated Authentication.  
-First configure `GATEWAY_ACL_STORE_ENABLED=true` then use can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`
+First configure `GATEWAY_ACL_STORE_ENABLED=true`, and then you can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
