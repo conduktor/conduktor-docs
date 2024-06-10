@@ -120,6 +120,7 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
   -e GATEWAY_ADVERTISED_HOST=localhost \
   -e GATEWAY_CLUSTER_ID=test \
   -p 6969-6999:6969-6999 \
+  -d \
   conduktor/conduktor-gateway:3.0.5
 ```
 
