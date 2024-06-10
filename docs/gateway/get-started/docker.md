@@ -54,6 +54,7 @@ Run the below command to start Conduktor Gateway and configure Docker networking
   -e GATEWAY_PORT_START=9099 \
   -e GATEWAY_PORT_COUNT=1 \
   -p 9099:9099 \
+  -d \
   conduktor/conduktor-gateway:3.0.5
 ```
 
