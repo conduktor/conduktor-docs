@@ -116,7 +116,7 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
   -e KAFKA_BOOTSTRAP_SERVERS=$CONFLUENT_CLOUD_KAFKA_BOOTSTRAP_SERVER \
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
-  -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="$USERNAME" password="$PASSWORD' \
+  -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="$CONFLUENT_CLOUD_API_KEY" password="$CONFLUENT_CLOUD_API_SECRET' \
   -e GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_PLAINTEXT \
   -e GATEWAY_ADVERTISED_HOST=localhost \
   -e GATEWAY_CLUSTER_ID=test \
