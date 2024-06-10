@@ -33,7 +33,7 @@ In its simplest form, Gateway can be run from a simple Docker run command with t
 
 Create a new directory (note the docker network will be derived from the directory name):
 ```sh
-mkdir gateway-quick-start
+mkdir gateway-quick-start && cd gateway-quick-start```
 ```
 
 Run the below command to start a single node Kafka and ZooKeeper:
