@@ -25,13 +25,24 @@ conduktor-gateway:
 Depending on the Client to Gateway Authentication method you choose, the Service Account used to connect the Gateway might need different ACLs to operate properly.
 
 ### Delegated Authentication
-In Delegated Authentcation, a Client connection is established from the Gateway to the client using the same service account provided to the Gateway.  
-As a result, the ACLs are directly checked against this Service Account.
+In Delegated Authentication, the credentials provided to establish the connection between the Client and the Gateway are the same used from the Gateway to the backing Kafka.  
+As a result, the Client will inherit the ACLs of the service account configured on the backing cluster.
 
-For this reason, Gateway Service Account requires the following ACLS:
+On top of that, Gateway needs its own Service Account with the following ACLs to operate correctly:
 - read on internal topics and they should (ofc) exist
 - describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
 
 ### Non-Delegated
+In Non-Delegated Authentication (Local, Oauth or mTLS), the connection is using the Gateway's Service Account to connect to the backing Kafka.
+
+This Service Account must have all the necessary ACLs to perform not only the Gateway operations:
+- read on internal topics and they should (ofc) exist
+- describe consumer group for internal topic
+- Describe on cluster
+- Describe topics for alias topics creation
+... but also all the permissions necessary to serve all Gateway users.
+
+If necessary, you can enable ACLs for Non-Delegated Authentication.  
+First configure `GATEWAY_ACL_STORE_ENABLED=true`, and then you can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
