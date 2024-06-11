@@ -289,7 +289,7 @@ clickhouse-client  \
 | [Grafana](https://clickhouse.com/docs/en/integrations/grafana)               | ClickHouse official connector |
 | [Hashboard](https://clickhouse.com/docs/en/integrations/hashboard)           | Native connector              |
 | [Looker](https://clickhouse.com/docs/en/integrations/looker)                 | Native connector              |
-| [Looker Studio](https://clickhouse.com/docs/en/integrations/looker-studio)   | MySQL interface               |
+| [Looker Studio](https://clickhouse.com/docs/en/integrations/lookerstudio)    | MySQL interface               |
 | [Metabase](https://clickhouse.com/docs/en/integrations/metabase)             | ClickHouse official connector |
 | [Mitzu](https://clickhouse.com/docs/en/integrations/mitzu)                   | Native connector              |
 | [Omni](https://clickhouse.com/docs/en/integrations/omni)                     | Native connector              |
