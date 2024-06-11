@@ -37,17 +37,21 @@ curl -s  http://localhost:8888/health | jq .
 # Monitoring
 ## How to access Prometheus metrics from Gateway
 
-The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example;
+The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 
 ```bash
 localhost:8888/metrics
 ```
 
-Please note that if you enabled `GATEWAY_SECURED_METRICS` (which is the default), you will need to access it with credentials, for example;
-```bash
---username "admin:conduktor" localhost:8888/metrics
+Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it. 
+
+For example, using the default credentials, you can access the metrics with the following command:
+
+```bash title='Retrieve Gateway Metrics'
+curl conduktor-gateway:8888/metrics --user "admin:conduktor"
 ```
-See the [env variables](/gateway/configuration/env-variables/#http) for more.
+
+See the [API environment variables](/gateway/configuration/env-variables/#http) for more details.
 
 ## Available metrics for Prometheus
 
