@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Monitoring and Health
-description: Monitoring and Health
+title: Health & Monitoring
+description: Health & Monitoring
 ---
 
 ## Health
