@@ -4,7 +4,7 @@ title: Monitoring and Health
 description: Monitoring and Health
 ---
 
-# Health
+## Health
 
 To check the health of your Gateway, you can check the endpoint `/health` on the Gateway API (port `8888` by default).
 
@@ -34,8 +34,8 @@ curl -s  http://localhost:8888/health | jq .
 }
 ```
 
-# Monitoring
-## How to access Prometheus metrics from Gateway
+## Monitoring
+### How to access Prometheus metrics from Gateway
 
 The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 
@@ -53,7 +53,7 @@ curl conduktor-gateway:8888/metrics --user "admin:conduktor"
 
 See the [API environment variables](/gateway/configuration/env-variables/#http) for more details.
 
-## Available metrics for Prometheus
+### Available metrics for Prometheus
 
 | Metric description                                                                               | Metric value                                      |
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------|
