@@ -53,7 +53,6 @@ Get a view on your data quality at a glance.
 
 ![Data Quality](images/data-quality.png)
 
-
 ## Indexation
 
 SQL Indexation is done alongside the [Indexer](https://docs.conduktor.io/platform/get-started/configuration/env-variables/#indexer-properties)
@@ -67,23 +66,23 @@ While indexing your business data, we are also indexing the kafka metadata.
 
 As such, we are adding the following fields
 
-| Field                   | Type                                                              |
-|-------------------------|-------------------------------------------------------------------|
-| _timestamp_ms           | DateTime64                                                        |
-| _partition              | UInt32                                                            |
-| _offset                 | UInt64                                                            |
-| _key                    | String                                                            |
-| _checksum               | String                                                            |
-| _batch_checksum         | Int64                                                             |
-| _batch_timestamp_type   | Enum8('NO_TIMESTAMP_TYPE' = -1, 'CREATE_TIME', 'LOG_APPEND_TIME') |
-| _batch_compression_type | Enum8('NONE' = 0, 'GZIP', 'SNAPPY', 'LZ4', 'ZSTD', 'UNKNOWN')     |
-| _batch_base_offset      | UInt64                                                            |
-| _batch_records          | UInt32                                                            |
-| _batch_size             | UInt32                                                            |
-| _batch_transactional    | Boolean                                                           |
-| _batch_producer_id      | Int64                                                             |
-| _batch_producer_epoch   | Int16                                                             |
-| _value_schema_id        | Int32                                                             |
+| Field                   | Type                                                              | Description                                                                                                           |
+|-------------------------|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| _timestamp_ms           | DateTime64                                                        | Date of message                                                                                                       |
+| _partition              | UInt32                                                            | Partition of the message                                                                                              |
+| _offset                 | UInt64                                                            | Offset of the message                                                                                                 |
+| _key                    | String                                                            | Key of the message (String)                                                                                           |
+| _checksum               | String                                                            | Checksum of the message, useful to determine functional duplicates                                                    |
+| _batch_checksum         | Int64                                                             | Checksum batch                                                                                                        |
+| _batch_timestamp_type   | Enum8('NO_TIMESTAMP_TYPE' = -1, 'CREATE_TIME', 'LOG_APPEND_TIME') | Type of timestamp                                                                                                     |
+| _batch_compression_type | Enum8('NONE' = 0, 'GZIP', 'SNAPPY', 'LZ4', 'ZSTD', 'UNKNOWN')     | Compression type, no compression is a bad practice                                                                    |
+| _batch_base_offset      | UInt64                                                            | Base offset of the batch                                                                                              |
+| _batch_records          | UInt32                                                            | Number of records in the batch, low number of records is a bad practice                                               |
+| _batch_size             | UInt32                                                            | Size of the batch, if < 16k it means default producer configuration has not been updated, this is a bad practice      |
+| _batch_transactional    | Boolean                                                           | For some teams, using kafka transactionality is a bad practice as its associated constraints are not well understood. |
+| _batch_producer_id      | Int64                                                             | Produce id of the message if any                                                                                      |
+| _batch_producer_epoch   | Int16                                                             | Producer epoch                                                                                                        |
+| _value_schema_id        | Int32                                                             | Schema id                                                                                                             |
 
 
 ### Limitation
@@ -91,28 +90,44 @@ As such, we are adding the following fields
 We are currently only support topics that contain `Json` and `Avro` using `TopicNameStrategy`.
 
 As a first version, we are not handling the following elements
-* schema change
-* data-masking
-* field level encryption
 
-## Connectivity
+* JsonSchema
+* Protobuf
+* Schema change
+* Data-masking
+* Keys are treated as Strings
+* Field level encryption
+* Very large topic with more than 20g of data
+* Specifying timezone for dates
+* Toggeling indexation at topic level
+* Toggeling indexation at database level
+* Custom deserializer
+* In JSON fields the `.` will be replaced by `_`
+
+### What we will never do
+
+* We will never support multi-peta bytes setups 
+* We will never support real time 
+
+
+## Database Protocols
 
 A wonderful property of Clickhouse is its ability to speak multiple protocols.
 This makes application and tool adopt it very smoothly: no need to add a specific driver to connect to it, just use what you currently have.
 
 We enabled
 
-* Native
-* HTTP
-* Postgres
-* MySQL
+* [Native](#clickhouse)
+* [HTTP](#http)
+* [Postgres](#postgresql)
+* [MySQL](#mysql)
 
 ![Drivers](images/drivers.png)
 
 
 ### HTTP
 
-You can hit the following http endpoint of your Conduktor UI: `/clickhouse/?query=QUERY&database=DATABASE&default_format=JSON'`
+You can call the following http endpoint of your Conduktor UI: `/clickhouse/?query=QUERY&database=DATABASE&default_format=JSON'`
 
 ```
 echo "select 1" | \
@@ -124,8 +139,8 @@ echo "select 1" | \
 
 You can add the following parameters
 * `query` to specify your sql statement instead of sending it in the body
-* `database` to specify a specific database
-* `default_format` can be `JSON`, `parquet`, `csv`, ...
+* `database` to specify the default database
+* `default_format` can be `JSON`, `parquet`, `csv`, [options](https://clickhouse.com/docs/en/interfaces/formats)
 
 [Clickhouse http endpoint documentation](https://clickhouse.com/docs/en/interfaces/http)
 
@@ -135,7 +150,7 @@ You can add the following parameters
 Connect your clickhouse clients on the clickhouse host with port `9000`.
 
 ```
-clickhouse-client  \
+clickhouse-client \
   --host localhost \
   --port 9000 \
   --user conduktor \
@@ -162,8 +177,11 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 +------+
 |    1 |
 +------+
-
 ```
+
+:::info
+In the preview this protocol is only enabled for system users.
+:::
 
 [Clickhouse Mysql endpoint documentation](https://clickhouse.com/docs/en/interfaces/mysql#connect-mysql-to-clickhouse)
 
@@ -184,6 +202,11 @@ PGPASSWORD=change_me \
  1
 (1 row)
 ```
+
+:::info
+In the preview this protocol is only enabled for system users. 
+:::
+
 
 [Clickhouse Postgres endpoint documentation](https://clickhouse.com/docs/en/interfaces/postgresql)
 
@@ -216,7 +239,8 @@ Same for the other drivers
 
 ```
 clickhouse-client  \
-  --host localhost --port 9000 \
+  --host localhost \
+  --port 9000 \
   --user admin@demo.com \
   --password "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtpZCI6Imp3a18wIn0.eyJpc3MiOiJhdXRoZW50aWNhdG9yIiwic3ViIjoiYWRtaW5AZGVtby5jb20iLCJleHAiOjE3MTgzNjc2MTYsIm5iZiI6MTcxODEwODQxNiwiaWF0IjoxNzE4MTA4NDE2LCJlbWFpbCI6ImFkbWluQGRlbW8uY29tIiwiaHR0cHM6Ly9jb25kdWt0b3IuaW8vdXNlcklkIjoiOGFiYzVkNjRhYjBhZjQzOGM0ZjdmOTJmOTlkMzc2NDVlMTM0NjQzMjZhY2U0MTM1NjI4OGJhMjViMmVmOTk3YSIsImh0dHBzOi8vY29uZHVrdG9yLmlvL3BsYXRmb3JtRmluZ2VycHJpbnQiOiIyZjg0MmQ1Mi03YmY3LTQ0OTMtYTc2ZC0wMGI3MjYyODZhY2MifQ.pedHFZ0nPtwkOYtchGWJy3dxRM6F7L5k8YcFoIYFOSJG5zPjKRfNuF-ydSD3hVdRmJqjTbCeCu-brGGY4BJYKv_PoM-ltWMf2mV0dsWLSeK6iVjhCIPD0qXkWnk10Ev6J01hRbAdZvlmZ_reP0gwC1yDwjkAYICKa3t0JMoZzvkZ_o0K9CKjTNBSM7I5VK9XD2eRajZxHl43rira432UcKgYLdoHW20Qk7zOkoDajGV6sN46SxwyD_k2r8MDR-5yKvYPjEGnc3Ye68TYl4rfVvvT7Ob8GOpmzVGMCWrV9zNTfxZ-_GE7uvSUfcxueB-xmF6R2kpCl5L_0axFd1xu0Q" \
   --query "select 1"
@@ -350,16 +374,41 @@ All your encryption rules of Conduktor must be replicated in your target databas
 
 ### It Requires a Synchronization of Security Model
 
-You will need to setup a complex mechanism to reproduce the Conduktor Security Model into your target database.
+You will need to set up a complex mechanism to reproduce the Conduktor Security Model into your target database.
 
 ### Missing the metadata
 
-Our indexing process is adding meta fields that are really helpful to track deficiencies.  
+Our indexing process is adding [meta fields](#metadata-fields) that are really helpful to track deficiencies.  
 
 ## Configuration
+
+### Console
 
 To enable SQL to your existing Console, please add the following property
 
 ```
 CDK_SQL_CLICKHOUSE-URL: "http://conduktor:some_password@clickhouse:8123"
 ```
+
+
+### Clickhouse
+
+If you want to use a specific clickhouse, you will need to specify a http authentication server in your `clickhouse.xml` within the `http_authentication_servers` section.
+
+```xml
+<http_authentication_servers>
+    <conduktor_authenticator>
+        <uri from_env="CDK_LOGIN_URL"/>
+        <connection_timeout_ms>1000</connection_timeout_ms>
+        <receive_timeout_ms>1000</receive_timeout_ms>
+        <send_timeout_ms>1000</send_timeout_ms>
+        <max_tries>3</max_tries>
+        <retry_initial_backoff_ms>50</retry_initial_backoff_ms>
+        <retry_max_backoff_ms>1000</retry_max_backoff_ms>
+    </conduktor_authenticator>
+</http_authentication_servers>
+```
+
+where `CDK_LOGIN_URL` is the console API endpoint that does authentication.
+
+The default value should be `http://conduktor-console:8080/auth/login`
