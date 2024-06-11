@@ -1,26 +1,59 @@
 ---
 sidebar_position: 3
-title: Monitoring and Health
-description: Monitoring and Health
+title: Health & Monitoring
+description: Health & Monitoring
 ---
 
+## Health
 
-# How to access Prometheus metrics from Gateway
+To check the health of your Gateway, you can check the endpoint `/health` on the Gateway API (port `8888` by default).
 
-The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics` , for example;
+```sh title='cURL Example'
+curl -s  http://localhost:8888/health | jq .
+```
+
+```json title='Output Example'
+{
+  "status": "UP",
+  "checks": [
+    {
+      "id": "buildInfo",
+      "status": "UP",
+      "data": {
+        "version": "3.1.0",
+        "time": "2024-06-03T20:32:32+0000",
+        "commit": "41967691f4c54b5d76a3f1fa8aee3701903b89d9"
+      }
+    },
+    {
+      "id": "live",
+      "status": "UP"
+    }
+  ],
+  "outcome": "UP"
+}
+```
+
+## Monitoring
+### How to access Prometheus metrics from Gateway
+
+The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 
 ```bash
 localhost:8888/metrics
 ```
 
-Please note that if you enabled `GATEWAY_SECURED_METRICS` you will need to access it with credentials, for example;
-```bash
---username "admin:conduktor" localhost:8888/metrics
+Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it. 
+
+For example, using the default credentials, you can access the metrics with the following command:
+
+```bash title='Retrieve Gateway Metrics'
+curl conduktor-gateway:8888/metrics --user "admin:conduktor"
 ```
-See the [env variables](/gateway/configuration/env-variables/#http) for more.
 
+See the [API environment variables](/gateway/configuration/env-variables/#http) for more details.
 
-# Available metrics for Prometheus
+### Available metrics for Prometheus
 
 | Metric description                                                                               | Metric value                                      |
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------|
