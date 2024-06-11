@@ -85,7 +85,7 @@ As such, we are adding the following fields
 | _value_schema_id        | Int32                                                             | Schema id                                                                                                             |
 
 
-### Limitation
+### Limitations
 
 We are currently only support topics that contain `Json` and `Avro` using `TopicNameStrategy`.
 
