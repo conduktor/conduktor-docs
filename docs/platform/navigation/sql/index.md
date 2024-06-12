@@ -29,6 +29,20 @@ Query any of your indexed topics using SQL.
 
 ![Adhoc Query](images/sql.png)
 
+### Dashboarding
+
+Navigate in your measures and dimensions
+
+
+![Dashboard](images/dashboard.png)
+
+### Data Quality
+
+Get a view on your data quality at a glance.
+
+![Data Quality](images/data-quality.png)
+
+
 ### Recent Queries
 
 Leverage your previous sql queries to go faster.
@@ -47,11 +61,156 @@ Know the impact of your queries on the system.
 
 ![Statistics](images/statistics.png)
 
-### Data Quality
 
-Get a view on your data quality at a glance.
+## Dashboarding
 
-![Data Quality](images/data-quality.png)
+We provide a way to build fast operational dashboards that your team will actually use.
+
+You can pivot, slice, and drill-down into your data right within your Kafka environment.
+
+![Dashboard explanation](images/dashboard-explanation.png)
+
+### Dashboard as code
+
+You define and govern all your dashboards assets as SQL and YAML code in a Github project.
+
+Commit, version, and manage your project files with Github.
+
+Push to deploy your dashboard.
+
+### Definition 
+
+The dashboard is composed of measures and dimensions.
+
+Measures are defined as follows
+
+```yaml
+  - label: "Total Cost" # Label for the measure
+    expression: "SUM(cost)"  # can be any valid sql expression
+    name: measure 
+    description: "The sum of cost" # Description of the measure
+    format_preset: currency_usd # optional, can be one of "humanize", "currency_usd" or "percentage"
+```
+
+Dimension are defined as follows
+```yaml
+  - label: Customer # Label of the dimension
+    column: company # Associated column name
+    description: "The name of the customer" # 
+```
+
+
+Example:
+
+
+```yaml
+title: "Customer Unit Economics Dashboard"
+model: "metrics_monitoring"
+timeseries: "__time"
+measures:
+  - label: "Total Cost"
+    expression: "SUM(cost)"
+    name: measure
+    description: "The sum of cost"
+    format_preset: currency_usd
+  - label: "Total Revenue"
+    expression: SUM(revenue)
+    name: total_records
+    description: The sum of revenue
+    format_preset: currency_usd
+  - label: "Net Revenue"
+    expression: "SUM(revenue) - SUM(cost)"
+    name: measure_2
+    description: "The sum of revenue minus the sum of cost"
+    format_preset: currency_usd
+  - label: "Gross Margin %"
+    expression: "(SUM(revenue) - SUM(cost))/SUM(revenue)"
+    name: measure_1
+    description: "Net revenue divided by sum of revenue"
+    format_preset: percentage
+  - label: "Unique Customers"
+    expression: "COUNT(DISTINCT company)"
+    name: measure_3
+    description: "The count of unique companies"
+    format_preset: humanize
+dimensions:
+  - label: Customer
+    column: company
+    description: "The name of the customer"
+  - label: Plan Name
+    column: plan_name
+    description: "The name of the billing plan"
+  - label: "Cost by Region"
+    column: "location"
+    description: "The region incurring costs"
+  - label: Cost by Component
+    column: component
+    description: "The component generating costs"
+  - label: "Cost by App Name"
+    column: "app_name"
+    description: "The app generating costs"
+  - label: "Cost by SKU"
+    column: "sku_description"
+    description: "The sku description for costs"
+  - label: "Cost by Data Pipeline"
+    column: "pipeline"
+    description: "The pipeline incurring costs"
+  - label: "Cost by Environment"
+    column: "environment"
+    description: "The environment incurring costs"
+```
+
+### Resolution
+
+Dashboards are automatically picked up from your github project.
+
+If a dashboard has been found for the topic, the `Dashboard` tab appears
+
+![Dashboard tab](images/dashboard-tab.png)
+
+For a given topic and cluster the dashboarding system will try to fetch in order
+
+1. git_url/cluster/topic.yaml
+2. git_url/topic.yaml
+
+Example:
+
+1. https://raw.githubusercontent.com/framiere/my-dashboards/main/cdk-gateway/customers.yaml
+2. https://raw.githubusercontent.com/framiere/my-dashboards/main/customers.yaml
+
+:::tip
+This especially useful when you have the same topics in multiple environments.
+:::
+
+
+### Export to Grafana
+
+We know dashboarding is most useful where people have already their dashboards.
+
+For this effect, you can export your Conduktor's dashboards into grafana by following these steps
+
+1. [Export to json](#export-to-json)
+2. [Grafana import Dashboard](#import-in-grafana)
+2. [Paste Dashboard](#paste-dashboard)
+3. [Select Target Database](#select-target-clickhouse)
+4. [Import complete](#import-complete) 
+
+##### Export to Json
+![Dashboard commands](images/dashboard-command-export-grafana.png)
+![Export to Grafana](images/dashboard-export-grafana.png)
+
+#### Import in Grafana
+![Start Import](images/grafana-import.png)
+
+#### Paste Dashboard
+![Paste json](images/grafana-paste-dashboard.png)
+
+#### Select target Clickhouse
+![Select target database](images/grafana-import-select-clickhouse.png)
+
+#### Import complete
+![Import is complete](images/grafana-import-complete.png)
+
 
 ## Indexation
 
