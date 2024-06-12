@@ -258,8 +258,8 @@ As a first version, we are not handling the following elements
 * Field level encryption
 * Very large topic with more than 20g of data
 * Specifying timezone for dates
-* Toggeling indexation at topic level
-* Toggeling indexation at database level
+* Toggle indexation at topic level
+* Toggle indexation at database level
 * Custom deserializer
 * In JSON fields the `.` will be replaced by `_`
 
