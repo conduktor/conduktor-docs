@@ -97,7 +97,7 @@ metadata:
 spec:
   schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
   format: AVRO
-  compatibility: BACKWARD
+  compatibility: FORWARD_TRANSITIVE
 ```
 
 **Inline**
@@ -114,6 +114,7 @@ spec:
     {
       "type": "long"
     }
+  format: AVRO
 ```
 
 **Schema Reference**
@@ -142,6 +143,7 @@ spec:
         }
       ]
     }
+  format: AVRO
   references:
     - name: com.schema.avro.Address
       subject: commons.address-value
@@ -152,9 +154,9 @@ spec:
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instance
 - One of `spec.schema` or `spec.schemaFile` must be present. `schema` requires an inline schema, `schemaFile` requires a path to a file that contains the schema (relative to the CLI execution path)
-- `spec.format` is optional. Defines the schema format: AVRO (default), PROTOBUF, JSON
-- `spec.compatibility` is optional. Defines the subject compatibility mode: GLOBAL (default), BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
-  - Use `GLOBAL` if you want the compatibility mode to be the one defined at the Schema Registry global level
+- `spec.format` is optional. Defines the schema format: AVRO, PROTOBUF, JSON
+- `spec.compatibility` is optional. Defines the subject compatibility mode: BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
+  - Unset the field if you want the compatibility mode to be the one defined at the Schema Registry global level
 - `spec.references` is optional. It specifies the names of referenced schemas
 
 

@@ -279,26 +279,33 @@ spec:
   permissions:
     - appInstance: clickstream-app-dev
       resourceType: TOPIC
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned & subscribed topics
+      patternType: "LITERAL"
+      name: "*" # All owned & subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
       resourceType: GROUP
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned consumer groups
+      patternType: "LITERAL"
+      name: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
-    - appInstance: clickstream-app-dev
-      resourceType: CONNECTOR
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned connectors
-      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectPauseResume", "kafkaConnectRestart"]
   members:
     - user1@company.org
     - user2@company.org
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
-
 ````
+**Application instance permission checks:**
+- `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
+- `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT` or `GROUP`
+- `spec.permissions[].patternType` can be `PREFIXED` or `LITERAL`
+- `spec.permissions[].name` must reference any "sub-resource" of `metadata.appInstance` or any subscribed Topic
+    - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
+- `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
+
+**Side effect in Console & Kafka:**
+- Console
+    - Members of the ApplicationGroup are given the associated permissions in the UI over the resources
+- Kafka
+    - No side effect
 
 
 ### Policy Constraints
