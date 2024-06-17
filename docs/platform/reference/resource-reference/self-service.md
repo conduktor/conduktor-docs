@@ -101,7 +101,7 @@ spec:
     - type: TOPIC
       name: "click."
       patternType: PREFIXED
-    - type: GROUP
+    - type: CONSUMER_GROUP
       name: "click."
       patternType: PREFIXED
 ````
@@ -111,7 +111,7 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
-- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`
+- `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT`
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
     -   ie: If there is already an owner for `click.` this is forbidden:
