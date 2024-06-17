@@ -77,9 +77,6 @@ spec:
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 ### Subject
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 Creates a Subject in the Schema Registry.
 
 **API Keys:** <AdminToken />  <AppToken />  
