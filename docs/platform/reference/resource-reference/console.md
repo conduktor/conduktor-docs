@@ -76,16 +76,18 @@ spec:
 ````
 **Groups checks:**
 - `spec.description` is **optional**
-- `spec.externalGroups` is a list of LDAP or OIDC groups whose members will be automatically added or removed upon login.
-  - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead.
+- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
+  - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
 - `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
-- `spec.members` must be email addresses of members you wish to add to this group.
+- `spec.members` must be email addresses of members you wish to add to this group
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
 **Side effect in Console & Kafka:**
+- Console
+  - Members of the Group are given the associated permissions in the UI over the resources
+  - Members of the LDAP or OIDC groups will be automatically added or removed upon login
 - Kafka
-  - Topic is created / updated.
-  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+  - No side effect
 
 ### ConsoleUser
 
@@ -112,6 +114,15 @@ spec:
         - topicConsume
         - topicProduce
 ````
+
+**Users checks:**
+- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
+
+**Side effect in Console & Kafka:**
+- Console
+  - User is given the associated permissions in the UI over the resources
+- Kafka
+  - No side effect
 
 ### Permissions
 

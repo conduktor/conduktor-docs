@@ -301,12 +301,13 @@ spec:
   - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
 - `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
 - `spec.members` must be email addresses of members you wish to add to this group.
-- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups whose members will be automatically added or removed upon login.
-  - Members added this way will not appear in `spec.members`.
+- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups to sync with this Console Groups
+  - Members added this way will not appear in `spec.members`
 
 **Side effect in Console & Kafka:**
 - Console
     - Members of the ApplicationGroup are given the associated permissions in the UI over the resources
+    - Members of the LDAP or OIDC groups will be automatically added or removed upon login
 - Kafka
     - No side effect
 
