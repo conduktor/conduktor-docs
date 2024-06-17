@@ -270,7 +270,7 @@ metadata:
   application: "clickstream-app"
   name: "clickstream-support"
 spec:
-  title: Support Clickstream
+  displayName: Support Clickstream
   description: |
     Members of the Support Group are allowed:
       Read access on all the resources
@@ -290,16 +290,19 @@ spec:
   members:
     - user1@company.org
     - user2@company.org
-  externalGroups:
-    - GP-COMPANY-CLICKSTREAM-SUPPORT
+#  externalGroups:
+#    - GP-COMPANY-CLICKSTREAM-SUPPORT
 ````
 **Application instance permission checks:**
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
 - `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT` or `GROUP`
 - `spec.permissions[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.permissions[].name` must reference any "sub-resource" of `metadata.appInstance` or any subscribed Topic
-    - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
+  - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
 - `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
+- `spec.members` must be email addresses of members you wish to add to this group.
+- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups whose members will be automatically added or removed upon login.
+  - Members added this way will not appear in `spec.members`.
 
 **Side effect in Console & Kafka:**
 - Console
@@ -307,6 +310,7 @@ spec:
 - Kafka
     - No side effect
 
+<hr />
 
 ### Policy Constraints
 
