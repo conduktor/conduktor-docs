@@ -247,9 +247,6 @@ spec:
     - `WRITE`: READ, WRITE, DESCRIBE_CONFIGS
 
 ### Application Group
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />
@@ -283,7 +280,7 @@ spec:
       name: "*" # All owned & subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
-      resourceType: GROUP
+      resourceType: CONSUMER_GROUP
       patternType: "LITERAL"
       name: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
@@ -295,7 +292,7 @@ spec:
 ````
 **Application instance permission checks:**
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
-- `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT` or `GROUP`
+- `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT` or `CONSUMER_GROUP`
 - `spec.permissions[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.permissions[].name` must reference any "sub-resource" of `metadata.appInstance` or any subscribed Topic
   - Use `*` to include to all owned & subscribed resources associated to this `appInstance`

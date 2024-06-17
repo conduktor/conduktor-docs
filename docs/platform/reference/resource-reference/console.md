@@ -141,9 +141,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### Topic Permissions
 ````yaml
 # Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
-- resourceType: Topic
+- resourceType: TOPIC
   cluster: shadow-it
-  patternType: PREFIX
+  patternType: PREFIXED
   name: toto-
   permissions:
     - topicViewConfig
@@ -151,9 +151,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
     - topicProduce
 ````
 
-- `resourceType`: `Topic`
+- `resourceType`: `TOPIC`
 - `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
+- `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the topic or topic prefix to apply the permissions to
 - `permissions` is a list of valid topic permissions (See Table)
 
@@ -172,7 +172,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### Subject Permissions
 ````yaml
 # Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
-- resourceType: Subject
+- resourceType: SUBJECT
   cluster: shadow-it
   patternType: PREFIX
   name: sub-
@@ -181,9 +181,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
     - subjectEditCompatibility
 ````
 
-- `resourceType`: `Subject`
+- `resourceType`: `SUBJECT`
 - `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
+- `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the subject or subject prefix to apply the permissions to
 - `permissions` is a list of valid subject permissions (See Table)
 
@@ -197,7 +197,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### ConsumerGroup Permissions
 ````yaml
 # Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
-- resourceType: ConsumerGroup
+- resourceType: CONSUMER_GROUP
   cluster: shadow-it
   patternType: PREFIX
   name: group-
@@ -206,9 +206,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
     - consumerGroupReset
 ````
 
-- `resourceType`: `ConsumerGroup`
+- `resourceType`: `CONSUMER_GROUP`
 - `cluster` is a valid Kafka cluster
-- `patternType` is either `PREFIX` or `LITERAL`
+- `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the consumer group or consumer group prefix to apply the permissions to
 - `permissions` is a list of valid consumer group permissions (See Table)
 
@@ -222,7 +222,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### Cluster Permissions
 ```yaml
 # Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
-- resourceType: Cluster
+- resourceType: CLUSTER
   name: shadow-it
   permissions:
     - clusterViewBroker
@@ -232,7 +232,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
     - clusterManageACL
 ```
 
-- `resourceType`: `Cluster`
+- `resourceType`: `CLUSTER`
 - `name` is the name of the cluster to apply the permissions to
   - Use `*` for all clusters
 - `permissions` is a list of valid cluster permissions (See Table)
@@ -249,20 +249,20 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### KafkaConnect Permissions
 ```yaml
 # Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
-- resourceType: KafkaConnect
+- resourceType: KAFKA_CONNECT
   cluster: shadow-it
   kafkaConnect: kafka-connect-cluster
-  patternType: PREFIX
+  patternType: PREFIXED
   name: connector-
   permissions:
     - kafkaConnectorCreate
     - kafkaConnectorDelete
 ```
 
-- `resourceType`: `KafkaConnect`
+- `resourceType`: `KAFKA_CONNECT`
 - `cluster` is a valid Kafka cluster
 - `kafkaConnect` is a valid Kafka Connect cluster
-- `patternType` is either `PREFIX` or `LITERAL`
+- `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the connector or connector prefix to apply the permissions to
 - `permissions` is a list of valid Kafka Connect permissions (See Table)
 
@@ -281,14 +281,14 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### KsqlDB Permissions
 ```yaml
 # Grants all permissions on KsqlDB cluster ksql-cluster
-- resourceType: KsqlDB
+- resourceType: KSQLDB
   cluster: shadow-it
   ksqlDB: ksql-cluster
   permissions:
     - ksqldbAccess
 ```
 
-- `resourceType`: `KsqlDB`
+- `resourceType`: `KSQLDB`
 - `cluster` is a valid Kafka cluster
 - `ksqlDB` is a valid Kafka Connect cluster
 - `permissions` is a list of valid KsqlDB permissions (See Table)
@@ -301,13 +301,13 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 #### Platform Permissions
 ```yaml
 # Grants Platform permissions
-- resourceType: Platform
+- resourceType: PLATFORM
   permissions:
     - userView
     - datamaskingView
 ```
 
-- `resourceType`: `Platform`
+- `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions (See Table)
 
 | Available KafkaConnect Permissions | Description                                                   |
