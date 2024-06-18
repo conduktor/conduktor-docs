@@ -65,7 +65,7 @@ spec:
     - member1@company.org
     - member2@company.org
   permissions:
-    - resourceType: Topic
+    - resourceType: TOPIC
       cluster: shadow-it
       patternType: PREFIX
       name: toto-
