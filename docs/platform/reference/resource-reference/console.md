@@ -481,9 +481,16 @@ spec:
 ````
 
 ### Alert
+
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
+
 ### DataMaskingPolicy
 
-
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 
 ### Icon Sets
 

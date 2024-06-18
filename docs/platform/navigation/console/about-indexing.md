@@ -4,26 +4,22 @@ title: About Indexing
 description: Learn how to get started with Console
 ---
 
-In Console, the Topics List and Consumer Groups List are served from an internal table instead of making AdminClient calls to Kafka.
-
-We are currently extending this logic to more list tables throughout Console: Subjects and Connectors.
+In Console, many of the list pages (Topics, Consumer Groups, Schema Registry, Kafka Connect) are served from an internal table instead of making AdminClient calls to Kafka.
 
 Theses tables are updated by a background process that we call **Indexing**. This Indexing process collects changes that happened to your Kafka every 30 seconds and stores the collected metadata in internal tables.
 
 :::info
-Details pages are not using this mechanism. As soon as you are on a specific Topic page or Consumer group page, the data is fetched directly on the Kafka cluster.
+Resource details pages are not using this mechanism. As soon as you are on a specific Topic page or Consumer group page, the data is fetched directly on the Kafka cluster.
 :::
 ![Capture](img/indexing-explained.png)
 
-## So I just created a Topic... Where is it?!
+## FAQ: I've just created a Topic, but can't see the metadata in the list?
 
-Indexing is a trade-off: for all the positive aspects we bring to the overall user experience, we loose on one key element.
+Indexing is a trade-off: for all the positive aspects it brings to the overall user experience, we lose on one key element.
 
-Topics created “now” would not be indexed until the next Indexing cycle. They wouldn't appear in Console for up to 30 seconds.
+Topics created 'now' would not be indexed until the next Indexing cycle. This means they wouldn't appear in Console for up to 30 seconds, but we know this is not acceptable.
 
-**We know this is not acceptable. **
-
-To mitigate the negative effect of Indexing, we have come up with an elegant counter-measure: any user request to the Topic List will ALWAYS make one AdminClient call to Kafka: `listTopics`. It’s cheap, simple, and it will only return the topic names.
+To mitigate the negative effect of Indexing, we have come up with an elegant counter-measure. Any user request to the Topic List will ALWAYS make one AdminClient call to Kafka: `listTopics`. It’s cheap, simple, and it will only return the topic names.
 
 So, whenever the user lists topics using Console,
 
@@ -34,16 +30,16 @@ So, whenever the user lists topics using Console,
 
 ## Why are we doing this?
 
-We do this to provide you with the best UX you can get and offer you features that you've never seen before associated to your Kafka resources:
+We do this to provide you with the best UX possible and provide features that you've never seen before associated to your Kafka resources:
 
--   (Today) **Smart tables **with sorting and filtering capabilities on a lot of interesting dimensions like message count, size, retention, last-message, produce-rate, consume-rate, and much more!
--   (Tomorrow) A **Global Search Bar** accessible from anywhere in Console, that autocompletes as you start typing, scanning through ALL your resource types across ALL you connected Kafka clusters.
+-   (Today): **Smart tables** with sorting and filtering capabilities on a lot of interesting dimensions like message count, size, retention, last-message, produce-rate, consume-rate, and much more!
+-   (Tomorrow): A **Global Search Bar** accessible from anywhere in Console, that autocompletes as you start typing, scanning through ALL your resource types across ALL you connected Kafka clusters.
 
 ![Capture](img/search-bar.png)
 
 -   (Later) **Alerting** or **Watch** capabilities on any Kafka resources.
-    -   Want to know when a new version of a subject is published ? Sure!
-    -   Someone's just created a topic with a replication factor that doesn't make sense ? No problem!
+    -   Want to know when a new version of a subject is published? Sure!
+    -   Someone's just created a topic with a replication factor that doesn't make sense? No problem!
     -   Your DLQ topic got new messages? We fire a Slack Alert!
 
 None of those features, or anything else we have planned for you, could have been created using only AdminClient calls, Schema Registry API calls, or Kafka Connect API calls. They are simply not efficient enough, especially as the number of active users or connected clusters on Console grows.

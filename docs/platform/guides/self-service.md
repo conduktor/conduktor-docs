@@ -212,10 +212,7 @@ spec:
 
 ### Resource Labels
 
-All resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels.
-
-Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.  
-Some resources will have Conduktor-specific annotations, for example Topic will have an annotation to determine whether it should appear in the Conduktor Topic Catalog.
+All resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.  
 
 **Example**
 ````yaml
@@ -232,8 +229,6 @@ metadata:
     business-doc-url: "https://confluence.company.org/display/CLICK/Kafka"
     application-code: CLK
     environment-code: dev
-  conduktor:
-    topic-visibility: public
 spec:
   replicationFactor: 3
   partitions: 6
