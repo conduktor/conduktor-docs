@@ -105,7 +105,7 @@ spec:
   firstName: "John"
   lastName: "Doe"
   permissions:
-    - resourceType: Topic
+    - resourceType: TOPIC
       cluster: shadow-it
       patternType: PREFIX
       name: toto-
