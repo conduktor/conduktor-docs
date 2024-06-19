@@ -149,8 +149,10 @@ spec:
 **Subject checks:**
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instance
-- One of `spec.schema` or `spec.schemaFile` must be present. `schema` requires an inline schema, `schemaFile` requires a path to a file that contains the schema (relative to the CLI execution path)
-  - Important: Using `spec.schemaFile` requires Conduktor CLI version >=0.2.5
+- One of `spec.schema` or `spec.schemaFile` must be present 
+  - `schema` requires an inline schema
+  - `schemaFile` requires a path to a file that contains the schema relative to the CLI execution path
+    - **Important:** Requires [Conduktor CLI version](/platform/reference/cli-reference/#version) >=0.2.5
 - `spec.format` is mandatory. Defines the schema format: AVRO, PROTOBUF, JSON
 - `spec.compatibility` is optional. Defines the subject compatibility mode: BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
   - Unset the field if you want the compatibility mode to be the one defined at the Schema Registry global level
