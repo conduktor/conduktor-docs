@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 99
 title: Environment Variables
 description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
@@ -89,11 +89,11 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable        | Default Value                         | Description                                                                                                                                   |
-|-----------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL` | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` |
-| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`     | Set if authenticated users are automatically assigned to `passthrough` vcluster if it's not configured. Reject authentication if set to `true` and vcluster is not configured for a principal |
-
+| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                     |
+|--------------------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL`                | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` |
+| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | Set if authenticated users are automatically assigned to `passthrough` vcluster if it's not configured. Reject authentication if set to `true` and vcluster is not configured for a principal   |
+| `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                     | When in non-delegated authentication mode, enable Kafka ACLs on the Gateway                                                                                                                     |
 #### SSL
 
 | Environment Variable                            | Default Value                      | Description                                       |
@@ -123,7 +123,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### MTLS
 
-more context for MTLS [here](/gateway/concepts/Clients/)
+more context for MTLS [here](/gateway/concepts/authentication/)
 
 | Environment Variable                  | Default Value     | Description                                       |
 |---------------------------------------|-------------------|---------------------------------------------------|

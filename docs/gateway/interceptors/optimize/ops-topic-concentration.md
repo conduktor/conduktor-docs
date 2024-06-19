@@ -27,7 +27,7 @@ Using 1/4 of the Kafka resources.
 
 ## Configuration
 
-Topic concentration is configured via Conduktor Gateway Enterprise Edition's admin REST API.
+Topic concentration is configured via Conduktor Gateway Enterprise Edition's admin HTTP API.
 
 | Property Name | Type | Description |
 | :-- | --- | :-- |
