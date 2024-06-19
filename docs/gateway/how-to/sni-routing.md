@@ -63,18 +63,20 @@ See below the alternative hostnames and how they can be customized.
 The following table shows the environment variables used to configure Gateway, the config path will be displayed in the logs at Gateway startup and can be used to double-check that the correct value has been set.
 
 
-| Environment var   | Config  | Possible values | Remarks |
-|---|---|---|---|
-| GATEWAY_ADVERTISED_HOST               | hostPortconfiguration.advertisedHost   |                  | Needs to be set, will be used as base domain for the brokers. For example: conduktor-gateway.sni-demo.local   |
-| GATEWAY_SECURITY_PROTOCOL          | authenticationConfig.securityProtocol     | SASL_SSL or SSL |                                                                                            |
-| GATEWAY_ROUTING_MECHANISM       | routing                                            | host               | Needs to be set to host for SNI routing.                                                |
-| GATEWAY_PORT_START                      | hostPortConfiguration.portStart               |                  | The only port to be exposed by Gateway, defaults to 6969                            |
-| GATEWAY_ADVERTISED_HOST_PREFIX | hostPortConfiguration.hostPrefix         |                  | Optional setting to configure the advertised broker names, see below. Defaults to broker. |
-| GATEWAY_SSL_KEY_STORE_PATH         | authenticationConfig.sslConfig.keyStore.keyStorePath |         | Path for the mounted keystore                                                             |
-| GATEWAY_SSL_KEY_STORE_PASSWORD | authenticationConfig.sslConfig.keyStore.keyStorePassword |    | Password of the keystore                                                                      |
-| GATEWAY_SSL_KEY_PASSWORD            | authenticationConfig.sslConfig.keyStore.keyPassword           |    | Password of the key                                                                                |
-| GATEWAY_SSL_KEY_TYPE                    | authenticationConfig.sslConfig.keyStore.keyStoreType      | jks, p12      | Type of the keystore. Defaults to jus                                                     |
-| GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES | authenticationConfig.sslConfig.updateContextIntervalMinutes |   |                                                                                                     |
+
+| Environment Variable                        | Configuration Path                                          | Description                                                                                                                               | Mandatory | Default  | Possible values     |
+| ------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------- | ------------------- |
+| GATEWAY_ADVERTISED_HOST                     | hostPortconfiguration.advertisedHost                        | Needs to be set, will be used as base domain for the brokers. For example: `conduktor-gateway.sni-demo.local`                             | Yes       |          |                     |
+| GATEWAY_SECURITY_PROTOCOL                   | authenticationConfig.securityProtocol                       | The type of authentication clients should use to connect to the Gateway. Needs to be set to one of the 2 possible values for SNI routing. | Yes       |          | `SASL_SSL` or `SSL` |
+| GATEWAY_ROUTING_MECHANISM                   | routing                                                     | Needs to be set to `host` for SNI routing                                                                                                 | Yes       |          | `host`              |
+| GATEWAY_PORT_START                          | hostPortConfiguration.portStart                             | The only port to be exposed by Gateway                                                                                                    | No        | `6969`   |                     |
+| GATEWAY_ADVERTISED_HOST_PREFIX              | hostPortConfiguration.hostPrefix                            | Configure the advertised broker names, see below for more details                                                                         | No        | `broker` |                     |
+| GATEWAY_SSL_KEY_STORE_PATH                  | authenticationConfig.sslConfig.keyStore.keyStorePath        | Path for the mounted keystore                                                                                                             | Yes       |          |                     |
+| GATEWAY_SSL_KEY_STORE_PASSWORD              | authenticationConfig.sslConfig.keyStore.keyStorePassword    | Password of the keystore                                                                                                                  | Yes       |          |                     |
+| GATEWAY_SSL_KEY_PASSWORD                    | authenticationConfig.sslConfig.keyStore.keyPassword         | Password of the key                                                                                                                       | Yes       |          |                     |
+| GATEWAY_SSL_KEY_TYPE                        | authenticationConfig.sslConfig.keyStore.keyStoreType        | Keystore type                                                                                                                             | No        | `jks`    | `jks`, `p12`        |
+| GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES | authenticationConfig.sslConfig.updateContextIntervalMinutes | Interval in minutes to refresh SSL context                                                                                                | No        | `5`      |                     |
+| GATEWAY_SNI_HOST_SEPARATOR                  | hostPortconfiguration.sniHostSeparator                      | Set the hosts separator to use while reading your SANs                                                                                    | No        | `.`      |                     |
 
 #### *Optional. Trust store configuration*
 For client authentication, you can additionally configure a trust store (including path, password, and type).
