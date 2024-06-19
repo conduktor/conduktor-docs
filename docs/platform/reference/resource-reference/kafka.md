@@ -52,7 +52,7 @@ Creates a Topic in Kafka.
 
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
@@ -77,9 +77,6 @@ spec:
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 ### Subject
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 Creates a Subject in the Schema Registry.
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -89,7 +86,7 @@ Creates a Subject in the Schema Registry.
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: kafka/v2
 kind: Subject
 metadata:
   cluster: shadow-it
@@ -97,14 +94,13 @@ metadata:
 spec:
   schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
   format: AVRO
-  compatibility: BACKWARD
+  compatibility: FORWARD_TRANSITIVE
 ```
-
 **Inline**
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: kafka/v2
 kind: Subject
 metadata:
   cluster: shadow-it
@@ -114,13 +110,14 @@ spec:
     {
       "type": "long"
     }
+  format: AVRO
 ```
 
 **Schema Reference**
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: kafka/v2
 kind: Subject
 metadata:
   cluster: shadow-it
@@ -142,6 +139,7 @@ spec:
         }
       ]
     }
+  format: AVRO
   references:
     - name: com.schema.avro.Address
       subject: commons.address-value
@@ -151,12 +149,14 @@ spec:
 **Subject checks:**
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instance
-- One of `spec.schema` or `spec.schemaFile` must be present. `schema` requires an inline schema, `schemaFile` requires a path to a file that contains the schema (relative to the CLI execution path)
-- `spec.format` is optional. Defines the schema format: AVRO (default), PROTOBUF, JSON
-- `spec.compatibility` is optional. Defines the subject compatibility mode: GLOBAL (default), BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
-  - Use `GLOBAL` if you want the compatibility mode to be the one defined at the Schema Registry global level
+- One of `spec.schema` or `spec.schemaFile` must be present 
+  - `schema` requires an inline schema
+  - `schemaFile` requires a path to a file that contains the schema relative to the CLI execution path
+    - **Important:** Requires [Conduktor CLI version](/platform/reference/cli-reference/#version) >=0.2.5
+- `spec.format` is mandatory. Defines the schema format: AVRO, PROTOBUF, JSON
+- `spec.compatibility` is optional. Defines the subject compatibility mode: BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
+  - Unset the field if you want the compatibility mode to be the one defined at the Schema Registry global level
 - `spec.references` is optional. It specifies the names of referenced schemas
-
 
 **Side effect in Console & Kafka:**
 - Kafka / Schema Registry
@@ -172,7 +172,7 @@ This concept will be available in a future version
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: kafka/v1
 kind: Connector
 metadata:
   name: myPrefix.myConnector

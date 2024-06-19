@@ -55,8 +55,8 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 ````yaml
 # Application
 ---
-apiVersion: "v1"
-kind: "Application"
+apiVersion: self-service/v1
+kind: Application
 metadata:
   name: "clickstream-app"
 spec:
@@ -86,8 +86,8 @@ This is the core concept of Self-service as it ties everything together:
 
 ````yaml
 ---
-apiVersion: "v1"
-kind: "ApplicationInstance"
+apiVersion: self-service/v1
+kind: ApplicationInstance
 metadata:
   application: "clickstream-app"
   name: "clickstream-dev"
@@ -98,12 +98,12 @@ spec:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
   resources:
-  - type: TOPIC
-    name: "click."
-    patternType: PREFIXED
-  - type: GROUP
-    name: "click."
-    patternType: PREFIXED
+    - type: TOPIC
+      name: "click."
+      patternType: PREFIXED
+    - type: CONSUMER_GROUP
+      name: "click."
+      patternType: PREFIXED
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -111,7 +111,7 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
-- `spec.resources[].type` can be `TOPIC`, `GROUP`, `SUBJECT`
+- `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT`
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
     -   ie: If there is already an owner for `click.` this is forbidden:
@@ -145,8 +145,8 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 
 ```yaml
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: self-service/v1
+kind: TopicPolicy
 metadata:
   name: "generic-dev-topic"
 spec:
@@ -162,8 +162,8 @@ spec:
       constraint: OneOf
       values: ["3"]
 ---
-apiVersion: "v1"
-kind: "TopicPolicy"
+apiVersion: self-service/v1
+kind: TopicPolicy
 metadata:
   name: "clickstream-naming-rule"
 spec:
@@ -185,7 +185,7 @@ spec:
 With the two Topic policies declared above, the following Topic resource would succeed validation:
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
@@ -209,8 +209,8 @@ Application Instance Permissions lets teams collaborate with each other.
 ````yaml
 # Permission granted to other Applications
 ---
-apiVersion: v1
-kind: "ApplicationInstancePermission"
+apiVersion: self-service/v1
+kind: ApplicationInstancePermission
 metadata:
   application: "clickstream-app"
   appInstance: "clickstream-app-dev"
@@ -247,9 +247,6 @@ spec:
     - `WRITE`: READ, WRITE, DESCRIBE_CONFIGS
 
 ### Application Group
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />
@@ -264,13 +261,13 @@ You can create as many Application Groups as required to restrict or represent t
 ````yaml
 # Permissions granted to Console users in the Application
 ---
-apiVersion: v1
-kind: "ApplicationGroup"
+apiVersion: self-service/v1
+kind: ApplicationGroup
 metadata:
   application: "clickstream-app"
   name: "clickstream-support"
 spec:
-  title: Support Clickstream
+  displayName: Support Clickstream
   description: |
     Members of the Support Group are allowed:
       Read access on all the resources
@@ -279,27 +276,39 @@ spec:
   permissions:
     - appInstance: clickstream-app-dev
       resourceType: TOPIC
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned & subscribed topics
+      patternType: "LITERAL"
+      name: "*" # All owned & subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
-      resourceType: GROUP
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned consumer groups
+      resourceType: CONSUMER_GROUP
+      patternType: "LITERAL"
+      name: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
-    - appInstance: clickstream-app-dev
-      resourceType: CONNECTOR
-      resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned connectors
-      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectPauseResume", "kafkaConnectRestart"]
   members:
     - user1@company.org
     - user2@company.org
-  externalGroups:
-    - GP-COMPANY-CLICKSTREAM-SUPPORT
-
+#  externalGroups:
+#    - GP-COMPANY-CLICKSTREAM-SUPPORT
 ````
+**Application instance permission checks:**
+- `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
+- `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT` or `CONSUMER_GROUP`
+- `spec.permissions[].patternType` can be `PREFIXED` or `LITERAL`
+- `spec.permissions[].name` must reference any "sub-resource" of `metadata.appInstance` or any subscribed Topic
+  - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
+- `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
+- `spec.members` must be email addresses of members you wish to add to this group.
+- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups to sync with this Console Groups
+  - Members added this way will not appear in `spec.members`
 
+**Side effect in Console & Kafka:**
+- Console
+    - Members of the ApplicationGroup are given the associated permissions in the UI over the resources
+    - Members of the LDAP or OIDC groups will be automatically added or removed upon login
+- Kafka
+    - No side effect
+
+<hr />
 
 ### Policy Constraints
 
@@ -367,7 +376,7 @@ spec.configs.min.insync.replicas:
 This object will pass the validation
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
@@ -382,7 +391,7 @@ spec:
 This object will fail the validation due to a new incorrect definition of `insync.replicas`
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it

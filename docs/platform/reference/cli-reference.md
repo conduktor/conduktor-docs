@@ -119,6 +119,14 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ````
 
+### Version
+Check the current version of your CLI using this command
+````
+$ conduktor version
+Version: 0.2.5
+Hash: 163e7476bb2046e190990de1a698bb75739b10b3
+````
+
 ## Integrate Conduktor CLI with your CI/CD
 
 Conduktor CLI can be easily integrated to a CI/CD pipeline.
