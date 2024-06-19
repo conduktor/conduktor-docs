@@ -66,7 +66,6 @@ You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [
 sso:
   oauth2:
     - name: "jumpcloud"
-      default: true
       client-id: "<Client ID>"
       client-secret: "<Client Secret>"
       groups-claim: "groups" #if wanting to use groups mapping
@@ -104,7 +103,6 @@ Below is the full snippet for your configuration file:
 sso:
   oauth2:
     - name: "jumpcloud"
-      default: true
       client-id: "<Client ID>"
       client-secret: "<Client Secret>"
       groups-claim: "groups"

@@ -43,7 +43,6 @@ For more information see [configuration properties and environment variables](..
 sso:
   oauth2:
     - name: "<IdP>"
-      default: true
       client-id: "<client ID>"
       client-secret: "<client secret>"
       groups-claim: "<groups claim>"
