@@ -40,7 +40,7 @@ Applications give business context to Kafka resources (topics, consumer groups &
 **Example**
 ````yaml
 ---
-apiVersion: "v1"
+apiVersion: "self-serve/v1"
 kind: "Application"
 metadata:
   name: "clickstream-app"
@@ -65,7 +65,7 @@ Each Application Instance:
 ````yaml
 # Application Instance (dev environment)
 ---
-apiVersion: "v1"
+apiVersion: "self-serve/v1"
 kind: "ApplicationInstance"
 metadata:
   application: "clickstream-app"
@@ -92,7 +92,7 @@ This is what lets Platform Administrators provide a Self-service experience that
 # Policies that restrict the Application to a certain range of configurations
 # on topic configs, but also on topic metadata
 ---
-apiVersion: "v1"
+apiVersion: "self-serve/v1"
 kind: "TopicPolicy"
 metadata:
   name: "generic-dev-topic"
@@ -120,7 +120,7 @@ This is how Application Teams can create the Kafka resources they need for their
 ````yaml
 # Topic example
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: "Topic"
 metadata:
   cluster: "shadow-it"
@@ -145,7 +145,7 @@ Deploying this object will grant permission to the `grantedTo` Application Insta
 ````yaml
 # Read permission granted to the Heatmap Application on click.screen-events topic
 ---
-apiVersion: "v1"
+apiVersion: self-serve/v1
 kind: "ApplicationInstancePermission"
 metadata:
   application: "clickstream-app"
@@ -174,7 +174,7 @@ You can create as many Application Groups as required to restrict or represent t
 ````yaml
 # Permissions granted to Console users in the group, CP-COMPANY-CLICKSTREAM-SUPPORT, for the clickstream-app Application
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: "ApplicationGroup"
 metadata:
   application: "clickstream-app"
@@ -218,7 +218,7 @@ All resources that can be created using the Conduktor CLI can be annotated with 
 ````yaml
 # Topic annotated with useful metadata
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: "Topic"
 metadata:
   cluster: "shadow-it"

@@ -52,7 +52,7 @@ export const AdminToken = () => (
 Creates a Group with members and permissions in Console
 ````yaml
 ---
-apiVersion: v2
+apiVersion: iam/v2
 kind: Group
 metadata:
   name: developers-a
@@ -97,7 +97,7 @@ spec:
 Sets a User with permissions in Console
 ````yaml
 ---
-apiVersion: v2
+apiVersion: iam/v2
 kind: User
 metadata:
   name: john.doe@company.org
@@ -335,7 +335,7 @@ Creates a Kafka Cluster Definition in Console.
 
 ````yaml
 ---
-apiVersion: v1
+apiVersion: console/v2
 kind: KafkaCluster
 metadata:
   name: shadow-julien
@@ -406,7 +406,7 @@ Creates a Kafka Connect Cluster Definition in Console.
 
 ````yaml
 ---
-apiVersion: v1
+apiVersion: console/v2
 kind: KafkaConnectCluster
 metadata:
   name: connect-1
@@ -448,7 +448,7 @@ This concept will be available in a future version
 Creates a ksqlDB Cluster Definition in Console.
 ````yaml
 ---
-apiVersion: v1
+apiVersion: console/v2
 kind: KsqlDBCluster
 metadata:
   name: connect-1

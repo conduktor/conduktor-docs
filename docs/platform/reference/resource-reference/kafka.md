@@ -172,7 +172,7 @@ This concept will be available in a future version
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: kafka/v1
 kind: Connector
 metadata:
   name: myPrefix.myConnector

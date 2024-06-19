@@ -55,7 +55,7 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 ````yaml
 # Application
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: Application
 metadata:
   name: "clickstream-app"
@@ -86,7 +86,7 @@ This is the core concept of Self-service as it ties everything together:
 
 ````yaml
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: ApplicationInstance
 metadata:
   application: "clickstream-app"
@@ -145,7 +145,7 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 
 ```yaml
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: TopicPolicy
 metadata:
   name: "generic-dev-topic"
@@ -162,7 +162,7 @@ spec:
       constraint: OneOf
       values: ["3"]
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: TopicPolicy
 metadata:
   name: "clickstream-naming-rule"
@@ -185,7 +185,7 @@ spec:
 With the two Topic policies declared above, the following Topic resource would succeed validation:
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
@@ -209,7 +209,7 @@ Application Instance Permissions lets teams collaborate with each other.
 ````yaml
 # Permission granted to other Applications
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: ApplicationInstancePermission
 metadata:
   application: "clickstream-app"
@@ -261,7 +261,7 @@ You can create as many Application Groups as required to restrict or represent t
 ````yaml
 # Permissions granted to Console users in the Application
 ---
-apiVersion: v1
+apiVersion: self-serve/v1
 kind: ApplicationGroup
 metadata:
   application: "clickstream-app"
@@ -376,7 +376,7 @@ spec.configs.min.insync.replicas:
 This object will pass the validation
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
@@ -391,7 +391,7 @@ spec:
 This object will fail the validation due to a new incorrect definition of `insync.replicas`
 ````yaml
 ---
-apiVersion: v2
+apiVersion: kafka/v2
 kind: Topic
 metadata:
   cluster: shadow-it
