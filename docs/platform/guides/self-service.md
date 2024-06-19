@@ -161,9 +161,6 @@ spec:
 ````
 
 ### Application Group
-:::caution
-This concept will be available in a future version
-:::
 Create an Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
