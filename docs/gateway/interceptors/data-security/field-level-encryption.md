@@ -97,6 +97,8 @@ With caching enabled, the interceptor will be able to use old versions of key fo
 the `KMS`. Configuring a low TTL will ensure that the interceptor will use the latest version of the key, but it is a
 trade-off between performance (increased calls to `KMS`) and security (using the latest key version).
 
+![envelope encryption](../../medias/encryption.png)
+
 # Configuration
 
 ## Encryption configuration
