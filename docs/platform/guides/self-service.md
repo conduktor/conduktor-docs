@@ -77,7 +77,7 @@ spec:
     - type: TOPIC
       name: "click."
       patternType: PREFIXED
-    - type: GROUP
+    - type: CONSUMER_GROUP
       name: "click."
       patternType: PREFIXED
 ````
@@ -190,7 +190,7 @@ spec:
       resourcePattern: "*" # All owned & subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
-      resourceType: GROUP
+      resourceType: CONSUMER_GROUP
       resourcePatternType: "LITERAL"
       resourcePattern: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
