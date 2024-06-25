@@ -34,13 +34,19 @@ Query any of your indexed topics using SQL.
 Navigate in your measures and dimensions
 
 
-![Dashboard](images/dashboard.png)
+[![Dashboard](images/dashboard.png)](#dashboarding-1)
 
 ### Data Quality
 
 Get a view on your data quality at a glance.
 
 ![Data Quality](images/data-quality.png)
+
+### Outliers detection
+
+Find directly the outliers
+
+![Outliers detection](images/data-quality-outliers.png)
 
 
 ### Recent Queries
