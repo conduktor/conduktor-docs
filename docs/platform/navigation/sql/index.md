@@ -254,7 +254,7 @@ As such, we are adding the following fields
 
 We are currently only support topics that contain `Json` and `Avro` using `TopicNameStrategy`.
 
-As a first version, we are not handling the following elements
+We'll be supporting the following features
 
 * JsonSchema
 * Protobuf
@@ -262,7 +262,7 @@ As a first version, we are not handling the following elements
 * Data-masking
 * Keys are treated as Strings
 * Field level encryption
-* Very large topic with more than 20g of data
+* Very large topic with more than 200g of data
 * Specifying timezone for dates
 * Toggle indexation at topic level
 * Toggle indexation at database level
@@ -271,9 +271,8 @@ As a first version, we are not handling the following elements
 
 ### What we will never do
 
-* We will never support multi-peta bytes setups 
-* We will never support real time 
-
+* We will never support multi-peta bytes setups (we are not replacing databricks, snowflake and your datawarehouse) 
+* We will never support real time (we are not replacing Flink, ksqlDB, materialize etc)
 
 ## Database Protocols
 
