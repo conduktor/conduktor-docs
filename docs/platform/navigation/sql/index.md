@@ -8,7 +8,7 @@ description: SQL Overview
 
 :::caution
 This functionality is in preview, we are welcoming all feedback.
-Please review the [limitations](#limitations) chapter.
+Please review the [current POC limitations](#current-poc-limitations) chapter.
 :::
 
 ## Overview
@@ -250,7 +250,7 @@ As such, we are adding the following fields
 | _value_schema_id        | Int32                                                             | Schema id                                                                                                             |
 
 
-### Limitations
+### Current POC Limitations
 
 We are currently only support topics that contain `Json` and `Avro` using `TopicNameStrategy`.
 
