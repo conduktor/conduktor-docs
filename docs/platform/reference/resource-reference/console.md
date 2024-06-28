@@ -325,13 +325,10 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 
 ### KafkaCluster
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />
 
 ````yaml
 ---
