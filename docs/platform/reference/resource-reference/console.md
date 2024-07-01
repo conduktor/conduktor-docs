@@ -183,6 +183,7 @@ You need to check that in Console directly.
 :::
 
 ### Schema Registry
+This section lets you associate a Schema Registry to your KafkaCluster
 #### Confluent or Confluent-like Registry
 
 ````yaml
@@ -221,23 +222,65 @@ AWS Glue Registry checks:
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
 - `spec.schemaRegistry.amazonSecurity` must be one of [`Credentials`, `FromContext`, `FromRole`]
 
-
-| Security                                     | Value                       |
-|----------------------------------------------|-----------------------------|
-| **Credentials**                              | |
-| `spec.schemaRegistry.amazonSecurity.type`                        | `"Credentials"`             |
-| `spec.schemaRegistry.amazonSecurity.accessKeyId`                 | Credentials auth access key |
-| `spec.schemaRegistry.amazonSecurity.secretKey`                   | Credentials auth secret key |
-| **FromProfile**                              |                             | 
-| `amazonSecurity.type`                        | `"FromProfile"`             |
-| `spec.schemaRegistry.amazonSecurity.profile` | Authentication profile      |
-| **FromRole**                                 |                             |
-| `spec.schemaRegistry.amazonSecurity.type`                        | `"FromRole"`                |
-| `spec.schemaRegistry.amazonSecurity.role` | Authentication role         |
-
-
+**Credentials**  
+Use AWS API Key/Secret to connect to the Glue Registry
+````yaml
+    amazonSecurity:
+      type: Credentials
+      accessKeyId: AKIAIOSFODNN7EXAMPLE
+      secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+````
+**FromContext**
+````yaml
+    amazonSecurity:
+      type: FromContext
+      profile: default
+````
+**FromRole**
+````yaml
+    amazonSecurity:
+      type: FromRole
+      role: arn:aws:iam::123456789012:role/example-role
+````
 ### Kafka Provider
+This section lets you configure the Kafka Provider for this KafkaCluster.
 
+**Confluent Cloud**  
+Provide your Confluent Cloud details to get additional features in Console (Service Accounts)
+
+````yaml
+spec:
+  kafkaFlavor:
+    type: "Confluent"
+    key: "yourApiKey123456"
+    secret: "yourApiSecret123456"
+    confluentEnvironmentId: "env-12345"
+    confluentClusterId: "lkc-67890"
+````
+
+**Aiven**  
+Provide your Aiven Cloud details to get additional features in Console (ACLs)
+
+````yaml
+spec:
+  kafkaFlavor:
+    type: "Aiven"
+    apiToken: "a1b2c3d4e5f6g7h8i9j0"
+    project: "my-kafka-project"
+    serviceName: "my-kafka-service"
+````
+
+**Gateway**  
+Provide your Gateway details to get additional features in Console (Interceptors)
+````yaml
+spec:
+  kafkaFlavor:
+    type: "Gateway"
+    url: "http://gateway:8088"
+    user: "admin"
+    password: "admin"
+    virtualCluster: vc1
+````
 
 ### Icon Sets
 
