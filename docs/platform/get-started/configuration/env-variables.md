@@ -253,6 +253,11 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 
 ### Kafka clusters properties
 
+:::caution
+The new recommended way to configure clusters is through the CLI and YAML manifests.  
+Check the associated [KafkaCluster documentation](/platform/reference/resource-reference/console/#kafkacluster)
+:::
+
 For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster Configurations](configuration-snippets.md#gitops-managing-cluster-configurations).
 
 You can find sample configurations on the [Configuration Snippets](configuration-snippets.md) page.
@@ -264,10 +269,7 @@ You can find sample configurations on the [Configuration Snippets](configuration
 | `clusters[].color`                      | Attach a color to associate with your cluster in the UI              | `CDK_CLUSTERS_0_COLOR`                      | false     | string in hexadecimal format (`#FFFFFF`) | random  |
 | `clusters[].ignoreUntrustedCertificate` | Skip SSL certificate validation                                      | `CDK_CLUSTERS_0_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                                  | `false` |
 | `clusters[].bootstrapServers`           | List of host:port for your Kafka brokers separated by coma `,`       | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS`           | true      | string                                   | ∅       |
-| `clusters[].zookeeperServer`            | Zookeeper server url                                                 | `CDK_CLUSTERS_0_ZOOKEEPERSERVER`            | false     | string                                   | ∅       |
 | `clusters[].properties`                 | Any cluster configuration properties                                 | `CDK_CLUSTERS_0_PROPERTIES`                 | false     | string where each line is a property     | ∅       |
-| `clusters[].jmxScrapePort`              | JMX-exporter port used to scrape Kafka broker metrics for monitoring | `CDK_CLUSTERS_0_JMXSCRAPEPORT`              | false     | int                                      | `9101`  |
-| `clusters[].nodeScrapePort`             | Node-exporter port used to scrape Kafka host metrics for monitoring  | `CDK_CLUSTERS_0_NODESCRAPEPORT`             | false     | int                                      | `9100`  |
 
 ### Kafka vendor specific properties
 
