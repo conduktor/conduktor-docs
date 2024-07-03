@@ -75,17 +75,7 @@ spec:
 - `spec.config` is a valid config for the `pluginClass`
 
 ### Interceptor Targeting
-You can make your Interceptor only active on certain scenarios. Use the following table to configure Targeting.  
-You can deploy multiple interceptors with the same name using different targeting scope. This will effectively override the scope.
-
-:::info
-The order of precedence from highest (overrides all others) to lowest (most easily overridden) is:
-
-- ServiceAccount
-- Group
-- VirtualCluster
-- Global
-:::
+You can make your Interceptor only active on certain scenarios. Use the following table to configure Targeting.
 
 | Use case                              | `metadata.vcluster` | `metadata.group` | `metadata.username` | 
 |---------------------------------------|---------------------|------------------|---------------------|
@@ -95,6 +85,17 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 | Virtual Cluster Targeting             | Set                 | Empty            | Empty               |
 | Virtual Cluster + Username Targeting  | Set                 | Empty            | Set                 |
 | Virtual Cluster + Group Targeting     | Set                 | Set              | Empty               |
+
+You can deploy multiple interceptors with the same name using different targeting scope. This will effectively override the configuration for the scope.
+
+:::info
+The order of precedence from highest (overrides all others) to lowest (most easily overridden) is:
+
+- ServiceAccount
+- Group
+- VirtualCluster
+- Global
+  :::
 
 **Examples**
 ````yaml
