@@ -30,13 +30,11 @@ Result groups are an union of groups defined on `UserMapping`, if one exists for
 
 ### Virtual cluster
 
-The user's virtual cluster will come from the `UserMapping` , if one exists, for the `Principal` .
+The user's virtual cluster will come from the `UserMapping`, if one exists, for the `Principal` .
 
 If no mapping exists then we try to use one from authentication extraction.
 
-If no virtual cluster was detected then the user is associated to the the `passthrough` virtual cluster, a transparent virtual cluster.
-
-If you don't want users to automatically fallback into the `passthrough` transparent virtual cluster, and instead fail the connection, you can set `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` to true.
+If no virtual cluster was detected then the user automatically falls back into the transparent virtual cluster, named `passthrough`. If you don't want users to automatically fallback into this mode, and instead fail the connection, you can set `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` to true.
 
 ## Authentication specific extraction
 
