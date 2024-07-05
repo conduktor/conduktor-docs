@@ -8,7 +8,7 @@ description: Fine-tuning log configuration with configuration file
 
 If you want to further customize your logging at an individual logger-level, you can use a custom log4j configuration file.
 
-you must bind mount your custom log4j configuration file to the `/app/resources/log4j2.xml` path in the container.
+You must bind mount your custom log4j configuration file to the `/app/resources/log4j2.xml` path in the container.
 
 Here is the default configuration file:
 
