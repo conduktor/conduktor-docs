@@ -13,8 +13,6 @@ Virtual Cluster concept is entirely **optional**.
   
 If you choose not to configure any Virtual Clusters, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. 
 This is the default mode and all topics and resources will be visible and accessible as usual, without any additional configuration.  
-  
-Technically, this mode is also a Virtual Cluster called [Passthrough](#passthrough).
 :::
 
 ### Why Use Virtual Clusters?
