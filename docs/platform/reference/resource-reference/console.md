@@ -150,12 +150,7 @@ spec:
     security:
       username: superUser
       password: superUser
-    properties:
     ignoreUntrustedCertificate: false
-  amazonSecurity:
-    type: "CREDENTIALS"
-    accessKeyId: "string"
-    secretKey: "string"
   kafkaFlavor:
     type: "CONFLUENT"
     key: "string"
@@ -212,7 +207,7 @@ spec:
     type: "Glue"
     region: eu-west-1
     registryName: default
-    amazonSecurity:
+    security:
       type: Credentials
       accessKeyId: accessKey
       secretKey: secretKey
@@ -220,25 +215,25 @@ spec:
 AWS Glue Registry checks:
 - `spec.schemaRegistry.region` must be a valid AWS region
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
-- `spec.schemaRegistry.amazonSecurity` must be one of [`Credentials`, `FromContext`, `FromRole`]
+- `spec.schemaRegistry.security.type` must be one of [`Credentials`, `FromContext`, `FromRole`]
 
 **Credentials**  
 Use AWS API Key/Secret to connect to the Glue Registry
 ````yaml
-    amazonSecurity:
+    security:
       type: Credentials
       accessKeyId: AKIAIOSFODNN7EXAMPLE
       secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ````
 **FromContext**
 ````yaml
-    amazonSecurity:
+    security:
       type: FromContext
       profile: default
 ````
 **FromRole**
 ````yaml
-    amazonSecurity:
+    security:
       type: FromRole
       role: arn:aws:iam::123456789012:role/example-role
 ````
@@ -246,7 +241,9 @@ Use AWS API Key/Secret to connect to the Glue Registry
 This section lets you configure the Kafka Provider for this KafkaCluster.
 
 **Confluent Cloud**  
-Provide your Confluent Cloud details to get additional features in Console (Service Accounts)
+Provide your Confluent Cloud details to get additional features in Console:
+- Confluent Cloud Service Accounts support
+- Confluent Cloud API Keys support
 
 ````yaml
 spec:
@@ -259,7 +256,9 @@ spec:
 ````
 
 **Aiven**  
-Provide your Aiven Cloud details to get additional features in Console (ACLs)
+Provide your Aiven Cloud details to get additional features in Console:  
+- Aiven Service Accounts support
+- Aiven ACLs support
 
 ````yaml
 spec:
@@ -271,7 +270,9 @@ spec:
 ````
 
 **Gateway**  
-Provide your Gateway details to get additional features in Console (Interceptors)
+Provide your Gateway details to get additional features in Console:
+- Interceptors support
+
 ````yaml
 spec:
   kafkaFlavor:
