@@ -1,22 +1,19 @@
 ---
 version: 3.2.0
 title: Large message/batch handling
-description: Increase performance and reduce costs with cold storage of Kafka data in Cloud storage (Amazon S3/Azure Blocb storage).
+description: Increase performance and reduce costs with cold storage of Kafka data in Cloud storage (Amazon S3/Azure Blob storage).
 parent: optimize
 license: enterprise
 ---
 
 ## Introduction
 
-Large message/batch handling interceptor will save the actual message produced to gateway into a cloud storage service.
+Large message/batch handling interceptor will save the actual message produced to gateway into a cloud storage service. It helps to protect data or optimize storage in actual kafka.
 
-Currently supported cloud storages are Amazon S3 or Azure Blob Storage.
+Currently supported cloud storages are Amazon S3 or Azure Blob Storage:
+ - Amazon S3 or Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface.
+ - Azure Blob Storage is a service offered by Microsoft Azure to provide blob storage.
 
-Amazon S3 or Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface.
-
-Azure Blob Storage is a service offered by Microsoft Azure to provide blob storage.
-
-It helps to protect data or optimize storage in actual kafka.
 
 ## Configuration
 
@@ -26,11 +23,11 @@ It helps to protect data or optimize storage in actual kafka.
 | s3Config           | [S3](#s3)       |         | Amazon S3 Configuration                                                                                |
 | azureConfig        | [Azure](#azure) |         | Azure Blob Storage Configuration                                                                       |
 | minimumSizeInBytes | int             |         | Only upload to s3 for batch/message record has size greater than or equal to this `minimumSizeInBytes` |
-| localDiskDirectory | string          | Local temp storage, used when we download file from S3 while fetching messages |
+| localDiskDirectory | string          |         | Local temp storage, used when we download file from S3 while fetching messages                         |
 
 ### S3 
 
-By default, s3 credentials default on managed identity. They will be overwritten if a specific `basic redentials` (`accessKey` and `secretKey`) 
+By default, s3 credentials default on managed identity. They will be overwritten if a specific `basic credentials` (`accessKey` and `secretKey`) 
 or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is configured.
 
 | key                | type         | description                                                                    |
@@ -41,6 +38,8 @@ or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is config
 | bucketName         | string       | S3 bucket name                                                                 |
 | uri                | string       | S3 uri                                                                         |
 | region             | string       | S3 Region                                                                      |
+| localDiskDirectory **(deprecated)**             | string       | Local temp storage, used when we download file from S3 while fetching messages. Note this should be specified in the top-level [configuration](#configuration) since version `3.2.0`.                                                                       |
+
 
 ### Azure
 
