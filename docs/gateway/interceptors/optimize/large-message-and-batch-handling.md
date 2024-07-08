@@ -1,26 +1,32 @@
 ---
-version: 3.0.0
+version: 3.2.0
 title: Large message/batch handling
-description: Increase performance and reduce costs with cold storage of Kafka data in Amazon S3.
+description: Increase performance and reduce costs with cold storage of Kafka data in Cloud storage (Amazon S3/Azure Blocb storage).
 parent: optimize
 license: enterprise
 ---
 
 ## Introduction
 
+Large message/batch handling interceptor will save the actual message produced to gateway into a cloud storage service.
+
+Currently supported cloud storages are Amazon S3 or Azure Blob Storage.
+
 Amazon S3 or Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface.
 
-Large message/batch handling interceptor will save the actual message produced to gateway into Amazon Simple Storage  Service.
+Azure Blob Storage is a service offered by Microsoft Azure to provide blob storage.
 
 It helps to protect data or optimize storage in actual kafka.
 
 ## Configuration
 
-| key                | type           | default | description                                                                                            |
-|:-------------------|:---------------|:--------|:-------------------------------------------------------------------------------------------------------|
-| topic              | String         | `.*`    | Topics that match this regex will have the interceptor applied                                         |
-| s3Config           | [S3](#s3)      |         | Amazon S3 Configuration                                                                                |
-| minimumSizeInBytes | int            |         | Only upload to s3 for batch/message record has size greater than or equal to this `minimumSizeInBytes` |
+| key                | type            | default | description                                                                                            |
+|:-------------------|:----------------|:--------|:-------------------------------------------------------------------------------------------------------|
+| topic              | String          | `.*`    | Topics that match this regex will have the interceptor applied                                         |
+| s3Config           | [S3](#s3)       |         | Amazon S3 Configuration                                                                                |
+| azureConfig        | [Azure](#azure) |         | Azure Blob Storage Configuration                                                                       |
+| minimumSizeInBytes | int             |         | Only upload to s3 for batch/message record has size greater than or equal to this `minimumSizeInBytes` |
+| localDiskDirectory | string          | Local temp storage, used when we download file from S3 while fetching messages |
 
 ### S3 
 
@@ -35,7 +41,16 @@ or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is config
 | bucketName         | string       | S3 bucket name                                                                 |
 | uri                | string       | S3 uri                                                                         |
 | region             | string       | S3 Region                                                                      |
-| localDiskDirectory | string       | Local temp storage, used when we download file from S3 while fetching messages |
+
+### Azure
+
+| key           | type         | description                                        |
+|:--------------|:-------------|:---------------------------------------------------|
+| tenantId      | string       | Azure tenant id                                    |
+| clientId      | string       | Azure client id                                    |
+| secret        | string       | Azure client secret                                |
+| blobEndpoint  | string       | Azure blob storage endpoint to use                 |
+| bucketName    | string       | Bucket name in blob storage configured to store in |
 
 ## Examples
 
