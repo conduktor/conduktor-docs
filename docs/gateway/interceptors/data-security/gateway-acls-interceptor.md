@@ -12,7 +12,7 @@ Like in Kafka, you can define ACLs on the Gateway to restrict your applications 
 
 :::warning
 This interceptor is not supported anymore, as of Gateway 3.1.0.
-If you are using a more recent version, please refer to this [page](../../concepts/acls).
+If you are using a more recent version, please refer to this [page](/gateway/concepts/acls/).
 :::
 
 ## Super Users
