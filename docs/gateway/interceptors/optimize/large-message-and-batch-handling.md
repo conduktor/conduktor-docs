@@ -43,13 +43,15 @@ or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is config
 
 ### Azure
 
+Note that your application will require at least **Storage Blob Data Contributor** permissions to be able to read/write the data.
+
 | key           | type         | description                                        |
 |:--------------|:-------------|:---------------------------------------------------|
 | tenantId      | string       | Azure tenant id                                    |
 | clientId      | string       | Azure client id                                    |
 | secret        | string       | Azure client secret                                |
 | blobEndpoint  | string       | Azure blob storage endpoint to use                 |
-| bucketName    | string       | Bucket name in blob storage configured to store in |
+| bucketName    | string       | Bucket (container) name in blob storage configured to store in |
 
 ## Examples
 
