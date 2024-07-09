@@ -248,6 +248,7 @@ and numbers. Special characters are not allowed. Also, it can work with the uppe
 ## KMS
 
 - IN_MEMORY
+    - *Note: This should be utilized for demo purposes only and **should not be used in production setups**. Keys may be lost when Gateway is restarted or interceptors are updated, reducing your ability to decrypt data that has already been written to Kafka.*
 - VAULT
 - AZURE
 - AWS
