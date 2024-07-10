@@ -41,7 +41,8 @@ To use Conduktor CLI, you need to define 2 environment variables:
 - Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application API Key)
 ````yaml
 export CDK_BASE_URL=http://localhost:8080
-export CDK_API_KEY=<api-key>
+read CDK_API_KEY
+export CDK_API_KEY
 ````
 
 ## Commands Usage
@@ -142,7 +143,57 @@ Consider the following folder structure:
 |   ├── permissions.yml     # Your permissions to other Apps are there
 ````
 
+## Creating a Token with the CLI
 
+You can use your local or LDAP credentials to create a short-lived token (valid for 5 days) directly linked to your account:
+
+```bash
+read CDK_USER
+read CDK_PASSWORD
+export CDK_USER
+export CDK_PASSWORD
+export CDK_API_KEY=$(conduktor login)
+```
+
+### Creating an Admin Token
+
+To create an admin token, you need to set either `CDK_API_KEY` or `CDK_USER`/`CDK_PASSWORD`:
+
+```bash
+conduktor create token admin my_first_admin_token
+```
+
+### Listing Admin Tokens
+
+To list existing admin tokens, use:
+
+```bash
+conduktor token list admin
+```
+
+### Deleting an Admin Token
+
+To delete an existing admin token, use:
+
+```bash
+conduktor token delete <token_uuid>
+```
+
+### Creating an Application-Instance Token
+
+To create a token for an application instance, use:
+
+```bash
+conduktor token create application-instance -i=my_instance my_token_for_my_instance
+```
+
+### Listing Application-Instance Tokens
+
+To list tokens for a specific application instance, use:
+
+```bash
+conduktor token list application-instance -i=my_instance
+```
 
 
 <Tabs>
