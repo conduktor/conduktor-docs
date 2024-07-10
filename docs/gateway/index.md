@@ -6,15 +6,16 @@ description: Kafka is a powerful tool, with many nuances and great flexibility. 
 
 # Overview
 
-## What is Conduktor Gateway?
+## What is Conduktor Gateway? A Kafka Proxy
 
 Conduktor Gateway is a network proxy for Apache Kafka, complete with an extensible and dynamic plugin mechanism that can be used to add technical and business logic on top of your existing Kafka deployment.
 
 This can be used to provide functionality that is not available in Kafka natively, such as:
- - End-to-end encryption
- - Safeguarding, through enforced configuration rules and business policies
- - Multi-tenancy through virtual clusters
- - Data Quality through schema validation
+ - **Centrally configure encryption** at the field-level or full payload, to secure your data during transit and at rest, before the cluster
+ - **Mask sensitive data** across topics and set access rules, so users only see what they’re authorized to
+ - **Set granular RBAC controls** to manage access and permissions for data at the cluster, team or individual level 
+ - **Leverage multi-tenancy** with virtual clusters to optimize resources and reduce operational overheads
+ - **Empower development teams** to manage their data within a federated control framework, accelerating project delivery
 
 Conduktor Gateway is vendor-agnostic, meaning it supports all Kafka providers (Confluent, AWS MSK, Redpanda, Aiven, Apache Kafka), both cloud and on-premise.
 
