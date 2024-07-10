@@ -33,6 +33,11 @@ Query any of your indexed topics using SQL.
 
 Navigate in your measures and dimensions
 
+#### For ops or developers
+
+![Dashboard](images/dashboard-metadata.png)
+
+#### For business users
 
 [![Dashboard](images/dashboard.png)](#dashboarding-1)
 
@@ -48,6 +53,20 @@ Find directly the outliers
 
 ![Outliers detection](images/data-quality-outliers.png)
 
+
+### Lineage
+
+Understand visually the flow of all kafka usage
+
+#### For ops or developers
+
+![Lineage](images/lineage.png)
+
+#### For architects
+
+Extract [C4 model](https://c4model.com/) information from self-service
+
+![Lineage](images/lineage-c4model.png)
 
 ### Recent Queries
 
