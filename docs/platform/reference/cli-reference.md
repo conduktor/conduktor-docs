@@ -125,6 +125,7 @@ Available Commands:
   delete      delete resource of a given kind and name
   get         get resource of a given kind
   token       manage API Keys 
+  login       create a short-lived API Key
   help        Help about any command
   version     display the version of conduktor
 
