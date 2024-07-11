@@ -38,11 +38,80 @@ docker pull conduktor/conduktor-ctl
 
 To use Conduktor CLI, you need to define 2 environment variables:
 - The URL of Conduktor Console
-- Your API Key (either an [Admin API Key](/platform/navigation/settings/api-key/) or Application API Key)
-````yaml
+- Your API Key
+
+````bash
 export CDK_BASE_URL=http://localhost:8080
-read CDK_API_KEY
-export CDK_API_KEY
+export CDK_API_KEY=<your-api-key>
+````
+
+There are 3 types of API Keys:
+- [Admin API Keys](#admin-api-key)
+- [Self-Service Application API Keys](#self-service-application-api-key)
+- [Short-lived User API Keys](#short-lived-user-api-keys)
+
+:::tip Hint 💡
+Use a Short-lived User API Key to bootstrap the first Admin Key
+:::
+
+#### Admin API Key
+Admin API Keys grant the maximum permissions on Console.  
+They are generated either from the UI or using the CLI.
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
+````bash
+# Generate a key named my-admin-key
+$ conduktor token create admin my-admin-key
+AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+````
+
+</TabItem>
+<TabItem value="GUI" label="UI">
+Navigate to Settings / API Keys
+
+Select **Create API Key** to generate a new API key.
+
+![api-token.png](img/admin-keys.png)
+</TabItem>
+</Tabs>
+
+<hr />
+
+#### Self-service Application API Key
+Self-service Application API Key permissions are limited to the scope of the ApplicationInstance for which they have been generated.  
+Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.  
+They can be obtained either from the UI or using the CLI.
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
+````bash
+$ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
+AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+````
+
+</TabItem>
+<TabItem value="GUI" label="UI">
+
+Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
+![Cluster identity](img/self-service-keys.png)
+
+</TabItem>
+</Tabs>
+
+#### Short-lived User API Keys
+This type of API Key have the permissions of the user who created it.  
+It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
+Short-lived User API Keys will be valid for the same duration as the [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).  
+**OIDC users can't generate this type of API Key.**  
+
+````bash
+export CDK_USER=admin@conduktor.io
+export CDK_PASSWORD=admin
+$ conduktor login
+AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
 ## Commands Usage
@@ -55,6 +124,7 @@ Available Commands:
   completion  Generate the autocompletion script for the specified shell
   delete      delete resource of a given kind and name
   get         get resource of a given kind
+  token       manage API Keys 
   help        Help about any command
   version     display the version of conduktor
 
@@ -120,6 +190,29 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ````
 
+### Token
+
+```bash
+# To create an Admin API Key, you need to set either `CDK_API_KEY` or `CDK_USER`/`CDK_PASSWORD`:
+$ conduktor token create admin my_first_admin_token
+AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+
+# List admin API Keys
+$ conduktor token list admin
+my_first_admin_token    1233ff18-0e95-4638-b3fc-f55e20088b8d
+other_admin_token       86cefd40-4d61-4290-8aa7-28c4f4d26079
+
+# Delete an API Key
+$ conduktor token delete 1233ff18-0e95-4638-b3fc-f55e20088b8d
+
+# Create a Self-service API Key
+$ conduktor token create application-instance -i=my_instance my_token_for_my_instance
+AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+
+# List Self-service API Keys
+$ conduktor token list application-instance -i=my_instance
+```
+
 ### Version
 Check the current version of your CLI using this command
 ````
@@ -142,59 +235,6 @@ Consider the following folder structure:
 │   ├── topics.yml          # Your topics are there
 |   ├── permissions.yml     # Your permissions to other Apps are there
 ````
-
-## Creating a Token with the CLI
-
-You can use your local or LDAP credentials to create a short-lived token (valid for 5 days) directly linked to your account:
-
-```bash
-read CDK_USER
-read CDK_PASSWORD
-export CDK_USER
-export CDK_PASSWORD
-export CDK_API_KEY=$(conduktor login)
-```
-
-### Creating an Admin Token
-
-To create an admin token, you need to set either `CDK_API_KEY` or `CDK_USER`/`CDK_PASSWORD`:
-
-```bash
-conduktor create token admin my_first_admin_token
-```
-
-### Listing Admin Tokens
-
-To list existing admin tokens, use:
-
-```bash
-conduktor token list admin
-```
-
-### Deleting an Admin Token
-
-To delete an existing admin token, use:
-
-```bash
-conduktor token delete <token_uuid>
-```
-
-### Creating an Application-Instance Token
-
-To create a token for an application instance, use:
-
-```bash
-conduktor token create application-instance -i=my_instance my_token_for_my_instance
-```
-
-### Listing Application-Instance Tokens
-
-To list tokens for a specific application instance, use:
-
-```bash
-conduktor token list application-instance -i=my_instance
-```
-
 
 <Tabs>
 <TabItem value="github" label="Github Actions">
@@ -230,7 +270,6 @@ jobs:
     container: conduktor/conduktor-ctl
     steps:
       - uses: actions/checkout@v3
-      // highlight-next-line
       - run: /bin/conduktor apply -f resources/
         env:
           CDK_BASE_URL: https://conduktor.domain.com
