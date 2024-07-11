@@ -79,7 +79,7 @@ spec:
 
 **Conduktor annotations**
 - `conduktor.io/description` is optional. The description field in the Topic Catalog view
-- `conduktor.io/description.editable` is optional (defaults `"true"`). defines whether the description can be updated in the UI
+- `conduktor.io/description.editable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
 
 **Side effect in Console & Kafka:**
 - Kafka
