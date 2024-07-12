@@ -38,7 +38,7 @@ or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is config
 | bucketName         | string       | S3 bucket name                                                                 |
 | uri                | string       | S3 uri                                                                         |
 | region             | string       | S3 Region                                                                      |
-| localDiskDirectory **(deprecated)**             | string       | Local temp storage, used when we download file from S3 while fetching messages. Note this should be specified in the top-level [configuration](#configuration) since version `3.2.0`.                                                                       |
+| localDiskDirectory **(removed)**             | string       | Local temp storage, used when we download file from S3 while fetching messages. Note this should be specified in the top-level [configuration](#configuration) since version `3.2.0`.                                                                       |
 
 
 ### Azure
