@@ -101,12 +101,12 @@ Create topic policy limits on topic creation to ensure that any topics created i
 
 ### Compression
 
-- `UNCOMPRESSED`
-- `GZIP`
-- `SNAPPY`
-- `LZ4`
-- `ZSTD`
-- `PRODUCER`
+- `uncompressed`
+- `gzip`
+- `snappy`
+- `lz4`
+- `zstd`
+- `producer`
 
 ### Action
 
