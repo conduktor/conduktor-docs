@@ -12,7 +12,7 @@ description: Conduktor API health endpoints
 
 `/platform/api/modules/health/live`
 
-Return a status 200 when platform-api HTTP server is up.
+Returns a status 200 when platform-api HTTP server is up.
 
 ```shell title="cURL example"
 curl -s  http://localhost:8080/platform/api/modules/health/live
@@ -59,7 +59,7 @@ livenessProbe:
 
 `/platform/api/modules/health/ready`
 
-Return readiness of the platform and each module.
+Returns readiness of the platform and each module.
 Modules status :
 
 - `STARTING` (initial state)
@@ -123,7 +123,7 @@ curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 
 `/ready` on port `9009`
 
-Return a status 200 with response `ready` if Cortex is running
+Returns a status 200 with response `ready` if Cortex is running
 
 ```shell title="cURL example"
 curl -s "http://localhost:9009/ready"
@@ -133,7 +133,7 @@ curl -s "http://localhost:9009/ready"
 
 `/ready` on port `9010`
 
-Return a status 200 with response `ready` if Alertmanager is running
+Returns a status 200 with response `ready` if Alertmanager is running
 
 ```shell title="cURL example"
 curl -s "http://localhost:9010/ready"
@@ -143,7 +143,7 @@ curl -s "http://localhost:9010/ready"
 
 `/-/healthy` on port `9090`
 
-Return a status 200 with response `Prometheus Server is Healthy.` if Prometheus is running
+Returns a status 200 with response `Prometheus Server is Healthy.` if Prometheus is running
 
 ```shell title="cURL example"
 curl -s "http://localhost:9090/-/healthy"
