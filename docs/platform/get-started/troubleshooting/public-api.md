@@ -4,9 +4,11 @@ title: API health endpoints
 description: Conduktor API health endpoints
 ---
 
-# API Healthcheck endpoints
+# API Healthcheck Endpoints
 
-### Liveness endpoint
+## Console Endpoints
+
+### Liveness Endpoint
 
 `/platform/api/modules/health/live`
 
@@ -53,7 +55,7 @@ livenessProbe:
   timeoutSeconds: 5
 ```
 
-### Readiness/startup endpoint
+### Readiness/startup Endpoint
 
 `/platform/api/modules/health/ready`
 
@@ -98,9 +100,9 @@ startupProbe:
     failureThreshold: 30
 ```
 
-## Console Information
 
-### Console versions
+
+### Console Versions
 
 `/platform/api/modules/versions`
 
@@ -113,4 +115,36 @@ curl -s  http://localhost:8080/platform/api/modules/versions | jq .
 #  "console": "059af990fff39541c76c0187edb5ea4e9f9ff69a",
 #  "console_web": "4786261ab99e5048d997b4ff2538c4747f285a2b",
 # }
+```
+
+## Cortex Monitoring Endpoints
+
+### Cortex Endpoint
+
+`/ready` on port `9009`
+
+Return a status 200 with response `ready` if Cortex is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9009/ready"
+```
+
+### Alertmanager Endpoint
+
+`/ready` on port `9010`
+
+Return a status 200 with response `ready` if Alertmanager is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9010/ready"
+```
+
+### Prometheus Endpoint
+
+`/-/healthy` on port `9090`
+
+Return a status 200 with response `Prometheus Server is Healthy.` if Prometheus is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9090/-/healthy"
 ```
