@@ -208,17 +208,19 @@ When it is set
 * `KAFKA` they will be materialized as a topic.
 * `IN_MEMORY` they will be stored in memory.
 
-| Environment Variable                   | Default Value                               | Description                                                                                  |
-|----------------------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------|
-| `GATEWAY_LICENSE_TOPIC`                | `_conduktor_gateway_license`                | Name of license topic                                                                        |
-| `GATEWAY_TOPIC_MAPPINGS_TOPIC`         | `_conduktor_gateway_topicmappings`          | Name of topicMappings topic                                                                  |
-| `GATEWAY_USER_MAPPINGS_TOPIC`          | `_conduktor_gateway_usermappings`           | Name of the user mapping topic                                                               |
-| `GATEWAY_CONSUMER_SUBSCRIPTIONS_TOPIC` | `_conduktor_gateway_consumer_subscriptions` | Name of the subscriptions for concentrated topic consumption topic                           |
-| `GATEWAY_CONSUMER_OFFSETS_TOPIC`       | `_conduktor_gateway_consumer_offsets`       | Name of the topic to store the offsets for concentrated topic consumption                    |
-| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                                             |
-| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration topic                                                       |
-| `GATEWAY_ACLS_TOPIC`                   | `_conduktor_gateway_acls`                   | Name of the acl topic                                                                        |
-| `GATEWAY_AUDIT_LOG_TOPIC`              | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                                          |
+| Environment Variable                   | Default Value                               | Description                                                               |
+|----------------------------------------|---------------------------------------------|---------------------------------------------------------------------------|
+| `GATEWAY_LICENSE_TOPIC`                | `_conduktor_gateway_license`                | Name of license topic                                                     |
+| `GATEWAY_TOPIC_MAPPINGS_TOPIC`         | `_conduktor_gateway_topicmappings`          | Name of topicMappings topic                                               |
+| `GATEWAY_USER_MAPPINGS_TOPIC`          | `_conduktor_gateway_usermappings`           | Name of the user mapping topic                                            |
+| `GATEWAY_CONSUMER_SUBSCRIPTIONS_TOPIC` | `_conduktor_gateway_consumer_subscriptions` | Name of the subscriptions for concentrated topic consumption topic        |
+| `GATEWAY_CONSUMER_OFFSETS_TOPIC`       | `_conduktor_gateway_consumer_offsets`       | Name of the topic to store the offsets for concentrated topic consumption |
+| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                          |
+| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration topic                                    |
+| `GATEWAY_ACLS_TOPIC`                   | `_conduktor_gateway_acls`                   | Name of the acl topic                                                     |
+| `GATEWAY_AUDIT_LOG_TOPIC`              | `_conduktor_gateway_auditlogs`              | Name of audit topic                                                       |
+| `GATEWAY_VCLUSTERS_TOPIC`              | `_conduktor_gateway_vclusters`              | Name of vclusters topic                                                   |
+| `GATEWAY_GROUPS_TOPIC`                 | `_conduktor_gateway_groups`                 | Name of groups topic                                                      |
 
 #### `IN_MEMORY` State Configurations
 
