@@ -171,7 +171,11 @@ Use `fields` for field level encryption, use `payload` when encrypting the full 
 ### Fields
 
 For **field level** encryption include this section in your interceptor config.
-Encryption interceptor allows encoding to each field (currently only text fields are supported):
+Encryption interceptor allows encoding to each field:
+
+:::info 
+Note that field-level encryption supports encryption/decryption of string and numeric fields (int, long, float, double). When using partial decryption with Avro schema registry, any numeric values that are not being decrypted will instead be masked with the minimum (most negative) value for the numeric type. This is to ensure the field is compliant with the type in the Avro schema. 
+:::
 
 
 | key         | type                                      | default    | description                                                                                                                             |
