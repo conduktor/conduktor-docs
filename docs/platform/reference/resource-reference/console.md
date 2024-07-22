@@ -145,14 +145,15 @@ spec:
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
   schemaRegistry:
-    type: "CONFLUENT"
+    type: "ConfluentLike"
     url: http://34.140.204.135/registry/
     security:
+      type: BasicAuth
       username: superUser
       password: superUser
     ignoreUntrustedCertificate: false
   kafkaFlavor:
-    type: "CONFLUENT"
+    type: "Confluent"
     key: "string"
     secret: "string"
     confluentEnvironmentId: "string"
