@@ -121,6 +121,7 @@ CRN `platform:/group/<uuid>`
 
 CRN `platform:/user/<email>`
 
+- user.Login
 - user.permission.Added
 - user.permission.Deleted
 - user.platform_role.Updated
