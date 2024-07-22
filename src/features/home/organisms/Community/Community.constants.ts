@@ -7,10 +7,10 @@ export const items = [
     href: 'https://github.com/conduktor',
   },
   {
-    title: 'Discord',
+    title: 'Slack',
     description:
-      'Join our awesome community of developers on Discord o help and show off what you built',
-    icon: '/assets/svgs/community/discord.svg',
-    href: 'https://discord.gg/gzTrmjdXdA',
+      'Join our awesome community of developers on Slack to help and show off what you built.',
+    icon: '/assets/svgs/community/slack.svg',
+    href: 'https://www.conduktor.io/slack',
   },
 ]
