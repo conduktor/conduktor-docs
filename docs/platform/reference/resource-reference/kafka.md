@@ -205,5 +205,5 @@ spec:
 - `metadata.name` must belong to the Application Instance
 
 **Conduktor annotations**
-- `conduktor.io/auto-restart-enabled` is optional (default `"false"`). Defines wether Console Automatic Restart feature is enabled for this Connector
-- `conduktor.io/auto-restart-frequency` is optional (default `10m`). Define the delay between consecutive restart attempts.
+- `conduktor.io/auto-restart-enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
+- `conduktor.io/auto-restart-frequency` is optional (default `10m`). Define the delay between consecutive restart attempts
