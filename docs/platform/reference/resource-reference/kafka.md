@@ -60,7 +60,7 @@ metadata:
   labels:
     conduktor.io/description: | 
       # Event Stream from Click Application
-      This is a multiline description that will appear in the Topic Catalog
+      This is a multiline markdown description that will appear in the Topic Catalog
     conduktor.io/description.editable: "false"
 spec:
   replicationFactor: 3
@@ -78,7 +78,7 @@ spec:
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
 **Conduktor annotations**
-- `conduktor.io/description` is optional. The description field in the Topic Catalog view
+- `conduktor.io/description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
 - `conduktor.io/description.editable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
 
 **Side effect in Console & Kafka:**
