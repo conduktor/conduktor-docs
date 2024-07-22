@@ -57,6 +57,11 @@ kind: Topic
 metadata:
   cluster: shadow-it
   name: click.event-stream.avro
+  labels:
+    conduktor.io/description: | 
+      # Event Stream from Click Application
+      This is a multiline markdown description that will appear in the Topic Catalog
+    conduktor.io/description.editable: "false"
 spec:
   replicationFactor: 3
   partitions: 3
@@ -66,10 +71,15 @@ spec:
     retention.ms: '60000'
 ````
 **Topic checks:**
-- `spec.cluster` is a valid Kafka Cluster
+- `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created
+- `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
+
+**Conduktor annotations**
+- `conduktor.io/description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
+- `conduktor.io/description.editable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
 
 **Side effect in Console & Kafka:**
 - Kafka
@@ -175,9 +185,12 @@ This concept will be available in a future version
 apiVersion: kafka/v1
 kind: Connector
 metadata:
+  connectCluster: my-connect-cluster
   name: myPrefix.myConnector
+  labels:
+    conduktor.io/auto-restart-enabled: true
+    conduktor.io/auto-restart-frequency: 10m
 spec:
-  connectCluster: myConnectCluster
   config:
     connector.class: io.connect.jdbc.JdbcSourceConnector
     tasks.max: '1'
@@ -186,3 +199,11 @@ spec:
     consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
 
 ```
+
+**Connector checks**
+- `metadata.connectCluster` is a valid KafkaConnect Cluster
+- `metadata.name` must belong to the Application Instance
+
+**Conduktor annotations**
+- `conduktor.io/auto-restart-enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
+- `conduktor.io/auto-restart-frequency` is optional (default `10m`). Define the delay between consecutive restart attempts

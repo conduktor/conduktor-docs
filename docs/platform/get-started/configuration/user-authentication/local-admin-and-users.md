@@ -17,6 +17,8 @@ From within the **Settings** > **Users & Groups** screen, select **Create member
  - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
  - Alternatively, you can add users via basic authentication
 
+Later on you may wish to add users from an IAC approach using the [ConsoleGroup](/platform/reference/resource-reference/console/#consolegroup) component.
+
 ![console kafka UI users](../assets/console-users.png)
 
 
