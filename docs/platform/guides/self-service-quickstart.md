@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Getting Started with Self-service
+title: Self-service Quickstart
 description: Getting Started with Self-service
 ---
 
