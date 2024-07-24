@@ -6,7 +6,9 @@ description: Getting Started with Self-service
 
 # Getting Started with Self-service
 
-This document gives an overview of Conduktor's self-service offering with a worked example. For all resource references and setup guides, checkout our docs site at [docs.conduktor.io](https://docs.conduktor.io/platform/guides/self-service/).
+This guide gives an overview of Conduktor's self-service offering with a worked example. For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
+
+To follow-along this demo you'll need to clone [the repository](https://github.com/conduktor/self-service-getting-started) hosted on our Github.
 
 - [Central team's repo](#central-teams-repo)
   - [Applications](#applications)
@@ -24,7 +26,7 @@ This document gives an overview of Conduktor's self-service offering with a work
     - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
 
 
-This repo contains two mock repos, represented by the directories, `central-team-repo` and `application-team-repo`. 
+This demo repository (repo) contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`. 
 
 
 # Central team's repo
@@ -49,7 +51,7 @@ Application teams can then create, modify and approve changes on their own resou
 The application team's repo will have sections for the different types of resource.
 
 ## Kafka resources
-For when application teams want to CRUD Kafka resources. This is how application teams create the Kafka resources they need for their applications e.g. defining a topic for automated creation. These resources are checked against the **policies** defined e.g. the topic policy in the central team's repo. Adding metadata in the form of Labels and Annotations is encouraged, to aid in filtering and sorting results as well as enabling the UI experience of Conduktor's Topic Catalog (*see below for more*).
+This is how application teams create, update and delete the Kafka resources they need for their applications e.g. defining a topic for automated creation. These resources are checked against the **policies** defined e.g. the topic policy in the central team's repo. Adding metadata in the form of Labels and Annotations is encouraged, to aid in filtering and sorting results as well as enabling the UI experience of Conduktor's Topic Catalog (*see below for more*).
 
 ## Application instance permission
 For when application teams want to approve access to their resources to other teams, without involving the central team. As the central team has delegated this to the relevant owner, the application team, they have permission to do their own approvals.
@@ -59,11 +61,21 @@ For when application teams want to define permissions within their own team, not
 
 
 # Worked Example
-The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) provider and container management provider e.g. a Terraform & Kubernetes combination. No need to change this example as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
+The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setuo. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
 The central team has defined three teams, the **clickstream**, **wikipedia** and **website-analytics** each with their own application, as can be seen by their respective yaml files in `/applications`.
 
-![applications folder](./img/applications-folder.png)
+<!-- ![applications folder](./img/applications-folder.png) -->
+
+
+```mermaid
+graph TD;
+    A[central-team-repo]
+    A --> B[applications]
+    B --> C[clickstream.yaml]
+    B --> D[web-analytics.yaml]
+    B --> E[wikipedia.yaml]
+```
 
 Each team file has both their application and application instances defined within their file. Lastly, the central team has a folder for their topic policies.
 
@@ -71,7 +83,18 @@ This example will focus on the website-analytics team.
 
 The website analytics team has their own "repo", which is the `application-team-repo` directory in this example. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource. Note connectors are not supported as of 1.25.
 
-![app team repo](./img/app-team-repo.png)
+<!-- ![app team repo](./img/app-team-repo.png) -->
+```mermaid
+graph TD;
+    A[application-team-repo] 
+    A --> B[application-groups]
+    A --> D[permissions]
+    A --> C[kafka-resources]
+    C --> E[schemas]
+    C --> F[connectior.yaml]
+    C --> G[subjects.yaml]
+    C --> H[topic.yaml]
+```
 
 ## Running the example
 
