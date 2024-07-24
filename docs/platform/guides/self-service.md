@@ -100,10 +100,10 @@ graph TD;
 
 ### Set-up Demo
 
-1. Spin up local resources, Conduktor & Kafka. A Docker compose file is provided, simply start it by navigating with your shell and a `docker compose up -d`, you may need to download the images if you've not run them before
+1. Spin up local resources, Conduktor & Kafka. A Docker compose file is provided, simply start it by navigating with your shell to the cloned repo and run `docker compose up -d`, you may need to download the images if you've not run them before and Docker is required
 1. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
-1. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, copy this value. Open the docker compose file, uncommeting the CLI service to now include it in the compose, assign the value you earlier copied to the `CDK_API_KEY` value. Save the file & re-run `docker compose up -d` to create the Conduktor CLI container.
-   1. Note, this could be done from the CLI to by setting the variables and running the following login command, but for the demo we'll stick to using the UI.  `export CDK_USER=admin@conduktor.io export CDK_PASSWORD=admin-secret conduktor login` 
+1. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, **copy this value**. Open the docker compose file, assign the value you earlier copied to the `CDK_API_KEY` value. Save the file & re-run `docker compose up -d` to create the Conduktor CLI container
+   1. Note, this could be done from the CLI to by setting the variables and running the following login command `export CDK_USER=admin@conduktor.io export CDK_PASSWORD=admin-secret conduktor login` , but for the demo we'll stick to using the UI.
 1. Open a Conduktor CLI by exec'ing into the container `docker compose exec -it conduktor-ctl /bin/sh`
 *Conduktor CLI is run as a container for convenience in this example but you can also install it to your local machine.*
 
@@ -124,12 +124,12 @@ conduktor apply -f ./self-service/central-team-repo/applications/web-analytics.y
 ```
 Applications and their instances are visible in the Applications Catalog (refresh your browser tab if not immediately available):
 
-![application instances](./img/application-instances.png)
+![application instances](./img/create-app-api-key.png)
 
 We now have everything ready to delegate to the application team.
 
 ### Apply the resources, application team perspective
- We are now going to assume perspective of the application team and try some typical activities.
+ We are to assume the perspective of the application team and try some typical activities.
 
 1. Create some topics on our clusters
 ```bash
@@ -157,9 +157,9 @@ The API key we've been using up until now has been an Admin API key, so truth be
 
 With the cli running using the **application instance API key** we can properly do the test. Now back to the example!
 
-Earlier the central team setup the `generic-prod-topic-policy` (go checkout the file if you want to [here](./central-team-repo/topic-policies/generic-prod-topic-policy.yaml)), which specifies the following rules;  
+Earlier the central team setup the `generic-prod-topic-policy` (go checkout the file if you want to [here](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/topic-policies/generic-prod-topic-policy.yaml)), which specifies the following rules;  
 
-* A `data-criticality` label **must** be provided, with one of the specified values
+* A `data-criticality` label must be provided, with one of the specified values
 * Number of partitions must be in a certain range
 * Replication factor must be in a certain range
 * Retention must be in a certain range
@@ -183,7 +183,7 @@ policies:
       max: 2419000000 # 28 days
 ```
 
-When the central team created the production [application instance](./central-team-repo/applications/web-analytics.yaml) they tied this policy to it, so when this application instance tries to make topics it must follow these rules(policies). Reminder below.
+When the central team created the production [application instance](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/applications/web-analytics.yaml) they tied this policy to it, so when this application instance tries to make topics it must follow these rules(policies). Reminder below.
 
 ```yaml
 kind: "ApplicationInstance"
@@ -199,7 +199,7 @@ spec:
 
 So, let's try create a topic as the prod application instance that doesn't folow this policy and see what happens.
 
-**Open** the team's [topic file](./application-team-repo/kafka-resources/topics.yaml) and **append the forbiden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention, or another break to the policy you wish to try.
+**Open** the team's topic file(*/application-team-repo/kafka-resources/topics.yaml*) and **append the forbiden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention, or another break to the policy you wish to try.
 
 Be sure to include the `---` at the top to indicate a break. 
 
@@ -235,7 +235,9 @@ The last message is the one of interest, an appropriate error from the policy we
 ```
 Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doesn't match the expected constraints: [At `metadata.labels.data-criticality` got "C5" expecting OneOf("C0", "C1", "C2"), At `spec.configs.retention.ms` got null expecting a Value, At `spec.partitions` got "11" expecting Range(1 to 10)]
 ```
-That concludes this worked example of self-service, do copy the example repos and start mapping your own team structure. We didn't cover how you can grant permissions to other teams on your owned resources or setting up teams within your Application, for more on that the docs are best.
+
+# Conclusion
+That concludes this worked example of self-service, do copy the example repos and start mapping your own team structure. We didn't everything today so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or [setting up teams within your Application](/platform/reference/resource-reference/self-service/#application-group). To close down the resources from today exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
 
 If you wish to discuss this further with one of our team then you can [book a demo](https://www.conduktor.io/contact/demo/?utm_source=github&utm_medium=webpage) with us from our website.
 
