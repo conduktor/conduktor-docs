@@ -146,7 +146,7 @@ We've demo'd this working, but now let's try make a topic that doesn't fit the c
 
 The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work, and we needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now.
 
-1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the prod instance of the application and click `New API Key`. You could also run this from the CLI `conduktor token create application-instance -i=website-analytics-prod my-new-key-name`
+1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the prod instance of the application and click `New API Key`. You could also run this from the CLI `conduktor token create application-instance -i=website-analytics-dev my-new-key-name`
 
 ![create app api key](./img/create-app-api-key.png)
 
