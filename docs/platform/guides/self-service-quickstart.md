@@ -209,7 +209,7 @@ apiVersion: kafka/v2
 kind: "Topic"
 metadata:
   name: "website-analytics.add-to-cart-fail"
-  cluster: "prod-cluster"
+  cluster: "dev-cluster"
   labels:
     data-criticality: C5
     replication: none
