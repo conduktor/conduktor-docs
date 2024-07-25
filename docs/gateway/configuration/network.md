@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Network configuration
+title: Network Configuration
 description: Securing Conduktor Gateway
 ---
 

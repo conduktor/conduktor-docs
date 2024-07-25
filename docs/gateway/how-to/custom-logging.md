@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Custom log configuration
+title: Custom Log Configuration
 description: Fine-tuning log configuration with configuration file
 ---
 
