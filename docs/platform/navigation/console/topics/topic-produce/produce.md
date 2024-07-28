@@ -51,7 +51,7 @@ Using the Flow mode, you can produce multiple records in one go or configure a L
 
 **Send N records at a time**
 
-This option lets you define how many message should be produce every time you click the "Produce" button.
+This option lets you define how many message should be produced every time you click the "Produce" button.
 
 Default: 1
 
