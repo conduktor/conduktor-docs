@@ -6,7 +6,9 @@ description: Getting Started with Self-service
 
 # Getting Started with Self-service
 
-This guide gives an overview of Conduktor's self-service offering with a worked example. For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
+This guide gives an overview of Conduktor's self-service offering with a worked example where you will define Applications for your teams, setup policies to delegate their use of topics, create topics for the topic catalog and experience what it's like attempting to create resources out of policy. After running the demo you will have an appreciation for how Conduktor's self-service benefits teams and how it can be applied within your organization. 
+
+For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
 
 To follow-along this demo you'll need to clone our repository.
 ````shell
@@ -83,8 +85,9 @@ graph TD;
     ````
 2. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
 3. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, **copy this value**. 
-   - This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
+   - Note: This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
      ````bash
+     # not part of today's demo, shown as an example
      export CDK_USER=admin@conduktor.io 
      export CDK_PASSWORD=admin-secret 
      conduktor login
@@ -204,7 +207,7 @@ spec:
 
 So, let's try create a topic as the prod application instance that doesn't folow this policy and see what happens.
 
-**Open** the team's topic file(*/application-team-repo/kafka-resources/topics.yaml*) and **append the forbiden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention, or another break to the policy you wish to try.
+**Open** the team's topic file (*/application-team-repo/kafka-resources/topics.yaml*) and **append the forbiden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention, or another break to the policy you wish to try.
 
 Be sure to include the `---` at the top to indicate a break. 
 
