@@ -33,14 +33,14 @@ This repo is where the central team would make, or approve, changes.
 It should contain definitions of infrastructure e.g. the cluster and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
 
 # Application team's repo
-This repo would exist and be owned by a domain, or application, team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
+This repo would exist and be owned by an application team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
 This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's self-service.  
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
 
 The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the self-service page.
 
 # Worked Example
-The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setuo. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
+The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
 The central team has defined three teams, the **clickstream**, **wikipedia** and **website-analytics** each with their own application, as can be seen by their respective yaml files in `/applications`.
 
@@ -70,7 +70,7 @@ graph TD;
     A --> D[permissions]
     A --> C[kafka-resources]
     C --> E[schemas]
-    C --> F[connectior.yaml]
+    C --> F[connector.yaml]
     C --> G[subjects.yaml]
     C --> H[topic.yaml]
 ```
@@ -245,7 +245,7 @@ Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doe
 ```
 
 # Conclusion
-That concludes this worked example of self-service, do copy the example repos and start mapping your own team structure. We didn't everything today so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or [setting up teams within your Application](/platform/reference/resource-reference/self-service/#application-group). To close down the resources from today exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
+That concludes this worked example of self-service, do copy the example repos and start mapping your own team structure. We didn't cover everything today so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or [setting up teams within your Application](/platform/reference/resource-reference/self-service/#application-group). To close down the resources from today exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
 
 If you wish to discuss this further with one of our team then you can [book a demo](https://www.conduktor.io/contact/demo/?utm_source=github&utm_medium=webpage) with us from our website.
 
