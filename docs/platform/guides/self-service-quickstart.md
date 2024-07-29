@@ -8,7 +8,10 @@ description: Getting Started with Self-service
 
 This guide gives an overview of Conduktor's self-service offering with a worked example. For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
 
-To follow-along this demo you'll need to clone [the repository](https://github.com/conduktor/self-service-getting-started) hosted on our Github.
+To follow-along this demo you'll need to clone our repository.
+````shell
+git clone https://github.com/conduktor/self-service-getting-started
+````
 
 - [Central team's repo](#central-teams-repo)
   - [Applications](#applications)
@@ -80,11 +83,27 @@ graph TD;
 
 ### Set-up Demo
 
-1. Spin up local resources, Conduktor & Kafka. A Docker compose file is provided, simply start it by navigating with your shell to the cloned repo and run `docker compose up -d`, you may need to download the images if you've not run them before and Docker is required
-1. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
-1. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, **copy this value**. Open the docker compose file, assign the value you earlier copied to the `CDK_API_KEY` value. Save the file & re-run `docker compose up -d` to create the Conduktor CLI container
-   1. Note, this could be done from the CLI to by setting the variables and running the following login command `export CDK_USER=admin@conduktor.io export CDK_PASSWORD=admin-secret conduktor login` , but for the demo we'll stick to using the UI.
-1. Open a Conduktor CLI by exec'ing into the container `docker compose exec -it conduktor-ctl /bin/sh`
+1. Spin up local resources, Conduktor & Kafka. A Docker compose file is provided, simply start it by navigating with your shell to the cloned repo and run the command below, you may need to download the images if you've not run them before and Docker is required
+    ````bash
+    docker compose up -d
+    ````
+2. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
+3. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, **copy this value**. 
+   - This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
+     ````bash
+     export CDK_USER=admin@conduktor.io 
+     export CDK_PASSWORD=admin-secret 
+     conduktor login
+     eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
+     ````
+4. Open the `docker-compose.yml` file, assign the value you earlier copied to the `CDK_API_KEY` value. Save the file & re-run docker compose to create the Conduktor CLI container
+    ````bash
+    docker compose up -d
+    ````
+5. Open a Conduktor CLI by exec'ing into the container 
+    ````bash
+    docker compose exec -it conduktor-ctl /bin/sh
+    ````
 *Conduktor CLI is run as a container for convenience in this example but you can also install it to your local machine.*
 
 ### Apply the resources, central team perspective
@@ -126,16 +145,28 @@ We've demo'd this working, but now let's try make a topic that doesn't fit the c
 
 The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work, and we needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now.
 
-1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the prod instance of the application and click `New API Key`. You could also run this from the CLI `conduktor token create application-instance -i=website-analytics-prod my-new-key-name`
+1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the prod instance of the application and click `New API Key`. You could also run this from the CLI:
+    ````bash 
+    conduktor token create application-instance -i=website-analytics-prod my-new-key-name
+    eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
+   ````
 
 ![create app api key](./img/create-app-api-key.png)
 
-2. Recreate the CLI container by swapping in the **new value for `CDK_API_KEY`** and running `docker compose up -d` again. This should work on most machines, recreating the container. If you only have one terminal open then use `exit` or `Ctrl + D` to leave the container bash sesssion.
-   1.  If this doesn't, then delete the container either in a UI tool e.g. Docker Desktop, or CLI `docker stop conduktor-cli` , `docker remove conduktor-cli` , `docker compose up -d` then run `docker compose up -d` to recreate it with the new key.
-
-3. As the container restarted you'll need to docker exec your window into it again, `docker compose exec -it conduktor-ctl /bin/sh`
-
-With the cli running using the **application instance API key** we can properly do the test. Now back to the example!
+2. Leave the CLI container
+    ````bash
+    # You are in the CLI container
+    / $ exit
+   ````
+3. Open the `docker-compose.yml` again to swap in the **new value for `CDK_API_KEY`** and restart docker compose again
+    ````bash
+    docker compose up -d
+    ````
+4. When the container is restarted, step back in the CLI container
+    ````bash
+    docker compose exec -it conduktor-ctl /bin/sh
+    ````
+With the CLI running using the **application instance API key** we can properly do the test. Now back to the example!
 
 Earlier the central team setup the `generic-prod-topic-policy` (go checkout the file if you want to [here](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/topic-policies/generic-prod-topic-policy.yaml)), which specifies the following rules;  
 
