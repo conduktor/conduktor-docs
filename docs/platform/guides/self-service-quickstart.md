@@ -6,7 +6,13 @@ description: Getting Started with Self-service
 
 # Getting Started with Self-service
 
-This guide gives an overview of Conduktor's self-service offering with a worked example where you will define Applications for your teams, setup policies to delegate their use of topics, create topics for the topic catalog and experience what it's like attempting to create resources out of policy. After running the demo you will have an appreciation for how Conduktor's self-service benefits teams and how it can be applied within your organization. 
+This guide gives an overview of Conduktor's self-service offering through a worked example where you will:
+ - Define Applications for your teams
+ - Setup policies to enforce governance over topic usage
+ - Expose topics in the topic catalog
+ - Experience trying to create resources that breach policies
+
+After running the demo you will have an appreciation of how Conduktor's self-service framework benefits teams and how it can be applied within your organization. 
 
 For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
 
