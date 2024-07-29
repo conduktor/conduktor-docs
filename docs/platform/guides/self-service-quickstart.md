@@ -33,12 +33,7 @@ This repo is where the central team would make, or approve, changes.
 It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
 
 # Application team's repo
-<<<<<<< Updated upstream
 This repo would exist and be owned by an application team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
-=======
-This repo would exist and be owned by a domain, or application, team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
-
->>>>>>> Stashed changes
 This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's self-service.  
 
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
