@@ -30,11 +30,17 @@ This demo repository (repo) contains two directories which each represent a mock
 
 # Central team's repo
 This repo is where the central team would make, or approve, changes.
-It should contain definitions of infrastructure e.g. the cluster and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
+It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
 
 # Application team's repo
+<<<<<<< Updated upstream
 This repo would exist and be owned by an application team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
+=======
+This repo would exist and be owned by a domain, or application, team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
+
+>>>>>>> Stashed changes
 This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's self-service.  
+
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
 
 The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the self-service page.
@@ -84,7 +90,7 @@ graph TD;
     docker compose up -d
     ````
 2. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
-3. Generate an admin API key for the Conduktor CLI. Navigate to Settings>API Keys, **copy this value**. 
+3. Generate an admin API key for the Conduktor CLI. Navigate to Settings > API Keys, **copy this value**. 
    - Note: This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
      ````bash
      # not part of today's demo, shown as an example
