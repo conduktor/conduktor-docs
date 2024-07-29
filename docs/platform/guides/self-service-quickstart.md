@@ -31,34 +31,14 @@ This demo repository (repo) contains two directories which each represent a mock
 
 # Central team's repo
 This repo is where the central team would make, or approve, changes.
-It should contain definitions of infrastructure e.g. the cluster and definitions of the following.
-
-## Applications
-For defining the overall streaming application responsible for producing, consuming or processing Kafka data.
-
-## Application Instances
-As applications are typically deployed to more than a single Kafka cluster or environment, each instance of this application will behave differently, e.g. a dev instance and a prod instance of an application should have different topic creation rules (policies).
-
-## Application Instance Policies
-For when central teams want to govern resources. To restrict how application instances behave. Policies are key for central teams to delegate with confidence, to define what applications can and cannot do. 
-For example a **topic policy** that limits the maximum number of partitions when creating topics can be defined, and that policy can be applied to any Application Instance.
+It should contain definitions of infrastructure e.g. the cluster and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
 
 # Application team's repo
 This repo would exist and be owned by a domain, or application, team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
 This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's self-service.  
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
 
-The application team's repo will have sections for the different types of resource.
-
-## Kafka resources
-This is how application teams create, update and delete the Kafka resources they need for their applications e.g. defining a topic for automated creation. These resources are checked against the **policies** defined e.g. the topic policy in the central team's repo. Adding metadata in the form of Labels and Annotations is encouraged, to aid in filtering and sorting results as well as enabling the UI experience of Conduktor's Topic Catalog (*see below for more*).
-
-## Application instance permission
-For when application teams want to approve access to their resources to other teams, without involving the central team. As the central team has delegated this to the relevant owner, the application team, they have permission to do their own approvals.
-
-## Application groups
-For when application teams want to define permissions within their own team, not everyone in the team is a super admin. Role-specific permissions can be defined to reflect how your Application operates. e.g. a tech lead vs a junior dev vs a devops vs a PM. Define who can do what within the team.
-
+The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the self-service page.
 
 # Worked Example
 The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setuo. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
