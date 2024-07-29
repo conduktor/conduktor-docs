@@ -24,6 +24,8 @@ Gateway does not currently provide any mechanism to replicate already written da
  - Confluent Replicator
  - Confluent Cluster Linking
 
+Note that none of these solutions (and therefore neither Conduktor's failover solution) can guarantee the absence of data loss during a disaster scenario.
+
 ### Kafka client configuration
 
 No specific client configuration is necessary, besides ensuring that clients have configured enough retries (or that the `delivery.timeout.ms` for JVM-based clients) setting is large enough to cover the time necessary for the operations team to discover failure of the primary cluster and initiate a failover procedure. Especially for JVM-based clients, the default delivery timeout of 2 minutes might be too short.
@@ -32,7 +34,9 @@ No specific client configuration is necessary, besides ensuring that clients hav
 
  - Gateway version `3.2.0`+
  - Kafka brokers version `2.8.0`+
- - Gateway configured with [SNI Routing](./sni-routing.md)
+ - Gateway configured with [SNI Routing](./sni-routing.md) (support for port-based routing will come in an upcoming release)
+
+Note that due to a current limitation in Kafka clients, the primary and secondary Kafka clusters must have some broker id's in common (see [KIP-899](https://cwiki.apache.org/confluence/display/KAFKA/KIP-899%3A+Allow+producer+and+consumer+clients+to+rebootstrap)). This ensures clients can recognize the secondary cluster as a legitimate continuation of the primary one.
 
 ## How it works
 
@@ -54,12 +58,12 @@ Specify your primary and secondary cluster configurations - note that the API ke
 
 ```yaml
 config:
-  primary:
+  main:
     bootstrap.servers: <primary bootstrap address>:9092
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="<primary-api-key>" password="<primary-api-secret>";
-  secondary:
+  failover:
     bootstrap.servers: <secondary bootstrap address>:9092
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
