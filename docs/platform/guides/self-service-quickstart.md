@@ -14,19 +14,13 @@ git clone https://github.com/conduktor/self-service-getting-started
 ````
 
 - [Central team's repo](#central-teams-repo)
-  - [Applications](#applications)
-  - [Application Instances](#application-instances)
-  - [Application Instance Policies](#application-instance-policies)
 - [Application team's repo](#application-teams-repo)
-  - [Kafka resources](#kafka-resources)
-  - [Application instance permission](#application-instance-permission)
-  - [Application groups](#application-groups)
 - [Worked Example](#worked-example)
-  - [Running the example](#running-the-example)
-    - [Set-up Demo](#set-up-demo)
-    - [Apply the resources, central team perspective](#apply-the-resources-central-team-perspective)
-    - [Apply the resources, application team perspective](#apply-the-resources-application-team-perspective)
-    - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
+- [Running the example](#running-the-example)
+  - [Set-up Demo](#set-up-demo)
+  - [Apply the resources, central team perspective](#apply-the-resources-central-team-perspective)
+  - [Apply the resources, application team perspective](#apply-the-resources-application-team-perspective)
+  - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
 
 
 This demo repository (repo) contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`. 
