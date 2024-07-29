@@ -68,7 +68,7 @@ config:
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="<secondary-api-key>" password="<secondary-api-secret>";
-    gateway.roles: failover ## <-- WTF is this
+    gateway.roles: failover
 ```
 
 Mount the cluster config file in the Gateway container using the configuration `GATEWAY_BACKEND_KAFKA_SELECTOR`:
@@ -105,5 +105,15 @@ curl \
   --silent | jq
 ```
 
+### Switching back
+
+To switch back from the secondary cluster to the primary cluster, the following request must be made to all Gateway instances:
+
+```bash
+curl \
+  --request POST 'http://localhost:8888/admin/pclusters/v1/pcluster/main/switch?to=main' \
+  --user 'admin:conduktor' \
+  --silent | jq
+```
 
 
