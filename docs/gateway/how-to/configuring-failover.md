@@ -48,7 +48,7 @@ Note that to initiate failover, it must be triggered through an API request to e
 
 ### Configuring Gateway
 
-To setup Gateway for failover, you should configure the primary and secondary clusters along with their configuration properties. This can be achieved through a **cluster-config file**, or through **environment variables**.
+To set up Gateway for failover, you should configure the primary and secondary clusters along with their configuration properties. This can be achieved through a **cluster-config file**, or through **environment variables**.
 
 #### Configuring through a cluster-config file
 
