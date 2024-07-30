@@ -46,7 +46,7 @@ Note that to initiate failover, it must be triggered through an API request to e
 
 _Note: Image needs 'productionising' before merging_
 
-![Failover](images/failover.png)
+![Failover](images/failover-docs.png)
 
 ### Configuring Gateway
 
@@ -54,7 +54,7 @@ To setup Gateway for failover, you should configure the primary and secondary cl
 
 #### Configuring through a cluster-config file
 
-Specify your primary and secondary cluster configurations - note that the API keys differ in the Confluent Cloud example below:
+Specify your primary and secondary cluster configurations, along with a `gateway.roles` entry to mark the failover cluster - note that the API keys differ in the Confluent Cloud example below:
 
 ```yaml
 config:
@@ -115,5 +115,6 @@ curl \
   --user 'admin:conduktor' \
   --silent | jq
 ```
+
 
 
