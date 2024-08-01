@@ -104,6 +104,9 @@ spec:
     - type: CONSUMER_GROUP
       patternType: PREFIXED
       name: "click."
+    - type: SUBJECT
+      patternType: PREFIXED
+      name: "click."
     - type: CONNECTOR
       connectCluster: shadow-connect
       patternType: PREFIXED
