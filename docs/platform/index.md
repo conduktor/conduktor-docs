@@ -37,7 +37,7 @@ The Conduktor Console is a powerful UI for Apache Kafka. The Console equips user
 
 **Monitor Kafka**. The cluster, topics and consumer groups. Creating alerts to notify you based on Kafka metrics we collect for you.
 
-See [Navigation](/platform/category/configuration/) for more details.
+See [Navigation](/platform/navigation/) for more details.
 
 ## Resources
 
