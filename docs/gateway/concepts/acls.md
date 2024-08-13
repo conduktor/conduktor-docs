@@ -52,7 +52,32 @@ To activate the ACLs, you need to add the following environment variable to your
 | Environment Variable        | Default | Description                                                                   |
 |:----------------------------|:--------|:------------------------------------------------------------------------------|
 | `GATEWAY_ACL_ENABLED`       | `false` | Enable or disable the ACLs **on the passthrough only**                        |
-| `GATEWAY_ACL_STORE_ENABLED` | `false` | Enable or disable the ACLs **only on virtual cluster, excluding passthrough** |
+| `GATEWAY_ACL_STORE_ENABLED` | `false` | <div>Enable or disable the ACLs **only on virtual cluster, excluding passthrough**.</div><br /><div>Note this is **Deprecated in 3.3.0** in favour of [ACLs on Virtual Clusters](#acls-activation-on-virtual-clusters).</div>   |
+
+## ACLs on Virtual Clusters
+
+As of Gateway 3.3.0, ACLs within Virtual Clusters can be driven explicitly by configuration. 
+
+:::warning
+Note that if you are migrating from an older version of Gateway, the migration will generate existing Virtual Clusters as configuration. The automation will derive the boolean value `aclsEnabled` automatically, but it will not populate the `superUsers`. 
+:::
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ prefix: "app-A-"
+ aclsEnabled: "true" # defaults to false
+ superUsers:
+ - username1
+ - username2
+```
+
+See the [CLI Reference](../reference/cli-reference.md) for more information on managing Gateway resources.
+
 
 ## ACLs Creation
 
