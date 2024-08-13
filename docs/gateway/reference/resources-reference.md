@@ -181,3 +181,17 @@ autoManageBackingTopics: false
 ````
 
 ## VirtualCluster
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ prefix: "app-A-"
+ aclsEnabled: "true" # defaults to false
+ superUsers:
+ - username1
+ - username2
+```
