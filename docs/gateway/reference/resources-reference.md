@@ -163,6 +163,19 @@ spec:
       username: "0000-AAAA-BBBB-CCCC"
 ````
 
+## ConcentratedTopic
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: ConcentratedTopic
+metadata:
+ name: name1
+ vCluster: vCluster1
+spec:
+ physicalName: physicalName1
+```
+
 ## ConcentrationRule
 
 ````yaml
@@ -194,4 +207,17 @@ spec:
  superUsers:
  - username1
  - username2
+```
+
+## AliasTopic
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: AliasTopic
+metadata:
+  name: name1
+  vCluster: vCluster1
+spec:
+  physicalName: physicalName1
 ```
