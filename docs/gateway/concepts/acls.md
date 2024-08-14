@@ -7,10 +7,6 @@ license: enterprise
 
 ## Introduction
 
-:::info
-As of the Gateway 3.1.0, the ACLs activation has been moved from the [ACLs interceptor](../interceptors/data-security/gateway-acls-interceptor.md) to the Gateway configuration.
-:::
-
 Like in Kafka, you can define ACLs on the Gateway to restrict your applications access. This implies that the authentication is made on Gateway, and that you are **not** using a [delegated mode](/gateway/configuration/kafka-authentication/#delegated-authentication).
 
 ## Super Users
@@ -42,8 +38,6 @@ kafka-acls --bootstrap-server conduktor-gateway:6969 \
   --allow-principal User:delegated-admin --allow-host '*' \
   --operation Alter --operation Describe --cluster
 ```
-
-After having turned on the ACLs interceptor, the delegated admin will be able to manage other users ACLs.
 
 ## ACLs Activation
 
