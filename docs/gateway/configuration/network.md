@@ -16,6 +16,7 @@ Configure port-based routing using [environment variables](../configuration/env-
  - `GATEWAY_ADVERTISED_HOST` 
  - `GATEWAY_PORT_START`
  - `GATEWAY_PORT_COUNT`
+ - `GATEWAY_MIN_BROKERID`
 
 
 ## Host-Based Routing (SNI)
