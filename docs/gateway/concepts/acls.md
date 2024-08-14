@@ -54,12 +54,15 @@ To activate the ACLs, you need to add the following environment variable to your
 | `GATEWAY_ACL_ENABLED`       | `false` | Enable or disable the ACLs **on the passthrough only**                        |
 | `GATEWAY_ACL_STORE_ENABLED` | `false` | <div>Enable or disable the ACLs **only on virtual cluster, excluding passthrough**.</div><br /><div>Note this is **Deprecated in 3.3.0** in favour of [ACLs on Virtual Clusters](#acls-activation-on-virtual-clusters).</div>   |
 
-## ACLs on Virtual Clusters
+### Activation on Virtual Clusters
 
 As of Gateway 3.3.0, ACLs within Virtual Clusters can be driven explicitly by configuration. 
 
 :::warning
-Note that if you are migrating from an older version of Gateway, the migration will generate existing Virtual Clusters as configuration. The automation will derive the boolean value `aclsEnabled` automatically, but it will not populate the `superUsers`. 
+Note that if you are migrating from an older version of Gateway, the migration will generate existing Virtual Clusters as configuration. 
+
+ - The automation will derive the boolean value `aclsEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable. 
+ - The migration will not populate the `superUsers` list automatically, so this must be addressed as part of your migration. 
 :::
 
 ```yaml
@@ -99,4 +102,17 @@ kafka-acls \
   --add \
   --allow-principal User:alice --allow-host * \
   --operation All --topic *
+```
+
+### Creation on Virtual Clusters
+
+You can create ACLs targeting topics that reside on a Virtual Cluster by using the virtual cluster configuration during ACL creation:
+```bash
+kafka-acls \
+    --bootstrap-server conduktor-gateway:6969 \
+    --command-config virtual-cluster-admin.properties \
+    --add \
+    --allow-principal User:consumer \
+    --operation read \
+    --topic logical-topic
 ```
