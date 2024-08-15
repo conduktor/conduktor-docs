@@ -5,7 +5,7 @@ export const items = [
   },
   {
     name: 'Changelog',
-    href: 'https://www.conduktor.io/changelog',
+    href: '/changelog',
   },
   {
     name: 'Roadmap',
