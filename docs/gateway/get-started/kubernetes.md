@@ -17,14 +17,14 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 
 ## General requirements
 
-* Kubernetes Cluster 1.19+ ([setup a local cluster](https://k3d.io/#installation))[^1]
+* Kubernetes Cluster 1.19+ ([setup a local cluster](https://k3d.io/#installation))
 * Kubectl ([install](https://kubernetes.io/docs/tasks/tools/#kubectl)) with proper kube context configured
 * Helm 3.1.0+ ([install](https://helm.sh/docs/intro/install/))
 * Basic knowledge of Kubernetes
 
 ### Install the Console Chart
 
-Configure Gateway by creating a values.yaml file and copying and modifying the following template:
+Configure Gateway by creating a values.yaml file and copying and modifying the following template for your requirements:
 
 ```
 # Default values for conduktor-gateway
@@ -50,7 +50,7 @@ gateway:
     ## @param gateway.image.repository Image in repository format (conduktor/conduktor-gateway)
     repository: conduktor/conduktor-gateway
     ## @param gateway.image.tag Image tag
-    tag: 3.2.0
+    tag: 3.2.1
     ## @param gateway.image.pullPolicy Kubernetes image pull policy
     pullPolicy: IfNotPresent
 
@@ -87,7 +87,23 @@ gateway:
     NAMESPACE: "conduktor"
 
   ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
-  interceptors: "[]"
+  interceptors: "[{
+  "name": "myEncryptionPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "recordValue": {
+      "fields": [
+        {
+          "fieldName": "password",
+          "keySecretId": "password-secret",
+          "algorithm": "AES128_GCM"
+        }
+      ]
+    }
+  }
+}]"
 
   portRange:
     ## @param gateway.portRange.start Start port of the gateway port range
@@ -249,4 +265,9 @@ kafka:
 Install the chart on your cluster:
 
 ```shell
-helm install myGateway conduktor/conduktor-gateway -f values.yaml\
+helm install myGateway conduktor/conduktor-gateway -f values.yaml
+```
+
+### Additional Properties
+
+Additional properties can be found in the Gateway helm chart repository [here].(https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md)
