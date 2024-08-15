@@ -105,7 +105,7 @@ gateway:
     }
   }
 }
-]'
+]
 
   portRange:
     ## @param gateway.portRange.start Start port of the gateway port range
