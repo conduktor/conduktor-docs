@@ -6,12 +6,12 @@ solutions: console
 tags: features,fix
 ---
 
-### Warning ⚠️ 
+:::warning
 
 We are aware of a critical CVE - [CVE-2024-41110](https://avd.aquasec.com/nvd/2024/cve-2024-41110/) - coming from a dependency of prometheus on the `console-cortex` image. This CVE is related to prometheus docker metric scraping, which is not used by Conduktor. 
 
 Regardless, as soon as the prometheus team fix this issue, it will be patched immediately by Conduktor. 
-
+:::
 
 ## Features ✨
 
