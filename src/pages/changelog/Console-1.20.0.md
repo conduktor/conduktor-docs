@@ -6,14 +6,6 @@ solutions: console
 tags: features,fix
 ---
 
-Remember, you can always:
-
-- Submit your feedback via our [public roadmap](https://product.conduktor.help/)
-- Visit our [Get Started](https://www.conduktor.io/get-started/) page to test our latest version of Conduktor
-- Receive updates on our future Releases via our [Support Portal](https://support.conduktor.io/hc/en-gb/sections/16400553827473-Conduktor-Console) and selecting **follow**
-
-# Conduktor Console
-
 ## Features ✨
 
 - [UI Navigation Overhaul](#ui-navigation-overhaul)

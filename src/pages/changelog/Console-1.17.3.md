@@ -6,12 +6,6 @@ solutions: console
 tags: fix
 ---
 
-Submit your feedback via our [public roadmap](https://product.conduktor.help/).
-
-Visit our [Get Started](https://www.conduktor.io/get-started/) page to test our latest version of Conduktor.
-
-## Conduktor Console
-
 ### Features ✨
 
 - Replace the alert threshold column with the full underlying query in the 'Alerts' table.

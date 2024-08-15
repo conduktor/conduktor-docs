@@ -6,16 +6,6 @@ solutions: gateway
 tags: fix
 ---
 
-Submit your feedback to us via our [public roadmap](https://product.conduktor.help/).
-
-Visit our [Get Started](https://docs.conduktor.io/gateway/) page to learn more and how to try our latest version of Conduktor.
-
-## Conduktor Gateway
-
-A vendor agnostic Apache Kafka proxy. Solving organizational problems of governance, security, cost-optimisation, and much more! Gateway is one of the two primary artefacts provided by Conduktor, and must be deployed to unlock Conduktor Data Security, Conduktor Governance, and Conduktor Optimize.
-
-Sound interesting? [Chat with the team](https://www.conduktor.io/contact/sales/).
-
 ## General fixes 🔨
 
 - More detailed API responses from the admin API. 201 & 203 codes now returned, as well as additional messages on create and deletion of resources

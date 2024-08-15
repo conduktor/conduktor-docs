@@ -6,16 +6,6 @@ solutions: gateway
 tags: features,fix
 ---
 
-Submit your feedback to us via our [public roadmap](https://product.conduktor.help/?utm_source=changelog&utm_medium=webpage&utm_campaign=).
-
-Visit our [Get Started docs](https://docs.conduktor.io/gateway/?utm_source=changelog&utm_medium=webpage&utm_campaign=) page to learn more and how to try our latest version of Conduktor or [chat with the team](https://www.conduktor.io/contact/sales/?utm_source=changelog&utm_medium=webpage&utm_campaign=).
-
-`docker pull conduktor/conduktor-gateway:3.2.0`  
-
-- [Breaking Changes 💣](#breaking-changes-)
-- [Features](#features)
-- [General Fixes 🔨](#general-fixes-🔨)
-
 ## Breaking Changes 💣
 ### Two new backing topics are required for Gateway
 In the next release (3.3), we'll bring a new API as well as support in the Conduktor [CLI](https://docs.conduktor.io/platform/reference/cli-reference/) to manage Gateway concepts using infra-as-code approach.  

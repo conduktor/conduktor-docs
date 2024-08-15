@@ -6,19 +6,6 @@ solutions: gateway
 tags: features,fix
 ---
 
-Submit your feedback to us via our [public roadmap](https://product.conduktor.help/?utm_source=changelog&utm_medium=webpage&utm_campaign=).
-
-Visit our [Get Started docs](https://docs.conduktor.io/gateway/?utm_source=changelog&utm_medium=webpage&utm_campaign=) page to learn more and how to try our latest version of Conduktor or [chat with the team](https://www.conduktor.io/contact/sales/?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24).
-
-`docker pull conduktor/conduktor-gateway:2.5.0`
-
-- [SQL data quality checks on produce](#sql-data-quality-checks-on-produce)
-- [Schema based data contract validation](#schema-based-data-contract-validation)
-- [Set config fields using environment variables](#set-config-fields-using-environment-variables)
-- [Set client ID on action](#client-id-required-policy)
-- [ARM builds](#arm-build)
-- [General fixes](#general-fixes-🔨)
-
 ## Schema-based data contract validation
 
 Check and enforce data quality at the schema level, preventing outages from missing or badly formatted records.

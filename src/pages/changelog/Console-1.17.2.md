@@ -6,12 +6,6 @@ solutions: console
 tags: fix
 ---
 
-Submit your feedback via our [public roadmap](https://product.conduktor.help/).
-
-Visit our [Get Started](https://www.conduktor.io/get-started/) page to test our latest version of Conduktor.
-
-## Conduktor Console
-
 ### Fixes 🔨
 
 - Fixed an issue on the consumer group list screen which could inflate the number of members in a group. This was a result of migrating to the internal 'snapshot' cache for improved performance, and missing a case whereby we did not clean up old consumer group members.

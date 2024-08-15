@@ -6,19 +6,6 @@ solutions: gateway
 tags: features,fix
 ---
 
-Submit your feedback to us via our [public roadmap](https://product.conduktor.help/?utm_source=changelog&utm_medium=webpage&utm_campaign=).
-
-Visit our [Get Started docs](https://docs.conduktor.io/gateway/?utm_source=changelog&utm_medium=webpage&utm_campaign=) page to learn more and how to try our latest version of Conduktor or [chat with the team](https://www.conduktor.io/contact/sales/?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24).
-
-`docker pull conduktor/conduktor-gateway:2.6.0`
-
-- [Encryption from schema](#schema-based-encryption)
-- [Cloud provider managed identities](#kms-now-use-cloud-managed-identities-by-default)
-- [Cache KMS TTL](#cache-kms-time-to-live)
-- [Override header injections](#override-header-injections)
-- [SSL principal extraction](#ssl-principal-extraction)
-- [General fixes](#general-fixes-🔨)
-
 ## Schema based encryption
 
 You can now define your encryption requirement directly within your Schemas.

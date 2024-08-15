@@ -8,14 +8,6 @@ tags: features,fix
 
 This release contains several **breaking changes** so please read the entire release note prior to installation.
 
-Submit your feedback via our [public roadmap](https://product.conduktor.help/).
-
-Visit our [Get Started](https://www.conduktor.io/get-started/) page to test our latest version of Conduktor.
-
-To receive updates on our future Releases, visit [Our Support Portal](https://support.conduktor.io/hc/en-gb/sections/16400521075217-Releases) and "Follow".
-
-# Conduktor Console
-
 ## Important changes to our internal architecture ❗
 
 We are cleaning up our Docker image to bring you a simpler, lighter, and generally more operable product.

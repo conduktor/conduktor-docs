@@ -6,22 +6,6 @@ solutions: gateway
 tags: fix
 ---
 
-Submit your feedback to us via our [public roadmap](https://product.conduktor.help/?utm_source=changelog&utm_medium=webpage&utm_campaign=).
-
-Visit our [Get Started docs](https://docs.conduktor.io/gateway/?utm_source=changelog&utm_medium=webpage&utm_campaign=) page to learn more and how to try our latest version of Conduktor or [chat with the team](https://www.conduktor.io/contact/sales/?utm_source=changelog&utm_medium=webpage).
-
-`docker pull conduktor/conduktor-gateway:3.0.0`
-
-- [Features](#features)
-	- [Interceptor Targeting](#interceptor-targeting)
-	- [Data Validation Across Fields](#data-quality-validation-rules-across-fields-using-cel)
-	- [Filter Messages on Topics](#filter-messages-on-topics-using-cel)
-	- [Topic Multiplexing Enhancements](#topic-multi-plexing-enhancements)
-	- [Alias Topic Enhcancements](#alias-topic-enhancements)
-	- [Default Vcluster Enhancements](#default-vcluster-rework)
-- [General Fixes 🔨](#general-fixes-🔨)
-
-
 This major release of the Gateway brings functionality around targeting your interceptors more specifically, adding additional data quality & filtering tools and a host of rework under the hood for improved reliability & robustness. This can be seen in the form of reworked authorization to more closely align with what you're used to in the existing Kafka world and a more intuitive experience when working with the enhanced functionality Conduktor brings in concentrated and alias topics.
 
 ## Features

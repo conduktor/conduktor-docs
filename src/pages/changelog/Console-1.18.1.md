@@ -6,14 +6,6 @@ solutions: console
 tags: fix
 ---
 
-Submit your feedback via our [public roadmap](https://product.conduktor.help/).
-
-Visit our [Get Started](https://www.conduktor.io/get-started/) page to test our latest version of Conduktor.
-
-To receive updates on our future Releases, visit [Our Support Portal](https://support.conduktor.io/hc/en-gb/sections/16400521075217-Releases) and "Follow".
-
-# Conduktor Console
-
 ## Fixes 🔨
 
 - Increased timeout from 30s to 5m when indexing snapshots (used for caching list pages) of Kafka clusters
