@@ -270,4 +270,4 @@ helm install myGateway conduktor/conduktor-gateway -f values.yaml
 
 ### Additional Properties
 
-Additional properties can be found in the Gateway helm chart repository [here].(https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md)
+Additional properties can be found in the Gateway helm chart repository [here](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).
