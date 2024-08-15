@@ -14,7 +14,7 @@ const Switcher: React.FunctionComponent<SwitcherProps> = () => {
   const location = useLocation()
   const isBrowser = useIsBrowser()
   const isHome = isBrowser ? location.pathname === '/' : true
-  const isChangelog = isBrowser ? location.pathname.includes('/changelog') : false
+  const isChangelog = isBrowser ? location.pathname.startsWith('/changelog') : false
   const [isOpened, setIsOpened] = React.useState<boolean>(false)
   const [fade, setFade] = React.useState<'in' | 'out'>('in')
 
