@@ -1,0 +1,63 @@
+---
+date: 2023-09-13
+title: OAuth support, alternative security provider support, REST audit and more
+description: The latest version of Conduktor Gateway introduces some fixes & improvements.
+solutions: gateway
+tags: features,fix
+---
+
+Submit your feedback to us via our [public roadmap](https://product.conduktor.help/).
+
+Visit our [Get Started](https://docs.conduktor.io/gateway/) page to learn more and how to try our latest version of Conduktor.
+
+## Conduktor Gateway
+
+A vendor agnostic Apache Kafka proxy. Solving organizational problems of governance, security, cost-optimisation, and much more! Gateway is one of the two primary artefacts provided by Conduktor, and must be deployed to unlock Conduktor Data Security, Conduktor Governance, and Conduktor Optimize.
+
+Sound interesting? [Chat with the team](https://www.conduktor.io/contact/sales/).
+
+## Features ✨
+
+### Support OAuth SASL Mechanism
+
+We now support OAuth allowing you to connect clients without having to change from your existing authentication setup. For more info on setup checkout the docs or contact us directly.
+
+### Security provider / FIPS
+
+New encryption security providers are now available when encrypting data. 
+The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and the options available are: 
+
+* [Bouncy Castle](https://www.bouncycastle.org/)
+* [Bouncy Castle with FIPS](https://downloads.bouncycastle.org/fips-java/docs/BC-FJA-SecurityPolicy-1.0.2.pdf)
+* [Conscrypt](https://www.conscrypt.org/)
+
+You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing [field level encryption](https://marketplace.conduktor.io/interceptors/field-level-encryption/) 
+
+### REST Audit
+
+All admin API calls are now logged in the audit log.
+
+### Dynamic port allocation 
+
+When not defined the `GATEWAY_PORT_COUNT` variable is now computed on the fly, rather than static allocation on start. 
+Note that the recommended production value is double the number of Kafka brokers.
+
+### Support all properties when protecting topics
+
+When putting interceptors in place to protect the creation of topics, or altering of topics, we have expanded our support for policies to be defined by all properties in the [Kafka topic configs](https://kafka.apache.org/documentation/#topicconfigs). 
+
+For setting up your own create topic policy checkout the [marketplace page](https://marketplace.conduktor.io/interceptors/safeguard-create-topic-policy).
+
+### SCRAM Passthrough
+
+Gateway's passthrough mode has been expanded to support `SASL_SCRAM`.
+
+## General fixes 🔨
+
+- More clarity to some of our logging error messages, more clear what to do for a failure
+- Improved garbage collection to clean up topic mappings upon deletion
+- Fixed an issue with virtual topics not behaving correctly in Passthrough mode
+- Improved API handling on Passthrough mode with better feedback when incorrectly attempting virtual cluster operations
+- Fixed a formatting issue when requesting details on an interceptor from the internal API
+- Improved handling when doing mass deletes in parallel
+- Fixed an issue with priorities on interceptors

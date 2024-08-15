@@ -1,0 +1,32 @@
+---
+date: 2023-08-25
+title: mTLS support, more prometheus metrics
+description: The latest version of Conduktor Gateway introduces some fixes & improvements.
+solutions: gateway
+tags: features,fix
+---
+
+Submit your feedback to us via our [public roadmap](https://product.conduktor.help/).
+
+Visit our [Get Started](https://docs.conduktor.io/gateway/) page to learn more and how to try our latest version of Conduktor.
+
+## Conduktor Gateway
+
+A vendor agnostic Apache Kafka proxy. Solving organizational problems of governance, security, cost-optimisation, and much more! Gateway is one of the two primary artefacts provided by Conduktor, and must be deployed to unlock Conduktor Data Security, Conduktor Governance, and Conduktor Optimize.
+
+Sound interesting? [Chat with the team](https://www.conduktor.io/contact/sales/).
+
+## General features
+
+### mTLS support for clients to Gateway
+
+Gateway now supports mTLS connetions between clients and the Gateway. We are constantly expanding our offering to meet the demands of our customer's environments and are excited to bring mTLS compatability.
+
+### Metrics on Prometheus
+
+Gateway exposes several health metrics on the available endpoint to help you monitor the health of your deployment. Checkout the docs for the available metrics on our docs site. If there are any you would need or like to see don't hesitate to [submit a feature request](https://product.conduktor.help/tabs/3-ideas) on our public roadmap.
+
+## General fixes 🔨
+
+- Fixed an issue with token generation where a small percentage generated would be invalid, requiring an early regeneration
+- Improved handling of timeout errors: Clients will now be better informed when timeout issues occur.
