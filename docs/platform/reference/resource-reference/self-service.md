@@ -99,11 +99,18 @@ spec:
     - "clickstream-naming-rule"
   resources:
     - type: TOPIC
-      name: "click."
       patternType: PREFIXED
+      name: "click."
     - type: CONSUMER_GROUP
-      name: "click."
       patternType: PREFIXED
+      name: "click."
+    - type: SUBJECT
+      patternType: PREFIXED
+      name: "click."
+    - type: CONNECTOR
+      connectCluster: shadow-connect
+      patternType: PREFIXED
+      name: "click."
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -111,7 +118,9 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
-- `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT`
+- `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
+  - `spec.resources[].connectCluster` is **only mandatory** when `type` is `CONNECTOR`
+  - `spec.resources[].connectCluster` is a valid Connect Cluster linked to the Kafka Cluster `spec.cluster`
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
     -   ie: If there is already an owner for `click.` this is forbidden:
