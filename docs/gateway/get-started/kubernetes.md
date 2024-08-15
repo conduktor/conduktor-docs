@@ -26,7 +26,7 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 
 Configure Gateway by creating a values.yaml file and copying and modifying the following template for your requirements:
 
-```
+```yaml
 # Default values for conduktor-gateway
 
 global:
@@ -87,7 +87,8 @@ gateway:
     NAMESPACE: "conduktor"
 
   ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
-  interceptors: "[{
+  interceptors: '[
+  {
   "name": "myEncryptionPlugin",
   "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
   "priority": 100,
@@ -103,7 +104,8 @@ gateway:
       ]
     }
   }
-}]"
+}
+]'
 
   portRange:
     ## @param gateway.portRange.start Start port of the gateway port range
