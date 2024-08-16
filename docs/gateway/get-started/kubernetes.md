@@ -28,7 +28,7 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 #### Default Configuration:
 
 1. Assumes a local installation on minikube
-2. Deploys a single kafka broker
+2. Deploys a single Kafka broker
 2. Deploys 2 instances of Gateway
 3. Deploys Interceptor ?
 4. Gateway is accessible on port 9099
