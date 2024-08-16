@@ -34,7 +34,7 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 4. Gateway is accessible on port 9099
 5. Gateway admin is accessible on port 8888
 
-#### Deploying against and existing kafka cluster
+#### Deploying against and existing Kafka cluster
 
 If you wish to deploy against an existing kafka cluster, you will need to modify the template as follows:
 
