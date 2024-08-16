@@ -121,14 +121,14 @@ gateway:
   secretSha256sum: ""
 
   ## @param gateway.env [object] Environment variables for gateway deployment
-  # env:
-  #   KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
-  #   GATEWAY_BIND_HOST: "0.0.0.0"
-  #   GATEWAY_ADVERTISED_HOST: "localhost"
-  #   GATEWAY_ROUTING_MECHANISM: "port"
-  #   GATEWAY_CLUSTER_ID: "default"
-  #   GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
-  #   NAMESPACE: "default"
+  env:
+    GATEWAY_ADVERTISED_HOST: "localhost"
+    # KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
+    # GATEWAY_BIND_HOST: "0.0.0.0"
+    # GATEWAY_ROUTING_MECHANISM: "port"
+    # GATEWAY_CLUSTER_ID: "default"
+    # GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
+    # NAMESPACE: "default"
 
   ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
   interceptors: '[{
