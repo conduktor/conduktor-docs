@@ -12,8 +12,7 @@ or contact our [support](https://www.conduktor.io/contact/support/).
 
 # Helm chart installation
 
-Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a 
-chart that will deploy Conduktor Gateway on your Kubernetes cluster.
+Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Gateway on your Kubernetes cluster.  This is a quick start guide to help you deploy a local instance of Gateway for non production purposes.
 
 ## General requirements
 
@@ -333,19 +332,23 @@ kubectl port-forward deployment/mygateway-conduktor-gateway -n default 8888:8888
 http://localhost:8888
 ```
 
-6. Setup port forwarding for a client connection
+6. Validate that the Audit Interceptor is deployed:
+
+```shell
+curl http://localhost:8888/admin/interceptors/v1/all -u admin:conduktor | jq .
+```
+
+7. Setup port forwarding for a client connection:
 
 ```shell
 kubectl port-forward deployment/mygateway-conduktor-gateway -n default 9099:9099
 ```
 
-7. Your clients can now interact with Conduktor Gateway like any other Kafka cluster:
+8. Your clients can now interact with Conduktor Gateway like any other Kafka cluster:
 
 ```shell
 bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
 ```
-
-
 
 ### Additional Properties
 
