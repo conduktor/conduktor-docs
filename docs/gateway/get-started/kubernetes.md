@@ -28,16 +28,16 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 #### Default Configuration:
 
 1. Assumes a local installation on minikube
-2. Deploys a single kafka broker
+2. Deploys a single Kafka broker
 3. Deploys a single Zookeeper instance
 4. Deploys 2 instances of Gateway
-5. Deploys Interceptor ? 
+5. Deploys [Audit Interceptor](https://docs.conduktor.io/gateway/interceptors/data-security/audit/)
 6. Gateway is accessible on port 9099
 7. Gateway admin is accessible on port 8888
 
 #### Deploying against and existing Kafka cluster
 
-If you wish to deploy against an existing kafka cluster, you will need to modify the template as follows:
+If you wish to deploy against an existing Kafka cluster, you will need to modify the template as follows:
 
 1. Set the following parameter to `false`
 
@@ -57,17 +57,16 @@ kafka:
     GATEWAY_ROUTING_MECHANISM: "port"
     GATEWAY_CLUSTER_ID: "default"
     GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
-    GATEWAY_STORAGE_TYPE: "KAFKA"
     NAMESPACE: "default"
 ```
-3. Set the following property to the hostname/IP and port of your kafka broker listeners:
+3. Set the following property to the hostname/IP and port of your Kafka broker listeners:
 
 ```yaml
 env:
     KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
 ```
 
-3. Make sure that your external kafka cluster is reachable from your Minikube instance (outside the scope of this guide).
+4. Make sure that your external Kafka cluster is reachable from your Minikube instance (outside the scope of this guide).
 
 #### Template deployment
 
@@ -130,11 +129,28 @@ gateway:
   #   GATEWAY_ROUTING_MECHANISM: "port"
   #   GATEWAY_CLUSTER_ID: "default"
   #   GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
-  #   GATEWAY_STORAGE_TYPE: "KAFKA"
   #   NAMESPACE: "default"
 
   ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
-  interceptors: "[]"
+  interceptors: '[{
+  "name": "myAuditInterceptorPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.AuditPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "apiKeys": [
+      "PRODUCE",
+      "FETCH"
+    ],
+    "vcluster": ".*",
+    "username": ".*",
+    "consumerGroupId": ".*",
+    "topicPartitions": [
+      1,
+      2
+    ]
+  }
+}]'
 
   portRange:
     ## @param gateway.portRange.start Start port of the gateway port range
@@ -293,23 +309,43 @@ kafka:
   enabled: true
 ```
 
-2. Install the chart on your cluster referencing the valus.yaml file:
+2. Install the chart on your cluster referencing the valus.yaml file (Note: This can a take a few minutes to complete):
 
 ```shell
 helm install mygateway conduktor/conduktor-gateway -f values.yaml
 ```
 
-3. Setup port forwarding to connect to Gateway through a browser:
+3. Validate the cluster is up and running, you should see 4 pods:
+
+```shell
+kubectl get pods
+```
+
+4. Setup port forwarding to connect to Gateway through a browser:
 
 ```shell
 kubectl port-forward deployment/mygateway-conduktor-gateway -n default 8888:8888
 ```
 
-4. Validate you can connect to the Gateway Admin interface in your browser:
+5. Validate you can connect to the Gateway Admin interface in your browser:
 
 ```
 http://localhost:8888
 ```
+
+6. Setup port forwarding for a client connection
+
+```shell
+kubectl port-forward deployment/mygateway-conduktor-gateway -n default 9099:9099
+```
+
+7. Your clients can now interact with Conduktor Gateway like any other Kafka cluster:
+
+```shell
+bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
+```
+
+
 
 ### Additional Properties
 
