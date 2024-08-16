@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Kubernetes
-description: The below guide details how to deploy Conduktor Gateway on a local Minikube instance.
+description: The below guide details how to deploy Conduktor Gateway on a local Minikube instance.  This is not for production purposes.
 ---
 
 :::info
@@ -28,11 +28,12 @@ chart that will deploy Conduktor Gateway on your Kubernetes cluster.
 #### Default Configuration:
 
 1. Assumes a local installation on minikube
-2. Deploys a single Kafka broker
-2. Deploys 2 instances of Gateway
-3. Deploys Interceptor ?
-4. Gateway is accessible on port 9099
-5. Gateway admin is accessible on port 8888
+2. Deploys a single kafka broker
+3. Deploys a single Zookeeper instance
+4. Deploys 2 instances of Gateway
+5. Deploys Interceptor ? 
+6. Gateway is accessible on port 9099
+7. Gateway admin is accessible on port 8888
 
 #### Deploying against and existing Kafka cluster
 
@@ -46,7 +47,20 @@ kafka:
   enabled: true
 ```
 
-2. Set the following property to the hostname/IP and port of your kafka broker listeners:
+2. Uncomment the following:
+
+```yaml
+  env:
+    KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
+    GATEWAY_BIND_HOST: "0.0.0.0"
+    GATEWAY_ADVERTISED_HOST: "localhost"
+    GATEWAY_ROUTING_MECHANISM: "port"
+    GATEWAY_CLUSTER_ID: "default"
+    GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
+    GATEWAY_STORAGE_TYPE: "KAFKA"
+    NAMESPACE: "default"
+```
+3. Set the following property to the hostname/IP and port of your kafka broker listeners:
 
 ```yaml
 env:
@@ -109,15 +123,15 @@ gateway:
   secretSha256sum: ""
 
   ## @param gateway.env [object] Environment variables for gateway deployment
-  env:
-    KAFKA_BOOTSTRAP_SERVERS: "192.168.86.223:19092"
-    GATEWAY_BIND_HOST: "0.0.0.0"
-    GATEWAY_ADVERTISED_HOST: "localhost"
-    GATEWAY_ROUTING_MECHANISM: "port"
-    GATEWAY_CLUSTER_ID: "default"
-    GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
-    GATEWAY_STORAGE_TYPE: "KAFKA"
-    NAMESPACE: "default"
+  # env:
+  #   KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
+  #   GATEWAY_BIND_HOST: "0.0.0.0"
+  #   GATEWAY_ADVERTISED_HOST: "localhost"
+  #   GATEWAY_ROUTING_MECHANISM: "port"
+  #   GATEWAY_CLUSTER_ID: "default"
+  #   GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
+  #   GATEWAY_STORAGE_TYPE: "KAFKA"
+  #   NAMESPACE: "default"
 
   ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
   interceptors: "[]"
