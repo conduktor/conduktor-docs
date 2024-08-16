@@ -181,7 +181,6 @@ Creates a connector on a Kafka Connect cluster.
 
 ```yaml
 ---
----
 apiVersion: kafka/v2
 kind: Connector
 metadata:
