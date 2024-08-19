@@ -199,7 +199,7 @@ Conduktor needs to save state, you can choose where:
 | `GATEWAY_GROUP_ID`      | null            | Set the group name for internal topic if not defined      |
 | `GATEWAY_STORE_TTL_MS`  | `604800000`     | Time between full refresh           |
 
-#### Topics Names
+#### Topic Names
 
 State is saved in different location based on `GATEWAY_STORAGE_TYPE`
 
