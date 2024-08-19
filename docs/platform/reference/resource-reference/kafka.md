@@ -174,30 +174,29 @@ spec:
   - In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
 
 ### Connector
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
+Creates a connector on a Kafka Connect cluster.
+
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API /> <GUI />
 
 ```yaml
 ---
-apiVersion: kafka/v1
+---
+apiVersion: kafka/v2
 kind: Connector
 metadata:
-  connectCluster: my-connect-cluster
-  name: myPrefix.myConnector
+  name: click.my-connector
+  cluster: 'prod-cluster'
+  connectCluster: kafka-connect-cluster
   labels:
     conduktor.io/auto-restart-enabled: true
-    conduktor.io/auto-restart-frequency: 10m
+    conduktor.io/auto-restart-frequency: 600
 spec:
-  config:
     connector.class: io.connect.jdbc.JdbcSourceConnector
     tasks.max: '1'
-    topics: myPrefix.myTopic
+    topic: click.pageviews
     connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
     consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
-
 ```
 
 **Connector checks**
@@ -206,4 +205,4 @@ spec:
 
 **Conduktor annotations**
 - `conduktor.io/auto-restart-enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
-- `conduktor.io/auto-restart-frequency` is optional (default `10m`). Define the delay between consecutive restart attempts
+- `conduktor.io/auto-restart-frequency` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts

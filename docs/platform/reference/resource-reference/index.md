@@ -44,7 +44,7 @@ export const AdminToken = () => (
 
 The Resources Reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.   
 
-There are two kind of API Key to use with the CLI, Terraform and Public API:
+There are two kinds of API Keys to use with the CLI, Terraform and Public API:
 - <AdminToken /> have all permissions over all resources in Console
 - <AppToken /> permission are scoped to Application instances & Ownership model defined in Self-service
 
