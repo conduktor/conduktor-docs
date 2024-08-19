@@ -45,7 +45,7 @@ export default function Feedback({ tiny = false }) {
         {haveVoted ? (
           <>
             {value === 0 ? (
-              <span >
+              <span>
                 Tell us how to improve:{' '}
                 <a href="mailto:product@conduktor.io">product@conduktor.io</a>
               </span>

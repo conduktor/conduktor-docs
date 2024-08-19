@@ -8,7 +8,7 @@ export const DocsRating = styled('div', {
   width: '100%',
   border: '1px solid var(--ifm-color-emphasis-300)',
   background: 'transparent',
-  textAlign: 'left',
+  textAlign: 'center',
   color: '#057594',
   lineHeight: '32px',
   fontWeight: 500,
@@ -47,6 +47,7 @@ export const DocsRating = styled('div', {
             margin: 0,
             marginTop: 20,
             border: 'none',
+            textAlign: 'left',
 
             span: {
               fontSize: '0.9em',
