@@ -23,7 +23,6 @@ As Gateway is quite a technical product, we recommend you to [book a demo](https
 ## Operations
 
 - [Cluster switching/Failover](./ops/cluster-switching): Transparent failover for your applications
-- [Merge Clusters](./ops/merge-cluster): Merge multiple Kafka clusters into a single logical one
 - [Multi-tenancy](./ops/multi-tenancy): Build multi-tenancy infrastructure with Kafka
 - [Topic Concentration](./ops/topic-concentration): Concentrate multiple topics into a single one for cost savings
 - [Header injection](./ops/header-injection): Inject headers into your Kafka messages for lineage or chargeback support
