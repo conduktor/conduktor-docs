@@ -19,8 +19,8 @@ You can mount a volume on this folder to keep metrics data between updates.
 Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
 
 | Environment Variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
-| --------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------- | ------ | ----------------------- | -------- |
-| `CDK_CONSOLE-URL`                             | Console URL and port (example: `"http://conduktor-console:8080"`)                                        | true      | string | ∅                       | `1.18.0` |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
+| `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`)                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console                                                     | false     | bool   | `false`                 | `1.18.2` |
 | `CDK_SCRAPER_CAFILE`                          | Path to CA certificate file inside the container to perform TLS check when scraping metrics from Console | false     | string | ∅                       | `1.18.2` |
 | **S3**                                        |                                                                                                          |           |        |                         |          |

@@ -9,10 +9,11 @@ description: How to setup and tune Conduktor logs
 
 To configure Conduktor Console logs globally, you can use the following environment variables:
 
-| Environment Variable | Default value |                                                                          |
-| -------------------- | ------------- | ------------------------------------------------------------------------ |
-| `CDK_ROOT_LOG_LEVEL` | `INFO`        | Global Console log level, one of `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG` |
-| `CDK_ROOT_LOG_COLOR` | `true`        | Enable color in logs when possible                                       |
+| Environment Variable  | Default value |                                                                          |
+| --------------------  | ------------- | ------------------------------------------------------------------------ |
+| `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global Console log level, one of `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG` |
+| `CDK_ROOT_LOG_FORMAT` | `TEXT`        | Log format, one of `TEXT` or `JSON` (sice 1.26.0)                        |
+| `CDK_ROOT_LOG_COLOR`  | `true`        | Enable color in logs when possible                                       |
 
 :::info
 For backward compatibility, `CDK_DEBUG: true` is still supported, and is equivalent to `CDK_ROOT_LOG_LEVEL: DEBUG`.
@@ -71,4 +72,30 @@ They also use environment variables defined [here](#per-module-log-configuration
 
 ## Structured logging (JSON)
 
-Currently, Console does not support structured logging (JSON), but it is planned for a future release.
+To enable structured logging, simply set `CONSOLE_ROOT_LOG_LEVEL=JSON`. 
+
+The logs will be structured using following format : 
+
+```json
+{
+ "timestamp": "2024-06-14T10:09:25.802542476+00:00",
+ "level": "<log level>",
+ "message": "<log message>",
+ "logger": "<logger name>",
+ "thread": "<logger thread>",
+ "stack_trace": "<throwable>",
+ "mdc": {
+   "key": "value"
+ }
+}
+```
+
+
+:::tip
+The log `timestamp` is encoded in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+:::
+
+
+:::info
+In case of structured logging enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
+:::

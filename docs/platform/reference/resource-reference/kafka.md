@@ -174,6 +174,7 @@ spec:
   - In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
 
 ### Connector
+Creates a connector on a Kafka Connect cluster.
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API /> <GUI />
@@ -184,8 +185,9 @@ spec:
 apiVersion: kafka/v2
 kind: Connector
 metadata:
-  connectCluster: kafka-connect
   name: click.my-connector
+  cluster: 'prod-cluster'
+  connectCluster: kafka-connect-cluster
   labels:
     conduktor.io/auto-restart-enabled: true
     conduktor.io/auto-restart-frequency: 600
