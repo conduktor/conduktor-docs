@@ -67,7 +67,7 @@ Each team file has both their application and application instances defined with
 
 This example will focus on the website-analytics team.
 
-The website analytics team has their own "repo", which is the `application-team-repo` directory in this example. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource. Note connectors are not supported as of 1.25.
+The website analytics team has their own "repo", which is the `application-team-repo` directory in this example. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource.
 
 <!-- ![app team repo](./img/app-team-repo.png) -->
 ```mermaid
