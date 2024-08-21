@@ -53,10 +53,11 @@ Deploys an Interceptor on the Gateway
 apiVersion: gateway/v2
 kind: Interceptor
 metadata:
-  # vcluster: aaa
-  # group: bbb
-  # username: ccc
   name: enforce-partition-limit
+  # scope:
+  #   vCluster: aaa
+  #   group: bbb
+  #   username: ccc
 spec:
   pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin"
   priority: 100
@@ -68,7 +69,7 @@ spec:
       action: "WARN"
 ````
 **Interceptor checks:**
-- `metadata.vcluster` / `metadata.group` / `metadata.user` are optional (default empty). They combine with each other to define the targeting
+- `metadata.scope` is optional (default empty). `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
   - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
 - `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptors-catalog/)
 - `spec.priority` is **mandatory**
@@ -110,16 +111,18 @@ spec:
 # This interceptor targets only `admin` service account
 kind: Interceptor
 metadata:
-  username: admin
   name: enforce-partition-limit
+    scope:
+    username: admin
 spec:
   
 ---
 # This interceptor targets only `read-only` virtual cluster
 kind: Interceptor
 metadata:
-  vcluster: read-only
   name: enforce-partition-limit
+  scope:
+    vCluster: read-only
 spec:
   
 
@@ -134,7 +137,7 @@ kind: GatewayServiceAccount
 metadata:
   name: application1
 spec:
-  type: EXTERNAL
+  allowLocalToken: false
   externalName: 00u9vme99nxudvxZA0h7
 ---
 # Local User on vc-B
@@ -143,8 +146,13 @@ metadata:
   vcluster: vc-B
   name: admin
 spec:
-  type: LOCAL
+  allowLocalToken: true
 ````
+**GatewayServiceAccount checks:**
+- `spec.allowLocalToken` when true, grants access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
+
+**GatewayServiceAccount side effects:**
+- Switching `spec.allowLocalToken` from `true` to `false` does not invalidate previously emitted tokens (they will keep on working for their TTL)
 
 ## GatewayGroup
 
@@ -157,9 +165,9 @@ metadata:
 spec:
   members:
     - username: admin # admin from vcluster passthrough
-    - vcluster: vc-B
+    - vCluster: vc-B
       username: admin
-    - vcluster: passthrough
+    - vCluster: passthrough
       username: "0000-AAAA-BBBB-CCCC"
 ````
 
@@ -202,7 +210,6 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- prefix: "app-A-"
  aclsEnabled: "true" # defaults to false
  superUsers:
  - username1
