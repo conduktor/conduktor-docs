@@ -84,10 +84,6 @@ __Example Values__
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
 | `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
 
-* `KAFKA_SECURITY` where your credentials and ACL handled your target Kafka cluster
-* `GATEWAY_SECURITY` where your credentials and ACL handled by Gateway
-* `VCLUSTER` where your virtual clusters, credentials and ACL handled by Gateway
-
 
 ### Client to Gateway Authentication
 
