@@ -46,7 +46,7 @@ Here is a quick explanation of each supported security protocol:
 
 # Security protocol
 
-Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.
+The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.
 
 Gateway supports all the security protocols as Apache Kafka does, you can find further information regarding what they are on the [Apache Kafka documentation](https://kafka.apache.org/documentation/#listener_configuration). In addition, Gateway adds two new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`, as mentioned for delegating to Kafka.
 
@@ -94,7 +94,7 @@ More info on jks truststores [here](https://docs.oracle.com/cd/E19509-01/820-350
 
 Mutual TLS leverages client side certificates to authenticate a Kafka client.
 
-`Principal` for mTLS connection can be detected from the subject of the certificate using the same feature as Apache Kafka the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) .
+`Principal` for an mTLS connection can be detected from the subject of the certificate using the same feature as Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) .
 
 Gateway configuration:
 
@@ -126,14 +126,14 @@ The server CA certificate here is provided as a PEM file as well as the client's
 
 ## SASL_PLAINTEXT
 
-Authentication from client is mandatory against Gateway but all communications are exchanged without any network security.
+Authentication from the client is mandatory against Gateway but all communications are exchanged without any network security.
 Gateway supports Plain and OAuthbearer SASL mechanisms.
 
 ### Plain
 
 Plain mechanism uses Username/Password credentials to authenticate credentials against Gateway.
 
-Plain credentials take the form of JWT token that are managed in Gateway using the Admin (HTTP) API. See below for the creation of tokens.
+Plain credentials take the form of a JWT token, these are managed in Gateway using the Admin (HTTP) API. See below for the creation of tokens.
 
 Gateway configuration:
 
@@ -141,7 +141,7 @@ Gateway configuration:
 GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
 ```
-You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value in order to ensure that tokens cannot be forged.
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
 
 
 Client configuration:
@@ -156,7 +156,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 <u>_Note on the password :_</u>
 
-It must be a token that is obtained by a Gateway admin via the HTTP API as follows:
+It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API as follows:
 
 ```bash
  curl \                                                                                                   --silent \
@@ -228,7 +228,7 @@ GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
-You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value in order to ensure that tokens cannot be forged.
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
 
 Client configuration:
 ```properties
@@ -242,7 +242,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
   password="yourToken";
 ```
 
-See section above for requirements on how to create tokens.
+See section above for requirements on how to create tokens using the Admin (HTTP) API.
 
 ### OAuthbearer
 
@@ -296,7 +296,7 @@ Supported authentication mechanisms on the backing Kafka are:
 
 
 Gateway configuration:
-Using PLAIN, as used for example Confluent Cloud:
+Using PLAIN, as used for example on Confluent Cloud:
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_PLAINTEXT
 ```
@@ -324,7 +324,7 @@ Supported authentication mechanisms on the backing Kafka are:
 -   Scram-sha-512
 
 Gateway configuration:
-Using PLAIN, as used for example Confluent Cloud:
+Using PLAIN, as used for example on Confluent Cloud:
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
 GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
