@@ -67,7 +67,7 @@ security.protocol=PLAINTEXT
 
 ## SSL
 
-With SSL only, there is not client client authentication, but communication between client and Gateway broker will be encrypted.
+With SSL only, there is no client authentication, but communication between the client and Gateway broker will be encrypted.
 
 Gateway configuration:
 ```yaml
