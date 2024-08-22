@@ -137,7 +137,7 @@ kind: GatewayServiceAccount
 metadata:
   name: application1
 spec:
-  allowLocalToken: false
+  type: EXTERNAL
   externalName: 00u9vme99nxudvxZA0h7
 ---
 # Local User on vc-B
@@ -146,13 +146,13 @@ metadata:
   vcluster: vc-B
   name: admin
 spec:
-  allowLocalToken: true
+  type: LOCAL
 ````
 **GatewayServiceAccount checks:**
-- `spec.allowLocalToken` when true, grants access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
+- `spec.type` when `LOCAL`, grants access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
 
 **GatewayServiceAccount side effects:**
-- Switching `spec.allowLocalToken` from `true` to `false` does not invalidate previously emitted tokens (they will keep on working for their TTL)
+- Switching `spec.type` from `LOCAL` to `EXTERNAL` does not invalidate previously emitted tokens (they will keep on working for their TTL)
 
 ## GatewayGroup
 
@@ -190,7 +190,7 @@ spec:
 ---
 kind: ConcentrationRule
 metadata:
-  # vcluster: passthrough <<< SUGGESTED
+  # vCluster: passthrough
   name: toutdanstiti
 spec:
   pattern: titi-
@@ -210,7 +210,8 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclsEnabled: "true" # defaults to false
+ prefix: "app-A-"
+ aclEnabled: "true" # defaults to false
  superUsers:
  - username1
  - username2
