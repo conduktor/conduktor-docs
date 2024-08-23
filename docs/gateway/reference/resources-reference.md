@@ -78,14 +78,14 @@ spec:
 ### Interceptor Targeting
 You can make your Interceptor only active on certain scenarios. Use the following table to configure Targeting.
 
-| Use case                              | `metadata.vcluster` | `metadata.group` | `metadata.username` | 
-|---------------------------------------|---------------------|------------------|---------------------|
-| Global Interceptor (targets everyone) | Empty               | Empty            | Empty               |
-| Username Targeting                    | Empty               | Empty            | Set                 |
-| Group Targeting                       | Empty               | Set              | Empty               |
-| Virtual Cluster Targeting             | Set                 | Empty            | Empty               |
-| Virtual Cluster + Username Targeting  | Set                 | Empty            | Set                 |
-| Virtual Cluster + Group Targeting     | Set                 | Set              | Empty               |
+| Use case                              | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` | 
+|---------------------------------------|---------------------------|------------------------|---------------------------|
+| Global Interceptor (targets everyone) | Empty                     | Empty                  | Empty                     |
+| Username Targeting                    | Empty                     | Empty                  | Set                       |
+| Group Targeting                       | Empty                     | Set                    | Empty                     |
+| Virtual Cluster Targeting             | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username Targeting  | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group Targeting     | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using different targeting scope. This will effectively override the configuration for the scope.
 
@@ -96,7 +96,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 - Group
 - VirtualCluster
 - Global
-  :::
+:::
 
 **Examples**
 ````yaml
@@ -112,7 +112,7 @@ spec:
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
-    scope:
+  scope:
     username: admin
 spec:
   
@@ -129,18 +129,24 @@ spec:
 ````
 
 ## GatewayServiceAccount
+GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
+There are a few cases where you **must** declare GatewayServiceAccount objects:
+- Create Local Service Accounts
+- Rename Service Accounts for easier clarity when using Interceptors
+- Attach Service Accounts to Virtual Clusters
 
 ````yaml
 ---
-# External User on passthrough
+# External User renamed
 kind: GatewayServiceAccount
 metadata:
   name: application1
 spec:
   type: EXTERNAL
-  externalName: 00u9vme99nxudvxZA0h7
+  externalNames: 
+  - 00u9vme99nxudvxZA0h7
 ---
-# Local User on vc-B
+# Local User on Virtual Cluster vc-B
 kind: GatewayServiceAccount
 metadata:
   vcluster: vc-B
@@ -149,42 +155,44 @@ spec:
   type: LOCAL
 ````
 **GatewayServiceAccount checks:**
-- `spec.type` when `LOCAL`, grants access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
+- When `spec.type` is `EXTERNAL`:
+  - `spec.externalNames` must be a list of external names. Each name must be unique across all declared GatewayServiceAccount.
+  - **At the moment** we only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
-- Switching `spec.type` from `LOCAL` to `EXTERNAL` does not invalidate previously emitted tokens (they will keep on working for their TTL)
+- When `spec.type` is `EXTERNAL`:
+  - During Client connection, the authenticated user will be checked against the list of `externalNames` to decide which GatewayServiceAccount it is.
+- When `spec.type` is `LOCAL`:
+  - Access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
+  - Switching a GatewayServiceAccount `spec.type` from `LOCAL` to `EXTERNAL` does not invalidate previously emitted tokens. They will keep on working for their TTL)
+
 
 ## GatewayGroup
+Gateway Group lets you add multiple users in the same GatewayGroup for easier targeting capabilities
 
 ````yaml
 ---
 # Users added to the group manually
 kind: GatewayGroup
 metadata:
-  name: app-a
+  name: group-a
 spec:
   members:
-    - username: admin # admin from vcluster passthrough
+    - username: admin
     - vCluster: vc-B
-      username: admin
-    - vCluster: passthrough
       username: "0000-AAAA-BBBB-CCCC"
 ````
+**GatewayGroup checks:**
+- `spec.members[].username` is mandatory.
+- `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
-## ConcentratedTopic
-
-```yaml
----
-apiVersion: gateway/v2
-kind: ConcentratedTopic
-metadata:
- name: name1
- vCluster: vCluster1
-spec:
- physicalName: physicalName1
-```
+**GatewayGroup side effects:**
+- All members of the group will be affected by Interceptors deployed with this group's scope.
 
 ## ConcentrationRule
+
+Concentration Rules lets you declare a pattern for which topic creation will not lead to a real physical topic but rather use our Topic Concentration feature.
+
 
 ````yaml
 ---
@@ -193,13 +201,17 @@ metadata:
   # vCluster: passthrough
   name: toutdanstiti
 spec:
-  pattern: titi-
-  backingTopics:
+  pattern: titi-.*
+  physicalTopics:
     delete: titi-delete
     compact: titi-compact
-    c+d: titi-cd
-autoManageBackingTopics: false
+    deleteCompact: titi-cd
+  autoManaged: false
 ````
+**ConcentrationRule checks:**
+`spec.physicalTopics.delete` is mandatory. Must be a valid topic name and must exist on the backing
+
+**ConcentrationRule side effects:**
 
 ## VirtualCluster
 
