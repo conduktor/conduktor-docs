@@ -46,49 +46,72 @@ Here is a quick explanation of each supported security protocol:
 
 # Security protocol
 
-Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.
+The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.
 
-Gateway supports all the security protocols as Apache Kafka does, you can find further information regarding what they are on the [Apache Kafka documentation](https://kafka.apache.org/documentation/#listener_configuration). In addition, Gateway adds two new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` , as mentioned for delegating to Kafka.
+Gateway supports all the security protocols as Apache Kafka does, you can find further information regarding what they are on the [Apache Kafka documentation](https://kafka.apache.org/documentation/#listener_configuration). In addition, Gateway adds two new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`, as mentioned for delegating to Kafka.
 
 ## Plaintext
 
-Brokers don't need any client authentication and all communication is exchanged without any network security.
+There is no client authentication to Gateway and all communication is exchanged without any network security.
 
-Example:
+Gateway configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+```
 
+Client configuration:
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9092
+bootstrap.servers=your.gateway.hostname:9092
 security.protocol=PLAINTEXT
 ```
 
 ## SSL
 
-With SSL only clients don't need any client authentication, but communication between client and Gateway broker will be encrypted.
+With SSL only, there is no client authentication, but communication between the client and Gateway broker will be encrypted.
 
-Example:
+Gateway configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
+GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
+```
 
+
+Client configuration:
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9093
+bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SSL
 ssl.truststore.location=/path/to/your/truststore.jks
 ssl.truststore.password=yourTruststorePassword
 ssl.protocol=TLSv1.3
 ```
 
-The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify the broker's SSL certificate (more info on jks truststores [here](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html)).
+The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify the Gateway's TLS certificate, which is stored in the keystore. 
+More info on jks truststores [here](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html).
 
-### mTLS
+### Mutual TLS (mTLS)
 
-This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication.
+Mutual TLS leverages client side certificates to authenticate a Kafka client.
 
-mTLS leverages SSL mutual authentication to identify a Kafka client.
+`Principal` for an mTLS connection can be detected from the subject of the certificate using the same feature as Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) .
 
-`Principal` for mTLS connection can be detected from the subject certificate using the same feature as Apache Kafka the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) .
+Gateway configuration:
 
-Example of mTLS configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SSL_CLIENT_AUTH: REQUIRE
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
+GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
+GATEWAY_SSL_TRUST_STORE_PATH: /path/to/your/truststore.jks
+GATEWAY_SSL_TRUST_STORE_PASSWORD: yourTrustStorePassword
+```
+
+Client configuration:
 
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9093
+bootstrap.servers=your.gateway.hostname:9093
 security.protocol=SSL
 ssl.keystore.type=PEM
 ssl.keystore.key=/path/to/your/client.key
@@ -103,26 +126,37 @@ The server CA certificate here is provided as a PEM file as well as the client's
 
 ## SASL_PLAINTEXT
 
-Authentication from client is mandatory against Gateway but all communications are exchanged without any network security.
+Authentication from the client is mandatory against Gateway but all communications are exchanged without any network security.
+Gateway supports Plain and OAuthbearer SASL mechanisms.
 
 ### Plain
 
 Plain mechanism uses Username/Password credentials to authenticate credentials against Gateway.
 
-Plain credentials are managed in Gateway using the HTTP API.
+Plain credentials take the form of a JWT token, these are managed in Gateway using the Admin (HTTP) API. See below for the creation of tokens.
 
+Gateway configuration:
+
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
+```
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
+
+
+Client configuration:
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9092
+bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
   username="yourUsername" \
-  password="yourPassword";
+  password="yourToken";
 ```
 
 <u>_Note on the password :_</u>
 
-It must contain a token that is obtained by a Gateway admin via the HTTP API as follows:
+It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API as follows:
 
 ```bash
  curl \                                                                                                   --silent \
@@ -132,9 +166,9 @@ It must contain a token that is obtained by a Gateway admin via the HTTP API as 
     --data-raw '{"lifeTimeSeconds": 7776000}' \
     | jq -r ".token"
 eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzE3NjY5NTA1fQ.9YXuxZFzMEs_-HZR8t3L39LhAVK8PJsIb5X_bHsfUEA
-
 ```
 
+The token conforms to the JWT token specification.
 The JWT payload contains the username, the vCluster and the expiration date:
 
 ```bash
@@ -150,17 +184,25 @@ The Oauth credentials base is managed in the configured provider.
 
 This mechanism will also allow you to verify some claims from your OIDC provider ( `audience` and `issuer` ).
 
+Gateway configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
+GATEWAY_OAUTH_EXPECTED_ISSUER: https://sts.windows.net/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/
+GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"    
+```
+
+Client configuration:
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9092
-security.protocol=SASL_SSL
+bootstrap.servers=your.gateway.hostname:9092
+security.protocol=SASL_PLAINTEXT
 sasl.mechanism=OAUTHBEARER
-sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
-  oauth.token.endpoint.uri="https://auth.gcn.nasa.gov/oauth2/token" \
-  clientId="yourClientId" \
-  clientSecret="yourClientSecret" \
-  oauth.audience="yourAudience";
-sasl.oauthbearer.token.endpoint.url=https://your.oauthserver.url/oauth2/token
 sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.oauthbearer.token.endpoint.url=https://login.microsoftonline.com/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/oauth2/token
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+ clientId="yourClientID" \
+  clientSecret="yourClientSecret" \
+  scope=".default";
 ```
 
 ## SASL_SSL
@@ -178,16 +220,29 @@ Plain mechanism use Username/Password credentials to authenticate credentials ag
 
 Plain credentials are managed in Gateway using the HTTP API.
 
+Gateway configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
+GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
+```
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
+
+Client configuration:
 ```properties
-bootstrap.servers=your.kafka.broker.hostname:9093
+bootstrap.servers=your.gateway.hostname:9093
 security.protocol=SASL_SSL
 sasl.mechanism=PLAIN
 ssl.truststore.location=/path/to/your/truststore.jks
 ssl.truststore.password=yourTruststorePassword
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
   username="yourUsername" \
-  password="yourPassword";
+  password="yourToken";
 ```
+
+See section above for requirements on how to create tokens using the Admin (HTTP) API.
 
 ### OAuthbearer
 
@@ -197,18 +252,30 @@ The Oauth credentials base is managed in the configured provider.
 
 This mechanism will also allow you to verify some claims from your OIDC provider ( `audience` and `issuer` )
 
+Gateway configuration:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
+GATEWAY_OAUTH_EXPECTED_ISSUER: https://sts.windows.net/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/
+GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"  
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
+GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
+````
+
+Client configuration:
 ```properties
-    bootstrap.servers=your.kafka.broker.hostname:9093
-    security.protocol=SASL_SSL
-    sasl.mechanism=OAUTHBEARER
-    sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule
-    ssl.truststore.location=/path/to/your/truststore.jks
-    ssl.truststore.password=yourTruststorePassword
-    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
-      oauth.token.endpoint.uri="https://your.authorization.server/oauth/token" \
-      oauth.client.id="yourClientId" \
-      oauth.client.secret="yourClientSecret" \
-      oauth.scope="requiredScope";
+bootstrap.servers=your.gateway.hostname:9092
+security.protocol=SASL_SSL
+sasl.mechanism=OAUTHBEARER
+ssl.truststore.location=/path/to/your/truststore.jks
+ssl.truststore.password=yourTruststorePassword
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.oauthbearer.token.endpoint.url=https://login.microsoftonline.com/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/oauth2/token
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+  clientId="yourClientID" \
+  clientSecret="yourClientSecret" \
+  scope=".default";
 ```
 
 ## DELEGATED_SASL_PLAINTEXT
@@ -225,6 +292,23 @@ Supported authentication mechanisms on the backing Kafka are:
 -   Scram-sha-256
 -   Scram-sha-512
 
+
+
+
+Gateway configuration:
+Using PLAIN, as used for example on Confluent Cloud:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_PLAINTEXT
+```
+
+Client configuration:
+```properties
+bootstrap.servers=your.gateway.hostname:9092
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
+```
+
 ## DELEGATED_SASL_SSL
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
@@ -238,6 +322,26 @@ Supported authentication mechanisms on the backing Kafka are:
 -   Plain
 -   Scram-sha-256
 -   Scram-sha-512
+
+Gateway configuration:
+Using PLAIN, as used for example on Confluent Cloud:
+```yaml
+GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
+GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
+```
+
+Client configuration:
+```properties
+bootstrap.servers=your.gateway.hostname:9092
+security.protocol=SASL_SSL
+ssl.truststore.location=/path/to/your/truststore.jks
+ssl.truststore.password=yourTruststorePassword
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
+```
+
 
 # Automatic security protocol detection (Default behavior)
 

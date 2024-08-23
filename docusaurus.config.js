@@ -118,15 +118,15 @@ const config = {
             items: [
               {
                 label: 'Changelog',
-                href: 'https://www.conduktor.io/changelog',
+                href: '/changelog',
               },
               {
                 label: 'GitHub',
                 href: 'https://github.com/conduktor',
               },
               {
-                label: 'Discord',
-                href: 'https://discord.gg/gzTrmjdXdA',
+                label: 'Slack',
+                href: 'https://www.conduktor.io/slack',
               },
             ],
           },

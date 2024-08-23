@@ -56,8 +56,8 @@ __Example Values__
 
 ```shell
   -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092 \
-  -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
+  -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';"
 ```
 
@@ -83,10 +83,6 @@ __Example Values__
 | `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
 | `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
 | `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
-
-* `KAFKA_SECURITY` where your credentials and ACL handled your target Kafka cluster
-* `GATEWAY_SECURITY` where your credentials and ACL handled by Gateway
-* `VCLUSTER` where your virtual clusters, credentials and ACL handled by Gateway
 
 
 ### Client to Gateway Authentication
@@ -130,7 +126,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### MTLS
 
-more context for MTLS [here](/gateway/concepts/authentication/)
+More context for mTLS [here](/gateway/concepts/authentication/)
 
 | Environment Variable                  | Default Value     | Description                                       |
 |---------------------------------------|-------------------|---------------------------------------------------|
@@ -196,22 +192,18 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 
 ### Internal State
 
-Conduktor needs to save state, you can choose where:
+To keep the Gateway instances stateless, internal state is stored in Kafka topics.
 
-| Environment Variable   | Default Value | Description                                          |
-| ---------------------- | ------------- | ---------------------------------------------------- |
-| `GATEWAY_STORAGE_TYPE` | `KAFKA`       | Can be `IN_MEMORY` or, `KAFKA`                       |
-| `GATEWAY_GROUP_ID`     | null          | Set the group name for internal topic if not defined |
-| `GATEWAY_STORE_TTL_MS` | `604800000`   | Time between full refresh                            |
+| Environment Variable                                         | Default Value | Description                                          |
+|--------------------------------------------------------------|---------------|------------------------------------------------------|
+| `GATEWAY_GROUP_ID`                                           | null          | Set the group name for internal topic if not defined |
+| `GATEWAY_STORE_TTL_MS`                                       | `604800000`   | Time between full refresh                            | 
+| `GATEWAY_TOPIC_STORE_REAL_TOPIC_PARTITION_COUNT`             | `-1`          | Defaults to the one defined in your cluster settings |
+| `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
+| `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
+
 
 #### Topics Names
-
-State is saved in different location based on `GATEWAY_STORAGE_TYPE`
-
-When it is set
-
-* `KAFKA` they will be materialized as a topic.
-* `IN_MEMORY` they will be stored in memory.
 
 | Environment Variable                   | Default Value                               | Description                                                               |
 |----------------------------------------|---------------------------------------------|---------------------------------------------------------------------------|
@@ -227,17 +219,6 @@ When it is set
 | `GATEWAY_VCLUSTERS_TOPIC`              | `_conduktor_gateway_vclusters`              | Name of vclusters topic                                                   |
 | `GATEWAY_GROUPS_TOPIC`                 | `_conduktor_gateway_groups`                 | Name of groups topic                                                      |
 
-#### `IN_MEMORY` State Configurations
-
-none
-
-#### `KAFKA` State Configurations
-
-| Environment Variable                                         | Default Value | Description                                          |
-|--------------------------------------------------------------|---------------|------------------------------------------------------|
-| `GATEWAY_TOPIC_STORE_REAL_TOPIC_PARTITION_COUNT`             | `-1`          | Defaults to the one defined in your cluster settings |
-| `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
-| `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
 ### Internal Setup
 
