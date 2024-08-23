@@ -6,7 +6,7 @@ description: Alias topics
 
 # Alias Topics
 
-Alias topic are logical topics that target a different physical topic.
+Alias topics are logical topics that target a different physical topic.
 
 They act like pointers to another physical topic.
 
