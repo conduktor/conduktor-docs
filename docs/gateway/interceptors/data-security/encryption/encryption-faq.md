@@ -211,4 +211,4 @@ No, you cannot use encrypted data as the `keySecretId`, because the value of a f
 
 **Encryption on Consume Interceptor**: This interceptor decrypts data before it is accessed by the end-user or application. The raw data is stored in the backing Kafka, but it will be encrypted before it is consumed by end-users or applications.
 
-You can find more details in the [Encryption Types](../encryption/encryption-configuration#encryption-types) section.
+You can find more details in the [Encryption Types](../encryption-configuration#encryption-types) section.
