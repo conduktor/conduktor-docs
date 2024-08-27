@@ -14,12 +14,11 @@ This breaking change only impacts Local Gateway service accounts generated throu
 
 If you are not using Local Gateway services accounts (OIDC, mTLS, Delegated Kafka), you are **not** impacted.
 :::
-Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.
-![SASL Login](/images/changelog/gateway/v3.2.2/sasl-login.png)
+Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.  
 In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behaviors.
 
-This breaking change is due for release 3.5.0.   
-For this hotfix release 3.2.2, and next product releases 3.3.x and 3.4.x, we'll only raise the following warning in the logs:  
+**This breaking change is due for release 3.5.0.**   
+For this hotfix release 3.2.2, and next product releases 3.3.0 and 3.4.0s, we'll only raise the following warning in the logs:  
 ````
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
