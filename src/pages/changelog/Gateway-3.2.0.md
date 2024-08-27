@@ -67,7 +67,7 @@ This will effectively render `GATEWAY_ACL_STORE_ENABLED` obsolete.
 
 ## General fixes 🔨
 
-- Fixed an issue with Field-level Avro encryption/decryption relating to [numeric fields](https://docs.conduktor.io/gateway/interceptors/data-security/field-level-encryption/#fields):
+- Fixed an issue with Field-level Avro encryption/decryption relating to [numeric fields](https://docs.conduktor.io/gateway/interceptors/data-security/encryption/encryption-faq/#how-does-encryption-work-with-avro-json-schema-and-protocol-buffers-records):
   - When using partial decryption with Avro schema registry, any numeric values (int, long, float, double) that are not being decrypted will instead be masked with the minimum (most negative) value for the numeric type
   - This is to ensure the field is compliant with the original type in the Avro schema
 - Fixed an issue with the ClientIdRequired Policy that wasn't properly overriding the ClientId
