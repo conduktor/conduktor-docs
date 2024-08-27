@@ -6,172 +6,209 @@ parent: data-security
 license: enterprise
 ---
 
+export const Highlight = ({children, color, text}) => (
+<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
+{children}
+</span>
+);
+
+export const KMS = () => (
+<Highlight color="#F8F1EE" text="#7D5E54">KMS</Highlight>
+);
+
+export const KEK = () => (
+<Highlight color="#E7F9F5" text="#067A6F">KEK</Highlight>
+);
+
+export const EDEK = () => (
+<Highlight color="#F0F4FF" text="#3451B2">EDEK</Highlight>
+);
+
+export const DEK = () => (
+<Highlight color="#FEEFF6" text="#CB1D63">DEK</Highlight>
+);
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Encryption and Decryption Processes](#encryption-and-decryption-processes)
 3. [Key Management](#key-management)
 4. [Encryption on Data with Avro, JSON Schema, and Protocol Buffers](#encryption-on-data-with-avro-json-schema-and-protocol-buffers)
-5. [Frequently Asked Quetions](#faq)
+5. [Frequently Asked Questions](#faq)
 
 ## Introduction
 
-This interceptor is designed to provide a robust and flexible solution for encrypting data within your Kafka records.
-The primary purpose of this feature is to ensure that sensitive data cannot be read by unauthorized third parties,
-thereby enhancing the security of your data both in transit and at rest.
+The Encryption interceptor is a robust and versatile solution for securing data within Kafka records. Its primary function is to safeguard sensitive information from unauthorized access, thereby enhancing data security both in transit and at rest.
 
-The interceptor supports both field-level and full message encryption. Field-level encryption allows you to encrypt
-specific fields within your Kafka records, such as passwords or personal user information. This is particularly useful
-when only certain parts of the message are sensitive. Full message encryption, on the other hand, encrypts the entire
-Kafka record. This is useful when the entire message needs to be secured.
+### Key Features
+**Field-Level Encryption**: Encrypts specific fields within Kafka records, such as passwords or Personally Identifiable Information (PII). This feature is ideal for scenarios where only certain parts of a message contain sensitive data.
 
-The encryption process is handled seamlessly by the interceptor, which identifies the data to be encrypted, retrieves the encryption key from the Key Management Service (KMS), encrypts the data, and then sends the encrypted message to its destination. 
-The interceptor supports various encryption algorithms and KMS options, providing flexibility to suit your specific requirements.
+**Full Message Encryption**: Encrypts the entire Kafka record, ensuring that all contents of the message are secured. This is particularly useful when the entire message is sensitive.
 
-The interceptor also supports decryption of the encrypted data. This can be done for all fields, specific fields, or the
-entire message, depending on your configuration. The decryption process is similar to the encryption process, with the
-interceptor identifying the data to be decrypted, retrieving the decryption key from the KMS, decrypting the data, and
-then making the decrypted message ready for consumption.
+You can find more details about the encryptions types [here](../encryption-configuration/#encryption-types).
 
-This interceptor is designed to be easy to configure and use, with various examples and detailed configuration options
-provided in this document. Whether you need to secure specific fields or entire messages, this interceptor provides a
-comprehensive solution for your data encryption needs in Kafka.
+### How It Works
+The encryption and decryption processes are seamlessly managed by the interceptor:
+
+**Encryption**: The interceptor automatically identifies the data that needs to be encrypted, retrieves the appropriate encryption key from the Key Management Service (KMS), encrypts the data, and then transmits the encrypted message to its destination.
+
+**Decryption**: Similar to encryption, the interceptor can decrypt either the entire message, specific fields or all the fields, based on your configuration. It retrieves the decryption key from the KMS, decrypts the necessary data, and prepares the decrypted message for consumption.
+
+### Flexibility and Compatibility
+**Multiple Encryption Algorithms**: The interceptor supports a variety of encryption algorithms, allowing you to choose the one that best meets your security requirements.
+
+**KMS Integration**: It integrates with various Key Management Services (KMS), providing flexibility in how you manage and store encryption keys.
 
 ## Encryption and Decryption Processes
 
-### How to Encrypt Data
+### How Does Gateway Encrypt Data?
 
-1. Data Identification: The interceptor identifies the data that needs to be encrypted. This could be the entire message
-   or specific fields within the message, based on your configuration. For example, if you have specified password as a
-   field to be encrypted in the fields configuration, the interceptor will identify this field in the incoming Kafka
-   record.
-2. Key Retrieval: The interceptor retrieves the encryption key from the Key Management Service (KMS). The KMS could be
-   Vault, Azure, AWS, GCP, or an in-memory service, depending on your configuration. The interceptor uses the
-   keySecretId specified in the configuration to retrieve the correct key.
-3. Encryption: The interceptor encrypts the identified data using the retrieved key and the specified encryption
-   algorithm. The encrypted data replaces the original data in the message.
-4. Transmission: Encrypted data is converted to json format and sent as a string to the destination.
+1. **Data Identification**: The interceptor first determines, based on its configuration, which data needs to be encrypted. This may include the entire message, specific fields, or all the fields within the message. For example, if you have configured the interceptor to encrypt a `password` field, it will target this field within the incoming Kafka record for encryption.
 
-### How to Decrypt Data
+2. **Key Retrieval**: The interceptor then retrieves the encryption key from the configured Key Management Service (KMS). Supported KMS options include Vault, Azure, AWS, GCP, or an in-memory service. The key is fetched using the `keySecretId` specified in your configuration to ensure the correct key is utilized. You can find more details about the key retrieval [here](#key-management).
 
-1. Data Identification: The interceptor identifies the data that needs to be decrypted. This could be the entire message
-   or specific fields within the message, based on your configuration. The interceptor uses the fields configuration to
-   identify which fields need to be decrypted.
-2. Key Retrieval: The interceptor retrieves the decryption key from the KMS. This is usually the same key that was used
-   for encryption. The interceptor uses the keySecretId specified in the configuration to retrieve the correct key.
-3. Decryption: The interceptor decrypts the identified data using the retrieved key and the specified encryption
-   algorithm. The decrypted data replaces the encrypted data in the message.
-4. Consumption: The decrypted message is then ready for consumption by the end user or application. The interceptor
-   ensures that the decrypted data is correctly formatted and compatible with the Kafka record structure.
+3. **Encryption**: Once the key is retrieved, the interceptor encrypts the identified data using the specified encryption algorithm. The original data within the message is then replaced with the encrypted version.
 
-Please note that the encryption and decryption process is transparent to the end user or application. The interceptor
-handles all the operations, allowing you to focus on your core business logic.
+4. **Transmission**: Finally, the encrypted data is either:
+- Stored as is if it is an Avro record
+- Converted into a JSON format
 
-## Key Management
+And is then transmitted as a string to the designated destination.
 
-### Definitions
+You can find more details about this last point [here](#encryption-on-data-with-avro-json-schema-and-protocol-buffers).
 
-| Term | Definition                                                                                                                                       |
-|:-----|:-------------------------------------------------------------------------------------------------------------------------------------------------|
-| KMS  | Key Management Service                                                                                                                           |
-| KEK  | Key Encryption Key, used to encrypt the DEK (Data Encryption Key) and stored in the KMS. Importantly, The KEK is never known to the interceptor. |
-| DEK  | Data Encryption Key, used to encrypt the data and was generated by the interceptor.                                                              |
-| EDEK | Encrypted Data Encryption Key, the DEK encrypted by the KEK.                                                                                     |
+### How Does Gateway Decrypt Data?
 
-### Envelope Encryption
+1. **Data Identification**: The interceptor first determines, based on its configuration, which data needs to be decrypted. This may include the entire message, specific fields, or all the fields within the message.
 
-The interceptor uses the envelope `encryption technique` to encrypt the data. This technique uses two keys, a `KEK` and
-a `DEK`. The `KEK` is used to encrypt the `DEK`, which is then used to encrypt the data. The `KEK` is stored in
-the `KMS`, while the `DEK` is generated by the interceptor. The `EDEK` is stored alongside the encrypted data then sent
-to the destination.
+2. **Key Retrieval**: The interceptor retrieves the decryption key from the Key Management Service (KMS). Typically, this is the same key that was used during encryption. The correct key is obtained using the `keySecretId` provided in your interceptor configuration, and that is stored in the header of the record, on the backing Kafka. You can find more details about the key retrieval [here](#key-management).
 
-When the data needs to be decrypted, if the `DEK` is not already known to the interceptor is takes the `EDEK` that's
-stored with the encrypted data and sends it to the `KMS` to retrieve the `DEK`. The interceptor then uses the `DEK` to
-decrypt the data.
+3. **Decryption**: The interceptor then decrypts the identified data using the retrieved key and the specified encryption algorithm. The decrypted data replaces the encrypted data within the message.
 
-To reduce the call to the `KMS`, the interceptor caches the `DEK` in memory. The time to live (TTL) of the cache is
-configurable, and the interceptor will call the `KMS` to decrypt the `EDEK` if the `DEK` is not in the cache.
+4. **Consumption**: Once decrypted, the message is ready for consumption by the end-user or application. The interceptor ensures that the decrypted data is correctly formatted and fully compatible with the Kafka record structure.
 
-With caching enabled, the interceptor will be able to use old versions of key for encryption when that key is rotated in
-the `KMS`. Configuring a low TTL will ensure that the interceptor will use the latest version of the key, but it is a
-trade-off between performance (increased calls to `KMS`) and security (using the latest key version).
+Note: The encryption and decryption processes are fully transparent to the end-user or application. The interceptor manages all these operations, allowing you to concentrate on your core business logic.
+
+### Key Management
+
+#### Envelope Encryption
+
+The interceptor uses the `envelope encryption` technique to encrypt the data. 
+
+Let's define some key terms to better understand the section below:
+
+|  Term   | Definition                                                                                                                                               |
+|:-------:|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <KMS/>  | **Key Management Service**: A system responsible for managing and storing cryptographic keys, including the <KEK/>.                                      |
+| <KEK/>  | **Key Encryption Key**: A key stored in the <KMS/>, used to encrypt the <DEK/>. Notably, the <KEK/> is never exposed to or known by the interceptor.     |
+| <DEK/>  | **Data Encryption Key**: A key generated by the interceptor, used to encrypt the actual data.                                                            |
+| <EDEK/> | **Encrypted Data Encryption Key**: The <DEK/> that has been encrypted by the <KEK/>, ensuring that the <DEK/> remains secure when stored or transmitted. |
+
+To **encrypt** the data, the Gateway:
+1. Generates a <DEK/> that is used to encrypt the data
+2. Sends the <DEK/> to the <KMS/>, so it encrypts it using its <KEK/> and returns the <EDEK/> to the Gateway
+3. Cache the <DEK/> & <EDEK/> in memory for a [configurable Time to Live (TTL)](#optimizing-performance-with-caching)
+4. Encrypts the data using the <DEK/>
+5. Stores the <EDEK/> alongside the encrypted data, and both are sent to the backing Kafka
+
+To **decrypt** the data, the Gateway:
+1. Retrieves the <EDEK/> that's stored with the encrypted data
+2. Sends the <EDEK/> and the <KEK/> to the <KMS/>, so it decrypts it and returns the <DEK/>
+3. Decrypts the data using the <DEK/>
 
 ![envelope encryption](../../../medias/encryption.png)
 
+### Optimizing Performance with Caching
+To reduce the number of calls to the <KMS/> and avoid some of the steps detailed above, the interceptor caches the <DEK/> in memory. The cache has a configurable Time to Live (TTL), and the interceptor will call the <KMS/> to decrypt the <EDEK/> if the <DEK/> is not in the cache, as detailed in the steps 1 and 2 above.
 
-## Encryption on Data with Avro, JSON Schema, and Protocol Buffers
+## How does encryption work with Avro, JSON Schema, and Protocol Buffers records?
 
-Encrypting data, regardless of its type, results in a string. This transformation poses a problem for strongly typed serialization formats like Avro, JSON Schema, and Protocol Buffers.
-For instance, encrypting a numeric salary value of `10` yields an encrypted string such as `XQS213KKDK2Q`.
-This string is incompatible with a schema expecting a numeric type.
+Encrypting data, regardless of its type, results in a string.
+
+### Problem
+
+This transformation poses a problem for strongly typed serialization formats like Avro, JSON Schema, and Protocol Buffers, especially for field that are not strings.
+
+For instance, encrypting a numeric salary value of `2000` yields an encrypted string such as `XQS213KKDK2Q`.
+
+This string is incompatible with a schema expecting a numeric type. This means that you will not be able to deserialize the encrypted data as is, as it will not match the schema, unless you decrypt these fields first.
+
+We have two approaches to address this issue, depending on your Gateway version and your serialization format.
+
+:::tip[**TL;DR**]
+- **Gateway < 3.3.0 or Protobuf / JSON schema**: the record is stored in JSON in the backing Kafka and will not be compatible with the schema if the encrypted fields are not strings.
+- **Gateway >= 3.3.0 and Avro format**: the record is stored in Avro in the backing Kafka, and the encrypted non-string fields are stored in the headers of the record.
+:::
 
 ### Before 3.3.0 (and later for Protobuf and JSON Schema)
 
-To address this issue, we store all encrypted data in a JSON format. During decryption, we convert the data back to its original format.
-If a field cannot be decrypted due to lack of permissions, it is replaced with a default value to maintain schema compatibility.
+To address this issue, we store all encrypted data in a JSON format in the backing Kafka, and we get it back to its original format during decryption.
+If a field cannot be decrypted due to a lack of permissions, it is replaced with a default value to maintain schema compatibility.
 
-**Example**
-Consider the case of a salary field:
+**Example:** Consider the case of a salary field:
 
-Original value: `10` (integer)
+Original value: `2000` (integer)
+
 Encrypted value: `XQS213KKDK2Q` (string)
+
 When decrypting: 
 - If decryption is successful and the user has the necessary permissions, the salary is restored to its original numeric value.
 - If decryption fails due to insufficient permissions, the salary is set to a default value (e.g., 0) instead of the encrypted string.
 
-This approach preserves the data structure's integrity and ensures compatibility with strongly typed systems.
-
 ### Starting from 3.3.0 (Avro only)
 
-With the approach detailed above, we saw a few limitations:
-- As the data pushed to Gateway are in Avro format, and the consumers expect Avro, the data **must** be decrypted to get back to its expected format.
-- The Decryption plugin cannot be applied without decrypting a field. This means that your consumers were not able to consume data in its original format without decrypting at least one field.
+However, with the approach detailed above, we saw a few limitations:
+- As the data pushed to Gateway are in Avro format (for instance), and the consumers expect Avro too, then the data **must** be decrypted to get back to its expected format.
+- The Decryption plugin cannot be applied without decrypting a field. This means that your consumers are not able to consume data in its original format without decrypting at least one field.
 - Even if the field encrypted is a string, we still store it as a JSON, even though it is not necessary.
 
-To address these limitations, we reviewed in the 3.3.0 our encryption plugin (on field-level only) to improve its behavior.
+To address these limitations, we reviewed in the version 3.3.0 our encryption plugin (on field-level only) to improve its behavior. For the moment, this is **for Avro only**, but we plan to expand it to other formats in the future.
 
-This results in a new mode to preserve the record type. When configured via a top level `schemaDataMode` setting to `preserve_avro` (default as of 3.3.0), the plugin will preserve the in-bound message format when it encrypts the data IF the incoming data is Avro, rather than converting the message to JSON (as per previous behaviour).
-For Protobuf and JSON Schema, this new setting has no effect (it is ignored).
-Existing configuration is still supported, but the default behaviour is now to keep AVRO messages as avro when performing field level encryption.
-To fallback on the previous behavior, you can set the `schemaDataMode` to `convert_json`.
+We've introduced a new mode called `schemaDataMode` to preserve the original record type. By default, this is set to `preserve_avro`, meaning that the plugin will now maintain the Avro format of the record rather than converting it to JSON, as was the previous behavior.
 
-So now, if the field type isn't a string, the interceptor will set it to the minimum value of its type (`-2147483648` for integers, `1.4e-45` for floats, etc.) instead of converting it to a JSON object. The encrypted value will be a string, and will be stored in the headers of the record.
+For formats like Protobuf and JSON Schema, this setting is ignored and has no effect.
 
-## Frequently Asked Questions
+The existing configuration is still supported, but the default behavior has changed to preserve Avro messages as Avro when performing field-level encryption. If you want to fall back to the previous behavior of converting to JSON, you can explicitly set `"schemaDataMode": "convert_json"`.
 
-### Does the interceptor support key rotation?
 
-Key rotation is an important aspect of cryptographic key management. However, key rotation is not directly supported by
-the interceptor. Key rotation is typically handled at the KMS level. When a key is rotated in the KMS, the interceptor
-will automatically start using the new key for encryption and decryption.
+So now, if the field type isn't a string, the interceptor will set it to the minimum value of its type (`-2147483648` for integers, `1.4e-45` for floats, etc.) instead of converting it to a JSON object. Its encrypted value will be a string stored in the headers of the record.
 
-### Is the KMS called on a per-message basis?
+## Does the interceptor support key rotation?
 
-It depends on the configuration. If the interceptor is configured to cache the keys, it will only call the KMS when the
-key is not found in the cache. If the interceptor is not configured to cache the keys, it will call the KMS on a
-per-message basis. See the [Key Management](#key-management) section for more details.
+Key rotation is a crucial aspect of cryptographic key management, typically handled at the KMS level. While the interceptor does not directly manage key rotation, it transitions to using new keys for encryption and decryption when a key is rotated within the KMS, ensuring continued security without manual intervention.
 
-### What happens if the interceptor is unable to encrypt the message?
+However, if the KEK in the KMS is rotated, the interceptor might continue using an older DEK version if it is still [cached](#optimizing-performance-with-caching). To ensure the interceptor uses the latest KEK version, you can configure a shorter Time to Live (TTL) for the cache. Be aware that this may result in more frequent KMS calls, which could impact performance.
 
-If the interceptor is unable to encrypt the message, it will throw an error and the message will not be sent to the
-destination. This ensures that sensitive data is always encrypted before it is sent to the destination.
+## Is the KMS called on a per-message basis?
 
-### What happens if the interceptor is unable to decrypt the message?
+The interceptor's interaction with the KMS depends on its configuration:
 
-If the interceptor is unable to decrypt the message, the encrypted message will be returned to the client. It ensures
-that sensitive data is not exposed to unauthorized third parties.
+- **With Key Caching Enabled**: If the interceptor is configured to [cache keys](#optimizing-performance-with-caching), it will only query the KMS when a key is not found in the cache. This reduces the frequency of KMS calls and can improve performance.
 
-### When we talk to the KMS? Do we store the keys in the interceptor?
+- **Without Key Caching**: If key caching is not enabled, the interceptor will query the KMS on a per-message basis, ensuring that it always uses the most current key.
 
-The interceptor will cache the keys in memory. The time to live (TTL) of the cache is configurable, and the interceptor
-will call the KMS to decrypt the key if it is not found in the cache. See the [Key Management](#key-management) section
-for more details.
+For more information, refer to the [Key Management](#key-management) section.
 
-### Can I use encrypted data as the keySecretId?
+## What happens if the interceptor is unable to encrypt the message?
 
-No, you cannot use encrypted data as the keySecretId. Because the value of a field will be replaced with the encrypted value. So it is not allowed to use the encryption field as the keyId.
+If the interceptor fails to encrypt a message, it will generate an error (1) for the client, (2) in the Gateway container logs, and (3) in the Gateway audit log topic, preventing the message from being sent to its destination. This safeguard ensures that sensitive data is always securely encrypted before sending to backing Kafka.
 
-### What is the difference between the Encryption on Produce interceptor and the Encryption on Consume interceptor?
+## What happens if the interceptor is unable to decrypt the message?
 
-The Encryption on Produce interceptor is used to encrypt data before it is sent to the destination. The Encryption on
-Consume interceptor is used to decrypt data before it is consumed by the end user or application.
+If the interceptor is unable to decrypt a message, the encrypted message will be returned to the client. This ensures that sensitive data remains protected and is not exposed to unauthorized third parties.
+
+## When does the Gateway call the KMS? Do we store the keys in the interceptor?
+
+The interceptor caches keys in memory, with a configurable time-to-live (TTL) for the [cache](#optimizing-performance-with-caching). If a key is not found in the cache, the interceptor will call the KMS to decrypt and retrieve the key. For further details, refer to the [Key Management](#key-management) section.
+
+## Can I use encrypted data as the `keySecretId`?
+
+No, you cannot use encrypted data as the `keySecretId`, because the value of a field will be replaced with its encrypted value.
+
+## What is the difference between the Encryption on Produce and the Encryption on Consume interceptors?
+
+**Encryption on Produce Interceptor**: This interceptor encrypts data before it is sent to the destination. It ensures that sensitive information is securely encrypted before it leaves your infrastructure and it's sent to the backing Kafka.
+
+**Encryption on Consume Interceptor**: This interceptor decrypts data before it is accessed by the end-user or application. The raw data is stored in the backing Kafka, but it will be encrypted before it is consumed by end-users or applications.
+
+You can find more details in the [Encryption Types](../encryption/encryption-configuration#encryption-types) section.

@@ -6,15 +6,6 @@ parent: data-security
 license: enterprise
 ---
 
-<!-- ## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Encryption and Decryption Processes](#encryption-and-decryption-processes)
-3. [Key Management](#key-management)
-4. [Configuration](#configuration)
-5. [Examples](#examples)
-6. [FAQ](#faq) -->
-
 # Encryption & Decryption Configurations
 
 ## Introduction
@@ -23,7 +14,7 @@ This document details all the configuration properties we support in our encrypt
 
 You'll also find a few tips, like the [Secret Key Templates](#secret-key-templates) or the [Secrets in Environment Variables](#use-environment-variables-as-secrets).
 
-Please find some interceptor examples in the [Encryption Snippets](/gateway/interceptors/data-security/encryption/encryption-snippets) page.
+Please find some examples of interceptors on the [Encryption Snippets](/gateway/interceptors/data-security/encryption/encryption-snippets) page.
 
 ### Encryption Types
 
@@ -31,14 +22,14 @@ Please find some interceptor examples in the [Encryption Snippets](/gateway/inte
 
 Gateway can encrypt your data on produce, or on consume:
 
-- **On Produce** - The data will be encrypted before it gets to the broker, i.e. **encrypted before it enters Kafka**. The Gateway will intercept the records, encrypt them following your definition within the interceptor configuration, and then will pass it to Kafka.
+- **On Produce** - The data will be encrypted before it gets to the broker, i.e. **encrypted before it enters Kafka**. The Gateway will intercept the records, encrypt them following your definition within the interceptor configuration, and then pass it to Kafka.
 - **On Consume** - The **original data is already in Kafka**. The Gateway will encrypt the original data as the consumer consumes it.
 
 #### *What to encrypt?*
 
-In either case, you should decide wether you want to encrypt the full payload, or only select fields.
+In either case, you should decide whether you want to encrypt the full payload, or only select fields.
 
-- **Full payload** - You want to encrypt either the key, the value, or the headers of your records, which can be done on structured or unstructured messages.
+- **Full payload** - You want to encrypt the key, the value, or the headers of your records, which can be done on structured or unstructured messages.
 - **Field-level** - Define which fields in your payload need to be encrypted. You can choose the fields with a schema-based solution, or not. The choice will depend on how you produce the messages, and what you want to encrypt:
     - **Schema-based** - Fields are encrypted based on tags you include in the record schema itself.
     - **List-based** - Fields are encrypted based on the list you specify in the interceptor configuration.
@@ -54,25 +45,25 @@ The properties detailed in this section work for the following plugins:
 |  List-based  |      `EncryptPlugin`       |      `FetchEncryptPlugin`       |
 | Schema-based | `EncryptSchemaBasedPlugin` | `FetchEncryptSchemaBasedPlugin` |
 
-Both schema-based and list-based encryption plugins have their own configuration, but some properties are common to both of them.
+Both schema-based and list-based encryption plugins have their configuration, but some properties are common to both of them.
 
-| key                                                                            | type                                             | default         | description                                                                                                                                                                                                                                                                                                                                          |
-|--------------------------------------------------------------------------------|--------------------------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Common Properties**                                                          |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                      |
-| `topic`                                                                        | String                                           | `.*`            | Topics matching this regex will have the interceptor applied.                                                                                                                                                                                                                                                                                        |
-| `schemaRegistryConfig`                                                         | [SchemaRegistry](#schema-registry-configuration) |                 | Configuration of your Schema Registry, needed if you want to encrypt data produced using Avro, JSON or Protobuf schemas.                                                                                                                                                                                                                             |
-| `schemaDataMode`                                                               | String                                           | `preserve_avro` | As of 3.3, you can decide to preserve the in-bound message format when it encrypts the data IF the incoming data is Avro, rather than converting the message to JSON (as per current behaviour).<br />To convert record to JSON and break the link to its schema in the backing topic, you can set this field to `convert_json` (default until 3.3). |
-| `externalStorage`                                                              | Boolean                                          | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.              |
-| `kmsConfig`                                                                    | [KMS](#kms-configuration)                        |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                |
-| [**List-Based Properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                      |
-| `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                           |
-| `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                             |
-| `recordHeader`                                                                 | [Headers Encryption](#headers-encryption)        |                 | Configuration to encrypt the record headers.                                                                                                                                                                                                                                                                                                         |
-| [**Schema-Based Properties**](#schema-based-encryption---schema-configuration) |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                      |
-| `defaultKeySecretId`                                                           | [Secret Key Template](#secret-key-templates)     |                 | Default `keySecretId` to use if none is set in the schema. It must be an unique identifier for the secret key, and can be a template for crypto shredding use cases.                                                                                                                                                                                 |
-| `defaultAlgorithm`                                                             | [Algorithm](#supported-algorithms)               | `AES128_GCM`    | Default `algorithm` to use if no algorithm is set in the schema.                                                                                                                                                                                                                                                                                     |
-| `tags`                                                                         | List[String]                                     |                 | List of tags to search for in the schema to encrypt the specified fields.                                                                                                                                                                                                                                                                            |
-| `namespace`                                                                    | String                                           | `conduktor.`    | Prefix of custom schema constraints for encryption.                                                                                                                                                                                                                                                                                                  |
+| key                                                                            | type                                             | default         | description                                                                                                                                                                                                                                                                                                                                             |
+|--------------------------------------------------------------------------------|--------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Common Properties**                                                          |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `topic`                                                                        | String                                           | `.*`            | Topics matching this regex will have the interceptor applied.                                                                                                                                                                                                                                                                                           |
+| `schemaRegistryConfig`                                                         | [SchemaRegistry](#schema-registry-configuration) |                 | Configuration of your Schema Registry, is needed if you want to encrypt data produced using Avro, JSON or Protobuf schemas.                                                                                                                                                                                                                             |
+| `schemaDataMode`                                                               | String                                           | `preserve_avro` | As of 3.3, you can decide to preserve the inbound message format when it encrypts the data IF the incoming data is Avro, rather than converting the message to JSON (as per current behaviour).<br />To convert the record to JSON and break the link to its schema in the backing topic, you can set this field to `convert_json` (default until 3.3). |
+| `externalStorage`                                                              | Boolean                                          | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.                 |
+| `kmsConfig`                                                                    | [KMS](#kms-configuration)                        |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
+| [**List-Based Properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
+| `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
+| `recordHeader`                                                                 | [Headers Encryption](#headers-encryption)        |                 | Configuration to encrypt the record headers.                                                                                                                                                                                                                                                                                                            |
+| [**Schema-Based Properties**](#schema-based-encryption---schema-configuration) |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `defaultKeySecretId`                                                           | [Secret Key Template](#secret-key-templates)     |                 | Default `keySecretId` to use if none is set in the schema. It must be a unique identifier for the secret key, and can be a template for crypto shredding use cases.                                                                                                                                                                                     |
+| `defaultAlgorithm`                                                             | [Algorithm](#supported-algorithms)               | `AES128_GCM`    | Default `algorithm` to use if no algorithm is set in the schema.                                                                                                                                                                                                                                                                                        |
+| `tags`                                                                         | List[String]                                     |                 | List of tags to search for in the schema to encrypt the specified fields.                                                                                                                                                                                                                                                                               |
+| `namespace`                                                                    | String                                           | `conduktor.`    | Prefix of custom schema constraints for encryption.                                                                                                                                                                                                                                                                                                     |
 
 ### List-Based Encryption
 
@@ -88,17 +79,17 @@ To define what you want to encrypt, the following options are expanded upon in t
 
 #### Value & Key Encryption
 
-Set the following properties below for `recordValue` (for value encryption) and / or `recordKey` (for key encryption).
+Set the following properties below for `recordValue` (for value encryption) and/or `recordKey` (for key encryption).
 
-| key                         | type                                         | default      | description                                                                                                                                                 |
-|-----------------------------|----------------------------------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Full-Payload Encryption** |                                              |              |                                                                                                                                                             |
-| `payload.keySecretId`       | [Secret Key Template](#secret-key-templates) |              | Secret key, can be a template for crypto shredding use cases.                                                                                               |
-| `payload.algorithm`         | [Algorithm](#supported-algorithms)           | `AES128_GCM` | Algorithm to leverage.                                                                                                                                      |
-| **Field-Level Encryption**  |                                              |              |                                                                                                                                                             |
-| `fields[].fieldName`        | String                                       |              | Name of the field to encrypt. It can be a nested structure with dot `.` such as `education.account.username` or `banks[0].accountNo`.                       |
-| `fields[].keySecretId`      | [Secret Key Template](#secret-key-templates) | `AES128_GCM` | Unique identifier for the secret key. You can store this key in your KMS by using thKMS key templates. It can be a template for crypto shredding use cases. |
-| `fields[].algorithm`        | [Algorithm](#supported-algorithms)           |              | Algorithm to use to encrypt this field.                                                                                                                     |
+| key                         | type                                         | default      | description                                                                                                                                                   |
+|-----------------------------|----------------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Full-Payload Encryption** |                                              |              |                                                                                                                                                               |
+| `payload.keySecretId`       | [Secret Key Template](#secret-key-templates) |              | Secret key, can be a template for crypto shredding use cases.                                                                                                 |
+| `payload.algorithm`         | [Algorithm](#supported-algorithms)           | `AES128_GCM` | Algorithm to leverage.                                                                                                                                        |
+| **Field-Level Encryption**  |                                              |              |                                                                                                                                                               |
+| `fields[].fieldName`        | String                                       |              | Name of the field to encrypt. It can be a nested structure with a dot `.` such as `education.account.username` or `banks[0].accountNo`.                       |
+| `fields[].keySecretId`      | [Secret Key Template](#secret-key-templates) | `AES128_GCM` | Unique identifier for the secret key. You can store this key in your KMS by using the KMS key templates. It can be a template for crypto shredding use cases. |
+| `fields[].algorithm`        | [Algorithm](#supported-algorithms)           |              | Algorithm to use to encrypt this field.                                                                                                                       |
 
 To see an example, please refer to the [Encryption Examples](/gateway/interceptors/data-security/encryption/encryption-snippets) page.
 
@@ -106,17 +97,17 @@ To see an example, please refer to the [Encryption Examples](/gateway/intercepto
 
 Set the following properties below for `recordHeader`.
 
-| key                         | type                                         | default      | description                                                                                                                           |
-|-----------------------------|----------------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| **Full-Payload Encryption** |                                              |              | Configuration to encrypt the full payload.                                                                                            |
-| `payload.keySecretId`       | [Secret Key Template](#secret-key-templates) |              | Secret key, can be a template for crypto shredding use cases.                                                                         |
-| `payload.algorithm`         | [Algorithm](#supported-algorithms)           | `AES128_GCM` | Algorithm to leverage.                                                                                                                |
-| **Field-Level Encryption**  |                                              |              |                                                                                                                                       |
-| `fields[].fieldName`        | String                                       |              | Name of the field to encrypt. It can be a nested structure with dot `.` such as `education.account.username` or `banks[0].accountNo`. |
-| `fields[].keySecretId`      | [Secret Key Template](#secret-key-templates) | `AES128_GCM` | Unique identifier for the secret key. It can be a template for crypto shredding use cases.                                            |
-| `fields[].algorithm`        | [Algorithm](#supported-algorithms)           |              |                                                                                                                                       |
-| **Headers Encryption**      |                                              |              |                                                                                                                                       |
-| `header`                    | String                                       |              | Headers that match this regex will be encrypted.<br />_Warning: it can encrypt all headers including gateway headers_                 |
+| key                         | type                                         | default      | description                                                                                                                             |
+|-----------------------------|----------------------------------------------|--------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| **Full-Payload Encryption** |                                              |              | Configuration to encrypt the full payload.                                                                                              |
+| `payload.keySecretId`       | [Secret Key Template](#secret-key-templates) |              | Secret key, can be a template for crypto shredding use cases.                                                                           |
+| `payload.algorithm`         | [Algorithm](#supported-algorithms)           | `AES128_GCM` | Algorithm to leverage.                                                                                                                  |
+| **Field-Level Encryption**  |                                              |              |                                                                                                                                         |
+| `fields[].fieldName`        | String                                       |              | Name of the field to encrypt. It can be a nested structure with a dot `.` such as `education.account.username` or `banks[0].accountNo`. |
+| `fields[].keySecretId`      | [Secret Key Template](#secret-key-templates) | `AES128_GCM` | Unique identifier for the secret key. It can be a template for crypto shredding use cases.                                              |
+| `fields[].algorithm`        | [Algorithm](#supported-algorithms)           |              |                                                                                                                                         |
+| **Headers Encryption**      |                                              |              |                                                                                                                                         |
+| `header`                    | String                                       |              | Headers that match this regex will be encrypted.<br />_Warning: it can encrypt all headers including gateway headers_                   |
 
 To see an example, please refer to the [Encryption Examples](/gateway/interceptors/data-security/encryption/encryption-snippets) page.
 
@@ -150,7 +141,7 @@ The value of a field will be replaced with the encrypted value. So it is not all
 
 | Pattern                                       | Replaced by                                                                                                                                                                                                                  |
 |-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `{{record.topic}}`                            | Name of the topic you're encrypted the data of.                                                                                                                                                                              |
+| `{{record.topic}}`                            | Name of the topic you're encrypting the data of.                                                                                                                                                                             |
 | `{{record.key}}`                              | Key of the encrypted record.                                                                                                                                                                                                 |
 | `{{record.value.someValueFieldName}}`         | Value of the field called `someValueFieldName`<br />If you're doing field-level encryption, please ensure that `someValueFieldName` is not included in the fields to encrypt. Otherwise, you will not be able to decrypt it. |
 | `{{record.value.someList[0].someValueField}}` | Value of the field called `someValueFieldName`, in the first element of the list `someList`                                                                                                                                  |
@@ -211,7 +202,7 @@ Now that your fields or payload are encrypted, you can decrypt them using the in
 | key                    | type                                             | default | description                                                                                                                  |
 |------------------------|--------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------|
 | `topic`                | String                                           | `.*`    | Topics matching this regex will have the interceptor applied                                                                 |
-| `schemaRegistryConfig` | [SchemaRegistry](#schema-registry-configuration) |         | Configuration of your Schema Registry, needed if you want to decrypt into Avro, JSON or Protobuf schemas.                    |
+| `schemaRegistryConfig` | [SchemaRegistry](#schema-registry-configuration) |         | Configuration of your Schema Registry, is needed if you want to decrypt into Avro, JSON or Protobuf schemas.                 |
 | `kmsConfig`            | [KMS](#kms-configuration)                        |         | Configuration of one or multiple KMS                                                                                         |
 | `recordValueFields`    | List[String]                                     |         | **Only for field-level encryption** - List of fields to decrypt in the value. If empty, we decrypt all the encrypted fields. |
 | `recordKeyFields`      | List[String]                                     |         | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.   |
@@ -225,11 +216,11 @@ As soon as your records are produced using a schema, you must configure these pr
 |---------------------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `host`              | string |         | URL of your schema registry.                                                                                                                                                                                   |
 | `cacheSize`         | string | `50`    | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                              |
-| `additionalConfigs` | map    |         | Additional properties maps to specific security related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| `additionalConfigs` | map    |         | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
 
 ## Use Environment Variables as Secrets
 
-You probably don't want your secrets to appear in your interceptors. In order to make sure this doesn't happen, you can refer to environment variables you have set in your Gateway container.
+You probably don't want your secrets to appear in your interceptors. In order to make sure this doesn't happen, you can refer to the environment variables you have set in your Gateway container.
 
 For that, you can simply use the format `${MY_ENV_VAR}`.
 
@@ -242,7 +233,7 @@ This section is detailing how to configure the different KMS within your encrypt
 
 | key       | type                    | description                                                                                       |
 |-----------|-------------------------|---------------------------------------------------------------------------------------------------|
-| keyTtlMs  | long                    | Key's time-to-live in milliseconds. Default is 1 hour. Disable the cache by setting it to 0.      |
+| keyTtlMs  | long                    | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
 | in-memory | [In-Memory](#in-memory) | Default KMS that is not persistent, internal to the Gateway.                                      |
 | vault     | [Vault KMS](#vault-kms) | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms) | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
@@ -253,7 +244,7 @@ This section is detailing how to configure the different KMS within your encrypt
 
 This is the default key storage we use, if no external one is set. This is for demos only and should not be used on production data.
 
-The risk using In-Memory KMS is that the key will not persist. This means that if you restart the Gateway, or change the interceptor configuration, you won't be able to decrypt old records anymore. **You should not use this default KMS in production.**
+The risk of using In-Memory KMS is that the key will not persist. This means that if you restart the Gateway, or change the interceptor configuration, you won't be able to decrypt old records anymore. **You should not use this default KMS in production.**
 
 ### Vault KMS
 
@@ -277,7 +268,7 @@ For enhanced security, you can hide the sensitive values using [environment vari
 | **Username & Password**    |        |                                                                               |
 | `username`                 | String | Username.                                                                     |
 | `password`                 | String | Password.                                                                     |
-| **Managed identity**       |        | Load authentication information from below environment variables.             |
+| **Managed identity**       |        | Load authentication information from the below environment variables.         |
 | `VAULT_ENGINE_VERSION_ENV` |        | Vault KV Secrets Engine version.                                              |
 | `VAULT_URI_ENV`            |        | Vault server base URI.                                                        |
 | `VAULT_TOKEN_ENV`          |        | Token to use for accessing Vault.                                             |
