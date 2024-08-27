@@ -260,16 +260,10 @@
 
 - Security patch: Update Logback from v1.2.8 to v1.2.9
 
-More information about the security patch, see: https://www.conduktor.io/ensuring-maximum-security-conduktor-desktop-v2.20.1
-
-
 ## 2.20.0 (2021-12-16)
 
 - Security patch for CVE-2021-42550
 - Improve the user experience when feature management is enabled
-
-More information about the security patch, see: https://www.conduktor.io/ensuring-maximum-security-conduktor-desktop-v2.20.1
-
 
 ## 2.19.3 (2021-12-08)
 
