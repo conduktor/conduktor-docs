@@ -166,17 +166,17 @@ for field options. Here's how it can be defined:
       "fields": [
         {
           "fieldName": "password",
-          "keySecretId": "password-secret",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/password-secret",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "visa",
-          "keySecretId": "{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "education.account.username",
-          "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+          "keySecretId": "azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d",
           "algorithm": "AES128_GCM"
         }
       ]
@@ -207,30 +207,24 @@ for field options. Here's how it can be defined:
         "uri": "http://vault:8200",
         "token": "${VAULT_TOKEN}",
         "version": 1
-      },
-      "azure": {
-        "tokenCredential": {
-          "clientId": "${AZURE_CLIENT_ID}",
-          "tenantId": "${AZURE_TENANT_ID}",
-          "clientSecret": "${AZURE_CLIENT_SECRET}"
-        }
+      }
       }
     },
     "recordValue": {
       "fields": [
         {
           "fieldName": "password",
-          "keySecretId": "password-secret",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/password-secret",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "visa",
-          "keySecretId": "{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "education.account.username",
-          "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
           "algorithm": "AES128_GCM"
         }
       ]
@@ -256,16 +250,10 @@ for field options. Here's how it can be defined:
         "uri": "http://vault:8200",
         "token": "vault-plaintext-root-token",
         "version": 1
-      },
-      "azure": {
-        "tokenCredential": {
-          "clientId": "azure_client_id",
-          "tenantId": "azure_tenant_id",
-          "clientSecret": "azure_client_secret"
-        }
+      }
       }
     },
-    "defaultKeySecretId": "myDefaultKeySecret",
+    "defaultKeySecretId": "vault-kms://vault:8200/transit/keys/myDefaultKeySecret",
     "defaultAlgorithm": "AES128_EAX",
     "tags": ["PII", "ENCRYPTION"],
     "namespace": "conduktor."
@@ -290,18 +278,12 @@ for field options. Here's how it can be defined:
         "uri": "http://vault:8200",
         "token": "vault-plaintext-root-token",
         "version": 1
-      },
-      "azure": {
-        "tokenCredential": {
-          "clientId": "azure_client_id",
-          "tenantId": "azure_tenant_id",
-          "clientSecret": "azure_client_secret"
-        }
+      }
       }
     },
     "recordValue": {
       "payload": {
-        "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+        "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
         "algorithm": "AES128_GCM"
       }
     }
@@ -331,18 +313,12 @@ for field options. Here's how it can be defined:
         "uri": "http://vault:8200",
         "token": "${VAULT_TOKEN}",
         "version": 1
-      },
-      "azure": {
-        "tokenCredential": {
-          "clientId": "${AZURE_CLIENT_ID}",
-          "tenantId": "${AZURE_TENANT_ID}",
-          "clientSecret": "${AZURE_CLIENT_SECRET}"
-        }
+      }
       }
     },
     "recordValue": {
       "payload": {
-        "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+        "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
         "algorithm": "AES128_GCM"
       }
     }
@@ -373,17 +349,17 @@ for field options. Here's how it can be defined:
       "fields": [
         {
           "fieldName": "password",
-          "keySecretId": "password-secret",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/password-secret",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "visa",
-          "keySecretId": "vault-kms://{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "education.account.username",
-          "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
           "algorithm": "AES128_GCM"
         }
       ]
@@ -408,16 +384,10 @@ for field options. Here's how it can be defined:
         "uri": "http://vault:8200",
         "token": "vault-plaintext-root-token",
         "version": 1
-      },
-      "azure": {
-        "tokenCredential": {
-          "clientId": "azure_client_id",
-          "tenantId": "azure_tenant_id",
-          "clientSecret": "azure_client_secret"
-        }
+      }
       }
     },
-    "defaultKeySecretId": "myDefaultKeySecret",
+    "defaultKeySecretId": "vault-kms://vault:8200/transit/keys/myDefaultKeySecret",
     "defaultAlgorithm": "AES128_EAX",
     "tags": ["PII", "ENCRYPTION"],
     "namespace": "conduktor."
@@ -453,17 +423,17 @@ for field options. Here's how it can be defined:
       "fields": [
         {
           "fieldName": "password",
-          "keySecretId": "password-secret",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/password-secret",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "visa",
-          "keySecretId": "vault-kms://{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-visa-secret-{{record.key}}-{{record.value.username}}-{{record.value.education.account.accountId}}",
           "algorithm": "AES128_GCM"
         },
         {
           "fieldName": "education.account.username",
-          "keySecretId": "{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
+          "keySecretId": "vault-kms://vault:8200/transit/keys/{{record.header.test-header}}-secret-key-account-username-{{record.topic}}",
           "algorithm": "AES128_GCM"
         }
       ]
