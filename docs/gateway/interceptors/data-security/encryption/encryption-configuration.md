@@ -227,7 +227,7 @@ For that, you can simply use the format `${MY_ENV_VAR}`.
 We recommend you use this for Schema Registry or Vault secrets, and any other values you'd like to hide in the configuration.
 
 
-## KMS Configuration[​](https://docs.conduktor.io/gateway/interceptors/data-security/field-level-encryption/#kms)
+## KMS Configuration
 
 This section is detailing how to configure the different KMS within your encrypt & decrypt interceptors.
 
