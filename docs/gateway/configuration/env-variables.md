@@ -11,21 +11,31 @@ Configuring the environment variables is the recommended way of setting up Condu
 
 Jump to:
 
-- [Kafka Environment Variables](#kafka-environment-variables)
-- [Gateway Environment Variables](#gateway-environment-variables)
-  - [Host/Port](#hostport)
-  - [Load Balancing](#load-balancing)
-  - [Client to Gateway Authentication](#client-to-gateway-authentication)
-  - [Security Provider](#security-provider)
-  - [Secret management](#secret-management)
-  - [HTTP](#http)
-  - [Internal State](#internal-state)
-  - [Internal Setup](#internal-setup)
-  - [Feature Flags](#feature-flags)
-  - [Licensing](#licensing)
-  - [Audit](#audit)
-  - [Logging](#logging)
-  - [Product Analytics](#product-analytics)
+- [Environment Variables](#environment-variables)
+  - [Kafka Environment Variables](#kafka-environment-variables)
+  - [Gateway Environment Variables](#gateway-environment-variables)
+    - [Guidelines](#guidelines)
+    - [Host/Port](#hostport)
+    - [Load Balancing](#load-balancing)
+    - [Client to Gateway Authentication](#client-to-gateway-authentication)
+      - [SSL](#ssl)
+      - [SSL Config](#ssl-config)
+      - [MTLS](#mtls)
+      - [OAuthbearer](#oauthbearer)
+      - [SECURITY PROVIDER](#security-provider)
+      - [SECRET MANAGEMENT](#secret-management)
+    - [HTTP](#http)
+    - [Internal State](#internal-state)
+      - [Topics Names](#topics-names)
+    - [Cluster Switching / Failover](#cluster-switching--failover)
+    - [Internal Setup](#internal-setup)
+      - [Threading](#threading)
+      - [Upstream Connection](#upstream-connection)
+    - [Feature Flags](#feature-flags)
+    - [Licensing](#licensing)
+    - [Audit](#audit)
+    - [Logging](#logging)
+    - [Product Analytics](#product-analytics)
 
 ## Kafka Environment Variables
 
@@ -219,6 +229,23 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_VCLUSTERS_TOPIC`              | `_conduktor_gateway_vclusters`              | Name of vclusters topic                                                   |
 | `GATEWAY_GROUPS_TOPIC`                 | `_conduktor_gateway_groups`                 | Name of groups topic                                                      |
 
+
+### Cluster Switching / Failover
+For a fuller description of the failover experience see the [failover how-to](docs/gateway/how-to/configuring-failover.md).
+Setup of environment variables is similar to normally [connecting to a Kafka cluster](#kafka-environment-variables), but you provide two sets, one for your main cluster, one for your failover cluster. You can also load a [cluster-config file](/docs/gateway/how-to/configuring-failover.md#configuring-through-a-cluster-config-file) if you prefer.
+
+| Environment Variable | Default Value | Description |
+| --- | --- |--- |
+| `GATEWAY_BACKEND_KAFKA_SELECTOR` | | States using a file, and path to it e.g. `'file : { path: /cluster-config.yaml}'` |
+| `KAFKA_MAIN_BOOTSTRAP_SERVERS` | | Bootstrap server of the main cluster |
+| `KAFKA_MAIN_SECURITY_PROTOCOL` | | Security protocol of the main cluster |
+| `KAFKA_MAIN_SASL_MECHANISM` | | SASL mechanism of the main cluster |
+| `KAFKA_MAIN_SASL_JAAS_CONFIG` | | SASL jaas config of the main cluster |
+| `KAFKA_FAILOVER_BOOTSTRAP_SERVERS` | | Bootstrap server of the failover cluster |
+| `KAFKA_FAILOVER_SECURITY_PROTOCOL` | | Security protocol of the failover cluster |
+| `KAFKA_FAILOVER_SASL_MECHANISM` | | SASL mechanism of the main cluster |
+| `KAFKA_FAILOVER_SASL_JAAS_CONFIG` | | SASL jaas config of the main cluster |
+| `KAFKA_FAILOVER_GATEWAY_ROLES` | | e.g. 'failover'|
 
 ### Internal Setup
 
