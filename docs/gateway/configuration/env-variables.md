@@ -236,7 +236,7 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 
 | Environment Variable | Default Value | Description |
 | --- | --- |--- |
-| `GATEWAY_BACKEND_KAFKA_SELECTOR` | | States using a file, and path to it e.g. `'file : { path: /cluster-config.yaml}'` |
+| `GATEWAY_BACKEND_KAFKA_SELECTOR` | | Indicates use of a file for config, and provide path to it e.g. `'file : { path: /cluster-config.yaml}'` |
 | `KAFKA_MAIN_BOOTSTRAP_SERVERS` | | Bootstrap server of the main cluster |
 | `KAFKA_MAIN_SECURITY_PROTOCOL` | | Security protocol of the main cluster |
 | `KAFKA_MAIN_SASL_MECHANISM` | | SASL mechanism of the main cluster |
@@ -245,7 +245,7 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 | `KAFKA_FAILOVER_SECURITY_PROTOCOL` | | Security protocol of the failover cluster |
 | `KAFKA_FAILOVER_SASL_MECHANISM` | | SASL mechanism of the main cluster |
 | `KAFKA_FAILOVER_SASL_JAAS_CONFIG` | | SASL jaas config of the main cluster |
-| `KAFKA_FAILOVER_GATEWAY_ROLES` | | e.g. 'failover'|
+| `KAFKA_FAILOVER_GATEWAY_ROLES` | | Set the Gateway into failover mode, set this to `failover` for this scenario|
 
 ### Internal Setup
 
