@@ -153,7 +153,7 @@ With `basic credentials`:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
-     "localDiskDirectory": "myStorage/",
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
