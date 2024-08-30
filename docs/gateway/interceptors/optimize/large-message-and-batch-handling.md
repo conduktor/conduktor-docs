@@ -17,6 +17,8 @@ Currently supported cloud storages are Amazon S3 or Azure Blob Storage:
 
 ## Configuration
 
+Note: On versions earlier then 3.2.0, you will need to specify the `localDiskDirectory` property in the S3 connector itself and not in the general configuration.
+
 | key                | type            | default | description                                                                                            |
 |:-------------------|:----------------|:--------|:-------------------------------------------------------------------------------------------------------|
 | topic              | String          | `.*`    | Topics that match this regex will have the interceptor applied                                         |
@@ -38,8 +40,6 @@ or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is config
 | bucketName         | string       | S3 bucket name                                                                 |
 | uri                | string       | S3 uri                                                                         |
 | region             | string       | S3 Region                                                                      |
-| localDiskDirectory **(removed)**             | string       | Local temp storage, used when we download file from S3 while fetching messages. Note this should be specified in the top-level [configuration](#configuration) since version `3.2.0`.                                                                       |
-
 
 ### Azure
 
@@ -68,11 +68,11 @@ With credentials default on managed identity:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
@@ -87,13 +87,13 @@ With `basic credentials`:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
@@ -108,6 +108,7 @@ With `session credentials`:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
@@ -115,7 +116,6 @@ With `session credentials`:
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
@@ -134,11 +134,11 @@ With credentials default on managed identity:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
@@ -153,13 +153,13 @@ With `basic credentials`:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
@@ -174,6 +174,7 @@ With `sessionCredentials`:
   "config": {
     "topic": "topic.*",
     "minimumSizeInBytes": 1024,
+    "localDiskDirectory": "myStorage/",
     "s3Config": {
       "accessKey": "myAccessKey",
       "secretKey": "mySecretKey",
@@ -181,7 +182,6 @@ With `sessionCredentials`:
       "bucketName": "myBucketName",
       "uri": "http://myexampleuri",
       "region": "us-east-1",
-      "localDiskDirectory": "myStorage/"
     }
   }
 }
