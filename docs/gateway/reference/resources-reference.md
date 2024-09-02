@@ -76,7 +76,7 @@ spec:
 - `spec.config` is a valid config for the `pluginClass`
 
 ### Interceptor Targeting
-You can make your Interceptor only active on certain scenarios. Use the following table to configure Targeting.
+You can activate your Interceptor only in specific scenarios. Use the table below to configure Targeting settings.
 
 | Use case                              | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` | 
 |---------------------------------------|---------------------------|------------------------|---------------------------|
@@ -87,7 +87,7 @@ You can make your Interceptor only active on certain scenarios. Use the followin
 | Virtual Cluster + Username Targeting  | Set                       | Empty                  | Set                       |
 | Virtual Cluster + Group Targeting     | Set                       | Set                    | Empty                     |
 
-You can deploy multiple interceptors with the same name using different targeting scope. This will effectively override the configuration for the scope.
+You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](docs.conduktor.io/gateway/concepts/interceptors/#overriding) the configuration for the scope.
 
 :::info
 The order of precedence from highest (overrides all others) to lowest (most easily overridden) is:
@@ -131,9 +131,9 @@ spec:
 ## GatewayServiceAccount
 GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
 There are a few cases where you **must** declare GatewayServiceAccount objects:
-- Create Local Service Accounts
-- Rename Service Accounts for easier clarity when using Interceptors
-- Attach Service Accounts to Virtual Clusters
+- Creating Local Service Accounts
+- Renaming Service Accounts for easier clarity when using Interceptors
+- Attaching Service Accounts to Virtual Clusters
 
 ````yaml
 ---
@@ -168,7 +168,7 @@ spec:
 
 
 ## GatewayGroup
-Gateway Group lets you add multiple users in the same GatewayGroup for easier Interceptor targeting capabilities
+Gateway Group lets you add multiple users in the same GatewayGroup for easier Interceptor targeting capabilities.
 
 ````yaml
 ---
@@ -184,7 +184,7 @@ spec:
 ````
 **GatewayGroup checks:**
 - `spec.members[].username` is mandatory.
-  - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it'll fail. This is a known issue that we'll address in a further release
+  - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it'll fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
@@ -192,7 +192,7 @@ spec:
 
 ## ConcentrationRule
 
-Concentration Rules lets you declare a pattern for which topic creation will not lead to a real physical topic but rather use our Topic Concentration feature.
+Concentration Rules allow you to define patterns where topic creation won't generate a physical topic, but will instead use our Topic Concentration feature.
 
 ````yaml
 ---
@@ -223,7 +223,7 @@ spec:
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
 
 ## VirtualCluster
-A Virtual Cluster lets you isolate one or multiple service accounts on a logical Cluster. Any topic or consumer group created on a Virtual Cluster will only be available to this Virtual Cluster.  
+A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.```
 A Virtual Cluster acts like a Kafka within a Kafka.
 
 ```yaml
@@ -244,14 +244,14 @@ spec:
 - `spec.aclEnabled` is optional, default `false`. 
 
 **VirtualCluster side effects:**
-- All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name` but will appear on the VirtualCluster without prefix.
-- Users can be associated to the VirtualCluster through the GatewayServiceAccount resource
+- All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
+- Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
 - When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
 
 
 ## AliasTopic
 
-An Alias Topic lets you make a real Kafka topic appear as a logical topic on the Gateway. This is useful for topic aliasing or to make a topic visible inside a Virtual Cluster
+An Alias Topic allows a real Kafka topic to appear as a logical topic within the Gateway. This is useful for aliasing topics or making a topic accessible within a Virtual Cluster.
 
 ```yaml
 ---
