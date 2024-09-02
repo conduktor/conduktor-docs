@@ -69,7 +69,8 @@ spec:
       action: "WARN"
 ````
 **Interceptor checks:**
-- `metadata.scope` is optional (default empty). `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
+- `metadata.scope` is optional (default empty). 
+- `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
   - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
 - `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptors-catalog/)
 - `spec.priority` is **mandatory**
@@ -87,7 +88,7 @@ You can activate your Interceptor only in specific scenarios. Use the table belo
 | Virtual Cluster + Username Targeting  | Set                       | Empty                  | Set                       |
 | Virtual Cluster + Group Targeting     | Set                       | Set                    | Empty                     |
 
-You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](docs.conduktor.io/gateway/concepts/interceptors/#overriding) the configuration for the scope.
+You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
 :::info
 The order of precedence from highest (overrides all others) to lowest (most easily overridden) is:
@@ -130,6 +131,7 @@ spec:
 
 ## GatewayServiceAccount
 GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
+
 There are a few cases where you **must** declare GatewayServiceAccount objects:
 - Creating Local Service Accounts
 - Renaming Service Accounts for easier clarity when using Interceptors
@@ -184,7 +186,7 @@ spec:
 ````
 **GatewayGroup checks:**
 - `spec.members[].username` is mandatory.
-  - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it'll fail. This is a known issue that we'll address in a further release.
+  - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
@@ -223,7 +225,8 @@ spec:
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
 
 ## VirtualCluster
-A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.```
+A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
+
 A Virtual Cluster acts like a Kafka within a Kafka.
 
 ```yaml
