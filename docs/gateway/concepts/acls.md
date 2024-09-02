@@ -55,7 +55,7 @@ As of Gateway 3.3.0, ACLs within Virtual Clusters can be driven explicitly by co
 :::warning
 Note that if you are migrating from an older version of Gateway, the migration will generate existing Virtual Clusters as configuration. 
 
- - The automation will derive the boolean value `aclsEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable. 
+ - The automation will derive the boolean value `aclEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable. 
  - The migration will not populate the `superUsers` list automatically, so this must be addressed as part of your migration. 
 :::
 
@@ -64,13 +64,12 @@ Note that if you are migrating from an older version of Gateway, the migration w
 apiVersion: gateway/v2
 kind: VirtualCluster
 metadata:
- name: "mon-app-A"
+  name: "mon-app-A"
 spec:
- prefix: "app-A-"
- aclsEnabled: "true" # defaults to false
- superUsers:
- - username1
- - username2
+  aclEnabled: "true" # defaults to false
+  superUsers:
+  - username1
+  - username2
 ```
 
 See the [CLI Reference](../reference/cli-reference.md) for more information on managing Gateway resources.
