@@ -15,6 +15,7 @@ This breaking change only impacts Local Gateway service accounts generated throu
 If you are not using Local Gateway services accounts (OIDC, mTLS, Delegated Kafka), you are **not** impacted.
 :::
 Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.  
+
 In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behaviors.
 
 **This breaking change is due for release 3.5.0.**   
@@ -28,6 +29,7 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
 - [Support for HTTPS APIs](#support-for-https-apis)
 - [Virtual Cluster ACLs and superUsers](#enhanced-ui--alerts-for-kafka-connect)
+- [Encryption Enhancements](#encryption-enhancements)
 - [Broker ID and port sticking](#quality-of-life-improvements)
 
 ### New V2 APIs and CLI support
@@ -41,12 +43,13 @@ You can now deploy Gateway resources using infra-as-code with easy to use and cl
 - AliasTopic
 - VirtualCluster
 
-[Check the associated documentation for more information regarding each concept](/gateway/reference/resources-reference/)
+Check the [CLI reference](/gateway/reference/cli-reference) to get started, and the [resources reference for more information on each concept](/gateway/reference/resources-reference/).
 
-On top of that, the API is now strictly enforcing consistency between resources.  
+On top of that, the API is now strictly enforcing consistency between resources.
+
 For instance: 
-- You can't deploy an Interceptor that target a Virtual Cluster that doesn't exist
-- You can't delete a Group which is used by and interceptor
+- You can't deploy an Interceptor targeting a Virtual Cluster that doesn't exist.
+- You can't delete a Group that is used by an Interceptor.
 
 ````yaml
 ---
@@ -82,16 +85,46 @@ $ conduktor delete GatewayGroup groupB
 The group groupB is still used by the following interceptor(s): enforce-partition-limit
 ````
 
-API V1 are still available. We recommend new users or simple Gateway configurations to start using V2 API as soon as possible.  
-We will come up with a deprecation plan in the next few weeks.   
-You will be informed in advance which Gateway version will be the last to support V1 APIs.
-
+**Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible. We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
 
 ### Support for HTTPS APIs
-It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs.
-Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details
+It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
 
 ### Virtual Cluster ACLs and superUsers
+To coincide with the clearly defined concepts established in API V2, ACLs within Virtual Clusters can now be driven explicitly by configuration.  
+
+:::warning
+Note that if you are migrating from an older version of Gateway, the migration will automatically generate existing Virtual Clusters as configuration.
+
+- The automation will derive the boolean value `aclEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable.
+- The migration will not populate the `superUsers` list automatically, so this must be addressed as part of your migration.
+:::
+
+Example configuration:
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+  name: "mon-app-A"
+spec:
+  aclEnabled: "true" # defaults to false
+  superUsers:
+  - username1
+  - username2
+```
+
+### Encryption Enhancements
+ - TO DO...
+ - schemaDataMode
+ - Block attempts to double encrypt (encrypt on encrypt)
+ - Default values
+ - Block attempts to encrypt headers containing required metadata for encryption
+ - Several bug fixes to support more field types
+ - Standardised default values across masking, partial decrypt, encrypt on fetch
+ - Deprecated support for schema (tag) based encryption with Protobuf, will fail. Decryption of historical still supported
+ - ...
 
 ### Broker ID and port sticking
 We have introduced a new Environment Variable `GATEWAY_MIN_BROKERID` 
