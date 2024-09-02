@@ -127,35 +127,3 @@ $ conduktor version
 Version: 0.2.5
 Hash: 163e7476bb2046e190990de1a698bb75739b10b3
 ````
-
-### 3.3 Tests
-
-````yaml
----
-apiVersion: gateway/v2
-kind: Interceptors
-metadata:
-  name: enforce-partition-limit
-spec:
-  pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin"
-  priority: 100
-  config:
-    topic: "myprefix-.*"
-    numPartition:
-      min: 5
-      max: 5
-      action: "INFO"
-````
-Resources examples:
-
-[https://github.com/conduktor/ctl/blob/main/docker/test_resource_gw.yml](https://github.com/conduktor/ctl/blob/main/docker/test_resource_gw.yml)
-
-Commands examples:
-````bash
-./conduktor get VClusters
-./conduktor get Interceptors
-./conduktor get AliasTopics
-./conduktor get ConcentrationRules
-./conduktor get GatewayGroups
-./conduktor get ServiceAccounts
-````
