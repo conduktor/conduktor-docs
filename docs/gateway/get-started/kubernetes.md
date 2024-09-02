@@ -61,7 +61,7 @@ kafka:
 3. Set the following property to the hostname/IP and port of your Kafka broker listeners:
 
 ```yaml
-env:
+  env:
     KAFKA_BOOTSTRAP_SERVERS: "<hostname/IP>:<port>"
 ```
 
