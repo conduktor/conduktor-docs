@@ -204,7 +204,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
 
-#### Topics Names
+#### Topic Names
 
 | Environment Variable                   | Default Value                               | Description                                                               |
 |----------------------------------------|---------------------------------------------|---------------------------------------------------------------------------|
