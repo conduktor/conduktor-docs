@@ -168,7 +168,7 @@ spec:
 
 
 ## GatewayGroup
-Gateway Group lets you add multiple users in the same GatewayGroup for easier targeting capabilities
+Gateway Group lets you add multiple users in the same GatewayGroup for easier Interceptor targeting capabilities
 
 ````yaml
 ---
@@ -194,7 +194,6 @@ spec:
 
 Concentration Rules lets you declare a pattern for which topic creation will not lead to a real physical topic but rather use our Topic Concentration feature.
 
-
 ````yaml
 ---
 kind: ConcentrationRule
@@ -212,15 +211,20 @@ spec:
 **ConcentrationRule checks:**
 - `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 - `spec.physicalTopics.delete` is mandatory. Must be a valid topic name with a `cleanup.policy` set to `delete`
-- `spec.physicalTopics.compact` and `deleteCompact` are optional. Must be a valid topic name with a `cleanup.policy` set to `compact` and `delete,compact` respectively.
-- `spec.autoManaged` is optional, default `false`. When set to `true`, the underlying physical topics will be automatically created and extended to fit
+- `spec.physicalTopics.compact` is optional. Must be a valid topic name with a `cleanup.policy` set to `compact`
+- `spec.physicalTopics.deleteCompact` is optional. Must be a valid topic name with a `cleanup.policy` set to `delete,compact`
+- `spec.autoManaged` is optional, default `false`
 
 **ConcentrationRule side effects:**
-Topics created with the `spec.pattern` name will not be created as real Kafka topics but as Concentrated topics instead.  
-Depending on the topic `cleanup.policy`, the topic's data will be stored in a different physical topic.  
-You can re
+- Once the Concentration Rule is deployed, topics created with the `spec.pattern` name will not be created as real Kafka topics but as Concentrated topics instead.  
+- Depending on the topic's `cleanup.policy`, the topic's data will be stored in each configured physical topics.
+- If a topic creation request is made with a `cleanup.policy` that isn't configured in the ConcentrationRule, topic creation will fail.
+- It is not possible to update `cleanup.policy` of a concentrated topic.
+- If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
 
 ## VirtualCluster
+A Virtual Cluster lets you isolate one or multiple service accounts on a logical Cluster. Any topic or consumer group created on a Virtual Cluster will only be available to this Virtual Cluster.  
+A Virtual Cluster acts like a Kafka within a Kafka.
 
 ```yaml
 ---
@@ -229,14 +233,25 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- prefix: "app-A-"
  aclEnabled: "true" # defaults to false
  superUsers:
  - username1
  - username2
 ```
 
+**VirtualCluster checks:**
+- `metadata.name` must be a valid topic prefix.
+- `spec.aclEnabled` is optional, default `false`. 
+
+**VirtualCluster side effects:**
+- All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name` but will appear on the VirtualCluster without prefix.
+- Users can be associated to the VirtualCluster through the GatewayServiceAccount resource
+- When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
+
+
 ## AliasTopic
+
+An Alias Topic lets you make a real Kafka topic appear as a logical topic on the Gateway. This is useful for topic aliasing or to make a topic visible inside a Virtual Cluster
 
 ```yaml
 ---
