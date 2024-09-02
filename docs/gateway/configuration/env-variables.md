@@ -181,15 +181,15 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 ### HTTP
 
 | Environment Variable                  | Default Value                                           | Description                                                                       |
-| ------------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `GATEWAY_HTTP_PORT`                   | `8888`                                                  | The port on which the gateway will present the HTTP management API                  |
+| ------------------------------------- | ------------------------------------------------------- |-----------------------------------------------------------------------------------|
+| `GATEWAY_HTTP_PORT`                   | `8888`                                                  | The port on which the gateway will present the HTTP management API                |
 | `GATEWAY_SECURED_METRICS`             | `true`                                                  | Does the HTTP management API require users?                                       |
 | `GATEWAY_ADMIN_API_USERS`             | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write |
 | `GATEWAY_HTTPS_CLIENT_AUTH`           | `NONE`                                                  | Client auth configuration for HTTPS incoming connection                           |
-| `GATEWAY_HTTPS_KEY_STORE_PATH	`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection               |
-| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`    |                                                         | Configures the password of the keystore used for HTTPS TLS connection              |
-| `GATEWAY_HTTPS_TRUST_STORE_PATH`      |                                                         | Configure the trustore used for the HTTPS TLS connection                              |
-| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD	` |                                                         | Configures the password of the truststore used for HTTPS TLS connection              |
+| `GATEWAY_HTTPS_KEY_STORE_PATH	`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection                |
+| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`    |                                                         | Configures the password of the keystore used for HTTPS TLS connection             |
+| `GATEWAY_HTTPS_TRUST_STORE_PATH`      |                                                         | Configure the truststore used for the HTTPS TLS connection                         |
+| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD	` |                                                         | Configures the password of the truststore used for HTTPS TLS connection           |
 
 ### Internal State
 
