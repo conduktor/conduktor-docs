@@ -184,6 +184,7 @@ spec:
 ````
 **GatewayGroup checks:**
 - `spec.members[].username` is mandatory.
+  - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it'll fail. This is a known issue that we'll address in a further release
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
@@ -198,7 +199,7 @@ Concentration Rules lets you declare a pattern for which topic creation will not
 ---
 kind: ConcentrationRule
 metadata:
-  # vCluster: passthrough
+  # vCluster: vc-B
   name: toutdanstiti
 spec:
   pattern: titi-.*
@@ -209,9 +210,15 @@ spec:
   autoManaged: false
 ````
 **ConcentrationRule checks:**
-`spec.physicalTopics.delete` is mandatory. Must be a valid topic name and must exist on the backing
+- `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
+- `spec.physicalTopics.delete` is mandatory. Must be a valid topic name with a `cleanup.policy` set to `delete`
+- `spec.physicalTopics.compact` and `deleteCompact` are optional. Must be a valid topic name with a `cleanup.policy` set to `compact` and `delete,compact` respectively.
+- `spec.autoManaged` is optional, default `false`. When set to `true`, the underlying physical topics will be automatically created and extended to fit
 
 **ConcentrationRule side effects:**
+Topics created with the `spec.pattern` name will not be created as real Kafka topics but as Concentrated topics instead.  
+Depending on the topic `cleanup.policy`, the topic's data will be stored in a different physical topic.  
+You can re
 
 ## VirtualCluster
 
