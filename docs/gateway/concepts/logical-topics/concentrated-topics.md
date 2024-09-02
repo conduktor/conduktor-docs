@@ -4,7 +4,7 @@ title: Concentrated Topics
 description: Concentrated topics
 ---
 
-Topic Concentration helps reduce costs on low-volume topics. It does this by co-locating messages from multiple topics on the same physical topic behind the scenes.  
+Topic Concentration helps reduce costs on low-volume topics. It does this by co-locating messages from multiple topics (called logical topics) on the same physical topic behind the scenes.  
 
 This is totally transparent for consumers and producers that continue to write into topics normally.  
 
@@ -20,13 +20,19 @@ Only the following topic configs are allowed
 - `delete.retention.ms`
 
 `retention.ms` and `retention.bytes` values must not exceed the backing topic's configuration unless `autoManaged` is set to true.
-Any other config defined during the topic creation will fail the topic creation (unless they have the same value as the backing cluster).
+Any other config defined during the topic creation will fail the topic creation (unless they have the same value as the backing cluster):
+
+```
+Error while executing topic command : Value '704800000' for configuration 'retention.ms' is incompatible with physical topic value '604800000'.
+```
+
 
 :::info
 With Concentrated Topics, the true retention is the one from the backing cluster's topic, not the retention requested during the concentrated topic creation.
 
-retention.ms and retention.bytes are not cleanup guarantees. They are retention guarantees.
+`retention.ms` and `retention.bytes` are not cleanup guarantees. They are retention guarantees.
 :::
+
 ### Performance
 Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
 
@@ -44,15 +50,22 @@ We are working to address that limitation in the near-future. Contact us to get 
 :::
 
 ## Usage
-To configure a Concentrated Topic rule as a Gateway Admin, configure a dedicated prefix of topic names to become concentrated using the API.  
+As written in the Gateway API documentation (accessible on the port 8888 of your Gateway by default), you can create a concentration rule to concentrate topics based on a prefix.
 
-````json
-POST /admin/vclusters/v1/vcluster/{vcluster}/concentration-rules
-{
-  "pattern": "concentrated-",
+For that, a 
+
+```bash
+curl "http://localhost:8888/admin/vclusters/v1/vcluster/passthrough/my-concentration-rule" \
+  -u "admin:conduktor" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "clusterId": "main",
+  "pattern": "topic.*",
   "physicalTopicName": "concentrated",
-  "autoManaged" : false
-}
+  "physicalTopicCompactedName": "concentrated_compacted",
+  "physicalTopicCompactedDeletedName": "concentrated_compacteddeleted",
+  "autoManaged": false
+}'
 ````
 
 Then, to create a Concentrated Topics, simply use the AdminClient as usual with a name that matches the Concentrated Topic Rule set by the Gateway Admin.
