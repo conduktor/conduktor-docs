@@ -18,7 +18,7 @@ Configure port-based routing using the [environment variables](../configuration/
  - `GATEWAY_PORT_COUNT`
  - `GATEWAY_MIN_BROKERID`
 
-The default port range values cover the range of the brokerIds with an additional 3 ports. The max broker ID is requested from the cluster, the min should be set as `GATEWAY_MIN_BROKERID` e.g. in a 3-broker cluster with IDs 1, 2, 3 the default port count will be 5. Note [SNI routing](#host-based-routing-sni) (see below) should be used when not using a sequential & stable port range, to avoid excessive port assignment, e.g. a 3-broker cluster with IDs, 100, 200, 300 would default to 203 ports and would fail if broker ID 400 was introduced.
+The default port range values cover the range of the brokerIds with an additional 2 ports. The max broker ID is requested from the cluster, the min should be set as `GATEWAY_MIN_BROKERID` e.g. in a 3-broker cluster with IDs 1, 2, 3, `GATEWAY_MIN_BROKERID` should be set to 1 and the default port count will be 5. Note [SNI routing](#host-based-routing-sni) (see below) should be used when not using a sequential & stable broker ids range, to avoid excessive port assignment, e.g. a 3-broker cluster with IDs, 100, 200, 300 with `GATEWAY_MIN_BROKERID`=100 would default to 203 ports and would fail if broker ID 400 was introduced.
 
 ## Host-Based Routing (SNI)
 With Host-Based Routing, Gateway listens on a single port and leverages Server Name Indication (SNI), an extension to the TLS protocol, to route traffic based on the hostname specified in the TLS handshake to determine the target Kafka broker, requiring valid TLS certificates, proper DNS setup, and DNS resolution.
