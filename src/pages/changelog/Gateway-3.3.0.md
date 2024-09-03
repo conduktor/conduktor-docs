@@ -161,6 +161,10 @@ Note that any data previously written in this mode can still be read back - as t
 - CUS-294: Improved log messages for Interceptors that reject actions, such as TopicPolicyPlugin
 - PXY-1523: Several improvements to the Large Message / Batch Handling Interceptors
 - PXY-1582: No error message when kcache initialization fails
-- Added a new Environment Variable `GATEWAY_MIN_BROKERID` that allows for determinist mapping of brokers and ports
+- Added a new Environment Variable `GATEWAY_MIN_BROKERID` (default 0) that allows for determinist mapping of brokers and ports
 - Improved network stability during Gateway scaling or Kafka topology changes
 - CUS-371: https://linear.app/conduktor/issue/CUS-371/sainsburys-audit-logs-impact-clients-latency
+
+## Known issues
+- We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first broker id of your cluster.
+  - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka Broker Id or use `kcat` with the `-E` flag
