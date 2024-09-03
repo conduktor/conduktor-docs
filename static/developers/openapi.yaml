@@ -350,12 +350,12 @@ paths:
       tags:
         - token
       description: |2+
-
-
+      
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Create a new token for given service account and a given virtual cluster.
-
+      
         If the vcluster is not provided, the token will be created for the passthrough virtual cluster.
 
       operationId: Generate a token for a service account on a virtual cluster
@@ -419,14 +419,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request POST \
               --url 'http://localhost:8888/gateway/v2/token' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{"vCluster":"vcluster1","username":"user1","lifeTimeSeconds":3600000}'
   /gateway/v2/virtual-cluster:
@@ -434,9 +434,9 @@ paths:
       tags:
         - cli_virtual-cluster_gateway_v2_7
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the virtual clusters
 
       operationId: List the virtual clusters
@@ -456,7 +456,6 @@ paths:
                   metadata:
                     name: vcluster1
                   spec:
-                    prefix: vcluster1
                     aclEnabled: false
                     superUsers:
                       - username1
@@ -478,21 +477,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/virtual-cluster' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_virtual-cluster_gateway_v2_7
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert a virtual cluster
 
       operationId: Upsert a virtual cluster
@@ -516,7 +515,6 @@ paths:
               metadata:
                 name: vcluster1
               spec:
-                prefix: vcluster1
                 aclEnabled: false
                 superUsers:
                   - username1
@@ -536,7 +534,6 @@ paths:
                   metadata:
                     name: vcluster1
                   spec:
-                    prefix: vcluster1
                     aclEnabled: false
                     superUsers:
                       - username1
@@ -575,14 +572,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/virtual-cluster?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "VirtualCluster",
@@ -591,7 +588,6 @@ paths:
                 "name" : "vcluster1"
               },
               "spec" : {
-                "prefix" : "vcluster1",
                 "aclEnabled" : false,
                 "superUsers" : [
                   "username1",
@@ -604,9 +600,9 @@ paths:
       tags:
         - cli_virtual-cluster_gateway_v2_7
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Get a virtual cluster
 
       operationId: Get a virtual cluster
@@ -630,7 +626,6 @@ paths:
                 metadata:
                   name: vcluster1
                 spec:
-                  prefix: vcluster1
                   aclEnabled: false
                   superUsers:
                     - username1
@@ -660,21 +655,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     delete:
       tags:
         - cli_virtual-cluster_gateway_v2_7
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete a virtual cluster
 
       operationId: Delete a virtual cluster
@@ -731,22 +726,22 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/alias-topic:
     get:
       tags:
         - cli_alias-topic_gateway_v2_8
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the alias topics of a virtual cluster
 
       operationId: List the alias topics
@@ -821,21 +816,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/alias-topic?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_alias-topic_gateway_v2_8
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert an alias topic in a virtual cluster
 
       operationId: Upsert an alias topic
@@ -912,14 +907,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/alias-topic?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "AliasTopic",
@@ -936,9 +931,9 @@ paths:
       tags:
         - cli_alias-topic_gateway_v2_8
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete an alias topic in a virtual cluster
 
       operationId: Delete an alias topic
@@ -984,14 +979,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/alias-topic' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "name" : "name1",
@@ -1002,9 +997,9 @@ paths:
       tags:
         - cli_concentrated-topic_gateway_v2_0
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the concentrated topics of a vcluster
 
       operationId: List the concentrated topics
@@ -1079,22 +1074,22 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/concentrated-topic?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/concentration-rule:
     get:
       tags:
         - cli_concentration-rule_gateway_v2_9
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the concentration rules of a vcluster
 
       operationId: List the concentration rules
@@ -1135,10 +1130,11 @@ paths:
                     name: concentrationRule1
                     vCluster: vCluster1
                   spec:
-                    logicalTopicNamePattern: topic.*
-                    physicalTopicName: physicalTopicName
-                    physicalTopicNameCompacted: physicalTopicNameCompacted
-                    physicalTopicNameCompactedDeleted: physicalTopicNameCompactedDeleted
+                    pattern: topic.*
+                    physicalTopics:
+                      delete: topic
+                      compact: compact_topic
+                      deleteCompact: compact_delete_topic
                     autoManaged: false
         '400':
           description: The request is not valid
@@ -1173,21 +1169,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/concentration-rule?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_concentration-rule_gateway_v2_9
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert a concentration rule in a vcluster
 
       operationId: Upsert a concentration rule
@@ -1212,10 +1208,11 @@ paths:
                 name: concentrationRule1
                 vCluster: vCluster1
               spec:
-                logicalTopicNamePattern: topic.*
-                physicalTopicName: physicalTopicName
-                physicalTopicNameCompacted: physicalTopicNameCompacted
-                physicalTopicNameCompactedDeleted: physicalTopicNameCompactedDeleted
+                pattern: topic.*
+                physicalTopics:
+                  delete: topic
+                  compact: compact_topic
+                  deleteCompact: compact_delete_topic
                 autoManaged: false
         required: true
       responses:
@@ -1233,10 +1230,11 @@ paths:
                     name: concentrationRule1
                     vCluster: vCluster1
                   spec:
-                    logicalTopicNamePattern: topic.*
-                    physicalTopicName: physicalTopicName
-                    physicalTopicNameCompacted: physicalTopicNameCompacted
-                    physicalTopicNameCompactedDeleted: physicalTopicNameCompactedDeleted
+                    pattern: topic.*
+                    physicalTopics:
+                      delete: topic
+                      compact: compact_topic
+                      deleteCompact: compact_delete_topic
                     autoManaged: false
                 upsertResult: Created
         '400':
@@ -1256,13 +1254,23 @@ paths:
               example:
                 title: The given credentials are not valid
         '404':
-          description: The given virtual cluster does not exist
+          description: The given virtual cluster does not exist or one of the physical
+            topics does not exist
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFound'
               example:
-                title: The given virtual cluster does not exist
+                title: The given virtual cluster does not exist or one of the physical
+                  topics does not exist
+        '409':
+          description: One of the physical topics exists with an incompatible cleanup.policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: One of the physical topics exists with an incompatible cleanup.policy
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -1272,14 +1280,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/concentration-rule?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "ConcentrationRule",
@@ -1289,10 +1297,12 @@ paths:
                 "vCluster" : "vCluster1"
               },
               "spec" : {
-                "logicalTopicNamePattern" : "topic.*",
-                "physicalTopicName" : "physicalTopicName",
-                "physicalTopicNameCompacted" : "physicalTopicNameCompacted",
-                "physicalTopicNameCompactedDeleted" : "physicalTopicNameCompactedDeleted",
+                "pattern" : "topic.*",
+                "physicalTopics" : {
+                  "delete" : "topic",
+                  "compact" : "compact_topic",
+                  "deleteCompact" : "compact_delete_topic"
+                },
                 "autoManaged" : false
               }
             }'
@@ -1300,9 +1310,9 @@ paths:
       tags:
         - cli_concentration-rule_gateway_v2_9
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete a concentration rule in a vcluster
 
       operationId: Delete a concentration rule
@@ -1351,14 +1361,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/concentration-rule' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "name" : "concentrationRule1",
@@ -1369,9 +1379,9 @@ paths:
       tags:
         - cli_interceptor_gateway_v2_12
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the interceptors
 
       operationId: List the interceptors
@@ -1456,21 +1466,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/interceptor?name=interceptor-name&global=true&vcluster=passthrough&group=group1&username=user1' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_interceptor_gateway_v2_12
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert an interceptor
 
       operationId: Upsert an interceptor
@@ -1563,14 +1573,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/interceptor?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "Interceptor",
@@ -1598,9 +1608,9 @@ paths:
       tags:
         - cli_interceptor_gateway_v2_12
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete an interceptor
 
       operationId: Delete an interceptor
@@ -1652,14 +1662,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/interceptor/yellow_cars_filter' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "vCluster" : "vCluster1",
@@ -1671,9 +1681,9 @@ paths:
       tags:
         - cli_interceptor_gateway_v2_12
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         A utility endpoint to resolve the interceptors for a given virtual cluster, groups and username.
         Helps to understand which interceptors will be applied for a given request.
 
@@ -1734,14 +1744,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request POST \
               --url 'http://localhost:8888/gateway/v2/interceptor/resolve' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "vCluster" : "passthrough",
@@ -1756,9 +1766,9 @@ paths:
       tags:
         - plugin
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the available plugins of the gateway
 
       operationId: List the Plugins of the Gateway
@@ -1840,23 +1850,23 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/plugin' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/service-account:
     get:
       tags:
         - cli_gateway-service-account_gateway_v2_11
       description: |2+
-
-
+      
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the service accounts
 
       operationId: List the service accounts
@@ -1904,7 +1914,8 @@ paths:
                     vCluster: vcluster1
                   spec:
                     type: External
-                    principal: aliasUser1
+                    externalNames:
+                      - externalName
                 - kind: GatewayServiceAccount
                   apiVersion: gateway/v2
                   metadata:
@@ -1937,22 +1948,22 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/service-account?vcluster=vCluster1&name=user1&type=External&showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_gateway-service-account_gateway_v2_11
       description: |2+
-
-
+      
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert a service account
 
       operationId: Upsert a service account
@@ -1978,7 +1989,8 @@ paths:
                 vCluster: vcluster1
               spec:
                 type: External
-                principal: aliasUser1
+                externalNames:
+                  - externalName
         required: true
       responses:
         '200':
@@ -1996,7 +2008,8 @@ paths:
                     vCluster: vcluster1
                   spec:
                     type: External
-                    principal: aliasUser1
+                    externalNames:
+                      - externalName
                 upsertResult: Created
         '400':
           description: The request is not valid
@@ -2041,14 +2054,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/service-account?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "GatewayServiceAccount",
@@ -2059,17 +2072,19 @@ paths:
               },
               "spec" : {
                 "type" : "External",
-                "principal" : "aliasUser1"
+                "externalNames" : [
+                  "externalName"
+                ]
               }
             }'
     delete:
       tags:
         - cli_gateway-service-account_gateway_v2_11
       description: |2+
-
-
+      
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete a service account
 
       operationId: Delete a service account
@@ -2121,14 +2136,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/service-account' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "name" : "user1"
@@ -2138,9 +2153,9 @@ paths:
       tags:
         - cli_gateway-group_gateway_v2_10
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         List the groups
 
       operationId: List the groups
@@ -2201,21 +2216,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/group?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
         - cli_gateway-group_gateway_v2_10
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Upsert a group
 
       operationId: Upsert a group
@@ -2308,14 +2323,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request PUT \
               --url 'http://localhost:8888/gateway/v2/group?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
               --header 'Content-Type: application/json' \
               --data-raw '{
               "kind" : "GatewayGroup",
@@ -2349,9 +2364,9 @@ paths:
       tags:
         - cli_gateway-group_gateway_v2_10
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Get a group
 
       operationId: Get a group
@@ -2423,21 +2438,21 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request GET \
               --url 'http://localhost:8888/gateway/v2/group/group1?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     delete:
       tags:
         - cli_gateway-group_gateway_v2_10
       description: |2+
-
+      
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-
+      
         Delete a group
 
       operationId: Delete a group
@@ -2483,14 +2498,14 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: []
+        - httpAuth: [ ]
       x-codeSamples:
         - lang: Shell
           source: |-
             curl \
               --request DELETE \
               --url 'http://localhost:8888/gateway/v2/group/group1' \
-              --header 'Authorization: Basic YWRtaW46YWRtaW4='
+              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
 components:
   schemas:
     AliasTopic:
@@ -2729,24 +2744,14 @@ components:
       description: The specification of the concentration rule
       type: object
       required:
-        - logicalTopicNamePattern
-        - physicalTopicName
+        - pattern
+        - physicalTopics
       properties:
-        logicalTopicNamePattern:
+        pattern:
           description: The pattern of the concentration rule
           type: string
-        physicalTopicName:
-          description: The physical name of the concentrated topic
-          type: string
-          format: ^[a-zA-Z0-9._-]+$
-        physicalTopicNameCompacted:
-          description: The physical name of the topic for compact policy
-          type: string
-          format: ^[a-zA-Z0-9._-]+$
-        physicalTopicNameCompactedDeleted:
-          description: The pattern of the topic for delete, compact policy
-          type: string
-          format: ^[a-zA-Z0-9._-]+$
+        physicalTopics:
+          $ref: '#/components/schemas/PhysicalTopics'
         autoManaged:
           description: Whether the concentration rule is auto managed
           type: boolean
@@ -2797,9 +2802,9 @@ components:
           format: ^[a-zA-Z0-9_-]{3,64}$
         vCluster:
           description: |2
-
+          
             The name of the virtual cluster the service account belongs to.
-
+          
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
           format: ^[a-zA-Z0-9_-]+$
@@ -2807,15 +2812,17 @@ components:
       title: ExternalSpec
       description: Spec of the service account
       type: object
-      required:
-        - principal
       properties:
-        principal:
+        externalNames:
           description: |2
-
-            An optional field to override the principal of the service account from an external user DB (OIDC)
-          type: string
-          format: ^[a-zA-Z0-9_-]{3,64}$
+          
+             List of the external names of the service account.
+             Used to keep a fixed reference of the service account in interceptors or groups if the values of the external user DB happen to change
+             (ex: OIDC principal, key in delegated auth mode with Confluent etc...)
+             At the moment, an external service account should have exactly one external name (The support for many external names will be available soon)
+          type: array
+          items:
+            type: string
     GatewayGroup:
       title: GatewayGroup
       type: object
@@ -2848,9 +2855,9 @@ components:
       properties:
         vCluster:
           description: |2
-
+          
             The name of the virtual cluster the service account belongs to.
-
+          
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
         name:
@@ -2916,7 +2923,7 @@ components:
         scope:
           $ref: '#/components/schemas/InterceptorScope'
           description: |2
-
+          
             The scope of the interceptor.
             It can be applied to a specific virtual cluster or group or username.
             If none of them is set, it will be applied Globally to the gateway.
@@ -3001,9 +3008,9 @@ components:
           format: ^[a-zA-Z0-9_-]{3,64}$
         vCluster:
           description: |2
-
+          
             The name of the virtual cluster the service account belongs to.
-
+          
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
           format: ^[a-zA-Z0-9_-]+$
@@ -3015,7 +3022,7 @@ components:
       title: Map_Json
       description: The configuration of the interceptor
       type: object
-      additionalProperties: {}
+      additionalProperties: { }
     NotChanged:
       title: NotChanged
       type: object
@@ -3031,6 +3038,34 @@ components:
           type: string
         cause:
           type: string
+    PhysicalTopics:
+      title: PhysicalTopics
+      description: The physical topics backing the concentrated logical topics
+      type: object
+      required:
+        - delete
+      properties:
+        delete:
+          description: |2
+          
+            The name of the physical topic to store the data of the concentrated topics created with a 'delete' policy.
+            The topic must exist in the physical kafka cluster with a 'delete' cleanup.policy (except if you use the autoManaged mode)
+          type: string
+          format: ^[a-zA-Z0-9._-]+$
+        compact:
+          description: |2
+          
+            The name of the physical topic to store the data of the concentrated topics created with a 'compact' policy.
+            If specified, the topic must exist in the physical kafka cluster with a 'compact' cleanup.policy (except if you use the autoManaged mode)
+          type: string
+          format: ^[a-zA-Z0-9._-]+$
+        deleteCompact:
+          description: |2
+          
+            The name of the physical topic to store the data of the concentrated topics created with a 'delete,compact' policy.
+            If specified, the topic must exist in the physical kafka cluster with a 'delete,compact' cleanup.policy (except if you use the autoManaged mode)
+          type: string
+          format: ^[a-zA-Z0-9._-]+$
     Plugin:
       title: Plugin
       type: object
@@ -3159,14 +3194,7 @@ components:
       title: VirtualClusterSpec
       description: Spec of the virtual cluster
       type: object
-      required:
-        - prefix
       properties:
-        prefix:
-          description: The prefix that will be used to namespace kafka resources in
-            the physical cluster
-          type: string
-          format: ^[a-zA-Z0-9_-]*$
         aclEnabled:
           description: Enable ACL for the virtual cluster
           type: boolean
