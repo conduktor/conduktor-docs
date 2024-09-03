@@ -170,7 +170,7 @@ spec:
 ````
 **GatewayServiceAccount checks:**
 - When `spec.type` is `EXTERNAL`:
-  - `spec.externalNames` must be a list of external names. Each name must be unique across all declared GatewayServiceAccount.
+  - `spec.externalNames` must be a non-empty list of external names. Each name must be unique across all declared GatewayServiceAccount.
   - **At the moment** we only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
