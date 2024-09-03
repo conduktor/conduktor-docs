@@ -189,7 +189,7 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 | `GATEWAY_HTTPS_KEY_STORE_PATH`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection                |
 | `GATEWAY_HTTPS_KEY_STORE_PASSWORD`    |                                                         | Configures the password of the keystore used for HTTPS TLS connection             |
 | `GATEWAY_HTTPS_TRUST_STORE_PATH`      |                                                         | Configure the truststore used for the HTTPS TLS connection                         |
-| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD	` |                                                         | Configures the password of the truststore used for HTTPS TLS connection           |
+| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD` |                                                         | Configures the password of the truststore used for HTTPS TLS connection           |
 
 ### Internal State
 
