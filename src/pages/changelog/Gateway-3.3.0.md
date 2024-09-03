@@ -166,5 +166,5 @@ Note that any data previously written in this mode can still be read back - as t
 - CUS-371: https://linear.app/conduktor/issue/CUS-371/sainsburys-audit-logs-impact-clients-latency
 
 ## Known issues
-- We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first broker id of your cluster.
-  - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka Broker Id or use `kcat` with the `-E` flag
+- We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
+  - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag
