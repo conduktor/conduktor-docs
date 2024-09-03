@@ -153,6 +153,11 @@ Note that any data previously written in this mode can still be read back - as t
 ## General fixes 🔨
 
 **TODO: remove ticket reference when we're happy with the list**
+- Large double values (where > Float Max) are now supported in field-level encryption for Avro and Protobuf
+- Bytes and fixed fields now properly supported in field-levle encryption for Avro
+- Avro unions of two or more values (rather than just a value and a null) are now supported in field-level encryption for Avro
+- Schema (tag) based encryption now checks and fails if its config is invalid
+- It is not possible to encrypt the headers which the encryption plugin uses to manage its decryption process (as this would render the data unrecoverable)
 - CUS-294: Improved log messages for Interceptors that reject actions, such as TopicPolicyPlugin
 - PXY-1523: Several improvements to the Large Message / Batch Handling Interceptors
 - PXY-1582: No error message when kcache initialization fails
