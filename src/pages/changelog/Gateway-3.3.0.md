@@ -45,7 +45,9 @@ You can now deploy Gateway resources using infra-as-code with easy to use and cl
 
 Check the [CLI reference](/gateway/reference/cli-reference) to get started, and the [resources reference for more information on each concept](/gateway/reference/resources-reference/).
 
-On top of that, the API is now strictly enforcing consistency between resources.
+API V2 added value
+- the API is now strictly enforcing consistency between resources.
+- allows for --dry-run to check before changes
 
 For instance: 
 - You can't deploy an Interceptor targeting a Virtual Cluster that doesn't exist.
@@ -85,7 +87,8 @@ $ conduktor delete GatewayGroup groupB
 The group groupB is still used by the following interceptor(s): enforce-partition-limit
 ````
 
-**Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible. We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
+**Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible. 
+We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
 
 ### Support for HTTPS APIs
 It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
@@ -126,8 +129,6 @@ spec:
  - Deprecated support for schema (tag) based encryption with Protobuf, will fail. Decryption of historical still supported
  - ...
 
-### Broker ID and port sticking
-We have introduced a new Environment Variable `GATEWAY_MIN_BROKERID` 
 
 ## General fixes 🔨
 
@@ -135,3 +136,6 @@ We have introduced a new Environment Variable `GATEWAY_MIN_BROKERID`
 - CUS-294: Improved log messages for Interceptors that reject actions, such as TopicPolicyPlugin
 - PXY-1523: Several improvements to the Large Message / Batch Handling Interceptors
 - PXY-1582: No error message when kcache initialization fails
+- Added a new Environment Variable `GATEWAY_MIN_BROKERID` that allows for determinist mapping of brokers and ports
+- Improved network stability during Gateway scaling or Kafka topology changes
+- CUS-371: https://linear.app/conduktor/issue/CUS-371/sainsburys-audit-logs-impact-clients-latency
