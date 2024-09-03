@@ -62,7 +62,7 @@ spec:
   pluginClass: "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin"
   priority: 100
   config:
-    topics: "myprefix-.*"
+    topic: "myprefix-.*"
     numPartition:
       min: 5
       max: 5
