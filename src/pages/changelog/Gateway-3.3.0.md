@@ -81,6 +81,7 @@ spec:
     topic: .*
 
 $ conduktor apply -f gateway.yml
+GatewayGroup/groupB: Created
 Interceptor/enforce-partition-limit: Created
 
 $ conduktor delete GatewayGroup groupB
