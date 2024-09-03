@@ -132,6 +132,18 @@ spec:
 ## GatewayServiceAccount
 GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
 
+GatewayServiceAccount resource is enabled or not depending on your Gateway configuration.   
+This is to prevent you to declare a resource that is incompatible with your current configuration:
+
+| GATEWAY_SECURITY         | LOCAL GatewayServiceAccount | EXTERNAL GatewayServiceAccount        |
+|--------------------------|--|--------------------------|
+| PLAINTEXT                | 🚫 | 🚫                       |
+| SSL                      | 🚫 | only if mTls             |
+| SASL_PLAINTEXT           | ✅ | only if OAuth configured |
+| SASL_SSL                 | ✅ | only if OAuth configured |
+| DELEGATED_SASL_PLAINTEXT | 🚫 | ✅                        |
+| DELEGATED_SASL_SSL       | 🚫 | ✅                        |
+
 There are a few cases where you **must** declare GatewayServiceAccount objects:
 - Creating Local Service Accounts
 - Renaming Service Accounts for easier clarity when using Interceptors
