@@ -139,6 +139,8 @@ Fields which cannot be encrypted in-place (effectively any non-string field) hav
 | fixed[] | every byte filled with charater "*" |
 | boolean | false |
 
+Note that the same default values are now used across all relevant plugins when manipulating a non-string field - Data Masking, Partial Decrypt, and Encrypt on Fetch. 
+
 #### Attempt to apply encryption to a message more than once will now fail
 If any of the encryption headers are detected in a message when encryption is about to be applied, then the encryption operation will fail. This is because applying encryption twice (or more) is currently not reversible.
 
