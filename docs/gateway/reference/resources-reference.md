@@ -230,7 +230,7 @@ spec:
 - `spec.autoManaged` is optional, default `false`
 
 **ConcentrationRule side effects:**
-- Once the Concentration Rule is deployed, topics created with the `spec.pattern` name will not be created as real Kafka topics but as Concentrated topics instead.  
+- Once the Concentration Rule is deployed, topics created with a name matching the `spec.pattern` will not be created as real Kafka topics but as Concentrated Topics instead.  
 - Depending on the topic's `cleanup.policy`, the topic's data will be stored in each configured physical topics.
 - If a topic creation request is made with a `cleanup.policy` that isn't configured in the ConcentrationRule, topic creation will fail.
 - It is not possible to update `cleanup.policy` of a concentrated topic.
