@@ -29,7 +29,7 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
 - [Support for HTTPS APIs](#support-for-https-apis)
 - [Virtual Cluster ACLs and superUsers](#enhanced-ui--alerts-for-kafka-connect)
-- [Encryption Enhancements](#encryption-enhancements)
+- [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
 - [Broker ID and port sticking](#quality-of-life-improvements)
 
 ### New V2 APIs and CLI support
@@ -118,16 +118,34 @@ spec:
   - username2
 ```
 
-### Encryption Enhancements
- - TO DO...
- - schemaDataMode
- - Block attempts to double encrypt (encrypt on encrypt)
- - Default values
- - Block attempts to encrypt headers containing required metadata for encryption
- - Several bug fixes to support more field types
- - Standardised default values across masking, partial decrypt, encrypt on fetch
- - Deprecated support for schema (tag) based encryption with Protobuf, will fail. Decryption of historical still supported
- - ...
+### Encryption Enhancements and Support Clarification
+
+#### Field-Level Encryption: Preserving Message Format to Enhance Usability
+When applying field-level encryption prior to `3.3.0`, the encryption plugin would convert the message to JSON, and re-apply the schema format when the message was read back through the decryption plugin. 
+
+In Gateway `3.3.0`, we now preserve the schema format for Avro messages - meaning the same schema is used in the backing topic, and the data can be read directly from Kafka or without the decryption plugin at all. 
+
+[Read more](/gateway/interceptors/data-security/encryption/encryption-faq/#starting-from-330-avro-only) about this change to the default behaviour, and how to configure it.
+
+Fields which cannot be encrypted in-place (effectively any non-string field) have their encrypted value placed in the headers, and the field itself is given a default masking value. The default values are clarified below:
+
+| **Field Type** | **Default Value in 3.3.0** |
+|--------------|--------------|
+| Integer | Int MIN_VALUE |
+| Long | Long MIN_VALUE |
+| Float | Float, MIN_VALUE |
+| Double | Float MIN_VALUE (yes, float again for doubles - because protobuf doesn't like Double MIN_VALUE) |
+| byte[] | "********" as bytes (array of '42' s) |
+| fixed[] | every byte filled with charater "*" |
+| boolean | false |
+
+#### Attempt to apply encryption to a message more than once will now fail
+If any of the encryption headers are detected in a message when encryption is about to be applied, then the encryption operation will fail. This is because applying encryption twice (or more) is currently not reversible.
+
+#### Deprecated support for Schema Based (tag) encryption with Protobuf 
+Note this is no longer supported, and the Gateway will now throw an exception if the encryption plugin attempts to apply schema (tag) based processing to a Protobuf message.
+
+Note that any data previously written in this mode can still be read back - as the decrypt does not use the schemas at all, rather it uses the message header to know what was encrypted.
 
 
 ## General fixes 🔨
