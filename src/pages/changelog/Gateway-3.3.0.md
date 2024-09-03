@@ -134,8 +134,8 @@ Fields which cannot be encrypted in-place (effectively any non-string field) hav
 | Integer | Int MIN_VALUE |
 | Long | Long MIN_VALUE |
 | Float | Float, MIN_VALUE |
-| Double | Float MIN_VALUE (yes, float again for doubles - because protobuf doesn't like Double MIN_VALUE) |
-| byte[] | "********" as bytes (array of '42' s) |
+| Double | Float MIN_VALUE (float again here due to some serdes behaviour) |
+| byte[] | "********" as bytes |
 | fixed[] | every byte filled with charater "*" |
 | boolean | false |
 
