@@ -28,9 +28,8 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 
 - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
 - [Support for HTTPS APIs](#support-for-https-apis)
-- [Virtual Cluster ACLs and superUsers](#enhanced-ui--alerts-for-kafka-connect)
+- [Better UX for ACLs and superUsers](#better-ux-for-acls-and-superusers)
 - [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
-- [Broker ID and port sticking](#quality-of-life-improvements)
 
 ### New V2 APIs and CLI support
 
@@ -85,7 +84,7 @@ We will announce a deprecation plan in the coming weeks and notify you in advanc
 ### Support for HTTPS APIs
 It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
 
-### ACLs and superUsers
+### Better UX for ACLs and superUsers
 To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
 ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
