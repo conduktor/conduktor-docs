@@ -16,7 +16,7 @@ Check for the list of supported resources and their definition in the dedicated 
 
 ## Install & Configure
 
-You have 2 options to Install Conduktor CLI.
+You have 2 options to Install Conduktor CLI:
 - Native binary for individual use and testing
 - Docker build for integration in CI/CD pipelines
 
