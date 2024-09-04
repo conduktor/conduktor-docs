@@ -224,6 +224,7 @@ Today, we only have label support for only a subset of our resources:
 - Topic
 - Subject
 - Connector
+
 We plan to bring label support to the following resources in the future:
 - KsqlDBCluster
 - User
