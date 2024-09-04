@@ -4,6 +4,9 @@ title: API V2 Migration guide
 description: Need to know changes between V1 and V2 APIs
 ---
 
+Most entities are maintained, slightly rebranded for a better UX, between V1 and V2.  
+As a result, only minimal attention should be required.
+
 ## Virtual Clusters
 
 - The automation will derive the boolean value `aclEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable.
@@ -11,10 +14,10 @@ description: Need to know changes between V1 and V2 APIs
 
 ## GatewayServiceAccount
 
-User Mappings become GatewayServiceAccount
-
+User Mappings become GatewayServiceAccount.
 Every existing User Mapping is migrated to V2 as EXTERNAL GatewayServiceAccount.  
-If you have created User Mappings using API V1 for Local Users to belong to Groups, you won't be able to generate a token through the V2 API.
 
-You will need to declare them as LOCAL users in V2 APIs to start generating tokens
+**Required action**
+If you were using Local Users (and generating tokens) with API V1, new actions are required on your part.
+- You will need first declare LOCAL users in V2 APIs to then be able to generate tokens
 

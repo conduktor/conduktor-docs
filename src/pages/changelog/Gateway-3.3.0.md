@@ -88,7 +88,7 @@ It is now possible to configure HTTPS and mTLS authentication on the Gateway HTT
 To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
 ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
-ACLs and Super Users on Virtual Clusters must now be driven explicitly by configuration.  
+ACLs and Super Users on Virtual Clusters must now be driven explicitly through API/CLI.  
 
 #### Enable ACLs for Gateway (excl. Virtual Clusters)
 Configure both environment variables:
