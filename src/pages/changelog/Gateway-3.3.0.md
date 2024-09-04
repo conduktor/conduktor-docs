@@ -85,11 +85,22 @@ We will announce a deprecation plan in the coming weeks and notify you in advanc
 ### Support for HTTPS APIs
 It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
 
-### Virtual Cluster ACLs and superUsers
-To coincide with the clearly defined concepts established in API V2, ACLs within Virtual Clusters can now be driven explicitly by configuration.  
+### ACLs and superUsers
+To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
-GATEWAY_SUPER_USERS
-GATEWAY_ACL_ENABLED
+ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
+ACLs and Super Users on Virtual Clusters must now be driven explicitly by configuration.  
+
+#### Enable ACLs for Gateway (excl. Virtual Clusters)
+Configure both environment variables:
+````shell
+GATEWAY_ACL_ENABLED=true # default false
+GATEWAY_SUPER_USERS=alice,bob
+````
+
+If `GATEWAY_SUPER_USERS` is not set, it will default to `GATEWAY_ADMIN_API_USERS` for backward compatibility.
+
+#### Enable ACLs for Virtual Clusters
 :::warning
 Note that if you are migrating from an older version of Gateway, the migration will automatically generate existing Virtual Clusters as configuration.
 
