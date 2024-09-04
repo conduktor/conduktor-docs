@@ -65,7 +65,7 @@ spec:
   permissions:
     - resourceType: TOPIC
       cluster: shadow-it
-      patternType: PREFIX
+      patternType: PREFIXED
       name: toto-
       permissions:
         - topicViewConfig
@@ -105,7 +105,7 @@ spec:
   permissions:
     - resourceType: TOPIC
       cluster: shadow-it
-      patternType: PREFIX
+      patternType: PREFIXED
       name: toto-
       permissions:
         - topicViewConfig
@@ -500,7 +500,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 # Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
 - resourceType: SUBJECT
   cluster: shadow-it
-  patternType: PREFIX
+  patternType: PREFIXED
   name: sub-
   permissions:
     - subjectView
@@ -525,7 +525,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 # Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
 - resourceType: CONSUMER_GROUP
   cluster: shadow-it
-  patternType: PREFIX
+  patternType: PREFIXED
   name: group-
   permissions:
     - consumerGroupView

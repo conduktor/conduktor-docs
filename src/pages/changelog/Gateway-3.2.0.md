@@ -56,8 +56,7 @@ kind: VirtualCluster
 metadata:
   name: "mon-app-A"
 spec:
-  prefix: "app-A-"
-  aclsEnabled: "true" # defaults to false
+  aclEnabled: "true" # defaults to false
   superUsers:
   - username1
   - username2

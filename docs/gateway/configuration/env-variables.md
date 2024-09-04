@@ -66,14 +66,15 @@ __Example Values__
 | Environment Variable             | Default Value                         | Description                                                                                                                                                                                                                                                                                     |
 |----------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_BIND_HOST`              | `0.0.0.0`                             | The host on which to bind the gateway                                                                                                                                                                                                                                                           |
-| `GATEWAY_ADVERTISED_HOST`        | defaults to your hostname             | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
+| `GATEWAY_ADVERTISED_HOST`        | Your hostname             | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
 | `GATEWAY_PORT_START`             | `6969`                                | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
-| `GATEWAY_PORT_COUNT`             | defaults to your number of brokers +2 | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
+| `GATEWAY_PORT_COUNT`             | (maxBrokerId-minBrokerId)+3 | Number of ports to be used by the Gateway, see [networking](docs/gateway/configuration/network.md#port-based-routing) for more on host/port configuration. |
+| `GATEWAY_MIN_BROKERID`           | `0`                                   | The broker id associated to Gateway's first port (`GATEWAY_PORT_START`), should be the lowest `broker.id` (or `node.id`) defined in the Kafka cluster.                                                   |
 | `GATEWAY_ROUTING_MECHANISM`      | `port`                                | `port` or `host`.                                                                                                                                                                                                                                                                               |
 | **SNI Routing only**             |                                       | Check our dedicated guide on [SNI Routing ](/gateway/how-to/sni-routing/)                                                                                                                                                                                                                       |
 | `GATEWAY_ADVERTISED_SNI_PORT`    | none                                  | Port to be advertised to the client if routing mechanism is set to `host` for SNI routing.                                                                                                                                                                                                      |
 | `GATEWAY_ADVERTISED_HOST_PREFIX` | `broker`                              | Set the host prefix when using SNI Routing                                                                                                                                                                                                                                                      |
-| `GATEWAY_SNI_HOST_SEPARATOR`     | `.`                                    | Set the host separator when using SNI Routing                                                                                                                                                                                                                                                   | 
+| `GATEWAY_SNI_HOST_SEPARATOR`     | `.`                                   | Set the host separator when using SNI Routing                                                                                                                                                                                                                                                   | 
 
 
 ### Load Balancing
@@ -90,12 +91,13 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                                            |
-|--------------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL`                | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`                        |
-| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | If no virtual cluster was detected then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal |
-| `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                          |
-| `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | Enable / Disable ACLs support for Virtual Clusters only.                                                                                                                                                               |
+| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                                                         |
+|--------------------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL`                |`KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`                                     |
+| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | If no virtual cluster was detected then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal              |
+| `GATEWAY_ACL_ENABLED`                      | `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                                       |
+| `GATEWAY_SUPER_USERS`                      |                                       | Coma separated list of service accounts (`alice,bob`) that will be promoted as superUsers on the Gateway (excluding VirtualClusters). If this variable is not set, it will use `GATEWAY_ADMIN_API_USERS` for backward compatibility |
+| `GATEWAY_ACL_STORE_ENABLED`                |`false`                    | Enable / Disable ACLs support for Virtual Clusters only.                                                                                                                                                                            |
 
 #### SSL
 
@@ -179,11 +181,16 @@ For a full list of security examples consider the [marketplace plugin pages](htt
 
 ### HTTP
 
-| Environment Variable      | Default Value                                           | Description                                                                       |
-|---------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------|
-| `GATEWAY_HTTP_PORT`       | `8888`                                                  | The port on which the gateway will present a HTTP management API                  |
-| `GATEWAY_SECURED_METRICS` | `true`                                                  | Does the HTTP management API require users?                                       |
-| `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write |
+| Environment Variable                  | Default Value                                           | Description                                                                                             |
+| ------------------------------------- | ------------------------------------------------------- |---------------------------------------------------------------------------------------------------------|
+| `GATEWAY_HTTP_PORT`                   | `8888`                                                  | The port on which the gateway will present the HTTP management API                                      |
+| `GATEWAY_SECURED_METRICS`             | `true`                                                  | Does the HTTP management API require authentication?                                                    |
+| `GATEWAY_ADMIN_API_USERS`             | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write                       |
+| `GATEWAY_HTTPS_CLIENT_AUTH`           | `NONE`                                                  | Client auth configuration for HTTPS incoming connection. Possible values: `NONE`, `REQUEST`, `REQUIRED` |
+| `GATEWAY_HTTPS_KEY_STORE_PATH`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection                                      |
+| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`    |                                                         | Configures the password of the keystore used for HTTPS TLS connection                                   |
+| `GATEWAY_HTTPS_TRUST_STORE_PATH`      |                                                         | Configure the truststore used for the HTTPS TLS connection                                              |
+| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD` |                                                         | Configures the password of the truststore used for HTTPS TLS connection                                 |
 
 ### Internal State
 
@@ -198,7 +205,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
 
-#### Topics Names
+#### Topic Names
 
 | Environment Variable                   | Default Value                               | Description                                                               |
 |----------------------------------------|---------------------------------------------|---------------------------------------------------------------------------|
@@ -252,6 +259,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                   |
 | `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   |
 | `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`            | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
+| `GATEWAY_AUDIT_LOG_KAFKA_`                      |                 | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |
 
 ### Logging
 
