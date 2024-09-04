@@ -218,7 +218,7 @@ spec:
 Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.
 It is our objective that all resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. 
 
-Today, we only have label support for only a subset of our resources:
+Today we have label support for a subset of our resources:
 - KafkaCluster
 - KafkaConnectCluster
 - Topic
