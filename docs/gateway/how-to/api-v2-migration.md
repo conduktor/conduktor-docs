@@ -19,5 +19,5 @@ Every existing User Mapping is migrated to V2 as EXTERNAL GatewayServiceAccount.
 
 **Required action**
 If you were using Local Users (and generating tokens) with API V1, new actions are required on your part.
-- You will need first declare LOCAL users in V2 APIs to then be able to generate tokens
+- You will need to first declare LOCAL users in V2 APIs to then be able to generate tokens
 
