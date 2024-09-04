@@ -169,3 +169,6 @@ Note that any data previously written in this mode can still be read back - as t
 ## Known issues
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag
+- It is not possible to add Service Accounts to GatewayGroups using API V2 unless they are previously declared as GatewayServiceAccount.
+  - This is not a wanted behavior, especially for OAuth or Delegated Kafka Authentication where declaring a GatewayServiceAccount should not be needed. We'll address this issue in a follow-up release
+  - API V1 (user-mapping) is not impacted
