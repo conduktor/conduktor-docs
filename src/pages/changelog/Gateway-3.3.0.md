@@ -157,7 +157,7 @@ Note that any data previously written in this mode can still be read back - as t
 ## General fixes 🔨
 
 - Large double values (where > Float Max) are now supported in field-level encryption for Avro and Protobuf
-- Bytes and fixed fields now properly supported in field-levle encryption for Avro
+- Bytes and fixed fields now properly supported in field-level encryption for Avro
 - Avro unions of two or more values (rather than just a value and a null) are now supported in field-level encryption for Avro
 - Schema (tag) based encryption now checks and fails if its config is invalid
 - It is not possible to encrypt the headers which the encryption plugin uses to manage its decryption process (as this would render the data unrecoverable)
@@ -168,7 +168,7 @@ Note that any data previously written in this mode can still be read back - as t
 - Improved network stability during Gateway scaling or Kafka topology changes
 - Added support for overriding Kafka Producer properties used for Audit Log topic with `GATEWAY_AUDIT_LOG_KAFKA_` environment variables
 - Removed metric `gateway.brokered_active_connections`. This was equal to portCount with port mapping and always 1 in host mapping
-- changed metric `gateway.request_expired` tags: nodeHost/nodePort are replaced by nodeId/clusterId
+- Changed metric `gateway.request_expired` tags: nodeHost/nodePort are replaced by nodeId/clusterId
 - Fix default value for `GATEWAY_UPSTREAM_THREAD` config. The new intended default (number of CPU) previously was (2 x number of CPU).
 - Fixed an issue with `GATEWAY_ADVERTISED_SNI_PORT` that wasn't working properly
 - Add log level for io.confluent packages in default log configuration
@@ -181,6 +181,6 @@ Note that any data previously written in this mode can still be read back - as t
 - It is not possible to add Service Accounts to GatewayGroups using API V2 unless they are previously declared as GatewayServiceAccount.
   - This is not a wanted behavior, especially for OAuth or Delegated Kafka Authentication where declaring a GatewayServiceAccount should not be needed. We'll address this issue in a follow-up release
   - API V1 (user-mapping) is not impacted
-- If you perform a rolling upgrade to 3.3, Gateway nodes in earlier versions will show the following error in the logs: `[ERROR] [KafkaCache:1007] - Failed to deserialize a value org.apache.avro.AvroTypeException: Expected field name not found: clusterId`
-  - This is fine and will not cause any further problem.
-- If you use Virtual Clusters and ACLs: After updating to 3.3, you must manage VirtualCluster's ACL and superUsers through V2 API. 
+- If you perform a rolling upgrade to 3.3.0, Gateway nodes in earlier versions will show the following error in the logs: `[ERROR] [KafkaCache:1007] - Failed to deserialize a value org.apache.avro.AvroTypeException: Expected field name not found: clusterId`
+  - This is fine and will not cause any further problems
+- If you use Virtual Clusters and ACLs: After updating to 3.3.0, you must manage VirtualCluster's ACL and superUsers through V2 API. 
