@@ -34,8 +34,7 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 
 ### New V2 APIs and CLI support
 
-We are proud to introduce a whole new API for the Gateway, which is designed to work seamlessly with our CLI.  
-You can now deploy Gateway resources using infra-as-code with easy to use and clearly defined concepts:
+We’re excited to introduce our new Gateway API, designed for seamless integration with our CLI. This update allows you to deploy Gateway resources using infrastructure-as-code with straightforward, clearly defined concepts:
 - Interceptor
 - GatewayServiceAccount
 - GatewayGroup
@@ -44,14 +43,6 @@ You can now deploy Gateway resources using infra-as-code with easy to use and cl
 - VirtualCluster
 
 Check the [CLI reference](/gateway/reference/cli-reference) to get started, and the [resources reference for more information on each concept](/gateway/reference/resources-reference/).
-
-API V2 added value
-- the API is now strictly enforcing consistency between resources.
-- allows for --dry-run to check before changes
-
-For instance: 
-- You can't deploy an Interceptor targeting a Virtual Cluster that doesn't exist.
-- You can't delete a Group that is used by an Interceptor.
 
 ````yaml
 ---
@@ -160,11 +151,11 @@ Note that any data previously written in this mode can still be read back - as t
 - Schema (tag) based encryption now checks and fails if its config is invalid
 - It is not possible to encrypt the headers which the encryption plugin uses to manage its decryption process (as this would render the data unrecoverable)
 - CUS-294: Improved log messages for Interceptors that reject actions, such as TopicPolicyPlugin
-- PXY-1523: Several improvements to the Large Message / Batch Handling Interceptors
-- PXY-1582: No error message when kcache initialization fails
+- PXY-1523: Several improvements to the LargeMessage & LargeBatch Interceptors
+- PXY-1582: Fixed an issue where KCache topic initialization would fail silently and leave Gateway in an unusable state
 - Added a new Environment Variable `GATEWAY_MIN_BROKERID` (default 0) that allows for determinist mapping of brokers and ports
 - Improved network stability during Gateway scaling or Kafka topology changes
-- CUS-371: https://linear.app/conduktor/issue/CUS-371/sainsburys-audit-logs-impact-clients-latency
+- CUS-371: Added support for overriding Kafka Producer properties used for Audit Log topic with `GATEWAY_AUDIT_LOG_KAFKA_` environment variables
 
 ## Known issues
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
