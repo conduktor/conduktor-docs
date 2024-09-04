@@ -215,7 +215,24 @@ spec:
 
 ### Resource Labels
 
-All resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.  
+Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.
+It is our objective that all resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. 
+
+Today, we only have label support for only a subset of our resources:
+- KafkaCluster
+- KafkaConnectCluster
+- Topic
+- Subject
+- Connector
+We plan to bring label support to the following resources in the future:
+- KsqlDBCluster
+- User
+- Group
+- TopicPolicy
+- Application
+- ApplicationInstance
+- ApplicationInstancePermission
+- ApplicationGroup
 
 **Example**
 ````yaml
