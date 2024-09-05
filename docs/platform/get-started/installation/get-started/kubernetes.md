@@ -67,6 +67,11 @@ For production environments, this is  **mandatory**:
 * To set up an [external S3 Bucket](../../configuration/env-variables.md#monitoring-properties)
 * Enough resources to run Conduktor with the [recommended configuration](../hardware.md#hardware-requirements)
 
+### A note on TLS, and URL forwarding
+For production environments it is recommened to run with TLS enabled and specifically with TLS enabled from your ingress controller and terminating on Console.  This creates a more secure connection, while also telling Console that it should use TLS when forwarding on any URL requests, for example, requests to SSO providers.
+
+Without TLS terminating on Console itself, requests between the ingress controller and Console will be in plain text as will URL forwarding to your SSO provider, which can lead to rejection of the request for not being secure.
+
 ## Getting started
 
 ### Setup Helm repository
