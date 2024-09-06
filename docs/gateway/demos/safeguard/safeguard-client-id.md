@@ -1,5 +1,5 @@
 ---
-title: Client Id validation
+title: ClientId Validation
 description: Client Id validation
 tag: safeguard
 ---

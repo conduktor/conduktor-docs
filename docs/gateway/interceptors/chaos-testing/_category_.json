@@ -1,6 +1,6 @@
 {
-  "label": "Ops / Failover",
-  "position": 6,
+  "label": "Chaos Testing",
+  "position": 2,
   "link": {
     "type": "generated-index"
   }
