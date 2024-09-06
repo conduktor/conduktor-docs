@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Future Breaking Changes 💣
 ### New docker image name
 To clarify our product naming we have renamed the Console docker image to `conduktor/conduktor-console`.
