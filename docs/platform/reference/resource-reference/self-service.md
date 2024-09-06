@@ -302,8 +302,8 @@ spec:
   members:
     - user1@company.org
     - user2@company.org
-#  externalGroups:
-#    - GP-COMPANY-CLICKSTREAM-SUPPORT
+  externalGroups:
+    - GP-COMPANY-CLICKSTREAM-SUPPORT
 ````
 **Application instance permission checks:**
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
@@ -314,7 +314,7 @@ spec:
   - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
 - `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
 - `spec.members` must be email addresses of members you wish to add to this group.
-- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups to sync with this Console Groups
+- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Groups
   - Members added this way will not appear in `spec.members`
 
 **Side effect in Console & Kafka:**
