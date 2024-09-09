@@ -1,7 +1,7 @@
 ---
 date: 2024-09-14
 title: Kafka Connect Wizard
-description: docker pull conduktor/conduktor-console:1.26.0
+description: docker pull conduktor/conduktor-console:1.27.0
 solutions: console
 tags: features,fix
 ---
