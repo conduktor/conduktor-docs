@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Fixes 🔨
 - Fixed a UI issue on Self-service Application Catalog and Topic Policies pages
 - Fixed a UI issue on Topic Catalog when listing topics created with empty configs
