@@ -308,6 +308,7 @@ spec:
 **Application instance permission checks:**
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
 - `spec.permissions[].resourceType` can be `TOPIC`, `SUBJECT`, `CONSUMER_GROUP` or `CONNECTOR`
+  - When `resourceType` is `CONNECTOR`, additional field `spec.permissions[].connectCluster` is mandatory. Must be a valid KafkaConnectCluster name
 - `spec.permissions[].patternType` can be `PREFIXED` or `LITERAL`
 - `spec.permissions[].name` must reference any "sub-resource" of `metadata.appInstance` or any subscribed Topic
   - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
