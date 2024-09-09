@@ -191,6 +191,7 @@ metadata:
     conduktor.io/auto-restart-enabled: true
     conduktor.io/auto-restart-frequency: 600
 spec:
+  config:
     connector.class: io.connect.jdbc.JdbcSourceConnector
     tasks.max: '1'
     topic: click.pageviews
