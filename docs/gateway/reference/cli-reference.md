@@ -84,8 +84,9 @@ Global Flags:
 Example:
 ````
 $ conduktor apply -f .
-application/clickstream-app: NotChanged
-app-instance/clickstream-app-dev: NotChanged
+Interceptor/mask-sensitive-fields: NOT_CHANGED
+Interceptor/encrypt-topic-customers: NOT_CHANGED
+Interceptor/safeguard-all-topics: UPDATED
 ````
 
 ### Delete
@@ -98,7 +99,7 @@ Example(s):
 ````
 $ conduktor delete -f ./directoryOfResources
 $ conduktor delete -f resource.yml
-$ conduktor delete topic myTopic
+$ conduktor delete Interceptor guard-produce-policy
 ````
 
 ### Get
@@ -116,14 +117,14 @@ Global Flags:
 ````
 Examples:
 ````
-$ conduktor get app-instance
-$ conduktor get app-instance clickstream-app-dev
+$ conduktor get Interceptor
+$ conduktor get Interceptor encrypt-topic-customers
 ````
 
 ### Version
 Check the current version of your CLI using this command
 ````
 $ conduktor version
-Version: 0.2.5
-Hash: 163e7476bb2046e190990de1a698bb75739b10b3
+Version: v0.3.0
+Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 ````
