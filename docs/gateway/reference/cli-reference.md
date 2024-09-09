@@ -99,7 +99,7 @@ Example(s):
 ````
 $ conduktor delete -f ./directoryOfResources
 $ conduktor delete -f resource.yml
-$ conduktor delete Interceptor guard-produce-policy
+$ conduktor delete Interceptor guard-produce-policy --vcluster=passthrough
 ````
 
 ### Get
@@ -118,7 +118,7 @@ Global Flags:
 Examples:
 ````
 $ conduktor get Interceptor
-$ conduktor get Interceptor encrypt-topic-customers
+$ conduktor get Interceptor encrypt-topic-customers --vcluster passthrough
 ````
 
 ### Version
