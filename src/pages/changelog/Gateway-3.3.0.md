@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Upcoming Breaking change 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:

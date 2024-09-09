@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Performance improvements 🚀
 
 - Consumer group membership is no longer loaded synchronously

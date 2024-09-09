@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Features ✨
 - Added support for Azure Managed Identity for Kafka authentication
 - Implement OIDC logout. You may need to update your OIDC configuration to allow the root page of Console as a possible redirect URI
