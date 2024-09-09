@@ -22,7 +22,7 @@ Below outlines both the Hardware and Kafka Requirements for running Conduktor Ga
 - 2 CPU cores
 - 4 GB of RAM
 
-Gateway itself does not use local storage, but certain interceptors, such as [Large message handling](/gateway/interceptors/optimize/large-message-and-batch-handling), might require temporary local storage.
+Gateway itself does not use local storage, but certain interceptors, such as [Large message handling](/gateway/interceptors/advanced-patterns-support/large-message-and-batch-handling), might require temporary local storage.
 
 ## Kafka Requirements
 

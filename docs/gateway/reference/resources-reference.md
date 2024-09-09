@@ -72,7 +72,7 @@ spec:
 - `metadata.scope` is optional (default empty). 
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
   - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
-- `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptors-catalog/)
+- `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptor-catalog/)
 - `spec.priority` is **mandatory**
 - `spec.config` is a valid config for the `pluginClass`
 

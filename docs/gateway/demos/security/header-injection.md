@@ -1,14 +1,16 @@
 ---
-title: SchemaId Validation
-description: Schema Id validation
-tag: safeguard
+title: Dynamic Header Injection
+description: Header Injection
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# Schema Id validation
+# Dynamic Header Injection & Removal
 
+There are multiple interceptors available for manipulating headers, either injection or regex based removal. 
 
+This demo will run you through some of these use cases step-by-step.
 
 ## View the full demo in realtime
 
@@ -23,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm.svg)](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm)
+[![asciicast](https://asciinema.org/a/kWjPbOI7tspNGq3BiKM8T6dN9.svg)](https://asciinema.org/a/kWjPbOI7tspNGq3BiKM8T6dN9)
 
 </TabItem>
 </Tabs>
@@ -255,65 +257,64 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Network safeguard-schema-id_default  Creating
- Network safeguard-schema-id_default  Created
+ Network header-injection_default  Creating
+ Network header-injection_default  Created
  Container zookeeper  Creating
  Container kafka-client  Creating
- Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka1  Creating
  Container kafka3  Creating
  Container kafka2  Creating
- Container kafka1  Creating
+ Container kafka-client  Created
  Container kafka2  Created
  Container kafka3  Created
  Container kafka1  Created
- Container gateway2  Creating
  Container schema-registry  Creating
+ Container gateway2  Creating
  Container gateway1  Creating
  Container gateway2  Created
  Container gateway1  Created
  Container schema-registry  Created
  Container zookeeper  Starting
  Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka1  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka1  Started
  Container kafka2  Started
  Container kafka3  Started
+ Container kafka1  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
+ Container kafka3  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
  Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container kafka3  Healthy
+ Container schema-registry  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
- Container kafka1  Healthy
- Container schema-registry  Starting
- Container kafka1  Healthy
- Container gateway1  Starting
  Container schema-registry  Started
- Container gateway1  Started
  Container gateway2  Started
- Container schema-registry  Waiting
+ Container gateway1  Started
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
@@ -321,21 +322,22 @@ docker compose up --detach --wait
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka2  Healthy
+ Container schema-registry  Waiting
  Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container kafka3  Healthy
  Container zookeeper  Healthy
- Container kafka-client  Healthy
- Container schema-registry  Healthy
- Container gateway2  Healthy
  Container gateway1  Healthy
+ Container gateway2  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE.svg)](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE)
+[![asciicast](https://asciinema.org/a/qozPL6m1DgyIveEJLsf3xfKE8.svg)](https://asciinema.org/a/qozPL6m1DgyIveEJLsf3xfKE8)
 
 </TabItem>
 </Tabs>
@@ -378,7 +380,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MDYxNX0.b8GXqe_BdbGajYcgY711xuFK9qJKzGIZz6ZOxyDCL-4';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3NjQ3MH0.hoxPqEUpXmMu_zwYCZVZlK5_NWDVoREkUtvxjeJoTZA';
 
 
 ```
@@ -386,7 +388,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL.svg)](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL)
+[![asciicast](https://asciinema.org/a/8j60jnBwXK67dTaoRekPZyF3i.svg)](https://asciinema.org/a/8j60jnBwXK67dTaoRekPZyF3i)
 
 </TabItem>
 </Tabs>
@@ -423,60 +425,28 @@ Created topic users.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs.svg)](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs)
+[![asciicast](https://asciinema.org/a/7ZPNky1ZsU1rptTKcZd5G1cEj.svg)](https://asciinema.org/a/7ZPNky1ZsU1rptTKcZd5G1cEj)
 
 </TabItem>
 </Tabs>
 
-## Listing topics in teamA
+## Adding interceptor inject-headers
 
-
+Let's create the interceptor to inject various headers
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --list
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-users
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p.svg)](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p)
-
-</TabItem>
-</Tabs>
-
-## Adding interceptor schema-id
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-cat step-08-schema-id.json | jq
+cat step-07-inject-headers.json | jq
 
 curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/schema-id" \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/inject-headers" \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent \
-    --data @step-08-schema-id.json | jq
+    --data @step-07-inject-headers.json | jq
 ```
 
 
@@ -485,15 +455,18 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin",
   "priority": 100,
   "config": {
-    "topic": "users",
-    "schemaIdRequired": true
+    "headers": {
+      "X-MY-KEY": "my own value",
+      "X-USER": "{{user}}",
+      "X-INTERPOLATED": "User {{user}} via ip {{userIp}}"
+    }
   }
 }
 {
-  "message": "schema-id is created"
+  "message": "inject-headers is created"
 }
 
 ```
@@ -501,14 +474,255 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn.svg)](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn)
+[![asciicast](https://asciinema.org/a/bklulHJpZPrio7E0j3gbnud8N.svg)](https://asciinema.org/a/bklulHJpZPrio7E0j3gbnud8N)
 
 </TabItem>
 </Tabs>
 
-## Listing interceptors for teamA
+## Send tom and laura into users
 
-Listing interceptors on `gateway1` for virtual cluster `teamA`
+Producing 2 messages in `users` in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+Sending 2 events
+```json
+{
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
+}
+{
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ",
+  "address" : "Dubai, UAE"
+}
+```
+with
+
+
+```sh
+echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic users
+
+echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","visa":"#888999XZ","address":"Dubai, UAE"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --producer.config teamA-sa.properties \
+        --topic users
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/uAHvo0bD5GXG0WMfTG4ZElwPe.svg)](https://asciinema.org/a/uAHvo0bD5GXG0WMfTG4ZElwPe)
+
+</TabItem>
+</Tabs>
+
+## Verify tom and laura have the corresponding headers
+
+Verify tom and laura have the corresponding headers in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic users \
+    --from-beginning \
+    --max-messages 2 \
+    --timeout-ms 10000 \
+    --property print.headers=true | jq
+```
+
+
+returns 2 events
+```json
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-MY-KEY" : "my own value",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "tom",
+    "username" : "tom@conduktor.io",
+    "password" : "motorhead",
+    "visa" : "#abc123",
+    "address" : "Chancery lane, London"
+  }
+}
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-MY-KEY" : "my own value",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "laura",
+    "username" : "laura@conduktor.io",
+    "password" : "kitesurf",
+    "visa" : "#888999XZ",
+    "address" : "Dubai, UAE"
+  }
+}
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+jq: parse error: Invalid numeric literal at line 1, column 15
+Processed a total of 2 messages
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/yCVpkCTCmoCiNtZJkLEmarG8p.svg)](https://asciinema.org/a/yCVpkCTCmoCiNtZJkLEmarG8p)
+
+</TabItem>
+</Tabs>
+
+## Adding interceptor remove-headers
+
+Let's create the interceptor `remove-headers` to remove headers that match `X-MY-.*`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+cat step-10-remove-headers.json | jq
+
+curl \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/remove-headers" \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent \
+    --data @step-10-remove-headers.json | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.MessageHeaderRemovalPlugin",
+  "priority": 100,
+  "config": {
+    "headerKeyRegex": "X-MY-.*"
+  }
+}
+{
+  "message": "remove-headers is created"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/fJJWTJ9J1QFAoHnxYO8XaM6ZF.svg)](https://asciinema.org/a/fJJWTJ9J1QFAoHnxYO8XaM6ZF)
+
+</TabItem>
+</Tabs>
+
+## Verify tom and laura have the corresponding headers
+
+Verify tom and laura have the corresponding headers in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic users \
+    --from-beginning \
+    --max-messages 2 \
+    --timeout-ms 10000 \
+    --property print.headers=true | jq
+```
+
+
+returns 2 events
+```json
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "tom",
+    "username" : "tom@conduktor.io",
+    "password" : "motorhead",
+    "visa" : "#abc123",
+    "address" : "Chancery lane, London"
+  }
+}
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "laura",
+    "username" : "laura@conduktor.io",
+    "password" : "kitesurf",
+    "visa" : "#888999XZ",
+    "address" : "Dubai, UAE"
+  }
+}
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+jq: parse error: Invalid numeric literal at line 1, column 15
+Processed a total of 2 messages
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/h3F2Tsp3jPHH6yx8Q4IyqKjCf.svg)](https://asciinema.org/a/h3F2Tsp3jPHH6yx8Q4IyqKjCf)
+
+</TabItem>
+</Tabs>
+
+## Remove interceptor remove-headers
+
+Let's delete the interceptor `remove-headers` so we can access all our headers again
 
 <Tabs>
 <TabItem value="Command">
@@ -516,7 +730,7 @@ Listing interceptors on `gateway1` for virtual cluster `teamA`
 
 ```sh
 curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
+    --request DELETE "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/remove-headers" \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent | jq
@@ -527,88 +741,20 @@ curl \
 <TabItem value="Output">
 
 ```json
-{
-  "interceptors": [
-    {
-      "name": "schema-id",
-      "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
-      "priority": 100,
-      "timeoutMs": 9223372036854775807,
-      "config": {
-        "topic": "users",
-        "schemaIdRequired": true
-      }
-    }
-  ]
-}
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU.svg)](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU)
+[![asciicast](https://asciinema.org/a/Kkh6H83kr1arR9DiqpmihStiQ.svg)](https://asciinema.org/a/Kkh6H83kr1arR9DiqpmihStiQ)
 
 </TabItem>
 </Tabs>
 
-## Producing 1 message in users
+## Verify tom and laura have X-MY-KEY back
 
-Producing 1 message in `users` in cluster `teamA`
-
-<Tabs>
-<TabItem value="Command">
-
-
-Sending 1 event
-```json
-{
-  "msg" : "hello world"
-}
-```
-with
-
-
-```sh
-echo '{"msg":"hello world"}' | \
-    kafka-console-producer \
-        --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
-        --topic users
-```
-
-> [!IMPORTANT]
-> We get the following exception
->
-> ```sh
-> org.apache.kafka.common.errors.PolicyViolationException:
->> Request parameters do not satisfy the configured policy.
->>Topic 'users' with schemaId is required.
-> ```
-
-
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[2024-04-10 03:16:59,779] ERROR Error when sending message to topic users with key: null, value: 21 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
-org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'users' with schemaId is required.
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi.svg)](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi)
-
-</TabItem>
-</Tabs>
-
-## Consuming from users
-
-Consuming from users in cluster `teamA`
+Verify tom and laura have X-MY-KEY back in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
@@ -620,7 +766,42 @@ kafka-console-consumer \
     --consumer.config teamA-sa.properties \
     --topic users \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --max-messages 2 \
+    --timeout-ms 10000 \
+    --property print.headers=true | jq
+```
+
+
+returns 2 events
+```json
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-MY-KEY" : "my own value",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "tom",
+    "username" : "tom@conduktor.io",
+    "password" : "motorhead",
+    "visa" : "#abc123",
+    "address" : "Chancery lane, London"
+  }
+}
+{
+  "headers" : {
+    "X-INTERPOLATED" : "User sa via ip 192.168.65.1",
+    "X-MY-KEY" : "my own value",
+    "X-USER" : "sa"
+  },
+  "value" : {
+    "name" : "laura",
+    "username" : "laura@conduktor.io",
+    "password" : "kitesurf",
+    "visa" : "#888999XZ",
+    "address" : "Dubai, UAE"
+  }
+}
 ```
 
 
@@ -628,200 +809,15 @@ kafka-console-consumer \
 <TabItem value="Output">
 
 ```json
-[2024-04-10 03:17:11,021] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
-Processed a total of 0 messages
+jq: parse error: Invalid numeric literal at line 1, column 15
+Processed a total of 2 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1.svg)](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1)
-
-</TabItem>
-</Tabs>
-
-## Send avro message
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-echo '{
-    "name": "conduktor",
-    "username": "test@conduktor.io",
-    "password": "password1",
-    "visa": "visa123456",
-    "address": "Conduktor Towers, London"
-}' | \
-  jq -c | \
-      kafka-json-schema-console-producer  \
-        --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
-        --topic users \
-        --property schema.registry.url=http://localhost:8081 \
-        --property value.schema='{
-            "title": "User",
-            "type": "object",
-            "properties": {
-                "name": { "type": "string" },
-                "username": { "type": "string" },
-                "password": { "type": "string" },
-                "visa": { "type": "string" },
-                "address": { "type": "string" }
-            }
-        }'
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[2024-04-10 03:17:12,375] INFO KafkaJsonSchemaSerializerConfig values: 
-	auto.register.schemas = true
-	basic.auth.credentials.source = URL
-	basic.auth.user.info = [hidden]
-	bearer.auth.cache.expiry.buffer.seconds = 300
-	bearer.auth.client.id = null
-	bearer.auth.client.secret = null
-	bearer.auth.credentials.source = STATIC_TOKEN
-	bearer.auth.custom.provider.class = null
-	bearer.auth.identity.pool.id = null
-	bearer.auth.issuer.endpoint.url = null
-	bearer.auth.logical.cluster = null
-	bearer.auth.scope = null
-	bearer.auth.scope.claim.name = scope
-	bearer.auth.sub.claim.name = sub
-	bearer.auth.token = [hidden]
-	context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
-	http.connect.timeout.ms = 60000
-	http.read.timeout.ms = 60000
-	id.compatibility.strict = true
-	json.fail.invalid.schema = true
-	json.fail.unknown.properties = true
-	json.indent.output = false
-	json.oneof.for.nullables = true
-	json.schema.spec.version = draft_7
-	json.write.dates.iso8601 = false
-	key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
-	latest.cache.size = 1000
-	latest.cache.ttl.sec = -1
-	latest.compatibility.strict = true
-	max.schemas.per.subject = 1000
-	normalize.schemas = false
-	proxy.host = 
-	proxy.port = -1
-	rule.actions = []
-	rule.executors = []
-	rule.service.loader.enable = true
-	schema.format = null
-	schema.reflection = false
-	schema.registry.basic.auth.user.info = [hidden]
-	schema.registry.ssl.cipher.suites = null
-	schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
-	schema.registry.ssl.endpoint.identification.algorithm = https
-	schema.registry.ssl.engine.factory.class = null
-	schema.registry.ssl.key.password = null
-	schema.registry.ssl.keymanager.algorithm = SunX509
-	schema.registry.ssl.keystore.certificate.chain = null
-	schema.registry.ssl.keystore.key = null
-	schema.registry.ssl.keystore.location = null
-	schema.registry.ssl.keystore.password = null
-	schema.registry.ssl.keystore.type = JKS
-	schema.registry.ssl.protocol = TLSv1.3
-	schema.registry.ssl.provider = null
-	schema.registry.ssl.secure.random.implementation = null
-	schema.registry.ssl.trustmanager.algorithm = PKIX
-	schema.registry.ssl.truststore.certificates = null
-	schema.registry.ssl.truststore.location = null
-	schema.registry.ssl.truststore.password = null
-	schema.registry.ssl.truststore.type = JKS
-	schema.registry.url = [http://localhost:8081]
-	use.latest.version = false
-	use.latest.with.metadata = null
-	use.schema.id = -1
-	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
- (io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig:376)
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT.svg)](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT)
-
-</TabItem>
-</Tabs>
-
-## Get subjects
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-curl --silent http://localhost:8081/subjects/ | jq     
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[
-  "users-value"
-]
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr.svg)](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr)
-
-</TabItem>
-</Tabs>
-
-## Consuming from users
-
-Consuming from users in cluster `teamA`
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic users \
-    --from-beginning \
-    --timeout-ms 10000 | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```json
-jq: parse error: Invalid numeric literal at line 1, column 6
-[2024-04-10 03:17:24,912] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
-Processed a total of 1 messages
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma.svg)](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma)
+[![asciicast](https://asciinema.org/a/0QZsGT0kYhsV5U821tyiL4diM.svg)](https://asciinema.org/a/0QZsGT0kYhsV5U821tyiL4diM)
 
 </TabItem>
 </Tabs>
@@ -845,22 +841,22 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
  Container kafka-client  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway2  Removed
+ Container gateway1  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
  Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka3  Stopping
  Container kafka2  Stopping
  Container kafka1  Stopping
+ Container kafka3  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
@@ -877,20 +873,20 @@ docker compose down --volumes
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
- Network safeguard-schema-id_default  Removing
- Network safeguard-schema-id_default  Removed
+ Network header-injection_default  Removing
+ Network header-injection_default  Removed
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk.svg)](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk)
+[![asciicast](https://asciinema.org/a/3x2x8XjLPYZIZttMHr7EfbZCu.svg)](https://asciinema.org/a/3x2x8XjLPYZIZttMHr7EfbZCu)
 
 </TabItem>
 </Tabs>
 
 # Conclusion
 
-You can now make sure you don't fall because of a wrong message
+Leveraging headers in Kafka is of tremendous help!
 

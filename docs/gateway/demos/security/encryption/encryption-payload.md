@@ -1,14 +1,14 @@
 ---
-title: SchemaId Validation
-description: Schema Id validation
-tag: safeguard
+title: Encryption Full Payload
+description: Encryption full payload
+tag: encryption
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# Schema Id validation
+# Field level encryption
 
-
+Let's demonstrate full payload encryption
 
 ## View the full demo in realtime
 
@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm.svg)](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm)
+[![asciicast](https://asciinema.org/a/cKTLDjWIvR7IFW3fV9zrba5uT.svg)](https://asciinema.org/a/cKTLDjWIvR7IFW3fV9zrba5uT)
 
 </TabItem>
 </Tabs>
@@ -255,65 +255,64 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Network safeguard-schema-id_default  Creating
- Network safeguard-schema-id_default  Created
- Container zookeeper  Creating
+ Network encryption-payload_default  Creating
+ Network encryption-payload_default  Created
  Container kafka-client  Creating
+ Container zookeeper  Creating
  Container kafka-client  Created
  Container zookeeper  Created
  Container kafka3  Creating
- Container kafka2  Creating
  Container kafka1  Creating
- Container kafka2  Created
- Container kafka3  Created
+ Container kafka2  Creating
  Container kafka1  Created
+ Container kafka3  Created
+ Container kafka2  Created
+ Container gateway1  Creating
  Container gateway2  Creating
  Container schema-registry  Creating
- Container gateway1  Creating
  Container gateway2  Created
  Container gateway1  Created
  Container schema-registry  Created
  Container zookeeper  Starting
  Container kafka-client  Starting
+ Container kafka-client  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
- Container kafka-client  Started
  Container zookeeper  Healthy
  Container kafka2  Starting
  Container zookeeper  Healthy
- Container kafka1  Starting
- Container zookeeper  Healthy
  Container kafka3  Starting
+ Container zookeeper  Healthy
+ Container kafka1  Starting
+ Container kafka3  Started
  Container kafka1  Started
  Container kafka2  Started
- Container kafka3  Started
- Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
  Container gateway2  Starting
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
  Container kafka1  Healthy
  Container schema-registry  Starting
- Container kafka1  Healthy
- Container gateway1  Starting
- Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
- Container schema-registry  Waiting
+ Container schema-registry  Started
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
@@ -321,21 +320,22 @@ docker compose up --detach --wait
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka2  Healthy
+ Container schema-registry  Waiting
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container zookeeper  Healthy
+ Container kafka2  Healthy
  Container kafka-client  Healthy
- Container schema-registry  Healthy
+ Container zookeeper  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE.svg)](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE)
+[![asciicast](https://asciinema.org/a/RcgB6vuxSQUVUeKk8IV8vnHxm.svg)](https://asciinema.org/a/RcgB6vuxSQUVUeKk8IV8vnHxm)
 
 </TabItem>
 </Tabs>
@@ -378,7 +378,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MDYxNX0.b8GXqe_BdbGajYcgY711xuFK9qJKzGIZz6ZOxyDCL-4';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3MzMxM30.kG-OLKwmB7Jf0iuA-NlJC51pwX2swsk1M_AAecrfCqU';
 
 
 ```
@@ -386,16 +386,16 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL.svg)](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL)
+[![asciicast](https://asciinema.org/a/vnWtMSJNOahEZmCRaoVZvLdoY.svg)](https://asciinema.org/a/vnWtMSJNOahEZmCRaoVZvLdoY)
 
 </TabItem>
 </Tabs>
 
-## Creating topic users on teamA
+## Creating topic customers on teamA
 
 Creating on `teamA`:
 
-* Topic `users` with partitions:1 and replication-factor:1
+* Topic `customers` with partitions:1 and replication-factor:1
 
 <Tabs>
 <TabItem value="Command">
@@ -408,7 +408,7 @@ kafka-topics \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
-    --topic users
+    --topic customers
 ```
 
 
@@ -416,67 +416,35 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-Created topic users.
+Created topic customers.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs.svg)](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs)
+[![asciicast](https://asciinema.org/a/rapERKuuiQkguOQWe0Puda2l3.svg)](https://asciinema.org/a/rapERKuuiQkguOQWe0Puda2l3)
 
 </TabItem>
 </Tabs>
 
-## Listing topics in teamA
+## Adding interceptor encrypt-full-payload
 
-
+We want to encrypt the full payload with an in memory KMS.
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --list
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-users
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p.svg)](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p)
-
-</TabItem>
-</Tabs>
-
-## Adding interceptor schema-id
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-cat step-08-schema-id.json | jq
+cat step-07-encrypt-full-payload.json | jq
 
 curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/schema-id" \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/encrypt-full-payload" \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent \
-    --data @step-08-schema-id.json | jq
+    --data @step-07-encrypt-full-payload.json | jq
 ```
 
 
@@ -485,15 +453,17 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
   "priority": 100,
   "config": {
-    "topic": "users",
-    "schemaIdRequired": true
+    "payload": {
+      "keySecretId": "full-payload-secret",
+      "algorithm": "AES_GCM"
+    }
   }
 }
 {
-  "message": "schema-id is created"
+  "message": "encrypt-full-payload is created"
 }
 
 ```
@@ -501,7 +471,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn.svg)](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn)
+[![asciicast](https://asciinema.org/a/xCSRybYNg0uIVzlCjT1ys0QxK.svg)](https://asciinema.org/a/xCSRybYNg0uIVzlCjT1ys0QxK)
 
 </TabItem>
 </Tabs>
@@ -530,13 +500,15 @@ curl \
 {
   "interceptors": [
     {
-      "name": "schema-id",
-      "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
+      "name": "encrypt-full-payload",
+      "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
       "priority": 100,
       "timeoutMs": 9223372036854775807,
       "config": {
-        "topic": "users",
-        "schemaIdRequired": true
+        "payload": {
+          "keySecretId": "full-payload-secret",
+          "algorithm": "AES_GCM"
+        }
       }
     }
   ]
@@ -547,134 +519,51 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU.svg)](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU)
+[![asciicast](https://asciinema.org/a/66sneWUxcLQpW9rA6HTKCnZQg.svg)](https://asciinema.org/a/66sneWUxcLQpW9rA6HTKCnZQg)
 
 </TabItem>
 </Tabs>
 
-## Producing 1 message in users
+## Let's send unencrypted json
 
-Producing 1 message in `users` in cluster `teamA`
+We are using regular kafka tools
 
 <Tabs>
 <TabItem value="Command">
 
 
-Sending 1 event
+Sending 2 events
 ```json
 {
-  "msg" : "hello world"
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
+}
+{
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ;",
+  "address" : "Dubai, UAE"
 }
 ```
 with
 
 
 ```sh
-echo '{"msg":"hello world"}' | \
+echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
         --producer.config teamA-sa.properties \
-        --topic users
-```
+        --topic customers
 
-> [!IMPORTANT]
-> We get the following exception
->
-> ```sh
-> org.apache.kafka.common.errors.PolicyViolationException:
->> Request parameters do not satisfy the configured policy.
->>Topic 'users' with schemaId is required.
-> ```
-
-
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[2024-04-10 03:16:59,779] ERROR Error when sending message to topic users with key: null, value: 21 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
-org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'users' with schemaId is required.
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi.svg)](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi)
-
-</TabItem>
-</Tabs>
-
-## Consuming from users
-
-Consuming from users in cluster `teamA`
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic users \
-    --from-beginning \
-    --timeout-ms 10000 | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```json
-[2024-04-10 03:17:11,021] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
-Processed a total of 0 messages
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1.svg)](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1)
-
-</TabItem>
-</Tabs>
-
-## Send avro message
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-echo '{
-    "name": "conduktor",
-    "username": "test@conduktor.io",
-    "password": "password1",
-    "visa": "visa123456",
-    "address": "Conduktor Towers, London"
-}' | \
-  jq -c | \
-      kafka-json-schema-console-producer  \
+echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","visa":"#888999XZ;","address":"Dubai, UAE"}' | \
+    kafka-console-producer \
         --bootstrap-server localhost:6969 \
         --producer.config teamA-sa.properties \
-        --topic users \
-        --property schema.registry.url=http://localhost:8081 \
-        --property value.schema='{
-            "title": "User",
-            "type": "object",
-            "properties": {
-                "name": { "type": "string" },
-                "username": { "type": "string" },
-                "password": { "type": "string" },
-                "visa": { "type": "string" },
-                "address": { "type": "string" }
-            }
-        }'
+        --topic customers
 ```
 
 
@@ -682,116 +571,20 @@ echo '{
 <TabItem value="Output">
 
 ```
-[2024-04-10 03:17:12,375] INFO KafkaJsonSchemaSerializerConfig values: 
-	auto.register.schemas = true
-	basic.auth.credentials.source = URL
-	basic.auth.user.info = [hidden]
-	bearer.auth.cache.expiry.buffer.seconds = 300
-	bearer.auth.client.id = null
-	bearer.auth.client.secret = null
-	bearer.auth.credentials.source = STATIC_TOKEN
-	bearer.auth.custom.provider.class = null
-	bearer.auth.identity.pool.id = null
-	bearer.auth.issuer.endpoint.url = null
-	bearer.auth.logical.cluster = null
-	bearer.auth.scope = null
-	bearer.auth.scope.claim.name = scope
-	bearer.auth.sub.claim.name = sub
-	bearer.auth.token = [hidden]
-	context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
-	http.connect.timeout.ms = 60000
-	http.read.timeout.ms = 60000
-	id.compatibility.strict = true
-	json.fail.invalid.schema = true
-	json.fail.unknown.properties = true
-	json.indent.output = false
-	json.oneof.for.nullables = true
-	json.schema.spec.version = draft_7
-	json.write.dates.iso8601 = false
-	key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
-	latest.cache.size = 1000
-	latest.cache.ttl.sec = -1
-	latest.compatibility.strict = true
-	max.schemas.per.subject = 1000
-	normalize.schemas = false
-	proxy.host = 
-	proxy.port = -1
-	rule.actions = []
-	rule.executors = []
-	rule.service.loader.enable = true
-	schema.format = null
-	schema.reflection = false
-	schema.registry.basic.auth.user.info = [hidden]
-	schema.registry.ssl.cipher.suites = null
-	schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
-	schema.registry.ssl.endpoint.identification.algorithm = https
-	schema.registry.ssl.engine.factory.class = null
-	schema.registry.ssl.key.password = null
-	schema.registry.ssl.keymanager.algorithm = SunX509
-	schema.registry.ssl.keystore.certificate.chain = null
-	schema.registry.ssl.keystore.key = null
-	schema.registry.ssl.keystore.location = null
-	schema.registry.ssl.keystore.password = null
-	schema.registry.ssl.keystore.type = JKS
-	schema.registry.ssl.protocol = TLSv1.3
-	schema.registry.ssl.provider = null
-	schema.registry.ssl.secure.random.implementation = null
-	schema.registry.ssl.trustmanager.algorithm = PKIX
-	schema.registry.ssl.truststore.certificates = null
-	schema.registry.ssl.truststore.location = null
-	schema.registry.ssl.truststore.password = null
-	schema.registry.ssl.truststore.type = JKS
-	schema.registry.url = [http://localhost:8081]
-	use.latest.version = false
-	use.latest.with.metadata = null
-	use.schema.id = -1
-	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
- (io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig:376)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT.svg)](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT)
+[![asciicast](https://asciinema.org/a/9Q3VwMw8ObmxSCJj1stWvrZ3g.svg)](https://asciinema.org/a/9Q3VwMw8ObmxSCJj1stWvrZ3g)
 
 </TabItem>
 </Tabs>
 
-## Get subjects
+## Let's consume the message, and confirm tom and laura data is encrypted
 
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-curl --silent http://localhost:8081/subjects/ | jq     
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[
-  "users-value"
-]
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr.svg)](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr)
-
-</TabItem>
-</Tabs>
-
-## Consuming from users
-
-Consuming from users in cluster `teamA`
+Let's consume the message, and confirm tom and laura data is encrypted in cluster `teamA`
 
 <Tabs>
 <TabItem value="Command">
@@ -801,9 +594,16 @@ Consuming from users in cluster `teamA`
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
     --consumer.config teamA-sa.properties \
-    --topic users \
+    --topic customers \
     --from-beginning \
     --timeout-ms 10000 | jq
+```
+
+
+returns 2 events
+```json
+
+
 ```
 
 
@@ -811,17 +611,202 @@ kafka-console-consumer \
 <TabItem value="Output">
 
 ```json
-jq: parse error: Invalid numeric literal at line 1, column 6
-[2024-04-10 03:17:24,912] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+jq: parse error: Invalid numeric literal at line 1, column 36
+[2024-04-10 01:15:29,530] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
-Processed a total of 1 messages
+Processed a total of 2 messages
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma.svg)](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma)
+[![asciicast](https://asciinema.org/a/DxBGDn7i5aOcXp4QPFvCdSSfw.svg)](https://asciinema.org/a/DxBGDn7i5aOcXp4QPFvCdSSfw)
+
+</TabItem>
+</Tabs>
+
+## Adding interceptor decrypt-full-payload
+
+Let's add the decrypt interceptor to decipher messages
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+cat step-11-decrypt-full-payload.json | jq
+
+curl \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/decrypt-full-payload" \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent \
+    --data @step-11-decrypt-full-payload.json | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "customers",
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "vault-plaintext-root-token",
+        "version": 1
+      }
+    }
+  }
+}
+{
+  "message": "decrypt-full-payload is created"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/P8pjuy5Iwafw30dCVMVsp3zL6.svg)](https://asciinema.org/a/P8pjuy5Iwafw30dCVMVsp3zL6)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors for teamA
+
+Listing interceptors on `gateway1` for virtual cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+curl \
+    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
+    --header 'Content-Type: application/json' \
+    --user 'admin:conduktor' \
+    --silent | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "interceptors": [
+    {
+      "name": "decrypt-full-payload",
+      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "topic": "customers",
+        "kmsConfig": {
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "vault-plaintext-root-token",
+            "version": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "encrypt-full-payload",
+      "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+      "priority": 100,
+      "timeoutMs": 9223372036854775807,
+      "config": {
+        "payload": {
+          "keySecretId": "full-payload-secret",
+          "algorithm": "AES_GCM"
+        }
+      }
+    }
+  ]
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/3ALFmDlcjeLvWxEmI9ct5fffK.svg)](https://asciinema.org/a/3ALFmDlcjeLvWxEmI9ct5fffK)
+
+</TabItem>
+</Tabs>
+
+## Confirm message from tom and laura are decrypted
+
+Confirm message from tom and laura are decrypted in cluster `teamA`
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --consumer.config teamA-sa.properties \
+    --topic customers \
+    --from-beginning \
+    --timeout-ms 10000 | jq
+```
+
+
+returns 2 events
+```json
+{
+  "name" : "tom",
+  "username" : "tom@conduktor.io",
+  "password" : "motorhead",
+  "visa" : "#abc123",
+  "address" : "Chancery lane, London"
+}
+{
+  "name" : "laura",
+  "username" : "laura@conduktor.io",
+  "password" : "kitesurf",
+  "visa" : "#888999XZ;",
+  "address" : "Dubai, UAE"
+}
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[2024-04-10 01:15:41,637] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
+Processed a total of 2 messages
+{
+  "name": "tom",
+  "username": "tom@conduktor.io",
+  "password": "motorhead",
+  "visa": "#abc123",
+  "address": "Chancery lane, London"
+}
+{
+  "name": "laura",
+  "username": "laura@conduktor.io",
+  "password": "kitesurf",
+  "visa": "#888999XZ;",
+  "address": "Dubai, UAE"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/TemTdVY04VGLO1T0JMnJPv5gt.svg)](https://asciinema.org/a/TemTdVY04VGLO1T0JMnJPv5gt)
 
 </TabItem>
 </Tabs>
@@ -845,10 +830,10 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
- Container kafka-client  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
+ Container kafka-client  Stopping
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -861,36 +846,36 @@ docker compose down --volumes
  Container kafka3  Stopping
  Container kafka2  Stopping
  Container kafka1  Stopping
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Container zookeeper  Stopping
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
- Network safeguard-schema-id_default  Removing
- Network safeguard-schema-id_default  Removed
+ Network encryption-payload_default  Removing
+ Network encryption-payload_default  Removed
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk.svg)](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk)
+[![asciicast](https://asciinema.org/a/RnoCzvIMgApsUEAn6KW6UECAC.svg)](https://asciinema.org/a/RnoCzvIMgApsUEAn6KW6UECAC)
 
 </TabItem>
 </Tabs>
 
 # Conclusion
 
-You can now make sure you don't fall because of a wrong message
+Yes, encryption in the Kafka world can be simple!
 

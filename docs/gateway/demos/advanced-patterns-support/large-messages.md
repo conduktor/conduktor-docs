@@ -1,12 +1,12 @@
 ---
-title: SchemaId Validation
-description: Schema Id validation
-tag: safeguard
+title: Large Message Handling
+description: Large message support
+tag: ops
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# Schema Id validation
+# Large messages support in Kafka with built-in claimcheck pattern.
 
 
 
@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm.svg)](https://asciinema.org/a/bQZ6qPyEO47NsdHs6t3TYaaSm)
+[![asciicast](https://asciinema.org/a/uzc57YiIXGRDSnFWxc8S84E4b.svg)](https://asciinema.org/a/uzc57YiIXGRDSnFWxc8S84E4b)
 
 </TabItem>
 </Tabs>
@@ -32,12 +32,14 @@ You can either follow all the steps manually, or watch the recording
 
 As can be seen from `docker-compose.yaml` the demo environment consists of the following services:
 
+* cli-aws
 * gateway1
 * gateway2
 * kafka-client
 * kafka1
 * kafka2
 * kafka3
+* minio
 * schema-registry
 * zookeeper
 
@@ -229,6 +231,28 @@ services:
       source: .
       target: /clientConfig
       read_only: true
+  minio:
+    image: quay.io/minio/minio
+    hostname: minio
+    environment:
+      MINIO_SERVER_HOST: minio
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+      MINIO_SITE_REGION: eu-south-1
+    container_name: minio
+    ports:
+    - 9000:9000
+    command: minio server /data
+  cli-aws:
+    image: amazon/aws-cli
+    hostname: cli-aws
+    container_name: cli-aws
+    entrypoint: sleep 100d
+    volumes:
+    - type: bind
+      source: credentials
+      target: /root/.aws/credentials
+      read_only: true
 networks:
   demo: null
 ```
@@ -255,87 +279,99 @@ docker compose up --detach --wait
 <TabItem value="Output">
 
 ```
- Network safeguard-schema-id_default  Creating
- Network safeguard-schema-id_default  Created
- Container zookeeper  Creating
+ Network large-messages_default  Creating
+ Network large-messages_default  Created
+ Container minio  Creating
  Container kafka-client  Creating
+ Container cli-aws  Creating
+ Container zookeeper  Creating
+ Container minio  Created
+ Container cli-aws  Created
  Container kafka-client  Created
  Container zookeeper  Created
+ Container kafka1  Creating
  Container kafka3  Creating
  Container kafka2  Creating
- Container kafka1  Creating
  Container kafka2  Created
- Container kafka3  Created
  Container kafka1  Created
- Container gateway2  Creating
+ Container kafka3  Created
  Container schema-registry  Creating
+ Container gateway2  Creating
  Container gateway1  Creating
- Container gateway2  Created
  Container gateway1  Created
+ Container gateway2  Created
  Container schema-registry  Created
- Container zookeeper  Starting
+ Container minio  Starting
+ Container cli-aws  Starting
  Container kafka-client  Starting
+ Container zookeeper  Starting
+ Container minio  Started
  Container zookeeper  Started
  Container zookeeper  Waiting
  Container zookeeper  Waiting
  Container zookeeper  Waiting
+ Container cli-aws  Started
  Container kafka-client  Started
  Container zookeeper  Healthy
- Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka1  Starting
+ Container kafka2  Starting
  Container zookeeper  Healthy
  Container kafka3  Starting
+ Container kafka3  Started
  Container kafka1  Started
  Container kafka2  Started
- Container kafka3  Started
- Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container kafka2  Healthy
+ Container schema-registry  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
- Container kafka1  Healthy
- Container schema-registry  Starting
- Container kafka1  Healthy
- Container gateway1  Starting
- Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
- Container schema-registry  Waiting
- Container gateway1  Waiting
- Container gateway2  Waiting
- Container kafka-client  Waiting
- Container zookeeper  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
+ Container schema-registry  Started
  Container kafka3  Waiting
- Container kafka2  Healthy
+ Container kafka-client  Waiting
+ Container gateway2  Waiting
+ Container minio  Waiting
+ Container gateway1  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Waiting
+ Container zookeeper  Waiting
+ Container schema-registry  Waiting
+ Container cli-aws  Waiting
+ Container minio  Healthy
+ Container cli-aws  Healthy
+ Container kafka-client  Healthy
+ Container zookeeper  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container zookeeper  Healthy
- Container kafka-client  Healthy
- Container schema-registry  Healthy
+ Container kafka2  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE.svg)](https://asciinema.org/a/m9FMVyZ64aJ8PVp0kCeogn1gE)
+[![asciicast](https://asciinema.org/a/3iZEu2e2kNbyalUBYxxGzc2Yt.svg)](https://asciinema.org/a/3iZEu2e2kNbyalUBYxxGzc2Yt)
 
 </TabItem>
 </Tabs>
@@ -378,7 +414,7 @@ cat teamA-sa.properties
 bootstrap.servers=localhost:6969
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4MDYxNX0.b8GXqe_BdbGajYcgY711xuFK9qJKzGIZz6ZOxyDCL-4';
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3NzE4Mn0.Sqku85l5xsVk1N4BniIZpvR4JjwiDNXtdbnwZL8IfDM';
 
 
 ```
@@ -386,16 +422,75 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL.svg)](https://asciinema.org/a/NYLAvvIGNG82WT8btTyaWmKVL)
+[![asciicast](https://asciinema.org/a/04ShGLEf5H83mdxhAxovv8fqI.svg)](https://asciinema.org/a/04ShGLEf5H83mdxhAxovv8fqI)
 
 </TabItem>
 </Tabs>
 
-## Creating topic users on teamA
+## Review credentials
+
+
+
+<Tabs>
+<TabItem value="Command">
+
+```sh
+cat credentials
+```
+
+</TabItem>
+<TabItem value="File Content">
+
+```
+[minio]
+aws_access_key_id = minio
+aws_secret_access_key = minio123
+```
+</TabItem>
+</Tabs>
+
+## Let's create a bucket
+
+
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+docker compose exec cli-aws \
+  aws \
+    --profile minio \
+    --endpoint-url=http://minio:9000 \
+    --region eu-south-1 \
+    s3api create-bucket \
+      --bucket bucket
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+{
+    "Location": "/bucket"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/62u3FVVktd0Fd2e6xq1IaWACe.svg)](https://asciinema.org/a/62u3FVVktd0Fd2e6xq1IaWACe)
+
+</TabItem>
+</Tabs>
+
+## Creating topic large-messages on teamA
 
 Creating on `teamA`:
 
-* Topic `users` with partitions:1 and replication-factor:1
+* Topic `large-messages` with partitions:1 and replication-factor:1
 
 <Tabs>
 <TabItem value="Command">
@@ -408,7 +503,7 @@ kafka-topics \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
-    --topic users
+    --topic large-messages
 ```
 
 
@@ -416,67 +511,35 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-Created topic users.
+Created topic large-messages.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs.svg)](https://asciinema.org/a/T6JmFW13fJRiHwJfA3r90WARs)
+[![asciicast](https://asciinema.org/a/chet0Hapir1YZ71iOgSuRWvb3.svg)](https://asciinema.org/a/chet0Hapir1YZ71iOgSuRWvb3)
 
 </TabItem>
 </Tabs>
 
-## Listing topics in teamA
+## Adding interceptor large-messages
 
-
+Let's ask Gateway to offload large messages to S3
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-kafka-topics \
-    --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
-    --list
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-users
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p.svg)](https://asciinema.org/a/mB0ESjh6VW2OtNhRwwgj6Bv3p)
-
-</TabItem>
-</Tabs>
-
-## Adding interceptor schema-id
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-cat step-08-schema-id.json | jq
+cat step-09-large-messages.json | jq
 
 curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/schema-id" \
+    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/large-messages" \
     --header 'Content-Type: application/json' \
     --user 'admin:conduktor' \
     --silent \
-    --data @step-08-schema-id.json | jq
+    --data @step-09-large-messages.json | jq
 ```
 
 
@@ -485,15 +548,21 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.LargeMessageHandlingPlugin",
   "priority": 100,
   "config": {
-    "topic": "users",
-    "schemaIdRequired": true
+    "topic": "large-messages",
+    "s3Config": {
+      "accessKey": "minio",
+      "secretKey": "minio123",
+      "bucketName": "bucket",
+      "region": "eu-south-1",
+      "uri": "http://minio:9000"
+    }
   }
 }
 {
-  "message": "schema-id is created"
+  "message": "large-messages is created"
 }
 
 ```
@@ -501,114 +570,185 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn.svg)](https://asciinema.org/a/qbHOLbk0vfCCWrtOuUI6qLpUn)
+[![asciicast](https://asciinema.org/a/Iwx7sV72ON3aL4pdEGRY7LAdL.svg)](https://asciinema.org/a/Iwx7sV72ON3aL4pdEGRY7LAdL)
 
 </TabItem>
 </Tabs>
 
-## Listing interceptors for teamA
+## Let's create a large message
 
-Listing interceptors on `gateway1` for virtual cluster `teamA`
+
 
 <Tabs>
 <TabItem value="Command">
 
 
 ```sh
-curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent | jq
+openssl rand -hex $((20*1024*1024)) > large-message.bin 
+ls -lh large-message.bin
 ```
 
 
 </TabItem>
 <TabItem value="Output">
 
-```json
-{
-  "interceptors": [
-    {
-      "name": "schema-id",
-      "pluginClass": "io.conduktor.gateway.interceptor.safeguard.TopicRequiredSchemaIdPolicyPlugin",
-      "priority": 100,
-      "timeoutMs": 9223372036854775807,
-      "config": {
-        "topic": "users",
-        "schemaIdRequired": true
-      }
-    }
-  ]
-}
+```
+-rw-r--r--@ 1 framiere  staff    40M 10 avr 02:19 large-message.bin
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU.svg)](https://asciinema.org/a/jul0EYxcI221Nw6f9CbEo95OU)
+[![asciicast](https://asciinema.org/a/OUw9U37AgNGdxBK86G2BKVHtI.svg)](https://asciinema.org/a/OUw9U37AgNGdxBK86G2BKVHtI)
 
 </TabItem>
 </Tabs>
 
-## Producing 1 message in users
+## Sending large pdf file through kafka
 
-Producing 1 message in `users` in cluster `teamA`
+
 
 <Tabs>
 <TabItem value="Command">
 
 
-Sending 1 event
-```json
-{
-  "msg" : "hello world"
-}
-```
-with
-
-
 ```sh
-echo '{"msg":"hello world"}' | \
-    kafka-console-producer \
-        --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
-        --topic users
+requiredMemory=$(( 2 * $(cat large-message.bin | wc -c | awk '{print $1}')))
+
+kafka-producer-perf-test \
+  --producer.config teamA-sa.properties \
+  --topic large-messages \
+  --throughput -1 \
+  --num-records 1 \
+  --payload-file large-message.bin \
+  --producer-props \
+    bootstrap.servers=localhost:6969 \
+    max.request.size=$requiredMemory \
+    buffer.memory=$requiredMemory
 ```
-
-> [!IMPORTANT]
-> We get the following exception
->
-> ```sh
-> org.apache.kafka.common.errors.PolicyViolationException:
->> Request parameters do not satisfy the configured policy.
->>Topic 'users' with schemaId is required.
-> ```
-
-
 
 
 </TabItem>
 <TabItem value="Output">
 
 ```
-[2024-04-10 03:16:59,779] ERROR Error when sending message to topic users with key: null, value: 21 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)
-org.apache.kafka.common.errors.PolicyViolationException: Request parameters do not satisfy the configured policy. Topic 'users' with schemaId is required.
+Reading payloads from: /Users/framiere/conduktor/conduktor-proxy/functional-testing/target/2024.04.10-01:54:14/large-messages/large-message.bin
+Number of messages read: 1
+1 records sent, 0,674764 records/sec (26,99 MB/sec), 1474,00 ms avg latency, 1474,00 ms max latency, 1474 ms 50th, 1474 ms 95th, 1474 ms 99th, 1474 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi.svg)](https://asciinema.org/a/sJ5w8IYOPeWId52pFTYNjDNVi)
+[![asciicast](https://asciinema.org/a/W88EKtd4a8zJYD1ZJqKEJXpgd.svg)](https://asciinema.org/a/W88EKtd4a8zJYD1ZJqKEJXpgd)
 
 </TabItem>
 </Tabs>
 
-## Consuming from users
+## Let's read the message back
 
-Consuming from users in cluster `teamA`
+
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+kafka-console-consumer  \
+  --bootstrap-server localhost:6969 \
+  --consumer.config teamA-sa.properties \
+  --topic large-messages \
+  --from-beginning \
+  --max-messages 1 > from-kafka.bin
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+Processed a total of 1 messages
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/nAAnVQ48O3EsSKZLN2FVdt3vw.svg)](https://asciinema.org/a/nAAnVQ48O3EsSKZLN2FVdt3vw)
+
+</TabItem>
+</Tabs>
+
+## Let's compare the files
+
+
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+ls -lH *bin
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+-rw-r--r--@ 1 framiere  staff  41943041 10 avr 02:19 from-kafka.bin
+-rw-r--r--@ 1 framiere  staff  41943041 10 avr 02:19 large-message.bin
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/CctyDIDDANHyrKoRrEBOnB8Rk.svg)](https://asciinema.org/a/CctyDIDDANHyrKoRrEBOnB8Rk)
+
+</TabItem>
+</Tabs>
+
+## Let's look at what's inside minio
+
+
+
+<Tabs>
+<TabItem value="Command">
+
+
+```sh
+docker compose exec cli-aws \
+    aws \
+        --profile minio \
+        --endpoint-url=http://minio:9000 \
+        --region eu-south-1 \
+        s3 \
+        ls s3://bucket --recursive --human-readable
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+2024-04-09 22:19:49   40.0 MiB large-messages/84a95586-c2ea-407b-99e5-8cd921f58ae7
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/gdiPpioZ6vrTU6WCf2B6lHl87.svg)](https://asciinema.org/a/gdiPpioZ6vrTU6WCf2B6lHl87)
+
+</TabItem>
+</Tabs>
+
+## Consuming from teamAlarge-messages
+
+Consuming from teamAlarge-messages in cluster `kafka1`
 
 <Tabs>
 <TabItem value="Command">
@@ -616,11 +756,11 @@ Consuming from users in cluster `teamA`
 
 ```sh
 kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic users \
+    --bootstrap-server localhost:19092,localhost:19093,localhost:19094 \
+    --topic teamAlarge-messages \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --timeout-ms 10000 \
+    --property print.headers=true | jq
 ```
 
 
@@ -628,191 +768,8 @@ kafka-console-consumer \
 <TabItem value="Output">
 
 ```json
-[2024-04-10 03:17:11,021] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
-org.apache.kafka.common.errors.TimeoutException
-Processed a total of 0 messages
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1.svg)](https://asciinema.org/a/GZavkrkF3FnnOlXvt34Q2I6p1)
-
-</TabItem>
-</Tabs>
-
-## Send avro message
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-echo '{
-    "name": "conduktor",
-    "username": "test@conduktor.io",
-    "password": "password1",
-    "visa": "visa123456",
-    "address": "Conduktor Towers, London"
-}' | \
-  jq -c | \
-      kafka-json-schema-console-producer  \
-        --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
-        --topic users \
-        --property schema.registry.url=http://localhost:8081 \
-        --property value.schema='{
-            "title": "User",
-            "type": "object",
-            "properties": {
-                "name": { "type": "string" },
-                "username": { "type": "string" },
-                "password": { "type": "string" },
-                "visa": { "type": "string" },
-                "address": { "type": "string" }
-            }
-        }'
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[2024-04-10 03:17:12,375] INFO KafkaJsonSchemaSerializerConfig values: 
-	auto.register.schemas = true
-	basic.auth.credentials.source = URL
-	basic.auth.user.info = [hidden]
-	bearer.auth.cache.expiry.buffer.seconds = 300
-	bearer.auth.client.id = null
-	bearer.auth.client.secret = null
-	bearer.auth.credentials.source = STATIC_TOKEN
-	bearer.auth.custom.provider.class = null
-	bearer.auth.identity.pool.id = null
-	bearer.auth.issuer.endpoint.url = null
-	bearer.auth.logical.cluster = null
-	bearer.auth.scope = null
-	bearer.auth.scope.claim.name = scope
-	bearer.auth.sub.claim.name = sub
-	bearer.auth.token = [hidden]
-	context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
-	http.connect.timeout.ms = 60000
-	http.read.timeout.ms = 60000
-	id.compatibility.strict = true
-	json.fail.invalid.schema = true
-	json.fail.unknown.properties = true
-	json.indent.output = false
-	json.oneof.for.nullables = true
-	json.schema.spec.version = draft_7
-	json.write.dates.iso8601 = false
-	key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
-	latest.cache.size = 1000
-	latest.cache.ttl.sec = -1
-	latest.compatibility.strict = true
-	max.schemas.per.subject = 1000
-	normalize.schemas = false
-	proxy.host = 
-	proxy.port = -1
-	rule.actions = []
-	rule.executors = []
-	rule.service.loader.enable = true
-	schema.format = null
-	schema.reflection = false
-	schema.registry.basic.auth.user.info = [hidden]
-	schema.registry.ssl.cipher.suites = null
-	schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
-	schema.registry.ssl.endpoint.identification.algorithm = https
-	schema.registry.ssl.engine.factory.class = null
-	schema.registry.ssl.key.password = null
-	schema.registry.ssl.keymanager.algorithm = SunX509
-	schema.registry.ssl.keystore.certificate.chain = null
-	schema.registry.ssl.keystore.key = null
-	schema.registry.ssl.keystore.location = null
-	schema.registry.ssl.keystore.password = null
-	schema.registry.ssl.keystore.type = JKS
-	schema.registry.ssl.protocol = TLSv1.3
-	schema.registry.ssl.provider = null
-	schema.registry.ssl.secure.random.implementation = null
-	schema.registry.ssl.trustmanager.algorithm = PKIX
-	schema.registry.ssl.truststore.certificates = null
-	schema.registry.ssl.truststore.location = null
-	schema.registry.ssl.truststore.password = null
-	schema.registry.ssl.truststore.type = JKS
-	schema.registry.url = [http://localhost:8081]
-	use.latest.version = false
-	use.latest.with.metadata = null
-	use.schema.id = -1
-	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
- (io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig:376)
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT.svg)](https://asciinema.org/a/21ohB4q49hQASuAXjSUt3eGQT)
-
-</TabItem>
-</Tabs>
-
-## Get subjects
-
-
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-curl --silent http://localhost:8081/subjects/ | jq     
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-[
-  "users-value"
-]
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr.svg)](https://asciinema.org/a/bHK8sRw1ZVSWpZHz20AxyZbOr)
-
-</TabItem>
-</Tabs>
-
-## Consuming from users
-
-Consuming from users in cluster `teamA`
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-kafka-console-consumer \
-    --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
-    --topic users \
-    --from-beginning \
-    --timeout-ms 10000 | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```json
-jq: parse error: Invalid numeric literal at line 1, column 6
-[2024-04-10 03:17:24,912] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+jq: parse error: Invalid numeric literal at line 1, column 17
+[2024-04-10 02:20:04,392] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 
@@ -821,7 +778,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma.svg)](https://asciinema.org/a/0ayxNF7xTPFUFJlpe81fRt6Ma)
+[![asciicast](https://asciinema.org/a/YdP2vSpmWQUa7YTg7do4QaAyQ.svg)](https://asciinema.org/a/YdP2vSpmWQUa7YTg7do4QaAyQ)
 
 </TabItem>
 </Tabs>
@@ -845,10 +802,15 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
+ Container minio  Stopping
  Container kafka-client  Stopping
- Container gateway2  Stopping
  Container schema-registry  Stopping
+ Container gateway1  Stopping
+ Container gateway2  Stopping
+ Container cli-aws  Stopping
+ Container minio  Stopped
+ Container minio  Removing
+ Container minio  Removed
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -859,17 +821,20 @@ docker compose down --volumes
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka3  Stopping
- Container kafka2  Stopping
  Container kafka1  Stopping
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
+ Container kafka2  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
+ Container cli-aws  Stopped
+ Container cli-aws  Removing
+ Container cli-aws  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
@@ -877,20 +842,20 @@ docker compose down --volumes
  Container zookeeper  Stopped
  Container zookeeper  Removing
  Container zookeeper  Removed
- Network safeguard-schema-id_default  Removing
- Network safeguard-schema-id_default  Removed
+ Network large-messages_default  Removing
+ Network large-messages_default  Removed
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk.svg)](https://asciinema.org/a/NkUynkyL0GtqXQcJJeinBlJZk)
+[![asciicast](https://asciinema.org/a/l49f6YWoei8DsQld1EEZmxja2.svg)](https://asciinema.org/a/l49f6YWoei8DsQld1EEZmxja2)
 
 </TabItem>
 </Tabs>
 
 # Conclusion
 
-You can now make sure you don't fall because of a wrong message
+ksqlDB can run in a virtual cluster where all its topics are concentrated into a single physical topic
 
