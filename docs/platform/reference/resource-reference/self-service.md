@@ -294,6 +294,7 @@ spec:
       name: "*" # All owned consumer groups
       permissions: ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
     - appInstance: clickstream-app-dev
+      connectCluster: local-connect
       resourceType: CONNECTOR
       patternType: "LITERAL"
       name: "*" # All owned connectors
