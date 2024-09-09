@@ -118,7 +118,6 @@ Global Flags:
 Examples:
 ````
 $ conduktor get Interceptor
-$ conduktor get Interceptor encrypt-topic-customers --vcluster passthrough
 ````
 
 ### Version

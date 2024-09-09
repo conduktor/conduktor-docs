@@ -66,7 +66,7 @@ kind: VirtualCluster
 metadata:
   name: "mon-app-A"
 spec:
-  aclEnabled: "true" # defaults to false
+  aclEnabled: true # defaults to false
   superUsers:
   - username1
   - username2
