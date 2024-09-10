@@ -598,7 +598,6 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
 | `kafkaConnectorEditConfig`         | Permission to edit the Kafka Connect configuration. |
 | `kafkaConnectorDelete`             | Permission to delete connectors. |
-| `kafkaConnectorUpdate`             | Permission to update connectors. |
 | `kafkaConnectorCreate`             | Permission to create new connectors. |
 | `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
 | `kafkaConnectRestart`              | Permission to restart connectors. |
