@@ -21,7 +21,7 @@ The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and
 * [Bouncy Castle with FIPS](https://downloads.bouncycastle.org/fips-java/docs/BC-FJA-SecurityPolicy-1.0.2.pdf)
 * [Conscrypt](https://www.conscrypt.org/)
 
-You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing [field level encryption](https://marketplace.conduktor.io/interceptors/field-level-encryption/) 
+You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing field level encryption
 
 ### REST Audit
 
@@ -36,7 +36,6 @@ Note that the recommended production value is double the number of Kafka brokers
 
 When putting interceptors in place to protect the creation of topics, or altering of topics, we have expanded our support for policies to be defined by all properties in the [Kafka topic configs](https://kafka.apache.org/documentation/#topicconfigs). 
 
-For setting up your own create topic policy checkout the [marketplace page](https://marketplace.conduktor.io/interceptors/safeguard-create-topic-policy).
 
 ### SCRAM Passthrough
 

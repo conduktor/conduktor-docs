@@ -176,8 +176,6 @@ Secrets may be passed from configuration to Gateway using environment variables.
 * `VAULT_PASSWORD`
 * etc.
 
-For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
-
 
 ### HTTP
 

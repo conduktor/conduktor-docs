@@ -44,7 +44,6 @@ New option
 }
 ```
 
-Further details are provided in the supporting documentation on the [plugin page](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
 
 ## Enhancements
 
