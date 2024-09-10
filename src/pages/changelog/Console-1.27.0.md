@@ -43,17 +43,17 @@ This is especially useful if you already have a centralized repository and exist
 
 ### Quality of Life improvements
 - Self-service: External Group Mapping is now available for ApplicationGroup
-- CONS-1268: The Login page now steers users towards their OIDC provider rather than User & Password login when OIDC is enabled
+- The Login page now steers users towards their OIDC provider rather than User & Password login when OIDC is enabled
+- Console doesn't override the client.id property anymore
 
 ## Fixes 🔨
-- CONS-1683: Consumer group reset offset doesn't honour the user request
-- CONS-1626: Deleting and recreating subject breaks indexing
-- CONS-1676: Incorrect topic create default replication factor
-- CONS-1659: We get an error in the UI if we create an Application Instance without any resources.
-- CUS-xxx: Several fixes around Teams Integration to support Teams workflow webhooks
-- CUS-398: Fixed a recent regression with Broker feature "Similar config" calculation
-- CUS-377: Fixed Kafka Connect client to use HTTP Proxy JVM configuration
-- CUS-368: Console doesn't override the client.id property anymore
+- Fixed an issue on Consumer group reset offset with the ToDatetime strategy
+- Fixed an issue with Console indexing that could occur when deleting and recreating subject
+- Fixed a recent regression with default replication factor when creating a topic
+- Fixed a recent regression with Broker feature "Similar config" calculation
+- Fixed a UI issue when Application Instance were created without any resources
+- Fixed several issues around Teams Integration to support Teams workflow webhooks
+- Fixed Kafka Connect client to use HTTP Proxy JVM configuration
 - Switching Kafka cluster from the Topic details page now redirects to the Topic List
 
 ## Deprecation Warning: Upcoming migration from Tags to Labels 💣
