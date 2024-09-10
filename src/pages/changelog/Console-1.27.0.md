@@ -8,30 +8,43 @@ tags: features,fix
 
 ## Features ✨
 
-- [Kafka Connect Configuration Wizard](#manage-connectors-using-the-cli)
+- [Kafka Connect Configuration Wizard](#kafka-connect-configuration-wizard)
 - [Alerts for Kafka Connect](#alerts-for-kafka-connect)
 - [Self-service: Limited Ownership mode](#self-service-limited-ownership-mode)
-- [Self-service: External Group Mapping on ApplicationGroup](#self-service-external-group-mapping-on-applicationgroup)
-
 
 
 ### Kafka Connect Configuration Wizard
 
+We are very excited to introduce our Configuration Wizard for Kafka Connect which is taking full advantage of the Kafka Connect Validate API:
+- Form is generated with structured configuration groups
+- Much nicer error handling, attached to each individual field
+- Embedded documentation that helps you understand which fields are required and what are their expected and default values
+- Ability to toggle advanced configuration to visualize only the most important fields
+- Ability to switch seamlessly between Form View and JSON View at any time.
+
 ### Alerts for Kafka Connect
 
-### Self-service: Limited Ownership mode
+TODO
 
-### Self-service: External Group Mapping on ApplicationGroup
+### Self-service: Limited Ownership mode
+To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.  
+- ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team
+- ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team
+
+This is especially useful if you already have a centralized repository and existing workflow for Topic creation. You may want to provide Self-service capabilities while still forcing your Application Teams to go through your pipeline for Topic Creation, instead of Self-service.
 
 
 ### Quality of Life improvements
-- The checkbox to skip TLS verification is now always visible
-- The YAML for Topic object now allows number in `spec.configs`. Previously it was mandatory to quote all numbers.
-- Self-service Topic Policies are now visible in the UI
+- Self-service: External Group Mapping is now available for ApplicationGroup
+- CONS-1268: The Login page now steers users towards their OIDC provider rather than User & Password login when OIDC is enabled
 
 ## Fixes 🔨
-- Topic Policies from Self-service are now properly enforced from the UI, as well as both the API and CLI
-- Fix Kafka Connect Cluster list showing invalid number of running tasks
+- CONS-1683: Consumer group reset offset doesn't honour the user request
+- CONS-1626: Deleting and recreating subject breaks indexing
+- CONS-1676: Incorrect topic create default replication factor
+- CONS-1659: We get an error in the UI if we create an Application Instance without any resources.
+- CUS-xxx: Several fixes around Teams Integration to support Teams workflow webhooks
+- CUS-398: Fixed a recent regression with Broker feature "Similar config" calculation
 
 ## Deprecation Warning: Upcoming migration from Tags to Labels 💣
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
