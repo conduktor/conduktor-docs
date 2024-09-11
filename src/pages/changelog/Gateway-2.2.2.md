@@ -38,8 +38,6 @@ With a simple interceptor added we can acheive full message encryption.
 
 ![full message encryption](/images/changelog/gateway/V2.2.2/fullMessage.png)
 
-Details are provided in the supporting documentation on the [plugin page](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
-
 ## Fixes
 
 ### Feedback to altering concentrated topics

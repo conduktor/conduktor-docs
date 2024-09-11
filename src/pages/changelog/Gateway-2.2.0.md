@@ -27,7 +27,6 @@ Fields can be defined in the decryption interceptor configuration;
       ]
 ```
 
-Interceptor configuration is available on the [Conduktor Marketplace](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
 
 #### OAuth principal to vcluster mapping
 

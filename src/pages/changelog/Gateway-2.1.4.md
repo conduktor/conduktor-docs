@@ -21,7 +21,7 @@ The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and
 * [Bouncy Castle with FIPS](https://downloads.bouncycastle.org/fips-java/docs/BC-FJA-SecurityPolicy-1.0.2.pdf)
 * [Conscrypt](https://www.conscrypt.org/)
 
-You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing [field level encryption](https://marketplace.conduktor.io/interceptors/field-level-encryption/) 
+You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing field level encryption.
 
 ### REST Audit
 
