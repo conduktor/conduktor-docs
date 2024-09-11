@@ -51,8 +51,8 @@ This is especially useful if you already have a centralized repository and exist
 - Fixed an issue with Console indexing that could occur when deleting and recreating subject
 - Fixed a recent regression with default replication factor when creating a topic
 - Fixed a recent regression with Broker feature "Similar config" calculation
-- Fixed a UI issue when Application Instance were created without any resources
-- Fixed several issues around Teams Integration to support Teams workflow webhooks
+- Fixed a UI issue when Application Instance was created without any resources
+- Fixed several issues around Microsoft Teams Integration to support Teams Workflow webhooks ([Step by step guide](https://docs.conduktor.io/platform/navigation/settings/integrations/))
 - Fixed Kafka Connect client to use HTTP Proxy JVM configuration
 - Switching Kafka cluster from the Topic details page now redirects to the Topic List
 - Console doesn't override the client.id property anymore

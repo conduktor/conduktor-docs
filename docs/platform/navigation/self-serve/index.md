@@ -259,14 +259,13 @@ spec:
     retention.ms: "60000"
 ````
 
-### Limited Ownership mode
+## Limited Ownership mode
 To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.
-
-ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team.  
-ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team.  
+- ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team.  
+- ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team.  
 
 This is especially useful if Central Team have a centralized repository and existing workflow for Topic (or other resource) creation and wants to still own that part of the process.  
-You may want to provide Self-service capabilities while still forcing your Application Teams to go through your pipeline for Topic Creation, instead of Self-service.
+This way they can provide Self-service capabilities while still having Application Teams to go through their pipeline for Topic Creation, instead of Self-service.
 
 | Restricted Permissions in LIMITED | Description                                            |
 |-----------------------------------|--------------------------------------------------------|

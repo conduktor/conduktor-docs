@@ -111,6 +111,10 @@ spec:
       connectCluster: shadow-connect
       patternType: PREFIXED
       name: "click."
+    - type: TOPIC
+      patternType: PREFIXED
+      ownershipMode: LIMITED # Topics are still maintained by Central Team
+      name: "legacy-click."
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -131,14 +135,14 @@ spec:
 **Side effect in Console & Kafka:**
 - Console
   - Members of the Owner Group can create Application API Keys from the UI
-  - Resources with ownershipMode to `ALL`: 
+  - Resources with `ownershipMode` to `ALL`: 
     - ApplicationInstance is given **all** permissions in the UI and the CLI over the owned resources
-  - Resources with ownershipMode to `LIMITED`:
+  - Resources with `ownershipMode` to `LIMITED`:
     - ApplicationInstance is restricted the Create/Update/Delete permissions in the UI and the CLI over the owned resources
       - Can't use the CLI apply command
       - Can't Create/Delete the resource in the UI
       - Everything else (restart connector, Browse & Produce from Topic, ...) is still available
-    - Read More about ownershipMode here
+  - [Read More about ownershipMode here](/platform/navigation/self-serve/#limited-ownership-mode)
 - Kafka
     - Service Account is granted the following ACLs over the declared resources depending on the type:
         - Topic: READ, WRITE, DESCRIBE_CONFIGS
