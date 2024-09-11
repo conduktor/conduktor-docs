@@ -36,7 +36,7 @@ Note that the recommended production value is double the number of Kafka brokers
 
 When putting interceptors in place to protect the creation of topics, or altering of topics, we have expanded our support for policies to be defined by all properties in the [Kafka topic configs](https://kafka.apache.org/documentation/#topicconfigs). 
 
-For setting up your own create topic policy checkout the [marketplace page](https://marketplace.conduktor.io/interceptors/safeguard-create-topic-policy).
+
 
 ### SCRAM Passthrough
 

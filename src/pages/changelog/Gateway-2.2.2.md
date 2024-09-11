@@ -42,7 +42,7 @@ With a simple interceptor added we can acheive full message encryption.
 
 ### Feedback to altering concentrated topics
 
-Concentrated topics will provide clear error messaging if you try to modify them. As concentrated topics from Conduktor are protected, in order to avoid disrupting a topic that is the source to several different applications, modifying anything other than `retention.ms` is prohibited. Now feedback is provided when attempting to do so. For more information on concentrated topics checkout the [marketplace page](https://marketplace.conduktor.io/interceptors/ops-topic-concentration/).
+Concentrated topics will provide clear error messaging if you try to modify them. As concentrated topics from Conduktor are protected, in order to avoid disrupting a topic that is the source to several different applications, modifying anything other than `retention.ms` is prohibited. Now feedback is provided when attempting to do so. 
 
 ### General fixes 🔨
 

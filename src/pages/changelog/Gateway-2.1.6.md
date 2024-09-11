@@ -24,7 +24,7 @@ Define which properties can or cannot be modified by safeguarding the configurat
 
 ### Enhanced Gateway caching
 
-Fixed an issue where part of the [caching functionality](https://marketplace.conduktor.io/interceptors/gateway-cache-interceptor/) available in GW could lead to a memory leak in certain conditions. It can now also support consumption of multiple topics mixing between those that are cached or not cached.
+Fixed an issue where part of the caching functionality available in GW could lead to a memory leak in certain conditions. It can now also support consumption of multiple topics mixing between those that are cached or not cached.
 
 ### Improved handling of invalid Kafka properties
 

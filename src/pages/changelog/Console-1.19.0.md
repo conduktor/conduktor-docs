@@ -33,7 +33,7 @@ You can now consume live messages from within the topic consume screen. Simply s
 
 We have finally said goodbye to the 5000 records limitation! If you wish to consume 100k records, 10M records, or even an entire topic, it's now possible! Note that for performance reasons, your browser will only store the most recent 5000 records available for browsing, or for use via the export feature.
 
-Warning, we're not responsible for the sudden spike in your billing for Bytes-Out. If this becomes a problem, we might even have [something for you!](https://marketplace.conduktor.io/interceptors/gateway-cache-interceptor/)
+Warning, we're not responsible for the sudden spike in your billing for Bytes-Out. If this becomes a problem, we might even have something for you!
 
 ![Consume Between Dates](/images/changelog/platform/v19/infinite-annotated.png)
 
