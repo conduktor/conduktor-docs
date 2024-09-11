@@ -258,6 +258,36 @@ spec:
     cleanup.policy: "delete"
     retention.ms: "60000"
 ````
+
+### Limited Ownership mode
+To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.
+
+ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team.  
+ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team.  
+
+This is especially useful if Central Team have a centralized repository and existing workflow for Topic (or other resource) creation and wants to still own that part of the process.  
+You may want to provide Self-service capabilities while still forcing your Application Teams to go through your pipeline for Topic Creation, instead of Self-service.
+
+| Restricted Permissions in LIMITED | Description                                            |
+|-----------------------------------|--------------------------------------------------------|
+| **Topic**                         |                                                        |
+| `topicEditConfig`                 | Permission to edit the topic configuration.            |
+| `topicCreate`                     | Permission to create a new topic.                      |
+| `topicDelete`                     | Permission to delete the topic.                        |
+| `topicAddPartition`               | Permission to add partitions to the topic.             |
+| **Subject**                       |                                                        |
+| `subjectCreateUpdate`             | Permission to create or update the subject.            |
+| `subjectDelete`                   | Permission to delete the subject.                      |
+| `subjectEditCompatibility`        | Permission to edit the subject compatibility settings. |
+| **Consumer Group**                |                                                        |
+| `consumerGroupCreate`             | Permission to create a new consumer group.             |
+| `consumerGroupDelete`             | Permission to delete the consumer group.               |
+| **Kafka Connect**                 |                                                        |
+| `kafkaConnectorEditConfig`        | Permission to edit the Kafka Connect configuration.    |
+| `kafkaConnectorDelete`            | Permission to delete connectors.                       |
+| `kafkaConnectorCreate`            | Permission to create new connectors.                   |
+
+
 ## Self-service User Interface
 For now, Self-service relies principally on the Conduktor CLI. 
 

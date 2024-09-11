@@ -40,11 +40,11 @@ To help organizations transition to Self-service more easily, we have added a ne
 
 This is especially useful if you already have a centralized repository and existing workflow for Topic creation. You may want to provide Self-service capabilities while still forcing your Application Teams to go through your pipeline for Topic Creation, instead of Self-service.
 
+[Get Started with Self-service today!](https://docs.conduktor.io/platform/navigation/self-serve/)
 
 ### Quality of Life improvements
 - Self-service: External Group Mapping is now available for ApplicationGroup
 - The Login page now steers users towards their OIDC provider rather than User & Password login when OIDC is enabled
-- Console doesn't override the client.id property anymore
 
 ## Fixes 🔨
 - Fixed an issue on Consumer group reset offset with the ToDatetime strategy
@@ -55,6 +55,7 @@ This is especially useful if you already have a centralized repository and exist
 - Fixed several issues around Teams Integration to support Teams workflow webhooks
 - Fixed Kafka Connect client to use HTTP Proxy JVM configuration
 - Switching Kafka cluster from the Topic details page now redirects to the Topic List
+- Console doesn't override the client.id property anymore
 
 ## Deprecation Warning: Upcoming migration from Tags to Labels 💣
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
