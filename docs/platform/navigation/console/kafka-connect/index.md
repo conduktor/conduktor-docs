@@ -4,9 +4,30 @@ title: Kafka Connect
 description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
-# Kafka Connect
+Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable & scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place.
 
-Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable & scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place. 
+## Kafka Connect Cluster List
+
+The Connect Cluster List is a summary view of all your configured Kafka Connect Clusters attached to your currently selected Kafka Cluster.
+
+You can filter by Connect Cluster name and order by 
+- Number of Connectors
+- Number of Tasks
+- Connect Cluster Name
+
+![img.png](img/connect-cluster-list.png)
+
+The list is warning you when some tasks are failed and you can get a high level overview by hovering the "Connectors" count.
+
+![img.png](img/connect-cluster-tooltip.png)
+
+## Connector List
+
+
+:::caution
+Configure **RBAC** to restrict your users to View, Manage, Deploy or perform any operation only to certain Connectors.  
+Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
+:::
 
 In the case of failed tasks, Conduktor can also help to automatically restart them.
 
