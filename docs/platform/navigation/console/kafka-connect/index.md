@@ -23,12 +23,39 @@ The list is warning you when some tasks are failed and you can get a high level 
 
 ## Connector List
 
-
+The Connector List page lets you search for any Connector on your currently selected Kafka Connect Cluster.
 :::caution
-Configure **RBAC** to restrict your users to View, Manage, Deploy or perform any operation only to certain Connectors.  
+Configure** RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::
+Multiple search capabilities can be combined to help you find to the Connector you want faster.
 
+**Filtering** is possible on:
+
+- Connector name
+- Connector class
+- Connector type (source / sink)
+- Connector status
+
+**Sorting** is possible on all columns.
+
+**Active columns** can be picked from a list of Available columns from the side button « ⚙️ Edit columns »
+
+
+
+![img.png](img/connector-list.png)
+The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-Restart feature: (Grey: disabled, Green: enabled)
+
+Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
+- Review the Connector Task details and status
+- View and Edit the Connector configuration
+- Create and manage Alerts for this Connector
+- Toggle Auto-Restart feature
+
+Several actions are also available from the Connector List: Add a Connector, Pause/Resume, Restart and Delete Connector.
+
+
+## Operations
 In the case of failed tasks, Conduktor can also help to automatically restart them.
 
  - [Create a Connector](#creating-a-connector)
@@ -83,14 +110,4 @@ To pause, restart, or remove a connector, select the menu from the right-hand si
 Alternatively, click on a connector to adjust all aspects in one place. You will be able to edit the configuration, restart individual tasks, or choose to pause, restart, and delete:
 
 ![Manage connectors](/img/console/manage-connector.png)
-
-## Auto-Restart
-
-You can enable **Auto-restart** on any connector instance. When enabled, Console will check for failed tasks **every minute** and attempt to restart them.
-
-Once a restart has occured, it won't try again until the user configured amount of time has passed. Note that any task restarts that have occurred will be visible in the auto-restart history. 
-
-To activate auto-restart, navigate to the **Auto-restart tab** from wtihin a connector.
-
-![Kafka Connect auto-restart](/img/console/connect-auto-restart.png)
 
