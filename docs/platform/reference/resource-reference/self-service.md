@@ -111,6 +111,10 @@ spec:
       connectCluster: shadow-connect
       patternType: PREFIXED
       name: "click."
+    - type: TOPIC
+      patternType: PREFIXED
+      ownershipMode: LIMITED # Topics are still maintained by Central Team
+      name: "legacy-click."
 ````
 **AppInstance checks:**
 - `metadata.application` is a valid Application
@@ -126,11 +130,19 @@ spec:
     -   ie: If there is already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click`
         -   `cli`: Resource is a parent-resource of `click`
+- `spec.resources[].ownershipMode` is **optional**, default `ALL`. Can be `ALL` or `LIMITED`
 
 **Side effect in Console & Kafka:**
 - Console
-    - Members of the Owner Group are given all permissions in the UI over the owned resources
-    - Members of the Owner Group can create Application API Keys from the UI
+  - Members of the Owner Group can create Application API Keys from the UI
+  - Resources with `ownershipMode` to `ALL`: 
+    - ApplicationInstance is given **all** permissions in the UI and the CLI over the owned resources
+  - Resources with `ownershipMode` to `LIMITED`:
+    - ApplicationInstance is restricted the Create/Update/Delete permissions in the UI and the CLI over the owned resources
+      - Can't use the CLI apply command
+      - Can't Create/Delete the resource in the UI
+      - Everything else (restart connector, Browse & Produce from Topic, ...) is still available
+  - [Read More about ownershipMode here](/platform/navigation/self-serve/#limited-ownership-mode)
 - Kafka
     - Service Account is granted the following ACLs over the declared resources depending on the type:
         - Topic: READ, WRITE, DESCRIBE_CONFIGS
@@ -302,8 +314,8 @@ spec:
   members:
     - user1@company.org
     - user2@company.org
-#  externalGroups:
-#    - GP-COMPANY-CLICKSTREAM-SUPPORT
+  externalGroups:
+    - GP-COMPANY-CLICKSTREAM-SUPPORT
 ````
 **Application instance permission checks:**
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
@@ -314,7 +326,7 @@ spec:
   - Use `*` to include to all owned & subscribed resources associated to this `appInstance`
 - `spec.permissions[].permissions` are valid permissions as defined in [Permissions](/platform/reference/resource-reference/console/#permissions)
 - `spec.members` must be email addresses of members you wish to add to this group.
-- `spec.externalGroups` **(Not implemented as of 1.24.0)** is a list of LDAP or OIDC groups to sync with this Console Groups
+- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Groups
   - Members added this way will not appear in `spec.members`
 
 **Side effect in Console & Kafka:**
