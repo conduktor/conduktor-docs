@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Features ✨
 
 - [UI Navigation Overhaul](#ui-navigation-overhaul)

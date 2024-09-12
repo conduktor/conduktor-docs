@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Breaking Changes 💣
 ### Two new backing topics are required for Gateway
 In the next release (3.3), we'll bring a new API as well as support in the Conduktor [CLI](https://docs.conduktor.io/platform/reference/cli-reference/) to manage Gateway concepts using infra-as-code approach.  
@@ -56,8 +58,7 @@ kind: VirtualCluster
 metadata:
   name: "mon-app-A"
 spec:
-  prefix: "app-A-"
-  aclsEnabled: "true" # defaults to false
+  aclEnabled: true # defaults to false
   superUsers:
   - username1
   - username2

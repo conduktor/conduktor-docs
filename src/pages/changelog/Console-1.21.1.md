@@ -6,5 +6,7 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Fixes 🔨
 - Resolved a problem causing a blank screen after login in certain situations, preventing users from accessing Console.

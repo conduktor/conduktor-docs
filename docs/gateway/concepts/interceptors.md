@@ -6,7 +6,7 @@ description: Interceptors
 
 ## Interceptors
 
-Conduktor Gateway has a massive list of Interceptors available. Check our [Interceptor Catalog](/gateway/category/interceptors-catalog/) for more details.
+Conduktor Gateway has an inventory of Interceptors available for different use cases. View the [Interceptor Catalog](/gateway/category/interceptor-catalog/) for more details.
 
 A few examples:
 - Full-body or field-level Encryption & Decryption

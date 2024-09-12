@@ -32,9 +32,8 @@ No specific client configuration is necessary, besides ensuring that clients hav
 
 ### System requirements
 
- - Gateway version `3.2.0`+
+ - Gateway version `3.3.0`+
  - Kafka brokers version `2.8.0`+
- - Gateway configured with [SNI Routing](./sni-routing.md) (support for port-based routing will come in an upcoming release)
 
 Note that due to a current limitation in Kafka clients, the primary and secondary Kafka clusters must have some broker id's in common (see [KIP-899](https://cwiki.apache.org/confluence/display/KAFKA/KIP-899%3A+Allow+producer+and+consumer+clients+to+rebootstrap)). This ensures clients can recognize the secondary cluster as a legitimate continuation of the primary one.
 

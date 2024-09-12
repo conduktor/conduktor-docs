@@ -6,6 +6,8 @@ solutions: gateway
 tags: performance
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Performance improvements 🚀
 
 - Performance is improved when using a large number of interceptors

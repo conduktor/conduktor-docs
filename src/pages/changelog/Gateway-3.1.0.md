@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## AclsInterceptorPlugin removed
 
 Kafka ACLs are now fully integrated in the Core Features of Conduktor Gateway.  
