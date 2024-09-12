@@ -40,11 +40,12 @@ To help organizations transition to Self-service more easily, we have added a ne
 
 This is especially useful if you already have a centralized repository and existing workflow for Topic creation. You may want to provide Self-service capabilities while still forcing your Application Teams to go through your pipeline for Topic Creation, instead of Self-service.
 
-[Get Started with Self-service today!](https://docs.conduktor.io/platform/navigation/self-serve/)
+ - [Read more about Limited Ownership mode](/platform/navigation/self-serve)
+ - [Get Started with Self-service today!](https://docs.conduktor.io/platform/navigation/self-serve#limited-ownership-mode)
 
 ### Quality of Life improvements
-- Self-service: External Group Mapping is now available for ApplicationGroup
-- The Login page now steers users towards their OIDC provider rather than User & Password login when OIDC is enabled
+- Self-service: External Group Mapping is now available for [ApplicationGroup](/platform/reference/resource-reference/self-service/#application-group)
+- The Login page now steers users towards their OIDC provider rather than basic auth when OIDC is enabled
 
 ## Fixes 🔨
 - Fixed an issue on Consumer group reset offset with the ToDatetime strategy

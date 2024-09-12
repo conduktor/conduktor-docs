@@ -15,7 +15,7 @@ It simplifies and automates processes, establishes clear rules and ways of worki
 This approach brings governance into your enterprise through concepts like Ownership and Applications, delegating operations to the Application Teams rather than the Central Platform Team.
 
 - For a presentation of Self-service and its key concepts, see [Get Started with Self-service](/platform/guides/self-service-quickstart)
-- For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
+- For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/)
 
 
 ### Benefits for Central Platform Team
