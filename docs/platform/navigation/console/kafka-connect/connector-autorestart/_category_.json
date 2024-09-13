@@ -1,5 +1,5 @@
 {
-    "label": "Connector Auto-Restart",
+    "label": "Connector Auto-restart",
     "position": 3,
     "link": {"type": "doc", "id": "index"}
   }

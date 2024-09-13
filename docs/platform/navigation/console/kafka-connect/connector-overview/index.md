@@ -15,7 +15,7 @@ The Connector Overview page is split in 3 main sections:
 This section gives you relevant information about the current state of your Connector that will stay visible across all tabs
 - Connector Status
 - Connector Class
-- Whether Auto-Restart is enabled
+- Whether Auto-restart is enabled
 - How many Topics are associated. You can click on the icon next to it to visualize their names
 
 ![img](../img/connector-details-topics.png)
@@ -39,6 +39,8 @@ To create an Alert, click on the "+" button inside the graph to open the "Create
 There, define the threshold for your alert as well as a name, and click Save.
 
 ![img](../img/connector-details-alert.png)
+
+You can get a summary of all alerts associated to this Connector in the dedicated [Alerts tab](../connector-alerts)
 
 ## Tasks list
 

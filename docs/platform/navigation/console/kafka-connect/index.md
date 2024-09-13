@@ -44,14 +44,14 @@ Multiple search capabilities can be combined to help you find to the Connector y
 
 
 ![img.png](img/connector-list.png)
-The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-Restart feature: (Grey: disabled, Green: enabled)
+The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-restart feature: (Grey: disabled, Green: enabled)
 
 
 Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
 - [Review the Connector Task details and status](connector-overview)
 - [View and Edit the Connector configuration](connector-config)
 - [Create and manage Alerts for this Connector](connector-alerts)
-- [Toggle Auto-Restart feature](connector-autorestart)
+- [Toggle Auto-restart feature](connector-autorestart)
 
 Several actions are also directly available from the Connector List:
 - Add a Connector
