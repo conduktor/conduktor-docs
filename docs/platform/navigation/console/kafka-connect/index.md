@@ -25,7 +25,7 @@ The list is warning you when some tasks are failed and you can get a high level 
 
 The Connector List page lets you search for any Connector on your currently selected Kafka Connect Cluster.
 :::caution
-Configure** RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
+Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::
 Multiple search capabilities can be combined to help you find to the Connector you want faster.
@@ -46,68 +46,66 @@ Multiple search capabilities can be combined to help you find to the Connector y
 ![img.png](img/connector-list.png)
 The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-Restart feature: (Grey: disabled, Green: enabled)
 
-Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
-- Review the Connector Task details and status
-- View and Edit the Connector configuration
-- Create and manage Alerts for this Connector
-- Toggle Auto-Restart feature
-
-Several actions are also available from the Connector List: Add a Connector, Pause/Resume, Restart and Delete Connector.
-
-
 ## Operations
-In the case of failed tasks, Conduktor can also help to automatically restart them.
 
- - [Create a Connector](#creating-a-connector)
- - [Managing Connectors](#managing-connectors)
- - [Auto-Restart](#auto-restart)
+Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
+- [Review the Connector Task details and status](connector-overview)
+- [View and Edit the Connector configuration](connector-config)
+- [Create and manage Alerts for this Connector](connector-alerts)
+- [Toggle Auto-Restart feature](connector-autorestart)
 
-## Getting Started
+Several actions are also directly available from the Connector List:
+- Add a Connector
+- Pause/Resume & Restart
+- Delete Connector
 
-Kafka Connect needs to be enabled on a per-cluster basis before any connectors can be added. To add Kafka Connect to your cluster, head to the [Admin](../../settings/managing-clusters) section to learn how. Add your Kafka Connect details on the tab available on an existing cluster configuration.
+### Multi-select operations
+All List Operations can be applied either on single Connector or by selecting multiple Connectors at once:
+![img.png](img/connector-list-multi-select.png)
 
-## Creating a Connector
 
-Once Kafka Connect is setup, navigate to Conduktor Console, then to the Kafka Connect display from the left-hand menu. Select **New connector** in the top right corner.
+### Add a Connector
 
-![Create a connector](/img/console/create-connector.png)
+To deploy a new Connector, click "Add a Connector". You will be presented with the list of all Connector Plugin classes installed on this Connect Cluster.
+![img.png](img/connector-add-classes.png)
 
-You will then need to define a Connector name, and paste in the JSON worker configuration for your connector.
+Next, you will get to our configuration wizard for Kafka Connect, which is taking full advantage of the [Kafka Connect Validate API](https://docs.confluent.io/platform/current/connect/references/restapi.html#put--connector-plugins-(string-name)-config-validate):
 
-### Generating a connector configuration
+- Form is generated with structured configuration groups
+- Much nicer error handling, attached to each individual field
+- Embedded documentation that helps you understand which fields are required and what are their expected and default values
+- Ability to toggle advanced configuration to visualize only the most important fields
+- Ability to switch seamlessly between Form View and JSON View at any time. 
 
-Creating a connector in Conduktor requires the connectors worker configuration properties.
+![img.png](img/connector-add-form-initial.png)
 
-Below shows an example config for elastic search sink connector:
+Configure your Connector to your convenience and use the Validate button to verify that your configuration is valid. 
 
-```json
-{
-  "name": "elasticsearch-ksqldb",
-  "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
-  "connection.url": "ES_CONNECTION_URL",
-  "topics": "WIKIPEDIABOT",
-  "type.name": "_doc",
-  "schema.ignore": "true",
-  "key.converter.schema.registry.url": "https://KAFKA_HOST:SCHEMA_REGISTRY_PORT",
-  "key.ignore": "true",
-  "value.converter.schema.registry.url": "https://KAFKA_HOST:SCHEMA_REGISTRY_PORT",
-  "value.converter.basic.auth.user.info": "USER:PASSWORD",
-  "consumer.interceptor.classes": "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor",
-  "consumer.override.sasl.jaas.config": "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username=\"USER\" password=\"PASSWORD\" metadataServerUrls=\"https://KAFKA1:PORT,https://KAFKA2:PORT\";",
-  "value.converter": "io.confluent.connect.avro.AvroConverter",
-  "value.converter.basic.auth.credentials.source": "USER_INFO"
-}
-```
+This will highlight the parts of the configuration that are not valid, and give you precise information onhow to correct your Connector configuration.
 
-Once your configuration is entered, select the **Validate** button to check that your connector has been correctly configured. Once your connection is marked as valid, click **Add connector** to complete the process.
+![img.png](img/connector-add-form-invalid.png)
 
-## Managing Connectors
+:::caution warning
 
-You will be able to manage all of your created connectors from the Kafka Connect display. You can pause, restart, and remove connectors; change their configurations; and check for any failed connectors or tasks. You can perform actions one at a time or across multiple connectors.
+While Kafka Connect Validate API generally checks for most configuration inconsistencies, there are some limits:
+- It usually doesn't check for external configuration such as URL and user / passwords.
+- Some Kafka Connect Plugins classes are notoriously badly implemented and don't take full advantage of Kafka Connect Validate API
 
-To pause, restart, or remove a connector, select the menu from the right-hand side of a connector, then choose the option you need.
+When errors happen outside the nominal scope of Kafka Connect Validate API, you will see the errors as Toasts
 
-Alternatively, click on a connector to adjust all aspects in one place. You will be able to edit the configuration, restart individual tasks, or choose to pause, restart, and delete:
+![img.png](img/connector-add-invalid-toast.png)
+:::
 
-![Manage connectors](/img/console/manage-connector.png)
+At any point in time, you can switch to JSON view and edit the JSON payload directly.  
+You can switch back and forth between JSON and Form view at your convenience.
+
+![img.png](img/connector-add-json.png)
+
+When you're done, click "Next" and you'll be presented with a Review screen where you will be able to copy the YAML associated to your Kafka Connect configuration.
+
+This YAML will help you automate your deployment with the help of [Conduktor CLI](/platform/reference/cli-reference/).  
+This is entirely optional and you can just deploy your Connector from the UI by clicking "Submit".
+
+
+![img.png](img/connector-add-review.png)
 
