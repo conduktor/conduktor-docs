@@ -46,7 +46,6 @@ Multiple search capabilities can be combined to help you find to the Connector y
 ![img.png](img/connector-list.png)
 The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-Restart feature: (Grey: disabled, Green: enabled)
 
-## Operations
 
 Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
 - [Review the Connector Task details and status](connector-overview)
@@ -59,12 +58,11 @@ Several actions are also directly available from the Connector List:
 - Pause/Resume & Restart
 - Delete Connector
 
-### Multi-select operations
 All List Operations can be applied either on single Connector or by selecting multiple Connectors at once:
 ![img.png](img/connector-list-multi-select.png)
 
 
-### Add a Connector
+## Add a Connector
 
 To deploy a new Connector, click "Add a Connector". You will be presented with the list of all Connector Plugin classes installed on this Connect Cluster.
 ![img.png](img/connector-add-classes.png)
