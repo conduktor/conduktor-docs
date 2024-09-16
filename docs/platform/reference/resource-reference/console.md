@@ -44,7 +44,7 @@ export const AdminToken = () => (
 
 ## ConsoleGroup
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 Creates a Group with members and permissions in Console
@@ -57,7 +57,7 @@ metadata:
 spec:
   displayName: "Developers Team A"
   description: "Members of the Team A - Developers"
-  externalGroups: 
+  externalGroups:
     - "LDAP-GRP-A-DEV"
   members:
     - member1@company.org
@@ -89,7 +89,7 @@ spec:
 
 ## ConsoleUser
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 Sets a User with permissions in Console
@@ -125,7 +125,7 @@ spec:
 ## KafkaCluster
 Creates a Kafka Cluster Definition in Console.
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 ````yaml
@@ -138,7 +138,7 @@ spec:
   displayName: "Julien's cloud - Kafka"
   icon: "kafka"
   color: "#000000"
-  bootstrapServers: "34.140.204.135:12092"
+  bootstrapServers: "localhost:9092"
   ignoreUntrustedCertificate: false
   properties:
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
@@ -146,11 +146,11 @@ spec:
     sasl.mechanism: PLAIN
   schemaRegistry:
     type: "ConfluentLike"
-    url: http://34.140.204.135/registry/
+    url: http://localhost:8080
     security:
       type: BasicAuth
-      username: superUser
-      password: superUser
+      username: some_user
+      password: some_password
     ignoreUntrustedCertificate: false
   kafkaFlavor:
     type: "Confluent"
@@ -168,13 +168,13 @@ spec:
 - `spec.icon` (optional, default `kafka`) is a valid entry from our [Icon Sets](#icon-sets)
 - `spec.color` (optional, default `#000000`) is a HEX color for `spec.icon`
 - `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.schemaRegistry.type` (optional) must be one of [`ConfluentLike`, `Glue`] 
+- `spec.schemaRegistry.type` (optional) must be one of [`ConfluentLike`, `Glue`]
   - See [Schema Registry Properties](#schema-registry) for the detailed list of options
-- `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
+- `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`]
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
 :::warning Important
-Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid.   
+Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid.
 You need to check that in Console directly.
 :::
 
@@ -186,12 +186,12 @@ This section lets you associate a Schema Registry to your KafkaCluster
 spec:
   schemaRegistry:
     type: "ConfluentLike"
-    urls: http://34.140.204.135/registry/
+    urls: http://localhost:8080
     ignoreUntrustedCertificate: false
     security:
       type: BasicAuth
-      username: superUser
-      password: superUser
+      username: some_user
+      password: some_password
 ````
 Confluent Schema Registry checks:
 - `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
@@ -218,7 +218,7 @@ AWS Glue Registry checks:
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
 - `spec.schemaRegistry.security.type` must be one of [`Credentials`, `FromContext`, `FromRole`]
 
-**Credentials**  
+**Credentials**
 Use AWS API Key/Secret to connect to the Glue Registry
 ````yaml
     security:
@@ -241,7 +241,7 @@ Use AWS API Key/Secret to connect to the Glue Registry
 ### Kafka Provider
 This section lets you configure the Kafka Provider for this KafkaCluster.
 
-**Confluent Cloud**  
+**Confluent Cloud**
 Provide your Confluent Cloud details to get additional features in Console:
 - Confluent Cloud Service Accounts support
 - Confluent Cloud API Keys support
@@ -256,8 +256,8 @@ spec:
     confluentClusterId: "lkc-67890"
 ````
 
-**Aiven**  
-Provide your Aiven Cloud details to get additional features in Console:  
+**Aiven**
+Provide your Aiven Cloud details to get additional features in Console:
 - Aiven Service Accounts support
 - Aiven ACLs support
 
@@ -270,7 +270,7 @@ spec:
     serviceName: "my-kafka-service"
 ````
 
-**Gateway**  
+**Gateway**
 Provide your Gateway details to get additional features in Console:
 - Interceptors support
 
@@ -337,7 +337,7 @@ spec:
 ## KafkaConnectCluster
 Creates a Kafka Connect Cluster Definition in Console.
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 ````yaml
@@ -349,7 +349,7 @@ metadata:
   name: connect-1
 spec:
   displayName: "Connect 1"
-  urls: "http://34.140.204.135/connect/"
+  urls: "http://localhost:8083"
   ignoreUntrustedCertificate: false
   headers:
     X-PROJECT-HEADER: value
@@ -373,7 +373,7 @@ spec:
 ## KsqlDBCluster
 
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 Creates a ksqlDB Cluster Definition in Console.
@@ -386,7 +386,7 @@ metadata:
   name: ksql-1
 spec:
   displayName: "KSQL 1"
-  url: "http://34.140.204.135/ksqldb/"
+  url: "http://localhost:8088"
   ignoreUntrustedCertificate: false
   security:
     type: "BasicAuth"
@@ -646,4 +646,3 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelManage`        | Permission to manage Integration channels                     |
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
-
