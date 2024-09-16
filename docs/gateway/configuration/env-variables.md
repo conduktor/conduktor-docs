@@ -159,7 +159,14 @@ Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REF
 | `GATEWAY_OAUTH_JWKS_MAX_RETRY`    | `NULL`        | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting                                                                                                                                                                                                                                                                                                                                            | 
 | `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`  | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                            |
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`    | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                          |
+#### PLAIN
+This settings are used when credentials are managed on the Gateway, see [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for details
 
+. | You must set to a random value to ensure that tokens cannot be forged. Used for the `PLAIN` mechanism when generating JWT tokens for clients. See for more. |
+
+| Environment Variable        | Default Value | Description                                                                                                             |
+|-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens, this is not published and *must* be changed. You should be a random value which is at least 256 bit long. |
 
 #### SECURITY PROVIDER
 
