@@ -10,7 +10,7 @@ tags: features,fix
 
 ## Breaking Changes 💣
 ### New docker image name
-We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
+We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.  
 Please modify your installation to reflect this change as we will now stop publishing a `conduktor/conduktor-platform` image.
 ````shell
 docker pull conduktor/conduktor-console:1.25.1
@@ -33,7 +33,7 @@ docker pull conduktor/conduktor-console:1.25.1
 Console is now able to be fully deployed through an IaC approach with the following additions to Console 1.25 and [CLI](https://github.com/conduktor/ctl) 0.2.7.
 
 #### Manage Cluster Connections
-Manage your Console resource lifecycle with the addition of the **KafkaCluster**, **KafkaConnectCluster** and **KsqlDBCluster** objects to our IaC approach using the Conduktor CLI.
+Manage your Console resource lifecycle with the addition of the **KafkaCluster**, **KafkaConnectCluster** and **KsqlDBCluster** objects to our IaC approach using the Conduktor CLI.  
 
 Checkout the example below and find the full definition at [Console Resources Reference](https://docs.conduktor.io/platform/reference/resource-reference/console/) documentation.
 
@@ -71,7 +71,7 @@ In addition to the startup token, you can now generate tokens for the appropriat
 
 ### Shareable Message Page
 
-Individual messages can now be accessed from a unique URL! Now you can link directly to a specific Kafka message for review or investigation, be that for sharing with a teammate, or commenting on a Jira ticket.
+Individual messages can now be accessed from a unique URL! Now you can link directly to a specific Kafka message for review or investigation, be that for sharing with a teammate, or commenting on a Jira ticket.  
 
 From within the Consume page, select a message and use the 'Share' button to navigate to the standalone page. The standalone message page shows the key, value, metadata and headers in a single view. Switch between the JSON view or table view, and utilize jq for additional filtering of the value.
 
@@ -86,7 +86,7 @@ We have put a limit on the message sizes that are sent to the browser in the Con
 
 ### Topic Catalog Details Page
 
-Expose contextual documentation about your Kafka Topics that exist in your organization with the Topic Details page. This helps democratize data to enhance its understanding and usage, and facilitate collaboration through a shared knowledge base.
+Expose contextual documentation about your Kafka Topics that exist in your organization with the Topic Details page. This helps democratize data to enhance its understanding and usage, and facilitate collaboration through a shared knowledge base. 
 
 You can choose to open or lock editing of descriptions within the UI using specific annotations. Check the [Topic Resource documentation](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#topic) for more information.
 
@@ -94,7 +94,7 @@ You can choose to open or lock editing of descriptions within the UI using speci
 
 ### Audit Last Activity of Users
 
-You can now audit the last activity date of users in Console.
+You can now audit the last activity date of users in Console. 
 
 From within the Settings > Users page, you will see a new column '**Last login**'. Note that the user login event is also captured in the [Audit Log](https://docs.conduktor.io/platform/navigation/settings/audit-log/).
 
@@ -104,11 +104,11 @@ From within the Settings > Users page, you will see a new column '**Last login**
 - Topic Catalog Search is now case-insensitive
 - Improved error message when trying to delete an ApplicationInstance that is referenced elsewhere
 - Improved error message when assign ownership on resources already owned by another ApplicationInstance
-- CLI delete command can now be applied at the file level, simliar to resource creation through `apply -f` you can now `delete -f`
+- CLI delete command can now be applied at the file level, simliar to resource creation through `apply -f` you can now `delete -f` 
 
 ## Fixes 🔨
 - Fixed an error that occurred when configuring a KsqlDBCluster in the UI
 - Fixed a UI issue that caused several dropdowns components to look wrong
 - Fixed an error message where expected and actual topic replication factor were inverted in the CLI
 - When deleting a Kafka Cluster from Console, the Indexed data is now properly deleted as well
-- Upgrade dependencies vulnerable to [CVE-2024-21634](https://nvd.nist.gov/vuln/detail/CVE-2024-21634)
+- Upgrade dependencies vulnerable to [CVE-2024-21634](https://nvd.nist.gov/vuln/detail/CVE-2024-21634) 
