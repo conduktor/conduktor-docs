@@ -12,7 +12,7 @@ description: Conduktor API health endpoints
 
 `/api/health/live`
 
-Returns a status 200 when Console is up.
+Returns a status HTTP 200 when Console is up.
 
 ```shell title="cURL example"
 curl -s  http://localhost:8080/api/health/live
