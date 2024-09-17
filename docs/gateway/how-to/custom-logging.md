@@ -29,8 +29,9 @@ Here is the default configuration file:
         <Property name="LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL">info</Property>
         <Property name="LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL">info</Property>
         <Property name="LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_PROXY_THREAD_LEVEL">warn</Property>
+        <Property name="LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL">warn</Property>
         <Property name="LOG4J2_IO_MICROMETER_LEVEL">error</Property>
+        <Property name="LOG4J2_IO_CONFLUENT_LEVEL">warn</Property>
     </Properties>
 
     <appenders>
@@ -73,7 +74,7 @@ Here is the default configuration file:
                 additivity="false">
             <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
         </logger>
-        <logger name="io.conduktor.proxy.thread.ProxyThread" level="${env:LOG4J2_IO_CONDUKTOR_PROXY_THREAD_LEVEL}"
+        <logger name="io.conduktor.proxy.thread.UpstreamThread" level="${env:LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL}"
                 additivity="false">
             <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
         </logger>
@@ -87,7 +88,7 @@ Here is the default configuration file:
         <logger name="org.hibernate.validator.internal.util" level="ERROR" additivity="false">
             <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
         </logger>
-        <logger name="io.conduktor.proxy.network.channel.ProxyChannelHandler" level="DEBUG" additivity="false">
+        <logger name="io.confluent" level="${env:LOG4J2_IO_CONFLUENT_LEVEL}" additivity="false">
             <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
         </logger>
 
@@ -96,4 +97,5 @@ Here is the default configuration file:
         </AsyncRoot>
     </loggers>
 </configuration>
+
 ```

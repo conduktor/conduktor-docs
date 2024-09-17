@@ -10,13 +10,12 @@ description: Conduktor API health endpoints
 
 ### Liveness Endpoint
 
-`/platform/api/modules/health/live`
+`/api/health/live`
 
-Returns a status 200 when platform-api HTTP server is up.
+Returns a status HTTP 200 when Console is up.
 
 ```shell title="cURL example"
-curl -s  http://localhost:8080/platform/api/modules/health/live
-# "Ok"
+curl -s  http://localhost:8080/api/health/live
 ```
 
 Could be used to set up probes on Kubernetes or docker-compose.
@@ -28,7 +27,7 @@ healthcheck:
   test:
     [
       'CMD-SHELL',
-      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/platform/api/modules/health/live',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/live',
     ]
   interval: 10s
   start_period: 120s # Leave time for the psql init scripts to run
@@ -48,7 +47,7 @@ ports:
 ```yaml title="Probe configuration"
 livenessProbe:
   httpGet:
-    path: /platform/api/modules/health/live
+    path: /api/health/live
     port: httpprobe
   initialDelaySeconds: 5
   periodSeconds: 10
@@ -57,26 +56,19 @@ livenessProbe:
 
 ### Readiness/startup Endpoint
 
-`/platform/api/modules/health/ready`
+`/api/health/ready`
 
-Returns readiness of the platform and each module.
+Returns readiness of the Console.
 Modules status :
 
-- `STARTING` (initial state)
-- `UP`
-- `DOWN`
-- `DISABLED` (disabled modules by license or manually)
+- `NOTREADY` (initial state)
+- `READY`
 
-This endpoint returns a 200 status code if all modules are in `UP` or `DISABLED` state.
-
-Otherwise, it returns 503 ("Service Unavailable") if at least one module is in `STARTING` or `DOWN` state.
+This endpoint returns a 200 status code if Console is in a `READY` state. Otherwise, it returns a 503 status code if Console fails to start.
 
 ```shell title="cURL example"
-curl -s  http://localhost:8080/platform/api/modules/health/ready | jq .
-# {
-#   "console": "UP",
-#   "is_ready": true
-# }
+curl -s  http://localhost:8080/api/health/ready
+# READY
 ```
 
 #### Kubernetes startup probe
@@ -92,7 +84,7 @@ ports:
 ```yaml title="Probe configuration"
 startupProbe:
     httpGet:
-        path: /platform/api/modules/health/ready
+        path: /api/health/ready
         port: httpprobe
     initialDelaySeconds: 30
     periodSeconds: 10
@@ -104,16 +96,17 @@ startupProbe:
 
 ### Console Versions
 
-`/platform/api/modules/versions`
+`/api/versions`
 
 This endpoint exposes module versions used to build the Console along with the overall Console version.
 
 ```shell title="cURL example"
-curl -s  http://localhost:8080/platform/api/modules/versions | jq .
+curl -s  http://localhost:8080/api/versions | jq .
 # {
-#  "platform": "1.21.0",
-#  "console": "059af990fff39541c76c0187edb5ea4e9f9ff69a",
-#  "console_web": "4786261ab99e5048d997b4ff2538c4747f285a2b",
+#  "platform": "1.27.0",
+#  "platformCommit": "ed849cbd545bb4711985ce0d0c93ca8588a6b31f",
+#  "console": "f97704187a7122f78ddc9110c09abdd1a9f9d470",
+#  "console_web": "05dea2124c01dfd9479bc0eb22d9f7d8aed6911b"
 # }
 ```
 

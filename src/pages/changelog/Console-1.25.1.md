@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Breaking Changes 💣
 ### New docker image name
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.  
@@ -45,17 +47,17 @@ spec:
   displayName: "Cloud Kafka"
   icon: "kafka"
   color: "#000000"
-  bootstrapServers: "34.140.204.135:12092"
+  bootstrapServers: "localhost:9092"
   properties:
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
   schemaRegistry:
-    url: http://34.140.204.135/registry/
+    url: http://localhost:8080
     security:
       type: BasicAuth
-      username: superUser
-      password: superUser
+      username: some_user
+      password: some_user
 ````
 
 #### Short lived token generation on startup

@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General fixes 🔨
 
 - Fixed an issue when either `GATEWAY_ACL_ENABLED` or `GATEWAY_ACL_STORE_ENABLED` was enabled resulting in ACLs being enforced in undesirable scenarios.

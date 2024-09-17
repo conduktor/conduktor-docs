@@ -33,7 +33,17 @@ Check the dedicated [Authentication Configuration page](/gateway/configuration/c
 Once Authentication is configured, if you don't need Group or Virtual Cluster, then no further step is necessary regarding Service Accounts.
 :::
 
-There are a few cases where it's necessary to declare GatewayServiceAccount resources: **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**.
+There are a few cases where it's necessary to declare GatewayServiceAccount resources: **Local Gateway Users**, **Service Account mapping** or **Virtual Cluster mapping**.  
+Also, the GatewayServiceAccount API will be restricted depending on your Gateway configuration:
+
+| GATEWAY_SECURITY         | Local SA | External    SA           |
+|--------------------------|----------|--------------------------|
+| PLAINTEXT                | 🚫       | 🚫                       |
+| SSL                      | 🚫       | only if mTls             |
+| SASL_PLAINTEXT           | ✅        | only if OAuth configured |
+| SASL_SSL                 | ✅        | only if OAuth configured |
+| DELEGATED_SASL_PLAINTEXT | 🚫       | ✅                        |
+| DELEGATED_SASL_SSL       | 🚫       | ✅                        |
 
 
 **Local Gateway Users**  

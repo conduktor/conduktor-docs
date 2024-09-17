@@ -55,7 +55,9 @@ nav.navbar .navbar__items {
 
 nav.navbar .navbar__logo,
 .navbar__brand {
-  margin-right: 0;
+  margin-right: 4px;
+  height: 24px;
+  margin-top: 2px;
 }
 
 

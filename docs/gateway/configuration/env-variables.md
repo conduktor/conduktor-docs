@@ -11,21 +11,31 @@ Configuring the environment variables is the recommended way of setting up Condu
 
 Jump to:
 
-- [Kafka Environment Variables](#kafka-environment-variables)
-- [Gateway Environment Variables](#gateway-environment-variables)
-  - [Host/Port](#hostport)
-  - [Load Balancing](#load-balancing)
-  - [Client to Gateway Authentication](#client-to-gateway-authentication)
-  - [Security Provider](#security-provider)
-  - [Secret management](#secret-management)
-  - [HTTP](#http)
-  - [Internal State](#internal-state)
-  - [Internal Setup](#internal-setup)
-  - [Feature Flags](#feature-flags)
-  - [Licensing](#licensing)
-  - [Audit](#audit)
-  - [Logging](#logging)
-  - [Product Analytics](#product-analytics)
+- [Environment Variables](#environment-variables)
+  - [Kafka Environment Variables](#kafka-environment-variables)
+  - [Gateway Environment Variables](#gateway-environment-variables)
+    - [Guidelines](#guidelines)
+    - [Host/Port](#hostport)
+    - [Load Balancing](#load-balancing)
+    - [Client to Gateway Authentication](#client-to-gateway-authentication)
+      - [SSL](#ssl)
+      - [SSL Config](#ssl-config)
+      - [MTLS](#mtls)
+      - [OAuthbearer](#oauthbearer)
+      - [SECURITY PROVIDER](#security-provider)
+      - [SECRET MANAGEMENT](#secret-management)
+    - [HTTP](#http)
+    - [Internal State](#internal-state)
+      - [Topics Names](#topics-names)
+    - [Cluster Switching / Failover](#cluster-switching--failover)
+    - [Internal Setup](#internal-setup)
+      - [Threading](#threading)
+      - [Upstream Connection](#upstream-connection)
+    - [Feature Flags](#feature-flags)
+    - [Licensing](#licensing)
+    - [Audit](#audit)
+    - [Logging](#logging)
+    - [Product Analytics](#product-analytics)
 
 ## Kafka Environment Variables
 
@@ -66,14 +76,15 @@ __Example Values__
 | Environment Variable             | Default Value                         | Description                                                                                                                                                                                                                                                                                     |
 |----------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_BIND_HOST`              | `0.0.0.0`                             | The host on which to bind the gateway                                                                                                                                                                                                                                                           |
-| `GATEWAY_ADVERTISED_HOST`        | defaults to your hostname             | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
+| `GATEWAY_ADVERTISED_HOST`        | Your hostname             | The gateway hostname that should be presented to clients                                                                                                                                                                                                                                        |
 | `GATEWAY_PORT_START`             | `6969`                                | Port on which Gateway will start listening on                                                                                                                                                                                                                                                   |
-| `GATEWAY_PORT_COUNT`             | defaults to your number of brokers +2 | Number of ports to be used by the Gateway, each port will correspond to a broker in the Kafka cluster so it must be at least as large as the broker count of the Kafka cluster. In production, we recommend it is double the size of the Kafka cluster to allow for expansion and reassignment. |
+| `GATEWAY_PORT_COUNT`             | (maxBrokerId-minBrokerId)+3 | Number of ports to be used by the Gateway, see [networking](docs/gateway/configuration/network.md#port-based-routing) for more on host/port configuration. |
+| `GATEWAY_MIN_BROKERID`           | `0`                                   | The broker id associated to Gateway's first port (`GATEWAY_PORT_START`), should be the lowest `broker.id` (or `node.id`) defined in the Kafka cluster.                                                   |
 | `GATEWAY_ROUTING_MECHANISM`      | `port`                                | `port` or `host`.                                                                                                                                                                                                                                                                               |
 | **SNI Routing only**             |                                       | Check our dedicated guide on [SNI Routing ](/gateway/how-to/sni-routing/)                                                                                                                                                                                                                       |
 | `GATEWAY_ADVERTISED_SNI_PORT`    | none                                  | Port to be advertised to the client if routing mechanism is set to `host` for SNI routing.                                                                                                                                                                                                      |
 | `GATEWAY_ADVERTISED_HOST_PREFIX` | `broker`                              | Set the host prefix when using SNI Routing                                                                                                                                                                                                                                                      |
-| `GATEWAY_SNI_HOST_SEPARATOR`     | `.`                                    | Set the host separator when using SNI Routing                                                                                                                                                                                                                                                   | 
+| `GATEWAY_SNI_HOST_SEPARATOR`     | `.`                                   | Set the host separator when using SNI Routing                                                                                                                                                                                                                                                   | 
 
 
 ### Load Balancing
@@ -96,6 +107,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | If no virtual cluster was detected then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal |
 | `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                          |
 | `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | Enable / Disable ACLs support for Virtual Clusters only.                                                                                                                                                               |
+| `GATEWAY_USER_POOL_SECRET_KEY` |  A default value is used to sign tokens, this is not published and should be changed. | You must set to a random value to ensure that tokens cannot be forged. Used for the `PLAIN` mechanism when generating JWT tokens for clients. See [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for more. |
 
 #### SSL
 
@@ -174,16 +186,19 @@ Secrets may be passed from configuration to Gateway using environment variables.
 * `VAULT_PASSWORD`
 * etc.
 
-For a full list of security examples consider the [marketplace plugin pages](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
-
 
 ### HTTP
 
-| Environment Variable      | Default Value                                           | Description                                                                       |
-|---------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------|
-| `GATEWAY_HTTP_PORT`       | `8888`                                                  | The port on which the gateway will present a HTTP management API                  |
-| `GATEWAY_SECURED_METRICS` | `true`                                                  | Does the HTTP management API require users?                                       |
-| `GATEWAY_ADMIN_API_USERS` | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write |
+| Environment Variable                  | Default Value                                           | Description                                                                                             |
+| ------------------------------------- | ------------------------------------------------------- |---------------------------------------------------------------------------------------------------------|
+| `GATEWAY_HTTP_PORT`                   | `8888`                                                  | The port on which the gateway will present the HTTP management API                                      |
+| `GATEWAY_SECURED_METRICS`             | `true`                                                  | Does the HTTP management API require authentication?                                                    |
+| `GATEWAY_ADMIN_API_USERS`             | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write                       |
+| `GATEWAY_HTTPS_CLIENT_AUTH`           | `NONE`                                                  | Client auth configuration for HTTPS incoming connection. Possible values: `NONE`, `REQUEST`, `REQUIRED` |
+| `GATEWAY_HTTPS_KEY_STORE_PATH`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection                                      |
+| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`    |                                                         | Configures the password of the keystore used for HTTPS TLS connection                                   |
+| `GATEWAY_HTTPS_TRUST_STORE_PATH`      |                                                         | Configure the truststore used for the HTTPS TLS connection                                              |
+| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD` |                                                         | Configures the password of the truststore used for HTTPS TLS connection                                 |
 
 ### Internal State
 
@@ -198,7 +213,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
 
 
-#### Topics Names
+#### Topic Names
 
 | Environment Variable                   | Default Value                               | Description                                                               |
 |----------------------------------------|---------------------------------------------|---------------------------------------------------------------------------|
@@ -214,6 +229,23 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_VCLUSTERS_TOPIC`              | `_conduktor_gateway_vclusters`              | Name of vclusters topic                                                   |
 | `GATEWAY_GROUPS_TOPIC`                 | `_conduktor_gateway_groups`                 | Name of groups topic                                                      |
 
+
+### Cluster Switching / Failover
+For a fuller description of the failover experience see the [failover how-to](docs/gateway/how-to/configuring-failover.md).
+Setup of environment variables is similar to normally [connecting to a Kafka cluster](#kafka-environment-variables), but you provide two sets, one for your main cluster, one for your failover cluster. You can also load a [cluster-config file](/docs/gateway/how-to/configuring-failover.md#configuring-through-a-cluster-config-file) if you prefer.
+
+| Environment Variable | Default Value | Description |
+| --- | --- |--- |
+| `GATEWAY_BACKEND_KAFKA_SELECTOR` | | Indicates use of a file for config, and provide path to it e.g. `'file : { path: /cluster-config.yaml}'` |
+| `KAFKA_MAIN_BOOTSTRAP_SERVERS` | | Bootstrap server of the main cluster |
+| `KAFKA_MAIN_SECURITY_PROTOCOL` | | Security protocol of the main cluster |
+| `KAFKA_MAIN_SASL_MECHANISM` | | SASL mechanism of the main cluster |
+| `KAFKA_MAIN_SASL_JAAS_CONFIG` | | SASL jaas config of the main cluster |
+| `KAFKA_FAILOVER_BOOTSTRAP_SERVERS` | | Bootstrap server of the failover cluster |
+| `KAFKA_FAILOVER_SECURITY_PROTOCOL` | | Security protocol of the failover cluster |
+| `KAFKA_FAILOVER_SASL_MECHANISM` | | SASL mechanism of the main cluster |
+| `KAFKA_FAILOVER_SASL_JAAS_CONFIG` | | SASL jaas config of the main cluster |
+| `KAFKA_FAILOVER_GATEWAY_ROLES` | | Set the Gateway into failover mode, set this to `failover` for this scenario|
 
 ### Internal Setup
 
@@ -252,6 +284,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                   |
 | `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   |
 | `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`            | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
+| `GATEWAY_AUDIT_LOG_KAFKA_`                      |                 | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |
 
 ### Logging
 

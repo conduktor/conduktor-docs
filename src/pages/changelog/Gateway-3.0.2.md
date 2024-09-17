@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General fixes 🔨
 
 - Fixed a race condition when closing connections (i.e. when Gateway detects a broker is removed from the cluster) that was causing restarts/timeouts

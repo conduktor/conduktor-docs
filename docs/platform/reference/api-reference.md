@@ -8,7 +8,7 @@ description: Conduktor Console gives you complete visibility into your Kafka eco
 
 ## Overview
 
-The Conduktor REST API can be used to manage your organizations Users, Groups and their associated Permissions. Additionally, it can be used to interact with Kafka resources that are added to your organization such as Clusters and Certificates.
+The Conduktor HTTP API can be used to manage your organizations Users, Groups and their associated Permissions. Additionally, it can be used to interact with Kafka resources that are added to your organization such as Clusters and Certificates.
 
 **Open API documentation** portal is available on `/docs` of your deployment host (e.g. `http://localhost:8080/docs`).
 

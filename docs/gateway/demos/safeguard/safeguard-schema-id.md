@@ -1,5 +1,5 @@
 ---
-title: Schema Id validation
+title: SchemaId Validation
 description: Schema Id validation
 tag: safeguard
 ---

@@ -16,18 +16,19 @@ As Gateway is quite a technical product, we recommend you to [book a demo](https
 
 ## Encrypting data in-transit and at-rest
 
-- [Field level encryption](./encryption/encryption-decrypt-only-specific-fields/): Encrypt and decrypt only specific fields
-- [Full encryption for 3rd Party](./encryption/encryption-third-party/): Encrypt specific fields for 3rd party consumers
-- [Encrypting using Vault](./encryption/encryption-vault-with-secret-management): Use HashiCorp Vault to encrypt and decrypt data
+- [Encrypting using Vault](./security/encryption/encryption-vault-with-secret-management/): Use HashiCorp Vault to encrypt and decrypt data
+- [Field level encryption](./security/encryption/encryption-field-level/): Encrypt and decrypt only specific fields
+- [Full payload encryption](./security/encryption/encryption-payload/): Encrypt full message payloads
+- [Encryption based on Schema Registry tags](./security/encryption/encryption-schema-registry/): Encrypt and decrypt only specific fields
 
 ## Operations
 
-- [Cluster switching/Failover](./ops/cluster-switching): Transparent failover for your applications
+- [Cluster switching/Failover](./ops/cluster-switching/): Transparent failover for your applications
 - [Multi-tenancy](./ops/multi-tenancy): Build multi-tenancy infrastructure with Kafka
 - [Topic Concentration](./ops/topic-concentration): Concentrate multiple topics into a single one for cost savings
-- [Header injection](./ops/header-injection): Inject headers into your Kafka messages for lineage or chargeback support
-- [Large messages support](./ops/large-messages): Sending files or large messages through Kafka?
-- [SQL](./sql/sql-topic-schema-registry/): Filter and transform your Kafka topics data with SQL without hassle
+- [Header injection](./security/header-injection/): Inject headers into your Kafka messages for lineage or chargeback support
+- [Large messages support](./advanced-patterns-support/large-messages/): Sending files or large messages through Kafka?
+- [SQL](./advanced-patterns-support/sql-topic-schema-registry/): Filter and transform your Kafka topics data with SQL without hassle
 
 ## Security
 

@@ -1,5 +1,6 @@
 {
-  "label": "Safeguard",
+  "label": "Traffic Control Policies",
+  "position": 8,
   "link": {
     "type": "generated-index"
   }
