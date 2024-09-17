@@ -259,6 +259,10 @@ const redirects = [
         to: '/gateway/configuration/env-variables',
       },
       {
+        from: '/gateway/category/interceptors-catalog/',
+        to: '/gateway/category/interceptor-catalog/',
+      },
+      {
         from: '/platform/admin/managing-clusters',
         to: '/platform/navigation/settings/managing-clusters',
       },
