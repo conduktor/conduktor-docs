@@ -66,7 +66,7 @@ spec:
     numPartition:
       min: 5
       max: 5
-      action: "WARN"
+      action: "INFO"
 ````
 **Interceptor checks:**
 - `metadata.scope` is optional (default empty). 
