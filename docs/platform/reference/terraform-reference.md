@@ -176,7 +176,7 @@ provider "conduktor" {
 resource "conduktor_user_v2" "bob" {
   name = "bob@mycompany.io"
   spec {
-    firstname   = "Example"
+    firstname   = "Bob"
     lastname    = "Smith"
     permissions = [
         {
@@ -189,7 +189,7 @@ resource "conduktor_user_v2" "bob" {
 
 # Create a group with Bob as a member
 resource "conduktor_group_v2" "example_group" {
-  name = "example-group"
+  name = "team-a"
   spec {
     display_name = "team-a"
     description  = "The group of team-a"
