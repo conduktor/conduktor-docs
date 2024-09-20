@@ -37,7 +37,7 @@ terraform {
 
 ### Configure
 
-To use Conduktor Terraform Provider, you need to define some minimal configuration :
+To use the Conduktor Terraform Provider, you need to define some minimal configuration :
 - The URL of Conduktor Console
 - The authentication mecanism
   - Using an API key
@@ -74,7 +74,7 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 
   </TabItem>
   <TabItem value="GUI" label="UI">
-Navigate to Settings / API Keys
+Navigate to Settings > API Keys
 
 Select **Create API Key** to generate a new API key.
 
@@ -111,9 +111,9 @@ Navigate to Applications, pick your Application, then under Application Instance
 
 ### Using short lived user credentials authentication
 
-This type of API Key have the permissions of the user who created it.
+This type of API Key will have the permissions of the user who created it.
 It is forged at provider configuration using login API, and it only works for Local Users or LDAP users.
-Short-lived User API Keys will be valid for the same duration as the [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
+Short-lived User API Keys will be valid for the same duration as the configured [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 **OIDC users can't be used here.**
 
 ````hcl
@@ -127,16 +127,16 @@ provider "conduktor" {
 
 ### Environment variables
 
-Provider configuration also support environment variables for all attributes.
+Provider configuration also supports environment variables for all attributes.
 
 | Environment Variables                | HCL Value        | Description |
 |--------------------------------------|------------------|-------------|
-| `CDK_CONSOLE_URL`  or `CDK_BASE_URL` | `console_url`    | Console base url like `http://localhost:8080` |
+| `CDK_CONSOLE_URL`  or `CDK_BASE_URL` | `console_url`    | Console base url e.g. `http://localhost:8080` |
 | `CDK_API_TOKEN` or `CDK_API_KEY`     | `api_token`      | Console [API Key](#using-api-key-authentication) |
 | `CDK_ADMIN_EMAIL`                    | `admin_email`    | Console [user login](#using-short-lived-user-credentials-authentication) email |
 | `CDK_ADMIN_PASSWORD`                 | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
 | `CDK_CERT`                           | `cert`           | Cert in PEM format to authenticate using client certificates |
-| `CDK_INSECURE`                       | `insecure`       | Skip TLS verification flag. Default to `false` |
+| `CDK_INSECURE`                       | `insecure`       | Skip TLS verification flag. Defaults to `false` |
 | `CDK_CA_CERT`                        | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate |
 | `CDK_KEY`                            | `key`            | Key in PEM format to authenticate using client certificates |
 
@@ -144,12 +144,12 @@ Provider configuration also support environment variables for all attributes.
 The configuration resolution is (by order of priority) :
 1. HCL values
 2. Environment variables
-3. Default value (if applicable)
+3. Default values (if applicable)
 :::
 
 ## Provider Usage
 
-Once provider configured all [currently available](#available-resources) resources can be used in terraform definition.
+Once the provider is configured all [currently available](#available-resources) resources can be used in the terraform definition.
 
 ### Usage Example
 Full example of user and group creation using Conduktor Console locally available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
@@ -215,7 +215,7 @@ Now if you go into Conduktor Console UI, you will se a new user and group create
 
 And if you login using external SSO (LDAP or OIDC) with email `example_user@mycompany.io` you will be known by Conduktor Console and end up in `example-group` Group.
 
-To revert back Conduktor state you can then destroy created resources using `terraform destroy`
+To revert the Conduktor state you can destroy created resources using `terraform destroy`
 
 
 For more details on Terraform CLI usage check Hashicorp [documentation](https://developer.hashicorp.com/terraform/cli/commands)
@@ -230,7 +230,7 @@ For more details on Terraform CLI usage check Hashicorp [documentation](https://
 
 The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
 
-It's still an exeperimental resource that have many [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subjected to breaking changes in future releases.
+It's still an exeperimental resource that have many [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases.
 
 
 ## More documentation reference
