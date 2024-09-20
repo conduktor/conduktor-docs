@@ -13,16 +13,16 @@ import TabItem from '@theme/TabItem';
 
 
 :::warning Warning ⚠
-Conduktor Terraform Provider is currently in **Alpha** and don't support all Conduktor resources yet.
-See our [resources roadmap](https://github.com/conduktor/terraform-provider-conduktor?tab=readme-ov-file#resources-roadmap).
-Let us know if you have [feedback](https://product.conduktor.help/c/74-terraform-provider) or wish to be a design partner.
+- Conduktor Terraform Provider is currently in **Alpha** and don't support all Conduktor resources yet.
+- See our [resources roadmap](https://github.com/conduktor/terraform-provider-conduktor?tab=readme-ov-file#resources-roadmap).
+- Let us know if you have [feedback](https://product.conduktor.help/c/74-terraform-provider) or wish to be a design partner.
 :::
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the Terraform Provider can be used for Kafka Self-service.
 
 ## Install & Configure
 
-Provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of version using following [`required_providers` configuration](https://developer.hashicorp.com/terraform/language/providers/requirements) :
+Provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of version using following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration :
 
 ```hcl
 terraform {
@@ -60,13 +60,13 @@ There are 2 types of API Keys:
 - [Self-Service Application API Keys](#self-service-application-api-key)
 
 <Tabs>
-<TabItem  value="Admin API Key" label="Admin API Key">
+<TabItem  value="admin-api-key" label="Admin API Key">
 
 Admin API Keys grant the maximum permissions on Console.
 They are generated either from the UI or using the  [CLI](./cli-reference.md).
 
-<Tabs>
-<TabItem  value="CLI" label="CLI">
+  <Tabs>
+  <TabItem  value="CLI" label="CLI">
 
 ````bash
 # Generate a key named my-admin-key
@@ -74,39 +74,39 @@ $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-</TabItem>
-<TabItem value="GUI" label="UI">
+  </TabItem>
+  <TabItem value="GUI" label="UI">
 Navigate to Settings / API Keys
 
 Select **Create API Key** to generate a new API key.
 
 ![api-token.png](img/admin-keys.png)
-</TabItem>
-</Tabs>
+  </TabItem>
+  </Tabs>
 
 </TabItem>
-<TabItem value="Self-service Application API Key" label="Self-service Application API Key">
+<TabItem value="self-service-application-api-key" label="Self-service Application API Key">
 
 Self-service Application API Key permissions are limited to the scope of the ApplicationInstance for which they have been generated.
 Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.
 They can be obtained either from the UI or using the [CLI](./cli-reference.md).
 
-<Tabs>
-<TabItem  value="CLI" label="CLI">
+  <Tabs>
+  <TabItem  value="CLI" label="CLI">
 
 ````bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-</TabItem>
-<TabItem value="GUI" label="UI">
+  </TabItem>
+  <TabItem value="GUI" label="UI">
 
 Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
 ![Cluster identity](img/self-service-keys.png)
 
-</TabItem>
-</Tabs>
+  </TabItem>
+  </Tabs>
 </TabItem>
 </Tabs>
 <hr />
@@ -114,7 +114,7 @@ Navigate to Applications, pick your Application, then under Application Instance
 ### Using short lived user credentials authentication
 
 This type of API Key have the permissions of the user who created it.
-It can only be generated from the CLI, and it only works for Local Users or LDAP users.
+It is forged at provider configuration using login API, and it only works for Local Users or LDAP users.
 Short-lived User API Keys will be valid for the same duration as the [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 **OIDC users can't be used here.**
 
@@ -122,7 +122,7 @@ Short-lived User API Keys will be valid for the same duration as the [Session Li
 # configure provider
 provider "conduktor" {
     console_url = "http://localhost:8080"
-    admin_email    = "console-admin@mycompany"
+    admin_email    = "console-admin@mycompany.io"
     admin_password = "console-admin-password"
 }
 ````
@@ -153,6 +153,69 @@ The configuration resolution is (by order of priority) :
 
 Once provider configured all [currently available](#available-resources) resources can be used in terraform definition.
 
+### Usage Example
+Full example of user and group creation using Conduktor Console locally available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
+
+```hcl title="conduktor-iac.tf"
+# Provider installation configuration
+terraform {
+  required_providers {
+    conduktor = {
+        source = "conduktor/conduktor"
+        version = ">= 0.1.0"
+    }
+  }
+}
+
+# Provider configuration
+provider "conduktor" {
+    console_url = "http://localhost:8080"
+    admin_email    = "admin@mycompany.io"
+    admin_password = "admin_password"
+}
+
+# Create example_user
+resource "conduktor_user_v2" "example_user" {
+  name = "example_user@mycompany.io"
+  spec {
+    firstname   = "Example"
+    lastname    = "User"
+    permissions = [
+        {
+            resource_type = "PLATFORM"
+            permissions   = ["userView", "datamaskingView", "auditLogView"]
+        }
+    ]
+  }
+}
+
+# Create example_group with example_user as member
+resource "conduktor_group_v2" "example_group" {
+  name = "example-group"
+  spec {
+    display_name = "Example Group"
+    description  = "Example group description"
+    members      = [ conduktor_user_v2.example_user.name ]
+    permissions  = []
+  }
+}
+```
+
+Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and on directory containing `conduktor-iac.tf` file.
+```shell
+# Initialize terraform project
+terraform init
+
+# Plan to preview the changes Terraform will make to match your configuration.
+terraform plan
+
+# Apply to make the planned changes.
+terraform apply
+```
+
+Now if you go into Conduktor Console UI, you will se a new user and group created.
+
+And if you login using external SSO (LDAP or OIDC) with email `example_user@mycompany.io` you will be known by Conduktor Console and end up in `example-group` Group.
 
 
 ### Available resources
