@@ -172,12 +172,12 @@ provider "conduktor" {
     admin_password = "admin_password"
 }
 
-# Create example_user
-resource "conduktor_user_v2" "example_user" {
-  name = "example_user@mycompany.io"
+# Create example_user, Bob
+resource "conduktor_user_v2" "bob" {
+  name = "bob@mycompany.io"
   spec {
     firstname   = "Example"
-    lastname    = "User"
+    lastname    = "Smith"
     permissions = [
         {
             resource_type = "PLATFORM"
@@ -187,19 +187,19 @@ resource "conduktor_user_v2" "example_user" {
   }
 }
 
-# Create example_group with example_user as member
+# Create a group with Bob as a member
 resource "conduktor_group_v2" "example_group" {
   name = "example-group"
   spec {
-    display_name = "Example Group"
-    description  = "Example group description"
-    members      = [ conduktor_user_v2.example_user.name ]
+    display_name = "team-a"
+    description  = "The group of team-a"
+    members      = [ conduktor_user_v2.bob.name ]
     permissions  = []
   }
 }
 ```
 
-Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and on directory containing `conduktor-iac.tf` file.
+Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and in directory containing `conduktor-iac.tf` file.
 ```shell
 # Initialize terraform project
 terraform init
@@ -211,9 +211,9 @@ terraform plan
 terraform apply
 ```
 
-Now if you go into Conduktor Console UI, you will se a new user and group created.
+Now if you navigate to the Conduktor UI, you will see a new user, Bob, and team-a's group created.
 
-And if you login using external SSO (LDAP or OIDC) with email `example_user@mycompany.io` you will be known by Conduktor Console and end up in `example-group` Group.
+Login using external SSO (LDAP or OIDC) with email `bob@mycompany.io` you will be recognised by Conduktor and end up in the `team-a` Group.
 
 To revert the Conduktor state you can destroy created resources using `terraform destroy`
 
