@@ -1,9 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const {themes} = require('prism-react-renderer');
-const lightCodeTheme = themes.github;
-const darkCodeTheme = themes.dracula;
+const { themes } = require('prism-react-renderer')
+const lightCodeTheme = themes.github
+const darkCodeTheme = themes.dracula
 const { gtag } = require('./src/services/gtag')
 const { analytics } = require('./src/services/analytics')
 const { gtm } = require('./src/services/gtm')
@@ -136,7 +136,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['bash', 'diff', 'json']
+        additionalLanguages: ['bash', 'diff', 'json', 'hcl'],
       },
       colorMode: {
         disableSwitch: true,
@@ -182,7 +182,7 @@ const config = {
         path: './docs/gateway',
         lastVersion: 'current',
         onlyIncludeVersions: ['current'],
-      }
+      },
     ],
     redirects,
     gtag,
@@ -197,18 +197,18 @@ const config = {
       type: 'text/javascript',
     },
     {
-      id: "runllm-widget-script",
-      type: "module",
-      src: "https://cdn.jsdelivr.net/npm/@runllm/search-widget@stable/dist/run-llm-search-widget.es.js",
-      "runllm-server-address": "https://api.runllm.com",
-      "runllm-assistant-id": "147",
-      "runllm-position": "BOTTOM_RIGHT",
-      "runllm-keyboard-shortcut": "Mod+j",
-      version: "stable",
-      "runllm-preset": "docusaurus",
-      "runllm-slack-community-url": "",
-      "runllm-name": "Conduktor",
-      "runllm-theme-color": "#005EEC",
+      id: 'runllm-widget-script',
+      type: 'module',
+      src: 'https://cdn.jsdelivr.net/npm/@runllm/search-widget@stable/dist/run-llm-search-widget.es.js',
+      'runllm-server-address': 'https://api.runllm.com',
+      'runllm-assistant-id': '147',
+      'runllm-position': 'BOTTOM_RIGHT',
+      'runllm-keyboard-shortcut': 'Mod+j',
+      version: 'stable',
+      'runllm-preset': 'docusaurus',
+      'runllm-slack-community-url': '',
+      'runllm-name': 'Conduktor',
+      'runllm-theme-color': '#005EEC',
       async: true,
     },
   ],
