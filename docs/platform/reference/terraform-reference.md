@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Terraform Reference
 
-[Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor) gives you the ability to perform some operations on Conduktor Console state directly from exsiting Terraform Infrastructure-as-Code environment.
+[Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor) gives you the ability to perform some operations on Conduktor Console state directly from exsiting [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
 
 
 :::warning Warning ⚠
@@ -56,8 +56,6 @@ provider "conduktor" {
 ````
 
 There are 2 types of API Keys:
-- [Admin API Keys](#admin-api-key)
-- [Self-Service Application API Keys](#self-service-application-api-key)
 
 <Tabs>
 <TabItem  value="admin-api-key" label="Admin API Key">
@@ -131,23 +129,23 @@ provider "conduktor" {
 
 Provider configuration also support environment variables for all attributes.
 
+| Environment Variables                | HCL Value        | Description |
+|--------------------------------------|------------------|-------------|
+| `CDK_CONSOLE_URL`  or `CDK_BASE_URL` | `console_url`    | Console base url like `http://localhost:8080` |
+| `CDK_API_TOKEN` or `CDK_API_KEY`     | `api_token`      | Console [API Key](#using-api-key-authentication) |
+| `CDK_ADMIN_EMAIL`                    | `admin_email`    | Console [user login](#using-short-lived-user-credentials-authentication) email |
+| `CDK_ADMIN_PASSWORD`                 | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_CERT`                           | `cert`           | Cert in PEM format to authenticate using client certificates |
+| `CDK_INSECURE`                       | `insecure`       | Skip TLS verification flag. Default to `false` |
+| `CDK_CA_CERT`                        | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate |
+| `CDK_KEY`                            | `key`            | Key in PEM format to authenticate using client certificates |
+
+:::info
 The configuration resolution is (by order of priority) :
 1. HCL values
 2. Environment variables
 3. Default value (if applicable)
-
-
-| Environment Variables                | HCL Value        | Description |
-|--------------------------------------|------------------|-------------|
-| `CDK_CONSOLE_URL`  or `CDK_BASE_URL` | `console_url`    | Console base url like `http://localhost:8080` |
-| `CDK_API_TOKEN` or `CDK_API_KEY`     | `api_token`      | Console API Token |
-| `CDK_ADMIN_EMAIL`                    | `admin_email`    | Console user login email |
-| `CDK_ADMIN_PASSWORD`                 | `admin_password` | Console user login password |
-| `CDK_CERT`                           | `cert`           | Cert in PEM format to authenticate using client certificates|
-| `CDK_INSECURE`                       | `insecure`       | Skip TLS verification flag. Default to `false`.|
-| `CDK_CA_CERT`                        | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate. |
-| `CDK_KEY`                            | `key`            | Key in PEM format to authenticate using client certificates. |
-
+:::
 
 ## Provider Usage
 
@@ -217,6 +215,10 @@ Now if you go into Conduktor Console UI, you will se a new user and group create
 
 And if you login using external SSO (LDAP or OIDC) with email `example_user@mycompany.io` you will be known by Conduktor Console and end up in `example-group` Group.
 
+To revert back Conduktor state you can then destroy created resources using `terraform destroy`
+
+
+For more details on Terraform CLI usage check Hashicorp [documentation](https://developer.hashicorp.com/terraform/cli/commands)
 
 ### Available resources
 
@@ -229,3 +231,10 @@ And if you login using external SSO (LDAP or OIDC) with email `example_user@myco
 The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
 
 It's still an exeperimental resource that have many [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subjected to breaking changes in future releases.
+
+
+## More documentation reference
+- Terraform [introduction](https://developer.hashicorp.com/terraform/intro)
+- Terraform HCL [documentation](https://developer.hashicorp.com/terraform/language)
+- Terraform CLI [documentation](https://developer.hashicorp.com/terraform/cli/commands)
+- Conduktor Terraform provider [registry](https://registry.terraform.io/providers/conduktor/conduktor/latest)
