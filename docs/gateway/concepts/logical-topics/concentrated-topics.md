@@ -11,7 +11,7 @@ Concentrated Topics transparently act as pointers to a single physical topic on 
 
 As per the Gateway API documentation, you can create a concentration rule to concentrate topics based on a prefix.
 
-For that, you can use the following API call, that will make every new topics starting with `concentrated.` be concentrated topics:
+The following API call is an example that will set a rule to modify any new topics created with the prefix `concentrated.` to be concentrated topics:
 
 ```bash
 curl \
