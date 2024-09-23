@@ -74,7 +74,7 @@ For that, the Gateway will add an identifier for each concentrated compacted top
 Of course, this suffix is invisible for applications and is removed on consume.
 
 :::tip
-In this internal topic, you can also see how concentrated and physical partitions are mapped together!
+In this internal topic, you can see how concentrated and physical partitions are mapped together!
 :::
 
 ## Limitations
