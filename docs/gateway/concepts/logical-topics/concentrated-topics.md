@@ -71,7 +71,7 @@ In the case of a compact cleanup policy, we should not force two records produce
 
 For that, the Gateway will add an identifier for each concentrated compacted topic as a key suffix. You can find this suffix in the internal topic that stores all the topic mappings.
 
-Of course, this suffix is invisible for applications and is removed on consume.
+This suffix is invisible for applications and is removed on consumption.
 
 :::tip
 In this internal topic, you can see how concentrated and physical partitions are mapped together!
