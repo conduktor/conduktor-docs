@@ -63,7 +63,7 @@ When you create a concentrated topic, each concentrated partition is mapped to a
 
 In this case, we have 2 concentrated topics (`concentrated.topicA` & `concentrated.topicB`), with partition counts of 3 and 4 respectively, that are mapped to a single physical topic (`physical.topic`) with 3 partitions.
 
-To ensure that consumers don't consume messages from other partitions - or even worse, from other concentrated topics - we store the concentrated partition and the concentrated topic name in the record headers. That way, the Gateway will filter the messages that should be returned to the consumer accordingly to what it asked for.
+To ensure that consumers don't consume messages from other partitions or from other concentrated topics, we store the concentrated partition and the concentrated topic name in the record headers. Gateway will automatically filter the messages that should be returned to the consumer.
 
 ### Compact Cleanup Policy
 
