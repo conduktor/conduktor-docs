@@ -81,7 +81,7 @@ In this internal topic, you can see how concentrated and physical partitions are
 
 ### Configuration
 
-Only the following topic properties can be set for the concentrated topics:
+The following list of topic properties are the only allowed properties for concentrated topics:
 - `partitions` 
 - `cleanup.policy`
 - `retention.ms`
