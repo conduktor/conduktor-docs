@@ -88,7 +88,7 @@ The following list of topic properties are the only allowed properties for conce
 - `retention.bytes`
 - `delete.retention.ms`
 
-If another configuration is being set, and is different from the physical cluster default, the topic creation will fail with an error:
+If any other configuration besides the above is being set, and is different from the physical cluster default, the topic creation will fail with an error:
 
 ```
 Configuration is invalid.
