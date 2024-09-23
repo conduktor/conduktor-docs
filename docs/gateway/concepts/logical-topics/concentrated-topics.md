@@ -4,7 +4,7 @@ title: Concentrated Topics
 description: Concentrated topics
 ---
 
-Topic concentration helps **reducing your infrastructure costs** on low-volume topics by co-locating messages from **multiple concentrated topics into one single physical topic**. That way, you can have concentrated topics with much more partitions than the ones you actually have in your physical topic.
+Concentrated Topics transparently act as pointers to a single physical topic on your Kafka cluster.  They allow you to reduce costs on low-volume topics by co-locating messages.  They are completely transparent to consumers and producers and allow you to emulate different partition counts irrespective of the backing physical topic's partition count.
 
 The topic concentration is totally transparent for consumers and producers.
 
