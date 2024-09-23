@@ -101,7 +101,7 @@ Error while executing topic command : Value '704800000' for configuration 'reten
 ```
 
 :::info
-With concentrated topics, the real retention is the physical topic's one, not the one requested at the concentrated topic creation.
+With concentrated topics, the enforced retention policy is the physical topic's retention policy, and not the policy requested at the concentrated topic creation time.
 
 `retention.ms` and `retention.bytes` are not cleanup guarantees. They are retention guarantees.
 :::
