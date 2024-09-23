@@ -9,7 +9,7 @@ Concentrated Topics transparently act as pointers to a single physical topic on 
 
 ## Usage
 
-As written in the Gateway API documentation (accessible on the port 8888 of your Gateway by default), you can create a concentration rule to concentrate topics based on a prefix.
+As per the Gateway API documentation, you can create a concentration rule to concentrate topics based on a prefix.
 
 For that, you can use the following API call, that will make every new topics starting with `concentrated.` be concentrated topics:
 
