@@ -112,7 +112,7 @@ Gateway must read all the messages for all the consumers and skip the ones that 
 
 ### Message Count & Lag, Offset (in)correctness
 
-Concentrated topics & SQL topics are not real, and that's not compatible with the tools available in the Kafka Ecosystem (Conduktor included) that rely on topics metadata to generate reports, graphs or calculations.
+Concentrated topics & SQL topics are virtualised, which creates incompatibilities with existing tools in the Kafka Ecosystem (Conduktor included) that rely on topics metadata to generate reports, graphs or calculations.
 
 Right now, the 2 most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that rely on partition **EndOffset**.
 
