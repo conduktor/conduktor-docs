@@ -46,7 +46,7 @@ The `autoManaged` flag, when enabled, will automatically create the physical top
 In the `autoManaged` mode, topics created by users will auto-extend the configuration (for example to honour the request `retention.ms`). As a result, if one users asks for a compacted topic with a retention of -1 (infinite), all other compacted topics associated with the concentration rule are now with infinite retention.
 :::
 
-Then, you can create a concentrated topic by matching the `pattern` mentioned in your concentration rule.
+You can now create a concentrated topic by matching the `pattern` mentioned in your concentration rule.
 
 ```sh
 kafka-topics \
