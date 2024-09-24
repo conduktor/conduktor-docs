@@ -10,4 +10,4 @@ tags: fix
 
 ## General fixes 🔨
 
-- Fixed an issue where Gateway would close the client connection upon receiving certain API Keys in parallel during the very first seconds of the connection being initialized
+- Fixed an issue where Gateway would close the client connection upon receiving certain API Keys in parallel of the initial Metadata Request
