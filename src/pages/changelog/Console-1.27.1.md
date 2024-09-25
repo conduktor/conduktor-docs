@@ -9,4 +9,4 @@ tags: fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 ## Fixes 🔨
-- Major performance improvements with the permission model
+- Improved performance of RBAC resolution where there is a large number of permissions
