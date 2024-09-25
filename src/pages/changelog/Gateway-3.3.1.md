@@ -1,5 +1,5 @@
 ---
-date: 2024-09-24
+date: 2024-09-25
 title: Hotfix for Gateway 3.3.1
 description: docker pull conduktor/conduktor-gateway:3.3.1
 solutions: gateway
