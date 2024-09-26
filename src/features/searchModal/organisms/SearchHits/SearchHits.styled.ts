@@ -21,7 +21,7 @@ export const Hit = styled('li', {
     transition: 'background-color 200ms ease-in-out',
 
     '&:hover, &:focus': {
-      backgroundColor: '$mauve4',
+      backgroundColor: '$olive4',
       textDecoration: 'none !important',
     },
   },
@@ -34,7 +34,7 @@ export const HitTitle = styled('strong', {
 
   i: {
     all: 'unset',
-    color: '$purple9',
+    color: '$primary11',
   },
 })
 
@@ -45,6 +45,6 @@ export const HitDescription = styled('p', {
 
   i: {
     all: 'unset',
-    color: '$purple9',
+    color: '$primary11',
   },
 })

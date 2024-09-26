@@ -13,7 +13,7 @@ export const Dot = styled('div', {
   variants: {
     type: {
       primary: {
-        backgroundColor: '$purple9',
+        backgroundColor: '$primary9',
       },
       white: {
         backgroundColor: '#fff',

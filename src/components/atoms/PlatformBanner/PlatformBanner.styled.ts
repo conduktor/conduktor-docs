@@ -1,7 +1,7 @@
 import { styled } from '@site/src/styles'
 
 export const StyledBanner = styled('div', {
-  border: '1px solid $mauve5',
+  border: '1px solid $olive5',
   borderRadius: '$radius6',
   padding: '$space9',
   display: 'flex',
@@ -20,11 +20,11 @@ export const StyledBanner = styled('div', {
 export const Title = styled('strong', {
   fontSize: '$fontSize4',
   fontWeight: '$medium',
-  color: '$mauve12',
+  color: '$olive12',
 })
 
 export const Paragraph = styled('p', {
-  color: '$mauve11',
+  color: '$olive11',
   letterSpacing: '-0.15px',
 
   variants: {
