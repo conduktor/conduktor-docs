@@ -2,21 +2,25 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: hsla(255, 100%, 67%, 1);
-  --ifm-color-primary-dark: hsla(255, 52%, 51%, 1);
-  --ifm-color-primary-darker: hsla(254, 49%, 35%, 1);
-  --ifm-color-primary-darkest: hsla(255, 49%, 18%, 1);
-  --ifm-color-primary-light: hsla(255, 100%, 86%, 1);
-  --ifm-color-primary-lighter: hsla(255, 100%, 91%, 1);
-  --ifm-color-primary-lightest: hsla(251, 100%, 98%, 1);
-  --ifm-navbar-link-color: hsl(260, 25%, 11%);
-  --ifm-menu-color: hsl(252, 4%, 44.8%);
-  --ifm-toc-link-color: hsl(252, 4%, 44.8%);
+  --ifm-color-primary: var(--colors-primary11);
+  --ifm-color-primary-dark: var(--colors-primary12);
+  --ifm-color-primary-darker: var(--colors-primary12);
+  --ifm-color-primary-darkest: var(--colors-primary12);
+  --ifm-color-primary-light: var(--colors-primary7);
+  --ifm-color-primary-lighter: var(--colors-primary5);
+  --ifm-color-primary-lightest: var(--colors-primary3);
+  --ifm-navbar-link-color: var(--colors-primary11);
+  --ifm-menu-color: var(--colors-primary11);
+  --ifm-toc-link-color: var(--colors-olive11);
   --ifm-code-font-size: 95%;
   --ifm-navbar-height: 73px;
   --ifm-heading-color: hsl(260, 25%, 11%);
-  --ifm-font-family-base: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --ifm-heading-font-family: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --ifm-font-family-base: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --ifm-heading-font-family: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   --ifm-heading-font-weight: 600;
   --ifm-container-width: 1216px;
   --ifm-container-width-xl: 1216px;
@@ -32,7 +36,7 @@
 nav.navbar {
   backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid var(--colors-mauve3);
+  border-bottom: 1px solid var(--colors-olive3);
   max-height: var(--ifm-navbar-height);
   box-shadow: unset;
   padding: var(--ifm-navbar-padding-vertical) 0;
@@ -60,13 +64,12 @@ nav.navbar .navbar__logo,
   margin-top: 2px;
 }
 
-
 aside > div {
   padding-left: 1.5rem;
 }
 
 aside.theme-doc-sidebar-container {
-  border-right: 1px solid var(--colors-mauve3);
+  border-right: 1px solid var(--colors-olive3);
 }
 
 aside #navbar-content-wrapper {
@@ -122,41 +125,47 @@ aside .menu__list-item button svg {
 }
 
 aside .menu__list-item button svg path {
-  fill: var(--colors-mauve11);
+  fill: var(--colors-olive11);
 }
 
-aside.theme-doc-sidebar-container nav ul li .menu__list-item-collapsible button[data-collapsed="false"] svg {
+aside.theme-doc-sidebar-container
+  nav
+  ul
+  li
+  .menu__list-item-collapsible
+  button[data-collapsed='false']
+  svg {
   transform: rotate(-90deg);
 }
 
 aside.theme-doc-sidebar-container nav ul li a {
   padding: 0.2rem 0;
   background-color: unset !important;
-  color: var(--colors-mauve11);
+  color: var(--colors-olive11);
   font-weight: 500;
   font-size: var(--fontSizes-fontSize2);
 }
 
 aside .menu__list-item-collapsible:hover button svg path {
-  fill: var(--colors-purple9);
-} 
+  fill: var(--colors-primary11);
+}
 
 aside.theme-doc-sidebar-container nav ul li a.menu__link--active {
   color: var(--ifm-menu-color-active) !important;
 }
 
 aside.theme-doc-sidebar-container nav ul li ul {
-  border-left: 1px solid var(--colors-mauve3);
+  border-left: 1px solid var(--colors-olive3);
 }
 
 ul li hr {
-  background-color: var(--colors-mauve3);
+  background-color: var(--colors-olive3);
   height: 1px;
   width: 100%;
   margin: 1rem 0;
 }
 
-ul li[data-icon="true"],
+ul li[data-icon='true'],
 aside ul li.console,
 aside ul li.testing,
 aside ul li.monitoring,
@@ -171,7 +180,7 @@ aside ul li.topic-as-a-service {
   padding: 0.25rem 0 0.25rem 2rem;
 }
 
-ul li[data-icon="true"]::before,
+ul li[data-icon='true']::before,
 aside ul li.console::before,
 aside ul li.testing::before,
 aside ul li.monitoring::before,
@@ -186,58 +195,57 @@ aside ul li.topic-service::before {
   left: 0;
 }
 
-ul li[data-icon="true"].console::before,
+ul li[data-icon='true'].console::before,
 aside ul li.console::before {
   content: url(/assets/svgs/products/24x24/console.svg);
 }
 
-ul li[data-icon="true"].testing::before,
+ul li[data-icon='true'].testing::before,
 aside ul li.testing::before {
   content: url(/assets/svgs/products/24x24/testing.svg);
 }
 
-ul li[data-icon="true"].monitoring::before,
+ul li[data-icon='true'].monitoring::before,
 aside ul li.monitoring::before {
   content: url(/assets/svgs/products/24x24/monitoring.svg);
 }
 
-ul li[data-icon="true"].data-masking::before,
+ul li[data-icon='true'].data-masking::before,
 aside ul li.data-masking::before {
   content: url(/assets/svgs/products/24x24/data-masking.svg);
 }
 
-ul li[data-icon="true"].gateway::before,
+ul li[data-icon='true'].gateway::before,
 aside ul li.gateway::before {
   content: url(/assets/svgs/products/24x24/gateway.svg);
 }
 
-ul li[data-icon="true"].admin::before,
+ul li[data-icon='true'].admin::before,
 aside ul li.admin::before {
   content: url(/assets/svgs/products/24x24/admin.svg);
 }
 
-ul li[data-icon="true"].desktop::before,
+ul li[data-icon='true'].desktop::before,
 aside ul li.desktop::before {
   content: url(/assets/svgs/products/24x24/desktop.svg);
 }
 
-ul li[data-icon="true"].topic-analyzer::before,
+ul li[data-icon='true'].topic-analyzer::before,
 aside ul li.topic-analyzer::before {
   content: url(/assets/svgs/products/24x24/topic-analyzer.svg);
 }
 
-ul li[data-icon="true"].topic-as-a-service::before,
+ul li[data-icon='true'].topic-as-a-service::before,
 aside ul li.topic-service::before,
 aside ul li.topic-as-a-service::before {
   content: url(/assets/svgs/products/24x24/topic-service.svg);
 }
 
-ul li[data-icon="true"].topic-analyzer::after,
-ul li[data-icon="true"].topic-as-a-service::after,
+ul li[data-icon='true'].topic-analyzer::after,
+ul li[data-icon='true'].topic-as-a-service::after,
 aside ul li.topic-analyzer::after,
-
-ul li[data-icon="true"].topic-analyzer a::after,
-ul li[data-icon="true"].topic-as-a-service a::after,
+ul li[data-icon='true'].topic-analyzer a::after,
+ul li[data-icon='true'].topic-as-a-service a::after,
 aside ul li.topic-analyzer a::after,
 aside ul li.topic-service a::after,
 aside ul li.topic-as-a-service a::after {
@@ -261,7 +269,7 @@ main p img {
   width: 100%;
   box-shadow: var(--shadows-shadow1);
   border-radius: var(--radii-radius4);
-  border: 1px solid var(--colors-mauve3);
+  border: 1px solid var(--colors-olive3);
   padding: var(--space-space6);
   margin-top: var(--space-space6);
 }
@@ -276,7 +284,7 @@ main article table tbody tr td:first-of-type {
 }
 
 main article table tbody tr td:first-of-type {
-  background-color: var(--colors-mauve2);
+  background-color: var(--colors-olive2);
 }
 
 main article table thead tr th:first-of-type::after,
@@ -288,7 +296,7 @@ main article table tbody tr td:first-of-type::before {
   top: 0;
   height: 100%;
   width: 1.5px;
-  background-color: var(--colors-mauve4);
+  background-color: var(--colors-olive4);
   z-index: 2;
 }
 
@@ -307,7 +315,7 @@ main article table tbody tr td:first-of-type::before {
 }
 
 .breadcrumbs__item--active .breadcrumbs__link {
-  background: var(--colors-mauve2);
+  background: var(--colors-primary3);
 }
 
 main iframe {
@@ -317,7 +325,7 @@ main iframe {
 }
 
 footer.footer--dark {
-  background-color: var(--colors-mauve12) !important;
+  background-color: var(--colors-olive12) !important;
 }
 
 footer.footer--dark .footer__title {
@@ -326,7 +334,7 @@ footer.footer--dark .footer__title {
 }
 
 footer.footer--dark .footer__item a {
-  color: var(--colors-mauve11);
+  color: var(--colors-olive11);
   transition: color 200ms ease-in-out;
   text-decoration: none !important;
   font-weight: 500;
@@ -340,7 +348,7 @@ footer.footer--dark .footer__item a:hover {
 footer.footer--dark .footer__item .badge {
   text-transform: uppercase;
   background-color: #fff;
-  color: var(--colors-mauve12);
+  color: var(--colors-olive12);
   font-size: 10px;
   font-weight: 600;
   line-height: 1;
@@ -354,14 +362,14 @@ footer.footer--dark .footer__item .badge {
 
 footer .footer__bottom {
   text-align: left;
-  color: var(--colors-mauve11);
+  color: var(--colors-olive11);
   font-size: 16px;
   font-weight: 500;
   margin-top: 2rem;
 }
 
 .table-of-contents__left-border {
-  border-left: 1px solid var(--colors-mauve3);
+  border-left: 1px solid var(--colors-olive3);
 }
 
 main .markdown h1 {
@@ -374,13 +382,11 @@ main .markdown h1 {
     position: unset;
     font-size: var(--ifm-h1-font-size) !important;
     transition: unset !important;
-    margin-bottom: calc(
-      var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading)
-    ) !important;
+    margin-bottom: calc(var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading)) !important;
   }
 }
 
-main .markdown h1[data-sticky="true"] {
+main .markdown h1[data-sticky='true'] {
   z-index: 200;
   font-size: var(--fontSizes-fontSize4);
   margin-bottom: 0;
@@ -390,7 +396,7 @@ main .markdown h1[data-sticky="true"] {
   text-overflow: ellipsis;
 }
 
-main .markdown h1[data-transition="true"] {
+main .markdown h1[data-transition='true'] {
   transition: font-size 200ms ease-in-out;
 }
 
@@ -406,12 +412,12 @@ table {
 
 table caption {
   font-size: 14px;
-  margin: .5em 0 .75em;
+  margin: 0.5em 0 0.75em;
 }
 
 table tr {
   border: none;
-  border-bottom: 1px solid var(--colors-mauve4) !important;
+  border-bottom: 1px solid var(--colors-olive4) !important;
   background-color: #fff;
 }
 
@@ -422,7 +428,7 @@ table td {
 
 table td {
   font-size: 13px;
-  border: 1px solid var(--colors-mauve4) !important;
+  border: 1px solid var(--colors-olive4) !important;
 }
 
 table td code {
@@ -435,14 +441,14 @@ table th {
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.15px;
-  color: var(--colors-mauve11);
-  border: 1px solid var(--colors-mauve4) !important;
+  color: var(--colors-olive11);
+  border: 1px solid var(--colors-olive4) !important;
   min-width: 200px;
-  background-color: var(--colors-mauve2);
+  background-color: var(--colors-olive2);
 }
 
 table tr:nth-child(2n) {
-  background-color: var(--colors-mauve1);
+  background-color: var(--colors-olive1);
 }
 
 @media screen and (max-width: 600px) {
@@ -453,7 +459,7 @@ table tr:nth-child(2n) {
   table caption {
     font-size: 14px;
   }
-  
+
   table thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -464,19 +470,19 @@ table tr:nth-child(2n) {
     position: absolute;
     width: 1px;
   }
-  
+
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
-    margin-bottom: .625em;
+    margin-bottom: 0.625em;
   }
-  
+
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
-    font-size: .8em;
+    font-size: 0.8em;
   }
-  
+
   table td::before {
     /*
     * aria-label has no advantage, it won't be read inside a table
@@ -487,7 +493,7 @@ table tr:nth-child(2n) {
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   table td:last-child {
     border-bottom: 0;
   }
@@ -511,10 +517,10 @@ table tr:nth-child(2n) {
   nav.navbar .navbar__inner {
     padding: 0 1.5rem;
   }
-  
+
   nav.navbar button[data-collapsed] {
     all: unset;
-    margin-right: .75rem;
+    margin-right: 0.75rem;
     display: flex;
     align-items: center;
   }
@@ -530,8 +536,8 @@ table tr:nth-child(2n) {
 
   .navbar-sidebar ul {
     display: block !important;
-    padding-left: 0.2rem !important; 
-    padding-right: 0.2rem !important; 
+    padding-left: 0.2rem !important;
+    padding-right: 0.2rem !important;
     width: 100%;
   }
 
@@ -539,7 +545,7 @@ table tr:nth-child(2n) {
     margin-bottom: 0.25rem;
   }
 
-  .navbar-sidebar ul li[data-get-started="true"] {
+  .navbar-sidebar ul li[data-get-started='true'] {
     margin-top: 1rem;
   }
 

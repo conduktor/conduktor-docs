@@ -6,7 +6,7 @@ export const StyledFeatures = styled('ul', {
 })
 
 export const Feature = styled('li', {
-  color: '$mauve12',
+  color: '$olive12',
   fontWeight: '$medium',
   letterSpacing: '-0.15px',
   display: 'flex',

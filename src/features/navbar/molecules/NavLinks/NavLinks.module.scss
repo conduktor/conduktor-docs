@@ -7,7 +7,7 @@
 
 .NavLink {
   cursor: pointer;
-  color: var(--colors-mauve12);
+  color: var(--colors-olive12);
   text-decoration: none !important;
   font-weight: var(--fontWeights-medium);
   font-size: var(--fontSizes-fontSize2);
@@ -16,20 +16,20 @@
 
 .NavLinkMobile {
   display: none;
-  
+
   @media only screen and (max-width: 768px) {
     display: block;
 
     a {
       font-size: var(--fontSizes-fontSize2);
-      color: var(--colors-mauve12);
+      color: var(--colors-olive12);
       display: block;
     }
 
     &[data-divider="true"] {
       padding-top: var(--space-space6);
       margin-top: var(--space-space6);
-      border-top: 1px solid var(--colors-mauve4);
+      border-top: 1px solid var(--colors-olive4);
     }
   }
 }
