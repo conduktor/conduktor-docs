@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 title: Metrics Reference
 description: Prometheus metrics available for Console
 ---
@@ -10,7 +10,7 @@ Console exposes metrics using the Prometheus format for your Kafka resources and
 
 ## Kafka Metrics Reference
 
-The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance.  
+The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance.
 Data points are refreshed every 30 seconds.
 
 | Metric Name | Metric Type | Labels | Description |
@@ -47,8 +47,8 @@ Data points are refreshed every 30 seconds.
 | `kafka_controller_controllerstats_uncleanleaderelectionspersec_total` | counter | `cluster_name`, `cluster_id` | Counter for kafka_controller_controllerstats_uncleanleaderelectionspersec metric |
 | `kafka_log_log_size` | gauge | `broker_host`, `partition`, `broker_id`, `topic`, `cluster_name`, `cluster_id` | Size in bytes of the current topic-partition |
 
-:::info  
-Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead.  
+:::info
+Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead.
 :::
 
 ## Console Reference
