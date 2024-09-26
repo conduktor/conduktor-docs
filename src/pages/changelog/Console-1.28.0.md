@@ -29,7 +29,9 @@ First topics, but we'll extend this to all resources.
 - TODO
 
 ## Fixes 🔨
-- TODO
+- CONS-1776 Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
+- CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
+- 
 
 
 :::warning
