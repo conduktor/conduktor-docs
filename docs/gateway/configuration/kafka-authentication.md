@@ -35,7 +35,7 @@ In the following examples, we provide blocks of environment variables which can 
 
 Information which should be customized is enclosed by `<` and `>`.
 
-## Plaintext
+## PLAINTEXT
 Kafka cluster without authentication, `PLAINTEXT`.
 
 In this case you just need the bootstrap servers:
@@ -47,7 +47,7 @@ KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 ## SASL_PLAINTEXT
 Kafka cluster with SASL_PLAINTEXT.
 
-### PLAIN SASL
+### SASL PLAIN
 
 ```yaml
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
@@ -56,17 +56,17 @@ KAFKA_SASL_MECHANISM: PLAIN
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
 ```
 
-### SCRAM SASL
+### SASL SCRAM
 
 ```yaml
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
-KAFKA_SASL_MECHANISM: 
-KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
 ```
 
 ## SASL_SSL
-### PLAIN SASL
+### SASL PLAIN
 Kafka cluster with SASL_SSL and PLAIN SASL mechanism
 
 #### Confluent Cloud with API key/secret
@@ -82,16 +82,63 @@ As Confluent Cloud uses certificates signed by a well-known CA, you normally do 
 
 Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `DELEGATED_SASL_PLAINTEXT`. Then clients will be able to authenticate using their own API keys/secrets.
 
-### SCRAM SASL
+### SASL SCRAM
 
-### SCRAM Kerberos
+```yaml
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+```
+
+### SASL GSSAPI (Kerberos)
+```yaml
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SASL_MECHANISM: GSSAPI
+KAFKA_SASL_JAAS_CONFIG: com.sun.security.auth.module.Krb5LoginModule required useKeyTab=true storeKey=true keyTab="<>>" principal="<>";
+KAFKA_SASL_KERBEROS_SERVICE_NAME: <kafka>
+KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
+KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
+KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
+```
 
 ## AWS MSK cluster with IAM
+```yaml
+KAFKA_BOOTSTRAP_SERVERS: <b-3-public.****.kafka.eu-west-1.amazonaws.com:9198>
+KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SASL_MECHANISM: AWS_MSK_IAM
+KAFKA_SASL_JAAS_CONFIG: software.amazon.msk.auth.iam.IAMLoginModule required;
+KAFKA_SASL_CLIENT_CALLBACK_HANDLER_CLASS: io.conduktor.aws.IAMClientCallbackHandler
+KAFKA_AWS_ACCESS_KEY_ID: <access-key-id>
+KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
+```
 
+## SSL
+```yaml
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SASL_MECHANISM: PLAIN
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
+KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
+KAFKA_SSL_KEYSTORE_LOCATION: </path/to/keystore.jks>
+KAFKA_SSL_KEYSTORE_PASSWORD: <keystore-password>
+KAFKA_SSL_KEY_PASSWORD: <key-password>
+```
 
-### Kafka cluster with mTLS client authentication  
+### mTLS
+Kafka cluster with mTLS client authentication.
 
-
+```yaml
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>, <your.kafka.broker-3:9092>
+KAFKA_SECURITY_PROTOCOL: SSL
+KAFKA_SSL_TRUSTSTORE_LOCATION: /security/truststore.jks
+KAFKA_SSL_TRUSTSTORE_PASSWORD: conduktor
+KAFKA_SSL_KEYSTORE_LOCATION: /security/kafka.gw.keystore.jks
+KAFKA_SSL_KEYSTORE_PASSWORD: conduktor
+KAFKA_SSL_KEY_PASSWORD: conduktor
+```
 
 ## Service Account and ACL requirements
 
