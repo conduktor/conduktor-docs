@@ -21,6 +21,7 @@ tags: features,fix
 ### Shareable Filters
 
 ### Tags becomes Labels
+
 First topics, but we'll extend this to all resources.
 
 ### Audit Log events into Kafka
