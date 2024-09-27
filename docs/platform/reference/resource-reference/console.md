@@ -48,6 +48,10 @@ export const AdminToken = () => (
 **Managed with:** <API /> <CLI /> <GUI />
 
 Creates a Group with members and permissions in Console
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 apiVersion: iam/v2
@@ -72,6 +76,34 @@ spec:
         - topicConsume
         - topicProduce
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_group_v2" "developers-a" {
+  name = "developers-a"
+  spec {
+    display_name = "Developers Team A"
+    description  = "Members of the Team A - Developers"
+    externalGroups = [ "LDAP-GRP-A-DEV" ]
+    members      = [ "member1@company.org", "member1@company.org" ]
+    permissions  = [
+     {
+        resource_type = "TOPIC"
+        cluster       = "shadow-it"
+        patternType   = "PREFIXED"
+        name          = "toto-"
+        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
+      }
+    ]
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Groups checks:**
 - `spec.description` is **optional**
 - `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
@@ -93,6 +125,10 @@ spec:
 **Managed with:** <API /> <CLI /> <GUI />
 
 Sets a User with permissions in Console
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 apiVersion: iam/v2
@@ -113,6 +149,30 @@ spec:
         - topicProduce
 ````
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_group_v2" "john.doe@company.org" {
+  name = "john.doe@company.org"
+  spec {
+    firstname = "John"
+    lastname  = "Doe"
+    permissions  = [
+     {
+        resource_type = "TOPIC"
+        cluster       = "shadow-it"
+        patternType   = "PREFIXED"
+        name          = "toto-"
+        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
+      }
+    ]
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
