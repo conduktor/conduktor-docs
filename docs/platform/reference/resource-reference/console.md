@@ -45,7 +45,7 @@ export const AdminToken = () => (
 ## ConsoleGroup
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />
 
 Creates a Group with members and permissions in Console
 
@@ -122,7 +122,7 @@ resource "conduktor_group_v2" "developers-a" {
 ## ConsoleUser
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />
 
 Sets a User with permissions in Console
 
