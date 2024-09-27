@@ -4,45 +4,50 @@ title: Gateway to Kafka Configuration
 description: Securing Conduktor Gateway
 ---
 
-## Connecting Gateway to Kafka
+# Connecting Gateway to Kafka
 
 Gateway depends on a 'backing' Kafka cluster for its operation.
 
-Configuring the connection to the backing Kafka cluster resembles configuring a Kafka client to connect to a cluster.
-The configuration is done via environment variables, as it is for other aspects of Gateway configuration.
+Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster.
+The configuration is done via environment variables, as it is for the other aspects of a Gateway configuration.
 
-All environment variables that start with `KAFKA_` are mapped to configuration properties.
-As Gateway is based on the Java-based Kafka-clients, it supports all configuration properties as Java-clients do.
-Environment variables are mapped to configuration properties as follows:
-- drop the `KAFKA_` prefix,
-- replace each `_` with a `.` (dot),
-- convert to lowercase.
+All environment variables that start with `KAFKA_` are mapped to configuration properties for connecting Gateway to the Kafka cluster.
+As Gateway is based on the Java-based Kafka-clients, it supports all configuration properties that Java-clients do.
+Kafka configuration properties are mapped to Gateway environment variables as follows:
+- Add a `KAFKA_` prefix
+- Replace each dot, `.` , with an underscore, `_`
+- Convert to uppercase
 
-So, for example, the `bootstrap.servers` configuration is set by the `KAFKA_BOOTSTRAP_SERVERS` environment variable.
+For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environment variable.
 
-In case your Kafka cluster requires authentication, we refer to the user-name you need to provide as the Gateway service account.
+For when your Kafka cluster requires authentication, we refer to the user-name you need to provide as the Gateway service account.
 
-### Supported Protocols
+## Supported Protocols
 
-To authenticate Gateway to the Kafka cluster, you can use all the Kafka security protocols; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`. We support all SASL mechanisms that Apache Kafka supports: `PLAIN`, `SCRAM-SHA`, `OAuthBearer`, `Kerberos` etc. In addition we support IAM authentication for AWS MSK clusters.
+You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.  
 
+These can be used with all SASL mechanisms supported by Apache Kafka: `PLAIN`, `SCRAM-SHA`, `OAuthBearer`, `Kerberos` etc. In addition, we support IAM authentication for AWS MSK clusters.
 
 
 ## Examples
 
-In the following examples, we provide blocks of environment variables which you can, e.g., provide to Gateway in a docker-compose file or in a `helm` deployment. 
+In the following examples, we provide blocks of environment variables which can be provided to Gateway, e.g. in a docker-compose file, or a `helm` deployment. 
 
-Information which should be customized is enclose between `<` and `>`.
+Information which should be customized is enclosed by `<` and `>`.
 
-### Kafka cluster without authentication (PLAINTEXT)
+## Plaintext
+Kafka cluster without authentication, `PLAINTEXT`.
 
-In this case you just need to provide the bootstrap servers:
+In this case you just need the bootstrap servers:
 
 ```yaml
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 ```
 
-### Kafka cluster with SASL_PLAINTEXT and PLAIN SASL mechanism
+## SASL_PLAINTEXT
+Kafka cluster with SASL_PLAINTEXT.
+
+### PLAIN SASL
 
 ```yaml
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
@@ -51,7 +56,7 @@ KAFKA_SASL_MECHANISM: PLAIN
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
 ```
 
-### Kafka cluster with SASL_PLAINTEXT and SCRAM SASL mechanism
+### SCRAM SASL
 
 ```yaml
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
@@ -60,9 +65,11 @@ KAFKA_SASL_MECHANISM:
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
 ```
 
-### Kafka cluster with SASL_SSL and PLAIN SASL mechanism
+## SASL_SSL
+### PLAIN SASL
+Kafka cluster with SASL_SSL and PLAIN SASL mechanism
 
-### Confluent Cloud with API key/secret
+#### Confluent Cloud with API key/secret
 This example can be seen as a special case of the one above.
 
 ```yaml
@@ -75,11 +82,11 @@ As Confluent Cloud uses certificates signed by a well-known CA, you normally do 
 
 Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `DELEGATED_SASL_PLAINTEXT`. Then clients will be able to authenticate using their own API keys/secrets.
 
-### Kafka cluster with SASL_SSL and SCRAM SASL mechanism
+### SCRAM SASL
 
-### Kafka cluster with SASL_SSL and SCRAM Kerberos mechanism
+### SCRAM Kerberos
 
-### AWS MSK cluster with IAM
+## AWS MSK cluster with IAM
 
 
 ### Kafka cluster with mTLS client authentication  
