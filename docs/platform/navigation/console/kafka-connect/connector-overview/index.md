@@ -5,9 +5,9 @@ description: Schema Registry in Conduktor Platform handles the distribution and 
 ---
 
 The Connector Overview page is split in 3 main sections:
-- the Statistics section
-- the Graphs & Alerts section 
-- the Tasks list section
+- Statistics
+- Graphs & Alerts
+- Tasks list
 
 ![img](../img/connector-details-overview.png)
 
@@ -20,7 +20,7 @@ This section gives you relevant information about the current state of your Conn
 
 ![img](../img/connector-details-topics.png)
 ### Operations
-A few operations are available from the:
+A few operations are available:
 - **Pause/Resume** uses the Kafka Connect API to Pause or Resume the Connector
 - **Restart Connector** restarts the Connector (**not the tasks**)
 - **Remove Connector** deletes the Connector from the Kafka Connect Cluster
@@ -50,5 +50,5 @@ The task list displays all the information related to the tasks associated to th
 - The current task state
 - An option to **Restart task**
 
-If a tasks is in Failed state, you can visualize the detailed logs that caused the Task to fail.
+If a task is in a Failed state, you can see the detailed logs about the failed task.  
 ![img](../img/connector-details-tasks.png)

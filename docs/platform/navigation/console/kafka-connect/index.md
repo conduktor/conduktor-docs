@@ -17,7 +17,7 @@ You can filter by Connect Cluster name and order by
 
 ![img.png](img/connect-cluster-list.png)
 
-The list is warning you when some tasks are failed and you can get a high level overview by hovering the "Connectors" count.
+The list is warning you that some tasks have failed and gives you a high level overview by hovering over "Connectors".
 
 ![img.png](img/connect-cluster-tooltip.png)
 
@@ -28,7 +28,7 @@ The Connector List page lets you search for any Connector on your currently sele
 Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::
-Multiple search capabilities can be combined to help you find to the Connector you want faster.
+Multiple search capabilities can be combined to help you find the Connector you want faster.
 
 **Filtering** is possible on:
 
@@ -44,7 +44,7 @@ Multiple search capabilities can be combined to help you find to the Connector y
 
 
 ![img.png](img/connector-list.png)
-The round arrow icon next to the Connector name indicates whether the connector is currently covered by Auto-restart feature: (Grey: disabled, Green: enabled)
+The round arrow icon next to the Connector name indicates whether the connector will be auto-restarted by Conduktor: (Grey: disabled, Green: enabled)
 
 
 Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
@@ -69,17 +69,17 @@ To deploy a new Connector, click "Add a Connector". You will be presented with t
 
 Next, you will get to our configuration wizard for Kafka Connect, which is taking full advantage of the [Kafka Connect Validate API](https://docs.confluent.io/platform/current/connect/references/restapi.html#put--connector-plugins-(string-name)-config-validate):
 
-- Form is generated with structured configuration groups
-- Much nicer error handling, attached to each individual field
-- Embedded documentation that helps you understand which fields are required and what are their expected and default values
-- Ability to toggle advanced configuration to visualize only the most important fields
-- Ability to switch seamlessly between Form View and JSON View at any time. 
+- A form is generated with structured configuration groups to be filled out
+- Supportive error handling is included with each individual field
+- Embedded documentation helps you understand which fields are required and what their expected, and default, values are
+- Toggle advanced configuration to visualize only the most important fields
+- Switch seamlessly between Form View and JSON View at any time
 
 ![img.png](img/connector-add-form-initial.png)
 
-Configure your Connector to your convenience and use the Validate button to verify that your configuration is valid. 
+Configure your Connector to your convenience and use the **Validate** button to verify that your configuration is valid. 
 
-This will highlight the parts of the configuration that are not valid, and give you precise information onhow to correct your Connector configuration.
+This will highlight the parts of the configuration that are invalid, and give you precise information on how to correct your Connector configuration.
 
 ![img.png](img/connector-add-form-invalid.png)
 
