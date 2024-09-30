@@ -184,3 +184,5 @@ Any tooling will currently display the message count, and the lag relative to th
 ### Performance
 
 Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
+
+TODO: Fill in results from https://github.com/conduktor/conduktor-proxy/pull/1726
