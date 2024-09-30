@@ -6,7 +6,7 @@ export default globalCss({
     fontFamily: '$sans',
     fontSize: 16,
     fontWeight: '$regular',
-    color: '$mauve11',
+    color: '$olive11',
   },
 
   'h1, h2, h3, h4, h5, h6, strong': {

@@ -16,11 +16,11 @@
 .ListItem {
   width: 100%;
   border-radius: var(--radii-radius3);
-  border: 1px solid var(--colors-mauve4);
+  border: 1px solid var(--colors-olive4);
 }
 
 .ListItemVisual {
-  background-color: var(--colors-mauve2);
+  background-color: var(--colors-olive2);
   padding: var(--space-space12) 0;
   display: flex;
   align-items: center;
@@ -34,11 +34,11 @@
 
   &:hover {
     strong: {
-      color: var(--colors-purple9);
+      color: var(--colors-primary9);
     }
 
     .ListItemVisual {
-      background-color: var(--colors-mauve3);
+      background-color: var(--colors-olive3);
     }
   }
 }
@@ -48,7 +48,7 @@
 }
 
 .ListItemTitle {
-  color: var(--colors-mauve12);
+  color: var(--colors-olive12);
   font-size: var(--fontSizes-fontSize5);
   line-height: var(--lineHeights-fit);
   margin-bottom: var(--space-space8);
@@ -57,5 +57,5 @@
 }
 
 .ListItemParagraph {
-  color: var(--colors-mauve11);
+  color: var(--colors-olive11);
 }

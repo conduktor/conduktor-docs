@@ -49,7 +49,7 @@ export const ListItem = styled('li', {
   transition: 'background-color 200ms ease',
 
   '&:hover, &:focus': {
-    backgroundColor: '$mauve2',
+    backgroundColor: '$olive2',
   },
 })
 
@@ -71,12 +71,12 @@ export const ListItemIcon = styled('img', {
 
 export const ListItemTitle = styled('strong', {
   fontSize: '$fontSize2',
-  color: '$mauve12',
+  color: '$olive12',
 })
 
 export const ListItemParagraph = styled('p', {
   all: 'unset',
-  color: '$mauve11',
+  color: '$olive11',
   fontSize: '$fontSize2',
 })
 

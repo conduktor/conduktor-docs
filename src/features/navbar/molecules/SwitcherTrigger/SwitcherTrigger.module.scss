@@ -8,7 +8,7 @@
 .Trigger {
   border: none;
   background-color: unset;
-  color: var(--colors-purple9);
+  color: var(--colors-primary11);
   cursor: pointer;
   font-weight: var(--fontWeights-slim);
   font-family: var(--fonts-poly);
@@ -23,10 +23,11 @@
   margin-left: calc(20px - var(--space-space4));
 
   &:hover, &:focus {
-    background-color: var(--colors-purple3) !important;
+    background-color: var(--colors-primary3) !important;
   }
 }
 
 .TriggerIcon {
   margin-left: var(--space-space4);
+  color: var(--colors-primary11)
 }
