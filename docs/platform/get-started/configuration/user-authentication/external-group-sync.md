@@ -35,7 +35,7 @@ sso:
 
 ### OIDC
 
-For OIDC, populate the `groups-claim` attribute. You can find some examples by [selecting your identity providers in this list](/platform/category/configure-sso/).
+For OIDC, populate the `groups-claim` attribute. You can find some examples by [selecting your identity providers in this list](/platform/category/configure-sso/SSO/external-group-sync).
 
 For more information see [configuration properties and environment variables](../../env-variables/#oauth2-properties).
 

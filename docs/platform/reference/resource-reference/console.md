@@ -4,7 +4,6 @@ title: Console Resources
 description: Console resources
 ---
 
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -32,7 +31,6 @@ export const GUI = () => (
 <Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
 );
 
-
 export const AppToken = () => (
 <Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
 );
@@ -41,14 +39,14 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
-
 ## ConsoleGroup
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Creates a Group with members and permissions in Console
-````yaml
+Creates a Group with members and permissions in Console, that you can see in Settings > Groups.
+
+```yaml
 ---
 apiVersion: iam/v2
 kind: Group
@@ -71,14 +69,16 @@ spec:
         - topicViewConfig
         - topicConsume
         - topicProduce
-````
-**Groups checks:**
-- `spec.description` is **optional**
-- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
-  - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
-- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
-- `spec.members` must be email addresses of members you wish to add to this group
-- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
+```
+
+| Field                            |      Type       | Description                                                                                                                                                                                           |
+|----------------------------------|:---------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`spec.displayName`**           |     String      | Friendly name of the Group in Console. Can contain spaces and special characters.                                                                                                                     |
+| `spec.description`               |     String      | Description of the Group in Console.                                                                                                                                                                  |
+| `spec.externalGroups`            |      List       | List of LDAP or OIDC groups to [sync with this Console Group](/platform/get-started/configuration/user-authentication/external-group-sync/). Members will appear in `spec.membersFromExternalGroups`. |
+| `spec.membersFromExternalGroups` |      List       | Read-only list of members added through `spec.externalGroups`.                                                                                                                                        |
+| **`spec.members`**               |      List       | Email addresses of existing [Console Users](#consoleuser) to add to this Group.                                                                                                                       |
+| `spec.permissions`               | List of Objects | Valid permissions as defined in the [Permissions](#permissions) documentation.                                                                                                                        |
 
 **Side effect in Console & Kafka:**
 - Console
@@ -92,8 +92,9 @@ spec:
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Sets a User with permissions in Console
-````yaml
+Creates a User with permissions in Console, that you can see in Settings > Users.
+
+```yaml
 ---
 apiVersion: iam/v2
 kind: User
@@ -111,10 +112,13 @@ spec:
         - topicViewConfig
         - topicConsume
         - topicProduce
-````
+```
 
-**Users checks:**
-- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
+| Field              |      Type       | Description                                                                    |
+|--------------------|:---------------:|--------------------------------------------------------------------------------|
+| `spec.firstName`   |     String      | User first name.                                                               |
+| `spec.lastName`    |     String      | User last name.                                                                |
+| `spec.permissions` | List of Objects | Valid permissions as defined in the [Permissions](#permissions) documentation. |
 
 **Side effect in Console & Kafka:**
 - Console
@@ -123,12 +127,13 @@ spec:
   - No side effect
 
 ## KafkaCluster
-Creates a Kafka Cluster Definition in Console.
+
+Creates a Kafka Cluster definition in Console, that you can see in Settings > Clusters.
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: KafkaCluster
@@ -145,33 +150,36 @@ spec:
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
   schemaRegistry:
-    type: "ConfluentLike"
-    url: http://localhost:8080
+    type: ConfluentLike
+    url: "http://localhost:8080"
+    ignoreUntrustedCertificate: false
     security:
       type: BasicAuth
       username: some_user
       password: some_password
-    ignoreUntrustedCertificate: false
   kafkaFlavor:
-    type: "Confluent"
-    key: "string"
-    secret: "string"
-    confluentEnvironmentId: "string"
-    confluentClusterId: "string"
-````
+    type: Confluent
+    key: "yourApiKey123456"
+    secret: "yourApiSecret123456"
+    confluentEnvironmentId: "env-12345"
+    confluentClusterId: "lkc-67890"
+```
+
 :::info
 `metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
 ![Cluster identity](../img/cluster-visual-identity.png)
 :::
 
-**KafkaCluster checks:**
-- `spec.icon` (optional, default `kafka`) is a valid entry from our [Icon Sets](#icon-sets)
-- `spec.color` (optional, default `#000000`) is a HEX color for `spec.icon`
-- `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.schemaRegistry.type` (optional) must be one of [`ConfluentLike`, `Glue`] 
-  - See [Schema Registry Properties](#schema-registry) for the detailed list of options
-- `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
-  - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
+| Field                             |            Type            | Description                                                                                                                                                                  |
+|-----------------------------------|:--------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`spec.displayName`**            |           String           | Friendly name of the Kafka Cluster in Console. Can contain spaces and special characters.                                                                                    |
+| `spec.icon`                       |           String           | Valid entry from our [Icon Sets](#icon-sets), default is the `kafka` icon.                                                                                                   |
+| `spec.color`                      |         HEX color          | Color of the `spec.icon`, default is black with a value of `#000000`                                                                                                         |
+| **`spec.bootstrapServers`**       |           String           | Bootstrap servers of your Kafka Cluster.                                                                                                                                     |
+| `spec.ignoreUntrustedCertificate` |          Boolean           | Skip the SSL check or not, default is `false`.                                                                                                                               |
+| `spec.properties`                 | Object of Kafka properties | Key-value properties needed to connect to your Kafka cluster.                                                                                                                |
+| `spec.schemaRegistry`             |           Object           | Configuration of your Schema Registry. The [sub properties](#schema-registry) depend on the `spec.schemaRegistry.type` defined, one of [`ConfluentLike`, `Glue`].            |
+| `spec.kafkaFlavor`                |           Object           | Configuration of your Kafka Cluster provider. The [sub properties](#kafka-provider) depend on the `spec.kafkaFlavor.type` defined, one of [`Confluent`, `Aiven`, `Gateway`]. |
 
 :::warning Important
 Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid.   
@@ -179,110 +187,238 @@ You need to check that in Console directly.
 :::
 
 ### Schema Registry
-This section lets you associate a Schema Registry to your KafkaCluster
-#### Confluent or Confluent-like Registry
 
-````yaml
-spec:
-  schemaRegistry:
-    type: "ConfluentLike"
-    urls: http://localhost:8080
-    ignoreUntrustedCertificate: false
-    security:
-      type: BasicAuth
-      username: some_user
-      password: some_password
-````
-Confluent Schema Registry checks:
-- `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
-  - **Multiple URLs are not supported for now. Coming soon**
-- `spec.schemaRegistry.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.schemaRegistry.properties` (optional) is Java Properties formatted key values to further configure the SchemaRegistry
-- `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
-  - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
+Select your Schema Registry provider and the right authentication method below, and add the snippet to your `spec.schemaRegistry`:
 
-#### AWS Glue Registry
-````yaml
-spec:
-  schemaRegistry:
-    type: "Glue"
-    region: eu-west-1
-    registryName: default
-    security:
-      type: Credentials
-      accessKeyId: accessKey
-      secretKey: secretKey
-````
-AWS Glue Registry checks:
-- `spec.schemaRegistry.region` must be a valid AWS region
-- `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
-- `spec.schemaRegistry.security.type` must be one of [`Credentials`, `FromContext`, `FromRole`]
+<Tabs>
+  <TabItem value="Confluent or Confluent-like Registry" label="Confluent or Confluent-like Registry">
+    <Tabs>
+      <TabItem value="Basic Authentication" label="Basic Authentication">
 
-**Credentials**  
-Use AWS API Key/Secret to connect to the Glue Registry
-````yaml
-    security:
-      type: Credentials
-      accessKeyId: AKIAIOSFODNN7EXAMPLE
-      secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-````
-**FromContext**
-````yaml
-    security:
-      type: FromContext
-      profile: default
-````
-**FromRole**
-````yaml
-    security:
-      type: FromRole
-      role: arn:aws:iam::123456789012:role/example-role
-````
+        ```yaml
+        spec:
+          schemaRegistry:
+            type: ConfluentLike
+            urls: "http://localhost:8080"
+            ignoreUntrustedCertificate: false
+            security:
+              type: BasicAuth
+              username: some_user
+              password: some_password
+        ```
+
+        | Field                                                | Type    | Default | Description                                                                                 |
+        |------------------------------------------------------|---------|---------|---------------------------------------------------------------------------------------------|
+        | **`spec.schemaRegistry.urls`**                       | String  |         | Single URL of the Schema Registry. **Multiple URLs are not supported for now. Coming soon** |
+        | **`spec.schemaRegistry.ignoreUntrustedCertificate`** | Boolean | `false` | Skip the SSL check or not.                                                                  |
+        | **`spec.schemaRegistry.security.username`**          | String  |         | Username to authenticate with the Schema Registry.                                          |
+        | **`spec.schemaRegistry.security.password`**          | String  |         | Password to authenticate with the Schema Registry.                                          |
+        | `spec.schemaRegistry.properties`                     | Object  |         | Other Java Properties formatted key values to further configure the Schema Registry.        |
+
+      </TabItem>
+      <TabItem value="Bearer Token" label="Bearer Token">
+
+        ```yaml
+        spec:
+          schemaRegistry:
+            type: ConfluentLike
+            urls: "http://localhost:8080"
+            ignoreUntrustedCertificate: false
+            security:
+              type: BearerToken
+              token: some_token
+        ```
+
+        | Field                                                | Type    | Default | Description                                                                                 |
+        |------------------------------------------------------|---------|---------|---------------------------------------------------------------------------------------------|
+        | **`spec.schemaRegistry.urls`**                       | String  |         | Single URL of the Schema Registry. **Multiple URLs are not supported for now. Coming soon** |
+        | **`spec.schemaRegistry.ignoreUntrustedCertificate`** | Boolean | `false` | Skip the SSL check or not.                                                                  |
+        | **`spec.schemaRegistry.security.token`**             | String  |         | Token to authenticate with the Schema Registry.                                             |
+        | `spec.schemaRegistry.properties`                     | Object  |         | Other Java Properties formatted key values to further configure the Schema Registry.        |
+
+      </TabItem>
+      <TabItem value="SSL Authentication" label="SSL Authentication">
+
+        ```yaml
+        spec:
+          schemaRegistry:
+            type: ConfluentLike
+            urls: "http://localhost:8080"
+            ignoreUntrustedCertificate: false
+            security:
+              type: SSLAuth
+              key: |
+                -----BEGIN PRIVATE KEY-----
+                MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+                ...
+                IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+                -----END PRIVATE KEY-----
+              certificateChain: |
+                -----BEGIN CERTIFICATE-----
+                MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+                RjELMAkGA1UEBhMCVVMxIjAgBgNVBAoTGUdvb2dsZSBUcnVzdCBTZXJ2aWNlcyBM
+                ...
+                8/s+YDKveNdoeQoAmGQpUmxhvJ9rbNYj+4jiaujkfxT/6WtFN8N95r+k3W/1K4hs
+                IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+                -----END CERTIFICATE-----
+        ```
+
+        | Field                                                | Type    | Default | Description                                                                                 |
+        |------------------------------------------------------|---------|---------|---------------------------------------------------------------------------------------------|
+        | **`spec.schemaRegistry.urls`**                       | String  |         | Single URL of the Schema Registry. **Multiple URLs are not supported for now. Coming soon** |
+        | **`spec.schemaRegistry.ignoreUntrustedCertificate`** | Boolean | `false` | Skip the SSL check or not.                                                                  |
+        | **`spec.schemaRegistry.security.key`**               | String  |         | Private key to authenticate with the Schema Registry.                                       |
+        | **`spec.schemaRegistry.security.certificateChain`**  | String  |         | Certificate chain to authenticate with the Schema Registry.                                 |
+        | `spec.schemaRegistry.properties`                     | Object  |         | Other Java Properties formatted key values to further configure the Schema Registry.        |
+
+      </TabItem>
+    </Tabs>
+  </TabItem>
+
+  <TabItem value="AWS Glue Registry" label="AWS Glue Registry">
+    <Tabs>
+      <TabItem value="Credentials" label="Credentials">
+
+      ```yaml
+      spec:
+        schemaRegistry:
+          type: Glue
+          region: "eu-west-1"
+          registryName: default
+          security:
+            type: Credentials
+            accessKeyId: accessKey
+            secretKey: secretKey
+      ```
+
+      | Field                                          | Type   | Description                                    |
+      |------------------------------------------------|--------|------------------------------------------------|
+      | **`spec.schemaRegistry.region`**               | String | AWS region where the Glue Registry is located. |
+      | `spec.schemaRegistry.registryName`             | String | Valid AWS Glue Registry in this region.        |
+      | **`spec.schemaRegistry.security.accessKeyId`** | String | AWS Access Key ID.                             |
+      | **`spec.schemaRegistry.security.secretKey`**   | String | AWS Secret Access Key.                         |
+
+      </TabItem>
+      <TabItem value="FromContext" label="From Context">
+
+      ```yaml
+      spec:
+        schemaRegistry:
+          type: Glue
+          region: "eu-west-1"
+          registryName: default
+          security:
+            type: FromContext
+            profile: default
+      ```
+
+      | Field                                      | Type   | Description                                    |
+      |--------------------------------------------|--------|------------------------------------------------|
+      | **`spec.schemaRegistry.region`**           | String | AWS region where the Glue Registry is located. |
+      | `spec.schemaRegistry.registryName`         | String | Valid AWS Glue Registry in this region.        |
+      | **`spec.schemaRegistry.security.profile`** | String | AWS Profile.                                   |
+
+      </TabItem>
+      <TabItem value="FromRole" label="From Role">
+
+      ```yaml
+      spec:
+        schemaRegistry:
+          type: Glue
+          region: "eu-west-1"
+          registryName: default
+          security:
+            type: FromRole
+            role: arn:aws:iam::123456789012:role/example-role
+      ```
+
+      | Field                                   | Type   | Description                                    |
+      |-----------------------------------------|--------|------------------------------------------------|
+      | **`spec.schemaRegistry.region`**        | String | AWS region where the Glue Registry is located. |
+      | `spec.schemaRegistry.registryName`      | String | Valid AWS Glue Registry in this region.        |
+      | **`spec.schemaRegistry.security.role`** | String | AWS Role.                                      |
+
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
 ### Kafka Provider
-This section lets you configure the Kafka Provider for this KafkaCluster.
 
-**Confluent Cloud**  
+Select your Kafka provider below, and add the snippet to your `spec.kafkaFlavor`:
+
+<Tabs>
+<TabItem value="Confluent Cloud" label="Confluent Cloud">
+
 Provide your Confluent Cloud details to get additional features in Console:
 - Confluent Cloud Service Accounts support
 - Confluent Cloud API Keys support
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
-    type: "Confluent"
+    type: Confluent
     key: "yourApiKey123456"
     secret: "yourApiSecret123456"
     confluentEnvironmentId: "env-12345"
     confluentClusterId: "lkc-67890"
-````
+```
 
-**Aiven**  
+| Field                                         | Type   | Description                     |
+|-----------------------------------------------|--------|---------------------------------|
+| **`spec.kafkaFlavor.key`**                    | String | Confluent Cloud API Key.        |
+| **`spec.kafkaFlavor.secret`**                 | String | Confluent Cloud API Secret.     |
+| **`spec.kafkaFlavor.confluentEnvironmentId`** | String | Confluent Cloud Environment ID. |
+| **`spec.kafkaFlavor.confluentClusterId`**     | String | Confluent Cloud Cluster ID.     |
+
+</TabItem>
+<TabItem value="Aiven Cloud" label="Aiven Cloud">
+
 Provide your Aiven Cloud details to get additional features in Console:  
 - Aiven Service Accounts support
 - Aiven ACLs support
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
-    type: "Aiven"
+    type: Aiven
     apiToken: "a1b2c3d4e5f6g7h8i9j0"
     project: "my-kafka-project"
     serviceName: "my-kafka-service"
-````
+```
 
-**Gateway**  
+| Field                              | Type   | Description         |
+|------------------------------------|--------|---------------------|
+| **`spec.kafkaFlavor.apiToken`**    | String | Aiven API Token.    |
+| **`spec.kafkaFlavor.project`**     | String | Aiven Project.      |
+| **`spec.kafkaFlavor.serviceName`** | String | Aiven Service Name. |
+
+</TabItem>
+<TabItem value="Conduktor Gateway" label="Conduktor Gateway">
+
 Provide your Gateway details to get additional features in Console:
 - Interceptors support
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
-    type: "Gateway"
+    type: Gateway
     url: "http://gateway:8088"
-    user: "admin"
-    password: "admin"
+    user: admin
+    password: admin
     virtualCluster: vc1
-````
+```
+
+| Field                                         | Type    | Default | Description                 |
+|-----------------------------------------------|---------|---------|-----------------------------|
+| **`spec.kafkaFlavor.url`**                    | String  |         | Gateway API URL.            |
+| **`spec.kafkaFlavor.user`**                   | String  |         | Gateway API admin user.     |
+| **`spec.kafkaFlavor.password`**               | String  |         | Gateway API admin password. |
+| **`spec.kafkaFlavor.virtualCluster`**         | String  |         | Gateway virtual cluster.    |
+| `spec.kafkaFlavor.ignoreUntrustedCertificate` | Boolean | `false` | Skip the SSL check or not.  |
+
+</TabItem>
+</Tabs>
 
 ### Icon Sets
 
@@ -335,40 +471,122 @@ spec:
 
 
 ## KafkaConnectCluster
-Creates a Kafka Connect Cluster Definition in Console.
+Creates a Kafka Connect cluster definition in Console.
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-````yaml
----
-apiVersion: console/v2
-kind: KafkaConnectCluster
-metadata:
-  cluster: shadow-julien
-  name: connect-1
-spec:
-  displayName: "Connect 1"
-  urls: "http://localhost:8083"
-  ignoreUntrustedCertificate: false
-  headers:
-    X-PROJECT-HEADER: value
-    AnotherHeader: test
-  security:
-    type: "BasicAuth"
-    username: "toto"
-    password: "my-secret"
-````
+Select the type of security to use with the Kafka Connect cluster below:
 
-**KafkaConnectCluster checks:**
-- `metadata.cluster` must be a valid KafkaCluster name
-- `spec.urls` must be a single URL of a Kafka Connect cluster
-  - **Multiple URLs are not supported for now. Coming soon**
-- `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
-  - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
+<Tabs>
+  <TabItem value="Basic Authentication" label="Basic Authentication">
 
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KafkaConnectCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-connect-cluster
+    spec:
+      displayName: "Production Connect Cluster"
+      urls: "http://localhost:8083"
+      ignoreUntrustedCertificate: false
+      headers:
+        X-PROJECT-HEADER: value
+        AnotherHeader: test
+      security:
+        type: BasicAuth
+        username: some_user
+        password: some_password
+    ```
+
+    | Field                             | Type    | Description                                                                                       |
+    |-----------------------------------|---------|---------------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**            | String  | Refers to an existing Kafka Cluster in Console                                                    |
+    | **`spec.displayName`**            | String  | Friendly name of the Kafka Connect cluster in Console. Can contain spaces and special characters. |
+    | **`spec.urls`**                   | String  | URL of a Kafka Connect cluster. **Multiple URLs are not supported for now. Coming soon**          |
+    | `spec.ignoreUntrustedCertificate` | Boolean | Skip the SSL check or not, default is `false`.                                                    |
+    | `spec.headers`                    | Object  | Key-value pairs of HTTP Headers.                                                                  |
+    | `spec.security.username`          | String  | Username to authenticate with the Kafka Connect cluster.                                          |
+    | `spec.security.password`          | String  | Password to authenticate with the Kafka Connect cluster.                                          |
+
+  </TabItem>
+  <TabItem value="Bearer Token" label="Bearer Token">
+
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KafkaConnectCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-connect-cluster
+    spec:
+      displayName: "Production Connect Cluster"
+      urls: "http://localhost:8083"
+      ignoreUntrustedCertificate: false
+      headers:
+        X-PROJECT-HEADER: value
+        AnotherHeader: test
+      security:
+        type: BearerToken
+        token: some_token
+    ```
+
+    | Field                             | Type    | Description                                                                                       |
+    |-----------------------------------|---------|---------------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**            | String  | Refers to an existing Kafka Cluster in Console                                                    |
+    | **`spec.displayName`**            | String  | Friendly name of the Kafka Connect cluster in Console. Can contain spaces and special characters. |
+    | **`spec.urls`**                   | String  | URL of a Kafka Connect cluster. **Multiple URLs are not supported for now. Coming soon**          |
+    | `spec.ignoreUntrustedCertificate` | Boolean | Skip the SSL check or not, default is `false`.                                                    |
+    | `spec.headers`                    | Object  | Key-value pairs of HTTP Headers.                                                                  |
+    | `spec.security.token`             | String  | Token to authenticate with the Kafka Connect cluster.                                             |
+
+  </TabItem>
+  <TabItem value="SSL Authentication" label="SSL Authentication">
+
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KafkaConnectCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-connect-cluster
+    spec:
+      displayName: "Production Connect Cluster"
+      urls: "http://localhost:8083"
+      ignoreUntrustedCertificate: false
+      headers:
+        X-PROJECT-HEADER: value
+        AnotherHeader: test
+      security:
+        type: SSLAuth
+        key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+          ...
+          IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+          -----END PRIVATE KEY-----
+        certificateChain: |
+          -----BEGIN CERTIFICATE-----
+          MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+          ...
+          IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+          -----END CERTIFICATE-----
+    ```
+
+    | Field                                | Type    | Description                                                                                       |
+    |--------------------------------------|---------|---------------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**               | String  | Refers to an existing Kafka Cluster in Console                                                    |
+    | **`spec.displayName`**               | String  | Friendly name of the Kafka Connect cluster in Console. Can contain spaces and special characters. |
+    | **`spec.urls`**                      | String  | URL of a Kafka Connect cluster. **Multiple URLs are not supported for now. Coming soon**          |
+    | `spec.ignoreUntrustedCertificate`    | Boolean | Skip the SSL check or not, default is `false`.                                                    |
+    | `spec.headers`                       | Object  | Key-value pairs of HTTP Headers.                                                                  |
+    | **`spec.security.key`**              | Object  | Private key to authenticate with the Kafka Connect cluster.                                       |
+    | **`spec.security.certificateChain`** | Object  | Certificate chain to authenticate with the Kafka Connect cluster.                                 |
+
+  </TabItem>
+</Tabs>
 
 ## KsqlDBCluster
 
@@ -376,30 +594,109 @@ spec:
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Creates a ksqlDB Cluster Definition in Console.
-````yaml
----
-apiVersion: console/v2
-kind: KsqlDBCluster
-metadata:
-  cluster: julien-cloud
-  name: ksql-1
-spec:
-  displayName: "KSQL 1"
-  url: "http://localhost:8088"
-  ignoreUntrustedCertificate: false
-  security:
-    type: "BasicAuth"
-    username: "toto"
-    password: "my-secret"
-````
-**KafkaConnectCluster checks:**
-- `metadata.cluster` must be a valid KafkaCluster name
-- `spec.url` must be a single URL of a KsqlDB cluster
-- `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
-  - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
+
+Select the type of security to use with the ksqlDB cluster below:
+
+<Tabs>
+  <TabItem value="Basic Authentication" label="Basic Authentication">
+
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KsqlDBCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-ksqldb-cluster
+    spec:
+      displayName: "Production ksqlDB Cluster"
+      url: "http://localhost:8088"
+      ignoreUntrustedCertificate: false
+      security:
+        type: BasicAuth
+        username: some_user
+        password: some_password
+    ```
+
+    | Field                             | Type    | Description                                                                                |
+    |-----------------------------------|---------|--------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**            | String  | Refers to an existing Kafka Cluster in Console                                             |
+    | **`spec.displayName`**            | String  | Friendly name of the ksqlDB cluster in Console. Can contain spaces and special characters. |
+    | **`spec.url`**                    | String  | URL of your ksqlDB cluster.                                                                |
+    | `spec.ignoreUntrustedCertificate` | Boolean | Skip the SSL check or not, default is `false`.                                             |
+    | `spec.headers`                    | Object  | Key-value pairs of HTTP Headers.                                                           |
+    | `spec.security.username`          | String  | Username to authenticate with the ksqlDB cluster.                                          |
+    | `spec.security.password`          | String  | Password to authenticate with the ksqlDB cluster.                                          |
+
+  </TabItem>
+  <TabItem value="Bearer Token" label="Bearer Token">
+
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KsqlDBCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-ksqldb-cluster
+    spec:
+      displayName: "Production ksqlDB Cluster"
+      url: "http://localhost:8088"
+      ignoreUntrustedCertificate: false
+      security:
+        type: BearerToken
+        token: some_token
+    ```
+
+    | Field                             | Type    | Description                                                                                |
+    |-----------------------------------|---------|--------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**            | String  | Refers to an existing Kafka Cluster in Console                                             |
+    | **`spec.displayName`**            | String  | Friendly name of the ksqlDB cluster in Console. Can contain spaces and special characters. |
+    | **`spec.url`**                    | String  | URL of your ksqlDB cluster.                                                                |
+    | `spec.ignoreUntrustedCertificate` | Boolean | Skip the SSL check or not, default is `false`.                                             |
+    | `spec.headers`                    | Object  | Key-value pairs of HTTP Headers.                                                           |
+    | `spec.security.token`             | String  | Token to authenticate with the ksqlDB cluster.                                             |
+
+  </TabItem>
+  <TabItem value="SSL Authentication" label="SSL Authentication">
+
+    ```yaml
+    ---
+    apiVersion: console/v2
+    kind: KsqlDBCluster
+    metadata:
+      cluster: prod-kafka-cluster
+      name: prod-ksqldb-cluster
+    spec:
+      displayName: "Production ksqlDB Cluster"
+      url: "http://localhost:8088"
+      ignoreUntrustedCertificate: false
+      security:
+        type: SSLAuth
+        key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+          ...
+          IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+          -----END PRIVATE KEY-----
+        certificateChain: |
+          -----BEGIN CERTIFICATE-----
+          MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
+          ...
+          IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
+          -----END CERTIFICATE-----
+    ```
+
+    | Field                                | Type    | Description                                                                                |
+    |--------------------------------------|---------|--------------------------------------------------------------------------------------------|
+    | **`metadata.cluster`**               | String  | Refers to an existing Kafka Cluster in Console                                             |
+    | **`spec.displayName`**               | String  | Friendly name of the ksqlDB cluster in Console. Can contain spaces and special characters. |
+    | **`spec.url`**                       | String  | URL of your ksqlDB cluster.                                                                |
+    | `spec.ignoreUntrustedCertificate`    | Boolean | Skip the SSL check or not, default is `false`.                                             |
+    | `spec.headers`                       | Object  | Key-value pairs of HTTP Headers.                                                           |
+    | **`spec.security.key`**              | Object  | Private key to authenticate with the ksqlDB cluster.                                       |
+    | **`spec.security.certificateChain`** | Object  | Certificate chain to authenticate with the ksqlDB cluster.                                 |
+
+  </TabItem>
+</Tabs>
 
 ## Alert
 
@@ -412,43 +709,6 @@ This concept will be available in a future version
 :::caution Not implemented yet
 This concept will be available in a future version
 :::
-
-## HTTP Security Properties
-
-HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster)
-### Basic Authentication
-````yaml
-  security:
-    type: "BasicAuth"
-    username: "toto"
-    password: "my-secret"
-````
-### Bearer Token
-````yaml
-  security:
-    type: "BearerToken"
-    token: "toto"
-````
-### mTLS / Client Certificate
-````yaml
-  security:
-    type: "SSLAuth"
-    key: |
-      -----BEGIN PRIVATE KEY-----
-      MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
-      ...
-      IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
-      -----END PRIVATE KEY-----
-    certificateChain: |
-      -----BEGIN CERTIFICATE-----
-      MIIOXzCCDUegAwIBAgIRAPRytMVYJNUgCbhnA+eYumgwDQYJKoZIhvcNAQELBQAw
-      RjELMAkGA1UEBhMCVVMxIjAgBgNVBAoTGUdvb2dsZSBUcnVzdCBTZXJ2aWNlcyBM
-      ...
-      8/s+YDKveNdoeQoAmGQpUmxhvJ9rbNYj+4jiaujkfxT/6WtFN8N95r+k3W/1K4hs
-      IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
-      -----END CERTIFICATE-----
-````
-
 
 ## Permissions
 
@@ -466,11 +726,11 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 ### Topic Permissions
 ````yaml
-# Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
+# Grants Consume, Produce and View Config to all topics finance-* on prod-kafka-cluster
 - resourceType: TOPIC
-  cluster: shadow-it
+  cluster: prod-kafka-cluster
   patternType: PREFIXED
-  name: toto-
+  name: finance-
   permissions:
     - topicViewConfig
     - topicConsume
@@ -483,15 +743,15 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the topic or topic prefix to apply the permissions to
 - `permissions` is a list of valid topic permissions (See Table)
 
-| Available Topic Permissions | Description |
-|-----------------------------|--------|
-| `topicConsume`              | Permission to consume messages from the topic. |
-| `topicProduce`              | Permission to produce (write) messages to the topic. |
-| `topicViewConfig`           | Permission to view the topic configuration. |
-| `topicEditConfig`           | Permission to edit the topic configuration. |
-| `topicCreate`               | Permission to create a new topic. |
-| `topicDelete`               | Permission to delete the topic. |
-| `topicAddPartition`         | Permission to add partitions to the topic. |
+| Available Topic Permissions | Description                                               |
+|-----------------------------|-----------------------------------------------------------|
+| `topicConsume`              | Permission to consume messages from the topic.            |
+| `topicProduce`              | Permission to produce (write) messages to the topic.      |
+| `topicViewConfig`           | Permission to view the topic configuration.               |
+| `topicEditConfig`           | Permission to edit the topic configuration.               |
+| `topicCreate`               | Permission to create a new topic.                         |
+| `topicDelete`               | Permission to delete the topic.                           |
+| `topicAddPartition`         | Permission to add partitions to the topic.                |
 | `topicEmpty`                | Permission to empty (delete all messages from) the topic. |
 
 
@@ -513,12 +773,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the subject or subject prefix to apply the permissions to
 - `permissions` is a list of valid subject permissions (See Table)
 
-| Available Subject Permissions      | Description |
-|------------------------------------|--------|
-| `subjectCreateUpdate`              | Permission to create or update the subject. |
-| `subjectDelete`                    | Permission to delete the subject. |
-| `subjectEditCompatibility`         | Permission to edit the subject compatibility settings. |
-| `subjectView`                      | Permission to view the subject details. |
+You can find the list of available permissions [here](/platform/navigation/settings/rbac/#granular-permissions).
 
 ### ConsumerGroup Permissions
 ````yaml
@@ -538,12 +793,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the consumer group or consumer group prefix to apply the permissions to
 - `permissions` is a list of valid consumer group permissions (See Table)
 
-| Available ConsumerGroup Permissions | Description |
-|-------------------------------------|--------|
-| `consumerGroupCreate`               | Permission to create a new consumer group. |
-| `consumerGroupReset`                | Permission to reset the consumer group. |
-| `consumerGroupDelete`               | Permission to delete the consumer group. |
-| `consumerGroupView`                 | Permission to view the consumer group details. |
+You can find the list of available permissions [here](/platform/navigation/settings/rbac/#granular-permissions).
 
 ### Cluster Permissions
 ```yaml
@@ -563,14 +813,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
   - Use `*` for all clusters
 - `permissions` is a list of valid cluster permissions (See Table)
 
-| Available Cluster Permissions | Description |
-|-------------------------------|--------|
-| `clusterViewBroker`           | Permission to view broker details. |
-| `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
-| `clusterEditBroker`          | Permission to edit broker configuration. |
-| `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
-| `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
-
+You can find the list of available permissions [here](/platform/navigation/settings/rbac/#granular-permissions).
 
 ### KafkaConnect Permissions
 ```yaml
@@ -592,16 +835,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the connector or connector prefix to apply the permissions to
 - `permissions` is a list of valid Kafka Connect permissions (See Table)
 
-| Available KafkaConnect Permissions | Description |
-|------------------------------------|--------|
-| `kafkaConnectorViewConfig`         | Permission to view the Kafka Connect configuration. |
-| `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
-| `kafkaConnectorEditConfig`         | Permission to edit the Kafka Connect configuration. |
-| `kafkaConnectorDelete`             | Permission to delete connectors. |
-| `kafkaConnectorCreate`             | Permission to create new connectors. |
-| `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
-| `kafkaConnectRestart`              | Permission to restart connectors. |
-
+You can find the list of available permissions [here](/platform/navigation/settings/rbac/#granular-permissions).
 
 ### KsqlDB Permissions
 ```yaml
@@ -618,10 +852,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `ksqlDB` is a valid Kafka Connect cluster
 - `permissions` is a list of valid KsqlDB permissions (See Table)
 
-| Available KafkaConnect Permissions | Description                                                                          |
-|------------------------------------|--------------------------------------------------------------------------------------|
-| `ksqldbAccess`         | Grants all permissions on the KsqlDB Cluster. |
-
+You can find the list of available permissions [here](/platform/navigation/settings/rbac/#granular-permissions).
 
 ### Platform Permissions
 ```yaml

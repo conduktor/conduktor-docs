@@ -53,6 +53,19 @@ If they have a restricted access to a topic, but belong to a group that has a fu
 
 ### Manage Services Permissions
 
+Here are the available permissions for Conduktor Console services:
+
+| Permission in the API       | Permissions in the UI              | Description                                                   |
+|-----------------------------|------------------------------------|---------------------------------------------------------------|
+| `auditLogView`              | Can access the Audit log           | Permission to browse audit log                                |
+| `datamaskingView`           | Can access Datamasking policies    | Permission to view Data policies                              |
+| `datamaskingManage`         | Can manage Datamasking policies    | Permission to manage Data policies (masking rules)            |
+| `clusterConnectionsManage`  | Can manage Cluster configurations  | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`         | Can manage Certificates            | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                | Can manage Users, Groups and Roles | Permission to manage Console users, groups & permissions      |
+| `notificationChannelManage` | Can manage Notification channels   | Permission to manage Integration channels                     |
+| `taasView`                  | Can view Application Catalog       | Permission to view Integration channels                       |
+
 You are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
 
 ![Services default set](/img/admin/services-default-set.png)
@@ -71,38 +84,46 @@ Finally, if you remove their access to Data Masking and/or Topic as a Service, t
 
 ### Manage Resources Permissions
 
-#### Granular Permissions
+#### Granular Kafka Permissions
 The RBAC model is very granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
 
-| Resource         | Permissions           |
-| ---------------- | --------------------- |
-| Topics           | View config           |
-| Topics           | Consume               |
-| Topics           | Produce               |
-| Topics           | Create                |
-| Topics           | Delete                |
-| Topics           | Empty                 |
-| Topics           | Add partitions        |
-| Consumer groups  | Viewer                |
-| Consumer groups  | Reset                 |
-| Consumer groups  | Create                |
-| Consumer groups  | Delete                |
-| Subjects         | View                  |
-| Subjects         | Edit compatibility    |
-| Subjects         | Create / Update       |
-| Subjects         | Delete                |
-| Kafka connectors | View task & status    |
-| Kafka connectors | View config           |
-| Kafka connectors | Edit config           |
-| Kafka connectors | Deploy                |
-| Kafka connectors | Delete                |
-| Kafka connectors | Restart               |
-| Kafka connectors | Pause / Resume        |
-| Clusters         | View ACL              |
-| Clusters         | Manage ACL            |
-| Clusters         | View broker           |
-| Clusters         | Edit broker           |
-| Clusters         | Edit SR compatibility |
+| Permission in the API        | Permissions in the UI | Description                                                          |
+|------------------------------|-----------------------|----------------------------------------------------------------------|
+| **Topics**                   |                       |                                                                      |
+| `topicViewConfig`            | View config           | Permission to view the topic configuration.                          |
+| `topicEditConfig`            | Edit config           | Permission to edit the topic configuration.                          |
+| `topicConsume`               | Consume               | Permission to consume messages from the topic.                       |
+| `topicProduce`               | Produce               | Permission to produce (write) messages to the topic.                 |
+| `topicCreate`                | Create                | Permission to create a new topic.                                    |
+| `topicDelete`                | Delete                | Permission to delete the topic.                                      |
+| `topicEmpty`                 | Empty                 | Permission to empty (delete all messages from) the topic.            |
+| `topicAddPartition`          | Add partitions        | Permission to add partitions to the topic.                           |
+| **Consumer groups**          |                       |                                                                      |
+| `consumerGroupView`          | View                  | Permission to view the consumer group.                               |
+| `consumerGroupReset`         | Reset                 | Permission to reset the consumer group.                              |
+| `consumerGroupCreate`        | Create                | Permission to create a new consumer group.                           |
+| `consumerGroupDelete`        | Delete                | Permission to delete the consumer group.                             |
+| **Subjects**                 |                       |                                                                      |
+| `subjectView`                | View                  | Permission to view the subject.                                      |
+| `subjectEditCompatibility`   | Edit compatibility    | Permission to edit the compatibility of the subject.                 |
+| `subjectCreateUpdate`        | Create / Update       | Permission to create or update the subject.                          |
+| `subjectDelete`              | Delete                | Permission to delete the subject.                                    |
+| **Kafka connectors**         |                       |                                                                      |
+| `kafkaConnectorStatus`       | View task & status    | Permission to view the task and status of the connector.             |
+| `kafkaConnectorViewConfig`   | View config           | Permission to view the configuration of the connector.               |
+| `kafkaConnectorEditConfig`   | Edit config           | Permission to edit the configuration of the connector.               |
+| `kafkaConnectorCreate`       | Deploy                | Permission to deploy a new connector.                                |
+| `kafkaConnectorDelete`       | Delete                | Permission to delete the connector.                                  |
+| `kafkaConnectRestart`        | Restart               | Permission to restart the connector.                                 |
+| `kafkaConnectPauseResume`    | Pause / Resume        | Permission to pause or resume the connector.                         |
+| **Clusters**                 |                       |                                                                      |
+| `clusterViewAcl`             | View ACL              | Permission to view the ACL of the cluster.                           |
+| `clusterManageAcl`           | Manage ACL            | Permission to manage the ACL of the cluster.                         |
+| `clusterViewBroker`          | View broker           | Permission to view the broker of the cluster.                        |
+| `clusterEditBroker`          | Edit broker           | Permission to edit the broker of the cluster.                        |
+| `clusterEditSrCompatibility` | Edit SR compatibility | Permission to edit the schema registry compatibility of the cluster. |
+| **ksqlDBs**                  |                       |                                                                      |
+| `ksqldbAccess`               | Manage                | Permission to manage the ksqlDB.                                     |
 
 All these permissions can be applied on one specific cluster, or all your clusters.
 
