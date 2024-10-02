@@ -138,7 +138,7 @@ spec:
   displayName: "Julien's cloud - Kafka"
   icon: "kafka"
   color: "#000000"
-  bootstrapServers: "34.140.204.135:12092"
+  bootstrapServers: "localhost:9092"
   ignoreUntrustedCertificate: false
   properties:
     sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
@@ -146,11 +146,11 @@ spec:
     sasl.mechanism: PLAIN
   schemaRegistry:
     type: "ConfluentLike"
-    url: http://34.140.204.135/registry/
+    url: http://localhost:8080
     security:
       type: BasicAuth
-      username: superUser
-      password: superUser
+      username: some_user
+      password: some_password
     ignoreUntrustedCertificate: false
   kafkaFlavor:
     type: "Confluent"
@@ -186,12 +186,12 @@ This section lets you associate a Schema Registry to your KafkaCluster
 spec:
   schemaRegistry:
     type: "ConfluentLike"
-    urls: http://34.140.204.135/registry/
+    urls: http://localhost:8080
     ignoreUntrustedCertificate: false
     security:
       type: BasicAuth
-      username: superUser
-      password: superUser
+      username: some_user
+      password: some_password
 ````
 Confluent Schema Registry checks:
 - `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
@@ -349,7 +349,7 @@ metadata:
   name: connect-1
 spec:
   displayName: "Connect 1"
-  urls: "http://34.140.204.135/connect/"
+  urls: "http://localhost:8083"
   ignoreUntrustedCertificate: false
   headers:
     X-PROJECT-HEADER: value
@@ -386,7 +386,7 @@ metadata:
   name: ksql-1
 spec:
   displayName: "KSQL 1"
-  url: "http://34.140.204.135/ksqldb/"
+  url: "http://localhost:8088"
   ignoreUntrustedCertificate: false
   security:
     type: "BasicAuth"
@@ -598,7 +598,6 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
 | `kafkaConnectorEditConfig`         | Permission to edit the Kafka Connect configuration. |
 | `kafkaConnectorDelete`             | Permission to delete connectors. |
-| `kafkaConnectorUpdate`             | Permission to update connectors. |
 | `kafkaConnectorCreate`             | Permission to create new connectors. |
 | `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
 | `kafkaConnectRestart`              | Permission to restart connectors. |

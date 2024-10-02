@@ -18,13 +18,13 @@ export const SocialItem = styled('a', {
       fill: '#0a66c2',
     },
     'svg[data-type="github"] path': {
-      fill: '$mauveDark11',
+      fill: '$oliveDark11',
     },
     'svg[data-type="youtube"] path': {
       fill: '#ff0302',
     },
     'svg[data-type="angellist"] path': {
-      fill: '$mauveDark11',
+      fill: '$oliveDark11',
     },
   },
 })

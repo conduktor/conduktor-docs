@@ -4,11 +4,11 @@ import { pulse } from '@site/src/styles/keyframes'
 export const StyledSearchInput = styled('div', {
   backgroundColor: 'rgb(255 255 255 / 90%)',
   backdropFilter: 'blur(8px)',
-  fontSize: '$fontSize2',
+  fontSize: '$fontSize3',
   fontWeight: '$medium',
   position: 'relative',
   width: '100%',
-  color: '$mauve11',
+  color: '$olive11',
   margin: '0 auto',
   boxShadow: '$shadow1',
   animation: `${pulse} 200ms 0ms both`,
@@ -41,5 +41,5 @@ export const SearchInputText = styled('input', {
   all: 'unset',
   width: '100%',
   padding: '$space6 $space6 $space6 $space11',
-  color: '$mauve12',
+  color: '$olive12',
 })

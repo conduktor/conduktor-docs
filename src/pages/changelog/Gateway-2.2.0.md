@@ -27,8 +27,6 @@ Fields can be defined in the decryption interceptor configuration;
       ]
 ```
 
-Interceptor configuration is available on the [Conduktor Marketplace](https://marketplace.conduktor.io/interceptors/field-level-encryption/).
-
 #### OAuth principal to vcluster mapping
 
 When you don't have the luxury to specify claims, we now provide the ability to map Oauth principals to vclusters, for usernames, through the Gateway API.

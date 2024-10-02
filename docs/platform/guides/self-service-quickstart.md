@@ -51,9 +51,6 @@ The Central team repo has created a cluster configuration in `/clusters`. Here t
 
 The central team has defined three teams, the **clickstream**, **wikipedia** and **website-analytics** each with their own application, as can be seen by their respective yaml files in `/applications`.
 
-<!-- ![applications folder](./img/applications-folder.png) -->
-
-
 ```mermaid
 graph TD;
     A[central-team-repo]
@@ -69,7 +66,6 @@ This example will focus on the website-analytics team.
 
 The website analytics team has their own "repo", which is the `application-team-repo` directory in this example. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource.
 
-<!-- ![app team repo](./img/app-team-repo.png) -->
 ```mermaid
 graph TD;
     A[application-team-repo] 
@@ -91,7 +87,7 @@ graph TD;
     docker compose up -d
     ````
 2. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
-3. Generate an admin API key for the Conduktor CLI. Navigate to Settings > API Keys, **copy this value**. 
+3. Generate an admin API key for the Conduktor CLI. Navigate to Settings > API Keys > New API Key, **copy this value**. 
    - Note: This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
      ````bash
      # not part of today's demo, shown as an example
@@ -100,7 +96,7 @@ graph TD;
      conduktor login
      eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
      ````
-4. Open the `docker-compose.yml` file, assign the value you earlier copied to the `CDK_API_KEY` value. Save the file & re-run docker compose to create the Conduktor CLI container
+4. Open the `docker-compose.yml` file, assign the value you just copied to the `CDK_API_KEY` env variable for the conduktor-ctl service, the first service. Save the file & re-run `docker compose up -d` to create the Conduktor CLI container
     ````bash
     docker compose up -d
     ````
@@ -113,7 +109,9 @@ graph TD;
 ### Apply the resources, central team perspective
 With setup complete we're now ready to create the Conduktor Applications, so we can delegate responsibility to our application teams. This is from the perspective of the central team.
 
-1. Create the Group (in the Settings menu), `website-analytics-team` in Conduktor Console. We are going to assign ownership of our application to this, so the group must exist
+1. Create a Group, `website-analytics-team`, from the Settings menu in Conduktor Console. Note this can be also be done through the API. Settings >  Groups > Create Group. We are going to assign ownership of our application to this, so the group must exist before application creation
+
+![create group](./img/create-group.png)
 2. Create the policies that some application instances might leverage using the Conduktor CLI
 ```bash
 conduktor apply -f ./self-service/central-team-repo/topic-policies/
@@ -145,7 +143,7 @@ Great success topics created with ownership and visibility! (*May take up to 30 
 ![topic-catalog](./img/topic-catalog.png)
 
 ### Attempt to create topics out of bounds
-We've demo'd this working, but now let's try make a topic that doesn't fit the criteria set by the central team.
+We've demoed this working, but now let's try make a topic that doesn't fit the criteria set by the central team.
 
 The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work, and we needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now.
 

@@ -36,7 +36,7 @@
 }
 
 .CardTitle {
-  color: var(--colors-mauve12);
+  color: var(--colors-olive12);
   font-size: var(--fontSizes-fontSize8);
   font-weight: var(--fontWeights-semi);
   margin-bottom: var(--space-space3);
@@ -48,7 +48,7 @@
 }
 
 .CardParagraph {
-  color: var(--colors-mauve11);
+  color: var(--colors-olive11);
   font-size: var(--fontSizes-fontSize4);
   margin-bottom: var(--space-space8);
   display: block;
@@ -61,7 +61,7 @@
 .PlatformVisualContainer {
   display: flex;
   align-items: flex-end;
-  cursor: pointer;  
+  cursor: pointer;
   overflow: hidden;
   padding-top: var(--space-space12);
 

@@ -9,6 +9,23 @@ description: Securing Conduktor Gateway
 ![image.png](../medias/clientsauth.png)
 
 As with Kafka brokers, Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the options available, how they work and how to configure them. The nature of your system's requirements, design and constraints will lead you to pick the most suitable option when working with our lovely experts as part of setting up Gateway with you.
+- [Client to Gateway Authentication](#client-to-gateway-authentication)
+  - [Supported security protocols and authentication mechanisms](#supported-security-protocols-and-authentication-mechanisms)
+- [Security protocol](#security-protocol)
+  - [Plaintext](#plaintext)
+  - [SSL](#ssl)
+    - [Mutual TLS (mTLS)](#mutual-tls-mtls)
+  - [SASL\_PLAINTEXT](#sasl_plaintext)
+    - [Plain](#plain)
+    - [OAuthbearer](#oauthbearer)
+  - [SASL\_SSL](#sasl_ssl)
+    - [Plain](#plain-1)
+    - [OAuthbearer](#oauthbearer-1)
+  - [DELEGATED\_SASL\_PLAINTEXT](#delegated_sasl_plaintext)
+  - [DELEGATED\_SASL\_SSL](#delegated_sasl_ssl)
+- [Automatic security protocol detection (Default behavior)](#automatic-security-protocol-detection-default-behavior)
+- [Re authentication support](#re-authentication-support)
+
 
 The authentication phase on Gateway is part of the initial communication handling by Gateway to handshake, and authenticate, a Kafka client. This phase manages the encryption of the network communication and how to identify a client.
 
