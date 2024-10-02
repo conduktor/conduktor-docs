@@ -396,3 +396,15 @@ You should modify these parameters only if you see an issue with the performance
 | `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once.        | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
 | `kafka_admin.batch_parallel_size`                    | Maximum of batched requests that can be sent in parallel                                                                                      | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
 | `kafka_admin.record_size_limit`                      | Maximum size in bytes of a single message to display in the consume page. For larger messages, you'll get a link to open in a dedicated page. | `CDK_KAFKAADMIN_RECORDSIZELIMIT`                   | false     | int  | `102400` (bytes)  |
+
+### AuditLog export properties
+
+The audit log export feature allows you to export the audit logs to a topic in a configured kafka cluster from the Console.
+
+| Property                                            | Description                                           | Environment Variable                                  | Mandatory | Type   | Default |
+|-----------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|-----------|--------|---------|
+| `audit_log_publisher.cluster`                       | The cluster ID where the audit logs will be exported  | `CDK_AUDITLOGPUBLISHER_CLUSTER`                       | false     | string | ∅       |
+| `audit_log_publisher.topicName`                     | The topic name where the audit logs will be exported  | `CDK_AUDITLOGPUBLISHER_TOPICNAME`                     | false     | string | ∅       |
+| `audit_log_publisher.topicConfig.partition`         | The number of partitions for the audit log topic      | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_PARTITION`         | false     | int    | `1`     |
+| `audit_log_publisher.topicConfig.replicationFactor` | The replication factor for the audit log topic        | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_REPLICATIONFACTOR` | false     | int    | `1`     |
+
