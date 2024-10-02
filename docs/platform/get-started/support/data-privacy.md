@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Data Security
+title: Data Privacy
 description: Conduktor does not send your data anywhere. Everything stays between your computer and your Apache Kafka clusters / applications.
 ---
 
@@ -29,12 +29,9 @@ Conduktor Console runs as a docker container on the instance of your choice in y
 In order to improve our product, we collect some information that allows us to personalize the Console user experience.  
 
 - Segment:
-  - We collect your email address so that we can engage with you directly through our [Support Portal](https://support.conduktor.io).
-  - We also capture anonymized information about which pages have been seen, or which button was clicked. This allows us to enhance the user experience of navigation. 
-- Sentry: 
-  - Only in case of errors, we send the error to Sentry to provide us visibility of a broken feature.
-- Datadog: 
-  - Provides insight into front-end performance issues that impact our users.
+  - We collect your login email address so that we can personalise our [Support](https://support.conduktor.io)  
+  - We capture anonymized information about which pages have been seen, or which button was clicked. This allows us to enhance the user experience of navigation  
+  - We collect error information to provide us visibility of broken features
 
 ## Login / Licenses
 
