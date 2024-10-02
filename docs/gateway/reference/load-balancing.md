@@ -17,6 +17,8 @@ Depending on your infrastructure, you might prefer one or the other.
 
 ## Internal Load Balancing
 
+What we call internal load balancing, is the Gateway's ability to distribute the clients connections between the different Gateway nodes in the same cluster. This is done automatically by the Gateway, and is the default behavior.
+
 To deploy multiple Gateway nodes as part of the same Gateway cluster, you need to set the same `GATEWAY_CLUSTER_ID` in each node's deployment configuration. This configuration ensures that all nodes join the same consumer group, enabling them to consume the internal license topic from your Kafka cluster. This is how the nodes recognize each other as members of the same Gateway cluster.
 
 When a client connects to one of the Gateway nodes to request metadata, the following process occurs (assuming `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` is set to `true`, which is the default setting):
@@ -50,7 +52,7 @@ In a Kubernetes environment, your ingress must point at a single service, which 
 
 ## External Load Balancing
 
-Alternatively, you can disable the internal load balancing by setting GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING: false in your Gateway configuration. In this case, you would deploy your own load balancer, such as [HAProxy](https://www.haproxy.org/), to manage traffic distribution.
+Alternatively, you can disable the internal load balancing by setting `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING: false` in your Gateway configuration. In this case, you would deploy your own load balancer, such as [HAProxy](https://www.haproxy.org/), to manage traffic distribution.
 
 This would allow you to configure the stickiness of the load balancer as you wish.
 
