@@ -112,7 +112,8 @@ This API **requires admin privileges** and is available on `/api/public/debug/v1
 `GET /api/public/debug/v1/loggers` :
 
 ```bash
-curl -X GET -H "Authorization: Bearer $API_KEY" 'http://localhost:8080/api/public/debug/v1/loggers' | jq .
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers' \
+  -H "Authorization: Bearer $API_KEY" | jq .
 ```
 That will output :
 
@@ -155,7 +156,8 @@ That will output :
 `GET /api/public/debug/v1/loggers/{loggerName}` :
 
 ```bash
-curl -X GET -H "Authorization: Bearer $API_KEY" 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator' | jq .
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator' \
+  -H "Authorization: Bearer $API_KEY" | jq .
 ```
 That will output :
 
@@ -183,7 +185,8 @@ Meaning that filter `authenticator` will match `io.conduktor.authenticator` and 
 `PUT /api/public/debug/v1/loggers/{loggerName}/{logLevel}` :
 
 ```bash
-curl -X PUT -H "Authorization: Bearer $API_KEY" 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' | jq .
+curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
+  -H "Authorization: Bearer $API_KEY" | jq .
 ```
 
 That will output the list of loggers impacted by the update:
@@ -206,7 +209,8 @@ The `logLevel` is **case-insensitive** and can be one of `TRACE`, `DEBUG`, `INFO
 `PUT /api/public/debug/v1/loggers` :
 
 ```bash
-curl -X PUT -H "Authorization: Bearer $API_KEY" 'http://localhost:8080/public/debug/v1/loggers' \
+curl -X PUT 'http://localhost:8080/public/debug/v1/loggers' \
+   -H "Authorization: Bearer $API_KEY" \
   --data '[
       {
           "name": "io.conduktor.authenticator.ConduktorUserProfile",
