@@ -17,8 +17,8 @@ Check for the list of supported resources and their definition in the dedicated 
 ## Install & Configure
 
 You have 2 options to Install Conduktor CLI.
-- Native binary for individual use and testing
-- Docker build for integration in CI/CD pipelines
+- [**Native binary**](#native-binary) for individual use and testing
+- [**Docker**](#docker) build for integration in CI/CD pipelines
 
 ### Native binary
 **From Github (Windows, Linux, MacOS)**  
@@ -80,7 +80,7 @@ Select **Create API Key** to generate a new API key.
 <hr />
 
 #### Self-service Application API Key
-Self-service Application API Key permissions are limited to the scope of the ApplicationInstance for which they have been generated.  
+Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance](/platform/reference/resource-reference/self-service/#application-instance) for which they have been generated.  
 Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.  
 They can be obtained either from the UI or using the CLI.
 
@@ -173,23 +173,144 @@ $ conduktor delete topic myTopic
 ````
 
 ### Get
-````
-get resource of a given kind
+
+```
+$ conduktor get user --help
+If name not provided it will list all resource
 
 Usage:
-  conduktor get kind [name] [flags]
+  conduktor get user [name] [flags]
+
+Aliases:
+  User, user
 
 Flags:
-  -h, --help   help for get
+  -h, --help            help for User
+  -o, --output output   Output format. One of: json|yaml|name (default yaml)
 
 Global Flags:
-  -v, --verbose   Show more information for debugging
-````
+  -v, --verbose   show more information for debugging
+```
+
 Examples:
-````
+```
 $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
-````
+```
+
+#### Select the output format
+
+By using the flag `--output` or `-o`, you can select the output format of the command.
+
+<Tabs>
+  <TabItem value="YAML" label="YAML">
+
+    ```yaml title="conduktor get user -o yaml"
+    ---
+    apiVersion: v2
+    kind: User
+    metadata:
+      name: alice@demo.dev
+    spec:
+      permissions:
+        - resourceType: TOPIC
+          cluster: underlying-kafka
+          name: alice-
+          patternType: PREFIXED
+          permissions:
+            - topicViewConfig
+            - topicConsume
+    ---
+    apiVersion: v2
+    kind: User
+    metadata:
+      name: bob@demo.dev
+    spec:
+      permissions:
+        - resourceType: TOPIC
+          cluster: underlying-kafka
+          name: bob-
+          patternType: PREFIXED
+          permissions:
+            - topicViewConfig
+            - topicConsume
+    ---
+    apiVersion: v2
+    kind: User
+    metadata:
+      name: admin@demo.dev
+    spec: {}
+    ```
+
+  </TabItem>
+  <TabItem value="JSON" label="JSON">
+
+    ```json title="conduktor get user -o json"
+    [
+      {
+        "apiVersion": "v2",
+        "kind": "User",
+        "metadata": {
+          "name": "alice@demo.dev"
+        },
+        "spec": {
+          "permissions": [
+            {
+              "resourceType": "TOPIC",
+              "cluster": "underlying-kafka",
+              "name": "alice-",
+              "patternType": "PREFIXED",
+              "permissions": [
+                "topicViewConfig",
+                "topicConsume"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "v2",
+        "kind": "User",
+        "metadata": {
+          "name": "bob@demo.dev"
+        },
+        "spec": {
+          "permissions": [
+            {
+              "resourceType": "TOPIC",
+              "cluster": "underlying-kafka",
+              "name": "bob-",
+              "patternType": "PREFIXED",
+              "permissions": [
+                "topicViewConfig",
+                "topicConsume"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "v2",
+        "kind": "User",
+        "metadata": {
+          "name": "admin@demo.dev"
+        },
+        "spec": {}
+      }
+    ]
+    ```
+
+  </TabItem>
+  <TabItem value="List of names" label="List of names">
+
+    ```txt title="conduktor get user -o name"
+    User/alice@demo.dev
+    User/bob@demo.dev
+    User/admin@demo.dev
+    ```
+
+  </TabItem>
+</Tabs>
 
 ### Token
 
@@ -218,8 +339,8 @@ $ conduktor token list application-instance -i=my_instance
 Check the current version of your CLI using this command
 ````
 $ conduktor version
-Version: 0.2.5
-Hash: 163e7476bb2046e190990de1a698bb75739b10b3
+Version: v0.3.0
+Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 ````
 
 ## Integrate Conduktor CLI with your CI/CD
