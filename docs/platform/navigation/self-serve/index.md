@@ -184,7 +184,7 @@ metadata:
   application: "clickstream-app"
   name: "clickstream-support"
 spec:
-  title: Support Clickstream
+  displayName: Support Clickstream
   description: |
     Members of the Support Group are allowed:
       Read access on all the resources
