@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+## fixes 🔨
 
 - Fixed an issue where the Producer Rate Limiting Policy would not honor its configuration.
