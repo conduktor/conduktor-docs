@@ -18,6 +18,9 @@ tags: features,fix
 
 ### Conduktor SQL
 
+### Monitoring improvements
+We are transitioning our Monitoring dashboards and alerts into each individual resource pages.
+
 ### Shareable Filters
 
 ### Tags becomes Labels
