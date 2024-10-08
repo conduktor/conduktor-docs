@@ -19,7 +19,32 @@ tags: features,fix
 ### Conduktor SQL
 
 ### Monitoring improvements
-We are transitioning our Monitoring dashboards and alerts into each individual resource pages.
+We are migrating our Monitoring dashboards into each individual resource pages.  
+This migration will happen over the next few releases and our objective is to remove the existing Monitoring pages by integrating them into the dedicated resource pages in Console:
+- Overview will be refactored into Home page
+- **Cluster Health** dashboards and alerts will move under Brokers page
+- **Topic monitoring** will be integrated with Topics page
+- Apps monitoring will be integrated with Consumer Groups pages
+- Alerts will be integrated as tabs in all the resource pages, similar to the recent changes Kafka Connect
+
+For this release 1.25.0, we are migrating **Cluster Health** and **Topic monitoring** pages.
+
+#### Brokers page
+The charts and alerts are now available under the Brokers page. We have cleaned the graphs 
+We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
+- Active Controller Count
+- Unclean Leader Election
+
+![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
+
+#### Topic Monitoring
+![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
+
+#### New Alerts
+As part of this improvement, we have also reimagined our alert definitions to pave the way to declaring Alerts via API or CLI.  
+Unfortunately, the existing alerts will not be migrated to the new Alert model.  
+The existing alerts are still working properly but the new recommendation is to create Broker and Topic alerts using the new V2 Alerts.
+
 
 ### Shareable Filters
 
