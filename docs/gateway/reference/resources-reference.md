@@ -79,14 +79,15 @@ spec:
 ### Interceptor Targeting
 You can activate your Interceptor only in specific scenarios. Use the table below to configure Targeting settings.
 
-| Use case                              | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` | 
-|---------------------------------------|---------------------------|------------------------|---------------------------|
-| Global Interceptor (targets everyone) | Empty                     | Empty                  | Empty                     |
-| Username Targeting                    | Empty                     | Empty                  | Set                       |
-| Group Targeting                       | Empty                     | Set                    | Empty                     |
-| Virtual Cluster Targeting             | Set                       | Empty                  | Empty                     |
-| Virtual Cluster + Username Targeting  | Set                       | Empty                  | Set                       |
-| Virtual Cluster + Group Targeting     | Set                       | Set                    | Empty                     |
+| Use case                                            | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` |
+|-----------------------------------------------------|---------------------------|------------------------|---------------------------|
+| Global Interceptor (Including Virtual Clusters)     | Set to `null`             | Set to `null`          | Set to `null`             |
+| Global Interceptor (**Excluding** Virtual Clusters) | Empty                     | Empty                  | Empty                     |
+| Username Targeting                                  | Empty                     | Empty                  | Set                       |
+| Group Targeting                                     | Empty                     | Set                    | Empty                     |
+| Virtual Cluster Targeting                           | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username Targeting                | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group Targeting                   | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
