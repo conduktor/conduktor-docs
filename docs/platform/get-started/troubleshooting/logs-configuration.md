@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Log configuration
-description: How to setup and tune Conduktor logs 
+description: How to setup and tune Conduktor logs
 ---
 # Conduktor Console log configuration
 ## Log configuration environment variables
@@ -39,7 +39,7 @@ For instance, if you only set
 CDK_ROOT_LOG_LEVEL: DEBUG
 # CONSOLE_ROOT_LOG_LEVEL isn't set
 ```
-Then, `CONSOLE_ROOT_LOG_LEVEL` will be automatically set to `DEBUG`. 
+Then, `CONSOLE_ROOT_LOG_LEVEL` will be automatically set to `DEBUG`.
 
 Similarly, if you set:
 ```yaml
@@ -72,9 +72,9 @@ They also use environment variables defined [here](#per-module-log-configuration
 
 ## Structured logging (JSON)
 
-To enable structured logging, simply set `CONSOLE_ROOT_LOG_LEVEL=JSON`. 
+To enable structured logging, simply set `CONSOLE_ROOT_LOG_LEVEL=JSON`.
 
-The logs will be structured using following format : 
+The logs will be structured using following format :
 
 ```json
 {
@@ -99,3 +99,138 @@ The log `timestamp` is encoded in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8
 :::info
 In case of structured logging enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
 :::
+
+
+## Runtime logger configuration API
+
+From version 1.28.0, Conduktor Console exposes an API to change the log level of a logger at runtime.
+
+This API **requires admin privileges** and is available on `/api/public/debug/v1/loggers`.
+
+### Get all loggers and their log level
+
+`GET /api/public/debug/v1/loggers` :
+
+```bash
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+That will output :
+
+```json
+[
+  {
+    "name": "io",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator.ConduktorUserProfile",
+    "level": "INFO"
+  },
+  {
+    "name": "org",
+    "level": "INFO"
+  },
+  {
+    "name": "org.apache",
+    "level": "INFO"
+  },
+  {
+    "name": "org.apache.avro",
+    "level": "INFO"
+  },
+  ...
+]
+```
+
+### Get a specific logger and its log level
+
+`GET /api/public/debug/v1/loggers/{loggerName}` :
+
+```bash
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+That will output :
+
+```json
+[
+  {
+    "name": "io.conduktor.authenticator",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator.ConduktorUserProfile",
+    "level": "INFO"
+  }
+  ...
+]
+```
+
+:::tip
+The `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it.
+Meaning that filter `authenticator` will match `io.conduktor.authenticator` and `io.conduktor.authenticator.ConduktorUserProfile` loggers.
+:::
+
+### Set a specific logger log level
+
+`PUT /api/public/debug/v1/loggers/{loggerName}/{logLevel}` :
+
+```bash
+curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+
+That will output the list of loggers impacted by the update:
+
+```json
+[
+  "io.conduktor.authenticator",
+  "io.conduktor.authenticator.ConduktorUserProfile"
+  ...
+]
+```
+
+:::tip
+Like the `GET` endpoint, the `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it.
+The `logLevel` is **case-insensitive** and can be one of `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `OFF`.
+:::
+
+### Set multiple loggers log level
+
+`PUT /api/public/debug/v1/loggers` :
+
+```bash
+curl -X PUT 'http://localhost:8080/public/debug/v1/loggers' \
+   -H "Authorization: Bearer $API_KEY" \
+  --data '[
+      {
+          "name": "io.conduktor.authenticator.ConduktorUserProfile",
+          "level": "TRACE"
+      },
+      {
+          "name": "io.conduktor.authenticator.adapter",
+          "level": "DEBUG"
+      }
+  ]' | jq .
+```
+
+That will output the list of loggers impacted by the update:
+
+```json
+[
+  "io.conduktor.authenticator.ConduktorUserProfile",
+  "io.conduktor.authenticator.ConduktorUserProfile$LocalUserProfile",
+  "io.conduktor.authenticator.adapter",
+  "io.conduktor.authenticator.adapter.Http4sCacheSessionStore",
+  ...
+]
+```
