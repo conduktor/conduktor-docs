@@ -17,6 +17,7 @@ tags: features,fix
 ## Features ✨
 
 ### Conduktor SQL
+TODO
 
 ### Monitoring improvements
 We are migrating our Monitoring dashboards into each individual resource pages.  
@@ -108,6 +109,16 @@ We plan to bring this capability on all resources (Connectors, Service Accounts,
 Let us know which resource you would like to see covered first.
 
 ### Audit Log events into Kafka
+TODO
+
+### Logging API
+We have added a new endpoint to adjust the log level of Console without a need to restart.
+```
+curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
+  -H "Authorization: Bearer $API_KEY"
+```
+
+Check the [associated documentation](/platform/get-started/troubleshooting/logs-configuration/#runtime-logger-configuration-api) for the full list of capabilities.
 
 ### Quality of Life improvements
 - Updated color theme
@@ -121,11 +132,4 @@ Let us know which resource you would like to see covered first.
 - CONS-1810 dont-allow-to-delete-group-when-its-owner-of-application
 - CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed error messages in many places where the error message wasn't useful
-
-
-:::warning
-
-We are aware of a critical CVE - [CVE-2024-41110](https://avd.aquasec.com/nvd/2024/cve-2024-41110/) - coming from a dependency of prometheus on the `console-cortex` image. This CVE is related to prometheus docker metric scraping, which is not used by Conduktor.
-
-Regardless, as soon as the prometheus team fix this issue, it will be patched immediately by Conduktor.
-:::
+- Fixed all critical and high CVE in console cortex image
