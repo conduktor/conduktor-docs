@@ -132,4 +132,5 @@ Check the [associated documentation](/platform/get-started/troubleshooting/logs-
 - CONS-1810 dont-allow-to-delete-group-when-its-owner-of-application
 - CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed error messages in many places where the error message wasn't useful
+- CONS-1508/aws-glue-schema-registry-breaking-after-1h-connection-pool-shut-down
 - Fixed all critical and high CVE in console cortex image
