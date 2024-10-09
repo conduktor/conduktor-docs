@@ -21,7 +21,7 @@ Get started in a few minutes with the latest Conduktor Console Docker image.
    - [Option 2: Configure using environment variables](#option-2-using-environment-variables)
 
 :::tip
-As the **Conduktor Playground** does not exist anymore, we recommend using the [embedded Kafka option](#option-1-start-with-an-embedded-kafka-cluster) to get started quickly.
+As the **Conduktor Playground**, also known as **Conduktor Cloud**, does not exist anymore, we recommend using the [embedded Kafka option](#option-1-start-with-an-embedded-kafka-cluster) to get started quickly.
 :::
 
 ## Simple Setup
