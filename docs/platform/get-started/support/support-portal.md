@@ -4,8 +4,6 @@ title: Support Portal
 description: Support Portal for Conduktor users to track your issues.
 ---
 
-## Support Portal
-
 In order to provide support to our customers and users, we have a dedicated Support Portal where you can track your issues and get help from our team.
 
 You can find this Conduktor Support Portal at [**support.conduktor.io**](https://support.conduktor.io).
