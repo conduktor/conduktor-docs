@@ -10,10 +10,10 @@ In this how-to guide, you will learn how to manage service accounts on the Gatew
 
 We consider that your Gateway is already available and that you know the API admin credentials in order to interact with it.
 
-We will use the [Gateway API](/gateway/reference/api) to create and manage service accounts, but the following guide works with the [CLI](/gateway/reference/cli) as well.
+We will use the [Gateway API](/gateway/reference/api-reference/) to create and manage service accounts, but the following guide works with the [CLI](/gateway/reference/cli-reference/) as well.
 
 :::tip
-You can find all the API endpoints documented in the [API Gateway endpoint](/gateway/reference/api). For local deployments, the default API URL is [`http://localhost:8888`](http://localhost:8888).
+You can find all the API endpoints documented in the [API Gateway endpoint](/gateway/reference/api-reference/). For local deployments, the default API URL is [`http://localhost:8888`](http://localhost:8888).
 :::
 
 In the Gateway API documentation, you can find in the `service-account` section how to create a service account. You'll then notice that you have to chose between a `local` or `external` service account.
