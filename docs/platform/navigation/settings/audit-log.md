@@ -8,11 +8,18 @@ description: List of the Audit Log events tracked throughout the Platform
 
 # Overview
 
-When you navigate Conduktor, audit events are captured that give you detailed tracking of actions relating to Kafka. This gives you centralized visibility of user-related and resource-related events.
+As you and your team interact with Conduktor, audit events are captured that give a detailed tracking of actions taken against Kafka. This gives you centralized visibility of user-related and resource-related events. Audit log events.
 
-Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for topic creation, which also details the number of partitions and replication factor that were used.
+The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may for them, such as maintaining your own audit trail in other systems.
 
 ![Admin Audit](images/admin-audit.png)
+
+Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for a new connector added, which can include metadata such as custom tags, the cluster, connector name and its ID.
+
+![Admin Audit Event](images/audit-log-inspect.png)
+
+Audit log events are also exported to a Kafka topic once configured with the right [environemnt variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
+![kafka message audit log](images/audit-log-kafka-message.png)
 
 ## Audit Events
 
