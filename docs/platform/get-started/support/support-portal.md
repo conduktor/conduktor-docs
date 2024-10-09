@@ -10,6 +10,8 @@ You can find this Conduktor Support Portal at [**support.conduktor.io**](https:/
 
 ![Support Portal](assets/support-portal.png)
 
+In this Support Portal, you can ask us about everything Conduktor-related and we will point you to the right resources to help you. This covers bugs, feature requests, billing enquiries, license management, ...
+
 ### Knowledge Base
 
 When you arrive on the Support Portal, you will find a Knowledge Base with articles that can help you solve common issues or answer your questions.
