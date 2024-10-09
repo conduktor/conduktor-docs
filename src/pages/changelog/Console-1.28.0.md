@@ -41,9 +41,13 @@ We have removed two metrics that were not possible to calculate correctly since 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
 
 #### New Alerts
-As part of this improvement, we have also reimagined our alert definitions to pave the way to declaring Alerts via API or CLI.  
-Unfortunately, the existing alerts will not be migrated to the new Alert model.  
-The existing alerts are still working properly but the new recommendation is to create Broker and Topic alerts using the new V2 Alerts.
+As part of this improvement, we have also reimagined our alert definitions to pave the way to declaring Alerts via API or CLI.
+**Unfortunately, the existing alerts will not be migrated to the new Alert model.**  
+
+The original alerts available under the Alerts section are still working properly.  
+We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
+
+In the meantime, we recommend you don't use the original alerts for Broker and Topic alerts and use the new ones instead.
 
 
 ### Shareable Filters
