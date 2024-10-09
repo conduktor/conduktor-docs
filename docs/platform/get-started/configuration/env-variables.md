@@ -6,10 +6,11 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
 
 # Configuration Properties and Environment Variables
 
+
 - [Docker image environment variables](#docker-image-environment-variables)
 - [Console properties reference](#console-properties-reference)
   - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
-  - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
+  - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
   - [Database properties](#database-properties)
   - [Session Lifetime Properties](#session-lifetime-properties)
@@ -27,6 +28,7 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
   - [Kafka Connect properties](#kafka-connect-properties)
   - [ksqlDB properties](#ksqldb-properties)
   - [Indexer properties](#indexer-properties)
+  - [AuditLog export properties](#auditlog-export-properties)
 
 ## Docker image environment variables
 
