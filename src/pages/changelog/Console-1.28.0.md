@@ -38,33 +38,89 @@ We have removed two metrics that were not possible to calculate correctly since 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
 
 #### Topic Monitoring
+The 3 existing graphs have been moved on the Topic details and we added a new graph to track the number of records in the topic.  
+
 ![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
 
 #### New Alerts
-As part of this improvement, we have also reimagined our alert definitions to pave the way to declaring Alerts via API or CLI.
+
+As part of this improvement, we have also reworked our alert definitions to pave the way to declaring Alerts via API or CLI.
 **Unfortunately, the existing alerts will not be migrated to the new Alert model.**  
 
-The original alerts available under the Alerts section are still working properly.  
+We plan to remove those original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
+- First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
+- Then, we'll block the creation of original alerts while still keeping them functional.
+- finally, we'll remove the original alerts from the product.
 We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
 
-In the meantime, we recommend you don't use the original alerts for Broker and Topic alerts and use the new ones instead.
+Starting today, we recommend you use the new alerts for Broker and Topic pages.
 
 
 ### Shareable Filters
+To increase collaboration between users we've made filters in the Topic view shareable. 
+After you've finished configuring filters on a topic, you now have an option to save the filter either as a Private or Organization filter.  
+![Kafka Connect Wizard](/images/changelog/platform/v28/shared-filters.png)
+
+Anyone can then load Organization filters from the dedicated section.
+![Kafka Connect Wizard](/images/changelog/platform/v28/load-filters.png)
 
 ### Tags becomes Labels
 
-First topics, but we'll extend this to all resources.
+With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
+
+In this release, we'll perform an automatic migration from Tags to Labels.
+
+Tags written with the naming convention `<key>/<value>` will automatically be added as similar labels:
+- `<key>: <value>`  
+
+If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created as follows:
+````yaml
+tag-<value>: true
+````
+
+Here's an example of how tags will be migrated into labels:
+````yaml
+# Tags defined on topic:
+- format/avro
+- project/supplychain
+- team/delivery
+- color/blue
+- color/red
+- wikipedia
+- non-prod
+
+# Resulting topic labels after migration
+labels:
+  format: avro
+  project: supplychain
+  team: delivery
+  tag-color/blue: true # Because conflict on "color"
+  tag-color/red: true # Because conflict on "color"
+  tag-wikipedia: true
+  tag-non-prod: true
+````
+
+The Topic list and Topic details page have been modified to use labels instead of tags.
+
+![Kafka Connect Wizard](/images/changelog/platform/v28/topic-labels.png)
+
+We plan to bring this capability on all resources (Connectors, Service Accounts, Consumer Groups, ...) over the next few releases.  
+Let us know which resource you would like to see covered first.
 
 ### Audit Log events into Kafka
 
 ### Quality of Life improvements
-- TODO
+- Updated color theme
+- Added navigation breadcrumb
+- And many more slight design changes 
 
 ## Fixes 🔨
 - CONS-1776 Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
+- CUS-415 - Topic policies in Console not enforced when changing settings
+- CONS-1828 [bug-cs]-local-user-creation-allows-bad-things
+- CONS-1810 dont-allow-to-delete-group-when-its-owner-of-application
 - CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
-- 
+- Fixed error messages in many places where the error message wasn't useful
 
 
 :::warning
