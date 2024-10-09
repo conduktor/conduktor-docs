@@ -103,7 +103,7 @@ In case of structured logging enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
 
 ## Runtime logger configuration API
 
-Since version 1.28.0, Conduktor Console exposes an API to change the log level of a logger at runtime.
+From version 1.28.0, Conduktor Console exposes an API to change the log level of a logger at runtime.
 
 This API **requires admin privileges** and is available on `/api/public/debug/v1/loggers`.
 
