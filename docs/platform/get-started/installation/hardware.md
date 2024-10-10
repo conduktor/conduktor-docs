@@ -49,7 +49,7 @@ See more about [environment variables](../../configuration/env-variables/), or s
 
 As noted in the [production requirements](#production-requirements), a complete deployment of Console depends on:
 
-- **PostgreSQL database** for storing Platform data, [Indexer](../../navigation/console/about-indexing.md) state, and shared Monitoring state
+- **PostgreSQL database** for storing Platform metadata, [Indexer](../../navigation/console/about-indexing.md) state, and shared Monitoring state
 - Our bespoke [**Cortex image**](../configuration/cortex.md) for metric collection and storage
 - **Block storage** for storing historical monitoring data
 
