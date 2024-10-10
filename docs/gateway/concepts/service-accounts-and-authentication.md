@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Authentication
+title: Service Accounts & Authentication
 description: Connecting clients to Gateway 
 ---
 
