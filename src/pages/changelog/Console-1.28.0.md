@@ -109,7 +109,11 @@ We plan to bring this capability on all resources (Connectors, Service Accounts,
 Let us know which resource you would like to see covered first.
 
 ### Audit Log events into Kafka
-TODO
+It is now possible to publish Console Audit Log events into Kafka.  
+
+Configure the target Kafka Cluster and Topic using `CDK_AUDITLOGPUBLISHER_CLUSTER` and `CDK_AUDITLOGPUBLISHER_TOPICNAME` and event will start being produced in the destination Topic.
+
+Check the dedicated Audit Log documentation for the list of supported event and the specification of the audit log event.
 
 ### Logging API
 We have added a new endpoint to adjust the log level of Console without a need to restart.
@@ -133,4 +137,4 @@ Check the [associated documentation](/platform/get-started/troubleshooting/logs-
 - CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed error messages in many places where the error message wasn't useful
 - CONS-1508/aws-glue-schema-registry-breaking-after-1h-connection-pool-shut-down
-- Fixed all critical and high CVE in console cortex image
+- Fixed all critical and high CVE in console-cortex image
