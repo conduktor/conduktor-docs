@@ -136,9 +136,8 @@ CRN `platform:/user/<email>`
 ## Exportable Audit Log Events
 
 Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
-Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.
 
-Thes strucutre follows the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows
+Thes strucutre follows the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the structure:
 
 ```json
 {
@@ -160,13 +159,13 @@ An example Conduktor event would look like:
 {
 	"source": "//kafka/kafkacluster/production/topic/website-orders",
 	"data": {
-    "eventType": "Kafka.Topic.Create",
-    // Additional event specific data...
-    "metadata": {
-				"name": "website-orders",
-				"cluster": "production"
-			}
-    // Additional event specific metadata...
+		"eventType": "Kafka.Topic.Create",
+		// Additional event specific data...
+		"metadata": {
+			"name": "website-orders",
+			"cluster": "production"
+		}
+		// Additional event specific metadata...
 	},
 	"datacontenttype": "application/json",
 	"id": "ad85122c-0041-421e-b04b-6bc2ec901e08",
@@ -176,7 +175,7 @@ An example Conduktor event would look like:
 }
 ```
 
-
+Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.  
 
 ### Kafka-Related Events
 
