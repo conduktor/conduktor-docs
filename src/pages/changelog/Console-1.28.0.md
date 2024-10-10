@@ -54,15 +54,16 @@ We have removed two metrics that were not possible to calculate correctly since 
 
 #### New Alerts
 
-As part of this improvement, we have also reworked our alert by allowing you to create them via API or CLI as well as Console.
+As part of this improvement, we have also reworked our alert by allowing you to create them via API or CLI on top of the UI.  
+Check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details
 
 ````yaml
 ---
 apiVersion: console/v2
 kind: Alert
 metadata:
-  name: my-alert
   cluster: local-julien
+  name: my-alert
 spec:
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ

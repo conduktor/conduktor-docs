@@ -463,9 +463,48 @@ spec:
 
 ## Alert
 
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <CLI /> <GUI />
+
+Creates an Alert in Console. 
+
+````yaml
+---
+apiVersion: console/v2
+kind: Alert
+metadata:
+  cluster: local-julien
+  name: my-alert
+spec:
+  type: TopicAlert
+  topicName: wikipedia-parsed-DLQ
+  metric: MessageCount
+  operator: GreaterThan
+  threshold: 0
+  disable: false
+````
+
+**Alert checks:**
+- `metadata.cluster` must be a valid KafkaCluster name
+- `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
+  - Check the section below for the additional mandatory fields needed for each `spec.type`
+- `spec.metric` is depending on the `spec.type`
+  - Check section below
+- `spec.operator` must be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
+- `spec.threshold` must be a number
+- `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
+
+**When `spec.type` is `BrokerAlert`**
+- `spec.metric` must be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
+
+**When `spec.type` is `TopicAlert`**
+- `spec.metric` must be one of [`MessageCount`, `MessageIn`, `MessageOut`, `MessageSize`]
+- `spec.topicName` must be a Kafka Topic
+
+**When `spec.type` is `KafkaConnectAlert`**
+- `spec.metric` must be `FailedTaskCount`
+- `spec.connectName` must be a valid KafkaConnect Cluster associated to this `meta.cluster` Kafka Cluster
+- `spec.connectorName` must be a Kafka Connect Connector
 
 ## DataMaskingPolicy
 
