@@ -11,9 +11,10 @@ We plan to remove those original alerts in the near future in favor of the new o
 - First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
 - Then, we'll block the creation of original alerts while still keeping them functional.
 - finally, we'll remove the original alerts from the product.
-  We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
 
-Starting today, we recommend you use the new alerts for Broker and Topic pages.
+We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
+
+Starting today, we recommend you use the new alerts for [Brokers page](/platform/navigation/console/brokers/) and [Topics page](/platform/navigation/console/topics/topic-graphs/).
 :::
 
 ## Overview
