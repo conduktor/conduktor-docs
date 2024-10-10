@@ -401,7 +401,7 @@ You should modify these parameters only if you see an issue with the performance
 
 ### AuditLog export properties
 
-The audit log export feature allows you to export the audit logs to a topic in a configured kafka cluster from the Console.
+The audit log can be exported to a Kafka topic, once configured in Console.
 
 | Property                                            | Description                                           | Environment Variable                                  | Mandatory | Type   | Default |
 |-----------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|-----------|--------|---------|
