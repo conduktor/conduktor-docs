@@ -132,3 +132,68 @@ CRN `platform:/user/<email>`
 - user.permission.Added
 - user.permission.Deleted
 - user.platform_role.Updated
+
+## Exported Audit Log Event
+
+the exported audit log event are a new set of events that will replace the current audit log events. The exported audit log events are more detailed and provide more information about the event that happened.
+below you will have the list of all the exported audit log events type with a short description.
+
+### Kafka-Related Events
+
+| **Event Type**                | **Description**                                      |
+|-------------------------------|------------------------------------------------------|
+| **Kafka.Subject.Create**       | Event when a Kafka subject is created.               |
+| **Kafka.Subject.Update**       | Event when a Kafka subject is updated.               |
+| **Kafka.Subject.Delete**       | Event when a Kafka subject is deleted.               |
+| **Kafka.Topic.Create**         | Event when a Kafka topic is created.                 |
+| **Kafka.Topic.Update**         | Event when a Kafka topic is updated.                 |
+| **Kafka.Topic.Delete**         | Event when a Kafka topic is deleted.                 |
+| **Kafka.Topic.Empty**          | Event when a Kafka topic is emptied.                 |
+| **Kafka.Connector.Create**     | Event when a Kafka connector is created.             |
+| **Kafka.Connector.Update**     | Event when a Kafka connector is updated.             |
+| **Kafka.Connector.Delete**     | Event when a Kafka connector is deleted.             |
+
+### IAM-Related Events
+
+| **Event Type**                | **Description**                                      |
+|-------------------------------|------------------------------------------------------|
+| **Iam.User.Create**            | Event when a new IAM user is created.                |
+| **Iam.User.Update**            | Event when an IAM user is updated.                   |
+| **Iam.User.Delete**            | Event when an IAM user is deleted.                   |
+| **Iam.Group.Create**           | Event when a new IAM group is created.               |
+| **Iam.Group.Update**           | Event when an IAM group is updated.                  |
+| **Iam.Group.Delete**           | Event when an IAM group is deleted.                  |
+
+### SelfServe-Related Events
+
+| **Event Type**                                        | **Description**                                              |
+|-------------------------------------------------------|--------------------------------------------------------------|
+| **SelfServe.Application.Create**                      | Event when a self-service application is created.             |
+| **SelfServe.Application.Update**                      | Event when a self-service application is updated.             |
+| **SelfServe.Application.Upsert**                      | Event when a self-service application is created or updated.  |
+| **SelfServe.Application.Delete**                      | Event when a self-service application is deleted.             |
+| **SelfServe.ApplicationInstance.Create**              | Event when a self-service application instance is created.    |
+| **SelfServe.ApplicationInstance.Update**              | Event when a self-service application instance is updated.    |
+| **SelfServe.ApplicationInstance.Delete**              | Event when a self-service application instance is deleted.    |
+| **SelfServe.ApplicationGroup.Create**                 | Event when a self-service application group is created.       |
+| **SelfServe.ApplicationGroup.Update**                 | Event when a self-service application group is updated.       |
+| **SelfServe.ApplicationGroup.Delete**                 | Event when a self-service application group is deleted.       |
+| **SelfServe.ApplicationPolicy.Create**                | Event when a self-service application policy is created.      |
+| **SelfServe.ApplicationPolicy.Update**                | Event when a self-service application policy is updated.      |
+| **SelfServe.ApplicationPolicy.Delete**                | Event when a self-service application policy is deleted.      |
+| **SelfServe.ApplicationInstancePermission.Create**     | Event when permissions are created for an app instance.       |
+| **SelfServe.ApplicationInstancePermission.Delete**     | Event when permissions are deleted for an app instance.       |
+
+### Admin-Related Events
+
+| **Event Type**                | **Description**                                      |
+|-------------------------------|------------------------------------------------------|
+| **Admin.KafkaConnect.Create**  | Event when an admin creates a Kafka Connect instance.|
+| **Admin.KafkaConnect.Update**  | Event when an admin updates a Kafka Connect instance.|
+| **Admin.KafkaConnect.Delete**  | Event when an admin deletes a Kafka Connect instance.|
+| **Admin.KsqlDB.Create**        | Event when an admin creates a KsqlDB instance.       |
+| **Admin.KsqlDB.Update**        | Event when an admin updates a KsqlDB instance.       |
+| **Admin.KsqlDB.Delete**        | Event when an admin deletes a KsqlDB instance.       |
+| **Admin.KafkaCluster.Create**  | Event when an admin creates a Kafka cluster.         |
+| **Admin.KafkaCluster.Update**  | Event when an admin updates a Kafka cluster.         |
+| **Admin.KafkaCluster.Delete**  | Event when an admin deletes a Kafka cluster.         |
