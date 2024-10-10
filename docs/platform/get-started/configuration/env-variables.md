@@ -74,26 +74,26 @@ Lists start at index 0 and are provided using `_idx_` syntax.
 
 ### Properties cases in YAML
 
-YAML configuration support multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for properties fragments like :
+YAML configuration supports multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for property fragments such as:
 - `clusters[].schemaRegistry.ignoreUntrustedCertificate`
 - `clusters[].schema-registry.ignore-untrusted-certificate`
 - `clusters[].schemaregistry.ignoreuntrustedcertificate`
 
-Are all valid and equivalent in YAML configuration.
+All are valid and equivalent in YAML configuration.
 
 
 ### Environment variables into YAML conversion rules
 
 At startup, Condutkor Console will convert environment variables into configuration that will be merged with input YAML configuration. The conversion rules are as follows:
 
-- Filter environment variables that start with `CDK_`
+- Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix
-- Convert the variable name to lowercase.
-- Replace `_` with `.` for nested properties.
+- Convert the variable name to lowercase
+- Replace `_` with `.` for nested properties
 - Replace `_[0-9]*_` with `[0-9].` for list properties. (Lists start at index 0)
 
-For example, the environment variables `CDK_DATABASE_URL` will be converted to `database.url` or `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted into `sso.oauth2[0].openid.issuer`.
-In YAML equivalent, it would look like:
+For example, the environment variables `CDK_DATABASE_URL` will be converted to `database.url`, or `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted into `sso.oauth2[0].openid.issuer`.
+The YAML equivalent would be:
 
 ```yaml
 database:
@@ -113,8 +113,8 @@ When converting environment variables to YAML configuration, environment variabl
 Because of YAML multiple case formats support, the conversion rules have some edge cases when trying to mix environment variables and YAML configuration.
 
 Extra rules when mixing environment variables and YAML configuration:
-- Don't use `camelCase` in yaml configuration. Use `kebab-case` or `lowercase`.
-- Stick to one compatible case format for a given property fragment using the following compatibility matrix.
+- Don't use `camelCase` in yaml configuration. Use `kebab-case` or `lowercase`
+- Stick to one compatible case format for a given property fragment using the following compatibility matrix
 
 Compatibility matrix:
 
@@ -127,7 +127,7 @@ Compatibility matrix:
 For example `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` environment variable :
 
 ```yaml
-# Is equivalant equivalent and compatible with
+# Is equivalent to and compatible with
 clusters:
   - schemaregistry:
       ignoreuntrustedcertificate: true
@@ -137,9 +137,9 @@ clusters:
       ignore-untrusted-certificate: true
 ```
 
-And conversely, for `CDK_CLUSTERS_0_SCHEMA-REGISTRY_IGNORE-UNTRUSTED-CERTIFICATE`  environment variable.
+And conversely, for `CDK_CLUSTERS_0_SCHEMA-REGISTRY_IGNORE-UNTRUSTED-CERTIFICATE` environment variable.
 
-That's why camelCase is not recommended in YAML configuration when mixing with  environment variables.
+That's why camelCase is not recommended in YAML configuration when mixing with environment variables.
 
 ### Support of shell expansion in the YAML configuration file
 
