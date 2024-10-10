@@ -90,7 +90,7 @@ At startup, Condutkor Console will convert environment variables into configurat
 - Remove the `CDK_` prefix
 - Convert the variable name to lowercase
 - Replace `_` with `.` for nested properties
-- Replace `_[0-9]*_` with `[0-9].` for list properties. (Lists start at index 0)
+- Replace `_[0-9]+_` with `[0-9].` for list properties. (Lists start at index 0)
 
 For example, the environment variables `CDK_DATABASE_URL` will be converted to `database.url`, or `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted into `sso.oauth2[0].openid.issuer`.
 The YAML equivalent would be:
