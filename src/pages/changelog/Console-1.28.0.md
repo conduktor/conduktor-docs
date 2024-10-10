@@ -16,23 +16,62 @@ tags: features,fix
 
 ## Features ✨
 
+***
+
 ### Conduktor SQL
-TODO
+
+:::info
+This feature is in [**Beta**](/platform/guides/configure-sql) and is subject to change as we enhance it further.
+
+It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
+:::
+
+Index data from Kafka topics in a database to enable data to be queried from the **UI**, **API** or **CLI** using **SQL**.
+
+This allows you to troubleshoot, sample, analyze, aggregate and join data through:
+ - Querying Kafka message data
+ - Querying Kafka metadata (such as the offset, partition and timestamp)
+
+Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
+
+**Query through the UI**
+
+![Conduktor SQL](/images/changelog/platform/v28/conduktor-sql.png)
+
+**Query through the API & CLI**
+
+**CLI:**
+```bash
+conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
+```
+
+**API:**
+```bash
+curl -XPOST  -H "Authorization: $token" 'localhost:8080/api/public/sql/v1/execute?maxLine=2' --data 'select * from "kafka-cluster-dev_customer_orders"'
+```
+
+**Important information regarding SQL**
+
+To use the feature there is a dependency on provisioning a new database. As a user, you have the choice of which topics you wish to index. Learn more about this and how to configure SQL using the [dedicated guide](/platform/guides/configure-sql).
+
+We encourage you to use this feature in non-production environments and give us [feedback](https://product.conduktor.help/c/133-sql-over-kafka).
+
+***
 
 ### Monitoring improvements
-We are migrating our Monitoring dashboards into their respective resource pages.  
-This migration will happen over the next few releases with our objective to remove the existing generic Monitoring pages:
+We are migrating our Monitoring dashboards into their respective resource pages for a more integrated experience.
+
+This migration will happen over the next few releases with our objective to remove the existing, generic Monitoring pages:
 - Overview will be refactored into Home page
 - **Cluster Health** dashboards and alerts will move under Brokers page
 - **Topic monitoring** will be integrated with Topics page
 - Apps monitoring will be integrated with Consumer Groups pages
 - Alerts will be integrated as tabs in all the resource pages, similar to the recent changes Kafka Connect
 
-For this release 1.25.0, we are migrating **Topic monitoring** and **Cluster Health** pages.
+For the 1.28.0 release we are migrating **Topic monitoring** and **Cluster Health** pages.
 
 #### Topic Monitoring
-The 3 existing graphs have been moved on the Topic details.  
-We also added a new graph to track the number of records in the topic.
+The 3 existing graphs have been moved on the Topic details.  We have also added a new graph to track the number of records in the topic.
 - Produce Rate and Consume Rate
 - Disk Usage
 - Records (new)
@@ -41,6 +80,7 @@ We also added a new graph to track the number of records in the topic.
 
 #### Cluster Health
 The charts and alerts are now available under the Brokers page with cleaner graphs.  
+
 We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
 - Produce Rate and Consume Rate
 - Disk Usage
@@ -52,9 +92,9 @@ We have removed two metrics that were not possible to calculate correctly since 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/broker-monitoring.png)
 
 
-#### New Alerts
+#### Alerting Support via API & CLI
 
-As part of this improvement, we have also reworked our alert by allowing you to create them via API or CLI as well as Console.
+As part of this improvement, we have also reworked our alerting by allowing you to create them via API or CLI as well as Console.
 
 ````yaml
 ---
@@ -82,7 +122,7 @@ We'll let you know a few releases in advance.
 If you have a large number of alerts configured and need some help, please get in touch with our support as soon as possible.
 :::
 
-
+***
 
 ### Shareable Filters
 To increase collaboration between users we've made filters in the Topic view shareable. 
@@ -92,7 +132,9 @@ After you've finished configuring filters on a topic, you now have an option to 
 Anyone can then load Organization filters from the dedicated section.
 ![Kafka Connect Wizard](/images/changelog/platform/v28/load-filters.png)
 
-### Tags becomes Labels
+*** 
+
+### Tags Become Labels
 
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
 
@@ -135,12 +177,16 @@ The Topic list and Topic details page have been modified to use labels instead o
 We plan to bring this capability on all resources (Connectors, Service Accounts, Consumer Groups, ...) over the next few releases.  
 Let us know which resource you would like to see covered first.
 
+***
+
 ### Audit Log events into Kafka
 It is now possible to publish Console Audit Log events into Kafka.  
 
 Configure the target Kafka Cluster and Topic using `CDK_AUDITLOGPUBLISHER_CLUSTER` and `CDK_AUDITLOGPUBLISHER_TOPICNAME` and event will start being produced in the destination Topic.
 
 Check the dedicated Audit Log documentation for the list of supported event and the specification of the audit log event.
+
+***
 
 ### Logging API
 We have added a new endpoint to adjust the log level of Console without a need to restart.
@@ -150,6 +196,8 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ```
 
 Check the [associated documentation](/platform/get-started/troubleshooting/logs-configuration/#runtime-logger-configuration-api) for the full list of capabilities.
+
+***
 
 ### Quality of Life improvements
 - Updated color theme
