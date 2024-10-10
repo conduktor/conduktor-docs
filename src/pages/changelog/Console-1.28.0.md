@@ -31,7 +31,7 @@ This migration will happen over the next few releases with our objective to remo
 For this release 1.25.0, we are migrating **Cluster Health** and **Topic monitoring** pages.
 
 #### Brokers page
-The charts and alerts are now available under the Brokers page. We have cleaned the graphs 
+The charts and alerts are now available under the Brokers page with cleaner graphs 
 We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
 - Active Controller Count
 - Unclean Leader Election
