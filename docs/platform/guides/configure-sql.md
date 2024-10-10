@@ -7,7 +7,9 @@ description: How to configure Conduktor SQL
 ## Configure Conduktor SQL
 
 :::info
-This feature is in **beta** and is subject to change as we enhance it further.
+This feature is in **Beta** and is subject to change as we enhance it further. 
+
+It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 :::
 
 Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**. 
@@ -16,8 +18,6 @@ Note this feature enables you to troubleshoot, sample, analyze, aggregate and jo
 
 - Querying Kafka message data 
 - Querying Kafka metadata (such as the offset, partition and timestamp)
-
-Note this feature is currently only available to Console **admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 
 ![Conduktor SQL](img/conduktor-sql.png)
 
@@ -120,7 +120,7 @@ conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 
 ## Database Storage Format
 
-Each indexed topic will have its dedicated SQL table. The name of the table will apply the following convention `${cluster-slug}_${topic-name}`.
+Each indexed topic will have its dedicated SQL table. The name of the table will apply the following convention `${cluster-technical-id}_${topic-name}`.
 
 The table will contain special columns type, each of those columns are indexed:
 * `__timestamp`
@@ -202,6 +202,9 @@ There are a number of known limitations regarding the current beta experience.
 
 Those are:
 
-- Data formats currently supported are plain `JSON` and `Avro` using TopicNameStrategy.
+- Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry.
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once.
-- 
+- Byte and Array data types are not supported today. If a record can't be parsed, they are ignored. 
+- If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table.
+
+If you identify more limitations or want to provide feedback, please [contact us](https://support.conduktor.io/).
