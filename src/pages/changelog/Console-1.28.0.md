@@ -28,33 +28,60 @@ This migration will happen over the next few releases with our objective to remo
 - Apps monitoring will be integrated with Consumer Groups pages
 - Alerts will be integrated as tabs in all the resource pages, similar to the recent changes Kafka Connect
 
-For this release 1.25.0, we are migrating **Cluster Health** and **Topic monitoring** pages.
-
-#### Brokers page
-The charts and alerts are now available under the Brokers page with cleaner graphs 
-We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
-- Active Controller Count
-- Unclean Leader Election
-
-![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
+For this release 1.25.0, we are migrating **Topic monitoring** and **Cluster Health** pages.
 
 #### Topic Monitoring
-The 3 existing graphs have been moved on the Topic details and we added a new graph to track the number of records in the topic.  
+The 3 existing graphs have been moved on the Topic details.  
+We also added a new graph to track the number of records in the topic.
+- Produce Rate and Consume Rate
+- Disk Usage
+- Records (new)
 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/topic-monitoring.png)
+
+#### Cluster Health
+The charts and alerts are now available under the Brokers page with cleaner graphs.  
+We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
+- Produce Rate and Consume Rate
+- Disk Usage
+- Partitions Count
+- Offline, Under Replicated and Under Min ISR Partitions
+- Active Controller Count (removed)
+- Unclean Leader Election (removed)
+
+![Kafka Connect Wizard](/images/changelog/platform/v28/broker-monitoring.png)
+
 
 #### New Alerts
 
-As part of this improvement, we have also reworked our alert definitions to pave the way to declaring Alerts via API or CLI.
-**Unfortunately, the existing alerts will not be migrated to the new Alert model.**  
+As part of this improvement, we have also reworked our alert by allowing you to create them via API or CLI as well as Console.
 
-We plan to remove those original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
-- First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
-- Then, we'll block the creation of original alerts while still keeping them functional.
-- finally, we'll remove the original alerts from the product.
-We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
+````yaml
+---
+apiVersion: console/v2
+kind: Alert
+metadata:
+  name: my-alert
+  cluster: local-julien
+spec:
+  type: TopicAlert
+  topicName: wikipedia-parsed-DLQ
+  metric: MessageCount
+  operator: GreaterThan
+  threshold: 0
+````
 
-Starting today, we recommend you use the new alerts for Broker and Topic pages.
+Starting today, we recommend you use the new alerts available under Brokers and Topics pages.
+
+:::caution Deprecation notice
+**We do not plan to migrate existing alerts to the new Alert model.**  
+
+We plan to remove those original alerts in the near future in favor of the new ones.  
+We'll let you know a few releases in advance.
+
+If you have a large number of alerts configured and need some help, please get in touch with our support as soon as possible.
+:::
+
 
 
 ### Shareable Filters
