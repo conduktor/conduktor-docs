@@ -113,7 +113,7 @@ When converting environment variables to YAML configuration, environment variabl
 Because of YAML multiple case formats support, the conversion rules have some edge cases when trying to mix environment variables and YAML configuration.
 
 Extra rules when mixing environment variables and YAML configuration:
-- Don't use `camelCase` in yaml configuration. Use `kebab-case` or `lowercase`
+- Don't use `camelCase` in YAML configuration. Use `kebab-case` or `lowercase`
 - Stick to one compatible case format for a given property fragment using the following compatibility matrix
 
 Compatibility matrix:
