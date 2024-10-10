@@ -8,6 +8,9 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
 
 - [Docker image environment variables](#docker-image-environment-variables)
 - [Console properties reference](#console-properties-reference)
+  - [Properties cases in YAML](#properties-cases-in-yaml)
+  - [Environment variables into YAML conversion rules](#environment-variables-into-yaml-conversion-rules)
+    - [Conversion edge cases](#conversion-edge-cases)
   - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
   - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
@@ -69,9 +72,78 @@ In case you set both environment variable and YAML value for a specific field, t
 Lists start at index 0 and are provided using `_idx_` syntax.
 :::
 
+### Properties cases in YAML
+
+YAML configuration support multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for properties fragments like :
+- `clusters[].schemaRegistry.ignoreUntrustedCertificate`
+- `clusters[].schema-registry.ignore-untrusted-certificate`
+- `clusters[].schemaregistry.ignoreuntrustedcertificate`
+
+Are all valid and equivalent in YAML configuration.
+
+
+### Environment variables into YAML conversion rules
+
+At startup, Condutkor Console will convert environment variables into configuration that will be merged with input YAML configuration. The conversion rules are as follows:
+
+- Filter environment variables that start with `CDK_`
+- Remove the `CDK_` prefix
+- Convert the variable name to lowercase.
+- Replace `_` with `.` for nested properties.
+- Replace `_[0-9]*_` with `[0-9].` for list properties. (Lists start at index 0)
+
+For example, the environment variables `CDK_DATABASE_URL` will be converted to `database.url` or `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted into `sso.oauth2[0].openid.issuer`.
+In YAML equivalent, it would look like:
+
+```yaml
+database:
+  url: "..."
+sso:
+  oauth2:
+    - openid:
+        issuer: "..."
+```
+
+:::note
+When converting environment variables to YAML configuration, environment variables in `UPPER-KEBAB-CASE` will be converted to `kebab-case` in the YAML configuration.
+:::
+
+#### Conversion edge cases
+
+Because of YAML multiple case formats support, the conversion rules have some edge cases when trying to mix environment variables and YAML configuration.
+
+Extra rules when mixing environment variables and YAML configuration:
+- Don't use `camelCase` in yaml configuration. Use `kebab-case` or `lowercase`.
+- Stick to one compatible case format for a given property fragment using the following compatibility matrix.
+
+Compatibility matrix:
+
+| YAML\Environment | `UPPER-KEBAB-CASE` | `UPPERCASE` |
+|------------------|--------------------|-------------|
+| `kebab-case`     | ✅                 | 🚫          |
+| `lowercase`      | 🚫                 | ✅          |
+| `camelCase`      | 🚫                 | 🚫          |
+
+For example `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` environment variable :
+
+```yaml
+# Is equivalant equivalent and compatible with
+clusters:
+  - schemaregistry:
+      ignoreuntrustedcertificate: true
+# but not with
+clusters:
+  - schema-registry:
+      ignore-untrusted-certificate: true
+```
+
+And conversely, for `CDK_CLUSTERS_0_SCHEMA-REGISTRY_IGNORE-UNTRUSTED-CERTIFICATE`  environment variable.
+
+That's why camelCase is not recommended in YAML configuration when mixing with  environment variables.
+
 ### Support of shell expansion in the YAML configuration file
 
-Console supports shell expansion for environment variables and home tilde `~`. 
+Console supports shell expansion for environment variables and home tilde `~`.
 This is useful if you have to use custom environment variables in your configuration.
 
 For example, you can use the following syntax:
@@ -182,7 +254,7 @@ Cortex is a custom implementation of Prometheus used in several production syste
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to access to the following pages anymore:
 ![](assets/monitoring-menu.png)
 
-The configuration is split in 2 chapters: 
+The configuration is split in 2 chapters:
 - Console Configuration for Cortex `conduktor/conduktor-console`
 - Cortex Configuration `conduktor/conduktor-console-cortex`
 
@@ -255,7 +327,7 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 ### Kafka clusters properties
 
 :::caution
-The new recommended way to configure clusters is through the CLI and YAML manifests.  
+The new recommended way to configure clusters is through the CLI and YAML manifests.
 Check the associated [KafkaCluster documentation](/platform/reference/resource-reference/console/#kafkacluster)
 :::
 
@@ -274,7 +346,7 @@ You can find sample configurations on the [Configuration Snippets](configuration
 
 ### Kafka vendor specific properties
 
-Note that you only need to set the [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console. 
+Note that you only need to set the [Kafka cluster properties](#kafka-clusters-properties) to use the core features of Console.
 
 However, you can get additional benefits by setting the flavor of your cluster. This corresponds to the `Provider` tab of your cluster configuration in Console.
 
