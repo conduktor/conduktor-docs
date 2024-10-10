@@ -120,7 +120,7 @@ conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 
 ## Database Storage Format
 
-Each indexed topic will have its dedicated SQL table. The name of the table will apply the following convention `${cluster-slug}_${topic-name}`.
+Each indexed topic will have its dedicated SQL table. The name of the table will apply the following convention `${cluster-name}_${topic-name}`.
 
 The table will contain special columns type, each of those columns are indexed:
 * `__timestamp`
