@@ -119,7 +119,7 @@ Here, the `cluster-id` is used in case we have multiple back-end Kafka clusters,
 Once you have your certificates configured, you will next need to create DNS entries which allow the clients to be properly routed to the kafka brokers.  Specifically, you will need to create a DNS entry for each Broker in your cluster using the same format as the SANs you specified in your Gateway certificates:
 
 ```
-host-prefix><cluster-id><broker-id>.<advertised-host>
+<host-prefix><cluster-id><broker-id>.<advertised-host>
 ```
 
 This allows the client the connect to Gateway, for Gateway to then append the relevant broker details when it passes back the connection string for the Broker(s), and the client to look this up in DNS and connect appropriately.
