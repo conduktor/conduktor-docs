@@ -46,15 +46,33 @@ The 3 existing graphs have been moved on the Topic details and we added a new gr
 #### New Alerts
 
 As part of this improvement, we have also reworked our alert definitions to pave the way to declaring Alerts via API or CLI.
-**Unfortunately, the existing alerts will not be migrated to the new Alert model.**  
 
-We plan to remove those original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
-- First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
-- Then, we'll block the creation of original alerts while still keeping them functional.
-- finally, we'll remove the original alerts from the product.
-We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
+````yaml
+---
+apiVersion: console/v2
+kind: Alert
+metadata:
+  name: my-alert
+  cluster: local-julien
+spec:
+  type: TopicAlert
+  topicName: wikipedia-parsed-DLQ
+  metric: MessageCount
+  operator: GreaterThan
+  threshold: 0
+````
 
 Starting today, we recommend you use the new alerts for Broker and Topic pages.
+
+:::caution Deprecation notice
+**We do not plan to migrate existing alerts to the new Alert model.**  
+
+We plan to remove those original alerts in the near future in favor of the new ones.  
+We'll let you know a few releases in advances.
+
+If you have a large number of alert and need some help, please get in touch with our support as soon as possible.
+:::
+
 
 
 ### Shareable Filters
