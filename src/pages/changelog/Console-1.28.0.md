@@ -21,7 +21,7 @@ TODO
 
 ### Monitoring improvements
 We are migrating our Monitoring dashboards into their respective resource pages.  
-This migration will happen over the next few releases and our objective is to remove the existing Monitoring pages by integrating them into the dedicated resource pages in Console:
+This migration will happen over the next few releases with our objective to remove the existing generic Monitoring pages:
 - Overview will be refactored into Home page
 - **Cluster Health** dashboards and alerts will move under Brokers page
 - **Topic monitoring** will be integrated with Topics page
