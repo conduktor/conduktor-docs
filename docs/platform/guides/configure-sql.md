@@ -31,7 +31,7 @@ We encourage you to use this feature in non-production environments and give us 
 By default, the SQL feature is disabled. You will need to add additional configuration about the database for storing the data.
 
 :::warning
-You should provision a second database for storing SQL data that is different from the existing one used by Console backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
+You should provision a second database for storing SQL data that is different from the existing one used by Console's backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
 
 See [database requirements](../get-started/configuration/database.md) and [about database isolation](#database-isolation) for more guidance. 
 :::
@@ -74,11 +74,11 @@ When selecting a topic for indexing, you will be asked to configure the:
 
 After choosing to index a topic, you will be able to see the state of the indexing process in the **Indexed Topics** tab. The table name will only become available when data starts to be indexed.
 
-The process gives into the:
+The process gives insight into the:
 
- - **Offset lag**: The difference between the latest message offset in the Kafka topic and the current offset of the consumer group, indicating how much data is yet to be processed.
- - **Time lag**: The delay between the timestamp of the latest message in the Kafka topic and the time when the message was indexed, reflecting processing latency.
- - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic.
+ - **Offset lag**: The difference between the latest message offset in the Kafka topic and the current offset of the consumer group, indicating how much data is yet to be processed
+ - **Time lag**: The delay between the timestamp of the latest message in the Kafka topic and the time when the message was indexed, reflecting processing latency
+ - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic
 
 
 ![Conduktor SQL Index Status](img/conduktor-sql-index-status.png)
@@ -167,7 +167,7 @@ If records with a different shape come later, the table schema will be updated:
 
 ### Shrinker
 
-As column names are limited in size (63 characters), the field name can sometimes be shrunk. We try to do that smartly so it is still meaningful for users.
+As column names are limited in size (63 characters), the field name must sometimes be shrunk. We try to do that intelligently so it is still meaningful for users.
 The head characters are removed first:
 
 `my.reaaaally.loooooooooooooooooooooooooooooong.path.to.a.field` 
@@ -190,14 +190,14 @@ The Kafka SQL feature, while providing flexibility, introduces potential securit
 
 To mitigate these risks, we've implemented several security measures. 
 
- - **Read-Only Connections**: While not foolproof, enforcing read-only connections limits the potential for data modification.
+ - **Read-Only Connections**: While not foolproof, enforcing read-only connections limits the potential for data modification
  - **SQL query pre-parsing and sanitizing**:
-    - **Schema restriction**: Restricting queries to the public. schema prevents access to sensitive data in other schemas. For example, in the Conduktor database, the public schema is empty (except for the Flyway migration table which is also hidden).
-    - **Query Type Limitation**: Allowing only SELECT statements ensures that users cannot modify or delete data. For example, it forbids ROLLBACK which would break the previous limitation.
+    - **Schema restriction**: Restricting queries to the public schema prevents access to sensitive data in other schemas. For example, in the Conduktor database, the public schema is empty (except for the Flyway migration table which is also hidden)
+    - **Query Type Limitation**: Allowing only SELECT statements ensures that users cannot modify or delete data. For example, it forbids ROLLBACK which would break the previous limitation
 
 Despite these measures, it's crucial to isolate the Kafka indexing database from the console backend database. This isolation provides additional benefits:
 
- - **Resource Contention**: Prevents the Kafka indexing process or a user's arbitrary request from consuming excessive resources and impacting the overall system performance.
+ - **Resource Contention**: Prevents the Kafka indexing process or a user's arbitrary request from consuming excessive resources and impacting the overall system performance
  - **Data Breach Mitigation**: Limits the potential damage in case of a security breach in the SQL endpoint protection (not totally foolproof).
 
 
@@ -207,9 +207,9 @@ There are several known limitations regarding the current beta experience.
 
 Those are:
 
-- Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry.
-- To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once.
-- Byte and Array data types are not supported today. If a record can't be parsed, they are ignored. 
-- If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table.
+- Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
+- Byte and Array data types are not supported. If a record can't be parsed, they are ignored
+- No primary key. To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
+- If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
 
 If you identify more limitations or want to provide feedback, please [contact us](https://support.conduktor.io/).
