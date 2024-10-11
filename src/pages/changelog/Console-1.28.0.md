@@ -255,6 +255,8 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 - Added navigation breadcrumb
 - Enhanced multiple error messages throughout the product
 - Improved the connector 90 days heatmap
+- Declaring an ApplicationInstance with resources ending in `*` will now fail with this error message
+  - `Could not apply resource ApplicationInstance/my-app-inst: resource name 'appA-*' is not allowed. Use name 'appA-' with patternType PREFIXED instead`
 
 ## Fixes 🔨
 - Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
