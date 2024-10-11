@@ -8,9 +8,9 @@ The Brokers menu lets you explore all your Kafka Cluster related info.
 
 ## Brokers List
 
-The statistics section provides you with relevant information about the current state of your Kafka Cluster
+The statistics section provides you with relevant information about the current state of your Kafka Cluster.
 - Number of Brokers
-- the version of your Kafka Cluster
+- Version of your Kafka Cluster
 - Whether all Brokers are configured the same or not
 
 The Brokers List is a summary view of all your Kafka Brokers as well as sizing and partition balance information.
@@ -30,7 +30,7 @@ The Brokers Graphs tab lets you visualize the current and past state of your Kaf
 - Total partition count
 - Offline, Under replicated and Under min ISR partition count
 
-Graphs can be visualized over 24h, 7 days or 30 days periods.
+Graphs can be visualized over 24 hours, 7 days or 30 days periods.
 
 ![img.png](img/graphs-tab.png)
 
