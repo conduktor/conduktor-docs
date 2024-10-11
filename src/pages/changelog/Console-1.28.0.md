@@ -9,6 +9,7 @@ tags: features,fix
 - [Features ✨](#features-)
   - [Conduktor SQL](#conduktor-sql)
   - [Monitoring improvements](#monitoring-improvements)
+  - [New CLI/API resource Alert](#new-cliapi-resource-alert)
   - [Shareable Filters](#shareable-filters)
   - [Tags becomes Labels](#tags-becomes-labels)
   - [Audit Log events into Kafka](#audit-log-events-into-kafka)
