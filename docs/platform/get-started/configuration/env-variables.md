@@ -29,6 +29,7 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
   - [ksqlDB properties](#ksqldb-properties)
   - [Indexer properties](#indexer-properties)
   - [AuditLog export properties](#auditlog-export-properties)
+  - [Conduktor SQL properties](#conduktor-sql-properties)
 
 ## Docker image environment variables
 
@@ -410,3 +411,23 @@ The audit log can be exported to a Kafka topic, once configured in Console.
 | `audit_log_publisher.topicConfig.partition`         | The number of partitions for the audit log topic      | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_PARTITION`         | false     | int    | `1`     |
 | `audit_log_publisher.topicConfig.replicationFactor` | The replication factor for the audit log topic        | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_REPLICATIONFACTOR` | false     | int    | `1`     |
 
+### Conduktor SQL properties
+
+In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
+You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each values individually `CDK_KAFKASQL_DATABASE_*`.
+
+Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
+
+| Property                                             | Description                                                                                                                           | Environment Variable                               | Mandatory | Type   | Default        |
+|------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|--------|----------------|
+| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅              |
+| `kafka_sql.database.host`                            | External PostgreSQL server hostname                                                                                                   | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅              |
+| `kafka_sql.database.port`                            | External PostgreSQL server port                                                                                                       | `CDK_KAFKASQL_DATABASE_PORT`                       | false     | int    | ∅              |
+| `kafka_sql.database.name`                            | External PostgreSQL database name                                                                                                     | `CDK_KAFKASQL_DATABASE_NAME`                       | false     | string | ∅              |
+| `kafka_sql.database.username`                        | External PostgreSQL login role                                                                                                        | `CDK_KAFKASQL_DATABASE_USERNAME`                   | false     | string | ∅              |
+| `kafka_sql.database.password`                        | External PostgreSQL login password                                                                                                    | `CDK_KAFKASQL_DATABASE_PASSWORD`                   | false     | string | ∅              |
+| `kafka_sql.database.connection_timeout`              | External PostgreSQL connection timeout in seconds                                                                                     | `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`          | false     | int    | ∅              |
+| `kafka_sql.commit_offset_every_in_sec`               | Frequency at which Conduktor SQL commits offsets into Kafka and flushes rows in the database                                          | `CDK_KAFKASQL_COMMITOFFSETEVERYINSEC`              | false     | int    | `30` (seconds) |
+| `kafka_sql.clean_expired_record_every_in_hour`       | How often to check for expired records and delete them from the Database                                                              | `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`  | false     | int    | `1` (hour)     |
+| `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
+| `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                     | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
