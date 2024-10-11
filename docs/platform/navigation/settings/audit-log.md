@@ -42,7 +42,7 @@ Clicking on an event in the audit log exposes event-specific metadata. The below
 
 ![Admin Audit Event](images/audit-log-inspect.png)
 
-Audit log events are also exported to a Kafka topic once configured with the right [environemnt variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
+Audit log events are also exported to a Kafka topic once configured with the right [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
 ![kafka message audit log](images/audit-log-kafka-message.png)
 
 ## Audit Events

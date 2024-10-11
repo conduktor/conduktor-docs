@@ -22,7 +22,7 @@ On each metric you have the option to create an Alert. This will open a side pan
 
 ## Alerts Tab
 
-The Brokers Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
+The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.
 
 ![img.png](img/alerts-tab.png)

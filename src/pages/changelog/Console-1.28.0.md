@@ -66,7 +66,7 @@ This migration will happen over the next few releases with our objective to remo
 - **Cluster Health** dashboards and alerts will move under Brokers page
 - **Topic monitoring** will be integrated with Topics page
 - Apps monitoring will be integrated with Consumer Groups pages
-- Alerts will be integrated as tabs in all the resource pages, similar to the recent changes Kafka Connect
+- Alerts will be integrated as tabs in all the resource pages, similar to the recent changes for Kafka Connect
 
 For this 1.28.0 release we are migrating the **Topic monitoring** and **Cluster Health** pages.
 
@@ -245,14 +245,14 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ### Quality of Life improvements
 - Updated color theme
 - Added navigation breadcrumb
-- And many more slight design changes 
+- Many more subtle design enhancements
 
 ## Fixes 🔨
-- CONS-1776 Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
-- CUS-415 - Topic policies in Console not enforced when changing settings
-- CONS-1828 [bug-cs]-local-user-creation-allows-bad-things
-- CONS-1810 dont-allow-to-delete-group-when-its-owner-of-application
-- CONS-1774 Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
-- Fixed error messages in many places where the error message wasn't useful
-- CONS-1508/aws-glue-schema-registry-breaking-after-1h-connection-pool-shut-down
+- Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
+- Fixed an issue enforcing Topic policies in Console when changing settings
+- Enhanced checks on local user creation emails
+- Prevented the deletion of a user group when the owner of an Applciation
+- Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
+- Enhanced error messages
+- Fixed an issue where connections to the AWS glue schema registry would disconnect after a certain time and struggle to reconnect
 - Fixed all critical and high CVE in console-cortex image
