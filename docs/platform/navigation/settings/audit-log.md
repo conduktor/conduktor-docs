@@ -161,7 +161,7 @@ CRN `platform:/user/<email>`
 
 Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
 
-The events follow the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
+The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
 ```json
 {
@@ -203,60 +203,60 @@ Below is the list of all the exported audit log event types, that are currently 
 
 ### Kafka-Related Events
 
-| **Event Type**                | **Description**                                      |
-|-------------------------------|------------------------------------------------------|
-| **Kafka.Subject.Create**       | Event when a Kafka subject is created.              |
-| **Kafka.Subject.Update**       | Event when a Kafka subject is updated.              |
-| **Kafka.Subject.Delete**       | Event when a Kafka subject is deleted.              |
-| **Kafka.Topic.Create**         | Event when a Kafka topic is created.                |
-| **Kafka.Topic.Update**         | Event when a Kafka topic is updated.                |
-| **Kafka.Topic.Delete**         | Event when a Kafka topic is deleted.                |
-| **Kafka.Topic.Empty**          | Event when a Kafka topic is emptied.                |
-| **Kafka.Connector.Create**     | Event when a Kafka connector is created.            |
-| **Kafka.Connector.Update**     | Event when a Kafka connector is updated.            |
-| **Kafka.Connector.Delete**     | Event when a Kafka connector is deleted.            |
+| **Event Type**             | **Description**             |
+| -------------------------- | --------------------------- |
+| **Kafka.Subject.Create**   | Kafka subject is created.   |
+| **Kafka.Subject.Update**   | Kafka subject is updated.   |
+| **Kafka.Subject.Delete**   | Kafka subject is deleted.   |
+| **Kafka.Topic.Create**     | Kafka topic is created.     |
+| **Kafka.Topic.Update**     | Kafka topic is updated.     |
+| **Kafka.Topic.Delete**     | Kafka topic is deleted.     |
+| **Kafka.Topic.Empty**      | Kafka topic is emptied.     |
+| **Kafka.Connector.Create** | Kafka connector is created. |
+| **Kafka.Connector.Update** | Kafka connector is updated. |
+| **Kafka.Connector.Delete** | Kafka connector is deleted. |
 
 ### IAM-Related Events
 
-| **Event Type**                | **Description**                                      |
-|-------------------------------|------------------------------------------------------|
-| **Iam.User.Create**            | Event when a new IAM user is created.               |
-| **Iam.User.Update**            | Event when an IAM user is updated.                  |
-| **Iam.User.Delete**            | Event when an IAM user is deleted.                  |
-| **Iam.Group.Create**           | Event when a new IAM group is created.              |
-| **Iam.Group.Update**           | Event when an IAM group is updated.                 |
-| **Iam.Group.Delete**           | Event when an IAM group is deleted.                 |
+| **Event Type**       | **Description**       |
+| -------------------- | --------------------- |
+| **Iam.User.Create**  | IAM user is created.  |
+| **Iam.User.Update**  | IAM user is updated.  |
+| **Iam.User.Delete**  | IAM user is deleted.  |
+| **Iam.Group.Create** | IAM group is created. |
+| **Iam.Group.Update** | IAM group is updated. |
+| **Iam.Group.Delete** | IAM group is deleted. |
 
 ### SelfService-Related Events
 
-| **Event Type**                                        | **Description**                                               |
-|-------------------------------------------------------|-------------------------------------------------------------- |
-| **SelfService.Application.Create**                      | Event when a self-service application is created.             |
-| **SelfService.Application.Update**                      | Event when a self-service application is updated.             |
-| **SelfService.Application.Upsert**                      | Event when a self-service application is created or updated.  |
-| **SelfService.Application.Delete**                      | Event when a self-service application is deleted.             |
-| **SelfService.ApplicationInstance.Create**              | Event when a self-service application instance is created.    |
-| **SelfService.ApplicationInstance.Update**              | Event when a self-service application instance is updated.    |
-| **SelfService.ApplicationInstance.Delete**              | Event when a self-service application instance is deleted.    |
-| **SelfService.ApplicationGroup.Create**                 | Event when a self-service application group is created.       |
-| **SelfService.ApplicationGroup.Update**                 | Event when a self-service application group is updated.       |
-| **SelfService.ApplicationGroup.Delete**                 | Event when a self-service application group is deleted.       |
-| **SelfService.ApplicationPolicy.Create**                | Event when a self-service application policy is created.      |
-| **SelfService.ApplicationPolicy.Update**                | Event when a self-service application policy is updated.      |
-| **SelfService.ApplicationPolicy.Delete**                | Event when a self-service application policy is deleted.      |
-| **SelfService.ApplicationInstancePermission.Create**     | Event when permissions are created for an app instance.      |
-| **SelfService.ApplicationInstancePermission.Delete**     | Event when permissions are deleted for an app instance.      |
+| **Event Type**                                       | **Description**                                 |
+| ---------------------------------------------------- | ----------------------------------------------- |
+| **SelfService.Application.Create**                   | Self-service application is created.            |
+| **SelfService.Application.Update**                   | Self-service application is updated.            |
+| **SelfService.Application.Upsert**                   | Self-service application is created or updated. |
+| **SelfService.Application.Delete**                   | Self-service application is deleted.            |
+| **SelfService.ApplicationInstance.Create**           | Self-service application instance is created.   |
+| **SelfService.ApplicationInstance.Update**           | Self-service application instance is updated.   |
+| **SelfService.ApplicationInstance.Delete**           | Self-service application instance is deleted.   |
+| **SelfService.ApplicationGroup.Create**              | Self-service application group is created.      |
+| **SelfService.ApplicationGroup.Update**              | Self-service application group is updated.      |
+| **SelfService.ApplicationGroup.Delete**              | Self-service application group is deleted.      |
+| **SelfService.ApplicationPolicy.Create**             | Self-service application policy is created.     |
+| **SelfService.ApplicationPolicy.Update**             | Self-service application policy is updated.     |
+| **SelfService.ApplicationPolicy.Delete**             | Self-service application policy is deleted.     |
+| **SelfService.ApplicationInstancePermission.Create** | Permissions are created for an app instance.    |
+| **SelfService.ApplicationInstancePermission.Delete** | Permissions are deleted for an app instance.    |
 
 ### Admin-Related Events
 
-| **Event Type**                | **Description**                                       |
-|-------------------------------|-------------------------------------------------------|
-| **Admin.KafkaConnect.Create**  | Event when an admin creates a Kafka Connect instance.|
-| **Admin.KafkaConnect.Update**  | Event when an admin updates a Kafka Connect instance.|
-| **Admin.KafkaConnect.Delete**  | Event when an admin deletes a Kafka Connect instance.|
-| **Admin.KsqlDB.Create**        | Event when an admin creates a KsqlDB instance.       |
-| **Admin.KsqlDB.Update**        | Event when an admin updates a KsqlDB instance.       |
-| **Admin.KsqlDB.Delete**        | Event when an admin deletes a KsqlDB instance.       |
-| **Admin.KafkaCluster.Create**  | Event when an admin creates a Kafka cluster.         |
-| **Admin.KafkaCluster.Update**  | Event when an admin updates a Kafka cluster.         |
-| **Admin.KafkaCluster.Delete**  | Event when an admin deletes a Kafka cluster.         |
+| **Event Type**                | **Description**                         |
+| ----------------------------- | --------------------------------------- |
+| **Admin.KafkaConnect.Create** | Admin creates a Kafka Connect instance. |
+| **Admin.KafkaConnect.Update** | Admin updates a Kafka Connect instance. |
+| **Admin.KafkaConnect.Delete** | Admin deletes a Kafka Connect instance. |
+| **Admin.KsqlDB.Create**       | Admin creates a KsqlDB instance.        |
+| **Admin.KsqlDB.Update**       | Admin updates a KsqlDB instance.        |
+| **Admin.KsqlDB.Delete**       | Admin deletes a KsqlDB instance.        |
+| **Admin.KafkaCluster.Create** | Admin creates a Kafka cluster.          |
+| **Admin.KafkaCluster.Update** | Admin updates a Kafka cluster.          |
+| **Admin.KafkaCluster.Delete** | Admin deletes a Kafka cluster.          |
