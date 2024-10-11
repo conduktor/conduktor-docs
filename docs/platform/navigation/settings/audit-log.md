@@ -6,11 +6,35 @@ description: List of the Audit Log events tracked throughout the Platform
 
 # Audit Log Events
 
+
+- [Overview](#overview)
+- [Audit Events](#audit-events)
+- [Console](#console)
+  - [ResourceType: `Topic`](#resourcetype-topic)
+  - [ResourceType: `Subject`](#resourcetype-subject)
+  - [ResourceType: `SchemaRegistry`](#resourcetype-schemaregistry)
+  - [ResourceType: `ConsumerGroup`](#resourcetype-consumergroup)
+  - [ResourceType: `Connector`](#resourcetype-connector)
+- [Data Masking](#data-masking)
+  - [ResourceType: `DatamaskingPolicy`](#resourcetype-datamaskingpolicy)
+- [Self-Service](#self-service)
+  - [ResourceType: `Application`](#resourcetype-application)
+- [Admin](#admin)
+  - [ResourceType: `Cluster`](#resourcetype-cluster)
+  - [ResourceType: `Group`](#resourcetype-group)
+  - [ResourceType: `User`](#resourcetype-user)
+- [Exportable Audit Log Events](#exportable-audit-log-events)
+  - [Kafka-Related Events](#kafka-related-events)
+  - [IAM-Related Events](#iam-related-events)
+  - [SelfService-Related Events](#selfservice-related-events)
+  - [Admin-Related Events](#admin-related-events)
+
+
 # Overview
 
 As you and your team interact with Conduktor, audit events are captured that give a detailed tracking of actions taken against Kafka. This gives you centralized visibility of user-related and resource-related events. Audit log events.
 
-The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may for them, such as maintaining your own audit trail in other systems.
+The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may have for them, such as maintaining your own audit trail in other systems.
 
 ![Admin Audit](images/admin-audit.png)
 
@@ -137,7 +161,7 @@ CRN `platform:/user/<email>`
 
 Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
 
-Thes strucutre follows the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the structure:
+The events follow the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
 ```json
 {
