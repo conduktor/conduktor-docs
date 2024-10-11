@@ -14,7 +14,7 @@ tags: features,fix
   - [Tags becomes Labels](#tags-becomes-labels)
   - [Publish Audit Log CloudEvents into Kafka](#publish-auditlog-cloudevents-into-kafkas)
   - [Logging API](#logging-api)
-  - [Quality of Life improvements](#quality-of-life-improvements)
+- [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
 ## Features ✨
@@ -233,11 +233,10 @@ An example Conduktor event would look like:
 }
 ```
 
-A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.  
-
 Specify the target Kafka cluster and topic using the environment variables `CDK_AUDITLOGPUBLISHER_CLUSTER` & `CDK_AUDITLOGPUBLISHER_TOPICNAME` and events will start being produced to the destination topic.
 
-Check the dedicated Audit Log documentation for the list of supported event and the specification of the audit log event.
+A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
+
 
 ***
 
@@ -251,7 +250,7 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ```
 ***
 
-### Quality of Life improvements
+## Quality of Life improvements
 - Updated design and color theme
 - Added navigation breadcrumb
 - Enhanced multiple error messages throughout the product
