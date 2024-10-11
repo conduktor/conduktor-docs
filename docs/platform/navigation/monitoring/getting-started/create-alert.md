@@ -7,10 +7,10 @@ description: Learn how to create an alert in Monitoring
 # Create an Alert
 
 :::caution Deprecation notice
-We plan to remove those original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
+We plan to remove these original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
 - First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
 - Then, we'll block the creation of original alerts while still keeping them functional.
-- finally, we'll remove the original alerts from the product.
+- Finally, we'll remove the original alerts from the product.
 
 We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
 
