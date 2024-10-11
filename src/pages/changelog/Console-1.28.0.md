@@ -68,10 +68,10 @@ This migration will happen over the next few releases with our objective to remo
 - Apps monitoring will be integrated with Consumer Groups pages
 - Alerts will be integrated as tabs in all the resource pages, similar to the recent changes Kafka Connect
 
-For the 1.28.0 release we are migrating **Topic monitoring** and **Cluster Health** pages.
+For this 1.28.0 release we are migrating the **Topic monitoring** and **Cluster Health** pages.
 
 #### Topic Monitoring
-The 3 existing graphs have been moved on the Topic details.  We have also added a new graph to track the number of records in the topic.
+The 3 existing graphs have been moved to the Topic details.  We have also added a new graph to track the number of records in the topic.
 - Produce Rate and Consume Rate
 - Disk Usage
 - Records (new)
@@ -81,21 +81,22 @@ The 3 existing graphs have been moved on the Topic details.  We have also added 
 #### Cluster Health
 The charts and alerts are now available under the Brokers page with cleaner graphs.  
 
-We have removed two metrics that were not possible to calculate correctly since the removal of JMX integration back in release 1.15 (May 2023)
 - Produce Rate and Consume Rate
 - Disk Usage
 - Partitions Count
 - Offline, Under Replicated and Under Min ISR Partitions
-- Active Controller Count (removed)
-- Unclean Leader Election (removed)
+
 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/broker-monitoring.png)
 
+We have removed two metrics that were not always calculated correctly since the removal of the JMX integration back in release 1.15 (May 2023).
+- Active Controller Count
+- Unclean Leader Election
 
 #### Alerting Support via API & CLI
 
-As part of this improvement, we have also reworked our alert by allowing you to create them via API or CLI on top of the UI.  
-Check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details
+We have reworked our alerts by allowing you to create them via the API or CLI in addition to the UI.  
+See below for example config, and check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details.
 
 ````yaml
 ---
@@ -117,17 +118,17 @@ Starting today, we recommend you use the new alerts available under Brokers and 
 :::caution Deprecation notice
 **We do not plan to migrate existing alerts to the new Alert model.**  
 
-We plan to remove those original alerts in the near future in favor of the new ones.  
+Original alerts will be removed in the near future in favor of the new ones.  
 We'll let you know a few releases in advance.
 
-If you have a large number of alerts configured and need some help, please get in touch with our support as soon as possible.
+If you have a large number of alerts configured and need some help, we're happy to help, please get in touch with our support.
 :::
 
 ***
 
 ### Shareable Filters
 To increase collaboration between users we've made filters in the Topic view shareable. 
-After you've finished configuring filters on a topic, you now have an option to save the filter either as a Private or Organization filter.  
+After you've finished configuring filters on a topic, you now have an option to save the filter either as a Private or an Organization filter.  
 ![Kafka Connect Wizard](/images/changelog/platform/v28/shared-filters.png)
 
 Anyone can then load Organization filters from the dedicated section.
@@ -144,7 +145,7 @@ In this release, we'll perform an automatic migration from Tags to Labels.
 Tags written with the naming convention `<key>/<value>` will automatically be added as similar labels:
 - `<key>: <value>`  
 
-If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created as follows:
+If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created with a `tag-` prefix as follows:
 ````yaml
 tag-<value>: true
 ````
@@ -167,8 +168,8 @@ labels:
   team: delivery
   tag-color/blue: true # Because conflict on "color"
   tag-color/red: true # Because conflict on "color"
-  tag-wikipedia: true
-  tag-non-prod: true
+  tag-wikipedia: true # Because wikipedia is not a key value pair
+  tag-non-prod: true # Becuase non-prod is not a key value pair
 ````
 
 The Topic list and Topic details page have been modified to use labels instead of tags.
@@ -181,23 +182,64 @@ Let us know which resource you would like to see covered first.
 ***
 
 ### Audit Log events into Kafka
-It is now possible to publish Console Audit Log events into Kafka.  
+It is now possible to publish Console Audit Log events into a Kafka topic directly for any further use you may have for them, such as maintaining your own audit trail in other systems.  
 
-Configure the target Kafka Cluster and Topic using `CDK_AUDITLOGPUBLISHER_CLUSTER` and `CDK_AUDITLOGPUBLISHER_TOPICNAME` and event will start being produced in the destination Topic.
+The exportable audit log events have more detail compared to the current UI events, providing additional information about the event that has taken place.  
+
+The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
+
+```json
+{
+    "specversion" : "1.0",
+    "type" : "com.github.pull_request.opened",
+    "source" : "https://github.com/cloudevents/spec/pull",
+    "subject" : "123",
+    "id" : "A234-1234-1234",
+    "time" : "2018-04-05T17:31:00Z",
+    "comexampleextension1" : "value",
+    "comexampleothervalue" : 5,
+    "datacontenttype" : "text/xml",
+    "data" : "<much wow=\"xml\"/>"
+}
+```
+
+An example Conduktor event would look like:
+```json
+{
+	"source": "//kafka/kafkacluster/production/topic/website-orders",
+	"data": {
+		"eventType": "Kafka.Topic.Create",
+		// Additional event specific data...
+		"metadata": {
+			"name": "website-orders",
+			"cluster": "production"
+		}
+		// Additional event specific metadata...
+	},
+	"datacontenttype": "application/json",
+	"id": "ad85122c-0041-421e-b04b-6bc2ec901e08",
+	"time": "2024-10-10T07:52:07.483140Z",
+	"type": "AuditLogEventType(Kafka,Topic,Create)",
+	"specversion": "1.0"
+}
+```
+
+A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.  
+
+Specify the target Kafka cluster and topic using the environment variables `CDK_AUDITLOGPUBLISHER_CLUSTER` & `CDK_AUDITLOGPUBLISHER_TOPICNAME` and events will start being produced to the destination topic.
 
 Check the dedicated Audit Log documentation for the list of supported event and the specification of the audit log event.
 
 ***
 
 ### Logging API
-We have added a new endpoint to adjust the log level of Console without a need to restart.
+Adjust the log level of Console without requiring a restart. We've added a new API endpoint to support targeted changes to log levels dynamically.
+Check the [associated documentation](/platform/get-started/troubleshooting/logs-configuration/#runtime-logger-configuration-api) for the full list of capabilities.
+
 ```
 curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
   -H "Authorization: Bearer $API_KEY"
 ```
-
-Check the [associated documentation](/platform/get-started/troubleshooting/logs-configuration/#runtime-logger-configuration-api) for the full list of capabilities.
-
 ***
 
 ### Quality of Life improvements
