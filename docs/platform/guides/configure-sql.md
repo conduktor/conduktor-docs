@@ -112,7 +112,10 @@ Upon execution, the console backend will index messages from the (current time) 
 
 * Using the API:
 ```bash
-curl -XPOST  -H "Authorization: $token" 'localhost:8080/api/public/sql/v1/execute?maxLine=2' --data 'select * from "kafka-cluster-dev_customer_orders"'
+curl \
+ --header "Authorization: $token" \
+ --request POST 'localhost:8080/api/public/sql/v1/execute?maxLine=2' \
+ --data 'select * from "kafka-cluster-dev_customer_orders"'
 ```
 
 * Using the CLI:
@@ -122,15 +125,15 @@ conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 
 ## Database Storage Format
 
-Each indexed topic will have its dedicated SQL table. The name of the table will apply the following convention `${cluster-technical-id}_${topic-name}`.
+Each indexed topic will have its dedicated SQL table. The table's name will apply the following convention `${cluster-technical-id}_${topic-name}`.
 
-The table will contain special columns type, each of those columns are indexed:
+The table will contain special column types, each of those columns is indexed:
 * `__timestamp`
 * `__partition`
 * `__offset`
 
 
-The content of each record is flattenned. Given the following record:
+The content of each record is flattened. Given the following record:
 
 ```json
 {
@@ -164,7 +167,7 @@ If records with a different shape come later, the table schema will be updated:
 
 ### Shrinker
 
-As column names are limited in size (63 characters), the field name can be shrunk in some cases. We try do to that in a smart way so its still meaningful for users.
+As column names are limited in size (63 characters), the field name can sometimes be shrunk. We try to do that smartly so it is still meaningful for users.
 The head characters are removed first:
 
 `my.reaaaally.loooooooooooooooooooooooooooooong.path.to.a.field` 
@@ -175,7 +178,7 @@ will give
 
 ### Collision Solver
 
-In some cases, table name or column name can be the same for two differents topics or fields. To resolve the conflict, we suffix the name by `_${inc}` (e.g. `my.field` & `my.field_2`).
+Sometimes, the table or column names can be the same for two different topics or fields. To resolve the conflict, we suffix the name by `_${inc}` (e.g. `my.field` & `my.field_2`).
 
 Relation between a table/column and a topic/field is tracked in special metadata tables:
 * `_table_mappings`
@@ -189,8 +192,8 @@ To mitigate these risks, we've implemented several security measures.
 
  - **Read-Only Connections**: While not foolproof, enforcing read-only connections limits the potential for data modification.
  - **SQL query pre-parsing and sanitizing**:
-    - **Schema restriction**: Restricting queries to the public. schema prevents access to sensitive data in other schemas. For example, in the Conduktor database, the public schema is empty (except the Flyway migration table which is also hidden).
-    - **Query Type Limitation**: Allowing only SELECT statements ensures that users cannot modify or delete data. For example, it forbids ROLLBACK that would break the previous limitation.
+    - **Schema restriction**: Restricting queries to the public. schema prevents access to sensitive data in other schemas. For example, in the Conduktor database, the public schema is empty (except for the Flyway migration table which is also hidden).
+    - **Query Type Limitation**: Allowing only SELECT statements ensures that users cannot modify or delete data. For example, it forbids ROLLBACK which would break the previous limitation.
 
 Despite these measures, it's crucial to isolate the Kafka indexing database from the console backend database. This isolation provides additional benefits:
 
@@ -200,7 +203,7 @@ Despite these measures, it's crucial to isolate the Kafka indexing database from
 
 ## Known Limitations
 
-There are a number of known limitations regarding the current beta experience. 
+There are several known limitations regarding the current beta experience. 
 
 Those are:
 
