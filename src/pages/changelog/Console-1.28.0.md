@@ -243,16 +243,16 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ***
 
 ### Quality of Life improvements
-- Updated color theme
+- Updated design and color theme
 - Added navigation breadcrumb
-- Many more subtle design enhancements
+- Enhanced multiple error messages throughout the product
 
 ## Fixes 🔨
 - Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
 - Fixed an issue enforcing Topic policies in Console when changing settings
 - Enhanced checks on local user creation emails
-- Prevented the deletion of a user group when the owner of an Applciation
+- Prevented the deletion of a group when it is owner of an Application
 - Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
-- Enhanced error messages
 - Fixed an issue where connections to the AWS glue schema registry would disconnect after a certain time and struggle to reconnect
 - Fixed all critical and high CVE in console-cortex image
+- Fixed an issue with the metric `under_replicated_partitions` when topics have `confluent.placement.constraints` property
