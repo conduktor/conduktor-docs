@@ -12,7 +12,7 @@ tags: features,fix
   - [New CLI/API resource Alert](#new-cliapi-resource-alert)
   - [Shareable Filters](#shareable-filters)
   - [Tags becomes Labels](#tags-becomes-labels)
-  - [Audit Log events into Kafka](#audit-log-events-into-kafka)
+  - [Publish Audit Log CloudEvents into Kafka](#publish-auditlog-cloudevents-into-kafkas)
   - [Logging API](#logging-api)
   - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
@@ -132,8 +132,12 @@ If you have a large number of alerts configured and need some help, we're happy 
 ***
 
 ### Shareable Filters
-To increase collaboration between users we've made filters in the Topic view shareable. 
-After you've finished configuring filters on a topic, you now have an option to save the filter either as a Private or an Organization filter.  
+Filters in the Topic Consume view are now shareable. This brings a number of benefits:
+- **Improved collaboration**: Share pre-defined views to ensure users are looking at the same subset of data
+- **Time savings**: Speed up troubleshooting and analysis with repeatable filters that share the same or similar criteria
+- **Consistency and accuracy**: Standardized filters across teams and departments reduce the risk of errors or discrepancies that can occur when individuals manually create filters
+
+After you've finished configuring filters on a topic, you now have an option to save the filter either as a Private or an Organization filter.   
 ![Kafka Connect Wizard](/images/changelog/platform/v28/shared-filters.png)
 
 Anyone can then load Organization filters from the dedicated section.
@@ -186,7 +190,7 @@ Let us know which resource you would like to see covered first.
 
 ***
 
-### Audit Log events into Kafka
+### Publish AuditLog CloudEvents into Kafka
 It is now possible to publish Console Audit Log events into a Kafka topic directly for any further use you may have for them, such as maintaining your own audit trail in other systems.  
 
 The exportable audit log events have more detail compared to the current UI events, providing additional information about the event that has taken place.  
