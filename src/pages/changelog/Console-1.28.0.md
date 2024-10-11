@@ -259,12 +259,12 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
   - `Could not apply resource ApplicationInstance/my-app-inst: resource name 'appA-*' is not allowed. Use name 'appA-' with patternType PREFIXED instead`
 
 ## Fixes 🔨
-- Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
-- Fixed an issue enforcing Topic policies in Console when changing settings
+- Fixed an issue with Topic Policy constraint Range where `max` value wasn't inclusive and `min` could greater than `max`
+- Fixed an issue where Topic Policies were not enforced on Topic configuration changes in Console
 - Added an error message when using the copy to clipboard button (for API Keys for instance) fails
 - Enhanced checks on local user creation emails
 - Prevented the deletion of a group when it is owner of an Application
 - Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed an issue where connections to the AWS glue schema registry would disconnect after a certain time and struggle to reconnect
-- Fixed all critical and high CVE in console-cortex image
+- Fixed all critical and high CVE in `console-cortex` image
 - Fixed an issue with the metric `under_replicated_partitions` when topics have `confluent.placement.constraints` property
