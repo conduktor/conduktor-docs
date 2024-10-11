@@ -1,10 +1,109 @@
 ---
 sidebar_position: 3
 title: Service Accounts & Authentication
-description: Connecting clients to Gateway 
+description: Better understand how the Gateway deals with clients service accounts and authentication
 ---
 
-## Gateway Service Accounts & Authentication
+## Introduction
+
+In this concept page, we will explain how the Gateway deals with Service Accounts, authentication, and how to manage the client ACLs.
+
+1. [Local and External Service Accounts](#local-and-external-service-accounts)
+2. [Authentication Methods](#authentication-methods)
+3. [ACLs management](#acls-management)
+
+At the end of this page, you will have a better understanding of:
+- Where do you want your clients to authenticate? (Gateway, Kafka)
+- Using which authentication method?
+- Do you want to manage local or external service accounts?
+- How to manage service accounts ACLs?
+
+## Local and External Service Accounts
+
+The service account is the non-human identity used by clients to connect to Kafka. This identity is used to authorize the client to perform actions on Kafka resources.
+In the Gateway, you can define two types of service accounts:
+- **Local service accounts**: The Gateway will generate the password for the service account you gave it. Then, you can share this with your clients to authenticate.
+- **External service accounts**: The Gateway will declare a service account mapped to an existing one handled by your OIDC, mTLS or LDAP identity provider. 
+
+Behind the scenes, all the service accounts created in the Gateway are stored in the `_conduktor_gateway_usermappings` internal topic.
+
+Creating Local Service Accounts
+Renaming Service Accounts for easier clarity when using Interceptors
+Attaching Service Accounts to Virtual Clusters
+
+In its [definition](/gateway/reference/resources-reference/#gatewayserviceaccount), each service account has a **name**, which is the reference used by Gateway to apply ACLs or interceptors. It also exists in a **Virtual Cluster**. If you don't provide any Virtual Cluster in your API call, the default is `passthrough`.
+
+:::warning
+Local and external service accounts aren't available in all the authentication methods. Please refer to the [Authentication Methods](#authentication-methods) section to understand which method supports which type of service account.
+:::
+
+### Local Service Accounts
+
+The local service accounts are useful if you want to manage the clients credentials directly in the Gateway. You can easily create, update, and delete them directly from the Gateway API. 
+
+See this guide to learn how to [manage a local service account](/gateway/how-to/manage-service-accounts/#manage-a-local-service-account).
+
+### External Service Accounts
+
+In the case of external service accounts, the clients credentials are handled by a third-party identity provider (OIDC, mTLS, LDAP). 
+
+However, you might want to:
+- Map them to a more friendly name in the Gateway
+- Attach them to a Virtual Cluster
+
+In those cases, you can create an external service account in the Gateway, which will be linked to the external service account.
+
+## Authentication Methods
+
+As mentioned earlier, the Gateway supports different clients authentication methods, but not all of them support local and external service accounts.
+
+Here is a summary of the supported service accounts for each authentication method:
+
+| GATEWAY_SECURITY         | Local SA | External    SA           |
+|--------------------------|----------|--------------------------|
+| **Anonymous**            |          |                          |
+| PLAINTEXT                | 🚫       | 🚫                       |
+| SSL                      | 🚫       | only if mTls             |
+| **SASL**                 |          |                          |
+| SASL_PLAINTEXT           | ✅        | only if OAuth configured |
+| SASL_SSL                 | ✅        | only if OAuth configured |
+| **Delegated SASL**       |          |                          |
+| DELEGATED_SASL_PLAINTEXT | 🚫       | ✅                        |
+| DELEGATED_SASL_SSL       | 🚫       | ✅                        |
+
+### Anonymous Authentication
+
+#### PLAINTEXT
+
+In the case of PLAINTEXT authentication, the client is anonymous and doesn't need any credentials. This means that the creation of local and service accounts are not available.
+
+#### SSL
+
+In the case of SSL authentication, the client is authenticated using a client certificate. For that reason, you can't create any local service account in the Gateway. However, you can create an external service account if you're using mTLS, that would be mapped to the CN of the client certificate.
+
+:::warning
+To be confirmed, this doesn't work for me.
+:::
+
+### SASL Authentication
+
+In the case of SASL authentication, when the clients connect, we retrieve their service account. This mean that you can create local and external service accounts.
+
+For both SASL_PLAINTEXT and SASL_SSL, you can
+
+### Delegated SASL Authentication
+
+
+
+## ACLs management
+
+
+
+
+
+
+
+---
 
 Gateway Service Accounts are tightly coupled to the Authentication method you choose to connect your clients to the Gateway.
 
@@ -22,9 +121,9 @@ Each method has its own advantages and limitations, due to the structure of the 
 | Authentication | Source of Name | Source of Groups | Source of Virtual Cluster |
 |----------------|----------------|------------------|---------------------------|
 | Delegated      | ✅              | 🚫               | 🚫                        |
-| mTLS           | ✅               | 🚫                 | 🚫                          |
+| mTLS           | ✅              | 🚫               | 🚫                        |
 | External Oauth | ✅              | ✅                | ✅                         |
-| Local          | ✅              | ✅                | ✅                        |
+| Local          | ✅              | ✅                | ✅                         |
 
 Check the dedicated [Authentication Configuration page](/gateway/configuration/client-authentication) to understand how to configure each method.
 
