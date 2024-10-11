@@ -50,7 +50,10 @@ conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 
 **API:**
 ```bash
-curl -XPOST  -H "Authorization: $token" 'localhost:8080/api/public/sql/v1/execute?maxLine=2' --data 'select * from "kafka-cluster-dev_customer_orders"'
+curl \
+ --header "Authorization: $token" \
+ --request POST 'localhost:8080/api/public/sql/v1/execute?maxLine=2' \
+ --data 'select * from "kafka-cluster-dev_customer_orders"'
 ```
 
 **Important information regarding SQL**
