@@ -36,7 +36,7 @@ Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
 
 **Query through the UI**
 
-![Conduktor SQL](/images/changelog/platform/v28/conduktor-sql.png)
+![Conduktor SQL](/images/changelog/platform/v28/console-sql-change-log.png)
 
 **Query through the API & CLI**
 
