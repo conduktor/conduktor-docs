@@ -15,15 +15,15 @@ On Okta side, you'll have to create a new application:
 ![](../../assets/okta-create-app.png)
 
 
-- **Step 2**: Configure the callback URI
+- **Step 2**: Configure the callback URL
 
-The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+The callback URL must match the URL you log into Console with.  
 
-For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like in the screenshot below.
+For example, if you deployed Console locally you can use `http://localhost:8080/`.
 
-For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
-
-![](../../assets/okta-callback-uri.png)
+:::note
+Please note, OKTA is case sensitive, so the callback URL you use, must match exactly to the URL you login to Console with.
+:::
 
 - **Step 3**: Configure **app assignments**, and save changes 
 
@@ -37,13 +37,9 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](../../assets/okta-issuer.png)
 
-:::tip
-You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-configuration`.
-:::
-
 ## Console Configuration
 
-On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, and `domain`, with what you got during steps 4 and 5.
+On Console side, you can add the snippet below to your configuration file. You have to replace the `console url` with the console callback URL specified in step 2, and you also need to replace `client ID`, `client secret`, and `domain`, which you retrieved in steps 4 and 5.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
@@ -51,6 +47,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <TabItem value="YAML  File" label="YAML File">
 
 ```yaml title="platform-config.yaml"
+platform.external.url: "<console url>"
 sso:
   oauth2:
     - name: "okta"
@@ -64,6 +61,7 @@ Please note that if you are using a custom auth server in Okta, the OPENID_ISSUE
 You can find documentation on this [here](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main/).
 :::
 
+
 </TabItem>
 <TabItem value="Environment Variables" label="Environment Variables">
 
@@ -73,6 +71,7 @@ CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>.okta.com"
+CDK_PLATFORM_EXTERNAL_URL="<console url>"
 ```
 
 </TabItem>
