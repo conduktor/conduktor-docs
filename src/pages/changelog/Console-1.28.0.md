@@ -8,9 +8,11 @@ tags: features,fix
 
 - [Features ✨](#features-)
   - [Conduktor SQL](#conduktor-sql)
+  - [Monitoring improvements](#monitoring-improvements)
   - [Shareable Filters](#shareable-filters)
   - [Tags becomes Labels](#tags-becomes-labels)
   - [Audit Log events into Kafka](#audit-log-events-into-kafka)
+  - [Logging API](#logging-api)
   - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
@@ -93,9 +95,11 @@ We have removed two metrics that were not always calculated correctly since the 
 - Active Controller Count
 - Unclean Leader Election
 
-#### Alerting Support via API & CLI
+***
 
-We have reworked our alerts by allowing you to create them via the API or CLI in addition to the UI.  
+### New CLI/API resource Alert
+
+Alerts can now be created via the API or CLI in addition to the UI.  
 See below for example config, and check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details.
 
 ````yaml
