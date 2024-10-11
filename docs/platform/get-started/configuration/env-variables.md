@@ -8,8 +8,8 @@ description: Starting from Conduktor Console 1.2.0 input configuration fields ca
 
 - [Docker image environment variables](#docker-image-environment-variables)
 - [Console properties reference](#console-properties-reference)
-  - [Properties cases in YAML](#properties-cases-in-yaml)
-  - [Environment variables into YAML conversion rules](#environment-variables-into-yaml-conversion-rules)
+  - [YAML Property Cases](#yaml-property-cases)
+  - [Environment Variable Conversion](#environment-variable-conversion)
     - [Conversion edge cases](#conversion-edge-cases)
   - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
   - [Support of `-_FILE` environment variables](#support-of-_file-environment-variables)
@@ -72,17 +72,17 @@ In case you set both environment variable and YAML value for a specific field, t
 Lists start at index 0 and are provided using `_idx_` syntax.
 :::
 
-### Properties cases in YAML
+### YAML Property Cases
 
 YAML configuration supports multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for property fragments such as:
 - `clusters[].schemaRegistry.ignoreUntrustedCertificate`
 - `clusters[].schema-registry.ignore-untrusted-certificate`
 - `clusters[].schemaregistry.ignoreuntrustedcertificate`
 
-All are valid and equivalent in YAML configuration.
+All are valid and equivalent in YAML.
 
 
-### Environment variables into YAML conversion rules
+### Environment Variable Conversion
 
 At startup, Condutkor Console will convert environment variables into configuration that will be merged with input YAML configuration. The conversion rules are as follows:
 
