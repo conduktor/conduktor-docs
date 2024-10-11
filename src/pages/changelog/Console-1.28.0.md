@@ -246,10 +246,12 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 - Updated design and color theme
 - Added navigation breadcrumb
 - Enhanced multiple error messages throughout the product
+- Improved the connector 90 days heatmap
 
 ## Fixes 🔨
 - Fixed an issue with Topic Policy constraint Range where max value wasn't inclusive
 - Fixed an issue enforcing Topic policies in Console when changing settings
+- Added an error message when using the copy to clipboard button (for API Keys for instance) fails
 - Enhanced checks on local user creation emails
 - Prevented the deletion of a group when it is owner of an Application
 - Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
