@@ -266,9 +266,13 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 - Fixed an issue where Topic Policies were not enforced on Topic configuration changes in Console
 - Added an error message when using the copy to clipboard button (for API Keys for instance) fails
 - Added checks on local user creation emails
+- Added new optional environment variable `CDK_SSO_OAUTH2_0_OPENID_METADATADOCUMENT` to modify the default discovery .well-known end-point
+- Fixed an issue where Avro messages using logical type UUID couldn't be deserialized properly
+- Fixed an issue with Cluster configuration page requiring `platform.certificates.create` permission to perform the TLS check
 - Fixed an issue with "Remove user from group" button which is now disabled for users added by external group mapping
 - Prevented the deletion of a group when it is owner of an Application
 - Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed an issue where connections to the AWS glue schema registry would disconnect after a certain time and struggle to reconnect
+- Fixed an issue where the "Reprocess message" feature was converting empty string headers to null value
 - Fixed all critical and high CVE in `console-cortex` image
 - Fixed an issue with the metric `under_replicated_partitions` when topics have `confluent.placement.constraints` property
