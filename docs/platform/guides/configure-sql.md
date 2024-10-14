@@ -208,7 +208,7 @@ There are several known limitations regarding the current beta experience.
 Those are:
 
 - Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
-- Byte and Array data types are not currently supported, they will be added in the next version
+- Byte, Array and Boolean data types are not currently parsed, they will be added in the next version
 - If for any reason a record can't be parsed, they are ignored and the consumer continues
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
 - If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
