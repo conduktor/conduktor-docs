@@ -256,7 +256,7 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ## Quality of Life improvements
 - Updated design and color theme
 - Added navigation breadcrumb
-- Enhanced multiple error messages throughout the product
+- Enhanced error messages throughout the product
 - Improved the connector 90 days heatmap
 - Declaring an ApplicationInstance with resources ending in `*` will now fail with this error message
   - `Could not apply resource ApplicationInstance/my-app-inst: resource name 'appA-*' is not allowed. Use name 'appA-' with patternType PREFIXED instead`
@@ -265,7 +265,8 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 - Fixed an issue with Topic Policy constraint Range where `max` value wasn't inclusive and `min` could greater than `max`
 - Fixed an issue where Topic Policies were not enforced on Topic configuration changes in Console
 - Added an error message when using the copy to clipboard button (for API Keys for instance) fails
-- Enhanced checks on local user creation emails
+- Added checks on local user creation emails
+- Fixed an issue with "Remove user from group" button which is now disabled for users added by external group mapping
 - Prevented the deletion of a group when it is owner of an Application
 - Fixed an issue with the "New version" button in the banner that was still showing despite being on the latest version
 - Fixed an issue where connections to the AWS glue schema registry would disconnect after a certain time and struggle to reconnect
