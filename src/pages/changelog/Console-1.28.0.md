@@ -43,7 +43,7 @@ Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
 
 **Query through the API & CLI**
 
-**CLI:**
+**CLI (upgrade to v0.3.1):**
 ```bash
 conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 ```
