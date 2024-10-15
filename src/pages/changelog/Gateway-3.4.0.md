@@ -32,7 +32,25 @@ For this release 3.4.0, we'll only raise the following warning in the logs:
 
 ### Correct Offsets on Concentrated Topics
 
-- TODO
+The main limitation of Concentrated Topics was its inability to show correct Lag and Message Count.  
+
+This is now a problem from the past as we are now computing offsets directly within the Gateway.
+
+This experimental feature can be enabled per ConcentrationRule.
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: myapp-concentrated
+spec:
+  pattern: myapp-.*
+  physicalTopics:
+    delete: myapp-concentrated
+  autoManaged: false
+  trueOffsets: true
+````
+
+Check the dedicated documentation for more details on the feature and its limitations.
 
 
 ## General fixes 🔨

@@ -102,7 +102,7 @@ With concentrated topics, the enforced retention policy is the physical topic's 
 
 
 
-### Auto-managed backing topics
+## Auto-managed backing topics
 
 When `autoManaged` is enabled: 
 - backing topics are automatically created with the default cluster configuration and partition count. 
@@ -156,32 +156,44 @@ If one user requests a topic with infinite retention (`retention.ms = -1`), **al
 
 :::
 
-### Message Count & Lag, Offset (in)correctness
+## Message Count & Lag, Offset (in)correctness
 
-Concentrated topics & SQL topics are virtualized, which creates incompatibilities with existing tools in the Kafka Ecosystem (Conduktor included) that rely on topics metadata to generate reports, graphs or calculations.
+Concentrated topics & SQL topics are virtualized. This creates inconsistencies with existing tools in the Kafka ecosystem, including Conduktor Console.
 
 Right now, the 2 most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that rely on partition **EndOffset**.
 
 ![Offset Incorrectness](img/offset-correct.png)
 
-Any tooling will currently display the message count, and the lag relative to the `EndOffset`, of the physical topic. This can create confusion for customers and applications that will see wrong metrics.
+Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see wrong metrics.
 
+To counter this effect we have implemented a dedicated offset management capability for ConcentrationRules.
 
-### Enabling `spec.trueOffsets` on ConcentrationRule
+:::caution 
+**This feature is experimental for now.**  
+As we collect feedback and gain some knowledge on the feature, we'll transition this to all ConcentrationRules
+:::
 
+To enable virtual offsets, add the following line to the ConcentrationRule:
 
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: concentration1
+spec:
+  pattern: concentrated.*
+  physicalTopics:
+    delete: physical.topic
+  trueOffsets: true
+````
 
 - `spec.trueOffsets` only applies to Concentrated Topics with the `cleanup.policy=delete`
-  - instead of reporting the backing topic records offsets
-    - Updating this value on an existing ConcentrationRule is risky because the offsets WILL change
-    - Consumers with already committed offsets will either skip or reprocess messages depending on how the offsets are recalculated
-    - 
-- instead of reporting the backing topic records offsets
-    - Updating this value on an existing ConcentrationRule is risky because the offsets WILL change
-    - Consumers with already committed offsets will either skip or reprocess messages depending on how the offsets are recalculated
+- `spec.trueOffsets` is not retroactive on previously created Concentrated Topics
 
 
-### Performance
+
+
+## Performance
 
 Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
 
