@@ -22,6 +22,24 @@ For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environ
 
 For when your Kafka cluster requires authentication, we refer to the user-name you need to provide as the Gateway service account.
 
+- [Supported Protocols](#supported-protocols)
+- [Examples](#examples)
+  - [PLAINTEXT](#plaintext)
+  - [SASL\_PLAINTEXT](#sasl_plaintext)
+  - [SASL PLAIN](#sasl-plain)
+  - [SASL SCRAM](#sasl-scram)
+  - [SASL\_SSL](#sasl_ssl)
+  - [SASL PLAIN](#sasl-plain-1)
+      - [Confluent Cloud with API key/secret](#confluent-cloud-with-api-keysecret)
+  - [SASL SCRAM](#sasl-scram-1)
+  - [SASL GSSAPI (Kerberos)](#sasl-gssapi-kerberos)
+  - [AWS MSK cluster with IAM](#aws-msk-cluster-with-iam)
+  - [SSL](#ssl)
+  - [mTLS](#mtls)
+- [Service Account and ACL requirements](#service-account-and-acl-requirements)
+  - [Delegated Authentication](#delegated-authentication)
+  - [Non-Delegated](#non-delegated)
+
 ## Supported Protocols
 
 You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.  
