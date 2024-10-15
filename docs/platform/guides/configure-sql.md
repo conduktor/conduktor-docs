@@ -92,7 +92,7 @@ Alternatively, you can index a topic through the conduktor [CLI](../reference/cl
 apiVersion: "v1"
 kind: "IndexedTopic"
 metadata:
-  name: "customer-orders"
+  name: "customers"
   cluster: "kafka-cluster-dev"
 spec:
   retentionTimeInSecond: "86400" # 1 day of retention
@@ -106,21 +106,26 @@ Upon execution, the console backend will index messages from the (current time) 
 
 ## Querying the data
 
-* Using the UI:
-   * Note the cluster name is used as a prefix for the table name (see [database storage format](#database-storage-format))
+**Using the UI**  
+Query syntax requires the cluster technical-id is used as a prefix for the table name e.g. for the topic `customers` on the cluster `kafka-cluster-dev`:
+```sql
+SELECT *
+  FROM "kafka-cluster-dev_customers";
+```
+See [database storage format](#database-storage-format) for the underlying table structure.
 ![Conduktor SQL](img/conduktor-sql.png)
 
-* Using the API:
+**Using the API**  
 ```bash
 curl \
  --header "Authorization: $token" \
  --request POST 'localhost:8080/api/public/sql/v1/execute?maxLine=2' \
- --data 'select * from "kafka-cluster-dev_customer_orders"'
+ --data 'select * from "kafka-cluster-dev_customers"'
 ```
 
-* Using the CLI:
+**Using the CLI**  
 ```bash
-conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
+conduktor sql 'select * from "kafka-cluster-dev_customers"' -n 2
 ```
 
 ## Database Storage Format
