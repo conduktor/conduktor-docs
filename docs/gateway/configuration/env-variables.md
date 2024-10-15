@@ -288,20 +288,20 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 
 ### Logging
 
-| Environment Variable                                   | Default Value | Description                                                                                      |
-|--------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
-| `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout |
-| `LOG4J2_ROOT_LEVEL`                                    | `info`        | The logging level for the root logger                                                            |
-| `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | The logging level for the package org.apache.kafka                                               |
-| `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | The logging level for the package io.kcache                                                      |
-| `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | The logging level for the package io.vertx                                                       |
-| `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | The logging level for the package io.netty                                                       |
-| `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | The logging level for the package io.conduktor                                                   |
-| `LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL`        | `info`        | The logging level for the package io.conduktor.proxy.authorization                               |
-| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | The logging level for the package io.conduktor.proxy.rebuilder.components                        |
-| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.service                                     |
-| `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | The logging level for the package io.conduktor.proxy.network                                     |
-| `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | The logging level for the package io.micrometer                                                  |
+| Environment Variable                                   | Default Value | Description                                                                                                                | Package                                  |
+|--------------------------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout                           |                                          |
+| `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | Low-level networking, connection mapping, authentication, authorization                                                    | io.conduktor.proxy.network               |
+| `LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL`            | `info`        | Requests processing and forwarding. At `trace`, log requests sent                                                          | io.conduktor.proxy.thread.UpstreamThread |
+| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | Requests and responses rewritting. Logs responses payload in `debug` (useful for checking METADATA)                        | io.conduktor.proxy.rebuilder.components  |
+| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | Various. Logs ACL checks and interceptor targettings at `debug`. Logs post-interceptor requests/reponse payload at `trace` | io.conduktor.proxy.service               |
+| `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | Get even more logs not covered by specific packages                                                                        | io.conduktor                             |
+| `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | Kafka log level                                                                                                            | org.apache.kafka                         |
+| `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | Kcache log level (our persistence library)                                                                                 | io.kcache                                |
+| `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | Vertx log level (our HTTP API framework)                                                                                   | io.vertx                                 |
+| `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | Netty log level (our network framework)                                                                                    | io.netty                                 |
+| `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | Micrometer log level (our metrics framework)                                                                               | io.micrometer                            |
+| `LOG4J2_ROOT_LEVEL`                                    | `info`        | Root logging level (applies to anything else)                                                                              | (root)                                   |
 
 ### Product Analytics
 
