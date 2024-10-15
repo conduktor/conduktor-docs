@@ -12,7 +12,7 @@
   height: 0;
 
   &:checked + span {
-    background-color: var(--colors-purple9);
+    background-color: var(--colors-primary10);
   }
 
   &:focus + span {
@@ -33,7 +33,7 @@
   right: 0;
   bottom: 0;
   border-radius: 34px;
-  background-color: var(--colors-mauve11);
+  background-color: var(--colors-olive11);
   transition: all 200ms ease-in-out;
 
   &::before {

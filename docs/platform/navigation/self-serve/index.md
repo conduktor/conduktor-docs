@@ -31,11 +31,12 @@ This approach brings governance into your enterprise through concepts like Owner
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self-service relies on a central concept, the **Application** which incorporates 3 core concepts:
-- Application Ownership on the **Kafka** resources
-- How **People** interact with the Application
-- Self-service **Processes** & Governance rules
-  ![Image](img/application-concept.png)
+Self-service relies on a central concept, the **Application**, which dictates **owernship** of Kafka resources. 
+
+Below outlines the relationships between [Self-service resources](../../reference/resource-reference/self-service).
+
+  ![Image](img/self-service-concepts.png)
+
 
 ## Central Platform Team Resources
 
@@ -183,7 +184,7 @@ metadata:
   application: "clickstream-app"
   name: "clickstream-support"
 spec:
-  title: Support Clickstream
+  displayName: Support Clickstream
   description: |
     Members of the Support Group are allowed:
       Read access on all the resources

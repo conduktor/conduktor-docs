@@ -38,7 +38,7 @@ export const Item = styled('li', {
   variants: {
     expanded: {
       true: {
-        backgroundColor: '$mauve2',
+        backgroundColor: '$olive2',
 
         svg: {
           transform: 'rotate(-180deg)',
@@ -58,7 +58,7 @@ export const ItemQuestionContainer = styled('div', {
 })
 
 export const ItemQuestion = styled('strong', {
-  color: '$mauve12',
+  color: '$olive12',
   fontWeight: '$semi',
   fontSize: '$fontSize4',
 })
@@ -66,7 +66,7 @@ export const ItemQuestion = styled('strong', {
 export const ItemAnswer = styled('p', {
   marginTop: '$space5',
   marginLeft: 'calc($space6 + 16px)',
-  color: '$mauve11',
+  color: '$olive11',
 
   variants: {
     expanded: {

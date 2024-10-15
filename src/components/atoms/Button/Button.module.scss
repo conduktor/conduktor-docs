@@ -1,7 +1,7 @@
 .Button {
   cursor: pointer;
   border-radius: var(--radii-radius2);
-  font-weight: var(--fontWeights-bold);
+  font-weight: var(--fontWeights-semi);
   letter-spacing: -0.15px;
   line-height: var(--lineHeights-button);
   height: 40px;
@@ -19,19 +19,19 @@
   }
 
   &[data-type="primary"] {
-    background-color: var(--colors-purple9);
-    color: #fff;
+    background-color: var(--colors-primary9);
+    color: var(--colors-primary12);
     &:hover {
-      background-color: var(--colors-purple10);
+      background-color: var(--colors-primary10);
     }
   }
 
   &[data-type="secondary"] {
     background-color: transparent;
-    border: 1px solid var(--colors-mauve6);
-    color: var(--colors-mauve12);
+    border: 1px solid var(--colors-olive6);
+    color: var(--colors-olive12);
     &:hover {
-      background-color: var(--colors-mauve6);
+      background-color: var(--colors-olive6);
     }
   }
 
@@ -39,7 +39,7 @@
     background-image: linear-gradient(101.67deg, #9B13EF 0%, #1378EF 100%);
     color: #fff;
     transition: filter 200ms ease-in-out;
-    
+
     &:hover {
       filter: grayscale(0.2);
     }
@@ -48,11 +48,11 @@
   &[data-type="transparent"] {
     background-color: transparent;
     padding: 0;
-    color: var(--colors-mauve12);
+    color: var(--colors-olive12);
     transition: 200ms color ease-in-out;
 
     &:hover {
-      color: var(--colors-purple9);
+      color: var(--colors-primary11);
 
       span {
         transform: rotate(0deg) translateX(3px);

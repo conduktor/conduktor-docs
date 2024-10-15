@@ -2,10 +2,10 @@ import { styled } from '@site/src/styles'
 
 export const StyledGridBackground = styled('div', {
   backgroundImage:
-    'linear-gradient($mauve3 1px, transparent 1px), linear-gradient(90deg, $mauve3 1px, transparent 1px), linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)',
+    'linear-gradient($olive3 1px, transparent 1px), linear-gradient(90deg, $olive3 1px, transparent 1px), linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)',
   backgroundSize: '64px 64px, 64px 64px, 20px 20px, 20px 20px',
   backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px',
-  borderBottom: '1px solid $mauve3',
+  borderBottom: '1px solid $olive3',
 
   variants: {
     breakpoint: {

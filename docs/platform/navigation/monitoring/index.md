@@ -11,7 +11,7 @@ description: Learn how to get started with Monitoring
 
 Conduktor Monitoring gives you insight into the most important Kafka metrics. There is no complicated setup and it integrates easily with existing systems.
 
-![Monitoring](/img/monitoring/monitoring-intro.webp)
+![Monitoring](/images/changelog/platform/v28/topic-monitoring.png)
 
 ## Ops Monitoring
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 title: Configure Custom Deserializers
 description: Reference Documentation for Topic related pages
 ---
