@@ -36,7 +36,7 @@ This will create a new topic (if it doesn't exist) in the cluster named `my-kafk
 
 If you don't see the topic `_conduktor_console_audit_log` in your Kafka cluster, you can check the Console logs for any error message, but first be sure to check if internal topics are Hidden.
 
-This is probably because you have misconfigured the name of the Kafka cluster. In that case, you will see this message showing up regularly:
+Otherwise, this is probably because of a misconfigured name of the Kafka cluster. In that case, you will see this message showing up regularly in the logs:
 ```
 Failed to publish audit log event: Not found. Could not find cluster my-kafka-cluster
 ```
