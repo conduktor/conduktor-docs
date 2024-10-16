@@ -13,6 +13,10 @@ With the complement of the [export feature](/platform/navigation/console/topics/
 
 Let's see how to configure the Console Audit Log to be sent in a Kafka topic, and how to export it as CSV or JSON.
 
+:::info
+You can find the [list of Audit Log events](/platform/navigation/settings/audit-log/#exportable-audit-log-events) here.
+:::
+
 ## Send the Console Audit Log in a Kafka Topic
 
 In the Console deployment configuration, you simply have to set the following properties:
