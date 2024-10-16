@@ -9,7 +9,7 @@ description: Send the Console Audit Log in a Kafka topic
 By default, Console's Audit Log is stored in the connected PostgreSQL database.
 From version [1.28.0](/changelog#console-1280), you can have Console emit this Audit Log to a Kafka topic. 
 
-With the complement of the [export feature](/platform/navigation/console/topics/topic-consume/consume/#export-records-in-csv--json), you can easily integrate the Console Audit Log with your SIEM or log management system.
+Complementing this with the [export feature](/platform/navigation/console/topics/topic-consume/consume/#export-records-in-csv--json), you can easily integrate the Console Audit Log with your SIEM or log management system.
 
 Let's see how to configure the Console Audit Log to be sent in a Kafka topic, and how to export it as CSV or JSON.
 
