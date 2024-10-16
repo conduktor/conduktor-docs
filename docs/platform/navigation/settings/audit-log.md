@@ -161,6 +161,8 @@ CRN `platform:/user/<email>`
 
 Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
 
+Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables#auditlog-export-properties).
+
 The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
 ```json
