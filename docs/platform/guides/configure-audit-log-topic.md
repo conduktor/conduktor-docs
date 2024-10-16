@@ -11,7 +11,7 @@ From version [1.28.0](/changelog#console-1280), you can have Console emit this A
 
 Complementing this with the [export feature](/platform/navigation/console/topics/topic-consume/consume/#export-records-in-csv--json), you can easily integrate the Console Audit Log with your SIEM or log management system.
 
-Let's see how to configure the Console Audit Log to be sent in a Kafka topic, and how to export it as CSV or JSON.
+Let's see how to configure the Audit Log to be sent to a Kafka topic, and then export it as CSV or JSON.
 
 :::info
 You can find the [list of Audit Log events](/platform/navigation/settings/audit-log/#exportable-audit-log-events) here.
