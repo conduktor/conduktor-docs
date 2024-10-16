@@ -30,7 +30,7 @@ CDK_AUDITLOGPUBLISHER_TOPICCONFIG_REPLICATIONFACTOR: 1          # Optional, defa
 
 Once you've added these properties in your Console deployment configuration, simply restart it.
 
-This will create a new topic (if it doesn't exist) in the cluster named `my-kafka-cluster`. This new topic will be named `_conduktor_console_audit_log`, and will have 1 partition and 1 replication factor.
+This will create a new topic (if it doesn't exist) in the cluster named `my-kafka-cluster`. This new topic will be named `_conduktor_console_audit_log`, and will have 1 partition and a replication factor of 1.
 
 ## Troubleshooting
 
