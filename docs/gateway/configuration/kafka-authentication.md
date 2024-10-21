@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Gateway to Kafka Configuration
 description: Securing Conduktor Gateway
 ---
@@ -8,8 +8,8 @@ description: Securing Conduktor Gateway
 
 Gateway depends on a 'backing' Kafka cluster for its operation.
 
-Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster.
-The configuration is done via environment variables, as it is for the other aspects of a Gateway configuration.
+Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster. If you have not done so already it is best to set the [Client to Gateway](/gateway/configuration/client-authentication) configuration variables, that way the Gateway will know how to interact with Kafka based on how authentication is being provided by the clients, the two are related because Gateway must know whether you wish to use [delegated authentication](#delegated-authentication) or not.
+The configuration is done via environment variables, as it is for the other aspects of a Gateway configuration. 
 
 All environment variables that start with `KAFKA_` are mapped to configuration properties for connecting Gateway to the Kafka cluster.
 As Gateway is based on the Java-based Kafka-clients, it supports all configuration properties that Java-clients do.
@@ -68,6 +68,7 @@ Kafka cluster with SASL_PLAINTEXT.
 ### SASL PLAIN
 
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
 KAFKA_SASL_MECHANISM: PLAIN
@@ -77,6 +78,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule 
 ### SASL SCRAM
 
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
 KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
@@ -91,6 +93,7 @@ Kafka cluster with SASL_SSL and PLAIN SASL mechanism
 This example can be seen as a special case of the one above.
 
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.cluster.confluent.cloud:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: PLAIN
@@ -103,6 +106,7 @@ Note: In case you are using this in a PoC setting without TLS encryption between
 ### SASL SCRAM
 
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
@@ -111,6 +115,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule 
 
 ### SASL GSSAPI (Kerberos)
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: GSSAPI
@@ -123,6 +128,7 @@ KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
 
 ## AWS MSK cluster with IAM
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <b-3-public.****.kafka.eu-west-1.amazonaws.com:9198>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: AWS_MSK_IAM
@@ -134,6 +140,7 @@ KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
 
 ## SSL
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: PLAIN
@@ -149,6 +156,7 @@ KAFKA_SSL_KEY_PASSWORD: <key-password>
 Kafka cluster with mTLS client authentication.
 
 ```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>, <your.kafka.broker-3:9092>
 KAFKA_SECURITY_PROTOCOL: SSL
 KAFKA_SSL_TRUSTSTORE_LOCATION: /security/truststore.jks
