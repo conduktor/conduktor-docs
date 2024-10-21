@@ -98,7 +98,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule 
 ```
 As Confluent Cloud uses certificates signed by a well-known CA, you normally do not need to specify a trust-store.
 
-Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `DELEGATED_SASL_PLAINTEXT`. Then clients will be able to authenticate using their own API keys/secrets.
+Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `DELEGATED_SASL_PLAINTEXT`. Then clients will be able to authenticate using their own API keys/secrets. Delegated is [explained below](#delegated-authentication).
 
 ### SASL SCRAM
 
@@ -184,3 +184,5 @@ This Service Account must have all the necessary ACLs to perform not only the Ga
 
 If necessary, you can enable ACLs for Non-Delegated Authentication.  
 First configure `GATEWAY_ACL_STORE_ENABLED=true`, and then you can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
+
+[Jump to top](#supported-protocols).
