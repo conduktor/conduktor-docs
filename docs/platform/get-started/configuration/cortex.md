@@ -28,8 +28,8 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region.                                                                                        | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name.                                                                                   | true      | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_INSECURE`          | S3 storage SSL/TLS check flag.                                                                            | false     | bool   | `false`                 | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | Access key ID of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, then if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                                                                       | false      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | Secret access key of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, then if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                            | false      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | Access key ID of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                                                                       | false      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | Secret access key of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                            | false      | string | ∅                       | `1.18.0` |
 | **GCS**                                       |                                                                                                          |           |        |                         |          |
 | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | GCS storage bucket name.                                                                                  | true      | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | GCS storage service account JSON content.                                                                 | true      | string | ∅                       | `1.18.0` |
@@ -60,7 +60,7 @@ Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration
 This is not currently available for Alert Manager and Prometheus. 
 :::
 
-In a docker compose it may look like the below:
+In a docker compose it may look like the following:
 ````yaml
 version: '3.8'
 services:
