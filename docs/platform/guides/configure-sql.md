@@ -26,6 +26,8 @@ We encourage you to use this feature in non-production environments and give us 
 
 ## Console Configuration
 
+For a fully integrated Docker Compose, run our [get started](https://conduktor.io/get-started/) stack to try SQL. The below guide details how to add this feature to your existing deployment. 
+
 ### Database Configuration
 
 By default, the SQL feature is disabled. You will need to add additional configuration about the database for storing the data.
