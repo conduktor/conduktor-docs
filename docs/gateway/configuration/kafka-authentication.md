@@ -87,7 +87,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule 
 
 ## SASL_SSL
 ### SASL PLAIN
-Kafka cluster with SASL_SSL and PLAIN SASL mechanism
+Kafka cluster with SASL_SSL and PLAIN SASL mechanism.
 
 #### Confluent Cloud with API key/secret
 This example can be seen as a special case of the one above.
@@ -111,6 +111,9 @@ KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 KAFKA_SECURITY_PROTOCOL: SASL_SSL
 KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
+KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
+KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
 ```
 
 ### SASL GSSAPI (Kerberos)
@@ -142,11 +145,13 @@ KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
-KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SECURITY_PROTOCOL: SSL
 KAFKA_SASL_MECHANISM: PLAIN
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
 KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
 KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
+KAFKA_SSL_KEYSTORE_TYPE: <JKS>
 KAFKA_SSL_KEYSTORE_LOCATION: </path/to/keystore.jks>
 KAFKA_SSL_KEYSTORE_PASSWORD: <keystore-password>
 KAFKA_SSL_KEY_PASSWORD: <key-password>
