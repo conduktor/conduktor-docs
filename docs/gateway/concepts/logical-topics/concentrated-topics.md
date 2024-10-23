@@ -184,11 +184,11 @@ spec:
   pattern: concentrated.*
   physicalTopics:
     delete: physical.topic
-  trueOffsets: true
+  offsetCorrectness: true
 ````
 
-- `spec.trueOffsets` only applies to Concentrated Topics with the `cleanup.policy=delete`
-- `spec.trueOffsets` is not retroactive on previously created Concentrated Topics
+- `spec.offsetCorrectness` only applies to Concentrated Topics with the `cleanup.policy=delete`
+- `spec.offsetCorrectness` is not retroactive on previously created Concentrated Topics
 
 
 
@@ -197,4 +197,4 @@ spec:
 
 Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
 
-TODO: Fill in results from https://github.com/conduktor/conduktor-proxy/pull/1726
+TODO: Fill in results from conduktor/conduktor-proxy/pull/1726

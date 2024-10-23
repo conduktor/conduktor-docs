@@ -222,7 +222,7 @@ spec:
     compact: titi-compact
     deleteCompact: titi-cd
   autoManaged: false
-  trueOffsets: false
+  offsetCorrectness: false
 ````
 **ConcentrationRule checks:**
 - `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
@@ -230,7 +230,7 @@ spec:
 - `spec.physicalTopics.compact` is optional. Must be a valid topic name with a `cleanup.policy` set to `compact`
 - `spec.physicalTopics.deleteCompact` is optional. Must be a valid topic name with a `cleanup.policy` set to `delete,compact`
 - `spec.autoManaged` is optional, default `false`
-- `spec.trueOffsets` is optional, default `false`
+- `spec.offsetCorrectness` is optional, default `false`
 
 **ConcentrationRule side effects:**
 - Once the Concentration Rule is deployed, topics created with a name matching the `spec.pattern` will not be created as real Kafka topics but as Concentrated Topics instead.  
@@ -238,10 +238,15 @@ spec:
 - If a topic creation request is made with a `cleanup.policy` that isn't configured in the ConcentrationRule, topic creation will fail.
 - It is not possible to update `cleanup.policy` of a concentrated topic.
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
-- If `spec.trueOffsets` is set to `true`, Gateway will maintain a list of offsets for each Concentrated Topic records. 
+- If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each Concentrated Topic records. 
   - This allows for a proper calculation of Message Count and Consumer Group Lag at the expense of some performance overhead.
   - Read more about offset Correctness here
-- If `spec.trueOffsets` is set to `false`, Gateway will report the offsets of the backing topic records.
+- If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
+
+:::caution
+If a ConcentrationRule spec changes, it will not affect previously created Concentrated Topics.  
+It will only affect the Topics created after the change.
+:::
 
 ## VirtualCluster
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
