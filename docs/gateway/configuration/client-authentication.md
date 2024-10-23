@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: Client to Gateway Configuration
 description: Securing Conduktor Gateway
 ---
@@ -12,7 +12,7 @@ As with Kafka brokers, Gateway brokers support multiple security schemes for Kaf
 - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Supported security protocols and authentication mechanisms](#supported-security-protocols-and-authentication-mechanisms)
 - [Security protocol](#security-protocol)
-  - [Plaintext](#plaintext)
+  - [PLAINTEXT](#plaintext)
   - [SSL](#ssl)
     - [Mutual TLS (mTLS)](#mutual-tls-mtls)
   - [SASL\_PLAINTEXT](#sasl_plaintext)
@@ -67,7 +67,7 @@ The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL`
 
 Gateway supports all the security protocols as Apache Kafka does, you can find further information regarding what they are on the [Apache Kafka documentation](https://kafka.apache.org/documentation/#listener_configuration). In addition, Gateway adds two new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`, as mentioned for delegating to Kafka.
 
-## Plaintext
+## PLAINTEXT
 
 There is no client authentication to Gateway and all communication is exchanged without any network security.
 
