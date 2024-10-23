@@ -20,8 +20,6 @@ Kafka configuration properties are mapped to Gateway environment variables as fo
 
 For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environment variable.
 
-For when your Kafka cluster requires authentication, we refer to the user-name you need to provide as the Gateway service account.
-
 - [Connecting Gateway to Kafka](#connecting-gateway-to-kafka)
 - [Supported Protocols](#supported-protocols)
   - [PLAINTEXT](#plaintext)
@@ -54,7 +52,7 @@ In the following examples, we provide blocks of environment variables which can 
 Information which should be customized is enclosed by `<` and `>`.
 
 ## PLAINTEXT
-Kafka cluster without authentication, `PLAINTEXT`.
+Kafka cluster without authentication or encryption in transit, `PLAINTEXT`.
 
 In this case you just need the bootstrap servers:
 
@@ -93,7 +91,7 @@ KAFKA_SSL_KEY_PASSWORD: conduktor
 ```
 
 ## SASL_PLAINTEXT
-Kafka cluster with SASL_PLAINTEXT security protocol, supporting the following SASL_MECHANISMs.
+Kafka cluster with SASL_PLAINTEXT security protocol but no encryption in transit, supporting the following SASL_MECHANISMs.
 
 ### SASL PLAIN
 
@@ -127,6 +125,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.oauthbearer.OAuthBearer
 ```
 
 ## SASL_SSL
+Kafka cluster that uses SASL for authentication and TLS (formerly SSL) for encryption in transit.
 ### PLAIN
 Kafka cluster with SASL_SSL and PLAIN SASL mechanism.
 
@@ -203,8 +202,8 @@ In Delegated Authentication, the credentials provided to establish the connectio
 As a result, the Client will inherit the ACLs of the service account configured on the backing cluster.
 
 On top of that, Gateway needs its own Service Account with the following ACLs to operate correctly:
-- read on internal topics and they should (ofc) exist
-- describe consumer group for internal topic
+- Read on internal topics and they should (ofc) exist
+- Describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
 
@@ -212,8 +211,8 @@ On top of that, Gateway needs its own Service Account with the following ACLs to
 In Non-Delegated Authentication (Local, Oauth or mTLS), the connection is using the Gateway's Service Account to connect to the backing Kafka.
 
 This Service Account must have all the necessary ACLs to perform not only the Gateway operations:
-- read on internal topics and they should (ofc) exist
-- describe consumer group for internal topic
+- Read on internal topics and they should (ofc) exist
+- Describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
 ... but also all the permissions necessary to serve all Gateway users.

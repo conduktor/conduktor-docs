@@ -159,11 +159,11 @@ Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REF
 | `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`  | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                            |
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`    | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                          |
 #### PLAIN
-This settings are used when credentials are managed on the Gateway, see [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for details.
+These settings are used when credentials are managed on the Gateway, see [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for details.
 
 | Environment Variable        | Default Value | Description                                                                                                             |
 |-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens, this is not published and *must* be changed. | Used for the `PLAIN` mechanism when generating JWT tokens for clients. You must set a random value which is at least 256 bit long to ensure tokens can't be forged. |
+| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens and *must* be changed. | Used for the `PLAIN` mechanism when generating JWT tokens for clients. You must set a random value which is at least 256 bit long to ensure tokens can't be forged. |
 
 #### SECURITY PROVIDER
 
