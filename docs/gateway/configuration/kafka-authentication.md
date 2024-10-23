@@ -22,32 +22,30 @@ For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environ
 
 For when your Kafka cluster requires authentication, we refer to the user-name you need to provide as the Gateway service account.
 
+- [Connecting Gateway to Kafka](#connecting-gateway-to-kafka)
 - [Supported Protocols](#supported-protocols)
-- [Examples](#examples)
   - [PLAINTEXT](#plaintext)
-  - [SASL\_PLAINTEXT](#sasl_plaintext)
-  - [SASL PLAIN](#sasl-plain)
-  - [SASL SCRAM](#sasl-scram)
-  - [SASL\_SSL](#sasl_ssl)
-  - [SASL PLAIN](#sasl-plain-1)
-      - [Confluent Cloud with API key/secret](#confluent-cloud-with-api-keysecret)
-  - [SASL SCRAM](#sasl-scram-1)
-  - [SASL GSSAPI (Kerberos)](#sasl-gssapi-kerberos)
-  - [AWS MSK cluster with IAM](#aws-msk-cluster-with-iam)
   - [SSL](#ssl)
-  - [mTLS](#mtls)
-- [Service Account and ACL requirements](#service-account-and-acl-requirements)
-  - [Delegated Authentication](#delegated-authentication)
-  - [Non-Delegated](#non-delegated)
+    - [mTLS](#mtls)
+  - [SASL\_PLAINTEXT](#sasl_plaintext)
+    - [SASL PLAIN](#sasl-plain)
+    - [SASL SCRAM](#sasl-scram)
+  - [SASL\_SSL](#sasl_ssl)
+    - [PLAIN](#plain)
+      - [Confluent Cloud with API key/secret](#confluent-cloud-with-api-keysecret)
+    - [SASL SCRAM](#sasl-scram-1)
+    - [SASL GSSAPI (Kerberos)](#sasl-gssapi-kerberos)
+  - [AWS MSK cluster with IAM](#aws-msk-cluster-with-iam)
+  - [Service Account and ACL requirements](#service-account-and-acl-requirements)
+    - [Delegated Authentication](#delegated-authentication)
+    - [Non-Delegated](#non-delegated)
 
-## Supported Protocols
+
+# Supported Protocols
 
 You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.  
 
 These can be used with all SASL mechanisms supported by Apache Kafka: `PLAIN`, `SCRAM-SHA`, `OAuthBearer`, `Kerberos` etc. In addition, we support IAM authentication for AWS MSK clusters.
-
-
-## Examples
 
 In the following examples, we provide blocks of environment variables which can be provided to Gateway, e.g. in a docker-compose file, or a `helm` deployment. 
 
@@ -62,8 +60,38 @@ In this case you just need the bootstrap servers:
 KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
 ```
 
+## SSL
+```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SSL
+KAFKA_SASL_MECHANISM: PLAIN
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
+KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
+KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
+KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
+KAFKA_SSL_KEYSTORE_TYPE: <JKS>
+KAFKA_SSL_KEYSTORE_LOCATION: </path/to/keystore.jks>
+KAFKA_SSL_KEYSTORE_PASSWORD: <keystore-password>
+KAFKA_SSL_KEY_PASSWORD: <key-password>
+```
+
+### mTLS
+Kafka cluster with mTLS client authentication.
+
+```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>, <your.kafka.broker-3:9092>
+KAFKA_SECURITY_PROTOCOL: SSL
+KAFKA_SSL_TRUSTSTORE_LOCATION: /security/truststore.jks
+KAFKA_SSL_TRUSTSTORE_PASSWORD: conduktor
+KAFKA_SSL_KEYSTORE_LOCATION: /security/kafka.gw.keystore.jks
+KAFKA_SSL_KEYSTORE_PASSWORD: conduktor
+KAFKA_SSL_KEY_PASSWORD: conduktor
+```
+
 ## SASL_PLAINTEXT
-Kafka cluster with SASL_PLAINTEXT.
+Kafka cluster with SASL_PLAINTEXT security protocol, supporting the following SASL_MECHANISMs.
 
 ### SASL PLAIN
 
@@ -86,11 +114,11 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule 
 ```
 
 ## SASL_SSL
-### SASL PLAIN
+### PLAIN
 Kafka cluster with SASL_SSL and PLAIN SASL mechanism.
 
 #### Confluent Cloud with API key/secret
-This example can be seen as a special case of the one above.
+This example can be seen as a special case of the above.
 
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
@@ -141,37 +169,7 @@ KAFKA_AWS_ACCESS_KEY_ID: <access-key-id>
 KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
 ```
 
-## SSL
-```yaml
-GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
-KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
-KAFKA_SECURITY_PROTOCOL: SSL
-KAFKA_SASL_MECHANISM: PLAIN
-KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
-KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
-KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
-KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
-KAFKA_SSL_KEYSTORE_TYPE: <JKS>
-KAFKA_SSL_KEYSTORE_LOCATION: </path/to/keystore.jks>
-KAFKA_SSL_KEYSTORE_PASSWORD: <keystore-password>
-KAFKA_SSL_KEY_PASSWORD: <key-password>
-```
-
-### mTLS
-Kafka cluster with mTLS client authentication.
-
-```yaml
-GATEWAY_SECURITY_PROTOCOL: PLAINTEXT # Change to relevant client-side value if known
-KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>, <your.kafka.broker-3:9092>
-KAFKA_SECURITY_PROTOCOL: SSL
-KAFKA_SSL_TRUSTSTORE_LOCATION: /security/truststore.jks
-KAFKA_SSL_TRUSTSTORE_PASSWORD: conduktor
-KAFKA_SSL_KEYSTORE_LOCATION: /security/kafka.gw.keystore.jks
-KAFKA_SSL_KEYSTORE_PASSWORD: conduktor
-KAFKA_SSL_KEY_PASSWORD: conduktor
-```
-
-## Service Account and ACL requirements
+## Service Account and ACL Requirements
 
 Depending on the Client to Gateway authentication method you choose, the Service Account used to connect the Gateway might need different ACLs to operate properly.
 
