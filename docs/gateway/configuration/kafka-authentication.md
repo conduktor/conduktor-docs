@@ -113,6 +113,17 @@ KAFKA_SASL_MECHANISM: SCRAM-SHA-256 # or SCRAM-SHA-512
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.scram.ScramLoginModule required username="<gw-sa-username>" password="<gw-sa-password>";
 ```
 
+### OAuthbearer
+```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+KAFKA_SASL_MECHANISM: OAUTHBEARER
+KAFKA_SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL: "<https://myidp.example.com/oauth2/default/v1/token>"
+KAFKA_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId=“<>” clientSecret=“<>” scope=“.default”;
+```
+
 ## SASL_SSL
 ### PLAIN
 Kafka cluster with SASL_SSL and PLAIN SASL mechanism.
@@ -155,6 +166,18 @@ KAFKA_SASL_KERBEROS_SERVICE_NAME: <kafka>
 KAFKA_SSL_TRUSTSTORE_TYPE: <JKS>
 KAFKA_SSL_TRUSTSTORE_LOCATION: </path/to/truststore.jks>
 KAFKA_SSL_TRUSTSTORE_PASSWORD: <truststore-password>
+```
+
+### OAuthbearer
+
+```yaml
+GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+KAFKA_BOOTSTRAP_SERVERS: <your.kafka.broker-1:9092>,<your.kafka.broker-2:9092>
+KAFKA_SECURITY_PROTOCOL: SASL_SSL
+KAFKA_SASL_MECHANISM: OAUTHBEARER
+KAFKA_SASL_OAUTHBEARER_TOKEN_ENDPOINT_URL: "<https://myidp.example.com/oauth2/default/v1/token>"
+KAFKA_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId=“<>” clientSecret=“<>” scope=“.default”;
 ```
 
 ## AWS MSK cluster with IAM
