@@ -12,7 +12,7 @@ As with Kafka brokers, Gateway brokers support multiple security schemes for Kaf
 - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Supported security protocols and authentication mechanisms](#supported-security-protocols-and-authentication-mechanisms)
 - [Security protocol](#security-protocol)
-  - [Plaintext](#plaintext)
+  - [PLAINTEXT](#plaintext)
   - [SSL](#ssl)
     - [Mutual TLS (mTLS)](#mutual-tls-mtls)
   - [SASL\_PLAINTEXT](#sasl_plaintext)
