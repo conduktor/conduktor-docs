@@ -89,7 +89,7 @@ limits:
   ingestion_rate: 50000
   max_series_per_metric: 100000
 ```
-Mount to `/opt/override-configs/cortex.yaml`. Spin up the container. Exec into the container and confirm the contents, `cat /var/conduktor/configs/monitoring-cortex.yaml`.
+Mount to `/opt/override-configs/cortex.yaml`. Spin up the container. Exec into the container and confirm the contents, replace `2` with the number of lines of override you wish to see, or remove grep to get the whole file, `cat /var/conduktor/configs/monitoring-cortex.yaml | grep limits -A2`.
 
 You should see a similar entry to the below in the opening logs:
 
