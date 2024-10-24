@@ -436,3 +436,42 @@ conduktor-main:
 </Tabs>
 
 
+### Using Environment Variables for Secrets
+When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
+It also supports default values as fallback using POSIX notation `${ENV:-default}`.
+
+It will fail if an environment variable is not found or set to empty.
+You can avoid crash and use empty string as default value if with permissive CLI flag.
+
+See below example for a Conduktor cluster configuration, the credentials to the cluster are hidden.
+
+```yaml
+apiVersion: console/v2
+kind: KafkaCluster
+metadata:
+  name: my-cluster
+spec:
+  displayName: "My Kafka Cluster"
+  icon: "kafka"
+  color: "#000000"
+  bootstrapServers: "localhost:9092"
+  ignoreUntrustedCertificate: false
+  properties:
+    sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${ENV_VAR_FOR_USER}" password="${ENV_VAR_FOR_PASSWORD}";
+    security.protocol: SASL_SSL
+    sasl.mechanism: PLAIN
+  schemaRegistry:
+    type: "ConfluentLike"
+    url: http://localhost:8080
+    security:
+      type: BasicAuth
+      username: ${ENV_VAR_FOR_USER}
+      password: ${ENV_VAR_FOR_PASSWORD}
+    ignoreUntrustedCertificate: false
+  kafkaFlavor:
+    type: "Confluent"
+    key: "string"
+    secret: "string"
+    confluentEnvironmentId: "string"
+    confluentClusterId: "string"
+```
