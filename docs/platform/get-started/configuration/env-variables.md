@@ -84,7 +84,7 @@ All are valid and equivalent in YAML.
 
 ### Environment Variable Conversion
 
-At startup, Condutkor Console will convert environment variables into configuration that will be merged with input YAML configuration. The conversion rules are as follows:
+At startup, Condutkor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
 
 - Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix
