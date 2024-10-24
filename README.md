@@ -4,6 +4,7 @@
 or, [user reference doc](/gateway/reference/user).
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`. 
 - Production (main): https://docs.conduktor.io
+- Anchor example, [env variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties)
 
 # Development
 
