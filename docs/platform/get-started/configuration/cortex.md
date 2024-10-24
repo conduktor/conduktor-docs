@@ -83,13 +83,17 @@ services:
 Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
 This is not currently available for Alert Manager and Prometheus. 
 
-For example, create a file `cortex.yaml` add in your overrides:
+For example, create a file `cortex.yaml` add in only your overrides:
 ```yaml
 limits:
   ingestion_rate: 50000
   max_series_per_metric: 100000
 ```
-Mount to `/opt/override-configs/cortex.yaml`. Spin up the container. Exec into the container and confirm the contents, `cat /var/conduktor/configs/cortex.yaml`.
+Mount to `/opt/override-configs/cortex.yaml`. Spin up the container. Exec into the container and confirm the contents, `cat /var/conduktor/configs/monitoring-cortex.yaml`.
+
+You should see a similar entry to the below in the opening logs:
+
+`INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment`
 
 ## Troubleshooting  
 
