@@ -55,11 +55,7 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level.                                                                                  | false     | string | `info`                  | `1.18.0` |
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
 
-:::tip
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
-This is not currently available for Alert Manager and Prometheus. 
-:::
-
+## Example configuration
 In a docker compose it may look like the following:
 ````yaml
 version: '3.8'
@@ -82,6 +78,18 @@ services:
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ````
+
+## Overriding Configuration
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+This is not currently available for Alert Manager and Prometheus. 
+
+For example, create a file `cortex.yaml` add in your overrides:
+```yaml
+limits:
+  ingestion_rate: 50000
+  max_series_per_metric: 100000
+```
+Mount to `/opt/override-configs/cortex.yaml`. Spin up the container. Exec into the container and confirm the contents, `cat /var/conduktor/configs/cortex.yaml`.
 
 ## Troubleshooting  
 
