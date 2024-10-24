@@ -469,8 +469,8 @@ spec:
     ignoreUntrustedCertificate: false
   kafkaFlavor:
     type: "Confluent"
-    key: "string"
-    secret: "string"
-    confluentEnvironmentId: "string"
-    confluentClusterId: "string"
+    key: "${ENV_VAR_CONFLUENT_KEY}"
+    secret: "${ENV_VAR_CONFLUENT_SECRET}"
+    confluentEnvironmentId: "${ENV_VAR_CONFLUENT_ENV_ID:-dev}"
+    confluentClusterId: "${ENV_VAR_CONFLUENT_CLUSTER_ID:-main}"
 ```
