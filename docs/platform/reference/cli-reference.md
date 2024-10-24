@@ -440,10 +440,9 @@ conduktor-main:
 When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
 It also supports default values as fallback using POSIX notation `${ENV:-default}`.
 
-It will fail if an environment variable is not found or set to empty.
-You can avoid crash and use empty string as default value if with permissive CLI flag.
+It will fail if an environment variable is not found or set to empty, unless the `--permissive` flag is set e.g. `conduktor apply -f clusters.yaml --permissive`. In which case when an env var is blank or is missing, then it will be replaced with an empty string.
 
-See below example for a Conduktor cluster configuration, the credentials to the cluster are hidden.
+See below example for a Conduktor cluster configuration, where the credentials to the cluster are hidden.
 
 ```yaml
 apiVersion: console/v2
