@@ -99,3 +99,6 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 4. [Create some alerts](../../navigation/monitoring/getting-started/create-alert.md).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
+
+## Endpoint Authentication
+Monitoring is not designed to be interacted with through the API endpoints by end users, only Console. As such no ingress is available externally and you should not set one up as there is no authentication mechanism.
