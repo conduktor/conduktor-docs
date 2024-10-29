@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General fixes 🔨
 
 - More detailed API responses from the admin API. 201 & 203 codes now returned, as well as additional messages on create and deletion of resources

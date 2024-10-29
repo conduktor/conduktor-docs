@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ### Features ✨
 
 - Replace the alert threshold column with the full underlying query in the 'Alerts' table.
