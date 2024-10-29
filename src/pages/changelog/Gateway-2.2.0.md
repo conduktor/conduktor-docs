@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Features ✨
 
 ### Usage metrics per topic and vcluster

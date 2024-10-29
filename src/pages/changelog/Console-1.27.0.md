@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 - [Features ✨](#features-)
   - [Kafka Connect Configuration Wizard](#kafka-connect-configuration-wizard)
   - [Alerts for Kafka Connect](#alerts-for-kafka-connect)

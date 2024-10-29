@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General fixes 🔨
 
 - Improved error handling on start: When faced with issues to do with missing keystores or inadequately configured port count, we'll throw you some better error messages

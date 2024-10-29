@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Fixes 🔨
 
 - Increased timeout from 30s to 5m when indexing snapshots (used for caching list pages) of Kafka clusters
