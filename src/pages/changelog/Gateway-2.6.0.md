@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Schema based encryption
 
 You can now define your encryption requirement directly within your Schemas.

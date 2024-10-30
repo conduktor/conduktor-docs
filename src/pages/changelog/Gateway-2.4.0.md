@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## User management unification
 
 We refactored all authentication process to unify some concern accross all authentication mechanism in Gateway.
