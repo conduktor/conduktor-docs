@@ -117,3 +117,7 @@ curl \
 
 Note that Conduktor can recommend alternative solutions for initiating the switchover that does not involve making an API call to every Gateway instance. These alternatives are dependent on your deployment configuration, therefore we recommend [contacting us](https://www.conduktor.io/contact/demo/?utm_source=docs&utm_medium=webpage) to discuss this.
 
+### Failover limitation
+
+During a failover the following interceptor will not work:
+ - Observability plugin: all metrics during the failover period will not be counted 
