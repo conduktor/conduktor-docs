@@ -41,8 +41,6 @@ If you want to use AWS RDS or AWS Aurora as a database with Conduktor Console, p
 
 Console will not work with all Postgresql engines within RDS, it will only work with engine versions 14.8+ / 15.3+, other versions are not fully supported.
 
-The Console configuration through our onboarding interface won't work, users should configure the console either with a yaml file or with environment variables.
-
 
 ### Setup
 

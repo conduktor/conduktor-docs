@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Fixes 🔨
 
 - Fixed an issue with the Reset Offset Preview in the Consumer Groups details showing incorrect target offsets

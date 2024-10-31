@@ -1,4 +1,5 @@
 ---
+sidebar_position: 9
 title: ksqlDB
 description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---

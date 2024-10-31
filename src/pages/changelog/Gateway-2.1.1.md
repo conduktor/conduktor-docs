@@ -6,6 +6,8 @@ solutions: gateway
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General fixes 🔨
 
 - Moved configuration of mTLS to the environment variable level, checkout the docs for more
