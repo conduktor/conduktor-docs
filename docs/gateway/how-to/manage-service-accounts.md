@@ -26,7 +26,7 @@ In the `service-account` section of the Gateway API documentation, you'll notice
 A `local` service account is managed by the Gateway itself, while an `external` service account is managed by an external OIDC identity provider.
 :::
 
-Here is a link to our [Service Accounts & Authentication](/gateway/concepts/service-accounts-and-authentication/) concept page if you need more information.
+Here is a link to our [Service Accounts, Authentication & Authorization](/gateway/concepts/service-accounts-authentication-authorization/) concept page if you need more information.
 
 ## Prerequisites
 

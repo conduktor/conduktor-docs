@@ -103,7 +103,7 @@ There are 3 ways to authenticate users with the Gateway:
 - Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
 - Using Gateway **Local** Service Accounts
 
-Check the dedicated [Authentication page](/gateway/concepts/service-accounts-and-authentication) for more details.
+Check the dedicated [Authentication page](/gateway/concepts/service-accounts-authentication-authorization/) for more details.
 
 ## Virtual Clusters
 
