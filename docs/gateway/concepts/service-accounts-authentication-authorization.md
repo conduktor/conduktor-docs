@@ -40,7 +40,7 @@ Please refer to the [Authentication Methods](#authentication-methods) section to
 
 The local Service Accounts are useful if you want to **manage the clients credentials directly in the Gateway**. You can easily create, update, and delete them directly from the Gateway API.
 
-[Learn how to manage a local service account](/gateway/how-to/manage-service-accounts/#manage-a-local-service-account).
+[Learn how to manage a local service account](/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account).
 
 ### External Service Accounts
 
@@ -54,7 +54,7 @@ In these cases, you can create an external Service Account in the Gateway, and l
 
 This external Service Account will be the one used in the Gateway to apply **ACLs** & **interceptors**, and will be logged in the **Gateway Audit Log** internal topic.
 
-[Learn how to manage an external service account here.](/gateway/how-to/manage-service-accounts/#manage-an-external-service-account)
+[Learn how to manage an external service account here.](/gateway/how-to/manage-service-accounts-and-acls/#manage-an-external-service-account)
 
 ## Client Authentication Methods
 
@@ -114,7 +114,7 @@ With SASL authentication using OAUTHBEARER, clients authenticate with an identit
 Note that if you have configured OAUTHBEARER, the Gateway expect the client to provide a JWT token, and the grant type should be `clientcredentials`.
 :::
 
-See [how to manage Gateway Service Accounts using SASL_PLAINTEXT.](/gateway/how-to/manage-service-accounts)
+See [how to manage Gateway Service Accounts using SASL_PLAINTEXT.](/gateway/how-to/manage-service-accounts-and-acls/)
 
 It is the same for SASL_PLAINTEXT and SASL_SSL. The only difference is that SASL_SSL encrypts the communication, while SASL_PLAINTEXT transmits in plain text.
 
