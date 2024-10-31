@@ -1,6 +1,6 @@
 ---
-sidebar_position: 6
-title: Manage Service Accounts
+sidebar_position: 2
+title: Manage Service Accounts & ACLs
 description: How to manage service accounts on the Gateway
 ---
 
@@ -256,7 +256,7 @@ In this case, the command doesn't return anything because we have enabled the AC
 ### Create an ACL Admin Local Service Account
 
 In order to give ACLs to your application, we recommend you define an **ACL admin service account**, that will be able to **manage the ACLs of the other service accounts**.
-This service account must be defined in the Gateway configuration by the environment variable **`GATEWAY_SUPER_USERS`**. In our case, we will call this service account `local-acl-admin`.
+This service account must be defined in the Gateway configuration by the environment variable **`GATEWAY_SUPER_USERS`**, in the case of the `passthrough` Virtual Cluster. In our case, we will call this service account `local-acl-admin`.
 
 Now we're back to the [creation of a local service account](#create-a-local-service-account), but this time we will create an ACL admin service account named `local-acl-admin`.
 
@@ -402,3 +402,70 @@ kafka-acls --bootstrap-server localhost:6969 \
   --topic finance- \
   --resource-pattern-type prefixed
 ```
+
+## Differences if using Virtual Clusters
+
+The example above is using the `passthrough` Virtual Cluster. If you are using a Virtual Cluster, you need to make a few changes.
+
+First, let's see how to create a Virtual Cluster with the ACLs enabled, and with a super user declared. Then, we'll see how to create this super user credentials, to delegate some permissions to the applications service account.
+
+### Create the Virtual Cluster with an ACL Admin
+
+Here is how to create a Virtual Cluster called `my-vcluster`, that will have the ACLs enabled, and with a super user called `local-acl-admin`.
+
+```bash title="Create a Virtual Cluster with ACLs Enabled"
+curl \
+  --request PUT \
+  --url 'http://localhost:8888/gateway/v2/virtual-cluster?dryMode=false' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "kind" : "VirtualCluster",
+  "apiVersion" : "gateway/v2",
+  "metadata" : { "name" : "my-vcluster" },
+  "spec" : {
+    "aclEnabled" : true,
+    "superUsers" : [ "local-acl-admin" ]
+  }
+}'
+```
+
+### Service Account Creation in a Virtual Cluster
+
+Now that the Virtual Cluster `my-vcluster` exists, here is how to create the local Service Account for the super user attached to it:
+
+```bash title="Create the Service Account"
+curl \
+  --request PUT \
+  --url 'http://localhost:8888/gateway/v2/service-account' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "kind" : "GatewayServiceAccount",
+    "apiVersion" : "gateway/v2",
+    "metadata" : {
+      "name" : "local-acl-admin",
+      "vCluster" : "my-vcluster"
+    },
+    "spec" : { "type" : "LOCAL" }
+  }'
+```
+
+Finally, let's get its secret key:
+
+```bash title="Get the secret key"
+curl \
+  --request POST \
+  --url 'http://localhost:8888/gateway/v2/token' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "vCluster": "my-vcluster",
+    "username": "local-acl-admin",
+    "lifeTimeSeconds": 3600000
+  }'
+```
+
+Note that the same modification applies for external Service Accounts.
+
+As of now, you can update the `local-acl-admin.properties` with the credentials you just created, and you can refer to the previous sections in order to create ACLs for local & external Service Accounts.
