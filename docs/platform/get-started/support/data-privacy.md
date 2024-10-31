@@ -29,7 +29,7 @@ Conduktor Console runs as a docker container on the instance of your choice in y
 In order to improve our product, we collect some information that allows us to personalize the Console user experience.  
 
 - Segment:
-  - We collect your login email address so that we can personalise our [Support](https://support.conduktor.io)  
+  - We collect your login email address so that we can personalize our [Support](https://support.conduktor.io)  
   - We capture anonymized information about which pages have been seen, or which button was clicked. This allows us to enhance the user experience of navigation  
   - We collect error information to provide us visibility of broken features
 

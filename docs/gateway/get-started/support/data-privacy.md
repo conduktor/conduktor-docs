@@ -10,7 +10,7 @@ description: Conduktor does not send your sensitive data anywhere
 
 Conduktor Gateway is installed on your infrastructure and stores its configuration on your disk and Kafka cluster. It is not stored nor sent anywhere else.. 
 
-Conduktor Gatway will store usernames & passwords you supply to connect to different technologies such as Apache Kafka, Schema Registry etc.
+Conduktor Gateway will store usernames & passwords you supply to connect to different technologies such as Apache Kafka, Schema Registry etc.
 
 ### Data: not sent anywhere
 
