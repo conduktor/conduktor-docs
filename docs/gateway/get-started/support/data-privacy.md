@@ -18,7 +18,7 @@ The message data only moves between your Conduktor Gateway, on your infrastructu
 
 ## Where is Conduktor installed?
 
-Conduktor Gateway runs as a docker container on the instance of your choice in your own infrastructure.
+Conduktor Gateway runs as a Docker container that you can deploy using on any Docker or Kubernetes type environment, either self-hosted or cloud based.
 
 ## Support / Analytics / Error reporting
 
@@ -28,7 +28,7 @@ We collect basic information about authentication mechanism types to better unde
 ## Image Vulnerabilities
 As part of our development process our images are scanned for any vulnerabilities that have been identified by the community, we updated any necessary libraries to remove them where available.
 
-We use several tools (Dependabot, Snyk, Docker Scout, Harbor, Grype, etc....) to detect vulnerabilities as part of our engineering pipelines, several of these tests are triggered for every commit. We are constantly upgrading our libraries to rely on the most recent /secured versions. The pipeline prevents us from releasing if there are any Critical or High vulnerabilities.
+We use several tools (Dependabot, Snyk, Docker Scout, Harbor, Grype, etc....) to detect vulnerabilities as part of our engineering pipelines, several of these tests are triggered for every commit. We are constantly upgrading our libraries to rely on the most recent / secured versions. The pipeline prevents us from releasing if there are any Critical or High vulnerabilities.
 
 We also regularly run pen-testing campaigns with third-party companies and always enjoy partnering with customers when they organize similar campaigns on their side.
 As part of SOC2 certification, Conduktor has developed clear procedures for incident response and tracking their resolution. This is discussed further on our [blog](https://conduktor.io/blog/what-we-learned-from-soc2-type2-write-what-you-do-do-what-you-write).
