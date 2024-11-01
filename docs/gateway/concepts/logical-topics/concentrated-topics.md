@@ -191,10 +191,11 @@ spec:
 - `spec.offsetCorrectness` is not retroactive on previously created Concentrated Topics
 
 
-
-
 ## Performance
 
-Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
-
-TODO: Fill in results from conduktor/conduktor-proxy/pull/1726
+With offset correctness:
+ - On startup, Gateway must read the concentrated topic entirely before it is available to consumers
+ - The end-to-end latency is increased by up to 500 ms (or `fetch,max,wait.ms` if non-default)
+ - Gateway consumes about ~250MB of heap memory per million records it has read in concentrated topics. This value is NOT bounded, so we advise against offset correctness on high-volume topics, and you should size your JVM accordingly.
+ - Only `IsolationLevel.READ_UNCOMMITTED` is supported (using `IsolationLevel.READ_COMMITTED` is undefined behavior)
+ - Partition truncation (upon `unclean.leader.election=true`) may not be detected by consumers

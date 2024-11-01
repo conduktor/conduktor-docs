@@ -26,6 +26,8 @@ For this release 3.4.0, we'll only raise the following warning in the logs:
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
 
+***
+
 ## Features ✨
 
 - [Correct Offsets on Concentrated Topics](#correct-offsets-on-concentrated-topics)
@@ -50,13 +52,16 @@ spec:
   trueOffsets: true
 ````
 
-Check the dedicated documentation for more details on the feature and its limitations.
+Check the dedicated [documentation](/gateway/concepts/logical-topics/concentrated-topics) for more details on this [feature](/gateway/concepts/logical-topics/concentrated-topics#message-count--lag-offset-incorrectness) and its limitations.
 
 
 ## General fixes 🔨
 
-- 
+- Fixed an issue impacting live consumption from concentrated topics within Console
+- Fixed an issue with upserts in API V2 relating to service accounts (reporting updated when the status should be not changed)
+- Fixed an issue related to Kafka 3.7 client support, ensuring topic id's for alias and concentrated topics are distinct from their underlying topics
+
 
 ## Known issues
-- We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
+- We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag
