@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Qrn2HgTI93mqlLEAcm5Anuyvv.svg)](https://asciinema.org/a/Qrn2HgTI93mqlLEAcm5Anuyvv)
+[![asciicast](https://asciinema.org/a/UabCbOYKNHqlDMkma4RuoLC1B.svg)](https://asciinema.org/a/UabCbOYKNHqlDMkma4RuoLC1B)
 
 </TabItem>
 </Tabs>
@@ -40,7 +40,6 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka3
 * keycloack
 * schema-registry
-* zookeeper
 
 <Tabs>
 <TabItem value="Command">
@@ -53,89 +52,74 @@ cat docker-compose.yaml
 <TabItem value="File Content">
 
 ```yaml
-version: '3.7'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    hostname: zookeeper
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2801
-      ZOOKEEPER_TICK_TIME: 2000
-    healthcheck:
-      test: nc -zv 0.0.0.0 2801 || exit 1
-      interval: 5s
-      retries: 25
   kafka1:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka1
     container_name: kafka1
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19092:19092
+    - 9092:9092
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL_SAME_HOST://:19092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL_SAME_HOST://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka1 9092 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka2:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka2
     container_name: kafka2
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19093:19093
+    - 9093:9093
     environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9093,EXTERNAL_SAME_HOST://:19093
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093,EXTERNAL_SAME_HOST://localhost:19093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka2 9093 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka3:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka3
     container_name: kafka3
     ports:
-    - 19094:19094
+    - 9094:9094
     environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9094,EXTERNAL_SAME_HOST://:19094
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9094,EXTERNAL_SAME_HOST://localhost:19094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka3 9094 || exit 1
+      test: nc -zv kafka3 29092 || exit 1
       interval: 5s
       retries: 25
   schema-registry:
@@ -146,7 +130,7 @@ services:
     - 8081:8081
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
@@ -168,13 +152,12 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: conduktor/conduktor-gateway:3.3.2
     hostname: gateway1
     container_name: gateway1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: GATEWAY_SECURITY
       GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
@@ -190,22 +173,21 @@ services:
     - 6969:6969
     - 6970:6970
     - 6971:6971
+    - 6972:6972
     - 8888:8888
     healthcheck:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: conduktor/conduktor-gateway:3.3.2
     hostname: gateway2
     container_name: gateway2
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: GATEWAY_SECURITY
       GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
-      GATEWAY_START_PORT: 7969
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
       GATEWAY_OAUTH_EXPECTED_ISSUER: http://keycloak:18080/realms/conduktor
     depends_on:
@@ -216,9 +198,10 @@ services:
       kafka3:
         condition: service_healthy
     ports:
-    - 7969:7969
-    - 7970:7970
-    - 7971:7971
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
     - 8889:8888
     healthcheck:
       test: curl localhost:8888/health
@@ -255,8 +238,6 @@ services:
     - --metrics-enabled=true
     - --health-enabled=true
     - --import-realm
-networks:
-  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -268,10 +249,14 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
 * `--detach`: Detached mode: Run containers in the background
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose up --detach --wait
 ```
@@ -283,91 +268,79 @@ docker compose up --detach --wait
 ```
  Network oauth_default  Creating
  Network oauth_default  Created
- Container zookeeper  Creating
- Container keycloak  Creating
  Container kafka-client  Creating
+ Container kafka3  Creating
+ Container keycloak  Creating
+ Container kafka2  Creating
+ Container kafka1  Creating
+ Container kafka1  Created
  Container keycloak  Created
  Container kafka-client  Created
- Container zookeeper  Created
- Container kafka1  Creating
- Container kafka3  Creating
- Container kafka2  Creating
- Container kafka1  Created
  Container kafka3  Created
  Container kafka2  Created
  Container gateway2  Creating
  Container gateway1  Creating
  Container schema-registry  Creating
- Container gateway2  Created
  Container gateway1  Created
  Container schema-registry  Created
+ Container gateway2  Created
  Container kafka-client  Starting
- Container zookeeper  Starting
- Container keycloak  Starting
- Container zookeeper  Started
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container keycloak  Started
- Container kafka-client  Started
- Container zookeeper  Healthy
- Container kafka2  Starting
- Container zookeeper  Healthy
- Container kafka1  Starting
- Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka1  Started
+ Container kafka1  Starting
+ Container kafka2  Starting
+ Container keycloak  Starting
  Container kafka2  Started
  Container kafka3  Started
+ Container kafka1  Started
+ Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka-client  Started
+ Container keycloak  Started
+ Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container schema-registry  Starting
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container gateway2  Starting
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
  Container kafka1  Healthy
  Container gateway1  Starting
+ Container schema-registry  Starting
  Container gateway2  Started
  Container gateway1  Started
  Container schema-registry  Started
- Container kafka2  Waiting
  Container kafka1  Waiting
- Container kafka-client  Waiting
- Container gateway2  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container keycloak  Waiting
- Container kafka3  Waiting
- Container zookeeper  Waiting
- Container kafka-client  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
  Container keycloak  Healthy
  Container kafka1  Healthy
- Container zookeeper  Healthy
- Container gateway2  Healthy
- Container gateway1  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container schema-registry  Healthy
+ Container gateway1  Healthy
+ Container gateway2  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hAO8eIuMShUwPR9JfS4ozOpzg.svg)](https://asciinema.org/a/hAO8eIuMShUwPR9JfS4ozOpzg)
+[![asciicast](https://asciinema.org/a/XJO5yv2cQtAD7gP0NySSIeI5T.svg)](https://asciinema.org/a/XJO5yv2cQtAD7gP0NySSIeI5T)
 
 </TabItem>
 </Tabs>
@@ -402,10 +375,14 @@ Creating on `gateway1`:
 
 * Topic `cars` with partitions:1 and replication-factor:1
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
@@ -421,7 +398,277 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-[2024-04-10 02:52:37,066] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Apr 10 02:53:36 GST 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Apr 10 02:53:25 GST 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
+[2024-10-29 22:17:15,438] WARN Error during retry attempt 1 (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:15,443] WARN Attempt 1 to make call resulted in an error; sleeping 100 ms before retrying (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:15,555] WARN Error during retry attempt 2 (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:15,557] WARN Attempt 2 to make call resulted in an error; sleeping 200 ms before retrying (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:15,785] WARN Error during retry attempt 3 (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:15,788] WARN Attempt 3 to make call resulted in an error; sleeping 400 ms before retrying (org.apache.kafka.common.security.oauthbearer.internals.secured.Retry)
+java.util.concurrent.ExecutionException: java.net.SocketException: Unexpected end of file from server
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:171)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.Retry.execute(Retry.java:70)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.retrieve(HttpAccessTokenRetriever.java:160)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handleTokenCallback(OAuthBearerLoginCallbackHandler.java:243)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler.handle(OAuthBearerLoginCallbackHandler.java:232)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.identifyToken(OAuthBearerLoginModule.java:316)
+	at org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule.login(OAuthBearerLoginModule.java:301)
+	at java.base/javax.security.auth.login.LoginContext.invoke(LoginContext.java:726)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:665)
+	at java.base/javax.security.auth.login.LoginContext$4.run(LoginContext.java:663)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+	at java.base/javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:663)
+	at java.base/javax.security.auth.login.LoginContext.login(LoginContext.java:574)
+	at org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin.login(ExpiringCredentialRefreshingLogin.java:204)
+	at org.apache.kafka.common.security.oauthbearer.internals.OAuthBearerRefreshingLogin.login(OAuthBearerRefreshingLogin.java:150)
+	at org.apache.kafka.common.security.authenticator.LoginManager.<init>(LoginManager.java:62)
+	at org.apache.kafka.common.security.authenticator.LoginManager.acquireLoginManager(LoginManager.java:105)
+	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:170)
+	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192)
+	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81)
+	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:119)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:223)
+	at org.apache.kafka.clients.ClientUtils.createNetworkClient(ClientUtils.java:189)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:525)
+	at org.apache.kafka.clients.admin.KafkaAdminClient.createInternal(KafkaAdminClient.java:492)
+	at org.apache.kafka.clients.admin.Admin.create(Admin.java:137)
+	at org.apache.kafka.tools.TopicCommand$TopicService.createAdminClient(TopicCommand.java:437)
+	at org.apache.kafka.tools.TopicCommand$TopicService.<init>(TopicCommand.java:426)
+	at org.apache.kafka.tools.TopicCommand.execute(TopicCommand.java:98)
+	at org.apache.kafka.tools.TopicCommand.mainNoExit(TopicCommand.java:87)
+	at org.apache.kafka.tools.TopicCommand.main(TopicCommand.java:82)
+Caused by: java.net.SocketException: Unexpected end of file from server
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:866)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:863)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:689)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1623)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1528)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.handleOutput(HttpAccessTokenRetriever.java:240)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.post(HttpAccessTokenRetriever.java:194)
+	at org.apache.kafka.common.security.oauthbearer.internals.secured.HttpAccessTokenRetriever.lambda$retrieve$0(HttpAccessTokenRetriever.java:169)
+	... 30 more
+[2024-10-29 22:17:16,926] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Tue Oct 29 22:18:16 GMT 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Tue Oct 29 22:18:06 GMT 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
 Created topic cars.
 
 ```
@@ -429,7 +676,7 @@ Created topic cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ZVBQmwoAHFhou41Ufp8db2y60.svg)](https://asciinema.org/a/ZVBQmwoAHFhou41Ufp8db2y60)
+[![asciicast](https://asciinema.org/a/Jmhq6hTNP4v7T955ucghO63Yy.svg)](https://asciinema.org/a/Jmhq6hTNP4v7T955ucghO63Yy)
 
 </TabItem>
 </Tabs>
@@ -438,10 +685,14 @@ Created topic cars.
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
@@ -454,7 +705,7 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
-[2024-04-10 02:52:38,664] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Wed Apr 10 02:53:38 GST 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Wed Apr 10 02:53:27 GST 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
+[2024-10-29 22:17:19,880] WARN [Principal=:f3e0ecec-42d0-455e-88aa-5db45560c160]: Expiring credential expires at Tue Oct 29 22:18:19 GMT 2024, so buffer times of 60 and 300 seconds at the front and back, respectively, cannot be accommodated.  We will refresh at Tue Oct 29 22:18:09 GMT 2024. (org.apache.kafka.common.security.oauthbearer.internals.expiring.ExpiringCredentialRefreshingLogin)
 cars
 
 ```
@@ -462,7 +713,7 @@ cars
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/546lbZA7mwaLQ7PJuMocLqTtS.svg)](https://asciinema.org/a/546lbZA7mwaLQ7PJuMocLqTtS)
+[![asciicast](https://asciinema.org/a/bq4SZUzmUS5ic2auuPA2YnWFS.svg)](https://asciinema.org/a/bq4SZUzmUS5ic2auuPA2YnWFS)
 
 </TabItem>
 </Tabs>
@@ -473,10 +724,14 @@ Remove all your docker processes and associated volumes
 
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose down --volumes
 ```
@@ -486,42 +741,38 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container kafka-client  Stopping
- Container schema-registry  Stopping
- Container gateway1  Stopping
- Container keycloak  Stopping
  Container gateway2  Stopping
- Container keycloak  Stopped
- Container keycloak  Removing
- Container keycloak  Removed
+ Container gateway1  Stopping
+ Container kafka-client  Stopping
+ Container keycloak  Stopping
+ Container schema-registry  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway1  Removed
+ Container keycloak  Stopped
+ Container keycloak  Removing
  Container gateway2  Stopped
  Container gateway2  Removing
+ Container gateway1  Removed
  Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
  Container kafka2  Stopping
- Container kafka1  Stopping
  Container kafka3  Stopping
+ Container kafka1  Stopping
+ Container keycloak  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
- Container kafka3  Removed
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container zookeeper  Stopping
- Container zookeeper  Stopped
- Container zookeeper  Removing
- Container zookeeper  Removed
+ Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Network oauth_default  Removing
  Network oauth_default  Removed
 
@@ -530,7 +781,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pJq42slg2ufIkkSyoa4PMszwC.svg)](https://asciinema.org/a/pJq42slg2ufIkkSyoa4PMszwC)
+[![asciicast](https://asciinema.org/a/FUtA35ojpIBLEQUkd2PvkHmzC.svg)](https://asciinema.org/a/FUtA35ojpIBLEQUkd2PvkHmzC)
 
 </TabItem>
 </Tabs>
