@@ -25,7 +25,7 @@ Conduktor Gateway runs as a docker container on the instance of your choice in y
 We collect basic information about authentication mechanism types to better understand and improve how customers can connect to Gateway such as the SASL mechanism and security protocol types used, sensitive data is never collected.
 
 
-# Image Vulnerabilities
+## Image Vulnerabilities
 As part of our development process our images are scanned for any vulnerabilities that have been identified by the community, we updated any necessary libraries to remove them where available.
 
 We use several tools (Dependabot, Snyk, Docker Scout, Harbor, Grype, etc....) to detect vulnerabilities as part of our engineering pipelines, several of these tests are triggered for every commit. We are constantly upgrading our libraries to rely on the most recent /secured versions. The pipeline prevents us from releasing if there are any Critical or High vulnerabilities.

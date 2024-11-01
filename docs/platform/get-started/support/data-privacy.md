@@ -37,7 +37,7 @@ In order to improve our product, we collect some information that allows us to p
 
 To use Conduktor, a login is not provided, it is configured within your organization e.g. using your own IdP (LDAP or OIDC).
 
-# Image Vulnerabilities
+## Image Vulnerabilities
 As part of our development process our images are scanned for any vulnerabilities that have been identified by the community, we updated any necessary libraries to remove them where available.
 
 We use several tools (Dependabot, Snyk, Docker Scout, Harbor, Grype, etc....) to detect vulnerabilities as part of our engineering pipelines, several of these tests are triggered for every commit. We are constantly upgrading our libraries to rely on the most recent /secured versions. The pipeline prevents us from releasing if there are any Critical or High vulnerabilities.
