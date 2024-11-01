@@ -10,7 +10,8 @@ description: Conduktor does not send your data anywhere. Everything stays betwee
 
 Conduktor Console, installed on your infrastructure, stores its configuration either on your disk or in a provided database. It is not stored nor sent anywhere else. 
 
-Console will contain some username & password used by itself to connect to the different technologies: Apache Kafka, Schema Registry etc.
+Console will contain some username & passwords used for connecting to the different technologies e.g. cluster credentials for connecting to the Kafka cluster, Schema Registry connection details...   
+It will also store local admin passwords (hashed) that you create as part of the configuration setup.
 
 ### Data: not sent anywhere
 
