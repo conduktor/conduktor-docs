@@ -160,7 +160,7 @@ If one user requests a topic with infinite retention (`retention.ms = -1`), **al
 
 Both concentrated and SQL topics are virtualized. This creates inconsistencies with existing tools in the Kafka ecosystem, including Conduktor Console.
 
-Currently, the 2twomost problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that relies on partition **EndOffset**.
+Currently, the two most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that relies on partition **EndOffset**.
 
 ![Offset Incorrectness](img/offset-correct.png)
 
