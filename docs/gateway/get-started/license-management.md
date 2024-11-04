@@ -29,7 +29,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="Enterprise plan" label="Enterprise plan">
 
-```json title="Enterprise plan"
+```json
 {
   "io.conduktor.proxy.avro.schema.AvroLicense.ConduktorLicense": {
     "token": "YOUR_LICENSE_HERE"
@@ -40,7 +40,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 </TabItem>
 <TabItem value="Free plan" label="Free plan">
 
-```json title="Free plan"
+```json
 {
   "io.conduktor.proxy.avro.schema.AvroLicense.FreeLicense": {
     "expirationDate": "1730280320532"
