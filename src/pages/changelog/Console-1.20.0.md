@@ -38,7 +38,7 @@ On the menu:
 
 ![Topic List](/images/changelog/platform/v20/topic-list.png)
 
-Need more? Give us feedback on [smart tables](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+Need more? Give us feedback on [smart tables](https://conduktor.io/roadmap).
 
 ---
 
@@ -47,7 +47,7 @@ Need more? Give us feedback on [smart tables](https://support.conduktor.io/hc/en
 Need to dump previously exported data back into Kafka? See how your application responsds to pre-prepared test data? We (finally) got you covered! From within a topic, navigate to the producer tab to utilize the new import CSV functionality. 
 ![Import CSV](/images/changelog/platform/v20/import-csv.png)
 
-Give us [feedback](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417) on this feature.
+Give us [feedback](https://conduktor.io/roadmap) on this feature.
 
 ---
 

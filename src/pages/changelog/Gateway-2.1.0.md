@@ -16,7 +16,7 @@ Gateway now supports mTLS connetions between clients and the Gateway. We are con
 
 ### Metrics on Prometheus
 
-Gateway exposes several health metrics on the available endpoint to help you monitor the health of your deployment. Checkout the docs for the available metrics on our docs site. If there are any you would need or like to see don't hesitate to [submit a feature request](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417) on our public roadmap.
+Gateway exposes several health metrics on the available endpoint to help you monitor the health of your deployment. Checkout the docs for the available metrics on our docs site. If there are any you would need or like to see don't hesitate to [submit a feature request](https://conduktor.io/roadmap) on our public roadmap.
 
 ## General fixes 🔨
 

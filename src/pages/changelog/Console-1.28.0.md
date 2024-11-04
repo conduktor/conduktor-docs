@@ -63,7 +63,7 @@ curl \
 
 To use the feature there is a dependency on provisioning a new database. As a user, you have the choice of which topics you wish to index. Learn more about this and how to configure SQL using the [dedicated guide](/platform/guides/configure-sql).
 
-We encourage you to use this feature in non-production environments and give us [feedback](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
 
 ***
 

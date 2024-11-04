@@ -23,7 +23,7 @@ The Manage Clusters page (`/settings/clusters`) has several advantages over the 
 - Certificate store to help with your Custom certificates needs (no more JKS files and volume mounts)
 
 Need to configure your Kafka Clusters using GitOps processes?  
-Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417) on this feature.
+Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://conduktor.io/roadmap) on this feature.
 
 If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](../env-variables/#kafka-clusters-properties) page.
 :::
