@@ -21,7 +21,7 @@ Starting today, we recommend you use the new alerts for [Brokers page](/platform
 
 Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** and **MS Teams** so that you can receive real-time notifications.
 
-If you require an additional integration, please [let us know](https://product.conduktor.help/tabs/1-in-development) so we can consider it.
+If you require an additional integration, please [let us know](https://conduktor.io/roadmap) so we can consider it.
 
 ## Configure the Integration
 
