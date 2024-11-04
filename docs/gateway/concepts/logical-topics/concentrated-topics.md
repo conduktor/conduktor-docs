@@ -158,19 +158,19 @@ If one user requests a topic with infinite retention (`retention.ms = -1`), **al
 
 ## Message Count & Lag, Offset (in)correctness
 
-Concentrated topics & SQL topics are virtualized. This creates inconsistencies with existing tools in the Kafka ecosystem, including Conduktor Console.
+Both concentrated and SQL topics are virtualized. This creates inconsistencies with existing tools in the Kafka ecosystem, including Conduktor Console.
 
-Right now, the 2 most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that rely on partition **EndOffset**.
+Currently, the 2twomost problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that relies on partition **EndOffset**.
 
 ![Offset Incorrectness](img/offset-correct.png)
 
-Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see wrong metrics.
+Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see incorrect metrics.
 
 To counter this effect we have implemented a dedicated offset management capability for ConcentrationRules.
 
 :::caution 
-**This feature is experimental for now.**  
-As we collect feedback and gain some knowledge on the feature, we'll transition this to all ConcentrationRules
+**This feature is currently experimental.**  
+As we collect feedback and make any adjustments to the feature, we'll transition this to all ConcentrationRules.
 :::
 
 To enable virtual offsets, add the following line to the ConcentrationRule:

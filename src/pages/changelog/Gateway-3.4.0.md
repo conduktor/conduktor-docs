@@ -14,11 +14,11 @@ This breaking change only impacts Local Gateway service accounts generated throu
 - `POST /admin/username/{username}`
 - `POST /admin/vclusters/v1/vcluster/{vcluster}/username/{username}`
 
-If you are not using Local Gateway services accounts (OIDC, mTLS, Delegated Kafka), you are **not** impacted.
+If you are using Gateway services accounts from OIDC, mTLS, Delegated Kafka, you are **not** impacted.
 :::
 Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.  
 
-In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behaviors.
+In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behavior.
 
 **This breaking change is due for release 3.5.0.**   
 For this release 3.4.0, we'll only raise the following warning in the logs:  
