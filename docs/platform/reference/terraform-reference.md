@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 :::warning Warning ⚠
 - Conduktor Terraform Provider is currently in **Alpha** and don't support all Conduktor resources yet.
 - See our [resources roadmap](https://github.com/conduktor/terraform-provider-conduktor?tab=readme-ov-file#resources-roadmap).
-- Let us know if you have [feedback](https://product.conduktor.help/c/74-terraform-provider) or wish to be a design partner.
+- Let us know if you have [feedback](https://conduktor.io/roadmap) or wish to be a design partner.
 :::
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the Terraform Provider can be used for Kafka Self-service.
