@@ -20,7 +20,7 @@ You can check that your license has been used to launch the Gateway by looking a
 
 The default name of this topic is `_conduktor_gateway_license`, but it might be different if:
 - You have set another name via `GATEWAY_LICENSE_TOPIC`
-- You have set the `GATEWAY_CLUSTER_ID`, then the topic will be `_conduktor_$GATEWAY_CLUSTER_ID_license`.
+- You have set the `GATEWAY_CLUSTER_ID`, then the topic will be `_conduktor_${GATEWAY_CLUSTER_ID}_license`.
 
 In this topic, you'll find the license expiration date.
 
@@ -31,9 +31,9 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ```json title="Enterprise plan"
 {
-	"io.conduktor.proxy.avro.schema.AvroLicense.ConduktorLicense": {
-		"token": "YOUR_LICENSE_HERE"
-	}
+  "io.conduktor.proxy.avro.schema.AvroLicense.ConduktorLicense": {
+    "token": "YOUR_LICENSE_HERE"
+  }
 }
 ```
 
@@ -42,9 +42,9 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ```json title="Free plan"
 {
-	"io.conduktor.proxy.avro.schema.AvroLicense.FreeLicense": {
-		"expirationDate": "1730280320532"
-	}
+  "io.conduktor.proxy.avro.schema.AvroLicense.FreeLicense": {
+    "expirationDate": "1730280320532"
+  }
 }
 ```
 
