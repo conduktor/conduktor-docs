@@ -256,7 +256,7 @@ In this case, the command doesn't return anything because we have enabled ACLs o
 In order to modify the ACLs, we recommend you define a dedicated **ACL admin service account**.  
 This is a privileged service account and must be defined in the Gateway configuration using the environment variable **`GATEWAY_SUPER_USERS`**, in the case of the `passthrough` Virtual Cluster. In our example, we have named this `local-acl-admin`.
 
-Repeat the steps, as before, using the name `local-acl-admin`.
+Repeat the steps, as before, using the name `local-acl-admin`. Create the service account, get its credentials, save them to file.
 
 <Tabs>
 <TabItem value="Create the service account" label="Create the service account">
@@ -334,7 +334,9 @@ Finally, let's list the topics using the `local-app-finance-dev` service account
 
 ```bash title="List topics as local-app-finance-dev"
 kafka-topics --list --bootstrap-server localhost:6969 --command-config local-client.properties
+```
 
+```bash title="Response"
 finance-data
 finance-report
 ```
@@ -342,6 +344,8 @@ finance-report
 ## Manage an External Service Account
 
 An external service account is managed by an external OIDC identity provider. This means we only have to make the Gateway aware of this external service account by giving it its OIDC principal (this is the `externalNames`). The credentials that will be used by this application are already defined in the OIDC identity provider.
+
+To follow these stops on your machine you will need to have connected an OAUTH provider in the config of the docker compose you are using, otherwise please use as reference.
 
 In order to create this external service account reference on the Gateway, you can run the following command to:
 
