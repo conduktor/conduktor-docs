@@ -172,6 +172,13 @@ services:
 </TabItem>
 </Tabs>
 
+### Export Java security manager config (optional)
+Depending on your version of Java you may need to run the below command in your shell session. Newer versions of Java have dropped support for security manager and current versions of Kafka CLI commands will fail without this being set. If you get errors when running the later commands with authentication, run this command. 
+
+```bash
+export KAFKA_OPTS="-Djava.security.manager=allow"  
+```
+
 ### Create a few topics on Kafka
 
 Let's create a few topics on Kafka by running the following command from your local machine:
