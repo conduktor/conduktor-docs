@@ -8,11 +8,11 @@ description: How to manage service accounts on the Gateway
 
 In this how-to guide, you will learn how to manage service accounts on the Gateway. We will cover the creation of both **local and external service accounts**, and how to **assign ACLs to them**.
 
-The scenario will use:
-- The SASL_PLAINTEXT security protocol for the communication between Clients > Gateway > Kafka.
-- The ACLs are enabled on the passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`).
-- The ACLs super-user is called `GATEWAY_SUPER_USERS: local-acl-admin`.
-- The Gateway API admin credentials are the default ones.
+In this scenario:
+- The SASL_PLAINTEXT security protocol is used for the communication between Clients > Gateway > Kafka
+- The ACLs are enabled on the passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`)
+- The ACLs super-user is named `GATEWAY_SUPER_USERS: local-acl-admin`
+- The Gateway API admin credentials are the defaults
 
 We will use the [Gateway API](/gateway/reference/api-reference/) to create and manage service accounts, but the following guide works with the [CLI](/gateway/reference/cli-reference/) as well.
 
@@ -20,13 +20,13 @@ We will use the [Gateway API](/gateway/reference/api-reference/) to create and m
 For local deployments, the Gateway API documentation is available at [`http://localhost:8888`](http://localhost:8888). In this guide, we will use the `service-account` and the `token` endpoints.
 :::
 
-In the `service-account` section of the Gateway API documentation, you'll notice that to create a service account on the Gateway, you have to chose between a `local` or `external` service account.
+In the `service-account` section of the API documentation, you'll notice that to create a service account on the Gateway, you have to chose between a `local` or `external` service account.
 
 :::info TL;DR
 A `local` service account is managed by the Gateway itself, while an `external` service account is managed by an external OIDC identity provider.
 :::
 
-Here is a link to our [Service Accounts, Authentication & Authorization](/gateway/concepts/service-accounts-authentication-authorization/) concept page if you need more information.
+For more information refer to the [Service Accounts, Authentication & Authorization](/gateway/concepts/service-accounts-authentication-authorization/) concept page if you have not done so already.
 
 ## Prerequisites
 
@@ -229,13 +229,11 @@ This will return a JSON object with the `token` field containing the secret key.
 }
 ```
 
-This means that, as of now, we can connect to the Gateway passthrough virtual cluster using the `local-app-finance-dev` service account and its secret key.
+This means that, we can now connect to the Gateway passthrough virtual cluster using the `local-app-finance-dev` service account and its secret key. Let's do so.
 
 ### Connect to the Gateway with a Local Service Account
 
-You can now connect to the Gateway using the `local-app-finance-dev` service account and its secret key.
-
-Here is the properties file you can use to connect to the Gateway:
+Create a properties file, `local-client.properties` with the credentials we just generated to connect to the Gateway:
 
 ```properties title="local-client.properties"
 security.protocol=SASL_PLAINTEXT
@@ -243,22 +241,22 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="local-app-finance-dev" password="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxvY2FsLWFwcC1maW5hbmNlLWRldiIsInZjbHVzdGVyIjoicGFzc3Rocm91Z2giLCJleHAiOjE3MzIwOTUzNjN9.-rivmwcI-zvTTqLPeO_0l3xUALz5mKtopp1YMaTswFk";
 ```
 
-And here is an example of using the Kafka CLI to list the topics, using this service account:
+List topics using the Kafka CLI, authenticating using our service account:
 
 ```bash title="List topics"
 kafka-topics --list --bootstrap-server localhost:6969 --command-config local-client.properties
 ```
 
-In this case, the command doesn't return anything because we have enabled the ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources. The next step is then to give it some ACLs so it can see its topics.
+In this case, the command doesn't return anything because we have enabled ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources, it's not authorized. Let's modify the ACLs so this service account can list topics.
 
 ## Create ACLs for a Local Service Account
 
 ### Create an ACL Admin Local Service Account
 
-In order to give ACLs to your application, we recommend you define an **ACL admin service account**, that will be able to **manage the ACLs of the other service accounts**.
-This service account must be defined in the Gateway configuration by the environment variable **`GATEWAY_SUPER_USERS`**, in the case of the `passthrough` Virtual Cluster. In our case, we will call this service account `local-acl-admin`.
+In order to modify the ACLs, we recommend you define a dedicated **ACL admin service account**.  
+This is a privileged service account and must be defined in the Gateway configuration using the environment variable **`GATEWAY_SUPER_USERS`**, in the case of the `passthrough` Virtual Cluster. In our example, we have named this `local-acl-admin`.
 
-Now we're back to the [creation of a local service account](#create-a-local-service-account), but this time we will create an ACL admin service account named `local-acl-admin`.
+Repeat the steps, as before, using the name `local-acl-admin`.
 
 <Tabs>
 <TabItem value="Create the service account" label="Create the service account">
@@ -300,19 +298,19 @@ curl \
 </Tabs>
 
 
-At the end of this step, we are getting the properties file to interact with the Gateway using this ACL admin service account.
+Store the generated credentials in a new file, `local-acl-admin.properties`.
 
 ```properties title="local-acl-admin.properties"
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="local-client.properties" password="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxvY2FsLWFjbC1hZG1pbiIsInZjbHVzdGVyIjoicGFzc3Rocm91Z2giLCJleHAiOjE3MzIxNjEwOTB9.m8U_DVv4MTOY9mKiKY2tHeUGjxsUvhC9ssE6iAI3eJc";
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="local-acl-admin" password="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImxvY2FsLWFjbC1hZG1pbiIsInZjbHVzdGVyIjoicGFzc3Rocm91Z2giLCJleHAiOjE3MzIxNjEwOTB9.m8U_DVv4MTOY9mKiKY2tHeUGjxsUvhC9ssE6iAI3eJc";
 ```
 
-As this user is an ACL admin, it has access to all the Gateway topics and can create ACLs for the other service accounts.
+As this user is an ACLs admin, it has access to all the Gateway topics and can create & modify ACLs for the other service accounts.
 
 ### Create ACLs for another Local Service Account, using the ACL Admin Service Account
 
-In order for the `local-app-finance-dev` service account to be able to interact with its topics, we need to give it the `WRITE` permission on its prefix. For that, you can run the following:
+In order for the `local-app-finance-dev` service account to be able to interact with its topics, we need to give it the `WRITE` permission on its prefix. Run the following command to do so:
 
 ```bash title="Give ACLs to local-app-finance-dev"
 kafka-acls --bootstrap-server localhost:6969 \
@@ -322,7 +320,9 @@ kafka-acls --bootstrap-server localhost:6969 \
   --operation write \
   --topic finance- \
   --resource-pattern-type prefixed
+```
 
+```bash title="Response"
 Adding ACLs for resource `ResourcePattern(resourceType=TOPIC, name=finance-, patternType=PREFIXED)`:
  	(principal=User:local-app-finance-dev, host=*, operation=WRITE, permissionType=ALLOW)
 
@@ -343,7 +343,11 @@ finance-report
 
 An external service account is managed by an external OIDC identity provider. This means we only have to make the Gateway aware of this external service account by giving it its OIDC principal (this is the `externalNames`). The credentials that will be used by this application are already defined in the OIDC identity provider.
 
-In order to create this external service account reference on the Gateway, you can run this command:
+In order to create this external service account reference on the Gateway, you can run the following command to:
+
+* Create a Gateway service account
+* Names azure-app-billing-dev
+* Which is recognized by it's OIDC principal (`"externalNames" : [ "TO_FILL" ]`)
 
 ```bash title="Create the service account"
 curl \
@@ -365,13 +369,13 @@ curl \
   }'
 ```
 
-As of now, you can apply some interceptors to this service account, by refering to the service account name `azure-app-billing-dev`.
+Now you can apply some interceptors to this service account, by referring to the service account name, `azure-app-billing-dev`.
 
 ### Connect to the Gateway with an External Service Account
 
 You can now connect to the Gateway using the `azure-app-billing-dev` service account.
 
-Here is the properties file you can use to connect to the Gateway:
+Here is the type of properties file you can may to connect to the Gateway using OAUTH:
 
 ```properties title="external-client.properties"
 security.protocol=SASL_PLAINTEXT
@@ -387,7 +391,7 @@ And here is an example of using the Kafka CLI to list the topics, using this ser
 kafka-topics --list --bootstrap-server localhost:6969 --command-config external-client.properties
 ```
 
-In this case, the command doesn't return anything because we have enabled the ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources. The next step is then to give it some ACLs so it can see its topics.
+In this case, the command wouldn't return anything because we have enabled the ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources, it's not authorized. The next step is then to give it some ACLs so it can list topics.
 
 ## Create ACLs for an External Service Account
 
@@ -405,13 +409,13 @@ kafka-acls --bootstrap-server localhost:6969 \
 
 ## Differences if using Virtual Clusters
 
-The example above is using the `passthrough` Virtual Cluster. If you are using a Virtual Cluster, you need to make a few changes.
+The example above is using a default `passthrough` Virtual Cluster. If you are using your own Virtual Clusters, you need to make a few changes.
 
-First, let's see how to create a Virtual Cluster with the ACLs enabled, and with a super user declared. Then, we'll see how to create this super user credentials, to delegate some permissions to the applications service account.
+First, let's see how to create a Virtual Cluster with the ACLs enabled, and a super user declared. Then, we'll see how to create the super user credentials, in order to give permissions to the applications service account.
 
 ### Create the Virtual Cluster with an ACL Admin
 
-Here is how to create a Virtual Cluster called `my-vcluster`, that will have the ACLs enabled, and with a super user called `local-acl-admin`.
+The below creates a Virtual Cluster called `my-vcluster`, that will have ACLs enabled, and a super user named `local-acl-admin`.
 
 ```bash title="Create a Virtual Cluster with ACLs Enabled"
 curl \
@@ -432,7 +436,7 @@ curl \
 
 ### Service Account Creation in a Virtual Cluster
 
-Now that the Virtual Cluster `my-vcluster` exists, here is how to create the local Service Account for the super user attached to it:
+Now that the Virtual Cluster `my-vcluster` exists, create the local Service Account for the super user:
 
 ```bash title="Create the Service Account"
 curl \
@@ -451,7 +455,7 @@ curl \
   }'
 ```
 
-Finally, let's get its secret key:
+Finally, get its secret key:
 
 ```bash title="Get the secret key"
 curl \
@@ -468,4 +472,4 @@ curl \
 
 Note that the same modification applies for external Service Accounts.
 
-As of now, you can update the `local-acl-admin.properties` with the credentials you just created, and you can refer to the previous sections in order to create ACLs for local & external Service Accounts.
+Now you can create a properties file, `local-acl-admin.properties` using the credentials you just generated. Refer to the previous sections for creating ACLs for local & external Service Accounts.
