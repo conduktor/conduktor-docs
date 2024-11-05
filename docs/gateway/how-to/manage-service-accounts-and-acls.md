@@ -64,6 +64,7 @@ services:
       KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required  username="admin" password="admin-secret";
       # Clients > Gateway connection
       GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_ADVERTISED_HOST: localhost # Considering your clients are running on your machine, outside of the Docker network
       # GATEWAY_OAUTH_JWKS_URL: "TO_FILL"
       # GATEWAY_OAUTH_EXPECTED_ISSUER: "TO_FILL"
       # GATEWAY_OAUTH_EXPECTED_AUDIENCES: "TO_FILL"

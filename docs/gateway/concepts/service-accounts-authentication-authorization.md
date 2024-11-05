@@ -25,8 +25,8 @@ This page will help you understand:
 ## Local and External Service Accounts
 
 In Gateway, you can define two types of Service Accounts:
-- **Local Service Accounts**: Gateway generates the password for the Service Account you asked it to create. These credentials can then be shared with clients for authentication.
-- **External Service Accounts**: Gateway declares a Service Account mapped to an existing service account that is already managed by your OIDC identity provider or mTLS certificate. 
+- **Local Service Accounts**: Gateway generates the password for the Service Account you asked it to create. These credentials can then be shared with clients for authentication. Useful if you want to manage the clients credentials directly within Gateway (non delegated client authentication), or if you're using Virtual Clusters.
+- **External Service Accounts**: Gateway declares a Service Account mapped to an existing service account that is already managed by your OIDC identity provider or mTLS certificate. Useful if you need an in-between state where you can see the value of Gateway's interceptors, but still want to use your existing identity provider to manage identities and ACLs.
 
 Each [Service Account](/gateway/reference/resources-reference/#gatewayserviceaccount) is stored in an internal topic, `_conduktor_gateway_usermappings`, and includes a **name** (used when applying ACLs and interceptors) and an associated **Virtual Cluster**. By default, this is set to `passthrough`.
 
