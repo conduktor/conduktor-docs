@@ -11,14 +11,14 @@ The Gateway Service Accounts Groups are used to **scope interceptors for a set o
 With these Groups, you can gather all the application Service Accounts defined on the Gateway that should follow a common set of interceptors rules.
 
 :::note
-They **can't be used for managing ACLs** of these Service Accounts today.
+They **can't be used for managing ACLs** of these Service Accounts.
 :::
 
 ## Creation
 
 You can create a Group by using the Gateway API.
 
-You can find the object definition and additional details on the [Gateway Group Resource Reference page](/gateway/reference/resources-reference/#gatewaygroup).
+Object definition and additional details can be found on the [Gateway Group Resource Reference page](/gateway/reference/resources-reference/#gatewaygroup).
 
 ## Apply an Interceptor to a Group
 
