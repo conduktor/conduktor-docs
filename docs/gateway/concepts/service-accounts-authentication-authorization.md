@@ -134,7 +134,7 @@ In this case, the Gateway can forward the client credentials to the backing Kafk
 
 :::info
 Today, **delegated SASL authentication supports only PLAIN and SCRAM mechanisms**, not GSSAPI (Kerberos) or OAUTHBEARER.
-If you'd like us to support more mechanisms, please [let us know](https://product.conduktor.help/tabs/2-released/submit-idea)!
+If you'd like us to support more mechanisms, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417!
 :::
 
 In this mode, the clients authorization (ACLs) is also handled by the backing Kafka cluster. **Any calls to the Kafka ACLs API made on the Gateway will be forwarded to the backing Kafka cluster**.
