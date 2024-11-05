@@ -20,7 +20,7 @@ We will use the [Gateway API](/gateway/reference/api-reference/) to create and m
 For local deployments, the Gateway API documentation is available at [`http://localhost:8888`](http://localhost:8888). In this guide, we will use the `service-account` and the `token` endpoints.
 :::
 
-In the `service-account` section of the API documentation, you'll notice that to create a service account on the Gateway, you have to chose between a `local` or `external` service account.
+In the `service-account` section of the Gateway API documentation, you'll notice that to create a service account on the Gateway, you have to chose between a `local` or `external` service account.
 
 :::info TL;DR
 A `local` service account is managed by the Gateway itself, while an `external` service account is managed by an external OIDC identity provider.
@@ -353,12 +353,12 @@ finance-report
 
 An external service account is managed by an external OIDC identity provider. This means we only have to make the Gateway aware of this external service account by giving it its OIDC principal (this is the `externalNames`). The credentials that will be used by this application are already defined in the OIDC identity provider.
 
-To follow these stops on your machine you will need to have connected an OAUTH provider in the config of the docker compose you are using, otherwise please use as reference.
+To follow these steps on your machine, you will need to have connected an OAUTHBEARER provider in the config of the docker compose you are using, otherwise please use as reference.
 
 In order to create this external service account reference on the Gateway, you can run the following command to:
 
 * Create a Gateway service account
-* Names azure-app-billing-dev
+* Names `azure-app-billing-dev`
 * Which is recognized by it's OIDC principal (`"externalNames" : [ "TO_FILL" ]`)
 
 ```bash title="Create the service account"
@@ -387,7 +387,7 @@ Now you can apply some interceptors to this service account, by referring to the
 
 You can now connect to the Gateway using the `azure-app-billing-dev` service account.
 
-Here is the type of properties file you can may to connect to the Gateway using OAUTH:
+Here is the type of properties file you can may to connect to the Gateway using OAUTHBEARER:
 
 ```properties title="external-client.properties"
 security.protocol=SASL_PLAINTEXT
