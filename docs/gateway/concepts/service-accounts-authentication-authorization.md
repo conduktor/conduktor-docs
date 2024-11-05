@@ -16,7 +16,7 @@ A **Service Account** is a non-human identity used by clients to authenticate an
 2. [Client Authentication Methods](#client-authentication-methods)
 3. [Authorization Management (ACLs)](#authorization-management-acls)
 
-At the end of this page, you will have a better understanding of:
+This page will help you understand:
 - Where to authenticate clients, Gateway or Kafka
 - Which authentication methods to use
 - When you would want to use local, or external, Service Accounts
