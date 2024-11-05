@@ -6,7 +6,7 @@ description: Better understand how the Gateway deals with clients service accoun
 
 ## Introduction
 
-This page explains how the Gateway manages Service Accounts, client authentication, and ACLs (Access Control Lists).
+This page explains how the Conduktor Gateway manages Service Accounts, client authentication, and ACLs (Access Control Lists).
 
 :::info Definition
 A **Service Account** is a non-human identity used by clients to authenticate and perform actions on Kafka resources through the Gateway, depending on their ACLs.
@@ -17,34 +17,34 @@ A **Service Account** is a non-human identity used by clients to authenticate an
 3. [Authorization Management (ACLs)](#authorization-management-acls)
 
 At the end of this page, you will have a better understanding of:
-- Where to authenticate clients (Gateway or Kafka)?
-- Which authentication methods to use?
-- Do you want to manage local or external Service Accounts?
-- How and where to manage service account ACLs?
+- Where to authenticate clients, Gateway or Kafka
+- Which authentication methods to use
+- When you would want to use local, or external, Service Accounts
+- How and where to manage service account ACLs
 
 ## Local and External Service Accounts
 
 In the Gateway, you can define two types of Service Accounts:
-- **Local Service Accounts**: The Gateway generates the password for the Service Account you asked it to create. The credentials can then be shared with clients for authentication.
-- **External Service Accounts**: The Gateway declares a Service Account mapped to an existing one managed by your OIDC identity provider or mTLS certificate. 
+- **Local Service Accounts**: The Gateway generates the password for the Service Account you asked it to create. These credentials can then be shared with clients for authentication.
+- **External Service Accounts**: The Gateway declares a Service Account mapped to an existing service account that is already managed by your OIDC identity provider or mTLS certificate. 
 
-Each [Service Account](/gateway/reference/resources-reference/#gatewayserviceaccount) is stored in the `_conduktor_gateway_usermappings` internal topic and includes a **name** (used to apply ACLs and interceptors) and an associated **Virtual Cluster**. By default, this is set to `passthrough`.
+Each [Service Account](/gateway/reference/resources-reference/#gatewayserviceaccount) is stored in an internal topic, `_conduktor_gateway_usermappings`, and includes a **name** (used when applying ACLs and interceptors) and an associated **Virtual Cluster**. By default, this is set to `passthrough`.
 
 :::warning
 Not all authentication methods support both local and external Service Accounts.
 
-Please refer to the [Authentication Methods](#authentication-methods) section to see which method supports which type of Service Account.
+Please refer to the [Client Authentication Methods](#client-authentication-methods) section to see which method supports which type of Service Account.
 :::
 
 ### Local Service Accounts
 
-The local Service Accounts are useful if you want to **manage the clients credentials directly in the Gateway**. You can easily create, update, and delete them directly from the Gateway API.
+The local Service Accounts are useful if you want to **manage the clients credentials directly within Conduktor Gateway**. You can easily create, update, and delete them directly from the Gateway's Admin API.
 
 [Learn how to manage a local service account](/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account).
 
 ### External Service Accounts
 
-For external Service Accounts, the **clients credentials are handled by a third-party identity provider** (OIDC, mTLS). 
+For external Service Accounts, the **clients credentials are created and handled by a third-party identity provider** (OIDC, mTLS). 
 
 However, you might want to:
 - Refer to them using a friendly name in the Gateway
@@ -60,7 +60,7 @@ This external Service Account will be the one used in the Gateway to apply **ACL
 
 As mentioned earlier, the Gateway supports different **clients authentication methods**, but **not all of them support local and external service accounts**.
 
-You'll find more details below, but here is a summary of the supported service accounts for each clients authentication method:
+You'll find more details below, but here is a summary of the supported service accounts for each client's authentication method:
 
 | `GATEWAY_SECURITY_PROTOCOL`          | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
 |--------------------------------------|:-----------------------------------:|:-----------------------------------------:|
@@ -82,7 +82,7 @@ You'll find more details below, but here is a summary of the supported service a
 
 In the case of PLAINTEXT authentication, the client is anonymous and doesn't need any credentials.
 
-Thus, **local and external Service Accounts are not supported in this mode**.
+Thus, authentication cannot take place and so **local and external Service Accounts are not supported in this mode**.
 
 [How to configure the client > Gateway connection with PLAINTEXT.](/gateway/configuration/client-authentication/#plaintext)
 
@@ -111,19 +111,19 @@ You can change the SSL principal mapping rules by setting the `GATEWAY_SSL_PRINC
 With SASL authentication using OAUTHBEARER, clients authenticate with an identity (the `sub` in the OIDC JWT token) which can be mapped to an external Service Account in the Gateway. You can also create a new local Service Account.
 
 :::note
-Note that if you have configured OAUTHBEARER, the Gateway expect the client to provide a JWT token, and the grant type should be `clientcredentials`.
+If you have configured OAUTHBEARER, the Gateway expects the client to provide a JWT token, and the grant type should be `clientcredentials`.
 :::
 
 See [how to manage Gateway Service Accounts using SASL_PLAINTEXT.](/gateway/how-to/manage-service-accounts-and-acls/)
 
-It is the same for SASL_PLAINTEXT and SASL_SSL. The only difference is that SASL_SSL encrypts the communication, while SASL_PLAINTEXT transmits in plain text.
+It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that SASL_SSL encrypts the communication, while SASL_PLAINTEXT transmits in plain text.
 
 [How to configure the client > Gateway connection with SASL.](/gateway/configuration/client-authentication/#sasl_plaintext)
 
 :::warning DELEGATED & NON-DELEGATED MODES
 With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
-- **Delegate them to the backing Kafka cluster** ([Delegated SASL Authentication](#delegated-sasl-authentication)) - The Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
-- **Handle them in the Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - The Gateway authenticates the clients and manages their ACLs
+- **Delegate them at the backing Kafka cluster** ([Delegated SASL Authentication](#delegated-sasl-authentication)) - The Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
+- **Handle them at the Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - The Gateway authenticates the clients and manages their ACLs
 :::
 
 ### Delegated SASL Authentication
@@ -139,12 +139,12 @@ If you'd like us to support more mechanisms, please [let us know](https://produc
 
 In this mode, the clients authorization (ACLs) is also handled by the backing Kafka cluster. **Any calls to the Kafka ACLs API made on the Gateway will be forwarded to the backing Kafka cluster**.
 
-This implies that:
-- **Local Service Accounts are not available on the Gateway**.
-- **External Service Accounts are available**, and could be mapped to the client principal so that the Gateway will apply its interceptors on this external Service Accounts with a "friendly" name
+As such:
+- **Local Service Accounts are not available on the Gateway**
+- **External Service Accounts are available**, and can be mapped to the client principal. This way Gateway will apply its interceptors on this external Service Account with a "friendly" name
 
 :::warning
-Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Virtual Topics](/gateway/concepts/logical-topics/alias-topics), [Concentration](/gateway/concepts/logical-topics/concentrated-topics)) are not available in the Delegated SASL mode.
+Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Alias Topics](/gateway/concepts/logical-topics/alias-topics) and [Concentrated Topics](/gateway/concepts/logical-topics/concentrated-topics)) are not available in the Delegated SASL mode.
 :::
 
 [How to configure the client > Gateway connection with DELEGATED_SASL.](/gateway/configuration/client-authentication/#delegated_sasl_plaintext)
@@ -159,6 +159,6 @@ Any calls to the Kafka ACLs API made on the Gateway will be forwarded to the bac
 
 ### In Non-Delegated Mode
 
-Authorization (ACLs) is managed by the Gateway, which means that you have to define the ACLs for your applications in the Gateway, using the Kafka ACLs commands or the Conduktor Console UI.
+Authorization (ACLs) is managed by the Gateway, as such you have to define the ACLs for your applications in the Gateway. This is done using the Kafka ACLs commands, or the Conduktor Console UI.
 
-The principal attached to the ACLs could be either the local Service Account name, or the external Service Account name. If the client connects to the Gateway using OAUTHBEARER, but no external Service Account is defined, the principal will be the `sub` of the JWT client token.
+The principal attached to the ACLs can be either the local Service Account name, or the external Service Account name. If the client connects to the Gateway using OAUTHBEARER, but no external Service Account is defined, the `sub` of the JWT client token will be used as the principal.
