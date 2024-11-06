@@ -387,7 +387,7 @@ Now you can apply some interceptors to this service account, by referring to the
 
 You can now connect to the Gateway using the `azure-app-billing-dev` service account.
 
-Here is the type of properties file you can may to connect to the Gateway using OAUTHBEARER:
+Here is the type of properties file you may use to connect to the Gateway using OAUTHBEARER:
 
 ```properties title="external-client.properties"
 security.protocol=SASL_PLAINTEXT
