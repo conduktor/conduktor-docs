@@ -136,7 +136,7 @@ If you need support with your configuration, please [contact us](https://support
 The below example demonstrates an environment consisting of:
  - Zookeeper and a 3-node Kafka cluster
  - Schema registry
- - Conduktor Gateway using [delegated authentication](../concepts/authentication.md)
+ - Conduktor Gateway using [delegated authentication](/gateway/concepts/service-accounts-authentication-authorization/#delegated-sasl-authentication)
  - Kafka client
 
 <Tabs>

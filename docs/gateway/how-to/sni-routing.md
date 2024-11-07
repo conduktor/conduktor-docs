@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: SNI Routing
 description: Making the most from the ports you have
 ---
