@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Upcoming Breaking change 💣
+## Upcoming Breaking change: Local Users 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -24,6 +24,13 @@ For this release 3.4.0, we'll only raise the following warning in the logs:
 ````
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
+
+## Upcoming Breaking change: SNI Routing prefix 💣
+:::info
+This breaking change only impacts Gateway deployments with SNI Routing
+:::
+
+In release 3.5.0, we will update the SNI Routing default prefix.
 
 ***
 
@@ -48,7 +55,7 @@ spec:
   physicalTopics:
     delete: myapp-concentrated
   autoManaged: false
-  trueOffsets: true
+  offsetCorrectness: true
 ````
 
 Check the dedicated [documentation](/gateway/concepts/logical-topics/concentrated-topics) for more details on this [feature](/gateway/concepts/logical-topics/concentrated-topics#message-count--lag-offset-incorrectness) and its limitations.
