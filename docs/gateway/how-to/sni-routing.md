@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: SNI Routing
 description: Making the most from the ports you have
 ---
@@ -132,3 +132,5 @@ This allows the client the connect to Gateway, for Gateway to then append the re
 
 * Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L) can be used to check whether the right advertised listeners have been configured or how many brokers are in a given cluster.
 * Setting `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL` to `DEBUG` might be helpful when debugging issues.
+
+For a rich guide on troubleshooting please refer to the knowledge base article [SNI Routing Troubleshooting Guide](https://support.conduktor.io/hc/en-gb/articles/29104372472977-Conduktor-Gateway-SNI-Routing-Troubleshooting-Guide).

@@ -19,12 +19,14 @@ Note this feature enables you to troubleshoot, sample, analyze, aggregate and jo
 - Querying Kafka message data 
 - Querying Kafka metadata (such as the offset, partition and timestamp)
 
-We encourage you to use this feature in non-production environments and give us [feedback](https://product.conduktor.help/c/133-sql-over-kafka).
+We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
 
 ![Conduktor SQL](img/conduktor-sql.png)
 
 
 ## Console Configuration
+
+For a fully integrated Docker Compose, run our [get started](https://conduktor.io/get-started/) stack to try SQL. The below guide details how to add this feature to your existing deployment. 
 
 ### Database Configuration
 

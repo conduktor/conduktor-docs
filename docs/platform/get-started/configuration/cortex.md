@@ -20,47 +20,43 @@ Otherwise, you can use the storage parameters described below to store the data 
 
 | Environment Variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
-| `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`)                                        | true      | string | ∅                       | `1.18.0` |
-| `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console                                                     | false     | bool   | `false`                 | `1.18.2` |
-| `CDK_SCRAPER_CAFILE`                          | Path to CA certificate file inside the container to perform TLS check when scraping metrics from Console | false     | string | ∅                       | `1.18.2` |
+| `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
+| `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
+| `CDK_SCRAPER_CAFILE`                          | Path to CA certificate file inside the container to perform TLS check when scraping metrics from Console. | false     | string | ∅                       | `1.18.2` |
 | **S3**                                        |                                                                                                          |           |        |                         |          |
-| `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | S3 storage endpoint                                                                                      | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region                                                                                        | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name                                                                                   | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_INSECURE`          | S3 storage SSL/TLS check flag                                                                            | false     | bool   | `false`                 | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | S3 storage access key                                                                                    | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | S3 storage access key secret                                                                             | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_ENDPOINT`          | S3 storage endpoint.                                                                                      | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region.                                                                                        | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name.                                                                                   | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_INSECURE`          | S3 storage SSL/TLS check flag.                                                                            | false     | bool   | `false`                 | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | Access key ID of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                                                                       | false      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | Secret access key of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                            | false      | string | ∅                       | `1.18.0` |
 | **GCS**                                       |                                                                                                          |           |        |                         |          |
-| `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | GCS storage bucket name                                                                                  | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | GCS storage service account JSON content                                                                 | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | GCS storage bucket name.                                                                                  | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | GCS storage service account JSON content.                                                                 | true      | string | ∅                       | `1.18.0` |
 | **Azure**                                     |                                                                                                          |           |        |                         |          |
-| `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | Azure storage account name                                                                               | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | Azure storage account key                                                                                | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | Azure storage container name                                                                             | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | Azure storage endpoint suffix                                                                            | false     | string | `blob.core.windows.net` | `1.18.0` |
+| `CDK_MONITORING_STORAGE_AZURE_ACCOUNTNAME`    | Azure storage account name.                                                                               | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_AZURE_ACCOUNTKEY`     | Azure storage account key.                                                                                | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_AZURE_CONTAINERNAME`  | Azure storage container name.                                                                             | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_AZURE_ENDPOINTSUFFIX` | Azure storage endpoint suffix.                                                                            | false     | string | `blob.core.windows.net` | `1.18.0` |
 | **Swift**                                     |                                                                                                          |           |        |                         |          |
-| `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | Swift storage authentication URL                                                                         | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | Swift storage user password                                                                              | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | Swift storage container name                                                                             | true      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_USERID`         | Swift storage user ID                                                                                    | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | Swift storage user name                                                                                  | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | Swift storage user domain name                                                                           | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | Swift storage user domain ID                                                                             | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | Swift storage user domain ID                                                                             | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | Swift storage user domain name                                                                           | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | Swift storage project ID                                                                                 | false     | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | Swift storage region name                                                                                | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_AUTHURL`        | Swift storage authentication URL.                                                                         | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_PASSWORD`       | Swift storage user password.                                                                              | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_CONTAINERNAME`  | Swift storage container name.                                                                             | true      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_USERID`         | Swift storage user ID.                                                                                    | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_USERNAME`       | Swift storage user name.                                                                                  | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINNAME` | Swift storage user domain name.                                                                           | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_USERDOMAINID`   | Swift storage user domain ID.                                                                             | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_DOMAINID`       | Swift storage user domain ID.                                                                             | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_DOMAINNAME`     | Swift storage user domain name.                                                                           | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_PROJECTID`      | Swift storage project ID.                                                                                 | false     | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_SWIFT_REGIONNAME`     | Swift storage region name.                                                                                | false     | string | ∅                       | `1.18.0` |
 | **Logs**                                      |                                                                                                          |           |        |                         |          |
-| `CORTEX_ROOT_LOG_LEVEL`                       | Cortex log level                                                                                         | false     | string | `info`                  | `1.18.0` |
-| `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level                                                                                  | false     | string | `info`                  | `1.18.0` |
-| `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level                                                                                     | false     | string | `info`                  | `1.18.0` |
+| `CORTEX_ROOT_LOG_LEVEL`                       | Cortex log level.                                                                                         | false     | string | `info`                  | `1.18.0` |
+| `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level.                                                                                  | false     | string | `info`                  | `1.18.0` |
+| `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
 
-:::tip
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overrided completly by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
-This is not possible yet for Alert Manager and Prometheus. 
-:::
-
-Typically, in docker compose it would look like this:
+## Example configuration
+In a docker compose it may look like the following:
 ````yaml
 version: '3.8'
 services:
@@ -83,6 +79,26 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ````
 
+## Overriding Configuration
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+This is not currently available for Alert Manager and Prometheus. 
+
+For example, create a file `cortex.yaml` add in only your overrides:
+```yaml
+limits:
+  ingestion_rate: 50000
+  max_series_per_metric: 100000
+```
+Mount to `/opt/override-configs/cortex.yaml`.  
+Spin up the container. Exec into the container and confirm the contents, replace `2` with the number of lines of override you wish to see, or remove grep to get the whole file:  
+`cat /var/conduktor/configs/monitoring-cortex.yaml | grep limits -A2`.
+
+You should see a similar entry to the below in the opening logs:
+
+```text
+INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
+```
+
 ## Troubleshooting  
 
 ### No metrics in the monitoring page  
@@ -99,3 +115,6 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 4. [Create some alerts](../../navigation/monitoring/getting-started/create-alert.md).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
+
+## Endpoint Authentication
+Monitoring is not designed to be interacted with through the API endpoints by end users, only Console. As such no ingress is available externally and you should not set one up as there is no authentication mechanism.

@@ -6,6 +6,8 @@ solutions: console
 tags: fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Fixes 🔨
 
 - Massive improvement over the indexing time of your cluster. This is especially notable if you have a large number of consumer groups (> 200) on your Kafka cluster.

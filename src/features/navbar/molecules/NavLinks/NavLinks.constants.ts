@@ -8,10 +8,6 @@ export const items = [
     href: '/changelog',
   },
   {
-    name: 'Roadmap',
-    href: 'https://product.conduktor.help',
-  },
-  {
     name: 'FAQ',
     to: '/faq',
   },
