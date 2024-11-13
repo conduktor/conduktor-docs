@@ -25,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7huVPVLW79SCMpYhRPyCOZc6Z.svg)](https://asciinema.org/a/7huVPVLW79SCMpYhRPyCOZc6Z)
+[![asciicast](https://asciinema.org/a/E2KwfBjnSDdAukOb1hy50nS3C.svg)](https://asciinema.org/a/E2KwfBjnSDdAukOb1hy50nS3C)
 
 </TabItem>
 </Tabs>
@@ -244,65 +244,65 @@ docker compose up --detach --wait
 ```
  Network chaos-simulate-invalid-schema-id_default  Creating
  Network chaos-simulate-invalid-schema-id_default  Created
- Container kafka3  Creating
- Container kafka2  Creating
  Container kafka-client  Creating
+ Container kafka2  Creating
  Container kafka1  Creating
+ Container kafka3  Creating
+ Container kafka-client  Created
  Container kafka3  Created
  Container kafka2  Created
- Container kafka-client  Created
  Container kafka1  Created
- Container gateway1  Creating
  Container schema-registry  Creating
+ Container gateway1  Creating
  Container gateway2  Creating
  Container gateway1  Created
  Container schema-registry  Created
  Container gateway2  Created
  Container kafka3  Starting
- Container kafka1  Starting
- Container kafka-client  Starting
  Container kafka2  Starting
- Container kafka2  Started
+ Container kafka-client  Starting
+ Container kafka1  Starting
  Container kafka3  Started
  Container kafka-client  Started
  Container kafka1  Started
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container kafka2  Started
  Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka3  Healthy
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka1  Healthy
  Container gateway2  Starting
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
  Container schema-registry  Starting
+ Container kafka3  Healthy
  Container gateway1  Starting
- Container gateway1  Started
  Container schema-registry  Started
  Container gateway2  Started
- Container gateway1  Waiting
- Container gateway2  Waiting
- Container kafka-client  Waiting
+ Container gateway1  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
- Container kafka2  Healthy
+ Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container kafka3  Healthy
- Container kafka1  Healthy
+ Container kafka2  Healthy
  Container kafka-client  Healthy
- Container gateway2  Healthy
+ Container kafka1  Healthy
  Container gateway1  Healthy
+ Container gateway2  Healthy
  Container schema-registry  Healthy
 
 ```
@@ -310,7 +310,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/xEtXTCY7HAmVhWQQ0HJaAFI9x.svg)](https://asciinema.org/a/xEtXTCY7HAmVhWQQ0HJaAFI9x)
+[![asciicast](https://asciinema.org/a/RPxm8UKFsk1la6JFXKHZV7prn.svg)](https://asciinema.org/a/RPxm8UKFsk1la6JFXKHZV7prn)
 
 </TabItem>
 </Tabs>
@@ -350,7 +350,7 @@ Created topic with-schema.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/xcd9e4kwmbMIhd2mSXI8s8wUT.svg)](https://asciinema.org/a/xcd9e4kwmbMIhd2mSXI8s8wUT)
+[![asciicast](https://asciinema.org/a/MvhjTn2rGFVRj6rsAAOSyKWMs.svg)](https://asciinema.org/a/MvhjTn2rGFVRj6rsAAOSyKWMs)
 
 </TabItem>
 </Tabs>
@@ -433,7 +433,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/nzbiXwGoQA5P310r55vkClieZ.svg)](https://asciinema.org/a/nzbiXwGoQA5P310r55vkClieZ)
+[![asciicast](https://asciinema.org/a/dbgEKR0mZBABpdXIXesVK1Wit.svg)](https://asciinema.org/a/dbgEKR0mZBABpdXIXesVK1Wit)
 
 </TabItem>
 </Tabs>
@@ -492,7 +492,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/HuoeAFIcb4lzN2DuIDDPfWkWV.svg)](https://asciinema.org/a/HuoeAFIcb4lzN2DuIDDPfWkWV)
+[![asciicast](https://asciinema.org/a/AZ3yWz5eB5dyFXW4njYnEMh4C.svg)](https://asciinema.org/a/AZ3yWz5eB5dyFXW4njYnEMh4C)
 
 </TabItem>
 </Tabs>
@@ -530,7 +530,7 @@ kafka-json-schema-console-producer \
 <TabItem value="Output">
 
 ```
-[2024-11-01 17:05:12,730] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-11-10 20:06:20,721] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -602,7 +602,7 @@ kafka-json-schema-console-producer \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/V7VvYCsv4epjmOcgcVK772Mk7.svg)](https://asciinema.org/a/V7VvYCsv4epjmOcgcVK772Mk7)
+[![asciicast](https://asciinema.org/a/lQmhvaU3oKp8gt9S3UuEpt0Z9.svg)](https://asciinema.org/a/lQmhvaU3oKp8gt9S3UuEpt0Z9)
 
 </TabItem>
 </Tabs>
@@ -631,7 +631,7 @@ kafka-json-schema-console-consumer \
 <TabItem value="Output">
 
 ```
-[2024-11-01 17:05:17,302] INFO KafkaJsonSchemaDeserializerConfig values: 
+[2024-11-10 20:06:25,666] INFO KafkaJsonSchemaDeserializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -696,7 +696,7 @@ kafka-json-schema-console-consumer \
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig:370)
 Processed a total of 1 messages
-[2024-11-01 17:05:27,811] ERROR Unknown error when running consumer:  (kafka.tools.ConsoleConsumer$:45)
+[2024-11-10 20:06:28,330] ERROR Unknown error when running consumer:  (kafka.tools.ConsoleConsumer$:45)
 org.apache.kafka.common.errors.SerializationException: Error retrieving JSON schema for id 999
 	at io.confluent.kafka.serializers.AbstractKafkaSchemaSerDe.toKafkaException(AbstractKafkaSchemaSerDe.java:806)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:238)
@@ -717,7 +717,7 @@ Caused by: io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientEx
 	at io.confluent.kafka.schemaregistry.client.CachedSchemaRegistryClient.getSchemaBySubjectAndId(CachedSchemaRegistryClient.java:463)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:133)
 	... 8 more
-[2024-11-01 17:05:27,811] ERROR Unknown error when running consumer:  (kafka.tools.ConsoleConsumer$:45)
+[2024-11-10 20:06:28,330] ERROR Unknown error when running consumer:  (kafka.tools.ConsoleConsumer$:45)
 org.apache.kafka.common.errors.SerializationException: Error retrieving JSON schema for id 999
 	at io.confluent.kafka.serializers.AbstractKafkaSchemaSerDe.toKafkaException(AbstractKafkaSchemaSerDe.java:806)
 	at io.confluent.kafka.serializers.json.AbstractKafkaJsonSchemaDeserializer.deserialize(AbstractKafkaJsonSchemaDeserializer.java:238)
@@ -744,7 +744,7 @@ Caused by: io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientEx
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/axZLsv9ZMOhCYyvhO33m1aY9j.svg)](https://asciinema.org/a/axZLsv9ZMOhCYyvhO33m1aY9j)
+[![asciicast](https://asciinema.org/a/WxWGz5vYgu5SoBVTSQmJpaBHO.svg)](https://asciinema.org/a/WxWGz5vYgu5SoBVTSQmJpaBHO)
 
 </TabItem>
 </Tabs>
@@ -772,34 +772,34 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container gateway1  Stopping
  Container kafka-client  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container schema-registry  Stopped
- Container schema-registry  Removing
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway1  Removed
- Container schema-registry  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway2  Removed
- Container kafka2  Stopping
+ Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container schema-registry  Removed
  Container kafka1  Stopping
+ Container kafka2  Stopping
  Container kafka3  Stopping
+ Container kafka1  Stopped
+ Container kafka1  Removing
  Container kafka2  Stopped
  Container kafka2  Removing
+ Container kafka1  Removed
+ Container kafka2  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
- Container kafka2  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
  Network chaos-simulate-invalid-schema-id_default  Removing
  Network chaos-simulate-invalid-schema-id_default  Removed
 
@@ -808,7 +808,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/mKtA3w1UkgPXlRBihPX1zb5Sd.svg)](https://asciinema.org/a/mKtA3w1UkgPXlRBihPX1zb5Sd)
+[![asciicast](https://asciinema.org/a/dMFTVUaHD7KU8N9HCMRk3YRhh.svg)](https://asciinema.org/a/dMFTVUaHD7KU8N9HCMRk3YRhh)
 
 </TabItem>
 </Tabs>

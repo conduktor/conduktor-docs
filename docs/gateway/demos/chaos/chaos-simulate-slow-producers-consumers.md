@@ -25,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Vbv9ehSBuTjQomButR7LjwTtY.svg)](https://asciinema.org/a/Vbv9ehSBuTjQomButR7LjwTtY)
+[![asciicast](https://asciinema.org/a/Kqdhp1JDlf0cvGfIClHPxTUK0.svg)](https://asciinema.org/a/Kqdhp1JDlf0cvGfIClHPxTUK0)
 
 </TabItem>
 </Tabs>
@@ -244,73 +244,73 @@ docker compose up --detach --wait
 ```
  Network chaos-simulate-slow-producers-consumers_default  Creating
  Network chaos-simulate-slow-producers-consumers_default  Created
- Container kafka2  Creating
- Container kafka-client  Creating
- Container kafka1  Creating
  Container kafka3  Creating
- Container kafka3  Created
- Container kafka1  Created
- Container kafka-client  Created
+ Container kafka1  Creating
+ Container kafka-client  Creating
+ Container kafka2  Creating
  Container kafka2  Created
+ Container kafka-client  Created
+ Container kafka1  Created
+ Container kafka3  Created
  Container gateway2  Creating
- Container schema-registry  Creating
  Container gateway1  Creating
+ Container schema-registry  Creating
  Container gateway2  Created
- Container schema-registry  Created
  Container gateway1  Created
+ Container schema-registry  Created
  Container kafka3  Starting
  Container kafka-client  Starting
- Container kafka1  Starting
  Container kafka2  Starting
+ Container kafka1  Starting
+ Container kafka2  Started
  Container kafka1  Started
  Container kafka-client  Started
  Container kafka3  Started
- Container kafka2  Started
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
- Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka1  Waiting
  Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
  Container schema-registry  Starting
- Container gateway1  Starting
+ Container kafka3  Healthy
  Container kafka3  Healthy
  Container gateway2  Starting
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container gateway2  Started
  Container schema-registry  Started
  Container gateway1  Started
- Container gateway2  Started
- Container gateway2  Waiting
  Container kafka-client  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
- Container kafka1  Healthy
- Container kafka-client  Healthy
- Container kafka2  Healthy
+ Container gateway2  Waiting
  Container kafka3  Healthy
- Container gateway2  Healthy
- Container gateway1  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
  Container schema-registry  Healthy
+ Container gateway1  Healthy
+container gateway2 exited (96)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/iAQa4zQLczFL6COl4UWBq5siV.svg)](https://asciinema.org/a/iAQa4zQLczFL6COl4UWBq5siV)
+[![asciicast](https://asciinema.org/a/A10qu6DLgShcKrxzcqq6vSK9G.svg)](https://asciinema.org/a/A10qu6DLgShcKrxzcqq6vSK9G)
 
 </TabItem>
 </Tabs>
@@ -350,7 +350,7 @@ Created topic slow-topic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/wqojIi0pdmBQCVitv6l8ql1SC.svg)](https://asciinema.org/a/wqojIi0pdmBQCVitv6l8ql1SC)
+[![asciicast](https://asciinema.org/a/Auh4OhedCgVVWnC3IVEjWjXDT.svg)](https://asciinema.org/a/Auh4OhedCgVVWnC3IVEjWjXDT)
 
 </TabItem>
 </Tabs>
@@ -435,7 +435,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/uiMjqXP317ic1sggbXi1gzYGY.svg)](https://asciinema.org/a/uiMjqXP317ic1sggbXi1gzYGY)
+[![asciicast](https://asciinema.org/a/venjmdU0cHEYAwYzjXFTiQeN4.svg)](https://asciinema.org/a/venjmdU0cHEYAwYzjXFTiQeN4)
 
 </TabItem>
 </Tabs>
@@ -495,7 +495,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LR86pMBloEJmv8GzLxrNnokEi.svg)](https://asciinema.org/a/LR86pMBloEJmv8GzLxrNnokEi)
+[![asciicast](https://asciinema.org/a/WwnL6hbaomJMBhS5HbqcF8uZv.svg)](https://asciinema.org/a/WwnL6hbaomJMBhS5HbqcF8uZv)
 
 </TabItem>
 </Tabs>
@@ -529,16 +529,16 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-4 records sent, 0.7 records/sec (0.00 MB/sec), 3381.0 ms avg latency, 3905.0 ms max latency.
-5 records sent, 1.0 records/sec (0.00 MB/sec), 3054.8 ms avg latency, 3149.0 ms max latency.
-10 records sent, 0.871688 records/sec (0.00 MB/sec), 3181.70 ms avg latency, 3905.00 ms max latency, 3047 ms 50th, 3905 ms 95th, 3905 ms 99th, 3905 ms 99.9th.
+4 records sent, 0.7 records/sec (0.00 MB/sec), 3276.5 ms avg latency, 3695.0 ms max latency.
+5 records sent, 1.0 records/sec (0.00 MB/sec), 3025.4 ms avg latency, 3038.0 ms max latency.
+10 records sent, 0.876424 records/sec (0.00 MB/sec), 3125.00 ms avg latency, 3695.00 ms max latency, 3021 ms 50th, 3695 ms 95th, 3695 ms 99th, 3695 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hApGvBYj96NZFD4wfgVWQd8d9.svg)](https://asciinema.org/a/hApGvBYj96NZFD4wfgVWQd8d9)
+[![asciicast](https://asciinema.org/a/dJm6DzHEsFIf7aZYWWSLT8XOe.svg)](https://asciinema.org/a/dJm6DzHEsFIf7aZYWWSLT8XOe)
 
 </TabItem>
 </Tabs>
@@ -567,33 +567,33 @@ docker compose down --volumes
 
 ```
  Container kafka-client  Stopping
- Container gateway1  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway1  Removed
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
  Container kafka3  Stopping
  Container kafka2  Stopping
+ Container kafka1  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka2  Stopped
+ Container kafka2  Removing
  Container kafka1  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
+ Container kafka2  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Network chaos-simulate-slow-producers-consumers_default  Removing
  Network chaos-simulate-slow-producers-consumers_default  Removed
 
@@ -602,7 +602,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/GRzS7Mg8S3lN5tHwPkRKRTTza.svg)](https://asciinema.org/a/GRzS7Mg8S3lN5tHwPkRKRTTza)
+[![asciicast](https://asciinema.org/a/BtjMt2mkBmwaMF61XZjd5oem3.svg)](https://asciinema.org/a/BtjMt2mkBmwaMF61XZjd5oem3)
 
 </TabItem>
 </Tabs>

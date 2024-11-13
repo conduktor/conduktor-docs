@@ -15,9 +15,18 @@ Let's demonstrate field level data masking
 
 
 
+<Tabs>
+<TabItem value="Command">
+
 You can either follow all the steps manually, or watch the recording
 
-[![asciicast](https://asciinema.org/a/upn0nKNhc6tnFkZtanzngkqn1.svg)](https://asciinema.org/a/upn0nKNhc6tnFkZtanzngkqn1)
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/gxaC7NmOu81f03mbo1yIHcP3o.svg)](https://asciinema.org/a/gxaC7NmOu81f03mbo1yIHcP3o)
+
+</TabItem>
+</Tabs>
 
 ## Review the docker compose environment
 
@@ -31,12 +40,15 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka3
 * schema-registry
 
+<Tabs>
+<TabItem value="Command">
+
 ```sh
 cat docker-compose.yaml
 ```
 
-<details>
-<summary>File content</summary>
+</TabItem>
+<TabItem value="File Content">
 
 ```yaml
 services:
@@ -201,8 +213,8 @@ services:
       target: /clientConfig
       read_only: true
 ```
-
-</details>
+</TabItem>
+</Tabs>
 
 ## Starting the docker environment
 
@@ -212,46 +224,45 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--detach`: Detached mode: Run containers in the background
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 docker compose up --detach --wait
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
  Network data-masking_default  Creating
  Network data-masking_default  Created
  Container kafka3  Creating
- Container kafka2  Creating
- Container kafka-client  Creating
  Container kafka1  Creating
- Container kafka1  Created
- Container kafka2  Created
- Container kafka3  Created
- Container gateway2  Creating
- Container schema-registry  Creating
- Container gateway1  Creating
+ Container kafka-client  Creating
+ Container kafka2  Creating
  Container kafka-client  Created
+ Container kafka1  Created
+ Container kafka3  Created
+ Container kafka2  Created
+ Container gateway2  Creating
+ Container gateway1  Creating
+ Container schema-registry  Creating
+ Container schema-registry  Created
  Container gateway1  Created
  Container gateway2  Created
- Container schema-registry  Created
  Container kafka3  Starting
  Container kafka-client  Starting
- Container kafka2  Starting
  Container kafka1  Starting
- Container kafka1  Started
- Container kafka2  Started
- Container kafka-client  Started
+ Container kafka2  Starting
  Container kafka3  Started
+ Container kafka2  Started
+ Container kafka1  Started
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
@@ -261,45 +272,46 @@ docker compose up --detach --wait
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
+ Container kafka-client  Started
  Container kafka3  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
  Container kafka3  Healthy
  Container gateway2  Starting
- Container gateway1  Starting
+ Container kafka1  Healthy
  Container schema-registry  Starting
- Container gateway1  Started
- Container schema-registry  Started
  Container gateway2  Started
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
- Container kafka1  Waiting
- Container kafka1  Healthy
- Container kafka-client  Healthy
  Container kafka2  Healthy
  Container kafka3  Healthy
- Container schema-registry  Healthy
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/aTk0bIvhHHegF24CF3EN42VIH.svg)](https://asciinema.org/a/aTk0bIvhHHegF24CF3EN42VIH)
+[![asciicast](https://asciinema.org/a/trjBHuCotL6LsFUWgUtyaErco.svg)](https://asciinema.org/a/trjBHuCotL6LsFUWgUtyaErco)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Creating topic customers on gateway1
 
@@ -308,11 +320,13 @@ Creating on `gateway1`:
 * Topic `customers` with partitions:1 and replication-factor:1
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
@@ -323,30 +337,30 @@ kafka-topics \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
 Created topic customers.
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/KxgTkJdy2GL7sls8lnhdJqkeT.svg)](https://asciinema.org/a/KxgTkJdy2GL7sls8lnhdJqkeT)
+[![asciicast](https://asciinema.org/a/aWuRDje1nw8no9zfncTqLH1V6.svg)](https://asciinema.org/a/aWuRDje1nw8no9zfncTqLH1V6)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Adding interceptor data-masking
 
 We want to data masking only two fields, with an in memory KMS.
 
-<details open>
-<summary>step-06-data-masking-interceptor.json</summary>
+
+
+
+`step-06-data-masking-interceptor.json`:
 
 ```json
 {
@@ -379,13 +393,11 @@ We want to data masking only two fields, with an in memory KMS.
   }
 }
 ```
-</details>
-
-<details open>
-<summary>Command</summary>
 
 
+<Tabs>
 
+<TabItem value="Command">
 ```sh
 curl \
     --silent \
@@ -396,10 +408,8 @@ curl \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
 {
@@ -451,24 +461,26 @@ curl \
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/HMSNuQYVYZm8rGA7rHAKXQRwt.svg)](https://asciinema.org/a/HMSNuQYVYZm8rGA7rHAKXQRwt)
+[![asciicast](https://asciinema.org/a/urfTJmPfJiofkiCD8sLcZswZy.svg)](https://asciinema.org/a/urfTJmPfJiofkiCD8sLcZswZy)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Listing interceptors
 
 Listing interceptors on `gateway1`
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 curl \
     --silent \
@@ -477,10 +489,8 @@ curl \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
 [
@@ -531,21 +541,18 @@ curl \
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/6U9ypNUPxC0FeypXbczfGyLZ8.svg)](https://asciinema.org/a/6U9ypNUPxC0FeypXbczfGyLZ8)
+[![asciicast](https://asciinema.org/a/dGjgtBD4uPBlX5MxOcvwk2HHw.svg)](https://asciinema.org/a/dGjgtBD4uPBlX5MxOcvwk2HHw)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Let's send json
 
 We are using regular kafka tools
 
-
-<details open>
-<summary>Command</summary>
 
 
 
@@ -567,6 +574,11 @@ Sending 2 events
 }
 ```
 
+
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
     kafka-console-producer \
@@ -580,33 +592,33 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/AHER05KbjzPGQ0dSuVkRL0voJ.svg)](https://asciinema.org/a/AHER05KbjzPGQ0dSuVkRL0voJ)
+[![asciicast](https://asciinema.org/a/pbJnpLLxjtP36IChHMOne5up2.svg)](https://asciinema.org/a/pbJnpLLxjtP36IChHMOne5up2)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Let's consume the message, and confirm tom and laura fields are masked
 
 Let's consume the message, and confirm tom and laura fields are masked in cluster `gateway1`
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
@@ -635,13 +647,11 @@ returns 2 events
 }
 ```
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
-[2024-10-29 19:54:23,557] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 20:45:39,954] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
@@ -661,24 +671,26 @@ Processed a total of 2 messages
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/0bXV7HW59DlrkrdzbrZBfr3Dq.svg)](https://asciinema.org/a/0bXV7HW59DlrkrdzbrZBfr3Dq)
+[![asciicast](https://asciinema.org/a/DyF6xvADjRieUiAkz7vkRmd1p.svg)](https://asciinema.org/a/DyF6xvADjRieUiAkz7vkRmd1p)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Remove interceptor data-masking
 
 
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 curl \
     --silent \
@@ -691,33 +703,33 @@ curl \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pH8Iovdtgbk8qLvU9tmV9u75r.svg)](https://asciinema.org/a/pH8Iovdtgbk8qLvU9tmV9u75r)
+[![asciicast](https://asciinema.org/a/TR54sUIWJPtYTzuhgMw3ToSUe.svg)](https://asciinema.org/a/TR54sUIWJPtYTzuhgMw3ToSUe)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Let's consume the message, and confirm tom and laura fields no more masked
 
 Let's consume the message, and confirm tom and laura fields no more masked in cluster `gateway1`
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
@@ -746,13 +758,11 @@ returns 2 events
 }
 ```
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
-[2024-10-29 19:54:29,450] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 20:45:45,808] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
@@ -772,13 +782,13 @@ Processed a total of 2 messages
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/i78sidmkLjy8DYNEeLBGcGleJ.svg)](https://asciinema.org/a/i78sidmkLjy8DYNEeLBGcGleJ)
+[![asciicast](https://asciinema.org/a/KVcXQZORJk8rNUNJU0vK2g5E7.svg)](https://asciinema.org/a/KVcXQZORJk8rNUNJU0vK2g5E7)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Tearing down the docker environment
 
@@ -787,64 +797,64 @@ Remove all your docker processes and associated volumes
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 docker compose down --volumes
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
+ Container kafka-client  Stopping
+ Container schema-registry  Stopping
  Container gateway1  Stopping
  Container gateway2  Stopping
- Container schema-registry  Stopping
- Container kafka-client  Stopping
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway1  Removed
  Container gateway2  Stopped
  Container gateway2  Removing
+ Container gateway1  Removed
  Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
  Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
+ Container kafka1  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Network data-masking_default  Removing
  Network data-masking_default  Removed
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/A8J5bFd5hlsMhV9cFKKORzGYe.svg)](https://asciinema.org/a/A8J5bFd5hlsMhV9cFKKORzGYe)
+[![asciicast](https://asciinema.org/a/TCVpQuHoNqH0yhSqxDEafqCuI.svg)](https://asciinema.org/a/TCVpQuHoNqH0yhSqxDEafqCuI)
 
-</details>
+</TabItem>
+</Tabs>
 
 # Conclusion
 
-Yes, data masking in the Kafka world can be simple!
+Yes, encryption in the Kafka world can be simple!
 

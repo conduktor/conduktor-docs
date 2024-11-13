@@ -17,9 +17,18 @@ This demo will run you through some of these use cases step-by-step.
 
 
 
+<Tabs>
+<TabItem value="Command">
+
 You can either follow all the steps manually, or watch the recording
 
-[![asciicast](https://asciinema.org/a/P7uHnIXy7U1tuvjgEvbyLHwOI.svg)](https://asciinema.org/a/P7uHnIXy7U1tuvjgEvbyLHwOI)
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/lA7pifpmtQYxTLcoUKIugGVA6.svg)](https://asciinema.org/a/lA7pifpmtQYxTLcoUKIugGVA6)
+
+</TabItem>
+</Tabs>
 
 ## Review the docker compose environment
 
@@ -33,12 +42,15 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka3
 * schema-registry
 
+<Tabs>
+<TabItem value="Command">
+
 ```sh
 cat docker-compose.yaml
 ```
 
-<details>
-<summary>File content</summary>
+</TabItem>
+<TabItem value="File Content">
 
 ```yaml
 services:
@@ -203,8 +215,8 @@ services:
       target: /clientConfig
       read_only: true
 ```
-
-</details>
+</TabItem>
+</Tabs>
 
 ## Starting the docker environment
 
@@ -214,20 +226,20 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--detach`: Detached mode: Run containers in the background
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 docker compose up --detach --wait
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
  Network chaos-duplicate-messages_default  Creating
@@ -236,72 +248,72 @@ docker compose up --detach --wait
  Container kafka-client  Creating
  Container kafka3  Creating
  Container kafka1  Creating
- Container kafka1  Created
- Container kafka-client  Created
- Container kafka2  Created
  Container kafka3  Created
- Container gateway2  Creating
- Container schema-registry  Creating
+ Container kafka1  Created
+ Container kafka2  Created
  Container gateway1  Creating
+ Container schema-registry  Creating
+ Container gateway2  Creating
+ Container kafka-client  Created
  Container gateway2  Created
  Container schema-registry  Created
  Container gateway1  Created
- Container kafka3  Starting
  Container kafka1  Starting
- Container kafka-client  Starting
  Container kafka2  Starting
- Container kafka1  Started
+ Container kafka-client  Starting
+ Container kafka3  Starting
  Container kafka3  Started
  Container kafka2  Started
+ Container kafka1  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka3  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
  Container kafka-client  Started
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
  Container gateway2  Starting
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container schema-registry  Starting
  Container kafka2  Healthy
  Container gateway1  Starting
- Container kafka1  Healthy
- Container kafka2  Healthy
- Container schema-registry  Starting
- Container gateway2  Started
- Container schema-registry  Started
  Container gateway1  Started
+ Container schema-registry  Started
+ Container gateway2  Started
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
- Container gateway2  Waiting
- Container kafka-client  Waiting
- Container kafka1  Waiting
+ Container kafka-client  Healthy
+ Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka-client  Healthy
- Container gateway2  Healthy
  Container gateway1  Healthy
  Container schema-registry  Healthy
+ Container gateway2  Healthy
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/cZrKG2NpGb4Br7D0KrGL7aHAz.svg)](https://asciinema.org/a/cZrKG2NpGb4Br7D0KrGL7aHAz)
+[![asciicast](https://asciinema.org/a/jiMt28LMcoRaKHcQJY1ewrsPF.svg)](https://asciinema.org/a/jiMt28LMcoRaKHcQJY1ewrsPF)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Creating topic topic-duplicate on gateway1
 
@@ -310,11 +322,13 @@ Creating on `gateway1`:
 * Topic `topic-duplicate` with partitions:1 and replication-factor:1
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
@@ -325,30 +339,30 @@ kafka-topics \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
 Created topic topic-duplicate.
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/HOdqruZB1Y5HHsZuQN1ylQCfk.svg)](https://asciinema.org/a/HOdqruZB1Y5HHsZuQN1ylQCfk)
+[![asciicast](https://asciinema.org/a/UGzl70k7RNShSdf5sUtPuQD7g.svg)](https://asciinema.org/a/UGzl70k7RNShSdf5sUtPuQD7g)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Adding interceptor duplicate-messages
 
 Let's create the interceptor, instructing Conduktor Gateway to inject duplicate records on produce requests.
 
-<details open>
-<summary>step-06-duplicate-messages-interceptor.json</summary>
+
+
+
+`step-06-duplicate-messages-interceptor.json`:
 
 ```json
 {
@@ -369,13 +383,11 @@ Let's create the interceptor, instructing Conduktor Gateway to inject duplicate 
   }
 }
 ```
-</details>
-
-<details open>
-<summary>Command</summary>
 
 
+<Tabs>
 
+<TabItem value="Command">
 ```sh
 curl \
     --silent \
@@ -386,10 +398,8 @@ curl \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
 {
@@ -420,24 +430,26 @@ curl \
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RBCf2PMZxz0P1ifoVUyyAKcvJ.svg)](https://asciinema.org/a/RBCf2PMZxz0P1ifoVUyyAKcvJ)
+[![asciicast](https://asciinema.org/a/Sot39qiraUf8ixU3YGPgePV03.svg)](https://asciinema.org/a/Sot39qiraUf8ixU3YGPgePV03)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Listing interceptors
 
 Listing interceptors on `gateway1`
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 curl \
     --silent \
@@ -446,10 +458,8 @@ curl \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
 [
@@ -479,21 +489,18 @@ curl \
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Gu2HcnCZ2ox1buigikkxZdHOA.svg)](https://asciinema.org/a/Gu2HcnCZ2ox1buigikkxZdHOA)
+[![asciicast](https://asciinema.org/a/tHsYyBk7ebhZZCDrQ9c0dv3Sz.svg)](https://asciinema.org/a/tHsYyBk7ebhZZCDrQ9c0dv3Sz)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Send message to our created topic
 
 Producing 1 message in `topic-duplicate` in cluster `gateway1`
 
-
-<details open>
-<summary>Command</summary>
 
 
 
@@ -504,6 +511,11 @@ Sending 1 event
 }
 ```
 
+
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 echo '{"message": "hello world"}' | \
     kafka-console-producer \
@@ -512,33 +524,33 @@ echo '{"message": "hello world"}' | \
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RHrAjQffwC8vrSW2X457EwDuF.svg)](https://asciinema.org/a/RHrAjQffwC8vrSW2X457EwDuF)
+[![asciicast](https://asciinema.org/a/LFuzpVMURiyCDD9rhl6yKVgJw.svg)](https://asciinema.org/a/LFuzpVMURiyCDD9rhl6yKVgJw)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Let's consume the message, and confirm message was duplicated
 
 Let's consume the message, and confirm message was duplicated in cluster `gateway1`
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
@@ -559,13 +571,11 @@ returns 2 events
 }
 ```
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```json
-[2024-10-29 19:03:21,013] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 19:54:05,022] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
@@ -577,13 +587,13 @@ Processed a total of 2 messages
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/k3cFTWpA4DjhCJzVNcVXRAYgH.svg)](https://asciinema.org/a/k3cFTWpA4DjhCJzVNcVXRAYgH)
+[![asciicast](https://asciinema.org/a/JjTT0eS6uf2cqQXAjAoZPtLif.svg)](https://asciinema.org/a/JjTT0eS6uf2cqQXAjAoZPtLif)
 
-</details>
+</TabItem>
+</Tabs>
 
 ## Tearing down the docker environment
 
@@ -592,47 +602,47 @@ Remove all your docker processes and associated volumes
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
 
-<details open>
-<summary>Command</summary>
 
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 docker compose down --volumes
 ```
 
 
-
-</details>
-<details>
-<summary>Output</summary>
+</TabItem>
+<TabItem value="Output">
 
 ```
  Container gateway1  Stopping
- Container schema-registry  Stopping
  Container kafka-client  Stopping
+ Container schema-registry  Stopping
  Container gateway2  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway1  Removed
  Container gateway2  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container schema-registry  Stopped
  Container schema-registry  Removing
+ Container gateway1  Removed
  Container schema-registry  Removed
- Container kafka3  Stopping
  Container kafka1  Stopping
  Container kafka2  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka1  Removed
- Container kafka2  Removed
+ Container kafka3  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
@@ -641,13 +651,13 @@ docker compose down --volumes
 
 ```
 
-</details>
-<details>
-<summary>Recording</summary>
+</TabItem>
+<TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/b3RYges0ttWgO01PpNxg19OHm.svg)](https://asciinema.org/a/b3RYges0ttWgO01PpNxg19OHm)
+[![asciicast](https://asciinema.org/a/rjsqMwDG7BlO9fhAmbrVdia6S.svg)](https://asciinema.org/a/rjsqMwDG7BlO9fhAmbrVdia6S)
 
-</details>
+</TabItem>
+</Tabs>
 
 # Conclusion
 

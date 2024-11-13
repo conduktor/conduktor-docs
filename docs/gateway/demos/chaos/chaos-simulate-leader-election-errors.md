@@ -25,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/9bh3L7M5LeETYUNtu3BX9y9qF.svg)](https://asciinema.org/a/9bh3L7M5LeETYUNtu3BX9y9qF)
+[![asciicast](https://asciinema.org/a/geNuTGUKGtSruKhTzIkfHNTpU.svg)](https://asciinema.org/a/geNuTGUKGtSruKhTzIkfHNTpU)
 
 </TabItem>
 </Tabs>
@@ -245,64 +245,64 @@ docker compose up --detach --wait
  Network chaos-simulate-leader-election-errors_default  Creating
  Network chaos-simulate-leader-election-errors_default  Created
  Container kafka3  Creating
- Container kafka1  Creating
  Container kafka2  Creating
+ Container kafka1  Creating
  Container kafka-client  Creating
- Container kafka-client  Created
- Container kafka3  Created
  Container kafka2  Created
+ Container kafka-client  Created
  Container kafka1  Created
+ Container kafka3  Created
  Container gateway2  Creating
  Container schema-registry  Creating
  Container gateway1  Creating
  Container gateway2  Created
- Container gateway1  Created
  Container schema-registry  Created
- Container kafka3  Starting
+ Container gateway1  Created
  Container kafka1  Starting
- Container kafka-client  Starting
  Container kafka2  Starting
- Container kafka3  Started
- Container kafka-client  Started
+ Container kafka3  Starting
+ Container kafka-client  Starting
  Container kafka1  Started
+ Container kafka-client  Started
+ Container kafka3  Started
  Container kafka2  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container kafka2  Healthy
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
- Container kafka2  Healthy
  Container schema-registry  Starting
- Container gateway1  Starting
- Container kafka1  Healthy
  Container gateway2  Starting
- Container schema-registry  Started
- Container gateway1  Started
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container gateway1  Starting
  Container gateway2  Started
+ Container gateway1  Started
+ Container schema-registry  Started
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container schema-registry  Waiting
- Container kafka3  Healthy
- Container kafka2  Healthy
  Container kafka-client  Healthy
+ Container kafka2  Healthy
  Container kafka1  Healthy
- Container gateway1  Healthy
+ Container kafka3  Healthy
  Container gateway2  Healthy
+ Container gateway1  Healthy
  Container schema-registry  Healthy
 
 ```
@@ -310,7 +310,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1CyclIWoL4TmNhZKBNOKnpqff.svg)](https://asciinema.org/a/1CyclIWoL4TmNhZKBNOKnpqff)
+[![asciicast](https://asciinema.org/a/egPrhiynKJTAShbOb9ZrhLR2p.svg)](https://asciinema.org/a/egPrhiynKJTAShbOb9ZrhLR2p)
 
 </TabItem>
 </Tabs>
@@ -350,7 +350,7 @@ Created topic my-topic.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/hgs5n1WxgpKjCLDrlR9yh96Sd.svg)](https://asciinema.org/a/hgs5n1WxgpKjCLDrlR9yh96Sd)
+[![asciicast](https://asciinema.org/a/5gQLM2h8PXvWMED9SWmQroP7U.svg)](https://asciinema.org/a/5gQLM2h8PXvWMED9SWmQroP7U)
 
 </TabItem>
 </Tabs>
@@ -429,7 +429,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7QYzjTgiXGkzP9QlJnJaJe1Wb.svg)](https://asciinema.org/a/7QYzjTgiXGkzP9QlJnJaJe1Wb)
+[![asciicast](https://asciinema.org/a/CaKxuOjHp2UjlBPLA9qc4OlvF.svg)](https://asciinema.org/a/CaKxuOjHp2UjlBPLA9qc4OlvF)
 
 </TabItem>
 </Tabs>
@@ -486,7 +486,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/y8gUzEebQpjfHm2zylfyhWgmR.svg)](https://asciinema.org/a/y8gUzEebQpjfHm2zylfyhWgmR)
+[![asciicast](https://asciinema.org/a/mQksNq4pbX36JHNiN5oEuyOiE.svg)](https://asciinema.org/a/mQksNq4pbX36JHNiN5oEuyOiE)
 
 </TabItem>
 </Tabs>
@@ -524,44 +524,31 @@ kafka-producer-perf-test \
 <TabItem value="Output">
 
 ```
-[2024-10-29 19:16:04,086] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 11 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,098] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,203] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 13 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,203] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,424] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 15 on topic-partition my-topic-0, retrying (2 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,424] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,835] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 17 on topic-partition my-topic-0, retrying (1 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:04,835] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-5 records sent, 0.9 records/sec (0.00 MB/sec), 546.0 ms avg latency, 1879.0 ms max latency.
-[2024-10-29 19:16:05,731] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 20 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:05,731] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:05,861] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 21 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:05,861] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:05,863] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 22 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:05,864] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,078] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 23 on topic-partition my-topic-0, retrying (2 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,078] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,574] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 26 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,574] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,788] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 27 on topic-partition my-topic-0, retrying (2 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:06,789] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:07,244] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 28 on topic-partition my-topic-0, retrying (1 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:07,245] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:07,246] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 29 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:07,246] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:08,081] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 32 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:08,081] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:08,465] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 33 on topic-partition my-topic-0, retrying (4 attempts left). Error: OUT_OF_ORDER_SEQUENCE_NUMBER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:08,587] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 36 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
-[2024-10-29 19:16:08,587] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
-10 records sent, 1.055855 records/sec (0.00 MB/sec), 918.30 ms avg latency, 2215.00 ms max latency, 921 ms 50th, 2215 ms 95th, 2215 ms 99th, 2215 ms 99.9th.
+[2024-11-10 20:12:31,612] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 12 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:31,625] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:31,735] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 14 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:31,736] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:31,971] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 16 on topic-partition my-topic-0, retrying (2 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:31,971] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+6 records sent, 1.2 records/sec (0.00 MB/sec), 295.5 ms avg latency, 802.0 ms max latency.
+[2024-11-10 20:12:32,569] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 19 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:32,570] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:32,688] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 20 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:32,689] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:34,599] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 24 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:34,599] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:34,726] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 26 on topic-partition my-topic-0, retrying (3 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:34,726] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:35,592] WARN [Producer clientId=perf-producer-client] Got error produce response with correlation id 28 on topic-partition my-topic-0, retrying (4 attempts left). Error: NOT_LEADER_OR_FOLLOWER (org.apache.kafka.clients.producer.internals.Sender)
+[2024-11-10 20:12:35,592] WARN [Producer clientId=perf-producer-client] Received invalid metadata error in produce request on partition my-topic-0 due to org.apache.kafka.common.errors.NotLeaderOrFollowerException: For requests intended only for the leader, this error indicates that the broker is not the current leader. For requests intended for any replica, this error indicates that the broker is not a replica of the topic partition.. Going to request metadata update now (org.apache.kafka.clients.producer.internals.Sender)
+10 records sent, 1.060558 records/sec (0.00 MB/sec), 266.90 ms avg latency, 802.00 ms max latency, 271 ms 50th, 802 ms 95th, 802 ms 99th, 802 ms 99.9th.
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7pNukezPSONGbxRS6Gr3wMliZ.svg)](https://asciinema.org/a/7pNukezPSONGbxRS6Gr3wMliZ)
+[![asciicast](https://asciinema.org/a/FHLjB8l2TIyPfEiug1MiBWimN.svg)](https://asciinema.org/a/FHLjB8l2TIyPfEiug1MiBWimN)
 
 </TabItem>
 </Tabs>
@@ -593,30 +580,30 @@ docker compose down --volumes
  Container gateway1  Stopping
  Container gateway2  Stopping
  Container schema-registry  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container gateway2  Stopped
- Container gateway2  Removing
- Container gateway1  Removed
- Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka1  Stopping
- Container kafka2  Stopping
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway1  Removed
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway2  Removed
  Container kafka3  Stopping
+ Container kafka2  Stopping
+ Container kafka1  Stopping
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
  Network chaos-simulate-leader-election-errors_default  Removing
  Network chaos-simulate-leader-election-errors_default  Removed
 
@@ -625,7 +612,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/UeJsPgBUtzBdc499lGDFIkMPt.svg)](https://asciinema.org/a/UeJsPgBUtzBdc499lGDFIkMPt)
+[![asciicast](https://asciinema.org/a/ODodePREueEEdFMfFrEJyM4F7.svg)](https://asciinema.org/a/ODodePREueEEdFMfFrEJyM4F7)
 
 </TabItem>
 </Tabs>
