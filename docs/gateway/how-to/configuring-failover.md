@@ -119,5 +119,5 @@ Note that Conduktor can recommend alternative solutions for initiating the switc
 
 ### Failover limitation
 
-During a failover, the following interceptors will not work:
+During a failover event, the following functionality will not work:
  - Observability plugin: The observability plugin is currently incompatible with failover.
