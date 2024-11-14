@@ -100,8 +100,6 @@ With concentrated topics, the enforced retention policy is the physical topic's 
 :::
 
 
-
-
 ## Auto-managed backing topics
 
 When `autoManaged` is enabled: 
@@ -199,3 +197,13 @@ With offset correctness:
  - Gateway consumes about ~250MB of heap memory per million records it has read in concentrated topics. This value is NOT bounded, so we advise against offset correctness on high-volume topics, and you should size your JVM accordingly.
  - Only `IsolationLevel.READ_UNCOMMITTED` is supported (using `IsolationLevel.READ_COMMITTED` is undefined behavior)
  - Partition truncation (upon `unclean.leader.election=true`) may not be detected by consumers
+
+## Limitations
+
+### Very slow Consumer Group edge case
+
+When using topic concentration with `offsetCorrectness` enabled, there is currently a limitation for consumer groups for the case where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently. If a consumer group with a committed offset waits for longer than the retention time for the backing physical topic without committing a new offset there is a possibility for that consumer group to become blocked. While in this situation - a Consumer Group whose last committed offset has been removed from the topic - the group actually becomes blocked only if the Conduktor Gateway restarted before the next offset commit by the Consumer Group.
+If this limitation does happen, the offsets for the affected consumer group will need to be manually reset for it to continue.
+Support for this edge case is planned for future releases of the Conduktor Gateway.
+
+
