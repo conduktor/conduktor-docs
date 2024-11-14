@@ -120,4 +120,4 @@ Note that Conduktor can recommend alternative solutions for initiating the switc
 ### Failover limitation
 
 During a failover event, the following functionality will not work:
- - Observability plugin: The observability plugin is currently incompatible with failover.
+ - Chargeback: Chargeback will only collect data for the original cluster. During a failover event data is not collected but would resume if failed back to the original cluster.
