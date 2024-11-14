@@ -9,7 +9,7 @@ description: Learn how to get started with Monitoring
 
 ## Overview
 
-Conduktor Monitoring gives you insight into the most important Kafka metrics. There is no complicated setup and it integrates easily with existing systems.
+Conduktor Monitoring gives you insight into the most important Kafka metrics. To set it up you will need to [configure a Cortex instance](../../get-started/configuration/cortex/) which is not complicated, and it integrates easily with existing systems.
 
 ![Monitoring](/images/changelog/platform/v28/topic-monitoring.png)
 
