@@ -97,6 +97,7 @@ spec:
   topicPolicyRef:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
+  defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
   resources:
     - type: TOPIC
       patternType: PREFIXED

@@ -40,11 +40,37 @@ The cluster homepage have been redesigned to present you with the most useful in
 
 ### Self-Service Topic Catalog visibility
 
+You can now choose which Topics should be visible in the Topic Catalog by annotating their YAML
+````yaml
+---
+apiVersion: kafka/v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+  catalogVisibility: PUBLIC # or PRIVATE
+spec:
+  ...
+````
+
+It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly
+Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance)
+
 ### Self-Service New Topic Policy Allowed Keys
+We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
+This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.
+Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints)
 
 ***
 
 ### More Audit Log CloudEvents into Kafka
+
+We have made more events available for the Audit Log Publisher:
+- IAM.User.Logout
+- IAM.User.Login
+- Kafka.ConsumerGroup.Duplicate
+- Kafka.ConsumerGroup.Delete
+- Kafka.ConsumerGroup.Update ( when we reset the offset of the consumer group )
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
