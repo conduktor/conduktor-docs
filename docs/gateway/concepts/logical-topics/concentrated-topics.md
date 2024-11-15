@@ -204,7 +204,7 @@ Gateway consumes about ~250MB of heap memory per million records it has read in 
 ### Very slow Consumer Group edge case
 
 :::caution
-Do not enable offsetCorrectness when your topic has extended periods of inactivity.
+Do not enable Offset Correctness when your topic has extended periods of inactivity.
 :::
 
 When using topic concentration with `offsetCorrectness` enabled, there is currently a limitation for consumer groups for the case where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently.  
@@ -212,5 +212,4 @@ If a consumer group with a committed offset waits for longer than the retention 
 If this limitation does happen, the offsets for the affected consumer group will need to be manually reset for it to continue.
 Support for this edge case is planned for future releases of the Conduktor Gateway.
 
-Do not use offsetCorrectness when your topic has extended periods of inactivity.
 
