@@ -156,20 +156,19 @@ If one user requests a topic with infinite retention (`retention.ms = -1`), **al
 
 ## Message Count & Lag, Offset (in)correctness
 
-Both concentrated and SQL topics are virtualized. This creates inconsistencies with existing tools in the Kafka ecosystem, including Conduktor Console.
+:::caution
+**This feature is currently experimental.**  
+As we collect feedback and make any adjustments to the feature, we'll transition this to all ConcentrationRules.
+:::
 
-Currently, the two most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that relies on partition **EndOffset**.
+By default, Concentrted Topic report the offsets of their backing topics.  
+This impacts the calculations of **Lag** and **Message Count** that relies on partition **EndOffset** and group **CommitedOffset**.
 
 ![Offset Incorrectness](img/offset-correct.png)
 
 Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see incorrect metrics.
 
 To counter this effect we have implemented a dedicated offset management capability for ConcentrationRules.
-
-:::caution 
-**This feature is currently experimental.**  
-As we collect feedback and make any adjustments to the feature, we'll transition this to all ConcentrationRules.
-:::
 
 To enable virtual offsets, add the following line to the ConcentrationRule:
 
@@ -188,22 +187,30 @@ spec:
 - `spec.offsetCorrectness` only applies to Concentrated Topics with the `cleanup.policy=delete`
 - `spec.offsetCorrectness` is not retroactive on previously created Concentrated Topics
 
+## Known issues and limitations with Offset Correctness
+### Performance
+On startup, Gateway must read the concentrated topic entirely before it is available to consumers.  
+The end-to-end latency is increased by up to 500 ms (or `fetch.max.wait.ms` if non-default)
 
-## Performance
+### Memory impact
+Gateway consumes about ~250MB of heap memory per million records it has read in concentrated topics. This value is NOT bounded, so we advise against offset correctness on high-volume topics, and you should size your JVM accordingly.
 
-With offset correctness:
- - On startup, Gateway must read the concentrated topic entirely before it is available to consumers
- - The end-to-end latency is increased by up to 500 ms (or `fetch,max,wait.ms` if non-default)
- - Gateway consumes about ~250MB of heap memory per million records it has read in concentrated topics. This value is NOT bounded, so we advise against offset correctness on high-volume topics, and you should size your JVM accordingly.
- - Only `IsolationLevel.READ_UNCOMMITTED` is supported (using `IsolationLevel.READ_COMMITTED` is undefined behavior)
- - Partition truncation (upon `unclean.leader.election=true`) may not be detected by consumers
-
-## Limitations
+### Unsupported Kafka API
+- DeleteRecords is not supported
+- Transactions are not supported
+- Only `IsolationLevel.READ_UNCOMMITTED` is supported (using `IsolationLevel.READ_COMMITTED` is undefined behavior)
+- Partition truncation (upon `unclean.leader.election=true`) may not be detected by consumers
 
 ### Very slow Consumer Group edge case
 
-When using topic concentration with `offsetCorrectness` enabled, there is currently a limitation for consumer groups for the case where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently. If a consumer group with a committed offset waits for longer than the retention time for the backing physical topic without committing a new offset there is a possibility for that consumer group to become blocked. While in this situation - a Consumer Group whose last committed offset has been removed from the topic - the group actually becomes blocked only if the Conduktor Gateway restarted before the next offset commit by the Consumer Group.
+:::caution
+Do not enable offsetCorrectness when your topic has extended periods of inactivity.
+:::
+
+When using topic concentration with `offsetCorrectness` enabled, there is currently a limitation for consumer groups for the case where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently.  
+If a consumer group with a committed offset waits for longer than the retention time for the backing physical topic without committing a new offset there is a possibility for that consumer group to become blocked. While in this situation - a Consumer Group whose last committed offset has been removed from the topic - the group actually becomes blocked only if the Conduktor Gateway restarted before the next offset commit by the Consumer Group.
 If this limitation does happen, the offsets for the affected consumer group will need to be manually reset for it to continue.
 Support for this edge case is planned for future releases of the Conduktor Gateway.
 
+Do not use offsetCorrectness when your topic has extended periods of inactivity.
 

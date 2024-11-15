@@ -40,11 +40,9 @@ In release 3.5.0, we will update the SNI Routing default prefix.
 
 ### Correct Offsets on Concentrated Topics
 
-The main limitation of Concentrated Topics was its inability to show correct Lag and Message Count.  
+Concentrated Topics were reporting the offsets of the underlying backing topic. This caused Lag and Message Count metrics to be invalid.
 
-This is now a problem from the past as we are now computing offsets directly within the Gateway.
-
-This experimental feature can be enabled per ConcentrationRule.
+Correct offsets can now be enabled per ConcentrationRule.
 ````yaml
 ---
 kind: ConcentrationRule
@@ -58,7 +56,7 @@ spec:
   offsetCorrectness: true
 ````
 
-Check the dedicated [documentation](/gateway/concepts/logical-topics/concentrated-topics) for more details on this [feature](/gateway/concepts/logical-topics/concentrated-topics#message-count--lag-offset-incorrectness) and its limitations.
+This feature is experimental and comes with a number of [limitations](/gateway/concepts/logical-topics/concentrated-topics#message-count--lag-offset-incorrectness) that are important to understand beforehand.
 
 
 ## General fixes 🔨
