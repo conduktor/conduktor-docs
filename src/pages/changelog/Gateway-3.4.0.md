@@ -1,5 +1,5 @@
 ---
-date: 2024-11-04
+date: 2024-11-15
 title: Gateway 3.4.0
 description: docker pull conduktor/conduktor-gateway:3.4.0
 solutions: gateway
@@ -24,13 +24,6 @@ For this release 3.4.0, we'll only raise the following warning in the logs:
 ````
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
-
-## Upcoming Breaking change: SNI Routing prefix 💣
-:::info
-This breaking change only impacts Gateway deployments with SNI Routing
-:::
-
-In release 3.5.0, we will update the SNI Routing default prefix.
 
 ***
 
