@@ -344,8 +344,9 @@ There are currently 3 available constraints:
 - `Range` validates a range of numbers
 - `OneOf` validates against a list of predefined options
 - `Match` validates using Regular Expression
+- `AllowedKeys` limits a set of keys in the dictionaries
 
-**Range**  
+#### Range
 Validates the property belongs to a range of numbers (inclusive)
 ```yaml
 spec.configs.retention.ms:
@@ -362,7 +363,7 @@ Validation will fail with these inputs:
 - 60000 (below min)
 - 999999999 (above max)
 
-**OneOf**  
+#### OneOf 
 Validates the property is one of the expected values
 ```yaml
 spec.configs.cleanup.policy:
@@ -377,7 +378,7 @@ Validation will fail with these inputs:
 - `delete, compact` (Valid in Kafka but not allowed by policy)
 - `deleet` (typo)
 
-**Match**  
+#### Match 
 Validates the property against a Regular Expression
 ```yaml
 metadata.name:
@@ -392,8 +393,9 @@ Validation will fail with these inputs:
 - `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern
 - `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
 
-**AllowedKeys**  
-Validates the keys are within an allowed key list. Applies to dictionary type (Key/Value maps) in the YAML
+#### AllowedKeys
+Validates the keys are within an allowed key list. Applies to dictionary type (Key/Value maps).  
+Can be used on `spec.configs` and `metadata.labels`.
 ```yaml
 spec.configs:
   constraint: AllowedKeys
@@ -434,7 +436,7 @@ spec:
     retention.ms: '60000'
 ```
 
-**Optional Flag**  
+#### Optional Flag
 Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
 Example:
 ```yaml
