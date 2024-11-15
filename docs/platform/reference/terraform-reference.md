@@ -220,10 +220,8 @@ For more details on Terraform CLI commands and usage check the Hashicorp [docume
 
 ### Available resources
 
-- [Console user](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/user_v2)
-- [Console group](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/group_v2)
-- 
-- [Generic](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic) :warning: This resource is experimental and should be used with care.
+For the full list of resources see the [provider page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
+
 
 #### Case of the `generic` resource
 
