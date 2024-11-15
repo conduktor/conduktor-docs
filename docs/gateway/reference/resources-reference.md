@@ -239,8 +239,8 @@ spec:
 - It is not possible to update `cleanup.policy` of a concentrated topic.
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
 - If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each of the Concentrated Topic records. 
-  - This allows for a proper calculation of Message Count and Consumer Group Lag at the expense of some performance overhead.
-  - Read more about offset Correctness here
+  - This allows for a proper calculation of Message Count and Consumer Group Lag.
+  - There are some limitation. Read more about [Offset Correctness here](/gateway/concepts/logical-topics/concentrated-topics/#known-issues-and-limitations-with-offset-correctness)
 - If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
 
 :::caution
