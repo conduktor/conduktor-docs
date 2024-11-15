@@ -8,7 +8,6 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-
 - [Features ✨](#features-)
   - [Conduktor SQL](#conduktor-sql)
   - [Monitoring improvements](#monitoring-improvements)
