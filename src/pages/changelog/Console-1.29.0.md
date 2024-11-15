@@ -28,10 +28,10 @@ tags: features,fix
 ***
 
 ### Console Homepage
-The cluster homepage have been totally redesigned to present you with the most useful information in one single frame:
-- The state of your Kafka Cluster with a few key metrics and graphs
+The cluster homepage have been redesigned to present you with the most useful information in one single frame:
+- The health of your Kafka Cluster with a few key metrics and graphs
 - The state of Console Indexing modules for this Kafka Cluster
-- 
+- Quick access to your most recently viewed resources
 ![Kafka Connect Wizard](/images/changelog/platform/v29/console-homepage.png)
 
 ### Consumer Group pages overhaul

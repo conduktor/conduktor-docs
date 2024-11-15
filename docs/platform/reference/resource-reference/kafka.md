@@ -62,6 +62,7 @@ metadata:
       # Event Stream from Click Application
       This is a multiline markdown description that will appear in the Topic Catalog
     conduktor.io/description.editable: "false"
+  catalogVisibility: PUBLIC
 spec:
   replicationFactor: 3
   partitions: 3
@@ -80,6 +81,9 @@ spec:
 **Conduktor annotations**
 - `conduktor.io/description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
 - `conduktor.io/description.editable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
+- `metadata.catalogVisibility` is **optional**. Can be `PUBLIC` or `PRIVATE`. 
+  - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
+  - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
 
 **Side effect in Console & Kafka:**
 - Kafka
