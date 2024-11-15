@@ -9,12 +9,10 @@ import TabItem from '@theme/TabItem';
 
 # Terraform Reference
 
-[Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor) gives you the ability to perform some operations on Conduktor Console state directly from exsiting [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
-
+The [Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
 
 :::warning Warning ⚠
-- Conduktor Terraform Provider is currently in **Alpha** and don't support all Conduktor resources yet.
-- See our [resources roadmap](https://github.com/conduktor/terraform-provider-conduktor?tab=readme-ov-file#resources-roadmap).
+- Conduktor Terraform Provider is currently in **Alpha** and doesn't support all Conduktor resources at this time.
 - Let us know if you have [feedback](https://conduktor.io/roadmap) or wish to be a design partner.
 :::
 
@@ -22,7 +20,7 @@ import TabItem from '@theme/TabItem';
 
 ## Install & Configure
 
-Provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of version using following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration :
+The provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of versions using the following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration :
 
 ```hcl
 terraform {
@@ -39,7 +37,7 @@ terraform {
 
 To use the Conduktor Terraform Provider, you need to define some minimal configuration :
 - The URL of Conduktor Console
-- The authentication mecanism
+- The authentication mechanism
   - Using an API key
   - Using local user (usually admin account) credentials
 
@@ -149,7 +147,7 @@ The configuration resolution is (by order of priority) :
 
 ## Provider Usage
 
-Once the provider is configured all [currently available](#available-resources) resources can be used in the terraform definition.
+Once the provider is configured all [currently available](#available-resources) resources can be used in the Terraform definition.
 
 ### Usage Example
 Full example of user and group creation using Conduktor Console locally available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
@@ -199,7 +197,7 @@ resource "conduktor_group_v2" "example_group" {
 }
 ```
 
-Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and in directory containing `conduktor-iac.tf` file.
+Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and in a directory containing `conduktor-iac.tf` file.
 ```shell
 # Initialize terraform project
 terraform init
@@ -213,24 +211,25 @@ terraform apply
 
 Now if you navigate to the Conduktor UI, you will see a new user, Bob, and team-a's group created.
 
-Login using external SSO (LDAP or OIDC) with email `bob@mycompany.io` you will be recognised by Conduktor and end up in the `team-a` Group.
+Login using an external SSO (LDAP or OIDC) with email `bob@mycompany.io` and you will be recognized by Conduktor, and end up in the `team-a` Group.
 
 To revert the Conduktor state you can destroy created resources using `terraform destroy`
 
 
-For more details on Terraform CLI usage check Hashicorp [documentation](https://developer.hashicorp.com/terraform/cli/commands)
+For more details on Terraform CLI commands and usage check the Hashicorp [documentation](https://developer.hashicorp.com/terraform/cli/commands).
 
 ### Available resources
 
 - [Console user](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/user_v2)
 - [Console group](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/group_v2)
+- 
 - [Generic](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic) :warning: This resource is experimental and should be used with care.
 
 #### Case of the `generic` resource
 
 The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
 
-It's still an exeperimental resource that have many [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases.
+This is an experimental resource that has several [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases. Do not include in your production workflows as this is unsupported.
 
 
 ## More documentation reference
