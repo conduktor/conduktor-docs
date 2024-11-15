@@ -475,6 +475,7 @@ You should modify these parameters only if you see an issue with the performance
 ### AuditLog export properties
 
 The audit log can be exported to a Kafka topic, once configured in Console.
+For details on the available exportable events refer to: [Exportable audit log events](docs/platform/navigation/settings/audit-log.md#exportable-audit-log-events).
 
 | Property                                            | Description                                           | Environment Variable                                  | Mandatory | Type   | Default |
 |-----------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|-----------|--------|---------|
