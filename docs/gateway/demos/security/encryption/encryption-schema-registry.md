@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/PwZxHlVuldkp46BXjdzCAtHR6.svg)](https://asciinema.org/a/PwZxHlVuldkp46BXjdzCAtHR6)
+[![asciicast](https://asciinema.org/a/689929.svg)](https://asciinema.org/a/689929)
 
 </TabItem>
 </Tabs>
@@ -263,56 +263,57 @@ docker compose up --detach --wait
 ```
  Network encryption-schema-based_default  Creating
  Network encryption-schema-based_default  Created
- Container kafka-client  Creating
+ Container kafka1  Creating
  Container vault  Creating
  Container kafka2  Creating
  Container kafka3  Creating
- Container kafka1  Creating
+ Container kafka-client  Creating
+ Container kafka-client  Created
+ Container kafka3  Created
+ Container vault  Created
  Container kafka2  Created
  Container kafka1  Created
- Container vault  Created
- Container kafka3  Created
- Container schema-registry  Creating
- Container gateway1  Creating
  Container gateway2  Creating
- Container kafka-client  Created
- Container gateway2  Created
+ Container gateway1  Creating
+ Container schema-registry  Creating
  Container gateway1  Created
+ Container gateway2  Created
  Container schema-registry  Created
- Container vault  Starting
- Container kafka3  Starting
- Container kafka1  Starting
  Container kafka2  Starting
+ Container kafka3  Starting
+ Container vault  Starting
  Container kafka-client  Starting
- Container vault  Started
- Container kafka2  Started
- Container kafka-client  Started
+ Container kafka1  Starting
  Container kafka3  Started
+ Container vault  Started
  Container kafka1  Started
+ Container kafka2  Started
  Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
- Container kafka2  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka-client  Started
+ Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka1  Healthy
- Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
- Container kafka3  Healthy
- Container gateway2  Starting
+ Container kafka1  Healthy
  Container kafka2  Healthy
  Container gateway1  Starting
- Container kafka3  Healthy
- Container kafka2  Healthy
  Container schema-registry  Starting
+ Container kafka2  Healthy
+ Container gateway2  Starting
  Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
@@ -320,22 +321,21 @@ docker compose up --detach --wait
  Container gateway2  Waiting
  Container kafka-client  Waiting
  Container vault  Waiting
- Container kafka1  Waiting
- Container kafka1  Healthy
- Container kafka2  Healthy
  Container kafka-client  Healthy
- Container vault  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
  Container kafka3  Healthy
- Container schema-registry  Healthy
+ Container vault  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/up10JdLVITsg6KKOO3IvFwYVQ.svg)](https://asciinema.org/a/up10JdLVITsg6KKOO3IvFwYVQ)
+[![asciicast](https://asciinema.org/a/689919.svg)](https://asciinema.org/a/689919)
 
 </TabItem>
 </Tabs>
@@ -375,7 +375,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/stMh4AGsvCwJvaQkCRTi3Ay6Z.svg)](https://asciinema.org/a/stMh4AGsvCwJvaQkCRTi3Ay6Z)
+[![asciicast](https://asciinema.org/a/689920.svg)](https://asciinema.org/a/689920)
 
 </TabItem>
 </Tabs>
@@ -486,7 +486,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/eTKxF7NUg7VMTfL3whYUuXAub.svg)](https://asciinema.org/a/eTKxF7NUg7VMTfL3whYUuXAub)
+[![asciicast](https://asciinema.org/a/689921.svg)](https://asciinema.org/a/689921)
 
 </TabItem>
 </Tabs>
@@ -560,7 +560,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/wsBlobOPBwxJvck2h0WELZXjW.svg)](https://asciinema.org/a/wsBlobOPBwxJvck2h0WELZXjW)
+[![asciicast](https://asciinema.org/a/689922.svg)](https://asciinema.org/a/689922)
 
 </TabItem>
 </Tabs>
@@ -671,7 +671,7 @@ kafka-json-schema-console-producer \
 <TabItem value="Output">
 
 ```
-[2024-11-01 17:12:11,056] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-11-16 12:13:45,651] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -737,7 +737,7 @@ kafka-json-schema-console-producer \
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
  (io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig:370)
-[2024-11-01 17:12:16,072] INFO KafkaJsonSchemaSerializerConfig values: 
+[2024-11-16 12:13:50,244] INFO KafkaJsonSchemaSerializerConfig values: 
 	auto.register.schemas = true
 	basic.auth.credentials.source = URL
 	basic.auth.user.info = [hidden]
@@ -809,7 +809,7 @@ kafka-json-schema-console-producer \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/kUpiR7PTqINxXAaTXgONIORBw.svg)](https://asciinema.org/a/kUpiR7PTqINxXAaTXgONIORBw)
+[![asciicast](https://asciinema.org/a/689923.svg)](https://asciinema.org/a/689923)
 
 </TabItem>
 </Tabs>
@@ -843,32 +843,32 @@ kafka-json-schema-console-consumer \
 ```json
 {
   "sessionId": "session-id-tom",
-  "authenticationToken": "AAAABQAAAAEAAAA7AYe/4CxHWLaItSkSnXZXgKR3Z6s0YOEHYd4yXCFXgu3kjgYOLEZEAdSIC733gZzSbyU8tkdX7zLakC0FTxoxNE8hbmkqHE49vusuatdwuFwpEGWAbsp2Wo1/SmiVw+0l+o0Z4bFOWLtQaODFOUhFqXH94BSBXYFeTEI=",
-  "deviceInformation": "AAAABQAAAAEAAABnAQwokky12WIkL0MLuT/v79Y9r9i6sxsET6ZI5delJSnIiatJxTjjSdUWXQV0jePuvPmH9jNhza0+LLrbjdz8uqIXFpFW8yNzgEhXZVjZQ7K/62JytObHM61P5y/enGnBFlBz/UIw+eZ0UtLkKLfcWipPHi74Mp//hCM6caU4l43+95YCbVruEQq5pWb2lAxiKq5gTJX/Wt4YsfF8NIYo8swnRJY="
+  "authenticationToken": "AAAABQAAAAEAAAA7AQ5sx4RiI0k3up9gIOtwPGc3Oe1zt6A+97eYC7wdn39PXlxQUV6Zc+IxK82yilW0Wr4Aygxc+g63LG25cWGfZEO5IUaD6eT0963qBB20AuNUSWBrMcp1mMTmNagl3u54VuGutVHoVdfy8sawAfh9WZj3Pna0QrvHcUI=",
+  "deviceInformation": "AAAABQAAAAEAAABnAXxbYxSvye59Rraxxzy8OVhrmeWg71AfRrQAXeNSB1iUSoVRl8c9YB75etSVeHz5G89iZI9XMbqlK5YN44vxCJgfelHSj5LYwbPwLh0EFtrtZr0EOj+3jwHhXP2j5Nmvj+e5Zu7Np/a4QwYBRi/aT6E4N33cTgsGYCdX9LIUVXZQ5edzYNd+YAcV1CJuSjU/mV/Fkmp6hX99QEpqxNDP8QW1sJQ="
 }
 {
   "name": "tom",
   "username": "tom@conduktor.io",
-  "password": "AAAABQAAAAEAAAAzAY1N8PS9TU5NThUjO6TFUCtfrZqVqhN6AjBtUqP3f6y7EgFUbyBuF/ycu79JytoXyZQIGyhWYJzrOZInyzEskMyfCkfLyrEVjhMyh3ME2j1ofihCps5lD4LSCVDODS4=",
-  "visa": "AAAABQAAAAEAAAAzATS+3icecvOVUQ59RQWlaEVh4I0PlJ76osrF9scAGgEKT9TgX+gXsPLBT3oNZXYp19B0YlWGAloEDDfvRFCewwVxtT2vAb42md83wpZztTILvICs7v9CkKWjfEtD",
+  "password": "AAAABQAAAAEAAAAzAabv3i91yoicZj/c19c5ybWypDtM31ciYaV1mFb7roxdcUaHwSOxg4H7cbET76NjhAgXJk9F/OdkEX9wFvhymlqG0nBC+lRHV279NxGP5LPEDWjNu0JydKlvE3KUdG4=",
+  "visa": "AAAABQAAAAEAAAAzAXBh2RlAqA+D87E8ur1yS0zudop1iJNBQV1LCVnt5JJjsCneBXhUB8L4Vs99UYL6sfj2BdlDAhb3LLibzx0cozpy7fWQy+pW4oAXJ5xyb7ETV4DAe2bG4U9z8pyV",
   "address": {
-    "location": "AAAABQAAAAEAAAA7AT9emu5zfSTj0JXDXw8EdF55lRzJ/vz6EPkzAiszIcKMDOs0QhZIbRLvd71pUZ5FLte6r/nVrCA+uSpE0v9QhIR/tlGC96vr0idybGKwJF1Zq2ThDv8/rrcf6HU+Tw8O0U+KMzzaGNr+qjjt7zGbP88g",
+    "location": "AAAABQAAAAEAAAA7AWa8hOLOpY7x3g4x0ARToIUwcGhKdjjj3J/Po1vTTFnK0xbIYANT8oUkYUXwZLkDhtZm5wn9hzWsI+UO4Xd/J7PcjEaacktxZa9GwJD65zaxi1YD0lxzpvRbCgtJ5skNK8d3SxiPWqLvuQqAqtTE09EW",
     "town": "London",
     "country": "UK"
   }
 }
 {
   "sessionId": "session-id-laura",
-  "authenticationToken": "AAAABQAAAAEAAAA7AYe/4CxHWLaItSkSnXZXgKR3Z6s0YOEHYd4yXCFXgu3kjgYOLEZEAdSIC733gZzSbyU8tkdX7zLakC2kK9865INlJawkdSuEzJDPicO3v5YjBoc7ZHHEDXBzs3o/uUyR5ZvKh8nlf4xDir6cIQuou8lCmQnqZsEkmEIf/g==",
-  "deviceInformation": "AAAABQAAAAEAAABnAQwokky12WIkL0MLuT/v79Y9r9i6sxsET6ZI5delJSnIiatJxTjjSdUWXQV0jePuvPmH9jNhza0+LLrbjdz8uqIXFpFW8yNzgEhXZVjZQ7K/62JytObHM61P5y/enGnBFlBz/UIw+cC2LgiOwS/cGKnYiktKZL7VdOtrvxfPvcoh+9MdNRp+1ux41F1/EvRQv5DntAkimtgRBXXVBkULiPcEXP8YiQ=="
+  "authenticationToken": "AAAABQAAAAEAAAA7AQ5sx4RiI0k3up9gIOtwPGc3Oe1zt6A+97eYC7wdn39PXlxQUV6Zc+IxK82yilW0Wr4Aygxc+g63LG2aa4+6aIzj6v2ptAJy2AlO4+mi4uMo2sPcbjhoZ0wDqc+lSjbHyO2pXvxSsPLhp3jgGkbx9wxo0XoMJJwHMh9lyQ==",
+  "deviceInformation": "AAAABQAAAAEAAABnAXxbYxSvye59Rraxxzy8OVhrmeWg71AfRrQAXeNSB1iUSoVRl8c9YB75etSVeHz5G89iZI9XMbqlK5YN44vxCJgfelHSj5LYwbPwLh0EFtrtZr0EOj+3jwHhXP2j5Nmvj+e5Zu7Np6A9Q/adKIDSPKhOvBjWdFLwLR+wI4iXUDyLAarGV3ICLOIAf+7jr9xDfQXSTfIHrsbLKXxqPTGM+Rt9NVE34g=="
 }
 {
   "name": "laura",
   "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAAAzAY1N8PS9TU5NThUjO6TFUCtfrZqVqhN6AjBtUqP3f6y7EgFUbyBuF/ycu79JytoXyZQI8PhLlWIcU6x8kOt6NBEu6JzgwRJ4fl6yElwZGj/2l9q4sgaTxTit096VwA==",
-  "visa": "AAAABQAAAAEAAAAzATS+3icecvOVUQ59RQWlaEVh4I0PlJ76osrF9scAGgEKT9TgX+gXsPLBT3oNZXYp19B0d5xBmKoNTZP0GzLhl/K4zlNkhbjRvjN8qPrOiCf1+FmSgGoSINLfh6WTKaZf",
+  "password": "AAAABQAAAAEAAAAzAabv3i91yoicZj/c19c5ybWypDtM31ciYaV1mFb7roxdcUaHwSOxg4H7cbET76NjhAgXp1L8c2c4adAtIzl0bERgbN21X5eCCXkCJY2ayTIVErcwUL9YSber0Iz3wg==",
+  "visa": "AAAABQAAAAEAAAAzAXBh2RlAqA+D87E8ur1yS0zudop1iJNBQV1LCVnt5JJjsCneBXhUB8L4Vs99UYL6sfj2mi9Nl7+29zAA9rrD/rqz49Y9z2NCm9mNKC8F+5Sfe1gKqieZzTnLuYyUrQYj",
   "address": {
-    "location": "AAAABQAAAAEAAAA7AT9emu5zfSTj0JXDXw8EdF55lRzJ/vz6EPkzAiszIcKMDOs0QhZIbRLvd71pUZ5FLte6r/nVrCA+uSqVyCSQAk/bGuCTKgcOZNVubg9G9XKTH0MlV1leUDPFnEp2bvzJc2HAjOiPRCTx/CxxQsUtfvg/XewA3Q==",
+    "location": "AAAABQAAAAEAAAA7AWa8hOLOpY7x3g4x0ARToIUwcGhKdjjj3J/Po1vTTFnK0xbIYANT8oUkYUXwZLkDhtZm5wn9hzWsI+UIXvO+5oKS+tvKMfG9hHuzN+odC8N/kTur77P7p2iVELechY7he/QNm1i2fLrC49pYLUbXPC6v+EVKYg==",
     "town": "Dubai",
     "country": "UAE"
   }
@@ -879,7 +879,7 @@ kafka-json-schema-console-consumer \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/qFtsna26HbHdmlC4rvEkyceen.svg)](https://asciinema.org/a/qFtsna26HbHdmlC4rvEkyceen)
+[![asciicast](https://asciinema.org/a/689924.svg)](https://asciinema.org/a/689924)
 
 </TabItem>
 </Tabs>
@@ -964,7 +964,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/1f05vuj50dxBYtU6GSL2NMPMJ.svg)](https://asciinema.org/a/1f05vuj50dxBYtU6GSL2NMPMJ)
+[![asciicast](https://asciinema.org/a/689925.svg)](https://asciinema.org/a/689925)
 
 </TabItem>
 </Tabs>
@@ -1061,7 +1061,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/6tJjWIu5EGanOSPXSQhrVJkyz.svg)](https://asciinema.org/a/6tJjWIu5EGanOSPXSQhrVJkyz)
+[![asciicast](https://asciinema.org/a/689926.svg)](https://asciinema.org/a/689926)
 
 </TabItem>
 </Tabs>
@@ -1131,7 +1131,7 @@ kafka-json-schema-console-consumer \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/joX8Jzi1b7vC0UlU6XtgYrryR.svg)](https://asciinema.org/a/joX8Jzi1b7vC0UlU6XtgYrryR)
+[![asciicast](https://asciinema.org/a/689927.svg)](https://asciinema.org/a/689927)
 
 </TabItem>
 </Tabs>
@@ -1160,37 +1160,37 @@ docker compose down --volumes
 
 ```
  Container gateway2  Stopping
+ Container schema-registry  Stopping
  Container vault  Stopping
  Container kafka-client  Stopping
- Container schema-registry  Stopping
  Container gateway1  Stopping
- Container schema-registry  Stopped
- Container schema-registry  Removing
  Container vault  Stopped
  Container vault  Removing
- Container schema-registry  Removed
- Container vault  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
+ Container vault  Removed
+ Container gateway1  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway1  Removed
+ Container schema-registry  Removed
  Container gateway2  Removed
  Container kafka3  Stopping
- Container kafka2  Stopping
  Container kafka1  Stopping
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
+ Container kafka2  Stopping
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Network encryption-schema-based_default  Removing
  Network encryption-schema-based_default  Removed
 
@@ -1199,7 +1199,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dmOzBHAKEp7zykN39BXAsy7xT.svg)](https://asciinema.org/a/dmOzBHAKEp7zykN39BXAsy7xT)
+[![asciicast](https://asciinema.org/a/689928.svg)](https://asciinema.org/a/689928)
 
 </TabItem>
 </Tabs>

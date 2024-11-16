@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/NqSBg1jaHnvytiUrH7WL0ktEh.svg)](https://asciinema.org/a/NqSBg1jaHnvytiUrH7WL0ktEh)
+[![asciicast](https://asciinema.org/a/689941.svg)](https://asciinema.org/a/689941)
 
 </TabItem>
 </Tabs>
@@ -267,69 +267,69 @@ docker compose up --detach --wait
  Network encryption-vault-with-secret-management_default  Created
  Container vault  Creating
  Container kafka2  Creating
- Container kafka-client  Creating
  Container kafka1  Creating
+ Container kafka-client  Creating
  Container kafka3  Creating
- Container vault  Created
- Container kafka3  Created
- Container kafka-client  Created
  Container kafka2  Created
+ Container kafka-client  Created
+ Container kafka3  Created
+ Container vault  Created
  Container kafka1  Created
  Container gateway1  Creating
  Container schema-registry  Creating
  Container gateway2  Creating
+ Container gateway2  Created
  Container schema-registry  Created
  Container gateway1  Created
- Container gateway2  Created
+ Container kafka-client  Starting
  Container kafka3  Starting
  Container kafka1  Starting
- Container kafka-client  Starting
- Container vault  Starting
  Container kafka2  Starting
+ Container vault  Starting
  Container kafka1  Started
- Container vault  Started
- Container kafka3  Started
  Container kafka-client  Started
  Container kafka2  Started
+ Container vault  Started
+ Container kafka3  Started
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
+ Container kafka1  Waiting
+ Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
+ Container kafka1  Healthy
  Container kafka3  Healthy
+ Container kafka1  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka3  Healthy
- Container kafka1  Healthy
  Container kafka2  Healthy
  Container gateway1  Starting
  Container schema-registry  Starting
- Container kafka1  Healthy
  Container kafka2  Healthy
  Container gateway2  Starting
  Container schema-registry  Started
  Container gateway1  Started
  Container gateway2  Started
+ Container gateway1  Waiting
+ Container gateway2  Waiting
  Container kafka-client  Waiting
  Container vault  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
- Container gateway1  Waiting
- Container gateway2  Waiting
  Container vault  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
  Container kafka-client  Healthy
- Container gateway1  Healthy
+ Container kafka2  Healthy
  Container schema-registry  Healthy
+ Container gateway1  Healthy
  Container gateway2  Healthy
 
 ```
@@ -337,7 +337,7 @@ docker compose up --detach --wait
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/fah8CO13Z8pHHaSMTyuZRaxnk.svg)](https://asciinema.org/a/fah8CO13Z8pHHaSMTyuZRaxnk)
+[![asciicast](https://asciinema.org/a/689930.svg)](https://asciinema.org/a/689930)
 
 </TabItem>
 </Tabs>
@@ -377,7 +377,7 @@ Created topic customers.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/keYThbDg9cqOSikwbOQrzfokl.svg)](https://asciinema.org/a/keYThbDg9cqOSikwbOQrzfokl)
+[![asciicast](https://asciinema.org/a/689931.svg)](https://asciinema.org/a/689931)
 
 </TabItem>
 </Tabs>
@@ -427,7 +427,7 @@ customers
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/eNFsK5l2SV0ZooWuvAcMZIfLT.svg)](https://asciinema.org/a/eNFsK5l2SV0ZooWuvAcMZIfLT)
+[![asciicast](https://asciinema.org/a/689932.svg)](https://asciinema.org/a/689932)
 
 </TabItem>
 </Tabs>
@@ -542,7 +542,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/czz9oj30m3uUxTLf2r7HfonkL.svg)](https://asciinema.org/a/czz9oj30m3uUxTLf2r7HfonkL)
+[![asciicast](https://asciinema.org/a/689933.svg)](https://asciinema.org/a/689933)
 
 </TabItem>
 </Tabs>
@@ -618,7 +618,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/5BC6uAetcYmkEWmuNTTpSeMBE.svg)](https://asciinema.org/a/5BC6uAetcYmkEWmuNTTpSeMBE)
+[![asciicast](https://asciinema.org/a/689934.svg)](https://asciinema.org/a/689934)
 
 </TabItem>
 </Tabs>
@@ -676,7 +676,7 @@ echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/sOOhZTyXDvQq0uFZz7eJQeC3j.svg)](https://asciinema.org/a/sOOhZTyXDvQq0uFZz7eJQeC3j)
+[![asciicast](https://asciinema.org/a/689935.svg)](https://asciinema.org/a/689935)
 
 </TabItem>
 </Tabs>
@@ -708,15 +708,15 @@ returns 2 events
 {
   "name" : "laura",
   "username" : "laura@conduktor.io",
-  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WWh1Sy9mVWFZN0U5YUQ0UENUTFErSlZZS0VVUm9HVjVQdWJWRjFqeksvSkhCOC9FQWczY01hSDF6L3Q0S1E9PZhV/URNZZs21Dtj4otO2gVQMFRm6mjpJztnFWbOC6KqSTFuiMcoh8wp8P4=",
-  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WWh1Sy9mVWFZN0U5YUQ0UENUTFErSlZZS0VVUm9HVjVQdWJWRjFqeksvSkhCOC9FQWczY01hSDF6L3Q0S1E9PVaHQq+b/OzbABGmdll1yI+eMbw9mZoHi2LU4baYcfd27Svoe6BNobfyB2rJ",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6Rk1na2VYczJFSHRxSXNSU0Q5dHJ0NXlBSW1PUGNMQjNxMjRXckJRZXpSRHdBaXV3dDJQVEpCTGVoUTYxK0E9PTpV1EQPCKQzCTwjVDdJTomgyOmFtzSMreAy4FZZSjgBAWH7evanWkpIs8c=",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6Rk1na2VYczJFSHRxSXNSU0Q5dHJ0NXlBSW1PUGNMQjNxMjRXckJRZXpSRHdBaXV3dDJQVEpCTGVoUTYxK0E9PYz16ibVgxysH2VwJTHy8EGYloe4HKxdLA+VJrGUgDAJzYU5QjkT6UuD2ktP",
   "address" : "Dubai, UAE"
 }
 {
   "name" : "tom",
   "username" : "tom@conduktor.io",
-  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6YWM3d3k5Z1Z6SG5FMmVrTDNSRFl6Q3ZYejlKODZsaC9kWndlSFJYb2JkOVhlV3dKbC95M3N0b3NJMC9iZ0E9PUYnTIXyqL3N/JTW7j1Cvv/ykNGVI4tGgJqvPQGj60tewBwWdvcraX8OF6HT",
-  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6YWM3d3k5Z1Z6SG5FMmVrTDNSRFl6Q3ZYejlKODZsaC9kWndlSFJYb2JkOVhlV3dKbC95M3N0b3NJMC9iZ0E9PWMcy2fZLq9Hat+Sxt7sJePENRWGc749hoaeDRw30szpTQfrEtzRZW5LCQ==",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6aTdXUHd0NkZXRnlTNUJab2J6WUxlOUVXMmhGOWNnMlorQXRrQ25SeFJUdTZ2WDYzVlBFN2U3dFlmNE12QUE9PSpTPd5xc/yFtoy2B9EYMD5nI0/y4lR4oDjM/Ty60GzcgaKXkfgB2nilYT/+",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6aTdXUHd0NkZXRnlTNUJab2J6WUxlOUVXMmhGOWNnMlorQXRrQ25SeFJUdTZ2WDYzVlBFN2U3dFlmNE12QUE9PSWcsTYHqmMi39UJmZtR4ggsBaDIKOmfe7tp+HQ2Nu0wHAnL2IUEL9+mzw==",
   "address" : "Chancery lane, London"
 }
 ```
@@ -725,21 +725,21 @@ returns 2 events
 <TabItem value="Output">
 
 ```json
-[2024-10-29 21:09:45,080] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-16 12:23:13,398] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "laura",
   "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6T3B0dVB1aUw4WllDaGVpMGZHRWpBaTNXam1MZ3B0SzdDM2xQQjJ1d2QrdGs4R005cURlNm16dzgybk1MN0E9PeNC0urxFeBDwwyqdjKps0usbgaY5YC/aMtADm21DR2zscg1/zWO+0y/Qoc=",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6T3B0dVB1aUw4WllDaGVpMGZHRWpBaTNXam1MZ3B0SzdDM2xQQjJ1d2QrdGs4R005cURlNm16dzgybk1MN0E9PWUyUUnGD3ZielobgfmeCSBZp9fKDbx4fQknf/BQD9UylupJSXIDl453xu15",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6YmJUUlVieFczdE4wVzlGeGhrUFp3RUd0cFVTTnl4OWZtY1ByVXcrSEJmWU5ZWXp2YW81Tzc0V3Q0MWRsZHc9PY0jhZq1IjtntKxYdbIFcH6gq6i0x6CfAJBgmuKjT+8ZPK+wyvq2NiGmB7Q=",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6YmJUUlVieFczdE4wVzlGeGhrUFp3RUd0cFVTTnl4OWZtY1ByVXcrSEJmWU5ZWXp2YW81Tzc0V3Q0MWRsZHc9PYWw3bKlf0uIS22Qrlug3WOhI7gyM9x6VyfV/AsYT6ujcxJzFxwNzrTUZM6p",
   "address": "Dubai, UAE"
 }
 {
   "name": "tom",
   "username": "tom@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6V0tOV1htcG9vVzJ3eEY2c2I1WFNhenUyKzNDSmZIM2hkMjBNVFVHWFIzMjVOQ3MrMndDbHBIemQ2MnQ2TXc9PYEBQjx3D6GY0cATZlydDqnjbbD9ruX36Q6dGblLhVKYcweQsjwM86s3vjXD",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6V0tOV1htcG9vVzJ3eEY2c2I1WFNhenUyKzNDSmZIM2hkMjBNVFVHWFIzMjVOQ3MrMndDbHBIemQ2MnQ2TXc9PY/sNGGbrV91RuuMVBaJeRWfmboymp0iUXa9oflXw9CJc44YUqS9rqWhXw==",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6NGxrMlBCQkFpV3grVWpEOEEwZG5semw3bW9FbnFMVHJnQ0JQT3YrSE4wamg4RzhtUFdUUGU5R0l4aDZ6TVE9PSbSwSX6/HRtS1ZMIITcs/TYFA3mA+VdqZ+jT3ASBKv2ZiCkZTtCHhP+PdV/",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6NGxrMlBCQkFpV3grVWpEOEEwZG5semw3bW9FbnFMVHJnQ0JQT3YrSE4wamg4RzhtUFdUUGU5R0l4aDZ6TVE9PZNthRSFG+pMDLe8nX/OSrce221pSypRX1kZ7rcW5zdWVQGyk4pwRW10LA==",
   "address": "Chancery lane, London"
 }
 
@@ -748,7 +748,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/RUPirKmiWbgaHCHBK9d68uftX.svg)](https://asciinema.org/a/RUPirKmiWbgaHCHBK9d68uftX)
+[![asciicast](https://asciinema.org/a/689936.svg)](https://asciinema.org/a/689936)
 
 </TabItem>
 </Tabs>
@@ -842,7 +842,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Ez6XBUsyxzKCnMKLaxPus5hQx.svg)](https://asciinema.org/a/Ez6XBUsyxzKCnMKLaxPus5hQx)
+[![asciicast](https://asciinema.org/a/689937.svg)](https://asciinema.org/a/689937)
 
 </TabItem>
 </Tabs>
@@ -945,7 +945,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/D9g32W8o5min9CIbfCKx3CtVd.svg)](https://asciinema.org/a/D9g32W8o5min9CIbfCKx3CtVd)
+[![asciicast](https://asciinema.org/a/689938.svg)](https://asciinema.org/a/689938)
 
 </TabItem>
 </Tabs>
@@ -994,7 +994,7 @@ returns 2 events
 <TabItem value="Output">
 
 ```json
-[2024-10-29 21:09:51,392] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-16 12:23:26,141] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
@@ -1017,7 +1017,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/IWBs4fKJwKdf9idPk0p2bZNCg.svg)](https://asciinema.org/a/IWBs4fKJwKdf9idPk0p2bZNCg)
+[![asciicast](https://asciinema.org/a/689939.svg)](https://asciinema.org/a/689939)
 
 </TabItem>
 </Tabs>
@@ -1045,38 +1045,38 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container vault  Stopping
- Container kafka-client  Stopping
- Container schema-registry  Stopping
- Container gateway1  Stopping
  Container gateway2  Stopping
+ Container schema-registry  Stopping
+ Container vault  Stopping
+ Container gateway1  Stopping
+ Container kafka-client  Stopping
  Container vault  Stopped
  Container vault  Removing
  Container vault  Removed
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
- Container gateway1  Stopped
- Container gateway1  Removing
  Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
  Container schema-registry  Removed
- Container kafka2  Stopping
  Container kafka3  Stopping
+ Container kafka2  Stopping
  Container kafka1  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
  Network encryption-vault-with-secret-management_default  Removing
  Network encryption-vault-with-secret-management_default  Removed
 
@@ -1085,7 +1085,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/SG993tkl4wVTYS7pl8dBO5Nkm.svg)](https://asciinema.org/a/SG993tkl4wVTYS7pl8dBO5Nkm)
+[![asciicast](https://asciinema.org/a/689940.svg)](https://asciinema.org/a/689940)
 
 </TabItem>
 </Tabs>
