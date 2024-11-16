@@ -25,7 +25,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rLCgSUInUKFAyGxk01X9X6cdo.svg)](https://asciinema.org/a/rLCgSUInUKFAyGxk01X9X6cdo)
+[![asciicast](https://asciinema.org/a/689980.svg)](https://asciinema.org/a/689980)
 
 </TabItem>
 </Tabs>
@@ -244,73 +244,73 @@ docker compose up --detach --wait
 ```
  Network header-injection_default  Creating
  Network header-injection_default  Created
+ Container kafka2  Creating
  Container kafka3  Creating
  Container kafka1  Creating
- Container kafka2  Creating
  Container kafka-client  Creating
+ Container kafka2  Created
  Container kafka1  Created
  Container kafka-client  Created
  Container kafka3  Created
- Container kafka2  Created
  Container gateway2  Creating
  Container gateway1  Creating
  Container schema-registry  Creating
+ Container gateway1  Created
  Container schema-registry  Created
  Container gateway2  Created
- Container gateway1  Created
- Container kafka-client  Starting
- Container kafka1  Starting
- Container kafka2  Starting
  Container kafka3  Starting
- Container kafka2  Started
- Container kafka1  Started
+ Container kafka-client  Starting
+ Container kafka2  Starting
+ Container kafka1  Starting
  Container kafka-client  Started
  Container kafka3  Started
+ Container kafka2  Started
+ Container kafka1  Started
+ Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka1  Waiting
+ Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka2  Waiting
+ Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka3  Waiting
- Container kafka3  Waiting
+ Container kafka2  Healthy
  Container kafka2  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
- Container kafka1  Healthy
  Container kafka3  Healthy
- Container schema-registry  Starting
- Container kafka2  Healthy
+ Container gateway2  Starting
  Container gateway1  Starting
  Container kafka2  Healthy
- Container gateway2  Starting
+ Container kafka1  Healthy
+ Container schema-registry  Starting
  Container gateway1  Started
- Container gateway2  Started
  Container schema-registry  Started
+ Container gateway2  Started
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container gateway2  Waiting
  Container kafka-client  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container schema-registry  Waiting
- Container gateway1  Waiting
- Container gateway2  Waiting
+ Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
  Container kafka-client  Healthy
- Container gateway2  Healthy
  Container gateway1  Healthy
  Container schema-registry  Healthy
+container gateway2 exited (96)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Ynr6IfhkY3mGobOofpGv7pg6L.svg)](https://asciinema.org/a/Ynr6IfhkY3mGobOofpGv7pg6L)
+[![asciicast](https://asciinema.org/a/689970.svg)](https://asciinema.org/a/689970)
 
 </TabItem>
 </Tabs>
@@ -350,7 +350,7 @@ Created topic users.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Zn16bLOb8mROrDRfGJNT8Kaqf.svg)](https://asciinema.org/a/Zn16bLOb8mROrDRfGJNT8Kaqf)
+[![asciicast](https://asciinema.org/a/689971.svg)](https://asciinema.org/a/689971)
 
 </TabItem>
 </Tabs>
@@ -437,7 +437,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Ia98V16UkaeLRsDGiiSXkn64b.svg)](https://asciinema.org/a/Ia98V16UkaeLRsDGiiSXkn64b)
+[![asciicast](https://asciinema.org/a/689972.svg)](https://asciinema.org/a/689972)
 
 </TabItem>
 </Tabs>
@@ -495,7 +495,7 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/MpE56lwwtV6gW9abrVbXM64tC.svg)](https://asciinema.org/a/MpE56lwwtV6gW9abrVbXM64tC)
+[![asciicast](https://asciinema.org/a/689973.svg)](https://asciinema.org/a/689973)
 
 </TabItem>
 </Tabs>
@@ -527,7 +527,7 @@ returns 2 events
 ```json
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-MY-KEY" : "my own value",
     "X-USER" : "anonymous"
   },
@@ -541,7 +541,7 @@ returns 2 events
 }
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-MY-KEY" : "my own value",
     "X-USER" : "anonymous"
   },
@@ -560,7 +560,7 @@ returns 2 events
 
 ```json
 parse error: Invalid numeric literal at line 1, column 15
-[2024-10-29 21:25:00,499] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 22:41:26,431] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
@@ -569,7 +569,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/i1O6Y0a13ZcExHaTCRNwRTWC0.svg)](https://asciinema.org/a/i1O6Y0a13ZcExHaTCRNwRTWC0)
+[![asciicast](https://asciinema.org/a/689974.svg)](https://asciinema.org/a/689974)
 
 </TabItem>
 </Tabs>
@@ -648,7 +648,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/V7t9EBW2pExfczUaH2cBff3u8.svg)](https://asciinema.org/a/V7t9EBW2pExfczUaH2cBff3u8)
+[![asciicast](https://asciinema.org/a/689975.svg)](https://asciinema.org/a/689975)
 
 </TabItem>
 </Tabs>
@@ -680,7 +680,7 @@ returns 2 events
 ```json
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-USER" : "anonymous"
   },
   "value" : {
@@ -693,7 +693,7 @@ returns 2 events
 }
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-USER" : "anonymous"
   },
   "value" : {
@@ -711,7 +711,7 @@ returns 2 events
 
 ```json
 parse error: Invalid numeric literal at line 1, column 15
-[2024-10-29 21:25:06,309] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 22:41:32,397] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
@@ -720,7 +720,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/BqsDET2CBNCmuOfabblTDKw4L.svg)](https://asciinema.org/a/BqsDET2CBNCmuOfabblTDKw4L)
+[![asciicast](https://asciinema.org/a/689976.svg)](https://asciinema.org/a/689976)
 
 </TabItem>
 </Tabs>
@@ -759,7 +759,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/rPqm39vnYdamviZawQnq5gtwu.svg)](https://asciinema.org/a/rPqm39vnYdamviZawQnq5gtwu)
+[![asciicast](https://asciinema.org/a/689977.svg)](https://asciinema.org/a/689977)
 
 </TabItem>
 </Tabs>
@@ -791,7 +791,7 @@ returns 2 events
 ```json
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-MY-KEY" : "my own value",
     "X-USER" : "anonymous"
   },
@@ -805,7 +805,7 @@ returns 2 events
 }
 {
   "headers" : {
-    "X-INTERPOLATED" : "User anonymous via ip 172.22.0.1",
+    "X-INTERPOLATED" : "User anonymous via ip 172.23.0.1",
     "X-MY-KEY" : "my own value",
     "X-USER" : "anonymous"
   },
@@ -824,7 +824,7 @@ returns 2 events
 
 ```json
 parse error: Invalid numeric literal at line 1, column 15
-[2024-10-29 21:25:12,051] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-10 22:41:38,447] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 
@@ -833,7 +833,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/AveJ0OZAoAUPnHMp1fPTPGwEK.svg)](https://asciinema.org/a/AveJ0OZAoAUPnHMp1fPTPGwEK)
+[![asciicast](https://asciinema.org/a/689978.svg)](https://asciinema.org/a/689978)
 
 </TabItem>
 </Tabs>
@@ -861,10 +861,10 @@ docker compose down --volumes
 <TabItem value="Output">
 
 ```
- Container schema-registry  Stopping
  Container kafka-client  Stopping
  Container gateway2  Stopping
  Container gateway1  Stopping
+ Container schema-registry  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
  Container gateway2  Removed
@@ -877,18 +877,18 @@ docker compose down --volumes
  Container kafka1  Stopping
  Container kafka2  Stopping
  Container kafka3  Stopping
- Container kafka2  Stopped
- Container kafka2  Removing
- Container kafka2  Removed
- Container kafka3  Stopped
- Container kafka3  Removing
- Container kafka3  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
  Network header-injection_default  Removing
  Network header-injection_default  Removed
 
@@ -897,7 +897,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/3XfZGPhbdya9RfMflqOKugMqw.svg)](https://asciinema.org/a/3XfZGPhbdya9RfMflqOKugMqw)
+[![asciicast](https://asciinema.org/a/689979.svg)](https://asciinema.org/a/689979)
 
 </TabItem>
 </Tabs>
