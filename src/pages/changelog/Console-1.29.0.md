@@ -8,6 +8,22 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
+## Breaking Changes 💣
+### Changes to Condukor labels
+````yaml
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  cluster: julien-cloud
+  connectCluster: my-connect
+  name: my-connector
+  labels:
+    conduktor.io/auto-restart-enabled: "true"
+    conduktor.io/auto-restart-frequency: "6000"
+spec:
+  ...
+````
 
 - [Features ✨](#features-)
   - [Conduktor Chargeback](#conduktor-chargeback)
@@ -36,6 +52,7 @@ The cluster homepage have been redesigned to present you with the most useful in
 
 ### Consumer Group pages overhaul
 
+
 ***
 
 ### Self-Service Topic Catalog visibility
@@ -48,6 +65,13 @@ kind: Topic
 metadata:
   cluster: shadow-it
   name: click.event-stream.avro
+  catalog:
+    visibility: PUBLIC
+    description: | 
+      multi
+      line
+      desc
+    description-editable-in-ui: true
   catalogVisibility: PUBLIC # or PRIVATE
 spec:
   ...
@@ -78,7 +102,15 @@ A full list of all the exported audit log event types is published on the [Audit
 ***
 
 ## Quality of Life improvements
-- TODO
+- Improved the performance of the Automatic deserializer
+- Improved the performance of the Schema Registry indexing process
+- Added support for Google Cloud Identity group claims
+
+
 
 ## Fixes 🔨
-- TODO
+- Fixed an issue where the ManageClusters permission wasn't working properly
+- Fixed an issue that prevented to create a KafkaCluster and a Topic on that newly declared KafkaCluster in a single CLI apply
+- Fixed `/health/readiness` endpoint to return HTTP 503 when Postgres DB is down
+- Fixed an issue where the Message Count wasn't updated to 0 when emptying a topic
+- Fixed an issue where the Pause/Resume button wasn't visible when a connector was in Failed state
