@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Conduktor API Documentation</title>
+  <title id="docTitle">Conduktor Documentation</title>
     <!-- needed for adaptive design -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,6 +41,9 @@
   function updateDocs() {
     const product = document.getElementById('productSelect').value;
     const versionSelect = document.getElementById('versionSelect');
+    
+    // Dynamically update title
+    document.getElementById('docTitle').textContent = `Conduktor ${product.charAt(0).toUpperCase() + product.slice(1)}`;
     
     // Show/hide version selector based on product
     versionSelect.style.display = product === 'gateway' ? 'inline' : 'none';

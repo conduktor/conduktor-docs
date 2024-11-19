@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Conduktor API
+  title: Conduktor Console API
   version: v2
   description: The API to interact with Conduktor Console programmatically
   contact:
