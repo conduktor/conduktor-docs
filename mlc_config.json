@@ -27,6 +27,9 @@
     },
     {
       "pattern": "^https://www.conduktor.io/ensuring-maximum-security-conduktor-desktop-v2.20.1"
+    },
+    {
+      "pattern": "^https://github.com/conduktor/conduktor-proxy/.*"
     }
   ],
   "aliveStatusCodes": [400, 403, 200, 503, 0, 999]
