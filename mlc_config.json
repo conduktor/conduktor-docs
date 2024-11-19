@@ -30,6 +30,10 @@
     },
     {
       "pattern": "^https://github.com/conduktor/conduktor-proxy/.*"
+    },
+    {
+      "pattern": "^https://github.com/conduktor/console-plus/.*"
+      
     }
   ],
   "aliveStatusCodes": [400, 403, 200, 503, 0, 999]
