@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Conduktor API
   version: v2
@@ -1934,12 +1934,13 @@ paths:
                 value:
                   name: My Kafka cluster
                   bootstrapServers: broker1:9092, broker2:9092
-                  properties: |-
-                    ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                  properties: |2
+
                     security.protocol=SSL
+                    ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                     ssl.truststore.password=conduktor
-                    ssl.keystore.password=conduktor
                     ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
+                    ssl.keystore.password=conduktor
                   ignoreUntrustedCertificate: false
               Kafka cluster with a Schema Registry:
                 value:
@@ -1951,11 +1952,12 @@ paths:
                       key: key
                       certificateChain: certificateChain
                       type: SSLAuth
-                    properties: |-
+                    properties: |2
+
+                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                      schema.registry.ssl.truststore.password=conduktor
                       schema.registry.ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                       schema.registry.ssl.keystore.password=conduktor
-                      schema.registry.ssl.truststore.password=conduktor
-                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                     ignoreUntrustedCertificate: false
                     type: ConfluentLikeSchemaRegistryRequest
                   ignoreUntrustedCertificate: false
@@ -2036,7 +2038,7 @@ paths:
             --url 'http://localhost:8080/public/v1/clusters/my-cluster' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nsecurity.protocol=SSL\nssl.truststore.password=conduktor\nssl.keystore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
+            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"\nsecurity.protocol=SSL\nssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nssl.truststore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks\nssl.keystore.password=conduktor\n","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
             --location \
             --max-redirs 32
     delete:
@@ -2121,12 +2123,13 @@ paths:
               - clusterSlug: silent-hill
                 name: My Kafka cluster
                 bootstrapServers: broker1:9092, broker2:9092
-                properties: |-
-                  ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                properties: |2
+
                   security.protocol=SSL
+                  ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                   ssl.truststore.password=conduktor
-                  ssl.keystore.password=conduktor
                   ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
+                  ssl.keystore.password=conduktor
                 kafkaConnects: []
                 ignoreUntrustedCertificate: false
                 createdAt: '1970-01-01T00:00:00Z'
@@ -4202,7 +4205,6 @@ paths:
                     name: my-consumer-group
                     patternType: LITERAL
                   serviceAccount: my-service-account
-                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4369,7 +4371,6 @@ paths:
                     name: my-consumer-group
                     patternType: LITERAL
                   serviceAccount: my-service-account
-                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4496,7 +4497,7 @@ paths:
             --url 'http://localhost:8080/public/self-serve/v1/application-instance?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account","defaultCatalogVisibility":"PUBLIC"}}' \
+            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account"}}' \
             --location \
             --max-redirs 32
   /public/self-serve/v1/application-instance-permission/{application-instance-permission-name}:
@@ -5538,7 +5539,6 @@ paths:
                     conduktor.io/application-instance: staging
                     user-labels: I am a user label
                     conduktor.io/application: application-a
-                  catalogVisibility: PUBLIC
                 spec:
                   partitions: 1
                   replicationFactor: 1
@@ -5707,7 +5707,6 @@ paths:
                     conduktor.io/application-instance: staging
                     user-labels: I am a user label
                     conduktor.io/application: application-a
-                  catalogVisibility: PUBLIC
                 spec:
                   partitions: 1
                   replicationFactor: 1
@@ -5845,7 +5844,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"},"catalogVisibility":"PUBLIC"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
     post:
@@ -5930,7 +5929,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"},"catalogVisibility":"PUBLIC"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/subject/{subject-name}:
@@ -6267,91 +6266,6 @@ paths:
             --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
             --location \
             --max-redirs 32
-    post:
-      tags:
-      - cli_subject_kafka_v2_6
-      description: Create a Subject
-      operationId: create-subject
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SubjectResource'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubjectCreateResult'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No subject with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No subject with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/subject' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
-            --location \
-            --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/connect/{connectCluster}/connector/{connector-name}:
     get:
       tags:
@@ -6389,9 +6303,6 @@ paths:
                   name: my-connector
                   cluster: my-cluster
                   connectCluster: my-connect
-                  autoRestart:
-                    enabled: true
-                    frequency: 600
                 spec:
                   config: {}
         '400':
@@ -6563,9 +6474,6 @@ paths:
                   name: my-connector
                   cluster: my-cluster
                   connectCluster: my-connect
-                  autoRestart:
-                    enabled: true
-                    frequency: 600
                 spec:
                   config: {}
         '400':
@@ -6705,7 +6613,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequency":600}},"spec":{"config":{}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect"},"spec":{"config":{}}}' \
             --location \
             --max-redirs 32
     post:
@@ -6796,7 +6704,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequency":600}},"spec":{"config":{}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect"},"spec":{"config":{}}}' \
             --location \
             --max-redirs 32
   /public/console/v2/kafka-cluster/{kafka-cluster-name}:
@@ -7867,7 +7775,6 @@ paths:
                   metadata:
                     name: topic1
                     cluster: cluster1
-                    catalogVisibility: PUBLIC
                   spec:
                     partitions: 3
                     replicationFactor: 3
@@ -10383,9 +10290,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/List_String'
         '400':
           description: The request is not valid
           content:
@@ -11374,7 +11279,7 @@ paths:
                   updatedAt: '1970-01-01T00:00:00Z'
                   updatedBy: someone@somewhere.com
                   lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
+                  status: Idle
                 spec:
                   connectName: connect
                   connectorName: connector
@@ -11544,12 +11449,6 @@ paths:
         required: false
         schema:
           type: string
-      - name: consumerGroup
-        in: query
-        description: Filter by consumer group name
-        required: false
-        schema:
-          type: string
       - name: alertType
         in: query
         description: 'Filter by alert type '
@@ -11574,7 +11473,7 @@ paths:
                   updatedAt: '1970-01-01T00:00:00Z'
                   updatedBy: someone@somewhere.com
                   lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
+                  status: Idle
                 spec:
                   connectName: connect
                   connectorName: connector
@@ -11964,21 +11863,6 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/AivenSchemaRegistryAcl'
-    AivenResponse:
-      title: AivenResponse
-      type: object
-      required:
-      - project
-      - serviceName
-      - type
-      properties:
-        project:
-          type: string
-        serviceName:
-          type: string
-        type:
-          type: string
-          const: AivenResponse
     AivenSRAclCreatePayload:
       title: AivenSRAclCreatePayload
       type: object
@@ -12145,29 +12029,26 @@ components:
       title: AlertSpec
       oneOf:
       - $ref: '#/components/schemas/BrokerAlert'
-      - $ref: '#/components/schemas/ConsumerGroupAlert'
       - $ref: '#/components/schemas/KafkaConnectAlert'
       - $ref: '#/components/schemas/TopicAlert'
     AlertSpecOutput:
       title: AlertSpecOutput
       oneOf:
       - $ref: '#/components/schemas/BrokerAlertOutput'
-      - $ref: '#/components/schemas/ConsumerGroupAlertOutput'
       - $ref: '#/components/schemas/KafkaConnectAlertOutput'
       - $ref: '#/components/schemas/TopicAlertOutput'
     AlertStatus:
       title: AlertStatus
       type: string
       enum:
-      - Firing
       - Healthy
-      - Pending
+      - Idle
+      - Unhealthy
     AlertType:
       title: AlertType
       type: string
       enum:
       - BrokerAlert
-      - ConsumerGroupAlert
       - KafkaConnectAlert
       - TopicAlert
     AllAclForPrincipal:
@@ -12182,22 +12063,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AclForResourceAndHost'
-    AllowedKeys:
-      title: AllowedKeys
-      type: object
-      required:
-      - constraint
-      - keys
-      properties:
-        constraint:
-          $ref: '#/components/schemas/ConstraintKind'
-        optional:
-          type: boolean
-        keys:
-          type: array
-          minItems: 1
-          items:
-            type: string
     AmazonSecurity:
       title: AmazonSecurity
       oneOf:
@@ -12452,8 +12317,6 @@ components:
             $ref: '#/components/schemas/ResourceWithOwnership'
         serviceAccount:
           type: string
-        defaultCatalogVisibility:
-          $ref: '#/components/schemas/CatalogVisibility'
     ApplicationKind:
       title: ApplicationKind
       type: string
@@ -12530,17 +12393,6 @@ components:
           type: string
         owner:
           type: string
-    AutoRestartConfig:
-      title: AutoRestartConfig
-      type: object
-      required:
-      - enabled
-      properties:
-        enabled:
-          type: boolean
-        frequency:
-          type: integer
-          format: int64
     BadRequest:
       title: BadRequest
       type: object
@@ -12828,12 +12680,9 @@ components:
         resourceType:
           type: string
           const: CONSUMER_GROUP
-    CatalogVisibility:
-      title: CatalogVisibility
-      type: string
-      enum:
-      - PRIVATE
-      - PUBLIC
+    CheckedCertificate:
+      title: CheckedCertificate
+      type: object
     CleanupPolicy:
       title: CleanupPolicy
       type: string
@@ -12990,24 +12839,6 @@ components:
           BearerToken: '#/components/schemas/BearerToken'
           NoSecurity: '#/components/schemas/NoSecurity'
           SSLAuth: '#/components/schemas/SSLAuth'
-    ConfluentResponse:
-      title: ConfluentResponse
-      type: object
-      required:
-      - key
-      - confluentEnvironmentId
-      - confluentClusterId
-      - type
-      properties:
-        key:
-          type: string
-        confluentEnvironmentId:
-          type: string
-        confluentClusterId:
-          type: string
-        type:
-          type: string
-          const: ConfluentResponse
     ConnectorApplyResult:
       title: ConnectorApplyResult
       type: object
@@ -13052,8 +12883,6 @@ components:
           minLength: 1
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
-        autoRestart:
-          $ref: '#/components/schemas/AutoRestartConfig'
     ConnectorResource:
       title: ConnectorResource
       type: object
@@ -13088,7 +12917,6 @@ components:
       - NoneOf
       - OneOf
       - Range
-      - AllowedKeys
       const: Match
     ConsumerGroup:
       title: ConsumerGroup
@@ -13123,57 +12951,6 @@ components:
           - KafkaConnect
           - Subject
           - KsqlDB
-    ConsumerGroupAlert:
-      title: ConsumerGroupAlert
-      type: object
-      required:
-      - consumerGroupName
-      - threshold
-      - operator
-      - metric
-      properties:
-        consumerGroupName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/ConsumerGroupMetricType'
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
-    ConsumerGroupAlertOutput:
-      title: ConsumerGroupAlertOutput
-      type: object
-      required:
-      - consumerGroupName
-      - threshold
-      - operator
-      - metric
-      - promQl
-      properties:
-        consumerGroupName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/ConsumerGroupMetricType'
-        promQl:
-          type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
     ConsumerGroupFilter:
       title: ConsumerGroupFilter
       oneOf:
@@ -13184,12 +12961,6 @@ components:
         mapping:
           OnConsumerGroupName: '#/components/schemas/OnConsumerGroupName'
           OnState: '#/components/schemas/OnState'
-    ConsumerGroupMetricType:
-      title: ConsumerGroupMetricType
-      type: string
-      enum:
-      - OffsetLag
-      - TimeLag
     ConsumerGroupRequest:
       title: ConsumerGroupRequest
       type: object
@@ -13452,27 +13223,6 @@ components:
         type:
           type: string
           const: Gateway
-    GatewayResponse:
-      title: GatewayResponse
-      type: object
-      required:
-      - url
-      - user
-      - virtualCluster
-      - type
-      properties:
-        url:
-          type: string
-        user:
-          type: string
-        virtualCluster:
-          type: string
-        ignoreUntrustedCertificate:
-          default: false
-          type: boolean
-        type:
-          type: string
-          const: GatewayResponse
     Glue:
       title: Glue
       type: object
@@ -14261,18 +14011,6 @@ components:
           Aiven: '#/components/schemas/Aiven'
           Confluent: '#/components/schemas/Confluent'
           Gateway: '#/components/schemas/Gateway'
-    KafkaFlavorResponse:
-      title: KafkaFlavorResponse
-      oneOf:
-      - $ref: '#/components/schemas/AivenResponse'
-      - $ref: '#/components/schemas/ConfluentResponse'
-      - $ref: '#/components/schemas/GatewayResponse'
-      discriminator:
-        propertyName: type
-        mapping:
-          AivenResponse: '#/components/schemas/AivenResponse'
-          ConfluentResponse: '#/components/schemas/ConfluentResponse'
-          GatewayResponse: '#/components/schemas/GatewayResponse'
     KsqlDB:
       title: KsqlDB
       type: object
@@ -14558,6 +14296,13 @@ components:
         type:
           type: string
           const: LabelsFilter
+    List_String:
+      title: List_String
+      oneOf:
+      - $ref: '#/components/schemas/Nil'
+      - type: array
+        items:
+          type: string
     LoggerDto:
       title: LoggerDto
       type: object
@@ -14621,6 +14366,9 @@ components:
           type: boolean
         pattern:
           type: string
+    Nil:
+      title: Nil
+      type: object
     NoSecurity:
       title: NoSecurity
       type: object
@@ -14977,7 +14725,6 @@ components:
     PolicyConstraintDto:
       title: PolicyConstraintDto
       oneOf:
-      - $ref: '#/components/schemas/AllowedKeys'
       - $ref: '#/components/schemas/Match'
       - $ref: '#/components/schemas/NoneOf'
       - $ref: '#/components/schemas/OneOf'
@@ -14985,7 +14732,6 @@ components:
       discriminator:
         propertyName: constraint
         mapping:
-          AllowedKeys: '#/components/schemas/AllowedKeys'
           Match: '#/components/schemas/Match'
           NoneOf: '#/components/schemas/NoneOf'
           OneOf: '#/components/schemas/OneOf'
@@ -15101,7 +14847,7 @@ components:
             them
           deprecated: true
         kafkaFlavor:
-          $ref: '#/components/schemas/KafkaFlavorResponse'
+          $ref: '#/components/schemas/KafkaFlavor'
         ksqlDBs:
           type: array
           uniqueItems: true
@@ -15620,17 +15366,6 @@ components:
           $ref: '#/components/schemas/SubjectResource'
         upsertResult:
           $ref: '#/components/schemas/UpsertResult'
-    SubjectCreateResult:
-      title: SubjectCreateResult
-      type: object
-      required:
-      - resource
-      - createResult
-      properties:
-        resource:
-          $ref: '#/components/schemas/SubjectResource'
-        createResult:
-          $ref: '#/components/schemas/CreateResult'
     SubjectKind:
       title: SubjectKind
       type: string
@@ -15819,15 +15554,17 @@ components:
         type:
           type: string
           const: TagsFilter
+    TlsNotSupported:
+      title: TlsNotSupported
+      type: object
     TlsStatus:
       title: TlsStatus
-      type: string
-      enum:
-      - checked_certificate
-      - unchecked_certificate
-      - tls_not_supported
-      - unreachable_target
-      - unexpected_status
+      oneOf:
+      - $ref: '#/components/schemas/CheckedCertificate'
+      - $ref: '#/components/schemas/TlsNotSupported'
+      - $ref: '#/components/schemas/UncheckedCertificate'
+      - $ref: '#/components/schemas/UnexpectedStatus'
+      - $ref: '#/components/schemas/UnreachableTarget'
     TlsTestRequest:
       title: TlsTestRequest
       type: object
@@ -16090,8 +15827,6 @@ components:
           type: string
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
-        catalogVisibility:
-          $ref: '#/components/schemas/CatalogVisibility'
     TopicMetricType:
       title: TopicMetricType
       type: string
@@ -16202,6 +15937,15 @@ components:
           type: string
         cause:
           type: string
+    UncheckedCertificate:
+      title: UncheckedCertificate
+      type: object
+    UnexpectedStatus:
+      title: UnexpectedStatus
+      type: object
+    UnreachableTarget:
+      title: UnreachableTarget
+      type: object
     UpdateGroupRequest:
       title: UpdateGroupRequest
       type: object
