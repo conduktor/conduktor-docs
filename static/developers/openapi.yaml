@@ -11,351 +11,351 @@ info:
     backgroundColor: '#FFFFFF'
     altText: Conduktor logo
 tags:
-  - name: Introduction
-    description: |
-      The Conduktor Gateway REST API 's aim is to help you configure your Gateway.
-      
-      The legacy (v1) API is available but deprecated ([V1 documentation](./?apiVersion=v1)).
-      
-      Get started with Conduktor Gateway [self-hosted](https://docs.conduktor.io/gateway/installation/) today. Setup takes only a few minutes.
-  - name: Authentication
-    description: |-
-      Authentication to the API requires a basic authentication.
-      
-      To get a token and use it you must go through the following steps:
-      
-      * Configure the admin password in the Gateway YAML configuration file.
-      
-      * Use the password in the **authorization** header of your requests.
-      
-      Example:
-      
-      ```shell
-      curl -X GET "https://your.gateway-api.host/gateway/v2/virtual-cluster" \
-            -H "accept: application/json" \
-            --user "admin:password"
-      ```
-  - name: Kinds
-    description: |
-      ### Definition
-      
-      Kinds the resource types of the Conduktor gateway.
-      
-      ### Conduktor Gateway Kinds
-      
-      The following kinds are available in the Conduktor Gateway API:
-      
-      * `VirtualCluster`
-      * `AliasTopic`
-      * `ConcentratedTopic`
-      * `ConcentrationRule`
-      * `Interceptor`
-      * `Plugin`
-      * `GatewayServiceAccount`
-      * `Token`
-      * `GatewayGroup`
-  - name: Api Groups
-    description: |+
-      ### Definition
-      
-      API groups a set of resources that share the same API path prefix. They are used to organize the API endpoints and the
-      resources they manage.
-      The versioning is set at this level, so all the resources in the same group share the same version.
-      
-      ### Conduktor Api Groups
-      
-      The Gateway API consist of a single API group right now (`gateway`), and it manages the following resources:
-      
-      | Api Group  | Version | Kinds                                                                                                                                                     |
-      |------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-      | `/gateway` | `/v2`   | `/virtual-cluster`, `/alias-topic`, `/concentrated-topic`, `/concentration-rule`, </br> `/interceptor`, `/plugin`, `/service-account`, `/group`, `/token` |
+- name: Introduction
+  description: |
+    The Conduktor Gateway REST API 's aim is to help you configure your Gateway.
+
+    The legacy (v1) API is available but deprecated ([V1 documentation](./?apiVersion=v1)).
+
+    Get started with Conduktor Gateway [self-hosted](https://docs.conduktor.io/gateway/installation/) today. Setup takes only a few minutes.
+- name: Authentication
+  description: |-
+    Authentication to the API requires a basic authentication.
+
+    To get a token and use it you must go through the following steps:
+
+    * Configure the admin password in the Gateway YAML configuration file.
+
+    * Use the password in the **authorization** header of your requests.
+
+    Example:
+
+    ```shell
+    curl -X GET "https://your.gateway-api.host/gateway/v2/virtual-cluster" \
+          -H "accept: application/json" \
+          --user "admin:password"
+    ```
+- name: Kinds
+  description: |
+    ### Definition
+
+    Kinds the resource types of the Conduktor gateway.
+
+    ### Conduktor Gateway Kinds
+
+    The following kinds are available in the Conduktor Gateway API:
+
+    * `VirtualCluster`
+    * `AliasTopic`
+    * `ConcentratedTopic`
+    * `ConcentrationRule`
+    * `Interceptor`
+    * `Plugin`
+    * `GatewayServiceAccount`
+    * `Token`
+    * `GatewayGroup`
+- name: Api Groups
+  description: |+
+    ### Definition
+
+    API groups a set of resources that share the same API path prefix. They are used to organize the API endpoints and the
+    resources they manage.
+    The versioning is set at this level, so all the resources in the same group share the same version.
+
+    ### Conduktor Api Groups
+
+    The Gateway API consist of a single API group right now (`gateway`), and it manages the following resources:
+
+    | Api Group  | Version | Kinds                                                                                                                                                     |
+    |------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | `/gateway` | `/v2`   | `/virtual-cluster`, `/alias-topic`, `/concentrated-topic`, `/concentration-rule`, </br> `/interceptor`, `/plugin`, `/service-account`, `/group`, `/token` |
 
 
 
-  - name: Versioning
-    description: |+
-      * __The version is set at the api group level__. It is incremented when a breaking change happens in the schema of an endpoint of the group (that has been marked `stable`). The n-1 version is still available for a while to allow users to migrate. The version is part of the endpoint path.
-      * The API version (v2) is the global version of the Conduktor Gateway API, it should not change unless there is a complete overhaul of the API.
-      
-      
-      Endpoint also have a status to manage their API lifecycle, following the order below:
-      * __preview__: this is an early-stage feature, really likely to change
-      * __beta__: early access feature, breaking change
-      * __stable__: Production-ready endpoint, no breaking change
-      * __deprecated__: This endpoint isn't supported anymore and the user should migrate
+- name: Versioning
+  description: |+
+    * __The version is set at the api group level__. It is incremented when a breaking change happens in the schema of an endpoint of the group (that has been marked `stable`). The n-1 version is still available for a while to allow users to migrate. The version is part of the endpoint path.
+    * The API version (v2) is the global version of the Conduktor Gateway API, it should not change unless there is a complete overhaul of the API.
 
 
-  - name: Conventions
-    description: |+
-      ### Path conventions
-      
-      The API follows as much as possible the endpoints structure below for each kind of resource:
-      
-      * `GET /{api-group}/{version}/{kind}/{name}` to read a resource
-      * `GET /{api-group}/{version}/{kind}` to list resources of a kind
-      * `PUT /{api-group}/{version}/{kind}` to update or create a resource
-      * `DELETE /{api-group}/{version}/{kind}/{name}` to delete a resource (returns 204 No Content)
-      * `POST` is used for specific operations that don't fit this CRUD model. PUT is the default verb for updates and
-        creations.
-      * Important principle: the result of a GET can be reused as the body of a PUT to update the resource.
-      
-      __Non-unique names__:
-      When a `name` is not enough to uniquely identify a resource, the GET and DELETE endpoint are different
-      The GET by name is replaced by query parameters (returning lists or the searched item if the criteria are the elements
-      of the key), and the DELETE by name is replaced by a DELETE with a body.
-      For example, an `alias-topic` is identified by its `name` and the `vCluster` gives the following endpoints:
-      
-      * `GET /gateway/v2/alias-topic?name={name}&vcluster={vcluster}`
-      * `PUT /gateway/v2/alias-topic`
-      * `DELETE /gateway/v2/alias-topic` with a body containing the `name` and the `vCluster`
-      
-      ### Other conventions
-      
-      * All requests and responses are in JSON and should have their `content-type` header set to `application/json`
-      * Every kind has a lower-cased name (e.g. `virtual-cluster` for the `VirtualCluster` kind) that is used in the endpoint
-        path.
-      * Errors have a standard format:
-          * The HTTP status code is used to indicate the type of error.
-          * The response body contains a common JSON object for every error:
-              * `title`: a unique error code for the error.
-              * `message`: a human-readable message for the error.
-              * `cause`: additional information about the error.
-      * All timestamps are in ISO 8601 format.
-
-  - name: token
-    description: |+
-      ### Definition
-      
-      The token group contains just a utility endpoint to generate a token for a given Local ServiceAccount (on a given
-      virtual cluster, or `passthrough` if omitted).
-      
-      This token can be used to authenticate against the Gateway API in the `sasl_plaintext` authentication mode.
-      More information on this case here : https://docs.conduktor.io/gateway/concepts/Clients/#sasl_plaintext
-      
-      ### Available operations
-      
-      * Generate a token
-      
-      ### Identity
-      
-      N/A.
-
-  - name: cli_virtual-cluster_gateway_v2_7
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Virtual%20Cluster/
-      
-      ### Available operations
-      
-      * List virtual clusters
-      * Get a virtual cluster
-      * Upsert a virtual cluster
-      * Delete a virtual cluster
-      
-      ### Identity
-      
-      A virtual cluster is identified by the `name`.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/VirtualCluster" />
-    
-
-    x-displayName: virtual-cluster
-  - name: cli_alias-topic_gateway_v2_8
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Logical_topics/Alias%20topics/
-      
-      ### Available operations
-      
-      * List alias topics
-      * Upsert an alias topic
-      * Delete an alias topic
-      
-      ### Identity
-      
-      An alias topic is identified by the `name` inside a `vCluster` (`passthrough` if omitted).
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/AliasTopic" />
-    
-
-    x-displayName: alias-topic
-  - name: cli_concentrated-topic_gateway_v2_0
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
-      
-      ### Available operations
-      
-      * List concentrated topics
-      
-      Concentrated topics are created when a concentration rule is applied. They are not created or deleted directly by the API.
-      
-      ### Identity
-      
-      A concentrated topic is identified by the `name` and the `vCluster` (`passthrough` if omitted).
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/ConcentratedTopic" />
-    
-
-    x-displayName: concentrated-topic
-  - name: cli_concentration-rule_gateway_v2_9
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
-      
-      ### Available operations
-      
-      * List concentration rules
-      * Get a concentration rule
-      * Upsert a concentration rule
-      * Delete a concentration rule
-      
-      
-      ### Identity
-      
-      A concentration rule is identified by its `name` inside a `vCluster`.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/ConcentrationRule" />
-    
-
-    x-displayName: concentration-rule
-  - name: cli_interceptor_gateway_v2_12
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
-      
-      ### Available operations
-      
-      * List the interceptors
-      * Get an interceptor
-      * Upsert an interceptor
-      * Delete an interceptor
-      
-      ### Identity
-      
-      An interceptor is identified by its `name` and its `scope`.
-      The `scope` is itself composed of 3 optional fields `vCluster`, `group`, `username`.
-      A __global__ interceptor is an interceptor whose `scope` has its fields empty.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/Interceptor"/>
-    
-
-    x-displayName: interceptor
-  - name: plugin
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
-      
-      ### Available operations
-      
-      * List the available plugins of the Gateway
-      
-      ### Identity
-      
-      A plugin is identified by its `pluginId`.
-      
-      The list of plugins is fixed for a given Gateway instance.
-      The list is fixed and cannot be modified.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/Plugin" />
+    Endpoint also have a status to manage their API lifecycle, following the order below:
+    * __preview__: this is an early-stage feature, really likely to change
+    * __beta__: early access feature, breaking change
+    * __stable__: Production-ready endpoint, no breaking change
+    * __deprecated__: This endpoint isn't supported anymore and the user should migrate
 
 
-  - name: cli_gateway-service-account_gateway_v2_11
-    description: |+
-      ### Definition
-      
-      https://docs.conduktor.io/gateway/concepts/GatewayUser/
-      
-      ### Available operations
-      
-      * List service accounts
-      * Upsert a service account
-      * Delete a service account
-      
-      ### Identity
-      
-      The service account is identified by the `name` and the `vCluster`.
-      
-      The `vCluster` name is not mandatory, but if omitted, the `passthrough` virtual cluster will be used.
-      Thus, a service account is always associated with one and only one virtual cluster.
-      
-      ### Local and external service accounts
-      
-      A service account can be `Local` or `External`.
-      
-      * A `Local` service account is just a local user that allows to generate Gateway tokens for your Kafka client
-        applications (SASL).
-      * An `External` service account is a user that is authenticated by an external system (OIDC). In such a
-        scenario you will only need to create external service accounts in 2 cases : either to rename the OIDC principal
-        for you Kafka applications OR to gather service accounts into `Groups`. Gateway Tokens are not issued for external
-        service accounts since the authentication must be done by the external system.
-      
-      To create an external service account you must provide have an `principal` that is the name of the user in the
-      external system.
-      It can be equal or not to the service account `name` (up to you), but note that __the `principal` must be unique
-      across all virtual clusters__.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/GatewayServiceAccount" />
-    
+- name: Conventions
+  description: |+
+    ### Path conventions
 
-    x-displayName: service-account
-  - name: cli_gateway-group_gateway_v2_10
-    description: |+
-      ### Definition
-      
-      Groups a defined by name a allow to regroup Gateway users in order to apply interceptors rules.
-      
-      ### Available operations
-      
-      * List groups
-      * Get a group
-      * Upsert a group
-      * Delete a group
-      
-      ### Identity
-      
-      The group is identified by its `name` (unique across all the virtual clusters).
-      
-      A group can be added external groups (coming from LDAP, OIDC claims etc.) which will allow the Gateway to bind them on the Gateway Group.
-      
-      ### Schema
-      
-      <SchemaDefinition schemaRef="#/components/schemas/GatewayGroup" />
-    
+    The API follows as much as possible the endpoints structure below for each kind of resource:
 
-    x-displayName: group
+    * `GET /{api-group}/{version}/{kind}/{name}` to read a resource
+    * `GET /{api-group}/{version}/{kind}` to list resources of a kind
+    * `PUT /{api-group}/{version}/{kind}` to update or create a resource
+    * `DELETE /{api-group}/{version}/{kind}/{name}` to delete a resource (returns 204 No Content)
+    * `POST` is used for specific operations that don't fit this CRUD model. PUT is the default verb for updates and
+      creations.
+    * Important principle: the result of a GET can be reused as the body of a PUT to update the resource.
+
+    __Non-unique names__:
+    When a `name` is not enough to uniquely identify a resource, the GET and DELETE endpoint are different
+    The GET by name is replaced by query parameters (returning lists or the searched item if the criteria are the elements
+    of the key), and the DELETE by name is replaced by a DELETE with a body.
+    For example, an `alias-topic` is identified by its `name` and the `vCluster` gives the following endpoints:
+
+    * `GET /gateway/v2/alias-topic?name={name}&vcluster={vcluster}`
+    * `PUT /gateway/v2/alias-topic`
+    * `DELETE /gateway/v2/alias-topic` with a body containing the `name` and the `vCluster`
+
+    ### Other conventions
+
+    * All requests and responses are in JSON and should have their `content-type` header set to `application/json`
+    * Every kind has a lower-cased name (e.g. `virtual-cluster` for the `VirtualCluster` kind) that is used in the endpoint
+      path.
+    * Errors have a standard format:
+        * The HTTP status code is used to indicate the type of error.
+        * The response body contains a common JSON object for every error:
+            * `title`: a unique error code for the error.
+            * `message`: a human-readable message for the error.
+            * `cause`: additional information about the error.
+    * All timestamps are in ISO 8601 format.
+
+- name: token
+  description: |+
+    ### Definition
+
+    The token group contains just a utility endpoint to generate a token for a given Local ServiceAccount (on a given
+    virtual cluster, or `passthrough` if omitted).
+
+    This token can be used to authenticate against the Gateway API in the `sasl_plaintext` authentication mode.
+    More information on this case here : https://docs.conduktor.io/gateway/concepts/Clients/#sasl_plaintext
+
+    ### Available operations
+
+    * Generate a token
+
+    ### Identity
+
+    N/A.
+
+- name: cli_virtual-cluster_gateway_v2_7
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Virtual%20Cluster/
+
+    ### Available operations
+
+    * List virtual clusters
+    * Get a virtual cluster
+    * Upsert a virtual cluster
+    * Delete a virtual cluster
+
+    ### Identity
+
+    A virtual cluster is identified by the `name`.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/VirtualCluster" />
+
+
+  x-displayName: virtual-cluster
+- name: cli_alias-topic_gateway_v2_8
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Logical_topics/Alias%20topics/
+
+    ### Available operations
+
+    * List alias topics
+    * Upsert an alias topic
+    * Delete an alias topic
+
+    ### Identity
+
+    An alias topic is identified by the `name` inside a `vCluster` (`passthrough` if omitted).
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/AliasTopic" />
+
+
+  x-displayName: alias-topic
+- name: cli_concentrated-topic_gateway_v2_0
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
+
+    ### Available operations
+
+    * List concentrated topics
+
+    Concentrated topics are created when a concentration rule is applied. They are not created or deleted directly by the API.
+
+    ### Identity
+
+    A concentrated topic is identified by the `name` and the `vCluster` (`passthrough` if omitted).
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/ConcentratedTopic" />
+
+
+  x-displayName: concentrated-topic
+- name: cli_concentration-rule_gateway_v2_9
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
+
+    ### Available operations
+
+    * List concentration rules
+    * Get a concentration rule
+    * Upsert a concentration rule
+    * Delete a concentration rule
+
+
+    ### Identity
+
+    A concentration rule is identified by its `name` inside a `vCluster`.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/ConcentrationRule" />
+
+
+  x-displayName: concentration-rule
+- name: cli_interceptor_gateway_v2_12
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
+
+    ### Available operations
+
+    * List the interceptors
+    * Get an interceptor
+    * Upsert an interceptor
+    * Delete an interceptor
+
+    ### Identity
+
+    An interceptor is identified by its `name` and its `scope`.
+    The `scope` is itself composed of 3 optional fields `vCluster`, `group`, `username`.
+    A __global__ interceptor is an interceptor whose `scope` has its fields empty.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/Interceptor"/>
+
+
+  x-displayName: interceptor
+- name: plugin
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
+
+    ### Available operations
+
+    * List the available plugins of the Gateway
+
+    ### Identity
+
+    A plugin is identified by its `pluginId`.
+
+    The list of plugins is fixed for a given Gateway instance.
+    The list is fixed and cannot be modified.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/Plugin" />
+
+
+- name: cli_gateway-service-account_gateway_v2_11
+  description: |+
+    ### Definition
+
+    https://docs.conduktor.io/gateway/concepts/GatewayUser/
+
+    ### Available operations
+
+    * List service accounts
+    * Upsert a service account
+    * Delete a service account
+
+    ### Identity
+
+    The service account is identified by the `name` and the `vCluster`.
+
+    The `vCluster` name is not mandatory, but if omitted, the `passthrough` virtual cluster will be used.
+    Thus, a service account is always associated with one and only one virtual cluster.
+
+    ### Local and external service accounts
+
+    A service account can be `Local` or `External`.
+
+    * A `Local` service account is just a local user that allows to generate Gateway tokens for your Kafka client
+      applications (SASL).
+    * An `External` service account is a user that is authenticated by an external system (OIDC). In such a
+      scenario you will only need to create external service accounts in 2 cases : either to rename the OIDC principal
+      for you Kafka applications OR to gather service accounts into `Groups`. Gateway Tokens are not issued for external
+      service accounts since the authentication must be done by the external system.
+
+    To create an external service account you must provide have an `principal` that is the name of the user in the
+    external system.
+    It can be equal or not to the service account `name` (up to you), but note that __the `principal` must be unique
+    across all virtual clusters__.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/GatewayServiceAccount" />
+
+
+  x-displayName: service-account
+- name: cli_gateway-group_gateway_v2_10
+  description: |+
+    ### Definition
+
+    Groups a defined by name a allow to regroup Gateway users in order to apply interceptors rules.
+
+    ### Available operations
+
+    * List groups
+    * Get a group
+    * Upsert a group
+    * Delete a group
+
+    ### Identity
+
+    The group is identified by its `name` (unique across all the virtual clusters).
+
+    A group can be added external groups (coming from LDAP, OIDC claims etc.) which will allow the Gateway to bind them on the Gateway Group.
+
+    ### Schema
+
+    <SchemaDefinition schemaRef="#/components/schemas/GatewayGroup" />
+
+
+  x-displayName: group
 paths:
   /gateway/v2/token:
     post:
       tags:
-        - token
+      - token
       description: |2+
-      
-      
+
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Create a new token for given service account and a given virtual cluster.
-      
+
         If the vcluster is not provided, the token will be created for the passthrough virtual cluster.
 
       operationId: Generate a token for a service account on a virtual cluster
@@ -419,24 +419,24 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request POST \
-              --url 'http://localhost:8888/gateway/v2/token' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{"vCluster":"vcluster1","username":"user1","lifeTimeSeconds":3600000}'
+      - lang: Shell
+        source: |-
+          curl \
+            --request POST \
+            --url 'http://localhost:8888/gateway/v2/token' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"vCluster":"vcluster1","username":"user1","lifeTimeSeconds":3600000}'
   /gateway/v2/virtual-cluster:
     get:
       tags:
-        - cli_virtual-cluster_gateway_v2_7
+      - cli_virtual-cluster_gateway_v2_7
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the virtual clusters
 
       operationId: List the virtual clusters
@@ -451,15 +451,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/VirtualCluster'
               example:
-                - kind: VirtualCluster
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: vcluster1
-                  spec:
-                    aclEnabled: false
-                    superUsers:
-                      - username1
-                      - username2
+              - kind: VirtualCluster
+                apiVersion: gateway/v2
+                metadata:
+                  name: vcluster1
+                spec:
+                  aclEnabled: false
+                  superUsers:
+                  - username1
+                  - username2
         '401':
           description: The given credentials are not valid
           content:
@@ -477,33 +477,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/virtual-cluster' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/virtual-cluster' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_virtual-cluster_gateway_v2_7
+      - cli_virtual-cluster_gateway_v2_7
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert a virtual cluster
 
       operationId: Upsert a virtual cluster
       parameters:
-        - name: dryMode
-          in: query
-          description: If true, the operation will be simulated and no changes will
-            be made
-          required: false
-          schema:
-            default: false
-            type: boolean
+      - name: dryMode
+        in: query
+        description: If true, the operation will be simulated and no changes will
+          be made
+        required: false
+        schema:
+          default: false
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -517,8 +517,8 @@ paths:
               spec:
                 aclEnabled: false
                 superUsers:
-                  - username1
-                  - username2
+                - username1
+                - username2
         required: true
       responses:
         '200':
@@ -536,9 +536,9 @@ paths:
                   spec:
                     aclEnabled: false
                     superUsers:
-                      - username1
-                      - username2
-                upsertResult: Updated
+                    - username1
+                    - username2
+                upsertResult: UPDATED
         '400':
           description: Wrong format or usage of reserved keywords (e.g. passthrough)
           content:
@@ -572,47 +572,47 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/virtual-cluster?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "VirtualCluster",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "vcluster1"
-              },
-              "spec" : {
-                "aclEnabled" : false,
-                "superUsers" : [
-                  "username1",
-                  "username2"
-                ]
-              }
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/virtual-cluster?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "VirtualCluster",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "vcluster1"
+            },
+            "spec" : {
+              "aclEnabled" : false,
+              "superUsers" : [
+                "username1",
+                "username2"
+              ]
+            }
+          }'
   /gateway/v2/virtual-cluster/{vCluster}:
     get:
       tags:
-        - cli_virtual-cluster_gateway_v2_7
+      - cli_virtual-cluster_gateway_v2_7
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Get a virtual cluster
 
       operationId: Get a virtual cluster
       parameters:
-        - name: vCluster
-          in: path
-          description: The name of the virtual cluster
-          required: true
-          schema:
-            type: string
+      - name: vCluster
+        in: path
+        description: The name of the virtual cluster
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: ''
@@ -628,8 +628,8 @@ paths:
                 spec:
                   aclEnabled: false
                   superUsers:
-                    - username1
-                    - username2
+                  - username1
+                  - username2
         '401':
           description: The given credentials are not valid
           content:
@@ -655,31 +655,31 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     delete:
       tags:
-        - cli_virtual-cluster_gateway_v2_7
+      - cli_virtual-cluster_gateway_v2_7
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete a virtual cluster
 
       operationId: Delete a virtual cluster
       parameters:
-        - name: vCluster
-          in: path
-          description: The name of the virtual cluster
-          required: true
-          schema:
-            type: string
+      - name: vCluster
+        in: path
+        description: The name of the virtual cluster
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: ''
@@ -726,46 +726,46 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/virtual-cluster/vcluster1' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/alias-topic:
     get:
       tags:
-        - cli_alias-topic_gateway_v2_8
+      - cli_alias-topic_gateway_v2_8
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the alias topics of a virtual cluster
 
       operationId: List the alias topics
       parameters:
-        - name: vcluster
-          in: query
-          description: The virtual cluster filter
-          required: false
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: The name filter
-          required: false
-          schema:
-            type: string
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: vcluster
+        in: query
+        description: The virtual cluster filter
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: The name filter
+        required: false
+        schema:
+          type: string
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -776,13 +776,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/AliasTopic'
               example:
-                - kind: AliasTopic
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: name1
-                    vCluster: vCluster1
-                  spec:
-                    physicalName: physicalName1
+              - kind: AliasTopic
+                apiVersion: gateway/v2
+                metadata:
+                  name: name1
+                  vCluster: vCluster1
+                spec:
+                  physicalName: physicalName1
         '400':
           description: The request is not valid
           content:
@@ -816,33 +816,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/alias-topic?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/alias-topic?showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_alias-topic_gateway_v2_8
+      - cli_alias-topic_gateway_v2_8
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert an alias topic in a virtual cluster
 
       operationId: Upsert an alias topic
       parameters:
-        - name: dryMode
-          in: query
-          description: Whether to simulate the operation or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: dryMode
+        in: query
+        description: Whether to simulate the operation or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       requestBody:
         content:
           application/json:
@@ -873,7 +873,7 @@ paths:
                     vCluster: vCluster1
                   spec:
                     physicalName: physicalName1
-                upsertResult: Updated
+                upsertResult: UPDATED
         '400':
           description: The request is not valid
           content:
@@ -907,33 +907,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/alias-topic?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "AliasTopic",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "name1",
-                "vCluster" : "vCluster1"
-              },
-              "spec" : {
-                "physicalName" : "physicalName1"
-              }
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/alias-topic?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "AliasTopic",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "name1",
+              "vCluster" : "vCluster1"
+            },
+            "spec" : {
+              "physicalName" : "physicalName1"
+            }
+          }'
     delete:
       tags:
-        - cli_alias-topic_gateway_v2_8
+      - cli_alias-topic_gateway_v2_8
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete an alias topic in a virtual cluster
 
       operationId: Delete an alias topic
@@ -979,51 +979,51 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/alias-topic' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "name" : "name1",
-              "vCluster" : "vCluster1"
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/alias-topic' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "name" : "name1",
+            "vCluster" : "vCluster1"
+          }'
   /gateway/v2/concentrated-topic:
     get:
       tags:
-        - cli_concentrated-topic_gateway_v2_0
+      - cli_concentrated-topic_gateway_v2_0
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the concentrated topics of a vcluster
 
       operationId: List the concentrated topics
       parameters:
-        - name: vcluster
-          in: query
-          description: The virtual cluster filter
-          required: false
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: The name filter
-          required: false
-          schema:
-            type: string
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: vcluster
+        in: query
+        description: The virtual cluster filter
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: The name filter
+        required: false
+        schema:
+          type: string
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -1034,13 +1034,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/ConcentratedTopic'
               example:
-                - kind: ConcentratedTopic
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: name1
-                    vCluster: vCluster1
-                  spec:
-                    physicalName: physicalName1
+              - kind: ConcentratedTopic
+                apiVersion: gateway/v2
+                metadata:
+                  name: name1
+                  vCluster: vCluster1
+                spec:
+                  physicalName: physicalName1
         '400':
           description: The request is not valid
           content:
@@ -1074,46 +1074,46 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/concentrated-topic?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/concentrated-topic?showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/concentration-rule:
     get:
       tags:
-        - cli_concentration-rule_gateway_v2_9
+      - cli_concentration-rule_gateway_v2_9
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the concentration rules of a vcluster
 
       operationId: List the concentration rules
       parameters:
-        - name: vcluster
-          in: query
-          description: The virtual cluster filter
-          required: false
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: The name filter
-          required: false
-          schema:
-            type: string
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: vcluster
+        in: query
+        description: The virtual cluster filter
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: The name filter
+        required: false
+        schema:
+          type: string
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -1124,18 +1124,19 @@ paths:
                 items:
                   $ref: '#/components/schemas/ConcentrationRule'
               example:
-                - kind: ConcentrationRule
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: concentrationRule1
-                    vCluster: vCluster1
-                  spec:
-                    pattern: topic.*
-                    physicalTopics:
-                      delete: topic
-                      compact: compact_topic
-                      deleteCompact: compact_delete_topic
-                    autoManaged: false
+              - kind: ConcentrationRule
+                apiVersion: gateway/v2
+                metadata:
+                  name: concentrationRule1
+                  vCluster: vCluster1
+                spec:
+                  pattern: topic.*
+                  physicalTopics:
+                    delete: topic
+                    compact: compact_topic
+                    deleteCompact: compact_delete_topic
+                  autoManaged: false
+                  offsetCorrectness: false
         '400':
           description: The request is not valid
           content:
@@ -1169,33 +1170,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/concentration-rule?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/concentration-rule?showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_concentration-rule_gateway_v2_9
+      - cli_concentration-rule_gateway_v2_9
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert a concentration rule in a vcluster
 
       operationId: Upsert a concentration rule
       parameters:
-        - name: dryMode
-          in: query
-          description: Whether to simulate the operation or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: dryMode
+        in: query
+        description: Whether to simulate the operation or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       requestBody:
         content:
           application/json:
@@ -1214,6 +1215,7 @@ paths:
                   compact: compact_topic
                   deleteCompact: compact_delete_topic
                 autoManaged: false
+                offsetCorrectness: false
         required: true
       responses:
         '200':
@@ -1236,7 +1238,8 @@ paths:
                       compact: compact_topic
                       deleteCompact: compact_delete_topic
                     autoManaged: false
-                upsertResult: Created
+                    offsetCorrectness: false
+                upsertResult: CREATED
         '400':
           description: The request is not valid
           content:
@@ -1280,39 +1283,40 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/concentration-rule?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "ConcentrationRule",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "concentrationRule1",
-                "vCluster" : "vCluster1"
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/concentration-rule?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "ConcentrationRule",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "concentrationRule1",
+              "vCluster" : "vCluster1"
+            },
+            "spec" : {
+              "pattern" : "topic.*",
+              "physicalTopics" : {
+                "delete" : "topic",
+                "compact" : "compact_topic",
+                "deleteCompact" : "compact_delete_topic"
               },
-              "spec" : {
-                "pattern" : "topic.*",
-                "physicalTopics" : {
-                  "delete" : "topic",
-                  "compact" : "compact_topic",
-                  "deleteCompact" : "compact_delete_topic"
-                },
-                "autoManaged" : false
-              }
-            }'
+              "autoManaged" : false,
+              "offsetCorrectness" : false
+            }
+          }'
     delete:
       tags:
-        - cli_concentration-rule_gateway_v2_9
+      - cli_concentration-rule_gateway_v2_9
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete a concentration rule in a vcluster
 
       operationId: Delete a concentration rule
@@ -1361,61 +1365,61 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/concentration-rule' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "name" : "concentrationRule1",
-              "vCluster" : "vCluster1"
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/concentration-rule' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "name" : "concentrationRule1",
+            "vCluster" : "vCluster1"
+          }'
   /gateway/v2/interceptor:
     get:
       tags:
-        - cli_interceptor_gateway_v2_12
+      - cli_interceptor_gateway_v2_12
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the interceptors
 
       operationId: List the interceptors
       parameters:
-        - name: name
-          in: query
-          description: Filter by name
-          required: false
-          schema:
-            type: string
-        - name: global
-          in: query
-          description: Keep only global interceptors
-          required: false
-          schema:
-            type: boolean
-        - name: vcluster
-          in: query
-          description: Filter by virtual cluster
-          required: false
-          schema:
-            type: string
-        - name: group
-          in: query
-          description: Filter by group
-          required: false
-          schema:
-            type: string
-        - name: username
-          in: query
-          description: Filter by service account
-          required: false
-          schema:
-            type: string
+      - name: name
+        in: query
+        description: Filter by name
+        required: false
+        schema:
+          type: string
+      - name: global
+        in: query
+        description: Keep only global interceptors
+        required: false
+        schema:
+          type: boolean
+      - name: vcluster
+        in: query
+        description: Filter by virtual cluster
+        required: false
+        schema:
+          type: string
+      - name: group
+        in: query
+        description: Filter by group
+        required: false
+        schema:
+          type: string
+      - name: username
+        in: query
+        description: Filter by service account
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: ''
@@ -1427,20 +1431,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/Interceptor'
               example:
-                - kind: Interceptor
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: yellow_cars_filter
-                    scope:
-                      vCluster: vCluster1
-                  spec:
-                    comment: Filter yellow cars
-                    pluginClass: io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin
-                    priority: 1
-                    config:
-                      virtualTopic: yellow_cars
-                      statement: SELECT '$.type' as type, '$.price' as price FROM cars
-                        WHERE '$.color' = 'yellow'
+              - kind: Interceptor
+                apiVersion: gateway/v2
+                metadata:
+                  name: yellow_cars_filter
+                  scope:
+                    vCluster: vCluster1
+                spec:
+                  comment: Filter yellow cars
+                  pluginClass: io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin
+                  priority: 1
+                  config:
+                    virtualTopic: yellow_cars
+                    statement: SELECT '$.type' as type, '$.price' as price FROM cars
+                      WHERE '$.color' = 'yellow'
         '400':
           description: The request is not valid
           content:
@@ -1466,33 +1470,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/interceptor?name=interceptor-name&global=true&vcluster=passthrough&group=group1&username=user1' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/interceptor?name=interceptor-name&global=true&vcluster=passthrough&group=group1&username=user1' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_interceptor_gateway_v2_12
+      - cli_interceptor_gateway_v2_12
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert an interceptor
 
       operationId: Upsert an interceptor
       parameters:
-        - name: dryMode
-          in: query
-          description: Whether to simulate the operation or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: dryMode
+        in: query
+        description: Whether to simulate the operation or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       requestBody:
         content:
           application/json:
@@ -1537,7 +1541,7 @@ paths:
                       virtualTopic: yellow_cars
                       statement: SELECT '$.type' as type, '$.price' as price FROM
                         cars WHERE '$.color' = 'yellow'
-                upsertResult: Created
+                upsertResult: CREATED
         '400':
           description: The request is not valid
           content:
@@ -1573,53 +1577,53 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/interceptor?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "Interceptor",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "yellow_cars_filter",
-                "scope" : {
-                  "vCluster" : "vCluster1",
-                  "group" : null,
-                  "username" : null
-                }
-              },
-              "spec" : {
-                "comment" : "Filter yellow cars",
-                "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
-                "priority" : 1,
-                "config" : {
-                  "virtualTopic" : "yellow_cars",
-                  "statement" : "SELECT \'$.type\' as type, \'$.price\' as price FROM cars WHERE \'$.color\' = \'yellow\'"
-                }
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/interceptor?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "Interceptor",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "yellow_cars_filter",
+              "scope" : {
+                "vCluster" : "vCluster1",
+                "group" : null,
+                "username" : null
               }
-            }'
+            },
+            "spec" : {
+              "comment" : "Filter yellow cars",
+              "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+              "priority" : 1,
+              "config" : {
+                "virtualTopic" : "yellow_cars",
+                "statement" : "SELECT \'$.type\' as type, \'$.price\' as price FROM cars WHERE \'$.color\' = \'yellow\'"
+              }
+            }
+          }'
   /gateway/v2/interceptor/{name}:
     delete:
       tags:
-        - cli_interceptor_gateway_v2_12
+      - cli_interceptor_gateway_v2_12
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete an interceptor
 
       operationId: Delete an interceptor
       parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -1662,28 +1666,28 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/interceptor/yellow_cars_filter' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "vCluster" : "vCluster1",
-              "group" : null,
-              "username" : null
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/interceptor/yellow_cars_filter' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "vCluster" : "vCluster1",
+            "group" : null,
+            "username" : null
+          }'
   /gateway/v2/interceptor/resolve:
     post:
       tags:
-        - cli_interceptor_gateway_v2_12
+      - cli_interceptor_gateway_v2_12
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         A utility endpoint to resolve the interceptors for a given virtual cluster, groups and username.
         Helps to understand which interceptors will be applied for a given request.
 
@@ -1705,20 +1709,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/Interceptor'
               example:
-                - kind: Interceptor
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: yellow_cars_filter
-                    scope:
-                      vCluster: vCluster1
-                  spec:
-                    comment: Filter yellow cars
-                    pluginClass: io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin
-                    priority: 1
-                    config:
-                      virtualTopic: yellow_cars
-                      statement: SELECT '$.type' as type, '$.price' as price FROM cars
-                        WHERE '$.color' = 'yellow'
+              - kind: Interceptor
+                apiVersion: gateway/v2
+                metadata:
+                  name: yellow_cars_filter
+                  scope:
+                    vCluster: vCluster1
+                spec:
+                  comment: Filter yellow cars
+                  pluginClass: io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin
+                  priority: 1
+                  config:
+                    virtualTopic: yellow_cars
+                    statement: SELECT '$.type' as type, '$.price' as price FROM cars
+                      WHERE '$.color' = 'yellow'
         '400':
           description: The request is not valid
           content:
@@ -1744,31 +1748,31 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request POST \
-              --url 'http://localhost:8888/gateway/v2/interceptor/resolve' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "vCluster" : "passthrough",
-              "groups" : [
-                "group1",
-                "group2"
-              ],
-              "username" : "user1"
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request POST \
+            --url 'http://localhost:8888/gateway/v2/interceptor/resolve' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "vCluster" : "passthrough",
+            "groups" : [
+              "group1",
+              "group2"
+            ],
+            "username" : "user1"
+          }'
   /gateway/v2/plugin:
     get:
       tags:
-        - plugin
+      - plugin
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the available plugins of the gateway
 
       operationId: List the Plugins of the Gateway
@@ -1783,56 +1787,56 @@ paths:
                 items:
                   $ref: '#/components/schemas/Plugin'
               example:
-                - plugin: io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin
-                  pluginId: io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin
-                  readme: |2+
-                  
-                    ---
-                    version: ${project.version}
-                    title: Simulate slow producers and consumers
-                    description: Validate your application behaves correctly when there are delays in responses from the Kafka cluster.
-                    parent: console
-                    license: enterprise
-                    ---
-                  
-                    ## Introduction
-                  
-                    This interceptor slows responses from the brokers.
-                  
-                    It will operate only on a set of topics rather than all traffic.
-                  
-                    This interceptor only works on Produce requests and Fetch requests.
-                  
-                    ## Configuration
-                  
-                    | key           | type    | default | description                                                     |
-                    |:--------------|:--------|:--------|:----------------------------------------------------------------|
-                    | topic         | String  | `.*`    | Topics that match this regex will have the interceptor applied. |
-                    | rateInPercent | int     |         | The percentage of requests that will apply this interceptor     |
-                    | minLatencyMs  | int     |         | Minimum for the random response latency in milliseconds         |
-                    | maxLatencyMs  | int     |         | Maximum for the random response latency in milliseconds         |
-                  
-                    ## Example
-                  
-                    ```json
-                    {
-                      "name": "mySimulateSlowProducersConsumersInterceptor",
-                      "pluginClass": "io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin",
-                      "priority": 100,
-                      "config": {
-                        "rateInPercent": 100,
-                        "minLatencyMs": 50,
-                        "maxLatencyMs": 1200
-                      }
-                    }
-                    ```
+              - plugin: io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin
+                pluginId: io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin
+                readme: |2+
 
-                  parent: Console
+                  ---
+                  version: ${project.version}
+                  title: Simulate slow producers and consumers
+                  description: Validate your application behaves correctly when there are delays in responses from the Kafka cluster.
+                  parent: console
                   license: enterprise
-                  description: Validate your application behaves correctly when broker
-                    errors occur.
-                  title: Broker errors
-                  version: 3.0.1
+                  ---
+
+                  ## Introduction
+
+                  This interceptor slows responses from the brokers.
+
+                  It will operate only on a set of topics rather than all traffic.
+
+                  This interceptor only works on Produce requests and Fetch requests.
+
+                  ## Configuration
+
+                  | key           | type    | default | description                                                     |
+                  |:--------------|:--------|:--------|:----------------------------------------------------------------|
+                  | topic         | String  | `.*`    | Topics that match this regex will have the interceptor applied. |
+                  | rateInPercent | int     |         | The percentage of requests that will apply this interceptor     |
+                  | minLatencyMs  | int     |         | Minimum for the random response latency in milliseconds         |
+                  | maxLatencyMs  | int     |         | Maximum for the random response latency in milliseconds         |
+
+                  ## Example
+
+                  ```json
+                  {
+                    "name": "mySimulateSlowProducersConsumersInterceptor",
+                    "pluginClass": "io.conduktor.gateway.interceptor.chaos.SimulateSlowProducersConsumersPlugin",
+                    "priority": 100,
+                    "config": {
+                      "rateInPercent": 100,
+                      "minLatencyMs": 50,
+                      "maxLatencyMs": 1200
+                    }
+                  }
+                  ```
+
+                parent: Console
+                license: enterprise
+                description: Validate your application behaves correctly when broker
+                  errors occur.
+                title: Broker errors
+                version: 3.0.1
         '401':
           description: The given credentials are not valid
           content:
@@ -1850,53 +1854,53 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/plugin' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/plugin' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
   /gateway/v2/service-account:
     get:
       tags:
-        - cli_gateway-service-account_gateway_v2_11
+      - cli_gateway-service-account_gateway_v2_11
       description: |2+
-      
-      
+
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the service accounts
 
       operationId: List the service accounts
       parameters:
-        - name: vcluster
-          in: query
-          description: Filter by virtual cluster
-          required: false
-          schema:
-            type: string
-        - name: name
-          in: query
-          description: Filter by name
-          required: false
-          schema:
-            type: string
-        - name: type
-          in: query
-          description: Filter by type (External or Local)
-          required: false
-          schema:
-            type: string
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: vcluster
+        in: query
+        description: Filter by virtual cluster
+        required: false
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Filter by name
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter by type (External or Local)
+        required: false
+        schema:
+          type: string
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -1907,22 +1911,22 @@ paths:
                 items:
                   $ref: '#/components/schemas/GatewayServiceAccount'
               example:
-                - kind: GatewayServiceAccount
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: user1
-                    vCluster: vcluster1
-                  spec:
-                    type: External
-                    externalNames:
-                      - externalName
-                - kind: GatewayServiceAccount
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: user1
-                    vCluster: vcluster1
-                  spec:
-                    type: Local
+              - kind: GatewayServiceAccount
+                apiVersion: gateway/v2
+                metadata:
+                  name: user1
+                  vCluster: vcluster1
+                spec:
+                  type: EXTERNAL
+                  externalNames:
+                  - externalName
+              - kind: GatewayServiceAccount
+                apiVersion: gateway/v2
+                metadata:
+                  name: user1
+                  vCluster: vcluster1
+                spec:
+                  type: LOCAL
         '400':
           description: The request is not valid
           content:
@@ -1948,34 +1952,34 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/service-account?vcluster=vCluster1&name=user1&type=External&showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/service-account?vcluster=vCluster1&name=user1&type=External&showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_gateway-service-account_gateway_v2_11
+      - cli_gateway-service-account_gateway_v2_11
       description: |2+
-      
-      
+
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert a service account
 
       operationId: Upsert a service account
       parameters:
-        - name: dryMode
-          in: query
-          description: Whether to simulate the operation or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: dryMode
+        in: query
+        description: Whether to simulate the operation or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       requestBody:
         content:
           application/json:
@@ -1988,9 +1992,9 @@ paths:
                 name: user1
                 vCluster: vcluster1
               spec:
-                type: External
+                type: EXTERNAL
                 externalNames:
-                  - externalName
+                - externalName
         required: true
       responses:
         '200':
@@ -2007,10 +2011,10 @@ paths:
                     name: user1
                     vCluster: vcluster1
                   spec:
-                    type: External
+                    type: EXTERNAL
                     externalNames:
-                      - externalName
-                upsertResult: Created
+                    - externalName
+                upsertResult: CREATED
         '400':
           description: The request is not valid
           content:
@@ -2054,37 +2058,37 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/service-account?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "GatewayServiceAccount",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "user1",
-                "vCluster" : "vcluster1"
-              },
-              "spec" : {
-                "type" : "External",
-                "externalNames" : [
-                  "externalName"
-                ]
-              }
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/service-account?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "GatewayServiceAccount",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "user1",
+              "vCluster" : "vcluster1"
+            },
+            "spec" : {
+              "type" : "EXTERNAL",
+              "externalNames" : [
+                "externalName"
+              ]
+            }
+          }'
     delete:
       tags:
-        - cli_gateway-service-account_gateway_v2_11
+      - cli_gateway-service-account_gateway_v2_11
       description: |2+
-      
-      
+
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete a service account
 
       operationId: Delete a service account
@@ -2136,38 +2140,38 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/service-account' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "name" : "user1"
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/service-account' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "name" : "user1"
+          }'
   /gateway/v2/group:
     get:
       tags:
-        - cli_gateway-group_gateway_v2_10
+      - cli_gateway-group_gateway_v2_10
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         List the groups
 
       operationId: List the groups
       parameters:
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -2178,21 +2182,21 @@ paths:
                 items:
                   $ref: '#/components/schemas/GatewayGroup'
               example:
-                - kind: GatewayGroup
-                  apiVersion: gateway/v2
-                  metadata:
-                    name: group1
-                  spec:
-                    members:
-                      - vCluster: vCluster1
-                        name: serviceAccount1
-                      - vCluster: vCluster2
-                        name: serviceAccount2
-                      - vCluster: vCluster3
-                        name: serviceAccount3
-                    externalGroups:
-                      - GROUP_READER
-                      - GROUP_WRITER
+              - kind: GatewayGroup
+                apiVersion: gateway/v2
+                metadata:
+                  name: group1
+                spec:
+                  members:
+                  - vCluster: vCluster1
+                    name: serviceAccount1
+                  - vCluster: vCluster2
+                    name: serviceAccount2
+                  - vCluster: vCluster3
+                    name: serviceAccount3
+                  externalGroups:
+                  - GROUP_READER
+                  - GROUP_WRITER
         '400':
           description: 'Invalid value for: query parameter showDefaults'
           content:
@@ -2216,33 +2220,33 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/group?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/group?showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     put:
       tags:
-        - cli_gateway-group_gateway_v2_10
+      - cli_gateway-group_gateway_v2_10
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Upsert a group
 
       operationId: Upsert a group
       parameters:
-        - name: dryMode
-          in: query
-          description: Whether to simulate the operation or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: dryMode
+        in: query
+        description: Whether to simulate the operation or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       requestBody:
         content:
           application/json:
@@ -2255,15 +2259,15 @@ paths:
                 name: group1
               spec:
                 members:
-                  - vCluster: vCluster1
-                    name: serviceAccount1
-                  - vCluster: vCluster2
-                    name: serviceAccount2
-                  - vCluster: vCluster3
-                    name: serviceAccount3
+                - vCluster: vCluster1
+                  name: serviceAccount1
+                - vCluster: vCluster2
+                  name: serviceAccount2
+                - vCluster: vCluster3
+                  name: serviceAccount3
                 externalGroups:
-                  - GROUP_READER
-                  - GROUP_WRITER
+                - GROUP_READER
+                - GROUP_WRITER
         required: true
       responses:
         '200':
@@ -2280,16 +2284,16 @@ paths:
                     name: group1
                   spec:
                     members:
-                      - vCluster: vCluster1
-                        name: serviceAccount1
-                      - vCluster: vCluster2
-                        name: serviceAccount2
-                      - vCluster: vCluster3
-                        name: serviceAccount3
+                    - vCluster: vCluster1
+                      name: serviceAccount1
+                    - vCluster: vCluster2
+                      name: serviceAccount2
+                    - vCluster: vCluster3
+                      name: serviceAccount3
                     externalGroups:
-                      - GROUP_READER
-                      - GROUP_WRITER
-                upsertResult: Updated
+                    - GROUP_READER
+                    - GROUP_WRITER
+                upsertResult: UPDATED
         '400':
           description: The request is not valid
           content:
@@ -2323,67 +2327,67 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request PUT \
-              --url 'http://localhost:8888/gateway/v2/group?dryMode=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{
-              "kind" : "GatewayGroup",
-              "apiVersion" : "gateway/v2",
-              "metadata" : {
-                "name" : "group1"
-              },
-              "spec" : {
-                "members" : [
-                  {
-                    "vCluster" : "vCluster1",
-                    "name" : "serviceAccount1"
-                  },
-                  {
-                    "vCluster" : "vCluster2",
-                    "name" : "serviceAccount2"
-                  },
-                  {
-                    "vCluster" : "vCluster3",
-                    "name" : "serviceAccount3"
-                  }
-                ],
-                "externalGroups" : [
-                  "GROUP_READER",
-                  "GROUP_WRITER"
-                ]
-              }
-            }'
+      - lang: Shell
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8888/gateway/v2/group?dryMode=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "kind" : "GatewayGroup",
+            "apiVersion" : "gateway/v2",
+            "metadata" : {
+              "name" : "group1"
+            },
+            "spec" : {
+              "members" : [
+                {
+                  "vCluster" : "vCluster1",
+                  "name" : "serviceAccount1"
+                },
+                {
+                  "vCluster" : "vCluster2",
+                  "name" : "serviceAccount2"
+                },
+                {
+                  "vCluster" : "vCluster3",
+                  "name" : "serviceAccount3"
+                }
+              ],
+              "externalGroups" : [
+                "GROUP_READER",
+                "GROUP_WRITER"
+              ]
+            }
+          }'
   /gateway/v2/group/{name}:
     get:
       tags:
-        - cli_gateway-group_gateway_v2_10
+      - cli_gateway-group_gateway_v2_10
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Get a group
 
       operationId: Get a group
       parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: showDefaults
-          in: query
-          description: Whether to show default values or not
-          required: false
-          schema:
-            default: false
-            type: boolean
-          example: true
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: showDefaults
+        in: query
+        description: Whether to show default values or not
+        required: false
+        schema:
+          default: false
+          type: boolean
+        example: true
       responses:
         '200':
           description: ''
@@ -2398,15 +2402,15 @@ paths:
                   name: group1
                 spec:
                   members:
-                    - vCluster: vCluster1
-                      name: serviceAccount1
-                    - vCluster: vCluster2
-                      name: serviceAccount2
-                    - vCluster: vCluster3
-                      name: serviceAccount3
+                  - vCluster: vCluster1
+                    name: serviceAccount1
+                  - vCluster: vCluster2
+                    name: serviceAccount2
+                  - vCluster: vCluster3
+                    name: serviceAccount3
                   externalGroups:
-                    - GROUP_READER
-                    - GROUP_WRITER
+                  - GROUP_READER
+                  - GROUP_WRITER
         '400':
           description: 'Invalid value for: query parameter showDefaults'
           content:
@@ -2438,30 +2442,30 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request GET \
-              --url 'http://localhost:8888/gateway/v2/group/group1?showDefaults=false' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8888/gateway/v2/group/group1?showDefaults=false' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
     delete:
       tags:
-        - cli_gateway-group_gateway_v2_10
+      - cli_gateway-group_gateway_v2_10
       description: |2+
-      
+
         [![Beta](https://img.shields.io/badge/Lifecycle-Beta-orange)](#tag/Versioning)
-      
+
         Delete a group
 
       operationId: Delete a group
       parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '204':
           description: ''
@@ -2498,24 +2502,24 @@ paths:
               example:
                 title: An unexpected error occurred in the server
       security:
-        - httpAuth: [ ]
+      - httpAuth: []
       x-codeSamples:
-        - lang: Shell
-          source: |-
-            curl \
-              --request DELETE \
-              --url 'http://localhost:8888/gateway/v2/group/group1' \
-              --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
+      - lang: Shell
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8888/gateway/v2/group/group1' \
+            --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y'
 components:
   schemas:
     AliasTopic:
       title: AliasTopic
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the alias topic
@@ -2531,7 +2535,7 @@ components:
       title: AliasTopicId
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the alias topic
@@ -2544,7 +2548,7 @@ components:
       description: The metadata of the alias topic
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the alias topic
@@ -2559,7 +2563,7 @@ components:
       description: The specification of the alias topic
       type: object
       required:
-        - physicalName
+      - physicalName
       properties:
         physicalName:
           description: The physical name of the alias topic
@@ -2569,8 +2573,8 @@ components:
       title: ApplyResult_AliasTopic
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/AliasTopic'
@@ -2581,8 +2585,8 @@ components:
       title: ApplyResult_ConcentrationRule
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/ConcentrationRule'
@@ -2593,8 +2597,8 @@ components:
       title: ApplyResult_GatewayGroup
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/GatewayGroup'
@@ -2605,8 +2609,8 @@ components:
       title: ApplyResult_GatewayServiceAccount
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/GatewayServiceAccount'
@@ -2617,8 +2621,8 @@ components:
       title: ApplyResult_Interceptor
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/Interceptor'
@@ -2629,8 +2633,8 @@ components:
       title: ApplyResult_VirtualCluster
       type: object
       required:
-        - resource
-        - upsertResult
+      - resource
+      - upsertResult
       properties:
         resource:
           $ref: '#/components/schemas/VirtualCluster'
@@ -2641,7 +2645,7 @@ components:
       title: BadRequest
       type: object
       required:
-        - title
+      - title
       properties:
         title:
           type: string
@@ -2653,10 +2657,10 @@ components:
       title: ConcentratedTopic
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the concentrated topic
@@ -2673,7 +2677,7 @@ components:
       description: The metadata of the concentrated topic
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the concentrated topic
@@ -2687,7 +2691,7 @@ components:
       description: The specification of the concentrated topic
       type: object
       required:
-        - physicalName
+      - physicalName
       properties:
         physicalName:
           description: The physical name of the concentrated topic
@@ -2696,10 +2700,10 @@ components:
       title: ConcentrationRule
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the concentration rule
@@ -2715,7 +2719,7 @@ components:
       title: ConcentrationRuleId
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the concentration rule (identifier in a vCluster)
@@ -2729,7 +2733,7 @@ components:
       description: The metadata of the concentration rule
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the concentration rule (identifier in a vCluster)
@@ -2744,8 +2748,8 @@ components:
       description: The specification of the concentration rule
       type: object
       required:
-        - pattern
-        - physicalTopics
+      - pattern
+      - physicalTopics
       properties:
         pattern:
           description: The pattern of the concentration rule
@@ -2755,11 +2759,17 @@ components:
         autoManaged:
           description: Whether the concentration rule is auto managed
           type: boolean
+        offsetCorrectness:
+          description: |2
+
+            Set the offset management on/off for the logical topics created with this rule (default to false).
+            Setting it on can have some impacts on the performances and the memory usage.
+          type: boolean
     Conflict:
       title: Conflict
       type: object
       required:
-        - title
+      - title
       properties:
         title:
           type: string
@@ -2774,10 +2784,10 @@ components:
       title: External
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the service account
@@ -2794,7 +2804,7 @@ components:
       description: Metadata of the service account
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the service account (identifier)
@@ -2802,9 +2812,9 @@ components:
           format: ^[a-zA-Z0-9_-]{3,64}$
         vCluster:
           description: |2
-          
+
             The name of the virtual cluster the service account belongs to.
-          
+
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
           format: ^[a-zA-Z0-9_-]+$
@@ -2815,7 +2825,7 @@ components:
       properties:
         externalNames:
           description: |2
-          
+
              List of the external names of the service account.
              Used to keep a fixed reference of the service account in interceptors or groups if the values of the external user DB happen to change
              (ex: OIDC principal, key in delegated auth mode with Confluent etc...)
@@ -2827,10 +2837,10 @@ components:
       title: GatewayGroup
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the group
@@ -2845,19 +2855,19 @@ components:
     GatewayServiceAccount:
       title: GatewayServiceAccount
       oneOf:
-        - $ref: '#/components/schemas/External'
-        - $ref: '#/components/schemas/Local'
+      - $ref: '#/components/schemas/External'
+      - $ref: '#/components/schemas/Local'
     GatewayServiceAccountId:
       title: GatewayServiceAccountId
       type: object
       required:
-        - name
+      - name
       properties:
         vCluster:
           description: |2
-          
+
             The name of the virtual cluster the service account belongs to.
-          
+
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
         name:
@@ -2868,7 +2878,7 @@ components:
       description: The metadata of the group
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the group
@@ -2895,10 +2905,10 @@ components:
       title: Interceptor
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the interceptor
@@ -2915,7 +2925,7 @@ components:
       description: Metadata of the interceptor
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the interceptor
@@ -2923,7 +2933,7 @@ components:
         scope:
           $ref: '#/components/schemas/InterceptorScope'
           description: |2
-          
+
             The scope of the interceptor.
             It can be applied to a specific virtual cluster or group or username.
             If none of them is set, it will be applied Globally to the gateway.
@@ -2960,9 +2970,9 @@ components:
       description: Spec of the interceptor
       type: object
       required:
-        - pluginClass
-        - priority
-        - config
+      - pluginClass
+      - priority
+      - config
       properties:
         comment:
           description: An optional comment for the interceptor
@@ -2980,10 +2990,10 @@ components:
       title: Local
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the service account
@@ -3000,7 +3010,7 @@ components:
       description: Metadata of the service account
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the service account (identifier)
@@ -3008,9 +3018,9 @@ components:
           format: ^[a-zA-Z0-9_-]{3,64}$
         vCluster:
           description: |2
-          
+
             The name of the virtual cluster the service account belongs to.
-          
+
             If not provided, the service account will be created in the default `passthrough` virtual cluster.
           type: string
           format: ^[a-zA-Z0-9_-]+$
@@ -3022,7 +3032,7 @@ components:
       title: Map_Json
       description: The configuration of the interceptor
       type: object
-      additionalProperties: { }
+      additionalProperties: {}
     NotChanged:
       title: NotChanged
       type: object
@@ -3030,7 +3040,7 @@ components:
       title: NotFound
       type: object
       required:
-        - title
+      - title
       properties:
         title:
           type: string
@@ -3043,25 +3053,25 @@ components:
       description: The physical topics backing the concentrated logical topics
       type: object
       required:
-        - delete
+      - delete
       properties:
         delete:
           description: |2
-          
+
             The name of the physical topic to store the data of the concentrated topics created with a 'delete' policy.
             The topic must exist in the physical kafka cluster with a 'delete' cleanup.policy (except if you use the autoManaged mode)
           type: string
           format: ^[a-zA-Z0-9._-]+$
         compact:
           description: |2
-          
+
             The name of the physical topic to store the data of the concentrated topics created with a 'compact' policy.
             If specified, the topic must exist in the physical kafka cluster with a 'compact' cleanup.policy (except if you use the autoManaged mode)
           type: string
           format: ^[a-zA-Z0-9._-]+$
         deleteCompact:
           description: |2
-          
+
             The name of the physical topic to store the data of the concentrated topics created with a 'delete,compact' policy.
             If specified, the topic must exist in the physical kafka cluster with a 'delete,compact' cleanup.policy (except if you use the autoManaged mode)
           type: string
@@ -3070,9 +3080,9 @@ components:
       title: Plugin
       type: object
       required:
-        - plugin
-        - pluginId
-        - readme
+      - plugin
+      - pluginId
+      - readme
       properties:
         plugin:
           description: The name of the plugin
@@ -3102,7 +3112,7 @@ components:
       title: ServerError
       type: object
       required:
-        - title
+      - title
       properties:
         title:
           type: string
@@ -3114,8 +3124,8 @@ components:
       title: TokenRequest
       type: object
       required:
-        - username
-        - lifeTimeSeconds
+      - username
+      - lifeTimeSeconds
       properties:
         vCluster:
           description: 'The name of the virtual cluster to create the token for. "passthrough
@@ -3133,7 +3143,7 @@ components:
       title: TokenResponse
       type: object
       required:
-        - token
+      - token
       properties:
         token:
           description: The token created for the given username on the given vcluster.
@@ -3142,7 +3152,7 @@ components:
       title: Unauthorized
       type: object
       required:
-        - title
+      - title
       properties:
         title:
           type: string
@@ -3157,17 +3167,17 @@ components:
       title: UpsertResult
       description: The result of the upsert operation (created, updated, not changed)
       oneOf:
-        - $ref: '#/components/schemas/Created'
-        - $ref: '#/components/schemas/NotChanged'
-        - $ref: '#/components/schemas/Updated'
+      - $ref: '#/components/schemas/Created'
+      - $ref: '#/components/schemas/NotChanged'
+      - $ref: '#/components/schemas/Updated'
     VirtualCluster:
       title: VirtualCluster
       type: object
       required:
-        - kind
-        - apiVersion
-        - metadata
-        - spec
+      - kind
+      - apiVersion
+      - metadata
+      - spec
       properties:
         kind:
           description: The kind of the virtual cluster
@@ -3184,7 +3194,7 @@ components:
       description: Metadata of the virtual cluster
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           description: The name of the virtual cluster
@@ -3209,22 +3219,22 @@ components:
       type: http
       scheme: basic
 x-tagGroups:
-  - name: 🐺 Conduktor Gateway API
-    tags:
-      - Introduction
-      - Authentication
-      - Kinds
-      - Api Groups
-      - Versioning
-      - Conventions
-  - name: 🌉 gateway/v2
-    tags:
-      - cli_virtual-cluster_gateway_v2_7
-      - cli_alias-topic_gateway_v2_8
-      - cli_concentrated-topic_gateway_v2_0
-      - cli_concentration-rule_gateway_v2_9
-      - cli_interceptor_gateway_v2_12
-      - plugin
-      - cli_gateway-service-account_gateway_v2_11
-      - cli_gateway-group_gateway_v2_10
-      - token
+- name: 🐺 Conduktor Gateway API
+  tags:
+  - Introduction
+  - Authentication
+  - Kinds
+  - Api Groups
+  - Versioning
+  - Conventions
+- name: 🌉 gateway/v2
+  tags:
+  - cli_virtual-cluster_gateway_v2_7
+  - cli_alias-topic_gateway_v2_8
+  - cli_concentrated-topic_gateway_v2_0
+  - cli_concentration-rule_gateway_v2_9
+  - cli_interceptor_gateway_v2_12
+  - plugin
+  - cli_gateway-service-account_gateway_v2_11
+  - cli_gateway-group_gateway_v2_10
+  - token
