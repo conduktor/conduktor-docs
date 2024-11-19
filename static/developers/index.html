@@ -1,40 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Conduktor Gateway</title>
-  <!-- needed for adaptive design -->
+  <title id="docTitle">Conduktor Documentation</title>
+    <!-- needed for adaptive design -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link
-          href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700"
-          rel="stylesheet"
-  />
-
-  <!--
-  Redoc doesn't change outer page styles
-  -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet" />
+   <!--Redoc doesn't change outer page styles-->
   <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    body { margin: 0; padding: 0; }
+    .product-selector {
+      padding: 10px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      text-align: center;
+    }
+    .product-selector select {
+      padding: 5px;
+      margin: 0 10px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-<!--
-Redoc element with link to your OpenAPI definition
--->
+  <!--Redoc element with link to your OpenAPI definition-->
+<div class="product-selector">
+  <select id="productSelect" onchange="updateDocs()">
+    <option value="gateway">Gateway</option>
+    <option value="console">Console</option>
+  </select>
+  <select id="versionSelect" onchange="updateDocs()" style="display: none">
+    <option value="v2">v2</option>
+    <option value="v1">v1</option>
+  </select>
+</div>
+
+<div id="redoc-container"></div>
 
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const apiVersion = urlParams.get('apiVersion');
-    const specUrl = apiVersion == "v1" ? `./gateway-API.yaml` : './openapi.yaml';
-    document.write(`<redoc spec-url="${specUrl}"></redoc>`);
+  function updateDocs() {
+    const product = document.getElementById('productSelect').value;
+    const versionSelect = document.getElementById('versionSelect');
+    
+    // Dynamically update title
+    document.getElementById('docTitle').textContent = `Conduktor ${product.charAt(0).toUpperCase() + product.slice(1)}`;
+    
+    // Show/hide version selector based on product
+    versionSelect.style.display = product === 'gateway' ? 'inline' : 'none';
+    
+    let specUrl;
+    if (product === 'gateway') {
+      const version = versionSelect.value;
+      specUrl = version === 'v1' ? './gateway-API.yaml' : './openapi.yaml';
+    } else if (product === 'console') {
+      specUrl = './public-api-doc.yaml';
+    }
+
+    // Remove existing Redoc instance
+    const container = document.getElementById('redoc-container');
+    container.innerHTML = '';
+    
+    // Create new Redoc instance
+    const redocElement = document.createElement('redoc');
+    redocElement.setAttribute('spec-url', specUrl);
+    container.appendChild(redocElement);
+    
+    // Initialize Redoc
+    Redoc.init(specUrl, {}, container);
+  }
+
+  // Set initial state based on URL params
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const product = params.get('product');
+    const version = params.get('apiVersion');
+    
+    if (product) {
+      document.getElementById('productSelect').value = product;
+    }
+    if (version) {
+      document.getElementById('versionSelect').value = version;
+    }
+    updateDocs();
+  });
 </script>
 
-<!--
-Link to Redoc JavaScript on CDN for rendering standalone element
--->
 <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 </body>
 </html>
