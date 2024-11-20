@@ -34,11 +34,9 @@ You are not impacted if you perform these actions through the UI.
 :::
 We recognize this change breaches the API contract and have carefully considered its implications. We remain committed to minimizing breaking changes and will continue to do our best to ensure that such changes are rare and well-justified.
 
-As we expand the number of Conduktor-related features, this change enables a cleaner separation between:
+As we expand the number of Conduktor-related features, this separation reduces the risk of conflicts, simplifies resource management, and provides flexibility for future improvements:
 - Labels used for sorting and filtering throughout the product
 - Conduktor-specific annotations used to drive behaviors on the resources
-
-This separation reduces the risk of conflicts, simplifies resource management, and provides flexibility for future improvements.
 
 Topic Resource
 - `metadata.labels.'conduktor.io/description'` → `metadata.description`
