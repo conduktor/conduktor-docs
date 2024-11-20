@@ -611,7 +611,10 @@ spec {
 Creates a Kafka Connect Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 ---
@@ -623,15 +626,42 @@ metadata:
 spec:
   displayName: "Connect 1"
   urls: "http://localhost:8083"
-  ignoreUntrustedCertificate: false
   headers:
     X-PROJECT-HEADER: value
     AnotherHeader: test
+  ignoreUntrustedCertificate: false
   security:
     type: "BasicAuth"
     username: "toto"
     password: "my-secret"
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_kafka_connect_v2" "connect-1" {
+  name    = "connect-1"
+  cluster = "shadow-julien"
+  spec {
+    display_name = "Connect 1"
+    urls         = "http://localhost:8083"
+    headers = {
+      X-PROJECT-HEADER = "value"
+      Cache-Control : "no-cache"
+    }
+    ignore_untrusted_certificate = false
+    security = {
+      type     = "BasicAuth"
+      username = "toto"
+      password = "my-secret"
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 
 **KafkaConnectCluster checks:**
 - `metadata.cluster` must be a valid KafkaCluster name
