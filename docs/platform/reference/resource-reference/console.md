@@ -642,7 +642,7 @@ spec:
 ````hcl
 resource "conduktor_kafka_connect_v2" "connect-1" {
   name    = "connect-1"
-  cluster = "shadow-julien"
+  cluster = "my-dev-kafka-cluster"
   spec {
     display_name = "Connect 1"
     urls         = "http://localhost:8083"
