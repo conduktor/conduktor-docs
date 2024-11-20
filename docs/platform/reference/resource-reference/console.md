@@ -196,9 +196,9 @@ Creates a Kafka Cluster Definition in Console.
 apiVersion: console/v2
 kind: KafkaCluster
 metadata:
-  name: shadow-julien
+  name: my-dev-cluster
 spec:
-  displayName: "Julien's cloud - Kafka"
+  displayName: "My Dev Cluster"
   icon: "kafka"
   color: "#000000"
   bootstrapServers: "localhost:9092"
@@ -227,8 +227,8 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_kafka_cluster_v2" "shadow-julien" {
-  name = "shadow-julien"
+resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
+  name = "my-dev-cluster"
   spec {
     display_name                 = "My Kafka Cluster"
     icon                         = "kafka"
@@ -618,7 +618,7 @@ Creates a Kafka Connect Cluster Definition in Console.
 apiVersion: console/v2
 kind: KafkaConnectCluster
 metadata:
-  cluster: shadow-julien
+  cluster: my-dev-cluster
   name: connect-1
 spec:
   displayName: "Connect 1"
@@ -655,7 +655,7 @@ Creates a ksqlDB Cluster Definition in Console.
 apiVersion: console/v2
 kind: KsqlDBCluster
 metadata:
-  cluster: julien-cloud
+  cluster: my-dev-cluster
   name: ksql-1
 spec:
   displayName: "KSQL 1"
@@ -686,7 +686,7 @@ Creates an Alert in Console.
 apiVersion: console/v2
 kind: Alert
 metadata:
-  cluster: local-julien
+  cluster: my-dev-cluster
   name: my-alert
 spec:
   type: TopicAlert
