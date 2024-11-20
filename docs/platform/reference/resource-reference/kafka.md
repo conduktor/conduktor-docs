@@ -58,10 +58,12 @@ metadata:
   cluster: shadow-it
   name: click.event-stream.avro
   labels:
-    conduktor.io/description: | 
-      # Event Stream from Click Application
-      This is a multiline markdown description that will appear in the Topic Catalog
-    conduktor.io/description.editable: "false"
+    domain: clickstream
+    appcode: clk
+  description: | 
+    # Event Stream from Click Application
+    This is a multiline markdown description that will appear in the Topic Catalog
+  descriptionIsEditable: "false"
   catalogVisibility: PUBLIC
 spec:
   replicationFactor: 3
@@ -79,8 +81,10 @@ spec:
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
 **Conduktor annotations**
-- `conduktor.io/description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
-- `conduktor.io/description.editable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
+- `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
+  - Previously `conduktor.io/description.editable` in 1.28 and below
+- `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
+  - Previously `conduktor.io/description.editable` in 1.28 and below
 - `metadata.catalogVisibility` is **optional**. Can be `PUBLIC` or `PRIVATE`. 
   - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
   - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
@@ -192,8 +196,10 @@ metadata:
   cluster: 'prod-cluster'
   connectCluster: kafka-connect-cluster
   labels:
-    conduktor.io/auto-restart-enabled: true
-    conduktor.io/auto-restart-frequency: 600
+    domain: clickstream
+  autoRestart:
+    enabled: true
+    frequency: 600
 spec:
   config:
     connector.class: io.connect.jdbc.JdbcSourceConnector
@@ -208,5 +214,7 @@ spec:
 - `metadata.name` must belong to the Application Instance
 
 **Conduktor annotations**
-- `conduktor.io/auto-restart-enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
-- `conduktor.io/auto-restart-frequency` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
+- `metadata.autoRestart.enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
+  - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
+- `metadata.autoRestart.frequency` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
+  - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below

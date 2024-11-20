@@ -102,24 +102,32 @@ kind: Topic
 metadata:
   cluster: shadow-it
   name: click.event-stream.avro
-  catalog:
-    visibility: PUBLIC # or PRIVATE
-    description: | 
-      multi
-      line
-      desc
-    description-editable-in-ui: true
   catalogVisibility: PUBLIC # or PRIVATE
 spec:
   ...
 ````
 
-It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly
+It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly  
 Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance)
 
 ### Self-Service New Topic Policy Allowed Keys
 We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
-This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.
+````yaml
+---
+# Limits the Topic spec.configs to only have retention.ms and cleanup.policy keys
+apiVersion: self-service/v1
+kind: TopicPolicy
+metadata:
+  name: "generic-dev-topic"
+spec:
+  policies:
+    spec.configs:
+      constraint: AllowedKeys
+      keys:
+        - retention.ms
+        - cleanup.policy
+````
+This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.  
 Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints)
 
 ***
