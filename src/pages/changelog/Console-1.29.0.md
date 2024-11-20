@@ -83,9 +83,15 @@ The cluster homepage have been redesigned to present you with the most useful in
 
 ### Consumer Group pages overhaul
 
-We have redesigned Consumer Group pages to simplify troubleshooting.
-Consumer group details page now have 2 tabs to help understand the status of your Consumer Group:
-- Topics first tab lets you understand the lag of the consumer group by Topic. 
+Consumer group details page is now organized in a way that helps understand the status of your Consumer Group easier:
+- Topics tab shows the Consumer Group info grouped by its subscribed Topics
+- Members tab shows the Consumer Group info grouped by its active members
+
+Both Topics and Members lists can be explored further down to individual member/topic-partition assignments.  
+
+On top of that graphs are now directly available in the resource page for Lag and Time Lag, as well as a dedicated tab to manage Alerts
+
+![Kafka Connect Wizard](/images/changelog/platform/v29/consumer-groups.png)
 
 ***
 
