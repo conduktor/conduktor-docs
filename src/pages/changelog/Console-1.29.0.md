@@ -11,7 +11,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
----
 - [Breaking Changes 💣](#breaking-changes-)
   - [Changes to Conduktor.io Labels](#changes-to-conduktorio-labels)
 - [Features ✨](#features-)
@@ -28,18 +27,19 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ### Changes to Conduktor.io Labels
 
-We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations.  
-This change affects you **only if** you:
+We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations. 
+:::caution
+This change impacts you if you:
 - Update the Topic Catalog description of Topic resources via CLI/API.
-- Configure automatic restart behavior through the CLI/API.
+- Configure Connect automatic restart with the CLI/API.
 
-You are **not impacted** if you perform these actions through the UI.
-
+You are not impacted if you perform these actions through the UI.
+:::
 We recognize this change breaches the API contract and have carefully considered its implications. Despite this, we’ve opted to move forward **without creating new API versions** to deliver a more consistent and sustainable experience.
 
 As we expand the number of Conduktor-related features, this change enables a **cleaner separation** between:
-- **User-defined labels**: Managed by you for your operational needs.
-- **Conduktor-specific behaviors**: Reserved for system-managed metadata.
+- Labels used for sorting and filtering throughout the product
+- Conduktor-specific annotations used to drive behaviors on the resources
 
 This separation reduces the risk of conflicts, simplifies resource management, and provides flexibility for future improvements.
 
@@ -83,6 +83,9 @@ The cluster homepage have been redesigned to present you with the most useful in
 
 ### Consumer Group pages overhaul
 
+We have redesigned Consumer Group pages to simplify troubleshooting.
+Consumer group details page now have 2 tabs to help understand the status of your Consumer Group:
+- Topics first tab lets you understand the lag of the consumer group by Topic. 
 
 ***
 
