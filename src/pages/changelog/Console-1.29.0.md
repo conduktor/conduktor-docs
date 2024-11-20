@@ -35,9 +35,9 @@ This change impacts you if you:
 
 You are not impacted if you perform these actions through the UI.
 :::
-We recognize this change breaches the API contract and have carefully considered its implications. Despite this, we’ve opted to move forward **without creating new API versions** to deliver a more consistent and sustainable experience.
+We recognize this change breaches the API contract and have carefully considered its implications. We remain committed to minimizing breaking changes and will continue to do our best to ensure that such changes are rare and well-justified.
 
-As we expand the number of Conduktor-related features, this change enables a **cleaner separation** between:
+As we expand the number of Conduktor-related features, this change enables a cleaner separation between:
 - Labels used for sorting and filtering throughout the product
 - Conduktor-specific annotations used to drive behaviors on the resources
 
@@ -51,12 +51,12 @@ Connector Resource
 - `metadata.labels.'conduktor.io/auto-restart-enabled'` → `metadata.autoRestart.enabled`
 - `metadata.labels.'conduktor.io/auto-restart-frequency'` → `metadata.autoRestart.frequency`
 
-Their associated values have been **automatically migrated** under the new names.
+Their associated values have been automatically migrated under the new names.
 
 
 #### Important Note for CLI Users
 
-Applying YAML files with old `conduktor.io` labels will **fail** in Conduktor Console 1.29. Be sure to update your YAML files to reflect the new labels.
+Applying YAML files with old `conduktor.io` labels will fail in Conduktor Console 1.29. Be sure to update your YAML files to reflect the new labels.
 
 Example error for outdated YAML:
 ```
@@ -154,3 +154,5 @@ A full list of all the exported audit log event types is published on the [Audit
 - Fixed `/health/readiness` endpoint to return HTTP 503 when Postgres DB is down
 - Fixed an issue where the Message Count wasn't updated to 0 when emptying a topic
 - Fixed an issue where the Pause/Resume button wasn't visible when a connector was in Failed state
+- Fixed an issue where the Topic creation failure reason wasn't shown in the UI anymore. 
+  - This helps understand why the Topic Creation was rejected (useful for Gateway and Self-Service Topic Policies)
