@@ -674,8 +674,6 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 
 ## KsqlDBCluster
-
-
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
