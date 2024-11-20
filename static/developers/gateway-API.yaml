@@ -9,7 +9,7 @@ info:
     altText: Conduktor logo
     backgroundColor: "#FFFFFF"
     href: https://docs.conduktor.io
-    url: https://www.conduktor.io/svgs/logo/black.svg
+    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/conduktor-gateway-api.png
     description: API routes to administer Conduktor Gateway.
 tags:
   - name: Introduction

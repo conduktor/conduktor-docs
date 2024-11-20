@@ -7,7 +7,7 @@ info:
     email: contact@conduktor.io
     url: https://docs.conduktor.io
   x-logo:
-    url: https://avatars.githubusercontent.com/u/60062294?s=200&v=4
+    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/conduktor-gateway-api.png
     backgroundColor: '#FFFFFF'
     altText: Conduktor logo
 tags:
