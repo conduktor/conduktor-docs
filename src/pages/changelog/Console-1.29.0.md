@@ -6,9 +6,6 @@ solutions: console
 tags: features,fix
 ---
 
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking Changes 💣](#breaking-changes-)
