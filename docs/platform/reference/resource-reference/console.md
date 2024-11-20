@@ -230,7 +230,7 @@ spec:
 resource "conduktor_kafka_cluster_v2" "shadow-julien" {
   name = "shadow-julien"
   spec {
-    display_name                 = "Julien's cloud - Kafka"
+    display_name                 = "My Kafka Cluster"
     icon                         = "kafka"
     color                        = "#000000"
     bootstrap_servers            = "localhost:9092"
