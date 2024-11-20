@@ -64,7 +64,7 @@ $ conduktor apply -f topic.yaml
 Could not apply resource Topic/click.event-stream.avro: Invalid value for: body (Couldn't decode key. at 'metadata.labels.conduktor.io/description')
 ```
 
-
+---
 
 ## Features ✨
 
