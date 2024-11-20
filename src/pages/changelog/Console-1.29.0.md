@@ -6,24 +6,103 @@ solutions: console
 tags: features,fix
 ---
 
+
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 ## Breaking Changes 💣
 ### Changes to Condukor labels
+We have moved the `conduktor.io` labels that were available on Connector and Topic resources.  
+As we are increasing the number of Conduktor-related behaviors, we believe this change will
+allow for a cleaner separation between user labels and Conduktor behaviors we want to add on to resources.  
+
+Impacted labels:
+- Topic
+  - `conduktor.io/description` moved to `metadata.topicCatalog.description`
+  - `conduktor.io/description.editable` moved to `metadata.topicCatalog.`
+- Connector
+  - `conduktor.io/auto-restart-enabled` moved to `metadata.autoRestart.enabled`
+  - `conduktor.io/auto-restart-frequency` moved to `metadata.autoRestart.frequency`
+
+Their associated values have been automatically migrated under their new names.
+
+<Tabs>
+<TabItem value="Before">
+
 ````yaml
+---
+apiVersion: v2
+kind: Topic
+metadata:
+  name: click2.event-stream.avro3
+  cluster: local
+  labels:
+    domain: clickstream
+    app-code: CLK
+    conduktor.io/description: |
+      # Click Event Stream
+      Long description
+    conduktor.io/description.editable: false
+spec:
+  ...
 ---
 apiVersion: kafka/v2
 kind: Connector
 metadata:
+  name: my-connector-instance
   cluster: julien-cloud
-  connectCluster: my-connect
-  name: my-connector
+  connectCluster: superconnect
   labels:
     conduktor.io/auto-restart-enabled: "true"
     conduktor.io/auto-restart-frequency: "6000"
 spec:
   ...
 ````
+
+</TabItem>
+<TabItem value="Now">
+
+````yaml
+---
+apiVersion: v2
+kind: Topic
+metadata:
+  name: click2.event-stream.avro3
+  cluster: local
+  labels:
+    domain: clickstream
+    app-code: CLK
+  topicCatalog:
+    description: |
+      # Click Event Stream
+      Long description
+    descriptionEditable: false
+spec:
+  ...
+---
+apiVersion: kafka/v2
+kind: Connector
+metadata:
+  name: my-connector-instance
+  cluster: julien-cloud
+  connectCluster: superconnect
+  autoRestart:
+    enabled: true
+    frequency: 6000
+spec:
+  ...  
+````
+
+</TabItem>
+</Tabs>
+
+Apply yaml files that with `conduktor.io` labels will fail in Console 1.29. Make sure you change your yaml accordingly.
+````
+$ conduktor apply -f topic.yaml
+Could not apply resource Topic/click.event-stream.avro: Invalid value for: body (Couldn't decode key. at 'metadata.labels.conduktor.io/description')
+````
+
 
 - [Features ✨](#features-)
   - [Conduktor Chargeback](#conduktor-chargeback)
@@ -66,7 +145,7 @@ metadata:
   cluster: shadow-it
   name: click.event-stream.avro
   catalog:
-    visibility: PUBLIC
+    visibility: PUBLIC # or PRIVATE
     description: | 
       multi
       line
