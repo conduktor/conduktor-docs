@@ -294,7 +294,7 @@ This section lets you associate a Schema Registry to your KafkaCluster
 spec:
   schemaRegistry:
     type: "ConfluentLike"
-    urls: http://localhost:8080
+    url: http://localhost:8080
     ignoreUntrustedCertificate: false
     security:
       type: BasicAuth
