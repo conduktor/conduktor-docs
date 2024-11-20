@@ -545,10 +545,10 @@ spec:
 spec {
   kafka_flavor = {
     type            = "Gateway"
-    url             = "http://gateway:8088"
+    url             = "http://gateway:8888"
     user            = "admin"
     password        = "admin"
-    virtual_cluster = "vc1"
+    virtual_cluster = "passthrough"
     ignore_untrusted_certificate = false
   }
 }
