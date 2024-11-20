@@ -287,6 +287,9 @@ You need to check that in Console directly.
 This section lets you associate a Schema Registry to your KafkaCluster
 #### Confluent or Confluent-like Registry
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 spec:
   schemaRegistry:
@@ -298,6 +301,28 @@ spec:
       username: some_user
       password: some_password
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+spec {
+  schema_registry = {
+    type = "ConfluentLike"
+    url = "http://localhost:8080
+    ignore_untrusted_certificate = false
+    security = {
+      type     = "BasicAuth"
+      username = "some_user"
+      password = "some_password"
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 Confluent Schema Registry checks:
 - `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
   - **Multiple URLs are not supported for now. Coming soon**
@@ -307,6 +332,10 @@ Confluent Schema Registry checks:
   - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
 
 #### AWS Glue Registry
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 spec:
   schemaRegistry:
@@ -318,6 +347,28 @@ spec:
       accessKeyId: accessKey
       secretKey: secretKey
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+spec {
+  schema_registry = {
+    type          = "Glue"
+    region        = "eu-west-1"
+    registry_name = "default"
+    security = {
+      type          = "Credentials"
+      access_key_id = "accessKey"
+      secret_key    = "secretKey"
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 AWS Glue Registry checks:
 - `spec.schemaRegistry.region` must be a valid AWS region
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
@@ -325,24 +376,79 @@ AWS Glue Registry checks:
 
 **Credentials**  
 Use AWS API Key/Secret to connect to the Glue Registry
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
     security:
       type: Credentials
       accessKeyId: AKIAIOSFODNN7EXAMPLE
       secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+    security = {
+      type          = "Credentials"
+      access_key_id = "AKIAIOSFODNN7EXAMPLE"
+      secret_key    = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    }
+````
+
+</TabItem>
+</Tabs>
+
 **FromContext**
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
     security:
       type: FromContext
       profile: default
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+    security = {
+      type    = "FromContext"
+      profile = "default"
+    }
+````
+
+</TabItem>
+</Tabs>
+
 **FromRole**
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
     security:
       type: FromRole
       role: arn:aws:iam::123456789012:role/example-role
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+    security = {
+      type    = "FromRole"
+      profile = "arn:aws:iam::123456789012:role/example-role"
+    }
+````
+
+</TabItem>
+</Tabs>
+
 ### Kafka Provider
 This section lets you configure the Kafka Provider for this KafkaCluster.
 
@@ -350,6 +456,9 @@ This section lets you configure the Kafka Provider for this KafkaCluster.
 Provide your Confluent Cloud details to get additional features in Console:
 - Confluent Cloud Service Accounts support
 - Confluent Cloud API Keys support
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 spec:
@@ -361,10 +470,31 @@ spec:
     confluentClusterId: "lkc-67890"
 ````
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+spec {
+  kafka_flavor = {
+    type                     = "Confluent"
+    key                      = "yourApiKey123456"
+    secret                   = "yourApiSecret123456"
+    confluent_environment_id = "env-12345"
+    confluent_cluster_id     = "lkc-67890"
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Aiven**  
 Provide your Aiven Cloud details to get additional features in Console:  
 - Aiven Service Accounts support
 - Aiven ACLs support
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 spec:
@@ -375,9 +505,29 @@ spec:
     serviceName: "my-kafka-service"
 ````
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+spec {
+  kafka_flavor = {
+    type         = "Aiven"
+    api_token    = "a1b2c3d4e5f6g7h8i9j0"
+    project      = "my-kafka-project"
+    service_name = "my-kafka-service"
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Gateway**  
 Provide your Gateway details to get additional features in Console:
 - Interceptors support
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 spec:
@@ -388,6 +538,24 @@ spec:
     password: "admin"
     virtualCluster: vc1
 ````
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+spec {
+  kafka_flavor = {
+    type            = "Gateway"
+    url             = "http://gateway:8088"
+    user            = "admin"
+    password        = "admin"
+    virtual_cluster = "vc1"
+    ignore_untrusted_certificate = false
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 
 ### Icon Sets
 
