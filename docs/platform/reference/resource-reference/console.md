@@ -186,7 +186,10 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 ---
@@ -219,6 +222,48 @@ spec:
     confluentEnvironmentId: "string"
     confluentClusterId: "string"
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_kafka_cluster_v2" "shadow-julien" {
+  name = "shadow-julien"
+  spec {
+    display_name                 = "Julien's cloud - Kafka"
+    icon                         = "kafka"
+    color                        = "#000000"
+    bootstrap_servers            = "localhost:9092"
+    ignore_untrusted_certificate = false
+    properties = {
+      "sasl.jaas.config"  = "org.apache.kafka.common.security.plain.PlainLoginModule required username='admin' password='admin-secret';"
+      "security.protocol" = "SASL_SSL"
+      "sasl.mechanism"    = "PLAIN"
+    }
+    schema_registry = {
+      type     = "ConfluentLike"
+      url      = "http://localhost:8080"
+      security = {
+        type     = "BasicAuth"
+        username = "some_user"
+        password = "some_password"
+      }
+      ignore_untrusted_certificate = false
+    }
+    kafka_flavor = {
+      type   = "Confluent"
+      key    = "string"
+      secret = "string"
+      confluent_environment_id = "string"
+      confluent_cluster_id     = "string"
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 :::info
 `metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
 ![Cluster identity](../img/cluster-visual-identity.png)
