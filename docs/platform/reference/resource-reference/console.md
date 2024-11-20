@@ -230,7 +230,7 @@ spec:
 resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
   name = "my-dev-cluster"
   spec {
-    display_name                 = "My Kafka Cluster"
+    display_name                 = "My Dev Cluster"
     icon                         = "kafka"
     color                        = "#000000"
     bootstrap_servers            = "localhost:9092"
@@ -533,10 +533,10 @@ Provide your Gateway details to get additional features in Console:
 spec:
   kafkaFlavor:
     type: "Gateway"
-    url: "http://gateway:8088"
+    url: "http://gateway:8888"
     user: "admin"
     password: "admin"
-    virtualCluster: vc1
+    virtualCluster: passthrough
 ````
 </TabItem>
 <TabItem value="Terraform" label="Terraform">
