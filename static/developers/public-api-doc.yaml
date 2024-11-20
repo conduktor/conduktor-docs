@@ -7,7 +7,7 @@ info:
     email: support@conduktor.io
     url: https://docs.conduktor.io
   x-logo:
-    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/transparent.png
+    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/conduktor-console-api.png
     backgroundColor: '#FFFFFF'
     altText: Conduktor logo
 tags:
