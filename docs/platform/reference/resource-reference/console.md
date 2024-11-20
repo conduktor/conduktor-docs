@@ -734,7 +734,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions (See Table)
 
-| Available KafkaConnect Permissions | Description                                                   |
+| Available Platform Permissions | Description                                                   |
 |------------------------------------|---------------------------------------------------------------|
 | `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
 | `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
