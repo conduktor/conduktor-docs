@@ -3,6 +3,7 @@ sidebar_position: 2
 title: Kubernetes
 description: The below guide details how to deploy kubernetes resources to run Conduktor.
 ---
+# Kubernetes
 
 The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
 
