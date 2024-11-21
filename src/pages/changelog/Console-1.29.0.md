@@ -44,7 +44,7 @@ Topic Resource
 
 Connector Resource
 - `metadata.labels.'conduktor.io/auto-restart-enabled'` → `metadata.autoRestart.enabled`
-- `metadata.labels.'conduktor.io/auto-restart-frequency'` → `metadata.autoRestart.frequency`
+- `metadata.labels.'conduktor.io/auto-restart-frequency'` → `metadata.autoRestart.frequencySeconds`
 
 Their associated values have been automatically migrated under the new names.
 
@@ -70,7 +70,7 @@ Could not apply resource Topic/click.event-stream.avro: Invalid value for: body 
 ***
 
 ### Console Homepage
-The cluster homepage have been redesigned to present you with the most useful information in one single frame:
+The cluster homepage have been redesigned to present you with the most useful information in one single view:
 - The health of your Kafka Cluster with a few key metrics and graphs
 - The state of Console Indexing modules for this Kafka Cluster
 - Quick access to your most recently viewed resources
@@ -78,7 +78,7 @@ The cluster homepage have been redesigned to present you with the most useful in
 
 ### Consumer Group pages overhaul
 
-Consumer group details page is now organized in a way that helps understand the status of your Consumer Group easier:
+Consumer group details page is now organized in a way that helps understand the status of your Consumer Group more easily:
 - Topics tab shows the Consumer Group info grouped by its subscribed Topics
 - Members tab shows the Consumer Group info grouped by its active members
 
@@ -152,6 +152,7 @@ A full list of all the exported audit log event types is published on the [Audit
 
 
 ## Fixes 🔨
+- Fixed an issue where Custom Deserializers weren't working properly
 - Fixed an issue where the ManageClusters permission wasn't working properly
 - Fixed an issue that prevented to create a KafkaCluster and a Topic on that newly declared KafkaCluster in a single CLI apply
 - Fixed `/health/readiness` endpoint to return HTTP 503 when Postgres DB is down

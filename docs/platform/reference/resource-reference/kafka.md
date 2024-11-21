@@ -199,7 +199,7 @@ metadata:
     domain: clickstream
   autoRestart:
     enabled: true
-    frequency: 600
+    frequencySeconds: 600
 spec:
   config:
     connector.class: io.connect.jdbc.JdbcSourceConnector
@@ -216,5 +216,5 @@ spec:
 **Conduktor annotations**
 - `metadata.autoRestart.enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
   - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
-- `metadata.autoRestart.frequency` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
+- `metadata.autoRestart.frequencySeconds` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
   - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below
