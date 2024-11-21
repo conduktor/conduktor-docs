@@ -78,7 +78,7 @@ Breaking Changes:
 | [console-1.10.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.10.0) | 1.25.1, 1.25.0, 1.24.1, 1.24.0 | |
 | [console-1.9.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.9.1) | 1.24.1, 1.24.0 | |
 | [console-1.9.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.9.0) | 1.24.0 | 🔴 Changed liveness and readiness probe path [see here](https://github.com/conduktor/conduktor-public-charts/pull/80) |
-| [console-1.8.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.8.1)   | 1.23.0, 1.22.1, 1.22.0 | |
+| [console-1.8.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.8.1) | 1.23.0, 1.22.1, 1.22.0 | |
 | [console-1.8.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.8.0) | 1.23.0, 1.22.1, 1.22.0 | |
 | [console-1.7.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.7.2) | 1.22.1, 1.22.0 | 🔴 Service Monitor endpoint changes, Grafana template changes [see here](https://github.com/conduktor/conduktor-public-charts/pull/65) |
 | [console-1.6.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.6.2) | 1.21.3, 1.21.2, 1.21.1, 1.21.0 | |
