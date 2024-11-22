@@ -10,6 +10,7 @@ tags: features,fix
 
 - [Breaking Changes 💣](#breaking-changes-)
   - [Changes to Conduktor.io Labels](#changes-to-conduktorio-labels)
+  - [Local Users Password policy update](#local-users-password-policy-update)
 - [Features ✨](#features-)
   - [Conduktor Chargeback](#conduktor-chargeback)
   - [Console Homepage](#console-homepage)
@@ -58,6 +59,31 @@ Example error for outdated YAML:
 $ conduktor apply -f topic.yaml
 Could not apply resource Topic/click.event-stream.avro: Invalid value for: body (Couldn't decode key. at 'metadata.labels.conduktor.io/description')
 ```
+
+---
+Here's the updated entry with a note on the benefits:
+
+---
+
+### Local Users Password policy update
+Starting with this release, passwords for console local users configured through YAML and environment variables must comply with the password policy.
+This enhancement improves the security of local user accounts by enforcing stronger password policies, reducing the risk of unauthorized access.
+
+This change enforces the following password requirements:
+
+- At least 8 characters in length
+- Includes at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special symbol
+
+Passwords set in existing installations that do not meet these requirements **will prevent Console from starting**, throwing a startup error in the logs like this:
+```  
+2024-11-21T14:25:47,434Z [console] ERROR zio-slf4j-logger - zio.Config$Error$InvalidData: (Invalid data at admin: Password must contain at least 8 characters including 1 uppercase letter, 1 lowercase letter, 1 number and 1 special symbol)
+
+```
+To resolve this, update the passwords in your YAML or environment variables to meet the new policy before upgrading:
+- If you only have an Admin user: `CDK_ADMIN_PASSWORD`
+- If you have other Local users: `CDK_AUTH_LOCALUSERS_0_PASSWORD`
+
+Local Users previously created with the UI are not impacted. 
 
 ---
 
