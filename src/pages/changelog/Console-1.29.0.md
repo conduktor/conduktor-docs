@@ -173,7 +173,7 @@ A full list of all the exported audit log event types is published on the [Audit
 - Improved the performance of the Automatic deserializer
 - Improved the performance of the Schema Registry indexing process
 - Added support for Google Cloud Identity group claims
-
+- Added License expiry warning in the UI when there is less than 30days left
 
 
 ## Fixes 🔨
