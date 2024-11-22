@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Schema-based data contract validation
 
 Check and enforce data quality at the schema level, preventing outages from missing or badly formatted records.

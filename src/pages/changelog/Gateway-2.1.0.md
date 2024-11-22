@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General features
 
 ### mTLS support for clients to Gateway
@@ -14,7 +16,7 @@ Gateway now supports mTLS connetions between clients and the Gateway. We are con
 
 ### Metrics on Prometheus
 
-Gateway exposes several health metrics on the available endpoint to help you monitor the health of your deployment. Checkout the docs for the available metrics on our docs site. If there are any you would need or like to see don't hesitate to [submit a feature request](https://product.conduktor.help/tabs/3-ideas) on our public roadmap.
+Gateway exposes several health metrics on the available endpoint to help you monitor the health of your deployment. Checkout the docs for the available metrics on our docs site. If there are any you would need or like to see don't hesitate to [submit a feature request](https://conduktor.io/roadmap) on our public roadmap.
 
 ## General fixes 🔨
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: SNI Routing
 description: Making the most from the ports you have
 ---
@@ -114,10 +114,23 @@ In general, the format for the advertised brokers to be included as SANs in the 
 
 Here, the `cluster-id` is used in case we have multiple back-end Kafka clusters, and defaults to main.
 
+## 3. Configure DNS
+
+Once you have your certificates configured, you will next need to create DNS entries which allow the clients to be properly routed to the kafka brokers.  Specifically, you will need to create a DNS entry for each Broker in your cluster using the same format as the SANs you specified in your Gateway certificates:
+
+```
+<host-prefix><cluster-id><broker-id>.<advertised-host>
+```
+
+This allows the client the connect to Gateway, for Gateway to then append the relevant broker details when it passes back the connection string for the Broker(s), and the client to look this up in DNS and connect appropriately.
+
 ## Useful tips for debugging and troubleshooting
+
 * You can use Console's Broker tab to view the advertised listeners of a Gateway once the initial connection and authentication are successful:
 
 ![console broker view](./images/console-broker-view.png)
 
 * Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L) can be used to check whether the right advertised listeners have been configured or how many brokers are in a given cluster.
 * Setting `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL` to `DEBUG` might be helpful when debugging issues.
+
+For a rich guide on troubleshooting please refer to the knowledge base article [SNI Routing Troubleshooting Guide](https://support.conduktor.io/hc/en-gb/articles/29104372472977-Conduktor-Gateway-SNI-Routing-Troubleshooting-Guide).

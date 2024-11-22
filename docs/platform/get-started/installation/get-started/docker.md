@@ -10,65 +10,73 @@ description: Get started with the latest Conduktor Console Docker image in just 
 Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-Get started with the latest Conduktor Console Docker image. The installation and configuration process takes only a few minutes.
+Get started in a few minutes with the latest Conduktor Console Docker image.
 
-- [**Simple Setup**](#simple-setup): Start Conduktor with onboarding and configure your environment inside the Conduktor interface. Great for **experimenting** with how Conduktor can help you quickly.
-   - [Launch Conduktor with an embedded Kafka (Redpanda)](#launch-conduktor-with-an-embedded-kafka-redpanda)
-   - [Launch Conduktor and connect it to your existing Kafka](#or-launch-conduktor-and-connect-it-to-your-existing-kafka)
+- [**Simple Setup**](#simple-setup): Get started with the Conduktor Console through its user-friendly interface - Perfect to **quickly** see its value.
+   - [Option 1: Start with an embedded Kafka cluster](#option-1-start-with-an-embedded-kafka-cluster)
+   - [Option 2: Use your existing Kafka cluster](#option-2-use-your-existing-kafka-cluster)
 
-- [**Advanced Configuration**](#advanced-setup): Configure your environment using a configuration file or using environment variables. This is essential for **production environments**.
-   - [Using a configuration file](#configuration-using-a-configuration-file)
-   - [Using environment variables](#configuration-using-environment-variables)
+- [**Advanced Setup**](#advanced-setup): For customized **production environments** or more complex setups.
+   - [Option 1: Configure using a configuration file](#option-1-using-a-configuration-file)
+   - [Option 2: Configure using environment variables](#option-2-using-environment-variables)
+
+:::tip
+As the **Conduktor Playground**, also known as **Conduktor Cloud**, does not exist anymore, we recommend using the [embedded Kafka option](#option-1-start-with-an-embedded-kafka-cluster) to get started quickly.
+:::
 
 ## Simple Setup
 
-When launching Conduktor Console for the first time, you will presented with onboarding to help configure your environment.
+When launching Conduktor Console for the first time, an onboarding guide will walk you through configuring your environment.
 
-### Step 1: Launch Conduktor
+### Step 1: Start the Console
 
-Run one of the below commands to launch Conduktor.
+Let's start by running one of the commands below to launch Conduktor. Choose the option that best fits your setup: use an embedded Kafka cluster, or connect to your own Kafka cluster.
 
-#### Launch Conduktor with an embedded Kafka (Redpanda)
+#### Option 1: Start with an embedded Kafka cluster
 
-This option pre-configures Conduktor to connect to the embedded Redpanda and Schema Registry.
+Start Conduktor Console with 2 clusters pre-configured:
+- a Redpanda Kafka cluster and Schema Registry
+- a Conduktor Gateway connected to the Redpanda cluster
 
 ```bash
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-#### OR, Launch Conduktor and connect it to your existing Kafka
+#### Option 2: Use your existing Kafka cluster
 
-Add your own cluster configuration from within the Conduktor UI.
+Start Conduktor Console without any cluster pre-configured.
 
 ```bash
 curl -L https://releases.conduktor.io/console -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
-### Step 2: Complete Onboarding
+### Step 2: Complete the onboarding wizard
 
-After a few seconds, the Conduktor onboarding wizard will be available at **[http://localhost:8080](http://localhost:8080)**.
+After a few seconds, the onboarding wizard will be available at **[http://localhost:8080](http://localhost:8080)**. Here, you can set the admin credentials to use to log in.
 
-![Onboarding](assets/onboarding_console.png)
+![Onboarding](assets/onboarding.png)
 
-### Step 3: Configure your existing Kafka cluster
+### Step 3: Connect to your existing Kafka cluster
+
+Conduktor Console is compatible with all the Kafka providers, such as Confluent, Aiven, MSK or Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
+
+In that regard, after having completed the onboarding wizard, go to the [**Clusters**](http://localhost:8080/settings/clusters) page, and click on **Add cluster**.
 
 :::tip
-Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect
+Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect!
 :::
 
-Conduktor works with all Kafka providers such as Confluent, Aiven, MSK and Redpanda. To see the full value of Conduktor, we recommend configuring it against your own Kafka data. 
+From within the cluster configuration screen, fill the:
 
-Once you complete the onboarding wizard, go to [http://localhost:8080/settings/clusters](http://localhost:8080/settings/clusters) and **add** a new cluster configuration.
-
-From within the cluster configuration screen, add the:
-
-- Bootstrap server
+- Bootstrap servers
 - Authentication details
 - Additional properties
 
-Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificate Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+![Cluster Configuration](assets/kafka-cluster.png)
 
-![Admin Cluster Config](assets/settings-cluster-config.png)
+:::tip
+Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificates Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+:::
 
 #### How to connect to Kafka running on localhost:9092?
 
@@ -93,47 +101,60 @@ From within the Conduktor interface, connect using the bootstrap server: `host.d
 
 ### Step 4: Add additional users
 
-If you have deployed Conduktor on a central server, add new users to collaborate with them inside the Console.
+If you have deployed Conduktor on a central server, you can add new users to collaborate with you inside the Console.
 
-From within the **Settings** > **Users & Groups** screen, select **Create Members** to add a new user.
+For that, go to the [**Users**](http://localhost:8080/settings/members) screen and select **Create Members** to set the credentials of a new local user.
 
-![console kafka UI users](../../configuration/assets/console-users.png)
+import AddUsers from './assets/add_users.png';
 
-For more information on configuring SSO see [configuring SSO](/platform/category/configure-sso/).
+<img src={AddUsers} alt="Add users" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
+:::info
+You can configure your [SSO](/platform/category/configure-sso/) using the free Console!
+:::
 
 ## Advanced Setup
 
-Conduktor can also be configured using a [configuration file](#configuration-using-a-configuration-file) `platform-config.yaml`, or through [environment variables](#configuration-using-environment-variables). This is used to set up your organization's environment.
-
-:::note
-If you use both methods, environment variables will take precedence.
+:::warning
+For **production deployments**, please make sure you respect the [production requirements](../hardware.md#production-requirements).
 :::
 
-Configuration can be used to declare:
-- Organization name
-- External database (**required for production environments**)
-- User authentication (Basic or SSO)
-- Platform license
+### Step 1: Configure the Console
 
-For production deployments, it's critical that you review the [production requirements](../hardware.md#production-requirements).
+To configure the Conduktor Console during deployment, you have two options:
+  - [Option 1: Using a configuration file](#option-1-using-a-configuration-file) - You define the configuration in a file and bind it to the Console container in the Docker Compose file.
+    - Easier to manage and update
+  - [Option 2: Using environment variables](#option-2-using-environment-variables) - You define the configuration directly in the Docker Compose file.
+    - Gathers everything in one place
 
-### Configuration using a configuration file
+:::important
+If both methods are used, **environment variables will take precedence** over the configuration file.
+:::
 
-#### Step 1: Create a configuration file
+Here’s what you can configure:
+- External database (**required**)
+- User authentication (Local or SSO/LDAP)
+- Kafka clusters configurations
+- Conduktor enterprise license key
 
-The below example shows how to configure Conduktor with the minimum configuration:
-- The name of the organization
-- An external database
-- A local administrator
+:::note
+Some objects, such as groups or Self-service resources, can't be initiated before the Console has started. To automate their creation, you can either use our [API](/platform/reference/api-reference/), [CLI](/platform/reference/cli-reference/) or [Terraform provider](/platform/reference/terraform-reference/).
+:::
+
+#### Option 1: Using a configuration file
+
+**Create a configuration file**
+
+The below example shows how to configure Conduktor with the following configuration:
+- The external database configuration
+- The local administrator credentials
+- The connection to the Monitoring container called `conduktor-console-cortex`
 
 If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](../../license-management/#into-the-configuration-file).
 You can get the list of all the properties supported [here](../../../configuration/env-variables/).
 
 ```yaml title="console-config.yaml"
-organization:
-  name: "conduktor"
-
-database:
+database:         # External database configuration
   host: 'postgresql'
   port: 5432
   name: 'conduktor-console'
@@ -141,25 +162,20 @@ database:
   password: 'change_me'
   connection_timeout: 30 # in seconds
 
-admin:
+admin:            # Local admin credentials
   email: "<name@your_company.io>"
   password: "admin"
 
-auth:
-  local-users:
-    - email: user@conduktor.io
-      password: user
-
-monitoring:
+monitoring:       # Connection to the Cortex Monitoring container
   cortex-url: http://conduktor-monitoring:9009/
   alert-manager-url: http://conduktor-monitoring:9010/
   callback-url: http://conduktor-console:8080/monitoring/api/
   notifications-callback-url: http://localhost:8080
 
-# license: "" license key if Enterprise
+# license: ""     # Enterprise license key
 ```
 
-#### Step 2: Bind the file 
+**Bind the file to the Console container**
 
 The below docker-compose indicates how to bind your `console-config.yaml` file.
 
@@ -176,7 +192,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.26.0
+    image: conduktor/conduktor-console:1.27.0
     depends_on:
       - postgresql
     ports:
@@ -190,41 +206,16 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.26.0
+    image: conduktor/conduktor-console-cortex:1.27.0
     environment:
-      CDK_CONSOLE-URL: "http://conduktor-console:8080"
+      CDK_CONSOLE-URL: "http://conduktor-console:8080" # Connection to the Console container
 ```
 
-#### Step 3: Access Conduktor
+#### Option 2: Using environment variables
 
-You just have to run the following command to launch the PostgreSQL instance and Conduktor Console:
-```sh
-docker compose up
-```
+The same configuration can be achieved using environment variables. 
 
-After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
-
-You can use the admin email and password to log in.
-
-If using [SSO](/platform/category/user-authentication/), you will see an option to log in via the relevant identity provider.
-
-![Sign In Azure](/img/get-started/azure-start.png)
-
-#### Step 4: Configure your first cluster
-
-See [configuring your first cluster](#step-3-configure-your-existing-kafka-cluster)
-
-#### Step 5: Add additional users
-
-See [adding additional users](#step-4-add-additional-users)
-
-### Configuration using environment variables
-
-All configuration properties can be provided using either [environment variables](../../../configuration/env-variables/) or the config file. If you use both, environment variables will take precedence.
-
-If you need some help converting this file into environment variables, feel free to use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/).
-
-Below is an example of the same deployment that uses environment variables for the Conduktor Console configuration.
+You can use our [YAML to ENV converter](https://conduktor.github.io/yaml-to-env/) to easily convert the configuration file into environment variables.
 
 ```yaml title="docker-compose.yaml"
 services:  
@@ -237,28 +228,63 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.24.1
+    image: conduktor/conduktor-console:1.27.0
     depends_on:
       - postgresql
     ports:
       - "8080:8080"
     environment:
-      # CDK_LICENSE: "" license key if Enterprise
+      # Enterprise license key
+      # CDK_LICENSE: ""
+      # External database configuration
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
-      CDK_ORGANIZATION_NAME: "<Your Company>"
+      # Local admin credentials
       CDK_ADMIN_EMAIL: "<name@your_company.io>"
       CDK_ADMIN_PASSWORD: "admin"
+      # Connection to the Cortex Monitoring container
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.24.1
+    image: conduktor/conduktor-console-cortex:1.27.0
     environment:
+      # Connection to the Console container
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 
 volumes:
   pg_data: {}
   conduktor_data: {}
 ```
+
+### Step 2: Deploy the Console
+
+Last step to start the containers is to run the following command.
+It will start:
+- An external PostgreSQL database
+- The Conduktor Console and Cortex containers
+
+```sh
+docker compose up
+```
+
+After a few minutes, **Conduktor will be available at [http://localhost:8080](http://localhost:8080)**
+
+You can use the admin email and password to log in.
+
+If using [SSO](/platform/category/user-authentication/), you will see an option to log in via the relevant identity provider.
+
+
+import LoginScreen from './assets/login_screen.png';
+
+<img src={LoginScreen} alt="Login screen" style={{ width: 300, display: 'block', margin: 'auto' }} />
+
+
+### Step 3: Connect to your existing Kafka cluster
+
+See [connecting to your existing Kafka cluster](#step-3-connect-to-your-existing-kafka-cluster)
+
+### Step 4: Add additional users
+
+See [adding additional users](#step-4-add-additional-users)

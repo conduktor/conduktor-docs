@@ -6,11 +6,22 @@ description: Learn how to create an alert in Monitoring
 
 # Create an Alert
 
+:::caution Deprecation notice
+We plan to remove these original alerts in the near future in favor of the new ones. We'll let you know a few releases in advances but it will happen in this order:
+- First we are going to cover all original alerts with new alerts through the dedicated resources pages. We are missing Consumer Group today.
+- Then, we'll block the creation of original alerts while still keeping them functional.
+- Finally, we'll remove the original alerts from the product.
+
+We'll give you in the next release changelog timelines for you to migrate your existing alerts to the new model.
+
+Starting today, we recommend you use the new alerts for [Brokers page](/platform/navigation/console/brokers/) and [Topics page](/platform/navigation/console/topics/topic-graphs/).
+:::
+
 ## Overview
 
 Our alerting solution will enable you to react to Kafka infrastructure and application irregularties. Currently, we integrate with **Slack** and **MS Teams** so that you can receive real-time notifications.
 
-If you require an additional integration, please [let us know](https://product.conduktor.help/tabs/1-in-development) so we can consider it.
+If you require an additional integration, please [let us know](https://conduktor.io/roadmap) so we can consider it.
 
 ## Configure the Integration
 
