@@ -97,6 +97,7 @@ spec:
   topicPolicyRef:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
+  defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
   resources:
     - type: TOPIC
       patternType: PREFIXED
@@ -122,6 +123,7 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
+- `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.
 - `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
   - `spec.resources[].connectCluster` is **only mandatory** when `type` is `CONNECTOR`
   - `spec.resources[].connectCluster` is a valid Connect Cluster linked to the Kafka Cluster `spec.cluster`
@@ -344,8 +346,9 @@ There are currently 3 available constraints:
 - `Range` validates a range of numbers
 - `OneOf` validates against a list of predefined options
 - `Match` validates using Regular Expression
+- `AllowedKeys` limits a set of keys in the dictionaries
 
-**Range**  
+#### Range
 Validates the property belongs to a range of numbers (inclusive)
 ```yaml
 spec.configs.retention.ms:
@@ -362,7 +365,7 @@ Validation will fail with these inputs:
 - 60000 (below min)
 - 999999999 (above max)
 
-**OneOf**  
+#### OneOf 
 Validates the property is one of the expected values
 ```yaml
 spec.configs.cleanup.policy:
@@ -377,7 +380,7 @@ Validation will fail with these inputs:
 - `delete, compact` (Valid in Kafka but not allowed by policy)
 - `deleet` (typo)
 
-**Match**  
+#### Match 
 Validates the property against a Regular Expression
 ```yaml
 metadata.name:
@@ -388,11 +391,54 @@ Validation will succeed with these inputs:
 - `wikipedia.links.avro`
 - `wikipedia.products.json`
 
-Validation will fail with these inputs
+Validation will fail with these inputs:
 - `notwikipedia.products.avro2`: `^` and `$` prevents anything before and after the pattern
 - `wikipedia.all-products.avro`: `(?<event>[a-z0-9]+)` prevents anything else than lowercase letters and digits
 
-**Optional Flag**  
+#### AllowedKeys
+Validates the keys are within an allowed key list. Applies to dictionary type (Key/Value maps).  
+Can be used on `spec.configs` and `metadata.labels`.
+```yaml
+spec.configs:
+  constraint: AllowedKeys
+  keys:
+    - retention.ms
+    - cleanup.policy
+```
+Validation will succeed with this input:
+```yaml
+---
+apiVersion: kafka/v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    cleanup.policy: delete
+    retention.ms: '60000'
+```
+
+Validation will fail with this input (`min.insync.replicas` not an Allowed Key in `spec.configs`)
+```yaml
+---
+apiVersion: kafka/v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro
+spec:
+  replicationFactor: 3
+  partitions: 3
+  configs:
+    min.insync.replicas: '2' # Not in AllowedKeys
+    cleanup.policy: delete
+    retention.ms: '60000'
+```
+
+#### Optional Flag
 Constraints can be marked as optional. In this scenario, the constraint will only be validated if the field exists.
 Example:
 ```yaml

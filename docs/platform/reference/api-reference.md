@@ -10,37 +10,21 @@ description: Conduktor Console gives you complete visibility into your Kafka eco
 
 The Conduktor HTTP API can be used to manage your organizations Users, Groups and their associated Permissions. Additionally, it can be used to interact with Kafka resources that are added to your organization such as Clusters and Certificates.
 
-**Open API documentation** portal is available on `/docs` of your deployment host (e.g. `http://localhost:8080/docs`).
-
-Currently, only members of the Admin group can generate API keys and access the API.
-
-:::info
-Note that complete documentation for all endpoints is contained within the API documentation portal.
-:::
+**Open API documentation** portal documents all endpoints for the API. The API doc for the running version is available on `/docs` of your deployment host (e.g. `http://localhost:8080/docs`), or the latest is available online at [developers.conduktor.io](https://developers.conduktor.io).
 
 ## Access the Open API specification
 
-The Open API documentation portal is available on `/docs` of your deployment host
-
-e.g. `http://localhost:8080/docs`
+Only members of the Admin group can generate API keys and access the API.
 
 From within the API documentation portal, you can **download** the OpenAPI specification. This allows you to import the OpenAPI specification in tools such as [Postman](https://www.postman.com/).
 
-![api-specification.png](/img/get-started/api-specification.png)
+![api-specification.png](./img/console-api.png)
 
 ## Generate an API key
 
-To start using the Conduktor API, navigate to the 'API Keys' tab in Settings and generate a new API Key.
-
-Select **Create API Key** to generate a new API key.
-
-![api-token.png](/img/get-started/api-token.png)
+To start using the Conduktor API, you can navigate to the 'API Keys' tab in [Settings](/platform/navigation/settings/api-key/), or [from the CLI](/platform/reference/cli-reference/#token).
 
 ## Example request
-
-:::info
-Note that complete documentation for all endpoints is contained within the API documentation portal.
-:::
 
 The following example lists the permissions associated with your group "project-a".
 

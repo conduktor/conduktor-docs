@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/UowAgTw44xlwWvdYo7FPiWk7K.svg)](https://asciinema.org/a/UowAgTw44xlwWvdYo7FPiWk7K)
+[![asciicast](https://asciinema.org/a/690001.svg)](https://asciinema.org/a/690001)
 
 </TabItem>
 </Tabs>
@@ -40,7 +40,6 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka3
 * schema-registry
 * vault
-* zookeeper
 
 <Tabs>
 <TabItem value="Command">
@@ -53,89 +52,74 @@ cat docker-compose.yaml
 <TabItem value="File Content">
 
 ```yaml
-version: '3.7'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    hostname: zookeeper
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2801
-      ZOOKEEPER_TICK_TIME: 2000
-    healthcheck:
-      test: nc -zv 0.0.0.0 2801 || exit 1
-      interval: 5s
-      retries: 25
   kafka1:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka1
     container_name: kafka1
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19092:19092
+    - 9092:9092
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL_SAME_HOST://:19092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL_SAME_HOST://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka1 9092 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka2:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka2
     container_name: kafka2
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19093:19093
+    - 9093:9093
     environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9093,EXTERNAL_SAME_HOST://:19093
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093,EXTERNAL_SAME_HOST://localhost:19093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka2 9093 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka3:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka3
     container_name: kafka3
     ports:
-    - 19094:19094
+    - 9094:9094
     environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9094,EXTERNAL_SAME_HOST://:19094
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9094,EXTERNAL_SAME_HOST://localhost:19094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka3 9094 || exit 1
+      test: nc -zv kafka3 29092 || exit 1
       interval: 5s
       retries: 25
   schema-registry:
@@ -146,7 +130,7 @@ services:
     - 8081:8081
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
@@ -168,14 +152,13 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: conduktor/conduktor-gateway:3.3.2
     hostname: gateway1
     container_name: gateway1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
     depends_on:
       kafka1:
@@ -188,22 +171,21 @@ services:
     - 6969:6969
     - 6970:6970
     - 6971:6971
+    - 6972:6972
     - 8888:8888
     healthcheck:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: conduktor/conduktor-gateway:3.3.2
     hostname: gateway2
     container_name: gateway2
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
-      GATEWAY_START_PORT: 7969
     depends_on:
       kafka1:
         condition: service_healthy
@@ -212,9 +194,10 @@ services:
       kafka3:
         condition: service_healthy
     ports:
-    - 7969:7969
-    - 7970:7970
-    - 7971:7971
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
     - 8889:8888
     healthcheck:
       test: curl localhost:8888/health
@@ -250,8 +233,6 @@ services:
       done; export VAULT_ADDR='http://0.0.0.0:8200';vault secrets enable transit;
       vault secrets enable -version=1 kv; vault secrets enable totp ) & vault server
       -dev -dev-listen-address=0.0.0.0:8200
-networks:
-  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -263,10 +244,14 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
 * `--detach`: Detached mode: Run containers in the background
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose up --detach --wait
 ```
@@ -278,160 +263,100 @@ docker compose up --detach --wait
 ```
  Network encryption-crypto-shredding_default  Creating
  Network encryption-crypto-shredding_default  Created
- Container zookeeper  Creating
  Container kafka-client  Creating
- Container vault  Creating
- Container kafka-client  Created
- Container vault  Created
- Container zookeeper  Created
- Container kafka3  Creating
  Container kafka2  Creating
+ Container kafka3  Creating
+ Container vault  Creating
  Container kafka1  Creating
- Container kafka2  Created
- Container kafka3  Created
  Container kafka1  Created
- Container gateway2  Creating
+ Container vault  Created
+ Container kafka2  Created
+ Container kafka-client  Created
+ Container kafka3  Created
  Container gateway1  Creating
  Container schema-registry  Creating
- Container gateway2  Created
+ Container gateway2  Creating
  Container gateway1  Created
  Container schema-registry  Created
- Container kafka-client  Starting
- Container zookeeper  Starting
- Container vault  Starting
- Container zookeeper  Started
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container vault  Started
- Container kafka-client  Started
- Container zookeeper  Healthy
- Container kafka1  Starting
- Container zookeeper  Healthy
+ Container gateway2  Created
  Container kafka3  Starting
- Container zookeeper  Healthy
+ Container vault  Starting
+ Container kafka1  Starting
  Container kafka2  Starting
- Container kafka1  Started
+ Container kafka-client  Starting
  Container kafka3  Started
+ Container kafka1  Started
+ Container vault  Started
  Container kafka2  Started
+ Container kafka3  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
  Container kafka2  Waiting
+ Container kafka-client  Started
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
  Container kafka1  Healthy
  Container kafka3  Healthy
  Container kafka3  Healthy
- Container kafka2  Healthy
+ Container gateway2  Starting
  Container kafka2  Healthy
  Container gateway1  Starting
- Container kafka2  Healthy
- Container kafka1  Healthy
- Container gateway2  Starting
- Container kafka3  Healthy
  Container kafka1  Healthy
  Container schema-registry  Starting
- Container gateway2  Started
  Container schema-registry  Started
+ Container gateway2  Started
  Container gateway1  Started
- Container zookeeper  Waiting
- Container kafka3  Waiting
- Container vault  Waiting
- Container kafka-client  Waiting
- Container gateway2  Waiting
- Container kafka1  Waiting
- Container gateway1  Waiting
- Container schema-registry  Waiting
  Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container vault  Waiting
+ Container kafka1  Waiting
  Container kafka2  Healthy
- Container kafka-client  Healthy
- Container zookeeper  Healthy
- Container kafka3  Healthy
- Container vault  Healthy
  Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka-client  Healthy
+ Container vault  Healthy
  Container gateway1  Healthy
- Container schema-registry  Healthy
  Container gateway2  Healthy
+ Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/J7gGmD1IyvujytoBIFOtw5BK3.svg)](https://asciinema.org/a/J7gGmD1IyvujytoBIFOtw5BK3)
+[![asciicast](https://asciinema.org/a/689987.svg)](https://asciinema.org/a/689987)
 
 </TabItem>
 </Tabs>
 
-## Creating virtual cluster teamA
+## Creating topic customers-shredding on gateway1
 
-Creating virtual cluster `teamA` on gateway `gateway1` and reviewing the configuration file to access it
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-# Generate virtual cluster teamA with service account sa
-token=$(curl \
-    --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/teamA/username/sa" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data-raw '{"lifeTimeSeconds": 7776000}' | jq -r ".token")
-
-# Create access file
-echo  """
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='$token';
-""" > teamA-sa.properties
-
-# Review file
-cat teamA-sa.properties
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ3MTk4OH0.bYzPnp3oq-55HGCu5HCfvJhewZNH4XTINKSBvax5u_4';
-
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/YjJDHeVrwsogaVPQIl6adej3T.svg)](https://asciinema.org/a/YjJDHeVrwsogaVPQIl6adej3T)
-
-</TabItem>
-</Tabs>
-
-## Creating topic customers-shredding on teamA
-
-Creating on `teamA`:
+Creating on `gateway1`:
 
 * Topic `customers-shredding` with partitions:1 and replication-factor:1
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
@@ -450,23 +375,26 @@ Created topic customers-shredding.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/eAqd6tq56OUIdWUhPDXMgjK4y.svg)](https://asciinema.org/a/eAqd6tq56OUIdWUhPDXMgjK4y)
+[![asciicast](https://asciinema.org/a/689988.svg)](https://asciinema.org/a/689988)
 
 </TabItem>
 </Tabs>
 
-## Listing topics in teamA
+## Listing topics in gateway1
+
+
+
+
+
 
 
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
     --list
 ```
 
@@ -475,6 +403,22 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
+__consumer_offsets
+_conduktor_gateway_acls
+_conduktor_gateway_auditlogs
+_conduktor_gateway_consumer_offsets
+_conduktor_gateway_consumer_subscriptions
+_conduktor_gateway_encryption_configs
+_conduktor_gateway_groups
+_conduktor_gateway_interceptor_configs
+_conduktor_gateway_license
+_conduktor_gateway_topicmappings
+_conduktor_gateway_usermappings
+_conduktor_gateway_vclusters
+_confluent-command
+_confluent-link-metadata
+_confluent-telemetry-metrics
+_schemas
 customers-shredding
 
 ```
@@ -482,7 +426,7 @@ customers-shredding
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/zoYB28VvZg0FgdaG6WenpM6zN.svg)](https://asciinema.org/a/zoYB28VvZg0FgdaG6WenpM6zN)
+[![asciicast](https://asciinema.org/a/689989.svg)](https://asciinema.org/a/689989)
 
 </TabItem>
 </Tabs>
@@ -491,80 +435,56 @@ customers-shredding
 
 Let's ask gateway to encrypt messages using vault and dynamic keys
 
-<Tabs>
-<TabItem value="Command">
 
 
-```sh
-cat step-08-crypto-shredding-encrypt.json | jq
 
-curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/crypto-shredding-encrypt" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data @step-08-crypto-shredding-encrypt.json | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
+`step-07-crypto-shredding-encrypt-interceptor.json`:
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
-  "priority": 100,
-  "config": {
-    "topic": "customers-shredding",
-    "kmsConfig": {
-      "vault": {
-        "uri": "http://vault:8200",
-        "token": "vault-plaintext-root-token",
-        "version": 1
-      }
-    },
-    "fields": [
-      {
-        "fieldName": "password",
-        "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-        "algorithm": "AES_GCM"
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "crypto-shredding-encrypt"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: crypto-shredding-encrypt",
+    "pluginClass" : "io.conduktor.gateway.interceptor.EncryptPlugin",
+    "priority" : 100,
+    "config" : {
+      "topic" : "customers-shredding",
+      "kmsConfig" : {
+        "vault" : {
+          "uri" : "http://vault:8200",
+          "token" : "vault-plaintext-root-token",
+          "version" : 1
+        }
       },
-      {
-        "fieldName": "visa",
-        "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-        "algorithm": "AES_GCM"
-      }
-    ]
+      "fields" : [ {
+        "fieldName" : "password",
+        "keySecretId" : "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+        "algorithm" : "AES128_GCM"
+      }, {
+        "fieldName" : "visa",
+        "keySecretId" : "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+        "algorithm" : "AES128_GCM"
+      } ]
+    }
   }
 }
-{
-  "message": "crypto-shredding-encrypt is created"
-}
-
 ```
 
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/aVCerK4oBUd3EyX4mDXkU6Oom.svg)](https://asciinema.org/a/aVCerK4oBUd3EyX4mDXkU6Oom)
-
-</TabItem>
-</Tabs>
-
-## Listing interceptors for teamA
-
-Listing interceptors on `gateway1` for virtual cluster `teamA`
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent | jq
+    --silent \
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-07-crypto-shredding-encrypt-interceptor.json | jq
 ```
 
 
@@ -573,12 +493,21 @@ curl \
 
 ```json
 {
-  "interceptors": [
-    {
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
       "name": "crypto-shredding-encrypt",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: crypto-shredding-encrypt",
       "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
       "priority": 100,
-      "timeoutMs": 9223372036854775807,
       "config": {
         "topic": "customers-shredding",
         "kmsConfig": {
@@ -592,17 +521,18 @@ curl \
           {
             "fieldName": "password",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": "AES_GCM"
+            "algorithm": "AES128_GCM"
           },
           {
             "fieldName": "visa",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": "AES_GCM"
+            "algorithm": "AES128_GCM"
           }
         ]
       }
     }
-  ]
+  },
+  "upsertResult": "CREATED"
 }
 
 ```
@@ -610,17 +540,92 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7oMgx8A9a5ovbXKIsHeI4BQFG.svg)](https://asciinema.org/a/7oMgx8A9a5ovbXKIsHeI4BQFG)
+[![asciicast](https://asciinema.org/a/689990.svg)](https://asciinema.org/a/689990)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors
+
+Listing interceptors on `gateway1`
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "crypto-shredding-encrypt",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: crypto-shredding-encrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+      "priority": 100,
+      "config": {
+        "topic": "customers-shredding",
+        "kmsConfig": {
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "vault-plaintext-root-token",
+            "version": 1
+          }
+        },
+        "fields": [
+          {
+            "fieldName": "password",
+            "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+            "algorithm": "AES128_GCM"
+          },
+          {
+            "fieldName": "visa",
+            "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
+            "algorithm": "AES128_GCM"
+          }
+        ]
+      }
+    }
+  }
+]
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/689991.svg)](https://asciinema.org/a/689991)
 
 </TabItem>
 </Tabs>
 
 ## Let's produce sample data for tom and laura
 
-Producing 2 messages in `customers-shredding` in cluster `teamA`
+Producing 2 messages in `customers-shredding` in cluster `gateway1`
 
-<Tabs>
-<TabItem value="Command">
+
 
 
 Sending 2 events
@@ -640,20 +645,21 @@ Sending 2 events
   "address" : "Chancery lane, London"
 }
 ```
-with
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","visa":"#888999XZ","address":"Dubai, UAE"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
         --topic customers-shredding
 
 echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
     kafka-console-producer \
         --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
         --topic customers-shredding
 ```
 
@@ -668,26 +674,30 @@ echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/cVcPqOLNISXolxoyZgDyj7kRt.svg)](https://asciinema.org/a/cVcPqOLNISXolxoyZgDyj7kRt)
+[![asciicast](https://asciinema.org/a/689992.svg)](https://asciinema.org/a/689992)
 
 </TabItem>
 </Tabs>
 
 ## Let's consume the message, and confirm tom and laura are encrypted
 
-Let's consume the message, and confirm tom and laura are encrypted in cluster `teamA`
+Let's consume the message, and confirm tom and laura are encrypted in cluster `gateway1`
+
+
+
+
+
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
     --topic customers-shredding \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --max-messages 3 \
+    --timeout-ms 3000 | jq
 ```
 
 
@@ -696,39 +706,38 @@ returns 2 events
 {
   "name" : "laura",
   "username" : "laura@conduktor.io",
-  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WXVmMUp5cTM2cUtFUUNDaVpQQ09vT1ZTZWhSTUxsZ1Rvd051WEpiK3lIOXMxT3RBcGU0Y0xPSHVNMzJZQ3c9PUW1O9hJBFOdHDjV6Z10leHvd2E22QitKoM02D+SgjeLXlC1Y+VBnHlIIkY=",
-  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WXVmMUp5cTM2cUtFUUNDaVpQQ09vT1ZTZWhSTUxsZ1Rvd051WEpiK3lIOXMxT3RBcGU0Y0xPSHVNMzJZQ3c9PQU3oYki9GuW9j3Vq7+Lj1fVfnKJrtZKNpVzE5YzIuEhq0vY3wT41xl2L0pS",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6a29zcVRKWm5vNlJrd3pteFBnaENjaTdiNE05RHA4UExad3RIaG5SMUlvcEdmSHNWYTVXUGJQNnpyWmg1WFE9PTT+lvH6WRwOhbSK1zuXemP/zgru12rku7Tfl5gIKOwQAWa8nBV9P1BVJiE=",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6a29zcVRKWm5vNlJrd3pteFBnaENjaTdiNE05RHA4UExad3RIaG5SMUlvcEdmSHNWYTVXUGJQNnpyWmg1WFE9Pa5usmFlb8ibw4+n70I1pT09syLa2yqOt1XSf9MC0IH7Tv+9Zq+aKfv49x7X",
   "address" : "Dubai, UAE"
 }
 {
   "name" : "tom",
   "username" : "tom@conduktor.io",
-  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6VGNtdGcwdEU4bkNucU9kV0xGQWRjQXZzVXJ3bUxSOXNMVm51TCtjTGpkSSt0NXJOaTFQYzhKZU9veU9CS3c9PXK5SEikrCnhMUTImgVWa8OisKzZIHjw2cRqUJrcE0WXRc2/+ny+UQYOB1Cd",
-  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6VGNtdGcwdEU4bkNucU9kV0xGQWRjQXZzVXJ3bUxSOXNMVm51TCtjTGpkSSt0NXJOaTFQYzhKZU9veU9CS3c9PT5PT6k9G2kkJB05CLSqPb5FjSJtecYf5DcVEPpIEhKnkc7acF9cz5/7vQ==",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WmVvTkh0eTFSQVdUODdZUm5DU3doMURFRnJJMnphaHFqZ0x3ajE3Um9FUUNVNjltS2tnaUZhMTgyUG5aVFE9PWdVu2uhmxW3cq1WDs6Xd77wbB1WQt2i4Lp3qFjKLTRWE13gttjbBS9dGdhY",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WmVvTkh0eTFSQVdUODdZUm5DU3doMURFRnJJMnphaHFqZ0x3ajE3Um9FUUNVNjltS2tnaUZhMTgyUG5aVFE9PX+m2RpInN+f7nYJ4i+QhnbKwyVZ1e/uDpZufudchZXh23vMdyg8v/CYJA==",
   "address" : "Chancery lane, London"
 }
 ```
-
 
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-04-10 00:53:27,265] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-16 18:55:46,373] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "laura",
   "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6ajA0MXFyK09hcEswcUE1MzlrOVB3bHcwSXNtbUdYV3k2emtJbE9rZ00wUFBlQ254SWhBbEViSmdzd2ljMEE9PTX4VrzUrdThwR6dFioySSveL0T0QEi+NxIzaz4RQQ+1coEL0FSDE6i4akE=",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6ajA0MXFyK09hcEswcUE1MzlrOVB3bHcwSXNtbUdYV3k2emtJbE9rZ00wUFBlQ254SWhBbEViSmdzd2ljMEE9Pe7mWHAVHw2H5tS1uxrjVn2PVb8NU6VqdKhQNqIqdXtr73Cd3M5NyATylO5l",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6cy9sMVVTaXpveUZDajBCOFpTSHgzRWowc2lCNS9iMm9TTFJIeU1uTEFRdUdVbDQ3dmlpZXlDczhEaEVQRkE9PbJz0uIuB5xXUvDT15O8aCIX3K6m8LML2eUwORqbpA51BF+7rsMyOXY3f9g=",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6cy9sMVVTaXpveUZDajBCOFpTSHgzRWowc2lCNS9iMm9TTFJIeU1uTEFRdUdVbDQ3dmlpZXlDczhEaEVQRkE9PalXTG/+i2PivrCL3DaCQWLMhS4DSsrRq8SyXChWkhmDmY+kGmrhND5sHr3c",
   "address": "Dubai, UAE"
 }
 {
   "name": "tom",
   "username": "tom@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6SEN3bG5lYlhkR3piZURsZ3k2OHZQa1lTR2RSTm51TXZMQTk2SkJpNDdSNC96cmRyRFNCWDlBbkN1bGQ1Mmc9PTwFrptKoMRbsEGVroZrNo5N3MGLtzUAVyUIaAhcj5C55cfUc7tMW7Ux8eYK",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6SEN3bG5lYlhkR3piZURsZ3k2OHZQa1lTR2RSTm51TXZMQTk2SkJpNDdSNC96cmRyRFNCWDlBbkN1bGQ1Mmc9PZn6ks7Upp48eJnCo1aAKmFFlgaPQ0j4hi9xixmdThO3pfBq1mBsKVLYNA==",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6UnBRQkwzMzRuUS9xZVNIczVJNFRJNW52a0dTb2RlNDB4QjJKMW1uK05XclhUU2xITVRUS2ZmTWNPUHduQUE9PQg3gDWX2VhiNdS0BiUm5fMouCvIIi0aR/Owyz9FX7aJJMKYw3g5VDJ2lDp6",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6UnBRQkwzMzRuUS9xZVNIczVJNFRJNW52a0dTb2RlNDB4QjJKMW1uK05XclhUU2xITVRUS2ZmTWNPUHduQUE9PVGnvyHHiT398JskCUckNDNMyZDdEi0rsolJVYRUA2LcMRnrAA/jWZxshQ==",
   "address": "Chancery lane, London"
 }
 
@@ -737,7 +746,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/piud6JKve7pq1tqmCBZ421Jl7.svg)](https://asciinema.org/a/piud6JKve7pq1tqmCBZ421Jl7)
+[![asciicast](https://asciinema.org/a/689993.svg)](https://asciinema.org/a/689993)
 
 </TabItem>
 </Tabs>
@@ -746,19 +755,48 @@ Processed a total of 2 messages
 
 Let's add the decrypt interceptor to decipher messages
 
+
+
+
+`step-11-crypto-shredding-decrypt-interceptor.json`:
+
+```json
+{
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "crypto-shredding-decrypt"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: crypto-shredding-decrypt",
+    "pluginClass" : "io.conduktor.gateway.interceptor.DecryptPlugin",
+    "priority" : 100,
+    "config" : {
+      "topic" : "customers-shredding",
+      "kmsConfig" : {
+        "keyTtlMs" : 200,
+        "vault" : {
+          "uri" : "http://vault:8200",
+          "token" : "vault-plaintext-root-token",
+          "version" : 1
+        }
+      }
+    }
+  }
+}
+```
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
-cat step-12-crypto-shredding-decrypt.json | jq
-
 curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/crypto-shredding-decrypt" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
     --silent \
-    --data @step-12-crypto-shredding-decrypt.json | jq
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-11-crypto-shredding-decrypt-interceptor.json | jq
 ```
 
 
@@ -767,22 +805,35 @@ curl \
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
-  "priority": 100,
-  "config": {
-    "topic": "customers-shredding",
-    "kmsConfig": {
-      "keyTtlMs": 200,
-      "vault": {
-        "uri": "http://vault:8200",
-        "token": "vault-plaintext-root-token",
-        "version": 1
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "crypto-shredding-decrypt",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: crypto-shredding-decrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+      "priority": 100,
+      "config": {
+        "topic": "customers-shredding",
+        "kmsConfig": {
+          "keyTtlMs": 200,
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "vault-plaintext-root-token",
+            "version": 1
+          }
+        }
       }
     }
-  }
-}
-{
-  "message": "crypto-shredding-decrypt is created"
+  },
+  "upsertResult": "CREATED"
 }
 
 ```
@@ -790,25 +841,28 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/QcdbpYQ8Kx8z18GCjuCGkzaab.svg)](https://asciinema.org/a/QcdbpYQ8Kx8z18GCjuCGkzaab)
+[![asciicast](https://asciinema.org/a/689994.svg)](https://asciinema.org/a/689994)
 
 </TabItem>
 </Tabs>
 
-## Listing interceptors for teamA
+## Listing interceptors
 
-Listing interceptors on `gateway1` for virtual cluster `teamA`
+Listing interceptors on `gateway1`
+
+
+
+
+
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent | jq
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
 ```
 
 
@@ -816,13 +870,50 @@ curl \
 <TabItem value="Output">
 
 ```json
-{
-  "interceptors": [
-    {
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "crypto-shredding-decrypt",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: crypto-shredding-decrypt",
+      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+      "priority": 100,
+      "config": {
+        "topic": "customers-shredding",
+        "kmsConfig": {
+          "keyTtlMs": 200,
+          "vault": {
+            "uri": "http://vault:8200",
+            "token": "vault-plaintext-root-token",
+            "version": 1
+          }
+        }
+      }
+    }
+  },
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
       "name": "crypto-shredding-encrypt",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: crypto-shredding-encrypt",
       "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
       "priority": 100,
-      "timeoutMs": 9223372036854775807,
       "config": {
         "topic": "customers-shredding",
         "kmsConfig": {
@@ -836,61 +927,48 @@ curl \
           {
             "fieldName": "password",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": "AES_GCM"
+            "algorithm": "AES128_GCM"
           },
           {
             "fieldName": "visa",
             "keySecretId": "vault-kms://vault:8200/transit/keys/secret-for-{{record.value.name}}",
-            "algorithm": "AES_GCM"
+            "algorithm": "AES128_GCM"
           }
         ]
       }
-    },
-    {
-      "name": "crypto-shredding-decrypt",
-      "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
-      "priority": 100,
-      "timeoutMs": 9223372036854775807,
-      "config": {
-        "topic": "customers-shredding",
-        "kmsConfig": {
-          "keyTtlMs": 200,
-          "vault": {
-            "uri": "http://vault:8200",
-            "token": "vault-plaintext-root-token",
-            "version": 1
-          }
-        }
-      }
     }
-  ]
-}
+  }
+]
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pU0S9EOAbNn70IldzDFxv14kX.svg)](https://asciinema.org/a/pU0S9EOAbNn70IldzDFxv14kX)
+[![asciicast](https://asciinema.org/a/689995.svg)](https://asciinema.org/a/689995)
 
 </TabItem>
 </Tabs>
 
 ## Confirm message from tom and laura are encrypted
 
-Confirm message from tom and laura are encrypted in cluster `teamA`
+Confirm message from tom and laura are encrypted in cluster `gateway1`
+
+
+
+
+
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
     --topic customers-shredding \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --max-messages 3 \
+    --timeout-ms 3000 | jq
 ```
 
 
@@ -912,12 +990,11 @@ returns 2 events
 }
 ```
 
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-04-10 00:53:39,587] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-16 18:55:52,726] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
@@ -940,7 +1017,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/QnCZbkg4MjsiGjimHaSBYse2E.svg)](https://asciinema.org/a/QnCZbkg4MjsiGjimHaSBYse2E)
+[![asciicast](https://asciinema.org/a/689996.svg)](https://asciinema.org/a/689996)
 
 </TabItem>
 </Tabs>
@@ -949,10 +1026,14 @@ Processed a total of 2 messages
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
   --request GET 'http://localhost:8200/v1/transit/keys/?list=true' \
@@ -975,7 +1056,7 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/K28vaFw8rdAm5E3Qn9IJrBQse.svg)](https://asciinema.org/a/K28vaFw8rdAm5E3Qn9IJrBQse)
+[![asciicast](https://asciinema.org/a/689997.svg)](https://asciinema.org/a/689997)
 
 </TabItem>
 </Tabs>
@@ -984,10 +1065,14 @@ curl \
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
   --request POST 'http://localhost:8200/v1/transit/keys/secret-for-laura/config' \
@@ -1013,26 +1098,30 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/Uz7z1337ZqtcFUlwJ6OD97V8P.svg)](https://asciinema.org/a/Uz7z1337ZqtcFUlwJ6OD97V8P)
+[![asciicast](https://asciinema.org/a/689998.svg)](https://asciinema.org/a/689998)
 
 </TabItem>
 </Tabs>
 
 ## Let's make sure laura data are no more readable!
 
-Let's make sure laura data are no more readable! in cluster `teamA`
+Let's make sure laura data are no more readable! in cluster `gateway1`
+
+
+
+
+
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
     --topic customers-shredding \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --max-messages 3 \
+    --timeout-ms 3000 | jq
 ```
 
 
@@ -1041,8 +1130,8 @@ returns 2 events
 {
   "name" : "laura",
   "username" : "laura@conduktor.io",
-  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WXVmMUp5cTM2cUtFUUNDaVpQQ09vT1ZTZWhSTUxsZ1Rvd051WEpiK3lIOXMxT3RBcGU0Y0xPSHVNMzJZQ3c9PUW1O9hJBFOdHDjV6Z10leHvd2E22QitKoM02D+SgjeLXlC1Y+VBnHlIIkY=",
-  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6WXVmMUp5cTM2cUtFUUNDaVpQQ09vT1ZTZWhSTUxsZ1Rvd051WEpiK3lIOXMxT3RBcGU0Y0xPSHVNMzJZQ3c9PQU3oYki9GuW9j3Vq7+Lj1fVfnKJrtZKNpVzE5YzIuEhq0vY3wT41xl2L0pS",
+  "password" : "AAAABQAAAAEAAABJdmF1bHQ6djE6a29zcVRKWm5vNlJrd3pteFBnaENjaTdiNE05RHA4UExad3RIaG5SMUlvcEdmSHNWYTVXUGJQNnpyWmg1WFE9PTT+lvH6WRwOhbSK1zuXemP/zgru12rku7Tfl5gIKOwQAWa8nBV9P1BVJiE=",
+  "visa" : "AAAABQAAAAEAAABJdmF1bHQ6djE6a29zcVRKWm5vNlJrd3pteFBnaENjaTdiNE05RHA4UExad3RIaG5SMUlvcEdmSHNWYTVXUGJQNnpyWmg1WFE9Pa5usmFlb8ibw4+n70I1pT09syLa2yqOt1XSf9MC0IH7Tv+9Zq+aKfv49x7X",
   "address" : "Dubai, UAE"
 }
 {
@@ -1054,19 +1143,18 @@ returns 2 events
 }
 ```
 
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-04-10 00:53:51,974] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-16 18:55:58,638] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "name": "laura",
   "username": "laura@conduktor.io",
-  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6ajA0MXFyK09hcEswcUE1MzlrOVB3bHcwSXNtbUdYV3k2emtJbE9rZ00wUFBlQ254SWhBbEViSmdzd2ljMEE9PTX4VrzUrdThwR6dFioySSveL0T0QEi+NxIzaz4RQQ+1coEL0FSDE6i4akE=",
-  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6ajA0MXFyK09hcEswcUE1MzlrOVB3bHcwSXNtbUdYV3k2emtJbE9rZ00wUFBlQ254SWhBbEViSmdzd2ljMEE9Pe7mWHAVHw2H5tS1uxrjVn2PVb8NU6VqdKhQNqIqdXtr73Cd3M5NyATylO5l",
+  "password": "AAAABQAAAAEAAABJdmF1bHQ6djE6cy9sMVVTaXpveUZDajBCOFpTSHgzRWowc2lCNS9iMm9TTFJIeU1uTEFRdUdVbDQ3dmlpZXlDczhEaEVQRkE9PbJz0uIuB5xXUvDT15O8aCIX3K6m8LML2eUwORqbpA51BF+7rsMyOXY3f9g=",
+  "visa": "AAAABQAAAAEAAABJdmF1bHQ6djE6cy9sMVVTaXpveUZDajBCOFpTSHgzRWowc2lCNS9iMm9TTFJIeU1uTEFRdUdVbDQ3dmlpZXlDczhEaEVQRkE9PalXTG/+i2PivrCL3DaCQWLMhS4DSsrRq8SyXChWkhmDmY+kGmrhND5sHr3c",
   "address": "Dubai, UAE"
 }
 {
@@ -1082,7 +1170,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/IkynW9Y864OC10CbBhbOe280r.svg)](https://asciinema.org/a/IkynW9Y864OC10CbBhbOe280r)
+[![asciicast](https://asciinema.org/a/689999.svg)](https://asciinema.org/a/689999)
 
 </TabItem>
 </Tabs>
@@ -1093,10 +1181,14 @@ Remove all your docker processes and associated volumes
 
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose down --volumes
 ```
@@ -1108,9 +1200,9 @@ docker compose down --volumes
 ```
  Container vault  Stopping
  Container kafka-client  Stopping
- Container schema-registry  Stopping
- Container gateway2  Stopping
  Container gateway1  Stopping
+ Container gateway2  Stopping
+ Container schema-registry  Stopping
  Container vault  Stopped
  Container vault  Removing
  Container vault  Removed
@@ -1119,18 +1211,18 @@ docker compose down --volumes
  Container gateway2  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
+ Container gateway1  Removed
  Container schema-registry  Removed
- Container kafka1  Stopping
- Container kafka3  Stopping
  Container kafka2  Stopping
+ Container kafka3  Stopping
+ Container kafka1  Stopping
  Container kafka3  Stopped
  Container kafka3  Removing
- Container kafka3  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
+ Container kafka3  Removed
  Container kafka1  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
@@ -1138,10 +1230,6 @@ docker compose down --volumes
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container zookeeper  Stopping
- Container zookeeper  Stopped
- Container zookeeper  Removing
- Container zookeeper  Removed
  Network encryption-crypto-shredding_default  Removing
  Network encryption-crypto-shredding_default  Removed
 
@@ -1150,7 +1238,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/CRnX2FK21Y0JcZJNmee365qZ8.svg)](https://asciinema.org/a/CRnX2FK21Y0JcZJNmee365qZ8)
+[![asciicast](https://asciinema.org/a/690000.svg)](https://asciinema.org/a/690000)
 
 </TabItem>
 </Tabs>

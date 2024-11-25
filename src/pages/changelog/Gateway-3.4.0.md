@@ -57,6 +57,8 @@ This feature is experimental and comes with a number of [limitations](/gateway/c
 - Fixed an issue impacting live consumption from concentrated topics within Console
 - Fixed an issue with upserts in API V2 relating to service accounts (reporting updated when the status should be not changed)
 - Fixed an issue related to Kafka 3.7 client support, ensuring topic id's for alias and concentrated topics are distinct from their underlying topics
+- Fixed an issue whereby audit logs were not being captured during cluster switching
+- Fixed an issue with SQL topics when parsing topic names containing "-"
 
 
 ## Known issues

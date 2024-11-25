@@ -205,18 +205,21 @@ Below is the list of all the exported audit log event types, that are currently 
 
 ### Kafka-Related Events
 
-| **Event Type**             | **Description**             |
-| -------------------------- | --------------------------- |
-| **Kafka.Subject.Create**   | Kafka subject is created.   |
-| **Kafka.Subject.Update**   | Kafka subject is updated.   |
-| **Kafka.Subject.Delete**   | Kafka subject is deleted.   |
-| **Kafka.Topic.Create**     | Kafka topic is created.     |
-| **Kafka.Topic.Update**     | Kafka topic is updated.     |
-| **Kafka.Topic.Delete**     | Kafka topic is deleted.     |
-| **Kafka.Topic.Empty**      | Kafka topic is emptied.     |
-| **Kafka.Connector.Create** | Kafka connector is created. |
-| **Kafka.Connector.Update** | Kafka connector is updated. |
-| **Kafka.Connector.Delete** | Kafka connector is deleted. |
+| **Event Type**                    | **Description**                                            |
+| --------------------------------- | ---------------------------------------------------------- |
+| **Kafka.Subject.Create**          | Kafka subject is created.                                  |
+| **Kafka.Subject.Update**          | Kafka subject is updated.                                  |
+| **Kafka.Subject.Delete**          | Kafka subject is deleted.                                  |
+| **Kafka.Topic.Create**            | Kafka topic is created.                                    |
+| **Kafka.Topic.Update**            | Kafka topic is updated.                                    |
+| **Kafka.Topic.Delete**            | Kafka topic is deleted.                                    |
+| **Kafka.Topic.Empty**             | Kafka topic is emptied.                                    |
+| **Kafka.Connector.Create**        | Kafka connector is created.                                |
+| **Kafka.Connector.Update**        | Kafka connector is updated.                                |
+| **Kafka.Connector.Delete**        | Kafka connector is deleted.                                |
+| **Kafka.ConsumerGroup.Duplicate** | Kafka consumer group is duplicated.                        |
+| **Kafka.ConsumerGroup.Update**    | Kafka consumer group is updated, when the offset is reset. |
+| **Kafka.ConsumerGroup.Delete**    | Kafka consumer group is deleted.                           |
 
 ### IAM-Related Events
 
@@ -225,6 +228,8 @@ Below is the list of all the exported audit log event types, that are currently 
 | **Iam.User.Create**  | IAM user is created.  |
 | **Iam.User.Update**  | IAM user is updated.  |
 | **Iam.User.Delete**  | IAM user is deleted.  |
+| **Iam.User.Login**   | IAM user logs in.     |
+| **Iam.User.Logout**  | IAM user logs out.    |
 | **Iam.Group.Create** | IAM group is created. |
 | **Iam.Group.Update** | IAM group is updated. |
 | **Iam.Group.Delete** | IAM group is deleted. |
