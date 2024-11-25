@@ -436,3 +436,41 @@ conduktor-main:
 </Tabs>
 
 
+### Using Environment Variables for Secrets
+When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
+It also supports default values as fallback using POSIX notation `${ENV:-default}`.
+
+It will fail if an environment variable is not found or set to empty, unless the `--permissive` flag is set e.g. `conduktor apply -f clusters.yaml --permissive`. In which case when an env var is blank or is missing, then it will be replaced with an empty string.
+
+See below example for a Conduktor cluster configuration, where the credentials to the cluster are hidden.
+
+```yaml
+apiVersion: console/v2
+kind: KafkaCluster
+metadata:
+  name: my-cluster
+spec:
+  displayName: "My Kafka Cluster"
+  icon: "kafka"
+  color: "#000000"
+  bootstrapServers: "localhost:9092"
+  ignoreUntrustedCertificate: false
+  properties:
+    sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${ENV_VAR_FOR_USER}" password="${ENV_VAR_FOR_PASSWORD}";
+    security.protocol: SASL_SSL
+    sasl.mechanism: PLAIN
+  schemaRegistry:
+    type: "ConfluentLike"
+    url: http://localhost:8080
+    security:
+      type: BasicAuth
+      username: ${ENV_VAR_FOR_USER}
+      password: ${ENV_VAR_FOR_PASSWORD}
+    ignoreUntrustedCertificate: false
+  kafkaFlavor:
+    type: "Confluent"
+    key: "${ENV_VAR_CONFLUENT_KEY}"
+    secret: "${ENV_VAR_CONFLUENT_SECRET}"
+    confluentEnvironmentId: "${ENV_VAR_CONFLUENT_ENV_ID:-dev}"
+    confluentClusterId: "${ENV_VAR_CONFLUENT_CLUSTER_ID:-main}"
+```

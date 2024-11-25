@@ -402,6 +402,10 @@ const redirects = [
         from: '/platform/navigation/self-serve/getting-started/',
         to: '/platform/navigation/self-serve/',
       },
+      {
+        from: '/platform/get-started/support/data-security/',
+        to: '/platform/get-started/support/data-privacy/'
+      }
     ],
   },
 ]

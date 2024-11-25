@@ -6,6 +6,8 @@ solutions: gateway
 tags: features
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## General features ✨
 
 ### Passthrough security for a simple setup experience

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: API V2 Migration Guide
+title: Migration Guide to API V2
 description: Need to know changes between V1 and V2 APIs
 ---
 

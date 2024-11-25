@@ -4,60 +4,36 @@ title: Concentrated Topics
 description: Concentrated topics
 ---
 
-Concentrated Topics transparently act as pointers to a single physical topic on your Kafka cluster.  They allow you to reduce costs on low-volume topics by co-locating messages.  They are completely transparent to consumers and producers and allow you to emulate different partition counts irrespective of the backing physical topic's partition count.
-
+## Overview 
+Concentrated Topics transparently act as pointers to a single physical topic on your Kafka cluster.  They allow you to reduce costs on low-volume topics by co-locating messages.  
+They are completely transparent to consumers and producers and allow you to emulate different partition counts irrespective of the backing physical topic's partition count.
 
 ## Usage
+To create Concentrated Topics, first deploy a [ConcentrationRule](/gateway/reference/resources-reference/#concentrationrule):
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: concentration1
+spec:
+  pattern: concentrated.*
+  physicalTopics:
+    delete: physical.topic
+````
 
-As per the Gateway API documentation, you can create a concentration rule to concentrate topics based on a prefix.
+Now, create topics that match the ConcentrationRule `spec.pattern`
 
-The following API call is an example that will set a rule to modify any new topics created with the prefix `concentrated.` to be concentrated topics:
-
-```bash
-curl \
-  --request PUT \
-  --url 'http://localhost:8888/gateway/v2/concentration-rule' \
-  --user 'admin:conduktor' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "kind": "ConcentrationRule",
-  "apiVersion": "gateway/v2",
-  "metadata": {
-    "name": "concentrationRule1",
-    "vCluster": "passthrough"
-  },
-  "spec": {
-    "pattern": "concentrated.*",
-    "physicalTopics": {
-      "delete": "physical.topic.delete",
-      "compact": "physical.topic.compact",
-      "deleteCompact": "physical.topic.deleteCompact"
-    },
-    "autoManaged": true
-  }
-}'
-```
-
-In this configuration, you can provide 3 `physicalTopics`, based on their cleanup policy. Each will store the messages of concentrated topics matching their cleanup policy.
-
-The `autoManaged` flag, when enabled, will automatically create the physical topics with the default configuration of the physical cluster and the default number of partitions (`num.partitions`).
-
-:::note
-In the `autoManaged` mode, topics created by users will auto-extend the configuration (for example to honour the request `retention.ms`). As a result, if one users asks for a compacted topic with a retention of -1 (infinite), all other compacted topics associated with the concentration rule are now with infinite retention.
-:::
-
-You can now create a concentrated topic by matching the `pattern` mentioned in your concentration rule.
-
-```sh
+````bash
 kafka-topics \
   --bootstrap-server conduktor-gateway:6969 \
   --topic concentrated.topicA \
-  --partitions 10
-```
+  --partitions 3
 
-## How does it work?
-
-When you create a concentrated topic, each concentrated partition is mapped to a physical partition, as shown below:
+kafka-topics \
+  --bootstrap-server conduktor-gateway:6969 \
+  --topic concentrated.topicB \
+  --partitions 4
+````
 
 ![Topic Concentration](./img/concentrated-topic.png)
 
@@ -65,61 +41,175 @@ In this case, we have 2 concentrated topics (`concentrated.topicA` & `concentrat
 
 To ensure that consumers don't consume messages from other partitions or from other concentrated topics, we store the concentrated partition and the concentrated topic name in the record headers. Gateway will automatically filter the messages that should be returned to the consumer.
 
-### Compact Cleanup Policy
-
-In the case of a compact cleanup policy, we should not force two records produced into two different concentrated topics with the same key to be stored in the same partition.
-
-For that, the Gateway will add an identifier for each concentrated compacted topic as a key suffix. You can find this suffix in the internal topic that stores all the topic mappings.
-
-This suffix is invisible for applications and is removed on consumption.
-
-:::tip
-In this internal topic, you can see how concentrated and physical partitions are mapped together!
-:::
-
 ## Limitations
+### Compact and Delete+Compact Topics
+You can create concentrated topics with any cleanup.policy, but your ConcentrationRule must have a backing topic for each of them, otherwise it won't let you create the topic.
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: concentration1
+spec:
+  pattern: concentrated.*
+  physicalTopics:
+    delete: physical.topic-delete
+    compact: physical.topic-compact
+    # deleteCompact: physical.topic-deletecompact
+````
+In this example, since the config for `spec.deleteCompact` is commented out, trying to create this topic will fail:
 
-### Configuration
+````bash
+kafka-topics --create 
+    --bootstrap-server conduktor-gateway:6969 \
+    --topic <your-topic-name> \
+    --partitions 3 \
+    --config cleanup.policy=compact,delete
+Error while executing topic command : Cleanup Policy is invalid
+````
+
+Backing topic cleanup policies are checked when you deploy a new ConcentrationRule. This prevents you from declaring a backing topic with a cleanup.policy of delete on a ConcentrationRule `spec.physicalTopic.compact` field.
+
+### Restricted topic configurations
 
 The following list of topic properties are the only allowed properties for concentrated topics:
-- `partitions` 
+- `partitions`
 - `cleanup.policy`
 - `retention.ms`
 - `retention.bytes`
 - `delete.retention.ms`
 
-If any other configuration besides the above is being set, and is different from the physical cluster default, the topic creation will fail with an error:
+If any other configuration besides the above is set, the topic creation will fail with an error.
+
+`retention.ms` and `retention.bytes` can be set to values lower or equal to the backing topic. If a user tries to create a topic with a higher value, topic creation will fail with an error:
 
 ```
-Configuration is invalid.
-```
-
-If `autoManaged` is disabled, the `retention.ms` and `retention.bytes` values must not exceed the physical topic's configuration. Otherwise, the topic creation will fail with an error like the one below:
-
-```
+kafka-topics --create 
+    --bootstrap-server conduktor-gateway:6969 \
+    --topic <your-topic-name> \
+    --partitions 3 \
+    --config retention.ms=704800000
 Error while executing topic command : Value '704800000' for configuration 'retention.ms' is incompatible with physical topic value '604800000'.
 ```
 
-:::info
+This behavior can be altered with the flag `spec.autoManaged`.
+
+:::caution
 With concentrated topics, the enforced retention policy is the physical topic's retention policy, and not the policy requested at the concentrated topic creation time.
 
 `retention.ms` and `retention.bytes` are not cleanup guarantees. They are retention guarantees.
 :::
 
-### Performance
 
-Gateway must read all the messages for all the consumers and skip the ones that are not necessary for each consumer.
+## Auto-managed backing topics
 
-### Message Count & Lag, Offset (in)correctness
+When `autoManaged` is enabled: 
+- backing topics are automatically created with the default cluster configuration and partition count. 
+- Concentrated topics created with higher `retention.ms` and `retention.bytes` are allowed. It automatically extends the configuration of the backing topic.
 
-Concentrated topics & SQL topics are virtualised, which creates incompatibilities with existing tools in the Kafka Ecosystem (Conduktor included) that rely on topics metadata to generate reports, graphs or calculations.
 
-Right now, the 2 most problematic calculations are **Lag** and **Message Count**. This is due to the calculation method that rely on partition **EndOffset**.
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: concentration1
+spec:
+  pattern: concentrated.*
+  physicalTopics:
+    delete: physical.topic
+  autoManaged: true
+````
+
+Let's check the backing topic retention on the physical cluster
+````bash
+kafka-configs --bootstrap-server kafka:9092 \
+    --entity-type topics --entity-name physical.topic \
+    --describe
+Configs for topic 'physical.topic' are:
+  cleanup.policy=delete
+  retention.ms=604800000
+  retention.bytes=-1
+````
+Let's try to create a Concentrated Topic with a higher retention on the Gateway
+````bash
+kafka-topics --create 
+    --bootstrap-server conduktor-gateway:6969 \
+    --topic <your-topic-name> \
+    --partitions 3 \
+    --config retention.ms=704800000
+````
+Let's review the backing topic again
+````bash
+kafka-configs --bootstrap-server kafka:9092 \
+    --entity-type topics --entity-name physical.topic \
+    --describe
+Configs for topic 'physical.topic' are:
+  cleanup.policy=delete
+  retention.ms=704800000
+  retention.bytes=-1
+````
+As we can see, the retention has been updated.
+
+:::caution
+If one user requests a topic with infinite retention (`retention.ms = -1`), **all topics** with the same cleanup policy associated with the rule will also inherit this extended configuration and have infinite retention.
+
+:::
+
+## Message Count & Lag, Offset (in)correctness
+
+:::caution
+**This feature is currently experimental.**  
+As we collect feedback and make any adjustments to the feature, we'll transition this to all ConcentrationRules.
+:::
+
+By default, Concentrted Topic report the offsets of their backing topics.  
+This impacts the calculations of **Lag** and **Message Count** that relies on partition **EndOffset** and group **CommitedOffset**.
 
 ![Offset Incorrectness](img/offset-correct.png)
 
-Any tooling will currently display the message count, and the lag relative to the `EndOffset`, of the physical topic. This can create confusion for customers and applications that will see wrong metrics.
+Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see incorrect metrics.
 
-:::tip
-We are working to address that limitation in the near-future. Contact us to get more information.
+To counter this effect we have implemented a dedicated offset management capability for ConcentrationRules.
+
+To enable virtual offsets, add the following line to the ConcentrationRule:
+
+````yaml
+---
+kind: ConcentrationRule
+metadata:
+  name: concentration1
+spec:
+  pattern: concentrated.*
+  physicalTopics:
+    delete: physical.topic
+  offsetCorrectness: true
+````
+
+- `spec.offsetCorrectness` only applies to Concentrated Topics with the `cleanup.policy=delete`
+- `spec.offsetCorrectness` is not retroactive on previously created Concentrated Topics
+
+## Known issues and limitations with Offset Correctness
+### Performance
+On startup, Gateway must read the concentrated topic entirely before it is available to consumers.  
+The end-to-end latency is increased by up to 500 ms (or `fetch.max.wait.ms` if non-default)
+
+### Memory impact
+Gateway consumes about ~250MB of heap memory per million records it has read in concentrated topics. This value is NOT bounded, so we advise against offset correctness on high-volume topics, and you should size your JVM accordingly.
+
+### Unsupported Kafka API
+- DeleteRecords is not supported
+- Transactions are not supported
+- Only `IsolationLevel.READ_UNCOMMITTED` is supported (using `IsolationLevel.READ_COMMITTED` is undefined behavior)
+- Partition truncation (upon `unclean.leader.election=true`) may not be detected by consumers
+
+### Very slow Consumer Group edge case
+
+:::caution
+Do not enable Offset Correctness when your topic has extended periods of inactivity.
 :::
+
+When using topic concentration with `offsetCorrectness` enabled, there is currently a limitation for consumer groups for the case where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently.  
+If a consumer group with a committed offset waits for longer than the retention time for the backing physical topic without committing a new offset there is a possibility for that consumer group to become blocked. While in this situation - a Consumer Group whose last committed offset has been removed from the topic - the group actually becomes blocked only if the Conduktor Gateway restarted before the next offset commit by the Consumer Group.
+If this limitation does happen, the offsets for the affected consumer group will need to be manually reset for it to continue.
+Support for this edge case is planned for future releases of the Conduktor Gateway.
+
+

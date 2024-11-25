@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 This release contains several **breaking changes** so please read the entire release note prior to installation.
 
 ## Important changes to our internal architecture ❗

@@ -9,7 +9,7 @@ info:
     altText: Conduktor logo
     backgroundColor: "#FFFFFF"
     href: https://docs.conduktor.io
-    url: https://www.conduktor.io/svgs/logo/black.svg
+    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/conduktor-gateway-api.png
     description: API routes to administer Conduktor Gateway.
 tags:
   - name: Introduction
@@ -39,9 +39,9 @@ tags:
   - name: Plugins
     description: APIs to interact with plugins.
 servers:
-  - url: "http://localhost:8888/admin"
+  - url: "http://localhost:8888"
 paths:
-  "/userMappings/v1/vcluster/{vcluster}":
+  "/admin/userMappings/v1/vcluster/{vcluster}":
     post:
       summary: Create a user mapping for a virtual cluster
       tags:
@@ -119,7 +119,7 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_listUserMappings
       deprecated: false
-  "/userMappings/v1/vcluster/{vcluster}/username/{username}":
+  "/admin/userMappings/v1/vcluster/{vcluster}/username/{username}":
     get:
       summary: Get a user mapping
       tags:
@@ -245,7 +245,7 @@ paths:
       operationId: Clusters_v1_deleteUserMapping
       deprecated: false
 
-  "/userMappings/v1":
+  "/admin/userMappings/v1":
     post:
       summary: Create a user mapping
       description: "Create a user mapping to define a gateway user from an authentication principal"
@@ -310,7 +310,7 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_listPassThroughUserMappings
       deprecated: false
-  "/userMappings/v1/username/{username}":
+  "/admin/userMappings/v1/username/{username}":
     get:
       summary: Get a user mapping
       tags:
@@ -418,7 +418,7 @@ paths:
       operationId: Clusters_v1_deletePassThroughUserMapping
       deprecated: false
 
-  "/vclusters/v1/vcluster/{vcluster}/username/{username}":
+  "/admin/vclusters/v1/vcluster/{vcluster}/username/{username}":
     post:
       summary: Create a virtual cluster with a username to connect to it
       tags:
@@ -469,7 +469,7 @@ paths:
         - basicAuth: [ ]
       operationId: Auth_v1_createClusterAccountToken
       deprecated: false
-  "/username/{username}":
+  "/admin/username/{username}":
     post:
       summary: Create a username
       tags:
@@ -514,7 +514,7 @@ paths:
         - basicAuth: [ ]
       operationId: Auth_v1_createPassThroughClusterAccountToken
       deprecated: false
-  "/vclusters/v1":
+  "/admin/vclusters/v1":
     get:
       summary: List virtual clusters
       tags:
@@ -544,7 +544,7 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_listClusters
       deprecated: false
-  "/vclusters/v1/vcluster/{vcluster}/topics":
+  "/admin/vclusters/v1/vcluster/{vcluster}/topics":
     delete:
       summary: Delete all topic mappings for a virtual cluster
       tags:
@@ -600,6 +600,7 @@ paths:
                     physicalTopicName: realTopic
                     readOnly: true
                     type: concentrated
+                    autoManaged: false
                   - logicalTopicName: topic2
                     physicalTopicName: realTopic2
                     readOnly: false
@@ -621,7 +622,7 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_listClusterTopicMapping
       deprecated: false
-  "/vclusters/v1/vcluster/{vcluster}/topics/{logicalTopicName}":
+  "/admin/vclusters/v1/vcluster/{vcluster}/topics/{logicalTopicName}":
     delete:
       summary: Delete a topic mapping for a virtual cluster
       description: Delete targeted topic mapping for a virtual cluster. If this API call is
@@ -699,6 +700,7 @@ paths:
                 physicalTopicName: realTopic
                 readOnly: true
                 type: alias
+                autoManaged: false
               schema:
                 "$ref": "#/components/schemas/TopicMapping"
         '400':
@@ -735,7 +737,7 @@ paths:
         - basicAuth: [ ]
       operationId: Clusters_v1_createClusterTopicMapping
       deprecated: false
-  "/vclusters/v1/vcluster/{vcluster}/concentration-rules":
+  "/admin/vclusters/v1/vcluster/{vcluster}/concentration-rules":
     post:
       tags:
         - Virtual Clusters
@@ -756,19 +758,38 @@ paths:
               properties:
                 clusterId:
                   type: string
+                  example: main
+                  description: Optional - Kafka cluster for merge cluster (default "main")
                 pattern:
                   type: string
+                  example: topic.*
+                  description: Logical topic name to apply concentration for
                 physicalTopicName:
                   type: string
+                  example: concentrated
+                  description: Physical topic to store concentrated topic
                 physicalTopicCompactedName:
                   type: string
+                  example: concentrated_compacted
+                  description: Optional - Physical topic to concentrate on for logical topic with compacted cleanup policy
                 physicalTopicCompactedDeletedName:
                   type: string
+                  example: concentrated_compacteddeleted
+                  description: Optional - Physical topic to concentrate on for logical topic with compacted deleted cleanup policy
+                autoManaged:
+                  type: boolean
+                  example: false
+                  description: Optional - Enable Gateway to auto manage backend topic
+              required:
+                - pattern
+                - physicalTopicName
       responses:
         '201':
           description: Rule created
         '400':
           description: Invalid input
+      security:
+        - basicAuth: [ ]
     get:
       tags:
         - Virtual Clusters
@@ -792,16 +813,35 @@ paths:
                   properties:
                     clusterId:
                       type: string
+                      example: main
+                      description: Optional - Kafka cluster for merge cluster (default "main")
                     pattern:
                       type: string
+                      example: topic.*
+                      description: Logical topic name to apply concentration for
                     physicalTopicName:
                       type: string
+                      example: concentrated
+                      description: Physical topic to store concentrated topic
                     physicalTopicCompactedName:
                       type: string
+                      example: concentrated_compacted
+                      description: Optional - Physical topic to concentrate on for logical topic with compacted cleanup policy
                     physicalTopicCompactedDeletedName:
                       type: string
+                      example: concentrated_compacteddeleted
+                      description: Optional - Physical topic to concentrate on for logical topic with compacted deleted cleanup policy
+                    autoManaged:
+                      type: boolean
+                      example: false
+                      description: Optional - Enable Gateway to auto manage backend topic
+                  required:
+                    - pattern
+                    - physicalTopicName
         '400':
           description: Invalid request
+      security:
+        - basicAuth: [ ]
     delete:
       summary: Delete a concentration rule
       tags:
@@ -824,7 +864,9 @@ paths:
           description: Rule deleted
         '404':
           description: Rule not found
-  "/pclusters/v1/pcluster/{pcluster}/switch":
+      security:
+        - basicAuth: [ ]
+  "/admin/pclusters/v1/pcluster/{pcluster}/switch":
     post:
       summary: Replace the connection properties of a physical cluster with properties from another cluster. Used for cluster switching.
       tags:
@@ -862,7 +904,49 @@ paths:
         - basicAuth: [ ]
       operationId: PhysClusters_v1_clusterSwitch
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/interceptor/{interceptorName}":
+  "/admin/pclusters/v1/pcluster/{pcluster}":
+    get:
+      summary: Get connection configuration for physical cluster id
+      tags:
+        - Physical Clusters
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: pcluster
+          required: true
+          description: Physical Cluster id
+      responses:
+        '200':
+          description: Current connection configuration of physical cluster
+          content:
+            application/json:
+              example:
+                boostrap.server: 192.169.0.1:9092
+                security.protocol: SASL_PLAINTEXT
+                sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="user" password="password";
+                sasl.mechanism: PLAIN
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '400':
+          description: Bad parameter. A cluster id is not configured
+          content: { }
+        '401':
+          description: ''
+          content: { }
+        '403':
+          description: Permission not granted
+          content:
+            application/json:
+              example:
+                message: You do not have permission to call this API, please contact your administrator.
+      security:
+        - basicAuth: [ ]
+      operationId: PhysClusters_v1_getPClusterInfo
+      deprecated: false
+  "/admin/interceptors/v1/vcluster/{vcluster}/interceptor/{interceptorName}":
     post:
       summary: Create an interceptor for a virtual cluster
       tags:
@@ -1052,7 +1136,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deleteClusterInterceptor
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/interceptors":
+  "/admin/interceptors/v1/vcluster/{vcluster}/interceptors":
     get:
       summary: Get interceptors of a cluster
       tags:
@@ -1116,7 +1200,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getClusterInterceptors_deprecated
       deprecated: true
-  "/interceptors/v1/vcluster/{vcluster}":
+  "/admin/interceptors/v1/vcluster/{vcluster}":
     get:
       summary: Get interceptors of a cluster
       tags:
@@ -1180,7 +1264,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getClusterInterceptors
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptor/{interceptorName}":
     post:
       summary: Add interceptor for a specific username within a virtual cluster
       tags:
@@ -1397,7 +1481,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deleteAccountInterceptor
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptors":
+  "/admin/interceptors/v1/vcluster/{vcluster}/username/{username}/interceptors":
     get:
       summary: Get interceptors of a username within a virtual cluster
       tags:
@@ -1467,7 +1551,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getAccountInterceptors_deprecated
       deprecated: true
-  "/interceptors/v1/vcluster/{vcluster}/username/{username}":
+  "/admin/interceptors/v1/vcluster/{vcluster}/username/{username}":
     get:
       summary: Get interceptors of a username within a virtual cluster
       tags:
@@ -1537,7 +1621,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getAccountInterceptors
       deprecated: false
-  "/interceptors/v1/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/interceptor/{interceptorName}":
     post:
       summary: Create an interceptor
       tags:
@@ -1703,7 +1787,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deletePassThroughClusterInterceptor
       deprecated: false
-  "/interceptors/v1":
+  "/admin/interceptors/v1":
     get:
       summary: Get interceptors
       tags:
@@ -1760,7 +1844,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getPassThroughClusterInterceptors
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/group/{group}/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/vcluster/{vcluster}/group/{group}/interceptor/{interceptorName}":
     post:
       summary: Add interceptor for a specific group within a virtual cluster
       tags:
@@ -1977,7 +2061,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deleteGroupInterceptor
       deprecated: false
-  "/interceptors/v1/vcluster/{vcluster}/group/{group}":
+  "/admin/interceptors/v1/vcluster/{vcluster}/group/{group}":
     get:
       summary: Get interceptors of a group within a virtual cluster
       tags:
@@ -2047,8 +2131,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getGroupInterceptors
       deprecated: false
-
-  "/interceptors/v1/username/{username}/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/username/{username}/interceptor/{interceptorName}":
     post:
       summary: Add interceptor for a specific username
       tags:
@@ -2241,7 +2324,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deletePassThroughAccountInterceptor
       deprecated: false
-  "/interceptors/v1/username/{username}":
+  "/admin/interceptors/v1/username/{username}":
     get:
       summary: Get interceptors of a username
       tags:
@@ -2305,7 +2388,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getPassThroughAccountInterceptors
       deprecated: false
-  "/interceptors/v1/group/{group}/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/group/{group}/interceptor/{interceptorName}":
     post:
       summary: Add interceptor for a specific group
       tags:
@@ -2502,7 +2585,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deletePassThroughGroupInterceptor
       deprecated: false
-  "/interceptors/v1/group/{group}":
+  "/admin/interceptors/v1/group/{group}":
     get:
       summary: Get interceptors of a group
       tags:
@@ -2566,7 +2649,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getPassThroughGroupInterceptors
       deprecated: false
-  "/interceptors/v1/global/interceptor/{interceptorName}":
+  "/admin/interceptors/v1/global/interceptor/{interceptorName}":
     post:
       summary: Add global interceptor
       tags:
@@ -2739,7 +2822,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_deleteGlobalInterceptor
       deprecated: false
-  "/interceptors/v1/global":
+  "/admin/interceptors/v1/global":
     get:
       summary: Get global interceptors
       tags:
@@ -2797,7 +2880,7 @@ paths:
       operationId: Interceptor_v1_getGlobalInterceptors
       deprecated: false
 
-  "/interceptors/v1/interceptors":
+  "/admin/interceptors/v1/interceptors":
     get:
       summary: Get all interceptors (virtual cluster and global interceptors)
       tags:
@@ -2882,7 +2965,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getInterceptors_deprecated
       deprecated: true
-  "/interceptors/v1/all":
+  "/admin/interceptors/v1/all":
     get:
       summary: Get all interceptors (virtual cluster and global interceptors)
       tags:
@@ -2967,7 +3050,7 @@ paths:
         - basicAuth: [ ]
       operationId: Interceptor_v1_getInterceptors
       deprecated: false
-  "/plugins/v1":
+  "/admin/plugins/v1":
     get:
       summary: List all available plugins
       tags:
@@ -2998,7 +3081,7 @@ paths:
         - basicAuth: [ ]
       operationId: Plugins_v1_getPlugins
       deprecated: false
-  "/plugins/v1/extended":
+  "/admin/plugins/v1/extended":
     get:
       summary: Get all available plugins with extended information
       tags:
@@ -3039,7 +3122,7 @@ paths:
         - basicAuth: [ ]
       operationId: Plugins_v1_getPluginsExtended
       deprecated: false
-  "/interceptors/v1/resolve":
+  "/admin/interceptors/v1/resolve":
     post:
       summary: resolve targeting for the given context
       tags:
@@ -3241,6 +3324,9 @@ components:
         type:
           example: alias
           type: string
+        autoManaged:
+          example: false
+          type: boolean
       example:
         logicalTopicName: logicalTopicName
         physicalTopicName: realTopic
@@ -3259,6 +3345,9 @@ components:
           type: string
         readOnly:
           example: true
+          type: boolean
+        autoManaged:
+          example: false
           type: boolean
         type:
           example: alias

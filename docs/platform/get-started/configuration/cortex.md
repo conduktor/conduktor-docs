@@ -55,11 +55,7 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level.                                                                                  | false     | string | `info`                  | `1.18.0` |
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
 
-:::tip
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
-This is not currently available for Alert Manager and Prometheus. 
-:::
-
+## Example configuration
 In a docker compose it may look like the following:
 ````yaml
 version: '3.8'
@@ -83,6 +79,26 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ````
 
+## Overriding Configuration
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+This is not currently available for Alert Manager and Prometheus. 
+
+For example, create a file `cortex.yaml` add in only your overrides:
+```yaml
+limits:
+  ingestion_rate: 50000
+  max_series_per_metric: 100000
+```
+Mount to `/opt/override-configs/cortex.yaml`.  
+Spin up the container. Exec into the container and confirm the contents, replace `2` with the number of lines of override you wish to see, or remove grep to get the whole file:  
+`cat /var/conduktor/configs/monitoring-cortex.yaml | grep limits -A2`.
+
+You should see a similar entry to the below in the opening logs:
+
+```text
+INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
+```
+
 ## Troubleshooting  
 
 ### No metrics in the monitoring page  
@@ -99,3 +115,6 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 4. [Create some alerts](../../navigation/monitoring/getting-started/create-alert.md).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
+
+## Endpoint Authentication
+Monitoring is not designed to be interacted with through the API endpoints by end users, only Console. As such no ingress is available externally and you should not set one up as there is no authentication mechanism.

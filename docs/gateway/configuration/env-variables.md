@@ -101,13 +101,13 @@ __Example Values__
 Note: These configurations apply to authentication between clients and Conduktor Gateway.
 For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
 
-| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                                            |
-|--------------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL`                | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`                        |
+| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                                         |
+|--------------------------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL`                | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`                     |
 | `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | If no virtual cluster was detected then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal |
-| `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                          |
-| `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | Enable / Disable ACLs support for Virtual Clusters only.                                                                                                                                                               |
-| `GATEWAY_USER_POOL_SECRET_KEY` |  A default value is used to sign tokens, this is not published and should be changed. | You must set to a random value to ensure that tokens cannot be forged. Used for the `PLAIN` mechanism when generating JWT tokens for clients. See [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for more. |
+| `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                       |
+| `GATEWAY_SUPER_USERS`                      | empty                                 | Coma-separated list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/> Example: `alice,bob`.                                                                        |
+| `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br />Enable / Disable ACLs support for Virtual Clusters only.                                                                                                    |
 
 #### SSL
 
@@ -138,7 +138,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 
 #### MTLS
 
-More context for mTLS [here](/gateway/concepts/authentication/)
+More context for mTLS [here](/gateway/concepts/service-accounts-authentication-authorization/)
 
 | Environment Variable                  | Default Value     | Description                                       |
 |---------------------------------------|-------------------|---------------------------------------------------|
@@ -159,7 +159,12 @@ Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REF
 | `GATEWAY_OAUTH_JWKS_MAX_RETRY`    | `NULL`        | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting                                                                                                                                                                                                                                                                                                                                            | 
 | `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`  | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                            |
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`    | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                          |
+#### PLAIN
+These settings are used when credentials are managed on the Gateway, see [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for details.
 
+| Environment Variable        | Default Value | Description                                                                                                             |
+|-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens and *must* be changed. | Used for the `PLAIN` mechanism when generating JWT tokens for clients. You must set a random value which is at least 256 bit long to ensure tokens can't be forged. |
 
 #### SECURITY PROVIDER
 
@@ -293,8 +298,8 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 | `LOG4J2_APPENDER_LAYOUT`                               | `pattern`     | The format to output console logging. Use `json` for json layout or `pattern` for pattern layout                           |                                          |
 | `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | `info`        | Low-level networking, connection mapping, authentication, authorization                                                    | io.conduktor.proxy.network               |
 | `LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL`            | `info`        | Requests processing and forwarding. At `trace`, log requests sent                                                          | io.conduktor.proxy.thread.UpstreamThread |
-| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | Requests and responses rewritting. Logs responses payload in `debug` (useful for checking METADATA)                        | io.conduktor.proxy.rebuilder.components  |
-| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | Various. Logs ACL checks and interceptor targettings at `debug`. Logs post-interceptor requests/reponse payload at `trace` | io.conduktor.proxy.service               |
+| `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | `info`        | Requests and responses rewriting. Logs responses payload in `debug` (useful for checking METADATA)                        | io.conduktor.proxy.rebuilder.components  |
+| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | `info`        | Various. Logs ACL checks and interceptor targettings at `debug`. Logs post-interceptor requests/response payload at `trace` | io.conduktor.proxy.service               |
 | `LOG4J2_IO_CONDUKTOR_LEVEL`                            | `info`        | Get even more logs not covered by specific packages                                                                        | io.conduktor                             |
 | `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | `warn`        | Kafka log level                                                                                                            | org.apache.kafka                         |
 | `LOG4J2_IO_KCACHE_LEVEL`                               | `warn`        | Kcache log level (our persistence library)                                                                                 | io.kcache                                |

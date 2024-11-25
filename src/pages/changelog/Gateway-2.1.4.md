@@ -6,6 +6,8 @@ solutions: gateway
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 ## Features ✨
 
 ### Support OAuth SASL Mechanism
@@ -18,7 +20,7 @@ New encryption security providers are now available when encrypting data.
 The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and the options available are: 
 
 * [Bouncy Castle](https://www.bouncycastle.org/)
-* [Bouncy Castle with FIPS](https://downloads.bouncycastle.org/fips-java/docs/BC-FJA-SecurityPolicy-1.0.2.pdf)
+* [Bouncy Castle with FIPS](https://www.bouncycastle.org/documentation/documentation-java/#bouncy-castle-java-fips-documentation)
 * [Conscrypt](https://www.conscrypt.org/)
 
 You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing field level encryption

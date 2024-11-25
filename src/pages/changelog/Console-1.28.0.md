@@ -6,6 +6,8 @@ solutions: console
 tags: features,fix
 ---
 
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
 - [Features ✨](#features-)
   - [Conduktor SQL](#conduktor-sql)
   - [Monitoring improvements](#monitoring-improvements)
@@ -60,7 +62,7 @@ curl \
 
 To use the feature there is a dependency on provisioning a new database. As a user, you have the choice of which topics you wish to index. Learn more about this and how to configure SQL using the [dedicated guide](/platform/guides/configure-sql).
 
-We encourage you to use this feature in non-production environments and give us [feedback](https://product.conduktor.help/c/133-sql-over-kafka).
+We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
 
 ***
 

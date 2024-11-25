@@ -79,14 +79,15 @@ spec:
 ### Interceptor Targeting
 You can activate your Interceptor only in specific scenarios. Use the table below to configure Targeting settings.
 
-| Use case                              | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` | 
-|---------------------------------------|---------------------------|------------------------|---------------------------|
-| Global Interceptor (targets everyone) | Empty                     | Empty                  | Empty                     |
-| Username Targeting                    | Empty                     | Empty                  | Set                       |
-| Group Targeting                       | Empty                     | Set                    | Empty                     |
-| Virtual Cluster Targeting             | Set                       | Empty                  | Empty                     |
-| Virtual Cluster + Username Targeting  | Set                       | Empty                  | Set                       |
-| Virtual Cluster + Group Targeting     | Set                       | Set                    | Empty                     |
+| Use case                                            | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` |
+|-----------------------------------------------------|---------------------------|------------------------|---------------------------|
+| Global Interceptor (Including Virtual Clusters)     | Set to `null`             | Set to `null`          | Set to `null`             |
+| Global Interceptor (**Excluding** Virtual Clusters) | Empty                     | Empty                  | Empty                     |
+| Username Targeting                                  | Empty                     | Empty                  | Set                       |
+| Group Targeting                                     | Empty                     | Set                    | Empty                     |
+| Virtual Cluster Targeting                           | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username Targeting                | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group Targeting                   | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
@@ -102,14 +103,28 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 **Examples**
 ````yaml
 ---
-# This interceptor targets everyone
+# This interceptor targets everyone (Including Virtual Clusters)
+apiVersion: gateway/v2
+kind: Interceptor
+metadata:
+  name: enforce-partition-limit
+  scope:
+    vCluster: null
+    goup: null
+    username: null
+spec:
+
+---
+# This interceptor targets everyone (Excluding Virtual Clusters)
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
 spec:
-  
+
 ---
 # This interceptor targets only `admin` service account
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
@@ -119,6 +134,7 @@ spec:
   
 ---
 # This interceptor targets only `read-only` virtual cluster
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
@@ -152,6 +168,7 @@ There are a few cases where you **must** declare GatewayServiceAccount objects:
 ````yaml
 ---
 # External User renamed
+apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
   name: application1
@@ -161,6 +178,7 @@ spec:
   - 00u9vme99nxudvxZA0h7
 ---
 # Local User on Virtual Cluster vc-B
+apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
   vcluster: vc-B
@@ -187,17 +205,18 @@ Gateway Group lets you add multiple users in the same GatewayGroup for easier In
 ````yaml
 ---
 # Users added to the group manually
+apiVersion: gateway/v2
 kind: GatewayGroup
 metadata:
   name: group-a
 spec:
   members:
-    - username: admin
+    - name: admin
     - vCluster: vc-B
-      username: "0000-AAAA-BBBB-CCCC"
+      name: "0000-AAAA-BBBB-CCCC"
 ````
 **GatewayGroup checks:**
-- `spec.members[].username` is mandatory.
+- `spec.members[].name` is mandatory.
   - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
@@ -210,6 +229,7 @@ Concentration Rules allow you to define patterns where topic creation won't gene
 
 ````yaml
 ---
+apiVersion: gateway/v2
 kind: ConcentrationRule
 metadata:
   # vCluster: vc-B
@@ -221,6 +241,7 @@ spec:
     compact: titi-compact
     deleteCompact: titi-cd
   autoManaged: false
+  offsetCorrectness: false
 ````
 **ConcentrationRule checks:**
 - `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
@@ -228,6 +249,7 @@ spec:
 - `spec.physicalTopics.compact` is optional. Must be a valid topic name with a `cleanup.policy` set to `compact`
 - `spec.physicalTopics.deleteCompact` is optional. Must be a valid topic name with a `cleanup.policy` set to `delete,compact`
 - `spec.autoManaged` is optional, default `false`
+- `spec.offsetCorrectness` is optional, default `false`
 
 **ConcentrationRule side effects:**
 - Once the Concentration Rule is deployed, topics created with a name matching the `spec.pattern` will not be created as real Kafka topics but as Concentrated Topics instead.  
@@ -235,6 +257,15 @@ spec:
 - If a topic creation request is made with a `cleanup.policy` that isn't configured in the ConcentrationRule, topic creation will fail.
 - It is not possible to update `cleanup.policy` of a concentrated topic.
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
+- If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each of the Concentrated Topic records. 
+  - This allows for a proper calculation of Message Count and Consumer Group Lag.
+  - There are some limitation. Read more about [Offset Correctness here](/gateway/concepts/logical-topics/concentrated-topics/#known-issues-and-limitations-with-offset-correctness)
+- If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
+
+:::caution
+If a ConcentrationRule spec changes, it will not affect previously created Concentrated Topics.  
+It will only affect the Topics created after the change.
+:::
 
 ## VirtualCluster
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
