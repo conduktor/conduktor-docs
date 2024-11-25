@@ -103,14 +103,28 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 **Examples**
 ````yaml
 ---
-# This interceptor targets everyone
+# This interceptor targets everyone (Including Virtual Clusters)
+apiVersion: gateway/v2
+kind: Interceptor
+metadata:
+  name: enforce-partition-limit
+  scope:
+    vCluster: null
+    goup: null
+    username: null
+spec:
+
+---
+# This interceptor targets everyone (Excluding Virtual Clusters)
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
 spec:
-  
+
 ---
 # This interceptor targets only `admin` service account
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
@@ -120,6 +134,7 @@ spec:
   
 ---
 # This interceptor targets only `read-only` virtual cluster
+apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
@@ -153,6 +168,7 @@ There are a few cases where you **must** declare GatewayServiceAccount objects:
 ````yaml
 ---
 # External User renamed
+apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
   name: application1
@@ -162,6 +178,7 @@ spec:
   - 00u9vme99nxudvxZA0h7
 ---
 # Local User on Virtual Cluster vc-B
+apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
   vcluster: vc-B
@@ -188,17 +205,18 @@ Gateway Group lets you add multiple users in the same GatewayGroup for easier In
 ````yaml
 ---
 # Users added to the group manually
+apiVersion: gateway/v2
 kind: GatewayGroup
 metadata:
   name: group-a
 spec:
   members:
-    - username: admin
+    - name: admin
     - vCluster: vc-B
-      username: "0000-AAAA-BBBB-CCCC"
+      name: "0000-AAAA-BBBB-CCCC"
 ````
 **GatewayGroup checks:**
-- `spec.members[].username` is mandatory.
+- `spec.members[].name` is mandatory.
   - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
@@ -211,6 +229,7 @@ Concentration Rules allow you to define patterns where topic creation won't gene
 
 ````yaml
 ---
+apiVersion: gateway/v2
 kind: ConcentrationRule
 metadata:
   # vCluster: vc-B
