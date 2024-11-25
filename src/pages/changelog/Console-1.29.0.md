@@ -1,5 +1,5 @@
 ---
-date: 2024-11-20
+date: 2024-11-25
 title: Chargeback
 description: docker pull conduktor/conduktor-console:1.29.0
 solutions: console
@@ -123,7 +123,7 @@ On top of that graphs are now directly available in the resource page for Lag an
 
 ### Self-Service Topic Catalog visibility
 
-You can now choose which Topics should be visible in the Topic Catalog by annotating their YAML
+You can now choose which Topics should be visible in the Topic Catalog by annotating their YAML.
 ````yaml
 ---
 apiVersion: kafka/v2
@@ -137,7 +137,7 @@ spec:
 ````
 
 It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly  
-Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance)
+Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance).
 
 ### Self-Service New Topic Policy Allowed Keys
 We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
@@ -172,6 +172,11 @@ We have made more events available for the Audit Log Publisher:
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
+
+***
+
+### Expanded Terraform Provider: Kafka cluster, schema registry, Kafka connect
+We've expanded the scope of our Terraform provider, you can now create additional resources: Kafka cluster with schema registry, and Kafka connect clusters using Terraform. With this version also comes some additional small fixes as requested by the community, see the dedicated [provider releases page](https://github.com/conduktor/terraform-provider-conduktor/releases) for the full list.
 
 ***
 
