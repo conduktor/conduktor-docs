@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Conduktor Console API
   version: v2
@@ -166,24 +166,24 @@ tags:
   x-displayName: kafka-connect-cluster
 - name: cli_ksql-d-b-cluster_console_v2_4
   x-displayName: ksqldb-cluster
-- name: cli_topic_kafka_v2_5
-  x-displayName: topic
-- name: cli_subject_kafka_v2_6
-  x-displayName: subject
-- name: cli_connector_kafka_v2_7
-  x-displayName: connector
-- name: cli_indexed-topic_sql_v1_8
-  x-displayName: indexed-topic
-- name: cli_topic-policy_self-serve_v1_9
+- name: cli_topic-policy_self-serve_v1_5
   x-displayName: topic-policy
-- name: cli_application_self-serve_v1_10
+- name: cli_application_self-serve_v1_6
   x-displayName: application
-- name: cli_application-instance_self-serve_v1_11
+- name: cli_application-instance_self-serve_v1_7
   x-displayName: application-instance
-- name: cli_application-instance-permission_self-serve_v1_12
+- name: cli_application-instance-permission_self-serve_v1_8
   x-displayName: application-instance-permission
-- name: cli_application-group_self-serve_v1_13
+- name: cli_application-group_self-serve_v1_9
   x-displayName: application-group
+- name: cli_topic_kafka_v2_10
+  x-displayName: topic
+- name: cli_subject_kafka_v2_11
+  x-displayName: subject
+- name: cli_connector_kafka_v2_12
+  x-displayName: connector
+- name: cli_indexed-topic_sql_v1_13
+  x-displayName: indexed-topic
 - name: cli_alert_monitoring_v2_14
   x-displayName: alert
 paths:
@@ -1934,13 +1934,12 @@ paths:
                 value:
                   name: My Kafka cluster
                   bootstrapServers: broker1:9092, broker2:9092
-                  properties: |2
-
-                    security.protocol=SSL
+                  properties: |-
                     ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                    security.protocol=SSL
                     ssl.truststore.password=conduktor
-                    ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                     ssl.keystore.password=conduktor
+                    ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                   ignoreUntrustedCertificate: false
               Kafka cluster with a Schema Registry:
                 value:
@@ -1952,12 +1951,11 @@ paths:
                       key: key
                       certificateChain: certificateChain
                       type: SSLAuth
-                    properties: |2
-
-                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
-                      schema.registry.ssl.truststore.password=conduktor
+                    properties: |-
                       schema.registry.ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                       schema.registry.ssl.keystore.password=conduktor
+                      schema.registry.ssl.truststore.password=conduktor
+                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                     ignoreUntrustedCertificate: false
                     type: ConfluentLikeSchemaRegistryRequest
                   ignoreUntrustedCertificate: false
@@ -2038,7 +2036,7 @@ paths:
             --url 'http://localhost:8080/public/v1/clusters/my-cluster' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"\nsecurity.protocol=SSL\nssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nssl.truststore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks\nssl.keystore.password=conduktor\n","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
+            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nsecurity.protocol=SSL\nssl.truststore.password=conduktor\nssl.keystore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
             --location \
             --max-redirs 32
     delete:
@@ -2123,13 +2121,12 @@ paths:
               - clusterSlug: silent-hill
                 name: My Kafka cluster
                 bootstrapServers: broker1:9092, broker2:9092
-                properties: |2
-
-                  security.protocol=SSL
+                properties: |-
                   ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                  security.protocol=SSL
                   ssl.truststore.password=conduktor
-                  ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                   ssl.keystore.password=conduktor
+                  ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                 kafkaConnects: []
                 ignoreUntrustedCertificate: false
                 createdAt: '1970-01-01T00:00:00Z'
@@ -3865,7 +3862,7 @@ paths:
   /public/self-serve/v1/application/{application-name}:
     get:
       tags:
-      - cli_application_self-serve_v1_10
+      - cli_application_self-serve_v1_6
       description: Get Application by name
       operationId: get-application-by-name
       parameters:
@@ -3943,7 +3940,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application_self-serve_v1_10
+      - cli_application_self-serve_v1_6
       description: Delete a Application
       operationId: delete-application
       parameters:
@@ -4018,7 +4015,7 @@ paths:
   /public/self-serve/v1/application:
     get:
       tags:
-      - cli_application_self-serve_v1_10
+      - cli_application_self-serve_v1_6
       description: List Application resources
       operationId: list-application-resources
       responses:
@@ -4091,7 +4088,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application_self-serve_v1_10
+      - cli_application_self-serve_v1_6
       description: Create or update a Application
       operationId: create-or-update-application
       parameters:
@@ -4170,7 +4167,7 @@ paths:
   /public/self-serve/v1/application-instance/{application-instance-name}:
     get:
       tags:
-      - cli_application-instance_self-serve_v1_11
+      - cli_application-instance_self-serve_v1_7
       description: Get ApplicationInstance by name
       operationId: get-application-instance-by-name
       parameters:
@@ -4205,6 +4202,7 @@ paths:
                     name: my-consumer-group
                     patternType: LITERAL
                   serviceAccount: my-service-account
+                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4258,7 +4256,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-instance_self-serve_v1_11
+      - cli_application-instance_self-serve_v1_7
       description: Delete a ApplicationInstance
       operationId: delete-application-instance
       parameters:
@@ -4333,7 +4331,7 @@ paths:
   /public/self-serve/v1/application-instance:
     get:
       tags:
-      - cli_application-instance_self-serve_v1_11
+      - cli_application-instance_self-serve_v1_7
       description: List ApplicationInstance resources
       operationId: list-application-instance-resources
       parameters:
@@ -4371,6 +4369,7 @@ paths:
                     name: my-consumer-group
                     patternType: LITERAL
                   serviceAccount: my-service-account
+                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4424,7 +4423,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-instance_self-serve_v1_11
+      - cli_application-instance_self-serve_v1_7
       description: Create or update a ApplicationInstance
       operationId: create-or-update-application-instance
       parameters:
@@ -4497,13 +4496,13 @@ paths:
             --url 'http://localhost:8080/public/self-serve/v1/application-instance?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account"}}' \
+            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account","defaultCatalogVisibility":"PUBLIC"}}' \
             --location \
             --max-redirs 32
   /public/self-serve/v1/application-instance-permission/{application-instance-permission-name}:
     get:
       tags:
-      - cli_application-instance-permission_self-serve_v1_12
+      - cli_application-instance-permission_self-serve_v1_8
       description: Get ApplicationInstancePermission by name
       operationId: get-application-instance-permission-by-name
       parameters:
@@ -4587,7 +4586,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-instance-permission_self-serve_v1_12
+      - cli_application-instance-permission_self-serve_v1_8
       description: Delete a ApplicationInstancePermission
       operationId: delete-application-instance-permission
       parameters:
@@ -4662,7 +4661,7 @@ paths:
   /public/self-serve/v1/application-instance-permission:
     get:
       tags:
-      - cli_application-instance-permission_self-serve_v1_12
+      - cli_application-instance-permission_self-serve_v1_8
       description: List ApplicationInstancePermission resources
       operationId: list-application-instance-permission-resources
       parameters:
@@ -4763,7 +4762,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-instance-permission_self-serve_v1_12
+      - cli_application-instance-permission_self-serve_v1_8
       description: Create or update a ApplicationInstancePermission
       operationId: create-or-update-application-instance-permission
       parameters:
@@ -4842,7 +4841,7 @@ paths:
   /public/self-serve/v1/application-group/{application-group-name}:
     get:
       tags:
-      - cli_application-group_self-serve_v1_13
+      - cli_application-group_self-serve_v1_9
       description: Get ApplicationGroup by name
       operationId: get-application-group-by-name
       parameters:
@@ -4938,7 +4937,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-group_self-serve_v1_13
+      - cli_application-group_self-serve_v1_9
       description: Delete a ApplicationGroup
       operationId: delete-application-group
       parameters:
@@ -5013,7 +5012,7 @@ paths:
   /public/self-serve/v1/application-group:
     get:
       tags:
-      - cli_application-group_self-serve_v1_13
+      - cli_application-group_self-serve_v1_9
       description: List ApplicationGroup resources
       operationId: list-application-group-resources
       responses:
@@ -5104,7 +5103,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-group_self-serve_v1_13
+      - cli_application-group_self-serve_v1_9
       description: Create or update a ApplicationGroup
       operationId: create-or-update-application-group
       parameters:
@@ -5183,7 +5182,7 @@ paths:
   /public/self-serve/v1/topic-policy/{topic-policy-name}:
     get:
       tags:
-      - cli_topic-policy_self-serve_v1_9
+      - cli_topic-policy_self-serve_v1_5
       description: Get TopicPolicy by name
       operationId: get-topic-policy-by-name
       parameters:
@@ -5266,7 +5265,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_topic-policy_self-serve_v1_9
+      - cli_topic-policy_self-serve_v1_5
       description: Delete a TopicPolicy
       operationId: delete-topic-policy
       parameters:
@@ -5341,7 +5340,7 @@ paths:
   /public/self-serve/v1/topic-policy:
     get:
       tags:
-      - cli_topic-policy_self-serve_v1_9
+      - cli_topic-policy_self-serve_v1_5
       description: List TopicPolicy resources
       operationId: list-topic-policy-resources
       parameters:
@@ -5427,7 +5426,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_topic-policy_self-serve_v1_9
+      - cli_topic-policy_self-serve_v1_5
       description: Create or update a TopicPolicy
       operationId: create-or-update-topic-policy
       parameters:
@@ -5506,7 +5505,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/topic/{topic-name}:
     get:
       tags:
-      - cli_topic_kafka_v2_5
+      - cli_topic_kafka_v2_10
       description: Get Topic by name
       operationId: get-topic-by-name
       parameters:
@@ -5534,11 +5533,12 @@ paths:
                   name: my-topic
                   cluster: my-cluster
                   labels:
-                    conduktor.io/description: This is a topic
-                    conduktor.io/description.editable: 'true'
+                    conduktor.io/application: application-a
                     conduktor.io/application-instance: staging
                     user-labels: I am a user label
-                    conduktor.io/application: application-a
+                  catalogVisibility: PUBLIC
+                  descriptionIsEditable: true
+                  description: This is a topic description
                 spec:
                   partitions: 1
                   replicationFactor: 1
@@ -5598,7 +5598,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_topic_kafka_v2_5
+      - cli_topic_kafka_v2_10
       description: Delete a Topic
       operationId: delete-topic
       parameters:
@@ -5677,7 +5677,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/topic:
     get:
       tags:
-      - cli_topic_kafka_v2_5
+      - cli_topic_kafka_v2_10
       description: List Topic resources
       operationId: list-topic-resources
       parameters:
@@ -5702,11 +5702,12 @@ paths:
                   name: my-topic
                   cluster: my-cluster
                   labels:
-                    conduktor.io/description: This is a topic
-                    conduktor.io/description.editable: 'true'
+                    conduktor.io/application: application-a
                     conduktor.io/application-instance: staging
                     user-labels: I am a user label
-                    conduktor.io/application: application-a
+                  catalogVisibility: PUBLIC
+                  descriptionIsEditable: true
+                  description: This is a topic description
                 spec:
                   partitions: 1
                   replicationFactor: 1
@@ -5766,7 +5767,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_topic_kafka_v2_5
+      - cli_topic_kafka_v2_10
       description: Create or update a Topic
       operationId: create-or-update-topic
       parameters:
@@ -5844,12 +5845,12 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging","user-labels":"I am a user label"},"catalogVisibility":"PUBLIC","descriptionIsEditable":true,"description":"This is a topic description"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
     post:
       tags:
-      - cli_topic_kafka_v2_5
+      - cli_topic_kafka_v2_10
       description: Create a Topic
       operationId: create-topic
       parameters:
@@ -5929,13 +5930,13 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging","user-labels":"I am a user label"},"catalogVisibility":"PUBLIC","descriptionIsEditable":true,"description":"This is a topic description"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/subject/{subject-name}:
     get:
       tags:
-      - cli_subject_kafka_v2_6
+      - cli_subject_kafka_v2_11
       description: Get Subject by name
       operationId: get-subject-by-name
       parameters:
@@ -6022,7 +6023,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_subject_kafka_v2_6
+      - cli_subject_kafka_v2_11
       description: Delete a Subject
       operationId: delete-subject
       parameters:
@@ -6101,7 +6102,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/subject:
     get:
       tags:
-      - cli_subject_kafka_v2_6
+      - cli_subject_kafka_v2_11
       description: List Subject resources
       operationId: list-subject-resources
       parameters:
@@ -6185,7 +6186,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_subject_kafka_v2_6
+      - cli_subject_kafka_v2_11
       description: Create or update a Subject
       operationId: create-or-update-subject
       parameters:
@@ -6266,10 +6267,95 @@ paths:
             --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
             --location \
             --max-redirs 32
+    post:
+      tags:
+      - cli_subject_kafka_v2_11
+      description: Create a Subject
+      operationId: create-subject
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectResource'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectCreateResult'
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No subject with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No subject with this technical id exists
+        '409':
+          description: Resource already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: Resource already exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request POST \
+            --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/subject' \
+            --header 'Authorization: Bearer $BEARER' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
+            --location \
+            --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/connect/{connectCluster}/connector/{connector-name}:
     get:
       tags:
-      - cli_connector_kafka_v2_7
+      - cli_connector_kafka_v2_12
       description: Get Connector by name
       operationId: get-connector-by-name
       parameters:
@@ -6303,6 +6389,10 @@ paths:
                   name: my-connector
                   cluster: my-cluster
                   connectCluster: my-connect
+                  autoRestart:
+                    enabled: true
+                    frequencySeconds: 600
+                  description: My connector
                 spec:
                   config: {}
         '400':
@@ -6358,7 +6448,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_connector_kafka_v2_7
+      - cli_connector_kafka_v2_12
       description: Delete a Connector
       operationId: delete-connector
       parameters:
@@ -6443,7 +6533,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/connect/{connectCluster}/connector:
     get:
       tags:
-      - cli_connector_kafka_v2_7
+      - cli_connector_kafka_v2_12
       description: List Connector resources
       operationId: list-connector-resources
       parameters:
@@ -6474,6 +6564,10 @@ paths:
                   name: my-connector
                   cluster: my-cluster
                   connectCluster: my-connect
+                  autoRestart:
+                    enabled: true
+                    frequencySeconds: 600
+                  description: My connector
                 spec:
                   config: {}
         '400':
@@ -6529,7 +6623,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_connector_kafka_v2_7
+      - cli_connector_kafka_v2_12
       description: Create or update a Connector
       operationId: create-or-update-connector
       parameters:
@@ -6613,12 +6707,12 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect"},"spec":{"config":{}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequencySeconds":600},"description":"My connector"},"spec":{"config":{}}}' \
             --location \
             --max-redirs 32
     post:
       tags:
-      - cli_connector_kafka_v2_7
+      - cli_connector_kafka_v2_12
       description: Create a Connector
       operationId: create-connector
       parameters:
@@ -6704,7 +6798,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect"},"spec":{"config":{}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequencySeconds":600},"description":"My connector"},"spec":{"config":{}}}' \
             --location \
             --max-redirs 32
   /public/console/v2/kafka-cluster/{kafka-cluster-name}:
@@ -7074,7 +7168,6 @@ paths:
                   name: connect-1
                   cluster: my-cloud
                   labels:
-                    conduktor.io/description: This is a great kafka connect
                     user-labels: I am a user label
                 spec:
                   displayName: My kafka connect
@@ -7245,7 +7338,6 @@ paths:
                   name: connect-1
                   cluster: my-cloud
                   labels:
-                    conduktor.io/description: This is a great kafka connect
                     user-labels: I am a user label
                 spec:
                   displayName: My kafka connect
@@ -7389,7 +7481,7 @@ paths:
             --url 'http://localhost:8080/public/console/v2/cluster/my-cluster/kafka-connect?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"KafkaConnectCluster","metadata":{"name":"connect-1","cluster":"my-cloud","labels":{"conduktor.io/description":"This is a great kafka connect","user-labels":"I am a user label"}},"spec":{"displayName":"My kafka connect","urls":"http://localhost:8083","headers":{"a":"b","c":"d"},"ignoreUntrustedCertificate":true,"security":{"username":"user","password":"password","type":"BasicAuth"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"KafkaConnectCluster","metadata":{"name":"connect-1","cluster":"my-cloud","labels":{"user-labels":"I am a user label"}},"spec":{"displayName":"My kafka connect","urls":"http://localhost:8083","headers":{"a":"b","c":"d"},"ignoreUntrustedCertificate":true,"security":{"username":"user","password":"password","type":"BasicAuth"}}}' \
             --location \
             --max-redirs 32
   /public/console/v2/cluster/{cluster}/ksqldb/{ksql-d-b-cluster-name}:
@@ -7775,6 +7867,9 @@ paths:
                   metadata:
                     name: topic1
                     cluster: cluster1
+                    catalogVisibility: PUBLIC
+                    descriptionIsEditable: true
+                    description: This is a topic description
                   spec:
                     partitions: 3
                     replicationFactor: 3
@@ -7912,7 +8007,7 @@ paths:
     get:
       tags:
       - beta
-      - cli_indexed-topic_sql_v1_8
+      - cli_indexed-topic_sql_v1_13
       description: Get IndexedTopic by name
       operationId: get-indexed-topic-by-name
       parameters:
@@ -7995,7 +8090,7 @@ paths:
     delete:
       tags:
       - beta
-      - cli_indexed-topic_sql_v1_8
+      - cli_indexed-topic_sql_v1_13
       description: Delete a IndexedTopic
       operationId: delete-indexed-topic
       parameters:
@@ -8074,7 +8169,7 @@ paths:
   /public/sql/v1/cluster/{cluster}/indexed_topic:
     get:
       tags:
-      - cli_indexed-topic_sql_v1_8
+      - cli_indexed-topic_sql_v1_13
       description: List IndexedTopic resources
       operationId: list-indexed-topic-resources
       parameters:
@@ -8153,7 +8248,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_indexed-topic_sql_v1_8
+      - cli_indexed-topic_sql_v1_13
       description: Create or update a IndexedTopic
       operationId: create-or-update-indexed-topic
       parameters:
@@ -10290,7 +10385,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/List_String'
+                type: array
+                items:
+                  type: string
         '400':
           description: The request is not valid
           content:
@@ -11279,7 +11376,7 @@ paths:
                   updatedAt: '1970-01-01T00:00:00Z'
                   updatedBy: someone@somewhere.com
                   lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Idle
+                  status: Pending
                 spec:
                   connectName: connect
                   connectorName: connector
@@ -11449,6 +11546,12 @@ paths:
         required: false
         schema:
           type: string
+      - name: consumerGroup
+        in: query
+        description: Filter by consumer group name
+        required: false
+        schema:
+          type: string
       - name: alertType
         in: query
         description: 'Filter by alert type '
@@ -11473,7 +11576,7 @@ paths:
                   updatedAt: '1970-01-01T00:00:00Z'
                   updatedBy: someone@somewhere.com
                   lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Idle
+                  status: Pending
                 spec:
                   connectName: connect
                   connectorName: connector
@@ -11863,6 +11966,21 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/AivenSchemaRegistryAcl'
+    AivenResponse:
+      title: AivenResponse
+      type: object
+      required:
+      - project
+      - serviceName
+      - type
+      properties:
+        project:
+          type: string
+        serviceName:
+          type: string
+        type:
+          type: string
+          const: AivenResponse
     AivenSRAclCreatePayload:
       title: AivenSRAclCreatePayload
       type: object
@@ -12029,26 +12147,29 @@ components:
       title: AlertSpec
       oneOf:
       - $ref: '#/components/schemas/BrokerAlert'
+      - $ref: '#/components/schemas/ConsumerGroupAlert'
       - $ref: '#/components/schemas/KafkaConnectAlert'
       - $ref: '#/components/schemas/TopicAlert'
     AlertSpecOutput:
       title: AlertSpecOutput
       oneOf:
       - $ref: '#/components/schemas/BrokerAlertOutput'
+      - $ref: '#/components/schemas/ConsumerGroupAlertOutput'
       - $ref: '#/components/schemas/KafkaConnectAlertOutput'
       - $ref: '#/components/schemas/TopicAlertOutput'
     AlertStatus:
       title: AlertStatus
       type: string
       enum:
+      - Firing
       - Healthy
-      - Idle
-      - Unhealthy
+      - Pending
     AlertType:
       title: AlertType
       type: string
       enum:
       - BrokerAlert
+      - ConsumerGroupAlert
       - KafkaConnectAlert
       - TopicAlert
     AllAclForPrincipal:
@@ -12063,6 +12184,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AclForResourceAndHost'
+    AllowedKeys:
+      title: AllowedKeys
+      type: object
+      required:
+      - constraint
+      - keys
+      properties:
+        constraint:
+          $ref: '#/components/schemas/ConstraintKind'
+        optional:
+          type: boolean
+        keys:
+          type: array
+          minItems: 1
+          items:
+            type: string
     AmazonSecurity:
       title: AmazonSecurity
       oneOf:
@@ -12317,6 +12454,8 @@ components:
             $ref: '#/components/schemas/ResourceWithOwnership'
         serviceAccount:
           type: string
+        defaultCatalogVisibility:
+          $ref: '#/components/schemas/CatalogVisibility'
     ApplicationKind:
       title: ApplicationKind
       type: string
@@ -12393,6 +12532,17 @@ components:
           type: string
         owner:
           type: string
+    AutoRestartConfig:
+      title: AutoRestartConfig
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+        frequencySeconds:
+          type: integer
+          format: int64
     BadRequest:
       title: BadRequest
       type: object
@@ -12680,9 +12830,12 @@ components:
         resourceType:
           type: string
           const: CONSUMER_GROUP
-    CheckedCertificate:
-      title: CheckedCertificate
-      type: object
+    CatalogVisibility:
+      title: CatalogVisibility
+      type: string
+      enum:
+      - PRIVATE
+      - PUBLIC
     CleanupPolicy:
       title: CleanupPolicy
       type: string
@@ -12839,6 +12992,24 @@ components:
           BearerToken: '#/components/schemas/BearerToken'
           NoSecurity: '#/components/schemas/NoSecurity'
           SSLAuth: '#/components/schemas/SSLAuth'
+    ConfluentResponse:
+      title: ConfluentResponse
+      type: object
+      required:
+      - key
+      - confluentEnvironmentId
+      - confluentClusterId
+      - type
+      properties:
+        key:
+          type: string
+        confluentEnvironmentId:
+          type: string
+        confluentClusterId:
+          type: string
+        type:
+          type: string
+          const: ConfluentResponse
     ConnectorApplyResult:
       title: ConnectorApplyResult
       type: object
@@ -12883,6 +13054,10 @@ components:
           minLength: 1
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
+        autoRestart:
+          $ref: '#/components/schemas/AutoRestartConfig'
+        description:
+          type: string
     ConnectorResource:
       title: ConnectorResource
       type: object
@@ -12913,6 +13088,7 @@ components:
       title: ConstraintKind
       type: string
       enum:
+      - AllowedKeys
       - Match
       - NoneOf
       - OneOf
@@ -12951,6 +13127,57 @@ components:
           - KafkaConnect
           - Subject
           - KsqlDB
+    ConsumerGroupAlert:
+      title: ConsumerGroupAlert
+      type: object
+      required:
+      - consumerGroupName
+      - threshold
+      - operator
+      - metric
+      properties:
+        consumerGroupName:
+          type: string
+        threshold:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/Operator'
+        metric:
+          $ref: '#/components/schemas/ConsumerGroupMetricType'
+        description:
+          type: string
+        displayName:
+          type: string
+        disable:
+          type: boolean
+    ConsumerGroupAlertOutput:
+      title: ConsumerGroupAlertOutput
+      type: object
+      required:
+      - consumerGroupName
+      - threshold
+      - operator
+      - metric
+      - promQl
+      properties:
+        consumerGroupName:
+          type: string
+        threshold:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/Operator'
+        metric:
+          $ref: '#/components/schemas/ConsumerGroupMetricType'
+        promQl:
+          type: string
+        description:
+          type: string
+        displayName:
+          type: string
+        disable:
+          type: boolean
     ConsumerGroupFilter:
       title: ConsumerGroupFilter
       oneOf:
@@ -12961,6 +13188,12 @@ components:
         mapping:
           OnConsumerGroupName: '#/components/schemas/OnConsumerGroupName'
           OnState: '#/components/schemas/OnState'
+    ConsumerGroupMetricType:
+      title: ConsumerGroupMetricType
+      type: string
+      enum:
+      - OffsetLag
+      - TimeLag
     ConsumerGroupRequest:
       title: ConsumerGroupRequest
       type: object
@@ -13223,6 +13456,27 @@ components:
         type:
           type: string
           const: Gateway
+    GatewayResponse:
+      title: GatewayResponse
+      type: object
+      required:
+      - url
+      - user
+      - virtualCluster
+      - type
+      properties:
+        url:
+          type: string
+        user:
+          type: string
+        virtualCluster:
+          type: string
+        ignoreUntrustedCertificate:
+          default: false
+          type: boolean
+        type:
+          type: string
+          const: GatewayResponse
     Glue:
       title: Glue
       type: object
@@ -14011,6 +14265,18 @@ components:
           Aiven: '#/components/schemas/Aiven'
           Confluent: '#/components/schemas/Confluent'
           Gateway: '#/components/schemas/Gateway'
+    KafkaFlavorResponse:
+      title: KafkaFlavorResponse
+      oneOf:
+      - $ref: '#/components/schemas/AivenResponse'
+      - $ref: '#/components/schemas/ConfluentResponse'
+      - $ref: '#/components/schemas/GatewayResponse'
+      discriminator:
+        propertyName: type
+        mapping:
+          AivenResponse: '#/components/schemas/AivenResponse'
+          ConfluentResponse: '#/components/schemas/ConfluentResponse'
+          GatewayResponse: '#/components/schemas/GatewayResponse'
     KsqlDB:
       title: KsqlDB
       type: object
@@ -14296,13 +14562,6 @@ components:
         type:
           type: string
           const: LabelsFilter
-    List_String:
-      title: List_String
-      oneOf:
-      - $ref: '#/components/schemas/Nil'
-      - type: array
-        items:
-          type: string
     LoggerDto:
       title: LoggerDto
       type: object
@@ -14366,9 +14625,6 @@ components:
           type: boolean
         pattern:
           type: string
-    Nil:
-      title: Nil
-      type: object
     NoSecurity:
       title: NoSecurity
       type: object
@@ -14725,6 +14981,7 @@ components:
     PolicyConstraintDto:
       title: PolicyConstraintDto
       oneOf:
+      - $ref: '#/components/schemas/AllowedKeys'
       - $ref: '#/components/schemas/Match'
       - $ref: '#/components/schemas/NoneOf'
       - $ref: '#/components/schemas/OneOf'
@@ -14732,6 +14989,7 @@ components:
       discriminator:
         propertyName: constraint
         mapping:
+          AllowedKeys: '#/components/schemas/AllowedKeys'
           Match: '#/components/schemas/Match'
           NoneOf: '#/components/schemas/NoneOf'
           OneOf: '#/components/schemas/OneOf'
@@ -14847,7 +15105,7 @@ components:
             them
           deprecated: true
         kafkaFlavor:
-          $ref: '#/components/schemas/KafkaFlavor'
+          $ref: '#/components/schemas/KafkaFlavorResponse'
         ksqlDBs:
           type: array
           uniqueItems: true
@@ -15366,6 +15624,17 @@ components:
           $ref: '#/components/schemas/SubjectResource'
         upsertResult:
           $ref: '#/components/schemas/UpsertResult'
+    SubjectCreateResult:
+      title: SubjectCreateResult
+      type: object
+      required:
+      - resource
+      - createResult
+      properties:
+        resource:
+          $ref: '#/components/schemas/SubjectResource'
+        createResult:
+          $ref: '#/components/schemas/CreateResult'
     SubjectKind:
       title: SubjectKind
       type: string
@@ -15554,17 +15823,15 @@ components:
         type:
           type: string
           const: TagsFilter
-    TlsNotSupported:
-      title: TlsNotSupported
-      type: object
     TlsStatus:
       title: TlsStatus
-      oneOf:
-      - $ref: '#/components/schemas/CheckedCertificate'
-      - $ref: '#/components/schemas/TlsNotSupported'
-      - $ref: '#/components/schemas/UncheckedCertificate'
-      - $ref: '#/components/schemas/UnexpectedStatus'
-      - $ref: '#/components/schemas/UnreachableTarget'
+      type: string
+      enum:
+      - checked_certificate
+      - unchecked_certificate
+      - tls_not_supported
+      - unreachable_target
+      - unexpected_status
     TlsTestRequest:
       title: TlsTestRequest
       type: object
@@ -15827,6 +16094,12 @@ components:
           type: string
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
+        catalogVisibility:
+          $ref: '#/components/schemas/CatalogVisibility'
+        descriptionIsEditable:
+          type: boolean
+        description:
+          type: string
     TopicMetricType:
       title: TopicMetricType
       type: string
@@ -15937,15 +16210,6 @@ components:
           type: string
         cause:
           type: string
-    UncheckedCertificate:
-      title: UncheckedCertificate
-      type: object
-    UnexpectedStatus:
-      title: UnexpectedStatus
-      type: object
-    UnreachableTarget:
-      title: UnreachableTarget
-      type: object
     UpdateGroupRequest:
       title: UpdateGroupRequest
       type: object
@@ -16146,23 +16410,23 @@ x-tagGroups:
   - ksqlDBs
 - name: 🔥 kafka/v2
   tags:
-  - cli_topic_kafka_v2_5
-  - cli_subject_kafka_v2_6
-  - cli_connector_kafka_v2_7
+  - cli_topic_kafka_v2_10
+  - cli_subject_kafka_v2_11
+  - cli_connector_kafka_v2_12
 - name: 🩺 monitoring/v2
   tags:
   - cli_alert_monitoring_v2_14
 - name: 🚀 self-serve/v1
   tags:
-  - cli_topic-policy_self-serve_v1_9
-  - cli_application_self-serve_v1_10
-  - cli_application-instance_self-serve_v1_11
-  - cli_application-instance-permission_self-serve_v1_12
-  - cli_application-group_self-serve_v1_13
+  - cli_topic-policy_self-serve_v1_5
+  - cli_application_self-serve_v1_6
+  - cli_application-instance_self-serve_v1_7
+  - cli_application-instance-permission_self-serve_v1_8
+  - cli_application-group_self-serve_v1_9
   - catalog
 - name: 🐘 sql/v1
   tags:
-  - cli_indexed-topic_sql_v1_8
+  - cli_indexed-topic_sql_v1_13
 - name: 🔑 token/v1
   tags:
   - tokens
