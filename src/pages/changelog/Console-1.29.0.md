@@ -18,6 +18,7 @@ tags: features,fix
   - [Self-Service Topic Catalog visibility](#self-service-topic-catalog-visibility)
   - [Self-Service New Topic Policy Allowed Keys](#self-service-new-topic-policy-allowed-keys)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
+  - [Expanded Terraform Provider](#expanded-terraform-provider-kafka-cluster-schema-registry-kafka-connect)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
