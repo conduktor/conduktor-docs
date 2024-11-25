@@ -12,7 +12,7 @@ tags: features,fix
   - [Changes to Conduktor.io Labels](#changes-to-conduktorio-labels)
   - [Local Users Password policy update](#local-users-password-policy-update)
 - [Features ✨](#features-)
-  - [Conduktor Chargeback](#conduktor-chargeback)
+  - [Conduktor Chargeback](#conduktor-chargeback-track-and-allocate-costs--resource-consumption)
   - [Console Homepage](#console-homepage)
   - [Consumer Group pages overhaul](#consumer-group-pages-overhaul)
   - [Self-Service Topic Catalog visibility](#self-service-topic-catalog-visibility)
@@ -90,7 +90,7 @@ Update the passwords in your YAML or environment variables to meet the new polic
 
 ***
 
-### Conduktor Chargeback
+### Conduktor Chargeback: Track and Allocate Costs & Resource Consumption
 
 :::info
 This feature is in [**Beta**](/platform/guides/configure-chargeback/) and is subject to change as we enhance it further.
@@ -100,7 +100,7 @@ Conduktor Chargeback allows organizations to track and allocate costs & usage as
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
-Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get started with Chargeback
+Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get started with Chargeback.
 ***
 
 ### Console Homepage

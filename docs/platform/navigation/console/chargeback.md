@@ -20,5 +20,8 @@ The measured period can be changed from 7D, 30D, 6M, 12M, or YTD(Year To Date)
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
-The configuration button lets you configure the Dollar cost of a Produced GB and a Consumed GB.
+The configuration button lets you configure the Dollar cost of a Produced GB and a Consumed GB. This allows you to align the chargeback model with your specific infrastructure costs.
+
+![Chargeback Configuration](img/chargeback-configuration.png)
+
 
