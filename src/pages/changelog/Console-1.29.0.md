@@ -61,9 +61,6 @@ Could not apply resource Topic/click.event-stream.avro: Invalid value for: body 
 ```
 
 ---
-Here's the updated entry with a note on the benefits:
-
----
 
 ### Local Users Password policy update
 Passwords for console Local Users configured through YAML and environment variables must comply with a new password policy.
@@ -88,8 +85,6 @@ Update the passwords in your YAML or environment variables to meet the new polic
 
 ## Features ✨
 
-***
-
 ### Conduktor Chargeback: Track and Allocate Costs & Resource Consumption
 
 :::info
@@ -109,6 +104,8 @@ The cluster homepage have been redesigned to present you with the most useful in
 - The state of Console Indexing modules for this Kafka Cluster
 - Quick access to your most recently viewed resources
 ![Kafka Connect Wizard](/images/changelog/platform/v29/console-homepage.png)
+
+***
 
 ### Consumer Group pages overhaul
 
