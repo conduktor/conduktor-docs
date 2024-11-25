@@ -178,6 +178,53 @@ A full list of all the exported audit log event types is published on the [Audit
 ### Expanded Terraform Provider: Kafka cluster, schema registry, Kafka connect
 We've expanded the scope of our Terraform provider, you can now create additional resources: Kafka cluster with schema registry, and Kafka connect clusters using Terraform. With this version also comes some additional small fixes as requested by the community, see the dedicated [provider releases page](https://github.com/conduktor/terraform-provider-conduktor/releases) for the full list.
 
+All [examples](https://github.com/conduktor/terraform-provider-conduktor/blob/main/docs/resources/kafka_cluster_v2.md) are available in our provider repo such as the below snippet for a Confluent Kafka cluster and schema registry (with mTLS) definition.
+
+```hcl
+resource "conduktor_kafka_cluster_v2" "confluent" {
+  name = "confluent-cluster"
+  labels = {
+    "env" = "staging"
+  }
+  spec {
+    display_name      = "Confluent Cluster"
+    bootstrap_servers = "aaa-aaaa.us-west4.gcp.confluent.cloud:9092"
+    properties = {
+      "sasl.jaas.config"  = "org.apache.kafka.common.security.plain.PlainLoginModule required username='admin' password='admin-secret';"
+      "security.protocol" = "SASL_PLAINTEXT"
+      "sasl.mechanism"    = "PLAIN"
+    }
+    icon                         = "kafka"
+    ignore_untrusted_certificate = false
+    kafka_flavor = {
+      type                     = "Confluent"
+      key                      = "yourApiKey123456"
+      secret                   = "yourApiSecret123456"
+      confluent_environment_id = "env-12345"
+      confluent_cluster_id     = "lkc-67890"
+    }
+    schema_registry = {
+      type                         = "ConfluentLike"
+      url                          = "https://bbb-bbbb.us-west4.gcp.confluent.cloud:8081"
+      ignore_untrusted_certificate = false
+      security = {
+        type              = "SSLAuth"
+        key               = <<EOT
+-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----
+EOT
+        certificate_chain = <<EOT
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+EOT
+      }
+    }
+  }
+}
+```
+
 ***
 
 ## Quality of Life improvements
