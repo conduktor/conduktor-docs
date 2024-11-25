@@ -574,7 +574,7 @@ kafka-console-consumer \
     --topic customers \
     --from-beginning \
     --max-messages 3 \
-    --timeout-ms 3000 | jq
+    --timeout-ms 3000
 ```
 
 
