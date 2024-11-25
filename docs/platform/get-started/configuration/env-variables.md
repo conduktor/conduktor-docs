@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Configuration Properties & Environment Variables
-description: Starting from Conduktor Console 1.2.0 input configuration fields can be provided using environment variables.
+description: Conduktor Console input configuration fields can be provided using environment variables.
 ---
 
 # Configuration Properties and Environment Variables
@@ -194,9 +194,9 @@ Exception: `CDK_IN_CONF_FILE` is not supported.
 | Property                   | Description                                                                                                                                                                                                 | Environment Variable           | Mandatory | Type    | Default     |
 |----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|-----------|---------|-------------|
 | `organization.name`        | Your organization's name                                                                                                                                                                                    | `CDK_ORGANIZATION_NAME`        | false     | string  | `"default"` |
-| `admin.email`              | Your organization's root administrator account email                                                                                                                                                        | `CDK_ADMIN_EMAIL`              | true      | string  | ∅           |
-| `admin.password`           | Your organization's root administrator account password                                                                                                                                                     | `CDK_ADMIN_PASSWORD`           | true      | string  | ∅           |
-| `license`                  | Enterprise license key. If not provided, fallback to free plan.                                                                                                                                             | `CDK_LICENSE` or `LICENSE_KEY` | false     | string  | ∅           |
+| `admin.email`              | Your organization's root administrator account email  | `CDK_ADMIN_EMAIL`              | true      | string  | ∅           |
+| `admin.password`           | Your organization's root administrator account password. Must be at least 8 characters in length, and include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special symbol | `CDK_ADMIN_PASSWORD`           | true      | string  | ∅           |
+| `license`                  | Enterprise license key. If not provided, fallback to free plan. | `CDK_LICENSE` or `LICENSE_KEY` | false     | string  | ∅           |
 | `platform.external.url`    | Force Console external URL. Useful for SSO callback URL when using a reverse proxy. By default, Console will try to guess it automatically using X-Forwarded-\* headers coming from upstream reverse proxy. | `CDK_PLATFORM_EXTERNAL_URL`    | false     | string  | ∅           |
 | `platform.https.cert.path` | Path to the SSL certificate file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_CERT_PATH` | false     | string  | ∅           |
 | `platform.https.key.path`  | Path to the SSL private key file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_KEY_PATH`  | false     | string  | ∅           |

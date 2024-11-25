@@ -9,7 +9,7 @@ description: Chargeback
 Chargeback lets you visualize the cost allocation of Service Accounts on a few key metrics.
 :::info
 At the moment, the data is aggregated per Service Account and the available metrics collected are the produced and consumed bytes.  
-We plan to add more features over time. [Let us know](https://conduktor.io/roadmap) which feature is important to you.
+We plan to add more features over time. [Let us know](https://conduktor.io/roadmap) how you want to aggregate your data or which features are important to you.
 :::
 
 - Overall Cost tab displays the dollar costs by adding up the dollar cost for each available metric (Ingress + Egress)

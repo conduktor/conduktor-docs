@@ -17,7 +17,7 @@ We plan to add more metrics to Chargeback in the future. Let us know which metri
 ## Requirement
 
 Chargeback requires both Console & Gateway:
-* Console 1.29+
+* Console 1.29.0+
 * Gateway 3.4.0+
 
 

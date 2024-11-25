@@ -28,8 +28,8 @@ tags: features,fix
 We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations. 
 :::caution
 This change impacts you if you:
-- Update the Topic Catalog description of Topic resources via CLI/API.
-- Configure Connect automatic restart with the CLI/API.
+- Update the Topic Catalog description of Topic resources via CLI/API
+- Configure Connect automatic restart with the CLI/API
 
 You are not impacted if you perform these actions through the UI.
 :::
@@ -115,7 +115,7 @@ Consumer group details page is now organized in a way that helps understand the 
 
 Both Topics and Members lists can be explored further down to individual member/topic-partition assignments.  
 
-On top of that graphs are now directly available in the resource page for Lag and Time Lag, as well as a dedicated tab to manage Alerts
+On top of that graphs are now directly available in the resource page for Lag and Time Lag, as well as a dedicated tab to manage Alerts.
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/consumer-groups.png)
 
@@ -157,7 +157,7 @@ spec:
         - cleanup.policy
 ````
 This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.  
-Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints)
+Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints).
 
 ***
 
@@ -175,7 +175,7 @@ A full list of all the exported audit log event types is published on the [Audit
 
 ***
 
-### Expanded Terraform Provider: Kafka cluster, schema registry, Kafka connect
+### Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect
 We've expanded the scope of our Terraform provider, you can now create additional resources: Kafka cluster with schema registry, and Kafka connect clusters using Terraform. With this version also comes some additional small fixes as requested by the community, see the dedicated [provider releases page](https://github.com/conduktor/terraform-provider-conduktor/releases) for the full list.
 
 All [examples](https://github.com/conduktor/terraform-provider-conduktor/blob/main/docs/resources/kafka_cluster_v2.md) are available in our provider repo such as the below snippet for a Confluent Kafka cluster and schema registry (with mTLS) definition.
@@ -231,15 +231,15 @@ EOT
 - Improved the performance of the Automatic deserializer
 - Improved the performance of the Schema Registry indexing process
 - Added support for Google Cloud Identity group claims
-- Added License expiry warning in the UI when there is less than 30days left
+- Added License expiry warning in the UI when there is less than 30 days left
 
 
 ## Fixes 🔨
-- Fixed an issue where Custom Deserializers weren't working properly
-- Fixed an issue where the ManageClusters permission wasn't working properly
-- Fixed an issue that prevented to create a KafkaCluster and a Topic on that newly declared KafkaCluster in a single CLI apply
-- Fixed `/health/readiness` endpoint to return HTTP 503 when Postgres DB is down
+- Fixed an issue where Custom Deserializers weren't working as expected
+- Fixed an issue where the ManageClusters permission wasn't working as expected
+- Fixed an issue that prevented creating a KafkaCluster and a Topic on that newly declared KafkaCluster in a single CLI apply command
+- Fixed `/health/readiness` endpoint to return HTTP 503 when the Postgres DB is down
 - Fixed an issue where the Message Count wasn't updated to 0 when emptying a topic
-- Fixed an issue where the Pause/Resume button wasn't visible when a connector was in Failed state
-- Fixed an issue where the Topic creation failure reason wasn't shown in the UI anymore. 
-  - This helps understand why the Topic Creation was rejected (useful for Gateway and Self-Service Topic Policies)
+- Fixed an issue where the Pause/Resume button wasn't visible when a connector was in the Failed state
+- Fixed an issue where the Topic creation failure reason wasn't shown in the UI
+  - This helps understand why Topic Creation is rejected (useful for Gateway and Self-Service Topic Policies), and how to modify the topic create request to meet the policy requirements
