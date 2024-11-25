@@ -103,13 +103,25 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 **Examples**
 ````yaml
 ---
-# This interceptor targets everyone
+# This interceptor targets everyone (Including Virtual Clusters)
+apiVersion: gateway/v2
+kind: Interceptor
+metadata:
+  name: enforce-partition-limit
+  scope:
+    vCluster: null
+    goup: null
+    username: null
+spec:
+
+---
+# This interceptor targets everyone (Excluding Virtual Clusters)
 apiVersion: gateway/v2
 kind: Interceptor
 metadata:
   name: enforce-partition-limit
 spec:
-  
+
 ---
 # This interceptor targets only `admin` service account
 apiVersion: gateway/v2
