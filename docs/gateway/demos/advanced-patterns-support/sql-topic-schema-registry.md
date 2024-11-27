@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/7ZC6SBU3wweGd74O25g0LcJNi.svg)](https://asciinema.org/a/7ZC6SBU3wweGd74O25g0LcJNi)
+[![asciicast](https://asciinema.org/a/692279.svg)](https://asciinema.org/a/692279)
 
 </TabItem>
 </Tabs>
@@ -39,7 +39,6 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka2
 * kafka3
 * schema-registry
-* zookeeper
 
 <Tabs>
 <TabItem value="Command">
@@ -52,89 +51,74 @@ cat docker-compose.yaml
 <TabItem value="File Content">
 
 ```yaml
-version: '3.7'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    hostname: zookeeper
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2801
-      ZOOKEEPER_TICK_TIME: 2000
-    healthcheck:
-      test: nc -zv 0.0.0.0 2801 || exit 1
-      interval: 5s
-      retries: 25
   kafka1:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka1
     container_name: kafka1
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19092:19092
+    - 9092:9092
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL_SAME_HOST://:19092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL_SAME_HOST://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka1 9092 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka2:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka2
     container_name: kafka2
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19093:19093
+    - 9093:9093
     environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9093,EXTERNAL_SAME_HOST://:19093
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093,EXTERNAL_SAME_HOST://localhost:19093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka2 9093 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka3:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka3
     container_name: kafka3
     ports:
-    - 19094:19094
+    - 9094:9094
     environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9094,EXTERNAL_SAME_HOST://:19094
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9094,EXTERNAL_SAME_HOST://localhost:19094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka3 9094 || exit 1
+      test: nc -zv kafka3 29092 || exit 1
       interval: 5s
       retries: 25
   schema-registry:
@@ -145,7 +129,7 @@ services:
     - 8081:8081
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
@@ -167,14 +151,13 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
     hostname: gateway1
     container_name: gateway1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
     depends_on:
       kafka1:
@@ -187,22 +170,21 @@ services:
     - 6969:6969
     - 6970:6970
     - 6971:6971
+    - 6972:6972
     - 8888:8888
     healthcheck:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
     hostname: gateway2
     container_name: gateway2
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: VCLUSTER
-      GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
-      GATEWAY_START_PORT: 7969
     depends_on:
       kafka1:
         condition: service_healthy
@@ -211,9 +193,10 @@ services:
       kafka3:
         condition: service_healthy
     ports:
-    - 7969:7969
-    - 7970:7970
-    - 7971:7971
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
     - 8889:8888
     healthcheck:
       test: curl localhost:8888/health
@@ -229,8 +212,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-networks:
-  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -242,10 +223,14 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
 * `--detach`: Detached mode: Run containers in the background
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose up --detach --wait
 ```
@@ -257,154 +242,94 @@ docker compose up --detach --wait
 ```
  Network sql-topic-schema-registry_default  Creating
  Network sql-topic-schema-registry_default  Created
- Container kafka-client  Creating
- Container zookeeper  Creating
- Container kafka-client  Created
- Container zookeeper  Created
  Container kafka3  Creating
  Container kafka1  Creating
  Container kafka2  Creating
- Container kafka3  Created
- Container kafka1  Created
+ Container kafka-client  Creating
  Container kafka2  Created
- Container gateway1  Creating
- Container schema-registry  Creating
+ Container kafka3  Created
+ Container kafka-client  Created
+ Container kafka1  Created
  Container gateway2  Creating
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container schema-registry  Created
  Container gateway1  Created
  Container gateway2  Created
- Container schema-registry  Created
  Container kafka-client  Starting
- Container zookeeper  Starting
- Container kafka-client  Started
- Container zookeeper  Started
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Healthy
- Container kafka1  Starting
- Container zookeeper  Healthy
- Container kafka2  Starting
- Container zookeeper  Healthy
  Container kafka3  Starting
- Container kafka2  Started
- Container kafka1  Started
+ Container kafka2  Starting
+ Container kafka1  Starting
  Container kafka3  Started
- Container kafka2  Waiting
+ Container kafka1  Started
+ Container kafka-client  Started
+ Container kafka2  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
+ Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka3  Waiting
- Container kafka1  Waiting
+ Container kafka3  Healthy
  Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
- Container kafka1  Healthy
- Container kafka3  Healthy
- Container gateway1  Starting
- Container kafka3  Healthy
- Container kafka3  Healthy
  Container schema-registry  Starting
+ Container kafka1  Healthy
+ Container gateway1  Starting
  Container kafka2  Healthy
  Container gateway2  Starting
- Container gateway1  Started
  Container gateway2  Started
  Container schema-registry  Started
- Container kafka1  Waiting
- Container kafka2  Waiting
- Container kafka3  Waiting
+ Container gateway1  Started
  Container schema-registry  Waiting
  Container gateway1  Waiting
  Container gateway2  Waiting
  Container kafka-client  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Healthy
- Container kafka3  Healthy
- Container kafka-client  Healthy
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
  Container kafka1  Healthy
  Container kafka2  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
+ Container schema-registry  Healthy
  Container gateway2  Healthy
  Container gateway1  Healthy
- Container schema-registry  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ZvOnJobWyvlhErJEVrNSsWVq6.svg)](https://asciinema.org/a/ZvOnJobWyvlhErJEVrNSsWVq6)
+[![asciicast](https://asciinema.org/a/692269.svg)](https://asciinema.org/a/692269)
 
 </TabItem>
 </Tabs>
 
-## Creating virtual cluster teamA
+## Creating topic cars on gateway1
 
-Creating virtual cluster `teamA` on gateway `gateway1` and reviewing the configuration file to access it
-
-<Tabs>
-<TabItem value="Command">
-
-
-```sh
-# Generate virtual cluster teamA with service account sa
-token=$(curl \
-    --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/teamA/username/sa" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data-raw '{"lifeTimeSeconds": 7776000}' | jq -r ".token")
-
-# Create access file
-echo  """
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='$token';
-""" > teamA-sa.properties
-
-# Review file
-cat teamA-sa.properties
-```
-
-
-</TabItem>
-<TabItem value="Output">
-
-```
-
-bootstrap.servers=localhost:6969
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='sa' password='eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNhIiwidmNsdXN0ZXIiOiJ0ZWFtQSIsImV4cCI6MTcyMDQ4NDA0Mn0.hOR7XsWSAt-WdufqJK4jjwr2jZ8VDGEuihoSFjn0xLE';
-
-
-```
-
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/qepBdFEu9hSQ1XuZnHcw5EV9r.svg)](https://asciinema.org/a/qepBdFEu9hSQ1XuZnHcw5EV9r)
-
-</TabItem>
-</Tabs>
-
-## Creating topic cars on teamA
-
-Creating on `teamA`:
+Creating on `gateway1`:
 
 * Topic `cars` with partitions:1 and replication-factor:1
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
@@ -423,23 +348,26 @@ Created topic cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pyIcDqnCFdo7qFmn4hA1kHdx4.svg)](https://asciinema.org/a/pyIcDqnCFdo7qFmn4hA1kHdx4)
+[![asciicast](https://asciinema.org/a/692270.svg)](https://asciinema.org/a/692270)
 
 </TabItem>
 </Tabs>
 
-## Listing topics in teamA
+## Listing topics in gateway1
+
+
+
+
+
 
 
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
     --list
 ```
 
@@ -448,6 +376,21 @@ kafka-topics \
 <TabItem value="Output">
 
 ```
+__consumer_offsets
+_conduktor_gateway_acls
+_conduktor_gateway_auditlogs
+_conduktor_gateway_consumer_offsets
+_conduktor_gateway_consumer_subscriptions
+_conduktor_gateway_encryption_configs
+_conduktor_gateway_groups
+_conduktor_gateway_interceptor_configs
+_conduktor_gateway_license
+_conduktor_gateway_topicmappings
+_conduktor_gateway_usermappings
+_conduktor_gateway_vclusters
+_confluent-command
+_confluent-link-metadata
+_schemas
 cars
 
 ```
@@ -455,7 +398,7 @@ cars
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/2f4o1NY0NSzLoK7ZHuJkyr3kl.svg)](https://asciinema.org/a/2f4o1NY0NSzLoK7ZHuJkyr3kl)
+[![asciicast](https://asciinema.org/a/692271.svg)](https://asciinema.org/a/692271)
 
 </TabItem>
 </Tabs>
@@ -464,10 +407,14 @@ cars
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 schema='{
             "type": "record",
@@ -481,7 +428,6 @@ schema='{
 echo '{"type":"Sports","price":75,"color":"blue"}' | \
     kafka-avro-console-producer  \
         --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
         --topic cars \
         --property schema.registry.url=http://localhost:8081 \
         --property "value.schema=$schema"
@@ -489,7 +435,6 @@ echo '{"type":"Sports","price":75,"color":"blue"}' | \
 echo '{"type":"SUV","price":55,"color":"red"}' | \
     kafka-avro-console-producer  \
         --bootstrap-server localhost:6969 \
-        --producer.config teamA-sa.properties \
         --topic cars \
         --property schema.registry.url=http://localhost:8081 \
         --property "value.schema=$schema"
@@ -500,7 +445,7 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 <TabItem value="Output">
 
 ```
-[2024-04-10 04:14:06,215] INFO KafkaAvroSerializerConfig values: 
+[2024-11-26 10:26:34,034] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -561,8 +506,8 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 	use.latest.with.metadata = null
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
- (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:376)
-[2024-04-10 04:14:07,843] INFO KafkaAvroSerializerConfig values: 
+ (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:370)
+[2024-11-26 10:26:36,644] INFO KafkaAvroSerializerConfig values: 
 	auto.register.schemas = true
 	avro.reflection.allow.null = false
 	avro.remove.java.properties = false
@@ -623,14 +568,14 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 	use.latest.with.metadata = null
 	use.schema.id = -1
 	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
- (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:376)
+ (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:370)
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/pPQsPWQ98dTXGQ2QEXm8J50Rg.svg)](https://asciinema.org/a/pPQsPWQ98dTXGQ2QEXm8J50Rg)
+[![asciicast](https://asciinema.org/a/692272.svg)](https://asciinema.org/a/692272)
 
 </TabItem>
 </Tabs>
@@ -639,14 +584,17 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-avro-console-consumer  \
     --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
     --topic cars \
     --property schema.registry.url=http://localhost:8081 \
     --from-beginning \
@@ -674,25 +622,28 @@ kafka-avro-console-consumer  \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/riUmfIqBBAx3XpcEkHVVceQhw.svg)](https://asciinema.org/a/riUmfIqBBAx3XpcEkHVVceQhw)
+[![asciicast](https://asciinema.org/a/692273.svg)](https://asciinema.org/a/692273)
 
 </TabItem>
 </Tabs>
 
-## Creating topic red-cars on teamA
+## Creating topic red-cars on gateway1
 
-Creating on `teamA`:
+Creating on `gateway1`:
 
 * Topic `red-cars` with partitions:1 and replication-factor:1
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
-    --command-config teamA-sa.properties \
     --replication-factor 1 \
     --partitions 1 \
     --create --if-not-exists \
@@ -711,7 +662,7 @@ Created topic red-cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/LjxvIHK7vJ8oTGlm9f50zHy3a.svg)](https://asciinema.org/a/LjxvIHK7vJ8oTGlm9f50zHy3a)
+[![asciicast](https://asciinema.org/a/692274.svg)](https://asciinema.org/a/692274)
 
 </TabItem>
 </Tabs>
@@ -720,65 +671,44 @@ Created topic red-cars.
 
 Let's create the interceptor to filter out the red cars from the cars topic.
 
-<Tabs>
-<TabItem value="Command">
 
 
-```sh
-cat step-11-red-cars.json | jq
 
-curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/teamA/interceptor/red-cars" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data @step-11-red-cars.json | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
+`step-10-red-cars-interceptor.json`:
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
-  "priority": 100,
-  "config": {
-    "virtualTopic": "red-cars",
-    "statement": "SELECT * FROM cars WHERE color = 'red'",
-    "schemaRegistryConfig": {
-      "host": "http://schema-registry:8081"
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "red-cars"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: red-cars",
+    "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+    "priority" : 100,
+    "config" : {
+      "virtualTopic" : "red-cars",
+      "statement" : "SELECT * FROM cars WHERE color = 'red'",
+      "schemaRegistryConfig" : {
+        "host" : "http://schema-registry:8081"
+      }
     }
   }
 }
-{
-  "message": "red-cars is created"
-}
-
 ```
 
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/WIWo2Mrk0an4ClZFSVJkkEUQh.svg)](https://asciinema.org/a/WIWo2Mrk0an4ClZFSVJkkEUQh)
-
-</TabItem>
-</Tabs>
-
-## Listing interceptors for teamA
-
-Listing interceptors on `gateway1` for virtual cluster `teamA`
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/teamA' \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent | jq
+    --silent \
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-10-red-cars-interceptor.json | jq
 ```
 
 
@@ -787,12 +717,21 @@ curl \
 
 ```json
 {
-  "interceptors": [
-    {
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
       "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
       "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
       "priority": 100,
-      "timeoutMs": 9223372036854775807,
       "config": {
         "virtualTopic": "red-cars",
         "statement": "SELECT * FROM cars WHERE color = 'red'",
@@ -801,7 +740,8 @@ curl \
         }
       }
     }
-  ]
+  },
+  "upsertResult": "CREATED"
 }
 
 ```
@@ -809,7 +749,68 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/P5XaqYHxTwcZjS1DH8DfJaxW1.svg)](https://asciinema.org/a/P5XaqYHxTwcZjS1DH8DfJaxW1)
+[![asciicast](https://asciinema.org/a/692275.svg)](https://asciinema.org/a/692275)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors
+
+Listing interceptors on `gateway1`
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT * FROM cars WHERE color = 'red'",
+        "schemaRegistryConfig": {
+          "host": "http://schema-registry:8081"
+        }
+      }
+    }
+  }
+]
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692276.svg)](https://asciinema.org/a/692276)
 
 </TabItem>
 </Tabs>
@@ -818,14 +819,17 @@ curl \
 
 
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-avro-console-consumer  \
     --bootstrap-server localhost:6969 \
-    --consumer.config teamA-sa.properties \
     --topic red-cars \
     --property schema.registry.url=http://localhost:8081 \
     --from-beginning \
@@ -848,7 +852,7 @@ kafka-avro-console-consumer  \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/whkPdhyS4WAKtvKMy92uCWCXS.svg)](https://asciinema.org/a/whkPdhyS4WAKtvKMy92uCWCXS)
+[![asciicast](https://asciinema.org/a/692277.svg)](https://asciinema.org/a/692277)
 
 </TabItem>
 </Tabs>
@@ -859,10 +863,14 @@ Remove all your docker processes and associated volumes
 
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose down --volumes
 ```
@@ -874,36 +882,32 @@ docker compose down --volumes
 ```
  Container schema-registry  Stopping
  Container kafka-client  Stopping
- Container gateway1  Stopping
  Container gateway2  Stopping
- Container gateway1  Stopped
- Container gateway1  Removing
- Container gateway1  Removed
+ Container gateway1  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
+ Container gateway1  Stopped
+ Container gateway1  Removing
  Container gateway2  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
+ Container gateway1  Removed
  Container schema-registry  Removed
  Container kafka1  Stopping
  Container kafka3  Stopping
  Container kafka2  Stopping
- Container kafka1  Stopped
- Container kafka1  Removing
- Container kafka1  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
+ Container kafka1  Stopped
+ Container kafka1  Removing
  Container kafka3  Removed
+ Container kafka1  Removed
  Container kafka-client  Stopped
  Container kafka-client  Removing
  Container kafka-client  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container zookeeper  Stopping
- Container zookeeper  Stopped
- Container zookeeper  Removing
- Container zookeeper  Removed
  Network sql-topic-schema-registry_default  Removing
  Network sql-topic-schema-registry_default  Removed
 
@@ -912,7 +916,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/dbUxZsUVqXwNTqwGjHstv8P8H.svg)](https://asciinema.org/a/dbUxZsUVqXwNTqwGjHstv8P8H)
+[![asciicast](https://asciinema.org/a/692278.svg)](https://asciinema.org/a/692278)
 
 </TabItem>
 </Tabs>
