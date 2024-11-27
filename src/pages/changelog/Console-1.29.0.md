@@ -104,6 +104,7 @@ The cluster homepage have been redesigned to present you with the most useful in
 - The health of your Kafka Cluster with a few key metrics and graphs
 - The state of Console Indexing modules for this Kafka Cluster
 - Quick access to your most recently viewed resources
+
 ![Kafka Connect Wizard](/images/changelog/platform/v29/console-homepage.png)
 
 ***
