@@ -23,7 +23,7 @@ You can either follow all the steps manually, or watch the recording
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/YMloDBlEQr2m6A075oPlKgOzN.svg)](https://asciinema.org/a/YMloDBlEQr2m6A075oPlKgOzN)
+[![asciicast](https://asciinema.org/a/692288.svg)](https://asciinema.org/a/692288)
 
 </TabItem>
 </Tabs>
@@ -39,7 +39,6 @@ As can be seen from `docker-compose.yaml` the demo environment consists of the f
 * kafka2
 * kafka3
 * schema-registry
-* zookeeper
 
 <Tabs>
 <TabItem value="Command">
@@ -52,89 +51,74 @@ cat docker-compose.yaml
 <TabItem value="File Content">
 
 ```yaml
-version: '3.7'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    hostname: zookeeper
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2801
-      ZOOKEEPER_TICK_TIME: 2000
-    healthcheck:
-      test: nc -zv 0.0.0.0 2801 || exit 1
-      interval: 5s
-      retries: 25
   kafka1:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka1
     container_name: kafka1
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19092:19092
+    - 9092:9092
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL_SAME_HOST://:19092
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL_SAME_HOST://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka1 9092 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka2:
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka2
     container_name: kafka2
-    image: confluentinc/cp-kafka:latest
     ports:
-    - 19093:19093
+    - 9093:9093
     environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9093,EXTERNAL_SAME_HOST://:19093
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093,EXTERNAL_SAME_HOST://localhost:19093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka2 9093 || exit 1
+      test: nc -zv kafka1 29092 || exit 1
       interval: 5s
       retries: 25
   kafka3:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-server:7.5.0
     hostname: kafka3
     container_name: kafka3
     ports:
-    - 19094:19094
+    - 9094:9094
     environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2801
-      KAFKA_LISTENERS: INTERNAL://:9094,EXTERNAL_SAME_HOST://:19094
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9094,EXTERNAL_SAME_HOST://localhost:19094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_LOG4J_LOGGERS: kafka.authorizer.logger=INFO
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
     healthcheck:
-      test: nc -zv kafka3 9094 || exit 1
+      test: nc -zv kafka3 29092 || exit 1
       interval: 5s
       retries: 25
   schema-registry:
@@ -145,7 +129,7 @@ services:
     - 8081:8081
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
@@ -167,13 +151,12 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
     hostname: gateway1
     container_name: gateway1
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: KAFKA_SECURITY
       GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
     depends_on:
@@ -187,22 +170,21 @@ services:
     - 6969:6969
     - 6970:6970
     - 6971:6971
+    - 6972:6972
     - 8888:8888
     healthcheck:
       test: curl localhost:8888/health
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.0.3
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
     hostname: gateway2
     container_name: gateway2
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
       GATEWAY_ADVERTISED_HOST: localhost
-      GATEWAY_MODE: KAFKA_SECURITY
       GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
-      GATEWAY_START_PORT: 7969
     depends_on:
       kafka1:
         condition: service_healthy
@@ -211,9 +193,10 @@ services:
       kafka3:
         condition: service_healthy
     ports:
-    - 7969:7969
-    - 7970:7970
-    - 7971:7971
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
     - 8889:8888
     healthcheck:
       test: curl localhost:8888/health
@@ -229,8 +212,6 @@ services:
       source: .
       target: /clientConfig
       read_only: true
-networks:
-  demo: null
 ```
 </TabItem>
 </Tabs>
@@ -242,10 +223,14 @@ Start all your docker processes, wait for them to be up and ready, then run in b
 * `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
 * `--detach`: Detached mode: Run containers in the background
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose up --detach --wait
 ```
@@ -257,85 +242,73 @@ docker compose up --detach --wait
 ```
  Network sql-topics_default  Creating
  Network sql-topics_default  Created
- Container zookeeper  Creating
- Container kafka-client  Creating
- Container kafka-client  Created
- Container zookeeper  Created
- Container kafka1  Creating
  Container kafka3  Creating
+ Container kafka-client  Creating
+ Container kafka1  Creating
  Container kafka2  Creating
+ Container kafka3  Created
+ Container kafka-client  Created
  Container kafka1  Created
  Container kafka2  Created
- Container kafka3  Created
- Container schema-registry  Creating
  Container gateway1  Creating
+ Container schema-registry  Creating
  Container gateway2  Creating
+ Container gateway1  Created
  Container gateway2  Created
  Container schema-registry  Created
- Container gateway1  Created
- Container zookeeper  Starting
- Container kafka-client  Starting
- Container zookeeper  Started
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container zookeeper  Waiting
- Container kafka-client  Started
- Container zookeeper  Healthy
  Container kafka3  Starting
- Container zookeeper  Healthy
  Container kafka1  Starting
- Container zookeeper  Healthy
+ Container kafka-client  Starting
  Container kafka2  Starting
- Container kafka1  Started
  Container kafka3  Started
  Container kafka2  Started
+ Container kafka1  Started
  Container kafka3  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
- Container kafka1  Waiting
- Container kafka3  Waiting
+ Container kafka2  Waiting
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
- Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka-client  Started
+ Container kafka3  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka2  Healthy
+ Container kafka3  Healthy
  Container kafka1  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
- Container kafka3  Healthy
+ Container kafka2  Healthy
  Container gateway1  Starting
  Container kafka1  Healthy
- Container kafka2  Healthy
  Container gateway2  Starting
  Container kafka1  Healthy
  Container schema-registry  Starting
- Container schema-registry  Started
- Container gateway2  Started
  Container gateway1  Started
- Container gateway2  Waiting
- Container kafka-client  Waiting
- Container zookeeper  Waiting
+ Container gateway2  Started
+ Container schema-registry  Started
  Container kafka1  Waiting
  Container kafka2  Waiting
  Container kafka3  Waiting
  Container schema-registry  Waiting
  Container gateway1  Waiting
- Container kafka-client  Healthy
- Container kafka1  Healthy
- Container kafka2  Healthy
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
  Container kafka3  Healthy
- Container zookeeper  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
+ Container gateway1  Healthy
  Container gateway2  Healthy
  Container schema-registry  Healthy
- Container gateway1  Healthy
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/tix4hSbLT4lOFhNUkeZlmmAWT.svg)](https://asciinema.org/a/tix4hSbLT4lOFhNUkeZlmmAWT)
+[![asciicast](https://asciinema.org/a/692280.svg)](https://asciinema.org/a/692280)
 
 </TabItem>
 </Tabs>
@@ -346,10 +319,14 @@ Creating on `gateway1`:
 
 * Topic `cars` with partitions:1 and replication-factor:1
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-topics \
     --bootstrap-server localhost:6969 \
@@ -371,7 +348,7 @@ Created topic cars.
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ytMxeqvSSjilVTt8MbSyOZrcv.svg)](https://asciinema.org/a/ytMxeqvSSjilVTt8MbSyOZrcv)
+[![asciicast](https://asciinema.org/a/692281.svg)](https://asciinema.org/a/692281)
 
 </TabItem>
 </Tabs>
@@ -383,8 +360,7 @@ Produce 2 records to the cars topic: our mock car data for cars.
 * A blue car
 * A red car
 
-<Tabs>
-<TabItem value="Command">
+
 
 
 Sending 2 events
@@ -400,9 +376,12 @@ Sending 2 events
   "color" : "red"
 }
 ```
-with
 
 
+
+<Tabs>
+
+<TabItem value="Command">
 ```sh
 echo '{"type":"Sports","price":75,"color":"blue"}' | \
     kafka-console-producer \
@@ -420,13 +399,14 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 <TabItem value="Output">
 
 ```
+>>>>
 
 ```
 
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/JUQise1WrVk8f4BWC6jeyMOpx.svg)](https://asciinema.org/a/JUQise1WrVk8f4BWC6jeyMOpx)
+[![asciicast](https://asciinema.org/a/692282.svg)](https://asciinema.org/a/692282)
 
 </TabItem>
 </Tabs>
@@ -435,17 +415,21 @@ echo '{"type":"SUV","price":55,"color":"red"}' | \
 
 Let's confirm the 2 records are there by consuming from the cars topic.
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
     --topic cars \
     --from-beginning \
-    --max-messages 2 \
-    --timeout-ms 10000 | jq
+    --max-messages 3 \
+    --timeout-ms 3000 | jq
 ```
 
 
@@ -463,11 +447,12 @@ returns 2 events
 }
 ```
 
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
+[2024-11-26 10:35:33,455] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
 Processed a total of 2 messages
 {
   "type": "Sports",
@@ -485,7 +470,7 @@ Processed a total of 2 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/g1bEqEFHIWgP8EAWnjsjbXQp9.svg)](https://asciinema.org/a/g1bEqEFHIWgP8EAWnjsjbXQp9)
+[![asciicast](https://asciinema.org/a/692283.svg)](https://asciinema.org/a/692283)
 
 </TabItem>
 </Tabs>
@@ -494,62 +479,41 @@ Processed a total of 2 messages
 
 Let's create the interceptor to filter out the red cars from the cars topic.
 
-<Tabs>
-<TabItem value="Command">
 
 
-```sh
-cat step-08-red-cars.json | jq
 
-curl \
-    --request POST "http://localhost:8888/admin/interceptors/v1/vcluster/passthrough/interceptor/red-cars" \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent \
-    --data @step-08-red-cars.json | jq
-```
-
-
-</TabItem>
-<TabItem value="Output">
+`step-08-red-cars-interceptor.json`:
 
 ```json
 {
-  "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
-  "priority": 100,
-  "config": {
-    "virtualTopic": "red-cars",
-    "statement": "SELECT type, price as money FROM cars WHERE color = 'red'"
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "red-cars"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: red-cars",
+    "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+    "priority" : 100,
+    "config" : {
+      "virtualTopic" : "red-cars",
+      "statement" : "SELECT type, price as money FROM cars WHERE color = 'red'"
+    }
   }
 }
-{
-  "message": "red-cars is created"
-}
-
 ```
 
-</TabItem>
-<TabItem value="Recording">
-
-[![asciicast](https://asciinema.org/a/Zeg773skSeBJmi99kKa7d5PR7.svg)](https://asciinema.org/a/Zeg773skSeBJmi99kKa7d5PR7)
-
-</TabItem>
-</Tabs>
-
-## Listing interceptors for passthrough
-
-Listing interceptors on `gateway1` for virtual cluster `passthrough`
 
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 curl \
-    --request GET 'http://localhost:8888/admin/interceptors/v1/vcluster/passthrough' \
-    --header 'Content-Type: application/json' \
-    --user 'admin:conduktor' \
-    --silent | jq
+    --silent \
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-08-red-cars-interceptor.json | jq
 ```
 
 
@@ -558,18 +522,28 @@ curl \
 
 ```json
 {
-  "interceptors": [
-    {
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
       "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
       "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
       "priority": 100,
-      "timeoutMs": 9223372036854775807,
       "config": {
         "virtualTopic": "red-cars",
         "statement": "SELECT type, price as money FROM cars WHERE color = 'red'"
       }
     }
-  ]
+  },
+  "upsertResult": "CREATED"
 }
 
 ```
@@ -577,7 +551,65 @@ curl \
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/oD5oG9PGkCCK0cJXaxGrms5Vm.svg)](https://asciinema.org/a/oD5oG9PGkCCK0cJXaxGrms5Vm)
+[![asciicast](https://asciinema.org/a/692284.svg)](https://asciinema.org/a/692284)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors
+
+Listing interceptors on `gateway1`
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT type, price as money FROM cars WHERE color = 'red'"
+      }
+    }
+  }
+]
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692285.svg)](https://asciinema.org/a/692285)
 
 </TabItem>
 </Tabs>
@@ -590,16 +622,21 @@ You now see only one car, the red one, please note that its format changed accor
 
 If you are wondering if you can be a bit more fancy, the answer is ... yes!
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 kafka-console-consumer \
     --bootstrap-server localhost:6969 \
     --topic red-cars \
     --from-beginning \
-    --timeout-ms 10000 | jq
+    --max-messages 2 \
+    --timeout-ms 3000 | jq
 ```
 
 
@@ -611,12 +648,11 @@ returns 1 event
 }
 ```
 
-
 </TabItem>
 <TabItem value="Output">
 
 ```json
-[2024-04-10 04:19:15,769] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+[2024-11-26 10:35:42,015] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
 org.apache.kafka.common.errors.TimeoutException
 Processed a total of 1 messages
 {
@@ -629,7 +665,7 @@ Processed a total of 1 messages
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/IeAw8Qh3wWFD28lszYKrj78bq.svg)](https://asciinema.org/a/IeAw8Qh3wWFD28lszYKrj78bq)
+[![asciicast](https://asciinema.org/a/692286.svg)](https://asciinema.org/a/692286)
 
 </TabItem>
 </Tabs>
@@ -661,10 +697,14 @@ Remove all your docker processes and associated volumes
 
 * `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
 
+
+
+
+
+
 <Tabs>
+
 <TabItem value="Command">
-
-
 ```sh
 docker compose down --volumes
 ```
@@ -676,36 +716,32 @@ docker compose down --volumes
 ```
  Container kafka-client  Stopping
  Container schema-registry  Stopping
- Container gateway2  Stopping
  Container gateway1  Stopping
+ Container gateway2  Stopping
  Container gateway2  Stopped
  Container gateway2  Removing
- Container gateway2  Removed
  Container gateway1  Stopped
  Container gateway1  Removing
- Container gateway1  Removed
  Container schema-registry  Stopped
  Container schema-registry  Removing
+ Container gateway2  Removed
+ Container gateway1  Removed
  Container schema-registry  Removed
  Container kafka3  Stopping
- Container kafka1  Stopping
  Container kafka2  Stopping
+ Container kafka1  Stopping
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
  Container kafka3  Stopped
  Container kafka3  Removing
  Container kafka3  Removed
  Container kafka1  Stopped
  Container kafka1  Removing
  Container kafka1  Removed
- Container kafka-client  Stopped
- Container kafka-client  Removing
- Container kafka-client  Removed
  Container kafka2  Stopped
  Container kafka2  Removing
  Container kafka2  Removed
- Container zookeeper  Stopping
- Container zookeeper  Stopped
- Container zookeeper  Removing
- Container zookeeper  Removed
  Network sql-topics_default  Removing
  Network sql-topics_default  Removed
 
@@ -714,7 +750,7 @@ docker compose down --volumes
 </TabItem>
 <TabItem value="Recording">
 
-[![asciicast](https://asciinema.org/a/ubq1TLzaQFf583Uja3f0bsHGo.svg)](https://asciinema.org/a/ubq1TLzaQFf583Uja3f0bsHGo)
+[![asciicast](https://asciinema.org/a/692287.svg)](https://asciinema.org/a/692287)
 
 </TabItem>
 </Tabs>
