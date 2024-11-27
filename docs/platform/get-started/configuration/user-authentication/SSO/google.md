@@ -13,7 +13,10 @@ On Google side, you'll have to follow these steps:
 - **Step 1**: Create an application on the **OAuth consent screen** tab
 
 The scopes needed are `email`, `profile`, and `openid`.
-
+:::caution Google Groups
+Additionally, if you want to sync Google Groups with Conduktor Groups, add the following scope:
+- `https://www.googleapis.com/auth/cloud-identity.groups.readonly`
+:::
 ![](../../assets/google-scopes.png)
 
 
@@ -49,6 +52,8 @@ If you need to add an **authorized domain** to your Google account, you can foll
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret with what you got during the step 4.
 
+The scope `https://www.googleapis.com/auth/cloud-identity.groups.readonly` is only required if you want to sync Google Group with Conduktor Groups.
+
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
@@ -60,6 +65,7 @@ sso:
     - name: "google"
       client-id: "<client ID>"
       client-secret: "<client secret>"
+      scopes: "openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
       openid:
         issuer: "https://accounts.google.com"
 ```
@@ -72,6 +78,7 @@ CDK_SSO_OAUTH2_0_NAME="google"
 CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 ```
 
