@@ -114,6 +114,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
+Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
 
 The value you need to put as an external group is the `email` address of the Google Group.
