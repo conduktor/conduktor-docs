@@ -20,6 +20,7 @@ Read the **[full guide](../../../../platform/guides/configure-chargeback)** on c
 |:------------------|:-------|:--------|:---------------------------------------------------------------------------------|
 | topicName         | String |         | Topics used to store observability metrics. If this topic already exists in your cluster, it must have only one partition. If the topic does not exist, Gateway will create this when you deploy the plugin. |
 | replicationFactor | Int    |         | The replication factor to set if Gateway needs to create the topic.               |
+| flushIntervalInSecond | Int    |    300     | The periodic interval for flushing metrics to the specified topic.               |
 
 ## Example
 
