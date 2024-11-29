@@ -9,4 +9,4 @@ tags: fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 ## Fixes 🔨
-- Fixed a regression where configuring Google OIDC without a `scope` was throwing an Exception.
+- Fixed an issue where configuring Google OIDC without a `scope` was throwing an Exception.
