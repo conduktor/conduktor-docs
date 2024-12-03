@@ -8,11 +8,18 @@ description: Cortex Configuration
 This Configuration is for Cortex dependency image `conduktor/conduktor-console-cortex`
 :::
 
-This image is exclusively configured through Environment Variables.  
+## Table of Contents
+- [Example configuration](#example-configuration)
+- [Overriding Configuration](#overriding-configuration)
+  - [Overriding with YAML](#overriding-with-yaml)
+  - [Overriding with configMap](#overriding-with-configmap)
+- [Troubleshooting](#troubleshooting)
+  - [No metrics in the monitoring page](#no-metrics-in-the-monitoring-page)
+  - [No Slack notification alerts](#no-slack-notification-alerts)
+- [Endpoint Authentication](#endpoint-authentication)
 
 
 The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
-
 
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
 You can mount a volume on this folder to keep metrics data between updates.
