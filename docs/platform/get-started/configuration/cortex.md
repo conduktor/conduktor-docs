@@ -108,7 +108,7 @@ You should see a similar entry to the below in the opening logs:
 INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
 ```
 
-### Overriding with configMap
+### Overriding with ConfigMap
 If you are deploying Cortex using our [Helm charts](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md) you may expand the input with a custom ConfigMap for overriding configuration such as retention time within Cortex.
 
 ```yaml
