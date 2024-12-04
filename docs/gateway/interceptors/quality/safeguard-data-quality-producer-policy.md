@@ -8,7 +8,7 @@ license: enterprise
 
 # What is the data quality producer policy ?
 
-Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in irder to be considered valid.
+Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid.
 
 For example, given a simple orders topic with records in the form:
 
@@ -48,7 +48,7 @@ In the statement, the list of fields selected is actually ignored - the importan
 
 `SELECT [ignored!] FROM [topic name] WHERE [field filter criteria]`
 
-Only one topic can be specified in the FROM clause (extra ones will be ignored), and the topic name is matched explicityl (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The interceptor currently supports values in JSON, AVRO and Protobuf formats. 
+Only one topic can be specified in the FROM clause (extra ones will be ignored), and the topic name is matched explicity (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The interceptor currently supports values in JSON, AVRO and Protobuf formats. 
 
 Nested fields can be accessed as expected with dot notation in the WHERE clause, e.g.:
 
@@ -56,13 +56,12 @@ Nested fields can be accessed as expected with dot notation in the WHERE clause,
 
 Currently
 
-- The currently supported operators for the WHERE clause are: `=, >, >=, <, <=, <>` and REGEXP (RegExp MySQL Operator)
-- When providing more than one condition in the WHERE clause, only the `AND` operator is currently supported
+- The supported operators for the WHERE clause are: `=, >, >=, <, <=, <>` and `REGEXP` (RegExp MySQL Operator)
+- When providing more than one condition in the WHERE clause, only the `AND` operator is supported
 - By default, the fields in the where clause are looked up from the value in the record. You can also filter by other parts of the record using the syntax below:
-    - Record key (It supports SR):
+    - Record key (It also supports encoded keys which require a schema registry lookup):
         - Record key as string: - `.. WHERE record.key = 'some thing'`
         - Record key as schema: `.. WHERE record.key.someValue.someChildValue = 'some thing'`
-    - Record value (It supports SR): `.. WHERE $.someValue.someChildValue = 'some thing'`
     - Partition: `.. WHERE record.partition = 1`
     - Timestamp: `.. WHERE record.timestamp = 98717823712`
     - Header: `.. WHERE record.header.someHeaderKey = 'some thing'`
@@ -70,7 +69,7 @@ Currently
 
 ## Note on Fields in WHERE Clause
 
-If you specify a field name in the where clause which does not exist in the record, then the condition will always fail, and the record will always be considered invalid. Fields in the WHERE clause must exist in a record for it to be considered valid.
+If you specify a field name in the where clause which does not exist in the record, then the condition will always fail and the record will always be considered invalid. Fields in the WHERE clause must exist in a record for it to be considered valid.
 
 ## Actions for Invalid Data
 
@@ -78,8 +77,8 @@ The policy acts on produce requests from the clients of Kafka, and as such this 
 
 | action                     | description                                                                                                                                                                                                                                                                                           |
 |:---------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| BLOCK_WHOLE_BATCH          | If any records in the batch is invalid, then block the whole batch. The Produce Request will fail for the client in this case.                                                                                                                                                                        |
-| BLOCK_ONLY_INVALID_RECORDS | Any records that is invalid is removed from the batch, but all the valid records in the batch are saved in kafka. If any records are written, a success response for that is returned to the client. In the case where every message in the batch is invalid then an error is returned to the client. |
+| BLOCK_WHOLE_BATCH          | If any records in the batch are invalid, then block the whole batch. The Produce Request will fail for the client in this case.                                                                                                                                                                        |
+| BLOCK_ONLY_INVALID_RECORDS | Any records that are invalid are removed from the batch, and all the valid records in the batch are saved in kafka. If any records are written, a success response for that is returned to the client. In the case where every message in the batch is invalid then an error is returned to the client. |
 | AUDIT_LOG_ONLY             | For any records in the produce request which are invalid, record this in the audit log only. All records still are saved in kafka                                                                                                                                                                     |
 | THROTTLE                   | If any records in the produce request are invalid, throttle the producer for a certain amount of time (`throttleTimeMs`). All records are still saved in kafka.                                                                                                                                       |
 
@@ -102,7 +101,7 @@ If no `deadLetterTopic` is configured for the policy, then no messages will be w
 ## Audit Log
 
 Any violation of the policy is logged to the configured Audit Log for the Gateway, if it is set up.
-This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit generated - it rather just identifies that a policy breach did occur for the produce request (and identifies the tenant, username and client IP for the request) 
+This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit - it rather just identifies that a policy breach did occur for the produce request (and identifies the tenant, username and client IP for the request) 
 
 
 ## Configuration
