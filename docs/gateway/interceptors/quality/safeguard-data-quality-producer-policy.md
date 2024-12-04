@@ -142,16 +142,7 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.DataQualityProducerPlugin",
   "priority": 100,
   "config": {
-    "statement": "
-        SELECT x FROM orders WHERE
-            id REGEXP '^[0-9A-F-]{36}$'    -- 36 char UUID in hex with dash separators
-        AND amount_cents REGEXP '[0-9]+'   -- amount must be an integer
-        AND amount_cents > 0               -- ... greater than zero and less than 1,000,000 cents
-        AND amount_cents < 1000000
-        AND currency REGEXP 'EUR|GBP|USD'  -- currency must be one of these three
-        AND order_date REGEXP '^20[2-9][0-9]-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]Z$'
-                                           -- valid date, and after 2020
-    ",
+    "statement": "SELECT x FROM orders WHERE amount_cents > 0 AND amount_cents < 1000000",
     "schemaRegistryConfig": {
        "host": "http://schema-registry:8081"
     },
