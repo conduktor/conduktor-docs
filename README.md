@@ -1,7 +1,5 @@
 # Conduktor Docs
 
-- Use relative paths and trailing slashes for links (e.g `/platform/testing/features/ci-cd-automation/` instead of `../../features/ci-cd-automation/`)
-or, [user reference doc](/gateway/reference/user).
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`. 
 - Production (main): https://docs.conduktor.io
 - Anchor example, [env variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties)
@@ -12,6 +10,48 @@ or, [user reference doc](/gateway/reference/user).
 $ yarn
 $ yarn start
 $ yarn build
+```
+
+Unless you are making changes to the docs framework or updating the changelog, you should only need to edit the Markdown files in the `docs` directory.
+Images can be stored in an `img` directory alonside the content.
+Docs for the Console can be found under the `docs/platform` directory.
+
+# Updating the Changelog
+
+For a new release, the changelog should be updated.  You need to create a new Markdown file for the new product version, and then reference it in the changelog index.
+
+## Changes for this version
+
+Add a new MD file in `src/pages/changelog/<Product>-<semver>.md` and add the following header to the file:
+
+```
+---
+date: 2024-11-25
+title: Chargeback
+description: docker pull conduktor/conduktor-console:1.29.0
+solutions: console
+tags: features,fix
+---
+
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+```
+
+You can then document the changes going in to this release, optionally with an index at the start.  See previous files for examples.
+
+## Adding your new changelog file to the index
+
+In `src/pages/changelog.mdx` you must add an import for your new page e.g.
+
+```
+import Console1290 from './changelog/Console-1.29.0.md';
+```
+
+and then reference it, e.g.
+
+```
+## Console 1.29.0
+<Console1290 />
+---
 ```
 
 # Vercel
@@ -27,8 +67,8 @@ Or have someone from Vercel change this line each time as the latest commit. `Ch
 ## Gateway
 For now they live on the host:8888 of Gateway, but we also publish them online at [developers.conduktor.io](https://www.developers.conduktor.io).
 
-To update the public version copy the latest open api yaml files from conduktor-proxy repo, https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml to the [/static/developers](./static/developers/).
+To update the public version copy the latest open api yaml files from conduktor-proxy repo, https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml to the [/static/developers](./static/developers/) directory.
 
 ## Console
 Available on the host/docs.
-Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml
+Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml  to the [/static/developers](./static/developers/) directory
