@@ -1,11 +1,8 @@
 # Conduktor Docs
-
-- If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`. 
-- Production (main): https://docs.conduktor.io
-- Anchor example, [env variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties)
+Production (main): https://docs.conduktor.io
 
 # Development
-
+For local preview run `yarn` , `yarn start`, a local server starts on localhost:3000. `yarn build` is best practice to see if any failures, as this is what the remote will check on each commit.
 ```
 $ yarn
 $ yarn start
@@ -14,14 +11,16 @@ $ yarn build
 
 Unless you are making changes to the docs framework or updating the changelog, you should only need to edit the Markdown files in the `docs` directory.
 
-Images can be stored in an `img` directory alonside the content.
+Console documentation is found under the `docs/platform` directory. The path of the MD files mirrors that of the website url.
 
-Docs for the Console can be found under the `docs/platform` directory.
+- Images can be stored in an `img` directory alongside the content
+- Anchor example, [env variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties)
+- If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
 
 # Updating public API docs
 
 ## Gateway
-For now they live on the host:8888 of Gateway, but we also publish them online at [developers.conduktor.io](https://www.developers.conduktor.io).
+They live on the host:8888 of the deployed Gateway, but we also publish them online at [developers.conduktor.io](https://www.developers.conduktor.io).
 
 To update the public version copy the latest open api yaml files from conduktor-proxy repo,
 https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml
@@ -73,10 +72,6 @@ and then reference it, e.g.
 
 # Vercel
 
-We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform.
+We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform. Ensure you are a member using `@conduktor.io`, not your personal email (check your Github profile).
 
-You have to be a member of our Vercel workspace for Vercel to build your PR/commits, otherwise the build stage will fail.
-
-Ensure you are a member using `@conduktor.io`, not your personal email (check your Github profile).
-
-Or have a member of the Vercel workspace (e.g. someone from the Product team) change this line each time as the latest commit and trigger a PR. `Change me 1`.
+You have to be a member of our Vercel workspace for Vercel to build your PR/commits, otherwise the build stage will fail. The workaround is to have a member of the Vercel workspace (e.g. someone from the Product team) change the end of this line each time as the latest commit and trigger a PR. `Change me 1`.
