@@ -6,7 +6,7 @@ parent: governance
 license: enterprise
 ---
 
-# What is the data quality producer policy ?
+# Introduction
 
 Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid.
 
@@ -52,7 +52,7 @@ Only one topic can be specified in the FROM clause (extra ones will be ignored),
 
 Nested fields can be accessed as expected with dot notation in the WHERE clause, e.g.:
 
-`address.street = 'Electric Avanue'`
+`address.street = 'Electric Avenue'`
 
 Currently
 
