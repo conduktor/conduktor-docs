@@ -127,6 +127,17 @@ data:
         retention_period: 24h
 ```
 
+On chart `values.yaml` : 
+```yaml
+platformCortex:
+  extraVolumes: 
+    - name: cortex-config-override
+      configMap:
+        name: conduktor-console-cortex-config
+  extraVolumeMounts:
+        - name: cortex-config-override
+          mountPath: /opt/override-configs/cortex.yaml
+          subPath: cortex.yaml
 ## Troubleshooting  
 
 ### No metrics in the monitoring page  
