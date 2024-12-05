@@ -106,7 +106,7 @@ If no `deadLetterTopic` is configured for the policy, then no messages will be w
 ## Audit Log
 
 Any violation of the policy is logged to the configured Audit Log for the Gateway, if it is set up.
-This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit - it rather just identifies that a policy breach did occur for the produce request (and identifies the tenant, username and client IP for the request)
+This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit - it identifies that a policy breach occurred for the produce request (and identifies the tenant, username and client IP for the request).
 
 
 ## Configuration
