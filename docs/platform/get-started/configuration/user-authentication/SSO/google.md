@@ -13,6 +13,7 @@ On Google side, you'll have to follow these steps:
 - **Step 1**: Create an application on the **OAuth consent screen** tab
 
 The scopes needed are `email`, `profile`, and `openid`.
+Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
 
 ![](../../assets/google-scopes.png)
 
@@ -60,6 +61,7 @@ sso:
     - name: "google"
       client-id: "<client ID>"
       client-secret: "<client secret>"
+      scopes: "openid,email,profile"
       openid:
         issuer: "https://accounts.google.com"
 ```
@@ -69,11 +71,49 @@ sso:
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="google"
-CDK_SSO_OAUTH2_0_DEFAULT=true
 CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
 CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 ```
 
 </TabItem>
 </Tabs>
+
+## Groups Configuration
+
+An additional scope `https://www.googleapis.com/auth/cloud-identity.groups.readonly` is required if you want to sync Google Group with Conduktor Groups.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML File">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "google"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      scopes: "openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
+      openid:
+        issuer: "https://accounts.google.com"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment Variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="google"
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
+```
+
+</TabItem>
+</Tabs>
+
+### External Groups Mapping
+
+Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
+
+The value you need to put as an external group is the `email` address of the Google Group.
