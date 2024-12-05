@@ -6,9 +6,9 @@ parent: governance
 license: enterprise
 ---
 
-# Introduction
+# Producer Data Quality Validation
 
-Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid.
+Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid. This is particularly useful if your data is plain JSON with no schema - however the policy can be applied to schema'd data (AVRO, Protobuf) as well.
 
 For example, given a simple orders topic with records in the form:
 
@@ -44,20 +44,28 @@ WHERE
                                        -- valid date, and after 2020  
 ```
 
-In the statement, the list of fields selected is actually ignored - the important parts are the FROM clause (specifying the topic that the policy is applied to) and the WHERE clause, which specifies the condition data must meet in order to be considered valid. i.e. If the select returns something, the record is valid. If it returns no results, the record is considered invalid. 
+In the statement, the list of fields selected is actually ignored - the important parts are the FROM clause (specifying the topic that the policy is applied to) and the WHERE clause, which specifies the condition data must meet in order to be considered valid. i.e. If the select returns something, the record is valid. If it returns no results, the record is considered invalid.
 
 `SELECT [ignored!] FROM [topic name] WHERE [field filter criteria]`
 
-Only one topic can be specified in the FROM clause (extra ones will be ignored), and the topic name is matched explicity (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The interceptor currently supports values in JSON, AVRO and Protobuf formats. 
+Only one topic can be specified in the FROM clause (joins will be ignored), and the topic name is matched explicity (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The interceptor currently supports values in JSON, AVRO and Protobuf formats.
+
+**Please Note**: Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
+
+`SELECT * FROM "our-orders" WHERE ...`
 
 Nested fields can be accessed as expected with dot notation in the WHERE clause, e.g.:
 
 `address.street = 'Electric Avenue'`
 
-Currently
+## WHERE Clause
 
-- The supported operators for the WHERE clause are: `=, >, >=, <, <=, <>` and `REGEXP` (RegExp MySQL Operator)
+If you specify a field name in the where clause which does not exist in the record, then the condition will always fail and the record will always be considered invalid. Fields in the WHERE clause must exist in a record for it to be considered valid.
+
+The WHERE clause supports a subset of SQL operations, as below:
+- The operators `=, >, >=, <, <=, <>` and `REGEXP` (RegExp MySQL Operator) are all supported
 - When providing more than one condition in the WHERE clause, only the `AND` operator is supported
+- The `IN` clause is not supported, but can be approximated with a RegExp
 - By default, the fields in the where clause are looked up from the value in the record. You can also filter by other parts of the record using the syntax below:
     - Record key (It also supports encoded keys which require a schema registry lookup):
         - Record key as string: - `.. WHERE record.key = 'some thing'`
@@ -67,9 +75,6 @@ Currently
     - Header: `.. WHERE record.header.someHeaderKey = 'some thing'`
     - Offset: `.. WHERE record.offset = 1`
 
-## Note on Fields in WHERE Clause
-
-If you specify a field name in the where clause which does not exist in the record, then the condition will always fail and the record will always be considered invalid. Fields in the WHERE clause must exist in a record for it to be considered valid.
 
 ## Actions for Invalid Data
 
@@ -101,7 +106,7 @@ If no `deadLetterTopic` is configured for the policy, then no messages will be w
 ## Audit Log
 
 Any violation of the policy is logged to the configured Audit Log for the Gateway, if it is set up.
-This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit - it rather just identifies that a policy breach did occur for the produce request (and identifies the tenant, username and client IP for the request) 
+This is currently logged at the *batch* level for each topic in the produce request. There is not a per record audit - it identifies that a policy breach occurred for the produce request (and identifies the tenant, username and client IP for the request).
 
 
 ## Configuration
