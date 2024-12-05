@@ -10,11 +10,11 @@ license: enterprise
 
 Ensuring that all records sent through your Kafka system conform to an agreed structure enables your Kafka consumers to confidently and independently access data. Records with missing or invalid schemas can cause application outages, as consumers may be unable to process the unexpected record format.
 
-More than this though, the use of schemas can broadly only assert structural correctness of data and a level of compatibility for those structures. When it comes to the _values_ in a record often all you can assert is a basic data type (integer, string, double etc.). So while the use of a valid schema solves some concerns around data quailty, there are other concerns that still have to be dealt with in a bespoke or distributed manner across all the clients of a given data type.
+More than this though, the use of schemas can broadly only assert structural correctness of data and a level of compatibility for those structures. When it comes to the _values_ in a record often all you can assert is a basic data type (integer, string, double etc.). So while the use of a valid schema solves some concerns around data quality, there are other concerns that still have to be dealt with in a bespoke or distributed manner across all the clients of a given data type.
 
-As a final point, while correct structure can be enforced in a Kafka ecosystem at a client level - each client needs to ensure that it knows and follows the expectations for the data. You cannot prevent one cleint correctly writing AVRO to a topic, while another one writes plain JSON to the same topic. If the second client doesn't know the rules it can't follow them.  
+As a final point, while correct structure can be enforced in a Kafka ecosystem at a client level - each client needs to ensure that it knows and follows the expectations for the data. You cannot prevent one client correctly writing AVRO to a topic, while another one writes plain JSON to the same topic. If the second client doesn't know the rules it can't follow them.  
 
-## Centralised Policy Enforcement
+## Centralized Policy Enforcement
 
 The Schema validation interceptor comes into play here, and provides functionality which you can configure once in your Kafka system on the source for data (a topic) to ensure that:
 
@@ -22,7 +22,7 @@ The Schema validation interceptor comes into play here, and provides functionali
 - The record contents adhere to that schema
 - The fields (values) in any given record comply to business validation rules you have set in the schema
 
-This policy provides a centralised enforcement of the validation of these rules at the point of write to Kafka. This enforcement cannot be bypassed or ignored by a client, so provides a strong guarantee that data actually written in to Kafka does match your rule set.    
+This policy provides a centralized enforcement of the validation of these rules at the point of write to Kafka. This enforcement cannot be bypassed or ignored by a client, so provides a strong guarantee that data actually written in to Kafka does match your rule set.    
 
 Learn more about the Schema Registry and Schemas [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
@@ -52,9 +52,9 @@ There are three levels of check you can apply:
 
 If any problems are found, the policy will take an action as configured. The `action` can be set to one of:
 
-- `BLOCK` → If any records in the batch fail the policy checks, record the problems in the audit log and then return an error to the client failing the entire batch. No records are wtitten to kafka at all if at least one of the records in the batch is considered onvalid.
+- `BLOCK` → If any records in the batch fail the policy checks, record the problems in the audit log and then return an error to the client failing the entire batch. No records are written to kafka at all if at least one of the records in the batch is considered invalid.
 - `INFO` → In this mode the data is always written to Kafka whether it passes the checks or not - but any problems found recorded in the audit log.
-- `THROTTLE` → If any records in the batch fail the policy checks, the data is still written to Kafka but the request will be throttled with time = `throttleTimeMs`, forcing the cleint to back off. Any problems found are recorded in the audit log.
+- `THROTTLE` → If any records in the batch fail the policy checks, the data is still written to Kafka but the request will be throttled with time = `throttleTimeMs`, forcing the client to back off. Any problems found are recorded in the audit log.
 
 ### Dead Letter Topic
 
@@ -65,7 +65,7 @@ Any record which the policy considers invalid is written to the dead letter topi
 
 | Header       | Message                                                               |
 |:-------------|:----------------------------------------------------------------------|
-| X-ERROR-MSG  | Descrition of the reason for the policy failure                       |
+| X-ERROR-MSG  | Description of the reason for the policy failure                       |
 | X-TOPIC      | The topic the message was intended to be written to                   |
 | X-PARTITION  | The partition of that topic the message was intended to be written to |
 
@@ -150,13 +150,13 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
 When configured to do so, the Schema Validation interceptor supports validating the value in a Kafka record against a specific set custom constraints for AvroSchema records. 
 This is similar to the validations provided by JsonSchema, such as:
 
-For fields in an Avro scehma, you can specify specific constraints on what is considered a correct value. These rules operate on the specific fields value only.
+For fields in an Avro schema, you can specify specific constraints on what is considered a correct value. These rules operate on the specific fields value only.
 - **INT**, **LONG**, **FLOAT**, **DOUBLE**: `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, `multipleOf`
 - **STRING**: `minLength`, `maxLength`, `pattern`, `format`
 - **ARRAY**: `maxItems`, `minItems`
 
 Current supported String `format` values:
-- `byte`, `date`, `time`, `date-time`, `duration`, `uri`, `uri-reference`, `uri-template`, `uri`, `email`, `hostname`, `ipv4`, `ipv6`, `regex`, `uuid`, `json-pointer`, `json-pointer-uri-fragement`, `relative-json-pointer`
+- `byte`, `date`, `time`, `date-time`, `duration`, `uri`, `uri-reference`, `uri-template`, `uri`, `email`, `hostname`, `ipv4`, `ipv6`, `regex`, `uuid`, `json-pointer`, `json-pointer-uri-fragment`, `relative-json-pointer`
 
 This interceptor also supports further validating elements from the whole payload against specific custom constraints - or Metadata Rules - using an expression
 based on the [CEL (Common Expression Language)](https://github.com/google/cel-spec) format. This provides a means to define more advanced rules dependent on *multiple* values in a record. 
