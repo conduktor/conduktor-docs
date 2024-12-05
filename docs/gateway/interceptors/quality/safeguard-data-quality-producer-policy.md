@@ -50,7 +50,7 @@ In the statement, the list of fields selected is actually ignored - the importan
 
 Only one topic can be specified in the FROM clause (joins will be ignored), and the topic name is matched explicity (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The interceptor currently supports values in JSON, AVRO and Protobuf formats.
 
-**Please Note**: Topic names with dash `-` characters in them must be quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
+**Please Note**: Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
 
 `SELECT * FROM "our-orders" WHERE ...`
 
