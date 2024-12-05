@@ -138,6 +138,7 @@ platformCortex:
         - name: cortex-config-override
           mountPath: /opt/override-configs/cortex.yaml
           subPath: cortex.yaml
+```
 
 ## Troubleshooting  
 
