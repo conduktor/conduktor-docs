@@ -8,7 +8,7 @@ license: enterprise
 
 # Producer Data Quality Validation
 
-Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid. this is particualrly useful if your data is plain JSON with no schema - however the policy can be applied to schema data (AVRO, Protobuf) as well.
+Conduktor Gateway's data quality producer policy feature uses a SQL like language to assert data quality before being produced, based on a simple SQL statement. Records in the topic from the FROM clause must match the WHERE clause for the statement in order to be considered valid. This is particularly useful if your data is plain JSON with no schema - however the policy can be applied to schema'd data (AVRO, Protobuf) as well.
 
 For example, given a simple orders topic with records in the form:
 
