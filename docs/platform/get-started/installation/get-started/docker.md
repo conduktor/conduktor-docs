@@ -155,8 +155,9 @@ You can get the list of all the properties supported [here](../../../configurati
 
 ```yaml title="console-config.yaml"
 database:         # External database configuration
-  host: 'postgresql'
-  port: 5432
+  hosts: 
+   - host: 'postgresql'
+     port: 5432
   name: 'conduktor-console'
   username: 'conduktor'
   password: 'change_me'

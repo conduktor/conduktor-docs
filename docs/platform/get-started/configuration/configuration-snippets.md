@@ -54,8 +54,9 @@ organization:
   name: "conduktor"
 
 database:
-  host: 'postgresql'
-  port: 5432
+  hosts: 
+   - host: 'postgresql'
+     port: 5432
   name: 'conduktor'
   username: 'conduktor'
   password: 'change_me'
