@@ -16,8 +16,6 @@ The [Conduktor Terraform Provider](https://registry.terraform.io/providers/condu
 - Let us know if you have [feedback](https://conduktor.io/roadmap) or wish to be a design partner.
 :::
 
-[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the Terraform Provider can be used for Kafka Self-service.
-
 ## Install & Configure
 
 The provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of versions using the following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration :
