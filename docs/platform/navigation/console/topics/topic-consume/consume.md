@@ -278,7 +278,7 @@ If your producer doesn't write header values as UTF8 String, this tab might not 
 
 ### Metadata tab
 
-The metadata tab gives you all the other information regarding your record that could be useful under certain circumstances. The informations presented are as follow:
+The metadata tab gives you all the other information regarding your record that could be useful under certain circumstances. The information presented are as follow:
 
 -   Record Partition
 -   Record Offset
@@ -302,7 +302,7 @@ The resulting files will look like this:
 
 This feature lets you pick a record from the list and reprocess it either in the same or in a different topic, while letting you change its content beforehand.
 
-Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjusments before **(3)**.
+Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjustments before **(3)**.
 ![img_6.png](img/topic-reprocess.png)
 ### Save & Load Filter Templates
 
