@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
-  title: Conduktor Console API
+  title: Conduktor API
   version: v2
   description: The API to interact with Conduktor Console programmatically
   contact:
     email: support@conduktor.io
     url: https://docs.conduktor.io
   x-logo:
-    url: https://raw.githubusercontent.com/conduktor/conduktor.io-public/main/logo/conduktor-console-api.png
+    url: https://avatars.githubusercontent.com/u/60062294?s=200&v=4
     backgroundColor: '#FFFFFF'
     altText: Conduktor logo
 tags:
@@ -166,25 +166,23 @@ tags:
   x-displayName: kafka-connect-cluster
 - name: cli_ksql-d-b-cluster_console_v2_4
   x-displayName: ksqldb-cluster
-- name: cli_topic-policy_self-serve_v1_5
-  x-displayName: topic-policy
-- name: cli_application_self-serve_v1_6
-  x-displayName: application
-- name: cli_application-instance_self-serve_v1_7
-  x-displayName: application-instance
-- name: cli_application-instance-permission_self-serve_v1_8
-  x-displayName: application-instance-permission
-- name: cli_application-group_self-serve_v1_9
-  x-displayName: application-group
-- name: cli_topic_kafka_v2_10
+- name: cli_topic_kafka_v2_5
   x-displayName: topic
-- name: cli_subject_kafka_v2_11
+- name: cli_subject_kafka_v2_6
   x-displayName: subject
-- name: cli_connector_kafka_v2_12
+- name: cli_connector_kafka_v2_7
   x-displayName: connector
-- name: cli_indexed-topic_sql_v1_13
-  x-displayName: indexed-topic
-- name: cli_alert_monitoring_v2_14
+- name: cli_topic-policy_self-serve_v1_8
+  x-displayName: topic-policy
+- name: cli_application_self-serve_v1_9
+  x-displayName: application
+- name: cli_application-instance_self-serve_v1_10
+  x-displayName: application-instance
+- name: cli_application-instance-permission_self-serve_v1_11
+  x-displayName: application-instance-permission
+- name: cli_application-group_self-serve_v1_12
+  x-displayName: application-group
+- name: cli_alert_monitoring_v2_13
   x-displayName: alert
 paths:
   /token/v1/admin_tokens:
@@ -1513,32 +1511,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupResource'
-              example:
-                apiVersion: v2
-                kind: Group
-                metadata:
-                  name: group
-                spec:
-                  displayName: test
-                  description: description
-                  externalGroups:
-                  - test
-                  members:
-                  - user@conduktor.io
-                  membersFromExternalGroups: []
-                  permissions:
-                  - resourceType: TOPIC
-                    cluster: '*'
-                    name: test
-                    patternType: LITERAL
-                    permissions:
-                    - topicConsume
-                  - resourceType: TOPIC
-                    cluster: '*'
-                    name: test2
-                    patternType: PREFIXED
-                    permissions:
-                    - topicConsume
         '400':
           description: The request is not valid
           content:
@@ -1637,14 +1609,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No group with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -1679,32 +1643,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GroupResource'
-              example:
-              - apiVersion: v2
-                kind: Group
-                metadata:
-                  name: group
-                spec:
-                  displayName: test
-                  description: description
-                  externalGroups:
-                  - test
-                  members:
-                  - user@conduktor.io
-                  membersFromExternalGroups: []
-                  permissions:
-                  - resourceType: TOPIC
-                    cluster: '*'
-                    name: test
-                    patternType: LITERAL
-                    permissions:
-                    - topicConsume
-                  - resourceType: TOPIC
-                    cluster: '*'
-                    name: test2
-                    patternType: PREFIXED
-                    permissions:
-                    - topicConsume
         '400':
           description: The request is not valid
           content:
@@ -1934,12 +1872,13 @@ paths:
                 value:
                   name: My Kafka cluster
                   bootstrapServers: broker1:9092, broker2:9092
-                  properties: |-
-                    ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                  properties: |2
+
                     security.protocol=SSL
+                    ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                     ssl.truststore.password=conduktor
-                    ssl.keystore.password=conduktor
                     ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
+                    ssl.keystore.password=conduktor
                   ignoreUntrustedCertificate: false
               Kafka cluster with a Schema Registry:
                 value:
@@ -1951,11 +1890,12 @@ paths:
                       key: key
                       certificateChain: certificateChain
                       type: SSLAuth
-                    properties: |-
+                    properties: |2
+
+                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                      schema.registry.ssl.truststore.password=conduktor
                       schema.registry.ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
                       schema.registry.ssl.keystore.password=conduktor
-                      schema.registry.ssl.truststore.password=conduktor
-                      schema.registry.ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                     ignoreUntrustedCertificate: false
                     type: ConfluentLikeSchemaRegistryRequest
                   ignoreUntrustedCertificate: false
@@ -2036,7 +1976,7 @@ paths:
             --url 'http://localhost:8080/public/v1/clusters/my-cluster' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nsecurity.protocol=SSL\nssl.truststore.password=conduktor\nssl.keystore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
+            --data-raw '{"name":"My Kafka cluster","bootstrapServers":"broker1:9092, broker2:9092","properties":"\nsecurity.protocol=SSL\nssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks\nssl.truststore.password=conduktor\nssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks\nssl.keystore.password=conduktor\n","color":null,"icon":null,"schemaRegistry":null,"kafkaConnects":null,"ignoreUntrustedCertificate":false,"amazonSecurity":null,"kafkaFlavor":null,"ksqlDBs":null}' \
             --location \
             --max-redirs 32
     delete:
@@ -2121,12 +2061,13 @@ paths:
               - clusterSlug: silent-hill
                 name: My Kafka cluster
                 bootstrapServers: broker1:9092, broker2:9092
-                properties: |-
-                  ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
+                properties: |2
+
                   security.protocol=SSL
+                  ssl.truststore.location=/etc/kafka/secrets/kafka.truststore.jks
                   ssl.truststore.password=conduktor
-                  ssl.keystore.password=conduktor
                   ssl.keystore.location=/etc/kafka/secrets/kafka.keystore.jks
+                  ssl.keystore.password=conduktor
                 kafkaConnects: []
                 ignoreUntrustedCertificate: false
                 createdAt: '1970-01-01T00:00:00Z'
@@ -3248,15 +3189,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResource'
-              example:
-                apiVersion: v2
-                kind: User
-                metadata:
-                  name: user@conduktor.io
-                spec:
-                  firstName: description
-                  lastName: test
-                  permissions: []
         '400':
           description: The request is not valid
           content:
@@ -3354,14 +3286,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No user with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -3396,15 +3320,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserResource'
-              example:
-              - apiVersion: v2
-                kind: User
-                metadata:
-                  name: user@conduktor.io
-                spec:
-                  firstName: description
-                  lastName: test
-                  permissions: []
         '400':
           description: The request is not valid
           content:
@@ -3534,335 +3449,10 @@ paths:
             --data-raw '{"apiVersion":"v2","kind":"User","metadata":{"name":"user@conduktor.io"},"spec":{"firstName":"description","lastName":"test","permissions":[]}}' \
             --location \
             --max-redirs 32
-  /public/debug/v1/loggers:
-    get:
-      tags:
-      - debug
-      - logging
-      description: List all loggers of Console
-      operationId: list-loggers
-      responses:
-        '200':
-          description: All loggers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LoggerDto'
-              example:
-              - name: org.apache.kafka
-                level: WARN
-              - name: io.conduktor.authenticator
-                level: DEBUG
-              - name: io.conduktor.authenticator.adapter.Http4sWebContext
-                level: INFO
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: The searched entity was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: The searched entity was not found
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/debug/v1/loggers' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    put:
-      tags:
-      - debug
-      - logging
-      description: Set multiple loggers levels
-      operationId: set-loggers-levels
-      requestBody:
-        description: The loggers to set
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/LoggerDto'
-            example:
-            - name: io.conduktor
-              level: INFO
-            - name: io.conduktor.authenticator
-              level: DEBUG
-        required: false
-      responses:
-        '200':
-          description: Updated loggers canonical names
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-              example:
-              - io.conduktor
-              - io.conduktor.admin
-              - io.conduktor.authenticator
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: The searched entity was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: The searched entity was not found
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request PUT \
-            --url 'http://localhost:8080/public/debug/v1/loggers' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '[{"name":"io.conduktor","level":"INFO"},{"name":"io.conduktor.authenticator","level":"DEBUG"}]' \
-            --location \
-            --max-redirs 32
-  /public/debug/v1/loggers/{loggerName}:
-    get:
-      tags:
-      - debug
-      - logging
-      description: Get all loggers of Console matching the given name
-      operationId: get-logger
-      parameters:
-      - name: loggerName
-        in: path
-        description: The logger canonical name
-        required: true
-        schema:
-          type: string
-        example: io.conduktor.authenticator
-      responses:
-        '200':
-          description: All matching loggers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LoggerDto'
-              example:
-              - name: io.conduktor.authenticator
-                level: DEBUG
-              - name: io.conduktor.authenticator.adapter.Http4sWebContext
-                level: INFO
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: The searched entity was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: The searched entity was not found
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/debug/v1/loggers/io.conduktor.authenticator' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-  /public/debug/v1/loggers/{loggerName}/{level}:
-    put:
-      tags:
-      - debug
-      - logging
-      description: Set a logger level
-      operationId: set-logger-level
-      parameters:
-      - name: loggerName
-        in: path
-        description: The logger canonical name to set
-        required: true
-        schema:
-          type: string
-        example: io.conduktor.authenticator
-      - name: level
-        in: path
-        description: The log level to set
-        required: true
-        schema:
-          type: string
-        example: DEBUG
-      responses:
-        '200':
-          description: Updated loggers canonical names
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-              example:
-              - io.conduktor.authenticator
-              - io.conduktor.authenticator.adapter.Http4sWebContext
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: The searched entity was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: The searched entity was not found
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request PUT \
-            --url 'http://localhost:8080/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
   /public/self-serve/v1/application/{application-name}:
     get:
       tags:
-      - cli_application_self-serve_v1_6
+      - cli_application_self-serve_v1_9
       description: Get Application by name
       operationId: get-application-by-name
       parameters:
@@ -3879,14 +3469,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationResource'
-              example:
-                apiVersion: v1
-                kind: Application
-                metadata:
-                  name: my-application
-                spec:
-                  title: My Application
-                  owner: me
         '400':
           description: The request is not valid
           content:
@@ -3940,7 +3522,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application_self-serve_v1_6
+      - cli_application_self-serve_v1_9
       description: Delete a Application
       operationId: delete-application
       parameters:
@@ -3985,14 +3567,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No application with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -4015,7 +3589,7 @@ paths:
   /public/self-serve/v1/application:
     get:
       tags:
-      - cli_application_self-serve_v1_6
+      - cli_application_self-serve_v1_9
       description: List Application resources
       operationId: list-application-resources
       responses:
@@ -4027,14 +3601,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplicationResource'
-              example:
-              - apiVersion: v1
-                kind: Application
-                metadata:
-                  name: my-application
-                spec:
-                  title: My Application
-                  owner: me
         '400':
           description: The request is not valid
           content:
@@ -4088,7 +3654,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application_self-serve_v1_6
+      - cli_application_self-serve_v1_9
       description: Create or update a Application
       operationId: create-or-update-application
       parameters:
@@ -4167,7 +3733,7 @@ paths:
   /public/self-serve/v1/application-instance/{application-instance-name}:
     get:
       tags:
-      - cli_application-instance_self-serve_v1_7
+      - cli_application-instance_self-serve_v1_10
       description: Get ApplicationInstance by name
       operationId: get-application-instance-by-name
       parameters:
@@ -4184,25 +3750,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationInstanceResource'
-              example:
-                apiVersion: v1
-                kind: ApplicationInstance
-                metadata:
-                  name: my-app-instance-prod
-                  application: my-app
-                spec:
-                  cluster: prod-cluster
-                  topicPolicyRef:
-                  - my-topic-policy
-                  resources:
-                  - type: TOPIC
-                    name: my-topic
-                    patternType: LITERAL
-                  - type: CONSUMER_GROUP
-                    name: my-consumer-group
-                    patternType: LITERAL
-                  serviceAccount: my-service-account
-                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4256,7 +3803,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-instance_self-serve_v1_7
+      - cli_application-instance_self-serve_v1_10
       description: Delete a ApplicationInstance
       operationId: delete-application-instance
       parameters:
@@ -4301,14 +3848,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No application-instance with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -4331,7 +3870,7 @@ paths:
   /public/self-serve/v1/application-instance:
     get:
       tags:
-      - cli_application-instance_self-serve_v1_7
+      - cli_application-instance_self-serve_v1_10
       description: List ApplicationInstance resources
       operationId: list-application-instance-resources
       parameters:
@@ -4351,25 +3890,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplicationInstanceResource'
-              example:
-              - apiVersion: v1
-                kind: ApplicationInstance
-                metadata:
-                  name: my-app-instance-prod
-                  application: my-app
-                spec:
-                  cluster: prod-cluster
-                  topicPolicyRef:
-                  - my-topic-policy
-                  resources:
-                  - type: TOPIC
-                    name: my-topic
-                    patternType: LITERAL
-                  - type: CONSUMER_GROUP
-                    name: my-consumer-group
-                    patternType: LITERAL
-                  serviceAccount: my-service-account
-                  defaultCatalogVisibility: PUBLIC
         '400':
           description: The request is not valid
           content:
@@ -4423,7 +3943,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-instance_self-serve_v1_7
+      - cli_application-instance_self-serve_v1_10
       description: Create or update a ApplicationInstance
       operationId: create-or-update-application-instance
       parameters:
@@ -4496,13 +4016,13 @@ paths:
             --url 'http://localhost:8080/public/self-serve/v1/application-instance?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account","defaultCatalogVisibility":"PUBLIC"}}' \
+            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account"}}' \
             --location \
             --max-redirs 32
   /public/self-serve/v1/application-instance-permission/{application-instance-permission-name}:
     get:
       tags:
-      - cli_application-instance-permission_self-serve_v1_8
+      - cli_application-instance-permission_self-serve_v1_11
       description: Get ApplicationInstancePermission by name
       operationId: get-application-instance-permission-by-name
       parameters:
@@ -4519,20 +4039,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationInstancePermissionResource'
-              example:
-                apiVersion: v1
-                kind: ApplicationInstancePermission
-                metadata:
-                  application: test
-                  appInstance: test
-                  name: test
-                spec:
-                  resource:
-                    type: TOPIC
-                    name: test
-                    patternType: LITERAL
-                  permission: READ
-                  grantedTo: test
         '400':
           description: The request is not valid
           content:
@@ -4586,7 +4092,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-instance-permission_self-serve_v1_8
+      - cli_application-instance-permission_self-serve_v1_11
       description: Delete a ApplicationInstancePermission
       operationId: delete-application-instance-permission
       parameters:
@@ -4631,14 +4137,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No application-instance-permission with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -4661,7 +4159,7 @@ paths:
   /public/self-serve/v1/application-instance-permission:
     get:
       tags:
-      - cli_application-instance-permission_self-serve_v1_8
+      - cli_application-instance-permission_self-serve_v1_11
       description: List ApplicationInstancePermission resources
       operationId: list-application-instance-permission-resources
       parameters:
@@ -4695,20 +4193,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplicationInstancePermissionResource'
-              example:
-              - apiVersion: v1
-                kind: ApplicationInstancePermission
-                metadata:
-                  application: test
-                  appInstance: test
-                  name: test
-                spec:
-                  resource:
-                    type: TOPIC
-                    name: test
-                    patternType: LITERAL
-                  permission: READ
-                  grantedTo: test
         '400':
           description: The request is not valid
           content:
@@ -4762,7 +4246,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-instance-permission_self-serve_v1_8
+      - cli_application-instance-permission_self-serve_v1_11
       description: Create or update a ApplicationInstancePermission
       operationId: create-or-update-application-instance-permission
       parameters:
@@ -4841,7 +4325,7 @@ paths:
   /public/self-serve/v1/application-group/{application-group-name}:
     get:
       tags:
-      - cli_application-group_self-serve_v1_9
+      - cli_application-group_self-serve_v1_12
       description: Get ApplicationGroup by name
       operationId: get-application-group-by-name
       parameters:
@@ -4858,32 +4342,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationGroupResource'
-              example:
-                apiVersion: v1
-                kind: ApplicationGroup
-                metadata:
-                  application: clickstream-app
-                  name: clickstream-support
-                spec:
-                  displayName: Support Clickstream
-                  description: |-
-                    Members of the Support Group are allowed:
-                    Read access on all the resources
-                    Can restart owned connectors
-                    Can reset offsets
-                  permissions:
-                  - appInstance: clickstream-app-dev
-                    patternType: LITERAL
-                    name: '*'
-                    permissions:
-                    - topicConsume
-                    - topicViewConfig
-                    resourceType: TOPIC
-                  members:
-                  - user1@company.org
-                  - user2@company.org
-                  externalGroups:
-                  - support
         '400':
           description: The request is not valid
           content:
@@ -4937,7 +4395,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_application-group_self-serve_v1_9
+      - cli_application-group_self-serve_v1_12
       description: Delete a ApplicationGroup
       operationId: delete-application-group
       parameters:
@@ -4982,14 +4440,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No application-group with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -5012,7 +4462,7 @@ paths:
   /public/self-serve/v1/application-group:
     get:
       tags:
-      - cli_application-group_self-serve_v1_9
+      - cli_application-group_self-serve_v1_12
       description: List ApplicationGroup resources
       operationId: list-application-group-resources
       responses:
@@ -5024,32 +4474,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplicationGroupResource'
-              example:
-              - apiVersion: v1
-                kind: ApplicationGroup
-                metadata:
-                  application: clickstream-app
-                  name: clickstream-support
-                spec:
-                  displayName: Support Clickstream
-                  description: |-
-                    Members of the Support Group are allowed:
-                    Read access on all the resources
-                    Can restart owned connectors
-                    Can reset offsets
-                  permissions:
-                  - appInstance: clickstream-app-dev
-                    patternType: LITERAL
-                    name: '*'
-                    permissions:
-                    - topicConsume
-                    - topicViewConfig
-                    resourceType: TOPIC
-                  members:
-                  - user1@company.org
-                  - user2@company.org
-                  externalGroups:
-                  - support
         '400':
           description: The request is not valid
           content:
@@ -5103,7 +4527,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_application-group_self-serve_v1_9
+      - cli_application-group_self-serve_v1_12
       description: Create or update a ApplicationGroup
       operationId: create-or-update-application-group
       parameters:
@@ -5182,7 +4606,7 @@ paths:
   /public/self-serve/v1/topic-policy/{topic-policy-name}:
     get:
       tags:
-      - cli_topic-policy_self-serve_v1_5
+      - cli_topic-policy_self-serve_v1_8
       description: Get TopicPolicy by name
       operationId: get-topic-policy-by-name
       parameters:
@@ -5199,19 +4623,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicPolicyResource'
-              example:
-                apiVersion: v1
-                kind: TopicPolicy
-                metadata:
-                  name: my-app-instance-prod
-                spec:
-                  policies:
-                    my-policy:
-                      constraint: OneOf
-                      optional: true
-                      values:
-                      - value1
-                      - value2
         '400':
           description: The request is not valid
           content:
@@ -5265,7 +4676,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_topic-policy_self-serve_v1_5
+      - cli_topic-policy_self-serve_v1_8
       description: Delete a TopicPolicy
       operationId: delete-topic-policy
       parameters:
@@ -5310,14 +4721,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No topic-policy with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -5340,7 +4743,7 @@ paths:
   /public/self-serve/v1/topic-policy:
     get:
       tags:
-      - cli_topic-policy_self-serve_v1_5
+      - cli_topic-policy_self-serve_v1_8
       description: List TopicPolicy resources
       operationId: list-topic-policy-resources
       parameters:
@@ -5360,19 +4763,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TopicPolicyResource'
-              example:
-              - apiVersion: v1
-                kind: TopicPolicy
-                metadata:
-                  name: my-app-instance-prod
-                spec:
-                  policies:
-                    my-policy:
-                      constraint: OneOf
-                      optional: true
-                      values:
-                      - value1
-                      - value2
         '400':
           description: The request is not valid
           content:
@@ -5426,7 +4816,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_topic-policy_self-serve_v1_5
+      - cli_topic-policy_self-serve_v1_8
       description: Create or update a TopicPolicy
       operationId: create-or-update-topic-policy
       parameters:
@@ -5505,7 +4895,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/topic/{topic-name}:
     get:
       tags:
-      - cli_topic_kafka_v2_10
+      - cli_topic_kafka_v2_5
       description: Get Topic by name
       operationId: get-topic-by-name
       parameters:
@@ -5526,25 +4916,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicResource'
-              example:
-                apiVersion: v2
-                kind: Topic
-                metadata:
-                  name: my-topic
-                  cluster: my-cluster
-                  labels:
-                    conduktor.io/application: application-a
-                    conduktor.io/application-instance: staging
-                    user-labels: I am a user label
-                  catalogVisibility: PUBLIC
-                  descriptionIsEditable: true
-                  description: This is a topic description
-                spec:
-                  partitions: 1
-                  replicationFactor: 1
-                  configs:
-                    cleanup.policy: delete
-                    retention.ms: '86400000'
         '400':
           description: The request is not valid
           content:
@@ -5598,7 +4969,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_topic_kafka_v2_10
+      - cli_topic_kafka_v2_5
       description: Delete a Topic
       operationId: delete-topic
       parameters:
@@ -5647,14 +5018,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No topic with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -5677,7 +5040,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/topic:
     get:
       tags:
-      - cli_topic_kafka_v2_10
+      - cli_topic_kafka_v2_5
       description: List Topic resources
       operationId: list-topic-resources
       parameters:
@@ -5695,25 +5058,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TopicResource'
-              example:
-              - apiVersion: v2
-                kind: Topic
-                metadata:
-                  name: my-topic
-                  cluster: my-cluster
-                  labels:
-                    conduktor.io/application: application-a
-                    conduktor.io/application-instance: staging
-                    user-labels: I am a user label
-                  catalogVisibility: PUBLIC
-                  descriptionIsEditable: true
-                  description: This is a topic description
-                spec:
-                  partitions: 1
-                  replicationFactor: 1
-                  configs:
-                    cleanup.policy: delete
-                    retention.ms: '86400000'
         '400':
           description: The request is not valid
           content:
@@ -5767,7 +5111,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_topic_kafka_v2_10
+      - cli_topic_kafka_v2_5
       description: Create or update a Topic
       operationId: create-or-update-topic
       parameters:
@@ -5845,12 +5189,12 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging","user-labels":"I am a user label"},"catalogVisibility":"PUBLIC","descriptionIsEditable":true,"description":"This is a topic description"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
     post:
       tags:
-      - cli_topic_kafka_v2_10
+      - cli_topic_kafka_v2_5
       description: Create a Topic
       operationId: create-topic
       parameters:
@@ -5904,14 +5248,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No topic with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -5930,13 +5266,13 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/topic' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging","user-labels":"I am a user label"},"catalogVisibility":"PUBLIC","descriptionIsEditable":true,"description":"This is a topic description"},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Topic","metadata":{"name":"my-topic","cluster":"my-cluster","labels":{"conduktor.io/description":"This is a topic","conduktor.io/description.editable":"true","conduktor.io/application-instance":"staging","user-labels":"I am a user label","conduktor.io/application":"application-a"}},"spec":{"partitions":1,"replicationFactor":1,"configs":{"cleanup.policy":"delete","retention.ms":"86400000"}}}' \
             --location \
             --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/subject/{subject-name}:
     get:
       tags:
-      - cli_subject_kafka_v2_11
+      - cli_subject_kafka_v2_6
       description: Get Subject by name
       operationId: get-subject-by-name
       parameters:
@@ -5957,19 +5293,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubjectResource'
-              example:
-                apiVersion: v2
-                kind: Subject
-                metadata:
-                  name: my-subject
-                  cluster: my-cluster
-                  labels:
-                    conduktor.io/application: application-a
-                    conduktor.io/application-instance: staging
-                spec:
-                  format: AVRO
-                  compatibility: BACKWARD_TRANSITIVE
-                  schema: '{"type": "long"}'
         '400':
           description: The request is not valid
           content:
@@ -6023,7 +5346,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_subject_kafka_v2_11
+      - cli_subject_kafka_v2_6
       description: Delete a Subject
       operationId: delete-subject
       parameters:
@@ -6072,14 +5395,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No subject with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -6102,7 +5417,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/subject:
     get:
       tags:
-      - cli_subject_kafka_v2_11
+      - cli_subject_kafka_v2_6
       description: List Subject resources
       operationId: list-subject-resources
       parameters:
@@ -6120,19 +5435,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubjectResource'
-              example:
-              - apiVersion: v2
-                kind: Subject
-                metadata:
-                  name: my-subject
-                  cluster: my-cluster
-                  labels:
-                    conduktor.io/application: application-a
-                    conduktor.io/application-instance: staging
-                spec:
-                  format: AVRO
-                  compatibility: BACKWARD_TRANSITIVE
-                  schema: '{"type": "long"}'
         '400':
           description: The request is not valid
           content:
@@ -6186,7 +5488,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_subject_kafka_v2_11
+      - cli_subject_kafka_v2_6
       description: Create or update a Subject
       operationId: create-or-update-subject
       parameters:
@@ -6267,95 +5569,10 @@ paths:
             --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
             --location \
             --max-redirs 32
-    post:
-      tags:
-      - cli_subject_kafka_v2_11
-      description: Create a Subject
-      operationId: create-subject
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SubjectResource'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubjectCreateResult'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No subject with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No subject with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/subject' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Subject","metadata":{"name":"my-subject","cluster":"my-cluster","labels":{"conduktor.io/application":"application-a","conduktor.io/application-instance":"staging"}},"spec":{"format":"AVRO","compatibility":"BACKWARD_TRANSITIVE","schema":"{\"type\": \"long\"}"}}' \
-            --location \
-            --max-redirs 32
   /public/kafka/v2/cluster/{cluster}/connect/{connectCluster}/connector/{connector-name}:
     get:
       tags:
-      - cli_connector_kafka_v2_12
+      - cli_connector_kafka_v2_7
       description: Get Connector by name
       operationId: get-connector-by-name
       parameters:
@@ -6382,19 +5599,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConnectorResource'
-              example:
-                apiVersion: v2
-                kind: Connector
-                metadata:
-                  name: my-connector
-                  cluster: my-cluster
-                  connectCluster: my-connect
-                  autoRestart:
-                    enabled: true
-                    frequencySeconds: 600
-                  description: My connector
-                spec:
-                  config: {}
         '400':
           description: The request is not valid
           content:
@@ -6448,7 +5652,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_connector_kafka_v2_12
+      - cli_connector_kafka_v2_7
       description: Delete a Connector
       operationId: delete-connector
       parameters:
@@ -6503,14 +5707,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No connector with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -6533,7 +5729,7 @@ paths:
   /public/kafka/v2/cluster/{cluster}/connect/{connectCluster}/connector:
     get:
       tags:
-      - cli_connector_kafka_v2_12
+      - cli_connector_kafka_v2_7
       description: List Connector resources
       operationId: list-connector-resources
       parameters:
@@ -6557,19 +5753,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ConnectorResource'
-              example:
-              - apiVersion: v2
-                kind: Connector
-                metadata:
-                  name: my-connector
-                  cluster: my-cluster
-                  connectCluster: my-connect
-                  autoRestart:
-                    enabled: true
-                    frequencySeconds: 600
-                  description: My connector
-                spec:
-                  config: {}
         '400':
           description: The request is not valid
           content:
@@ -6623,7 +5806,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_connector_kafka_v2_12
+      - cli_connector_kafka_v2_7
       description: Create or update a Connector
       operationId: create-or-update-connector
       parameters:
@@ -6707,98 +5890,7 @@ paths:
             --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequencySeconds":600},"description":"My connector"},"spec":{"config":{}}}' \
-            --location \
-            --max-redirs 32
-    post:
-      tags:
-      - cli_connector_kafka_v2_12
-      description: Create a Connector
-      operationId: create-connector
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: connectCluster
-        in: path
-        required: true
-        schema:
-          type: string
-          minLength: 1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ConnectorResource'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectorCreateResult'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No connector with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No connector with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/kafka/v2/cluster/my-cluster/connect/my-connect/connector' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect","autoRestart":{"enabled":true,"frequencySeconds":600},"description":"My connector"},"spec":{"config":{}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Connector","metadata":{"name":"my-connector","cluster":"my-cluster","connectCluster":"my-connect"},"spec":{"config":{}}}' \
             --location \
             --max-redirs 32
   /public/console/v2/kafka-cluster/{kafka-cluster-name}:
@@ -6821,29 +5913,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KafkaClusterResource'
-              example:
-                apiVersion: v2
-                kind: KafkaCluster
-                metadata:
-                  name: my-kafka-cluster
-                  labels:
-                    env: prod
-                spec:
-                  displayName: yo
-                  bootstrapServers: localhost:9092
-                  properties:
-                    sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule
-                      required username="admin" password="admin-secret";
-                  color: '#FF0000'
-                  icon: icon
-                  schemaRegistry:
-                    url: https://my-schema-registry:8081
-                    security:
-                      username: admin
-                      password: admin-secret
-                      type: BasicAuth
-                    ignoreUntrustedCertificate: false
-                    type: ConfluentLike
         '400':
           description: The request is not valid
           content:
@@ -6942,14 +6011,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No kafka-cluster with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -6984,29 +6045,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/KafkaClusterResource'
-              example:
-              - apiVersion: v2
-                kind: KafkaCluster
-                metadata:
-                  name: my-kafka-cluster
-                  labels:
-                    env: prod
-                spec:
-                  displayName: yo
-                  bootstrapServers: localhost:9092
-                  properties:
-                    sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule
-                      required username="admin" password="admin-secret";
-                  color: '#FF0000'
-                  icon: icon
-                  schemaRegistry:
-                    url: https://my-schema-registry:8081
-                    security:
-                      username: admin
-                      password: admin-secret
-                      type: BasicAuth
-                    ignoreUntrustedCertificate: false
-                    type: ConfluentLike
         '400':
           description: The request is not valid
           content:
@@ -7161,25 +6199,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KafkaConnectClusterResource'
-              example:
-                apiVersion: v2
-                kind: KafkaConnectCluster
-                metadata:
-                  name: connect-1
-                  cluster: my-cloud
-                  labels:
-                    user-labels: I am a user label
-                spec:
-                  displayName: My kafka connect
-                  urls: http://localhost:8083
-                  headers:
-                    a: b
-                    c: d
-                  ignoreUntrustedCertificate: true
-                  security:
-                    username: user
-                    password: password
-                    type: BasicAuth
         '400':
           description: The request is not valid
           content:
@@ -7283,14 +6302,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No kafka-connect-cluster with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -7331,25 +6342,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/KafkaConnectClusterResource'
-              example:
-              - apiVersion: v2
-                kind: KafkaConnectCluster
-                metadata:
-                  name: connect-1
-                  cluster: my-cloud
-                  labels:
-                    user-labels: I am a user label
-                spec:
-                  displayName: My kafka connect
-                  urls: http://localhost:8083
-                  headers:
-                    a: b
-                    c: d
-                  ignoreUntrustedCertificate: true
-                  security:
-                    username: user
-                    password: password
-                    type: BasicAuth
         '400':
           description: The request is not valid
           content:
@@ -7481,7 +6473,7 @@ paths:
             --url 'http://localhost:8080/public/console/v2/cluster/my-cluster/kafka-connect?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"KafkaConnectCluster","metadata":{"name":"connect-1","cluster":"my-cloud","labels":{"user-labels":"I am a user label"}},"spec":{"displayName":"My kafka connect","urls":"http://localhost:8083","headers":{"a":"b","c":"d"},"ignoreUntrustedCertificate":true,"security":{"username":"user","password":"password","type":"BasicAuth"}}}' \
+            --data-raw '{"apiVersion":"v2","kind":"KafkaConnectCluster","metadata":{"name":"connect-1","cluster":"my-cloud","labels":{"conduktor.io/description":"This is a great kafka connect","user-labels":"I am a user label"}},"spec":{"displayName":"My kafka connect","urls":"http://localhost:8083","headers":{"a":"b","c":"d"},"ignoreUntrustedCertificate":true,"security":{"username":"user","password":"password","type":"BasicAuth"}}}' \
             --location \
             --max-redirs 32
   /public/console/v2/cluster/{cluster}/ksqldb/{ksql-d-b-cluster-name}:
@@ -7509,23 +6501,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KsqlDBClusterResource'
-              example:
-                apiVersion: v2
-                kind: KsqlDBCluster
-                metadata:
-                  name: connect-1
-                  cluster: my-cloud
-                spec:
-                  displayName: My kafka connect
-                  url: http://localhost:8083
-                  headers:
-                    a: b
-                    c: d
-                  ignoreUntrustedCertificate: true
-                  security:
-                    username: user
-                    password: password
-                    type: BasicAuth
         '400':
           description: The request is not valid
           content:
@@ -7629,14 +6604,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No ksql-d-b-cluster with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -7677,23 +6644,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/KsqlDBClusterResource'
-              example:
-              - apiVersion: v2
-                kind: KsqlDBCluster
-                metadata:
-                  name: connect-1
-                  cluster: my-cloud
-                spec:
-                  displayName: My kafka connect
-                  url: http://localhost:8083
-                  headers:
-                    a: b
-                    c: d
-                  ignoreUntrustedCertificate: true
-                  security:
-                    username: user
-                    password: password
-                    type: BasicAuth
         '400':
           description: The request is not valid
           content:
@@ -7867,9 +6817,6 @@ paths:
                   metadata:
                     name: topic1
                     cluster: cluster1
-                    catalogVisibility: PUBLIC
-                    descriptionIsEditable: true
-                    description: This is a topic description
                   spec:
                     partitions: 3
                     replicationFactor: 3
@@ -7920,413 +6867,6 @@ paths:
             --request GET \
             --url 'http://localhost:8080/public/self-serve/v1/catalog?fulltext=I'm+searching+for+something+in+full+text&name=my-topic&cluster=my-cluster&attr.label1=value1&attr.label2=value2&page=1&itemsPerPage=50&sort=desc' \
             --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-  /public/sql/v1/execute:
-    post:
-      tags:
-      - beta
-      description: The result of the query
-      operationId: execute
-      parameters:
-      - name: maxLine
-        in: query
-        description: Max number of lines to return
-        required: true
-        schema:
-          type: integer
-          format: int32
-          maximum: 500
-        example: 100
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              type: string
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SqlResultApiResponse'
-              example:
-                header:
-                - field1
-                - field2
-                row:
-                - - '1'
-                  - 2
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/sql/v1/execute?maxLine=100' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: text/plain' \
-            --data-raw 'select * from my_cluser_topic1' \
-            --location \
-            --max-redirs 32
-  /public/sql/v1/cluster/{cluster}/indexed_topic/{indexed-topic-name}:
-    get:
-      tags:
-      - beta
-      - cli_indexed-topic_sql_v1_13
-      description: Get IndexedTopic by name
-      operationId: get-indexed-topic-by-name
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: indexed-topic-name
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndexedTopicResource'
-              example:
-                apiVersion: v1
-                kind: IndexedTopic
-                metadata:
-                  cluster: my-cluster
-                  name: my-topic
-                spec:
-                  retentionTimeInSecond: 3600
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No indexed-topic with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No indexed-topic with this technical id exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/sql/v1/cluster/my-cluster/indexed_topic/my-topic' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    delete:
-      tags:
-      - beta
-      - cli_indexed-topic_sql_v1_13
-      description: Delete a IndexedTopic
-      operationId: delete-indexed-topic
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: indexed-topic-name
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: ''
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No indexed-topic with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No indexed-topic with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request DELETE \
-            --url 'http://localhost:8080/public/sql/v1/cluster/my-cluster/indexed_topic/my-topic' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-  /public/sql/v1/cluster/{cluster}/indexed_topic:
-    get:
-      tags:
-      - cli_indexed-topic_sql_v1_13
-      description: List IndexedTopic resources
-      operationId: list-indexed-topic-resources
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/IndexedTopicResource'
-              example:
-              - apiVersion: v1
-                kind: IndexedTopic
-                metadata:
-                  cluster: my-cluster
-                  name: my-topic
-                spec:
-                  retentionTimeInSecond: 3600
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No indexed-topic with this name exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No indexed-topic with this name exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/sql/v1/cluster/my-cluster/indexed_topic' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    put:
-      tags:
-      - cli_indexed-topic_sql_v1_13
-      description: Create or update a IndexedTopic
-      operationId: create-or-update-indexed-topic
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: dryMode
-        in: query
-        required: false
-        schema:
-          default: false
-          type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IndexedTopicResource'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndexedTopicApplyResult'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No indexed-topic with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No indexed-topic with this technical id exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request PUT \
-            --url 'http://localhost:8080/public/sql/v1/cluster/my-cluster/indexed_topic?dryMode=false' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"IndexedTopic","metadata":{"cluster":"my-cluster","name":"my-topic"},"spec":{"retentionTimeInSecond":3600}}' \
             --location \
             --max-redirs 32
   /public/v1/clusters/{clusterName}/service-accounts:
@@ -10083,8 +8623,6 @@ paths:
                   - id: f9ae435d-ac85-4d9f-ae0b-e1eb3ee0bf28
                     name: a_tag
                     color: '#008000'
-                  labels:
-                    label-key: label-value
                   lastActivityAt: '2021-03-18T14:00:00Z'
                   produceRate: 0
                   type: IndexedTopic
@@ -10385,9 +8923,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/List_String'
         '400':
           description: The request is not valid
           content:
@@ -11345,7 +9881,7 @@ paths:
   /public/monitoring/v2/cluster/{cluster}/alert/{alert-name}:
     get:
       tags:
-      - cli_alert_monitoring_v2_14
+      - cli_alert_monitoring_v2_13
       description: Beta
       operationId: get-alert-by-name
       parameters:
@@ -11366,25 +9902,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AlertOutputResource'
-              example:
-                apiVersion: v2
-                kind: Alert
-                metadata:
-                  name: alert
-                  cluster: my-cluster
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  type: KafkaConnectAlert
+                $ref: '#/components/schemas/AlertResource'
         '400':
           description: The request is not valid
           content:
@@ -11438,7 +9956,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_alert_monitoring_v2_14
+      - cli_alert_monitoring_v2_13
       description: Beta
       operationId: delete-alert
       parameters:
@@ -11488,14 +10006,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No alert with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -11518,7 +10028,7 @@ paths:
   /public/monitoring/v2/cluster/{cluster}/alert:
     get:
       tags:
-      - cli_alert_monitoring_v2_14
+      - cli_alert_monitoring_v2_13
       description: Beta
       operationId: list-alert-resources
       parameters:
@@ -11540,24 +10050,6 @@ paths:
         schema:
           type: string
           minLength: 1
-      - name: topic
-        in: query
-        description: Filter by topic name
-        required: false
-        schema:
-          type: string
-      - name: consumerGroup
-        in: query
-        description: Filter by consumer group name
-        required: false
-        schema:
-          type: string
-      - name: alertType
-        in: query
-        description: 'Filter by alert type '
-        required: false
-        schema:
-          $ref: '#/components/schemas/AlertType'
       responses:
         '200':
           description: ''
@@ -11566,25 +10058,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlertOutputResource'
-              example:
-              - apiVersion: v2
-                kind: Alert
-                metadata:
-                  name: alert
-                  cluster: my-cluster
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  type: KafkaConnectAlert
+                  $ref: '#/components/schemas/AlertResource'
         '400':
           description: The request is not valid
           content:
@@ -11638,7 +10112,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_alert_monitoring_v2_14
+      - cli_alert_monitoring_v2_13
       description: Beta
       operationId: create-or-update-alert
       parameters:
@@ -11716,12 +10190,12 @@ paths:
             --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","promQl":"kafka_connect_failed_tasks{cluster_name=\"f9af33a6-88ee-534f-cb62-46094d233d5c\",cluster_id=\"shadow-julien\",connect_cluster_id=\"cloud-confluent\",connector=\"elasticsearch-ksqldb\"}","type":"KafkaConnectFailedTask"}}' \
             --location \
             --max-redirs 32
     post:
       tags:
-      - cli_alert_monitoring_v2_14
+      - cli_alert_monitoring_v2_13
       description: Beta
       operationId: create-alert
       parameters:
@@ -11775,14 +10249,6 @@ paths:
                 $ref: '#/components/schemas/NotFound'
               example:
                 title: No alert with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
         '500':
           description: An unexpected error occurred in the server
           content:
@@ -11801,7 +10267,7 @@ paths:
             --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
+            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","promQl":"kafka_connect_failed_tasks{cluster_name=\"f9af33a6-88ee-534f-cb62-46094d233d5c\",cluster_id=\"shadow-julien\",connect_cluster_id=\"cloud-confluent\",connector=\"elasticsearch-ksqldb\"}","type":"KafkaConnectFailedTask"}}' \
             --location \
             --max-redirs 32
 components:
@@ -11901,7 +10367,6 @@ components:
           type: string
         type:
           type: string
-          const: Aiven
     AivenAcl:
       title: AivenAcl
       type: object
@@ -11966,21 +10431,6 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/AivenSchemaRegistryAcl'
-    AivenResponse:
-      title: AivenResponse
-      type: object
-      required:
-      - project
-      - serviceName
-      - type
-      properties:
-        project:
-          type: string
-        serviceName:
-          type: string
-        type:
-          type: string
-          const: AivenResponse
     AivenSRAclCreatePayload:
       title: AivenSRAclCreatePayload
       type: object
@@ -12082,49 +10532,6 @@ components:
           pattern: ^[0-9a-z_\-.]+$
         cluster:
           type: string
-    AlertMetadataOutput:
-      title: AlertMetadataOutput
-      type: object
-      required:
-      - name
-      - cluster
-      - updatedAt
-      - updatedBy
-      - status
-      properties:
-        name:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-        cluster:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        updatedBy:
-          type: string
-        lastTriggeredAt:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/AlertStatus'
-    AlertOutputResource:
-      title: AlertOutputResource
-      type: object
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
-      properties:
-        apiVersion:
-          type: string
-          pattern: v2
-        kind:
-          $ref: '#/components/schemas/AlertKind'
-        metadata:
-          $ref: '#/components/schemas/AlertMetadataOutput'
-        spec:
-          $ref: '#/components/schemas/AlertSpecOutput'
     AlertResource:
       title: AlertResource
       type: object
@@ -12146,32 +10553,7 @@ components:
     AlertSpec:
       title: AlertSpec
       oneOf:
-      - $ref: '#/components/schemas/BrokerAlert'
-      - $ref: '#/components/schemas/ConsumerGroupAlert'
-      - $ref: '#/components/schemas/KafkaConnectAlert'
-      - $ref: '#/components/schemas/TopicAlert'
-    AlertSpecOutput:
-      title: AlertSpecOutput
-      oneOf:
-      - $ref: '#/components/schemas/BrokerAlertOutput'
-      - $ref: '#/components/schemas/ConsumerGroupAlertOutput'
-      - $ref: '#/components/schemas/KafkaConnectAlertOutput'
-      - $ref: '#/components/schemas/TopicAlertOutput'
-    AlertStatus:
-      title: AlertStatus
-      type: string
-      enum:
-      - Firing
-      - Healthy
-      - Pending
-    AlertType:
-      title: AlertType
-      type: string
-      enum:
-      - BrokerAlert
-      - ConsumerGroupAlert
-      - KafkaConnectAlert
-      - TopicAlert
+      - $ref: '#/components/schemas/KafkaConnectFailedTask'
     AllAclForPrincipal:
       title: AllAclForPrincipal
       type: object
@@ -12184,22 +10566,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AclForResourceAndHost'
-    AllowedKeys:
-      title: AllowedKeys
-      type: object
-      required:
-      - constraint
-      - keys
-      properties:
-        constraint:
-          $ref: '#/components/schemas/ConstraintKind'
-        optional:
-          type: boolean
-        keys:
-          type: array
-          minItems: 1
-          items:
-            type: string
     AmazonSecurity:
       title: AmazonSecurity
       oneOf:
@@ -12451,11 +10817,9 @@ components:
           type: array
           uniqueItems: true
           items:
-            $ref: '#/components/schemas/ResourceWithOwnership'
+            $ref: '#/components/schemas/Resource'
         serviceAccount:
           type: string
-        defaultCatalogVisibility:
-          $ref: '#/components/schemas/CatalogVisibility'
     ApplicationKind:
       title: ApplicationKind
       type: string
@@ -12532,17 +10896,6 @@ components:
           type: string
         owner:
           type: string
-    AutoRestartConfig:
-      title: AutoRestartConfig
-      type: object
-      required:
-      - enabled
-      properties:
-        enabled:
-          type: boolean
-        frequencySeconds:
-          type: integer
-          format: int64
     BadRequest:
       title: BadRequest
       type: object
@@ -12570,7 +10923,6 @@ components:
           type: string
         type:
           type: string
-          const: BasicAuth
     BasicAuth1:
       title: BasicAuth
       type: object
@@ -12586,7 +10938,6 @@ components:
           type: string
         type:
           type: string
-          const: BasicAuth
     BasicAuth2:
       title: BasicAuth
       type: object
@@ -12602,7 +10953,6 @@ components:
           type: string
         type:
           type: string
-          const: BasicAuth
     BearerToken:
       title: BearerToken
       type: object
@@ -12615,7 +10965,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: BearerToken
     BearerToken1:
       title: BearerToken
       type: object
@@ -12628,7 +10977,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: BearerToken
     BearerToken2:
       title: BearerToken
       type: object
@@ -12641,63 +10989,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: BearerToken
-    BrokerAlert:
-      title: BrokerAlert
-      type: object
-      required:
-      - threshold
-      - operator
-      - metric
-      properties:
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/BrokerMetricType'
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
-    BrokerAlertOutput:
-      title: BrokerAlertOutput
-      type: object
-      required:
-      - threshold
-      - operator
-      - metric
-      - promQl
-      properties:
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/BrokerMetricType'
-        promQl:
-          type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
-    BrokerMetricType:
-      title: BrokerMetricType
-      type: string
-      enum:
-      - MessageIn
-      - MessageOut
-      - MessageSize
-      - OfflinePartitionCount
-      - PartitionCount
-      - UnderMinIsrPartitionCount
-      - UnderReplicatedPartitionCount
     CLUSTER:
       title: CLUSTER
       type: object
@@ -12759,12 +11050,12 @@ components:
             - kafkaConnectorStatus
             - kafkaConnectorEditConfig
             - kafkaConnectorDelete
+            - kafkaConnectorUpdate
             - kafkaConnectorCreate
             - kafkaConnectPauseResume
             - kafkaConnectRestart
         resourceType:
           type: string
-          const: CONNECTOR
     CONSUMER_GROUP:
       title: CONSUMER_GROUP
       type: object
@@ -12829,13 +11120,9 @@ components:
             - consumerGroupCreate
         resourceType:
           type: string
-          const: CONSUMER_GROUP
-    CatalogVisibility:
-      title: CatalogVisibility
-      type: string
-      enum:
-      - PRIVATE
-      - PUBLIC
+    CheckedCertificate:
+      title: CheckedCertificate
+      type: object
     CleanupPolicy:
       title: CleanupPolicy
       type: string
@@ -12855,7 +11142,6 @@ components:
             $ref: '#/components/schemas/CleanupPolicy'
         type:
           type: string
-          const: CleanupPolicyFilter
     Cluster:
       title: Cluster
       type: object
@@ -12919,7 +11205,6 @@ components:
           type: string
         type:
           type: string
-          const: Confluent
     ConfluentLike:
       title: ConfluentLike
       type: object
@@ -12953,7 +11238,6 @@ components:
           type: boolean
         type:
           type: string
-          const: ConfluentLikeSchemaRegistryRequest
     ConfluentLikeSchemaRegistryResponse:
       title: ConfluentLikeSchemaRegistryResponse
       type: object
@@ -12977,7 +11261,6 @@ components:
           type: boolean
         type:
           type: string
-          const: ConfluentLikeSchemaRegistryResponse
     ConfluentLikeSchemaRegistrySecurity:
       title: ConfluentLikeSchemaRegistrySecurity
       oneOf:
@@ -12992,24 +11275,6 @@ components:
           BearerToken: '#/components/schemas/BearerToken'
           NoSecurity: '#/components/schemas/NoSecurity'
           SSLAuth: '#/components/schemas/SSLAuth'
-    ConfluentResponse:
-      title: ConfluentResponse
-      type: object
-      required:
-      - key
-      - confluentEnvironmentId
-      - confluentClusterId
-      - type
-      properties:
-        key:
-          type: string
-        confluentEnvironmentId:
-          type: string
-        confluentClusterId:
-          type: string
-        type:
-          type: string
-          const: ConfluentResponse
     ConnectorApplyResult:
       title: ConnectorApplyResult
       type: object
@@ -13021,17 +11286,6 @@ components:
           $ref: '#/components/schemas/ConnectorResource'
         upsertResult:
           $ref: '#/components/schemas/UpsertResult'
-    ConnectorCreateResult:
-      title: ConnectorCreateResult
-      type: object
-      required:
-      - resource
-      - createResult
-      properties:
-        resource:
-          $ref: '#/components/schemas/ConnectorResource'
-        createResult:
-          $ref: '#/components/schemas/CreateResult'
     ConnectorKind:
       title: ConnectorKind
       type: string
@@ -13054,10 +11308,6 @@ components:
           minLength: 1
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
-        autoRestart:
-          $ref: '#/components/schemas/AutoRestartConfig'
-        description:
-          type: string
     ConnectorResource:
       title: ConnectorResource
       type: object
@@ -13088,12 +11338,10 @@ components:
       title: ConstraintKind
       type: string
       enum:
-      - AllowedKeys
       - Match
       - NoneOf
       - OneOf
       - Range
-      const: Match
     ConsumerGroup:
       title: ConsumerGroup
       type: object
@@ -13127,57 +11375,6 @@ components:
           - KafkaConnect
           - Subject
           - KsqlDB
-    ConsumerGroupAlert:
-      title: ConsumerGroupAlert
-      type: object
-      required:
-      - consumerGroupName
-      - threshold
-      - operator
-      - metric
-      properties:
-        consumerGroupName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/ConsumerGroupMetricType'
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
-    ConsumerGroupAlertOutput:
-      title: ConsumerGroupAlertOutput
-      type: object
-      required:
-      - consumerGroupName
-      - threshold
-      - operator
-      - metric
-      - promQl
-      properties:
-        consumerGroupName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/ConsumerGroupMetricType'
-        promQl:
-          type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
     ConsumerGroupFilter:
       title: ConsumerGroupFilter
       oneOf:
@@ -13188,12 +11385,6 @@ components:
         mapping:
           OnConsumerGroupName: '#/components/schemas/OnConsumerGroupName'
           OnState: '#/components/schemas/OnState'
-    ConsumerGroupMetricType:
-      title: ConsumerGroupMetricType
-      type: string
-      enum:
-      - OffsetLag
-      - TimeLag
     ConsumerGroupRequest:
       title: ConsumerGroupRequest
       type: object
@@ -13318,7 +11509,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: Credentials
     DecodedCertificate:
       title: DecodedCertificate
       type: object
@@ -13418,7 +11608,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: FromContext
     FromRole:
       title: FromRole
       type: object
@@ -13431,7 +11620,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: FromRole
     Gateway:
       title: Gateway
       type: object
@@ -13455,28 +11643,6 @@ components:
           type: boolean
         type:
           type: string
-          const: Gateway
-    GatewayResponse:
-      title: GatewayResponse
-      type: object
-      required:
-      - url
-      - user
-      - virtualCluster
-      - type
-      properties:
-        url:
-          type: string
-        user:
-          type: string
-        virtualCluster:
-          type: string
-        ignoreUntrustedCertificate:
-          default: false
-          type: boolean
-        type:
-          type: string
-          const: GatewayResponse
     Glue:
       title: Glue
       type: object
@@ -13510,7 +11676,6 @@ components:
           $ref: '#/components/schemas/AmazonSecurity'
         type:
           type: string
-          const: GlueSchemaRegistryRequest
     GlueSchemaRegistryResponse:
       title: GlueSchemaRegistryResponse
       type: object
@@ -13533,7 +11698,6 @@ components:
           $ref: '#/components/schemas/AmazonSecurity'
         type:
           type: string
-          const: GlueSchemaRegistryResponse
     GroupApplyResult:
       title: GroupApplyResult
       type: object
@@ -13613,7 +11777,6 @@ components:
       properties:
         type:
           type: string
-          const: HideInternal
     HideStream:
       title: HideStream
       type: object
@@ -13622,7 +11785,6 @@ components:
       properties:
         type:
           type: string
-          const: HideStream
     IAMAnywhere:
       title: IAMAnywhere
       type: object
@@ -13651,7 +11813,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: IAMAnywhere
     IndexedConsumerGroup:
       title: IndexedConsumerGroup
       type: object
@@ -13681,7 +11842,6 @@ components:
           format: int64
         type:
           type: string
-          const: IndexedConsumerGroup
     IndexedTopic:
       title: IndexedTopic
       type: object
@@ -13690,7 +11850,6 @@ components:
       - replicationFactor
       - partitionCount
       - recordCount
-      - labels
       - produceRate
       - type
       properties:
@@ -13702,7 +11861,6 @@ components:
         partitionCount:
           type: integer
           format: int32
-          minimum: 1
         recordCount:
           type: integer
           format: int64
@@ -13724,8 +11882,6 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/TagInfo'
-        labels:
-          $ref: '#/components/schemas/Map_LabelKey_String'
         lastActivityAt:
           type: string
           format: date-time
@@ -13734,61 +11890,6 @@ components:
           format: int32
         type:
           type: string
-          const: IndexedTopic
-    IndexedTopicApplyResult:
-      title: IndexedTopicApplyResult
-      type: object
-      required:
-      - resource
-      - upsertResult
-      properties:
-        resource:
-          $ref: '#/components/schemas/IndexedTopicResource'
-        upsertResult:
-          $ref: '#/components/schemas/UpsertResult'
-    IndexedTopicKind:
-      title: IndexedTopicKind
-      type: string
-      enum:
-      - IndexedTopic
-    IndexedTopicMetadata:
-      title: IndexedTopicMetadata
-      type: object
-      required:
-      - cluster
-      - name
-      properties:
-        cluster:
-          type: string
-        name:
-          type: string
-    IndexedTopicResource:
-      title: IndexedTopicResource
-      type: object
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
-      properties:
-        apiVersion:
-          type: string
-          pattern: v1
-        kind:
-          $ref: '#/components/schemas/IndexedTopicKind'
-        metadata:
-          $ref: '#/components/schemas/IndexedTopicMetadata'
-        spec:
-          $ref: '#/components/schemas/IndexedTopicSpec'
-    IndexedTopicSpec:
-      title: IndexedTopicSpec
-      type: object
-      required:
-      - retentionTimeInSecond
-      properties:
-        retentionTimeInSecond:
-          type: integer
-          format: int64
     Interceptor:
       title: Interceptor
       type: object
@@ -13836,6 +11937,7 @@ components:
             - kafkaConnectorStatus
             - kafkaConnectorEditConfig
             - kafkaConnectorDelete
+            - kafkaConnectorUpdate
             - kafkaConnectorCreate
             - kafkaConnectPauseResume
             - kafkaConnectRestart
@@ -13977,6 +12079,7 @@ components:
             - kafkaConnectorStatus
             - kafkaConnectorEditConfig
             - kafkaConnectorDelete
+            - kafkaConnectorUpdate
             - kafkaConnectorCreate
             - kafkaConnectPauseResume
             - kafkaConnectRestart
@@ -13990,65 +12093,6 @@ components:
           - KafkaConnect
           - Subject
           - KsqlDB
-    KafkaConnectAlert:
-      title: KafkaConnectAlert
-      type: object
-      required:
-      - connectName
-      - connectorName
-      - threshold
-      - operator
-      - metric
-      properties:
-        connectName:
-          type: string
-          minLength: 1
-        connectorName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/KafkaConnectMetricType'
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
-    KafkaConnectAlertOutput:
-      title: KafkaConnectAlertOutput
-      type: object
-      required:
-      - connectName
-      - connectorName
-      - metric
-      - threshold
-      - operator
-      - promQl
-      properties:
-        connectName:
-          type: string
-          minLength: 1
-        connectorName:
-          type: string
-        metric:
-          $ref: '#/components/schemas/KafkaConnectMetricType'
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        promQl:
-          type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
     KafkaConnectBasicAuth:
       title: KafkaConnectBasicAuth
       type: object
@@ -14064,7 +12108,6 @@ components:
           type: string
         type:
           type: string
-          const: KafkaConnectBasicAuth
     KafkaConnectBearerToken:
       title: KafkaConnectBearerToken
       type: object
@@ -14077,7 +12120,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: KafkaConnectBearerToken
     KafkaConnectClusterApplyResult:
       title: KafkaConnectClusterApplyResult
       type: object
@@ -14112,6 +12154,33 @@ components:
           $ref: '#/components/schemas/KafkaConnectMetadata'
         spec:
           $ref: '#/components/schemas/KafkaConnectSpec'
+    KafkaConnectFailedTask:
+      title: KafkaConnectFailedTask
+      type: object
+      required:
+      - connectName
+      - connectorName
+      - threshold
+      - operator
+      properties:
+        connectName:
+          type: string
+          minLength: 1
+        connectorName:
+          type: string
+        threshold:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/Operator'
+        promQl:
+          description: always present when reading the value, ignored if present when
+            writting (this value is generated by the back-end)
+          type: string
+        description:
+          type: string
+        disable:
+          type: boolean
     KafkaConnectMetadata:
       title: KafkaConnectMetadata
       type: object
@@ -14126,11 +12195,6 @@ components:
           type: string
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
-    KafkaConnectMetricType:
-      title: KafkaConnectMetricType
-      type: string
-      enum:
-      - FailedTaskCount
     KafkaConnectNoSecurity:
       title: KafkaConnectNoSecurity
       type: object
@@ -14139,7 +12203,6 @@ components:
       properties:
         type:
           type: string
-          const: KafkaConnectNoSecurity
     KafkaConnectSSLAuth:
       title: KafkaConnectSSLAuth
       type: object
@@ -14156,7 +12219,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: KafkaConnectSSLAuth
     KafkaConnectSecurity:
       title: KafkaConnectSecurity
       oneOf:
@@ -14265,18 +12327,6 @@ components:
           Aiven: '#/components/schemas/Aiven'
           Confluent: '#/components/schemas/Confluent'
           Gateway: '#/components/schemas/Gateway'
-    KafkaFlavorResponse:
-      title: KafkaFlavorResponse
-      oneOf:
-      - $ref: '#/components/schemas/AivenResponse'
-      - $ref: '#/components/schemas/ConfluentResponse'
-      - $ref: '#/components/schemas/GatewayResponse'
-      discriminator:
-        propertyName: type
-        mapping:
-          AivenResponse: '#/components/schemas/AivenResponse'
-          ConfluentResponse: '#/components/schemas/ConfluentResponse'
-          GatewayResponse: '#/components/schemas/GatewayResponse'
     KsqlDB:
       title: KsqlDB
       type: object
@@ -14323,7 +12373,6 @@ components:
           type: string
         type:
           type: string
-          const: KsqlDBBasicAuth
     KsqlDBBearerToken:
       title: KsqlDBBearerToken
       type: object
@@ -14336,7 +12385,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: KsqlDBBearerToken
     KsqlDBClusterApplyResult:
       title: KsqlDBClusterApplyResult
       type: object
@@ -14391,7 +12439,6 @@ components:
       properties:
         type:
           type: string
-          const: KsqlDBNoSecurity
     KsqlDBQuery:
       title: KsqlDBQuery
       type: object
@@ -14418,7 +12465,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: KsqlDBSSLAuth
     KsqlDBSecurity:
       title: KsqlDBSecurity
       oneOf:
@@ -14546,32 +12592,12 @@ components:
           format: int32
         error:
           type: string
-    LabelsFilter:
-      title: LabelsFilter
-      type: object
-      required:
-      - key
-      - type
-      properties:
-        key:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-          const: LabelsFilter
-    LoggerDto:
-      title: LoggerDto
-      type: object
-      required:
-      - name
-      - level
-      properties:
-        name:
-          type: string
-        level:
+    List_String:
+      title: List_String
+      oneOf:
+      - $ref: '#/components/schemas/Nil'
+      - type: array
+        items:
           type: string
     Map_Double:
       title: Map_Double
@@ -14625,6 +12651,9 @@ components:
           type: boolean
         pattern:
           type: string
+    Nil:
+      title: Nil
+      type: object
     NoSecurity:
       title: NoSecurity
       type: object
@@ -14633,7 +12662,6 @@ components:
       properties:
         type:
           type: string
-          const: NoSecurity
     NoSecurity1:
       title: NoSecurity
       type: object
@@ -14642,13 +12670,11 @@ components:
       properties:
         type:
           type: string
-          const: NoSecurity
     NoneOf:
       title: NoneOf
       type: object
       required:
       - constraint
-      - values
       properties:
         constraint:
           $ref: '#/components/schemas/ConstraintKind'
@@ -14656,7 +12682,6 @@ components:
           type: boolean
         values:
           type: array
-          minItems: 1
           items:
             type: string
     NotFound:
@@ -14682,7 +12707,6 @@ components:
           type: string
         type:
           type: string
-          const: NotIndexedConsumerGroup
     NotIndexedTopic:
       title: NotIndexedTopic
       type: object
@@ -14694,7 +12718,6 @@ components:
           type: string
         type:
           type: string
-          const: NotIndexedTopic
     OnConsumerGroupName:
       title: OnConsumerGroupName
       type: object
@@ -14706,7 +12729,6 @@ components:
           type: string
         type:
           type: string
-          const: OnConsumerGroupName
     OnState:
       title: OnState
       type: object
@@ -14719,13 +12741,11 @@ components:
             $ref: '#/components/schemas/ConsumerGroupState'
         type:
           type: string
-          const: OnState
     OneOf:
       title: OneOf
       type: object
       required:
       - constraint
-      - values
       properties:
         constraint:
           $ref: '#/components/schemas/ConstraintKind'
@@ -14733,7 +12753,6 @@ components:
           type: boolean
         values:
           type: array
-          minItems: 1
           items:
             type: string
     OperationStates:
@@ -14785,12 +12804,6 @@ components:
       enum:
       - asc
       - desc
-    OwnershipMode:
-      title: OwnershipMode
-      type: string
-      enum:
-      - ALL
-      - LIMITED
     PLATFORM:
       title: PLATFORM
       type: object
@@ -14981,7 +12994,6 @@ components:
     PolicyConstraintDto:
       title: PolicyConstraintDto
       oneOf:
-      - $ref: '#/components/schemas/AllowedKeys'
       - $ref: '#/components/schemas/Match'
       - $ref: '#/components/schemas/NoneOf'
       - $ref: '#/components/schemas/OneOf'
@@ -14989,7 +13001,6 @@ components:
       discriminator:
         propertyName: constraint
         mapping:
-          AllowedKeys: '#/components/schemas/AllowedKeys'
           Match: '#/components/schemas/Match'
           NoneOf: '#/components/schemas/NoneOf'
           OneOf: '#/components/schemas/OneOf'
@@ -15105,7 +13116,7 @@ components:
             them
           deprecated: true
         kafkaFlavor:
-          $ref: '#/components/schemas/KafkaFlavorResponse'
+          $ref: '#/components/schemas/KafkaFlavor'
         ksqlDBs:
           type: array
           uniqueItems: true
@@ -15282,25 +13293,6 @@ components:
       - TransactionalId
       - DelegationToken
       - User
-    ResourceWithOwnership:
-      title: ResourceWithOwnership
-      type: object
-      required:
-      - type
-      - name
-      - patternType
-      properties:
-        type:
-          $ref: '#/components/schemas/ResourceType'
-        name:
-          type: string
-        patternType:
-          $ref: '#/components/schemas/ResourcePatternType'
-        connectCluster:
-          type: string
-          minLength: 1
-        ownershipMode:
-          $ref: '#/components/schemas/OwnershipMode'
     Resource_TopicMetadata_TopicSpec_String_V2:
       title: Resource_TopicMetadata_TopicSpec_String_V2
       type: object
@@ -15335,7 +13327,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: SSLAuth
     SSLAuth1:
       title: SSLAuth
       type: object
@@ -15352,7 +13343,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: SSLAuth
     SSLAuth2:
       title: SSLAuth
       type: object
@@ -15369,7 +13359,6 @@ components:
           minLength: 1
         type:
           type: string
-          const: SSLAuth
     SUBJECT:
       title: SUBJECT
       type: object
@@ -15393,9 +13382,9 @@ components:
             type: string
             enum:
             - subjectCreateUpdate
+            - subjectView
             - subjectEditCompatibility
             - subjectDelete
-            - subjectView
         resourceType:
           type: string
           enum:
@@ -15429,12 +13418,11 @@ components:
             type: string
             enum:
             - subjectCreateUpdate
+            - subjectView
             - subjectEditCompatibility
             - subjectDelete
-            - subjectView
         resourceType:
           type: string
-          const: SUBJECT
     SchemaCompatibility:
       title: SchemaCompatibility
       type: string
@@ -15567,19 +13555,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field'
-    SqlResultApiResponse:
-      title: SqlResultApiResponse
-      type: object
-      properties:
-        header:
-          type: array
-          items:
-            type: string
-        row:
-          type: array
-          items:
-            type: array
-            items: {}
     Subject:
       title: Subject
       type: object
@@ -15600,9 +13575,9 @@ components:
             type: string
             enum:
             - subjectCreateUpdate
+            - subjectView
             - subjectEditCompatibility
             - subjectDelete
-            - subjectView
         resourceType:
           type: string
           enum:
@@ -15624,17 +13599,6 @@ components:
           $ref: '#/components/schemas/SubjectResource'
         upsertResult:
           $ref: '#/components/schemas/UpsertResult'
-    SubjectCreateResult:
-      title: SubjectCreateResult
-      type: object
-      required:
-      - resource
-      - createResult
-      properties:
-        resource:
-          $ref: '#/components/schemas/SubjectResource'
-        createResult:
-          $ref: '#/components/schemas/CreateResult'
     SubjectKind:
       title: SubjectKind
       type: string
@@ -15766,7 +13730,6 @@ components:
             - topicDelete
         resourceType:
           type: string
-          const: TOPIC
     Table:
       title: Table
       type: object
@@ -15822,16 +13785,17 @@ components:
             type: string
         type:
           type: string
-          const: TagsFilter
+    TlsNotSupported:
+      title: TlsNotSupported
+      type: object
     TlsStatus:
       title: TlsStatus
-      type: string
-      enum:
-      - checked_certificate
-      - unchecked_certificate
-      - tls_not_supported
-      - unreachable_target
-      - unexpected_status
+      oneOf:
+      - $ref: '#/components/schemas/CheckedCertificate'
+      - $ref: '#/components/schemas/TlsNotSupported'
+      - $ref: '#/components/schemas/UncheckedCertificate'
+      - $ref: '#/components/schemas/UnexpectedStatus'
+      - $ref: '#/components/schemas/UnreachableTarget'
     TlsTestRequest:
       title: TlsTestRequest
       type: object
@@ -15942,63 +13906,6 @@ components:
           - KafkaConnect
           - Subject
           - KsqlDB
-    TopicAlert:
-      title: TopicAlert
-      type: object
-      required:
-      - topicName
-      - threshold
-      - operator
-      - metric
-      properties:
-        topicName:
-          type: string
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/TopicMetricType'
-        description:
-          type: string
-        displayName:
-          type: string
-        partition:
-          type: integer
-          format: int32
-        disable:
-          type: boolean
-    TopicAlertOutput:
-      title: TopicAlertOutput
-      type: object
-      required:
-      - topicName
-      - threshold
-      - operator
-      - metric
-      - promQl
-      properties:
-        topicName:
-          type: string
-        partition:
-          type: integer
-          format: int32
-        threshold:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/Operator'
-        metric:
-          $ref: '#/components/schemas/TopicMetricType'
-        promQl:
-          type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        disable:
-          type: boolean
     TopicApplyResult:
       title: TopicApplyResult
       type: object
@@ -16032,7 +13939,6 @@ components:
       - $ref: '#/components/schemas/CleanupPolicyFilter'
       - $ref: '#/components/schemas/HideInternal'
       - $ref: '#/components/schemas/HideStream'
-      - $ref: '#/components/schemas/LabelsFilter'
       - $ref: '#/components/schemas/TagsFilter'
       - $ref: '#/components/schemas/TopicNameFilter'
       discriminator:
@@ -16041,7 +13947,6 @@ components:
           CleanupPolicyFilter: '#/components/schemas/CleanupPolicyFilter'
           HideInternal: '#/components/schemas/HideInternal'
           HideStream: '#/components/schemas/HideStream'
-          LabelsFilter: '#/components/schemas/LabelsFilter'
           TagsFilter: '#/components/schemas/TagsFilter'
           TopicNameFilter: '#/components/schemas/TopicNameFilter'
     TopicListRequest:
@@ -16094,20 +13999,6 @@ components:
           type: string
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
-        catalogVisibility:
-          $ref: '#/components/schemas/CatalogVisibility'
-        descriptionIsEditable:
-          type: boolean
-        description:
-          type: string
-    TopicMetricType:
-      title: TopicMetricType
-      type: string
-      enum:
-      - MessageCount
-      - MessageIn
-      - MessageOut
-      - MessageSize
     TopicNameFilter:
       title: TopicNameFilter
       type: object
@@ -16119,7 +14010,6 @@ components:
           type: string
         type:
           type: string
-          const: TopicNameFilter
     TopicPolicyApplyResult:
       title: TopicPolicyApplyResult
       type: object
@@ -16192,7 +14082,6 @@ components:
         partitions:
           type: integer
           format: int32
-          minimum: 1
         replicationFactor:
           type: integer
           format: int32
@@ -16210,6 +14099,15 @@ components:
           type: string
         cause:
           type: string
+    UncheckedCertificate:
+      title: UncheckedCertificate
+      type: object
+    UnexpectedStatus:
+      title: UnexpectedStatus
+      type: object
+    UnreachableTarget:
+      title: UnreachableTarget
+      type: object
     UpdateGroupRequest:
       title: UpdateGroupRequest
       type: object
@@ -16385,9 +14283,6 @@ x-tagGroups:
   - cli_kafka-cluster_console_v2_2
   - cli_kafka-connect-cluster_console_v2_3
   - cli_ksql-d-b-cluster_console_v2_4
-- name: 🐞 debug/v1
-  tags:
-  - logging
 - name: 🌉 gateway/v1
   tags:
   - interceptors
@@ -16410,23 +14305,20 @@ x-tagGroups:
   - ksqlDBs
 - name: 🔥 kafka/v2
   tags:
-  - cli_topic_kafka_v2_10
-  - cli_subject_kafka_v2_11
-  - cli_connector_kafka_v2_12
+  - cli_topic_kafka_v2_5
+  - cli_subject_kafka_v2_6
+  - cli_connector_kafka_v2_7
 - name: 🩺 monitoring/v2
   tags:
-  - cli_alert_monitoring_v2_14
+  - cli_alert_monitoring_v2_13
 - name: 🚀 self-serve/v1
   tags:
-  - cli_topic-policy_self-serve_v1_5
-  - cli_application_self-serve_v1_6
-  - cli_application-instance_self-serve_v1_7
-  - cli_application-instance-permission_self-serve_v1_8
-  - cli_application-group_self-serve_v1_9
+  - cli_topic-policy_self-serve_v1_8
+  - cli_application_self-serve_v1_9
+  - cli_application-instance_self-serve_v1_10
+  - cli_application-instance-permission_self-serve_v1_11
+  - cli_application-group_self-serve_v1_12
   - catalog
-- name: 🐘 sql/v1
-  tags:
-  - cli_indexed-topic_sql_v1_13
 - name: 🔑 token/v1
   tags:
   - tokens
