@@ -23,14 +23,16 @@ Console documentation is found under the `docs/platform` directory. The path of 
 They live on the host:8888 of the deployed Gateway, but we also publish them online at [developers.conduktor.io](https://www.developers.conduktor.io).
 
 To update the public version copy the latest open api yaml files from conduktor-proxy repo,
-https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml
-and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml
-to the [/static/developers](./static/developers/) directory.
+https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml (v1)
+and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml (v2)
+to the [/static/developers](./static/developers/openapi/gateway) directory and rename them.
 
 ## Console
 Available on the host/docs.
 Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml
-to the [/static/developers](./static/developers/) directory
+to the [/static/developers](./static/developers/openapi/console) directory.
+
+Add new versions to static/developers/openapi/manifest.json.
 
 # Updating the Changelog
 
