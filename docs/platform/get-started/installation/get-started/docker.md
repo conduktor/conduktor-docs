@@ -165,7 +165,7 @@ database:         # External database configuration
 
 admin:            # Local admin credentials
   email: "<name@your_company.io>"
-  password: "admin"
+  password: "adminP4ss!"
 
 monitoring:       # Connection to the Cortex Monitoring container
   cortex-url: http://conduktor-monitoring:9009/
@@ -193,7 +193,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.27.0
+    image: conduktor/conduktor-console:1.29.1
     depends_on:
       - postgresql
     ports:
@@ -207,7 +207,7 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.27.0
+    image: conduktor/conduktor-console-cortex:1.29.1
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080" # Connection to the Console container
 ```
@@ -229,7 +229,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.27.0
+    image: conduktor/conduktor-console:1.29.1
     depends_on:
       - postgresql
     ports:
@@ -241,7 +241,7 @@ services:
       CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor-console"
       # Local admin credentials
       CDK_ADMIN_EMAIL: "<name@your_company.io>"
-      CDK_ADMIN_PASSWORD: "admin"
+      CDK_ADMIN_PASSWORD: "adminP4ss!"
       # Connection to the Cortex Monitoring container
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
@@ -249,7 +249,7 @@ services:
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.27.0
+    image: conduktor/conduktor-console-cortex:1.29.1
     environment:
       # Connection to the Console container
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
