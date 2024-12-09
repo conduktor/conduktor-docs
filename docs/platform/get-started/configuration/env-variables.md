@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: Configuration Properties & Environment Variables
 description: Conduktor Console input configuration fields can be provided using environment variables.
 ---
