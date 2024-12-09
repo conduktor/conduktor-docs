@@ -135,3 +135,5 @@ You can also provide [JDBC connection parameter](https://jdbc.postgresql.org/doc
 database:
   url: 'jdbc:postgresql://user:password@host1:5432,host2:5432/database?targetServerType=primary'
 ```
+
+Nearly all `targetServerType` are supported: `any`, `primary`, `master`, `slave`, `secondary`, `preferSlave`, `preferSecondary` and `preferPrimary`. `loadBalanceHosts` is not currently supported.
