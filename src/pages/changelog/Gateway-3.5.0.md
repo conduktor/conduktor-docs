@@ -50,6 +50,26 @@ If this, or any other valid KMS identifier, is not present the encryption plugin
 
 See [the encryption configuration docs](/gateway/interceptors/data-security/encryption/encryption-configuration.md) for more information.
 
+## Licence Expiry
+
+We have altered the behaviour of the Gateway when your licence expires to provide a more friendly experience. The behaviour is now as below:
+
+* We have added new metric `gateway.license.remaining_days` which you can monitor to track the time left on your licence
+* If the Gateway is currently running, do not automatically exit on license expiry. Rather, Gateway will now log a warning every hour that your licence is expired:
+
+```text
+License has expired! You need to add a valid license to continue using Conduktor Gateway. Checkout our documentation if unsure how to set the license
+```
+
+* These warnings will start 1 week before expiry occurs as a notification, in the format:
+
+```text
+License will expire in less than {N} day(s)! You need to renew your license to continue using Conduktor Gateway
+```
+
+* Finally, we now check your license earlier in the bootstrap sequence for Gateway, so it will fail fast with a clear message when your licence is expired.
+
+The key change here is that if your licence does expire, Gateway will not exit automatically anymore. It will continue running, logging warnings. Should you restart the Gateway in this state, it will then fail to start up - but there is no automatic shutdown. 
 
 ***
 
