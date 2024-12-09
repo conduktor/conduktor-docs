@@ -489,7 +489,7 @@ For details on the available exportable events refer to: [Exportable audit log e
 ### Conduktor SQL properties
 
 In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
-You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each values individually `CDK_KAFKASQL_DATABASE_*`.
+You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
 

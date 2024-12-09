@@ -24,8 +24,8 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
    - `database.url` : database connection url in the format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...]`
    - `database.hosts[].host` : Postgresql server hosts name
    - `database.hosts[].port` : Postgresql server ports
-   - `database.host` : Postgresql server host name (Deprecated use `database.hosts` instead)
-   - `database.port` : Postgresql server port (Deprecated use `database.hosts` instead)
+   - `database.host` : Postgresql server host name (Deprecated. Use `database.hosts` instead)
+   - `database.port` : Postgresql server port (Deprecated. Use `database.hosts` instead)
    - `database.name` : Database name
    - `database.username` : Database login role
    - `database.password` : Database login password
@@ -33,7 +33,7 @@ Until version 1.18, Conduktor supported an embedded database. This is deprecated
 
 #### URL format
 
-Console support both standard [PostgreSQL](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING-URIS) url and [JDBC PostgreSQL](https://jdbc.postgresql.org/documentation/use/#connecting-to-the-database) url formats.
+Console supports both standard [PostgreSQL](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING-URIS) url and [JDBC PostgreSQL](https://jdbc.postgresql.org/documentation/use/#connecting-to-the-database) url formats.
 
 Connection username and password can be provided in the URL as basic authentication or as parameters.
 
@@ -98,7 +98,7 @@ Example :
 ### Multi-host configuration
 
 If you have a multi-host setup, you can configure the database connection with a list of hosts. 
-Conduktor use PostgreSQL JDBC driver to connect to the database that supports [multiple hosts in the connection url](https://jdbc.postgresql.org/documentation/use/#connection-fail-over).
+Conduktor uses a PostgreSQL JDBC driver to connect to the database that supports [multiple hosts in the connection url](https://jdbc.postgresql.org/documentation/use/#connection-fail-over).
 
 To configure a multi-host setup, you can use the `database.url` configuration field with a list of hosts separated by commas.
 ```yaml
