@@ -20,8 +20,36 @@ Today, the token as the password for local Gateway service accounts contains all
 
 This will help reduce inconsistencies and avoid unexpected behavior.
 
-## Breaking change: default SNI host separator
-TODO
+## Breaking change: Default SNI Host Separator
+In this release we have changed the default value for the separator used in the SNI routing configuration from a period `.` to a dash `-`. This is in order to better allow the use of wild card certificates when certificates are in use.  
+
+The format of the SNI routing host names is now as below:
+
+```properties
+ <host_prefix><cluster_id><broker_id>-<advertised_host>
+```
+
+Please note that a side effect of this change is that a dash `-` cannot appear in the host prefix or cluster id unless the SNI host separator is overridden.
+
+The previous behaviour of Gateway can be configured by simply adding this to your configuration:
+
+`GATEWAY_SNI_HOST_SEPARATOR=.`
+
+For more information on SNI routing, see [its documentation](/gateway/how-to/sni-routing.md).
+
+## Use of In-memory KMS for Encryption  
+Gateway has always supported the use of an in memory KMS for encryption in order to provide an easy-to-use setting for testing and developing your encryption config. This mode is not however meant for production use as the state of the KMS is lost when Gateway restarts, rendering and data encrypted with it unrecoverable.
+
+Before this release, the in memory mode was the default setting and would be used as a fallback if no valid external KMS was detected in the encyrption setup.
+
+From this release, you must now explicitly opt-in to the in-memory mode for encryption using the prefix:
+
+`in-memory-kms://`
+
+If this, or any other valid KMS identifier, is not present the encryption plugin will now fail. This change is a precaution to prevent accidental misconfigurations resulting in the use of in memory mode and subsequent data loss.
+
+See [the encryption configuration docs](/gateway/interceptors/data-security/encryption/encryption-configuration.md) for more information.
+
 
 ***
 

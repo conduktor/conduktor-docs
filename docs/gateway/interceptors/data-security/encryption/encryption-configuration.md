@@ -168,17 +168,19 @@ If you want this key to be stored in your Vault KMS for instance, you can set: `
 
 #### Key Stored in KMS
 
-By default, any `keySecretId` that doesn't match one of the schemas detailed below, will be stored in-memory.
+Any `keySecretId` that doesn't match one of the schemas detailed below will be **rejected** and the encryption operation will **fail**.
 
 If you want to make sure the key is well created in your KMS, you have to (1) [make sure you have configured the connection to the KMS](#kms-configuration) , and (2) use the following format as `keySecretId`:
 
-| KMS                 | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
-|---------------------|-----------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| In-Memory (default) |                       | Any string that isn't prefixed by a KMS identifier prefix                                            | `my-password-key-id`                                                                               |
-| Vault               | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                              |
-| Azure               | azure-kms://          | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
-| AWS                 | aws-kms://            | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
-| GCP                 | gcp-kms://            | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
+| KMS       | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
+|-----------|-----------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| In-Memory | in-memory-kms://      | `in-memory-kms://<key-id>`                                                                           | `in-memory-kms://my-password-key-id`                                                                               |
+| Vault     | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                              |
+| Azure     | azure-kms://          | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
+| AWS       | aws-kms://            | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
+| GCP       | gcp-kms://            | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
+
+Note that In-Memory mode is present for testing and development purposes only - keys stored in this manner do not persist between Gateway restarts.
 
 :::warning
 Keys are string that starts with a letter, followed by a combination of letters, underscores (_), hyphens (-), and numbers. Special characters are not allowed. It also works with the upper [mustache pattern](#mustache-template).
@@ -234,7 +236,7 @@ This section is detailing how to configure the different KMS within your encrypt
 | key       | type                    | description                                                                                       |
 |-----------|-------------------------|---------------------------------------------------------------------------------------------------|
 | keyTtlMs  | long                    | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
-| in-memory | [In-Memory](#in-memory) | Default KMS that is not persistent, internal to the Gateway.                                      |
+| in-memory | [In-Memory](#in-memory) | A KMS that is not persistent, internal to the Gateway and included for testing purposes.          |
 | vault     | [Vault KMS](#vault-kms) | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms) | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
 | aws       | [AWS KMS](#aws-kms)     | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
@@ -242,9 +244,9 @@ This section is detailing how to configure the different KMS within your encrypt
 
 ### In-Memory
 
-This is the default key storage we use, if no external one is set. This is for demos only and should not be used on production data.
+This is for demos only and should not be used on production data.
 
-The risk of using In-Memory KMS is that the key will not persist. This means that if you restart the Gateway, or change the interceptor configuration, you won't be able to decrypt old records anymore. **You should not use this default KMS in production.**
+The risk of using In-Memory KMS is that the key will not persist. This means that if you restart the Gateway, or change the interceptor configuration, you won't be able to decrypt old records anymore. **You should not use this KMS in production.**
 
 ### Vault KMS
 
