@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 4
 title: Chargeback
 description: Chargeback
 ---
@@ -24,7 +24,7 @@ The measured period can be changed from 7D, 30D, 6M, 12M, or YTD (Year To Date).
 
 The configuration button lets you configure the Dollar cost of a Produced GB and a Consumed GB. This allows you to align the chargeback model with your specific infrastructure costs.
 
-![Chargeback Configuration](img/chargeback-configuration.png)
+![Chargeback Configuration](./img/chargeback-configuration.png)
 
 ## Exporting chargeback data
 
@@ -51,3 +51,6 @@ The exported data will depend on the currently selected tab:
 The exported data will be formatted based on the selected time period:
 - Selecting **7D** or **30D** will export the relevant data broken down per day
 - Selecting **6M**, **12M** or **YTD** will export the relevant data broken down per month
+
+## Configure chargeback
+When you want to set this up checkout the dedicated page on how to [configure chargeback](docs/platform/guides/configure-chargeback.md).
