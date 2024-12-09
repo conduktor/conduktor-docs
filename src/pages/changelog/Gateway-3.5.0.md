@@ -29,8 +29,6 @@ The format of the SNI routing host names is now as below:
  <host_prefix><cluster_id><broker_id>-<advertised_host>
 ```
 
-Please note that a side effect of this change is that a dash `-` cannot appear in the host prefix or cluster id unless the SNI host separator is overridden.
-
 The previous behaviour of Gateway can be configured by simply adding this to your configuration:
 
 `GATEWAY_SNI_HOST_SEPARATOR=.`
@@ -38,7 +36,7 @@ The previous behaviour of Gateway can be configured by simply adding this to you
 For more information on SNI routing, see [its documentation](/gateway/how-to/sni-routing.md).
 
 ## Use of In-memory KMS for Encryption  
-Gateway has always supported the use of an in memory KMS for encryption in order to provide an easy-to-use setting for testing and developing your encryption config. This mode is not however meant for production use as the state of the KMS is lost when Gateway restarts, rendering and data encrypted with it unrecoverable.
+Gateway has always supported the use of an in memory KMS for encryption in order to provide an easy-to-use setting for testing and developing your encryption config. This mode is not however meant for production use as the state of the KMS is lost when Gateway restarts, rendering any data encrypted with it unrecoverable.
 
 Before this release, the in memory mode was the default setting and would be used as a fallback if no valid external KMS was detected in the encyrption setup.
 
