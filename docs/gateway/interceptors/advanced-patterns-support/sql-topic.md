@@ -45,6 +45,13 @@ Currently
     - Header: `.. WHERE record.header.someHeaderKey = 'some thing'`
     - Offset: `.. WHERE record.offset = 1`
 
+## Schemas and Projections
+
+If your data uses a schema, then it is not possible to make use of the projection feature here because the resulting data will no longer match the original schema. For plain JSON topics you may use the select clause to alter the shape of the data returned as required - however for schema'd data (Avro and Protobuf) you must not use a projection, i.e. the select should be in the form:
+
+`SELECT * FROM ...`
+
+Filtering with the where clause is still supported.
 
 ## Configuration
 

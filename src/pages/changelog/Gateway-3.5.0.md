@@ -16,9 +16,9 @@ This breaking change only impacts Local Gateway service accounts generated throu
 
 If you are using Gateway services accounts from OIDC, mTLS, Delegated Kafka, you are **not** impacted.
 :::
-Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.  
 
-This will help reduce inconsistencies and avoid unexpected behavior.
+From this release, we will now strictly enforce that the username and the token matches in requests made to the Gateway where local service accounts are used. This will help reduce inconsistencies and avoid unexpected behaviors. If they do not match, requests will fail to authenticate.
+
 
 ## Breaking change: Default SNI Host Separator
 In this release we have changed the default value for the separator used in the SNI routing configuration from a period `.` to a dash `-`. This is in order to better allow the use of wild card certificates when certificates are in use.  
@@ -55,22 +55,19 @@ See [the encryption configuration docs](/gateway/interceptors/data-security/encr
 
 ## Quality of Life
 - Support for Kafka Clients up to 3.9
-- PXY-1515/encryption-plugin-in-memory-mode-opt-in-only
-- CUS-424/pluralsight-change-default-snihostseparator-from-to
+- The encryption plugin now requires explicit opt-in for its in memory KMS mode, to safeguard against production misconfigurations 
+- The default SNI host separator is now a dash `-`, to avoid issues with wild card certificates.
   - Breaking change
-- PXY-1617/resolve-gw-service-account-security-issue
+- Enforce that the username and the token matches in calls to the Gateway when local service accounts are used.
   - Breaking change
+- Added support for Approle authentication against Vault
 
 
 ## General fixes 🔨
-
-- PXY-1539/acl-issue-when-data-are-null
-- CUS-438/adidas-filtering-with-sql-doesnt-work-with-topics-having-symbols
-- CUS-404/sainsburys-kafka-acls-visible-from-vcluster
-- PXY-1619/vaults-approle-authentication-support
-- PXY-1600/license-expiry-warn-on-expiry-instead-of-shutdown
-- CUS-448/internal-sql-topic-filter-avro-doesnt-support-projections-and-fails
-- PXY-1515/encryption-plugin-in-memory-mode-opt-in-only
+TBD - replace with proper descriptions
+- Fixed a bug in ACL handling which caused an error if no topics were passed for an offset fetch request (being the case where the caller wants to retrieve offsets for all topics). 
+- Fixed a bug in Virtual Clusters which in some cases meant the ACLs for the physical Kafka clusters where exposed in error.
+- Changed the behaviour when your licence expires, such that the Gateway will now warn in its logs but not shutdown.
 
 
 ## Known issues
