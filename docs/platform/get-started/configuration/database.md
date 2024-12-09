@@ -12,6 +12,16 @@ Conduktor **requires** a postgres database to store its state.
 Until version 1.18, Conduktor supported an embedded database. This is deprecated from 1.18 onwards to ensure your Console deployment is production ready. Please contact [support](https://support.conduktor.io/) if you are having difficulty migrating.
 :::
 
+- [Database configuration](#database-configuration)
+    - [Database requirements](#database-requirements)
+    - [Database configuration properties](#database-configuration-properties)
+      - [URL format](#url-format)
+    - [SSL support](#ssl-support)
+    - [Use AWS RDS / Aurora as database](#use-aws-rds--aurora-as-database)
+    - [Setup](#setup)
+    - [Multi-host configuration](#multi-host-configuration)
+
+
 ### Database requirements
 
 - PostgreSQL 13+

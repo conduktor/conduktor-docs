@@ -19,11 +19,11 @@ For production environments, there are **mandatory requirements** to ensure your
 
 To ensure you meet these requirements, you must:
 
- - Set up an [external PostgreSQL (13+) database](../configuration/database.md) with appropriate backup policy. 
-    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations. 
-    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over).
- - Setup [block storage](../configuration/env-variables.md#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring. 
- - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue. 
+ - Set up an [external PostgreSQL (13+) database](../configuration/database.md) with appropriate backup policy 
+    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations
+    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over)
+ - Setup [block storage](../configuration/env-variables.md#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring
+ - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
  
 Note that if you are deploying the [Helm chart](get-started/kubernetes.md), the [production requirements](get-started/kubernetes.md#production-requirements) are clearly outlined in the installation guide. 
 
@@ -106,15 +106,18 @@ The system currently uses Cortex in standalone mode, which does not inherently p
 
 #### Database Connection Fail-over
 
-Console does not currently support using multiple database URLs in configuration to achieve high availability (HA). For example, [Connection Fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) as seen in the case of PostgreSQL.
+Since version 1.30 Console supports using multiple database URLs in configuration to achieve high availability (HA). For example, [Connection Fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) as seen in the case of PostgreSQL.
 
-While this is something we are actively investigating, we recommend instead that you configure an HA Postgres database using solutions such as:
+For Conduktor configuration details see [Multi-host database configuration](docs/platform/get-started/configuration/database.md#multi-host-configuration) which supports multiple hosts.
+For Postgresql HA configuration it's best to discuss with your architect, one example is using [Bitnami's postgresql-ha chart](https://github.com/bitnami/charts/blob/main/bitnami/postgresql-ha/README.md#differences-between-the-postgresql-ha-and-postgresql-helm-charts).
+
+
+In earlier versions we recommend instead that you configure an HA Postgres database where you should specify the single connection URL (e.g. the endpoint of PgBouncer or HAProxy) in the Conduktor Console database configuration. There are several solutions available such as:
  
- - [**Patroni**](https://www.cybertec-postgresql.com/en/patroni-setting-up-a-highly-available-postgresql-cluster/): Automates Postgres replication and failover.
- - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances.
- - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA.
+ - [**Patroni**](https://www.cybertec-postgresql.com/en/patroni-setting-up-a-highly-available-postgresql-cluster/): Automates Postgres replication and failover
+ - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances
+ - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
-In either case, you should specify the single connection URL (e.g. the endpoint of PgBouncer or HAProxy) in the Conduktor Console database configuration. 
 
 
 
