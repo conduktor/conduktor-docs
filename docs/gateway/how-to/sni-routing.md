@@ -114,7 +114,17 @@ In general, the format for the advertised brokers to be included as SANs in the 
 
 Here, the `cluster_id` is used in case we have multiple back-end Kafka clusters, and defaults to main.
 
-Note that the value as a whole is split into the prefix and host parts on the **first** occurence of the `GATEWAY_SNI_HOST_SEPARATOR` value (a dash in the above example).  
+Note that the `GATEWAY_SNI_HOST_SEPARATOR` is used when the hostname is parsed by the Gateway, as follows, to acquire the broker Id:
+
+1. Match the full host name based on the configured prefix `<host_prefix><cluster_id>` (using the `GATEWAY_ADVERTISED_HOST_PREFIX` value)
+2. Remove this prefix, and break the resulting value (`<broker_id>-<advertised_host>`) into two based on the `GATEWAY_SNI_HOST_SEPARATOR` value, and pick the first part.
+
+The `GATEWAY_SNI_HOST_SEPARATOR` may therefore appear in the values for:
+* GATEWAY_ADVERTISED_HOST_PREFIX
+* Cluster Id
+* GATEWAY_ADVERTISED_HOST
+
+But cannot appear in a broker Id.
 
 ## 3. Configure DNS
 
