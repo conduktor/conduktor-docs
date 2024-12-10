@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: CloudFormation
+title: AWS Marketplace - CloudFormation
 description: Deploy an instance of Conduktor Console on AWS via CloudFormation.
 ---
 
