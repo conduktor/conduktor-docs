@@ -12,7 +12,7 @@ export const items = [
   {
     question: 'Does Role Based Access Control (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
-      "Right now it does not.",
+      'Yes, users can view or fully manage ACLs. See <a href="https://docs.conduktor.io/platform/navigation/settings/rbac/#granular-permissions" target="_blank">docs page</a> for more.',
   },
   {
     question: 'Can we use IAM + MSK?',
