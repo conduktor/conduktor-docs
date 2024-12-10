@@ -10,7 +10,7 @@ description: Deploy an instance of Conduktor Console on AWS.
 
 This guide will demonstrate how to deploy Console in your AWS environment with all mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
 
-Rather than follow this manual guide, you might prefer the [CloudFormation](/platform/get-started/installation/get-started/CloudFormation/) template.
+Rather than follow this manual guide, you might prefer to see our [Marktetplace Listing](AWS_Marketplace.md).
 
 :::info
 While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
@@ -27,11 +27,19 @@ Before you proceed, it is important to make sure that you have either already cr
 
 ## Deployment Steps
 
- - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
- - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
- - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
- - [Step 4: Access Conduktor and Configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
- - [Step 5: Onboard your team](#step-5-onboard-your-team)
+- [Deployment on AWS](#deployment-on-aws)
+  - [Getting started](#getting-started)
+  - [Security](#security)
+  - [Networking \& Architecture](#networking--architecture)
+  - [Deployment Steps](#deployment-steps)
+    - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
+    - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
+    - [Step 2.1: Add the core console container](#step-21-add-the-core-console-container)
+    - [Step 2.2: Add the conduktor cortex monitoring image](#step-22-add-the-conduktor-cortex-monitoring-image)
+    - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
+    - [Step 4: Access Conduktor and configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
+    - [Step 5: Onboard your team](#step-5-onboard-your-team)
+    - [Troubleshooting: Enabling Inbound Rules](#troubleshooting-enabling-inbound-rules)
 
 
 ### Step 1: Create a PostgreSQL database via Amazon RDS
