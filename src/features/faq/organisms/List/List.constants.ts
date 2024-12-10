@@ -5,14 +5,14 @@ export const items = [
       'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
   },
   {
-    question: 'How can we deploy Conduktor Platform?',
+    question: 'How can we deploy Conduktor?',
     answer:
       'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
   },
   {
-    question: 'Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?',
+    question: 'Does Role Based Access Control (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
-      "Right now it does not. It's on our roadmap to make RBAC trickle down to Kafka ACLs also.",
+      "Right now it does not.",
   },
   {
     question: 'Can we use IAM + MSK?',
@@ -21,17 +21,17 @@ export const items = [
   },
   {
     question: 'Do you have a Helm chart for deploying in my Kubernetes environment?',
-    answer: 'We are working on a helm chart and will make this available soon.',
+    answer: 'Yes, checkout our <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/kubernetes/" target="_blank">docs page</a>.',
   },
   {
-    question: 'Is access to the internet required to run the Conduktor Platform?',
+    question: 'Is access to the internet required to run Conduktor?',
     answer:
-      'No, you can run an air gapped docker image in your environment without internet access.',
+      'No, you can run an air gapped Docker image in your environment without internet access.',
   },
   {
     question: 'Can we externalize Postgres & other data storage?',
     answer:
-      'Yes!  The instructions for doing this can be found <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Configuration.md#external-database-configuration" target="_blank">here</a>.',
+      'Yes!  The instructions for doing this can be found <a href="https://docs.conduktor.io/platform/get-started/configuration/database/" target="_blank">here</a>.',
   },
   {
     question: 'What schema registries do you support?',
@@ -41,37 +41,16 @@ export const items = [
   {
     question: 'Do you have Terraform or CloudFormation?',
     answer:
-      'We currently have a public cloud formation available <a href="https://github.com/conduktor/quickstart-conduktor-aws-msk" target="_blank">here</a>.',
+      'Yes we have both a <a href="https://docs.conduktor.io/platform/reference/terraform-reference/" target="_blank">Terraform provider</a>, and a public <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/CloudFormation/" target="_blank">CloudFormation</a>.',
   },
   {
-    question: 'What kind of compliance requirements does your SaaS product satisfy?',
-    answer: 'None for now. However, we are working on a SOC 2 Type 2 compliance.',
+    question: 'Are you SOC 2 compliant?',
+    answer: 'Yes! We are SOC 2 Type 2 compliant.',
   },
   {
-    question:
-      'What is different about Conduktor Testing from other options such as test containers and jUnit?',
+    question: 'What are the suggested resources that should be dedicated to Conduktor?',
     answer:
-      'Conduktor testing is an end-to-end and integration testing environment. It is designed to be used by multiple teams to share knowledge and provide global visibility of test strategy throughout an organization.  In addition, Conduktor Testing provides data validation and data checks at each step of a distributed system. This ensures both data correctness and application resilience.',
-  },
-  {
-    question: 'What is the suggested settings for running the docker image?',
-    answer:
-      'We suggest you add a docker volume. If you fail to add the second --mount option each time you restart the docker container your settings and metrics will be erased. See our Docker Quick Start guide for exact commands.',
-  },
-  {
-    question: 'I want to run this docker image in AWS Fargate/ECS/EKS, how can I do that?',
-    answer:
-      'We are working on a manifest as well as helm chart to enable this.  For now, deploying Conduktor platform as a single container works for most folks. <a href="https://docs.docker.com/get-started/kube-deploy/" target="_blank">https://docs.docker.com/get-started/kube-deploy/</a> has instructions.',
-  },
-  {
-    question: 'What are the suggested resources that should be dedicated to Conduktor Platform?',
-    answer:
-      'We are working on a Helm chart to enable this.  For now, deploying Conduktor platform as a single container works for most folks.  See <a href="https://docs.docker.com/get-started/kube-deploy/" target="_blank">https://docs.docker.com/get-started/kube-deploy/</a> for more instructions.',
-  },
-  {
-    question: 'Do you have an overview video of the Platform features?',
-    answer:
-      'Sure! You can see our platform hands on with Stephane Mareek <a href="https://www.youtube.com/watch?v=SnLv2yL5sy0" target="_blank">here</a>, get a free demo and discussion with us <a href="https://www.conduktor.io/contact/demo" target="_blank">here</a>, or try it on our demo environment <a href="https://www.conduktor.io/get-started#option-3" target="_blank">here</a>.',
+      'See the requirements pages for <a href="https://docs.conduktor.io/gateway/get-started/system-requirements/" target="_blank">Gateway</a>, or <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">Console</a> for more instructions.',
   },
   {
     question:
@@ -81,7 +60,7 @@ export const items = [
   },
   {
     question: 'Does the Data Masking solution make any changes to my Kafka data?',
-    answer: 'No it does not. The data is masked on the Conduktor Platform only.',
+    answer: 'No it does not. The data is masked on the consumer only.',
   },
   {
     question:
@@ -103,7 +82,7 @@ export const items = [
     question:
       'Are the timestamps in Conduktor Console for Kafka messages based on Local time or Coordinated Universal Time(UTC)?',
     answer:
-      'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionailty to allow users be able to choose between either local time and UTC on Conduktor Console.',
+      'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionality to allow users be able to choose between either local time and UTC on Conduktor Console.',
   },
   {
     question:
@@ -116,11 +95,5 @@ export const items = [
       'What happens if I exceed my user threshold?',
     answer:
       'Conduktor employs a soft limit to ensure that your service is not disrupted in cases whereby you onboard more users than you expected. We understand it can be difficult to plan in advance, and ask you get in contact with your Customer Success team if you exceed your user threshold. Please note this limit is a contractual agreement between Conduktor and your company, and may be subject to auditing from time to time.',
-  },
-  {
-    question:
-      'I cannot see the last active date of a user, how can I perform a clean-up?',
-    answer:
-      'This information is not currently available within Conduktor,  but is being considered for an upcoming release in the next couple of months. If you are interested in this feature, please contact your Customer Success team or our Support team who can advise on interim workarounds.'
   }
 ]
