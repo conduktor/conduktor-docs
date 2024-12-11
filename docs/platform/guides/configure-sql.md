@@ -4,7 +4,7 @@ title: Configure SQL
 description: How to configure Conduktor SQL
 ---
 
-## Configure Conduktor SQL
+## Overview
 
 :::info
 This feature is in **Beta** and is subject to change as we enhance it further. 
@@ -57,6 +57,8 @@ Note that additional configuration can be made in relation to the indexing proce
 
  - `CDK_KAFKASQL_CONSUMER-GROUP-ID`: Consumer group name for the indexing process (default is `conduktor-sql`)
  - `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`: The interval in which the clean-up process will run to purge data outside the desired [retention period](#index-topics-in-the-ui).
+  - `CDK_KAFKA_SQL_REFRESH-TOPIC-CONFIGURATION-EVERY-IN-SEC`: TO DO 
+   - `CDK_KAFKASQL_REFRESH-USER-PERMISSIONS-EVERY-IN-SEC`: See [RBAC](#rbac)
 
 
 ## Index Topics for Querying
@@ -64,6 +66,8 @@ Note that additional configuration can be made in relation to the indexing proce
 ### Index Topics in the UI
 
 To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#configure-conduktor-sql) the SQL database as a dependency.
+
+Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic. 
 
 When selecting a topic for indexing, you will be asked to configure the:
 
@@ -91,17 +95,24 @@ The process gives insight into the:
 Alternatively, you can index a topic through the conduktor [CLI](../reference/cli-reference.md):
 
 ```yaml
-apiVersion: "v1"
-kind: "IndexedTopic"
+---
+apiVersion: kafka/v2
+kind: Topic
 metadata:
-  name: "customers"
-  cluster: "kafka-cluster-dev"
+  cluster: kafka-cluster-dev
+  name: customers
+  sqlStorage:
+    retentionTimeInSecond: 86400 # 1 day of retention
+    enabled: true
 spec:
-  retentionTimeInSecond: "86400" # 1 day of retention
+  replicationFactor: 1
+  partitions: 1
+  configs:
+    cleanup.policy: delete
 ```
 
 ```bash
-conduktor apply -f index-topics.yml
+conduktor apply -f topics.yml
 ```
 
 Upon execution, the console backend will index messages from the (current time) - (retention time), and subsequently start listening for new records.
@@ -138,6 +149,10 @@ The table will contain special column types, each of those columns is indexed:
 * `__timestamp`
 * `__partition`
 * `__offset`
+* `__checksum`: the checksum of the tuple (message(s) key, message(s) value)
+* `__headers`: the message(s) headers
+* `__schema_id`: the schema id
+* `__key`: the message(s) key
 
 
 The content of each record is flattened. Given the following record:
@@ -154,10 +169,9 @@ The content of each record is flattened. Given the following record:
 ```
 
 Then, you'll have the following table structure:
-
-| __timestamp | __partition | __offset | a.b.c                       | userId |
-|-------------|-------------|----------|-----------------------------|-------------|
-| 123456789   | 0           | 42       | Hello World                 | 109210921092|
+| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId |
+|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|
+| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092|
 
 
 If records with a different shape come later, the table schema will be updated:
@@ -167,10 +181,11 @@ If records with a different shape come later, the table schema will be updated:
 }
 ```
 
-| __timestamp | __partition | __offset | a.b.c                       | userId | newField |
-|-------------|-------------|----------|-----------------------------|-------------|----------------|
-| 123456789   | 0           | 42       | Hello World                 | 109210921092     | NULL           |
-| 123456790   | 0           | 43       | NULL                        | NULL        | Kafka           |
+| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId | newField |
+|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|----------------|
+| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092| NULL           |
+| 123456790   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c18      | conduktor | 1           | something | NULL                 | NULL| Kafka           |
+
 
 ### Shrinker
 
@@ -209,7 +224,7 @@ Despite these measures, it's crucial to isolate the Kafka indexing database from
 
 ## SQL security
 
-We now support RBAC & data masking on SQL model.
+Conduktor's RBAC model & data masking capabilities are applicable when using SQL.
 
 ### RBAC
 
@@ -230,12 +245,6 @@ There are some limitations:
 - For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead.
 - If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error.
 
-
-### Permission check on UI
-
-Previously, only Admins were allowed to access the SQL UI. This is no longer the case; all users can now access it.
-
-A new backend permission, `kafka.topics.config.sql`, has been introduced. This permission is verified whenever a user attempts to update the `sqlStorage` configuration for a topic. Currently, only Admins have this permission, but this may change in the future.
 
 ### UI Experience
 
