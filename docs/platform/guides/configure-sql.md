@@ -207,6 +207,46 @@ Despite these measures, it's crucial to isolate the Kafka indexing database from
  - **Resource Contention**: Prevents the Kafka indexing process or a user's arbitrary request from consuming excessive resources and impacting the overall system performance
  - **Data Breach Mitigation**: Limits the potential damage in case of a security breach in the SQL endpoint protection (not totally foolproof).
 
+## SQL security
+
+We now support RBAC & data masking on SQL model.
+
+### RBAC
+
+The Console RBAC model is integrated with the PostgreSQL database using PostgreSQL's built-in ROLE feature.
+
+There are two distinct processes involved:
+
+1. **Initial Role Creation:** When a user executes an SQL query on the Console for the first time, the system checks if the corresponding user ROLE exists in the PostgreSQL database. If it does not, the RBAC system is consulted to determine the topics for which the user has the `kafka.topics.read` permission. The user's ROLE is then created in PostgreSQL, and read access to the relevant topic tables is granted.
+
+2. **Periodic Role Updates:** A background process in the Console periodically updates the access rights for each user ROLE to ensure they remain aligned with the RBAC permissions. The job is run every 30 seconds by default and can be customized by setting env variable `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`.
+
+### Data masking
+
+Data masking policies are implemented similarly to RBAC. By default, access is granted to all columns in a table. However, if a data masking policy applies to a specific column for a given user, access to that column is denied.
+
+There are some limitations:
+- Instead of applying the masking policy as defined in the Console, access to the entire column is restricted for simplicity.
+- For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead.
+- If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error.
+
+
+### Permission check on UI
+
+Previously, only Admins were allowed to access the SQL UI. This is no longer the case; all users can now access it.
+
+A new backend permission, `kafka.topics.config.sql`, has been introduced. This permission is verified whenever a user attempts to update the `sqlStorage` configuration for a topic. Currently, only Admins have this permission, but this may change in the future.
+
+### UI
+
+The user will only see the table(s) and field(s) is has access to on the UI:
+
+![SQL metadata description](img/sql-ui-security.png)
+
+If a user try to access a table on which it doesn't has any right then he got a access denied error:
+
+![access denied error](img/sql-exec-access-denied.png)
+
 
 ## Known Limitations
 
@@ -215,7 +255,6 @@ There are several known limitations regarding the current beta experience.
 Those are:
 
 - Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
-- Byte, Array and Boolean data types are not currently parsed, they will be added in the next version
 - If for any reason a record can't be parsed, they are ignored and the consumer continues
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
 - If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
