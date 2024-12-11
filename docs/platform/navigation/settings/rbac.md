@@ -132,7 +132,10 @@ The screenshots below show the different `Quick select` sets of permissions depe
 ![Subjects quick select](/img/admin/subjects-quick-select.png)
 ![Kafka connectors](/img/admin/kafka-connectors-quick-select.png)
 ![Clusters](/img/admin/clusters-quick-select.png)
+![ksqlDBs](/img/admin/ksqlDB-quick-select.png)
 For the `Clusters` permissions, the first set is for `Viewer`, and the second one is for `Admin`.
+
+For the `ksqlDBs`, we have only `Editor` permission.
 
 If the `Quick select` doesn't fit your need, you can still `Select permissions manually` by checking the exact boxes you need.
 
@@ -144,8 +147,8 @@ Here is an example of a set of permissions given to Alice:
 
 We can see that this is a recap of all the permissions this user has.
 
-In blue, we have the permissions Alice inherits from the group `Project A`, and in white the ones that are assigned to her directly.
+In grey, we have the permissions Alice inherits from the group `Project A`, and in white the ones that are assigned to her directly.
 
 This set of permissions gives her:
-- A full access to the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `Local Kafka`
+- A full access to the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `test`
 - Some actions on all the topics and consumer groups that start with the prefix `app-a-`, on all the clusters, that she inherits from the group `Project A`
