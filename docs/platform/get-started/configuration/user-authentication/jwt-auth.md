@@ -27,7 +27,7 @@ For more information see [configuration properties and environment variables](..
 In the following example, we configure Console to accept any token issued by `https://example.org/keycloak/realms/conduktor`.
 If a valid API key is defined in `apikey` claim, it will be used.
 Otherwise, the email contained in the `email` claim will be mapped to a Console user. If the user does not exist, it will be created.
-The `groups` claim is optional and used for [external group mapping](../external-group-sync.md).
+The `groups` claim is optional and used for [external group mapping](external-group-sync.md).
 
 ```yaml title="platform-config.yaml"
 sso:
