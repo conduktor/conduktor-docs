@@ -237,13 +237,13 @@ Previously, only Admins were allowed to access the SQL UI. This is no longer the
 
 A new backend permission, `kafka.topics.config.sql`, has been introduced. This permission is verified whenever a user attempts to update the `sqlStorage` configuration for a topic. Currently, only Admins have this permission, but this may change in the future.
 
-### UI
+### UI Experience
 
-The user will only see the table(s) and field(s) is has access to on the UI:
+The user will only see the table(s) and field(s) they have access to on the UI:
 
 ![SQL metadata description](img/sql-ui-security.png)
 
-If a user try to access a table on which it doesn't has any right then he got a access denied error:
+If a user tries to access a table for which they lack the necessary rights, they will receive an 'access denied' error:
 
 ![access denied error](img/sql-exec-access-denied.png)
 
