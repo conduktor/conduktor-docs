@@ -18,7 +18,7 @@ With Conduktor RBAC, you can:
    - Consumer Groups
    - Clusters
    - Subjects
-   - Connects
+   - Connectors
 
 ---
 **Jump to:**
@@ -42,7 +42,7 @@ And you can assign those permissions to:
 - Users
 - Groups
 
-To do so, you can either click on the name of the user/group, or click on the `...` icon on the right of their name, like shown below.
+To do so, you can either click on the name of the user/group, or click on the `...` icon on the right of their name, as shown below.
 
 ![Assign permissions](/img/admin/assign-permissions.png)
 
@@ -57,17 +57,7 @@ You are able to restrict access to Conduktor Console services. The default set o
 
 ![Services default set](/img/admin/services-default-set.png)
 
-This set of permissions means that the user will have this view of the `Admin` section (note the available tabs on the left):
-
-![Default view](/img/admin/bob-no-access.png)
-
-If you check all the boxes, the user will have this view of the `Admin` section (access to additional settings):
-
-![Full access user view](/img/admin/alice-full-access.png)
-
-Finally, if you remove their access to Data Masking and/or Topic as a Service, they will still see the modules, but won't be able to access them. Here is an example for Topic as a Service:
-
-![Topic as a Service access denied](/img/admin/taas-access-denied.png)
+This set of permissions means that the user will not be able to access all the available tabs on the left e.g. to manage certificates or generate API keys.
 
 ### Manage Resources Permissions
 
@@ -121,11 +111,11 @@ The exact same works for other Kafka resources.
 
 #### Quick Select
 
-In order to win some time during the permissions creation, you can use the `Quick select` to give a default set of permissions.
+In order to save time during the permissions creation, you can use the `Quick select` to give a default set of permissions or set this up using the CLI, API or Terraform.
 
 ![Quick select](/img/admin/quick-select.png)
 
-The screenshots below show the different `Quick select` sets of permissions depending on the resource.
+The screenshots below show the different `Quick select` sets of permissions (for topic patterns 1, 2, 3 respectively).
 
 ![Topics quick select](/img/admin/topics-quick-select.png)
 ![Consumer groups quick select](/img/admin/consumer-groups-quick-select.png)
@@ -133,9 +123,10 @@ The screenshots below show the different `Quick select` sets of permissions depe
 ![Kafka connectors](/img/admin/kafka-connectors-quick-select.png)
 ![Clusters](/img/admin/clusters-quick-select.png)
 ![ksqlDBs](/img/admin/ksqlDB-quick-select.png)
+
 For the `Clusters` permissions, the first set is for `Viewer`, and the second one is for `Admin`.
 
-For the `ksqlDBs`, we have only `Editor` permission.
+For the `ksqlDBs`, we have the `Editor` permission.
 
 If the `Quick select` doesn't fit your need, you can still `Select permissions manually` by checking the exact boxes you need.
 
@@ -150,5 +141,5 @@ We can see that this is a recap of all the permissions this user has.
 In grey, we have the permissions Alice inherits from the group `Project A`, and in white the ones that are assigned to her directly.
 
 This set of permissions gives her:
-- A full access to the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `test`
-- Some actions on all the topics and consumer groups that start with the prefix `app-a-`, on all the clusters, that she inherits from the group `Project A`
+- Full access to both the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `test`
+- Partial access on all topics and consumer groups, that start with the prefix `app-a-`, across all clusters and that she inherits this from the group `Project A`
