@@ -14,7 +14,7 @@ This guide will demonstrate how to use our marketplace offering that utilises [A
 While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
 :::
 
-The process should take no more than 15 - 30 minutes.
+The process should take no more than 30 minutes.
 
 ## Security
 
@@ -26,31 +26,43 @@ This template will create all the resources on a public subnet. However, the DB 
 
 ## Deployment Steps
 
+1. Go to https://aws.amazon.com/marketplace/pp/prodview-xjv65ie5rjtxu.
+
+2. Select `View purchase options`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-1.png)
+
+3. Agree the terms of service
+
+    ![AWS Marketplace](./assets/aws-marketplace-2.png)
+
+4. Select `Continue to Configuration`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-3.png)
+
+5. Select the Software Version you want to deploy (we currently only offer one fulfillment option). Then press `Continue to Launch`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-4.png)
+
+6. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region. We also offer the raw CloudFormation template that you can download and deploy manually.
+
+    ![AWS Marketplace](./assets/aws-marketplace-5.png)
+
+
+
 1. Go to `https://<region>.console.aws.amazon.com/cloudformation`.
 
-1. Click on "Create stack" button and choose the "With new resources" option.
+2. Click on "Create stack" button and choose the "With new resources" option.
 
     ![Alt Cloudformation](assets/cloudformation-guide-1.png)
 
-1. Choose the following options.
+3. Choose the following options.
 
     ![Alt Cloudformation](assets/cloudformation-guide-2.png)
 
-1. Upload one of our templates:
+4. Click "next".
 
-    > Decide if you want to deploy Console using your own resources (cluster, DB, etc.) or if you want us to deploy all resource dependencies alongside Console as well.
-
-    To deploy Console **only**, you can use the following template:
-
-    - [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml)
-
-    To deploy Console and all resources needed (e.g. DB), you can use the following template:
-
-    - [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml)
-
-1. Click "next".
-
-1. Give your stack a name and define/ review the parameters.
+5. Give your stack a name and define/ review the parameters.
 
     - If you have chosen the [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml), then you will have to supply the following values before you can continue.
 
@@ -74,27 +86,27 @@ This template will create all the resources on a public subnet. However, the DB 
 
     ![Alt Config](assets/cloudformation-guide-4.png)
 
-1. Click "next".
+6. Click "next".
 
-1. Acknowledge the tick box. *This will ensure we have the right permissions to access our ECS instance!*
+7. Acknowledge the tick box. *This will ensure we have the right permissions to access our ECS instance!*
 
     ![Alt Tickbox](assets/cloudformation-guide-5.png)
 
-1. Click "submit".
+8. Click "submit".
 
-1. Wait for all resources to be created. *This may take some time!*
+9. Wait for all resources to be created. *This may take some time!*
 
-1. From the "Resources" tab, click on `conduktor-ecs` then navigate to your newly created **Service** and then **Task**.  
+10. From the "Resources" tab, click on `conduktor-ecs` then navigate to your newly created **Service** and then **Task**.  
 
     ![Alt Cluster](assets/cloudformation-guide-6.png)
     ![Alt Service](assets/cloudformation-guide-7.png)
     ![Alt Task](assets/cloudformation-guide-8.png)
 
-1. Find the `conduktor-console` Container and navigate to the **Network bindings** tab.
+11. Find the `conduktor-console` Container and navigate to the **Network bindings** tab.
 
     ![AWS Guide Breadcrumb](assets/aws-guide-8.png)
 
-1. Click on the **External** link to open the Console application.
+12. Click on the **External** link to open the Console application.
 
     ![AWS Guide Network Bindings](assets/aws-guide-9.png)
 
