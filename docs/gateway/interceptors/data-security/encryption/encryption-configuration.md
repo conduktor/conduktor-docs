@@ -164,7 +164,7 @@ myKey
 
 If you want, you can set something like `"keySecretId": "{{record.topic}}-{{record.header.someHeader}}-{{record.key}}"`. This will create an encryption key called `myTopic-myHeader-myKey` in memory.
 
-If you want this key to be stored in your Vault KMS for instance, you can set: `"keySecretId": "vault-kms://vault:8200/transit/keys/{{record.topic}}-{{record.header.someHeader}}-{{record.key}}"`.
+If you want this key to be stored in your Vault KMS for instance, you can set: `"keySecretId": "vault-kms://https://vault:8200/transit/keys/{{record.topic}}-{{record.header.someHeader}}-{{record.key}}"`.
 
 #### Key Stored in KMS
 
@@ -175,8 +175,8 @@ If you want to make sure the key is well created in your KMS, you have to (1) [m
 | KMS                 | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
 |---------------------|-----------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | In-Memory (default) |                       | Any string that isn't prefixed by a KMS identifier prefix                                            | `my-password-key-id`                                                                               |
-| Vault               | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                              |
-| Azure               | azure-kms://          | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
+| Vault               | vault-kms://          | `vault-kms://<scheme><vault-host>/transit/keys/<key-id>`                                             | `vault-kms://https://vault:8200/transit/keys/password-key-id`                                              |
+| Azure               | azure-kms://          | `azure-kms://<scheme><key-vault-name>.vault.azure.net/keys/<object-name>`                            | `azure-kms://https://my-key-vault.vault.azure.net/keys/conduktor-gateway` |
 | AWS                 | aws-kms://            | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
 | GCP                 | gcp-kms://            | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
 
