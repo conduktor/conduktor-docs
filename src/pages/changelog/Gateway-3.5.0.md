@@ -79,6 +79,8 @@ The key change here is that if your licence does expire, Gateway will not exit a
 - Enforce that the username and the token matches in calls to the Gateway when local service accounts are used.
   - Breaking change
 - Added support for Approle authentication against Vault
+- Introduced a new configuration `enableAuditLogOnError` (default: `true`) which enhances the errors which are logged when encryption/decryption fails
+
 
 
 ## General fixes 🔨
