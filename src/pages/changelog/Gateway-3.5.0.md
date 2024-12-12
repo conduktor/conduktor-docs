@@ -82,7 +82,6 @@ The key change here is that if your licence does expire, Gateway will not exit a
 
 
 ## General fixes 🔨
-TBD - replace with proper descriptions
 - Fixed a bug in ACL handling which caused an error if no topics were passed for an offset fetch request (being the case where the caller wants to retrieve offsets for all topics). 
 - Fixed a bug in Virtual Clusters which in some cases meant the ACLs for the physical Kafka clusters where exposed in error.
 - Changed the behaviour when your licence expires, such that the Gateway will now warn in its logs but not shutdown.
