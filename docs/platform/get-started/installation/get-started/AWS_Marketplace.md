@@ -10,6 +10,8 @@ description: Deploy an instance of Conduktor Console and Cortex on AWS via Cloud
 
 This guide will demonstrate how to use our marketplace offering that utilises [AWS CloudFormation](https://aws.amazon.com/cloudformation/) to deploy Console in your AWS environment with all mandatory dependencies. It will deploy Conduktor as a Docker container on an ECS service with Fargate and configure it alongside a PostgreSQL database via RDS.
 
+As we offer different products under the blanket term of "Conduktor" our Marketplace offering only gives you our free `Community Edition` of Conduktor Console. If you are interested in any of our other offerings please look at our [pricing page](https://conduktor.io/pricing).
+
 :::info
 While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
 :::
@@ -26,7 +28,7 @@ This template will create all the resources on a public subnet. However, the DB 
 
 ## Deployment Steps
 
-1. Go to https://aws.amazon.com/marketplace/pp/prodview-xjv65ie5rjtxu.
+1. Go to https://aws.amazon.com/marketplace/pp/prodview-xjv65ie5rjtxu
 
 2. Select `View purchase options`.
 
