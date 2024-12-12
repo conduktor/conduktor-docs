@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: Configuration Properties & Environment Variables
 description: Conduktor Console input configuration fields can be provided using environment variables.
 ---
@@ -210,15 +210,17 @@ If you need more than what the free plan offers, you can [contact us](https://ww
 
 See database configuration [documentation](../database) for more info.
 
-| Property                      | Description                                                                                                                            | Environment Variable             | Mandatory | Type   | Default |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
-| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_DATABASE_URL`               | false     | string | ∅       |
-| `database.host`               | External PostgreSQL server hostname                                                                                                    | `CDK_DATABASE_HOST`              | false     | string | ∅       |
-| `database.port`               | External PostgreSQL server port                                                                                                        | `CDK_DATABASE_PORT`              | false     | int    | ∅       |
-| `database.name`               | External PostgreSQL database name                                                                                                      | `CDK_DATABASE_NAME`              | false     | string | ∅       |
-| `database.username`           | External PostgreSQL login role                                                                                                         | `CDK_DATABASE_USERNAME`          | false     | string | ∅       |
-| `database.password`           | External PostgreSQL login password                                                                                                     | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
-| `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                      | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
+| Property                      | Description                                                                                                                                 | Environment Variable             | Mandatory | Type   | Default |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
+| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_DATABASE_URL`               | false     | string | ∅       |
+| `database.hosts[].host`       | External PostgreSQL servers hostname                                                                                                        | `CDK_DATABASE_HOSTS_0_HOST`      | false     | string | ∅       |
+| `database.hosts[].port`       | External PostgreSQL servers port                                                                                                            | `CDK_DATABASE_HOSTS_0_PORT`      | false     | int    | ∅       |
+| `database.host`               | External PostgreSQL server hostname (Deprecated, use `database.hosts` instead)                                                              | `CDK_DATABASE_HOST`              | false     | string | ∅       |
+| `database.port`               | External PostgreSQL server port (Deprecated, use `database.hosts` instead)                                                                  | `CDK_DATABASE_PORT`              | false     | int    | ∅       |
+| `database.name`               | External PostgreSQL database name                                                                                                           | `CDK_DATABASE_NAME`              | false     | string | ∅       |
+| `database.username`           | External PostgreSQL login role                                                                                                              | `CDK_DATABASE_USERNAME`          | false     | string | ∅       |
+| `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
+| `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
 ### Session Lifetime Properties
 
@@ -487,19 +489,21 @@ For details on the available exportable events refer to: [Exportable audit log e
 ### Conduktor SQL properties
 
 In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
-You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each values individually `CDK_KAFKASQL_DATABASE_*`.
+You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
 
 | Property                                             | Description                                                                                                                           | Environment Variable                               | Mandatory | Type   | Default        |
 |------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|--------|----------------|
-| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅              |
-| `kafka_sql.database.host`                            | External PostgreSQL server hostname                                                                                                   | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅              |
-| `kafka_sql.database.port`                            | External PostgreSQL server port                                                                                                       | `CDK_KAFKASQL_DATABASE_PORT`                       | false     | int    | ∅              |
-| `kafka_sql.database.name`                            | External PostgreSQL database name                                                                                                     | `CDK_KAFKASQL_DATABASE_NAME`                       | false     | string | ∅              |
-| `kafka_sql.database.username`                        | External PostgreSQL login role                                                                                                        | `CDK_KAFKASQL_DATABASE_USERNAME`                   | false     | string | ∅              |
-| `kafka_sql.database.password`                        | External PostgreSQL login password                                                                                                    | `CDK_KAFKASQL_DATABASE_PASSWORD`                   | false     | string | ∅              |
-| `kafka_sql.database.connection_timeout`              | External PostgreSQL connection timeout in seconds                                                                                     | `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`          | false     | int    | ∅              |
+| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅               |
+| `kafka_sql.database.hosts[].host`                    | External PostgreSQL servers hostname                                                                                                        | `CDK_KAFKASQL_DATABASE_HOSTS_0_HOST`               | false     | string | ∅               |
+| `kafka_sql.database.hosts[].port`                    | External PostgreSQL servers port                                                                                                            | `CDK_KAFKASQL_DATABASE_HOSTS_0_PORT`               | false     | int    | ∅               |
+| `kafka_sql.database.host`                            | External PostgreSQL server hostname (Deprecated, use `kafka_sql.database.hosts` instead)                                                    | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅               |
+| `kafka_sql.database.port`                            | External PostgreSQL server port (Deprecated, use `kafka_sql.database.hosts` instead)                                                        | `CDK_KAFKASQL_DATABASE_PORT`                       | false     | int    | ∅               |
+| `kafka_sql.database.name`                            | External PostgreSQL database name                                                                                                           | `CDK_KAFKASQL_DATABASE_NAME`                       | false     | string | ∅               |
+| `kafka_sql.database.username`                        | External PostgreSQL login role                                                                                                              | `CDK_KAFKASQL_DATABASE_USERNAME`                   | false     | string | ∅               |
+| `kafka_sql.database.password`                        | External PostgreSQL login password                                                                                                          | `CDK_KAFKASQL_DATABASE_PASSWORD`                   | false     | string | ∅               |
+| `kafka_sql.database.connection_timeout`              | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`          | false     | int    | ∅               |
 
 Advanced properties (typically, these do not need to be altered)
 
@@ -510,4 +514,3 @@ Advanced properties (typically, these do not need to be altered)
 | `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
 | `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                         | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
 | `kafka_sql.refresh_user_permissions_every_in_sec`    | Frequency at which Conduktor SQL refreshes the role permissions in the DB to match the RBAC setup in Console                          | `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`                   | false     | string    | `conduktor-sql`  |
-
