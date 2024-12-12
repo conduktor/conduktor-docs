@@ -11,8 +11,13 @@ tags: features,fix
 **TOC**
 
 ## Breaking Changes 💣
+?
 
-### Feature 1
+### RBAC screen redesign
+
+The RBAC screen displaying resource access has been redesigned to provide a clearer distinction between inherited and user-specific permissions.
+
+![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
 
 ***
 
