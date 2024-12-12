@@ -57,7 +57,7 @@ Note that additional configuration can be made in relation to the indexing proce
 
  - `CDK_KAFKASQL_CONSUMER-GROUP-ID`: Consumer group name for the indexing process (default is `conduktor-sql`)
  - `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`: The interval in which the clean-up process will run to purge data outside the desired [retention period](#index-topics-in-the-ui).
-  - `CDK_KAFKA_SQL_REFRESH-TOPIC-CONFIGURATION-EVERY-IN-SEC`: TO DO 
+  - `CDK_KAFKA_SQL_REFRESH-TOPIC-CONFIGURATION-EVERY-IN-SEC`:  Time interval before taking into account any [`sqlStorage`](#index-topics-in-the-cli) configuration changes on Topic resources
    - `CDK_KAFKASQL_REFRESH-USER-PERMISSIONS-EVERY-IN-SEC`: See [RBAC](#rbac)
 
 
