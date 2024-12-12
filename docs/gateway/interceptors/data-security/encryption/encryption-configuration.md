@@ -261,21 +261,124 @@ Make sure you've followed the right method, and that you've provided the correct
 
 For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).
 
-| key                        | type   | description                                                                   |
-|----------------------------|--------|-------------------------------------------------------------------------------|
-| `uri`                      | String | Vault URI.                                                                    |
-| `version`                  | String | Version.                                                                      |
-| **Token**                  |        |                                                                               |
-| `token`                    | String | Security token.                                                               |
-| **Username & Password**    |        |                                                                               |
-| `username`                 | String | Username.                                                                     |
-| `password`                 | String | Password.                                                                     |
-| **Managed identity**       |        | Load authentication information from the below environment variables.         |
-| `VAULT_ENGINE_VERSION_ENV` |        | Vault KV Secrets Engine version.                                              |
-| `VAULT_URI_ENV`            |        | Vault server base URI.                                                        |
-| `VAULT_TOKEN_ENV`          |        | Token to use for accessing Vault.                                             |
-| `VAULT_USERNAME_ENV`       |        | Username for accessing Vault (used with `VAULT_PASSWORD_ENV` to build Token). |
-| `VAULT_PASSWORD_ENV`       |        | Password for accessing Vault (used with `VAULT_USERNAME_ENV` to build Token). |
+| Key                                | Type   | Description                                                            |
+|------------------------------------|--------|------------------------------------------------------------------------|
+| **Token Authentication**           |        | Use Token Authentication.                                              |
+| `type`                             | String | **Must be `TOKEN`.** Indicates the type of authentication.             |
+| `token`                            | String | Security token for accessing Vault.                                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `TOKEN`.** Indicates the type of authentication.             |
+| `VAULT_TOKEN`                      |        | Token to use for accessing Vault.                                      |
+| **Username & Password**            |        | Use Username & Password Authentication.                                |
+| `type`                             | String | **Must be `USERNAME_PASSWORD`.** Indicates the type of authentication. |
+| `username`                         | String | Username for accessing Vault.                                          |
+| `password`                         | String | Password for accessing Vault.                                          |
+| `userpassAuthMount`                | String | (Optional) Mount path for the userpass auth method.                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `USERNAME_PASSWORD`.** Indicates the type of authentication. |
+| `VAULT_USERNAME`                   |        | Username for accessing Vault.                                          |
+| `VAULT_PASSWORD`                   |        | Password for accessing Vault.                                          |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the userpass auth method.                    |
+| **GitHub Authentication**          |        | Use GitHub Token Authentication.                                       |
+| `type`                             | String | **Must be `GITHUB`.** Indicates the type of authentication.            |
+| `token`                            | String | GitHub personal access token.                                          |
+| `githubAuthMount`                  | String | (Optional) Mount path for the GitHub auth method.                      |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `GITHUB`.** Indicates the type of authentication.            |
+| `VAULT_GITHUB_TOKEN`               |        | GitHub token for accessing Vault.                                      |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the GitHub auth method.                      |
+| **LDAP Authentication**            |        | Use LDAP Authentication.                                               |
+| `type`                             | String | **Must be `LDAP`.** Indicates the type of authentication.              |
+| `username`                         | String | LDAP username.                                                         |
+| `password`                         | String | LDAP password.                                                         |
+| `ldapAuthMount`                    | String | (Optional) Mount path for the LDAP auth method.                        |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `LDAP`.** Indicates the type of authentication.              |
+| `VAULT_LDAP_USERNAME`              |        | LDAP username.                                                         |
+| `VAULT_LDAP_PASSWORD`              |        | LDAP password.                                                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the LDAP auth method.                        |
+| **AppRole Authentication**         |        | Use AppRole Authentication.                                            |
+| `type`                             | String | **Must be `APP_ROLE`.** Indicates the type of authentication.          |
+| `roleId`                           | String | Role ID for AppRole authentication.                                    |
+| `secretId`                         | String | Secret ID for AppRole authentication.                                  |
+| `path`                             | String | (Optional) Mount path for the AppRole auth method.                     |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `APP_ROLE`.** Indicates the type of authentication.          |
+| `VAULT_APP_ROLE_ID`                |        | Role ID for AppRole authentication.                                    |
+| `VAULT_APP_SECRET_ID`              |        | Secret ID for AppRole authentication.                                  |
+| `VAULT_APP_PATH`                   |        | (Optional) Mount path for the AppRole auth method.                     |
+| **Kubernetes Authentication**      |        | Use Kubernetes Authentication.                                         |
+| `type`                             | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
+| `role`                             | String | Kubernetes role.                                                       |
+| `jwt`                              | String | Kubernetes JWT token.                                                  |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
+| `VAULT_KUBERNETES_ROLE`            |        | Kubernetes role.                                                       |
+| `VAULT_KUBERNETES_JWT`             |        | Kubernetes JWT token.                                                  |
+| **GCP Authentication**             |        | Use Google Cloud Platform Authentication.                              |
+| `type`                             | String | **Must be `GCP`.** Indicates the type of authentication.               |
+| `role`                             | String | GCP role for authentication.                                           |
+| `jwt`                              | String | JWT token issued by Google Cloud Platform.                             |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `GCP`.** Indicates the type of authentication.               |
+| `VAULT_GCP_ROLE`                   |        | GCP role for authentication.                                           |
+| `VAULT_GCP_JWT`                    |        | JWT token for accessing Vault.                                         |
+| **AWS EC2 Authentication (PKCS7)** |        | Use AWS EC2 PKCS7 Authentication.                                      |
+| `type`                             | String | **Must be `AWS_EC2_PKCS7`.** Indicates the type of authentication.     |
+| `role`                             | String | AWS role for EC2 authentication.                                       |
+| `pkcs7`                            | String | PKCS7 identity document.                                               |
+| `nonce`                            | String | (Optional) Nonce value for EC2 authentication.                         |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_EC2_PKCS7`.** Indicates the type of authentication.     |
+| `VAULT_AWS_ROLE`                   |        | AWS role for EC2 authentication.                                       |
+| `VAULT_AWS_PKCS7`                  |        | PKCS7 identity document.                                               |
+| `VAULT_AWS_NONCE`                  |        | (Optional) Nonce value for EC2 authentication.                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the AWS EC2 PKCS7 auth method.               |
+| **AWS EC2 Authentication**         |        | Use AWS EC2 Identity Authentication.                                   |
+| `type`                             | String | **Must be `AWS_EC2`.** Indicates the type of authentication.           |
+| `role`                             | String | AWS role for EC2 authentication.                                       |
+| `identity`                         | String | AWS identity document.                                                 |
+| `signature`                        | String | AWS signature for authentication.                                      |
+| `nonce`                            | String | Nonce value for EC2 authentication.                                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_EC2`.** Indicates the type of authentication.           |
+| `VAULT_AWS_ROLE`                   |        | AWS role for EC2 authentication.                                       |
+| `VAULT_AWS_IDENTITY`               |        | AWS identity document.                                                 |
+| `VAULT_AWS_SIGNATURE`              |        | AWS signature for authentication.                                      |
+| `VAULT_AWS_NONCE`                  |        | (Optional) Nonce value for EC2 authentication.                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the AWS EC2 auth method.                     |
+| **AWS IAM Authentication**         |        | Use AWS IAM Authentication.                                            |
+| `type`                             | String | **Must be `AWS_IAM`.** Indicates the type of authentication.           |
+| `role`                             | String | AWS role for IAM authentication.                                       |
+| `iamRequestUrl`                    | String | IAM request URL for authentication.                                    |
+| `iamRequestBody`                   | String | IAM request body for authentication.                                   |
+| `iamRequestHeaders`                | String | IAM request headers for authentication.                                |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_IAM`.** Indicates the type of authentication.           |
+| `VAULT_AWS_ROLE`                   |        | AWS role for IAM authentication.                                       |
+| `VAULT_AWS_IAM_REQUEST_URL`        |        | IAM request URL for authentication.                                    |
+| `VAULT_AWS_IAM_REQUEST_BODY`       |        | IAM request body for authentication.                                   |
+| `VAULT_AWS_IAM_REQUEST_HEADERS`    |        | IAM request headers for authentication.                                |
+| **JWT Authentication**             |        | Use JWT Authentication.                                                |
+| `type`                             | String | **Must be `JWT`.** Indicates the type of authentication.               |
+| `jwt`                              | String | JWT token for authentication.                                          |
+| `provider`                         | String | JWT provider for authentication.                                       |
+| `role`                             | String | JWT role for authentication.                                           |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `JWT`.** Indicates the type of authentication.               |
+| `VAULT_JWT`                        |        | JWT token for authentication.                                          |
+| `VAULT_JWT_PROVIDER`               |        | JWT provider for authentication.                                       |
+
+Example:
+```json
+{
+  "type": "APP_ROLE",
+  "uri": "http://vault.example.com",
+  "version": "1",
+  "roleId": "my-role-id",
+  "secretId": "my-secret-id"
+}
+```
 
 ### Azure KMS
 
