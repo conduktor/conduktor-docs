@@ -199,6 +199,8 @@ If a record contains array, then the cardinality is to high and so we don't flat
         }
     ]
 }
+```
+
 ### Shrinker
 
 As column names are limited in size (63 characters), the field name must sometimes be shrunk. We try to do that intelligently so it is still meaningful for users.
