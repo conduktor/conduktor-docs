@@ -75,7 +75,7 @@ From within the cluster configuration screen, fill the:
 ![Cluster Configuration](assets/kafka-cluster.png)
 
 :::tip
-Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificates Store](../../configuration/ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificates Store](/platform/get-started/configuration/ssl-tls-configuration/#using-the-conduktor-certificate-store).
 :::
 
 #### How to connect to Kafka running on localhost:9092?
@@ -105,7 +105,7 @@ If you have deployed Conduktor on a central server, you can add new users to col
 
 For that, go to the [**Users**](http://localhost:8080/settings/members) screen and select **Create Members** to set the credentials of a new local user.
 
-import AddUsers from './assets/add_users.png';
+import AddUsers from './assets/add-users.png';
 
 <img src={AddUsers} alt="Add users" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -116,7 +116,7 @@ You can configure your [SSO](/platform/category/configure-sso/) using the free C
 ## Advanced Setup
 
 :::warning
-For **production deployments**, please make sure you respect the [production requirements](../hardware.md#production-requirements).
+For **production deployments**, please make sure you respect the [production requirements](/platform/get-started/installation/hardware/#production-requirements).
 :::
 
 ### Step 1: Configure the Console
@@ -150,8 +150,8 @@ The below example shows how to configure Conduktor with the following configurat
 - The local administrator credentials
 - The connection to the Monitoring container called `conduktor-console-cortex`
 
-If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](../../license-management/#into-the-configuration-file).
-You can get the list of all the properties supported [here](../../../configuration/env-variables/).
+If you want, you can add more snippets, like [SSO](/platform/category/configure-sso/) or [license key](/platform/get-started/installation/license-management/#into-the-configuration-file).
+You can get the list of all the properties supported [here](/platform/get-started/configuration/env-variables/).
 
 ```yaml title="console-config.yaml"
 database:         # External database configuration
@@ -273,10 +273,10 @@ After a few minutes, **Conduktor will be available at [http://localhost:8080](ht
 
 You can use the admin email and password to log in.
 
-If using [SSO](/platform/category/user-authentication/), you will see an option to log in via the relevant identity provider.
+If using [SSO](/platform/category/configure-sso/), you will see an option to log in via the relevant identity provider.
 
 
-import LoginScreen from './assets/login_screen.png';
+import LoginScreen from './assets/login-screen.png';
 
 <img src={LoginScreen} alt="Login screen" style={{ width: 300, display: 'block', margin: 'auto' }} />
 

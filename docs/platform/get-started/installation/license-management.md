@@ -57,7 +57,7 @@ License is valid ! Remaining days : 365
 
 You can find your plan details in `Settings` > `Plan`:
 
-![Plan details](assets/plan_details.png)
+![Plan details](assets/plan-details.png)
 
 ## Renew or install a new license
 
