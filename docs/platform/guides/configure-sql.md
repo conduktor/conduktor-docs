@@ -186,7 +186,19 @@ If records with a different shape come later, the table schema will be updated:
 | 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092| NULL           |
 | 123456790   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c18      | conduktor | 1           | something | NULL                 | NULL| Kafka           |
 
+If a record contains array, then the cardinality is to high and so we don't flatten the structure. Instead we create a JSON column containing the array content:
 
+```json
+{
+    "my_array": [
+        {
+            "something": "foo"
+        },
+        {
+            "something_else": "bar"
+        }
+    ]
+}
 ### Shrinker
 
 As column names are limited in size (63 characters), the field name must sometimes be shrunk. We try to do that intelligently so it is still meaningful for users.
