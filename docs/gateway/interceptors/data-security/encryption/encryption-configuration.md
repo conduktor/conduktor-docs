@@ -250,14 +250,11 @@ This section is detailing how to configure the different KMS within your encrypt
 This is for demos only and should not be used on production data.
 :::
 
-Keys in In-Memory KMS are not persisted, this means that if you
+Keys in In-Memory KMS are not persisted, this means that if you do one of the following, you won't be able to decrypt old records, loosing the data.
 
-* use a gateway cluster with more than a single node
-* or restart the Gateway
-* or change the interceptor configuration
-
-you won't be able to decrypt old records anymore.
-
+* Use a gateway cluster with more than a single node
+* Or restart the Gateway
+* Or change the interceptor configuration
 
 ### Vault KMS
 
