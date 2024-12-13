@@ -225,7 +225,6 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_LICENSE_TOPIC`                | `_conduktor_gateway_license`                | Name of license topic                                                     |
 | `GATEWAY_TOPIC_MAPPINGS_TOPIC`         | `_conduktor_gateway_topicmappings`          | Name of topicMappings topic                                               |
 | `GATEWAY_USER_MAPPINGS_TOPIC`          | `_conduktor_gateway_usermappings`           | Name of the user mapping topic                                            |
-| `GATEWAY_CONSUMER_SUBSCRIPTIONS_TOPIC` | `_conduktor_gateway_consumer_subscriptions` | Name of the subscriptions for concentrated topic consumption topic        |
 | `GATEWAY_CONSUMER_OFFSETS_TOPIC`       | `_conduktor_gateway_consumer_offsets`       | Name of the topic to store the offsets for concentrated topic consumption |
 | `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC`    | `_conduktor_gateway_interceptor_configs`    | Name of interceptor config topic                                          |
 | `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`     | `_conduktor_gateway_encryption_configs`     | Name of encryption configuration topic                                    |
