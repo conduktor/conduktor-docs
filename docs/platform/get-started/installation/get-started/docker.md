@@ -193,7 +193,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
 
   conduktor-console:
-    image: conduktor/conduktor-console:1.29.1
+    image: conduktor/conduktor-console:1.30.0
     depends_on:
       - postgresql
     ports:
@@ -207,7 +207,7 @@ services:
       CDK_IN_CONF_FILE: /opt/conduktor/console-config.yaml
 
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.29.1
+    image: conduktor/conduktor-console-cortex:1.30.1
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080" # Connection to the Console container
 ```
