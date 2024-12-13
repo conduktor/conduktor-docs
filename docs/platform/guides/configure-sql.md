@@ -4,7 +4,7 @@ title: Configure SQL
 description: How to configure Conduktor SQL
 ---
 
-## Configure Conduktor SQL
+## Overview
 
 :::info
 This feature is in **Beta** and is subject to change as we enhance it further. 
@@ -56,7 +56,9 @@ Alternatively, set each value explicitly:
 Note that additional configuration can be made in relation to the indexing process:
 
  - `CDK_KAFKASQL_CONSUMER-GROUP-ID`: Consumer group name for the indexing process (default is `conduktor-sql`)
- - `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`: The interval in which the clean-up process will run to purge data outside the desired [retention period](#index-topics-in-the-ui).
+ - `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`: The interval in which the clean-up process will run to purge data outside the desired [retention period](#index-topics-in-the-ui)
+  - `CDK_KAFKA_SQL_REFRESH-TOPIC-CONFIGURATION-EVERY-IN-SEC`:  Time interval before taking into account any [`sqlStorage`](#index-topics-in-the-cli) configuration changes on Topic resources
+   - `CDK_KAFKASQL_REFRESH-USER-PERMISSIONS-EVERY-IN-SEC`: See [RBAC](#rbac)
 
 
 ## Index Topics for Querying
@@ -64,6 +66,8 @@ Note that additional configuration can be made in relation to the indexing proce
 ### Index Topics in the UI
 
 To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#configure-conduktor-sql) the SQL database as a dependency.
+
+Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic. 
 
 When selecting a topic for indexing, you will be asked to configure the:
 
@@ -91,17 +95,24 @@ The process gives insight into the:
 Alternatively, you can index a topic through the conduktor [CLI](../reference/cli-reference.md):
 
 ```yaml
-apiVersion: "v1"
-kind: "IndexedTopic"
+---
+apiVersion: kafka/v2
+kind: Topic
 metadata:
-  name: "customers"
-  cluster: "kafka-cluster-dev"
+  cluster: kafka-cluster-dev
+  name: customers
+  sqlStorage:
+    retentionTimeInSecond: 86400 # 1 day of retention
+    enabled: true
 spec:
-  retentionTimeInSecond: "86400" # 1 day of retention
+  replicationFactor: 1
+  partitions: 1
+  configs:
+    cleanup.policy: delete
 ```
 
 ```bash
-conduktor apply -f index-topics.yml
+conduktor apply -f topics.yml
 ```
 
 Upon execution, the console backend will index messages from the (current time) - (retention time), and subsequently start listening for new records.
@@ -138,6 +149,10 @@ The table will contain special column types, each of those columns is indexed:
 * `__timestamp`
 * `__partition`
 * `__offset`
+* `__checksum`: the checksum of the tuple (message(s) key, message(s) value)
+* `__headers`: the message(s) headers
+* `__schema_id`: the schema id
+* `__key`: the message(s) key
 
 
 The content of each record is flattened. Given the following record:
@@ -154,10 +169,9 @@ The content of each record is flattened. Given the following record:
 ```
 
 Then, you'll have the following table structure:
-
-| __timestamp | __partition | __offset | a.b.c                       | userId |
-|-------------|-------------|----------|-----------------------------|-------------|
-| 123456789   | 0           | 42       | Hello World                 | 109210921092|
+| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId |
+|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|
+| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092|
 
 
 If records with a different shape come later, the table schema will be updated:
@@ -167,10 +181,25 @@ If records with a different shape come later, the table schema will be updated:
 }
 ```
 
-| __timestamp | __partition | __offset | a.b.c                       | userId | newField |
-|-------------|-------------|----------|-----------------------------|-------------|----------------|
-| 123456789   | 0           | 42       | Hello World                 | 109210921092     | NULL           |
-| 123456790   | 0           | 43       | NULL                        | NULL        | Kafka           |
+| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId | newField |
+|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|----------------|
+| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092| NULL           |
+| 123456790   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c18      | conduktor | 1           | something | NULL                 | NULL| Kafka           |
+
+If a record contains array, then the cardinality is to high and so we don't flatten the structure. Instead we create a JSON column containing the array content:
+
+```json
+{
+    "my_array": [
+        {
+            "something": "foo"
+        },
+        {
+            "something_else": "bar"
+        }
+    ]
+}
+```
 
 ### Shrinker
 
@@ -207,6 +236,40 @@ Despite these measures, it's crucial to isolate the Kafka indexing database from
  - **Resource Contention**: Prevents the Kafka indexing process or a user's arbitrary request from consuming excessive resources and impacting the overall system performance
  - **Data Breach Mitigation**: Limits the potential damage in case of a security breach in the SQL endpoint protection (not totally foolproof).
 
+## SQL security
+
+Conduktor's RBAC model & data masking capabilities are applicable when using SQL.
+
+### RBAC
+
+The Console RBAC model is integrated with the PostgreSQL database using PostgreSQL's built-in ROLE feature.
+
+There are two distinct processes involved:
+
+1. **Initial Role Creation:** When a user executes an SQL query on the Console for the first time, the system checks if the corresponding user ROLE exists in the PostgreSQL database. If it does not, the RBAC system is consulted to determine the topics for which the user has the `kafka.topics.read` permission. The user's ROLE is then created in PostgreSQL, and read access to the relevant topic tables is granted.
+
+2. **Periodic Role Updates:** A background process in the Console periodically updates the access rights for each user ROLE to ensure they remain aligned with the RBAC permissions. The job is run every 30 seconds by default and can be customized by setting env variable `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`.
+
+### Data masking
+
+Data masking policies are implemented similarly to RBAC. By default, access is granted to all columns in a table. However, if a data masking policy applies to a specific column for a given user, access to that column is denied.
+
+There are some limitations:
+- Instead of applying the masking policy as defined in the Console, access to the entire column is restricted for simplicity.
+- For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead.
+- If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error.
+
+
+### UI Experience
+
+The user will only see the table(s) and field(s) they have access to on the UI:
+
+![SQL metadata description](img/sql-ui-security.png)
+
+If a user tries to access a table for which they lack the necessary rights, they will receive an 'access denied' error:
+
+![access denied error](img/sql-exec-access-denied.png)
+
 
 ## Known Limitations
 
@@ -215,7 +278,6 @@ There are several known limitations regarding the current beta experience.
 Those are:
 
 - Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
-- Byte, Array and Boolean data types are not currently parsed, they will be added in the next version
 - If for any reason a record can't be parsed, they are ignored and the consumer continues
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
 - If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
