@@ -330,6 +330,16 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 | `sso.oauth2[].preferred-jws-algorithm`  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
 | `sso.oauth2-logout`                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
 
+
+#### JWT auth properties
+
+| Property                      | Description                                   | Environment Variable            | Mandatory | Type   | Default  |
+|-------------------------------|-----------------------------------------------|---------------------------------|-----------|--------|----------|
+| `sso.jwt-auth.issuer`         | Issuer of your identity provider              | `CDK_SSO_JWTAUTH_ISSUER`        | true      | string | ∅        |
+| `sso.jwt-auth.username-claim` | Email attribute from your identity provider   | `CDK_SSO_JWTAUTH_USERNAMECLAIM` | false     | string | `email`  |
+| `sso.jwt-auth.groups-claim`   | Group attribute from your identity provider   | `CDK_SSO_JWTAUTH_GROUPSCLAIM`   | false     | string | `groups` |
+| `sso.jwt-auth.api-key-claim`  | API key attribute from your identity provider | `CDK_SSO_JWTAUTH_APIKEYCLAIM`   | false     | string | `apikey` |
+
 ### Kafka clusters properties
 
 :::caution

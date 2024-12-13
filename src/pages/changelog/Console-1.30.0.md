@@ -25,6 +25,13 @@ The RBAC screen displaying resource access has been redesigned to provide a clea
 
 ## Features ✨
 
+### Delegating authentication to an identity provider
+Console can now be configured to accept a JWT token from an external identity provider.
+It allows you to directly use your identity provider for managing access to Console.
+A common use case of this feature is to delegate authentication to your API gateway.
+
+For the full configuration details, check out the [documentation](/platform/get-started/configuration/user-authentication/jwt-auth).
+
 ### More Audit Log CloudEvents into Kafka
 
 We have made more events available for the Audit Log Publisher:
