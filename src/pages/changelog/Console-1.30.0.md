@@ -8,22 +8,28 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-**TOC**
+- [Breaking Changes 💣](#breaking-changes-)
+  - [RBAC screen redesign](#rbac-screen-redesign)
+- [Depreciation notice 🚨](#depreciation-notice-)
+  - [Single-host database configuration](#single-host-database-configuration)
+- [Quality of Life improvements](#quality-of-life-improvements)
+- [Features ✨](#features-)
+  - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
+  - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
+  - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
+  - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
+- [Fixes 🔨](#fixes-)
 
 ## Breaking Changes 💣
 ?
-
-### RBAC screen redesign
-
-The RBAC screen displaying resource access has been redesigned to provide a clearer distinction between inherited and user-specific permissions.
-
-![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
 
 ## Depreciation notice 🚨
 
 ### Single-host database configuration
 
-Because of the new multi-host database configuration, the single-host configuration is now deprecated.
+As part of bringing [high availability(HA) support for Console's backing database](#add-support-for-multi-hosts-database-configuration), the single-host configuration is now deprecated in favour of multi-host support.
+
+Whilst single-host is still supported for now, please update your configuration as mapped below for continued support in the future.
 
 Replacements :
 - `database.host` -> `database.hosts[0].host`
@@ -31,11 +37,14 @@ Replacements :
 - `kafka_sql.database.host` -> `kafka_sql.hosts[0].host`
 - `kafka_sql.database.port` -> `kafka_sql.hosts[0].port`
 
-***
-
-## Quality of Life improvements
 
 ## Features ✨
+
+### RBAC screen redesign
+
+The RBAC screen displaying resource access has been redesigned to provide a clearer distinction between inherited and user-specific permissions.
+
+![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
 
 ### Delegating authentication to an identity provider
 Console can now be configured to accept a JWT token from an external identity provider.
@@ -59,9 +68,9 @@ We have made more events available for the Audit Log Publisher:
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
-### Add support of multi-hosts database configuration
+### Add support for multi-hosts database configuration
 
-If you have a PostgreSQL HA setup with multiple hosts, you can now configure Console to [JDBC connection](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) to the database using a list of hosts.
+You can now setup Console's backing database for high availability(HA). If you have a PostgreSQL HA setup with multiple hosts, you can now configure a Console to [JDBC connection](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) to the database using a list of hosts.
 
 ```yaml
 database:
@@ -79,15 +88,11 @@ kafka_sql:
 ```
 For more information, check out the [Multi-host configuration](/platform/get-started/configuration/database/#multi-host-configuration) section in the Database configuration documentation.
 
-***
-
 ### Conduktor Chargeback: Data Export
 
 The tabular data you can see on the Chargeback page can now be exported into a CSV file to enable easier integration with existing organization cost management data.
 
 For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
-
-***
 
 ## Fixes 🔨
 - Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
