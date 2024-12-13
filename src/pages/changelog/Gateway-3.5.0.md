@@ -74,7 +74,7 @@ The key change here is that if your licence does expire, Gateway will not exit a
 ## Quality of Life
 - Support for Kafka Clients up to 3.9
 - Improved compatibility and logging for dealing with kafka-client versions and version negotiations
-- Added support for Approle authentication against Vault
+- Added support for multiple authentication mechanisms against Vault (AppRole, LDAP, ...)
 - Introduced a new configuration `enableAuditLogOnError` (default: `true`) which enhances the errors which are logged when encryption/decryption fails
 - Improved error logging for expired tokens on authentication, to replace large stack traces with concise information
 - Performance improvements for TLS handshakes, in particular to prevent repeated failed attempts overloading the gateway
