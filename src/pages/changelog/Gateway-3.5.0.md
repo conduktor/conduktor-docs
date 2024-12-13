@@ -83,10 +83,10 @@ The key change here is that if your licence does expire, Gateway will not exit a
 
 
 ## General fixes 🔨
-- Fixed a bug in ACL handling which caused an error if no topics were passed for an offset fetch request (being the case where the caller wants to retrieve offsets for all topics). 
-- Fixed a bug in Virtual Clusters which in some cases meant the ACLs for the physical Kafka clusters where exposed in error.
-- Fixed a bug in the regular expression application in the data quality and SQL plugins, where `.*` would not always match the entire value for a field
-- Fix a bug when creating both a service account and a service account group through the cli to ensure the order of operations is always correct, preventing intermittent failures in this case.
+- Fixed an issue in ACL handling which caused an error if no topics were passed for an offset fetch request (being the case where the caller wants to retrieve offsets for all topics). 
+- Fixed an issue in Virtual Clusters which in some cases meant the ACLs for the physical Kafka clusters where exposed in error.
+- Fixed an issue in the regular expression application in the data quality and SQL plugins, where `.*` would not always match the entire value for a field
+- Fix an issue when creating both a service account and a service account group through the cli to ensure the order of operations is always correct, preventing intermittent failures in this case.
 
 
 ## Known issues
