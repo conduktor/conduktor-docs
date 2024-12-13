@@ -33,7 +33,7 @@ The previous behaviour of Gateway can be configured by simply adding this to you
 
 `GATEWAY_SNI_HOST_SEPARATOR=.`
 
-For more information on SNI routing, see [its documentation](/gateway/how-to/sni-routing.md).
+For more information on SNI routing, see [its documentation](/gateway/how-to/sni-routing).
 
 ## Use of In-memory KMS for Encryption  
 Gateway has always supported the use of an in memory KMS for encryption in order to provide an easy-to-use setting for testing and developing your encryption config. This mode is not however meant for production use as the state of the KMS is lost when Gateway restarts, rendering any data encrypted with it unrecoverable.
@@ -46,7 +46,7 @@ From this release, you must now explicitly opt-in to the in-memory mode for encr
 
 If this, or any other valid KMS identifier, is not present the encryption plugin will now fail. This change is a precaution to prevent accidental misconfigurations resulting in the use of in memory mode and subsequent data loss.
 
-See [the encryption configuration docs](/gateway/interceptors/data-security/encryption/encryption-configuration.md) for more information.
+See [the encryption configuration docs](/gateway/interceptors/data-security/encryption/encryption-configuration) for more information.
 
 ## Licence Expiry
 
