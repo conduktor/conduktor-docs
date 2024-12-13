@@ -50,7 +50,7 @@ See [the encryption configuration docs](/gateway/interceptors/data-security/encr
 
 ## Licence Expiry
 
-We have altered the behaviour of the Gateway when your licence expires to provide a more friendly experience. The behaviour is now as below:
+We have altered the behaviour of the Gateway when your licence expires to provide a better experience. The behaviour is now as below:
 
 * We have added new metric `gateway.license.remaining_days` which you can monitor to track the time left on your licence
 * If the Gateway is currently running, do not automatically exit on license expiry. Rather, Gateway will now log a warning every hour that your licence is expired:
@@ -73,20 +73,20 @@ The key change here is that if your licence does expire, Gateway will not exit a
 
 ## Quality of Life
 - Support for Kafka Clients up to 3.9
-- The encryption plugin now requires explicit opt-in for its in memory KMS mode, to safeguard against production misconfigurations 
-- The default SNI host separator is now a dash `-`, to avoid issues with wild card certificates.
-  - Breaking change
-- Enforce that the username and the token matches in calls to the Gateway when local service accounts are used.
-  - Breaking change
+- Improved compatibility and logging for dealing with kafka-client versions and version negotiations
 - Added support for Approle authentication against Vault
 - Introduced a new configuration `enableAuditLogOnError` (default: `true`) which enhances the errors which are logged when encryption/decryption fails
+- Improved error logging for expired tokens on authentication, to replace large stack traces with concise information
+- Performance improvements for TLS handshakes, in particular to prevent repeated failed attempts overloading the gateway
+- Several improvements to data quality and encryption config validation to provide better error reporting and feedback in the case of problems
 
 
 
 ## General fixes 🔨
 - Fixed a bug in ACL handling which caused an error if no topics were passed for an offset fetch request (being the case where the caller wants to retrieve offsets for all topics). 
 - Fixed a bug in Virtual Clusters which in some cases meant the ACLs for the physical Kafka clusters where exposed in error.
-- Changed the behaviour when your licence expires, such that the Gateway will now warn in its logs but not shutdown.
+- Fixed a bug in the regular expression application in the data quality and SQL plugins, where `.*` would not always match the entire value for a field
+- Fix a bug when creating both a service account and a service account group through the cli to ensure the order of operations is always correct, preventing intermittent failures in this case.
 
 
 ## Known issues
