@@ -137,3 +137,5 @@ database:
 ```
 
 Nearly all `targetServerType` are supported: `any`, `primary`, `master`, `slave`, `secondary`, `preferSlave`, `preferSecondary` and `preferPrimary`. `loadBalanceHosts` is not currently supported.
+
+For Postgresql HA configuration it's best to discuss with your architect, one example is using [Bitnami's postgresql-ha chart](https://github.com/bitnami/charts/blob/main/bitnami/postgresql-ha/README.md#differences-between-the-postgresql-ha-and-postgresql-helm-charts).
