@@ -46,7 +46,9 @@ A full list of all the exported audit log event types is published on the [Audit
 
 The tabular data you can see on the Chargeback page can now be exported into a CSV file to enable easier integration with existing organization cost management data.
 
-For more detailed information, check out the Exporting chargeback data section in the Chargeback documentation.
+For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
+
+***
 
 ## Fixes 🔨
 - Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
