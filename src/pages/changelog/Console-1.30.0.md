@@ -94,5 +94,7 @@ The tabular data you can see on the Chargeback page can now be exported into a C
 
 For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
 
+![A screenshot of the Chargeback section in the console, showing a graph and a data table with cost and usage metrics over time. The 'Export all' button is highlighted in the top right corner of the graph.](/images/changelog/platform/v30/chargeback-data-export.png)
+
 ## Fixes 🔨
 - Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
