@@ -46,6 +46,14 @@ The RBAC screen displaying resource access has been redesigned to provide a clea
 
 ![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
 
+### Alert list redesign
+Alert lists across the product now provide a more intuitive overview of alert configurations and statuses:
+
+- Query names are now more human readable, we've replaced the Prometheus query column with a friendly metric name & the condition under which it will fire
+- Fnd firing alerts easier and those that have never been triggered with the addition of a "Last Triggered Time" column
+
+![New alert list](/images/changelog/platform/v30/new-alert-list.png)
+
 ### Delegating authentication to an identity provider
 Console can now be configured to accept a JWT token from an external identity provider.
 It allows you to directly use your identity provider for managing access to Console.
