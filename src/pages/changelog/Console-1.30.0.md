@@ -19,6 +19,18 @@ The RBAC screen displaying resource access has been redesigned to provide a clea
 
 ![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
 
+## Depreciation notice 🚨
+
+### Single-host database configuration
+
+Because of the new multi-host database configuration, the single-host configuration is now deprecated.
+
+Replacements :
+- `database.host` -> `database.hosts[0].host`
+- `database.port` -> `database.hosts[0].port`
+- `kafka_sql.database.host` -> `kafka_sql.hosts[0].host`
+- `kafka_sql.database.port` -> `kafka_sql.hosts[0].port`
+
 ***
 
 ## Quality of Life improvements
@@ -46,6 +58,26 @@ We have made more events available for the Audit Log Publisher:
 - Kafka.Connector.AutoRestartStop
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
+
+### Add support of multi-hosts database configuration
+
+If you have a PostgreSQL HA setup with multiple hosts, you can now configure Console to [JDBC connection](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) to the database using a list of hosts.
+
+```yaml
+database:
+  url: 'jdbc:postgresql://user:password@host1:5432,host2:5433/console_database'
+  
+kafka_sql:
+  hosts:
+  - host: 'host1'
+    port: 5432
+  - host: 'host2'
+    port: 5432
+  name: 'kafka_sql_database'
+  username: 'user'
+  password: 'password'
+```
+For more information, check out the [Multi-host configuration](/platform/get-started/configuration/database/#multi-host-configuration) section in the Database configuration documentation.
 
 ***
 
