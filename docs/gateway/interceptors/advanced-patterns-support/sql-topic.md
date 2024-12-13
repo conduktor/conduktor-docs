@@ -29,6 +29,9 @@ This supports for FetchResponse only: i.e., resulting topic is read-only.
 
 `SELECT [list of fields] FROM [topic name] WHERE [field filter criteria]`
 
+**Please Note**: Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
+
+`SELECT * FROM "our-orders" WHERE ...`
 
 Currently
 
