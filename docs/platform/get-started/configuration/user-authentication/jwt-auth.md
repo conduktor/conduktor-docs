@@ -8,15 +8,15 @@ description: Configure Conduktor Console to accept JWT tokens from your identity
 
 Console has the ability to delegate authentication to an external identity provider. 
 
-A common use case is to protect Console by putting an API gateway between Console and its clients. The authentication flow of the client is performed by the gateway and the token from the identity provider is sent directly to Console.
+A common use case is to protect Console by putting an API gateway between Console and its clients. The authentication flow of the client is performed by the API gateway and the token from the identity provider is sent directly to Console.
 In this case, no authentication is performed by Console. It only checks that the token is valid and issued by the trusted identity provider.
 
-![](../assets/jwt-auth-api-gateway.png)
+![architecture diagram API auth](../assets/jwt-auth-api-gateway.png)
 
 When enabling the delegated authentication mode, tokens issued directly by Console are still accepted.
 
 ## Prerequisites
-In order to validate a token, Console will retrieve the issuer configuration and public keys. The issuer must expose an OIDC discovery endpoint (`.well-know/openid-configuration`) to provide this information.
+In order to validate a token, Console will retrieve the issuer configuration and public keys. The issuer must expose an OIDC discovery endpoint, such as `.well-know/openid-configuration`, to provide this information.
 
 The token of the identity provider must contain claims with either an API key or an email. These claims allow Console to map the token to a user or an API key and apply its permissions. 
 
@@ -48,7 +48,7 @@ If you already have a token from your identity provider, you can configure the C
 ```shell
 # Bearer token (issued by the identity provider)
 export CDK_AUTH_MODE="external"
-export CDK_API_KEY=<token>
+export CDK_API_KEY=<bearer token>
 ```
 
 If you use an API gateway in front of Console, you can also send the client ID and secret as Basic auth in the Authentication header, as following:
