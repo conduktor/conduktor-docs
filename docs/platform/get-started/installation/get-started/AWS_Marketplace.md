@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
-title: AWS Marketplace - CloudFormation
-description: Deploy an instance of Conduktor Console and Cortex on AWS via CloudFormation.
+title: AWS Marketplace
+description: Deploy Conduktor Console on AWS via CloudFormation.
 ---
 
 # Deployment on AWS Marketplace
@@ -46,25 +46,26 @@ This template will create all the resources on a public subnet. However, the DB 
 
     ![AWS Marketplace](./assets/aws-marketplace-4.png)
 
-6. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region. We also offer the raw CloudFormation template that you can download and deploy manually.
+6. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually.<br>Select `Quick launch CloudFormation template`.
 
     ![AWS Marketplace](./assets/aws-marketplace-5.png)
 
+7. This will open you up to the CloudFormation page with the template pre-filled. Press `Next`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-6.png)
+
+8. You will then be givem the option to change the stack name and review the parameters. Once you are happy with the parameters, press `Next`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-7.png)
+
+9. Configure your stack options and achknowledge the tick box. Press `Next`.
+
+    ![AWS Marketplace](./assets/aws-marketplace-8.png)
 
 
-1. Go to `https://<region>.console.aws.amazon.com/cloudformation`.
 
-2. Click on "Create stack" button and choose the "With new resources" option.
 
-    ![Alt Cloudformation](assets/cloudformation-guide-1.png)
-
-3. Choose the following options.
-
-    ![Alt Cloudformation](assets/cloudformation-guide-2.png)
-
-4. Click "next".
-
-5. Give your stack a name and define/ review the parameters.
+8.  Give your stack a name and define/ review the parameters.
 
     - If you have chosen the [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml), then you will have to supply the following values before you can continue.
 
@@ -88,27 +89,27 @@ This template will create all the resources on a public subnet. However, the DB 
 
     ![Alt Config](assets/cloudformation-guide-4.png)
 
-6. Click "next".
+9.  Click "next".
 
-7. Acknowledge the tick box. *This will ensure we have the right permissions to access our ECS instance!*
+10. Acknowledge the tick box. *This will ensure we have the right permissions to access our ECS instance!*
 
     ![Alt Tickbox](assets/cloudformation-guide-5.png)
 
-8. Click "submit".
+11. Click "submit".
 
-9. Wait for all resources to be created. *This may take some time!*
+12. Wait for all resources to be created. *This may take some time!*
 
-10. From the "Resources" tab, click on `conduktor-ecs` then navigate to your newly created **Service** and then **Task**.  
+13. From the "Resources" tab, click on `conduktor-ecs` then navigate to your newly created **Service** and then **Task**.  
 
     ![Alt Cluster](assets/cloudformation-guide-6.png)
     ![Alt Service](assets/cloudformation-guide-7.png)
     ![Alt Task](assets/cloudformation-guide-8.png)
 
-11. Find the `conduktor-console` Container and navigate to the **Network bindings** tab.
+14. Find the `conduktor-console` Container and navigate to the **Network bindings** tab.
 
     ![AWS Guide Breadcrumb](assets/aws-guide-8.png)
 
-12. Click on the **External** link to open the Console application.
+15. Click on the **External** link to open the Console application.
 
     ![AWS Guide Network Bindings](assets/aws-guide-9.png)
 
