@@ -31,7 +31,7 @@ This new update brings full RBAC support on Conduktor SQL:
 
 You can now bring SQL to all users within your organization.  
 
-For more detailed information, check out the [SQL security](/platform/guides/configure-sql.md#sql-security) section.
+For more detailed information, check out the [SQL security](/platform/guides/configure-sql#sql-security) section.
 
 ### Add support for multi-hosts database configuration
 
