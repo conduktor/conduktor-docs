@@ -180,7 +180,7 @@ A full list of all the exported audit log event types is published on the [Audit
 ### Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect
 We've expanded the scope of our Terraform provider, you can now create additional resources: Kafka cluster with schema registry, and Kafka connect clusters using Terraform. With this version also comes some additional small fixes as requested by the community, see the dedicated [provider releases page](https://github.com/conduktor/terraform-provider-conduktor/releases) for the full list.
 
-All [examples](https://github.com/conduktor/terraform-provider-conduktor/blob/main/docs/resources/kafka_cluster_v2.md) are available in our provider repo such as the below snippet for a Confluent Kafka cluster and schema registry (with mTLS) definition.
+All [examples](https://github.com/conduktor/terraform-provider-conduktor/blob/main/docs/resources/console_kafka_cluster_v2.md) are available in our provider repo such as the below snippet for a Confluent Kafka cluster and schema registry (with mTLS) definition.
 
 ```hcl
 resource "conduktor_kafka_cluster_v2" "confluent" {
