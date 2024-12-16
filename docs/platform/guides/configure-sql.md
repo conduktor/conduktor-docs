@@ -7,16 +7,16 @@ description: How to configure Conduktor SQL
 ## Overview
 
 :::info
-This feature is in **Beta** and is subject to change as we enhance it further. 
+This feature is in **Beta** and is subject to change as we enhance it further.
 
 It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 :::
 
-Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**. 
+Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**.
 
 Note this feature enables you to troubleshoot, sample, analyze, aggregate and join data through:
 
-- Querying Kafka message data 
+- Querying Kafka message data
 - Querying Kafka metadata (such as the offset, partition and timestamp)
 
 We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
@@ -26,7 +26,7 @@ We encourage you to use this feature in non-production environments and give us 
 
 ## Console Configuration
 
-For a fully integrated Docker Compose, run our [get started](https://conduktor.io/get-started/) stack to try SQL. The below guide details how to add this feature to your existing deployment. 
+For a fully integrated Docker Compose, run our [get started](https://conduktor.io/get-started/) stack to try SQL. The below guide details how to add this feature to your existing deployment.
 
 ### Database Configuration
 
@@ -35,7 +35,7 @@ By default, the SQL feature is disabled. You will need to add additional configu
 :::warning
 You should provision a second database for storing SQL data that is different from the existing one used by Console's backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
 
-See [database requirements](../get-started/configuration/database.md) and [about database isolation](#database-isolation) for more guidance. 
+See [database requirements](../get-started/configuration/database.md) and [about database isolation](#database-isolation) for more guidance.
 :::
 
 Configure the second database through environment variables:
@@ -67,7 +67,7 @@ Note that additional configuration can be made in relation to the indexing proce
 
 To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#configure-conduktor-sql) the SQL database as a dependency.
 
-Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic. 
+Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic.
 
 When selecting a topic for indexing, you will be asked to configure the:
 
@@ -119,7 +119,7 @@ Upon execution, the console backend will index messages from the (current time) 
 
 ## Querying the data
 
-**Using the UI**  
+**Using the UI**
 Query syntax requires the cluster technical-id is used as a prefix for the table name e.g. for the topic `customers` on the cluster `kafka-cluster-dev`:
 ```sql
 SELECT *
@@ -128,15 +128,10 @@ SELECT *
 See [database storage format](#database-storage-format) for the underlying table structure.
 ![Conduktor SQL](img/conduktor-sql.png)
 
-**Using the API**  
-```bash
-curl \
- --header "Authorization: $token" \
- --request POST 'localhost:8080/api/public/sql/v1/execute?maxLine=2' \
- --data 'select * from "kafka-cluster-dev_customers"'
-```
+**Using the CLI**
 
-**Using the CLI**  
+API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](../reference/cli-reference.md####short-lived-user-api-keys)
+
 ```bash
 conduktor sql 'select * from "kafka-cluster-dev_customers"' -n 2
 ```
@@ -206,7 +201,7 @@ If a record contains array, then the cardinality is to high and so we don't flat
 As column names are limited in size (63 characters), the field name must sometimes be shrunk. We try to do that intelligently so it is still meaningful for users.
 The head characters are removed first:
 
-`my.reaaaally.loooooooooooooooooooooooooooooong.path.to.a.field` 
+`my.reaaaally.loooooooooooooooooooooooooooooong.path.to.a.field`
 
 will give
 
@@ -224,7 +219,7 @@ Relation between a table/column and a topic/field is tracked in special metadata
 
 The Kafka SQL feature, while providing flexibility, introduces potential security risks. By allowing users (only admin) to execute arbitrary SQL commands, there's a chance of unauthorized access or malicious activities.
 
-To mitigate these risks, we've implemented several security measures. 
+To mitigate these risks, we've implemented several security measures.
 
  - **Read-Only Connections**: While not foolproof, enforcing read-only connections limits the potential for data modification
  - **SQL query pre-parsing and sanitizing**:
@@ -273,7 +268,7 @@ If a user tries to access a table for which they lack the necessary rights, they
 
 ## Known Limitations
 
-There are several known limitations regarding the current beta experience. 
+There are several known limitations regarding the current beta experience.
 
 Those are:
 

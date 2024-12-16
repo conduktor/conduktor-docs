@@ -18,6 +18,7 @@ tags: features,fix
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
+  - [RBAC security](#rbac-security)
 - [Fixes 🔨](#fixes-)
 
 ## Breaking Changes 💣
@@ -83,7 +84,7 @@ You can now setup Console's backing database for high availability(HA). If you h
 ```yaml
 database:
   url: 'jdbc:postgresql://user:password@host1:5432,host2:5433/console_database'
-  
+
 kafka_sql:
   hosts:
   - host: 'host1'
@@ -103,6 +104,12 @@ The tabular data you can see on the Chargeback page can now be exported into a C
 For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
 
 ![A screenshot of the Chargeback section in the console, showing a graph and a data table with cost and usage metrics over time. The 'Export all' button is highlighted in the top right corner of the graph.](/images/changelog/platform/v30/chargeback-data-export.png)
+
+### SQL security
+
+RBAC & data masking policies are now project into SQL database. In consequence every user of the platform can now use Console SQL.
+
+For more detailed information, check out the [SQL security](/platform/guides/configure-sql.md##sql-security) section.
 
 ## Fixes 🔨
 - Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
