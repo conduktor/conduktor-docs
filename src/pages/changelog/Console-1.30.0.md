@@ -8,9 +8,6 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking Changes 💣](#breaking-changes-)
-- [Depreciation notice 🚨](#depreciation-notice-)
-  - [Single-host database configuration](#single-host-database-configuration)
 - [Features ✨](#features-)
   - [RBAC screen redesign](#rbac-screen-redesign)
   - [Alert list redesign](#alert-list-redesign)
@@ -20,23 +17,6 @@ tags: features,fix
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
   - [Secure SQL Search](#secure-sql-search)
 - [Fixes 🔨](#fixes-)
-
-## Breaking Changes 💣
-?
-
-## Depreciation notice 🚨
-
-### Single-host database configuration
-
-As part of bringing [high availability(HA) support for Console's backing database](#add-support-for-multi-hosts-database-configuration), the single-host configuration is now deprecated in favour of multi-host support.
-
-Whilst single-host is still supported for now, please update your configuration as mapped below for continued support in the future.
-
-Replacements :
-- `database.host` -> `database.hosts[0].host`
-- `database.port` -> `database.hosts[0].port`
-- `kafka_sql.database.host` -> `kafka_sql.hosts[0].host`
-- `kafka_sql.database.port` -> `kafka_sql.hosts[0].port`
 
 
 ## Features ✨
@@ -83,18 +63,8 @@ A full list of all the exported audit log event types is published on the [Audit
 You can now setup Console's backing database for high availability(HA). If you have a PostgreSQL HA setup with multiple hosts, you can now configure a Console to [JDBC connection](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) to the database using a list of hosts.
 
 ```yaml
-database:
-  url: 'jdbc:postgresql://user:password@host1:5432,host2:5433/console_database'
-
-kafka_sql:
-  hosts:
-  - host: 'host1'
-    port: 5432
-  - host: 'host2'
-    port: 5432
-  name: 'kafka_sql_database'
-  username: 'user'
-  password: 'password'
+CDK_DATABASE_URL: jdbc:postgresql://user:password@host1:5432,host2:5433/console_database
+CDK_KAFKASQL_DATABASE_URL: jdbc:postgresql://user:password@host1:5432,host2:5433/kafka_sql_database
 ```
 For more information, check out the [Multi-host configuration](/platform/get-started/configuration/database/#multi-host-configuration) section in the Database configuration documentation.
 
