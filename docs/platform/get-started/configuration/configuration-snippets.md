@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 title: Configuration Snippets
 description: This demonstrates a complete configuration for Conduktor Enterprise consisting of two Kafka clusters with Schema Registry, SSO and license key.
 ---
@@ -54,8 +54,9 @@ organization:
   name: "conduktor"
 
 database:
-  host: 'postgresql'
-  port: 5432
+  hosts: 
+   - host: 'postgresql'
+     port: 5432
   name: 'conduktor'
   username: 'conduktor'
   password: 'change_me'
