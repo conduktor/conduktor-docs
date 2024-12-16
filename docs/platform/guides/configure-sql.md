@@ -23,6 +23,25 @@ We encourage you to use this feature in non-production environments and give us 
 
 ![Conduktor SQL](img/conduktor-sql.png)
 
+# Table of Contents
+- [Console Configuration](#console-configuration)
+  - [Database Configuration](#database-configuration)
+  - [Additional Configuration](#additional-configuration)
+- [Index Topics for Querying](#index-topics-for-querying)
+  - [Index Topics in the UI](#index-topics-in-the-ui)
+  - [Index Topics in the CLI](#index-topics-in-the-cli)
+- [Querying the data](#querying-the-data)
+- [Database Storage Format](#database-storage-format)
+  - [Shrinker](#shrinker)
+  - [Collision Solver](#collision-solver)
+  - [Database isolation](#database-isolation)
+- [SQL security](#sql-security)
+  - [RBAC](#rbac)
+  - [Data masking](#data-masking)
+  - [UI Experience](#ui-experience)
+- [Known Limitations](#known-limitations)
+
+
 
 ## Console Configuration
 
@@ -119,7 +138,7 @@ Upon execution, the console backend will index messages from the (current time) 
 
 ## Querying the data
 
-**Using the UI**
+**Using the UI**  
 Query syntax requires the cluster technical-id is used as a prefix for the table name e.g. for the topic `customers` on the cluster `kafka-cluster-dev`:
 ```sql
 SELECT *
@@ -128,9 +147,9 @@ SELECT *
 See [database storage format](#database-storage-format) for the underlying table structure.
 ![Conduktor SQL](img/conduktor-sql.png)
 
-**Using the CLI**
+**Using the CLI**  
 
-API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](../reference/cli-reference.md####short-lived-user-api-keys)
+API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](../reference/cli-reference.md#short-lived-user-api-keys)
 
 ```bash
 conduktor sql 'select * from "kafka-cluster-dev_customers"' -n 2
@@ -241,18 +260,18 @@ The Console RBAC model is integrated with the PostgreSQL database using PostgreS
 
 There are two distinct processes involved:
 
-1. **Initial Role Creation:** When a user executes an SQL query on the Console for the first time, the system checks if the corresponding user ROLE exists in the PostgreSQL database. If it does not, the RBAC system is consulted to determine the topics for which the user has the `kafka.topics.read` permission. The user's ROLE is then created in PostgreSQL, and read access to the relevant topic tables is granted.
+1. **Initial Role Creation:** When a user executes a SQL query on Console for the first time, the system checks if the corresponding user ROLE exists in the PostgreSQL database. If it does not, the RBAC system is consulted to determine the topics for which the user has the `kafka.topics.read` permission. The user's ROLE is then created in PostgreSQL, and read access to the relevant topic tables is granted.
 
-2. **Periodic Role Updates:** A background process in the Console periodically updates the access rights for each user ROLE to ensure they remain aligned with the RBAC permissions. The job is run every 30 seconds by default and can be customized by setting env variable `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`.
+2. **Periodic Role Updates:** A background process in the Console periodically updates the access rights for each user ROLE to ensure they remain aligned with the RBAC permissions. The job is run every 30 seconds by default and can be customized by setting the env variable `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`.
 
 ### Data masking
 
 Data masking policies are implemented similarly to RBAC. By default, access is granted to all columns in a table. However, if a data masking policy applies to a specific column for a given user, access to that column is denied.
 
 There are some limitations:
-- Instead of applying the masking policy as defined in the Console, access to the entire column is restricted for simplicity.
-- For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead.
-- If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error.
+- Instead of applying the masking policy as defined in Console, access to the entire column is restricted for simplicity
+- For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead
+- If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error
 
 
 ### UI Experience
