@@ -9,16 +9,16 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking Changes 💣](#breaking-changes-)
-  - [RBAC screen redesign](#rbac-screen-redesign)
 - [Depreciation notice 🚨](#depreciation-notice-)
   - [Single-host database configuration](#single-host-database-configuration)
-- [Quality of Life improvements](#quality-of-life-improvements)
 - [Features ✨](#features-)
+  - [RBAC screen redesign](#rbac-screen-redesign)
+  - [Alert list redesign](#alert-list-redesign)
   - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
-  - [SQL security](#sql-security)
+  - [Secure SQL Search](#secure-sql-search)
 - [Fixes 🔨](#fixes-)
 
 ## Breaking Changes 💣
