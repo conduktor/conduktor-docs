@@ -65,7 +65,7 @@ The following table shows the environment variables used to configure Gateway, t
 
 
 | Environment Variable                        | Configuration Path                                          | Description                                                                                                                               | Mandatory | Default  | Possible values     |
-| ------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------- | ------------------- |
+| ------------------------------------------- | ----------------------------------------------------------- |-------------------------------------------------------------------------------------------------------------------------------------------| --------- |----------| ------------------- |
 | GATEWAY_ADVERTISED_HOST                     | hostPortconfiguration.advertisedHost                        | Needs to be set, will be used as base domain for the brokers. For example: `conduktor-gateway.sni-demo.local`                             | Yes       |          |                     |
 | GATEWAY_SECURITY_PROTOCOL                   | authenticationConfig.securityProtocol                       | The type of authentication clients should use to connect to the Gateway. Needs to be set to one of the 2 possible values for SNI routing. | Yes       |          | `SASL_SSL` or `SSL` |
 | GATEWAY_ROUTING_MECHANISM                   | routing                                                     | Needs to be set to `host` for SNI routing                                                                                                 | Yes       |          | `host`              |
@@ -76,17 +76,17 @@ The following table shows the environment variables used to configure Gateway, t
 | GATEWAY_SSL_KEY_PASSWORD                    | authenticationConfig.sslConfig.keyStore.keyPassword         | Password of the key                                                                                                                       | Yes       |          |                     |
 | GATEWAY_SSL_KEY_TYPE                        | authenticationConfig.sslConfig.keyStore.keyStoreType        | Keystore type                                                                                                                             | No        | `jks`    | `jks`, `p12`        |
 | GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES | authenticationConfig.sslConfig.updateContextIntervalMinutes | Interval in minutes to refresh SSL context                                                                                                | No        | `5`      |                     |
-| GATEWAY_SNI_HOST_SEPARATOR                  | hostPortconfiguration.sniHostSeparator                      | Set the hosts separator to use while reading your SANs                                                                                    | No        | `.`      |                     |
+| GATEWAY_SNI_HOST_SEPARATOR                  | hostPortconfiguration.sniHostSeparator                      | Set the hosts separator to use while reading your SANs. The value is split on the first occurence of this separator.                      | No        | `-`      |                     |
 
 #### *Optional. Trust store configuration*
 For client authentication, you can additionally configure a trust store (including path, password, and type).
 
 **Example**
 ```yaml
-GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST: cdkgateway.snidemo.local
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST_PREFIX: broker-passthrough
+GATEWAY_ADVERTISED_HOST_PREFIX: brokerpassthrough
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
@@ -95,31 +95,43 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 Given the configuration above, the necessary SANs for the certificate are:
 
 ```properties
-broker-passthroughmain<broker id>.conduktor-gateway.sni-demo.local
+brokerpassthroughmain<broker_id>-cdkgateway.snidemo.local
 ```
 
 for each broker in the cluster. For example:
 
 ```properties
-broker-passthroughmain1.conduktor-gateway.sni-demo.local
-broker-passthroughmain2.conduktor-gateway.sni-demo.local
-broker-passthroughmain3.conduktor-gateway.sni-demo.local
+brokerpassthroughmain1-cdkgateway.snidemo.local
+brokerpassthroughmain2-cdkgateway.snidemo.local
+brokerpassthroughmain3-cdkgateway.snidemo.local
 ```
 
 In general, the format for the advertised brokers to be included as SANs in the Gateway certificate is:
 
 ```properties
- <host-prefix><cluster-id><broker-id>.<advertised-host>
+ <host_prefix><cluster_id><broker_id>-<advertised_host>
 ```
 
-Here, the `cluster-id` is used in case we have multiple back-end Kafka clusters, and defaults to main.
+Here, the `cluster_id` is used in case we have multiple back-end Kafka clusters, and defaults to main.
+
+Note that the `GATEWAY_SNI_HOST_SEPARATOR` is used when the hostname is parsed by the Gateway, as follows, to acquire the broker Id:
+
+1. Match the full host name based on the configured prefix `<host_prefix><cluster_id>` (using the `GATEWAY_ADVERTISED_HOST_PREFIX` value)
+2. Remove this prefix, and break the resulting value (`<broker_id>-<advertised_host>`) into two based on the `GATEWAY_SNI_HOST_SEPARATOR` value, and pick the first part.
+
+The `GATEWAY_SNI_HOST_SEPARATOR` may therefore appear in the values for:
+* GATEWAY_ADVERTISED_HOST_PREFIX
+* Cluster Id
+* GATEWAY_ADVERTISED_HOST
+
+But cannot appear in a broker Id. 
 
 ## 3. Configure DNS
 
 Once you have your certificates configured, you will next need to create DNS entries which allow the clients to be properly routed to the kafka brokers.  Specifically, you will need to create a DNS entry for each Broker in your cluster using the same format as the SANs you specified in your Gateway certificates:
 
 ```
-<host-prefix><cluster-id><broker-id>.<advertised-host>
+<host_prefix><cluster_id><broker_id>-<advertised_host>
 ```
 
 This allows the client the connect to Gateway, for Gateway to then append the relevant broker details when it passes back the connection string for the Broker(s), and the client to look this up in DNS and connect appropriately.
