@@ -23,11 +23,11 @@ In that regard, we have extracted the 'Storage & Alerting' aspect of the Monitor
 
 **Consequences**:
 - If you didn't use Monitoring: No further action is required on your part. You won't be able to access the Monitoring module anymore.
-- If you used Monitoring: read the [documentation](../../configuration/env-variables/#monitoring-properties) to understand how to deploy and configure the dependency image `conduktor/conduktor-console-cortex:1.18.0`.
+- If you used Monitoring: read the [documentation](/platform/get-started/configuration/env-variables/#monitoring-properties) to understand how to deploy and configure the dependency image `conduktor/conduktor-console-cortex:1.18.0`.
 
 #### Embedded database
 
-As having a Postgres database is one of the production requirements we have, we decided to remove the embedded Postgres database from the Docker image. That way, having a Postgres database is now required to deploy Conduktor Console. If you want to get started and discover the product, here are guides for [Docker](../../installation/get-started/docker/) and [Kubernetes](../../installation/get-started/kubernetes/).
+As having a Postgres database is one of the production requirements we have, we decided to remove the embedded Postgres database from the Docker image. That way, having a Postgres database is now required to deploy Conduktor Console. If you want to get started and discover the product, here are guides for [Docker](/platform/get-started/installation/get-started/docker/) and [Kubernetes](/platform/get-started/installation/get-started/kubernetes/).
 
 #### Testing
 
@@ -47,14 +47,14 @@ Support for both the embedded database and using a container volume filesystem f
 
 Since v1.0, Conduktor has shipped with an **optional embedded database** for storing Console data. For demo and trial purposes, the embedded database allows you to get started quickly; storing data such as users, permissions, tags and configurations. However, it was never intended that the embedded database be used in production.
 
-Equally, if you do not configure an external block storage for **monitoring data**, it has been possible to depend on the container volume filesystem. Again, this does not meet our [production requirements](../installation/hardware.md#production-requirements), as the volume will grow in size as your usage of Conduktor continues.
+Equally, if you do not configure an external block storage for **monitoring data**, it has been possible to depend on the container volume filesystem. Again, this does not meet our [production requirements](/platform/get-started/installation/hardware/#production-requirements), as the volume will grow in size as your usage of Conduktor continues.
 
-When deploying Conduktor in [production](../installation/hardware.md#production-requirements), we want to ensure you have a reliable, durable and recoverable deployment. 
+When deploying Conduktor in [production](/platform/get-started/installation/hardware/#production-requirements), we want to ensure you have a reliable, durable and recoverable deployment. 
 
 As such, it is:
-   - **Mandatory** to use an [external PostgreSQL (13+) database](../configuration/database.md). This will ensure you have a robust and supported migration path when updating Conduktor. It also ensures that you have an appropriate backup policy in case of a corrupt environment. 
-   - **Mandatory** to setup [block storage (S3, GCS, Azure, Swift)](../configuration/env-variables.md#monitoring-properties) to store metrics data required for Monitoring. This will ensure your container volume does not grow indefinitely.
-   - **Mandatory** to ensure you meet the [hardware requirements](../installation/hardware.md) necessary for running Conduktor.
+   - **Mandatory** to use an [external PostgreSQL (13+) database](/platform/get-started/configuration/database/). This will ensure you have a robust and supported migration path when updating Conduktor. It also ensures that you have an appropriate backup policy in case of a corrupt environment. 
+   - **Mandatory** to setup [block storage (S3, GCS, Azure, Swift)](/platform/get-started/configuration/env-variables/#monitoring-properties) to store metrics data required for Monitoring. This will ensure your container volume does not grow indefinitely.
+   - **Mandatory** to ensure you meet the [hardware requirements](/platform/get-started/installation/hardware/) necessary for running Conduktor.
 
 If you are an existing customer with a production-grade deployment, it's vital that you review if you are adhering to these requirements. Support for both the embedded database and using a container volume filesystem for monitoring data will be **removed in an August release**.
 
@@ -122,7 +122,7 @@ Note that the administrator account can also be set via **environment variables:
  - `CDK_ADMIN_EMAIL`
  - `CDK_ADMIN_PASSWORD`
 
-Note **it's mandatory to have an administrator account defined for Conduktor to start**. If you were not using Conduktor prior to 1.14.0, then we recommend following the [simple setup](../installation/get-started/docker.md#simple-setup), which will guide you through creating an administrator account during the onboarding wizard.
+Note **it's mandatory to have an administrator account defined for Conduktor to start**. If you were not using Conduktor prior to 1.14.0, then we recommend following the [simple setup](/platform/get-started/installation/get-started/docker/#simple-setup), which will guide you through creating an administrator account during the onboarding wizard.
 
 ---
 
