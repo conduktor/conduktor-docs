@@ -50,4 +50,4 @@ After a few minutes, you should see your active Service Accounts appear in the C
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
-Check the [Chargeback Usage](/platform/navigation/console/chargeback/) pages for details on the different tabs and UI features.
+Check the [Chargeback Usage](/platform/navigation/chargeback/) pages for details on the different tabs and UI features.
