@@ -68,6 +68,7 @@ We have made more events available for the Audit Log Publisher:
 - Kafka.Subject.ChangeCompatibility
 - Kafka.Topic.Browse
 - Kafka.Topic.ProduceRecord
+- Kafka.Topic.SqlQuery
 - Kafka.Connector.Restart
 - Kafka.Connector.Pause
 - Kafka.Connector.Resume
