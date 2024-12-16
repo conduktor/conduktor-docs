@@ -29,6 +29,9 @@ This supports for FetchResponse only: i.e., resulting topic is read-only.
 
 `SELECT [list of fields] FROM [topic name] WHERE [field filter criteria]`
 
+**Please Note**: Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
+
+`SELECT * FROM "our-orders" WHERE ...`
 
 Currently
 
@@ -45,6 +48,13 @@ Currently
     - Header: `.. WHERE record.header.someHeaderKey = 'some thing'`
     - Offset: `.. WHERE record.offset = 1`
 
+## Schemas and Projections
+
+If your data uses a schema, then it is not possible to make use of the projection feature here because the resulting data will no longer match the original schema. For plain JSON topics you may use the select clause to alter the shape of the data returned as required - however for schema'd data (Avro and Protobuf) you must not use a projection, i.e. the select should be in the form:
+
+`SELECT * FROM ...`
+
+Filtering with the where clause is still supported.
 
 ## Configuration
 

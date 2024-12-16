@@ -47,23 +47,24 @@ The properties detailed in this section work for the following plugins:
 
 Both schema-based and list-based encryption plugins have their configuration, but some properties are common to both of them.
 
-| key                                                                            | type                                             | default         | description                                                                                                                                                                                                                                                                                                                                             |
-|--------------------------------------------------------------------------------|--------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Common Properties**                                                          |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
-| `topic`                                                                        | String                                           | `.*`            | Topics matching this regex will have the interceptor applied.                                                                                                                                                                                                                                                                                           |
+| key                                                                            | type                                                                                                                                              | default         | description                                                                                                                                                                                                                                                                                                                                             |
+|--------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Common Properties**                                                          |                                                                                                                                                   |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `topic`                                                                        | String                                                                                                                                            | `.*`            | Topics matching this regex will have the interceptor applied.                                                                                                                                                                                                                                                                                           |
 | `schemaRegistryConfig`                                                         | [SchemaRegistry](#schema-registry-configuration) |                 | Configuration of your Schema Registry, is needed if you want to encrypt data produced using Avro, JSON or Protobuf schemas.                                                                                                                                                                                                                             |
-| `schemaDataMode`                                                               | String                                           | `preserve_avro` | As of 3.3, you can decide to preserve the inbound message format when it encrypts the data IF the incoming data is Avro, rather than converting the message to JSON (as per current behaviour).<br />To convert the record to JSON and break the link to its schema in the backing topic, you can set this field to `convert_json` (default until 3.3). |
-| `externalStorage`                                                              | Boolean                                          | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.                 |
-| `kmsConfig`                                                                    | [KMS](#kms-configuration)                        |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
-| [**List-Based Properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
-| `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
-| `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
-| `recordHeader`                                                                 | [Headers Encryption](#headers-encryption)        |                 | Configuration to encrypt the record headers.                                                                                                                                                                                                                                                                                                            |
-| [**Schema-Based Properties**](#schema-based-encryption---schema-configuration) |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `schemaDataMode`                                                               | String                                                                                                                                            | `preserve_avro` | As of 3.3, you can decide to preserve the inbound message format when it encrypts the data IF the incoming data is Avro, rather than converting the message to JSON (as per current behaviour).<br />To convert the record to JSON and break the link to its schema in the backing topic, you can set this field to `convert_json` (default until 3.3). |
+| `externalStorage`                                                              | Boolean                                                                                                                                           | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.                 |
+| `kmsConfig`                                                                    | [KMS](#kms-configuration)                                                                                                                         |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
+| `enableAuditLogOnError`                                                        | Boolean                                                                                                                                           | true            | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                                                                                                                                         |
+| [**List-Based Properties**](#list-based-encryption)                            |                                                                                                                                                   |                 |                                                                                                                                                                                                                                                                                                                                                         |
+| `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption)                                                                                                  |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
+| `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption)                                                                                                  |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
+| `recordHeader`                                                                 | [Headers Encryption](#headers-encryption)                                                                                                         |                 | Configuration to encrypt the record headers.                                                                                                                                                                                                                                                                                                            |
+| [**Schema-Based Properties**](#schema-based-encryption---schema-configuration) |                                                                                                                                                   |                 |                                                                                                                                                                                                                                                                                                                                                         |
 | `defaultKeySecretId`                                                           | [Secret Key Template](#secret-key-templates)     |                 | Default `keySecretId` to use if none is set in the schema. It must be a unique identifier for the secret key, and can be a template for crypto shredding use cases.                                                                                                                                                                                     |
 | `defaultAlgorithm`                                                             | [Algorithm](#supported-algorithms)               | `AES128_GCM`    | Default `algorithm` to use if no algorithm is set in the schema.                                                                                                                                                                                                                                                                                        |
-| `tags`                                                                         | List[String]                                     |                 | List of tags to search for in the schema to encrypt the specified fields.                                                                                                                                                                                                                                                                               |
-| `namespace`                                                                    | String                                           | `conduktor.`    | Prefix of custom schema constraints for encryption.                                                                                                                                                                                                                                                                                                     |
+| `tags`                                                                         | List[String]                                                                                                                                      |                 | List of tags to search for in the schema to encrypt the specified fields.                                                                                                                                                                                                                                                                               |
+| `namespace`                                                                    | String                                                                                                                                            | `conduktor.`    | Prefix of custom schema constraints for encryption.                                                                                                                                                                                                                                                                                                     |
 
 ### List-Based Encryption
 
@@ -168,17 +169,19 @@ If you want this key to be stored in your Vault KMS for instance, you can set: `
 
 #### Key Stored in KMS
 
-By default, any `keySecretId` that doesn't match one of the schemas detailed below, will be stored in-memory.
+Any `keySecretId` that doesn't match one of the schemas detailed below will be **rejected** and the encryption operation will **fail**.
 
 If you want to make sure the key is well created in your KMS, you have to (1) [make sure you have configured the connection to the KMS](#kms-configuration) , and (2) use the following format as `keySecretId`:
 
-| KMS                 | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
-|---------------------|-----------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| In-Memory (default) |                       | Any string that isn't prefixed by a KMS identifier prefix                                            | `my-password-key-id`                                                                               |
-| Vault               | vault-kms://          | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                              |
-| Azure               | azure-kms://          | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
-| AWS                 | aws-kms://            | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
-| GCP                 | gcp-kms://            | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
+| KMS       | KMS identifier prefix | Key URI format                                                                                       | Example                                                                                            |
+|-----------|----------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| In-Memory | in-memory-kms://     | `in-memory-kms://<key-id>`                                                                           | `in-memory-kms://my-password-key-id`                                                               |
+| Vault     | vault-kms://         | `vault-kms://<vault-host>/transit/keys/<key-id>`                                                     | `vault-kms://vault:8200/transit/keys/password-key-id`                                              |
+| Azure     | azure-kms://         | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
+| AWS       | aws-kms://           | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
+| GCP       | gcp-kms://           | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
+
+Note that In-Memory mode is present for testing and development purposes only - keys stored in this manner do not persist between Gateway restarts.
 
 :::warning
 Keys are string that starts with a letter, followed by a combination of letters, underscores (_), hyphens (-), and numbers. Special characters are not allowed. It also works with the upper [mustache pattern](#mustache-template).
@@ -199,14 +202,15 @@ Keys are string that starts with a letter, followed by a combination of letters,
 
 Now that your fields or payload are encrypted, you can decrypt them using the interceptor `DecryptPlugin`.
 
-| key                    | type                                             | default | description                                                                                                                  |
-|------------------------|--------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------|
-| `topic`                | String                                           | `.*`    | Topics matching this regex will have the interceptor applied                                                                 |
-| `schemaRegistryConfig` | [SchemaRegistry](#schema-registry-configuration) |         | Configuration of your Schema Registry, is needed if you want to decrypt into Avro, JSON or Protobuf schemas.                 |
-| `kmsConfig`            | [KMS](#kms-configuration)                        |         | Configuration of one or multiple KMS                                                                                         |
-| `recordValueFields`    | List[String]                                     |         | **Only for field-level encryption** - List of fields to decrypt in the value. If empty, we decrypt all the encrypted fields. |
-| `recordKeyFields`      | List[String]                                     |         | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.   |
-| `recordHeaderFields`   | List[String]                                     |         | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.            |
+| key                      | type                                                                                                                                              | default       | description                                                                                                                                                                                                                              |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `topic`                  | String                                                                                                                                            | `.*`          | Topics matching this regex will have the interceptor applied                                                                                                                                                                             |
+| `schemaRegistryConfig`   | [SchemaRegistry](#schema-registry-configuration) |               | Configuration of your Schema Registry, is needed if you want to decrypt into Avro, JSON or Protobuf schemas.                                                                                                                             |
+| `kmsConfig`              | [KMS](#kms-configuration)                                                                                                                         |               | Configuration of one or multiple KMS                                                                                                                                                                                                     |
+| `recordValueFields`      | List[String]                                                                                                                                      |               | **Only for field-level encryption** - List of fields to decrypt in the value. If empty, we decrypt all the encrypted fields.                                                                                                             |
+| `recordKeyFields`        | List[String]                                                                                                                                      |               | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.                                                                                                               |
+| `recordHeaderFields`     | List[String]                                                                                                                                      |               | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.                                                                                                                        |
+| `enableAuditLogOnError`  | Boolean                                                                                                                                           | true          | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                          |
 
 ## Schema Registry Configuration
 
@@ -231,20 +235,26 @@ We recommend you use this for Schema Registry or Vault secrets, and any other va
 
 This section is detailing how to configure the different KMS within your encrypt & decrypt interceptors.
 
-| key       | type                    | description                                                                                       |
-|-----------|-------------------------|---------------------------------------------------------------------------------------------------|
-| keyTtlMs  | long                    | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
-| in-memory | [In-Memory](#in-memory) | Default KMS that is not persistent, internal to the Gateway.                                      |
-| vault     | [Vault KMS](#vault-kms) | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
-| azure     | [Azure KMS](#azure-kms) | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
-| aws       | [AWS KMS](#aws-kms)     | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
-| gcp       | [GCP KMS](#gcp-kms)     | [Google Key Management](https://cloud.google.com/security/products/security-key-management?hl=en) |
+| key       | type                        | description                                                                                       |
+|-----------|-----------------------------|---------------------------------------------------------------------------------------------------|
+| keyTtlMs  | long                        | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
+| in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to the Gateway, for demo purposes only.            |
+| vault     | [Vault KMS](#vault-kms)     | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
+| azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
+| aws       | [AWS KMS](#aws-kms)         | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
+| gcp       | [GCP KMS](#gcp-kms)         | [Google Key Management](https://cloud.google.com/security/products/security-key-management?hl=en) |
 
-### In-Memory
+### In-Memory KMS
 
-This is the default key storage we use, if no external one is set. This is for demos only and should not be used on production data.
+:::warning
+This is for demos only and should not be used on production data.
+:::
 
-The risk of using In-Memory KMS is that the key will not persist. This means that if you restart the Gateway, or change the interceptor configuration, you won't be able to decrypt old records anymore. **You should not use this default KMS in production.**
+Keys in In-Memory KMS are not persisted, this means that if you do one of the following, you won't be able to decrypt old records, loosing the data.
+
+* Use a gateway cluster with more than a single node
+* Or restart the Gateway
+* Or change the interceptor configuration
 
 ### Vault KMS
 
@@ -259,21 +269,134 @@ Make sure you've followed the right method, and that you've provided the correct
 
 For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).
 
-| key                        | type   | description                                                                   |
-|----------------------------|--------|-------------------------------------------------------------------------------|
-| `uri`                      | String | Vault URI.                                                                    |
-| `version`                  | String | Version.                                                                      |
-| **Token**                  |        |                                                                               |
-| `token`                    | String | Security token.                                                               |
-| **Username & Password**    |        |                                                                               |
-| `username`                 | String | Username.                                                                     |
-| `password`                 | String | Password.                                                                     |
-| **Managed identity**       |        | Load authentication information from the below environment variables.         |
-| `VAULT_ENGINE_VERSION_ENV` |        | Vault KV Secrets Engine version.                                              |
-| `VAULT_URI_ENV`            |        | Vault server base URI.                                                        |
-| `VAULT_TOKEN_ENV`          |        | Token to use for accessing Vault.                                             |
-| `VAULT_USERNAME_ENV`       |        | Username for accessing Vault (used with `VAULT_PASSWORD_ENV` to build Token). |
-| `VAULT_PASSWORD_ENV`       |        | Password for accessing Vault (used with `VAULT_USERNAME_ENV` to build Token). |
+| key                      | type   | description                                                                                                                                                                                                                                                                                   |
+|--------------------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `uri`                    | String | Vault URI.                                                                                                                                                                                                                                                                                    |
+| `version`                | String | Version.                                                                                                                                                                                                                                                                                      |
+| **Managed identity**     |        | Load authentication information from the below environment variables.                                                                                                                                                                                                                         | 
+| `VAULT_URI`              |        | Vault server base URI.                                                                                                                                                                                                                                                                        |
+| `VAULT_ENGINE_VERSION`   |        | Vault KV Secrets Engine version.                                                                                                                                                                                                                                                              |
+| `type`                   | String | **Required for all types of VaultKMSConfig.** Determines the type of authentication to use. <br/>Supported types: <br/>-`TOKEN`<br/>-`USERNAME_PASSWORD`<br/>-`GITHUB`<br/>-`LDAP`<br/>-`APP_ROLE`<br/>-`KUBERNETES`<br/>-`GCP`<br/>-`AWS_EC2_PKCS7`<br/>-`AWS_EC2`<br/>-`AWS_IAM`<br/>-`JWT` |
+
+#### Vault Authentication Types
+| Key                                | Type   | Description                                                            |
+|------------------------------------|--------|------------------------------------------------------------------------|
+| **Token Authentication**           |        | Use Token Authentication.                                              |
+| `type`                             | String | **Must be `TOKEN`.** Indicates the type of authentication.             |
+| `token`                            | String | Security token for accessing Vault.                                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `TOKEN`.** Indicates the type of authentication.             |
+| `VAULT_TOKEN`                      |        | Token to use for accessing Vault.                                      |
+| **Username & Password**            |        | Use Username & Password Authentication.                                |
+| `type`                             | String | **Must be `USERNAME_PASSWORD`.** Indicates the type of authentication. |
+| `username`                         | String | Username for accessing Vault.                                          |
+| `password`                         | String | Password for accessing Vault.                                          |
+| `userpassAuthMount`                | String | (Optional) Mount path for the userpass auth method.                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `USERNAME_PASSWORD`.** Indicates the type of authentication. |
+| `VAULT_USERNAME`                   |        | Username for accessing Vault.                                          |
+| `VAULT_PASSWORD`                   |        | Password for accessing Vault.                                          |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the userpass auth method.                    |
+| **GitHub Authentication**          |        | Use GitHub Token Authentication.                                       |
+| `type`                             | String | **Must be `GITHUB`.** Indicates the type of authentication.            |
+| `token`                            | String | GitHub personal access token.                                          |
+| `githubAuthMount`                  | String | (Optional) Mount path for the GitHub auth method.                      |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `GITHUB`.** Indicates the type of authentication.            |
+| `VAULT_GITHUB_TOKEN`               |        | GitHub token for accessing Vault.                                      |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the GitHub auth method.                      |
+| **LDAP Authentication**            |        | Use LDAP Authentication.                                               |
+| `type`                             | String | **Must be `LDAP`.** Indicates the type of authentication.              |
+| `username`                         | String | LDAP username.                                                         |
+| `password`                         | String | LDAP password.                                                         |
+| `ldapAuthMount`                    | String | (Optional) Mount path for the LDAP auth method.                        |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `LDAP`.** Indicates the type of authentication.              |
+| `VAULT_LDAP_USERNAME`              |        | LDAP username.                                                         |
+| `VAULT_LDAP_PASSWORD`              |        | LDAP password.                                                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the LDAP auth method.                        |
+| **AppRole Authentication**         |        | Use AppRole Authentication.                                            |
+| `type`                             | String | **Must be `APP_ROLE`.** Indicates the type of authentication.          |
+| `roleId`                           | String | Role ID for AppRole authentication.                                    |
+| `secretId`                         | String | Secret ID for AppRole authentication.                                  |
+| `path`                             | String | (Optional) Mount path for the AppRole auth method.                     |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `APP_ROLE`.** Indicates the type of authentication.          |
+| `VAULT_APP_ROLE_ID`                |        | Role ID for AppRole authentication.                                    |
+| `VAULT_APP_SECRET_ID`              |        | Secret ID for AppRole authentication.                                  |
+| `VAULT_APP_PATH`                   |        | (Optional) Mount path for the AppRole auth method.                     |
+| **Kubernetes Authentication**      |        | Use Kubernetes Authentication.                                         |
+| `type`                             | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
+| `role`                             | String | Kubernetes role.                                                       |
+| `jwt`                              | String | Kubernetes JWT token.                                                  |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
+| `VAULT_KUBERNETES_ROLE`            |        | Kubernetes role.                                                       |
+| `VAULT_KUBERNETES_JWT`             |        | Kubernetes JWT token.                                                  |
+| **GCP Authentication**             |        | Use Google Cloud Platform Authentication.                              |
+| `type`                             | String | **Must be `GCP`.** Indicates the type of authentication.               |
+| `role`                             | String | GCP role for authentication.                                           |
+| `jwt`                              | String | JWT token issued by Google Cloud Platform.                             |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `GCP`.** Indicates the type of authentication.               |
+| `VAULT_GCP_ROLE`                   |        | GCP role for authentication.                                           |
+| `VAULT_GCP_JWT`                    |        | JWT token for accessing Vault.                                         |
+| **AWS EC2 Authentication (PKCS7)** |        | Use AWS EC2 PKCS7 Authentication.                                      |
+| `type`                             | String | **Must be `AWS_EC2_PKCS7`.** Indicates the type of authentication.     |
+| `role`                             | String | AWS role for EC2 authentication.                                       |
+| `pkcs7`                            | String | PKCS7 identity document.                                               |
+| `nonce`                            | String | (Optional) Nonce value for EC2 authentication.                         |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_EC2_PKCS7`.** Indicates the type of authentication.     |
+| `VAULT_AWS_ROLE`                   |        | AWS role for EC2 authentication.                                       |
+| `VAULT_AWS_PKCS7`                  |        | PKCS7 identity document.                                               |
+| `VAULT_AWS_NONCE`                  |        | (Optional) Nonce value for EC2 authentication.                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the AWS EC2 PKCS7 auth method.               |
+| **AWS EC2 Authentication**         |        | Use AWS EC2 Identity Authentication.                                   |
+| `type`                             | String | **Must be `AWS_EC2`.** Indicates the type of authentication.           |
+| `role`                             | String | AWS role for EC2 authentication.                                       |
+| `identity`                         | String | AWS identity document.                                                 |
+| `signature`                        | String | AWS signature for authentication.                                      |
+| `nonce`                            | String | Nonce value for EC2 authentication.                                    |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_EC2`.** Indicates the type of authentication.           |
+| `VAULT_AWS_ROLE`                   |        | AWS role for EC2 authentication.                                       |
+| `VAULT_AWS_IDENTITY`               |        | AWS identity document.                                                 |
+| `VAULT_AWS_SIGNATURE`              |        | AWS signature for authentication.                                      |
+| `VAULT_AWS_NONCE`                  |        | (Optional) Nonce value for EC2 authentication.                         |
+| `VAULT_AUTH_MOUNT`                 |        | (Optional) Mount path for the AWS EC2 auth method.                     |
+| **AWS IAM Authentication**         |        | Use AWS IAM Authentication.                                            |
+| `type`                             | String | **Must be `AWS_IAM`.** Indicates the type of authentication.           |
+| `role`                             | String | AWS role for IAM authentication.                                       |
+| `iamRequestUrl`                    | String | IAM request URL for authentication.                                    |
+| `iamRequestBody`                   | String | IAM request body for authentication.                                   |
+| `iamRequestHeaders`                | String | IAM request headers for authentication.                                |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `AWS_IAM`.** Indicates the type of authentication.           |
+| `VAULT_AWS_ROLE`                   |        | AWS role for IAM authentication.                                       |
+| `VAULT_AWS_IAM_REQUEST_URL`        |        | IAM request URL for authentication.                                    |
+| `VAULT_AWS_IAM_REQUEST_BODY`       |        | IAM request body for authentication.                                   |
+| `VAULT_AWS_IAM_REQUEST_HEADERS`    |        | IAM request headers for authentication.                                |
+| **JWT Authentication**             |        | Use JWT Authentication.                                                |
+| `type`                             | String | **Must be `JWT`.** Indicates the type of authentication.               |
+| `jwt`                              | String | JWT token for authentication.                                          |
+| `provider`                         | String | JWT provider for authentication.                                       |
+| `role`                             | String | JWT role for authentication.                                           |
+| _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
+| `VAULT_AUTH_TYPE`                  | String | **Must be `JWT`.** Indicates the type of authentication.               |
+| `VAULT_JWT`                        |        | JWT token for authentication.                                          |
+| `VAULT_JWT_PROVIDER`               |        | JWT provider for authentication.                                       |
+
+Example:
+```json
+{
+  "type": "APP_ROLE",
+  "uri": "http://vault.example.com",
+  "version": "1",
+  "roleId": "my-role-id",
+  "secretId": "my-secret-id"
+}
+```
 
 ### Azure KMS
 
