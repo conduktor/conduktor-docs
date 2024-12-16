@@ -31,35 +31,37 @@ Jump to:
 
 You can manage custom certificates for Kafka, Kafka Connect and Schema Registry through the Console UI. This enables you to import and parse the certificates as text or files. The supported file formats are:
 
-- .crt
-- .pem
-- .jks
-- .p12
+- `.crt`
+- `.pem`
+- `.jks`
+- `.p12`
 
 ### Uploading certificates in the cluster configuration screen
 
 Assuming you have appropriate permissions, you can add cluster configurations from within **Admin**. When you add the bootstrap server to your configuration, a check will be made to validate if the certificate is issued by a valid authority.
 
-![admin-ssl.png](/img/admin/admin-ssl.png)
+![](assets/cluster-ssl.png)
 
 If the response indicates the certificate is not issued by a valid authority, you have two options:
 
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
-- **Upload Certificate**: This option will enable you to upload the certificate (.crt, .pem, .jks or .p12 files), or paste the certificate as text
+- **Upload Certificate**: This option will enable you to upload the certificate (`.crt`, `.pem`, `.jks` or `.p12` files), or paste the certificate as text
 
-![admin-ssl-2.png](/img/admin/admin-ssl-2.png)
+import ClusterCertificate from './assets/cluster-certificate.png';
+
+<img src={ClusterCertificate} alt="Cluster Certificate" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
 
-![admin-ssl-3.png](/img/admin/admin-ssl-3.png)
+![](assets/cluster-connection-secure.png)
 
-### Adding certificates in the dedicated certificates screen
+### Adding truststores in the dedicated certificates screen
 
-Provided you have permissions, you can also manage organization certificates via the **Certificates** tab within **Admin**.
+Provided you have permissions, you can also manage organization truststores via the **Certificates** tab within **Settings**.
 
 Simply add all of your certificates by uploading them or pasting them as text. In doing this, the SSL context will be derived when you configure Kafka, Kafka Connect and Schema Registry connections.
 
-![admin-ssl-4.png](/img/admin/admin-ssl-4.png)
+![](assets/certificates.png)
 
 ## Mounting Custom Truststore
 
@@ -104,8 +106,6 @@ If run from docker :
 From docker-compose :
 
 ```yaml
-version: '3.8'
-
 services:
   conduktor-console:
     image: conduktor/conduktor-console
@@ -131,36 +131,37 @@ Other names include:
 - Digital Certificate Authentication, Public Key Infrastructure (PKI) Authentication
 
 ### Using the UI (keystore method)
-Your Kafka Admin or your Kafka Provider gave you a keystore file (.jks or .p12 format).
+Your Kafka Admin or your Kafka Provider gave you a keystore file (`.jks` or `.p12` format).
 
 Click the "Import from keystore" button to select a keystore file from your filesystem.
-![mtls-3a.png](assets/mtls-3a.png)
+![](assets/cluster-keystore.png)
 
-Fill in the required keystore password and key password and click "Import".  
-![mtls-3b.png](assets/mtls-3b.png)
+Fill in the required keystore password and key password and click "Import".
+
+import ImportFromKeystore from './assets/import-from-keystore.png';
+
+<img src={ImportFromKeystore} alt="Import from keystore" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
-![mtls-4.png](assets/mtls-4.png)
+![](assets/cluster-keystore-imported.png)
 
 ### Using the UI (Access key & Access certificate method)
 
 Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
 
-- An Access key (.key file)
-- An Access certificate (.pem or .crt file)
+- An Access key (`.key` file)
+- An Access certificate (`.pem` or `.crt` file)
 
 Here's an example with Aiven:
-![mtls-1.png](assets/mtls-1.png)
+![](assets/aiven-certificates.png)
 
-You can paste the 2 file's contents into Conduktor, or alternatively import from keystore.
-![mtls-2.png](assets/mtls-2.png)
+You can paste the 2 file's contents into Conduktor, or alternatively import from keystore [as detailed in the previous section](#using-the-ui-keystore-method).
 
 ### Using Volume Mount (Alternate method)
 
 You can mount the keystore file in 'conduktor-console' image:
 
 ```yaml
-version: '3.8'
 services:
   conduktor-console:
     image: conduktor/conduktor-console
@@ -174,4 +175,4 @@ services:
 ```
 
 Then from the UI, choose the SSL Authentication method "Keystore file is mounted on the volume" and fill in the required fields
-![mtls-5.png](assets/mtls-5.png)
+![](assets/keystore-from-volume.png)

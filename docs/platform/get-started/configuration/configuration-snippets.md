@@ -6,13 +6,13 @@ description: This demonstrates a complete configuration for Conduktor Enterprise
 
 # Configuration Snippets
 
-The Conduktor Console can be configured using a YAML configuration file or through environment variables. The full list of configurable properties can be found [here](env-variables.md). Note that it's also possible to make some configurations (such as Kafka cluster configuration) through our [API](../../../reference/api-reference).
+The Conduktor Console can be configured using a YAML configuration file or through environment variables. The full list of configurable properties can be found [here](/platform/get-started/configuration/env-variables/). Note that it's also possible to make some configurations (such as Kafka cluster configuration) through our [API](/platform/reference/api-reference/).
 
-Note you can also configure your clusters within the [Admin](../../navigation/settings/managing-clusters.md) section of Console, whereby you can also upload certificates using the [certificate store](ssl-tls-configuration.md#using-the-conduktor-certificate-store).
+Note you can also configure your clusters within the [Admin](/platform/navigation/settings/managing-clusters/) section of Console, whereby you can also upload certificates using the [certificate store](/platform/get-started/configuration/ssl-tls-configuration/#using-the-conduktor-certificate-store).
 
 ## GitOps: Managing Cluster Configurations
 :::tip
-Our recommendation is to use the Console [API](../../../reference/api-reference) if you wish to configure clusters with a GitOps approach. 
+Our recommendation is to use the Console [API](/platform/reference/api-reference/) if you wish to configure clusters with a GitOps approach. 
 :::
 
 Note that from Console version `1.19`, if you are configuring clusters through the YAML file, this will act as the source of truth for cluster definition. Meaning, if you make changes to the cluster using the UI, they will be overridden on the next restart containing a reference to your configuration file. 
@@ -42,7 +42,7 @@ The below outlines reusable snippets for common configurations such as:
 
 This demonstrates a complete configuration for Conduktor Enterprise consisting of one Kafka cluster with Schema Registry, SSO and license key. 
 
-For identity provider specific guides see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](../user-authentication/local-admin-and-users/) instead.
+For identity provider specific guides see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](/platform/get-started/configuration/user-authentication/local-admin-and-users/) instead.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 

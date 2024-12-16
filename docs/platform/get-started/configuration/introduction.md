@@ -25,13 +25,13 @@ The Manage Clusters page (`/settings/clusters`) has several advantages over the 
 Need to configure your Kafka Clusters using GitOps processes?  
 Contact our [Customer Success](https://www.conduktor.io/contact/support) or give us [feedback](https://conduktor.io/roadmap) on this feature.
 
-If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](../env-variables/#kafka-clusters-properties) page.
+If you absolutely need to configure your clusters using YAML, read the [Configuration Properties](/platform/get-started/configuration/env-variables/#kafka-clusters-properties) page.
 :::
 
 
 ## Security notes
 
-The [database](../database/) as well as the configuration file described in this document may contain sensitive information.
+The [database](/platform/get-started/configuration/database/) as well as the configuration file described in this document may contain sensitive information.
 
 - The configuration file should be protected by file system permissions.
 - The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
