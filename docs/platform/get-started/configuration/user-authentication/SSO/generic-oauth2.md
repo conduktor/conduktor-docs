@@ -7,12 +7,12 @@ description: Configure OpenID Connect as SSO for Conduktor Console.
 # Configure OIDC provider as SSO
 
 There are many OIDC (OpenID Connect) providers available, we already have guides for some of them:
-- [Azure AD](azure.md)
-- [Google](google.md)
-- [Amazon Cognito](amazon-cognito.md)
-- [Keycloak](keycloak.md)
-- [Okta](okta.md)
-- [Auth0](auth0.md)
+- [Azure AD](/platform/get-started/configuration/user-authentication/SSO/azure/)
+- [Google](/platform/get-started/configuration/user-authentication/SSO/google/)
+- [Amazon Cognito](/platform/get-started/configuration/user-authentication/SSO/amazon-cognito/)
+- [Keycloak](/platform/get-started/configuration/user-authentication/SSO/keycloak/)
+- [Okta](/platform/get-started/configuration/user-authentication/SSO/okta/)
+- [Auth0](/platform/get-started/configuration/user-authentication/SSO/auth0/)
 
 For other providers, you can follow this guide which will explain the general steps to follow.
 
@@ -56,10 +56,10 @@ It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` heade
 In this case, the `Host` header (generally set by the browser) will be used to determine the external URL. 
 :::note
 **Port** will be guessed depending on the content of the `Host` header and fallback to Console configured port using environment variable `CDK_LISTENING_PORT` (default to `8080`).   
-**Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](../../ssl-tls-configuration.md) for more details. (default to `http`).
+**Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details. (default to `http`).
 :::
 
-### 3. Get the `client id` and `client secret` from application settings
+### 3. Get the client ID & secret from application settings
 
 ## Console Configuration
 
@@ -74,7 +74,7 @@ Required properties are:
 Optionally, you can configure the following properties:
 - `sso.oauth2.scopes`: the list of scopes to request during the authorization code flow.
 
-For a detailed list of OAuth2 configurations supported by Console please refer to [this page](../../env-variables.md#oauth2-properties).
+For a detailed list of OAuth2 configurations supported by Console please refer to [this page](/platform/get-started/configuration/env-variables/#oauth2-properties).
 
 ### Example
 Here is an example of a configuration file for a generic OIDC provider:

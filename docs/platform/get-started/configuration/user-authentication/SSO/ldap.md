@@ -6,7 +6,7 @@ description: Configure LDAP as SSO for Conduktor Console.
 
 # Configure LDAP as SSO
 
-You can find the list of LDAP properties [here](../../../env-variables/#ldap-properties).
+You can find the list of LDAP properties [here](/platform/get-started/configuration/env-variables/#ldap-properties).
 
 ## TL;DR
 
@@ -91,7 +91,7 @@ Now that your configuration is finished, you can set up a **mapping** between yo
 
 To create this mapping, you have to create a group from Console, and mention the ID of the group on your LDAP (you should find it in the attribute you mentioned as `groups-base`).
 
-![](../../assets/admin-create-group-egm.png)
+![](assets/external-groups-mapping.png)
 
 After the user logged in, we can see they've been added to the group, without any action:
-![](../../assets/admin-egm-after-login.png)
+![](assets/egm-after-login.png)

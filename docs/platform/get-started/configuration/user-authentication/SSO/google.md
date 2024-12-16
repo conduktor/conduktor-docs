@@ -15,12 +15,16 @@ On Google side, you'll have to follow these steps:
 The scopes needed are `email`, `profile`, and `openid`.
 Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
 
-![](../../assets/google-scopes.png)
+import GoogleScopes from './assets/google-scopes.png';
+
+<img src={GoogleScopes} alt="Google Scopes" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 
 - **Step 2**: Restrict access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
 
-![](../../assets/google-user-type-internal.png)
+import GoogleUserTypeInternal from './assets/google-user-type-internal.png';
+
+<img src={GoogleUserTypeInternal} alt="Google Users type internal" style={{ width: 300, display: 'block', margin: 'auto' }} />
 
 - **Step 3**: Create a new `OAuth client ID`
 
@@ -30,13 +34,17 @@ For example, if you deployed Console locally using the name `google` in your con
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-![](../../assets/google-create-client.png)
+import GoogleCreateClient from './assets/google-create-client.png';
+
+<img src={GoogleCreateClient} alt="Google Create Client" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 - **Step 4**: Get the `client ID` and the `secret ID`
 
 After the creation, the pop-up below appears. You can save the client ID and secret as JSON if you want.
 
-![](../../assets/google-client-id-secret.png)
+import GoogleClientIdSecret from './assets/google-client-id-secret.png';
+
+<img src={GoogleClientIdSecret} alt="Google Client ID Secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 :::tip
 You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
@@ -114,6 +122,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
+Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
 
 The value you need to put as an external group is the `email` address of the Google Group.

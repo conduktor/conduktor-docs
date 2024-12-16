@@ -12,7 +12,7 @@ On Amazon Cognito side, you'll have to create a user pool with an application:
 
 - **Step 1**: Create a new user pool
 
-![](../../assets/cognito-user-pool.png)
+![](assets/cognito-user-pool.png)
 
 - **Step 2**: Configure the application client
 
@@ -24,17 +24,17 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 Make sure that a client secret will be generated. You can select `Confidential client` for that.
 
-![](../../assets/cognito-app-client.png)
+![](assets/cognito-app-client.png)
 
 - **Step 3**: Set the scopes `profile`, `email`, and `openid` in the **Advanced app settings**
 
-![](../../assets/cognito-scopes.png)
+![](assets/cognito-scopes.png)
 
 
 - **Step 4**: Get the `user pool ID`, `client ID`, and `client secret`, that you'll use in the configuration file of Console
 
-![](../../assets/cognito-user-pool-id.png)
-![](../../assets/cognito-client-id-secret.png)
+![](assets/cognito-user-pool-id.png)
+![](assets/cognito-client-id-secret.png)
 
 :::tip
 You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<user pool ID>/.well-known/openid-configuration`.
@@ -108,6 +108,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
+Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
 
 The value you need to put as an external group is the `Object ID` of the Amazon Cognito group.

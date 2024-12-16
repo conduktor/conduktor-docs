@@ -12,11 +12,11 @@ On Keycloak side, you'll have to create a new application:
 
 - **Step 1**: create a new OpenID Connect client, and set the `client ID`
 
-![](../../assets/keycloak-create-client.png)
+![](assets/keycloak-create-client.png)
 
 - **Step 2**: Select the **Client authentication**
 
-![](../../assets/keycloak-client-config.png)
+![](assets/keycloak-client-config.png)
 
 - **Step 3**: Configure the redirect URI 
 
@@ -26,11 +26,11 @@ For example, if you deployed Console locally using the name `keycloak` in your c
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-![](../../assets/keycloak-callback.png)
+![](assets/keycloak-callback.png)
 
 - **Step 4**: Get the `client secret` in the **Credentials** tab
 
-![](../../assets/keycloak-client-secret.png)
+![](assets/keycloak-client-secret.png)
 
 :::tip
 You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
@@ -75,14 +75,14 @@ If you want to use the `external groups mapping` to map groups between your Cond
 
 - **Step 1**: Create the scope and configure the mapper to **Group Membership**
 
-![](../../assets/keycloak-scope.png)
-![](../../assets/keycloak-scope-mapper.png)
+![](assets/keycloak-scope.png)
+![](assets/keycloak-scope-mapper.png)
 
 You can add the claim to the token you want. In this example, the **UserInfo**.
 
 - **Step 2**: Add the scope to the application
 
-![](../../assets/keycloak-add-scope-app.png)
+![](assets/keycloak-add-scope-app.png)
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
@@ -118,7 +118,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<r
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [setup the mapping](../../external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
+Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
 
 The value you need to put as an external group is the name of the Keycloak group.
 
