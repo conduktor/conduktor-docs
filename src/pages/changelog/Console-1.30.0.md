@@ -9,12 +9,12 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Features ✨](#features-)
-  - [RBAC support for Conduktor](#rbac-support-for-conduktor-sql)
-  - [RBAC screen redesign](#rbac-screen-redesign)
+  - [RBAC support for Conduktor SQL](#rbac-support-for-conduktor-sql)
+  - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Alert list redesign](#alert-list-redesign)
   - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
-  - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
+  - [RBAC screen redesign](#rbac-screen-redesign)
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
 - [Fixes 🔨](#fixes-)
 
@@ -26,7 +26,7 @@ tags: features,fix
 In a previous release, we introduced Conduktor SQL. It was restricted to Admins because it did not apply any permission model.
 
 This new update brings full RBAC support on Conduktor SQL:
-- Users & Groups can only see and query the tables for which they have an associated Topic permission in Console.
+- Users & Groups can only see and query the tables for which they have an associated Topic permission in Console
 - Data masking policies are applied (with limitations) 
 
 You can now bring SQL to all users within your organization.  
