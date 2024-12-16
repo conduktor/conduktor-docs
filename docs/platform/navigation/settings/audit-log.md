@@ -159,7 +159,7 @@ CRN `platform:/user/<email>`
 
 ## Exportable Audit Log Events
 
-Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
+Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.
 
 Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables#auditlog-export-properties).
 
@@ -201,7 +201,7 @@ An example Conduktor event would look like:
 }
 ```
 
-Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.  
+Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.
 
 ### Kafka-Related Events
 
@@ -217,6 +217,7 @@ Below is the list of all the exported audit log event types, that are currently 
 | **Kafka.Topic.Empty**                   | Kafka topic is emptied.                                    |
 | **Kafka.Topic.Browse**                  | Kafka topic is browsed.                                    |
 | **Kafka.Topic.ProduceRecord**           | Kafka topic record is produced.                            |
+| **Kafka.Topic.SqlQuery**                | Kafka topic is requested through Console SQL.              |
 | **Kafka.Connector.Create**              | Kafka connector is created.                                |
 | **Kafka.Connector.Update**              | Kafka connector is updated.                                |
 | **Kafka.Connector.Delete**              | Kafka connector is deleted.                                |
@@ -225,7 +226,7 @@ Below is the list of all the exported audit log event types, that are currently 
 | **Kafka.Connector.Pause**               | Kafka connector is paused.                                 |
 | **Kafka.Connector.Resume**              | Kafka connector is resumed.                                |
 | **Kafka.Connector.AutoRestartActivate** | Kafka connector auto-restart is activated.                 |
-| **Kafka.Connector.AutoRestartStop**     | Kafka connector auto-restart is stopped.                   |	
+| **Kafka.Connector.AutoRestartStop**     | Kafka connector auto-restart is stopped.                   |
 | **Kafka.ConsumerGroup.Duplicate**       | Kafka consumer group is duplicated.                        |
 | **Kafka.ConsumerGroup.Update**          | Kafka consumer group is updated, when the offset is reset. |
 | **Kafka.ConsumerGroup.Delete**          | Kafka consumer group is deleted.                           |

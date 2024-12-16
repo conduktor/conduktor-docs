@@ -9,15 +9,16 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking Changes 💣](#breaking-changes-)
-  - [RBAC screen redesign](#rbac-screen-redesign)
 - [Depreciation notice 🚨](#depreciation-notice-)
   - [Single-host database configuration](#single-host-database-configuration)
-- [Quality of Life improvements](#quality-of-life-improvements)
 - [Features ✨](#features-)
+  - [RBAC screen redesign](#rbac-screen-redesign)
+  - [Alert list redesign](#alert-list-redesign)
   - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
+  - [Secure SQL Search](#secure-sql-search)
 - [Fixes 🔨](#fixes-)
 
 ## Breaking Changes 💣
@@ -67,6 +68,7 @@ We have made more events available for the Audit Log Publisher:
 - Kafka.Subject.ChangeCompatibility
 - Kafka.Topic.Browse
 - Kafka.Topic.ProduceRecord
+- Kafka.Topic.SqlQuery
 - Kafka.Connector.Restart
 - Kafka.Connector.Pause
 - Kafka.Connector.Resume
@@ -83,7 +85,7 @@ You can now setup Console's backing database for high availability(HA). If you h
 ```yaml
 database:
   url: 'jdbc:postgresql://user:password@host1:5432,host2:5433/console_database'
-  
+
 kafka_sql:
   hosts:
   - host: 'host1'
@@ -103,6 +105,12 @@ The tabular data you can see on the Chargeback page can now be exported into a C
 For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
 
 ![A screenshot of the Chargeback section in the console, showing a graph and a data table with cost and usage metrics over time. The 'Export all' button is highlighted in the top right corner of the graph.](/images/changelog/platform/v30/chargeback-data-export.png)
+
+### Secure SQL Search
+
+RBAC & data masking policies are now honoured when using SQL to query topics allowing this functionality to be opened up to all users within your organization.
+
+For more detailed information, check out the [SQL security](/platform/guides/configure-sql.md#sql-security) section.
 
 ## Fixes 🔨
 - Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
