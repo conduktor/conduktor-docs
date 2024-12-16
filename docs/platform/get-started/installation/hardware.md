@@ -19,11 +19,11 @@ For production environments, there are **mandatory requirements** to ensure your
 
 To ensure you meet these requirements, you must:
 
- - Set up an [external PostgreSQL (13+) database](/platform/get-started/configuration/database/) with appropriate backup policy. 
-    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations. 
-    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over).
- - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring. 
- - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue. 
+ - Set up an [external PostgreSQL (13+) database](/platform/get-started/configuration/database/) with appropriate backup policy 
+    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations
+    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over)
+ - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring
+ - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
  
 Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide. 
 
