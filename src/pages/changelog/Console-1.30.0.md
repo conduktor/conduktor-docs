@@ -1,6 +1,6 @@
 ---
 date: 2024-12-16
-title: title
+title: Console 1.30
 description: docker pull conduktor/conduktor-console:1.30.0
 solutions: console
 tags: features,fix
