@@ -124,7 +124,7 @@ The `GATEWAY_SNI_HOST_SEPARATOR` may therefore appear in the values for:
 * Cluster Id
 * GATEWAY_ADVERTISED_HOST
 
-But cannot appear in a broker Id.
+But cannot appear in a broker Id. 
 
 ## 3. Configure DNS
 
