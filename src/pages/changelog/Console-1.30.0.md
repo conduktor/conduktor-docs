@@ -18,7 +18,7 @@ tags: features,fix
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
-  - [RBAC security](#rbac-security)
+  - [SQL security](#sql-security)
 - [Fixes 🔨](#fixes-)
 
 ## Breaking Changes 💣
