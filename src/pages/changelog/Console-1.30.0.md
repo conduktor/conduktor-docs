@@ -11,11 +11,9 @@ tags: features,fix
 - [Features ✨](#features-)
   - [RBAC support for Conduktor SQL](#rbac-support-for-conduktor-sql)
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
-  - [Alert list redesign](#alert-list-redesign)
   - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
-  - [RBAC screen redesign](#rbac-screen-redesign)
-  - [Conduktor Chargeback: Data Export](#conduktor-chargeback-data-export)
+- [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
 
@@ -43,14 +41,6 @@ CDK_KAFKASQL_DATABASE_URL: jdbc:postgresql://user:password@host1:5432,host2:5433
 ```
 For more information, check out the [Multi-host configuration](/platform/get-started/configuration/database/#multi-host-configuration) section in the Database configuration documentation.
 
-### Alert list redesign
-Alert lists across the product now provide a more intuitive overview of alert configurations and statuses:
-
-- Query names are now more human readable, we've replaced the Prometheus query column with a friendly metric name & the condition under which it will fire
-- Fnd firing alerts easier and those that have never been triggered with the addition of a "Last Triggered Time" column
-
-![New alert list](/images/changelog/platform/v30/new-alert-list.png)
-
 ### Delegating authentication to an identity provider
 Console can now be configured to accept a JWT token from an external identity provider.  
 It allows you to directly use your identity provider for managing access to Console.  
@@ -74,20 +64,16 @@ We have made more events available for the Audit Log Publisher:
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
-### RBAC screen redesign
 
-The RBAC screen displaying resource access has been redesigned to provide a clearer distinction between inherited and user-specific permissions.
+## Quality of Life improvements
 
-![RBAC screen](/images/changelog/platform/v30/RBAC-screen-redesign.png)
-
-### Conduktor Chargeback: Data Export
-
-The tabular data you can see on the Chargeback page can now be exported into a CSV file to enable easier integration with existing organization cost management data.
-
-For more detailed information, check out the [Exporting chargeback data](/platform/navigation/chargeback#exporting-chargeback-data) section in the Chargeback documentation.
-
-![A screenshot of the Chargeback section in the console, showing a graph and a data table with cost and usage metrics over time. The 'Export all' button is highlighted in the top right corner of the graph.](/images/changelog/platform/v30/chargeback-data-export.png)
-
+- Alert lists in the resource pages have been updated to show the metric and condition, the alert state and a new column "Last Triggered"
+- Chargeback data can now be exported into a CSV file to enable easier integration with existing organization cost management data.
+- The User permission page provides a clearer distinction between inherited and user-specific permissions.
+- Topic policy validation errors message are easier to read when using the CLI
+- Added support for Array and Boolean types in Conduktor SQL
+- Added Kafka Key column and other metadata in Conduktor SQL Topics ([Full list](/platform/guides/configure-sql/#database-storage-format))
 
 ## Fixes 🔨
-- Fixed an issue where pagination was not working as expected in the SQL Indexed Topics table when there are more than 50 topics indexed
+- Fixed a pagination issue in the SQL Indexed Topics view
+- Fixed several instances where the CLI would not report the expected state change (Updated vs. Not Changed) on apply
