@@ -295,5 +295,6 @@ Those are:
 - If for any reason a record can't be parsed, they are ignored and the consumer continues
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
 - If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
+- Admin API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize the user password authentication method, or [short-lived user token](/platform/reference/cli-reference/#short-lived-user-api-keys)
 
 If you identify more limitations or want to provide feedback, please [contact us](https://support.conduktor.io/).
