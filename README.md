@@ -11,16 +11,20 @@ $ yarn build
 
 Unless you are making changes to the docs framework or updating the changelog, you should only need to edit the Markdown files in the `docs` directory.
 
-Console documentation is found under the `docs/platform` directory. The path of the MD files mirrors that of the website url.
+Console documentation is found under the `docs/platform` directory, and Gateway's under the `docs/gateway`. The path of the MD files mirrors that of the website url.
 
-- Images can be stored in an `img` directory alongside the content
-- Anchor example, [env variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties)
+# Best practices for writing docs
+
+- Images can be stored in an `assets` directory in the same folder as the MD file, and referenced with `![Alt text](assets/image.png)`.
+- If images are too large, you can resize them following [this section](#resizing-images).
+- Use absolute links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
+- Anchor example, [env variables](/platform/get-started/configuration/env-variables/#auditlog-export-properties)
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
 
 # Updating public API docs
 
 ## Gateway
-They live on the host:8888 of the deployed Gateway, but we also publish them online at [developers.conduktor.io](https://www.developers.conduktor.io).
+They live on the host:8888 of the deployed Gateway, but we also publish them online at [developers.conduktor.io](https://developers.conduktor.io/?product=gateway).
 
 To update the public version copy the latest open api yaml files from conduktor-proxy repo,
 https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml (v1)
@@ -28,7 +32,8 @@ and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/ma
 to the [/static/developers](./static/developers/openapi/gateway) directory and rename them.
 
 ## Console
-Available on the host/docs.
+Available on the host/docs of any Console deployment, but also online at [developers.conduktor.io](https://developers.conduktor.io/?product=console).
+
 Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml
 to the [/static/developers](./static/developers/openapi/console) directory.
 
@@ -71,6 +76,66 @@ and then reference it, e.g.
 <Console1290 />
 ---
 ```
+
+# Docusaurus Snippets
+
+## Resizing images
+
+The images you'll be using in the docs will be automatically sized to the width of the content area.
+If you want to resize an image, you can use a snippet like:
+
+```md
+import MyImage from './assets/my-image.png';
+
+<img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
+```
+
+## Create table with multiple tabs
+
+To create a table similar as [this one](/platform/get-started/configuration/user-authentication/SSO/azure/#console-configuration), you can use the following snippet in your MD file:
+
+````md
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="First Tab" label="First Tab">
+
+My first tab content:
+
+```yaml title="first-tab.yaml"
+myFirstTab: "content"
+```
+
+</TabItem>
+<TabItem value="Second Tab" label="Second Tab">
+
+My second tab content:
+
+```yaml title="second-tab.yaml"
+mySecondTab: "content"
+```
+</TabItem>
+</Tabs>
+````
+
+## Use tags
+
+To use tags as in the [Self-service reference docs](/platform/reference/resource-reference/self-service/), here is an example of snippet:
+
+```md
+import Admonition from '@theme/Admonition';
+
+export const Highlight = ({children, color, text}) => (
+<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500' }}> {children} </span>
+);
+
+export const Tag1 = () => (
+<Highlight color="#F8F1EE" text="#7D5E54">Tag 1</Highlight>
+);
+
+<Tag1/>
+```
+
 
 # Vercel
 

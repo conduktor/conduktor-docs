@@ -147,13 +147,13 @@ Go to `http://localhost:9090/targets` to see Prometheus scraping target status.
 
 If it fails, check that you can query metrics endpoint from `conduktor-console-cortex` container. 
 
-You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](https-configuration.md#https-configuration).
+You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](/platform/get-started/configuration/https-configuration/#https-configuration).
 
 ### No Slack notification alerts
 1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console. 
 2. Don't forget to manually add Slack App bot to the channel integrations you want to use for alerts notifications.
 3. Enable notifications in the **Alerts** tab, and select the same channel as previously. 
-4. [Create some alerts](../../navigation/monitoring/getting-started/create-alert.md).
+4. [Create some alerts](/platform/navigation/monitoring/getting-started/create-alert/).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
 
