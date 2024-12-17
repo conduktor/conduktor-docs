@@ -15,7 +15,7 @@ It contains a brief overview of the architecture followed by the steps on how to
 The Conduktor Marketplace offering is the Community Edition. If you are interested in our enterprise offering then [contact us](https://conduktor.io/contact/demo?utm_source=docs&utm_medium=product) for a free demo.
 
 :::info
-While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
+While this guide helps get you started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements) to meet your requirements.
 :::
 
 The template is designed for a speedy deployment, you'll be deployed in only a few clicks. You may however need to wait a few minutes for AWS to spin up the resources ☕.
@@ -32,60 +32,32 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
 1. Visit the [Marketplace listing page](https://aws.amazon.com/marketplace/pp/prodview-xjv65ie5rjtxu).
 
-1. Select `View purchase options`.
+2. Select `View purchase options`.
 
     ![AWS Marketplace](./assets/aws-marketplace-1.png)
 
-1. Accept the terms of service.
+3. Accept the terms of service.
 
     ![AWS Marketplace](./assets/aws-marketplace-2.png)
 
-1. Select `Continue to Configuration`.
+4. Select `Continue to Configuration`.
 
     ![AWS Marketplace](./assets/aws-marketplace-3.png)
 
-1. `Continue to Launch`. There is only one supported Software Version and fulfillment option available.
+5. `Continue to Launch`. There is only one supported Software Version and fulfillment option available.
 
     ![AWS Marketplace](./assets/aws-marketplace-4.png)
 
-
-1. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually.  
+6. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually.  
 Select `Quick launch CloudFormation template`.
 
     ![AWS Marketplace](./assets/aws-marketplace-5.png)
 
-1. This will open you up to the CloudFormation page with the template pre-filled. Press `Next`.
+7. This will open you up to the CloudFormation page with the template pre-filled. Press `Next`.
 
     ![AWS Marketplace](./assets/aws-marketplace-6.png)
 
-1. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
-
-
-
-
-8.  Give your stack a name and define/ review the parameters.
-
-    - If you have chosen the [CDK-lite-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-lite-template.yaml), then you will have to supply the following values before you can continue.
-
-    | Parameter | Value |
-    | -------- | ------- |
-    | `Subnet` | The ARN of the subnet you want to deploy your ECS service on. |
-    | `SecurityGroup` |  The Security group that will have access to your ECS service. |
-    | `ClusterArn` | The ARN of the cluster you want to deploy your ECS service on. |
-    | `DatabaseEndpoint` | The endpoint of your DB instance. |
-    | `DatabaseName` | The name of your DB instance. |
-    | `DatabaseUsername` | The username for the above DB instance. |
-    | `DatabasePassword` | The password for the above DB instance. |
-
-    ![Alt Config](assets/cloudformation-guide-3.png)
-
-    - If you have chosen the [CDK-Full-template](https://github.com/conduktor/quickstart-conduktor-cloudformation/blob/main/templates/CDK-full-template.yaml), then you **won't** have to supply any parameter values, but you may override the default ones.
-1. Create the default stack by clicking `Next`
-![create the stack](./assets/create-stack.png)
-
-1. Change the stack name, it won't accept the `.` from `0.0.1` , if you wish adjust the parameters, otherwise click `Next`.
-![choose stack name](./assets/stack-name.png)
-
+8. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
 
     :::warning
     Note the default value for the region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
