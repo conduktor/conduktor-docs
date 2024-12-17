@@ -57,13 +57,7 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
     ![AWS Marketplace](./assets/aws-marketplace-6.png)
 
-8. You will then be givem the option to change the stack name and review the parameters. Once you are happy with the parameters, press `Next`.
-
-    ![AWS Marketplace](./assets/aws-marketplace-7.png)
-
-9. Configure your stack options and achknowledge the tick box. Press `Next`.
-
-    ![AWS Marketplace](./assets/aws-marketplace-8.png)
+8. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
 
 
 
@@ -96,28 +90,36 @@ In this configuration all the resources are on a public subnet. However, the DB 
     Note the default value for the region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
     :::
 
+    ![AWS Marketplace](./assets/aws-marketplace-7.png)
 
-1. Acknowledge the tick box as resources will be created, and `Submit`.
+9.  Configure your stack options and acknowledge that the CloudFormation template will create IAM resources. Then press `Next`.
 
-    ![Alt Tickbox](assets/cloudformation-guide-5.png)
+    ![AWS Marketplace](./assets/aws-marketplace-8.png)
 
-1. Wait for all resources to be created. This may take some time, about 10 minutes depending how quickly AWS deploys RDS.
+10. You can then review the CloudFormation stack and then press `Submit`.
 
-1. From the "Resources" tab, click on `conduktor-ecs` then navigate to your newly created **Service** and then **Task**.  
+    ![AWS Marketplace](./assets/aws-marketplace-9.png)
 
-    ![Alt Cluster](assets/cloudformation-guide-6.png)
-    ![Alt Service](assets/cloudformation-guide-7.png)
-    ![Alt Task](assets/cloudformation-guide-8.png)
+11. Wait for all resources to be created. This may take some time, about 10 minutes depending how quickly AWS deploys RDS.
 
-1. Find the `conduktor-console` Container, **not** the `conduktor-console-cortex` container, and navigate to the **Network bindings** tab.
+    ![AWS Marketplace](./assets/aws-marketplace-10.png)
 
-    ![AWS Guide Breadcrumb](assets/aws-guide-8.png)
 
-1. Click on the **External** link to open the Console application.
+12. From the "Resources" tab, click on `${AWS::StackName}-conduktor-ecs-cluster` then navigate to your newly created **Service** and then **Task**. (Be sure to click on the links)  
 
-    ![AWS Guide Network Bindings](assets/aws-guide-9.png)
+    ![Alt Cluster](assets/aws-marketplace-11.png)
+    ![Alt Service](assets/aws-marketplace-12.png)
+    ![Alt Task](assets/aws-marketplace-13.png)
 
-    > In our example, our application is running at 3.122.113.99:8080.
+13. Find the `conduktor-console` Container, **not** the `conduktor-console-cortex` container, and navigate to the **Network bindings** tab.
+
+    ![AWS Guide Breadcrumb](./assets/aws-marketplace-14.png)
+
+14. Click on the **External** link to open the Console application.
+
+    ![AWS Guide Network Bindings](./assets/aws-marketplace-15.png)
+
+    > In our example, our application is running at 54.155.197.172:8080.
 
 ### Access Conduktor
 
