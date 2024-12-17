@@ -26,7 +26,7 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
 ## Networking & Architecture
 
-![AWS Deployment](./assets/conduktor.ecs.drawio.svg)
+![AWS Deployment](./assets/conduktor.ecs.png)
 
 ## Deployment Steps
 
