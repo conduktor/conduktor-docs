@@ -17,7 +17,7 @@ Console documentation is found under the `docs/platform` directory, and Gateway'
 
 - Images can be stored in an `assets` directory in the same folder as the MD file, and referenced with `![Alt text](assets/image.png)`.
 - If images are too large, you can resize them following [this section](#resizing-images).
-- Use relative links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
+- Use absolute links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
 - Anchor example, [env variables](/platform/get-started/configuration/env-variables/#auditlog-export-properties)
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
 
