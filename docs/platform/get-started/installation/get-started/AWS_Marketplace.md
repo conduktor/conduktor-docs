@@ -18,15 +18,15 @@ The Conduktor Marketplace offering is the Community Edition. If you are interest
 While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
 :::
 
-The template is designed for a speedy deployment, you'll be deployed in only a few clicks. You may however need to wait several minutes for AWS to spin up the resources ☕.
+The template is designed for a speedy deployment, you'll be deployed in only a few clicks. You may however need to wait a few minutes for AWS to spin up the resources ☕.
 
 ## Security
 
-In this configuration all the resources are on a public subnet. However, the DB instance is available on both private and public subnets. It is important to keep this in mind when using it.
+In this configuration all the resources are on a public subnet. However, the DB instance is available on both private and public subnets. Keep this in mind as part of any security concerns for the DB.
 
 ## Networking & Architecture
 
-![AWS Deployment](assets/conduktor.ecs.drawio.svg)
+![AWS Deployment](./assets/conduktor.ecs.drawio.svg)
 
 ## Deployment Steps
 
@@ -48,9 +48,9 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
     ![AWS Marketplace](./assets/aws-marketplace-4.png)
 
-1. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually. Select `Quick launch CloudFormation template`.
 
-1. Choose the `Quick launch CloudFormation template` to be taken directly to the CloudFormation console with the template pre-filled on your last previously used region. If you wish you may instead download the template file, adjust it and manually deploy yourself. The rest of the guide assumes you want to continue with quick launch.
+1. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually.  
+Select `Quick launch CloudFormation template`.
 
     ![AWS Marketplace](./assets/aws-marketplace-5.png)
 
@@ -105,8 +105,7 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
     ![AWS Marketplace](./assets/aws-marketplace-10.png)
 
-
-12. From the "Resources" tab, click on `${AWS::StackName}-conduktor-ecs-cluster` then navigate to your newly created **Service** and then **Task**. (Be sure to click on the links)  
+12. From the "Resources" tab, click on `${AWS::StackName}-conduktor-ecs-cluster`. From the **Cluster**, navigate to your newly created **Service** , and then to the **Task**. (Be sure to click on the links).  
 
     ![Alt Cluster](assets/aws-marketplace-11.png)
     ![Alt Service](assets/aws-marketplace-12.png)
@@ -124,6 +123,8 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
 ### Access Conduktor
 
-You will now be greeted with the create admin login, take note of the credentials you're about to create, they are for this instance, Conduktor cannot remotely interact with these. From here you can make additional local users if you want to add others, when ready for a production level deployment you will likely want to connect to SSO for importing your organization's existing users and groups.
+You will now be greeted with the create admin login, take note of the credentials you're about to create, they are for this instance, Conduktor cannot remotely interact i.e. reset these crednentials. From here you can make additional local users if you want to add other users. When you're ready for a production level deployment you will likely want to connect to SSO for importing your organization's existing users and groups.
 
 ![onboarding login](./assets/login.png)
+
+You have now deployed Conduktor Console through the AWS Marketplace.
