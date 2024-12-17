@@ -48,16 +48,17 @@ In this configuration all the resources are on a public subnet. However, the DB 
 
     ![AWS Marketplace](./assets/aws-marketplace-4.png)
 
-6. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually.<br>Select `Quick launch CloudFormation template`.
+1. You now can choose how you want to deploy the CloudFormation template. We offer a quicklink that will take you directly to the CloudFormation console with the template pre-filled on your last previously used region (What this guide will be covering). We also offer the raw CloudFormation template that you can download and deploy manually. Select `Quick launch CloudFormation template`.
+
 1. Choose the `Quick launch CloudFormation template` to be taken directly to the CloudFormation console with the template pre-filled on your last previously used region. If you wish you may instead download the template file, adjust it and manually deploy yourself. The rest of the guide assumes you want to continue with quick launch.
 
     ![AWS Marketplace](./assets/aws-marketplace-5.png)
 
-7. This will open you up to the CloudFormation page with the template pre-filled. Press `Next`.
+1. This will open you up to the CloudFormation page with the template pre-filled. Press `Next`.
 
     ![AWS Marketplace](./assets/aws-marketplace-6.png)
 
-8. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
+1. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
 
 
 
