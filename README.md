@@ -37,7 +37,7 @@ Available on the host/docs of any Console deployment, but also online at [develo
 Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml
 to the [/static/developers](./static/developers/openapi/console) directory.
 
-Add new versions to static/developers/openapi/manifest.json.
+Add new versions to `static/developers/openapi/manifest.json`.
 
 # Updating the Changelog
 
