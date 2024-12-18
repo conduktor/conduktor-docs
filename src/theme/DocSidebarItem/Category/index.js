@@ -9,9 +9,9 @@ import {
 import {
   findFirstSidebarItemLink,
   isActiveSidebarItem,
-  isSamePath,
   useDocSidebarItemsExpandedState,
-} from '@docusaurus/theme-common/internal'
+} from '@docusaurus/plugin-content-docs/client'
+import { isSamePath } from '@docusaurus/theme-common/internal'
 import { translate } from '@docusaurus/Translate'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import AngleDownIcon from '@site/src/svgs/angleDown'
