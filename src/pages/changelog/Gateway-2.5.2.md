@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - `PUT` can be used in both the User API and the Interceptor API to create resources when they don't already exist

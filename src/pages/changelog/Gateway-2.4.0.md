@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## User management unification
+### User management unification
 
 We refactored all authentication process to unify some concern accross all authentication mechanism in Gateway.
 
@@ -22,14 +22,14 @@ You can now easily create and manage Gateway users, associate them to your authe
 
 _New authentication flow_ : ![new_authentication_flow](/images/changelog/gateway/v2.4.0/new_authentication_flow.png)
 
-### API change
+#### API change
 
 The following `UserMapping` http API's now provide an optional body field `principal` to be able to define the principal for a mapping.
 
 - `/userMappings/v1`
 - `/userMappings/v1/vcluster/{vcluster}`
 
-### FAQ
+#### FAQ
 
 **- Do I need to recreate all my users?**
 
@@ -55,11 +55,11 @@ No, depending on your authentication provider, the principal (the authorization 
 
 By default if a `principal` is not defined when creating a `UserMapping` we define that the `principal` is the same as `username`.
 
-## Concentrated topics
+### Concentrated topics
 
 Logical partitions are no longer automatically remapped to another partition when their backing partitions are deleted.
 
-## Virtual clusters
+### Virtual clusters
 
 Virtual clusters are currently under rework and this release introduces some deprecations:
 
@@ -68,7 +68,7 @@ Virtual clusters are currently under rework and this release introduces some dep
 - We removed some string interpolation in the real topic concentration that were unused
 - We deprecated some fields in the response of the internal APIs (these APIs will probably go away in the next release)
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Concentration: Fix transaction support (but the support is still a bit experimental)
 - Concentration: Fix retention not emulated on `policy=compacted,deleted`

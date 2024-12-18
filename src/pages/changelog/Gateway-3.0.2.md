@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed a race condition when closing connections (i.e. when Gateway detects a broker is removed from the cluster) that was causing restarts/timeouts
 - Fix duplicated key exception when rebuilding fetch request with duplicated topics

@@ -8,5 +8,5 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed an issue where configuring Google OIDC without a `scope` was throwing an Exception.

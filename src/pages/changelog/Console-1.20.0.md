@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
 - [UI Navigation Overhaul](#ui-navigation-overhaul)
 - [Sort, Filter and Customize the Topic List & Consumer Group List](#sort-filter-and-customize-the-topic-list-consumer-group-list)
@@ -18,7 +18,7 @@ tags: features,fix
 
 ---
 
-### UI Navigation Overhaul
+#### UI Navigation Overhaul
 
 Transition more seamlessly between different areas of the Console with a new UI experience. Everything Kafka related can now be accessed from the side bar, making it easier to navigate directly to your desired location in even fewer clicks. This change consolidates the app experience and puts all of Conduktor's power at your fingertips!
 
@@ -26,7 +26,7 @@ Transition more seamlessly between different areas of the Console with a new UI 
 
 ---
 
-### Sort, Filter and Customize the Topic List & Consumer Group List
+#### Sort, Filter and Customize the Topic List & Consumer Group List
 
 It probably looks underwhelming on the surface, but trust us... it's big! 🚀
 
@@ -42,7 +42,7 @@ Need more? Give us feedback on [smart tables](https://conduktor.io/roadmap).
 
 ---
 
-### Import records from CSV
+#### Import records from CSV
 
 Need to dump previously exported data back into Kafka? See how your application responsds to pre-prepared test data? We (finally) got you covered! From within a topic, navigate to the producer tab to utilize the new import CSV functionality. 
 ![Import CSV](/images/changelog/platform/v20/import-csv.png)
@@ -51,7 +51,7 @@ Give us [feedback](https://conduktor.io/roadmap) on this feature.
 
 ---
 
-### Other features and improvements
+#### Other features and improvements
 
 When adding a filter to search in a specific field, the input is now an autocomplete text field instead of a dropdown list. It's now even quicker to create your own filters on the fly!  
 ![Autocomplete](/images/changelog/platform/v20/autocomplete.png)
@@ -62,7 +62,7 @@ The Table view quick filter buttons now generates Simple Filters instead of adva
 Say goodbye to internal UUIDs! URLs are now taking advantage of the user-defined technical id making sharable links all the more readable with colleagues.  
 ![Technical ID](/images/changelog/platform/v20/technical-id.png)
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Hide Provider tab secrets on the Cluster Configuration page
 - Adding an ACL in the Service Account page now adds the entry at the bottom of the list

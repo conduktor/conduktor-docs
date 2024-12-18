@@ -8,13 +8,13 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
-### Passthrough enhanced API UX
+#### Passthrough enhanced API UX
 
 New API paths have been added to the API for when GW is in the default `Passthrough` mode. This simplifies some of the interceptor paths by removing the need to include `/vcluster/passthrough/`. ![api-doc-udpated](/images/changelog/gateway/v2.3.0/api-doc-online.png)
 
-### Simple secret management
+#### Simple secret management
 
 Previously secrets had to be defined in the configuration of interceptors. Now, secrets can be stored on the client side setup in an environment variable which can be used by the interceptor.
 
@@ -47,13 +47,13 @@ New option
 ```
 
 
-## Enhancements
+### Enhancements
 
-### Encryption
+#### Encryption
 
 You now have the option of storing encryption configuration within a topic, rather than in the headers of the messages. This is a design option to be considered. Storing in the topic requires less storage, but now messages are no longer self-sufficient and will depend on this topic data. Set the environment variable for the name of the topic to be used and you're good to go. See [the docs](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names) for more.
 
-## Audit log filtering
+### Audit log filtering
 
 Finding an issue or a specific event in your Kafka isn't always straightforward, especially on many physical, or virtual, clusters. With enriched properties of the audit log we can now filter on;
 
@@ -64,7 +64,7 @@ Finding an issue or a specific event in your Kafka isn't always straightforward,
 - Consumer Group Ids
 - topicPartitions
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Changed behaviour for field level actions to be more lenient. Gateway will ignore fields that don't match the encryption or masking interceptor configuration, rather than throwing an exception
 - Changed behaviour for Oauth authorisation to be more secure. Gateway will prioritise Conduktor user-mappings when looking for which vcluster to connect to, if no user-mapping exists it fallback on claims, if no claim exist, the authorisation fails.

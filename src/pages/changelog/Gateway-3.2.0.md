@@ -8,8 +8,8 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Breaking Changes 💣
-### Two new backing topics are required for Gateway
+### Breaking Changes 💣
+#### Two new backing topics are required for Gateway
 In the next release (3.3), we'll bring a new API as well as support in the Conduktor [CLI](https://docs.conduktor.io/platform/reference/cli-reference/) to manage Gateway concepts using infra-as-code approach.  
 
 In preparation for this upcoming release, we are replacing some weakly-defined concepts in favor of strongly-defined concepts. The following are now clearly captured in the topics mentioned below:
@@ -26,7 +26,7 @@ If you are happy with the default names, you have nothing to do. If you want to 
 
 Check the [associated Documentation](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names) for more information.
 
-### Changes to ACL support on Gateway
+#### Changes to ACL support on Gateway
 With Gateway 3.1 we removed our dedicated ACL interceptor in favor of a new environment variable `GATEWAY_ACL_STORE_ENABLED`. This variable was enabling ACLs in all scenarios, whether you used Virtual Clusters or not.
 
 #### Changes for Gateway 3.2
@@ -66,7 +66,7 @@ spec:
 This will effectively render `GATEWAY_ACL_STORE_ENABLED` obsolete.
 
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed an issue with Field-level Avro encryption/decryption relating to [numeric fields](https://docs.conduktor.io/gateway/interceptors/data-security/encryption/encryption-faq/#how-does-encryption-work-with-avro-json-schema-and-protocol-buffers-records):
   - When using partial decryption with Avro schema registry, any numeric values (int, long, float, double) that are not being decrypted will instead be masked with the minimum (most negative) value for the numeric type

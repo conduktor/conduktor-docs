@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Performance is improved when using a large number of interceptors (backported in 3.0.5)
 - Pre-create folders when using RocksDB as a cache backend
