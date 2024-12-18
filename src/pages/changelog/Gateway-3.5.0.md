@@ -8,7 +8,9 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Breaking change: Local Users 💣
+### Breaking changes
+
+#### Breaking change: Local Users 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -20,7 +22,7 @@ If you are using Gateway services accounts from OIDC, mTLS, Delegated Kafka, you
 From this release, we will now strictly enforce that the username and the token matches in requests made to the Gateway where local service accounts are used. This will help reduce inconsistencies and avoid unexpected behaviors. If they do not match, requests will fail to authenticate.
 
 
-### Breaking change: Default SNI Host Separator
+#### Breaking change: Default SNI Host Separator
 In this release we have changed the default value for the separator used in the SNI routing configuration from a period `.` to a dash `-`. This is in order to better allow the use of wild card certificates when certificates are in use.  
 
 The format of the SNI routing host names is now as below:
@@ -35,7 +37,8 @@ The previous behaviour of Gateway can be configured by simply adding this to you
 
 For more information on SNI routing, see [its documentation](/gateway/how-to/sni-routing).
 
-### Use of In-memory KMS for Encryption  
+### Features ✨
+#### Use of In-memory KMS for Encryption  
 Gateway has always supported the use of an in memory KMS for encryption in order to provide an easy-to-use setting for testing and developing your encryption config. This mode is not however meant for production use as the state of the KMS is lost when Gateway restarts, rendering any data encrypted with it unrecoverable.
 
 Before this release, the in memory mode was the default setting and would be used as a fallback if no valid external KMS was detected in the encyrption setup.
@@ -48,12 +51,12 @@ If this, or any other valid KMS identifier, is not present the encryption plugin
 
 See [the encryption configuration docs](/gateway/interceptors/data-security/encryption/encryption-configuration) for more information.
 
-### Licence Expiry
+#### License Expiry
 
-We have altered the behaviour of the Gateway when your licence expires to provide a better experience. The behaviour is now as below:
+We have altered the behaviour of the Gateway when your license expires to provide a better experience. The behaviour is now as below:
 
-* We have added new metric `gateway.license.remaining_days` which you can monitor to track the time left on your licence
-* If the Gateway is currently running, do not automatically exit on license expiry. Rather, Gateway will now log a warning every hour that your licence is expired:
+* We have added new metric `gateway.license.remaining_days` which you can monitor to track the time left on your license
+* If the Gateway is currently running, do not automatically exit on license expiry. Rather, Gateway will now log a warning every hour that your license is expired:
 
 ```text
 License has expired! You need to add a valid license to continue using Conduktor Gateway. Checkout our documentation if unsure how to set the license
@@ -65,13 +68,13 @@ License has expired! You need to add a valid license to continue using Conduktor
 License will expire in less than {N} day(s)! You need to renew your license to continue using Conduktor Gateway
 ```
 
-* Finally, we now check your license earlier in the bootstrap sequence for Gateway, so it will fail fast with a clear message when your licence is expired.
+* Finally, we now check your license earlier in the bootstrap sequence for Gateway, so it will fail fast with a clear message when your license is expired.
 
-The key change here is that if your licence does expire, Gateway will not exit automatically anymore. It will continue running, logging warnings. Should you restart the Gateway in this state, it will then fail to start up - but there is no automatic shutdown. 
+The key change here is that if your license does expire, Gateway will not exit automatically anymore. It will continue running, logging warnings. Should you restart the Gateway in this state, it will then fail to start up - but there is no automatic shutdown. 
 
 ***
 
-### Quality of Life
+### Quality of Life Improvements ✨
 - Support for Kafka Clients up to 3.9
 - Improved compatibility and logging for dealing with kafka-client versions and version negotiations
 - Added support for multiple authentication mechanisms against Vault (AppRole, LDAP, ...)
@@ -89,6 +92,6 @@ The key change here is that if your licence does expire, Gateway will not exit a
 - Fix an issue when creating both a service account and a service account group through the cli to ensure the order of operations is always correct, preventing intermittent failures in this case.
 
 
-### Known issues
+#### Known issues
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag

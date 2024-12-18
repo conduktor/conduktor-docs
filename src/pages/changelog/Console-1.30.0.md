@@ -65,7 +65,7 @@ We have made more events available for the Audit Log Publisher:
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
 
-### Quality of Life improvements
+### Quality of Life improvements ✨
 
 - Alert lists in the resource pages have been updated to show the metric and condition, the alert state and a new column "Last Triggered"
 - Chargeback data can now be exported into a CSV file to enable easier integration with existing organization cost management data.
