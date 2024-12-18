@@ -8,9 +8,9 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Enhancements
+### Enhancements
 
-### Gateway mode
+#### Gateway mode
 
 You can now choose to setup your gateway in one of the following mode
 
@@ -20,21 +20,21 @@ You can now choose to setup your gateway in one of the following mode
 
 Previous `GATEWAY_FEATURE_FLAGS_SINGLE_TENANT` and `GATEWAY_FEATURE_FLAGS_MULTI_TENANCY` are migrated automatically.
 
-### ACL fixes
+#### ACL fixes
 
 Few ACL ordering/conflict patterns are now resolved. 
 We are now following [KIP679](https://cwiki.apache.org/confluence/display/KAFKA/KIP-679%3A+Producer+will+enable+the+strongest+delivery+guarantee+by+default)
 
-### Better error management
+#### Better error management
 
 Upon duplicate UserMapping creation we are now returning a `STATUS_CODE_CONFLICT` error code (or 409).
 
-### Gateway and Broker config
+#### Gateway and Broker config
 
 Gateway properties are now visible in the broker properties page
 
 ![gateway config](/images/changelog/gateway/v2.3.1/gateway-config.png)
 
-## General fixes 🔨
+### General fixes 🔨
 
 - We renamed `DuplicateResourcesPlugin` into `DuplicateMessagesPlugin` to better reflect the intent of the plugin. 

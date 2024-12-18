@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Append data quality error reporting to the the header produced in the Dead Letter Queue
 - Added a [swagger](https://github.com/swagger-api/swagger-ui) endpoint at `/swagger`

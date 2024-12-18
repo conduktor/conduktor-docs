@@ -8,9 +8,9 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
-### Full message encryption
+#### Full message encryption
 
 Conduktor Gateway gives you the flexibility and power of field-level encryption. However, sometimes you just want the simplicity of having the whole message encrypted. With the latest release you can now use the encryption plugin to encrypt the entire message at once.
 
@@ -40,13 +40,13 @@ With a simple interceptor added we can acheive full message encryption.
 
 ![full message encryption](/images/changelog/gateway/V2.2.2/fullMessage.png)
 
-## Fixes
+### Fixes
 
-### Feedback to altering concentrated topics
+#### Feedback to altering concentrated topics
 
 Concentrated topics will provide clear error messaging if you try to modify them. As concentrated topics from Conduktor are protected, in order to avoid disrupting a topic that is the source to several different applications, modifying anything other than `retention.ms` is prohibited. Now feedback is provided when attempting to do so.
 
-### General fixes 🔨
+#### General fixes 🔨
 
 - sql topics are now visible in Console when using passthrough mode
 - More rigorous masking of potential secrets in logs

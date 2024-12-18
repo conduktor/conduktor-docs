@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 * `GATEWAY_SECURED_METRICS`=`false` would not allow to access the prometheus metrics without security. This is now fixed.
