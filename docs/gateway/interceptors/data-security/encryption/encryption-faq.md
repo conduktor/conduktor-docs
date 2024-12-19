@@ -29,12 +29,9 @@ export const DEK = () => (
 );
 
 ## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Encryption and Decryption Processes](#encryption-and-decryption-processes)
-3. [Key Management](#key-management)
-4. [Encryption on Data with Avro, JSON Schema, and Protocol Buffers](#encryption-on-data-with-avro-json-schema-and-protocol-buffers)
-5. [Frequently Asked Questions](#faq)
+- [Introduction](#introduction)
+- [How It Works](#how-it-works)
+- [FAQ](#faq)
 
 ## Introduction
 
@@ -47,27 +44,32 @@ The Encryption interceptor is a robust and versatile solution for securing data 
 
 You can find more details about the encryptions types [here](../encryption-configuration/#encryption-types).
 
-### How It Works
-The encryption and decryption processes are seamlessly managed by the interceptor:
+## How It Works
+Once configured, the encryption and decryption processes are seamlessly managed by the interceptor.
 
-**Encryption**: The interceptor automatically identifies the data that needs to be encrypted, retrieves the appropriate encryption key from the Key Management Service (KMS), encrypts the data, and then transmits the encrypted message to its destination.
+**Encryption**: The interceptor identifies the data that needs to be encrypted & the KMS details to share the encryption key, Gateway will then encrypt and produce the message.
 
-**Decryption**: Similar to encryption, the interceptor can decrypt either the entire message, specific fields or all the fields, based on your configuration. It retrieves the decryption key from the KMS, decrypts the necessary data, and prepares the decrypted message for consumption.
+**Decryption**: Similar to encryption, the interceptor can decrypt either the entire message, specific fields or all the fields, based on your configuration.
+
+See [Encryption and Decryption Processes](#encryption-and-decryption-processes) below for more details.
 
 ### Flexibility and Compatibility
+You can refine how it's encrypted with a choice of algorithm and KMS provider.
+
 **Multiple Encryption Algorithms**: The interceptor supports a variety of encryption algorithms, allowing you to choose the one that best meets your security requirements.
 
 **KMS Integration**: It integrates with various Key Management Services (KMS), providing flexibility in how you manage and store encryption keys.
 
-## Encryption and Decryption Processes
+### Encryption and Decryption Processes
+Details on how the encryption takes place step by step. Jump to the [diagram](#key-management) below if you want the simplified steps involving the keys.
 
-### How Does Gateway Encrypt Data?
+#### How Does Gateway Encrypt Data?
 
-1. **Data Identification**: The interceptor first determines, based on its configuration, which data needs to be encrypted. This may include the entire message, specific fields, or all the fields within the message. For example, if you have configured the interceptor to encrypt a `password` field, it will target this field within the incoming Kafka record for encryption.
+1. **Data Identification**: The interceptor first determines, based on its configuration, what data needs to be encrypted. This may include the entire message, specific fields, or all the fields within the message. For example, if you have configured the interceptor to encrypt a `password` field, it will target this field within the incoming Kafka record for encryption.  
 
-2. **Key Retrieval**: The interceptor then retrieves the encryption key from the configured Key Management Service (KMS). Supported KMS options include Vault, Azure, AWS, GCP, or an in-memory service. The key is fetched using the `keySecretId` specified in your configuration to ensure the correct key is utilized. You can find more details about the key retrieval [here](#key-management).
+2. **Key Retrieval**: The interceptor then generates a key and shares it with the the configured Key Management Service (KMS), or retrieves it if existing. Supported KMS options include Vault, Azure, AWS, GCP, or an in-memory service for local development only. The key is fetched using the `keySecretId` specified in your configuration to ensure the correct key is utilized. You can find more details about the key retrieval [here](#key-management).
 
-3. **Encryption**: Once the key is retrieved, the interceptor encrypts the identified data using the specified encryption algorithm. The original data within the message is then replaced with the encrypted version.
+3. **Encryption**: Once the key is generated, or retrieved, the interceptor encrypts the identified data using the specified encryption algorithm. The original data within the message is now replaced with the encrypted version.
 
 4. **Transmission**: Finally, the encrypted data is either:
 - Stored as is if it is an Avro record
@@ -77,7 +79,7 @@ And is then transmitted as a string to the designated destination.
 
 You can find more details about this last point [here](#encryption-on-data-with-avro-json-schema-and-protocol-buffers).
 
-### How Does Gateway Decrypt Data?
+#### How Does Gateway Decrypt Data?
 
 1. **Data Identification**: The interceptor first determines, based on its configuration, which data needs to be decrypted. This may include the entire message, specific fields, or all the fields within the message.
 
@@ -90,8 +92,6 @@ You can find more details about this last point [here](#encryption-on-data-with-
 Note: The encryption and decryption processes are fully transparent to the end-user or application. The interceptor manages all these operations, allowing you to concentrate on your core business logic.
 
 ### Key Management
-
-#### Envelope Encryption
 
 The interceptor uses the `envelope encryption` technique to encrypt the data. 
 
@@ -113,7 +113,7 @@ To **encrypt** the data, the Gateway:
 
 To **decrypt** the data, the Gateway:
 1. Retrieves the <EDEK/> that's stored with the encrypted data
-2. Sends the <EDEK/> and the <KEK/> to the <KMS/>, so it decrypts it and returns the <DEK/>
+2. Sends the <EDEK/> to the <KMS/>, which decrypts it (using the <KEK/>) and returns the <DEK/> to Gateway
 3. Decrypts the data using the <DEK/>
 
 ![envelope encryption](../../../medias/encryption.png)
@@ -121,11 +121,13 @@ To **decrypt** the data, the Gateway:
 ### Optimizing Performance with Caching
 To reduce the number of calls to the <KMS/> and avoid some of the steps detailed above, the interceptor caches the <DEK/> in memory. The cache has a configurable Time to Live (TTL), and the interceptor will call the <KMS/> to decrypt the <EDEK/> if the <DEK/> is not in the cache, as detailed in the steps 1 and 2 above.
 
-## How does encryption work with Avro, JSON Schema, and Protocol Buffers records?
+## FAQ
+
+### How does encryption work with Avro, JSON Schema, and Protocol Buffers records?
 
 Encrypting data, regardless of its type, results in a string.
 
-### Problem
+**Problem**  
 
 This transformation poses a problem for strongly typed serialization formats like Avro, JSON Schema, and Protocol Buffers, especially for field that are not strings.
 
@@ -140,7 +142,7 @@ We have two approaches to address this issue, depending on your Gateway version 
 - **Gateway >= 3.3.0 and Avro format**: the record is stored in Avro in the backing Kafka, and the encrypted non-string fields are stored in the headers of the record.
 :::
 
-### Before 3.3.0 (and later for Protobuf and JSON Schema)
+#### Before 3.3.0 (and later for Protobuf and JSON Schema)
 
 To address this issue, we store all encrypted data in a JSON format in the backing Kafka, and we get it back to its original format during decryption.
 If a field cannot be decrypted due to a lack of permissions, it is replaced with a default value to maintain schema compatibility.
@@ -155,7 +157,7 @@ When decrypting:
 - If decryption is successful and the user has the necessary permissions, the salary is restored to its original numeric value.
 - If decryption fails due to insufficient permissions, the salary is set to a default value (e.g., 0) instead of the encrypted string.
 
-### Starting from 3.3.0 (Avro only)
+#### Starting from 3.3.0 (Avro only)
 
 However, with the approach detailed above, we saw a few limitations:
 - As the data pushed to Gateway are in Avro format (for instance), and the consumers expect Avro too, then the data **must** be decrypted to get back to its expected format.
@@ -173,13 +175,13 @@ The existing configuration is still supported, but the default behavior has chan
 
 So now, if the field type isn't a string, the interceptor will set it to the minimum value of its type (`-2147483648` for integers, `1.4e-45` for floats, etc.) instead of converting it to a JSON object. Its encrypted value will be a string stored in the headers of the record.
 
-## Does the interceptor support key rotation?
+### Does the interceptor support key rotation?
 
-Key rotation is a crucial aspect of cryptographic key management, typically handled at the KMS level. While the interceptor does not directly manage key rotation, it transitions to using new keys for encryption and decryption when a key is rotated within the KMS, ensuring continued security without manual intervention.
+Yes, from the KMS. Key rotation is a crucial aspect of cryptographic key management, typically handled at the KMS level. While the interceptor does not directly manage key rotation, it transitions to using new keys for encryption and decryption when a key is rotated within the KMS, ensuring continued security without manual intervention.
 
 However, if the KEK in the KMS is rotated, the interceptor might continue using an older DEK version if it is still [cached](#optimizing-performance-with-caching). To ensure the interceptor uses the latest KEK version, you can configure a shorter Time to Live (TTL) for the cache. Be aware that this may result in more frequent KMS calls, which could impact performance.
 
-## Is the KMS called on a per-message basis?
+### Is the KMS called on a per-message basis?
 
 The interceptor's interaction with the KMS depends on its configuration:
 
@@ -189,23 +191,23 @@ The interceptor's interaction with the KMS depends on its configuration:
 
 For more information, refer to the [Key Management](#key-management) section.
 
-## What happens if the interceptor is unable to encrypt the message?
+### What happens if the interceptor is unable to encrypt the message?
 
 If the interceptor fails to encrypt a message, it will generate an error (1) for the client, (2) in the Gateway container logs, and (3) in the Gateway audit log topic, preventing the message from being sent to its destination. This safeguard ensures that sensitive data is always securely encrypted before sending to backing Kafka.
 
-## What happens if the interceptor is unable to decrypt the message?
+### What happens if the interceptor is unable to decrypt the message?
 
 If the interceptor is unable to decrypt a message, the encrypted message will be returned to the client. This ensures that sensitive data remains protected and is not exposed to unauthorized third parties.
 
-## When does the Gateway call the KMS? Do we store the keys in the interceptor?
+### When does the Gateway call the KMS? Do we store the keys in the interceptor?
 
 The interceptor caches keys in memory, with a configurable time-to-live (TTL) for the [cache](#optimizing-performance-with-caching). If a key is not found in the cache, the interceptor will call the KMS to decrypt and retrieve the key. For further details, refer to the [Key Management](#key-management) section.
 
-## Can I use encrypted data as the `keySecretId`?
+### Can I use encrypted data as the `keySecretId`?
 
 No, you cannot use encrypted data as the `keySecretId`, because the value of a field will be replaced with its encrypted value.
 
-## What is the difference between the Encryption on Produce and the Encryption on Consume interceptors?
+### What is the difference between the Encryption on Produce and the Encryption on Consume interceptors?
 
 **Encryption on Produce Interceptor**: This interceptor encrypts data before it is sent to the destination. It ensures that sensitive information is securely encrypted before it leaves your infrastructure and it's sent to the backing Kafka.
 
