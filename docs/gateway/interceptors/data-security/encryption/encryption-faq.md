@@ -125,26 +125,24 @@ To reduce the number of calls to the <KMS/> and avoid some of the steps detailed
 
 ### How does encryption work with Avro, JSON Schema, and Protocol Buffers records?
 
-Encrypting data, regardless of its type, results in a string.
-
-**Problem**  
-
-This transformation poses a problem for strongly typed serialization formats like Avro, JSON Schema, and Protocol Buffers, especially for field that are not strings.
-
-For instance, encrypting a numeric salary value of `2000` yields an encrypted string such as `XQS213KKDK2Q`.
-
-This string is incompatible with a schema expecting a numeric type. This means that you will not be able to deserialize the encrypted data as is, as it will not match the schema, unless you decrypt these fields first.
-
-We have two approaches to address this issue, depending on your Gateway version and your serialization format.
-
 :::tip[**TL;DR**]
+- **Gateway >= 3.3.0 and Avro format**: The record is stored in Avro in the backing Kafka, and the encrypted non-string fields are stored in the headers of the record.
 - **Gateway < 3.3.0 or Protobuf / JSON schema**: the record is stored in JSON in the backing Kafka and will not be compatible with the schema if the encrypted fields are not strings.
-- **Gateway >= 3.3.0 and Avro format**: the record is stored in Avro in the backing Kafka, and the encrypted non-string fields are stored in the headers of the record.
 :::
+
+#### From 3.3.0 (Avro only)
+
+This is **for Avro only** field-level encryption, for formats like Protobuf and JSON Schema, the below has no effect.
+
+Gateway runs with `schemaDataMode` set to `preserve_avro` , to preserve the original record type. The plugin maintains the Avro format of the record rather than converting it to JSON, as was the previous behavior.
+
+When the field type isn't a string, the interceptor will set it to the minimum value of its type (`-2147483648` for integers, `1.4e-45` for floats, etc.). Its encrypted value will be a string stored in the headers of the record.
+
+If you want to fall back to legacy behavior of converting to JSON, you can explicitly set `"schemaDataMode": "convert_json"`.
 
 #### Before 3.3.0 (and later for Protobuf and JSON Schema)
 
-To address this issue, we store all encrypted data in a JSON format in the backing Kafka, and we get it back to its original format during decryption.
+In legacy versions of Gateway we store all encrypted data in a JSON format in the backing Kafka, and we get it back to its original format during decryption.
 If a field cannot be decrypted due to a lack of permissions, it is replaced with a default value to maintain schema compatibility.
 
 **Example:** Consider the case of a salary field:
@@ -157,23 +155,11 @@ When decrypting:
 - If decryption is successful and the user has the necessary permissions, the salary is restored to its original numeric value.
 - If decryption fails due to insufficient permissions, the salary is set to a default value (e.g., 0) instead of the encrypted string.
 
-#### Starting from 3.3.0 (Avro only)
+This had it's issues which is why we changed the design to the above:
 
-However, with the approach detailed above, we saw a few limitations:
 - As the data pushed to Gateway are in Avro format (for instance), and the consumers expect Avro too, then the data **must** be decrypted to get back to its expected format.
 - The Decryption plugin cannot be applied without decrypting a field. This means that your consumers are not able to consume data in its original format without decrypting at least one field.
 - Even if the field encrypted is a string, we still store it as a JSON, even though it is not necessary.
-
-To address these limitations, we reviewed in the version 3.3.0 our encryption plugin (on field-level only) to improve its behavior. For the moment, this is **for Avro only**, but we plan to expand it to other formats in the future.
-
-We've introduced a new mode called `schemaDataMode` to preserve the original record type. By default, this is set to `preserve_avro`, meaning that the plugin will now maintain the Avro format of the record rather than converting it to JSON, as was the previous behavior.
-
-For formats like Protobuf and JSON Schema, this setting is ignored and has no effect.
-
-The existing configuration is still supported, but the default behavior has changed to preserve Avro messages as Avro when performing field-level encryption. If you want to fall back to the previous behavior of converting to JSON, you can explicitly set `"schemaDataMode": "convert_json"`.
-
-
-So now, if the field type isn't a string, the interceptor will set it to the minimum value of its type (`-2147483648` for integers, `1.4e-45` for floats, etc.) instead of converting it to a JSON object. Its encrypted value will be a string stored in the headers of the record.
 
 ### Does the interceptor support key rotation?
 
