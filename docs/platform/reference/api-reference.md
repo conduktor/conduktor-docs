@@ -18,7 +18,7 @@ Only members of the Admin group can generate API keys and access the API.
 
 From within the API documentation portal, you can **download** the OpenAPI specification. This allows you to import the OpenAPI specification in tools such as [Postman](https://www.postman.com/).
 
-![api-specification.png](./img/console-api.png)
+![API specification.png](assets/console-api.png)
 
 ## Generate an API key
 

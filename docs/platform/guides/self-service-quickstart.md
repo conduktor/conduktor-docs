@@ -156,7 +156,7 @@ The API key we've been using up until now has been an Admin API key, so truth be
     eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
    ````
 
-![create app api key](./assets/create-app-api-key.png)
+![Create Application Instance API key](assets/create-app-api-key.png)
 
 2. Leave the CLI container
     ````bash
