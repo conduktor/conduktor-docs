@@ -238,6 +238,12 @@ import RecordDetails from './img/topic-browse.png';
 
 <img src={RecordDetails} alt="Record details" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
+The **Share** button will lead you to a page dedicated to this record, allowing you to share it with your colleagues, and to get more details about it.
+
+import ShareRecord from './img/record-details.png';
+
+<img src={ShareRecord} alt="Share a record" style={{ width: 700, display: 'block', margin: 'auto' }} />
+
 ### Data tab
 
 The Data tab lets you visualize your record's Key and Value.

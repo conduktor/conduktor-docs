@@ -10,7 +10,7 @@ JS filter is used to filter Kafka records. The filter is evaluated on each recor
 
 :::caution
 This filter is not the preferred method.  
-We recommend that you use the simpler and more performant filters: [Global Search](../consume/#global-search) and [Search in a Specific field](../consume/#search-in-a-specific-field) .
+We recommend that you use the simpler and more performant filters: [Global Search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a Specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
 :::
 
 The code has to return a boolean.
