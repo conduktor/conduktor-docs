@@ -4,7 +4,6 @@ title: Topic Consume
 description: Reference Documentation for Topic related pages
 ---
 
-
 - [Configure the Kafka Consumer](#configure-the-kafka-consumer)
   - [Show From](#show-from)
   - [Limit](#limit)
@@ -33,24 +32,21 @@ description: Reference Documentation for Topic related pages
   - [Save \& Load Filter Templates](#save--load-filter-templates)
 
 :::info
-
 **Checkout our video that presents the most important features of Topic Consume**  
 
 [Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
 :::
 
-
-
 ## Configure the Kafka Consumer
 
-When you access a Topic from the Topic List page for the first time, a consume is automatically triggered with default settings:
+When you access a Topic from the Topic List page for the first time, a consumer is automatically triggered with default settings:
 
 -   Show From: `Most recent`
 -   Limit: `500 records`
 -   Partitions: `All`
 
 This default setup lets you quickly browse through the 500 most recent messages produced in the topic.
-![img.png](img/topic-default.png)
+![Default topic consumer](img/topic-default.png)
 
 There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
 
@@ -58,30 +54,34 @@ There's a good chance this will not correspond to your requirements, so let's ex
 
 `Show From` defines the starting point for the Kafka Consumer in your topic.
 
-![Capture d’écran 2023-12-12 à 11.05.23.png](img/topic-show-from-choice.png)
+import ShowFromOptions from './img/topic-show-from-choices.png';
+
+<img src={ShowFromOptions} alt="Show from options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 The possible values are as follow:
 
 -   `Most Recent` option works differently depending on the **Limit** that you select
     -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
-        -   [How Most Recent 500 works?](../most-recent/)
+        -   [How Most Recent 500 works?](/platform/navigation/console/topics/topic-consume/most-recent/)
     -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
--   `Latest Hour`, `Today`, `Yesterday` to start the consumer respectively
+-   `Latest hour`, `Today`, `Yesterday` to start the consumer respectively
     -   60 minute ago,
     -   At the beginning of the day at 00:00:00 (Local Timezone based on your browser)
     -   At the beginning of the day before at 00:00:00 (Local Timezone)
 -   `Beginning` to start the consumer from the very beginning of the topic.
 -   `Date` and `Timestamp` to start from a specific point in time datetime or an epoch
-    -   Date: ISO 8601 DateTime format with offset `2023-12-21T00:00:00+00:00`
-    -   Timestamp: Unix timestamp in **milliseconds** `1702312803000`
--   `Offset` to start the consumer at a specific offset. Best when used in conjunction with a single **Partition** setting
+    -   Date: ISO 8601 DateTime format with offset `2024-12-21T00:00:00+00:00`
+    -   Timestamp: Unix timestamp in **milliseconds** `1734949697000`
+-   `Offset` to start the consumer at a specific offset, ideal for use with a single **Partition** setting.
 -   `Consumer Group` to start the consumer from the last offsets committed by a consumer group on this topic.
 
 ### Limit
 
 `Limit` defines when your consumer must stop.
 
-![Capture d’écran 2023-12-12 à 11.06.00.png](img/topic-limit-choice.png)
+import LimitOptions from './img/topic-limit-choices.png';
+
+<img src={LimitOptions} alt="Limit options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 Possible choices are:
 
@@ -97,13 +97,17 @@ Possible choices are:
 
 `Partitions` lets you restrict the consumer to only consume from certain partitions of your topic. By default, records from **all partitions** are consumed.
 
-![Capture d’écran 2023-12-12 à 11.06.50.png](img/topic-partition-choice.png)
+import PartitionsOptions from './img/topic-partitions-choices.png';
+
+<img src={PartitionsOptions} alt="Partitions options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 ### Key & Value Format
 
 `Key format` and `Value format` lets you force the deserializer for your topic.
 
-![Capture d’écran 2023-12-12 à 11.07.23.png](img/topic-deser.png)
+import TopicKeyFormatOptions from './img/topic-key-format-choices.png';
+
+<img src={TopicKeyFormatOptions} alt="Key format choices" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 #### Automatic Deserializer
 
@@ -118,22 +122,25 @@ It also lets you to visualize the binary data in topics `__consumer_offsets` and
 
 Automatic deserializer applies independently to each record. If messages have been serialized differently, they will all be presented in the most human readable way.  
 The following captures show the same records deserialized using ByteDeserializer, then Automatic Deserializer  
-![img.png](img/topic-byte-serdes.png)
-![Capture d’écran 2023-12-12 à 11.48.59.png](img/topic-3-deser.png)
+
+<!-- Couldn't reproduce the same records with 1.30.0, so I'm using the old pics - [CUS-490: Internal - Automatic deser changed](https://linear.app/conduktor/issue/CUS-490/internal-automatic-deser-changed) -->
+
+![Deserializer with bytes](img/topic-bytes-deserializer.png) 
+![Deserializer with automatic](img/topic-auto-deserializer.png)
 
 #### Custom Deserializer
 If you have installed them, your Custom Deserializers will appear here.  
 Optionally configure them using the `Properties` text and your messages will show as expected.  
 
 Check our guide on how to [Install & Configure Custom Deserializers](/platform/guides/custom-deserializers/) in Console.
-![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
+![Consume with a custom deserializer](img/topic-custom-deserializer.png)
 
 
 #### JSON Deserializer
 
 JSON Deserializer will explicitly fail on records that doesn't match a JSON type.
 
-![Capture d’écran 2023-12-12 à 13.28.57.png](img/topic-json-deser-fail.png)
+![Consume with JSON deserializer](img/topic-json-deser-fail.png)
 
 #### Bytes Deserializer
 
@@ -157,7 +164,7 @@ will be represented like this:
 \x00\x00\x00\x00\x07\x10I'm AVRO
 ```
 
-![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-byte-serdes.png)
+![Deserializer with bytes](img/topic-bytes-deserializer.png)
 
 
 ## Filter records
@@ -168,21 +175,21 @@ Console give you 3 methods to define filters that will be executed on the server
 
 Global Search is the most simple type of filter you can use.
 
--   Specify whether to look in the Key or in the Value,
--   pick an operator (contains, not contains, equals, not equals)
--   type your search term
+1. Specify whether to look in the Key or in the Value,
+2. Pick an operator (contains, not contains, equals, not equals)
+3. Type your search term
 
 :::info
 Internally, this will treat the record Key or Value as text to apply the operation (contains, equals, ...).  
 This might not be the preferred approach if your record is JSON-ish
 :::
 
-![Capture d’écran 2023-12-13 à 10.07.05.png](img/topic-global-filter.png)
+![Global search](img/topic-global-filter.png)
 
 ### Search in a Specific Field
 
 You can make your search more fine-grained by activating "Search in a specific field".
-![img_1.png](img/topic-search-infield.png)
+![Search in a specific field](img/topic-search-infield.png)
 :::info
 Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
 Examples:  
@@ -226,13 +233,21 @@ Use the arrow keys to navigate between messages: ⬆️ ⬇️
 :::
 
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
-![img_2.png](img/topic-browse.png)
+
+import RecordDetails from './img/topic-browse.png';
+
+<img src={RecordDetails} alt="Record details" style={{ width: 600, display: 'block', margin: 'auto' }} />
+
 ### Data tab
 
 The Data tab lets you visualize your record's Key and Value.
 
 If your record Value is serialized with JSON or using a Schema Registry it is presented by default using the Table view. You can also switch to the JSON view if necessary.
-![img_3.png](img/topic-browse-json-table.png)
+
+import DataTabs from './img/topic-browse-json-table.png';
+
+<img src={DataTabs} alt="Data tabs" style={{ width: 600, display: 'block', margin: 'auto' }} />
+
 The 2 views have different features associated.
 
 #### Table View
@@ -241,7 +256,7 @@ The table view lets you visualize your message field by field and also gives you
 
 Filters are available for:
 
--   **string **fields
+-   **string** fields
 -   **number** fields
 -   **bool** fields
 
@@ -261,15 +276,15 @@ The basic syntax lets you focus on sub-elements of your record, as shown in the 
 .meta.domain // Renders a single String
 { id, meta } // Renders a new JSON with both elements
 ```
-![img_4.png](img/topic-browse-json.png)
+![See JQ filter](img/topic-browse-json.png)
 Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-construction) for more advanced use-cases.
 
 ### Headers tab
 
 The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
-![img_5.png](img/topic-header-funnel.png)
+![Headers tab](img/topic-header-funnel.png)
 The resulting filter will be created:
-![Capture d’écran 2024-01-12 à 12.12.14.png](img/topic-header-filter.png)
+![Filter on headers](img/topic-header-filter.png)
 
 :::caution
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
@@ -280,13 +295,17 @@ If your producer doesn't write header values as UTF8 String, this tab might not 
 
 The metadata tab gives you all the other information regarding your record that could be useful under certain circumstances. The information presented are as follow:
 
--   Record Partition
--   Record Offset
--   Record Timestamp
--   The Key and Value Serializer inferred by the [Automatic Deserializer](#automatic-deserializer)
--   Key Size and Value Size (how it's serialized on the broker)
+- Record Partition
+- Record Offset
+- Record Timestamp
+- The Key and Value Serializer inferred by the [Automatic Deserializer](#automatic-deserializer)
+- Key Size and Value Size (how it's serialized on the broker)
+- Compression type
+- Schema ID if any
 
-![Capture d’écran 2024-01-12 à 12.15.34.png](img/topic-metadata.png)
+import MetadataTab from './img/topic-metadata.png';
+
+<img src={MetadataTab} alt="Metadata tab" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 ## Operations
 
@@ -295,23 +314,42 @@ The metadata tab gives you all the other information regarding your record that 
 You have the ability to export the records in either JSON or CSV format.
 
 CSV particularly useful in particular because you can use Console to re-import them either in a new topic or in the same topic after having modified them (or not)
-![img_5.png](img/topic-export.png)
+![Export records from a topic](img/topic-export.png)
 The resulting files will look like this:
-![img_5.png](img/topic-export-result.png)
+![Export results](img/topic-export-result.png)
+
 ### Reprocess Record
 
 This feature lets you pick a record from the list and reprocess it either in the same or in a different topic, while letting you change its content beforehand.
 
 Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjustments before **(3)**.
-![img_6.png](img/topic-reprocess.png)
-### Save & Load Filter Templates
 
-If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, you can save your current view as a template for reuse.
+![Reprocess a record](img/topic-reprocess.png)
 
-Save icon button will prompt you to enter a name to your template:
-![img_7.png](img/topic-template-save.png)
-And the Load icon button will present you with the available template and you can choose to Load one:
-![Capture d’écran 2024-01-12 à 14.13.49.png](img/topic-template-load.png)
+Know more about [How to reprocess records](/platform/guides/reprocess/).
 
+### Save & Load Views
 
+If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, or if you'd like to share them with your colleagues, you can save your current view as a template for reuse.
+
+**Create a new view**
+
+Click on the Save icon button to save your current view as a template:
+![Save a new view](img/save-new-view.png)
+
+From there, you can name your view, add a description, and select whether this view is private, or if you want everyone in your organization to be able to see it and use it.
+
+![Fill the view details](img/create-shared-view.png)
+
+**List the existing views**
+
+To list the existing views, click on the folder icon:
+
+![List existing views](img/shared-views.png)
+
+From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
+
+import SharedViews from './img/list-shared-views.png';
+
+<img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
           

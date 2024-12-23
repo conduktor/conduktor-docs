@@ -8,7 +8,7 @@ description: Reference Documentation for Topic related pages
 
 The Topic page lets you search for any topic on your currently selected Kafka cluster.
 :::caution
-Configure** RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
+Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::
 Multiple search capabilities can be combined to help you find to the topic you want faster.
@@ -19,7 +19,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 -   Show/Hide Internal topics (starts with `_`)
 -   Show/Hide Kafka Stream topics (ends with `-repartition` or `-changelog`)
 -   Cleanup policy
--   Tags (click on tag to add/remove them from the filters, [See Topic Tagging](#topic-tagging))
+-   Labels (click on a label to add/remove it from the filters, [See Add Topic Label](#manage-topic-labels))
 
 **Sorting** is possible on all columns.
 
@@ -28,7 +28,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 :::info
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
 :::
-![img.png](img/topic-list.png)
+![Topics](img/topic-list.png)
 
 ## Operations
 
@@ -44,7 +44,9 @@ If you want to understand more deeply what those parameters are about, here's so
 [Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
 :::
 
-![Image](img/topic-create.png)
+import CreateTopic from './img/topic-create.png';
+
+<img src={CreateTopic} alt="Create a topic" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 **Topic name**
 
@@ -66,9 +68,9 @@ Default: `min(3, number of brokers)`
 
 The Cleanup policy (along with its associated advanced configurations) controls how the retention of your messages is done.
 
-**Tags**
+**Labels**
 
-Use tags to organize your topics and facilitate searching them in Console
+Use labels to organize your topics and facilitate searching them in Console. Each label is a key-value pair.
 
 **Advanced configuration**
 
@@ -76,7 +78,10 @@ Upon toggling the Advanced configuration, you will be shown all the available to
 :::info
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 :::
-![Image](img/topic-create-advanced.png)
+
+import CreateTopicAdvanced from './img/topic-create-advanced.png';
+
+<img src={CreateTopicAdvanced} alt="Topic advanced properties" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 ### Add partitions
 
@@ -84,7 +89,10 @@ Increase the number of partitions for your topic. Number of partitions cannot be
 :::caution
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 :::
-![Image](img/topic-add-partitions.png)
+
+import AddPartitions from './img/topic-add-partitions.png';
+
+<img src={AddPartitions} alt="Add partitions" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 ### Empty topic
 
@@ -92,25 +100,30 @@ This lets you delete all records from a topic. This operation is permanent and i
 
 If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
 
-![Image](img/topic-empty.png)
+import EmptyTopic from './img/topic-empty.png';
+
+<img src={EmptyTopic} alt="Empty a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 ### Delete topic
 
 This lets you delete the topic from Kafka. This operation is permanent and irreversible.
 
-![Image](img/topic-delete.png)
+import DeleteTopic from './img/topic-delete.png';
+
+<img src={DeleteTopic} alt="Delete a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
           
-### Topic Tagging
-You can help categorize your Topics further using tags.  
-**Associate Tags**  
-To tag a topic, click the "Add tags" button from the topic details view and start typing to find available tags.  
-![Image](img/tag-add.png)
-If the tag you need doesn't exist, a button will appear to create a new tag.  
-Then, check the tag(s) you want to associate to the topic and click "Apply".  
-![Image](img/tag-new.png)  
-**Remove Tags**  
-To remove tags, simply click the "X" icon on the tag name. No confirmation.  
-![Image](img/tag-delete.png)  
-:::tip
-Resource tagging is a power filtering feature that helps your organization & projects structure their resources.
-:::
+### Manage topic labels
+
+You can help categorize your Topics further using key-value pairs called labels.
+
+To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
+
+import EditLabel from './img/label-edit.png';
+
+<img src={EditLabel} alt="Edit labels" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
+
+import LabelNew from './img/label-new.png';
+
+<img src={LabelNew} alt="Add new labels" style={{ width: 400, display: 'block', margin: 'auto' }} />
