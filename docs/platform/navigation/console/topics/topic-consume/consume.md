@@ -352,4 +352,3 @@ From here, you will see your private views, and the organization views that you 
 import SharedViews from './img/list-shared-views.png';
 
 <img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
-          
