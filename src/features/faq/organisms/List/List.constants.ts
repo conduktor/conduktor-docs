@@ -71,7 +71,7 @@ export const items = [
   {
     question:
       'What platforms do the monitoring and alerting capabilities integrate with?',
-    answer: 'Conduktor integrates with Microsoft Teams and Slack for third-party alerting. Conduktor also exposes metrics in <a href="https://docs.conduktor.io/platform/reference/metric-reference/" target="_blank"Prometheus format</a> so that they can be scraped and integrated with an external log management system.',
+    answer: 'Conduktor integrates with Microsoft Teams and Slack for third-party alerting. Conduktor also exposes metrics in <a href="https://docs.conduktor.io/platform/reference/metric-reference/" target="_blank">Prometheus format</a> so that they can be scraped and integrated with an external log management system.',
   },
   {
     question: 'How are the cluster credentials I enter on the platform stored?',
