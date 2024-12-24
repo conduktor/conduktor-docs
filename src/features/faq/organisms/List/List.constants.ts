@@ -45,7 +45,7 @@ export const items = [
   },
   {
     question: 'What kind of compliance certifications does Conduktor have?',
-    answer: 'Conduktor is SOC 2 Type 2 compliant and conducts regular penetration testing on our products. The reports are avaialble as requested.',
+    answer: 'Conduktor is SOC 2 Type 2 compliant and conducts regular penetration testing on our products. The reports are available as requested.',
   },
   {
     question: 'What are the suggested settings for running the docker image?',
