@@ -66,7 +66,7 @@ export const items = [
     question:
       'Is a separate Docker image required to get the Monitoring and Alerting features of Conduktor?',
     answer:
-      'Yes, the Conduktor deployment depends on an additional image `conduktor-console-cortex` to support monitoring and alerting capabilities. See how the configuration and dependencies should be declared in the <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/docker/#advanced-setup" target="_blank"docker compose</a> example. ',
+      'Yes, the Conduktor deployment depends on an additional image `conduktor-console-cortex` to support monitoring and alerting capabilities. See how the configuration and dependencies should be declared in the <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/docker/#advanced-setup" target="_blank">docker compose</a> example. ',
   },
   {
     question:
