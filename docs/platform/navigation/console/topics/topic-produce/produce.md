@@ -16,17 +16,17 @@ It is already configured with [sensible defaults](#sensible-defaults) that you c
 
 Each section from the accordion menu will allow you to configure the Kafka producer further: Key, Value, Headers, Flow and Additional options.
 
-![Capture d’écran 2024-01-12 à 16.54.58.png](img/produce-accordion.png)
+![Produce accordion](img/produce-accordion.png)
 
 ### Key & Value
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
-![Capture d’écran 2024-01-12 à 17.19.05.png](img/produce-serializers.png)
+import ProduceSerializers from './img/produce-serializers.png';
 
-The default Serializer is **String**.
+<img src={ProduceSerializers} alt="Produce serializers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
-If you have a matching subject name in your Schema Registry (with the **TopicNameStrategy**) the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema) with the subject name set to `<topic-name>-key` or `<topic-name>-value`
+The default serializer is **String**, unless you have a matching subject name in your Schema Registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
 :::caution
 If using a Schema Registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
@@ -36,14 +36,17 @@ If using a Schema Registry, please note that Conduktor currently only supports p
 The "Generate once" button will generate a message that conforms to the picked Serializer.
 
 This works with Schema Registry serializers as well:
-![Image](img/produce-random-data-gen.png)
+![Produce random data](img/produce-random-data-gen.png)
 
 ### Headers
 
 The Headers section lets you add headers to your message.
 
 Header Key and Header Value both expect valid UTF8 String.
-![Image](img/produce-headers.png)
+
+import ProduceHeaders from './img/produce-headers.png';
+
+<img src={ProduceHeaders} alt="Produce headers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 ### Flow
 
@@ -73,7 +76,7 @@ Manual Mode starts a single Kafka Produce each time you click the "Produce" butt
 
 Automatic Mode starts a long running process that batches several Kafka Produce.
 
-**Interval (ms) : **
+**Interval (ms):**
 
 -   Interval between each produce batch in milliseconds
 -   Range: [1000, 60000]
@@ -87,14 +90,13 @@ Automatic Mode starts a long running process that batches several Kafka Produce.
     -   Stops the producer after a set period of time.
     -   Range: [0, 60000]
 
-In the next screenshot, the producer is configured like this:
+The next screenshot is an example of a produce flow, that will generate:
+-   A batch of 10 records, every second for a minute
+-   With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
--   Produce 3 messages per batch
--   Reuse the same Key for all records
--   Generate a random Value (using the associated Serializer)
--   Generate a batch every second
+import ProduceFlowMode from './img/produce-flow-mode.png';
 
-![Image](img/produce-flow-mode.png)
+<img src={ProduceFlowMode} alt="Produce flow mode" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 ### Additional options
 
@@ -135,18 +137,28 @@ The following items are preconfigured by default:
 
 Kafka records produced through this screen will be available from the Produced message panel, which acts similarly as the Consume page, allowing you to review your produced record and check the Key, Value, Headers and Metadata
 
-![Image](img/produce-messages-panel.png)
-![Image](img/produce-messages-panel-single.png)
+![Produced messages](img/produce-messages-panel.png)
+
+By clicking on one of the records that you just produced, you can see its content and metadata.
+
+import ProduceMessagesPanelSingle from './img/produce-messages-panel-single.png';
+
+<img src={ProduceMessagesPanelSingle} alt="Produce messages panel single" style={{ width: 700, display: 'block', margin: 'auto' }} />
 
 ## Operations
 
 ### Import CSV
 
+![Import as CSV button](img/produce-import-csv-button.png)
+
 This feature lets you produce a batch of Kafka Records based on a CSV file.
 
 The 3 required inputs are the Key & Value Serializer, and the input file itself.
 
-![Image](img/produce-import-csv.png)
+import ImportCSV from './img/produce-import-csv.png';
+
+<img src={ImportCSV} alt="Import CSV" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
 As of today, the file must respect the following structure:
 
 - Named headers `key` and `value` must be present. Additional columns will be ignored.
@@ -180,12 +192,18 @@ While in progress, you'll see a loading state.
 
 Once the import is finished, you'll get a summary message.
 
-![Image](img/produce-import-csv-success.png)
+import ImportCSVSuccess from './img/produce-import-csv-success.png';
+
+<img src={ImportCSVSuccess} alt="Import CSV Success" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 ### Save & Load Producer Templates
 
 If you are regularly using the same set of Producer configuration, you can save your current settings as a template for reuse.
 
-Save icon button will prompt you to enter a name to your template, while the Load icon button will present you with the available template and you can choose to Load one.
+At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
 
-![Image](img/produce-templates.png)
+import ProduceTemplates from './img/produce-templates.png';
+
+<img src={ProduceTemplates} alt="Produce templates" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
+In this list, you're free to apply templates, but also to rename, duplicate and delete them.

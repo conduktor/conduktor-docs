@@ -8,7 +8,7 @@ The Topic Configuration tab lets you visualize and edit your topic configuration
 ## List configurations
 
 
-![Image](img/topic-config-list.png)
+![Topic configuration](img/topic-config-list.png)
 
 On top of the table you have different fields to help you:
 
@@ -28,7 +28,7 @@ Default: `true`
 This button shows all the Topic Configurations as key value pairs  
 
 **More Button `...`**  
-This lets you do the same 3 operations that are available on the [Topic List Page](../#add-partitions) : Add partitions, Empty Topic and Delete Topic.
+This lets you do the same 3 operations that are available on the [Topic List Page](/platform/navigation/console/topics/#add-partitions) : Add partitions, Empty Topic and Delete Topic.
 
 ## Edit configurations
 
@@ -38,7 +38,9 @@ When clicking on the edit button from the table rows, a new screen will appear w
 - The Kafka default value
 - The current value
 
-![Image](img/topic-config-item.png)
+import EditTopicConfiguration from './img/topic-config-item.png';
+
+<img src={EditTopicConfiguration} alt="Edit Topic configuration" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 You can choose to either Update the value to something new or revert to the Kafka default, which will apply the change directly on the Kafka cluster, similarly to the `kafka-configs` commands below.
 
