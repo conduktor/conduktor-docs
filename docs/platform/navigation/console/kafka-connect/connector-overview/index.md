@@ -9,7 +9,7 @@ The Connector Overview page is split in 3 main sections:
 - Graphs & Alerts
 - Tasks list
 
-<!-- To update when Staging is back up and running -->
+<!-- TODO: To update when Staging is back up and running -->
 ![Connector details overview](assets/connector-details-overview.png)
 
 ## Statistics
@@ -33,7 +33,7 @@ A few operations are available:
 The Graph section lets you visualize the number of Failed Tasks of your Connector over the past 24 hours (Line chart on the left) or over the past 3 months (Heatmap on the right).   
 This can help you understand if there is a specific pattern associated with your Kafka Connect Tasks failures.
 
-<!-- To update when Staging is back up and running -->
+<!-- TODO: To update when Staging is back up and running -->
 ![Connector graphs](assets/connector-details-graphs.png)
 
 ### Create an Alert
