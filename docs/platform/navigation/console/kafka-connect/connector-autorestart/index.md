@@ -20,5 +20,5 @@ Conduktor lets you enable **Auto-restart** on any connector instance. Once enabl
 ## Auto-restart history
 You can review all the occurrences when Auto-restart triggered and the error message of the failed task before restarting.
 
-![Kafka Connect auto-restart](../img/connector-details-autorestart.png)
+![Kafka Connect auto-restart](assets/connector-details-autorestart.png)
 
