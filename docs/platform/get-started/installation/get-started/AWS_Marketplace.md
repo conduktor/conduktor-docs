@@ -57,7 +57,7 @@ Select `Quick launch CloudFormation template`.
 
     ![AWS Marketplace](./assets/aws-marketplace-6.png)
 
-8. You will then be given the option to change the stack name and insert your values into the parameters. Once you are happy with the parameters, press `Next`.
+8. You will then be given the option to change the stack name or any of the other default values from our template. You will need to provide values for the missing CIDR properties towards the bottom of the page. Once you are happy with the parameters, press `Next`.
 
     :::warning
     Note the default value for the region is specified in the template as **`eu-west-1a`** (public subnet) and **`eu-west-1b`** (private subnet), if you are deploying in a **different region** you must update these values.
@@ -95,7 +95,7 @@ Select `Quick launch CloudFormation template`.
 
 ### Access Conduktor
 
-You will now be greeted with the create admin login, take note of the credentials you're about to create, they are for this instance, Conduktor cannot remotely interact i.e. reset these crednentials. From here you can make additional local users if you want to add other users. When you're ready for a production level deployment you will likely want to connect to SSO for importing your organization's existing users and groups.
+You will now be greeted with the create admin login, take note of the credentials you're about to create, they are for this instance, Conduktor cannot remotely interact i.e. reset these credentials. From here you can make additional local users if you want to add other users. When you're ready for a production level deployment you will likely want to connect to SSO for importing your organization's existing users and groups.
 
 ![onboarding login](./assets/login.png)
 
