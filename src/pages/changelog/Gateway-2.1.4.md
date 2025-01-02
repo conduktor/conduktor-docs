@@ -8,13 +8,13 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
-### Support OAuth SASL Mechanism
+#### Support OAuth SASL Mechanism
 
 We now support OAuth allowing you to connect clients without having to change from your existing authentication setup. For more info on setup checkout the docs or contact us directly.
 
-### Security provider / FIPS
+#### Security provider / FIPS
 
 New encryption security providers are now available when encrypting data. 
 The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and the options available are: 
@@ -25,25 +25,25 @@ The security provider is set via a feature flag `GATEWAY_SECURITY_PROVIDER`, and
 
 You can now be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant when doing field level encryption
 
-### REST Audit
+#### REST Audit
 
 All admin API calls are now logged in the audit log.
 
-### Dynamic port allocation 
+#### Dynamic port allocation 
 
 When not defined the `GATEWAY_PORT_COUNT` variable is now computed on the fly, rather than static allocation on start. 
 Note that the recommended production value is double the number of Kafka brokers.
 
-### Support all properties when protecting topics
+#### Support all properties when protecting topics
 
 When putting interceptors in place to protect the creation of topics, or altering of topics, we have expanded our support for policies to be defined by all properties in the [Kafka topic configs](https://kafka.apache.org/documentation/#topicconfigs). 
 
 
-### SCRAM Passthrough
+#### SCRAM Passthrough
 
 Gateway's passthrough mode has been expanded to support `SASL_SCRAM`.
 
-## General fixes 🔨
+### General fixes 🔨
 
 - More clarity to some of our logging error messages, more clear what to do for a failure
 - Improved garbage collection to clean up topic mappings upon deletion

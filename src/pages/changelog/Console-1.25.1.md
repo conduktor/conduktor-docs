@@ -8,15 +8,15 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Breaking Changes 💣
-### New docker image name
+### Breaking Changes 💣
+#### New docker image name
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.  
 Please modify your installation to reflect this change as we will now stop publishing a `conduktor/conduktor-platform` image.
 ````shell
 docker pull conduktor/conduktor-console:1.25.1
 ````
 
-## Features ✨
+### Features ✨
 
 - [Conduktor Console IaC Compatible](#conduktor-console-iac-compatible)
   - [Manage Cluster Connections](#manage-cluster-connections)
@@ -28,7 +28,7 @@ docker pull conduktor/conduktor-console:1.25.1
 - [Audit Last Activity of Users](#audit-last-activity-of-users)
 - [Quality of Life improvements](#quality-of-life-improvements)
 
-### Conduktor Console IaC Compatible
+#### Conduktor Console IaC Compatible
 
 Console is now able to be fully deployed through an IaC approach with the following additions to Console 1.25 and [CLI](https://github.com/conduktor/ctl) 0.2.7.
 
@@ -69,7 +69,7 @@ When spinning up Console, a token is needed to access the API. Previoulsy this h
 In addition to the startup token, you can now generate tokens for the appropriate scope, for admin and application level tokens. [The docs](https://docs.conduktor.io/platform/reference/cli-reference/#configure) will walk you through this.
 
 
-### Shareable Message Page
+#### Shareable Message Page
 
 Individual messages can now be accessed from a unique URL! Now you can link directly to a specific Kafka message for review or investigation, be that for sharing with a teammate, or commenting on a Jira ticket.  
 
@@ -78,13 +78,13 @@ From within the Consume page, select a message and use the 'Share' button to nav
 ![shareable message](/images/changelog/platform/v25/console-shareable-message.png)
 
 
-### Large Messages Support
+#### Large Messages Support
 
 We have put a limit on the message sizes that are sent to the browser in the Consume page (100Kb). From now on, when a message is larger than this size, we'll provide you with a link to access the individual message - this mitigates performance issues and still provides a path for troubleshooting, and sharing, large messages.
 
 ![large message](/images/changelog/platform/v25/console-large-message.png)
 
-### Topic Catalog Details Page
+#### Topic Catalog Details Page
 
 Expose contextual documentation about your Kafka Topics that exist in your organization with the Topic Details page. This helps democratize data to enhance its understanding and usage, and facilitate collaboration through a shared knowledge base. 
 
@@ -92,13 +92,13 @@ You can choose to open or lock editing of descriptions within the UI using speci
 
 ![topic catalog](/images/changelog/platform/v25/topic-catalog.png)
 
-### Audit Last Activity of Users
+#### Audit Last Activity of Users
 
 You can now audit the last activity date of users in Console. 
 
 From within the Settings > Users page, you will see a new column '**Last login**'. Note that the user login event is also captured in the [Audit Log](https://docs.conduktor.io/platform/navigation/settings/audit-log/).
 
-### Quality of Life improvements
+#### Quality of Life improvements
 - Introduced an intermediate screen for Kafka Connect, allowing you to segment Connectors by each Connect cluster
 - Within a Connect cluster, introduced an icon for each connector that clarifies if auto-restart is enabled
 - Topic Catalog Search is now case-insensitive
@@ -106,7 +106,7 @@ From within the Settings > Users page, you will see a new column '**Last login**
 - Improved error message when assign ownership on resources already owned by another ApplicationInstance
 - CLI delete command can now be applied at the file level, simliar to resource creation through `apply -f` you can now `delete -f` 
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed an error that occurred when configuring a KsqlDBCluster in the UI
 - Fixed a UI issue that caused several dropdowns components to look wrong
 - Fixed an error message where expected and actual topic replication factor were inverted in the CLI

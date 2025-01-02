@@ -10,9 +10,9 @@ tags: fix
 
 This major release of the Gateway brings functionality around targeting your interceptors more specifically, adding additional data quality & filtering tools and a host of rework under the hood for improved reliability & robustness. This can be seen in the form of reworked authorization to more closely align with what you're used to in the existing Kafka world and a more intuitive experience when working with the enhanced functionality Conduktor brings in concentrated and alias topics.
 
-## Features
+### Features
 
-### Interceptor Targeting
+#### Interceptor Targeting
 
 Interceptors can now target more specifically than the previous scopes of vcluster and username. They can now be targeted at the global, vcluster, group(**new**), or service account level. Below are some areas and examples where targeting interceptors brings great power in their flexibility.
 
@@ -34,7 +34,7 @@ A project from a domain is more advanced and doesn't need the safeguarding prote
 * They know how to size topics correctly and are allowed a higher limit on partitions for topic creation, than the rest of the group
 * Everyone is required to have compression enforced by default, but for this specific team they are allowed to remove it to meet a low latency requirement
 
-### Data quality validation rules across fields, using CEL
+#### Data quality validation rules across fields, using CEL
 
 Validate data across fields using [Common Expression Language](https://github.com/google/cel-spec). Before we could define rules for fields within a schema, a great way to ensure data quality catching the data before it hits the cluster. Now, we can relate fields to each other. We can bring together data quality and business rules within our schema. 
 
@@ -66,7 +66,7 @@ An example for age and email checks in our schema:
 }
 ```
 
-### Filter messages on topics, using CEL
+#### Filter messages on topics, using CEL
 
 Topic filtering can now be done with a simple plugin rather than building yet another pipeline. Effortlessly tailor message filtering rules to your use cases, ensuring only the most relevant data reaches your consumers.
 
@@ -82,23 +82,23 @@ Suppose you want to filter messages where the timestamp is greater than a certai
 }
 ```
 
-### Topic multiplexing enhancements
+#### Topic multiplexing enhancements
 
 Several enhancements have been made when working with concentrated topics for topic multiplexing.
 Concentration can now be achieved on the default vcluster, `passthrough`.
 UX has been adjusted from using patterns only in favor of **concentration rules**, which have a dedicated part of the API.
 
-### Alias topic enhancements
+#### Alias topic enhancements
 
 Alias topics (dedicated to referencing another topic within your cluster, see the docs for more) have been reworked for a more intuitive experience.
 Alias topics no longer replace the physical topic during interactions, but are seen as another topic.
 This will help in use cases related to migration, when applications use different topic names, and when exposing more topics within vclusters.
 
-### Default vcluster rework
+#### Default vcluster rework
 
 The default vcluster, `passthrough`, now has users associated with it by default rather than being rejected. This behavior can be reverted through configuration; see the docs for more.
 
-## General fixes 🔨
+### General fixes 🔨
 
 * Fixed an issue that was prefixing consumer group names with Gateway in certain virtual clusters
 * Simplified the security protocol experience, dropping the need for `GATEWAY_MODE`(s) to be defined, instead using Kafka standard security protocols or `DELEGATED` security protocols. Refer to the docs for more

@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - ACL would not be applied in `GATEWAY_SECURITY` mode.

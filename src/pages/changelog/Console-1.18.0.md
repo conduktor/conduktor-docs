@@ -10,7 +10,7 @@ tags: features,fix
 
 This release contains several **breaking changes** so please read the entire release note prior to installation.
 
-## Important changes to our internal architecture ❗
+### Important changes to our internal architecture ❗
 
 We are cleaning up our Docker image to bring you a simpler, lighter, and generally more operable product.
 
@@ -21,9 +21,9 @@ We are cleaning up our Docker image to bring you a simpler, lighter, and general
 - We have removed Testing from the base image
 - We have rewritten our authentication module. If you have any issue with authentication using LDAP or OIDC with this new release [Contact Conduktor Support](https://support.conduktor.io/hc/en-gb)
 
-## Features ✨
+### Features ✨
 
-### User Friendly Filters
+#### User Friendly Filters
 
 We have completely revamped our filtering UX in the Consume page to be more aligned with your day-to-day use cases. Now you can search your topics by combining any of the following filtering mechanisms.
 
@@ -39,19 +39,19 @@ If your message is JSON, Avro or Protobuf, find values from specific fields. Ope
 
 For when you require more complex rules, Advanced Filters will give you the full power of JS to construct your own custom filters. ![Advanced Filters](/images/changelog/platform/v18/filters-3.png)
 
-### New Design for Service Accounts & Kafka ACLs
+#### New Design for Service Accounts & Kafka ACLs
 
 We've overhauled Kafka ACLs and service account management. Visualize, create and edit your Kafka ACLs right within the UI with a simple but powerful design. Pair this with our market leading RBAC capability to empower only those that need it ![Service Accounts ACLS 1](/images/changelog/platform/v18/acls-1.png).  
 ![Service Accounts ACLS 2](/images/changelog/platform/v18/acls-2.png)
 
-## Reduced Memory Footprint
+### Reduced Memory Footprint
 
 As a result of our improvements to our internal architecture, we are happy to share that we have lowered our hardware requirements.  
 If you are currently deployed in prod using `RUN_MODE=nano` or `RUN_MODE=small`, please update the `RUN_MODE` based on your available memory after looking at our documentation.  
 If you are using higher `RUN_MODE`, you can free up some memory and save on infrastructure costs.  
 Visit our [System Requirements](https://docs.conduktor.io/platform/get-started/installation/hardware/#hardware-requirements) page to see the changes.
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Fixed a UI issue where Add Partitions wasn't possible when using Firefox
 - Fixed some UI issues with Kafka Connect and RBAC

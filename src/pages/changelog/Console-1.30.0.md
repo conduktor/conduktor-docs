@@ -17,9 +17,9 @@ tags: features,fix
 - [Fixes 🔨](#fixes-)
 
 
-## Features ✨
+### Features ✨
 
-### RBAC support for Conduktor SQL
+#### RBAC support for Conduktor SQL
 
 In a previous release, we introduced Conduktor SQL. It was restricted to Admins because it did not apply any permission model.
 
@@ -31,7 +31,7 @@ You can now bring SQL to all users within your organization.
 
 For more detailed information, check out the [SQL security](/platform/guides/configure-sql#sql-security) section.
 
-### Add support for multi-hosts database configuration
+#### Add support for multi-hosts database configuration
 
 You can now setup Console's backing database for high availability(HA). If you have a PostgreSQL HA setup with multiple hosts, you can now configure a Console to [JDBC connection](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) to the database using a list of hosts.
 
@@ -41,14 +41,14 @@ CDK_KAFKASQL_DATABASE_URL: jdbc:postgresql://user:password@host1:5432,host2:5433
 ```
 For more information, check out the [Multi-host configuration](/platform/get-started/configuration/database/#multi-host-configuration) section in the Database configuration documentation.
 
-### Delegating authentication to an identity provider
+#### Delegating authentication to an identity provider
 Console can now be configured to accept a JWT token from an external identity provider.  
 It allows you to directly use your identity provider for managing access to Console.  
 A common use case of this feature is to delegate authentication to your API gateway.  
 
 For the full configuration details, check out the [documentation](/platform/get-started/configuration/user-authentication/jwt-auth).
 
-### More Audit Log CloudEvents into Kafka
+#### More Audit Log CloudEvents into Kafka
 
 We have made more events available for the Audit Log Publisher:
 - Kafka.Subject.ChangeCompatibility
@@ -65,7 +65,7 @@ We have made more events available for the Audit Log Publisher:
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
 
-## Quality of Life improvements
+### Quality of Life improvements ✨
 
 - Alert lists in the resource pages have been updated to show the metric and condition, the alert state and a new column "Last Triggered"
 - Chargeback data can now be exported into a CSV file to enable easier integration with existing organization cost management data.
@@ -74,6 +74,6 @@ A full list of all the exported audit log event types is published on the [Audit
 - Added support for Array and Boolean types in Conduktor SQL
 - Added Kafka Key column and other metadata in Conduktor SQL Topics ([Full list](/platform/guides/configure-sql/#database-storage-format))
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed a pagination issue in the SQL Indexed Topics view
 - Fixed several instances where the CLI would not report the expected state change (Updated vs. Not Changed) on apply

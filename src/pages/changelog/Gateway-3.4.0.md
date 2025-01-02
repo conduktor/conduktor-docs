@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Upcoming Breaking change: Local Users 💣
+### Upcoming Breaking change: Local Users 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -27,11 +27,11 @@ For this release 3.4.0, we'll only raise the following warning in the logs:
 
 ***
 
-## Features ✨
+### Features ✨
 
 - [Correct Offsets on Concentrated Topics](#correct-offsets-on-concentrated-topics)
 
-### Correct Offsets on Concentrated Topics
+#### Correct Offsets on Concentrated Topics
 
 Concentrated Topics were reporting the offsets of the underlying backing topic. This caused Lag and Message Count metrics to be invalid.
 
@@ -52,7 +52,7 @@ spec:
 This feature is experimental and comes with a number of [limitations](/gateway/concepts/logical-topics/concentrated-topics#message-count--lag-offset-incorrectness) that are important to understand beforehand.
 
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed an issue impacting live consumption from concentrated topics within Console
 - Fixed an issue with upserts in API V2 relating to service accounts (reporting updated when the status should be not changed)
@@ -61,6 +61,6 @@ This feature is experimental and comes with a number of [limitations](/gateway/c
 - Fixed an issue with SQL topics when parsing topic names containing "-"
 
 
-## Known issues
+### Known issues
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag

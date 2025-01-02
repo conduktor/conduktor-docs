@@ -2,17 +2,17 @@ export const items = [
   {
     question: 'Can I use Active Directory for SSO?',
     answer:
-      'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider.',
+      'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider. View all our options for configuring SSO <a href="https://docs.conduktor.io/platform/category/configure-sso/" target="_blank">here</a>  ',
   },
   {
     question: 'How can we deploy Conduktor?',
     answer:
-      'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.).',
+      'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.). See the full list of deployment guides here <a href="https://docs.conduktor.io/platform/category/deployment-options/" target="_blank">here</a>',
   },
   {
     question: 'Does Role Based Access Control (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
-      "Right now it does not. It's on our roadmap to make RBAC trickle down to Kafka ACLs also."
+      "No - Conduktor's Role-Based Access Control (RBAC) model is designed to manage user permissions within the Conduktor platform, specifically for interacting with Kafka resources through Conduktor's interface. However, in Conduktor's self-service model, the platform facilitates the creation of Access Control Lists (ACLs) based on applications. This approach allows application teams to manage their Kafka resources autonomously, ensuring that each application has the necessary permissions to interact with Kafka topics, consumer groups, and other resources. ",
   },
   {
     question: 'Can we use IAM + MSK?',
@@ -29,14 +29,14 @@ export const items = [
       'No, you can run an air gapped Docker image in your environment without internet access.',
   },
   {
-    question: 'Can we externalize Postgres & other data storage?',
+    question: 'Is an external database required to run Conduktor?',
     answer:
-      'Yes!  The instructions for doing this can be found <a href="https://docs.conduktor.io/platform/get-started/configuration/database/" target="_blank">here</a>.',
+      'Yes! The external database is used to store platform configuration such as users and permissions. The instructions for doing this can be found <a href="https://docs.conduktor.io/platform/get-started/configuration/database/" target="_blank">here</a> and more information on system requirements can be found <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">here</a>.',
   },
   {
     question: 'What schema registries do you support?',
     answer:
-      'Conduktor currently supports Confluent Schema Registry, as well as AWS Glue Schema registry.',
+      'Conduktor Console currently supports Confluent Schema Registry, as well as AWS Glue Schema registry. Conduktor Gateway supports Confluent Schema Registry only.',
   },
   {
     question: 'Do you have Terraform or CloudFormation?',
@@ -44,7 +44,7 @@ export const items = [
       'Yes we have both a <a href="https://docs.conduktor.io/platform/reference/terraform-reference/" target="_blank">Terraform provider</a>, and a public <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/CloudFormation/" target="_blank">CloudFormation</a>.',
   },
   {
-    question: 'Are you SOC 2 compliant?',
+    question: 'What kind of compliance certifications does Conduktor have?',
     answer: 'Conduktor is SOC 2 Type 2 compliant and conducts regular penetration testing on our products. The reports are available as requested.',
   },
   {
@@ -53,25 +53,30 @@ export const items = [
       'See the requirements pages for <a href="https://docs.conduktor.io/gateway/get-started/system-requirements/" target="_blank">Gateway</a>, or <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">Console</a> for more instructions.',
   },
   {
-    question:
-      'If I have licenses of Conduktor Desktop is it still account.conduktor.io where I manage these licenses, add/remove etc?',
+    question: 'What are the suggested settings for running the docker image?',
     answer:
-      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Admin section of your deployment.',
-  },
-  {
-    question: 'Does the Data Masking solution make any changes to my Kafka data?',
-    answer: 'No it does not. The data is masked on the consumer only.',
+      'Please see our system requirements for <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">Conduktor Console</a>, and system requirements for <a href="https://docs.conduktor.io/gateway/get-started/system-requirements/" target="_blank">Conduktor Gateway.</a>',
   },
   {
     question:
-      'If I am currently using JMX exporter on a specific port, how do I utilize Conduktor Platforms Monitoring features? Do I have to use a specific port?',
+      'If I have licenses of Conduktor Desktop, do I still manage licenses through account.conduktor.io?',
     answer:
-      'You can use the port you are currently using, just change the configuration called jmxScrapePort as shown <a href="https://github.com/conduktor/conduktor-platform/blob/main/doc/Environment_Override.md#property-definitions" target="_blank">here</a>.',
+      'Yes, if you have licenses of Conduktor Desktop you manage them via account.conduktor.io. Please see more information on account management for Conduktor Desktop <a href="https://docs.conduktor.io/portal/account-management" target="_blank">here</a>. If you are using Conduktor Platform you will manage the users of your subscription from the Settings of your deployment.',
+  },
+  {
+    question: 'Does the Console Data Masking solution make any changes to my Kafka data?',
+    answer: 'No it does not. The data is masked is applied within the Conduktor UI at runtime for specified users and groups only. The underlying data in Kafka remains unchanged.',
   },
   {
     question:
-      'What other integrations are planned for Monitoring and Alerting? For example, MS Teams, Email?',
-    answer: 'We plan to have webhooks available so you can integrate with other services.',
+      'Is a separate Docker image required to get the Monitoring and Alerting features of Conduktor?',
+    answer:
+      'Yes, the Conduktor deployment depends on an additional image `conduktor-console-cortex` to support monitoring and alerting capabilities. See how the configuration and dependencies should be declared in the <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/docker/#advanced-setup" target="_blank">docker compose</a> example. ',
+  },
+  {
+    question:
+      'What platforms do the monitoring and alerting capabilities integrate with?',
+    answer: 'Conduktor integrates with Microsoft Teams and Slack for third-party alerting. Conduktor also exposes metrics in <a href="https://docs.conduktor.io/platform/reference/metric-reference/" target="_blank">Prometheus format</a> so that they can be scraped and integrated with an external log management system.',
   },
   {
     question: 'How are the cluster credentials I enter on the platform stored?',
@@ -82,7 +87,7 @@ export const items = [
     question:
       'Are the timestamps in Conduktor Console for Kafka messages based on Local time or Coordinated Universal Time(UTC)?',
     answer:
-      'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Our team are working on functionality to allow users be able to choose between either local time and UTC on Conduktor Console.',
+      'The timestamps of Kafka messages on Conduktor Console are based on the local time zone of the user. Hover over a timestamp within the Consumer view and you will also see the timestamp in UTC.',
   },
   {
     question:
@@ -95,5 +100,11 @@ export const items = [
       'What happens if I exceed my user threshold?',
     answer:
       'Conduktor employs a soft limit to ensure that your service is not disrupted in cases whereby you onboard more users than you expected. We understand it can be difficult to plan in advance, and ask you get in contact with your Customer Success team if you exceed your user threshold. Please note this limit is a contractual agreement between Conduktor and your company, and may be subject to auditing from time to time.',
+  },
+  {
+    question:
+      'I cannot see the last active date of a user, how can I perform a clean-up?',
+    answer:
+      'You can review the last login time of a user from within the Settings > Users view. '
   }
 ]

@@ -8,8 +8,8 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Future Breaking Changes 💣
-### New docker image name
+### Future Breaking Changes 💣
+#### New docker image name
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
 
 We will publish newer versions using both names for this release and the **next release** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
@@ -18,7 +18,7 @@ We will publish newer versions using both names for this release and the **next 
 docker pull conduktor/conduktor-console:1.23.0
 ````
 
-## Features ✨
+### Features ✨
 
 - [Conduktor Console](#conduktor-console)
   - [Future Breaking Changes 💣](#future-breaking-changes-)
@@ -35,7 +35,7 @@ docker pull conduktor/conduktor-console:1.23.0
 
 ---
 
-### Self-service
+#### Self-service
 
 There's a host of new functionality available providing our first truly powerful self-service release. This comes from the addition of two new resources (Topic, TopicPolicy), application tokens, a topic catalog and service account synchronization.
 
@@ -103,13 +103,13 @@ In addition, Service Account's ACLs are now synchronized with the permissions fr
 
 [Read More about Self-service](https://docs.conduktor.io/platform/navigation/self-serve/)
 
-### Editable columns on the Consume Page
+#### Editable columns on the Consume Page
 
 You can now customise the columns you want to display in the Consume Page. Let us know if there's any additional metadata you want to see!
 
 ![Editable Columns](/images/changelog/platform/v23/qol-consume.png)
 
-### Quality of Life improvements
+#### Quality of Life improvements
 **Topic pages**
 - SchemaId is now displayed from the Message Viewer panel
 - Header count is now displayed from the Message Viewer panel
@@ -138,7 +138,7 @@ You can now customise the columns you want to display in the Consume Page. Let u
 - Searching in screens now trims whitespace from the text supplied
 
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed an issue with the Test Connection button that didn't work after a successful response
 - Fixed an issue with the indexing of Confluent Cloud Managed Connect
 - Fixed an issue with the Kafka Connect List where filter by Connect Cluster wouldn't work in some cases
