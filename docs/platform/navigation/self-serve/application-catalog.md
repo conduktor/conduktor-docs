@@ -17,7 +17,7 @@ You can search by any element available in the list: Name, Description, Owner.
 
 You can click on an Application to get to its details page.
 
-![AppCatalog](img/app-catalog.png)
+![Application Catalog](assets/app-catalog.png)
 
 ## Application Details
 
@@ -29,4 +29,6 @@ The Application Details page summarizes all the information that relates to the 
 
 Additionally, if you belong to the owner Group of the Application, you can generate Application Instance API Keys to use with the CLI to create resources.
 
-![AppCatalogDetails](img/app-catalog-details.png)
+import AppDetails from './assets/app-details.png';
+
+<img src={AppDetails} alt="Application details" style={{ width: 400, display: 'block', margin: 'auto' }} />
