@@ -1,16 +1,16 @@
 ---
 sidebar_position: 4
-title: AWS Marketplace
+title: AWS Marketplace and CloudFormation
 description: Deploy Conduktor Console on AWS via CloudFormation.
 ---
 
-# Deployment on AWS Marketplace
+# Deployment on AWS Marketplace or with CloudFormation
+
+This page demonstrates how to use our AWS Marketplace offering for a quick deployment of Console using [AWS CloudFormation](https://aws.amazon.com/cloudformation/). If you are looking to deploy Console via CloudFormation then you can follow similar steps to this guide, referencing your own template file with your own values.
 
 ## Getting started
 
-This guide demonstrates how to use our AWS Marketplace quick deployment on [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
-
-It contains a brief overview of the architecture followed by the steps on how to deploy Console in your AWS environment with all mandatory dependencies. It will deploy Conduktor as a Docker container on an ECS service with Fargate and configure it alongside a PostgreSQL database via RDS.
+This guide contains a brief overview of the Marketplace listing architecture followed by the steps on how to deploy Console in your AWS environment with all mandatory dependencies. It will deploy Conduktor as a Docker container on an ECS service with Fargate and configure it alongside a PostgreSQL database via RDS.
 
 The Conduktor Marketplace offering is the Community Edition. If you are interested in our enterprise offering then [contact us](https://conduktor.io/contact/demo?utm_source=docs&utm_medium=product) for a free demo.
 

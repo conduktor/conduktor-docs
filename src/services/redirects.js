@@ -408,7 +408,7 @@ const redirects = [
       },
       {
         from: '/platform/get-started/installation/get-started/CloudFormation/',
-        to: '/platform/get-started/installation/get-started/AWS_Marketplace/'
+        to: '/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/'
       }
     ],
   },
