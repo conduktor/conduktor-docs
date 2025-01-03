@@ -6,7 +6,7 @@ description: Deploy Conduktor Console on AWS via CloudFormation.
 
 # Deployment on AWS Marketplace or with CloudFormation
 
-This page demonstrates how to use our AWS Marketplace offering for a quick deployment of Console using [AWS CloudFormation](https://aws.amazon.com/cloudformation/). If you are looking to deploy Console via CloudFormation then you can follow similar steps to this guide, referencing your own template file with your own values.
+This page demonstrates how to use our AWS Marketplace offering for a quick deployment of Console using [AWS CloudFormation](https://aws.amazon.com/cloudformation/). If you are looking to deploy Console via CloudFormation then you can follow similar steps to this guide, referencing your own template file, using our [example template](https://conduktor-marketplace.s3.us-east-1.amazonaws.com/templates/full_template/conduktor-console_full-template-latest.yaml) as a guide, with your own values.
 
 ## Getting started
 
