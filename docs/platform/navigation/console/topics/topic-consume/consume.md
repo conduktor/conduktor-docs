@@ -46,7 +46,7 @@ When you access a Topic from the Topic List page for the first time, a consumer 
 -   Partitions: `All`
 
 This default setup lets you quickly browse through the 500 most recent messages produced in the topic.
-![Default topic consumer](img/topic-default.png)
+![Default topic consumer](assets/topic-default.png)
 
 There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
 
@@ -54,7 +54,7 @@ There's a good chance this will not correspond to your requirements, so let's ex
 
 `Show From` defines the starting point for the Kafka Consumer in your topic.
 
-import ShowFromOptions from './img/topic-show-from-choices.png';
+import ShowFromOptions from './assets/topic-show-from-choices.png';
 
 <img src={ShowFromOptions} alt="Show from options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -79,7 +79,7 @@ The possible values are as follow:
 
 `Limit` defines when your consumer must stop.
 
-import LimitOptions from './img/topic-limit-choices.png';
+import LimitOptions from './assets/topic-limit-choices.png';
 
 <img src={LimitOptions} alt="Limit options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -97,7 +97,7 @@ Possible choices are:
 
 `Partitions` lets you restrict the consumer to only consume from certain partitions of your topic. By default, records from **all partitions** are consumed.
 
-import PartitionsOptions from './img/topic-partitions-choices.png';
+import PartitionsOptions from './assets/topic-partitions-choices.png';
 
 <img src={PartitionsOptions} alt="Partitions options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -105,7 +105,7 @@ import PartitionsOptions from './img/topic-partitions-choices.png';
 
 `Key format` and `Value format` lets you force the deserializer for your topic.
 
-import TopicKeyFormatOptions from './img/topic-key-format-choices.png';
+import TopicKeyFormatOptions from './assets/topic-key-format-choices.png';
 
 <img src={TopicKeyFormatOptions} alt="Key format choices" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -125,22 +125,22 @@ The following captures show the same records deserialized using ByteDeserializer
 
 <!-- TODO: Couldn't reproduce the same records with 1.30.0, so I'm using the old pics - [CUS-490: Internal - Automatic deser changed](https://linear.app/conduktor/issue/CUS-490/internal-automatic-deser-changed) -->
 
-![Deserializer with bytes](img/topic-bytes-deserializer.png) 
-![Deserializer with automatic](img/topic-auto-deserializer.png)
+![Deserializer with bytes](assets/topic-bytes-deserializer.png) 
+![Deserializer with automatic](assets/topic-auto-deserializer.png)
 
 #### Custom Deserializer
 If you have installed them, your Custom Deserializers will appear here.  
 Optionally configure them using the `Properties` text and your messages will show as expected.  
 
 Check our guide on how to [Install & Configure Custom Deserializers](/platform/guides/custom-deserializers/) in Console.
-![Consume with a custom deserializer](img/topic-custom-deserializer.png)
+![Consume with a custom deserializer](assets/topic-custom-deserializer.png)
 
 
 #### JSON Deserializer
 
 JSON Deserializer will explicitly fail on records that doesn't match a JSON type.
 
-![Consume with JSON deserializer](img/topic-json-deser-fail.png)
+![Consume with JSON deserializer](assets/topic-json-deser-fail.png)
 
 #### Bytes Deserializer
 
@@ -164,7 +164,7 @@ will be represented like this:
 \x00\x00\x00\x00\x07\x10I'm AVRO
 ```
 
-![Deserializer with bytes](img/topic-bytes-deserializer.png)
+![Deserializer with bytes](assets/topic-bytes-deserializer.png)
 
 
 ## Filter records
@@ -184,12 +184,12 @@ Internally, this will treat the record Key or Value as text to apply the operati
 This might not be the preferred approach if your record is JSON-ish
 :::
 
-![Global search](img/topic-global-filter.png)
+![Global search](assets/topic-global-filter.png)
 
 ### Search in a Specific Field
 
 You can make your search more fine-grained by activating "Search in a specific field".
-![Search in a specific field](img/topic-search-infield.png)
+![Search in a specific field](assets/topic-search-infield.png)
 :::info
 Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
 Examples:  
@@ -212,7 +212,7 @@ While the consumer is processing, you will see the following statistics window.
 This little window present the necessary information to let you decide wether it's worth pursuing the current search or if you should rather refine it further.
 
 Here's how to read it.
-![img.png](img/topic-stats-info.png)
+![Statistics](assets/topic-stats-info.png)
 
 ## Browse records
 
@@ -234,13 +234,13 @@ Use the arrow keys to navigate between messages: ⬆️ ⬇️
 
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
 
-import RecordDetails from './img/topic-browse.png';
+import RecordDetails from './assets/topic-browse.png';
 
 <img src={RecordDetails} alt="Record details" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 The **Share** button will lead you to a page dedicated to this record, allowing you to share it with your colleagues, and to get more details about it.
 
-import ShareRecord from './img/record-details.png';
+import ShareRecord from './assets/record-details.png';
 
 <img src={ShareRecord} alt="Share a record" style={{ width: 700, display: 'block', margin: 'auto' }} />
 
@@ -250,7 +250,7 @@ The Data tab lets you visualize your record's Key and Value.
 
 If your record Value is serialized with JSON or using a Schema Registry it is presented by default using the Table view. You can also switch to the JSON view if necessary.
 
-import DataTabs from './img/topic-browse-json-table.png';
+import DataTabs from './assets/topic-browse-json-table.png';
 
 <img src={DataTabs} alt="Data tabs" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -282,15 +282,15 @@ The basic syntax lets you focus on sub-elements of your record, as shown in the 
 .meta.domain // Renders a single String
 { id, meta } // Renders a new JSON with both elements
 ```
-![See JQ filter](img/topic-browse-json.png)
+![See JQ filter](assets/topic-browse-json.png)
 Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-construction) for more advanced use-cases.
 
 ### Headers tab
 
 The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
-![Headers tab](img/topic-header-funnel.png)
+![Headers tab](assets/topic-header-funnel.png)
 The resulting filter will be created:
-![Filter on headers](img/topic-header-filter.png)
+![Filter on headers](assets/topic-header-filter.png)
 
 :::caution
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
@@ -309,7 +309,7 @@ The metadata tab gives you all the other information regarding your record that 
 - Compression type
 - Schema ID if any
 
-import MetadataTab from './img/topic-metadata.png';
+import MetadataTab from './assets/topic-metadata.png';
 
 <img src={MetadataTab} alt="Metadata tab" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -320,9 +320,9 @@ import MetadataTab from './img/topic-metadata.png';
 You have the ability to export the records in either JSON or CSV format.
 
 CSV particularly useful in particular because you can use Console to re-import them either in a new topic or in the same topic after having modified them (or not)
-![Export records from a topic](img/topic-export.png)
+![Export records from a topic](assets/topic-export.png)
 The resulting files will look like this:
-![Export results](img/topic-export-result.png)
+![Export results](assets/topic-export-result.png)
 
 ### Reprocess Record
 
@@ -330,7 +330,7 @@ This feature lets you pick a record from the list and reprocess it either in the
 
 Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjustments before **(3)**.
 
-![Reprocess a record](img/topic-reprocess.png)
+![Reprocess a record](assets/topic-reprocess.png)
 
 Know more about [How to reprocess records](/platform/guides/reprocess/).
 
@@ -341,20 +341,20 @@ If you are regularly using the same set of Consume Configuration (Show From, Lim
 **Create a new view**
 
 Click on the Save icon button to save your current view as a template:
-![Save a new view](img/save-new-view.png)
+![Save a new view](assets/save-new-view.png)
 
 From there, you can name your view, add a description, and select whether this view is private, or if you want everyone in your organization to be able to see it and use it.
 
-![Fill the view details](img/create-shared-view.png)
+![Fill the view details](assets/create-shared-view.png)
 
 **List the existing views**
 
 To list the existing views, click on the folder icon:
 
-![List existing views](img/shared-views.png)
+![List existing views](assets/shared-views.png)
 
 From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
 
-import SharedViews from './img/list-shared-views.png';
+import SharedViews from './assets/list-shared-views.png';
 
 <img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />

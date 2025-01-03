@@ -12,13 +12,13 @@ The **Per partition** view presents the data available for each partition:
 - Begin and End Offsets
 - Broker Ids of the Partition Leader (green) and Followers (grey)
 
-![Per partition](img/per-partition.png)
+![Per partition](assets/per-partition.png)
 
 The **Per broker** view pivots the data to show for each broker:  
 - Partitions where the broker is Leader
 - Partitions where the broker is Follower
 
-![Per broker](img/per-broker.png)
+![Per broker](assets/per-broker.png)
 
 ## Operations
 ### Empty Partition

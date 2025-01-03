@@ -10,18 +10,32 @@ Check the [CLI Reference](/platform/reference/cli-reference/) and [API Reference
 
 API Keys List displays all the information associated to the keys.
 
-![api-token.png](images/api-keys-list.png)
+![API Keys list](assets/api-keys-list.png)
 
 ## Operations
+
 ### Create API Key
-You can create a new API Key by clicking the "Create API Key" button. You will be prompted for a name.
-![api-token.png](images/api-keys-create.png)
+
+You can create a new API Key by clicking the "New API Key" button. You will be prompted for a name.
+
+import NewAPIKey from './assets/api-new-key.png';
+
+<img src={NewAPIKey} alt="New API key" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
 Once created, you will see the associated Key to be used in the API and CLI.
-![api-token.png](images/api-keys-created.png)
+
+import SaveAPIKey from './assets/api-save-key.png';
+
+<img src={SaveAPIKey} alt="Save API key" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
 :::caution
 The generated API Key won't be visible anymore after closing this screen to make sure to save it properly.
 :::
 
 ### Revoke API Key
+
 To revoke an API Key, simply click the revoke button and confirm.
-![api-token.png](images/api-keys-revoke.png)
+
+import DeleteAPIKey from './assets/api-delete-key.png';
+
+<img src={DeleteAPIKey} alt="Delete API key" style={{ width: 500, display: 'block', margin: 'auto' }} />

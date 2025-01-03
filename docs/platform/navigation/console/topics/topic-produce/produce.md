@@ -16,13 +16,13 @@ It is already configured with [sensible defaults](#sensible-defaults) that you c
 
 Each section from the accordion menu will allow you to configure the Kafka producer further: Key, Value, Headers, Flow and Additional options.
 
-![Produce accordion](img/produce-accordion.png)
+![Produce accordion](assets/produce-accordion.png)
 
 ### Key & Value
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
-import ProduceSerializers from './img/produce-serializers.png';
+import ProduceSerializers from './assets/produce-serializers.png';
 
 <img src={ProduceSerializers} alt="Produce serializers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -36,7 +36,7 @@ If using a Schema Registry, please note that Conduktor currently only supports p
 The "Generate once" button will generate a message that conforms to the picked Serializer.
 
 This works with Schema Registry serializers as well:
-![Produce random data](img/produce-random-data-gen.png)
+![Produce random data](assets/produce-random-data-gen.png)
 
 ### Headers
 
@@ -44,7 +44,7 @@ The Headers section lets you add headers to your message.
 
 Header Key and Header Value both expect valid UTF8 String.
 
-import ProduceHeaders from './img/produce-headers.png';
+import ProduceHeaders from './assets/produce-headers.png';
 
 <img src={ProduceHeaders} alt="Produce headers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -94,7 +94,7 @@ The next screenshot is an example of a produce flow, that will generate:
 -   A batch of 10 records, every second for a minute
 -   With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
-import ProduceFlowMode from './img/produce-flow-mode.png';
+import ProduceFlowMode from './assets/produce-flow-mode.png';
 
 <img src={ProduceFlowMode} alt="Produce flow mode" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -137,11 +137,11 @@ The following items are preconfigured by default:
 
 Kafka records produced through this screen will be available from the Produced message panel, which acts similarly as the Consume page, allowing you to review your produced record and check the Key, Value, Headers and Metadata
 
-![Produced messages](img/produce-messages-panel.png)
+![Produced messages](assets/produce-messages-panel.png)
 
 By clicking on one of the records that you just produced, you can see its content and metadata.
 
-import ProduceMessagesPanelSingle from './img/produce-messages-panel-single.png';
+import ProduceMessagesPanelSingle from './assets/produce-messages-panel-single.png';
 
 <img src={ProduceMessagesPanelSingle} alt="Produce messages panel single" style={{ width: 700, display: 'block', margin: 'auto' }} />
 
@@ -149,13 +149,13 @@ import ProduceMessagesPanelSingle from './img/produce-messages-panel-single.png'
 
 ### Import CSV
 
-![Import as CSV button](img/produce-import-csv-button.png)
+![Import as CSV button](assets/produce-import-csv-button.png)
 
 This feature lets you produce a batch of Kafka Records based on a CSV file.
 
 The 3 required inputs are the Key & Value Serializer, and the input file itself.
 
-import ImportCSV from './img/produce-import-csv.png';
+import ImportCSV from './assets/produce-import-csv.png';
 
 <img src={ImportCSV} alt="Import CSV" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -192,7 +192,7 @@ While in progress, you'll see a loading state.
 
 Once the import is finished, you'll get a summary message.
 
-import ImportCSVSuccess from './img/produce-import-csv-success.png';
+import ImportCSVSuccess from './assets/produce-import-csv-success.png';
 
 <img src={ImportCSVSuccess} alt="Import CSV Success" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -202,7 +202,7 @@ If you are regularly using the same set of Producer configuration, you can save 
 
 At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
 
-import ProduceTemplates from './img/produce-templates.png';
+import ProduceTemplates from './assets/produce-templates.png';
 
 <img src={ProduceTemplates} alt="Produce templates" style={{ width: 400, display: 'block', margin: 'auto' }} />
 

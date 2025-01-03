@@ -28,7 +28,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 :::info
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
 :::
-![Topics](img/topic-list.png)
+![Topics](assets/topic-list.png)
 
 ## Operations
 
@@ -44,7 +44,7 @@ If you want to understand more deeply what those parameters are about, here's so
 [Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
 :::
 
-import CreateTopic from './img/topic-create.png';
+import CreateTopic from './assets/topic-create.png';
 
 <img src={CreateTopic} alt="Create a topic" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -79,7 +79,7 @@ Upon toggling the Advanced configuration, you will be shown all the available to
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 :::
 
-import CreateTopicAdvanced from './img/topic-create-advanced.png';
+import CreateTopicAdvanced from './assets/topic-create-advanced.png';
 
 <img src={CreateTopicAdvanced} alt="Topic advanced properties" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -90,7 +90,7 @@ Increase the number of partitions for your topic. Number of partitions cannot be
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 :::
 
-import AddPartitions from './img/topic-add-partitions.png';
+import AddPartitions from './assets/topic-add-partitions.png';
 
 <img src={AddPartitions} alt="Add partitions" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -100,7 +100,7 @@ This lets you delete all records from a topic. This operation is permanent and i
 
 If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
 
-import EmptyTopic from './img/topic-empty.png';
+import EmptyTopic from './assets/topic-empty.png';
 
 <img src={EmptyTopic} alt="Empty a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -108,7 +108,7 @@ import EmptyTopic from './img/topic-empty.png';
 
 This lets you delete the topic from Kafka. This operation is permanent and irreversible.
 
-import DeleteTopic from './img/topic-delete.png';
+import DeleteTopic from './assets/topic-delete.png';
 
 <img src={DeleteTopic} alt="Delete a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
           
@@ -118,12 +118,12 @@ You can help categorize your Topics further using key-value pairs called labels.
 
 To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
 
-import EditLabel from './img/label-edit.png';
+import EditLabel from './assets/label-edit.png';
 
 <img src={EditLabel} alt="Edit labels" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
 
-import LabelNew from './img/label-new.png';
+import LabelNew from './assets/label-new.png';
 
 <img src={LabelNew} alt="Add new labels" style={{ width: 400, display: 'block', margin: 'auto' }} />

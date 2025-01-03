@@ -8,7 +8,7 @@ The Topic Configuration tab lets you visualize and edit your topic configuration
 ## List configurations
 
 
-![Topic configuration](img/topic-config-list.png)
+![Topic configuration](assets/topic-config-list.png)
 
 On top of the table you have different fields to help you:
 
@@ -38,7 +38,7 @@ When clicking on the edit button from the table rows, a new screen will appear w
 - The Kafka default value
 - The current value
 
-import EditTopicConfiguration from './img/topic-config-item.png';
+import EditTopicConfiguration from './assets/topic-config-item.png';
 
 <img src={EditTopicConfiguration} alt="Edit Topic configuration" style={{ width: 400, display: 'block', margin: 'auto' }} />
 

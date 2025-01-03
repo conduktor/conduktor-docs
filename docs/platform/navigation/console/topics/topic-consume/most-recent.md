@@ -20,7 +20,7 @@ Edge cases might occur and the algorithm will account for it seamlessly.
 See image below 👇  
 :::
 
-import MostRecent500 from './img/most-recent-500.png'
+import MostRecent500 from './assets/most-recent-500.png'
 
 <img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
