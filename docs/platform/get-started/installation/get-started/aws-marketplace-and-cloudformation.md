@@ -15,7 +15,7 @@ This guide contains a brief overview of the Marketplace listing architecture fol
 The Conduktor Marketplace offering is the Community Edition. If you are interested in our enterprise offering then [contact us](https://conduktor.io/contact/demo?utm_source=docs&utm_medium=product) for a free demo.
 
 :::info
-While this guide helps get you started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements) to meet your requirements.
+While this guide helps get you started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements).
 :::
 
 The template is designed for a speedy deployment, you'll be deployed in only a few clicks. You may however need to wait a few minutes for AWS to spin up the resources ☕.
