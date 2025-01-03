@@ -35,7 +35,7 @@ Check the ksqlDB documentation for more info about the [ksqlDB concepts](https:/
 
 ## Streams & Tables tabs
 
-Both Streams and Tables tabs are similar, the only different is the kind of resource it's showing. The first one shows the result of `CREATE STREAM` statements while the other one is about `CREATE TABLE` statements.
+Both Streams and Tables tabs are similar, the only difference is the kind of resource it's showing. The first one shows the result of `CREATE STREAM` statements while the other one is about `CREATE TABLE` statements.
 
 ![Streams](assets/ksql_streams_list.png)
 
