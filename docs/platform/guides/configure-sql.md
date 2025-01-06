@@ -21,7 +21,7 @@ Note this feature enables you to troubleshoot, sample, analyze, aggregate and jo
 
 We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
 
-![Conduktor SQL](img/conduktor-sql.png)
+![Conduktor SQL](assets/conduktor-sql.png)
 
 # Table of Contents
 - [Console Configuration](#console-configuration)
@@ -54,7 +54,7 @@ By default, the SQL feature is disabled. You will need to add additional configu
 :::warning
 You should provision a second database for storing SQL data that is different from the existing one used by Console's backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
 
-See [database requirements](../get-started/configuration/database.md) and [about database isolation](#database-isolation) for more guidance.
+See [database requirements](/platform/get-started/configuration/database) and [about database isolation](#database-isolation) for more guidance.
 :::
 
 Configure the second database through environment variables:
@@ -93,7 +93,7 @@ When selecting a topic for indexing, you will be asked to configure the:
  -  **Indexed Retention Time**: The furthest point in time from which the data will be indexed. Note that any data before this point in time will be purged periodically.
     - By default, purging happens every 1h, but it's configurable using the environment variable `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`
 
-![Conduktor SQL Indexing](img/conduktor-sql-index.png)
+![Conduktor SQL Indexing](assets/conduktor-sql-index.png)
 
 **Understanding the state of indexing**
 
@@ -106,12 +106,12 @@ The process gives insight into the:
  - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic
 
 
-![Conduktor SQL Index Status](img/conduktor-sql-index-status.png)
+![Conduktor SQL Index Status](assets/conduktor-sql-index-status.png)
 
 
 ### Index Topics in the CLI
 
-Alternatively, you can index a topic through the conduktor [CLI](../reference/cli-reference.md):
+Alternatively, you can index a topic through the conduktor [CLI](/platform/reference/cli-reference/):
 
 ```yaml
 ---
@@ -145,11 +145,11 @@ SELECT *
   FROM "kafka-cluster-dev_customers";
 ```
 See [database storage format](#database-storage-format) for the underlying table structure.
-![Conduktor SQL](img/conduktor-sql.png)
+![Conduktor SQL](assets/conduktor-sql.png)
 
 **Using the CLI**  
 
-API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](../reference/cli-reference.md#short-lived-user-api-keys)
+API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](/platform/reference/cli-reference/#short-lived-user-api-keys)
 
 ```bash
 conduktor sql 'select * from "kafka-cluster-dev_customers"' -n 2
@@ -278,11 +278,11 @@ There are some limitations:
 
 The user will only see the table(s) and field(s) they have access to on the UI:
 
-![SQL metadata description](img/sql-ui-security.png)
+![SQL metadata description](assets/sql-ui-security.png)
 
 If a user tries to access a table for which they lack the necessary rights, they will receive an 'access denied' error:
 
-![access denied error](img/sql-exec-access-denied.png)
+![access denied error](assets/sql-exec-access-denied.png)
 
 
 ## Known Limitations

@@ -18,7 +18,7 @@ The [Conduktor Terraform Provider](https://registry.terraform.io/providers/condu
 
 ## Install & Configure
 
-The provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of versions using the following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration :
+The provider should be installed automatically with `terraform init`, but it's recommended to pin a specific version or range of versions using the following [`required_providers`](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration:
 
 ```hcl
 terraform {
@@ -33,7 +33,7 @@ terraform {
 
 ### Configure
 
-To use the Conduktor Terraform Provider, you need to define some minimal configuration :
+To use the Conduktor Terraform Provider, you need to define some minimal configuration:
 - The URL of Conduktor Console
 - The authentication mechanism
   - Using an API key
@@ -57,7 +57,7 @@ There are 2 types of API Keys:
 <TabItem  value="admin-api-key" label="Admin API Key">
 
 Admin API Keys grant the maximum permissions on Console.
-They are generated either from the UI or using the  [CLI](./cli-reference.md).
+They are generated either from the UI or using the  [CLI](/platform/reference/cli-reference/).
 
   <Tabs>
   <TabItem  value="CLI" label="CLI">
@@ -72,9 +72,9 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
   <TabItem value="GUI" label="UI">
 Navigate to Settings > API Keys
 
-Select **Create API Key** to generate a new API key.
+Select **New API Key** to generate a new API key.
 
-![api-token.png](img/admin-keys.png)
+![Create API Key](assets/admin-keys.png)
   </TabItem>
   </Tabs>
 
@@ -83,7 +83,7 @@ Select **Create API Key** to generate a new API key.
 
 Self-service Application API Key permissions are limited to the scope of the ApplicationInstance for which they have been generated.
 Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.
-They can be obtained either from the UI or using the [CLI](./cli-reference.md).
+They can be obtained either from the UI or using the [CLI](/platform/reference/cli-reference/).
 
   <Tabs>
   <TabItem  value="CLI" label="CLI">
@@ -97,7 +97,7 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
   <TabItem value="GUI" label="UI">
 
 Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
-![Cluster identity](img/self-service-keys.png)
+![Cluster identity](assets/create-app-api-key.png)
 
   </TabItem>
   </Tabs>

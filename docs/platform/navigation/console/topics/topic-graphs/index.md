@@ -13,11 +13,11 @@ When you browse any Topic Details page, you will see the associated Graphs assoc
 
 Graphs can be visualized over 24h, 7 days or 30 days periods.
 
-![img.png](img/topic-graphs.png)
+![Topic Graphs](assets/topic-graphs.png)
 
 On each metric you have the option to create an Alert. This will open a side panel requesting you to set the parameters to triggers your Alert.
 
-![img.png](img/topic-create-alert.png)
+![Create a Topic alert](assets/topic-create-alert.png)
 
 
 ## Alerts Tab
@@ -25,5 +25,4 @@ On each metric you have the option to create an Alert. This will open a side pan
 The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.
 
-![img.png](img/alerts-tab.png)
-          
+![List Topic alerts](assets/alerts-tab.png)

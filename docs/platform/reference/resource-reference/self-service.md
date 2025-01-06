@@ -196,7 +196,7 @@ spec:
       pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
 ```
 **TopicPolicy checks:**
-- `spec.policies` requires YAML paths that are paths to the [Topic resource](../kafka#topic) YAML. For example:
+- `spec.policies` requires YAML paths that are paths to the [Topic resource](/platform/reference/resource-reference/kafka/#topic) YAML. For example:
   - `metadata.name` to create constraints on Topic name
   - `metadata.labels.<key>` to create constraints on Topic label `<key>`
   - `spec.partitions` to create constraints on Partitions number

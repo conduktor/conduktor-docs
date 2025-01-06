@@ -4,21 +4,19 @@ title: ksqlDB
 description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
-
 # ksqlDB
 
-## ksqlDB Cluster List
+## ksqlDB Clusters List
 
-The landing page for ksqlDB shows the list of all configured ksqlDB clusters for this Kafka cluster. If you have multiple ksqlDB clusters, use the input to filter them by name or by technical id.
+The landing page for ksqlDB shows the list of all configured ksqlDB clusters for this Kafka cluster. If you have multiple ksqlDB clusters, use the input to filter them by name or by technical ID.
 
 Click on an element to get to the ksqlDB Cluster Details page.
 
 :::caution
-Configure** RBAC** to restrict your user access to certain ksqlDB Clusters.  
-Check the [Settings](/platform/navigation/settings/rbac/) for more info.
+Configure [**RBAC**](/platform/navigation/settings/rbac/) to restrict your users from accessing to certain ksqlDB Clusters.
 :::
 
-![Image](img/ksql_clusters.png)
+![ksqlDB clusters](assets/ksql_clusters.png)
 
 ## ksqlDB Cluster Details
 
@@ -37,9 +35,9 @@ Check the ksqlDB documentation for more info about the [ksqlDB concepts](https:/
 
 ## Streams & Tables tabs
 
-Both Streams and Tables tabs are similar, the only different is the kind of resource it's showing. The first one shows the result of `CREATE STREAM` statements while the other one is about `CREATE TABLE` statements.
+Both Streams and Tables tabs are similar, the only difference is the kind of resource it's showing. The first one shows the result of `CREATE STREAM` statements while the other one is about `CREATE TABLE` statements.
 
-![Image](img/ksql_streams_list.png)
+![Streams](assets/ksql_streams_list.png)
 
 The table of Steams / Tables consists of the following columns:
 
@@ -57,11 +55,11 @@ This page contains 3 sections: Fields, kSQL, Metrics
 
 **Fields** let you visualize on the structure of the records on the given Stream or Table.
 
-![Image](img/ksql_stream_fields.png)
+![Stream fields](assets/ksql_stream_fields.png)
 
 **kSQL** gives you the exact kSQL statement that is running behind the scenes
 
-![Image](img/ksql_stream_sql.png)
+![Stream SQL](assets/ksql_stream_sql.png)
 
 **Metrics** provides runtime statistics for the topic backing the Stream or Table. More info about the [metrics here](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/describe/)
 
@@ -78,7 +76,7 @@ The table has of the following columns:
 
 Click on the **Peristent** type queries to see more information (Fields, kSQL)
 
-![Image](img/ksql_queries_list.png)
+![Queries](assets/ksql_queries_list.png)
 
 ## Editor tab
 :::info
@@ -93,7 +91,7 @@ This will send requests to the `/query-stream` endpoint of ksqlDB.
 
 [https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/streaming-endpoint/)
 
-![Image](img/ksql_editor_query.png)
+![Editor](assets/ksql_editor_query.png)
 
 ### Execute a statement
 
@@ -101,4 +99,4 @@ Alternatively, select the "Execute a statement" option from the dropdown to run 
 
 [https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/ksql-endpoint/](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-rest-api/ksql-endpoint/)
 
-![Image](img/ksql_editor_statement.png)
+![Statement](assets/ksql_editor_statement.png)

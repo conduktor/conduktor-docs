@@ -1,18 +1,18 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Self-service Quickstart
 description: Getting Started with Self-service
 ---
 
 # Getting Started with Self-service
 
-This guide gives an overview of Conduktor's self-service offering through a worked example where you will:
+This guide gives an overview of Conduktor's Self-service offering through a worked example where you will:
  - Define Applications for your teams
  - Setup policies to enforce governance over topic usage
  - Expose topics in the topic catalog
  - Experience trying to create resources that breach policies
 
-After running the demo you will have an appreciation of how Conduktor's self-service framework benefits teams and how it can be applied within your organization. 
+After running the demo you will have an appreciation of how Conduktor's Self-service framework benefits teams and how it can be applied within your organization. 
 
 For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
 
@@ -34,19 +34,19 @@ git clone https://github.com/conduktor/self-service-getting-started
 This demo repository (repo) contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`. 
 
 
-# Central team's repo
+## Central team's repo
 This repo is where the central team would make, or approve, changes.
-It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the self-service page.
+It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies. These concepts are detailed on the [concepts](/platform/navigation/self-serve/#concepts) of the Self-service page.
 
-# Application team's repo
+## Application team's repo
 This repo would exist and be owned by an application team. As the application team is the owner, they make or approve changes, without requiring the central team's involvement.  
-This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's self-service.  
+This model works because the central team has delegated appropriate scope by creating the Application and Application Instance(s) in advance. This delegation is key to Conduktor's Self-service.  
 
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
 
-The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the self-service page.
+The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the Self-service page.
 
-# Worked Example
+## Worked Example
 The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
 The central team has defined three teams, the **clickstream**, **wikipedia** and **website-analytics** each with their own application, as can be seen by their respective yaml files in `/applications`.
@@ -86,13 +86,13 @@ graph TD;
     ````bash
     docker compose up -d
     ````
-2. Login to Console at http://localhost:8080 , with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-secret`
+2. Login to Console at http://localhost:8080, with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-S3cret`
 3. Generate an admin API key for the Conduktor CLI. Navigate to Settings > API Keys > New API Key, **copy this value**. 
    - Note: This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
      ````bash
      # not part of today's demo, shown as an example
      export CDK_USER=admin@conduktor.io 
-     export CDK_PASSWORD=admin-secret 
+     export CDK_PASSWORD=admin-S3cret 
      conduktor login
      eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
      ````
@@ -111,21 +111,24 @@ With setup complete we're now ready to create the Conduktor Applications, so we 
 
 1. Create a Group, `website-analytics-team`, from the Settings menu in Conduktor Console. Note this can be also be done through the API. Settings >  Groups > Create Group. We are going to assign ownership of our application to this, so the group must exist before application creation
 
-![create group](./img/create-group.png)
+import CreateGroup from './assets/create-group.png';
+
+<img src={CreateGroup} alt="Create group" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
 2. Create the policies that some application instances might leverage using the Conduktor CLI
 ```bash
 conduktor apply -f ./self-service/central-team-repo/topic-policies/
 ```
 These are now visible within the UI under Topic Policies:
 
-![topic policies](./img/topic-policies.png)
+![Topic Policies](assets/topic-policies.png)
 3. Create the team resources, the Application and the Application Instances
 ```bash
 conduktor apply -f ./self-service/central-team-repo/applications/web-analytics.yaml #web analytics
 ```
 Applications and their instances are visible in the Applications Catalog (refresh your browser tab if not immediately available):
 
-![application instances](./img/create-app-api-key.png)
+![Application Instances](assets/app-catalog.png)
 
 We now have everything ready to delegate to the application team.
 
@@ -140,7 +143,7 @@ As these topics are now associated to the application instances, we are able to 
 
 Great success topics created with ownership and visibility! (*May take up to 30 seconds for the new topics to appear depending when the indexer last polled for topics.*)
 
-![topic-catalog](./img/topic-catalog.png)
+![Topic Catalog](assets/topic-catalog.png)
 
 ### Attempt to create topics out of bounds
 We've demoed this working, but now let's try make a topic that doesn't fit the criteria set by the central team.
@@ -153,7 +156,7 @@ The API key we've been using up until now has been an Admin API key, so truth be
     eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
    ````
 
-![create app api key](./img/create-app-api-key.png)
+![Create Application Instance API key](assets/create-app-api-key.png)
 
 2. Leave the CLI container
     ````bash
@@ -246,12 +249,13 @@ You'll notice you get some errors followed by some successes, this is because th
 The last message is the one of interest, an appropriate error from the policy we just reviewed;
 
 ```
-Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doesn't match the expected constraints: [At `metadata.labels.data-criticality` got "C5" expecting OneOf("C0", "C1", "C2"), At `spec.configs.retention.ms` got null expecting a Value, At `spec.partitions` got "11" expecting Range(1 to 10)]
+Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doesn't match the expected constraints:
+- At `metadata.labels.data-criticality` got "C5" expecting OneOf("C0", "C1", "C2")
+- At `spec.configs.retention.ms` got null expecting Range(604800000, 2419000000)
+- At `spec.partitions` got "11" expecting Range(1 to 10)
 ```
 
-# Conclusion
-That concludes this worked example of self-service, do copy the example repos and start mapping your own team structure. We didn't cover everything today so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or [setting up teams within your Application](/platform/reference/resource-reference/self-service/#application-group). To close down the resources from today exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
+## Conclusion
+That concludes this worked example of Self-service, do copy the example repos and start mapping your own team structure. We didn't cover everything today so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or [setting up teams within your Application](/platform/reference/resource-reference/self-service/#application-group). To close down the resources from today exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
 
 If you wish to discuss this further with one of our team then you can [book a demo](https://www.conduktor.io/contact/demo/?utm_source=github&utm_medium=webpage) with us from our website.
-
-![UI screenshot](./img/full-ui.png)
