@@ -5,12 +5,12 @@ export const items = [
       'Yes. We support any OIDC, Active Directory, or LDAP standard identity provider. Further this does not require a connection back to Conduktor. It integrates directly with your identify provider. View all our options for configuring SSO <a href="https://docs.conduktor.io/platform/category/configure-sso/" target="_blank">here</a>  ',
   },
   {
-    question: 'How can we deploy Conduktor Platform?',
+    question: 'How can we deploy Conduktor?',
     answer:
       'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.). See the full list of deployment guides here <a href="https://docs.conduktor.io/platform/category/deployment-options/" target="_blank">here</a>',
   },
   {
-    question: 'Does Role Based Access Contol (RBAC) in Conduktor platform apply to Kafka also?',
+    question: 'Does Role Based Access Control (RBAC) in Conduktor platform apply to Kafka also?',
     answer:
       "No - Conduktor's Role-Based Access Control (RBAC) model is designed to manage user permissions within the Conduktor platform, specifically for interacting with Kafka resources through Conduktor's interface. However, in Conduktor's self-service model, the platform facilitates the creation of Access Control Lists (ACLs) based on applications. This approach allows application teams to manage their Kafka resources autonomously, ensuring that each application has the necessary permissions to interact with Kafka topics, consumer groups, and other resources. ",
   },
@@ -21,17 +21,17 @@ export const items = [
   },
   {
     question: 'Do you have a Helm chart for deploying in my Kubernetes environment?',
-    answer: 'Yes, our public Helm repository can be found <a href="https://helm.conduktor.io/" target="_blank">here</a>.',
+    answer: 'Yes, checkout our <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/kubernetes/" target="_blank">docs page</a>.',
   },
   {
-    question: 'Is access to the internet required to run the Conduktor Platform?',
+    question: 'Is access to the internet required to run Conduktor?',
     answer:
-      'No, you can run an air gapped docker image in your environment without internet access.',
+      'No, you can run an air gapped Docker image in your environment without internet access.',
   },
   {
     question: 'Is an external database required to run Conduktor?',
     answer:
-      'Yes! The external database is used to store platform configuration such as users and permissions. More information can be found in <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">system requirements</a>.',
+      'Yes! The external database is used to store platform configuration such as users and permissions. The instructions for doing this can be found <a href="https://docs.conduktor.io/platform/get-started/configuration/database/" target="_blank">here</a> and more information on system requirements can be found <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">here</a>.',
   },
   {
     question: 'What schema registries do you support?',
@@ -41,11 +41,16 @@ export const items = [
   {
     question: 'Do you have Terraform or CloudFormation?',
     answer:
-      'We currently have a public CloudFormation available <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/CloudFormation/" target="_blank">here</a>. You can find our Terraform provider <a href="https://github.com/conduktor/terraform-provider-conduktor" target="_blank">here</a>.',
+      'Yes we have both a <a href="https://docs.conduktor.io/platform/reference/terraform-reference/" target="_blank">Terraform provider</a>, and a public <a href="https://docs.conduktor.io/platform/get-started/installation/get-started/CloudFormation/" target="_blank">CloudFormation</a>.',
   },
   {
     question: 'What kind of compliance certifications does Conduktor have?',
     answer: 'Conduktor is SOC 2 Type 2 compliant and conducts regular penetration testing on our products. The reports are available as requested.',
+  },
+  {
+    question: 'What are the suggested resources that should be dedicated to Conduktor?',
+    answer:
+      'See the requirements pages for <a href="https://docs.conduktor.io/gateway/get-started/system-requirements/" target="_blank">Gateway</a>, or <a href="https://docs.conduktor.io/platform/get-started/installation/hardware/" target="_blank">Console</a> for more instructions.',
   },
   {
     question: 'What are the suggested settings for running the docker image?',

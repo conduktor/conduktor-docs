@@ -405,6 +405,10 @@ const redirects = [
       {
         from: '/platform/get-started/support/data-security/',
         to: '/platform/get-started/support/data-privacy/'
+      },
+      {
+        from: '/platform/get-started/installation/get-started/CloudFormation/',
+        to: '/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/'
       }
     ],
   },
