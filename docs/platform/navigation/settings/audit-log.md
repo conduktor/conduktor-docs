@@ -36,14 +36,14 @@ As you and your team interact with Conduktor, audit events are captured that giv
 
 The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may have for them, such as maintaining your own audit trail in other systems.
 
-![Admin Audit](images/admin-audit.png)
+![Admin Audit](assets/admin-audit.png)
 
 Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for a new connector added, which can include metadata such as custom tags, the cluster, connector name and its ID.
 
-![Admin Audit Event](images/audit-log-inspect.png)
+![Admin Audit Event](assets/audit-log-inspect.png)
 
 Audit log events are also exported to a Kafka topic once configured with the right [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
-![kafka message audit log](images/audit-log-kafka-message.png)
+![kafka message audit log](assets/audit-log-kafka-message.png)
 
 ## Audit Events
 
@@ -161,7 +161,7 @@ CRN `platform:/user/<email>`
 
 Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.
 
-Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables#auditlog-export-properties).
+Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties).
 
 The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 

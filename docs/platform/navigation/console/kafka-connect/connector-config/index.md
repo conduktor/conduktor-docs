@@ -12,4 +12,8 @@ Similar to the Create Connector workflow, the Connector Configuration tab lets y
 - Toggle advanced configuration to visualize only the most important fields
 - Switch seamlessly between Form View and JSON View at any time
 
-![img](../img/connector-details-config-form.png) ![img](../img/connector-details-config-json.png)
+![Connector configuration](assets/connector-details-config-form.png)
+
+The same configuration as a JSON:
+
+![Connector configuration as a JSON](assets/connector-details-config-json.png)

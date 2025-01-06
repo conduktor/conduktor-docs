@@ -17,7 +17,7 @@ What you see in the **Service Accounts** screen will depend on whether you have 
 
 When viewing the Service Accounts screen, you will observe a powerful design that aggregates ACLs to principal granularity. This makes it possible to more easily understand all resource ACLs assigned to each service account.
 
-![Service Accounts](/img/console/console-service-accounts.png)
+![Service Accounts](assets/service-accounts.png)
 
 After selecting a service account, you can **edit** existing ACLs and **add** new resource ACLs. When you create new ACLs for a resource, you can:
  - Use preconfigured permissions (e.g. Consumer, Producer, Admin)
@@ -25,15 +25,15 @@ After selecting a service account, you can **edit** existing ACLs and **add** ne
 
 To manually edit permissions, select the operation and choose **Allow**, **Deny** or **Not Set**.
 
-![Console ACLs](/img/console/console-acls.png)
+![ACLs](assets/acls.png)
 
 ## Provider Integrations
 
 Connect your Kafka provider to manage their benefits directly in Conduktor Console. The additional functionality you get from connecting your provider is made possible via their APIs.
 
-To use Kafka provider service account functionality, you must first configure the **Provider** tab from within your cluster configuration. 
+To use Kafka provider service account functionality, you must first configure the **Provider** tab from within your cluster configuration.
 
-![Confluent Service Account Admin](/img/console/confluent-service-admin.png)
+![Confluent Cloud provider settings](assets/confluent-cloud-provider.png)
 
 ### Confluent Cloud
 
@@ -47,19 +47,18 @@ Once you have configured Confluent Cloud as your [provider](#provider-integratio
 
 To manage Confluent Cloud resources, navigate to the **Service Accounts** screen when connected to a Confluent Cloud Kafka cluster. Note you will have a different view that's tailored to Confluent resources.
 
-![Confluent Service Acc](/img/console/confluent-sa.png)
+![Confluent Service ACLs](assets/confluent-sa.png)
 
 Additionally, you can **list** and **create API Keys** associated with a Confluent Cloud service account:
 
-![Confluent API Keys](/img/console/confluent-sa-api-keys.png)
-
+![Confluent API Keys](assets/confluent-sa-api-keys.png)
 
 ### Aiven
 
 :::info
-When configuring Aiven as your [provider](#provider-integrations), you can find the **project name** and **service name** fields in the below locations from within the Aiven console.
+When configuring Aiven as your [provider](#provider-integrations), you can generate your API token following [this guide](https://aiven.io/docs/platform/howto/create_authentication_token), and get the **project name** and **service name** fields in the below locations from within the Aiven console.
 
-![Aiven Service Account](/img/console/aiven-provider-fields.png)
+![Aiven Service Account](assets/aiven-provider-fields.png)
 :::
 
 Once you have configured Aiven as your [provider](#provider-integrations), you can:
@@ -68,4 +67,6 @@ Once you have configured Aiven as your [provider](#provider-integrations), you c
 
 To manage Aiven resources, navigate to the **Service Accounts** screen when connected to an Aiven Kafka cluster.
 
-![Aiven Service Account](/img/console/aiven-console.png)
+You'll see the list of your Aiven users, and their associated Aiven ACLs.
+
+![Aiven ACLs](assets/aiven-acls.png)

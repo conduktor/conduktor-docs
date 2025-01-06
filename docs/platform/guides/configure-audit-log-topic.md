@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Configure Audit Log Topic
 description: Send the Console Audit Log in a Kafka topic
 ---
@@ -43,7 +43,7 @@ Failed to publish audit log event: Not found. Could not find cluster my-kafka-cl
 
 Please make sure that the Kafka cluster name matches with the ID you can see in the clusters dropdown in the Console:
 
-import ClustersDropdown from './img/clusters-dropdown.png';
+import ClustersDropdown from './assets/clusters-dropdown.png';
 
 <img src={ClustersDropdown} alt="Clusters Dropdown" style={{width: 300, display: 'block', margin: 'auto'}} />
 
@@ -53,6 +53,6 @@ In order to export the Audit Log from this Kafka topic, you should go to the Con
 
 Here, click on the `...` button on the top right of the records table, and select either `Export to CSV` or `Export to JSON`.
 
-![Export to CSV or JSON](img/audit-log-topic.png)
+![Export to CSV or JSON](assets/audit-log-topic.png)
 
 You can now import that file in your SIEM or log management system.

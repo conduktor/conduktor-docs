@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 # CLI Reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated [Resources Reference](../resource-reference) page.
+Check for the list of supported resources and their definition in the dedicated [Resources Reference](/platform/reference/resource-reference/) page.
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
 
@@ -71,9 +71,9 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 <TabItem value="GUI" label="UI">
 Navigate to Settings / API Keys
 
-Select **Create API Key** to generate a new API key.
+Select **New API Key** to generate a new API key.
 
-![api-token.png](img/admin-keys.png)
+![Create API Key](assets/admin-keys.png)
 </TabItem>
 </Tabs>
 
@@ -96,7 +96,7 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 <TabItem value="GUI" label="UI">
 
 Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
-![Cluster identity](img/self-service-keys.png)
+![Cluster identity](assets/create-app-api-key.png)
 
 </TabItem>
 </Tabs>

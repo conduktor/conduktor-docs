@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 6
 title: Configure Custom Deserializers
 description: Reference Documentation for Topic related pages
 ---
@@ -93,7 +93,7 @@ spec:
   storageClassName: standard # change for one that support requested accessModes
 ```
 
-Then when using [Console Helm Chart](../get-started/installation/get-started/kubernetes.md) provide created PVC as extra volume like :
+Then when using [Console Helm Chart](/platform/get-started/installation/get-started/kubernetes/) provide created PVC as extra volume like :
 
 ```yaml title="console-values.yaml"
 platform:
@@ -167,4 +167,4 @@ apicurio.auth.username=srvc-acct-a95c41e8-xxxx-4e99-xxxx-217755ad7046
 apicurio.auth.password=7d94b05a-xxxx-4f70-xxxx-1e6aba25a8b4
 ```
 
-![Capture d’écran 2023-12-12 à 16.04.53.png](img/topic-custom-deser.png)
+![Custom deserializer](assets/topic-custom-deser.png)
