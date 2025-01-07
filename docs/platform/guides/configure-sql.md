@@ -8,18 +8,16 @@ description: How to configure Conduktor SQL
 
 :::info
 This feature is in **Beta** and is subject to change as we enhance it further.
-
-It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 :::
 
 Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**.
 
-Note this feature enables you to troubleshoot, sample, analyze, aggregate and join data through:
+This feature enables you to troubleshoot, sample, analyze, aggregate and join data through:
 
 - Querying Kafka message data
 - Querying Kafka metadata (such as the offset, partition and timestamp)
 
-We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
+We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap). For a demo and walkthrough checkout our [dedicated video](https://youtu.be/nHWh5yS2t38).
 
 ![Conduktor SQL](assets/conduktor-sql.png)
 
