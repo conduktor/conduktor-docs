@@ -3,6 +3,10 @@ const redirects = [
   {
     redirects: [
       {
+        from: '/platform/navigation/console/conduktor-sql/',
+        to: '/platform/guides/configure-sql/'
+      },
+      {
         from: '/learn-apache-kafka-with-conduktor',
         to: '/desktop/learn-apache-kafka-with-conduktor',
       },
