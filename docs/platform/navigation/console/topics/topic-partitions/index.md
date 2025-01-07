@@ -10,14 +10,20 @@ The **Per partition** view presents the data available for each partition:
 - Total number of records (estimated using EndOffset - BeginOffset)
 - Partition Size
 - Begin and End Offsets
-- Broker Ids of the Partition Leader (green) and Followers (grey)  
-![Image](img/per-partition.png)
+- Broker Ids of the Partition Leader (green) and Followers (grey)
+
+![Per partition](assets/per-partition.png)
 
 The **Per broker** view pivots the data to show for each broker:  
 - Partitions where the broker is Leader
-- Partitions where the broker is Follower  
-![Image](img/per-broker.png)
+- Partitions where the broker is Follower
+
+![Per broker](assets/per-broker.png)
 
 ## Operations
 ### Empty Partition
-Empty Partition removes the Kafka records from the selected partition. If you need to delete all records from all partitions, use the Empty Topic button from the Configuration page instead. 
+On the Per partition view, you can click on the bin icon to remove the Kafka records from this specific partition.
+
+:::tip
+If you need to delete all records from all partitions, click on the `...` icon above the Per partition / Per broker switch, and select **Empty Topic**.
+:::

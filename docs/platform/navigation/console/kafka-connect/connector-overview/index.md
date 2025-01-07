@@ -9,7 +9,8 @@ The Connector Overview page is split in 3 main sections:
 - Graphs & Alerts
 - Tasks list
 
-![img](../img/connector-details-overview.png)
+<!-- TODO: To update when Staging is back up and running -->
+![Connector details overview](assets/connector-details-overview.png)
 
 ## Statistics
 This section gives you relevant information about the current state of your Connector that will stay visible across all tabs
@@ -18,7 +19,8 @@ This section gives you relevant information about the current state of your Conn
 - Whether Auto-restart is enabled
 - How many Topics are associated. You can click on the icon next to it to visualize their names
 
-![img](../img/connector-details-topics.png)
+![Connector details topics](assets/connector-details-topics.png)
+
 ### Operations
 A few operations are available:
 - **Pause/Resume** uses the Kafka Connect API to Pause or Resume the Connector
@@ -31,16 +33,20 @@ A few operations are available:
 The Graph section lets you visualize the number of Failed Tasks of your Connector over the past 24 hours (Line chart on the left) or over the past 3 months (Heatmap on the right).   
 This can help you understand if there is a specific pattern associated with your Kafka Connect Tasks failures.
 
-![img](../img/connector-details-graphs.png)
+<!-- TODO: To update when Staging is back up and running -->
+![Connector graphs](assets/connector-details-graphs.png)
+
 ### Create an Alert
 
 To create an Alert, click on the "+" button inside the graph to open the "Create Alert" page.
 
 There, define the threshold for your alert as well as a name, and click Save.
 
-![img](../img/connector-details-alert.png)
+import CreateConnectorAlert from './assets/connector-details-alert.png'
 
-You can get a summary of all alerts associated to this Connector in the dedicated [Alerts tab](../connector-alerts)
+<img src={CreateConnectorAlert} alt="Create a Connector alert" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
+You can get a summary of all alerts associated to this Connector in the dedicated [Alerts tab](/platform/navigation/console/kafka-connect/connector-alerts/).
 
 ## Tasks list
 
@@ -51,4 +57,4 @@ The task list displays all the information related to the tasks associated to th
 - An option to **Restart task**
 
 If a task is in a Failed state, you can see the detailed logs about the failed task.  
-![img](../img/connector-details-tasks.png)
+![Connector task failed details](assets/connector-details-tasks.png)

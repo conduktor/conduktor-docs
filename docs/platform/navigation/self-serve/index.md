@@ -33,9 +33,9 @@ This approach brings governance into your enterprise through concepts like Owner
 ## Concepts
 Self-service relies on a central concept, the **Application**, which dictates **owernship** of Kafka resources. 
 
-Below outlines the relationships between [Self-service resources](../../reference/resource-reference/self-service).
+Below outlines the relationships between [Self-service resources](/platform/reference/resource-reference/self-service).
 
-  ![Image](img/self-service-concepts.png)
+![Self-service Concepts](assets/self-service-concepts.png)
 
 
 ## Central Platform Team Resources
@@ -293,4 +293,4 @@ For now, Self-service relies principally on the Conduktor CLI.
 
 The Console UI reconciles actions executed via the CLI to present Read Only views of your [Application Catalog](/platform/navigation/self-serve/application-catalog/) and [Topic Catalog](/platform/navigation/self-serve/topic-catalog/). This promotes discoverability of Kafka resources with business context inside your organization.
 
-![Application](img/application-ui.png)
+![Application](assets/application-ui.png)

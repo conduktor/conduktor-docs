@@ -29,7 +29,7 @@ From within Monitoring, navigagte to the **Alerts** tab. If you have not yet con
 
 If you have any issues with this process, please contact us through the chat box at the bottom of your window.
 
-![monitoring-configure](/img/monitoring/monitoring-configure.png)
+![Configure the integration](assets/monitoring-configure.png)
 
 
 ## Create an Alert
@@ -47,7 +47,7 @@ Fill in the:
 - **Value**: The value to use as threshold for the alert
 - **Comments**: Any additional comments to share with your colleagues
 
-![monitoring-alert-1](/img/monitoring/monitoring-alert-1.png)
+![Alert from tab](assets/monitoring-alert-1.png)
 
 ### Option 2: From a Graph
 
@@ -55,4 +55,4 @@ Alternatively, you can create an alert more dynamically when viewing a graph.
 
 Next to each graph, you have a **+** button that can be used to create the alert. Once you have clicked the button, follow the steps from Option 1 to fill out the form.
 
-![monitoring-alert-1](/img/monitoring/monitoring-alert-2.png)
+![Alert from graph](assets/monitoring-alert-2.png)

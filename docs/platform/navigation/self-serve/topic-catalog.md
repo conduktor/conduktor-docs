@@ -15,4 +15,4 @@ The Application Catalog lets you search through the Topics marked as public depl
 
 You can filter by multiple dimensions: Application, Kafka Cluster, and also the Topic metadata.
 
-![TopicCatalog](img/topic-catalog.png)
+![TopicCatalog](assets/topic-catalog.png)

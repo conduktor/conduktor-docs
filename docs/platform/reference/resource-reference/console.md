@@ -266,7 +266,7 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 
 :::info
 `metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
-![Cluster identity](../img/cluster-visual-identity.png)
+![Cluster identity](assets/cluster-visual-identity.png)
 :::
 
 **KafkaCluster checks:**

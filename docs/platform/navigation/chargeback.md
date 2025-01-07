@@ -24,7 +24,7 @@ The measured period can be changed from 7D, 30D, 6M, 12M, or YTD (Year To Date).
 
 The configuration button lets you configure the Dollar cost of a Produced GB and a Consumed GB. This allows you to align the chargeback model with your specific infrastructure costs.
 
-![Chargeback Configuration](./img/chargeback-configuration.png)
+![Chargeback Configuration](assets/chargeback-configuration.png)
 
 ## Exporting chargeback data
 
