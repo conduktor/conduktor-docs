@@ -118,15 +118,7 @@ This is the default deserializer. **Automatic** infers the correct deserializer 
 -   StringDeserializer
 -   ByteDeserializer (fallback)
 
-It also lets you to visualize the binary data in topics `__consumer_offsets` and `__transaction_state`
-
-Automatic deserializer applies independently to each record. If messages have been serialized differently, they will all be presented in the most human readable way.  
-The following captures show the same records deserialized using ByteDeserializer, then Automatic Deserializer  
-
-<!-- TODO: Couldn't reproduce the same records with 1.30.0, so I'm using the old pics - [CUS-490: Internal - Automatic deser changed](https://linear.app/conduktor/issue/CUS-490/internal-automatic-deser-changed) -->
-
-![Deserializer with bytes](assets/topic-bytes-deserializer.png) 
-![Deserializer with automatic](assets/topic-auto-deserializer.png)
+Automatic deserializer applies to all the records within a topic, based on the one that matches the first record it encounters.
 
 #### Custom Deserializer
 If you have installed them, your Custom Deserializers will appear here.  
