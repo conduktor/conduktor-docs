@@ -10,4 +10,4 @@ tags: fix
 
 ### Features ✨
 
-- Added support for Hashicorp Vault Enterprise namespaces
+- Added [support](/gateway/interceptors/data-security/encryption/encryption-configuration) for Hashicorp Vault Enterprise namespaces
