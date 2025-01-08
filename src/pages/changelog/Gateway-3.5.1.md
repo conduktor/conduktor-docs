@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Fixes 🔨
+### Features ✨
 
-- Fixed an issue where the Producer Rate Limiting Policy would not honor its configuration.
+- Added support for Hashicorp Vault Enterprise namespaces
