@@ -34,6 +34,9 @@ This will create a new topic (if it doesn't exist) in the cluster named `my-kafk
 
 Please note that the principal used by Console to connect to your Kafka cluster must have the following minimum set of permissions:
 
+**Topics**: Create, Describe, DescribeConfigs, Write
+**Cluster**: Create, Describe, DescribeConfigs
+
 ![Minimum permissions for Audit log topic](assets/minimum-set-acls.png)
 
 ## Troubleshooting
