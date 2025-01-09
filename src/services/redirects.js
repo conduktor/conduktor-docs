@@ -383,6 +383,10 @@ const redirects = [
         to: '/platform/get-started/installation/get-started/AWS/',
       },
       {
+        from: '/platform/get-started/installation/get-started/AWS_Marketplace/',
+        to: '/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/',
+      },
+      {
         from: '/platform/installation/license-management/',
         to: '/platform/get-started/installation/license-management/',
       },
