@@ -32,6 +32,13 @@ Once you've added these properties in your Console deployment configuration, sim
 
 This will create a new topic (if it doesn't exist) in the cluster named `my-kafka-cluster`. This new topic will be named `_conduktor_console_audit_log`, and will have 1 partition and a replication factor of 1.
 
+Please note that the principal used by Console to connect to your Kafka cluster must have the following minimum set of permissions:
+
+**Topics**: Create, Describe, DescribeConfigs, Write
+**Cluster**: Create, Describe, DescribeConfigs
+
+![Minimum permissions for Audit log topic](assets/minimum-set-acls.png)
+
 ## Troubleshooting
 
 If you don't see the topic `_conduktor_console_audit_log` in your Kafka cluster, you can check the Console logs for any error message, but first be sure to check if internal topics are Hidden.
