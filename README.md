@@ -1,6 +1,21 @@
 # Conduktor Docs
 Production (main): https://docs.conduktor.io
 
+- [Development](#development)
+- [Best practices for writing docs](#best-practices-for-writing-docs)
+- [Updating public API docs](#updating-public-api-docs)
+  - [Gateway](#gateway)
+  - [Console](#console)
+- [Updating the Changelog](#updating-the-changelog)
+  - [Changes for this version](#changes-for-this-version)
+  - [Adding your new changelog file to the index](#adding-your-new-changelog-file-to-the-index)
+- [Docusaurus Snippets](#docusaurus-snippets)
+  - [Resizing images](#resizing-images)
+  - [Create table with multiple tabs](#create-table-with-multiple-tabs)
+  - [Use tags](#use-tags)
+- [Vercel](#vercel)
+
+
 # Development
 For local preview run `yarn` , `yarn start`, a local server starts on localhost:3000. `yarn build` is best practice to see if any failures, as this is what the remote will check on each commit.
 ```
