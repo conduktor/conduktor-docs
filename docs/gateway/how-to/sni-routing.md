@@ -55,7 +55,7 @@ SNI routing relies on TLS and server name indication for Gateway to determine to
 
 ### 1. Prepare TLS certificates
 
-The certificate for a Gateway with SNI routing needs to include the Gateway host name as well as a SAN for each broker in the cluster. Alternatively, wildcards can be used in the SAN if supported by your issuer and security team.
+The certificate for a Gateway with SNI routing needs to include the Gateway host name as well as a SAN for each broker in the cluster. Alternatively, wildcards can be used in the SAN if supported by your issuer and security team. 
 See below the alternative hostnames and how they can be customized.
 
 ### 2. Configure Gateway
