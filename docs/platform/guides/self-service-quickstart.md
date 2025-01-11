@@ -47,24 +47,24 @@ Application teams can then create, modify and approve changes on their own resou
 The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the Self-service page.
 
 ## Worked Example
-The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastucture as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
+The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastructure as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
-The central team has defined three teams, the **clickstream**, **wikipedia** and **website-analytics** each with their own application, as can be seen by their respective yaml files in `/applications`.
+The central team has defined three teams,  **clickstream**, **wikipedia** and **website-analytics** each with their own **Application**, as can be seen by their respective yaml files in `/applications`.
 
 ```mermaid
 graph TD;
     A[central-team-repo]
     A --> B[applications]
     B --> C[clickstream.yaml]
-    B --> D[web-analytics.yaml]
+    B --> D[website-analytics.yaml]
     B --> E[wikipedia.yaml]
 ```
 
-Each team file has both their application and application instances defined within their file. Lastly, the central team has a folder for their topic policies.
+Each of these files contains the definition of both their Application and Application Instances. The central team also have folders for their topic policies and user groups.
 
 This example will focus on the website-analytics team.
 
-The website analytics team has their own "repo", which is the `application-team-repo` directory in this example. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource.
+The website analytics team has their own "repo" for their resource, which for this example will be the `application-team-repo` directory. Within they have defined their *Kafka resources* (topics, schema registry subjects, connectors), *application group(s)* for permissions within their team and an *application instance permission* for granting a different team access to their resource.
 
 ```mermaid
 graph TD;
@@ -86,13 +86,13 @@ graph TD;
     ````bash
     docker compose up -d
     ````
-2. Login to Console at http://localhost:8080, with the credentials provided in the docker-compose, `admin@conduktor.io` : `admin-S3cret`
+2. Login to Console at http://localhost:8080, with the credentials provided in the docker-compose, `admin@conduktor.io` : `adminP4ss!`
 3. Generate an admin API key for the Conduktor CLI. Navigate to Settings > API Keys > New API Key, **copy this value**. 
-   - Note: This could also be done from the CLI to by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
+   - Note: This can be done from the CLI by setting the following variables and running the command below, but for the demo we'll stick to using the UI.
      ````bash
      # not part of today's demo, shown as an example
      export CDK_USER=admin@conduktor.io 
-     export CDK_PASSWORD=admin-S3cret 
+     export CDK_PASSWORD=adminP4ss!
      conduktor login
      eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
      ````
@@ -109,48 +109,47 @@ graph TD;
 ### Apply the resources, central team perspective
 With setup complete we're now ready to create the Conduktor Applications, so we can delegate responsibility to our application teams. This is from the perspective of the central team.
 
-1. Create a Group, `website-analytics-team`, from the Settings menu in Conduktor Console. Note this can be also be done through the API. Settings >  Groups > Create Group. We are going to assign ownership of our application to this, so the group must exist before application creation
+1. Create a Group, `website-analytics-team`. We are going to assign ownership of our Application to this group, so the group must exist before creating this Application creation.
+```bash
+conduktor apply -f ./self-service/central-team-repo/groups
+```
 
-import CreateGroup from './assets/create-group.png';
-
-<img src={CreateGroup} alt="Create group" style={{ width: 400, display: 'block', margin: 'auto' }} />
-
-2. Create the policies that some application instances might leverage using the Conduktor CLI
+2. Create policies that some application instances might leverage using the Conduktor CLI
 ```bash
 conduktor apply -f ./self-service/central-team-repo/topic-policies/
 ```
-These are now visible within the UI under Topic Policies:
+The policies we've created are visible within the UI, under Topic Policies:
 
 ![Topic Policies](assets/topic-policies.png)
 3. Create the team resources, the Application and the Application Instances
 ```bash
-conduktor apply -f ./self-service/central-team-repo/applications/web-analytics.yaml #web analytics
+conduktor apply -f ./self-service/central-team-repo/applications/website-analytics.yaml #website analytics
 ```
-Applications and their instances are visible in the Applications Catalog (refresh your browser tab if not immediately available):
+Applications and their instances are visible in the **Applications Catalog**:
 
 ![Application Instances](assets/app-catalog.png)
 
 We now have everything ready to delegate to the application team.
 
 ### Apply the resources, application team perspective
- We are to assume the perspective of the application team and try some typical activities.
+With our protective policies in place and website analytics team's Application created let's create some topics.
 
-1. Create some topics on our clusters
+1. Create some topics on our cluster
 ```bash
 conduktor apply -f ./self-service/application-team-repo/kafka-resources/topics.yaml
 ```
-As these topics are now associated to the application instances, we are able to visualise this link in the UI (Topic Catalog), this helps teams discover who (which team) owns a topic to initiate a conversation, or even request access to it directly as part of a pull request.
+As these topics are associated to the Application Instances, we are able to visualise this link in the Topic Catalog, this helps teams discover who (which team) owns a topic to initiate a conversation, or even request access to it directly as part of a pull request.
 
-Great success topics created with ownership and visibility! (*May take up to 30 seconds for the new topics to appear depending when the indexer last polled for topics.*)
+Great success topics created with ownership and visibility! (*This may take up to 30 seconds for the new topics to appear depending when the indexer last polled for topics.*)
 
 ![Topic Catalog](assets/topic-catalog.png)
 
 ### Attempt to create topics out of bounds
-We've demoed this working, but now let's try make a topic that doesn't fit the criteria set by the central team.
+We've demoed successful topic creation, but now let's attempt to make a topic that doesn't fit the criteria set by the central team.
 
-The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work, and we needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now.
+The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work. We needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now and assume the role of the website analytics prod application.
 
-1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the prod instance of the application and click `New API Key`. You could also run this from the CLI:
+1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the **prod** instance of the application and click `New API Key`. **Copy this value**. You could also run this from the CLI:
     ````bash 
     conduktor token create application-instance -i=website-analytics-prod my-new-key-name
     eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
@@ -213,11 +212,11 @@ spec:
     - "generic-prod-topic-policy" # <-- Policy set against this app instance
 ```
 
-So, let's try create a topic as the prod application instance that doesn't folow this policy and see what happens.
+So, let's try create a topic as the prod application instance that doesn't flow this policy and see what happens.
 
-**Open** the team's topic file (*/application-team-repo/kafka-resources/topics.yaml*) and **append the forbiden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention, or another break to the policy you wish to try.
+**Open** the team's topic file (*/application-team-repo/kafka-resources/**topics.yaml***) and **append the forbidden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention policy, or another break to the policy you wish to try. This adds the new topic to our list of topics.
 
-Be sure to include the `---` at the top to indicate a break. 
+Be sure to include the `---` as part of appending this block, to indicate a new resource block. 
 
 ```yaml
 ---
