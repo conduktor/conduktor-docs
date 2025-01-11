@@ -56,7 +56,7 @@ graph TD;
     A[central-team-repo]
     A --> B[applications]
     B --> C[clickstream.yaml]
-    B --> D[web-analytics.yaml]
+    B --> D[website-analytics.yaml]
     B --> E[wikipedia.yaml]
 ```
 
@@ -125,7 +125,7 @@ The policies we've created are visible within the UI, under Topic Policies:
 ```bash
 conduktor apply -f ./self-service/central-team-repo/applications/website-analytics.yaml #website analytics
 ```
-Applications and their instances are visible in the **Applications Catalog** (refresh your browser tab if not immediately available):
+Applications and their instances are visible in the **Applications Catalog**:
 
 ![Application Instances](assets/app-catalog.png)
 
@@ -147,9 +147,9 @@ Great success topics created with ownership and visibility! (*This may take up t
 ### Attempt to create topics out of bounds
 We've demoed successful topic creation, but now let's attempt to make a topic that doesn't fit the criteria set by the central team.
 
-The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work. We needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now.
+The API key we've been using up until now has been an Admin API key, so truth be told this was always going to work. We needed it to create topics beyond the scope of a single Application Instance. Remember we have created two application instances in this demo (prod and dev) so we wouldn't want to use an application level token. However, to properly recreate the application team experience, for this failure, we need to use a key that is scoped to the Application Instance level. Let's swap in the correct key now and assume the role of the website analytics prod application.
 
-1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the **prod** instance of the application and click `New API Key`. You could also run this from the CLI:
+1. Inside Console, navigate to the Application Catalog, our application Website Analytics, the **prod** instance of the application and click `New API Key`. **Copy this value**. You could also run this from the CLI:
     ````bash 
     conduktor token create application-instance -i=website-analytics-prod my-new-key-name
     eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
@@ -214,9 +214,9 @@ spec:
 
 So, let's try create a topic as the prod application instance that doesn't flow this policy and see what happens.
 
-**Open** the team's topic file (*/application-team-repo/kafka-resources/topics.yaml*) and **append the forbidden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention policy, or another break to the policy you wish to try.
+**Open** the team's topic file (*/application-team-repo/kafka-resources/**topics.yaml***) and **append the forbidden topic config provided below** which includes an incorrect label, no replication, too many partitions and missing retention policy, or another break to the policy you wish to try. This adds the new topic to our list of topics.
 
-Be sure to include the `---` at the top to indicate a break. 
+Be sure to include the `---` as part of appending this block, to indicate a new resource block. 
 
 ```yaml
 ---
