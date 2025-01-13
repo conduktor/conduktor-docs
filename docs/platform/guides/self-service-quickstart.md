@@ -198,7 +198,7 @@ policies:
       max: 2419000000 # 28 days
 ```
 
-When the central team created the production [application instance](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/applications/web-analytics.yaml) they tied this policy to it, so when this application instance tries to make topics it must follow these rules(policies). Reminder below.
+When the central team created the production [application instance](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/applications/website-analytics.yaml) they tied this policy to it, so when this application instance tries to make topics it must follow these rules(policies). Reminder below.
 
 ```yaml
 kind: "ApplicationInstance"
