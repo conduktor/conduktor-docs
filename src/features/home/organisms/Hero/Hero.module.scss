@@ -46,7 +46,17 @@
 }
 
 .ButtonContainer {
-  margin-bottom: var(--space-space9);
+  width: 200px;
+}
+
+.HeroContent {
+  padding: var(--space-space10);
+  background: #ddd;
+  border-radius: var(--radii-radius5);
+}
+
+.HeroContentTitle {
+  font-size: var(--fontSizes-fontSize6);
 }
 
 @keyframes fadeIn {

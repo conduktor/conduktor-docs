@@ -1,23 +1,17 @@
 .List {
   list-style-type: none;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-space8);
   padding: 0;
 
   @media only screen and (max-width: 768px) {
-    display: grid;
     grid-template-columns: 1fr 1fr;
   }
 }
 
 .ListItem {
-  width: 214px;
-
-  @media only screen and (max-width: 768px) {
-    width: 100%;
-  }
+  height: 150px;
 }
 
 .ListItemLink {
@@ -30,7 +24,6 @@
 
       img {
         transform: scale(1.02) translateY(-5px);
-        // box-shadow: var(--shadows-shadow5);
       }
     }
 
@@ -38,34 +31,29 @@
       color: var(--colors-primary11);
     }
   }
-
-  @media only screen and (max-width: 768px) {
-    width: 100%;
-  }
 }
 
 .ListVisual {
-  padding: var(--space-space10) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: var(--space-space5) 0;
+  height: 100px;
+  padding: var(--space-space5) var(--space-space5);
   background-color: var(--colors-primary3);
   border-radius: var(--radii-radius5);
-  margin-bottom: var(--space-space8);
-  transition: filter 200ms ease-in-out;
+  transition: filter 100ms ease-in-out;
   transition: background-color 0.4s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-space5);
 
-    &:hover{
-      background-color: var(--colors-primary6);
-    }
+  &:hover{
+    background-color: var(--colors-primary6);
+  }
 }
 
-
 .ListVisualImage {
-  // box-shadow: var(--shadows-shadow3);
   transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
-  height: 64px;
-  width: 64px;
+  height: 32px;
+  width: 32px;
 }
 
 .ListItemNameContainer {

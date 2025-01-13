@@ -12,23 +12,16 @@ const Products: React.FunctionComponent<ProductsProps> = () => {
   return (
     <section>
       <Container>
-        <div className={styles.HeadingContainer}>
-          <Heading>Browse by tools</Heading>
-        </div>
         <ul className={styles.List}>
           {items.map((item, itemIndex) => (
             <li key={itemIndex} className={styles.ListItem}>
               <Link to={item.to} className={styles.ListItemLink}>
                 <div className={styles.ListVisual}>
                   <img className={styles.ListVisualImage} src={item.icon} alt={item.name} />
-                </div>
-                <div className={styles.ListItemNameContainer}>
-                  <div className={styles.ListItemNameWrapper}>
+                  <div>
                     <strong className={styles.ListItemName}>{item.name}</strong>
-                    {item.comingSoon ? <Badge>soon</Badge> : <span></span>}
-                    {item.legacy ? <Badge type="legacy">legacy</Badge> : <span></span>}
+                    <p className={styles.ListItemDescription}>{item.description}</p>
                   </div>
-                  <p className={styles.ListItemDescription}>{item.description}</p>
                 </div>
               </Link>
             </li>
