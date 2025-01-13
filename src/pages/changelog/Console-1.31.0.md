@@ -24,8 +24,9 @@ TODO
 
 ### Quality of Life improvements ✨
 
-- TODO
-- TODO
+- Added a "Groups" tab in the Application page which shows all of the Application Groups created via Self-service
+- Improved the license plan page to show the start and end date of the license, as well as the packages included in the license
+- Added the remaining days left in the sidebar when the license is expiring in less than 30 days
 
 ### Fixes 🔨
 - TODO
