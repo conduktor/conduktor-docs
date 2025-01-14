@@ -52,10 +52,9 @@ Run the below command to start Conduktor Gateway and configure Docker networking
   -e KAFKA_BOOTSTRAP_SERVERS=kafka1:29092 \
   -e GATEWAY_ADVERTISED_HOST=localhost \
   -e GATEWAY_PORT_START=9099 \
-  -e GATEWAY_MIN_BROKERID=1 \
   -p 9099:9099 \
   -d \
-  conduktor/conduktor-gateway:3.5.0
+  conduktor/conduktor-gateway:3.5.1
 ```
 
 By default, the Gateway uses [port-based routing](../configuration/network.md) and listens on as many ports as there are Kafka brokers. In this case, we started a single-node Kafka cluster and opened 1 port. 
