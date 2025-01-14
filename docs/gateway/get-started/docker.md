@@ -55,7 +55,7 @@ Run the below command to start Conduktor Gateway and configure Docker networking
   -e GATEWAY_PORT_COUNT=1 \
   -p 9099:9099 \
   -d \
-  conduktor/conduktor-gateway:3.0.5
+  conduktor/conduktor-gateway:3.5.0
 ```
 
 By default, the Gateway uses [port-based routing](../configuration/network.md) and listens on as many ports as there are Kafka brokers. In this case, we started a single-node Kafka cluster and opened 1 port. 
@@ -122,7 +122,7 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
   -e GATEWAY_CLUSTER_ID=test \
   -p 6969-6999:6969-6999 \
   -d \
-  conduktor/conduktor-gateway:3.0.5
+  conduktor/conduktor-gateway:3.5.0
 ```
 
 Note that if you wish to maintain the SSL/TLS connection between clients and Conduktor Gateway, see [Client to Gateway Configuration](../configuration/client-authentication.md).
