@@ -52,7 +52,7 @@ Run the below command to start Conduktor Gateway and configure Docker networking
   -e KAFKA_BOOTSTRAP_SERVERS=kafka1:29092 \
   -e GATEWAY_ADVERTISED_HOST=localhost \
   -e GATEWAY_PORT_START=9099 \
-  -e GATEWAY_PORT_COUNT=1 \
+  -e GATEWAY_MIN_BROKERID=1 \
   -p 9099:9099 \
   -d \
   conduktor/conduktor-gateway:3.5.0
