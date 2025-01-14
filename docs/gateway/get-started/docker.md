@@ -122,7 +122,7 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
   -e GATEWAY_CLUSTER_ID=test \
   -p 6969-6999:6969-6999 \
   -d \
-  conduktor/conduktor-gateway:3.5.0
+  conduktor/conduktor-gateway:3.5.1
 ```
 
 Note that if you wish to maintain the SSL/TLS connection between clients and Conduktor Gateway, see [Client to Gateway Configuration](../configuration/client-authentication.md).
