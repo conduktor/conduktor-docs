@@ -16,8 +16,7 @@
   border: 1px solid var(--colors-olive4);
   border-radius: var(--radii-radius5);
   padding: var(--space-space8);
-  background-color: var(--colors-olive3);
-  box-shadow: var(--shadows-shadow1);
+  background-color: var(--colors-olive2);
 }
 
 .ListItem > span {
@@ -34,14 +33,20 @@
   padding: 0;
 }
 
-.ListItemTitle  {
+.ListItemTitle {
   color: var(--colors-olive12);
   transition: color 200ms ease-in-out;
   display: flex;
   align-items: center;
 }
 
+.ListItemTitle > a {
+  color: var(--colors-olive12);
+  font-weight: 500;
+  padding: var(--space-space2) var(--space-space2);
+}
+
 .ListItemTitle .ListItemArrow {
-  color: var(--colors-olive10);
-  padding-right: 10px;
+  color: var(--colors-olive9);
+  padding-right: var(--space-space4);
 }

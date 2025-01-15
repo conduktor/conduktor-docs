@@ -15,12 +15,8 @@
   --ifm-code-font-size: 95%;
   --ifm-navbar-height: 73px;
   --ifm-heading-color: hsl(260, 25%, 11%);
-  --ifm-font-family-base: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
-  --ifm-heading-font-family: 'Roobert', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+  --ifm-font-family-base: 'Geist', sans-serif;
+  --ifm-heading-font-family: 'Geist', sans-serif;
   --ifm-heading-font-weight: 600;
   --ifm-container-width: 1216px;
   --ifm-container-width-xl: 1216px;

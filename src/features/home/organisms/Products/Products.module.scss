@@ -35,9 +35,10 @@
 
 .ListVisual {
   padding: var(--space-space5) 0;
-  height: 100px;
-  padding: var(--space-space5) var(--space-space5);
-  background-color: var(--colors-primary3);
+  /* height: 100px; */
+  padding: var(--space-space6) var(--space-space6);
+  background-color: var(--colors-olive2);
+  border: 1px solid var(--colors-olive4);
   border-radius: var(--radii-radius5);
   transition: filter 100ms ease-in-out;
   transition: background-color 0.4s ease-in-out;
@@ -45,8 +46,8 @@
   flex-direction: row;
   gap: var(--space-space5);
 
-  &:hover{
-    background-color: var(--colors-primary6);
+  &:hover {
+    background-color: var(--colors-olive4);
   }
 }
 
@@ -60,7 +61,6 @@
   display: block;
 
   @media only screen and (max-width: 768px) {
-
     span {
       width: fit-content;
     }
@@ -74,12 +74,13 @@
 }
 
 .ListItemName {
-  color:  var(--colors-olive12);
+  color: var(--colors-olive12);
   font-weight: var(--fontWeights-semi);
   line-height: var(--lineHeights-fit);
   letter-spacing: -0.15px;
   display: block;
-  margin-bottom: var(--space-space1);
+  margin-top: var(--space-space3);
+  margin-bottom: var(--space-space4);
   transition: color 200ms ease-in-out;
 }
 
