@@ -27,6 +27,7 @@ Here, you can see alerts listed by ownership and see a breakdown of how many ale
 Click the bell icon on a graph to open the alert creation drawer. Alerts need a unique name, a metric to measure, and an operator and value for their threshold.
 You also need to specify an owner when creating an alert.
 Currently alerts can be owned by an individual, a group, or an individual user, and this determines who can edit the alert.
+**If the owner of an alert is deleted, then the alerts associated with that owner will be deleted too.**
 
 If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications.
 Each alert has a maximum of one external destination.
