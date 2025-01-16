@@ -52,7 +52,7 @@ Any variable prefixed with `KAFKA_` will be treated as a connection parameter by
 
 The default configurations for Conduktor Gateway can be overridden by setting environment variables, or importing environment variables from a file.
 
-When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`.
+When importing from a file, mount the file into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`. The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`.
 
 ### Guidelines
 
