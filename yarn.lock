@@ -9057,11 +9057,6 @@ react-router@5.3.4, react-router@^5.3.4:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-use-intercom@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-use-intercom/-/react-use-intercom-2.1.0.tgz#3b2b5d67e72cc1aa712d83d04c22e6cf53a10caf"
-  integrity sha512-M4g2Il31LcI75u1IirN1+6J30IXPIBgqf+78tmTTIyXWgy8rNuVg8wSLi7oaTUb3JnyU/l/RKFDlr3GYNcpiRg==
-
 react@^18.0.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
