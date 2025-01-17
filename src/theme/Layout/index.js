@@ -43,6 +43,7 @@ function Banner() {
   );
 }
 
+
 export default function LayoutWrapper(props) {
   const location = useLocation();
   const showBanner = location.pathname.includes('/desktop/');
