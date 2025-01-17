@@ -312,3 +312,12 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 | Environment Variable                                   | Default Value | Description                                                                                                                                                                                                                                   |
 |--------------------------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`        | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. |
+
+
+### Sourcing Environment Variables from a File
+
+| Environment Variable | Default Value | Description                 |
+|----------------------|---------------|-----------------------------|
+| `GATEWAY_ENV_FILE`   |               | Path to an environment file |
+
+The environment file should be a text file with each line containing an environment variable in the format `KEY=VALUE`.
