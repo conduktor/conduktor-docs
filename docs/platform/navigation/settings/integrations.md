@@ -21,6 +21,8 @@ The existing Microsoft 365 (previously called Office 365) connectors and webhook
 
 This document is focused on how Conduktor console integrates with workflows in place of the webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
 
+Note: We currently only support alerting to a single Microsoft Teams room.  This room must also be a Microsoft Teams "standard room" and not a "shared" room.
+
 ## Workflows Setup Instructions
 
 1.  Open the Workflows app within the chat or channel by right-clicking on the conversation, or by clicking on More options (…) then selecting Workflows.
