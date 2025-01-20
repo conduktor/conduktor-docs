@@ -54,6 +54,21 @@ The default configurations for Conduktor Gateway can be overridden by setting en
 
 When importing from a file, mount the file into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`. The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`.
 
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below. 
+
+Use a .env file with key value pairs.
+
+```
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
+
+The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`, or warn if set and the file is not found
+
+```
+Warning: GATEWAY_ENV_FILE is set but the file does not exist or is not readable.
+```
+
 ### Guidelines
 
 There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
