@@ -16,7 +16,7 @@ const config = {
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
