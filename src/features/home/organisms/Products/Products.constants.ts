@@ -14,7 +14,7 @@ export const items = [
   {
     name: 'Reference',
     description: 'Browser our CLI and API documentation, Terraform, and more',
-    to: '/reference',
+    to: '/platform/category/reference/',
     icon: '/assets/svgs/products/reference.svg',
   }
 ]
