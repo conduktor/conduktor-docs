@@ -1,12 +1,8 @@
-import React from 'react'
-import { StyledGridBackground } from './GridHalfVisibleBackground.styled'
+import styles from './GridHalfVisibleBackground.module.scss'
 
-interface GridBackgroundProps {
-  children: React.ReactNode | React.ReactNode[]
-}
+const GridHalfVisibleBackground = () => {
+  return <div className={styles.GridBackground}/>
 
-const GridHalfVisibleBackground: React.FunctionComponent<GridBackgroundProps> = ({ children }) => {
-  return <StyledGridBackground>{children}</StyledGridBackground>
 }
 
 export default GridHalfVisibleBackground

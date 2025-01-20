@@ -2,23 +2,44 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-space8);
+  gap: 64px;
   padding: 0 0 var(--space-space14) 0;
 
   @media only screen and (max-width: 768px) {
-    flex-wrap: wrap;
     margin-bottom: var(--space-space9);
     padding: 0 0 var(--space-space9) 0;
   }
 }
 
-.ListItem {
+.Title {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.Description {
+  color: var(--custom-color-tertiary-text);
+}
+
+.ListItemWrapper {
   width: 100%;
-  border: 1px solid var(--colors-olive4);
-  border-radius: var(--radii-radius5);
-  padding: var(--space-space8);
-  background-color: var(--colors-olive3);
-  box-shadow: var(--shadows-shadow1);
+  display: flex;
+  justify-content: space-between;
+  &:not(:last-of-type) {
+    padding-bottom: 50px;
+    border-bottom: 1px solid var(--custom-color-border-secondary);
+  }
+}
+
+.ListItemLeft {
+  flex-basis: 40%;
+}
+
+.ButtonsList {
+  flex-basis: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-end;
 }
 
 .ListItem > span {

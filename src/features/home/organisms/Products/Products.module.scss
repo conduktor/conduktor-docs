@@ -4,6 +4,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-space8);
   padding: 0;
+  margin-bottom: var(--space-space14);
 
   @media only screen and (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
@@ -11,26 +12,14 @@
 }
 
 .ListItem {
-  height: 150px;
+  display: flex;
 }
 
 .ListItemLink {
+  display: flex;
   cursor: pointer;
   text-decoration: none !important;
 
-  &:hover {
-    div {
-      filter: grayscale(0.05);
-
-      img {
-        transform: scale(1.02) translateY(-5px);
-      }
-    }
-
-    strong {
-      color: var(--colors-primary11);
-    }
-  }
 }
 
 .ListVisual {

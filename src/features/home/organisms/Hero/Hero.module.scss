@@ -1,24 +1,4 @@
-.GridBackground {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
 
-  &:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    background: linear-gradient(62.36deg, #F8FCFC 32.57%, rgba(248, 252, 252, 0.8) 66.44%, rgba(248, 252, 252, 0.6) 100%);
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background-image: url("/assets/svgs/common/grid.svg");
-  }
-}
 
 .StyledHero {
   position: relative;
@@ -35,7 +15,8 @@
 }
 
 .ContentContainer {
-  padding: var(--space-space16) 0;
+  padding-top: var(--space-space11);
+  padding-bottom: var(--space-space8);
   z-index: 1;
   position: relative;
 }

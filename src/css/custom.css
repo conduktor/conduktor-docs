@@ -29,8 +29,10 @@
   --custom-color-olive-1: #F8FCFC;
   --custom-color-primary-text: #072024;
   --custom-color-brand: #09343C;
+  --custom-color-border-secondary: #E6E9E9;
   --custom-color-secondary-text: #394D50;
   --custom-color-accent-text: #E3FFCC;
+  --custom-color-tertiary-text: #6A797C;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */

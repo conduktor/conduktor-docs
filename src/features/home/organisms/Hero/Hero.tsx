@@ -1,11 +1,8 @@
 import Button from '@site/src/components/atoms/Button'
 import Container from '@site/src/components/atoms/Container'
-import GradientMask from '@site/src/components/atoms/GradientMask/GradientMask'
 import GridHalfVisibleBackground from '../../atoms/GridHalfVisibleBackground/GridHalfVisibleBackground'
-import SearchInput from '@site/src/components/molecules/SearchInput'
 import React from 'react'
 import styles from './Hero.module.scss'
-import Flex from "@site/src/components/atoms/Flex";
 
 interface HeroProps {
 }
@@ -30,7 +27,7 @@ const Hero: React.FunctionComponent<HeroProps> = () => {
               </div>
             </div>
             <div className={styles.HeroRightContent}>
-              <div className={styles.GridBackground}/>
+              <GridHalfVisibleBackground/>
               <img className={styles.HeroRightImage} src="/assets/images/home-hero-charts.png" alt="charts image"/>
             </div>
           </div>
