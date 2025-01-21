@@ -8,8 +8,10 @@ description: Docs for the Conduktor Desktop product
 
 Welcome to our documentation website. We hope you enjoy it!
 
-:::info
-If anything is missing or wrong, or for any feedback, please [contact us](https://www.conduktor.io/contact).
+:::warning
+Conduktor Desktop is being sunset at the end of 2025, read the [full announcement](https://conduktor.io/desktop).
+
+Learn about [migrating to Conduktor Scale](./migrating-to-conduktor-scale.md), or contact [support](https://support.conduktor.io/) if you have any questions.
 :::
 
 ## Navigating the documentation
