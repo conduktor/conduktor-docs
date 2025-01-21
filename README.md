@@ -56,7 +56,7 @@ Add new versions to `static/developers/openapi/manifest.json`.
 
 # Updating the Changelog
 
-For a new release, the changelog should be updated.  You need to create a new Markdown file for the new product version, and then reference it in the changelog index.
+For a new release, the changelog should be updated.  You need to create a new Markdown file for the new product version, add import line and then reference it in the changelog index.
 
 ## Changes for this version
 

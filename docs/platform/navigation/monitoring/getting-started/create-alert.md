@@ -3,6 +3,13 @@ sidebar_position: 2
 title: Create an Alert
 description: Learn how to create an alert in Monitoring
 ---
+- [Create an Alert](#create-an-alert)
+  - [Overview](#overview)
+  - [Configure the Integration](#configure-the-integration)
+  - [Create an Alert](#create-an-alert-1)
+    - [Option 1: From the Alerts Tab](#option-1-from-the-alerts-tab)
+    - [Option 2: From a Graph](#option-2-from-a-graph)
+
 
 # Create an Alert
 
