@@ -1,19 +1,19 @@
 export const items = [
   {
     name: 'Slack',
-    description: 'Explore Conduktor, its architecture and feature set',
+    description: 'Need help fast? Join our community Slack for real-time support!',
     to: 'https://www.conduktor.io/slack',
     icon: '/assets/svgs/useful-links/slack.svg',
   },
   {
     name: 'Support',
-    description: "Get step-by-step guidance on deploying Conduktor efficiently",
+    description: "Unlock our experts guidance to deploy and master Conduktor.",
     to: 'https://support.conduktor.io/',
     icon: '/assets/svgs/useful-links/headset.svg',
   },
   {
     name: 'Changelog',
-    description: 'Browse our CLI and API documentation, Terraform and more',
+    description: 'Stay up to date with our latest features, updates, and must-know details.',
     to: '/changelog',
     icon: '/assets/svgs/useful-links/changelog.svg',
   }
