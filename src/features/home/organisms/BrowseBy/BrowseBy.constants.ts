@@ -2,7 +2,7 @@ export const products = [
   {
     title: 'Scale',
     icon: '/assets/svgs/guides/scale.svg',
-    description: 'Scale your stuff',
+    description: 'Scale data streaming with security and control',
     items: [
       [ 'Configuration', '/platform/get-started/configuration/env-variables' ],
       [ 'RBAC', '/platform/navigation/settings/rbac' ],
@@ -15,7 +15,7 @@ export const products = [
   {
     title: 'Shield',
     icon: '/assets/svgs/guides/shield.svg',
-    description: 'Shield your stuff',
+    description: 'Protect sensitive data and adhere to regulations',
     items: [
       [ 'Encryption', 'https://docs.conduktor.io/gateway/category/encryption/' ],
       [ 'Audit', 'https://docs.conduktor.io/gateway/interceptors/data-security/audit/' ],
@@ -26,7 +26,7 @@ export const products = [
   {
     title: 'Exchange',
     icon: '/assets/svgs/guides/exchange.svg',
-    description: 'Exchange your stuff',
+    description: 'Grow your business with secure data sharing ',
     items: [
       [ 'Third-Party Data Sharing', 'https://docs.conduktor.io/platform/data-sharing' ],
       [ 'Partner Zones', 'https://docs.conduktor.io/platform/concepts/partner-zones/' ]
@@ -39,7 +39,7 @@ export const useCases = [
   {
     title: 'Use Cases',
     icon: '/assets/svgs/guides/use-cases.svg',
-    description: 'Use cases for Conduktor',
+    description: 'Step-by-step guides for typical scenarios and best practices.',
     items: [
       [ 'Configure SQL', 'https://docs.conduktor.io/platform/guides/configure-sql/' ],
       [ 'Configure Chargeback', 'https://docs.conduktor.io/platform/guides/configure-chargeback/' ],
