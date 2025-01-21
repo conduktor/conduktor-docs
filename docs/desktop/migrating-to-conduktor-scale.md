@@ -123,5 +123,5 @@ Example: Grant viewer-only permissions to a topic or consumer group
 
 If you encounter any issues during migration, our [support](https://support.conduktor.io/) team are available to assist.
 
-Thank you for choosing Conduktor!
+Thanks for choosing Conduktor!
 
