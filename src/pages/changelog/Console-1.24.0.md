@@ -8,8 +8,8 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Breaking Changes 💣
-### New docker image name
+### Breaking Changes 💣
+#### New docker image name
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
 **Final warning! This is the last version where we publish our images using both names.**
 Please modify your installation to reflect this change in advance of us deprecating the name `conduktor/conduktor-platform`.
@@ -17,7 +17,7 @@ Please modify your installation to reflect this change in advance of us deprecat
 docker pull conduktor/conduktor-console:1.24.0
 ````
 
-### Change in ApplicationInstance Resource Type from GROUP to CONSUMER_GROUP
+#### Change in ApplicationInstance Resource Type from GROUP to CONSUMER_GROUP
 
 We have renamed the resource type in `ApplicationInstance` from `GROUP` to `CONSUMER_GROUP`. This change is intended to prevent confusion with the newly introduced resources `ApplicationGroup` and `Group`.
 
@@ -31,7 +31,7 @@ spec:
       patternType: PREFIXED
 ```
 
-## Features ✨
+### Features ✨
 
 - [Self-service](#self-service)
   - [Subject](#subject)
@@ -45,7 +45,7 @@ spec:
 
 ---
 
-### Self-service
+#### Self-service
 
 There's a host of new functionality available providing a truly powerful self-service release. 
 This comes from the addition of two new resources: Subject and ApplicationGroup
@@ -118,7 +118,7 @@ You can now filter on all the topics based on user-defined, business [metadata](
 Looking to request access to another applications resources? You can now generate the required `ApplicationInstancePermission` snippet that grants the necessary access to Topics belonging to another Application.
 ![topic catalog](/images/changelog/platform/v24/topic-catalog-subscribe.png)
 
-### Manage Groups and Users using the CLI
+#### Manage Groups and Users using the CLI
 
 Manage your Console Group and Permissions lifecycle through IaC with the addition of the **Group** and **User** objects.  
 Checkout the example below and find the full definition via the [Resource Reference](https://docs.conduktor.io/platform/reference/resource-reference/) documentation.
@@ -148,7 +148,7 @@ spec:
         - topicProduce
 ````
 
-### Topic list columns Produce Rate and Last Activity
+#### Topic list columns Produce Rate and Last Activity
 
 We added two new columns to the Topic List to help you troubleshoot and understand Kafka better: Produce Rate & Last Activity.
 
@@ -159,13 +159,13 @@ Values are computed once per [Indexing](https://docs.conduktor.io/platform/navig
 
 - Last Activity is set to `Datetime.now()` if the latest offsets have changed since the last Indexing
 
-### Active Data Policies in Topic Consume page
+#### Active Data Policies in Topic Consume page
 
 When exploring topics, fields masked by active [Data Policies](https://docs.conduktor.io/platform/navigation/settings/data-masking/) are now displayed in a different color, while the policy name is also now visible on hover.
 
 ![img.png](/images/changelog/platform/v24/topic-datamasking.png)
 
-### Quality of Life improvements
+#### Quality of Life improvements
 **Topic pages**
 - You can now see all subjects associated to the Schema Id of the current message from the Message Viewer panel
 - Added message Compression Type metadata in the Message Viewer panel
@@ -188,7 +188,7 @@ When exploring topics, fields masked by active [Data Policies](https://docs.cond
 - Added support for [Subject](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#subject) field `spec.schemaFile`. Previous versions of the CLI will only accept `spec.schema` inlined.
 
 
-## Fixes 🔨
+### Fixes 🔨
 - Clean monitoring metrics related to brokers that are unreachable
 - Fix support of Avro byte arrays encoded as base64 when producing messages
 - Fix bulk import of users in case a user already exist

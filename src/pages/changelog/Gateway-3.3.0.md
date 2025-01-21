@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Upcoming Breaking change 💣
+### Upcoming Breaking change 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -26,14 +26,14 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
 
-## Features ✨
+### Features ✨
 
 - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
 - [Support for HTTPS APIs](#support-for-https-apis)
 - [Better UX for ACLs and superUsers](#better-ux-for-acls-and-superusers)
 - [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
 
-### New V2 APIs and CLI support
+#### New V2 APIs and CLI support
 
 We’re excited to introduce our new Gateway API, designed for seamless integration with our CLI. This update allows you to deploy Gateway resources using infrastructure-as-code with straightforward, clearly defined concepts:
 - Interceptor
@@ -83,10 +83,10 @@ The group groupB is still used by the following interceptor(s): enforce-partitio
 **Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible. 
 We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
 
-### Support for HTTPS APIs
+#### Support for HTTPS APIs
 It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
 
-### Better UX for ACLs and superUsers
+#### Better UX for ACLs and superUsers
 To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
  - ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
@@ -124,7 +124,7 @@ spec:
   - username2
 ```
 
-### Encryption Enhancements and Support Clarification
+#### Encryption Enhancements and Support Clarification
 
 #### Field-Level Encryption: Preserving Message Format to Enhance Usability
 When applying field-level encryption prior to `3.3.0`, the encryption plugin would convert the message to JSON, and re-apply the schema format when the message was read back through the decryption plugin. 
@@ -156,7 +156,7 @@ Note this is no longer supported, and the Gateway will now throw an exception if
 Note that any data previously written in this mode can still be read back - as the decrypt does not use the schemas at all, rather it uses the message header to know what was encrypted.
 
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Large double values (where > Float Max) are now supported in field-level encryption for Avro and Protobuf
 - Bytes and fixed fields now properly supported in field-level encryption for Avro
@@ -177,7 +177,7 @@ Note that any data previously written in this mode can still be read back - as t
 - Add default value to non mandatory configruation value for min and max bytes in FetchPolicyInterceptor
 - Fix an issue with Concentrated Topics creation with Redpanda
 
-## Known issues
+### Known issues
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag
 - It is not possible to add Service Accounts to GatewayGroups using API V2 unless they are previously declared as GatewayServiceAccount.

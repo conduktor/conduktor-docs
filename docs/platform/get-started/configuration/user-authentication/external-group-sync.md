@@ -17,9 +17,9 @@ You must first configure [SSO](/platform/category/configure-sso/) to an LDAP or 
 
 ### LDAP
 
-For [LDAP](../SSO/ldap), populate the `groups-base` and `groups-filter` attributes.
+For [LDAP](/platform/get-started/configuration/user-authentication/SSO/ldap/), populate the `groups-base` and `groups-filter` attributes.
 
-For more information see [configuration properties and environment variables](../../env-variables/#ldap-properties).
+For more information see [configuration properties and environment variables](/platform/get-started/configuration/env-variables/#ldap-properties).
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -37,7 +37,7 @@ sso:
 
 For OIDC, populate the `groups-claim` attribute. You can find some examples by [selecting your identity providers in this list](/platform/category/configure-sso/).
 
-For more information see [configuration properties and environment variables](../../env-variables/#oauth2-properties).
+For more information see [configuration properties and environment variables](/platform/get-started/configuration/env-variables/#oauth2-properties).
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -63,17 +63,17 @@ From within Admin, navigate to the `Users & Groups` screen and select the `Group
  - Provide the `Name`, `Description` and select `Activate external groups mapping`
  - Provide 1 or more LDAP/OIDC groups
 
-![](../assets/external-groups-mapping-new-group.png)
+![](../user-authentication/SSO/assets/external-groups-mapping.png)
 
-In the above example, any users that are present in the group `project-c` in your IdP, will be added to the Conduktor group `Project C`, and will inherit permissions that are set against it. 
-To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](../../../navigation/settings/rbac.md).
+In the above example, any users that are present in the group `project-a` in your IdP, will be added to the Conduktor group `Project A`, and will inherit permissions that are set against it. 
+To learn how to use Conduktor's RBAC system to enforce permissions, see [RBAC](/platform/navigation/settings/rbac/).
 
 **Map an existing Conduktor group to an external group**
 
-From within the `Members` screen, select the breadcrumbs next to an existing group and select `Map external groups`.
+From within the `Groups` screen, select the breadcrumbs next to an existing group and select `Map external groups`.
 
-![](../assets/external-group-mapping-existing-group.png)
+![](assets/external-group-mapping-existing-group.png)
 
 The value to set depends on the IdP you use. For example, for **Azure**, you must put the `Object ID` of your groups. For **Keycloak**, this is the name of the group.
 
-Once you have mapped external groups, use Conduktor's [RBAC](../../../navigation/settings/rbac.md) system to enforce permissions.
+Once you have mapped external groups, use Conduktor's [RBAC](/platform/navigation/settings/rbac/) system to enforce permissions.

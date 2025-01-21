@@ -10,10 +10,10 @@ description: Deploy an instance of Conduktor Console on AWS.
 
 This guide will demonstrate how to deploy Console in your AWS environment with all mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
 
-Rather than follow this manual guide, you might prefer the [CloudFormation](CloudFormation.md) template.
+Rather than follow this manual guide, you might prefer to see our [Marktetplace Listing](aws-marketplace-and-cloudformation.md).
 
 :::info
-While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](../hardware.md#production-requirements).
+While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/platform/get-started/installation/hardware/#production-requirements).
 :::
 
 The process should take no more than 15 - 30 minutes. 
@@ -27,11 +27,19 @@ Before you proceed, it is important to make sure that you have either already cr
 
 ## Deployment Steps
 
- - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
- - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
- - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
- - [Step 4: Access Conduktor and Configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
- - [Step 5: Onboard your team](#step-5-onboard-your-team)
+- [Deployment on AWS](#deployment-on-aws)
+  - [Getting started](#getting-started)
+  - [Security](#security)
+  - [Networking \& Architecture](#networking--architecture)
+  - [Deployment Steps](#deployment-steps)
+    - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
+    - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
+    - [Step 2.1: Add the core console container](#step-21-add-the-core-console-container)
+    - [Step 2.2: Add the conduktor cortex monitoring image](#step-22-add-the-conduktor-cortex-monitoring-image)
+    - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
+    - [Step 4: Access Conduktor and configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
+    - [Step 5: Onboard your team](#step-5-onboard-your-team)
+    - [Troubleshooting: Enabling Inbound Rules](#troubleshooting-enabling-inbound-rules)
 
 
 ### Step 1: Create a PostgreSQL database via Amazon RDS
@@ -42,7 +50,7 @@ You can skip this step if you already have an RDS database running you want to u
 
 Let's start by deploying a database on RDS that Conduktor will use to store its state. 
 
-As per the [system requirements](../hardware.md), the PostgreSQL DB needs to be version **13 or higher**. 
+As per the [system requirements](/platform/get-started/installation/hardware/#production-requirements), the PostgreSQL DB needs to be version **13 or higher**. 
 Please be aware that Console is compatible only with PostgreSQL engines of version 14.8 or 15.3 and above **within RDS**; other versions may not be fully supported.
 
 Go to the RDS menu and create a new database.
@@ -77,7 +85,7 @@ Go to Amazon Elastic Container Service:
 
 In the **Infrastructure Requirements** section:
  - Define the ECS family name as `conduktor`, this will be useful to update our deployment with newer versions of Conduktor.
- - Specify the infrastructure requirements relevant to your deployment. Per the [system requirements](../hardware.md#production-requirements), we recommend a minimum of **2x CPU cores** and **4GB of RAM**.
+ - Specify the infrastructure requirements relevant to your deployment. Per the [system requirements](/platform/get-started/installation/hardware/#production-requirements), we recommend a minimum of **2x CPU cores** and **4GB of RAM**.
 
 ### Step 2.1: Add the core console container
 
@@ -106,7 +114,7 @@ In the **Environment Variables** section, add the essential environment variable
 
 ![AWS Guide Env Var](assets/aws-guide-4.png)
 
-You can see the full list of environment variables [here](../../configuration/env-variables.md). 
+You can see the full list of environment variables [here](/platform/get-started/configuration/env-variables/). 
 
 :::info
 Note that you can also add your Kafka cluster, Schema Registry, Connect and ksqlDB configurations as environment variables. But if you're just getting started, we recommend you use the wizard inside the Console UI instead. The wizard provides support for uploading certificates, and help on debugging your connections.
@@ -133,7 +141,7 @@ In the **Environment variables** section, add the required environment variable 
 
 ![AWS Guide Task](assets/aws-guide-cortex.png)
 
-Note that for production environments, you should also configure an [external S3 bucket](../../../configuration/cortex) to store historical monitoring data.
+Note that for production environments, you should also configure an [external S3 bucket](/platform/get-started/configuration/cortex/) to store historical monitoring data.
 
 We can now go down below and **Create** our task definition.
 
@@ -180,14 +188,14 @@ You can now log in as admin with the credentials previously defined in the envir
 
 ![AWS Guide Breadcrumb](assets/aws-guide-10.png)
 
-Select the **Connect your Kafka clusters** option and start adding your Kafka cluster configurations.
+Select the **Configure clusters** option and start adding your Kafka cluster configurations.
 
 ### Step 5: Onboard your team
 
 Now that you have an up-and-running deployment of Console, it's time to invite your team!
 
  - [Configure SSO](/platform/category/configure-sso/) to easily onboard users
- - Configure [local users](../../../configuration/user-authentication/local-admin-and-users/) if you are not using SSO
+ - Configure [local users](/platform/get-started/configuration/user-authentication/local-admin-and-users/) if you are not using SSO
 
 ### Troubleshooting: Enabling Inbound Rules
 

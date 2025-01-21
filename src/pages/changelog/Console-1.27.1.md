@@ -8,5 +8,5 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 - Improved performance of RBAC resolution when there is a large number of permissions

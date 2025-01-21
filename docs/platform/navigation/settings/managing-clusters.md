@@ -1,12 +1,10 @@
 ---
 sidebar_position: 1
-title: Managing Clusters
-description: How to manage your Kafka clusters in Conduktor Platform
+title: Clusters
+description: How to manage your Kafka clusters in Conduktor Console
 ---
 
-import Badge from '@site/src/features/home/atoms/Badge'
-
-# Managing Clusters
+# Clusters
 
 ## Overview
 
@@ -14,9 +12,10 @@ import Badge from '@site/src/features/home/atoms/Badge'
 Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect
 :::
 
-The Admin section of Conduktor Platform enables you to add, update, and delete Kafka cluster configurations. By default, only users with Admin permissions will be able to view and perform actions relating to Cluster management. You will not be able to add clusters beyond your current organization limit; please use the chat box below or contact us to discuss an increase to this limit.
+In the **Clusters** sections of the **Settings**, you can add, update, and delete Kafka cluster configurations.
+By default, only users belonging to the **Admin** group, or having the `Can manage Cluster configurations` permission, will be able to view and manage the clusters.
 
-![Cluster admin](/img/admin/cluster-admin.png)
+![Cluster admin](assets/clusters-list.png)
 
 To create a new cluster configuration, click on the "Create cluster" button in the top right-hand corner.
 
@@ -26,7 +25,7 @@ To edit an existing cluster configuration, select it from the list. You will the
 
 Conduktor leverages the default Apache Kafka Java Clients, and therefore we use the same [configuration properties](https://kafka.apache.org/documentation/#consumerconfigs).
 
-When the Conduktor Admin application needs to connect to a secure Kafka cluster, you must specify the values from your `config.properties` file.
+When the Conduktor Console needs to connect to a secure Kafka cluster, you must specify the values from your `config.properties` file.
 
 For example:
 
@@ -48,53 +47,56 @@ Via your Confluent cluster dashboard, select the **Clients** tab within **Data i
 
 Select **Java** as the language.
 
-![](/img/admin/confluent-language.png)
+![Confluent client](assets/confluent-client.png)
 
-Create the **Kafka cluster** **API key.** You also have the option to create the **Schema Registry API Key** if you are using Schema Registry.
+Create the **Kafka cluster API key**. You also have the option to create the **Schema Registry API Key** if you are using Schema Registry.
 
-![](/img/admin/confluent-api-key.png)
+![Confluent snippet](assets/confluent-api-key.png)
 
 **Copy** the configuration to your clipboard.
 
-From within the cluster configuration of the Admin application, **Paste** your configuration as additional properties.
+You can now go back to Conduktor Console to configure your Kafka cluster. You can fill the bootstrap servers, and paste your configuration as Advanced properties.
 
-You can test the connection and if successful, you will see a green **CONNECTED** label.
+You can test the connection and if successful, you will see a green **Connected** label.
 
-![](/img/admin/confluent-connection.png)
+![Confluent configuration in Console](assets/confluent-config.png)
 
-Click **Create Configuration** to save your cluster.&#x20;
+Click **Create Configuration** to save your cluster.
 
 ## Connect to an Aiven cluster
 
 When connecting to an Aiven cluster, you have two options.
 
-The first, is to add **SSL** authentication.
+### Option 1: With SSL
 
-![](/img/admin/aiven-ssl-home.png)
+To connect to your Aiven cluster using SSL, you need to provide the **Access Key**, **Access Certificate**, and **CA Certificate**.
+You also need the cluster **Bootstrap server**, labelled as **Service URI** within the Aiven console.
 
-For this, you must specify the **Access Key**, **Access Certificate**.
+![Aiven certificates](assets/aiven-certs.png)
 
-You also need to add the Bootstrap server. This is labelled **Service URI** within the Aiven console.&#x20; Since it's ssl, you need to specify a **CA Certificate**.
+In the Console, after having filled the bootstrap server, you'll have to upload the CA certificate in order to connect to your Aiven cluster.
 
-![](/img/admin/aiven-ssl.png)
+Then, simply select **SSL** as authentication method, and paste the **Access Key** and **Access Certificate** in the corresponding fields.
 
-The second, is by using **SASL**.
+The configuration should look like this:
 
-In Aiven, change your authentication method by **SASL**.
+![Console config with SSL](assets/aiven-with-ssl.png)
 
-![](/img/admin/aiven-sasl-home.png)
+### Option 2: With SASL_SSL
 
-Retrieve **Service URI**, **User** and **Password**.
+To connect to your Aiven cluster using SASL_SSL, you need to provide the **Bootstrap server** labelled as **Service URI**, **User**, and **Password**. You can find these in the Aiven console.
 
-You can add this information in Conduktor Admin.
+![Aiven SASL](assets/aiven-sasl-ssl.png)
 
-![](/img/admin/aiven-sasl.png)
+The configuration in the Console should look like this:
+
+![Console config with SASL_SSL](assets/aiven-with-sasl-ssl.png)
 
 ## Connect to a MSK cluster
 
 For connecting to MSK, you first need to create an IAM user.
 
-![](/img/admin/msk-iam-user.png)
+![MSK IAM user](assets/msk-iam-user.png)
 
 After that, you have to give it permissions to connect to your MSK cluster.
 
@@ -113,8 +115,11 @@ After that, you have to give it permissions to connect to your MSK cluster.
 
 Finally, generate an access key.
 
-![](/img/admin/msk-access-key.png)
+![MSK Access key](assets/msk-access-key.png)
 
-You can fill the cluster form with all this information.
+In the Console, fill the **Bootstrap server** and select **AWS IAM** as an authentication method.
+You now have two options: Either you inherit the credentials from your environment (with environment variables) or you can fill the **Access Key** and **Secret Key**.
 
-![](/img/admin/msk-conduktor.png)
+The configuration should look like this in the Console:
+
+![Consol config with IAM](assets/msk-with-iam.png)

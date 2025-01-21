@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Fixed an issue on the Consumer Group List page that caused the page to timeout with a high number of consumer groups.

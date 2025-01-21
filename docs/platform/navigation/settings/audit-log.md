@@ -36,14 +36,14 @@ As you and your team interact with Conduktor, audit events are captured that giv
 
 The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may have for them, such as maintaining your own audit trail in other systems.
 
-![Admin Audit](images/admin-audit.png)
+![Admin Audit](assets/admin-audit.png)
 
 Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for a new connector added, which can include metadata such as custom tags, the cluster, connector name and its ID.
 
-![Admin Audit Event](images/audit-log-inspect.png)
+![Admin Audit Event](assets/audit-log-inspect.png)
 
 Audit log events are also exported to a Kafka topic once configured with the right [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
-![kafka message audit log](images/audit-log-kafka-message.png)
+![kafka message audit log](assets/audit-log-kafka-message.png)
 
 ## Audit Events
 
@@ -159,9 +159,9 @@ CRN `platform:/user/<email>`
 
 ## Exportable Audit Log Events
 
-Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.  
+Audit log events from within the UI are being superceeded by a new set of audit log events that are exportable from a Kafka topic. The exportable audit log events have more detail, providing additional information about the event that has taken place.
 
-Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables#auditlog-export-properties).
+Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties).
 
 The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
@@ -201,25 +201,35 @@ An example Conduktor event would look like:
 }
 ```
 
-Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.  
+Below is the list of all the exported audit log event types, that are currently available. We are expanding the coverage to UI events and more in subsequent releases.
 
 ### Kafka-Related Events
 
-| **Event Type**                    | **Description**                                            |
-| --------------------------------- | ---------------------------------------------------------- |
-| **Kafka.Subject.Create**          | Kafka subject is created.                                  |
-| **Kafka.Subject.Update**          | Kafka subject is updated.                                  |
-| **Kafka.Subject.Delete**          | Kafka subject is deleted.                                  |
-| **Kafka.Topic.Create**            | Kafka topic is created.                                    |
-| **Kafka.Topic.Update**            | Kafka topic is updated.                                    |
-| **Kafka.Topic.Delete**            | Kafka topic is deleted.                                    |
-| **Kafka.Topic.Empty**             | Kafka topic is emptied.                                    |
-| **Kafka.Connector.Create**        | Kafka connector is created.                                |
-| **Kafka.Connector.Update**        | Kafka connector is updated.                                |
-| **Kafka.Connector.Delete**        | Kafka connector is deleted.                                |
-| **Kafka.ConsumerGroup.Duplicate** | Kafka consumer group is duplicated.                        |
-| **Kafka.ConsumerGroup.Update**    | Kafka consumer group is updated, when the offset is reset. |
-| **Kafka.ConsumerGroup.Delete**    | Kafka consumer group is deleted.                           |
+| **Event Type**                          | **Description**                                            |
+| --------------------------------------- | ---------------------------------------------------------- |
+| **Kafka.Subject.Create**                | Kafka subject is created.                                  |
+| **Kafka.Subject.Update**                | Kafka subject is updated.                                  |
+| **Kafka.Subject.Delete**                | Kafka subject is deleted.                                  |
+| **Kafka.Subject.ChangeCompatibility**   | Kafka subject compatibility is changed                     |
+| **Kafka.Topic.Create**                  | Kafka topic is created.                                    |
+| **Kafka.Topic.Update**                  | Kafka topic is updated.                                    |
+| **Kafka.Topic.Delete**                  | Kafka topic is deleted.                                    |
+| **Kafka.Topic.Empty**                   | Kafka topic is emptied.                                    |
+| **Kafka.Topic.Browse**                  | Kafka topic is browsed.                                    |
+| **Kafka.Topic.ProduceRecord**           | Kafka topic record is produced.                            |
+| **Kafka.Topic.SqlQuery**                | Kafka topic is requested through Console SQL.              |
+| **Kafka.Connector.Create**              | Kafka connector is created.                                |
+| **Kafka.Connector.Update**              | Kafka connector is updated.                                |
+| **Kafka.Connector.Delete**              | Kafka connector is deleted.                                |
+| **Kafka.Connector.Restart**             | Kafka connector is restarted.                              |
+| **Kafka.Connector.TaskRestart**         | Kafka connector task is restarted.                         |
+| **Kafka.Connector.Pause**               | Kafka connector is paused.                                 |
+| **Kafka.Connector.Resume**              | Kafka connector is resumed.                                |
+| **Kafka.Connector.AutoRestartActivate** | Kafka connector auto-restart is activated.                 |
+| **Kafka.Connector.AutoRestartStop**     | Kafka connector auto-restart is stopped.                   |
+| **Kafka.ConsumerGroup.Duplicate**       | Kafka consumer group is duplicated.                        |
+| **Kafka.ConsumerGroup.Update**          | Kafka consumer group is updated, when the offset is reset. |
+| **Kafka.ConsumerGroup.Delete**          | Kafka consumer group is deleted.                           |
 
 ### IAM-Related Events
 

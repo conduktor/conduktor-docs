@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Upcoming Breaking change 💣
+### Upcoming Breaking change 💣
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -25,7 +25,7 @@ For this hotfix release 3.2.2, and next product releases 3.3.0 and 3.4.0s, we'll
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed a **severe** authentication issue with Gateway generated tokens that could lead to a different user being authenticated, effectively causing elevated privileges under certain conditions.
 - Fixed an issue where `GATEWAY_SNI_HOST_SEPARATOR` couldn't be set to the value `-`

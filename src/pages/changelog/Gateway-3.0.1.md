@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed some issues with Encryption when the value is a tombstone.
 - Fixed some inconsistencies between the OpenAPI Spec and the actual implementation.

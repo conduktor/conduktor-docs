@@ -11,18 +11,18 @@ description: Configure JumpCloud as a SSO for Conduktor Console.
 On the JumpCloud side, you'll have to create a new application:
 
 - **Step 1**: Create a new application in `SSO Applications`.
-![](../../assets/jumpcloud-figure-1.png)
+![](assets/jumpcloud-figure-1.png)
 
 
 - **Step 2**: Select a `Custom Application` as shown below.
-![](../../assets/jumpcloud-figure-2.png)
+![](assets/jumpcloud-figure-2.png)
 
 Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in the screenshot below.
-![](../../assets/jumpcloud-figure-3.png)
+![](assets/jumpcloud-figure-3.png)
 
 Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in the screenshot below and configure this application.
 
-![](../../assets/jumpcloud-figure-4.png)
+![](assets/jumpcloud-figure-4.png)
 
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
@@ -38,16 +38,16 @@ For example, if you deployed Console locally using the name `jumpcloud` in your 
 
 Enter the Login URL, which is the URL users need to log into this application. In the example below, this is `https://localhost:8080` .
 
-![](../../assets/jumpcloud-figure-5.png)
+![](assets/jumpcloud-figure-5.png)
 
 
 - **Step 4**: Find the `Client ID` and `Client Secret`.
 
 After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
  
-![](../../assets/jumpcloud-figure-6.png)
+import JumpCloudClientIdSecret from './assets/jumpcloud-figure-6.png';
 
-
+<img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
 
 :::warning
 You need to keep the `Client Secret` somewhere safe, as you will not have access to it again.
@@ -94,7 +94,7 @@ From the JumpCloud side, ensure you have:
 
 See the example screenshot shown below.
 
-![](../../assets/jumpcloud-figure-7.png)
+![](assets/jumpcloud-figure-7.png)
 
 From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
 Below is the full snippet for your configuration file:

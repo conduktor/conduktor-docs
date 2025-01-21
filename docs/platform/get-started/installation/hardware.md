@@ -19,17 +19,17 @@ For production environments, there are **mandatory requirements** to ensure your
 
 To ensure you meet these requirements, you must:
 
- - Set up an [external PostgreSQL (13+) database](../configuration/database.md) with appropriate backup policy. 
-    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations. 
-    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over).
- - Setup [block storage](../configuration/env-variables.md#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring. 
- - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue. 
+ - Set up an [external PostgreSQL (13+) database](/platform/get-started/configuration/database/) with appropriate backup policy 
+    - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations
+    - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over)
+ - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring
+ - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
  
-Note that if you are deploying the [Helm chart](get-started/kubernetes.md), the [production requirements](get-started/kubernetes.md#production-requirements) are clearly outlined in the installation guide. 
+Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide. 
 
 ## Hardware Requirements
 
-To configure Conduktor Console for particular hardware, you can use container CGroups limits. More details [here](../configuration/memory-configuration.md)
+To configure Conduktor Console for particular hardware, you can use container CGroups limits. More details [here](/platform/get-started/configuration/memory-configuration)
 
 **Minimum**
 
@@ -43,14 +43,14 @@ To configure Conduktor Console for particular hardware, you can use container CG
 - 4+ GB of RAM
 - 10+ GB of disk space
 
-See more about [environment variables](../../configuration/env-variables/), or starting the Platform in [Docker Quick Start](../../installation/get-started/docker/).
+See more about [environment variables](/platform/get-started/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/get-started/installation/get-started/docker/).
 
 ## Deployment Architecture
 
 As noted in the [production requirements](#production-requirements), a complete deployment of Console depends on:
 
-- **PostgreSQL database** for storing Platform metadata, [Indexer](../../navigation/console/about-indexing.md) state, and shared Monitoring state
-- Our bespoke [**Cortex image**](../configuration/cortex.md) for metric collection and storage
+- **PostgreSQL database** for storing Platform metadata, [Indexer](/platform/navigation/console/about-indexing/) state, and shared Monitoring state
+- Our bespoke [**Cortex image**](/platform/get-started/configuration/cortex/) for metric collection and storage
 - **Block storage** for storing historical monitoring data
 
 Below outlines how an external persistent store (PostgreSQL) and a leader election service are used to manage stateful data and monitoring tasks across multiple Console instances.
@@ -88,9 +88,9 @@ In the pre-1.25.0 architecture, Kafka Monitoring maintained its state in-memory.
 #### Multiple Instances (Post-Console 1.25.0)
 
 From Console 1.25.0 onwards, the monitoring state is now stored in the external PostgreSQL database, allowing the state to be shared and accessed by all instances of Console. This change brings several advantages:
- - **Consistency**: Multiple Console instances can now deployed with a leader elected to handle the stateful components (Kafka [Metadata Indexer](../../navigation/console/about-indexing.md) and Monitoring).
+ - **Consistency**: Multiple Console instances can now deployed with a leader elected to handle the stateful components (Kafka [Metadata Indexer](/platform/navigation/console/about-indexing/) and Monitoring).
  - **Redundancy & Fault Tolerance**: If the leader instance fails, another instance takes over as the leader, without losing any monitoring data.
- - **Prometheus Metrics**: Every Console instance is now capable of exposing [Prometheus metrics](../../reference/metric-reference.md) through the API. This allows for real-time monitoring of the application regardless of which instance is the leader, as the monitoring state is available to all instances.
+ - **Prometheus Metrics**: Every Console instance is now capable of exposing [Prometheus metrics](/platform/reference/metric-reference/) through the API. This allows for real-time monitoring of the application regardless of which instance is the leader, as the monitoring state is available to all instances.
 
  ### High-Availability Limitations
 
@@ -106,15 +106,18 @@ The system currently uses Cortex in standalone mode, which does not inherently p
 
 #### Database Connection Fail-over
 
-Console does not currently support using multiple database URLs in configuration to achieve high availability (HA). For example, [Connection Fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) as seen in the case of PostgreSQL.
+Since version 1.30 Console supports using multiple database URLs in configuration to achieve high availability (HA). For example, [Connection Fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) as seen in the case of PostgreSQL.
 
-While this is something we are actively investigating, we recommend instead that you configure an HA Postgres database using solutions such as:
+For Conduktor configuration details see [Multi-host database configuration](docs/platform/get-started/configuration/database.md#multi-host-configuration) which supports multiple hosts.
+For Postgresql HA configuration it's best to discuss with your architect, one example is using [Bitnami's postgresql-ha chart](https://github.com/bitnami/charts/blob/main/bitnami/postgresql-ha/README.md#differences-between-the-postgresql-ha-and-postgresql-helm-charts).
+
+
+In earlier versions we recommend instead that you configure an HA Postgres database where you should specify the single connection URL (e.g. the endpoint of PgBouncer or HAProxy) in the Conduktor Console database configuration. There are several solutions available such as:
  
- - [**Patroni**](https://www.cybertec-postgresql.com/en/patroni-setting-up-a-highly-available-postgresql-cluster/): Automates Postgres replication and failover.
- - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances.
- - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA.
+ - [**Patroni**](https://www.cybertec-postgresql.com/en/patroni-setting-up-a-highly-available-postgresql-cluster/): Automates Postgres replication and failover
+ - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances
+ - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
-In either case, you should specify the single connection URL (e.g. the endpoint of PgBouncer or HAProxy) in the Conduktor Console database configuration. 
 
 
 

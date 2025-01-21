@@ -10,7 +10,7 @@ JS filter is used to filter Kafka records. The filter is evaluated on each recor
 
 :::caution
 This filter is not the preferred method.  
-We recommend that you use the simpler and more performant filters: [Global Search](../consume/#global-search) and [Search in a Specific field](../consume/#search-in-a-specific-field) .
+We recommend that you use the simpler and more performant filters: [Global Search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a Specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
 :::
 
 The code has to return a boolean.
@@ -110,7 +110,7 @@ return !headers.includesKey("trace-id");
 // Selects all the records not having a trace-id header
 
 const isHighPrice = value.totalPrice >= 30
-const moreThanOneItem = value.items.lenght > 1
+const moreThanOneItem = value.items.length > 1
 return isHighPrice && moreThanOneItem
 // Selects all the orders having a total price superior to or equal to 30 and having more than one 1 item
 

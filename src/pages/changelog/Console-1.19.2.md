@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Fixed an issue with the Reset Offset Preview in the Consumer Groups details showing incorrect target offsets
 - Fixed an issue with Service Account page where prefix ACLs were saved incorrectly (`prefix-*` instead of `prefix-`)

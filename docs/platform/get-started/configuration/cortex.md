@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: Cortex Configuration
 description: Cortex Configuration
 ---
@@ -8,11 +8,18 @@ description: Cortex Configuration
 This Configuration is for Cortex dependency image `conduktor/conduktor-console-cortex`
 :::
 
-This image is exclusively configured through Environment Variables.  
+## Table of Contents
+- [Example configuration](#example-configuration)
+- [Overriding Configuration](#overriding-configuration)
+  - [Overriding with YAML](#overriding-with-yaml)
+  - [Overriding with ConfigMap](#overriding-with-configmap)
+- [Troubleshooting](#troubleshooting)
+  - [No metrics in the monitoring page](#no-metrics-in-the-monitoring-page)
+  - [No Slack notification alerts](#no-slack-notification-alerts)
+- [Endpoint Authentication](#endpoint-authentication)
 
 
 The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
-
 
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
 You can mount a volume on this folder to keep metrics data between updates.
@@ -80,7 +87,9 @@ services:
 ````
 
 ## Overriding Configuration
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. You can also change the path location using the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.    
+
+### Overriding with YAML
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
 This is not currently available for Alert Manager and Prometheus. 
 
 For example, create a file `cortex.yaml` add in only your overrides:
@@ -99,6 +108,38 @@ You should see a similar entry to the below in the opening logs:
 INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
 ```
 
+### Overriding with ConfigMap
+If you are deploying Cortex using our [Helm charts](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md) you may expand the input with a custom ConfigMap for overriding configuration such as retention time within Cortex.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: conduktor-console-cortex-config
+  labels:
+    app.kubernetes.io/name: console
+    app.kubernetes.io/instance: conduktor
+    app.kubernetes.io/component: conduktor-platform-cortex
+data:
+  cortex.yaml: |
+    blocks_storage:
+      tsdb:
+        retention_period: 24h
+```
+
+On chart `values.yaml` : 
+```yaml
+platformCortex:
+  extraVolumes: 
+    - name: cortex-config-override
+      configMap:
+        name: conduktor-console-cortex-config
+  extraVolumeMounts:
+        - name: cortex-config-override
+          mountPath: /opt/override-configs/cortex.yaml
+          subPath: cortex.yaml
+```
+
 ## Troubleshooting  
 
 ### No metrics in the monitoring page  
@@ -106,13 +147,13 @@ Go to `http://localhost:9090/targets` to see Prometheus scraping target status.
 
 If it fails, check that you can query metrics endpoint from `conduktor-console-cortex` container. 
 
-You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](https-configuration.md#https-configuration).
+You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](/platform/get-started/configuration/https-configuration/#https-configuration).
 
 ### No Slack notification alerts
 1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console. 
 2. Don't forget to manually add Slack App bot to the channel integrations you want to use for alerts notifications.
 3. Enable notifications in the **Alerts** tab, and select the same channel as previously. 
-4. [Create some alerts](../../navigation/monitoring/getting-started/create-alert.md).
+4. [Create some alerts](/platform/navigation/monitoring/getting-started/create-alert#create-an-alert/).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
 

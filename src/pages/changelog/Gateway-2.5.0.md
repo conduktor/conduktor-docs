@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Schema-based data contract validation
+### Schema-based data contract validation
 
 Check and enforce data quality at the schema level, preventing outages from missing or badly formatted records.
 
@@ -52,7 +52,7 @@ Sounds interesting, try it out for yourself with [this demo](https://github.com/
 
 This can be combined with the SQL data quality producer plugin described below, or standalone.
 
-## SQL data quality checks on produce
+### SQL data quality checks on produce
 
 Check data quality with a SQL statement before it hits the cluster, ensure the data produced is valid.
 
@@ -72,24 +72,24 @@ Rejected messages will throw up informative feedback on why the data quality is 
 
 We also have a [demo](https://github.com/conduktor/conduktor-gateway-demos/tree/main/sql-data-quality-producer?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24) for you to try yourself.
 
-## Set config fields using environment variables
+### Set config fields using environment variables
 
 Be able to alias all interceptor config fields using environment variables.
 
-## Set client ID on action
+### Set client ID on action
 
 ClientId is an optional field that helps identify applications within your Kafka. Requiring this is set presents opportunities such as speedier debugging by narrowing down which applications affect which messages, or quota management.
 
 Rather than simply block messages that don't have it set, you can instead choose to override the message metadata to set one. This can be done on all Kafka verbs i.e. produce, consume, admin actions and more.
 
-## ARM build
+### ARM build
 
 Conduktor Gateway is now available in an ARM build, not just AMD, to provide more flexibility to your deployment machine choices.
 
-## Interceptor API Upsert Support
+### Interceptor API Upsert Support
 
 The interceptor API will now upsert (create if doesn't exist, update if exists) when making `PUT` calls.
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed support for additional Kafka topic configuration properties such as `retention.ms = -1`

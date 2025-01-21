@@ -8,8 +8,8 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Future Breaking Changes 💣
-### New docker image name
+### Future Breaking Changes 💣
+#### New docker image name
 To clarify our product naming we have renamed the Console docker image to `conduktor/conduktor-console`.
 
 We will publish newer versions using both names for the next **three releases** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
@@ -18,7 +18,7 @@ We will publish newer versions using both names for the next **three releases** 
 docker pull conduktor/conduktor-console:1.21.0
 ````
 
-## Features ✨
+### Features ✨
 
 - [ksqlDB](#ksql-db)
 - [Metrics available via Prometheus](#subscribe-to-metrics-via-the-prometheus-endpoint)
@@ -28,7 +28,7 @@ docker pull conduktor/conduktor-console:1.21.0
 
 ---
 
-### ksqlDB
+#### ksqlDB
 Say hello to seamless integration with ksqlDB for you and your team on Conduktor Console.   
 Grant permission to whom can access the interface to create queries, setup new connections and visualise the existing connections.
 
@@ -47,24 +47,24 @@ For more information [checkout the docs](https://docs.conduktor.io/platform/navi
 
 ![New navigation](/images/changelog/platform/v21/ksqlComp.png)
 
-### Subscribe to metrics via the Prometheus endpoint
+#### Subscribe to metrics via the Prometheus endpoint
 
 Gain deeper insights into your system's performance with metrics now readily available via the Prometheus endpoint. No need for yet another system to monitor, seamlessly integrate metrics directly into your external log system in the Prometheus format, allowing for effortless monitoring and optimization of Conduktor within your systems.
 
 You can monitor metrics such as under replicated partitions, total & failed connector tasks and consumer group lags. For the full list of available metrics [checkout the docs](https://docs.conduktor.io/platform/reference/metric-reference/).
 
-### Smart tables for Kafka Connect and Schema Registry subjects
+#### Smart tables for Kafka Connect and Schema Registry subjects
 
 Get the answers you need quicker with the new tables. Sort by what matters, be that subject name, version count, latest version and more! For Connect there's all the usual suspects: source/sink, topics, the connect cluster and importantly the state (e.g. Failed, Paused). Quickly find which connectors are failing with just one click. 
 
 Choose what columns to hide the noise. Filter on name, tags and other resource metatdata such as consumer group state.
 
-### Add Local Users from the UI
+#### Add Local Users from the UI
 
 Don't have SSO ? Now you can add Users directly from the Users & Groups page in Settings, instead of modifying the config file and restarting the Console.
 ![Add Users](/images/changelog/platform/v21/add-users.png)
 
-## Fixes 🔨
+### Fixes 🔨
 - Added support for complex union-type avro messages in Console Producer
 - Fixed a blank screen issue after login due to case-sensitivity bug with email address
 - Fixed an issue where Message Reprocessing didn't work after refreshing the page
