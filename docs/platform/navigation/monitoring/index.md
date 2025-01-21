@@ -35,4 +35,4 @@ See [metrics](/platform/navigation/monitoring/metrics/) for more information.
 
 ## Alerting
 
-We enable real-time notifications on built-in and custom alerts. Alerts can be made at a topic granularity and with configurable thresholds. We currently support alerting via **Slack** and **MS Teams**.
+We enable real-time notifications on built-in and custom alerts. [Alerts](/platform/navigation/settings/alerts) can be made at a topic granularity and with configurable thresholds. We currently support alerting via **Slack** and **MS Teams**.
