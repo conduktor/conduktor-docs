@@ -12,7 +12,7 @@ This Configuration is for Cortex dependency image `conduktor/conduktor-console-c
 - [Example configuration](#example-configuration)
 - [Overriding Configuration](#overriding-configuration)
   - [Overriding with YAML](#overriding-with-yaml)
-  - [Overriding with configMap](#overriding-with-configmap)
+  - [Overriding with ConfigMap](#overriding-with-configmap)
 - [Troubleshooting](#troubleshooting)
   - [No metrics in the monitoring page](#no-metrics-in-the-monitoring-page)
   - [No Slack notification alerts](#no-slack-notification-alerts)
@@ -153,7 +153,7 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console. 
 2. Don't forget to manually add Slack App bot to the channel integrations you want to use for alerts notifications.
 3. Enable notifications in the **Alerts** tab, and select the same channel as previously. 
-4. [Create some alerts](/platform/navigation/monitoring/getting-started/create-alert/).
+4. [Create some alerts](/platform/navigation/settings/alerts).
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
 
