@@ -2,7 +2,7 @@ export const useCases = [
   {
     title: 'Use Cases',
     icon: '/assets/svgs/guides/use-cases.svg',
-    description: 'Use cases for Conduktor',
+    description: 'Step-by-step guides for typical scenarios and best practices.',
     items: [
       [ 'Configure SQL', 'https://docs.conduktor.io/platform/guides/configure-sql/' ],
       [ 'Configure Chargeback', 'https://docs.conduktor.io/platform/guides/configure-chargeback/' ],
