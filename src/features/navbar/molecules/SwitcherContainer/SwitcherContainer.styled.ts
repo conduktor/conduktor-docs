@@ -36,8 +36,6 @@ export const StyledSwitcherContainer = styled('div', {
 export const List = styled('ul', {
   all: 'unset',
   listStyleType: 'none',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
   gap: '$space6',
 })
 
@@ -47,6 +45,7 @@ export const ListItem = styled('li', {
   justifyContent: 'space-between',
   borderRadius: '$radius3',
   transition: 'background-color 200ms ease',
+  maxWidth: '600px',
 
   '&:hover, &:focus': {
     backgroundColor: '$olive2',
