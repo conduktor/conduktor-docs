@@ -50,7 +50,24 @@ Any variable prefixed with `KAFKA_` will be treated as a connection parameter by
 
 ## Gateway Environment Variables
 
-Default configurations for Conduktor Gateway can be overridden by environment variables.
+The default configurations for Conduktor Gateway can be overridden by setting environment variables, or importing environment variables from a file.
+
+When importing from a file, mount the file into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`. The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`.
+
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below. 
+
+Use a .env file with key value pairs.
+
+```
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
+
+The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`, or warn if set and the file is not found
+
+```
+Warning: GATEWAY_ENV_FILE is set but the file does not exist or is not readable.
+```
 
 ### Guidelines
 
@@ -312,3 +329,12 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 | Environment Variable                                   | Default Value | Description                                                                                                                                                                                                                                   |
 |--------------------------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`        | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. |
+
+
+### Sourcing Environment Variables from a File
+
+| Environment Variable | Default Value | Description                 |
+|----------------------|---------------|-----------------------------|
+| `GATEWAY_ENV_FILE`   |               | Path to an environment file |
+
+The environment file should be a text file with each line containing an environment variable in the format `KEY=VALUE`.
