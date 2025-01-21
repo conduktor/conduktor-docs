@@ -18,7 +18,7 @@ const Hero: React.FunctionComponent<HeroProps> = () => {
               <p className={styles.HeroContentSubtitle}>Learn how to install Conduktor and explore our Enterprise Data Management Platform For
                 Streaming.</p>
               <div className={styles.ButtonContainer}>
-                <Button to="/platform/category/get-started" type="brand">
+                <Button to="/platform/get-started/installation/get-started/docker/" type="brand">
                   Get started
                 </Button>
                 <Button to="/platform/category/get-started" type="colorless">
