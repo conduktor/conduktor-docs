@@ -2,13 +2,13 @@ export const items = [
   {
     name: 'Slack',
     description: 'Explore Conduktor, its architecture and feature set',
-    to: '/slack',
+    to: 'https://www.conduktor.io/slack',
     icon: '/assets/svgs/useful-links/slack.svg',
   },
   {
     name: 'Support',
     description: "Get step-by-step guidance on deploying Conduktor efficiently",
-    to: '/support',
+    to: 'https://support.conduktor.io/',
     icon: '/assets/svgs/useful-links/headset.svg',
   },
   {

@@ -21,7 +21,7 @@ const Hero: React.FunctionComponent<HeroProps> = () => {
                 <Button to="/platform/get-started/installation/get-started/docker/" type="brand">
                   Get started
                 </Button>
-                <Button to="/platform/category/get-started" type="colorless">
+                <Button to="/gateway/get-started/docker/" type="colorless">
                   Start with proxy
                 </Button>
               </div>
