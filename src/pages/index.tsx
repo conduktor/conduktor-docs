@@ -1,6 +1,7 @@
 import Head from '@docusaurus/Head'
 import Layout from '@theme/Layout'
 import React, { Fragment } from 'react'
+import { JSX } from 'react'
 import Community from '../features/home/organisms/Community'
 import GetStarted from '../features/home/organisms/GetStarted'
 import Guides from '../features/home/organisms/Guides'
