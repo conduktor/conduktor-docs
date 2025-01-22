@@ -21,7 +21,7 @@ export const products = [
       [ 'Data Masking', '/gateway/interceptors/data-security/data-masking/', '/assets/svgs/products/data-masking.svg'  ],
       [ 'Dynamic Header Injection', '/gateway/interceptors/data-security/dynamic-header-injection/', '/assets/svgs/products/dynamic.svg'  ],
     ]
-  },
+  }/*,
   {
     title: 'Exchange',
     icon: '/assets/svgs/products/exchange.svg',
@@ -30,6 +30,6 @@ export const products = [
       [ 'Third-Party Data Sharing', '/platform/data-sharing', '/assets/svgs/products/data-sharing.svg'  ],
       [ 'Partner Zones', '/platform/concepts/partner-zones/', '/assets/svgs/products/partner-zones.svg'  ]
     ]
-  },
+  },*/
 ]
 
