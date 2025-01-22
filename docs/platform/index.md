@@ -2,43 +2,34 @@
 sidebar_position: 1
 title: Overview
 slug: /
-description: Conduktor Console gives you complete visibility into your Kafka ecosystem and the ability to manage and monitor your data streaming applications
+description: Conduktor is the Enterprise Data Management Platform for Streaming
 ---
 
-# Overview
+## What is Conduktor?
 
-- [Getting Started](#getting-started-with-the-docs)
-- [What is Conduktor Console](#what-is-conduktor-console)
-- [Resources](#resources)
+Conduktor is the Enterprise Data Management Platform for Streaming that integrates with your existing infrastructure to provide centralized visibility and control over your real-time data. 
 
-## Getting Started with the Docs
+To maximize the value of Conduktor, there are two key components to be aware of:
+ - [Console](/platform/navigation/): Unified interface to develop, monitor, and manage data streaming operations
+ - [Gateway](/gateway): Proxy that simplifies authentication, authorization, and traffic management
 
-These documents allow you to setup, configure and explore Conduktor Console.
+![Platform Overview](https://framerusercontent.com/images/BxLyUIFsUAAWKnRZD5xEbj2rQ.png)
 
-If you are looking at setting up Console, [review the installation](/platform/category/installation/).  
+The Conduktor Console is a powerful UI for Apache Kafka. It equips users with functionality to support many essential tasks when working with Kafka.
 
-Need to further configure Console for your specific setup, [review the configuration options](/platform/category/configuration/).  
-
-Want to maximise what you can get from Console [dive into the Navigation](/platform/category/configuration/).
-
-
-## What is Conduktor Console?
-
-The Conduktor Console is a powerful UI for Apache Kafka. The Console equips users with functionality to support many essential tasks when working with Kafka.
+ - See [Navigation](/platform/navigation/) for more details
 
 ![Console Home page](assets/home.png)
 
-**Access and Manage Kafka resource**. Explore topics, reset consumer offsets, manage ACLs, deploy & restart connectors, are just some of the things you can do.
+The Conduktor Gateway is a Kafka proxy deployed between your client applications and existing Kafka clusters. This can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption, traffic control policies, and failover for disaster recovery.
 
-![Console Consume page](assets/consume.png)
+ - See [Overview](/gateway) for more details
 
-**Self-service**. Solve some of the most recurring problems associated with working with Kafka at scale. Ownership of resources, access request management, topic discvoerability, governance policies, and much more!
+![conduktor-gateway](../gateway/medias/conduktor-gateway.svg)
 
-**Secure Kafka**. Import your existing groups, configure detailed permissions for your users, set up your external integrations, review audit logs as well as much more.
-
-**Monitor Kafka**. The cluster, topics and consumer groups. Creating alerts to notify you based on Kafka metrics we collect for you.
-
-See [Navigation](/platform/navigation/) for more details.
+## Next Steps
+ - [Getting Started with Console](/platform/get-started/installation/get-started/docker)
+ - [Getting Started with Gateway](/gateway/get-started/docker)
 
 ## Resources
 
@@ -48,5 +39,3 @@ See [Navigation](/platform/navigation/) for more details.
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
 
 Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.  
-
-Happy reading 😃.
