@@ -1,6 +1,6 @@
 export const useCases = [
   {
-    title: 'Use Cases',
+    title: '',
     icon: '/assets/svgs/guides/use-cases.svg',
     description: 'Step-by-step guides for typical scenarios and best practices.',
     items: [

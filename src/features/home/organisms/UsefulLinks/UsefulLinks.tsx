@@ -1,4 +1,4 @@
-import WrappedHeading from "@site/src/features/home/atoms/WrappedHeading";
+import Heading from '../../atoms/Heading'
 import React from "react";
 import { items } from './UsefulLinks.constants'
 import Container from "@site/src/components/atoms/Container";
@@ -10,9 +10,9 @@ const UsefulLinks = () => {
   return (
     <section>
       <Container>
-        <WrappedHeading>
-          Useful links
-        </WrappedHeading>
+        <Heading>
+          Getting more from Conduktor
+        </Heading>
         <ul className={styles.List}>
           {items.map((item, itemIndex) => (
             <li key={itemIndex} className={styles.ListItem}>

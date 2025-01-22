@@ -3,16 +3,16 @@ import React from 'react'
 import { useCases } from './BrowseByUsecase.constants'
 import styles from './BrowseByUsecase.module.scss'
 import UsecaseLink from "@site/src/features/home/atoms/UsecaseLink/UsecseLink";
-import WrappedHeading from "@site/src/features/home/atoms/WrappedHeading";
+import Heading from '../../atoms/Heading'
 
 const BrowseByUsecase = () => {
 
   return (
     <section className={styles.StyledGuides}>
       <Container>
-        <WrappedHeading>
+        <Heading>
           Browse by use case
-        </WrappedHeading>
+        </Heading>
         <ul className={styles.List}>
           {useCases.map((item, itemIndex) => (
             <li className={styles.ListItemWrapper} key={itemIndex}>
