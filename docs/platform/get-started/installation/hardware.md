@@ -1,12 +1,16 @@
 ---
 sidebar_position: 3
 title: System Requirements
-description: Conduktor Console is provided as a single Docker container.
+description: Conduktor Console consists of two containers, Console and Cortex.
 ---
 
 # System Requirements
 
-Conduktor Console is provided as a single Docker container.
+Conduktor Console consists of two containers, the Console container and the Cortex container.
+
+The Console container provides the web interface while the Cortex container provides the metrics.
+
+**Note:**  It is not supported to run Console without the Cortex container.
 
 Jump to:
  - [Production Requirements](#production-requirements)
@@ -22,14 +26,14 @@ To ensure you meet these requirements, you must:
  - Set up an [external PostgreSQL (13+) database](/platform/get-started/configuration/database/) with appropriate backup policy 
     - This is used to store data relating to your Conduktor deployment; such as your users, permissions, tags and configurations
     - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over)
- - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring
+ - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Cortex
  - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
  
 Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide. 
 
 ## Hardware Requirements
 
-To configure Conduktor Console for particular hardware, you can use container CGroups limits. More details [here](/platform/get-started/configuration/memory-configuration)
+### Console
 
 **Minimum**
 
@@ -43,7 +47,19 @@ To configure Conduktor Console for particular hardware, you can use container CG
 - 4+ GB of RAM
 - 10+ GB of disk space
 
-See more about [environment variables](/platform/get-started/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/get-started/installation/get-started/docker/).
+### Cortex
+
+**Minimum**
+
+- 4 CPU Cores
+- 6 GB of RAM
+- 10 GB of disk space
+
+**Recommended**
+
+- 8 CPU Cores
+- 8+ GB of RAM
+- [block storage](/platform/get-started/configuration/env-variables#monitoring-properties)
 
 ## Deployment Architecture
 
