@@ -29,6 +29,10 @@ You also need to specify an owner when creating an alert.
 Currently alerts can be owned by an individual, a group, or an individual user, and this determines who can edit the alert.
 **If the owner of an alert is deleted, then the alerts associated with that owner will be deleted too.**
 
+import AlertCreation from './assets/create-alert.png';
+
+<img src={AlertCreation} alt="Alert creation" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
 If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications.
 Each alert has a maximum of one external destination.
 After configuring a destination, you can click the 'send test' button to trigger a sample notification.
