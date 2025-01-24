@@ -8,11 +8,8 @@ import React from 'react';
 
 We support releases of our software for one calendar year after their release date (the release date being the date the version was first published to DockerHub). For the purposes of support, the specific software artefacts in scope for this policy are:
 
-* conduktor-console
-* conduktor-gateway
-* conduktor-console-cortex
-* conduktor-ctl
-* terraform-provider-conduktor
+* Console (also covering cortex)
+* Gateway
 
 The end of support date applies to minor versions and any maintenance versions that come after the minor version. This means that maintenance versions follow the same one year lifecycle of the minor version. For example, Conduktor Console version `1.21.x` ends support on 26<sup>th</sup> Feb 2024, and this will include ending support for its maintenance versions `1.21.1`, `1.21.2` and `1.21.3`.
 
@@ -22,9 +19,9 @@ For supported versions, our support team will work with you to address issues yo
 
 # Supported Versions and End of Support Dates
 
-## conduktor-console, conduktor-console-cortex
+## Console
 
-These artefacts are released together, and supported as below.
+Conduktor Console covers the UI, API and the cortex monitoring.
 
 Helm charts providing in-support versions for these artefacts are also covered by support.
 
@@ -42,7 +39,7 @@ Helm charts providing in-support versions for these artefacts are also covered b
 | 1.21.x                 | 26 Feb 2024      | 26 Feb 2025                    |
 | *1.20.x (and earlier)* | *12 Dec 2023*    | *12 Dec 2024 : Out of Support* |
 
-## conduktor-gateway
+## Gateway
 
 For Conduktor Gateway, the one year support policy only applies from version `3.0.0` onwards. Version `2.X.x` releases of Conduktor Gateway are no longer supported and are superseded by version `3.X.x` of Gateway.
 
@@ -57,20 +54,4 @@ Helm charts providing in-support versions for these artefacts are also covered b
 | 3.1.x       | 3 Jun 2024        | 3 Jun 2025                        |
 | 3.0.x       | 20 Mar 2024       | 20 Mar 2025                       |
 | *2.X.x*     | *12 Feb 2024*     | *EoL since v 3.0, Out of Support* |
-
-## conduktor-ctl (Conduktor CLI)
-
-The first two releases of this artefact are already out of support and were superseded by version `0.3.x`
-
-| **Version** | **Release Date** | **End of Support Date**           |
-| :---------- | :--------------- | :-------------------------------- |
-| 0.3.x       | 28 Aug 2024      | 28 Aug 2025                       |
-| 0.2.x       | 22 Apr 2024      | *EoL since 0.3.0, Out of Support* |
-| 0.1.x       | 26 Mar 2024      | *EoL since 0.3.0, Out of Support* |
-
-### terraform-provider-conduktor
-
-Conduktor's Terraform provider (terraform-provider-conduktor) is still in its Alpha phase we will provide support for any customers using it, however we only provide fixes to the latest version available. I.e. while we will fully support all customers using our terraform provider, we do not support patches to versions other than the latest.
-
-          
 
