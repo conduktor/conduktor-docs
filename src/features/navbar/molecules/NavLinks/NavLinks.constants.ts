@@ -8,6 +8,10 @@ export const items = [
     href: '/changelog',
   },
   {
+    name: 'Support',
+    href: '/support',
+  },
+  {
     name: 'FAQ',
     to: '/faq',
   },
