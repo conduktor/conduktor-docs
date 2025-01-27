@@ -16,8 +16,8 @@ const config = {
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.

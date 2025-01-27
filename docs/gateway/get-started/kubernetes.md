@@ -29,20 +29,21 @@ Breaking Changes:
 
 🔴 - Breaks overall deployment of the product (e.g. renaming variables in .values, major product releases)
 
+
 | Chart version | Supported Gateway version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
-| [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.4.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.1) | 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.4.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.0) | 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.3.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.1) | 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.3.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.0) | 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.2.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.2) | 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/98) |
-| [conduktor-gateway-3.2.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.1) | 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.2.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.0) | 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.1.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.1) | 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.1.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.0) | 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/81) |
-| [conduktor-gateway-3.0.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.1) | 3.0.1, 3.0.0 | |
-| [conduktor-gateway-3.0.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.0) | 3.0.0 | 🔴 Major product update [see here](https://github.com/conduktor/conduktor-public-charts/pull/56) |
+| [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | **3.5.0**, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.4.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.1) | **3.4.1**, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.4.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.0) | **3.4.0**, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🔴 Change service account creation behavior [see here](https://github.com/conduktor/conduktor-public-charts/pull/125) <br/> 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/123) |
+| [conduktor-gateway-3.3.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.1) | **3.3.1**, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.3.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.0) | **3.3.0**, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.2.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.2) | **3.2.2**, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/98) |
+| [conduktor-gateway-3.2.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.1) | **3.2.1**, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.2.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.0) | **3.2.1**, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.1.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.1) | **3.1.1**, 3.1.0 | |
+| [conduktor-gateway-3.1.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.0) | **3.1.1**, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/81) |
+| [conduktor-gateway-3.0.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.1) | **3.0.1**, 3.0.0 | |
+| [conduktor-gateway-3.0.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.0) | **3.0.0** | 🔴 Major product update [see here](https://github.com/conduktor/conduktor-public-charts/pull/56) |
 
 ## General requirements
 
