@@ -95,7 +95,7 @@ spec:
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 ### Service Account
-Allows for the modification of ACLs for an existing service account in Kafka. Note the creation of service accounts is not supported.
+Manages the ACLs of a service account in Kafka. Note this does not create the service account, it only assigns ACLs.
 
 **API Keys:** <AdminToken />
 **Managed with:** <CLI /> <API /> <GUI />
@@ -120,31 +120,25 @@ spec:
         patternType: PREFIXED
         operations:
           - Write
-        host: "*"
-        permission: Allow
       - type: CLUSTER
         name: kafka-cluster
         patternType: LITERAL
         operations:
-          DescribeConfigs
-        host: "*"
-        permission: Allow
+          - DescribeConfigs
       - type: CONSUMER_GROUP
         name: cg-name
         patternType: LITERAL
         operations:
-          Read
-        host: "*"
-        permission: Allow
+          - Read
 ````
 **Service account checks:**
 - `metadata.cluster` is a valid Kafka Cluster.
 - `metadata.name` is a valid, pre-existing service account.
-- `spec.acls` must not contain an ACL definition that for the resource type contains both an ALLOW and DENY entry.
-- `spec.acls` can not contain duplicate operation blocks for the same resource type.
-- `spec.acls.operations` must contain only operations that are valid for the resource type.
-- `spec.acls.host` is optional, and will default to '*'.
-- `spec.acls.permission` is optional, and will default to 'Allow'.
+- `spec.authorization.type` must be 'KAFKA_ACL'. This is the default implementations which store ACLs in the cluster metadata. This is the only supported type in this API for now.
+- `spec.acls[].type` must be a valid resource type on Kafka ([Kafka ACL Operations and Resources](https://kafka.apache.org/documentation/#operations_resources_and_protocols))
+- `spec.acls[].operations` must contain only operations that are valid for the resource type.
+- `spec.acls[].host` is optional, and will default to '*'.
+- `spec.acls[].permission` is optional, and will default to 'Allow'.
 
 **Side effect in Console & Kafka:**
 - Kafka
