@@ -94,6 +94,63 @@ spec:
   - Topic is created / updated.
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
+### Service Account
+Allows for the modification of ACLs for an existing service account in Kafka. Note the creation of service accounts is not supported.
+
+**API Keys:** <AdminToken />
+**Managed with:** <CLI /> <API /> <GUI />
+
+
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: shadow-it
+  name: clickstream-sa
+  labels:
+    domain: clickstream
+    appcode: clk
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+      - type: TOPIC
+        name: click.event-stream.avro
+        patternType: PREFIXED
+        operations:
+          - Write
+        host: "*"
+        permission: Allow
+      - type: CLUSTER
+        name: kafka-cluster
+        patternType: LITERAL
+        operations:
+          DescribeConfigs
+        host: "*"
+        permission: Allow
+      - type: CONSUMER_GROUP
+        name: cg-name
+        patternType: LITERAL
+        operations:
+          Read
+        host: "*"
+        permission: Allow
+````
+**Service account checks:**
+- `metadata.cluster` is a valid Kafka Cluster.
+- `metadata.name` is a valid, pre-existing service account.
+- `spec.acls` must not contain an ACL definition that for the resource type contains both an ALLOW and DENY entry.
+- `spec.acls` can not contain duplicate operation blocks for the same resource type.
+- `spec.acls.operations` must contain only operations that are valid for the resource type.
+- `spec.acls.host` is optional, and will default to '*'.
+- `spec.acls.permission` is optional, and will default to 'Allow'.
+
+**Side effect in Console & Kafka:**
+- Kafka
+  - Service account ACLs are created / updated.
+  - In dry-run mode, service account ACLs are validated against the aforementioned criteria, ensuring the ACL definitions are legal.
+
 ### Subject
 Creates a Subject in the Schema Registry.
 
