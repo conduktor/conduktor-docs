@@ -80,6 +80,58 @@ spec:
 - `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
+### Service Account
+Allows for the modifications of ACLs for an existing service account in Kafka.
+
+**API Keys:** <AdminToken />
+**Managed with:** <CLI /> <API /> <GUI />
+
+
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: shadow-it
+  name: clickstream-sa
+  labels:
+    domain: clickstream
+    appcode: clk
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+      - type: TOPIC
+        name: click.event-stream.avro
+        patternType: PREFIXED
+        operations:
+          - Write
+        host: "*"
+        permission: Allow
+      - type: CLUSTER
+        name: kafka-cluster
+        patternType: LITERAL
+        operations:
+          DescribeConfigs
+        host: "*"
+        permission: Allow
+      - type: CONSUMER_GROUP
+        name: cg-name
+        patternType: LITERAL
+        operations:
+          Read
+        host: "*"
+        permission: Allow
+````
+**Service account checks:**
+- `metadata.cluster` is a valid Kafka Cluster.
+- `metadata.name` is a valid, pre-existing service account.
+- `spec.acls` must not contain an ACL definition that for the resource type contains both an ALLOW and DENY entry.
+- `specs.acls` can not contain duplicate operation blocks for the same resource type.
+- `spec.acls.operations` must contain only operations that are valid for the resource type.
+- `spec.acls.host` is optional, and will default to '*'.
+- `spec.acls.permission` is optional, and will default to 'Allow'.
+
 **Conduktor annotations**
 - `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
   - Previously `conduktor.io/description.editable` in 1.28 and below
