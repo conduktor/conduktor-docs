@@ -127,7 +127,7 @@ spec:
 - `metadata.cluster` is a valid Kafka Cluster.
 - `metadata.name` is a valid, pre-existing service account.
 - `spec.acls` must not contain an ACL definition that for the resource type contains both an ALLOW and DENY entry.
-- `specs.acls` can not contain duplicate operation blocks for the same resource type.
+- `spec.acls` can not contain duplicate operation blocks for the same resource type.
 - `spec.acls.operations` must contain only operations that are valid for the resource type.
 - `spec.acls.host` is optional, and will default to '*'.
 - `spec.acls.permission` is optional, and will default to 'Allow'.
