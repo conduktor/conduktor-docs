@@ -95,7 +95,7 @@ spec:
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
 
 ### Service Account
-Allows for the modifications of ACLs for an existing service account in Kafka.
+Allows for the modification of ACLs for an existing service account in Kafka. Note the creation of service accounts is not supported.
 
 **API Keys:** <AdminToken />
 **Managed with:** <CLI /> <API /> <GUI />
