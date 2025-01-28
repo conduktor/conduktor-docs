@@ -80,6 +80,20 @@ spec:
 - `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
+**Conduktor annotations**
+- `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
+  - Previously `conduktor.io/description.editable` in 1.28 and below
+- `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
+  - Previously `conduktor.io/description.editable` in 1.28 and below
+- `metadata.catalogVisibility` is **optional**. Can be `PUBLIC` or `PRIVATE`. 
+  - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
+  - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
+
+**Side effect in Console & Kafka:**
+- Kafka
+  - Topic is created / updated.
+  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+
 ### Service Account
 Allows for the modifications of ACLs for an existing service account in Kafka.
 
@@ -132,19 +146,10 @@ spec:
 - `spec.acls.host` is optional, and will default to '*'.
 - `spec.acls.permission` is optional, and will default to 'Allow'.
 
-**Conduktor annotations**
-- `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
-  - Previously `conduktor.io/description.editable` in 1.28 and below
-- `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
-  - Previously `conduktor.io/description.editable` in 1.28 and below
-- `metadata.catalogVisibility` is **optional**. Can be `PUBLIC` or `PRIVATE`. 
-  - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
-  - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
-
 **Side effect in Console & Kafka:**
 - Kafka
-  - Topic is created / updated.
-  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+  - Service account ACLs are created / updated.
+  - In dry-run mode, service account ACLs are validated against the aforementioned criteria, ensuring the ACL definitions are legal.
 
 ### Subject
 Creates a Subject in the Schema Registry.
