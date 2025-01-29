@@ -9,21 +9,22 @@ description: Connect Conduktor to other tools that your team uses.
 Conduktor console can integrate with Slack, MS Teams, and any system that receives webhooks.
 MS Teams and webhook integrations can be enabled and disabled from this page with a simple toggle.  
 **Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.**  
-Enabling the **Slack** integration requires generating a token from a Slack application and adding the Slack application to the Slack channel.  
+Enabling the **Slack** integration requires creating a Slack application, installing this to your Slack workspace, inviting your app to the channel and adding the application token to Conduktor.  
 Enabling the **MS Teams** integration requires a webhook URL from Teams when creating alerts with this destination.
 Additional instructions for either integration can be found within Conduktor's UI as part of setup, or below.  
 
 
 ## Slack Integration
 
-After setting up the Slack integration following the instructions from within Conduktor, you can create alerts with the destination "Slack" selecting any channel you want to send the alerts to.
+As part of configuring the Slack integration in Conduktor, you will find steps for [creating a Slack application](https://api.slack.com/apps) (a bot) using the app manifest template (provided in Conduktor). This app needs to be installed to your Slack workspace and the OAuth token added to the Conduktor integration.
+
+Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack. 
 
 import SlackIntegration from './assets/slack-invite.png';
 
 <img src={SlackIntegration} alt="Slack integration" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-
-In order to receive alert messages, ensure you have added the Slack application to the channel you want to send the alerts to. You can do this by typing `/invite` in the channel and choose the application you have just created.
+Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
 
 
 ## Microsoft Teams Integration using Workflows
