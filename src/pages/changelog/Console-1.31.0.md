@@ -62,7 +62,7 @@ You can read [the alerting section of our documentation](/platform/navigation/se
 - Added the remaining days left in the sidebar when the license is expiring in less than 30 days
 
 ### Fixes 🔨
-- Fixed the permission check when adding partitions to a topic
-- Fixed the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
-- Fixed data masking in consumer when choosing the String format on data that cannot be parsed as JSON
+- Fixed a permission check issue when adding partitions to a topic
+- Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
+- Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
 - Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
