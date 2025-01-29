@@ -10,7 +10,7 @@ tags: features,fix
 
 - [Breaking Changes 💣](#breaking-changes-)
 - [Features ✨](#features-)
-  - TODO
+  - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
@@ -37,8 +37,13 @@ Different teams can manage their own alerts independently with RBAC protection a
 Any migrated existing alerts have been assigned to the individual who created them.
 You can read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
 
-#### Feat 2
-TODO
+####  Application permissions on RBAC screen
+
+The user permission page has been updated to show the inherited permissions from Applications.
+These permissions are readonly.
+
+![alt text](image.png)
+
 
 ### Quality of Life improvements ✨
 

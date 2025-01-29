@@ -138,8 +138,11 @@ Here is an example of a set of permissions given to Alice:
 
 We can see that this is a recap of all the permissions this user has.
 
-In grey, we have the permissions Alice inherits from the group `Project A`, and in white the ones that are assigned to her directly.
+In grey, we have the permissions Alice inherits from the group `Project A`, from the application `support-for-tracker` and in white the ones that are assigned to her directly.
 
 This set of permissions gives her:
-- Full access to both the topic `alice-private-topic` and to the consumer group `alice-consumers`, on the cluster `test`
-- Partial access on all topics and consumer groups, that start with the prefix `app-a-`, across all clusters and that she inherits this from the group `Project A`
+- Full access to the topic `alice-private-topic` on the cluster `test`
+- Full access on all topics, that start with the prefix `app-a-`, across all clusters and that she inherits this from the group `Project A`
+- Partial access to thetopic `tracker-click-1` and `tracker-click-2` on the cluster `Cluster-A` and that she inherits this from the application `support-for-tracker`
+
+
