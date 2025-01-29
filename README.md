@@ -35,6 +35,7 @@ Console documentation is found under the `docs/platform` directory, and Gateway'
 - Use absolute links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
 - Anchor example, [env variables](/platform/get-started/configuration/env-variables/#auditlog-export-properties)
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
+- Line breaks can be added by trailing a line with a double space
 
 # Updating public API docs
 
