@@ -84,17 +84,17 @@ spec:
 resource "conduktor_group_v2" "developers-a" {
   name = "developers-a"
   spec {
-    display_name = "Developers Team A"
-    description  = "Members of the Team A - Developers"
-    externalGroups = [ "LDAP-GRP-A-DEV" ]
-    members      = [ "member1@company.org", "member1@company.org" ]
-    permissions  = [
+    display_name    = "Developers Team A"
+    description     = "Members of the Team A - Developers"
+    external_groups = [ "LDAP-GRP-A-DEV" ]
+    members         = [ "member1@company.org", "member1@company.org" ]
+    permissions     = [
      {
         resource_type = "TOPIC"
         cluster       = "shadow-it"
-        patternType   = "PREFIXED"
+        pattern_type  = "PREFIXED"
         name          = "toto-"
-        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
+        permissions   = ["topicViewConfig", "topicConsume", "topicProduce"]
       }
     ]
   }
