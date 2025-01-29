@@ -42,7 +42,7 @@ You can read [the alerting section of our documentation](/platform/navigation/se
 The user permission page has been updated to show the inherited permissions from Applications.
 These permissions are readonly.
 
-![alt text](image.png)
+![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
 
 
 ### Quality of Life improvements ✨
