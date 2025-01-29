@@ -7,30 +7,30 @@ description: Connect Conduktor to other tools that your team uses.
 ## Configuring Integrations
 
 Conduktor console can integrate with Slack, MS Teams, and any system that receives webhooks.
-MS Teams and webhook integrations can be enabled and disabled from this page with a simple toggle.
-_Disabling an integration that is used by existing alerts will not delete those alerts, but it will prevent them from sending external notifications._
-Enabling the Slack integration requires generating a token, and instructions for this can be found within the Conduktor UI after initiating a connection.
-MS Teams integration can be enabled and disabled on this page, but you will need a webhook URL from Teams when creating alerts with this destination.
-Instructions for generating this URL can be found below.
+MS Teams and webhook integrations can be enabled and disabled from this page with a simple toggle.  
+**Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.**  
+Enabling the **Slack** integration requires generating a token from a Slack application and adding the Slack application to the Slack channel.  
+Enabling the **MS Teams** integration requires a webhook URL from Teams when creating alerts with this destination.
+Additional instructions for either integration can be found within Conduktor's UI as part of setup, or below.  
 
 
 ## Slack Integration
 
-Please follow the instructions from the Slack integration setup page in Conduktor console to setup Slack integration. Once connected, you can create alerts with the destination "Slack", and select any channel you want to send the alerts to.
+After setting up the Slack integration following the instructions from within Conduktor, you can create alerts with the destination "Slack" selecting any channel you want to send the alerts to.
 
 import SlackIntegration from './assets/slack-invite.png';
 
 <img src={SlackIntegration} alt="Slack integration" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 
-In order to receive alert messages, make sure you have added the slack application to the channel you want to send the alerts to. You can do this by typing `/invite` in the channel and choose the application you have just created.
+In order to receive alert messages, ensure you have added the Slack application to the channel you want to send the alerts to. You can do this by typing `/invite` in the channel and choose the application you have just created.
 
 
 ## Microsoft Teams Integration using Workflows
 
-The existing Microsoft 365 (previously called Office 365) connectors and webhooks across all cloud platforms are planned for retirement starting 8/15/2024 with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
+Microsoft plans to retire existing Microsoft 365 (previously Office 365) connectors and webhooks across all cloud platforms starting 8/15/2024, with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
 
-This document is focused on how Conduktor console integrates with workflows in place of the webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
+This document focusses on the Workflows integration, rather than webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
 
 You can send notifications to different rooms for different alerts. However, this room must be a Microsoft Teams "standard room" and not a "shared" room.
 
@@ -57,7 +57,7 @@ import Workflows3 from './assets/workflows-3.png';
 <img src={Workflows3} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 
-4.  Pick which team and which channel to post to, then click on Create flow. This page usually takes a bit to load.
+4.  Pick which team and which channel to post to, then click on Create flow. This page may take some time to load.
 
 import Workflows4 from './assets/workflows-4.png';
 
@@ -80,7 +80,7 @@ import Workflows6 from './assets/workflows-6.png';
 
 <img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-8.  Head to the integrations settings in conduktor console and turn on Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
+8.  Head to the integrations settings in Conduktor and turn on the Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
 
 import Workflows7 from './assets/workflows-7.png';
 

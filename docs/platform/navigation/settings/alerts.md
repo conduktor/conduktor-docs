@@ -1,14 +1,14 @@
 ---
 sidebar_position: 8
 title: Alerts
-description: Using alerts to be notified about degredation in your Kafka resources
+description: Using alerts to be notified about changes to your Kafka resources
 ---
 
 # Alerts
 
 ## Overview
 
-Our alerting solution enables you to react to Kafka infrastructure and application irregularties.
+Our alerting solution enables you to react to Kafka infrastructure and application changes.
 Currently, we integrate with **Slack** and **MS Teams** so that you can receive real-time notifications.
 You can also set up arbitrary webhook destinations for alerts with any URL and custom headers.
 
