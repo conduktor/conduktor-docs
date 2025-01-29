@@ -11,6 +11,9 @@ tags: features,fix
 - [Breaking Changes 💣](#breaking-changes-)
 - [Features ✨](#features-)
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
+  - [Partner Zones](#partner-zones)
+  - [More configuration for alert notifications](#more-configuration-for-alert-notifications)
+  - [Alert ownership](#alert-ownership)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
@@ -23,6 +26,18 @@ As mentioned in our changelog for 1.28.0, alerts created in the alerts page with
 Read on for more information about the new alert functionality.
 
 ### Features ✨
+
+#### Partner Zones
+
+:::info
+Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
+:::
+
+We’re excited to introduce Partner Zones, an innovative solution that will revolutionize the process of securely sharing your streaming data with external partners.
+
+In the coming releases, we will be adding support that allows you to manage Partner Zones completely from the UI.
+
+For more information, check out the [Partner Zones documentation](/platform/navigation/settings/partner-zones).
 
 #### More configuration for alert notifications
 
