@@ -60,6 +60,7 @@ You can read [the alerting section of our documentation](/platform/navigation/se
 - Added a "Groups" tab in the Application page which shows all of the Application Groups created via Self-service
 - Improved the license plan page to show the start and end date of the license, as well as the packages included in the license
 - Added the remaining days left in the sidebar when the license is expiring in less than 30 days
+- Improved how a connector's configuration is displayed in the raw JSON view by sorting the properties alphabetically
 
 ### Fixes 🔨
 - Fixed a permission check issue when adding partitions to a topic
