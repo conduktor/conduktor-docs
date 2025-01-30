@@ -24,6 +24,10 @@ This release added new alert functionality and removed the old data model for al
 As mentioned in our changelog for 1.28.0, alerts created in the alerts page with the old data model cannot be migrated but any new alerts created on their dedicated resource page (Topics, Brokers, etc.) will remain visible and active.
 Read on for more information about the new alert functionality.
 
+#### ID of Certificates
+The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
+It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
+
 ### Features ✨
 
 #### Partner Zones
@@ -58,5 +62,7 @@ You can read [the alerting section of our documentation](/platform/navigation/se
 - Added the remaining days left in the sidebar when the license is expiring in less than 30 days
 
 ### Fixes 🔨
-- TODO
-- TODO
+- Fixed a permission check issue when adding partitions to a topic
+- Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
+- Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
+- Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
