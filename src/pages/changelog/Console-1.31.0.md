@@ -10,6 +10,7 @@ tags: features,fix
 
 - [Breaking Changes 💣](#breaking-changes-)
 - [Features ✨](#features-)
+  - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
   - [Partner Zones](#partner-zones)
   - [More configuration for alert notifications](#more-configuration-for-alert-notifications)
   - [Alert ownership](#alert-ownership)
@@ -54,6 +55,14 @@ Alerts are now owned by individuals, groups, or applications.
 Different teams can manage their own alerts independently with RBAC protection and use separate destinations for their alerts if needed.
 Any migrated existing alerts have been assigned to the individual who created them.
 You can read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
+
+####  Application permissions on RBAC screen
+
+The user permission page has been updated to show the inherited permissions from Applications.
+These permissions are readonly.
+
+![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
+
 
 ### Quality of Life improvements ✨
 
