@@ -10,7 +10,19 @@ tags: fix
 
 ### Features ✨
 
+#### Multiple Kafka Cluster Connections
 
+TBD
+
+#### Encryption Improvements
+* Improvement: Encryption mustache templates
+* Improvement: Encryption Hard Failure Mode 
+* Improvement: Encryption add namespace support for vault KMS
 
 ### Fixes 🔨
+
+* Improvement: Read only schema registry access
+* Improvement: CreateTopicPolicy override applications
+* Improvement: Remove log spamming, and updated some logging to be clearer on the issue logged
+* Improvement: DataQualityPolicy validate schema registry access
 
