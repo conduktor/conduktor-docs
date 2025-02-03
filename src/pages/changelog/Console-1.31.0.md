@@ -63,6 +63,7 @@ You can read [the alerting section of our documentation](/platform/navigation/se
 - Improved how a connector's configuration is displayed in the raw JSON view by sorting the properties alphabetically
 
 ### Fixes 🔨
+- Fixed a connector state mapping issue in the Kafka Connect UI for Confluent Cloud clusters
 - Fixed a permission check issue when adding partitions to a topic
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
