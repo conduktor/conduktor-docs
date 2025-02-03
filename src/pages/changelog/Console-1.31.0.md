@@ -22,9 +22,9 @@ tags: features,fix
 Original alerts created in the Monitoring/Alerts section are no longer available.
 
 #### Changes to V2 Alerts
-V2 Alerts, that could be created on the dedicated resource page (Topics, Brokers, etc.) are still available and active, but have been migrated with the following rules:
-- Existing alerts have been automatically configured with the previously globally configured channel (Teams or Slack).
-- Existing alerts have been assigned to the individual who created them.
+V2 Alerts, that can be created since Console 1.28 on the dedicated resource page (Topics, Brokers, etc.) are still available and active, but have been migrated with the following rules:
+- Alerts have been automatically configured with the previously globally configured channel (Teams or Slack).
+- Alerts have been assigned to the individual who created them.
 
 Read below for more information about the new alert functionality.
 
@@ -32,7 +32,7 @@ Read below for more information about the new alert functionality.
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
-### Features ✨
+### Features: Scale ✨
 
 #### Massive improvements on Alerts
 
@@ -60,6 +60,7 @@ spec:
     type: Slack
     channel: "alerts-p1"
 ````
+Console UI has been updated to reflect these changes.
 
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-1.png)
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-2.png)
@@ -67,6 +68,16 @@ spec:
 
 Read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
 
+####  Application Group permissions now available on Users Permissions page
+
+The users permissions page has been updated to show the permissions inherited when they belong to an ApplicationGroup.
+
+![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
+
+### Features: Exchange ✨
+
+**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your partners.  
+Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
 
 #### Partner Zones
 
@@ -74,19 +85,14 @@ Read [the alerting section of our documentation](/platform/navigation/settings/a
 Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
 :::
 
-We’re excited to introduce Partner Zones, an innovative solution that will revolutionize the process of securely sharing your streaming data with external partners.
+Partner Zones enable you to securely share your streaming data with external partners, without needing to replicate the data into a second, physical Kafka cluster.
 
-In the coming releases, we will be adding support that allows you to manage Partner Zones completely from the UI.
+In the upcoming releases, we will be adding the following:
+- Dedicated pages that allows you to manage Partner Zones completely from the UI
+- Support for Traffic Control Policies to limit the amount of data that can be consumed or produced by your partners
+- Topic renaming capability to avoid leaking internal topic names to your partners
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/settings/partner-zones).
-
-
-
-####  Application Group permissions now available on Users Permissions page
-
-The users permissions page has been updated to show the permissions inherited when they belong to an ApplicationGroup.
-
-![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
 
 
 ### Quality of Life improvements ✨
