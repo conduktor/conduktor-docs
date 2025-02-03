@@ -76,3 +76,6 @@ The users permissions page has been updated to show the permissions inherited wh
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
 - Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
+
+### Known issues
+- We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on a fix and will release it in the next version.
