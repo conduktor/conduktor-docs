@@ -716,6 +716,10 @@ kind: Alert
 metadata:
   cluster: my-dev-cluster
   name: my-alert
+  user: team@conduktor.io # will be the owner of the alert, can be either a user, a group or an appInstance
+  destination:
+    type: Slack
+    channel: "asdfsarasdf"
 spec:
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ
@@ -726,6 +730,8 @@ spec:
 ````
 
 **Alert checks:**
+- `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
+- `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
 - `metadata.cluster` must be a valid KafkaCluster name
 - `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
   - Check the section below for the additional mandatory fields needed for each `spec.type`
@@ -735,17 +741,35 @@ spec:
 - `spec.threshold` must be a number
 - `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
 
+**When `metadata.destination.type` is `Slack`**
+- `metadata.destination.channel` must be a valid Slack channel id
+
+**When `metadata.destination.type` is `Teams`**
+- `metadata.destination.url` must be a valid Teams webhook URL
+
+**When `metadata.destination.type` is `Webhook`**
+- `metadata.destination.url` must be a valid URL
+- `metadata.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
+- `metadata.destination.headers` (optional) must be key-value pairs of HTTP Headers
+- `metadata.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
+  - when is `BasicAuth` `metadata.destination.authentification.username` and `metadata.destination.authentification.password` must be set
+  - when is `BearerToken` `metadata.destination.authentification.token` must be set
+
 **When `spec.type` is `BrokerAlert`**
 - `spec.metric` must be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
 
 **When `spec.type` is `TopicAlert`**
 - `spec.metric` must be one of [`MessageCount`, `MessageIn`, `MessageOut`, `MessageSize`]
-- `spec.topicName` must be a Kafka Topic
+- `spec.topicName` must be a Kafka Topic that the owner can access
 
 **When `spec.type` is `KafkaConnectAlert`**
 - `spec.metric` must be `FailedTaskCount`
 - `spec.connectName` must be a valid KafkaConnect Cluster associated to this `meta.cluster` Kafka Cluster
-- `spec.connectorName` must be a Kafka Connect Connector
+- `spec.connectorName` must be a Kafka Connect Connector that the owner can access
+
+**When `spec.type` is `ConsumerGroupAlert`**
+- `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
+- `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
 ## DataMaskingPolicy
 
