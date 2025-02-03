@@ -711,28 +711,29 @@ Creates an Alert in Console.
 
 ````yaml
 ---
-apiVersion: console/v2
+apiVersion: console/v3
 kind: Alert
 metadata:
-  cluster: my-dev-cluster
-  name: my-alert
-  user: team@conduktor.io # will be the owner of the alert, can be either a user, a group or an appInstance
+  name: messages-in-dead-letter-queue
+  group: support-team # will be the owner of the alert, can be either a user, a group or an appInstance
+  # user: user@company.org
+  # appInstance: my-app-instance
 spec:
-  destination:
-    type: Slack
-    channel: "asdfsarasdf"
+  cluster: my-dev-cluster
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ
   metric: MessageCount
   operator: GreaterThan
   threshold: 0
-  disable: false
+  destination:
+    type: Slack
+    channel: "alerts-p1"
 ````
 
 **Alert checks:**
 - `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
-- `metadata.cluster` must be a valid KafkaCluster name
+- `spec.cluster` must be a valid KafkaCluster name
 - `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
   - Check the section below for the additional mandatory fields needed for each `spec.type`
 - `spec.metric` is depending on the `spec.type`
@@ -764,7 +765,7 @@ spec:
 
 **When `spec.type` is `KafkaConnectAlert`**
 - `spec.metric` must be `FailedTaskCount`
-- `spec.connectName` must be a valid KafkaConnect Cluster associated to this `meta.cluster` Kafka Cluster
+- `spec.connectName` must be a valid KafkaConnect Cluster associated to this `spec.cluster` Kafka Cluster
 - `spec.connectorName` must be a Kafka Connect Connector that the owner can access
 
 **When `spec.type` is `ConsumerGroupAlert`**
