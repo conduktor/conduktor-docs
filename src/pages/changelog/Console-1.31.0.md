@@ -13,12 +13,12 @@ tags: features,fix
   - [Changes to V2 Alerts](#changes-to-v2-alerts)
   - [Id of Certificates](#id-of-certificates)
 - [Scale ✨](#scale-)
-  - [Massive improvements on Alerts](#massive-improvements-on-alerts)
-  - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
+  - [Enhanced Alerting with Added Webhooks Support](#enhanced-alerting-with-added-webhooks-support)
+  - [View Application-inherited permissions on RBAC screen](#application-group-permissions-now-available-on-users-permissions-page)
   - [API / CLI support for Service Accounts](#api--cli-support-for-service-accounts)
   - [Self-Service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
 - [Exchange ✨](#exchange-)
-  - [Partner Zones](#partner-zones)
+  - [Introducing Partner Zones for Third-Party Data Sharing](#introducing-partner-zones-for-third-party-data-sharing)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
@@ -32,7 +32,7 @@ V2 Alerts, that can be created since Console 1.28 on the dedicated resource page
 - Alerts have been automatically configured with the previously globally configured channel (Teams or Slack).
 - Alerts have been assigned to the individual who created them.
 
-Read below for more information about the new alert functionality.
+Read [below](#enhanced-alerting-with-added-webhooks-support) for more information about the new alerting functionality.
 
 #### Id of Certificates
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
@@ -42,7 +42,7 @@ It brings a more stable way to identify certificates in audit log and prevent mu
 
 ### Scale ✨
 
-#### Massive improvements on Alerts
+#### Enhanced Alerting with Added Webhooks Support
 
 We have made significant improvements to the alerting system in Console.  
 Here are some of the changes:
@@ -141,7 +141,7 @@ The users permissions page has been updated to show the permissions inherited wh
 **Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
 Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
 
-#### Partner Zones
+#### Introducing Partner Zones for Third-Party Data Sharing
 
 :::info
 Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
