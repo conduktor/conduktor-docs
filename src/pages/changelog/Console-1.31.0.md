@@ -9,6 +9,9 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking Changes 💣](#breaking-changes-)
+  - [Removed V1 Alerts](#removed-v1-alerts)
+  - [Changes to V2 Alerts](#changes-to-v2-alerts)
+  - [Id of Certificates](#id-of-certificates)
 - [Scale ✨](#scale-)
   - [Massive improvements on Alerts](#massive-improvements-on-alerts)
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
@@ -31,7 +34,7 @@ V2 Alerts, that can be created since Console 1.28 on the dedicated resource page
 
 Read below for more information about the new alert functionality.
 
-#### ID of Certificates
+#### Id of Certificates
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
