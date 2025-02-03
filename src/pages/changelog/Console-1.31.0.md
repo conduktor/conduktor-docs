@@ -56,10 +56,9 @@ Different teams can manage their own alerts independently with RBAC protection a
 Any migrated existing alerts have been assigned to the individual who created them.
 You can read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
 
-####  Application permissions on RBAC screen
+####  Application Group permissions now available on Users Permissions page
 
-The user permission page has been updated to show the inherited permissions from Applications.
-These permissions are readonly.
+The users permissions page has been updated to show the permissions inherited when they belong to an ApplicationGroup.
 
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
 
@@ -72,7 +71,7 @@ These permissions are readonly.
 - Improved how a connector's configuration is displayed in the raw JSON view by sorting the properties alphabetically
 
 ### Fixes 🔨
-- Fixed a connector state mapping issue in the Kafka Connect UI for Confluent Cloud clusters
+- Fixed a connector state mapping issue in the Kafka Connect UI for Confluent Cloud Managed Connector
 - Fixed a permission check issue when adding partitions to a topic
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
