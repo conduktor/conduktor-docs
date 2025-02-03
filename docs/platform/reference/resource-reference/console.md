@@ -717,10 +717,10 @@ metadata:
   cluster: my-dev-cluster
   name: my-alert
   user: team@conduktor.io # will be the owner of the alert, can be either a user, a group or an appInstance
+spec:
   destination:
     type: Slack
     channel: "asdfsarasdf"
-spec:
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ
   metric: MessageCount
@@ -741,19 +741,19 @@ spec:
 - `spec.threshold` must be a number
 - `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
 
-**When `metadata.destination.type` is `Slack`**
-- `metadata.destination.channel` must be a valid Slack channel id
+**When `spec.destination.type` is `Slack`**
+- `spec.destination.channel` must be a valid Slack channel id
 
-**When `metadata.destination.type` is `Teams`**
-- `metadata.destination.url` must be a valid Teams webhook URL
+**When `spec.destination.type` is `Teams`**
+- `spec.destination.url` must be a valid Teams webhook URL
 
-**When `metadata.destination.type` is `Webhook`**
-- `metadata.destination.url` must be a valid URL
-- `metadata.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
-- `metadata.destination.headers` (optional) must be key-value pairs of HTTP Headers
-- `metadata.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
-  - when is `BasicAuth` `metadata.destination.authentification.username` and `metadata.destination.authentification.password` must be set
-  - when is `BearerToken` `metadata.destination.authentification.token` must be set
+**When `spec.destination.type` is `Webhook`**
+- `spec.destination.url` must be a valid URL
+- `spec.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
+- `spec.destination.headers` (optional) must be key-value pairs of HTTP Headers
+- `spec.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
+  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` must be set
+  - when is `BearerToken` `spec.destination.authentification.token` must be set
 
 **When `spec.type` is `BrokerAlert`**
 - `spec.metric` must be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
