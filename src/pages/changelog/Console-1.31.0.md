@@ -38,6 +38,8 @@ Read below for more information about the new alert functionality.
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
+***
+
 ### Scale ✨
 
 #### Massive improvements on Alerts
@@ -132,6 +134,8 @@ The users permissions page has been updated to show the permissions inherited wh
 
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
 
+***
+
 ### Exchange ✨
 
 **Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
@@ -152,6 +156,7 @@ In the upcoming releases, we will be adding the following:
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/settings/partner-zones).
 
+***
 
 ### Quality of Life improvements ✨
 
