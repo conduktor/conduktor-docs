@@ -11,8 +11,9 @@ tags: features,fix
 - [Breaking Changes 💣](#breaking-changes-)
 - [Scale ✨](#scale-)
   - [Massive improvements on Alerts](#massive-improvements-on-alerts)
-  - 
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
+  - [API / CLI support for Service Accounts](#api--cli-support-for-service-accounts)
+  - [Self-Service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
 - [Exchange ✨](#exchange-)
   - [Partner Zones](#partner-zones)
 - [Quality of Life improvements](#quality-of-life-improvements)
