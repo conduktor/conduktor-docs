@@ -11,6 +11,7 @@ tags: features,fix
 - [Breaking Changes 💣](#breaking-changes-)
 - [Scale ✨](#scale-)
   - [Massive improvements on Alerts](#massive-improvements-on-alerts)
+  - 
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
 - [Exchange ✨](#exchange-)
   - [Partner Zones](#partner-zones)
@@ -68,6 +69,58 @@ Console UI has been updated to reflect these changes.
 
 
 Read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
+
+#### API / CLI support for Service Accounts
+We have added support for Service Accounts in the API and CLI.  
+Declaring ServiceAccount resource lets you manage the ACLs of a service account in Kafka. At the moment we only support Kafka ACLs.   
+We plan to add support for Aiven ACLs in the future.
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: shadow-it
+  name: clickstream-sa
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+      - type: TOPIC
+        name: click.event-stream.avro
+        patternType: PREFIXED
+        operations:
+          - Write
+      - type: CLUSTER
+        name: kafka-cluster
+        patternType: LITERAL
+        operations:
+          - DescribeConfigs
+      - type: CONSUMER_GROUP
+        name: cg-name
+        patternType: LITERAL
+        operations:
+          - Read
+````
+
+#### Self-Service support for Application Managed Service Accounts
+We have added a new mode for ApplicationInstance that allows Application Teams to have full control over their Service Accounts.  
+This mode can be enabled in the ApplicationInstance with the following flag `spec.applicationManagedServiceAccount` set to `true`.  
+When enabled, Self-Service will not synchronize the Service Account with the ApplicationInstance and will let the Application Team manage the Service Account directly.
+Application Managed Service Accounts can be declared in the API and CLI using the Application Api Key.
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  appInstance: "clickstream-app-dev" # Mandatory to link the Service Account to the ApplicationInstance
+  cluster: shadow-it
+  name: clickstream-sa
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+...
+````
 
 ####  Application Group permissions now available on Users Permissions page
 
