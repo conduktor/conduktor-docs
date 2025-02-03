@@ -9,9 +9,10 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking Changes 💣](#breaking-changes-)
-- [Features ✨](#features-)
+- [Scale ✨](#scale-)
   - [Massive improvements on Alerts](#massive-improvements-on-alerts)
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
+- [Exchange ✨](#exchange-)
   - [Partner Zones](#partner-zones)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
@@ -32,7 +33,7 @@ Read below for more information about the new alert functionality.
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
-### Features: Scale ✨
+### Scale ✨
 
 #### Massive improvements on Alerts
 
@@ -74,9 +75,9 @@ The users permissions page has been updated to show the permissions inherited wh
 
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/app-permission-rbac.png)
 
-### Features: Exchange ✨
+### Exchange ✨
 
-**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your partners.  
+**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
 Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
 
 #### Partner Zones
