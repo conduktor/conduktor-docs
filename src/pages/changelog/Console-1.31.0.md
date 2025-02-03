@@ -10,26 +10,63 @@ tags: features,fix
 
 - [Breaking Changes 💣](#breaking-changes-)
 - [Features ✨](#features-)
+  - [Massive improvements on Alerts](#massive-improvements-on-alerts)
   - [Application permissions on RBAC screen](#application-permissions-on-rbac-screen)
   - [Partner Zones](#partner-zones)
-  - [More configuration for alert notifications](#more-configuration-for-alert-notifications)
-  - [Alert ownership](#alert-ownership)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
 ### Breaking Changes 💣
 
-#### Changes to alerts
+#### Removed V1 Alerts
+Original alerts created in the Monitoring/Alerts section are no longer available.
 
-This release added new alert functionality and removed the old data model for alerts.
-As mentioned in our changelog for 1.28.0, alerts created in the alerts page with the old data model cannot be migrated but any new alerts created on their dedicated resource page (Topics, Brokers, etc.) will remain visible and active.
-Read on for more information about the new alert functionality.
+#### Changes to V2 Alerts
+V2 Alerts, that could be created on the dedicated resource page (Topics, Brokers, etc.) are still available and active, but have been migrated with the following rules:
+- Existing alerts have been automatically configured with the previously globally configured channel (Teams or Slack).
+- Existing alerts have been assigned to the individual who created them.
+
+Read below for more information about the new alert functionality.
 
 #### ID of Certificates
 The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
 ### Features ✨
+
+#### Massive improvements on Alerts
+
+We have made significant improvements to the alerting system in Console.  
+Here are some of the changes:
+- Alerts are now **owned** by individuals, groups, or applications
+- We added **Webhook** destination to alerts notifications
+- Destinations are now configurable per-alert
+- API / CLI support for Alerts is now available
+
+````yaml
+apiVersion: console/v3
+kind: Alert
+metadata:
+  name: messages-in-dead-letter-queue
+  group: support-team
+spec:
+  cluster: my-dev-cluster
+  type: TopicAlert
+  topicName: wikipedia-parsed-DLQ
+  metric: MessageCount
+  operator: GreaterThan
+  threshold: 0
+  destination:
+    type: Slack
+    channel: "alerts-p1"
+````
+
+![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-1.png)
+![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-2.png)
+
+
+Read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
+
 
 #### Partner Zones
 
@@ -43,18 +80,7 @@ In the coming releases, we will be adding support that allows you to manage Part
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/settings/partner-zones).
 
-#### More configuration for alert notifications
 
-Alerts can now send notifications to configured webhook urls, and each alert has independent notification settings.
-When creating a new alert you will be given the choice of Slack, Teams, and webhook destinations for your notifications.
-The Slack channel for alert notifications is also now configurable per-alert.
-
-#### Alert ownership
-
-Alerts are now owned by individuals, groups, or applications.
-Different teams can manage their own alerts independently with RBAC protection and use separate destinations for their alerts if needed.
-Any migrated existing alerts have been assigned to the individual who created them.
-You can read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
 
 ####  Application Group permissions now available on Users Permissions page
 
@@ -71,11 +97,17 @@ The users permissions page has been updated to show the permissions inherited wh
 - Improved how a connector's configuration is displayed in the raw JSON view by sorting the properties alphabetically
 
 ### Fixes 🔨
-- Fixed a connector state mapping issue in the Kafka Connect UI for Confluent Cloud Managed Connector
+- Fixed several issues Confluent Cloud Managed Connectors
+  - Fixed Pause/Resume connector
+  - Fixed Restart connector (not task)
+  - Fixed Connector Status (Running, Paused, etc.), previously displayed as "Unknown"
 - Fixed a permission check issue when adding partitions to a topic
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
 - Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
 
 ### Known issues
-- We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on a fix and will release it in the next version.
+- We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on it.
+  - Task status is not always correctly displayed
+  - Individual task restart fails with Internal Server Error
+  - Automatic Connector restart doesn't work as it relies on individual task restart
