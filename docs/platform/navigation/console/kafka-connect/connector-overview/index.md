@@ -56,5 +56,9 @@ The task list displays all the information related to the tasks associated to th
 - The current task state
 - An option to **Restart task**
 
+:::caution
+For Confluent Cloud clusters, the Restart task functionality will hit Confluent Cloud's [restart connector API](https://docs.confluent.io/cloud/current/api.html#tag/Lifecycle-(connectv1)/operation/restartConnectv1Connector). This will restart the entire connector and all its associated tasks. This is the only publicly documented API that Confluent has exposed to achieve task restarts.
+:::
+
 If a task is in a Failed state, you can see the detailed logs about the failed task.  
 ![Connector task failed details](assets/connector-details-tasks.png)
