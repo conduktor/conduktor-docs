@@ -68,18 +68,17 @@ spec:
     type: Slack
     channel: "alerts-p1"
 ````
-Console UI has been updated to reflect these changes.
+Alert creation workflow has been updated to allow you to configure the alert destination and ownership in the UI.
 
-![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-1.png)
-![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts-2.png)
+![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts.png)
 
 
 Read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information about the new alert functionality.
 
 #### API / CLI support for Service Accounts
 We have added support for Service Accounts in the API and CLI.  
-Declaring ServiceAccount resource lets you manage the ACLs of a service account in Kafka. At the moment we only support Kafka ACLs.   
-We plan to add support for Aiven ACLs in the future.
+Declaring ServiceAccount resource lets you manage the ACLs of a service account in Kafka.  
+At the moment we only support Kafka ACLs (calls to Kafka APIs) but we plan to add support for Aiven ACLs in ServiceAccount resource in the future. 
 ````yaml
 ---
 apiVersion: v1
