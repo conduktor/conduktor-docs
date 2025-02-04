@@ -16,6 +16,7 @@ tags: features,fix
   - [Enhanced Alerting with Added Webhooks Support](#enhanced-alerting-with-added-webhooks-support)
   - [View Application-inherited permissions on RBAC screen](#application-group-permissions-now-available-on-users-permissions-page)
   - [API / CLI support for Service Accounts](#api--cli-support-for-service-accounts)
+  - [Labels support for Service Accounts](#labels-support-for-service-accounts)
   - [Self-Service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
 - [Exchange ✨](#exchange-)
   - [Introducing Partner Zones for Third-Party Data Sharing](#introducing-partner-zones-for-third-party-data-sharing)
@@ -106,6 +107,26 @@ spec:
         operations:
           - Read
 ````
+
+#### Labels support for Service Accounts
+We have added support for labels in the ServiceAccount resource.  
+For now you can only edit labels through ServiceAccount resource in the API and CLI.
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: shadow-it
+  name: clickstream-sa
+  labels:
+    domain: payment
+    region: EMEA
+    application: clickstream
+spec:
+  ...
+````
+The labels are used to filter the Service Accounts in the UI. Editing labels in the UI will be available in the next release.
+![Application permissions on RBAC screen](/images/changelog/platform/v31/service-account.png)
 
 #### Self-Service support for Application Managed Service Accounts
 We have added a new mode for ApplicationInstance that allows Application Teams to have full control over their Service Accounts.  
