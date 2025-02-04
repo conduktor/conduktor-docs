@@ -167,7 +167,7 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 ### Fixes 🔨
 - Fixed several issues Confluent Cloud Managed Connectors
   - Fixed Pause/Resume connector
-  - Fixed Restart connector (not task)
+  - Fixed Connector and Task Restart
   - Fixed Connector Status (Running, Paused, etc.), previously displayed as "Unknown"
 - Fixed a permission check issue when adding partitions to a topic
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
@@ -177,5 +177,4 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 ### Known issues
 - We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on it.
   - Task status is not always correctly displayed
-  - Individual task restart fails with Internal Server Error
-  - Automatic Connector restart doesn't work as it relies on individual task restart
+  - Various UI responsiveness issues
