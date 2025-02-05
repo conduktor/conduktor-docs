@@ -36,7 +36,7 @@ V2 Alerts, that can be created since Console 1.28 on the dedicated resource page
 Read [below](#enhanced-alerting-with-added-webhooks-support) for more information about the new alerting functionality.
 
 #### Id of Certificates
-The ID of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
+The Id of certificates in the ```public/v1/certificates``` API endpoints were modified to represent the fingerprint of the certificate.
 It brings a more stable way to identify certificates in audit log and prevent multiple uploads of the same certificate. 
 
 ***
