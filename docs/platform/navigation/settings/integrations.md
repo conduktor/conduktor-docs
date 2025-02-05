@@ -117,8 +117,7 @@ import Workflows6 from './assets/workflows-6.png';
 <img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 <img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-8.  Head to Teams integration on Conduktor Console, and configure the connection using the URL found in previous steps. You can test your connection and see whether or not it fails on console before saving the configuration.
-    1.  Currently with the new workflow integration it will NOT show in the Teams channel where the workflow is configured whether or not the Conduktor integration test connection is successful. Previously with webhooks, it will confirm with a message in the Teams channel.
+8.  Head to the integrations settings in Conduktor and turn on the Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
 
 import Workflows7 from './assets/workflows-7.png';
 
