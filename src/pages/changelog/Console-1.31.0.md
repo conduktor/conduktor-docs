@@ -194,6 +194,9 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 - Improved the serialization of ```String``` and ```com.fasterxml.jackson.databind.JsonNode``` types returned by custom deserializers
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
 - Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
+- Fixed the edition of ownership mode of application instances
+- Fixed the form for saving producer templates 
+- Fixed the navigation to go back to the home page of connectors when switching clusters
 
 
 ### Known issues
