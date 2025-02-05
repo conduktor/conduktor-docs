@@ -203,4 +203,4 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 - We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on it.
   - Task status is not always correctly displayed
   - Various UI responsiveness issues
-- When using Webhook, headers keys with leading/trailing whitespaces will cause errors. 
+- When using Webhook, headers keys with leading/trailing whitespaces will cause errors
