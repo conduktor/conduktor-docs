@@ -143,6 +143,6 @@ In grey, we have the permissions Alice inherits from the group `Project A`, from
 This set of permissions gives her:
 - Full access to the topic `alice-private-topic` on the cluster `test`
 - Full access on all topics, that start with the prefix `app-a-`, across all clusters and that she inherits this from the group `Project A`
-- Partial access to thetopic `tracker-click-1` and `tracker-click-2` on the cluster `Cluster-A` and that she inherits this from the application `support-for-tracker`
+- Partial access to the topic `tracker-click-1` and `tracker-click-2` on the cluster `Cluster-A` and that she inherits this from the application `support-for-tracker`
 
 
