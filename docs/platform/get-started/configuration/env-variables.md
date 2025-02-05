@@ -68,7 +68,20 @@ description: Conduktor Console input configuration fields can be provided using 
 
 ## Console properties reference
 
-You have multiple options to configure Console: either via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below. 
+
+Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use a .env file with key value pairs.
+
+```
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
+
+The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`, or warn if set and the file is not found
+
+```
+Warning: CDK_ENV_FILE is set but the file does not exist or is not readable.
+```
 
 In case you set both environment variable and YAML value for a specific field, the environment variable will take precedence.
 
@@ -88,7 +101,7 @@ All are valid and equivalent in YAML.
 
 ### Environment Variable Conversion
 
-At startup, Condutkor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
+At startup, Conduktor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
 
 - Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix

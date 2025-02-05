@@ -218,3 +218,55 @@ spec:
   - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
 - `metadata.autoRestart.frequencySeconds` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
   - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below
+
+
+### Service Account
+Manages the ACLs of a service account in Kafka. Note this does not create the service account, it only assigns ACLs.
+
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API /> <GUI />
+
+
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: shadow-it
+  name: clickstream-sa
+  labels:
+    domain: clickstream
+    appcode: clk
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+      - type: TOPIC
+        name: click.event-stream.avro
+        patternType: PREFIXED
+        operations:
+          - Write
+      - type: CLUSTER
+        name: kafka-cluster
+        patternType: LITERAL
+        operations:
+          - DescribeConfigs
+      - type: CONSUMER_GROUP
+        name: cg-name
+        patternType: LITERAL
+        operations:
+          - Read
+````
+**Service account checks:**
+- `metadata.cluster` is a valid Kafka Cluster.
+- `metadata.name` is a valid, pre-existing service account.
+- `spec.authorization.type` must be 'KAFKA_ACL'. This is the default implementations which store ACLs in the cluster metadata. This is the only supported type in this API for now.
+- `spec.acls[].type` must be a valid resource type on Kafka ([Kafka ACL Operations and Resources](https://kafka.apache.org/documentation/#operations_resources_and_protocols))
+- `spec.acls[].operations` must contain only operations that are valid for the resource type.
+- `spec.acls[].host` is optional, and will default to '*'.
+- `spec.acls[].permission` is optional, and will default to 'Allow'.
+
+**Side effect in Console & Kafka:**
+- Kafka
+  - Service account ACLs are created / updated.
+  - In dry-run mode, service account ACLs are validated against the aforementioned criteria, ensuring the ACL definitions are legal.
