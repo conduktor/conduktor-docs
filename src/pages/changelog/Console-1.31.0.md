@@ -132,7 +132,7 @@ The labels are used to filter the Service Accounts in the UI. Editing labels in 
 We have added a new mode for ApplicationInstance that allows Application Teams to have full control over their Service Accounts.  
 This mode can be enabled in the ApplicationInstance with the following flag `spec.applicationManagedServiceAccount` set to `true`.  
 When enabled, Self-Service will not synchronize the Service Account with the ApplicationInstance and will let the Application Team manage the Service Account directly.
-Application Managed Service Accounts can be declared in the API and CLI using the Application Api Key.
+Application Managed Service Accounts can be declared in the API and CLI using the Application API Key.
 ````yaml
 ---
 apiVersion: v1
