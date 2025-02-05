@@ -110,6 +110,30 @@ The `metadata.status` field give you the deployment status of your partner zone:
  - `READY`: the configuration is up to date on gateway
  - `FAILED`: Something unexpected happen during the deployment of the configuration
 
+## Connect to the Partner Zone
+
+By creating the PartnerZone, we provided the service account name (`spec.serviceAccount`) that we want to use to connect to Kafka. But we still need to do an extra step before being able to connect - generate a password for the service account.
+
+```bash
+cur --request POST \
+    --url 'http://localhost:8080/public/partner-zone/v2/$PARTNER_ZONE_NAME/generate-credentials' \
+    --header "Authorization: Bearer $CDK_API_KEY"
+```
+
+Then we can retrieve the resulting password and create a config.properties file that we will use to connect:
+
+```bash
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=johndoe password=${SERVICE_ACCOUNT_PASSWORD};
+```
+
+You can then use the cli to list partner zone's topic:
+```bash
+❯ kafka-topics --bootstrap-server gateway:9094 --list --command-config config.properties
+topic-a
+topic-b
+```
 
 ## List Partner Zones
 
