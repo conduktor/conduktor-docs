@@ -195,7 +195,9 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 - Fixed an issue parsing masked data when choosing the String format on data that cannot be parsed as JSON
 - Added topics ending with ```-subscription-registration-topic``` and ```-subscription-response-topic``` to the Kafka Stream filter
 
+
 ### Known issues
 - We are aware of more inconsistencies with Confluent Cloud Managed Connector support in Console. We are working on it.
   - Task status is not always correctly displayed
   - Various UI responsiveness issues
+- When using Webhook, headers keys with leading/trailing whitespaces will cause errors. 
