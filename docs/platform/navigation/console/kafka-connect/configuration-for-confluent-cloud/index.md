@@ -28,7 +28,7 @@ $ ccloud api-key create --resource cloud
 
 ## Obtaining your environment and cluster identifiers
 Now we need to obtain the identifiers of the environment and cluster.
-- Retrieving the ID of your environment can be achieved through the ``ccloud environment list` command.
+- Retrieving the ID of your environment can be achieved through the `ccloud environment list` command.
 ```
 $ ccloud environment list                                                                     
       Id      |    Name
@@ -37,7 +37,7 @@ $ ccloud environment list
   * env-6789 | production
 ```
 In this scenario, the environment ID for the production cluster would be `env-6789`.
-- Retrieving the ID of your Kafka cluster can be achieved from the ``ccloud kafka cluster list` command.
+- Retrieving the ID of your Kafka cluster can be achieved from the `ccloud kafka cluster list` command.
 ```
  ccloud environment use env-6789
  ccloud kafka cluster list                                                                    16:21:10
