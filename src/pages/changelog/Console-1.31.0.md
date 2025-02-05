@@ -1,5 +1,5 @@
 ---
-date: 2025-01-28
+date: 2025-02-05
 title: Console 1.31
 description: docker pull conduktor/conduktor-console:1.31.0
 solutions: console
