@@ -17,9 +17,9 @@ Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a c
 ## Compatibility Matrix
 This compatibility matrix is a resource to help you find which versions of Conduktor Gateway work on which version of our Conduktor Gateway Helm Chart.
 
-> In general we recommend you use the version of Gateway that comes preconfigured with the Helm chart. If needed you can adjust the version in your values property according to the supported Gateway version.
+> In general we recommend you use the version of Gateway that comes pre-configured with the Helm chart. If needed you can adjust the version in your values property according to the supported Gateway version.
 
-> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artefacts.
+> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm Chart Compatibility
 
@@ -148,7 +148,7 @@ gateway:
   ##        name: secret-test
   ##        key: SECRET_2
   extraSecretEnvVars: []
-  ## @param gateway.secretSha256sum [nullable] Optional sha256sum of the referenced secret. This could be set to have a automactic restart of gateway deployment if secret change
+  ## @param gateway.secretSha256sum [nullable] Optional sha256sum of the referenced secret. This could be set to have a automatic restart of Gateway deployment if secret change
   secretSha256sum: ""
 
   ## @param gateway.env [object] Environment variables for gateway deployment
