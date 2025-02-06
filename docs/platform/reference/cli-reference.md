@@ -121,25 +121,19 @@ Usage:
   conduktor [flags]
   conduktor [command]
 
-Available Commands:
-  apply              Upsert a resource on Conduktor
-  completion         Generate the autocompletion script for the specified shell
-  delete             Delete resource of a given kind and name
-  get                Get resource of a given kind
-  help               Help about any command
-  login              Login user using username password to get a JWT token
-  run                run an action
-  sql                
-  template           Get a yaml example for a given kind
-  token              Manage Admin and Application Instance tokens
-  version            Display the version of conduktor
+Available commands:
+  apply       upsert a resource on Conduktor
+  completion  generate the autocompletion script for the specified shell
+  delete      delete resource of a given kind and name
+  get         get resource of a given kind
+  token       manage API Keys 
+  login       create a short-lived API Key
+  help        help with any command
+  version     display the version of Conduktor
 
 Flags:
-  -h, --help         help for conduktor
-      --permissive   permissive mode, allow undefined environment variables
-  -v, --verbose      show more information for debugging
-
-Use "conduktor [command] --help" for more information about a command.
+  -h, --help      help for Conduktor
+  -v, --verbose   show more information for debugging
 ````
 
 ### Apply

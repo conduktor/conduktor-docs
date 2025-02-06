@@ -794,10 +794,13 @@ spec:
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
 - `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
+<<<<<<< HEAD
 **When `spec.type` is `ConsumerGroupAlert`**
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
 - `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
+=======
+>>>>>>> 6b130bf (Misc capitalization and spelling fixes)
 
 ## HTTP Security Properties
 
