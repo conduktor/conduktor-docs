@@ -50,5 +50,5 @@ A general set of improvements have been made to areas of the logging performed b
 
 * Improvement: Plugin validation of schema registry access
 
-All gatewqy plugins which access the Schema Registry will now validate that the configuration for the Schema REgistry in the plugin is correct at the point the configuration is added or updated in the gateway. Previously this behanviour was in consistent, and a few of our Plugins would only detect incorrect configurations when they processed a message, rather than when they are setup.
+All gateway plugins which access the Schema Registry will now validate that the configuration for the Schema REgistry in the plugin is correct at the point the configuration is added or updated in the gateway. Previously this behanviour was in consistent, and a few of our Plugins would only detect incorrect configurations when they processed a message, rather than when they are setup.
 
