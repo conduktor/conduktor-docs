@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Kubernetes
-description: The below guide details how to deploy kubernetes resources to run Conduktor.
+description: The below guide details how to deploy Kubernetes resources to run Conduktor.
 ---
 # Kubernetes
 
@@ -57,9 +57,9 @@ open http://localhost:8080
 ## Compatibility Matrix
 This compatibility matrix is a resource to help you find which versions of Conduktor Console work on which version of our Conduktor Console Helm Chart.
 
-> In general we recommend you use the version of Console that comes preconfigured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
+> In general we recommend you use the version of Console that comes pre-configured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
 
-> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artefacts.
+> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm Chart Compatibility
 
@@ -137,7 +137,7 @@ For production environments, this is  **mandatory**:
 * Enough resources to run Conduktor with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ### A note on TLS, and URL forwarding
-For production environments it is recommened to run with TLS enabled and specifically with TLS enabled from your ingress controller and terminating on Console.  This creates a more secure connection, while also telling Console that it should use TLS when forwarding on any URL requests, for example, requests to SSO providers.
+For production environments it is recommended to run with TLS enabled and specifically with TLS enabled from your ingress controller and terminating on Console.  This creates a more secure connection, while also telling Console that it should use TLS when forwarding on any URL requests, for example, requests to SSO providers.
 
 Without TLS terminating on Console itself, requests between the ingress controller and Console will be in plain text as will URL forwarding to your SSO provider, which can lead to rejection of the request for not being secure.
 

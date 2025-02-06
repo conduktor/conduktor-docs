@@ -75,7 +75,7 @@ Set the environment variable `TESTING_ENABLED` to **true** when starting Condukt
 
 **Why are we making this change?**
 
-By removing the number of services started by default on-premise, this provides a performance optimisation for customers that are not currently using Testing.
+By removing the number of services started by default on-premise, this provides a performance optimization for customers that are not currently using Testing.
 
 ---
 
@@ -132,7 +132,7 @@ On **January 27, 2023**, we announced that as of **April 3rd, 2023** there will 
 
 Since launching in September 2022, we have listened carefully to customer feedback. One area that has been prone to misconfiguration is setting up the Prometheus Node/JMX exporter. Conduktor’s goal has always been to make our users lives easier, not complicate them. 
 
-As a result, we will focus our immediate attention on providing an excellent Monitoring experience without the need for an Agent. This allows us to **maximize support for all Kafka vendors** out-of-the-box, rather than investing in a wide variety of bespoke setups and integrations. This means you will get the benefits of Monitoring without any additional configuration. Simply add your cluster to your organisation, and we will start collecting metrics immediately.
+As a result, we will focus our immediate attention on providing an excellent Monitoring experience without the need for an Agent. This allows us to **maximize support for all Kafka vendors** out-of-the-box, rather than investing in a wide variety of bespoke setups and integrations. This means you will get the benefits of Monitoring without any additional configuration. Simply add your cluster to your organization, and we will start collecting metrics immediately.
 
 Though it will not be possible to derive every metric without any agent, we will continue to provide the most critical metrics for ensuring observability of your Kafka applications. See below on the metrics we will continue to collect.
 
