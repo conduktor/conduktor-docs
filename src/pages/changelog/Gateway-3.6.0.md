@@ -1,9 +1,9 @@
 ---
-date: 2025-02-XX
+date: 2025-02-07
 title: Hotfix for Gateway 3.6.0
 description: docker pull conduktor/conduktor-gateway:3.6.0
 solutions: gateway
-tags: fix
+tags: features,fix
 ---
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
@@ -18,6 +18,9 @@ TBD
 * Improvement: Encryption mustache templates
 * Improvement: Encryption Hard Failure Mode 
 * Improvement: Encryption add namespace support for vault KMS
+
+### Quality of Life Improvements
+- Added a new CLI command `conduktor run generateServiceAccountToken` to generate the JWT for Local service accounts. Update your CLI to version 0.3.5 or higher.
 
 ### Fixes 🔨
 
