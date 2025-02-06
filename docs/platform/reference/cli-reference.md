@@ -50,7 +50,7 @@ There are 3 types of API Keys:
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::tip Hint 💡
+:::tip Hint
 Use a Short-lived User API Key to bootstrap the first Admin Key
 :::
 
@@ -114,31 +114,25 @@ $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-## Commands Usage
+## Command usage
 ````
 Usage:
   conduktor [flags]
   conduktor [command]
 
-Available Commands:
-  apply              Upsert a resource on Conduktor
-  completion         Generate the autocompletion script for the specified shell
-  delete             Delete resource of a given kind and name
-  get                Get resource of a given kind
-  help               Help about any command
-  login              Login user using username password to get a JWT token
-  run                run an action
-  sql                
-  template           Get a yaml example for a given kind
-  token              Manage Admin and Application Instance tokens
-  version            Display the version of conduktor
+Available commands:
+  apply       upsert a resource on Conduktor
+  completion  generate the autocompletion script for the specified shell
+  delete      delete resource of a given kind and name
+  get         get resource of a given kind
+  token       manage API Keys 
+  login       create a short-lived API Key
+  help        help with any command
+  version     display the version of Conduktor
 
 Flags:
-  -h, --help         help for conduktor
-      --permissive   permissive mode, allow undefined environment variables
-  -v, --verbose      show more information for debugging
-
-Use "conduktor [command] --help" for more information about a command.
+  -h, --help      help for Conduktor
+  -v, --verbose   show more information for debugging
 ````
 
 ### Apply

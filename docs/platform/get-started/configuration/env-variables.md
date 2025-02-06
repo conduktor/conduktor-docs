@@ -16,7 +16,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
   - [Database properties](#database-properties)
-  - [Session Lifetime Properties](#session-lifetime-properties)
+  - [Session Lifetime properties](#session-lifetime-properties)
   - [Local users properties](#local-users-properties)
   - [Monitoring properties](#monitoring-properties)
     - [Console Configuration for Cortex](#console-configuration-for-cortex)
@@ -256,18 +256,12 @@ Optional local accounts list used to log on Console
 ### Monitoring properties
 :::caution
 Starting with version 1.18.0, if you want to benefit from our Monitoring capabilities (dashboard and alerts), you need to deploy a new image along with Console.
-
-Before 1.18:
-- `conduktor/conduktor-platform:1.17.3` or below
-
-Starting with 1.18:
 - `conduktor/conduktor-console:1.18.0` or above
 and
 - `conduktor/conduktor-console-cortex:1.18.0` or above
-
 :::
 
-This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
+This new image is based on [Cortex](https://github.com/cortexproject/cortex) and pre-configured to run with Console.
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.

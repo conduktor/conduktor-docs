@@ -772,11 +772,6 @@ spec:
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
 - `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
-## DataMaskingPolicy
-
-:::caution Not implemented yet
-This concept will be available in a future version
-:::
 
 ## HTTP Security Properties
 
