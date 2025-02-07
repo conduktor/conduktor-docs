@@ -177,8 +177,6 @@ metadata:
     name: my-topic
     cluster: my-cluster
     labels:
-        conduktor.io/application: application-a
-        conduktor.io/application-instance: staging
         user-labels: I am a user label
     catalogVisibility: PUBLIC
     descriptionIsEditable: true
