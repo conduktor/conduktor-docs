@@ -712,6 +712,7 @@ Creates an Alert in Console.
 ````yaml
 ---
 apiVersion: console/v3
+apiVersion: console/v3
 kind: Alert
 metadata:
   name: messages-in-dead-letter-queue
@@ -719,6 +720,7 @@ metadata:
   # user: user@company.org
   # appInstance: my-app-instance
 spec:
+  cluster: my-dev-cluster
   cluster: my-dev-cluster
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ
@@ -728,9 +730,15 @@ spec:
   destination:
     type: Slack
     channel: "alerts-p1"
+  destination:
+    type: Slack
+    channel: "alerts-p1"
 ````
 
 **Alert checks:**
+- `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
+- `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
+- `spec.cluster` must be a valid KafkaCluster name
 - `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
 - `spec.cluster` must be a valid KafkaCluster name
@@ -741,6 +749,20 @@ spec:
 - `spec.operator` must be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
 - `spec.threshold` must be a number
 - `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
+
+**When `spec.destination.type` is `Slack`**
+- `spec.destination.channel` must be a valid Slack channel id
+
+**When `spec.destination.type` is `Teams`**
+- `spec.destination.url` must be a valid Teams webhook URL
+
+**When `spec.destination.type` is `Webhook`**
+- `spec.destination.url` must be a valid URL
+- `spec.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
+- `spec.destination.headers` (optional) must be key-value pairs of HTTP Headers
+- `spec.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
+  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` must be set
+  - when is `BearerToken` `spec.destination.authentification.token` must be set
 
 **When `spec.destination.type` is `Slack`**
 - `spec.destination.channel` must be a valid Slack channel id
@@ -767,6 +789,10 @@ spec:
 - `spec.metric` must be `FailedTaskCount`
 - `spec.connectName` must be a valid KafkaConnect Cluster associated to this `spec.cluster` Kafka Cluster
 - `spec.connectorName` must be a Kafka Connect Connector that the owner can access
+
+**When `spec.type` is `ConsumerGroupAlert`**
+- `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
+- `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
 **When `spec.type` is `ConsumerGroupAlert`**
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]

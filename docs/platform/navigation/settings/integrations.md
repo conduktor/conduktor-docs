@@ -21,7 +21,28 @@ As part of configuring the Slack integration in Conduktor, you will find steps f
 Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack. 
 
 import SlackIntegration from './assets/slack-invite.png';
+Conduktor console can integrate with Slack, MS Teams, and any system that receives webhooks.
+MS Teams and webhook integrations can be enabled and disabled from this page with a simple toggle.  
+**Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.**  
+Enabling the **Slack** integration requires creating a Slack application, installing this to your Slack workspace, inviting your app to the channel and adding the application token to Conduktor.  
+Enabling the **MS Teams** integration requires a webhook URL from Teams when creating alerts with this destination.
+Additional instructions for either integration can be found within Conduktor's UI as part of setup, or below.  
 
+
+## Slack Integration
+
+As part of configuring the Slack integration in Conduktor, you will find steps for [creating a Slack application](https://api.slack.com/apps) (a bot) using the app manifest template (provided in Conduktor). This app needs to be installed to your Slack workspace and the OAuth token added to the Conduktor integration.
+
+Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack. 
+
+import SlackIntegration from './assets/slack-invite.png';
+
+<img src={SlackIntegration} alt="Slack integration" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
+Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
+
+
+## Microsoft Teams Integration using Workflows
 <img src={SlackIntegration} alt="Slack integration" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
@@ -30,16 +51,22 @@ Channels that have not had the application invited cannot be set as destinations
 ## Microsoft Teams Integration using Workflows
 
 Microsoft plans to retire existing Microsoft 365 (previously Office 365) connectors and webhooks across all cloud platforms starting 8/15/2024, with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
+Microsoft plans to retire existing Microsoft 365 (previously Office 365) connectors and webhooks across all cloud platforms starting 8/15/2024, with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
 
+This document focusses on the Workflows integration, rather than webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
 This document focusses on the Workflows integration, rather than webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
 
 You can send notifications to different rooms for different alerts. However, this room must be a Microsoft Teams "standard room" and not a "shared" room.
+You can send notifications to different rooms for different alerts. However, this room must be a Microsoft Teams "standard room" and not a "shared" room.
 
+### Workflows Setup Instructions
 ### Workflows Setup Instructions
 
 1.  Open the Workflows app within the chat or channel by right-clicking on the conversation, or by clicking on More options (…) then selecting Workflows.
 
 import Workflows1 from './assets/workflows-1.png';
+
+<img src={Workflows1} alt="Workflows" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 <img src={Workflows1} alt="Workflows" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
@@ -50,6 +77,8 @@ import Workflows2 from './assets/workflows-2.png';
 
 <img src={Workflows2} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
+<img src={Workflows2} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
 
 3.  Choose a name for this flow, you can use the default "Post to a channel when a webhook request is received". And choose who will own this workflow, it should default to the user you are using to log into teams. Then click Next.
 
@@ -57,10 +86,15 @@ import Workflows3 from './assets/workflows-3.png';
 
 <img src={Workflows3} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
+<img src={Workflows3} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
+
+4.  Pick which team and which channel to post to, then click on Create flow. This page may take some time to load.
 4.  Pick which team and which channel to post to, then click on Create flow. This page may take some time to load.
 
 import Workflows4 from './assets/workflows-4.png';
+
+<img src={Workflows4} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 <img src={Workflows4} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
@@ -72,6 +106,7 @@ import Workflows4 from './assets/workflows-4.png';
 import Workflows5 from './assets/workflows-5.png';
 
 <img src={Workflows5} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+<img src={Workflows5} alt="Workflows" style={{ width: 700, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 7.  On this page:
     1.  Expand the first step "When a Teams webhook request is received" to see the URL endpoint again if you failed to save it from the previous step. You can also change who can trigger the flow, for this example we will use "Anyone".
@@ -80,12 +115,13 @@ import Workflows5 from './assets/workflows-5.png';
 import Workflows6 from './assets/workflows-6.png';
 
 <img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+<img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-8.  Head to Teams integration on Conduktor Console, and configure the connection using the URL found in previous steps. You can test your connection and see whether or not it fails on console before saving the configuration.
-    1.  Currently with the new workflow integration it will NOT show in the Teams channel where the workflow is configured whether or not the Conduktor integration test connection is successful. Previously with webhooks, it will confirm with a message in the Teams channel.
+8.  Head to the integrations settings in Conduktor and turn on the Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
 
 import Workflows7 from './assets/workflows-7.png';
 
+<img src={Workflows7} alt="Workflows" style={{ width: 600, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 <img src={Workflows7} alt="Workflows" style={{ width: 600, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 9.  Fire some alerts and you should now see alert messages being posted in Microsoft teams under the channel you specified
@@ -93,3 +129,4 @@ import Workflows7 from './assets/workflows-7.png';
 import Workflows8 from './assets/workflows-8.png';
 
 <img src={Workflows8} alt="Workflows" style={{ width: 600, display: 'block', margin: 'auto' }} />
+
