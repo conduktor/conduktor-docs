@@ -68,7 +68,7 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
         </li>
       ))}
       <li data-get-started>
-        <Button href="https://www.conduktor.io/get-started">Get Started</Button>
+        <Button href="https://www.conduktor.io/get-started">Free trial</Button>
       </li>
     </ul>
   )

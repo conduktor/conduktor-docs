@@ -57,9 +57,9 @@ open http://localhost:8080
 ## Compatibility Matrix
 This compatibility matrix is a resource to help you find which versions of Conduktor Console work on which version of our Conduktor Console Helm Chart.
 
-> In general we recommend you use the version of Console that comes preconfigured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
+> In general we recommend you use the version of Console that comes pre-configured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
 
-> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artefacts.
+> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm Chart Compatibility
 
