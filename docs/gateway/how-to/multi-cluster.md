@@ -55,8 +55,8 @@ GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /cluster-config.yaml}'
 ```
 
 :::warning
-Partner virtual clusters are meant to be used to share data with third-parties external to the organization.
-The cluster ids (`clusterA`, `clusterB`) may be exposed in the bootstrap-server address (or visible in client logs).
+If you are using Partner virtual clusters to share data with third-parties external to the organization, then please note that
+the cluster ids (`clusterA`, `clusterB`) may be exposed in the bootstrap-server address (or visible in client logs).
 Make sure to not expose sensitive names or information in the cluster ids.
 :::
 
@@ -80,8 +80,8 @@ KAFKA_CLUSTERB_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLog
 ```
 
 :::warning
-Partner virtual clusters are meant to be used to share data with third-parties external to the organization.
-The cluster ids (`CLUSTERA`, `CLUSTERB`) may be exposed in the bootstrap-server address (or visible in client logs).
+If you are using Partner virtual clusters to share data with third-parties external to the organization, then please note that
+the cluster ids (`CLUSTERA`, `CLUSTERB`) may be exposed in the bootstrap-server address (or visible in client logs).
 Make sure to not expose sensitive names or information in the cluster ids.
 :::
 
