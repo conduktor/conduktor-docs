@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Features ✨
+### Features
 
 - Added [support](/gateway/interceptors/data-security/encryption/encryption-configuration) for Hashicorp Vault Enterprise namespaces
