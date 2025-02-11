@@ -121,10 +121,10 @@ resource "conduktor_group_v2" "developers-a" {
 
 ## ConsoleUser
 
-**API Keys:** <AdminToken />  
+**API keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
 
-Sets a User with permissions in Console
+Defines user permissions in Platform.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -173,6 +173,37 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 
 </TabItem>
 </Tabs>
+
+:::warning
+Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
+:::
+
+For example:
+
+````yaml
+---
+apiVersion: iam/v2
+kind: User
+metadata:
+  name: john.doe@company.org
+spec:
+  firstName: "John"
+  lastName: "Doe"
+  permissions:
+    - resourceType: PLATFORM
+      permissions:
+        - taasView
+        - datamaskingView
+    - resourceType: TOPIC
+      cluster: shadow-it
+      patternType: PREFIXED
+      name: toto-
+      permissions:
+        - topicViewConfig
+        - topicConsume
+        - topicProduce
+````
+
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
@@ -998,9 +1029,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 ```
 
 - `resourceType`: `PLATFORM`
-- `permissions` is a list of valid Platform permissions (See Table)
+- `permissions` is a list of valid Platform permissions
 
-| Available Platform Permissions | Description                                                   |
+| Available Platform permissions | Description |
 |------------------------------------|---------------------------------------------------------------|
 | `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
 | `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
@@ -1011,4 +1042,5 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelManage`        | Permission to manage Integration channels                     |
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
+| `taasView`                         | Permission to view Application Catalog                        | 
 
