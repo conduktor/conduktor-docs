@@ -60,11 +60,20 @@
 <div id="redoc-container"></div>
 
 <script>
-  async function loadManifest() {
-    const response = await fetch('./openapi/manifest.json');
-    const manifest = await response.json();
-    return manifest;
-  }
+async function loadManifest() {
+    const basePath = window.location.pathname.includes('/developers') ? '/developers' : '';
+    try {
+        const response = await fetch(`${basePath}/openapi/manifest.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const manifest = await response.json();
+        return manifest;
+    } catch (error) {
+        console.error('Error loading manifest:', error);
+        return {};
+    }
+}
 
   function populateProductSelect(manifest) {
     const productSelect = document.getElementById('productSelect');
@@ -128,14 +137,17 @@
     const version = document.getElementById('versionSelect').value;
     const gatewayApiVersion = document.getElementById('gatewayApiVersionSelect').value;
 
+    // Get base path dynamically
+    const basePath = window.location.pathname.includes('/developers') ? '/developers' : '';
+
     // Dynamically update title
     document.getElementById('docTitle').textContent = `Conduktor ${product.charAt(0).toUpperCase() + product.slice(1)} ${version} Documentation`;
 
     let specUrl;
     if (product === 'gateway') {
-      specUrl = `./openapi/gateway/gateway-${version}-${gatewayApiVersion}.yaml`;
+        specUrl = `${basePath}/openapi/gateway/gateway-${version}-${gatewayApiVersion}.yaml`;
     } else if (product === 'console') {
-      specUrl = `./openapi/console/console-${version}.yaml`;
+        specUrl = `${basePath}/openapi/console/console-${version}.yaml`;
     }
 
     // Keep anchor when updating docs
@@ -146,9 +158,9 @@
     params.set('product', product);
     params.set('version', version);
     if (product === 'gateway') {
-      params.set('gatewayApiVersion', gatewayApiVersion);
+        params.set('gatewayApiVersion', gatewayApiVersion);
     } else {
-      params.delete('gatewayApiVersion');
+        params.delete('gatewayApiVersion');
     }
     window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
 
@@ -157,22 +169,17 @@
     container.innerHTML = '';
 
     // Create new Redoc instance
-    const redocElement = document.createElement('redoc');
-    redocElement.setAttribute('spec-url', specUrl);
-    container.appendChild(redocElement);
-
-    // Initialize Redoc
     Redoc.init(specUrl, {}, container);
 
     // Navigate to anchor tag if it exists
     if (anchor) {
-      window.location.hash = anchor;
-      const element = document.querySelector(anchor);
-      if (element) {
-        element.scrollIntoView();
-      }
+        window.location.hash = anchor;
+        const element = document.querySelector(anchor);
+        if (element) {
+            element.scrollIntoView();
+        }
     }
-  }
+}
 
   let manifest;
 
