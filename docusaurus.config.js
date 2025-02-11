@@ -210,7 +210,7 @@ const config = {
       'runllm-community-type': 'slack',
       'runllm-disclaimer': 'For best-effort assistance only (no SLA). For official support, visit our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
-      'runllm-theme-color': '#BDFE67',
+      'runllm-theme-color': '#005EEC',
       async: true,
     },
   ],
