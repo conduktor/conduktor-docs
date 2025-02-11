@@ -181,7 +181,7 @@ spec:
 apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
-  vcluster: vc-B
+  vCluster: vc-B
   name: admin
 spec:
   type: LOCAL

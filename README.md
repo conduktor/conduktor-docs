@@ -157,4 +157,4 @@ export const Tag1 = () => (
 
 We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform. Ensure you are a member using `@conduktor.io`, not your personal email (check your Github profile).
 
-You have to be a member of our Vercel workspace for Vercel to build your PR/commits, otherwise the build stage will fail. The workaround is to have a member of the Vercel workspace (e.g. someone from the Product team) change the end of this line each time as the latest commit and trigger a PR. `Change me 1`.
+You have to be a member of our Vercel workspace for Vercel to build your PR/commits, otherwise the build stage will fail. The workaround is to have a member of the Vercel workspace (e.g. someone from the Product team) change the end of this line each time as the latest commit and trigger a PR. `Change me 0`.

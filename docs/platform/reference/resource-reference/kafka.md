@@ -63,7 +63,7 @@ metadata:
   description: | 
     # Event Stream from Click Application
     This is a multiline markdown description that will appear in the Topic Catalog
-  descriptionIsEditable: "false"
+  descriptionIsEditable: false
   catalogVisibility: PUBLIC
 spec:
   replicationFactor: 3
