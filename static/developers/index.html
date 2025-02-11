@@ -61,7 +61,7 @@
 
 <script>
   async function loadManifest() {
-    const response = await fetch('./openapi/manifest.json');
+    const response = await fetch('/developers/openapi/manifest.json');
     const manifest = await response.json();
     return manifest;
   }
@@ -133,9 +133,9 @@
 
     let specUrl;
     if (product === 'gateway') {
-      specUrl = `./openapi/gateway/gateway-${version}-${gatewayApiVersion}.yaml`;
+      specUrl = `/developers/openapi/gateway/gateway-${version}-${gatewayApiVersion}.yaml`;
     } else if (product === 'console') {
-      specUrl = `./openapi/console/console-${version}.yaml`;
+      specUrl = `/developers/openapi//console/console-${version}.yaml`;
     }
 
     // Keep anchor when updating docs
