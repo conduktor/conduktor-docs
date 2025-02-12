@@ -33,7 +33,7 @@ The Conduktor Gateway is a Kafka proxy deployed between your client applications
 
 ## Resources
 
-- [Changelog](https://conduktor.io/changelog)
+- [Release notes](https://conduktor.io/changelog)
 - [Roadmap](https://product.conduktor.help)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)

@@ -5,25 +5,19 @@ description: The below guide details how to deploy Kubernetes resources to run C
 ---
 # Kubernetes
 
-The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
+Deploy a production-ready instance of Conduktor on Kubernetes.
 
 :::info
-We welcome contributions and feedback, if you have issues, you can either 
-open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues)
-or contact our [support](https://www.conduktor.io/contact/support/).
+We welcome contributions and feedback. If you have issues, you can either open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or [contact support](https://www.conduktor.io/contact/support/).
 :::
 
 # Helm chart installation
 
-Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a 
-chart that will deploy Conduktor Console on your Kubernetes cluster.
+Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Console on your Kubernetes cluster.
 
-## TL;DR
+### Overview
 
-We do not provide any relational database dependency, you will have to provide
-your own database. Check our 
-[**production requirements**](#production-requirements) section for more 
-information.
+We don't provide any relational database dependency, you will have to provide your own database. Check out [production requirements](#production-requirements) for details.
 
 Check our [Snippets](#snippets) section for more examples.
 
@@ -200,10 +194,9 @@ You can configure the Console by inserting it into the `config` section of the
 find available configurations in the [configuration section](../../configuration/env-variables.md)
 
 
-### Based on a docker configuration
+### Based on a Docker configuration
 
-If you already have a configuration file that you were using within docker,
-you can use it by giving it to the helm chart with the following command:
+If you already have a configuration file that you were using within Docker,you can use it by giving it to the helm chart with the following command:
 
 ```yaml title="values.yaml"
 config:
@@ -249,5 +242,4 @@ config:
 
 ## Snippets
 
-Please refer to our helm chart [README](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#snippets)
-for config snippets.
+For coding snippets, see our [README](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#snippets).
