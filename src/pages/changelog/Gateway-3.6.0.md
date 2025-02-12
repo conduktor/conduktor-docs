@@ -49,6 +49,6 @@ All gateway plugins which access the Schema Registry will now validate that the 
 
 ### Fixes 🔨
 
-* Fix: CreateTopicPolicy and AlterTopicPolicy overrides. There were some edge cases where the desired overrides from the plugin config would not be applied. These plugins now behave consistently in all situations.
-* Improvement: Remove some verbose logging log, and updated some logging to be clearer on the problems. A general set of improvements have been made to areas of the logging performed by the gateway in order to make the casue for some errors clearer, or to reduce repeated logging of the same error in some situations.
+- Fix: CreateTopicPolicy and AlterTopicPolicy overrides. There were some edge cases where the desired overrides from the plugin config would not be applied. These plugins now behave consistently in all situations.
+- Improvement: Remove some verbose logging log, and updated some logging to be clearer on the problems. A general set of improvements have been made to areas of the logging performed by the gateway in order to make the casue for some errors clearer, or to reduce repeated logging of the same error in some situations.
 
