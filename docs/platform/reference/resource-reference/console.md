@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Console Resources
+title: Console resources
 description: Console resources
 ---
 
@@ -121,64 +121,13 @@ resource "conduktor_group_v2" "developers-a" {
 
 ## ConsoleUser
 
-**API keys:** <AdminToken />  
+**API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
 
-Defines user permissions in Platform.
+Create a user with Platform permissions.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
-
-````yaml
----
-apiVersion: iam/v2
-kind: User
-metadata:
-  name: john.doe@company.org
-spec:
-  firstName: "John"
-  lastName: "Doe"
-  permissions:
-    - resourceType: TOPIC
-      cluster: shadow-it
-      patternType: PREFIXED
-      name: toto-
-      permissions:
-        - topicViewConfig
-        - topicConsume
-        - topicProduce
-````
-
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
-
-````hcl
-resource "conduktor_group_v2" "john.doe@company.org" {
-  name = "john.doe@company.org"
-  spec {
-    firstname = "John"
-    lastname  = "Doe"
-    permissions  = [
-     {
-        resource_type = "TOPIC"
-        cluster       = "shadow-it"
-        patternType   = "PREFIXED"
-        name          = "toto-"
-        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
-      }
-    ]
-  }
-}
-````
-
-</TabItem>
-</Tabs>
-
-:::warning
-Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
-:::
-
-For example:
 
 ````yaml
 ---
@@ -203,6 +152,48 @@ spec:
         - topicConsume
         - topicProduce
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_group_v2" "john.doe@company.org" {
+  name = "john.doe@company.org"
+  
+  spec {
+    firstname = "John"
+    lastname  = "Doe"
+    
+    permissions = [
+      {
+        resource_type = "TOPIC"
+        cluster       = "shadow-it"
+        patternType   = "PREFIXED"
+        name          = "toto-"
+        permissions   = [
+          "topicViewConfig",
+          "datamaskingView",
+          "auditLogView"
+        ]
+      },
+      {
+        resource_type = "PLATFORM"
+        permissions   = [
+          "taasView",
+          "datamaskingView"
+        ]
+      }
+    ]
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
+:::warning
+Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
+:::
 
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
