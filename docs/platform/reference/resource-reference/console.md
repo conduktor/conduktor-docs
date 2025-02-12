@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Console Resources
+title: Console resources
 description: Console resources
 ---
 
@@ -124,7 +124,7 @@ resource "conduktor_group_v2" "developers-a" {
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
 
-Sets a User with permissions in Console
+Create a user with Platform permissions.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -139,6 +139,10 @@ spec:
   firstName: "John"
   lastName: "Doe"
   permissions:
+    - resourceType: PLATFORM
+      permissions:
+        - taasView
+        - datamaskingView
     - resourceType: TOPIC
       cluster: shadow-it
       patternType: PREFIXED
@@ -155,16 +159,29 @@ spec:
 ````hcl
 resource "conduktor_group_v2" "john.doe@company.org" {
   name = "john.doe@company.org"
+  
   spec {
     firstname = "John"
     lastname  = "Doe"
-    permissions  = [
-     {
+    
+    permissions = [
+      {
         resource_type = "TOPIC"
         cluster       = "shadow-it"
         patternType   = "PREFIXED"
         name          = "toto-"
-        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
+        permissions   = [
+          "topicViewConfig",
+          "datamaskingView",
+          "auditLogView"
+        ]
+      },
+      {
+        resource_type = "PLATFORM"
+        permissions   = [
+          "taasView",
+          "datamaskingView"
+        ]
       }
     ]
   }
@@ -173,6 +190,11 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 
 </TabItem>
 </Tabs>
+
+:::warning
+Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
+:::
+
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
@@ -998,9 +1020,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 ```
 
 - `resourceType`: `PLATFORM`
-- `permissions` is a list of valid Platform permissions (See Table)
+- `permissions` is a list of valid Platform permissions
 
-| Available Platform Permissions | Description                                                   |
+| Available Platform permissions | Description |
 |------------------------------------|---------------------------------------------------------------|
 | `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
 | `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
@@ -1011,4 +1033,5 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelManage`        | Permission to manage Integration channels                     |
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
+| `taasView`                         | Permission to view Application Catalog                        | 
 
