@@ -1,6 +1,6 @@
 ---
 date: 2025-02-12
-title: Hotfix for Gateway 3.6.0
+title: Gateway 3.6.0
 description: docker pull conduktor/conduktor-gateway:3.6.0
 solutions: gateway
 tags: features,fix
