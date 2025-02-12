@@ -8,11 +8,11 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Features ✨
+### Features
 
 - Add [support](/gateway/configuration/env-variables#sourcing-environment-variables-from-a-file) for sourcing environment variables from a file
 
 
-### Fixes 🔨
+### Fixes
 
 - Add automatic refresh of HashiCorp Vault authentication tokens

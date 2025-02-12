@@ -1,29 +1,23 @@
 ---
 sidebar_position: 2
 title: Kubernetes
-description: The below guide details how to deploy kubernetes resources to run Conduktor.
+description: The below guide details how to deploy Kubernetes resources to run Conduktor.
 ---
 # Kubernetes
 
-The below guide will help you to deploy a production-ready instance of Conduktor on Kubernetes.
+Deploy a production-ready instance of Conduktor on Kubernetes.
 
 :::info
-We welcome contributions and feedback, if you have issues, you can either 
-open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues)
-or contact our [support](https://www.conduktor.io/contact/support/).
+We welcome contributions and feedback. If you have issues, you can either open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or [contact support](https://www.conduktor.io/contact/support/).
 :::
 
 # Helm chart installation
 
-Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a 
-chart that will deploy Conduktor Console on your Kubernetes cluster.
+Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Console on your Kubernetes cluster.
 
-## TL;DR
+### Overview
 
-We do not provide any relational database dependency, you will have to provide
-your own database. Check our 
-[**production requirements**](#production-requirements) section for more 
-information.
+We don't provide any relational database dependency, you will have to provide your own database. Check out [production requirements](#production-requirements) for details.
 
 Check our [Snippets](#snippets) section for more examples.
 
@@ -57,9 +51,9 @@ open http://localhost:8080
 ## Compatibility Matrix
 This compatibility matrix is a resource to help you find which versions of Conduktor Console work on which version of our Conduktor Console Helm Chart.
 
-> In general we recommend you use the version of Console that comes preconfigured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
+> In general we recommend you use the version of Console that comes pre-configured with the Helm chart. If needed you can adjust the version in your values property according to the supported Console version.
 
-> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artefacts.
+> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm Chart Compatibility
 
@@ -137,7 +131,7 @@ For production environments, this is  **mandatory**:
 * Enough resources to run Conduktor with the [recommended configuration](../hardware.md#hardware-requirements)
 
 ### A note on TLS, and URL forwarding
-For production environments it is recommened to run with TLS enabled and specifically with TLS enabled from your ingress controller and terminating on Console.  This creates a more secure connection, while also telling Console that it should use TLS when forwarding on any URL requests, for example, requests to SSO providers.
+For production environments it is recommended to run with TLS enabled and specifically with TLS enabled from your ingress controller and terminating on Console.  This creates a more secure connection, while also telling Console that it should use TLS when forwarding on any URL requests, for example, requests to SSO providers.
 
 Without TLS terminating on Console itself, requests between the ingress controller and Console will be in plain text as will URL forwarding to your SSO provider, which can lead to rejection of the request for not being secure.
 
@@ -200,10 +194,9 @@ You can configure the Console by inserting it into the `config` section of the
 find available configurations in the [configuration section](../../configuration/env-variables.md)
 
 
-### Based on a docker configuration
+### Based on a Docker configuration
 
-If you already have a configuration file that you were using within docker,
-you can use it by giving it to the helm chart with the following command:
+If you already have a configuration file that you were using within Docker,you can use it by giving it to the helm chart with the following command:
 
 ```yaml title="values.yaml"
 config:
@@ -249,5 +242,4 @@ config:
 
 ## Snippets
 
-Please refer to our helm chart [README](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#snippets)
-for config snippets.
+For coding snippets, see our [README](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#snippets).
