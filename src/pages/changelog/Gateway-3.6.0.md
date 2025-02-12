@@ -18,7 +18,7 @@ This release includes a set of enhancements to how the gateway manages connectiv
 
 ##### Encryption Secret Id Mustache Templates
 
-The encryption now allows multiple mustache substitutions in a key sercret Id configuration. Previously, only a single substitution was supported. E.g. This is now allowed:
+The encryption now allows multiple mustache substitutions in a key secret Id configuration. Previously, only a single substitution was supported. E.g. This is now allowed:
 
 `"keySecretId": "vault-kms://my-vault:8200/transit/keys/{{record.key}}-{{record.header.someHeader}}"`
 
@@ -36,7 +36,7 @@ In both cases, we have enhanced the logging so issues during decryption are more
 
 ##### Read Only Schema Registry Access
 
-Some of our gateway plugins will deserialise and re-serialise messages in order to perform their functions, and a side effect of this is that the serialiser code would needlessly require write access to the Schema Registry. While there was **no situation** where the gateway would actually casue any updated or additional schema to appear - we have altered the Schema Registry access to be read only. This is avoids having to assign write permission needlessly for our gateway Schema Registry conenctions if you are using ACLs on your Schema Registry.
+Some of our gateway plugins will deserialize and re-serialize messages in order to perform their functions, and a side effect of this is that the serializer code would needlessly require write access to the Schema Registry. While there was **no situation** where the gateway would actually casue any updated or additional schema to appear - we have altered the Schema Registry access to be read only. This is avoids having to assign write permission needlessly for our gateway Schema Registry conenctions if you are using ACLs on your Schema Registry.
 
 ##### Plugin Validation of Schema Registry Access
 
@@ -45,7 +45,7 @@ All gateway plugins which access the Schema Registry will now validate that the 
 
 ### Quality of Life Improvements
 
-- Added a new CLI command `conduktor run generateServiceAccountToken` to generate the JWT for Local service accounts. Update your CLI to version 0.3.5 or higher.
+- Added a new CLI command `conduktor run generateServiceAccountToken` to generate the JWT for Local service accounts. Update your CLI to version 0.4.0 or higher.
 
 ### Fixes 🔨
 
