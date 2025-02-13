@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: Platform resources
-description: Platform resources
+title: Console resources
+description: Console resources
 ---
 
 
@@ -29,7 +29,7 @@ export const TF = () => (
 );
 
 export const GUI = () => (
-<Highlight color="#F6F4FF" text="#422D84">Platform UI</Highlight>
+<Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
 );
 
 
@@ -47,7 +47,7 @@ export const AdminToken = () => (
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
 
-Creates a Group with members and permissions in Platform.
+Creates a Group with members and permissions in Console
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -106,18 +106,18 @@ resource "conduktor_group_v2" "developers-a" {
 
 **Groups checks:**
 - `spec.description` is **optional**
-- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Platform Group
+- `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
   - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
 - `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
 - `spec.members` must be email addresses of members you wish to add to this group
-- `spec.permissions` are valid [permissions](#permissions)
+- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effects**
-- Platform:
+**Side effect in Console & Kafka:**
+- Console
   - Members of the Group are given the associated permissions in the UI over the resources
   - Members of the LDAP or OIDC groups will be automatically added or removed upon login
-- Kafka:
-  - None
+- Kafka
+  - No side effect
 
 ## ConsoleUser
 
@@ -195,17 +195,17 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
 :::
 
-**User checks:**
-- `spec.permissions` are valid [permissions](#permissions)
+**Users checks:**
+- `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effects**
-- Platform:
+**Side effect in Console & Kafka:**
+- Console
   - User is given the associated permissions in the UI over the resources
-- Kafka:
-  - None
+- Kafka
+  - No side effect
 
 ## KafkaCluster
-Creates a Kafka Cluster Definition in Platform.
+Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
@@ -287,7 +287,7 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 </Tabs>
 
 :::info
-`metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Platform.
+`metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
 ![Cluster identity](assets/cluster-visual-identity.png)
 :::
 
@@ -300,8 +300,9 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 - `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
-:::warning
-Conduktor CLI does not verify whether your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid. You have to check that in Platform directly.
+:::warning Important
+Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid.   
+You need to check that in Console directly.
 :::
 
 ### Schema Registry
@@ -470,11 +471,11 @@ Use AWS API Key/Secret to connect to the Glue Registry
 </TabItem>
 </Tabs>
 
-### Kafka provider
-This section lets you configure the Kafka provider for this KafkaCluster.
+### Kafka Provider
+This section lets you configure the Kafka Provider for this KafkaCluster.
 
 **Confluent Cloud**  
-Provide your Confluent Cloud details to get additional features in Platform:
+Provide your Confluent Cloud details to get additional features in Console:
 - Confluent Cloud Service Accounts support
 - Confluent Cloud API Keys support
 
@@ -510,7 +511,7 @@ spec {
 </Tabs>
 
 **Aiven**  
-Provide your Aiven Cloud details to get additional features in Platform:  
+Provide your Aiven Cloud details to get additional features in Console:  
 - Aiven Service Accounts support
 - Aiven ACLs support
 
@@ -544,7 +545,7 @@ spec {
 </Tabs>
 
 **Gateway**  
-Provide your Gateway details to get additional features in Platform:
+Provide your Gateway details to get additional features in Console:
 - Interceptors support
 
 <Tabs>
@@ -629,7 +630,7 @@ spec {
 
 
 ## KafkaConnectCluster
-Creates a Kafka Connect Cluster Definition in Platform.
+Creates a Kafka Connect Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
@@ -698,7 +699,7 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Creates a ksqlDB Cluster Definition in Platform.
+Creates a ksqlDB Cluster Definition in Console.
 ````yaml
 ---
 apiVersion: console/v2
@@ -728,7 +729,7 @@ spec:
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Creates an alert in Platform. 
+Creates an Alert in Console. 
 
 ````yaml
 ---
@@ -793,10 +794,15 @@ spec:
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
 - `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
+## DataMaskingPolicy
 
-## HTTP security properties
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 
-HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster)
+## HTTP Security Properties
+
+HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster)
 ### Basic Authentication
 ````yaml
   security:
@@ -833,7 +839,7 @@ HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-
 
 ## Permissions
 
-Permissions are used in [Groups](#consolegroup) and [Users](#consoleuser) and lets you configure all the access to any Kafka resource or Platform feature.
+Permissions are used in [Groups](#consolegroup) and [Users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
 
 A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
 
@@ -1018,10 +1024,10 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 | Available Platform permissions | Description |
 |------------------------------------|---------------------------------------------------------------|
-| `clusterConnectionsManage`         | Permission to manage Kafka clusters on Platform               |
-| `certificateManage`                | Permission to manage TLS Certificates on Platform             |
-| `userManage`                       | Permission to manage Platform users, groups & permissions     |
-| `userView`                         | Permission to view Platform users, groups & permissions       |
+| `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                       | Permission to manage Console users, groups & permissions      |
+| `userView`                         | Permission to view Console users, groups & permissions        |
 | `datamaskingManage`                | Permission to manage Data policies (masking rules)            |
 | `datamaskingView`                  | Permission to view Data policies                              |
 | `notificationChannelManage`        | Permission to manage Integration channels                     |
