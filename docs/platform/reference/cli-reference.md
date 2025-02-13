@@ -1,16 +1,16 @@
 ---
 sidebar_position: 3
-title: CLI Reference
+title: CLI reference
 description: CLI Reference
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# CLI Reference
+# CLI reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated [Resources Reference](/platform/reference/resource-reference/) page.
+Check for the list of supported resources and their definition in the dedicated [Resources reference](/platform/reference/resource-reference/) page.
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
 
@@ -50,7 +50,7 @@ There are 3 types of API Keys:
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::tip Hint
+:::tip
 Use a Short-lived User API Key to bootstrap the first Admin Key
 :::
 
@@ -114,26 +114,31 @@ $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-## Command usage
+## Commands Usage
 ````
 Usage:
-  conduktor [flags]
   conduktor [flags]
   conduktor [command]
 
 Available commands:
-  apply       upsert a resource on Conduktor
-  completion  generate the autocompletion script for the specified shell
-  delete      delete resource of a given kind and name
-  get         get resource of a given kind
-  token       manage API Keys 
-  login       create a short-lived API Key
-  help        help with any command
-  version     display the version of Conduktor
+  apply              Upsert a resource on Conduktor
+  completion         Generate the autocompletion script for the specified shell
+  delete             Delete resource of a given kind and name
+  get                Get resource of a given kind
+  help               Help about any command
+  login              Login user using username password to get a JWT token
+  run                run an action
+  sql                
+  template           Get a .yaml example for a given kind
+  token              Manage Admin and Application Instance tokens
+  version            Display the version of Conduktor
 
 Flags:
-  -h, --help      help for Conduktor
-  -v, --verbose   show more information for debugging
+  -h, --help         help for  Conduktor
+      --permissive   permissive mode, allow undefined environment variables
+  -v, --verbose      show more information for debugging
+
+Use "conduktor [command] --help" for more information about a command.
 ````
 
 ### Apply
@@ -142,7 +147,7 @@ The `apply` command allows you to deploy any resource.
 
 ````
 Usage:
-  conduktor apply [flags]
+   Conduktor apply [flags]
 
 Flags:
       --dry-run            Don't really apply change but check on backend the effect if applied
@@ -159,41 +164,6 @@ $ conduktor apply -f .
 application/clickstream-app: NotChanged
 app-instance/clickstream-app-dev: NotChanged
 ````
-
-### Template
-
-The `template` command allows you to get an example of a resource definition:
-```
-$ conduktor template topic                                                                                                                                                       
----
-apiVersion: v2
-kind: Topic
-metadata:
-    name: my-topic
-    cluster: my-cluster
-    labels:
-        user-labels: I am a user label
-    catalogVisibility: PUBLIC
-    descriptionIsEditable: true
-    description: This is a topic description
-    sqlStorage:
-        retentionTimeInSecond: 42
-spec:
-    partitions: 1
-    replicationFactor: 1
-    configs:
-        cleanup.policy: delete
-        retention.ms: '86400000'
-```
-
-You can also save the output in a file, in order to edit it before applying it:
-```
-conduktor template KafkaCluster -o definiton.yml
-conduktor template Topic >> definition.yml   #Appending to a already existinng files
-vim definition.yml # (or any other text editor you like)
-conduktor apply -f
-```
-
 
 ### Template
 
@@ -374,7 +344,7 @@ By using the flag `--output` or `-o`, you can select the output format of the co
   </TabItem>
   <TabItem value="List of names" label="List of names">
 
-    ```txt title="conduktor get user -o name"
+    ```txt title="Conduktor get user -o name"
     User/alice@demo.dev
     User/bob@demo.dev
     User/admin@demo.dev
@@ -453,7 +423,7 @@ jobs:
 ```
 
 ```yaml title=".github/workflows/on-push.yml"
-name: Execute Commited Changes
+name: Execute committed changes
 on:
   push:
     branches: [ "main" ]
