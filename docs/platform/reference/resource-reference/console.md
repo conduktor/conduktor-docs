@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Console Resources
+title: Console resources
 description: Console resources
 ---
 
@@ -124,7 +124,7 @@ resource "conduktor_group_v2" "developers-a" {
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />
 
-Sets a User with permissions in Console
+Create a user with Platform permissions.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -139,6 +139,10 @@ spec:
   firstName: "John"
   lastName: "Doe"
   permissions:
+    - resourceType: PLATFORM
+      permissions:
+        - taasView
+        - datamaskingView
     - resourceType: TOPIC
       cluster: shadow-it
       patternType: PREFIXED
@@ -155,16 +159,29 @@ spec:
 ````hcl
 resource "conduktor_group_v2" "john.doe@company.org" {
   name = "john.doe@company.org"
+  
   spec {
     firstname = "John"
     lastname  = "Doe"
-    permissions  = [
-     {
+    
+    permissions = [
+      {
         resource_type = "TOPIC"
         cluster       = "shadow-it"
         patternType   = "PREFIXED"
         name          = "toto-"
-        permissions   = ["topicViewConfig", "datamaskingView", "auditLogView"]
+        permissions   = [
+          "topicViewConfig",
+          "datamaskingView",
+          "auditLogView"
+        ]
+      },
+      {
+        resource_type = "PLATFORM"
+        permissions   = [
+          "taasView",
+          "datamaskingView"
+        ]
       }
     ]
   }
@@ -173,6 +190,11 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 
 </TabItem>
 </Tabs>
+
+:::warning
+Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
+:::
+
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
@@ -712,7 +734,6 @@ Creates an Alert in Console.
 ````yaml
 ---
 apiVersion: console/v3
-apiVersion: console/v3
 kind: Alert
 metadata:
   name: messages-in-dead-letter-queue
@@ -720,7 +741,6 @@ metadata:
   # user: user@company.org
   # appInstance: my-app-instance
 spec:
-  cluster: my-dev-cluster
   cluster: my-dev-cluster
   type: TopicAlert
   topicName: wikipedia-parsed-DLQ
@@ -730,15 +750,9 @@ spec:
   destination:
     type: Slack
     channel: "alerts-p1"
-  destination:
-    type: Slack
-    channel: "alerts-p1"
 ````
 
 **Alert checks:**
-- `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
-- `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
-- `spec.cluster` must be a valid KafkaCluster name
 - `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
 - `spec.cluster` must be a valid KafkaCluster name
@@ -749,20 +763,6 @@ spec:
 - `spec.operator` must be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
 - `spec.threshold` must be a number
 - `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
-
-**When `spec.destination.type` is `Slack`**
-- `spec.destination.channel` must be a valid Slack channel id
-
-**When `spec.destination.type` is `Teams`**
-- `spec.destination.url` must be a valid Teams webhook URL
-
-**When `spec.destination.type` is `Webhook`**
-- `spec.destination.url` must be a valid URL
-- `spec.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
-- `spec.destination.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
-  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` must be set
-  - when is `BearerToken` `spec.destination.authentification.token` must be set
 
 **When `spec.destination.type` is `Slack`**
 - `spec.destination.channel` must be a valid Slack channel id
@@ -794,13 +794,11 @@ spec:
 - `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
 - `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
 
-<<<<<<< HEAD
-**When `spec.type` is `ConsumerGroupAlert`**
-- `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
-- `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
+## DataMaskingPolicy
 
-=======
->>>>>>> 6b130bf (Misc capitalization and spelling fixes)
+:::caution Not implemented yet
+This concept will be available in a future version
+:::
 
 ## HTTP Security Properties
 
@@ -1022,9 +1020,9 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 ```
 
 - `resourceType`: `PLATFORM`
-- `permissions` is a list of valid Platform permissions (See Table)
+- `permissions` is a list of valid Platform permissions
 
-| Available Platform Permissions | Description                                                   |
+| Available Platform permissions | Description |
 |------------------------------------|---------------------------------------------------------------|
 | `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
 | `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
@@ -1035,4 +1033,4 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelManage`        | Permission to manage Integration channels                     |
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
-
+| `taasView`                         | Permission to view Application Catalog                        | 
