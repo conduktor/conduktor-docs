@@ -24,6 +24,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [SSO properties](#sso-properties)
     - [LDAP properties](#ldap-properties)
     - [OAuth2 properties](#oauth2-properties)
+    - [JWT auth properties](#jwt-auth-properties)
   - [Kafka clusters properties](#kafka-clusters-properties)
   - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
   - [Schema registry properties](#schema-registry-properties)
@@ -235,7 +236,7 @@ See database configuration [documentation](/platform/get-started/configuration/d
 | `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
 | `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
-### Session Lifetime Properties
+### Session Lifetime properties
 
 Optional properties for configuring [session lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 
