@@ -1034,3 +1034,4 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
 | `taasView`                         | Permission to view Application Catalog                        | 
+

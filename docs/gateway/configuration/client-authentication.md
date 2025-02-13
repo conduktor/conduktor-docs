@@ -176,7 +176,8 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API as follows:
 
 ```bash
- curl \                                                                                                   --silent \
+ curl \
+    --silent \
     --request POST "http://your.gateway.url:8888/admin/vclusters/v1/vcluster/passthrough/username/jdoe" \
     --user "admin:conduktor" \
     --header 'Content-Type: application/json' \
