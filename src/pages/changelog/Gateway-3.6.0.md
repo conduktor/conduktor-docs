@@ -36,7 +36,7 @@ In both cases, we have enhanced the logging, so issues during decryption are mor
 
 ##### Read only Schema Registry access
 
-Some of our Gateway plugins will de-serialize and re-serialize messages in order to perform their functions. A side effect of this is that the serializer code would needlessly require write access to the Schema Registry. While there was **no situation** where Gateway would actually cause any updated or additional schema to appear, - we've altered the Schema Registry access to be read only. This is avoids having to assign write permission needlessly for our Gateway Schema Registry connections if you're using ACLs on your Schema Registry.
+Some of our Gateway plugins will deserialize and re-serialize messages in order to perform their functions. A side effect of this is that the serializer code would unnecessarily require write access to the Schema Registry. While there was **no situation** where Gateway would actually cause any updated or additional schema to appear, - we've altered the Schema Registry access to be read only. This avoids having to unnecessarily assign write permission for our Gateway Schema Registry connections if you're using ACLs on your Schema Registry.
 
 ##### Plugin validation of Schema Registry access
 
