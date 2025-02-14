@@ -81,10 +81,10 @@ By default, the Gateway operates with minimal impact on performance, typically a
 
 ## Resources
 
-- [Get Started](./get-started/docker.md)
+- [Get started](./get-started/docker.md)
 - [Concepts](./concepts/index.md)
 - [Configuration](./configuration/index.md)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo/?utm_source=docs&utm_medium=webpage)
 - [Try demos yourself](https://github.com/conduktor/conduktor-gateway-demos)
-- [Changelog](https://www.conduktor.io/changelog/)
+- [Release notes](https://www.conduktor.io/changelog/)

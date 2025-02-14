@@ -94,13 +94,17 @@ const config = {
                 label: 'Configuration',
                 to: 'platform/get-started/configuration/introduction',
               },
+              {
+                label: 'FAQ',
+                to: '/faq',
+              },
             ],
           },
           {
             title: 'Docs',
             items: [
               {
-                label: 'Console',
+                label: 'Platform',
                 to: '/platform',
               },
               {
@@ -117,7 +121,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Changelog',
+                label: 'Release notes',
                 href: '/changelog',
               },
               {
