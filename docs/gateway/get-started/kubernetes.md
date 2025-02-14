@@ -18,7 +18,7 @@ This compatibility matrix is a resource to help you find which versions of Condu
 
 > We recommend you use the version of Gateway that comes pre-configured with the Helm chart. You can adjust the version in your values property according to the supported Gateway version, if required.
 
-> Breaking changes column only lists **breaking change in the Helm chart**. See Conduktor [release notes](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
+> Breaking changes column only lists a **breaking change in the Helm chart**. See Conduktor [release notes](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm chart compatibility
 
