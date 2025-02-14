@@ -17,7 +17,7 @@ Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a c
 
 ### Overview
 
-We don't provide any relational database dependency, you will have to provide your own database. Check out [production requirements](#production-requirements) for details.
+We don't provide any relational database dependency, you will have to provide your own database. See the [production requirements](#production-requirements) for details.
 
 Check out the [snippets](#snippets) section for more examples.
 
@@ -187,12 +187,12 @@ kubectl port-forward deployment/console -n ${NAMESPACE} 8080:8080
 ### Fresh install
 
 You can configure Platform by inserting it into the `config` section of the
-`values.yaml` file the configuration of Console you want to apply. Find available configurations in the [configuration section](../../configuration/env-variables.md)
+`values.yaml` file. Find available configurations in the [configuration section](../../configuration/env-variables.md).
 
 
 ### Based on a Docker configuration
 
-If you already have a configuration file that you were using within Docker,you can use it by giving it to the Helm chart with the following command:
+If you're already using a config file within Docker,you can use it by giving it to the Helm chart with the following command:
 
 ```yaml title="values.yaml"
 config:

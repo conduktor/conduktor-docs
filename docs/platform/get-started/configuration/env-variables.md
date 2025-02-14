@@ -16,7 +16,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
   - [Database properties](#database-properties)
-  - [Session Lifetime properties](#session-lifetime-properties)
+  - [Session lifetime properties](#session-lifetime-properties)
   - [Local users properties](#local-users-properties)
   - [Monitoring properties](#monitoring-properties)
     - [Console Configuration for Cortex](#console-configuration-for-cortex)
@@ -236,7 +236,7 @@ See database configuration [documentation](/platform/get-started/configuration/d
 | `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
 | `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
-### Session Lifetime properties
+### Session lifetime properties
 
 Optional properties for configuring [session lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 

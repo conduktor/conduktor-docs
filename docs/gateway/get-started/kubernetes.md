@@ -99,7 +99,7 @@ kafka:
 
 #### Template deployment
 
-1. Copy the following template into a file called values.yaml
+1. Copy the following template into a file called **values.yaml**.
 
 ```yaml
 # Default values for conduktor-gateway
@@ -112,7 +112,7 @@ global:
 
 ## @section Conduktor-gateway configurations
 ## @descriptionStart
-## This section contains configuration of the Gateway
+## This section contains configuration of the gateway
 ## @descriptionEnd
 gateway:
   ## @section Conduktor-gateway image configuration
