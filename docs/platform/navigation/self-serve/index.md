@@ -23,7 +23,7 @@ This approach brings governance into your enterprise through concepts like Owner
 - Enforce naming conventions
 - Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
 - Declare the Applications and their rights
-- 🍹🏖️
+
 ### Benefits for Applications Teams
 - Autonomy and responsibility over their resources
 - Isolation with Application namespaces
@@ -31,7 +31,7 @@ This approach brings governance into your enterprise through concepts like Owner
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self-service relies on a central concept, the **Application**, which dictates **owernship** of Kafka resources. 
+Self-service relies on a central concept, the **Application**, which dictates **ownership** of Kafka resources. 
 
 Below outlines the relationships between [Self-service resources](/platform/reference/resource-reference/self-service).
 

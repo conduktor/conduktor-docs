@@ -16,7 +16,6 @@ We are cleaning up our Docker image to bring you a simpler, lighter, and general
 
 - We have extracted the 'Storage & Alerting' aspect of the Monitoring Solution from the base Console image and moved it to a dependency image
   - If you didn't use Monitoring, no further action is required from your part
-  - **If you used Monitoring**, read the [documentation](https://docs.conduktor.io/platform/get-started/support/important-notices/) to understand how to deploy and configure the dependency image `conduktor/conduktor-platform-cortex:1.18.0`
 - We have removed the embedded Postgres Database from the Docker image
 - We have removed Testing from the base image
 - We have rewritten our authentication module. If you have any issue with authentication using LDAP or OIDC with this new release [Contact Conduktor Support](https://support.conduktor.io/hc/en-gb)
