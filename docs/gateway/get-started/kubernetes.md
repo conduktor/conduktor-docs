@@ -5,8 +5,7 @@ description: This guide is for deploying Conduktor Gateway on a local Minikube i
 ---
 
 :::info
-We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues)
-or contact [support](https://www.conduktor.io/contact/support/).
+We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or contact [support](https://www.conduktor.io/contact/support/).
 :::
 
 # Helm chart installation
@@ -338,7 +337,7 @@ kafka:
   enabled: true
 ```
 
-2. Install the chart on your cluster referencing the valus.yaml file (Note: This can a take a few minutes to complete):
+2. Install the chart on your cluster referencing the values.yaml file (Note: This can a take a few minutes to complete):
 
 ```shell
 helm install mygateway conduktor/conduktor-gateway -f values.yaml
