@@ -35,7 +35,7 @@ Before you proceed, it is important to make sure that you have either already cr
     - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
     - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
     - [Step 2.1: Add the core console container](#step-21-add-the-core-console-container)
-    - [Step 2.2: Add the conduktor cortex monitoring image](#step-22-add-the-conduktor-cortex-monitoring-image)
+    - [Step 2.2: Add the Conduktor Cortex monitoring image](#step-22-add-the-conduktor-cortex-monitoring-image)
     - [Step 3: Create an ECS cluster and setup Conduktor service](#step-3-create-an-ecs-cluster-and-setup-conduktor-service)
     - [Step 4: Access Conduktor and configure Kafka Clusters](#step-4-access-conduktor-and-configure-kafka-clusters)
     - [Step 5: Onboard your team](#step-5-onboard-your-team)
@@ -120,7 +120,7 @@ You can see the full list of environment variables [here](/platform/get-started/
 Note that you can also add your Kafka cluster, Schema Registry, Connect and ksqlDB configurations as environment variables. But if you're just getting started, we recommend you use the wizard inside the Console UI instead. The wizard provides support for uploading certificates, and help on debugging your connections.
 :::
 
-### Step 2.2: Add the conduktor cortex monitoring image
+### Step 2.2: Add the Conduktor Cortex monitoring image
 Underneath your first container definition, select **+ Add container** so we can also specify the docker image required to get monitoring benefits inside Conduktor.
 
 In the **Container Details** section:
@@ -128,7 +128,7 @@ In the **Container Details** section:
  - Specify the Image URI and version for conduktor monitoring. You should use the most recent major/minor version.
     - eg: `conduktor/conduktor-console-cortex:<tag>`
 
-Add the below Port mappings:
+Add the below port mappings:
 - 9090 | TCP | conduktor-cortex-9090-tcp
 - 9010 | TCP | conduktor-cortex-9010-tcp
 - 9009 | TCP | conduktor-cortex-9009-tcp

@@ -1,16 +1,16 @@
 ---
 sidebar_position: 3
-title: CLI Reference
+title: CLI reference
 description: CLI Reference
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# CLI Reference
+# CLI reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated [Resources Reference](/platform/reference/resource-reference/) page.
+Check for the list of supported resources and their definition in the dedicated [Resources reference](/platform/reference/resource-reference/) page.
 
 [Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
 
@@ -50,7 +50,7 @@ There are 3 types of API Keys:
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::tip Hint 💡
+:::tip
 Use a Short-lived User API Key to bootstrap the first Admin Key
 :::
 
@@ -120,7 +120,7 @@ Usage:
   conduktor [flags]
   conduktor [command]
 
-Available Commands:
+Available commands:
   apply              Upsert a resource on Conduktor
   completion         Generate the autocompletion script for the specified shell
   delete             Delete resource of a given kind and name
@@ -129,12 +129,12 @@ Available Commands:
   login              Login user using username password to get a JWT token
   run                run an action
   sql                
-  template           Get a yaml example for a given kind
+  template           Get a .yaml example for a given kind
   token              Manage Admin and Application Instance tokens
-  version            Display the version of conduktor
+  version            Display the version of Conduktor
 
 Flags:
-  -h, --help         help for conduktor
+  -h, --help         help for  Conduktor
       --permissive   permissive mode, allow undefined environment variables
   -v, --verbose      show more information for debugging
 
@@ -147,7 +147,7 @@ The `apply` command allows you to deploy any resource.
 
 ````
 Usage:
-  conduktor apply [flags]
+   Conduktor apply [flags]
 
 Flags:
       --dry-run            Don't really apply change but check on backend the effect if applied
@@ -344,7 +344,7 @@ By using the flag `--output` or `-o`, you can select the output format of the co
   </TabItem>
   <TabItem value="List of names" label="List of names">
 
-    ```txt title="conduktor get user -o name"
+    ```txt title="Conduktor get user -o name"
     User/alice@demo.dev
     User/bob@demo.dev
     User/admin@demo.dev
@@ -423,7 +423,7 @@ jobs:
 ```
 
 ```yaml title=".github/workflows/on-push.yml"
-name: Execute Commited Changes
+name: Execute committed changes
 on:
   push:
     branches: [ "main" ]
