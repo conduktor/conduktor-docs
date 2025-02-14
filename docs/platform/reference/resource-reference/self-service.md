@@ -123,7 +123,7 @@ spec:
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
 - `spec.applicationManagedServiceAccount` is **optional**, default `false`. 
-  - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchrornized by the ApplicationInstance component.
+  - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchronized by the ApplicationInstance component.
   - Check dedicated section [Application-managed Service Account](#application-managed-service-account)
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
 - `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.

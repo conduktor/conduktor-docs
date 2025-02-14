@@ -76,7 +76,7 @@ spec:
 **Topic checks:**
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances
-- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the topic is created
+- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the Topic is created
 - `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
@@ -110,7 +110,7 @@ metadata:
   cluster: shadow-it
   name: myPrefix.topic-value
 spec:
-  schemaFile: schemas/topic.avsc # relative to conduktor CLI execution context
+  schemaFile: schemas/topic.avsc # relative to Conduktor CLI execution context
   format: AVRO
   compatibility: FORWARD_TRANSITIVE
 ```
@@ -179,10 +179,10 @@ spec:
 **Side effect in Console & Kafka:**
 - Kafka / Schema Registry
   - Subject is created / updated
-  - In dry-run mode, subject will be checked against the SchemaRegistry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
+  - In dry-run mode, subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
 
 ### Connector
-Creates a connector on a Kafka Connect cluster.
+Creates a connector on a Kafka Connect Cluster.
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API /> <GUI />
@@ -210,7 +210,7 @@ spec:
 ```
 
 **Connector checks**
-- `metadata.connectCluster` is a valid KafkaConnect Cluster
+- `metadata.connectCluster` is a valid Kafka Connect Cluster
 - `metadata.name` must belong to the Application Instance
 
 **Conduktor annotations**

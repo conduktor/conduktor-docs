@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 The [Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
 
-:::warning Warning ⚠
+:::warning Warning
 - Conduktor Terraform Provider is currently in **Alpha** and doesn't support all Conduktor resources at this time.
 - Let us know if you have [feedback](https://conduktor.io/roadmap) or wish to be a design partner.
 :::
