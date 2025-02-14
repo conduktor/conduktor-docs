@@ -1,16 +1,12 @@
 ---
 sidebar_position: 5
 title: Database Configuration
-description: Conduktor require a postgres database to run.
+description: Conduktor require a Postgres database to run.
 ---
 
 # Database configuration
 
 Conduktor **requires** a postgres database to store its state.
-
-:::info
-Until version 1.18, Conduktor supported an embedded database. This is deprecated from 1.18 onwards to ensure your Console deployment is production ready. Please contact [support](https://support.conduktor.io/) if you are having difficulty migrating.
-:::
 
 - [Database configuration](#database-configuration)
     - [Database requirements](#database-requirements)
@@ -62,14 +58,14 @@ We plan to make this configurable in the future along with database certificate.
 
 If you want to use AWS RDS or AWS Aurora as a database with Conduktor Console, please take into consideration the following:
 
-Console will not work with all Postgresql engines within RDS, it will only work with engine versions 14.8+ / 15.3+, other versions are not fully supported.
+Console will not work with all PostgreSQL engines within RDS, it will only work with engine versions 14.8+ / 15.3+, other versions are not fully supported.
 
 
 ### Setup
 
 There are several options available when configuring an external database:
 
-1. From a single connection url
+1. From a single connection URL
 
    - With the `CDK_DATABASE_URL` environment variable.
    - With the `database.url` configuration field.
