@@ -8,20 +8,21 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes-)
+- [Breaking changes](#breaking-changes)
   - [Removed V1 Alerts](#removed-v1-alerts)
   - [Changes to V2 Alerts](#changes-to-v2-alerts)
   - [Id of Certificates](#id-of-certificates)
-- [Scale](#scale-)
+- [Scale](#scale)
   - [Enhanced Alerting with Added Webhooks Support](#enhanced-alerting-with-added-webhooks-support)
-  - [View Application-inherited permissions on RBAC screen](#application-group-permissions-now-available-on-users-permissions-page)
   - [API / CLI support for Service Accounts](#api--cli-support-for-service-accounts)
   - [Labels support for Service Accounts](#labels-support-for-service-accounts)
   - [Self-Service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
-- [Exchange](#exchange-)
+  - [Application Group permissions now available on Users Permissions page](#application-group-permissions-now-available-on-users-permissions-page)
+- [Exchange](#exchange)
   - [Introducing Partner Zones for Third-Party Data Sharing](#introducing-partner-zones-for-third-party-data-sharing)
 - [Quality of Life improvements](#quality-of-life-improvements)
-- [Fixes](#fixes-)
+- [Fixes](#fixes)
+- [Known issues](#known-issues)
 
 ### Breaking changes
 

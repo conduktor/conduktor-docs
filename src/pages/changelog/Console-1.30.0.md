@@ -13,7 +13,7 @@ tags: features,fix
   - [Add support for multi-hosts database configuration](#add-support-for-multi-hosts-database-configuration)
   - [Delegating authentication to an identity provider](#delegating-authentication-to-an-identity-provider)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
-- [Quality of Life improvements](#quality-of-life-improvements)
+- [Quality of Life improvements ✨](#quality-of-life-improvements-)
 - [Fixes 🔨](#fixes-)
 
 
