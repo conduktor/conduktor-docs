@@ -292,7 +292,8 @@ Cortex ports are configured like this by default:
 
 By default, Console uses **non-aggregated metrics** to display metrics. If your Kafka clusters have many topics and partitions, enabling **aggregated metrics** can help reduce the number of metrics exposed in the metrics endpoint scraped by Cortex.  
 
-You can enable aggregated metrics **without deactivating** non-aggregated metrics. However, if you **disable non-aggregated metrics**, metrics will no longer be visible in the Console UI.
+You can enable aggregated metrics **without deactivating** non-aggregated metrics. However, if you **disable non-aggregated metrics** and **do not enable aggregated metrics**, metrics will no longer be visible in the Console UI.  
+
 
 #### Configuration Properties  
 
