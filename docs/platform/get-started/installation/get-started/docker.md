@@ -42,6 +42,14 @@ Start Conduktor Console with 2 clusters pre-configured:
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
 
+:::tip
+If you have an M4 Mac the above command will fail because of a JDK/Docker interopability bug. Use the following work-around until a JDK fix is released in April.
+
+```bash
+curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && -L https://releases.conduktor.io/quick-start-m4-override -o docker-compose-m4-override.yml && docker compose -f docker-compose.yml -f docker-compose-m4-override.yml up -d --wait && echo "Conduktor started on http://localhost:8080"
+```
+:::
+
 #### Option 2: Use your existing Kafka cluster
 
 Start Conduktor Console without any cluster pre-configured.
