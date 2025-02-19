@@ -288,19 +288,19 @@ Cortex ports are configured like this by default:
 | `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics          | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
 
 
-### Console Metrics Aggregation Configuration  
+### Configure Console metrics
 
 By default, Console uses **non-aggregated metrics** to display metrics. If your Kafka clusters have many topics and partitions, enabling **aggregated metrics** can help reduce the number of metrics exposed in the metrics endpoint scraped by Cortex.  
 
 You can enable aggregated metrics **without deactivating** non-aggregated metrics. However, if you **disable non-aggregated metrics** and **do not enable aggregated metrics**, metrics will no longer be visible in the Console UI.  
 
 
-#### Configuration Properties  
+#### Configuration properties  
 
-| Property                                    | Description                                      | Environment Variable                         | Mandatory | Type    | Default |
+| Property                                    | Description                                      | Environment variable                         | Mandatory | Type    | Default |
 |---------------------------------------------|--------------------------------------------------|----------------------------------------------|-----------|---------|---------|
-| `monitoring.use-aggregated-metrics`         | Enables the use of aggregated metrics            | `CDK_MONITORING_USE_AGGREGATED_METRICS`      | No        | Boolean | `false` |
-| `monitoring.enable-non-aggregated-metrics`  | Enables collection of non-aggregated metrics     | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No        | Boolean | `true`  |
+| `monitoring.use-aggregated-metrics`         | Enables aggregated metrics            | `CDK_MONITORING_USE_AGGREGATED_METRICS`      | No        | Boolean | `false` |
+| `monitoring.enable-non-aggregated-metrics`  | Enables non-aggregated metrics     | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No        | Boolean | `true`  |
 
 #### List of non aggregated metrics
 
@@ -312,7 +312,7 @@ You can enable aggregated metrics **without deactivating** non-aggregated metric
 - `kafka_log_log_size` the log size of a topic-partition on a specific broker
 
 
-#### Cortex Configuration
+#### Cortex configuration
 
 See [Cortex configuration page](/platform/get-started/configuration/cortex/) for more info.
 

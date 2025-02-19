@@ -1,7 +1,7 @@
 # Conduktor Docs
 Production (main): https://docs.conduktor.io
 
-- [Conduktor Docs](#conduktor-docs)
+- [Conduktor technical docs](#conduktor-docs)
 - [Development](#development)
 - [Best practices for writing docs](#best-practices-for-writing-docs)
 - [Updating public API docs](#updating-public-api-docs)
