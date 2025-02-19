@@ -19,8 +19,8 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Session lifetime properties](#session-lifetime-properties)
   - [Local users properties](#local-users-properties)
   - [Monitoring properties](#monitoring-properties)
-    - [Console Configuration for Cortex](#console-configuration-for-cortex)
-    - [Cortex Configuration](#cortex-configuration)
+    - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
+    - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
   - [SSO properties](#sso-properties)
     - [LDAP properties](#ldap-properties)
     - [OAuth2 properties](#oauth2-properties)
@@ -268,10 +268,10 @@ Cortex is a custom implementation of Prometheus used in several production syste
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.
 
 The configuration is split in 2 chapters:
-- Console Configuration for Cortex `conduktor/conduktor-console`
-- Cortex Configuration `conduktor/conduktor-console-cortex`
+- Monitoring Configuration for Console applies to `conduktor/conduktor-console`
+- Monitoring Configuration for Cortex applies to `conduktor/conduktor-console-cortex`
 
-#### Console Configuration for Cortex
+#### Monitoring Configuration for Console
 
 First, we need to configure Console to connect to Cortex services.
 Cortex ports are configured like this by default:
@@ -279,16 +279,27 @@ Cortex ports are configured like this by default:
 - Alert Manager port 9010
 
 
-| Property                                | Description                                  | Environment Variable                     | Mandatory | Type   | Default |
-|-----------------------------------------|----------------------------------------------|------------------------------------------|-----------|--------|---------|
-| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009       | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
-| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010      | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
-| `monitoring.callback-url`               | Console API                                  | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
-| `monitoring.notifications-callback-url` | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
-| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics          | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| Property                                | Description                                                          | Environment Variable                     | Mandatory | Type   | Default |
+|-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
+| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009                               | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
+| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010                              | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
+| `monitoring.callback-url`               | Console API                                                          | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
+| `monitoring.notifications-callback-url` | Where the Slack notification should redirect                         | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
+| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics                                  | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
+| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
+:::info
+`monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
-#### Cortex Configuration
+Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
+```
+CDK_MONITORING_USEAGGREGATEDMETRICS: true
+CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
+```
+:::
+
+#### Monitoring Configuration for Cortex
 
 See [Cortex configuration page](/platform/get-started/configuration/cortex/) for more info.
 
