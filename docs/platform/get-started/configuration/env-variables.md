@@ -301,7 +301,7 @@ If you experience graph timeouts or OutOfMemory issues, upgrade to 1.31.1 and co
 | `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
 :::info
-To ensure graph are available in the UI, at least one configuration must be `true`.
+To ensure graphs are available in the UI, at least one configuration has to be `true`.
 :::
 
 #### List of non aggregated metrics

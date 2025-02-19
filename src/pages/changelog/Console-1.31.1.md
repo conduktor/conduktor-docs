@@ -11,19 +11,18 @@ tags: fix
 
 ### Console metrics performance and configuration
 
-To address a growing number of issues related to monitoring graph timing out and OutOfMemory issues when Console is connected with large Kafka clusters, 
-we have introduced a change to the metrics collection in Console.
+To address issues related to monitoring graph time outs and OutOfMemory issues when Console is connected with large Kafka clusters, we've introduced a change to how metrics are collected in Console.
 
-This feature is opt-in for now and will be enabled by default in an upcoming release.
+This feature is currently optional but will be enabled by default in the next release.
 
-If you experience graph timeouts or OutOfMemory issues, upgrade to 1.31.1 and configure the following additional environment variables as follows:
+If you're experiencing graph timeouts or OutOfMemory issues, upgrade to 1.31.1 and configure the following additional environment variables:
 
 ```
 CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 CDK_MONITORING_USEAGGREGATEDMETRICS: true
 ```
 
-This configuration will 1. disable the collection of obsolete granular metrics and 2. use the new aggregated metrics in the Console graphs.
+This configuration will disable the collection of obsolete granular metrics and use the new aggregated metrics in the Console graphs.
 
 See [metric configuration](platform/get-started/configuration/env-variables/#configure-console-metrics) for details.
 
