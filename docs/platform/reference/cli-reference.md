@@ -147,7 +147,7 @@ The `apply` command allows you to deploy any resource.
 
 ````
 Usage:
-   Conduktor apply [flags]
+   conduktor apply [flags]
 
 Flags:
       --dry-run            Don't really apply change but check on backend the effect if applied
@@ -193,8 +193,8 @@ spec:
 
 You can also save the output in a file, in order to edit it before applying it:
 ```
-conduktor template KafkaCluster -o definiton.yml
-conduktor template Topic >> definition.yml   #Appending to a already existinng files
+conduktor template KafkaCluster -o definition.yml
+conduktor template Topic >> definition.yml   #Appending to a already existing files
 vim definition.yml # (or any other text editor you like)
 conduktor apply -f
 ```
