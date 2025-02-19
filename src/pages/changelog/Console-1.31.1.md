@@ -17,8 +17,8 @@ tags: fix
 - Resolved an issue related to SSL checks between the Console and Cortex where bad certificates caused communication issues
 - Fixed an issue with user email addresses containing a `'` character that blocked database migrations
 - Reduced the memory consumption and improved the performance of metrics under heavy load that prevented them from displaying
-- Partner zone: fix to correctly apply configuration updates
-- Partner zone: partner can now use consumer groups while consuming
+- Partner Zones: configuration updates are now applied correctly
+- Partner Zones: partners can now utilize consumer groups
 
 ### Console metrics performance and configuration
 
@@ -40,4 +40,4 @@ To have metrics visible in the UI, ensure that one of these settings (aggregated
 | `monitoring.use-aggregated-metrics`         | Enables aggregated metrics            | `CDK_MONITORING_USE_AGGREGATED_METRICS`      | No        | Boolean | `false` |
 | `monitoring.enable-non-aggregated-metrics`  | Enables non-aggregated metrics     | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No        | Boolean | `true`  |
 
-See the [docs](platform/get-started/configuration/env-variables/#configure-console-metrics) for full detail of the metrics configuration.
+See [metric configuration](platform/get-started/configuration/env-variables/#configure-console-metrics) for details.
