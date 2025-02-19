@@ -8,6 +8,26 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
+
+### Console metrics performance and configuration
+
+To address a growing number of issues related to monitoring graph timing out and OutOfMemory issues when Console is connected with large Kafka clusters, 
+we have introduced a change to the metrics collection in Console.
+
+This feature is opt-in for now and will be enabled by default in an upcoming release.
+
+If you experience graph timeouts or OutOfMemory issues, upgrade to 1.31.1 and configure the following additional environment variables as follows:
+
+```
+CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
+CDK_MONITORING_USEAGGREGATEDMETRICS: true
+```
+
+This configuration will 1. disable the collection of obsolete granular metrics and 2. use the new aggregated metrics in the Console graphs.
+
+See [metric configuration](platform/get-started/configuration/env-variables/#configure-console-metrics) for details.
+
+
 ### Fixes
 - Fixed dependencies vulnerable to the following CVEs:
   - [CVE-2024-57699](https://nvd.nist.gov/vuln/detail/CVE-2024-57699)
@@ -19,25 +39,3 @@ tags: fix
 - Reduced the memory consumption and improved the performance of metrics under heavy load that prevented them from displaying
 - Partner Zones: configuration updates are now applied correctly
 - Partner Zones: partners can now utilize consumer groups
-
-### Console metrics performance and configuration
-
-This release improves performance and reduces memory consumption of the metrics.
-If your Kafka clusters have many topics and partitions, we recommend enabling aggregated metrics to reduce the number of metrics exposed in the metrics endpoint, scraped by Cortex. You can enable this **without de-activating non-aggregated metrics**.
-
-:::warning
-Aggregated metrics will be enabled by default in an upcoming release.
-:::
-
-:::info
-To have metrics visible in the UI, ensure that one of these settings (aggregated or non-aggregated metrics) is enabled.
-:::
-
-#### Configuration properties
-
-| Property                                    | Description                                      | Environment variable                         | Mandatory | Type    | Default |
-|---------------------------------------------|--------------------------------------------------|----------------------------------------------|-----------|---------|---------|
-| `monitoring.use-aggregated-metrics`         | Enables aggregated metrics            | `CDK_MONITORING_USE_AGGREGATED_METRICS`      | No        | Boolean | `false` |
-| `monitoring.enable-non-aggregated-metrics`  | Enables non-aggregated metrics     | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No        | Boolean | `true`  |
-
-See [metric configuration](platform/get-started/configuration/env-variables/#configure-console-metrics) for details.

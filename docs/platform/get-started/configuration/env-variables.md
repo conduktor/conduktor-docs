@@ -290,21 +290,19 @@ Cortex ports are configured like this by default:
 
 ### Configure Console metrics
 
-Console uses non-aggregated metrics by default.
-
-If your Kafka clusters have many topics and partitions, we recommend enabling aggregated metrics to reduce the number of metrics exposed in the metrics endpoint, scraped by Cortex. You can enable this **without de-activating non-aggregated metrics**.
-
-:::info
-To have metrics visible in the UI, ensure that one of these settings (aggregated or non-aggregated metrics) is enabled.
-:::
-
+Console uses non-aggregated metrics by default.  
+If you experience graph timeouts or OutOfMemory issues, upgrade to 1.31.1 and configure the following additional environment variables as follows:
 
 #### Configuration properties  
 
-| Property                                    | Description                                      | Environment variable                         | Mandatory | Type    | Default |
-|---------------------------------------------|--------------------------------------------------|----------------------------------------------|-----------|---------|---------|
-| `monitoring.use-aggregated-metrics`         | Enables aggregated metrics            | `CDK_MONITORING_USE_AGGREGATED_METRICS`      | No        | Boolean | `false` |
-| `monitoring.enable-non-aggregated-metrics`  | Enables non-aggregated metrics     | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No        | Boolean | `true`  |
+| Property                                    | Description                                                          | Environment variable                       | Mandatory | Type    | Default |
+|---------------------------------------------|----------------------------------------------------------------------|--------------------------------------------|-----------|---------|---------|
+| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
+| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
+
+:::info
+To ensure graph are available in the UI, at least one configuration must be `true`.
+:::
 
 #### List of non aggregated metrics
 
