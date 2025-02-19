@@ -13,3 +13,5 @@ tags: fix
 - Resolved an issue related to SSL checks between the Console and Cortex where bad certificates caused communication issues
 - Fixed an issue with user email addresses containing a `'` character that blocked database migrations
 - Reduced the memory consumption and improved the performance of metrics under heavy load that prevented them from displaying
+- Partner zone update fixed
+- Partner zone: partner can now use consumer group while consuming
