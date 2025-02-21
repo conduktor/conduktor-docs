@@ -28,15 +28,15 @@ import AlertCreationButton from './assets/create-alert-button.png';
 
 <img src={AlertCreationButton} alt="Alert creation button" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-Alerts need a unique name, a metric to measure, an operator & value for their threshold and an owner.  
-Currently alerts can be owned by an application instance, a group, or an individual user, and this determines who can edit the alert.  
+Alerts need a unique name, a metric to measure, an operator & value for their threshold and an owner.
+Currently alerts can be owned by an application instance, a group, or an individual user, and this determines who can edit the alert.
 **If the owner of an alert is deleted, then the alerts associated with that owner will also be deleted.**
 
 import AlertCreation from './assets/create-alert.png';
 
 <img src={AlertCreation} alt="Alert creation" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications. 
+If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications.
 
 Alerts are periodically checked for **every minute**.
 
@@ -84,3 +84,13 @@ You can also reference the example below:
   "status": "resolved"
 }
 ```
+
+## Alert history
+
+You can find an overview of an alert's history on the details page for that alert.
+
+TODO screenshot
+
+The chart shows the alert's status over time, which you can use to see how long the alert has been healthy or firing.
+The table below the chart lists changes in the alert's status and a record of whether notifications were successfuly sent for those changes.
+Rows with failed notification delivery attempts will include a tooltip describing the error which occured.
