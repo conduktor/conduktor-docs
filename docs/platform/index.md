@@ -7,13 +7,13 @@ description: Conduktor is the Enterprise Data Management Platform for Streaming
 
 ## What is Conduktor?
 
-Conduktor is the Enterprise Data Management Platform for Streaming that integrates with your existing infrastructure to provide centralized visibility and control over your real-time data. 
+Conduktor is the Enterprise Data Management Platform for Streaming that integrates with your existing infrastructure to provide centralized visibility and control over your real-time data.
 
 To maximize the value of Conduktor, there are two key components to be aware of:
  - [Console](/platform/navigation/): Unified interface to develop, monitor, and manage data streaming operations
  - [Gateway](/gateway): Proxy that simplifies authentication, authorization, and traffic management
 
-![Platform Overview](https://framerusercontent.com/images/BxLyUIFsUAAWKnRZD5xEbj2rQ.png)
+![Platform Overview](https://framerusercontent.com/images/meFtLvvuqKtvLTZJuKgIV8xMI.png)
 
 The Conduktor Console is a powerful UI for Apache Kafka. It equips users with functionality to support many essential tasks when working with Kafka.
 
@@ -33,9 +33,9 @@ The Conduktor Gateway is a Kafka proxy deployed between your client applications
 
 ## Resources
 
-- [Changelog](https://conduktor.io/changelog)
+- [Release notes](https://conduktor.io/changelog)
 - [Roadmap](https://product.conduktor.help)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
 
-Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.  
+Something missing, want more? [Contact us](https://support.conduktor.io/hc/en-gb), we're always reviewing and expanding our documentation.

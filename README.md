@@ -1,6 +1,7 @@
 # Conduktor Docs
 Production (main): https://docs.conduktor.io
 
+- [Conduktor technical docs](#conduktor-docs)
 - [Development](#development)
 - [Best practices for writing docs](#best-practices-for-writing-docs)
 - [Updating public API docs](#updating-public-api-docs)
@@ -35,6 +36,7 @@ Console documentation is found under the `docs/platform` directory, and Gateway'
 - Use absolute links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
 - Anchor example, [env variables](/platform/get-started/configuration/env-variables/#auditlog-export-properties)
 - If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
+- Line breaks can be added by trailing a line with a double space
 
 # Updating public API docs
 
@@ -154,6 +156,4 @@ export const Tag1 = () => (
 
 # Vercel
 
-We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform. Ensure you are a member using `@conduktor.io`, not your personal email (check your Github profile).
-
-You have to be a member of our Vercel workspace for Vercel to build your PR/commits, otherwise the build stage will fail. The workaround is to have a member of the Vercel workspace (e.g. someone from the Product team) change the end of this line each time as the latest commit and trigger a PR. `Change me 1`.
+We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform.

@@ -94,13 +94,17 @@ const config = {
                 label: 'Configuration',
                 to: 'platform/get-started/configuration/introduction',
               },
+              {
+                label: 'FAQ',
+                to: '/faq',
+              },
             ],
           },
           {
             title: 'Docs',
             items: [
               {
-                label: 'Console',
+                label: 'Platform',
                 to: '/platform',
               },
               {
@@ -117,7 +121,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Changelog',
+                label: 'Release notes',
                 href: '/changelog',
               },
               {
@@ -206,7 +210,9 @@ const config = {
       'runllm-keyboard-shortcut': 'Mod+j',
       version: 'stable',
       'runllm-preset': 'docusaurus',
-      'runllm-slack-community-url': 'https://conduktor.io/slack',
+      'runllm-community-url': 'https://conduktor.io/slack',
+      'runllm-community-type': 'slack',
+      'runllm-disclaimer': 'For best-effort assistance only (no SLA). For official support, visit our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
       'runllm-theme-color': '#005EEC',
       async: true,

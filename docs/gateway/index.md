@@ -33,7 +33,7 @@ Much like Kafka brokers, Gateway supports multiple security protocols for Kafka 
 
 ### Interceptors
 
-Once Gateway is deployed, interceptors are used to add technical and business logic, such as message encryption, inside your Gateway deployment. Interceptors can be deployed and managed through the [HTTP API](https://developers.conduktor.io/), and targeted at different granularities (Global, Virtual Cluster, Group, Username). Read more about [Interceptors](concepts/interceptors)
+Once Gateway is deployed, interceptors are used to add technical and business logic, such as message encryption, inside your Gateway deployment. Interceptors can be deployed and managed through the [HTTP API](https://developers.conduktor.io/), and targeted at a different scope (Global, Virtual Cluster, Group, Username). Read more about [Interceptors](concepts/interceptors).
 
 ### Processing Flow
 
@@ -81,10 +81,10 @@ By default, the Gateway operates with minimal impact on performance, typically a
 
 ## Resources
 
-- [Get Started](./get-started/docker.md)
+- [Get started](./get-started/docker.md)
 - [Concepts](./concepts/index.md)
 - [Configuration](./configuration/index.md)
 - [Support](https://www.conduktor.io/contact/support)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo/?utm_source=docs&utm_medium=webpage)
 - [Try demos yourself](https://github.com/conduktor/conduktor-gateway-demos)
-- [Changelog](https://www.conduktor.io/changelog/)
+- [Release notes](https://www.conduktor.io/changelog/)

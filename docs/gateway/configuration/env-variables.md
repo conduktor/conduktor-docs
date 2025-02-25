@@ -101,7 +101,7 @@ __Example Values__
 | **SNI Routing only**             |                             | Check our dedicated guide on [SNI Routing ](/gateway/how-to/sni-routing/)                                                                                  |
 | `GATEWAY_ADVERTISED_SNI_PORT`    | none                        | Port to be advertised to the client if routing mechanism is set to `host` for SNI routing.                                                                 |
 | `GATEWAY_ADVERTISED_HOST_PREFIX` | `broker`                    | Set the host prefix when using SNI Routing                                                                                                                 |
-| `GATEWAY_SNI_HOST_SEPARATOR`     | `-`                         | Set the host separator when using SNI Routing. The value is split on the first occurence of this separator.                                                | 
+| `GATEWAY_SNI_HOST_SEPARATOR`     | `-`                         | Set the host separator when using SNI Routing. The value is split on the first occurrence of this separator.                                                | 
 
 
 ### Load Balancing
