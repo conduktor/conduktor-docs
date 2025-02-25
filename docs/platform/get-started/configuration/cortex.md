@@ -89,8 +89,9 @@ services:
 ## Overriding Configuration
 
 ### Overriding with YAML
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be overridden completely by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
-This is not currently available for Alert Manager and Prometheus. 
+**Cortex**  
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
+This is not currently available for Alert Manager. 
 
 For example, create a file `cortex.yaml` add in only your overrides:
 ```yaml
@@ -108,8 +109,18 @@ You should see a similar entry to the below in the opening logs:
 INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
 ```
 
+**Prometheus**  
+Prometheus configuration can be overridden with replace, by mounting a YAML file into path `/opt/override-configs/prometheus.yaml`. For an alternative path set the location using an environment variable `PROMETHEUS_OVERRIDE_CONFIG_FILE`.
+
+You should see a similar entry to the below in the opening logs:
+
+```text
+INFO monitoring_entrypoint - Replace "/var/conduktor/configs/monitoring-prometheus.yaml" configuration with "/opt/override-configs/prometheus.yaml" content
+```
+
 ### Overriding with ConfigMap
-If you are deploying Cortex using our [Helm charts](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md) you may expand the input with a custom ConfigMap for overriding configuration such as retention time within Cortex.
+
+If you are deploying Cortex using our [Helm charts](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/console/README.md#platform-cortex-parameters) you may expand the input with a custom ConfigMap for patching configuration such as retention time within Cortex. You can also replace the Prometheus config as described below.
 
 ```yaml
 apiVersion: v1
@@ -125,6 +136,10 @@ data:
     blocks_storage:
       tsdb:
         retention_period: 24h
+  prometheus.yaml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
 ```
 
 On chart `values.yaml` : 
@@ -138,6 +153,9 @@ platformCortex:
         - name: cortex-config-override
           mountPath: /opt/override-configs/cortex.yaml
           subPath: cortex.yaml
+        - name: cortex-config-override
+          mountPath: /opt/override-configs/prometheus.yaml
+          subPath: prometheus.yaml
 ```
 
 ## Troubleshooting  
