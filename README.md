@@ -1,105 +1,39 @@
-# Conduktor Docs
-Production (main): https://docs.conduktor.io
+- [Conduktor technical docs](#conduktor-technical-docs)
+- [Deployment and structure](#deployment-notes)
+- [Docs best practice](#docs-best-practice)
+  - [Images](#images)
+  - [Links](#links)
+  - [Tabs](#tabs)
+  - [Tags](#tags)
+- [Update release notes](#update-release-notes)
+- [Update public API docs](#update-public-api-docs)
 
-- [Conduktor technical docs](#conduktor-docs)
-- [Development](#development)
-- [Best practices for writing docs](#best-practices-for-writing-docs)
-- [Updating public API docs](#updating-public-api-docs)
-  - [Gateway](#gateway)
-  - [Console](#console)
-- [Updating the Changelog](#updating-the-changelog)
-  - [Changes for this version](#changes-for-this-version)
-  - [Adding your new changelog file to the index](#adding-your-new-changelog-file-to-the-index)
-- [Docusaurus Snippets](#docusaurus-snippets)
-  - [Resizing images](#resizing-images)
-  - [Create table with multiple tabs](#create-table-with-multiple-tabs)
-  - [Use tags](#use-tags)
-- [Vercel](#vercel)
+# Conduktor technical docs
+Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
+# Deployment and structure
+In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**). 
 
-# Development
-For local preview run `yarn` , `yarn start`, a local server starts on localhost:3000. `yarn build` is best practice to see if any failures, as this is what the remote will check on each commit.
+For a local preview (on *localhost:3000*), run `yarn start`. 
+
+If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
+
 ```
 $ yarn
-$ yarn start
 $ yarn build
-```
-
-Unless you are making changes to the docs framework or updating the changelog, you should only need to edit the Markdown files in the `docs` directory.
-
-Console documentation is found under the `docs/platform` directory, and Gateway's under the `docs/gateway`. The path of the MD files mirrors that of the website url.
-
-# Best practices for writing docs
-
-- Images can be stored in an `assets` directory in the same folder as the MD file, and referenced with `![Alt text](assets/image.png)`.
-- If images are too large, you can resize them following [this section](#resizing-images).
-- Use absolute links for internal links, e.g. `[link text](/platform/get-started/installation/hardware)`.
-- Anchor example, [env variables](/platform/get-started/configuration/env-variables/#auditlog-export-properties)
-- If linking to a category page that doesn't have an index then use `/gateway/category/<category-name>` same for `/console/...`
-- Line breaks can be added by trailing a line with a double space
-
-# Updating public API docs
-
-## Gateway
-They live on the host:8888 of the deployed Gateway, but we also publish them online at [developers.conduktor.io](https://developers.conduktor.io/?product=gateway).
-
-To update the public version copy the latest open api yaml files from conduktor-proxy repo,
-https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml (v1)
-and https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml (v2)
-to the [/static/developers](./static/developers/openapi/gateway) directory and rename them.
-
-## Console
-Available on the host/docs of any Console deployment, but also online at [developers.conduktor.io](https://developers.conduktor.io/?product=console).
-
-Copy this file, https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml
-to the [/static/developers](./static/developers/openapi/console) directory.
-
-Add new versions to `static/developers/openapi/manifest.json`.
-
-# Updating the Changelog
-
-For a new release, the changelog should be updated.  You need to create a new Markdown file for the new product version, add import line and then reference it in the changelog index.
-
-## Changes for this version
-
-Add a new MD file in `src/pages/changelog/<product>-<semver>.md` and add the following header to the file:
+$ yarn start
 
 ```
----
-date: 2024-11-25
-title: Chargeback
-description: docker pull conduktor/conduktor-console:1.29.0
-solutions: console
-tags: features,fix
----
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
-```
+We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
 
-You can then document the changes going in to this release, optionally with an index at the start.  See previous files for examples.
+# Docs best practice
+## Images
+Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
 
-## Adding your new changelog file to the index
+All images will be auto-sized to fit the width of the content pane. 
 
-In `src/pages/changelog.mdx` you must add an import for your new page e.g.
-
-```
-import Console1290 from './changelog/Console-1.29.0.md';
-```
-
-and then reference it, e.g.
-
-```
-## Console 1.29.0
-<Console1290 />
----
-```
-
-# Docusaurus Snippets
-
-## Resizing images
-
-The images you'll be using in the docs will be automatically sized to the width of the content area.
-If you want to resize an image, you can use a snippet like:
+To resize an image:
 
 ```md
 import MyImage from './assets/my-image.png';
@@ -107,9 +41,15 @@ import MyImage from './assets/my-image.png';
 <img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
 ```
 
-## Create table with multiple tabs
+## Links
+Use absolute links when linking to Conduktor docs, e.g. **[hardware specs](/platform/get-started/installation/hardware)**.
 
-To create a table similar as [this one](/platform/get-started/configuration/user-authentication/SSO/azure/#console-configuration), you can use the following snippet in your MD file:
+You can also link to specific sections on the page, e.g. **[export properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties)**.
+
+## Tabs
+You can break-up long paragraphs by using tabs, [like this](/platform/get-started/configuration/user-authentication/SSO/azure/#console-configuration). 
+
+To add tabs:
 
 ````md
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -135,9 +75,10 @@ mySecondTab: "content"
 </Tabs>
 ````
 
-## Use tags
+## Tags
+You can use tags to visualize available options, [like this](/platform/reference/resource-reference/self-service/). 
 
-To use tags as in the [Self-service reference docs](/platform/reference/resource-reference/self-service/), here is an example of snippet:
+To add tags:
 
 ```md
 import Admonition from '@theme/Admonition';
@@ -153,7 +94,43 @@ export const Tag1 = () => (
 <Tag1/>
 ```
 
+# Update release notes
+Every new version of Gateway and Console has to have release notes.
 
-# Vercel
+To update release notes:
+1. Go to **src/pages/changelog**.
+1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
+1. Make sure your file has the following header:
+```
+---
+date: 2025-11-25
+title: Chargeback
+description: docker pull conduktor/conduktor-console:1.31.0
+solutions: console
+tags: features,fix
+---
 
-We host the docs using [Vercel](https://vercel.com/) and the build will try to deploy to this platform.
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+```
+1. Document all the changes in the release. If it's a major release, consider adding an index/table of contents to make it easier to read.
+1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
+```
+import Console1310 from './changelog/Console-1.31.0.md';
+```
+1. Finally, add an entry at the top of the page, linking to your file. E.g.:
+```
+## Console 1.131.0
+<Console1310 />
+---
+```
+
+# Update public API docs
+API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
+
+To update the public docs:
+1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
+- [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
+- [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
+- [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
+1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
+1. Add the new version to `static/developers/openapi/manifest.json`.
