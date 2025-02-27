@@ -20,8 +20,9 @@ If you're editing many files or making significant changes, run `yarn build` to 
 
 ```
 $ yarn
-$ yarn start
 $ yarn build
+$ yarn start
+
 ```
 
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
