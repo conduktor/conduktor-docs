@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Kafka resources
-description: Kafka resources
+description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
 ---
 
 
