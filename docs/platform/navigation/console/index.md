@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Kafka Resources
+title: Kafka resources
 description: Learn how to get started with Console
 ---
 
