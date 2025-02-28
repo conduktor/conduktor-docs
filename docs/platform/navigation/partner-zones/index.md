@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 4
 title: Partner Zones
 description: Securely share your Kafka streaming data with external partners.
 ---
@@ -24,7 +24,7 @@ Note that to configure a Partner Zone you must be on:
  - Console >= 1.31
  - Gateway >= 3.5.0
 
- **SASL authentication** should also be enabled on gateway.
+ ** SASL authentication** should also be enabled on gateway.
 
 Firstly, you should connect your gateway to Console. Create a secret token for `admin` user on gateway:
 
