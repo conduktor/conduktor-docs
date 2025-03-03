@@ -32,7 +32,9 @@ Alerts need a unique name, a metric to measure, an operator & value for their th
 Alerts can be owned by an individual user, an application instance or a group. The ownership will determine who can edit the alert.
 
 Alerts are periodically checked for **every minute**.
-**If the owner of an alert is deleted, then the alerts associated with that owner will also be deleted.**
+:::warning
+If the owner of an alert is deleted, the associated alerts will also be deleted.
+:::
 
 import AlertCreation from './assets/create-alert.png';
 
