@@ -10,8 +10,10 @@ tags: fix
 
 ### Fixes
 - Fixed prefixed ACLs not displaying correctly in the Service Account UI
-- Fixed dangling Service Account metadata incorrectly appearing in the UI
+- Fixed an issue where Service Accounts with no ACL were incorrectly shown in the UI
 - Fixed an issue allowing creation of Service Accounts without ACLs
 
 ### Known Issues
-- When removing ACLs in the Service Account UI, you can not remove the last ACL
+- When removing ACLs in the Service Account UI, you cannot remove the last ACL
+ - As a workaround, you can create remove that last ACL, then create a new ACL against a resource name that does not exist.
+ - We will address this issue in the next release
