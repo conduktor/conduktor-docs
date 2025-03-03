@@ -28,7 +28,11 @@ import AlertCreationButton from './assets/create-alert-button.png';
 
 <img src={AlertCreationButton} alt="Alert creation button" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-Alerts need a unique name, a metric to measure, an operator & value for their threshold and an owner.
+Each alert has to have:
+- unique name
+- a metric to measure
+- an operator and value for the threshold
+- an owner
 Alerts can be owned by an individual user, an application instance or a group. The ownership will determine who can edit the alert.
 
 Alerts are periodically checked for **every minute**.
