@@ -40,7 +40,7 @@ If the owner of an alert is deleted, the associated alerts will also be deleted.
 ## Manage alerts
 You can disable an alert temporarily without deleting it. You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations). 
 
-Select the event and click the three docs in the top-right corner:
+Select the event and click the three dots in the top-right corner:
 
 import EditAlert from './assets/edit-alert.png';
 
