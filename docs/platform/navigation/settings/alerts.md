@@ -29,7 +29,9 @@ import AlertCreationButton from './assets/create-alert-button.png';
 <img src={AlertCreationButton} alt="Alert creation button" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 Alerts need a unique name, a metric to measure, an operator & value for their threshold and an owner.
-Currently alerts can be owned by an application instance, a group, or an individual user, and this determines who can edit the alert.
+Alerts can be owned by an individual user, an application instance or a group. The ownership will determine who can edit the alert.
+
+Alerts are periodically checked for **every minute**.
 **If the owner of an alert is deleted, then the alerts associated with that owner will also be deleted.**
 
 import AlertCreation from './assets/create-alert.png';
