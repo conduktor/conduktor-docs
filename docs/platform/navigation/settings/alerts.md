@@ -34,7 +34,7 @@ In the **New Alert** pane enter the required details. Each alert has to have:
 :::warning
 If the owner of an alert is deleted, the associated alerts will also be deleted.
 :::
-- (optional) comments lets you add a description explaining what the alert does or why you created it. This is useful if you're creating an external alert.
+- (optional) a description explaining what the alert does or why you created it. This is useful if you're creating an external alert.
 - a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
 
 ## Manage alerts
