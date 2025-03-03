@@ -27,7 +27,7 @@ import AlertCreationButton from './assets/create-alert-button.png';
 <img src={AlertCreationButton} alt="Alert creation" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
 In the **New Alert** pane enter the required details. Each alert has to have:
-  - unique name
+  - a unique name
   - a metric you want to measure (e.g. messageCount)
   - an operator and value for the threshold
   - an owner. This can be a group, an application instance or an individual user. The ownership will determine who can edit the alert.
