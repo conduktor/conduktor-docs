@@ -40,7 +40,6 @@ import AlertCreation from './assets/create-alert.png';
 
 If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications.
 
-Alerts are periodically checked for **every minute**.
 
 Each alert has a maximum of one external destination. After configuring a destination, you can click the 'send test' button to trigger a sample notification.
 
