@@ -46,7 +46,7 @@ import AlertCreation from './assets/create-alert.png';
 
 <img src={AlertCreation} alt="Alert creation" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) you will be able to set an external destination for alert notifications.
+If you have configured alerting integrations in [the integration settings page](/platform/navigation/settings/integrations) (e.g. Slack, Teams, webhooks) you will be able to set an external destination for alert notifications.
 
 
 Each alert has a maximum of one external destination. After configuring a destination, you can click the 'send test' button to trigger a sample notification.
