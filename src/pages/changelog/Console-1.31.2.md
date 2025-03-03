@@ -15,5 +15,5 @@ tags: fix
 
 ### Known Issues
 - When removing ACLs in the Service Account UI, you cannot remove the last ACL
- - As a workaround, you can create remove that last ACL, then create a new ACL against a resource name that does not exist.
+ - As a workaround, you can remove that last ACL, then create a new ACL against a resource name that does not exist.
  - We will address this issue in the next release
