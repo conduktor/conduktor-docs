@@ -10,7 +10,7 @@ description: Get notified about changes to your Kafka resources with alerts
 
 Alerts allow you to be notified and react to Kafka infrastructure or application changes as soon as they happen.
 
-You can integrate alerts with **Slack** and **MS Teams** to receive real-time notifications. Alternatively, set up arbitrary webhook destinations with any URL and custom headers. Find out how to [configure integrations](/platform/navigation/settings/integrations).
+You can integrate alerts with **Slack** and **MS Teams** to receive real-time notifications. Alternatively, set up arbitrary **webhook** destinations with any URL and custom headers. Find out how to [configure integrations](/platform/navigation/settings/integrations).
 
 Alerts are periodically checked for **every minute**.
 
