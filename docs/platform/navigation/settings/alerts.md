@@ -33,9 +33,11 @@ Each alert has to have:
 - a metric to measure
 - an operator and value for the threshold
 - an owner
+
 Alerts can be owned by an individual user, an application instance or a group. The ownership will determine who can edit the alert.
 
 Alerts are periodically checked for **every minute**.
+
 :::warning
 If the owner of an alert is deleted, the associated alerts will also be deleted.
 :::
