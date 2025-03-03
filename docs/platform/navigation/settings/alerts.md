@@ -89,8 +89,13 @@ You can also reference the example below:
 
 You can find an overview of an alert's history on the details page for that alert.
 
-TODO screenshot
+import AlertDetails from './assets/alert-details.png';
+
+<img src={AlertDetails} style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }}
+  alt="Screenshot of the alert details page. The left side lists alert properties like name and description. The right side displays a heatmap-style chart with red and grey squares indicating alert health and a table below listing recent alert notifications."
+  />
 
 The chart shows the alert's status over time, which you can use to see how long the alert has been healthy or firing.
-The table below the chart lists changes in the alert's status and a record of whether notifications were successfuly sent for those changes.
+The table below the chart lists alert notifications and a record of whether external notifications were successfuly delivered.
+Alerts in a firing state will trigger a notification every hour.
 Rows with failed notification delivery attempts will include a tooltip describing the error which occured.
