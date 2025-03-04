@@ -10,7 +10,7 @@ Conduktor Console can integrate with Slack, MS Teams and any system that receive
 
 Enabling the **Slack** integration requires creating a Slack application, installing this to your Slack workspace, inviting your app to the channel and adding the application token to Conduktor.  
 
-Enabling the **MS Teams** integration requires a webhook URL from Teams when creating alerts with this destination.
+After enabling the **MS Teams** integration you will need a Teams webhook URL to create alerts with this destination.
 
 :::info
 Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.
