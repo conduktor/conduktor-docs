@@ -39,7 +39,7 @@ If the owner of an alert is deleted, the associated alerts will also be deleted.
 
 ## Manage alerts
 You can **deactivate an alert without deleting** it. Deactivated alerts will continue to work but notifications to the specified destination won't be sent and the event history won't be recorded.
-You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations).
+You can also test, duplicate or delete the alert at any point.
 
 Select the event and click the three dots in the top-right corner:
 
