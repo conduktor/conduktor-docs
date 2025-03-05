@@ -11,7 +11,7 @@ tags: fix
 ### Features
 
 * Fixed a problem with the Create Topic Policy plugin which would not apply overrides to default configurations from the underlying Kafka setup.
-* Fixed a problem with CreateTopics ACLs in the gateway, which previously would also require Create cluster permission to be enabled
+* Fixed a problem with `CreateTopics ACLs` in Gateway which previously also required the `Create cluster` permission enabled.
 * Addressed a problem with Non Delegated SASL/PLAIN token credential, where it would continue to work after service account is deleted
 * Improved the Encryption Plugin descriptions in the API so that they can be differentiated
 * Fixed a problem in the Observability Plugin where it failed to apply configuration changes if optional flush interval was not set
