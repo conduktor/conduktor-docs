@@ -57,4 +57,4 @@ import AlertDetails from './assets/alert-details.png';
   />
 
 ## Alert list
-Go to **Settings > Alerts** to see all the alerts, grouped by owner. You can sort the view by name, status or destination and enable/disable as required. You can also customize this view to show/hide columns relevant to you.
+Go to **Settings > Alerts** to see all the alerts, grouped by owner. You can sort the view by name, status or destination and activate/deactivate as required. You can also customize this view to show/hide columns relevant to you.
