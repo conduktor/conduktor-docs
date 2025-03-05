@@ -15,7 +15,7 @@ You can integrate alerts with **Slack** and **MS Teams** to receive real-time no
 Alerts are periodically checked for **every minute**.
 
 ## Create alerts
-Alerts can be created for most resources (e.g. brokers or topics) in Conduktor Console. 
+Alerts can be created for most resources (e.g. brokers or topics) in Conduktor Console.
 
 To create an alert:
 1. Navigate to the required resource.
@@ -38,7 +38,9 @@ If the owner of an alert is deleted, the associated alerts will also be deleted.
 - a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
 
 ## Manage alerts
-You can disable an alert temporarily without deleting it. You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations). 
+You can **deactivate an alert without deleting** it. Deactivated alerts won't send notifications or record history/status until reactivated.
+
+You can also test, duplicate or delete the alert at any point.
 
 Select the event and click the three dots in the top-right corner:
 
@@ -46,7 +48,7 @@ import EditAlert from './assets/edit-alert.png';
 
 <img src={EditAlert} alt="Editing alerts" style={{ width: 200, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-## Alerting history
+## Alert history
 Each alert will keep a history of when it was triggered and the status over time. This gives you an overview of successful or failed deliveries. Alerts with the `firing` status will trigger a notification every hour.
 
 import AlertDetails from './assets/alert-details.png';
@@ -56,4 +58,4 @@ import AlertDetails from './assets/alert-details.png';
   />
 
 ## Alert list
-Go to **Settings > Alerts** to see all the alerts, grouped by owner. You can sort the view by name, status or destination and enable/disable as required. You can also customize this view to show/hide columns relevant to you.
+Go to **Settings > Alerts** to see all the alerts, grouped by owner. You can sort the view by name, status or destination and activate/deactivate as required. You can also customize this view to show/hide columns relevant to you.
