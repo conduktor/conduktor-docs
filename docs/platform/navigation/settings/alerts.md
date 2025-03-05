@@ -38,7 +38,7 @@ If the owner of an alert is deleted, the associated alerts will also be deleted.
 - a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
 
 ## Manage alerts
-You can deactivate an alert temporarily without deleting it. The status of deactivated alerts will continue to update but will not be recorded in the alert's history, and notifications will not be fired.
+You can **deactivate an alert without deleting** it. Deactivated alerts will continue to work but notifications to the specified destination won't be sent and the event history won't be recorded.
 You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations).
 
 Select the event and click the three dots in the top-right corner:
