@@ -15,7 +15,7 @@ You can integrate alerts with **Slack** and **MS Teams** to receive real-time no
 Alerts are periodically checked for **every minute**.
 
 ## Create alerts
-Alerts can be created for most resources (e.g. brokers or topics) in Conduktor Console. 
+Alerts can be created for most resources (e.g. brokers or topics) in Conduktor Console.
 
 To create an alert:
 1. Navigate to the required resource.
@@ -38,7 +38,8 @@ If the owner of an alert is deleted, the associated alerts will also be deleted.
 - a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
 
 ## Manage alerts
-You can disable an alert temporarily without deleting it. You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations). 
+You can deactivate an alert temporarily without deleting it. The status of deactivated alerts will continue to update but will not be recorded in the alert's history, and notifications will not be fired.
+You can also test the alert at any point or duplicate it (e.g. if you want the same alert to go to different external destinations).
 
 Select the event and click the three dots in the top-right corner:
 
