@@ -4,42 +4,44 @@ title: Environment Variables
 description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
 
-# Environment Variables
+Configuring environment variables is the recommended method for setting up Conduktor Gateway. They can be **set in the Gateway container**, or **taken from a file**. You can make sure the values have been properly set by checking the startup logs.
 
-Configuring the environment variables is the recommended way of setting up Conduktor Gateway.
+Using a file:
 
+You can mount a file that contains the key-value pairs into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`.
 
-Jump to:
+```env title="Example"
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
 
-- [Environment Variables](#environment-variables)
-  - [Kafka Environment Variables](#kafka-environment-variables)
-  - [Gateway Environment Variables](#gateway-environment-variables)
-    - [Guidelines](#guidelines)
-    - [Host/Port](#hostport)
-    - [Load Balancing](#load-balancing)
-    - [Client to Gateway Authentication](#client-to-gateway-authentication)
-      - [SSL](#ssl)
-      - [SSL Config](#ssl-config)
-      - [MTLS](#mtls)
-      - [OAuthbearer](#oauthbearer)
-      - [SECURITY PROVIDER](#security-provider)
-      - [SECRET MANAGEMENT](#secret-management)
-    - [HTTP](#http)
-    - [Internal State](#internal-state)
-      - [Topics Names](#topics-names)
-    - [Cluster Switching / Failover](#cluster-switching--failover)
-    - [Internal Setup](#internal-setup)
-      - [Threading](#threading)
-      - [Upstream Connection](#upstream-connection)
-    - [Feature Flags](#feature-flags)
-    - [Licensing](#licensing)
-    - [Audit](#audit)
-    - [Logging](#logging)
-    - [Product Analytics](#product-analytics)
+You'll get a confirmation in the logs: `Sourcing environment variables from $GATEWAY_ENV_FILE`, or a warning if the file is not found: `Warning: GATEWAY_ENV_FILE is set but the file does not exist or is not readable.`
 
-## Kafka Environment Variables
+---
+
+Setting environment variables in the container:
+
+For Docker, you can set them during the docker-run command with `-e` or `--env`:
+
+```shell
+-e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092 \
+-e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
+-e KAFKA_SASL_MECHANISM=PLAIN \
+-e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';"
+```
+
+For Kubernetes, you can set them in the `values.yaml`:
+
+```yaml
+gateway:
+  env:
+    KAFKA_SSL_TRUSTSTORE_LOCATION: /etc/gateway/tls/truststore/kafka.truststore.jks
+```
+
+## Connection from Gateway to Kafka
 
 Conduktor Gateway's connection to Kafka are configured by the `KAFKA_` environment variables.
+
 When translating Kafka's properties, use upper case instead and replace the `.` with `_`.  
 
 For example;  
@@ -47,237 +49,167 @@ When defining Gateway's Kafka property `bootstrap.servers`, declare it as the en
 
 Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway.
 
+You can find snippets for each security protocol on [this page](/gateway/configuration/kafka-authentication/).
 
-## Gateway Environment Variables
+## Connection from Clients to Gateway
 
-The default configurations for Conduktor Gateway can be overridden by setting environment variables, or importing environment variables from a file.
+| Environment Variable                              | Default Value                          | Description                                                                                                                                                                                                                      |
+|---------------------------------------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROTOCOL`                       | `KAFKA_SECURITY_PROTOCOL`              | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`.                                 |
+| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER`        | `false`                                | If no virtual cluster was detected, then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal.         |
+| `GATEWAY_ACL_ENABLED`                             | `false`                                | Enable/Disable ACLs support on the Gateway transparent virtual cluster (`passthrough`) only.                                                                                                                                     |
+| `GATEWAY_SUPER_USERS`                             | Usernames from GATEWAY_ADMIN_API_USERS | Coma-separated list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/>Example: `alice,bob`. If not set, it falls back to the usernames defined in the `GATEWAY_ADMIN_API_USERS`. |
+| `GATEWAY_ACL_STORE_ENABLED`                       | `false`                                | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br/>Enable/Disable ACLs support for Virtual Clusters only.                                                              |
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | `0`                                    | Force the client reauthentication after this amount of time. If set to 0, we never force the client to reauthenticate                                                                                                            |
 
-When importing from a file, mount the file into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`. The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`.
+### SSL
 
-You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below. 
+See [Client Authentication](/gateway/configuration/client-authentication/#ssl) for details.
 
-Use a .env file with key value pairs.
+| Environment Variable                          | Default Value        | Description                                                                                                                                                                                                                                                                                                                                                                                           |
+|-----------------------------------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Keystore**                                  |                      |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `GATEWAY_SSL_KEY_STORE_PATH`                  |                      | Path to a mounted keystore for SSL connections                                                                                                                                                                                                                                                                                                                                                        |
+| `GATEWAY_SSL_KEY_STORE_PASSWORD`              |                      | Password for the keystore defined above                                                                                                                                                                                                                                                                                                                                                               |
+| `GATEWAY_SSL_KEY_PASSWORD`                    |                      | Password for the key contained in the store above                                                                                                                                                                                                                                                                                                                                                     |
+| `GATEWAY_SSL_KEY_TYPE`                        | `jks`                | `jks`or `pkcs12`                                                                                                                                                                                                                                                                                                                                                                                      |
+| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES` | `5`                  | Interval in minutes to refresh SSL context                                                                                                                                                                                                                                                                                                                                                            |
+| **Truststore (for mTLS)**                     |                      |                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `GATEWAY_SSL_TRUST_STORE_PATH`                |                      | Path to a keystore for SSL connections                                                                                                                                                                                                                                                                                                                                                                |
+| `GATEWAY_SSL_TRUST_STORE_PASSWORD`            |                      | Password for the truststore defined above                                                                                                                                                                                                                                                                                                                                                             |
+| `GATEWAY_SSL_TRUST_STORE_TYPE`                | `jks`                | `jks`, `pkcs12`                                                                                                                                                                                                                                                                                                                                                                                       |
+| `GATEWAY_SSL_CLIENT_AUTH`                     | `NONE`               | `NONE` will not request client authentication, `OPTIONAL` will request client authentication, `REQUIRE` will require client authentication                                                                                                                                                                                                                                                            |
+| `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES`         | extracts the Subject | mTLS leverages SSL mutual authentication to identify a Kafka client. Principal for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) |
 
-```
-MY_ENV_VAR1=value
-MY_ENV_VAR2=otherValue
-```
-
-The logs will confirm, `Sourcing environment variables from $GATEWAY_ENV_FILE`, or warn if set and the file is not found
-
-```
-Warning: GATEWAY_ENV_FILE is set but the file does not exist or is not readable.
-```
-
-### Guidelines
-
-There is no typical deployment of Gateway as every environment will be unique in it's design considerations and security requirements.
-
-The below is an example including some variables we recommend you modify in any setup you do, but is by no
-means a guarantee of sufficient requirements in your setup.
-
-We will support you in onboarding of Conduktor Gateway to help you get setup in the first place and for any ongoing
-issues or questions please contact support at `support@conduktor.io`.
-
-__Example Values__
-
-```shell
-  -e KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092 \
-  -e KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT \
-  -e KAFKA_SASL_MECHANISM=PLAIN \
-  -e KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';"
-```
-
-### Host/Port
-
-| Environment Variable             | Default Value               | Description                                                                                                                                                |
-|----------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_BIND_HOST`              | `0.0.0.0`                   | The host on which to bind the gateway                                                                                                                      |
-| `GATEWAY_ADVERTISED_HOST`        | Your hostname               | The gateway hostname that should be presented to clients                                                                                                   |
-| `GATEWAY_PORT_START`             | `6969`                      | Port on which Gateway will start listening on                                                                                                              |
-| `GATEWAY_PORT_COUNT`             | (maxBrokerId-minBrokerId)+3 | Number of ports to be used by the Gateway, see [networking](docs/gateway/configuration/network.md#port-based-routing) for more on host/port configuration. |
-| `GATEWAY_MIN_BROKERID`           | `0`                         | The broker id associated to Gateway's first port (`GATEWAY_PORT_START`), should be the lowest `broker.id` (or `node.id`) defined in the Kafka cluster.     |
-| `GATEWAY_ROUTING_MECHANISM`      | `port`                      | `port` or `host`.                                                                                                                                          |
-| **SNI Routing only**             |                             | Check our dedicated guide on [SNI Routing ](/gateway/how-to/sni-routing/)                                                                                  |
-| `GATEWAY_ADVERTISED_SNI_PORT`    | none                        | Port to be advertised to the client if routing mechanism is set to `host` for SNI routing.                                                                 |
-| `GATEWAY_ADVERTISED_HOST_PREFIX` | `broker`                    | Set the host prefix when using SNI Routing                                                                                                                 |
-| `GATEWAY_SNI_HOST_SEPARATOR`     | `-`                         | Set the host separator when using SNI Routing. The value is split on the first occurrence of this separator.                                                | 
-
-
-### Load Balancing
-
-| Environment Variable                            | Default Value      | Description                                                                                                              |
-|-------------------------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_CLUSTER_ID`                            | `conduktorGateway` | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.              |
-| `GATEWAY_RACK_ID`                               | none               | Similar as `broker.rack`                                                                                                 |
-
-
-### Client to Gateway Authentication
-
-Note: These configurations apply to authentication between clients and Conduktor Gateway.
-For authentication between Conduktor Gateway and Kafka see [Kafka Environment Variables](#kafka-environment-variables)
-
-| Environment Variable                       | Default Value                         | Description                                                                                                                                                                                                            |
-|--------------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROTOCOL`                | defaults to `KAFKA_SECURITY_PROTOCOL` | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`                        |
-| `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` | default to `false`                    | If no virtual cluster was detected then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal |
-| `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                          |
-| `GATEWAY_SUPER_USERS`                      | empty                                 | Coma-separated list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/> Example: `alice,bob`.                                                                           |
-| `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br />Enable / Disable ACLs support for Virtual Clusters only.                                                 |
-
-#### SSL
-
-| Environment Variable                            | Default Value                      | Description                                       |
-|-------------------------------------------------|------------------------------------|---------------------------------------------------|
-| `GATEWAY_SSL_KEY_STORE_PATH`                    | `config/kafka-proxy.keystore.jks`  | Path to a keystore for SSL connections            |
-| `GATEWAY_SSL_KEY_STORE_PASSWORD`                | `123456`                           | Password for the keystore defined above           |
-| `GATEWAY_SSL_KEY_PASSWORD`                      | `123456`                           | Password for the key contained in the store above |
-| `GATEWAY_SSL_KEY_TYPE`                          | `jks`                              | We currently only support `jks`                   |
-| `GATEWAY_SSL_UPDATE_INTERVAL_MS`                | `600000`                           |                                                   |
-| `GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES`   | `5`                                | Interval in minutes to refresh SSL context        |
-
-| Environment Variable               | Default Value                       | Description                                                                                                                                |
-|------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SSL_TRUST_STORE_PATH`     | `config/kafka-proxy.truststore.jks` | Path to a keystore for SSL connections                                                                                                     |
-| `GATEWAY_SSL_TRUST_STORE_PASSWORD` | `123456`                            | Password for the keystore defined above                                                                                                    |
-| `GATEWAY_SSL_TRUST_STORE_TYPE`     | `jks`                               | We currently only support `jks`                                                                                                            |
-| `GATEWAY_SSL_CLIENT_AUTH`          | `NONE`                              | `NONE` will not request client authentication, `OPTIONAL` will request client authentication, `REQUIRE` will require client authentication |
-
-#### SSL Config
-
-| Environment Variable                                    | Default Value | Description                  |
-|---------------------------------------------------------|---------------|------------------------------|
-| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS`       | `0`           | Max Reauth                   |
-| `GATEWAY_AUTHENTICATION_TIMEOUT_MS`                     | `1000`        | Timeout in ms                |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MULTIPLIER` | `2`           | Backoff multiplier on reauth |
-| `GATEWAY_AUTHENTICATION_EXPONENTIAL_BACKOFF_MAX_MS`     | `5000`        | Max backoff                  |
-
-#### MTLS
-
-More context for mTLS [here](/gateway/concepts/service-accounts-authentication-authorization/)
-
-| Environment Variable                  | Default Value     | Description                                                                                                                                                                                                                                                                                                                                                                                           |
-|---------------------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` | extracts the `CN` | mTLS leverages SSL mutual authentication to identify a Kafka client. Principal for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate) |
-
-
-#### OAuthbearer
+### OAuthbearer
 
 Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
 
-| Environment Variable               | Default Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-|------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_OAUTH_JWKS_URL`           | `NULL`        | The OAuth/OIDC provider URL from which the provider's JWKS (JSON Web Key Set) can be retrieved. The URL can be HTTP(S)-based or file-based.                                                                                                                                                                                                                                                                                                                           | 
-| `GATEWAY_OAUTH_EXPECTED_ISSUER`    | `NULL`        | The (optional) setting for the broker to use to verify that the JWT was created by the expected issuer. The JWT will be inspected for the standard OAuth `iss` claim and if this value is set, the broker will match it exactly against what is in the JWT's `iss` claim. If there is no match, the broker will reject the JWT and authentication will fail                                                                                                           | 
-| `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | `NULL`        | The (optional) comma-delimited setting for the broker to use to verify that the JWT was issued for one of the expected audiences. The JWT will be inspected for the standard OAuth `aud` claim and if this value is set, the broker will match the value from JWT's `aud` claim to see if there is an exact match. If there is no match, the broker will reject the JWT and authentication will fail.                                                                 | 
-| `GATEWAY_OAUTH_JWKS_REFRESH`       | `NULL`        | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT.                                                                                                                                                                                                                                                                                           | 
-| `GATEWAY_OAUTH_JWKS_RETRY`         | `NULL`        | The (optional) value in milliseconds for the initial wait between JWKS (JSON Web Key Set) retrieval attempts from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting       | 
-| `GATEWAY_OAUTH_JWKS_MAX_RETRY`     | `NULL`        | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting | 
-| `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`   | `NULL`        | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                             |
-| `GATEWAY_OAUTH_SUB_CLAIM_NAME`     | `NULL`        | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                           |
-#### PLAIN
-These settings are used when credentials are managed on the Gateway, see [Client Authentication](/docs/gateway/configuration/client-authentication.md#plain) for details.
+| Environment Variable               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_OAUTH_JWKS_URL`           | The OAuth/OIDC provider URL from which the provider's JWKS (JSON Web Key Set) can be retrieved. The URL can be HTTP(S)-based or file-based.                                                                                                                                                                                                                                                                                                                           |
+| `GATEWAY_OAUTH_EXPECTED_ISSUER`    | The (optional) setting for the broker to use to verify that the JWT was created by the expected issuer. The JWT will be inspected for the standard OAuth `iss` claim and if this value is set, the broker will match it exactly against what is in the JWT's `iss` claim. If there is no match, the broker will reject the JWT and authentication will fail                                                                                                           |
+| `GATEWAY_OAUTH_EXPECTED_AUDIENCES` | The (optional) comma-delimited setting for the broker to use to verify that the JWT was issued for one of the expected audiences. The JWT will be inspected for the standard OAuth `aud` claim and if this value is set, the broker will match the value from JWT's `aud` claim to see if there is an exact match. If there is no match, the broker will reject the JWT and authentication will fail.                                                                 |
+| `GATEWAY_OAUTH_JWKS_REFRESH`       | The (optional) value in milliseconds for the broker to wait between refreshing its JWKS (JSON Web Key Set) cache that contains the keys to verify the signature of the JWT.                                                                                                                                                                                                                                                                                           |
+| `GATEWAY_OAUTH_JWKS_RETRY`         | The (optional) value in milliseconds for the initial wait between JWKS (JSON Web Key Set) retrieval attempts from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting       |
+| `GATEWAY_OAUTH_JWKS_MAX_RETRY`     | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
+| `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`   | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                             |
+| `GATEWAY_OAUTH_SUB_CLAIM_NAME`     | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                           |
 
-| Environment Variable           | Default Value                                                 | Description                                                                                                                                                         |
-|--------------------------------|---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens and *must* be changed. | Used for the `PLAIN` mechanism when generating JWT tokens for clients. You must set a random value which is at least 256 bit long to ensure tokens can't be forged. |
+### Plain
 
-#### SECURITY PROVIDER
+See [Client Authentication](/gateway/configuration/client-authentication/#plain) for details.
 
-| Environment Variable        | Default Value | Description                                                                                                             |
-|-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT` |
+| Environment Variable           | Default Value                                                   | Description                                                                                                                                                                                                                                                                                                    |
+|--------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_USER_POOL_SECRET_KEY` | A default value is used to sign tokens and **must** be changed. | If using SASL_PLAIN or SASL_SSL, you have the ability to create local service accounts on the Gateway. These service accounts will have credentials generated by the Gateway based on the `GATEWAY_USER_POOL_SECRET_KEY`. This is why, for production deployment, we strongly recommend you change this value. |
 
-Please note that `CONSCRYPT` does not support Mac OS with aarch64.
+## Networking
 
-#### SECRET MANAGEMENT
+### Port & SNI routing
 
-Secrets may be passed from configuration to Gateway using environment variables. Some suggested examples are below that may be more common, but you are free to use your own and avoid any clashes with existing environment variables. 
+| **Environment Variable**                                                        | **Description**                                                                                                                               | **Default**                       |
+|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| **Common Properties**                                                           |                                                                                                                                               |                                   |
+| `GATEWAY_ADVERTISED_HOST`                                                       | The hostname returned in the Gateway’s metadata for clients to connect to.                                                                    | Your hostname                     |
+| `GATEWAY_ROUTING_MECHANISM`                                                     | Defines the routing method: **`port` for port routing, `host` for SNI routing**.                                                              | `port`                            |
+| `GATEWAY_PORT_START`                                                            | The first port the Gateway listens on.                                                                                                        | `6969`                            |
+| `GATEWAY_MIN_BROKERID`                                                          | The broker ID associated with the first port (`GATEWAY_PORT_START`). Should match the lowest `broker.id` (or `node.id`) in the Kafka cluster. | `0`                               |
+| `GATEWAY_BIND_HOST`                                                             | The network interface the Gateway binds to.                                                                                                   | `0.0.0.0`                         |
+| [**Port routing specific**](/gateway/configuration/network/#port-based-routing) |                                                                                                                                               |                                   |
+| `GATEWAY_PORT_COUNT`                                                            | The total number of ports used by the Gateway.                                                                                                | `(maxBrokerId - minBrokerId) + 3` |
+| [**SNI routing specific**](/gateway/how-to/sni-routing)                         |                                                                                                                                               |                                   |
+| `GATEWAY_ADVERTISED_SNI_PORT`                                                   | The port returned in the Gateway’s metadata for clients to connect to when using SNI routing.                                                 | `GATEWAY_PORT_START`              |
+| `GATEWAY_ADVERTISED_HOST_PREFIX`                                                | Configures the advertised broker names.                                                                                                       | `broker`                          |
+| `GATEWAY_SECURITY_PROTOCOL`                                                     | Defines the security protocol clients should use to connect to the Gateway. **Must be set to `SSL`, `SASL_SSL`, or `DELEGATED_SASL_SSL`.**    |                                   |
+| `GATEWAY_SNI_HOST_SEPARATOR`                                                    | The separator used to construct returned metadata.                                                                                            | `-`                               |
 
-* `SCHEMA_REGISTRY_LOGIN`
-* `SCHEMA_REGISTRY_PASSWORD`
-* `AWS_ACCESS_KEY`
-* `AWS_SECRET_KEY`
-* `AWS_SESSION_TOKEN`
-* `AZURE_CLIENT_ID`
-* `AZURE_TENANT_ID`
-* `AZURE_CLIENT_SECRET`
-* `VAULT_TOKEN`
-* `VAULT_USERNAME`
-* `VAULT_PASSWORD`
-* etc.
+### Load Balancing
 
+| Environment Variable                            | Default Value | Description                                                                                                               |
+|-------------------------------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_CLUSTER_ID`                            | `gateway`     | A unique identifier for a given Gateway cluster, this is used to establish Gateway cluster membership for load balancing. |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether to use Conduktor Gateway's internal load balancer to balance connections between Gateway instances.               |
+| `GATEWAY_RACK_ID`                               |               | Similar as `broker.rack`.                                                                                                 |
 
-### HTTP
+### HTTP API
 
-| Environment Variable                 | Default Value                                           | Description                                                                                             |
-|--------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `GATEWAY_HTTP_PORT`                  | `8888`                                                  | The port on which the gateway will present the HTTP management API                                      |
-| `GATEWAY_SECURED_METRICS`            | `true`                                                  | Does the HTTP management API require authentication?                                                    |
-| `GATEWAY_ADMIN_API_USERS`            | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the api, please note that admin is required to do any write                       |
-| `GATEWAY_HTTPS_CLIENT_AUTH`          | `NONE`                                                  | Client auth configuration for HTTPS incoming connection. Possible values: `NONE`, `REQUEST`, `REQUIRED` |
-| `GATEWAY_HTTPS_KEY_STORE_PATH`       |                                                         | Activates HTTPS and defines the keystore to use for TLS connection                                      |
-| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`   |                                                         | Configures the password of the keystore used for HTTPS TLS connection                                   |
-| `GATEWAY_HTTPS_TRUST_STORE_PATH`     |                                                         | Configure the truststore used for the HTTPS TLS connection                                              |
-| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD` |                                                         | Configures the password of the truststore used for HTTPS TLS connection                                 |
+| Environment Variable                 | Default Value                                           | Description                                                                                                                        |
+|--------------------------------------|---------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_HTTP_PORT`                  | `8888`                                                  | The port on which the gateway will present the HTTP management API.                                                                |
+| `GATEWAY_SECURED_METRICS`            | `true`                                                  | Determines whether the HTTP management API requires authentication.                                                                |
+| `GATEWAY_ADMIN_API_USERS`            | `[{username: admin, password: conduktor, admin: true}]` | Users that can access the API. Note: Admin access is required for write operations. Setting `admin: true` grants read-only access. |
+| **HTTPS Configuration**              |                                                         |                                                                                                                                    |
+| `GATEWAY_HTTPS_KEY_STORE_PATH`       |                                                         | Enables HTTPS and specifies the keystore to use for TLS connections.                                                               |
+| `GATEWAY_HTTPS_KEY_STORE_PASSWORD`   |                                                         | Sets the password for the keystore used in HTTPS TLS connections.                                                                  |
+| `GATEWAY_HTTPS_CLIENT_AUTH`          | `NONE`                                                  | Client authentication configuration for mTLS. Possible values: `NONE`, `REQUEST`, `REQUIRED`.                                      |
+| `GATEWAY_HTTPS_TRUST_STORE_PATH`     |                                                         | Specifies the truststore used for mTLS.                                                                                            |
+| `GATEWAY_HTTPS_TRUST_STORE_PASSWORD` |                                                         | Password for the truststore defined above.                                                                                         |
+
+## Internal topics
+
+As the Gateway is stateless, it uses Kafka topics to store its internal state. The following environment variables can be used to configure these topics.
 
 ### Internal State
 
 To keep the Gateway instances stateless, internal state is stored in Kafka topics.
 
-| Environment Variable                                         | Default Value | Description                                          |
-|--------------------------------------------------------------|---------------|------------------------------------------------------|
-| `GATEWAY_GROUP_ID`                                           | null          | Set the group name for internal topic if not defined |
-| `GATEWAY_STORE_TTL_MS`                                       | `604800000`   | Time between full refresh                            | 
-| `GATEWAY_TOPIC_STORE_REAL_TOPIC_PARTITION_COUNT`             | `-1`          | Defaults to the one defined in your cluster settings |
-| `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR`              | `-1`          | Defaults to the one defined in your cluster settings |
-| `GATEWAY_TOPIC_STORE_DISTRIBUTED_CATCHUP_TIMEOUT_IN_SECONDS` | `1`           | Duration for catchup                                 |
+| Environment Variable                            | Default Value                     | Description                                                                                                                                                                                         |
+|-------------------------------------------------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_GROUP_ID`                              | `conduktor_${GATEWAY_CLUSTER_ID}` | Set the consumer group name used by Gateway to consume the internal license topic. This is thanks to this consumer group that the Gateways from the same Gateway cluster will recognize each other. |
+| `GATEWAY_STORE_TTL_MS`                          | `604800000`                       | Time between full refresh.                                                                                                                                                                          |
+| `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR` | `-1`                              | Defaults to the one defined in your cluster settings.                                                                                                                                               |
 
+### Topic Names
 
-#### Topic Names
+| Environment Variable                | Default Value                                          | Description                                                            |
+|-------------------------------------|--------------------------------------------------------|------------------------------------------------------------------------|
+| `GATEWAY_LICENSE_TOPIC`             | `_conduktor_${GATEWAY_CLUSTER_ID}_license`             | Topic where the license is stored.                                     |
+| `GATEWAY_TOPIC_MAPPINGS_TOPIC`      | `_conduktor_${GATEWAY_CLUSTER_ID}_topicmappings`       | Topic where the topics aliases are stored.                             |
+| `GATEWAY_USER_MAPPINGS_TOPIC`       | `_conduktor_${GATEWAY_CLUSTER_ID}_usermappings`        | Topic where the service accounts are stored.                           |
+| `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`    | Topic where the offsets for concentrated topic consumption are stored. |
+| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs` | Topic where the deployed interceptors are stored.                      |
+| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`  | Topic where the encryption configuration is stored, in specific cases. |
+| `GATEWAY_ACLS_TOPIC`                | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                | Topic where the ACLs managed by the Gateway are stored.                |
+| `GATEWAY_AUDIT_LOG_TOPIC`           | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`           | Topic where the Gateway audit log is stored.                           |
+| `GATEWAY_VCLUSTERS_TOPIC`           | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`           | Topic where the virtual clusters are stored.                           |
+| `GATEWAY_GROUPS_TOPIC`              | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`              | Topic where the service account groups are stored.                     |
 
-| Environment Variable                | Default Value                            | Description                                                               |
-|-------------------------------------|------------------------------------------|---------------------------------------------------------------------------|
-| `GATEWAY_LICENSE_TOPIC`             | `_conduktor_gateway_license`             | Name of license topic                                                     |
-| `GATEWAY_TOPIC_MAPPINGS_TOPIC`      | `_conduktor_gateway_topicmappings`       | Name of topicMappings topic                                               |
-| `GATEWAY_USER_MAPPINGS_TOPIC`       | `_conduktor_gateway_usermappings`        | Name of the user mapping topic                                            |
-| `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | `_conduktor_gateway_consumer_offsets`    | Name of the topic to store the offsets for concentrated topic consumption |
-| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | `_conduktor_gateway_interceptor_configs` | Name of interceptor config topic                                          |
-| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | `_conduktor_gateway_encryption_configs`  | Name of encryption configuration topic                                    |
-| `GATEWAY_ACLS_TOPIC`                | `_conduktor_gateway_acls`                | Name of the acl topic                                                     |
-| `GATEWAY_AUDIT_LOG_TOPIC`           | `_conduktor_gateway_auditlogs`           | Name of audit topic                                                       |
-| `GATEWAY_VCLUSTERS_TOPIC`           | `_conduktor_gateway_vclusters`           | Name of vclusters topic                                                   |
-| `GATEWAY_GROUPS_TOPIC`              | `_conduktor_gateway_groups`              | Name of groups topic                                                      |
+## Cluster Switching / Failover
 
+Setting up your Kafka clusters for [failover](/gateway/how-to/configuring-failover) is similar to the standard setup, but you need to provide two sets of properties: one for your main cluster and one for your failover cluster. You can define these properties as environment variables, or load a [clusters configuration file](/gateway/how-to/configuring-failover/#configuring-through-a-cluster-config-file) if you prefer.
 
-### Cluster Switching / Failover
-For a fuller description of the failover experience see the [failover how-to](docs/gateway/how-to/configuring-failover.md).
-Setup of environment variables is similar to normally [connecting to a Kafka cluster](#kafka-environment-variables), but you provide two sets, one for your main cluster, one for your failover cluster. You can also load a [cluster-config file](/docs/gateway/how-to/configuring-failover.md#configuring-through-a-cluster-config-file) if you prefer.
+| Environment Variable               | Description                                                                                                      |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_BACKEND_KAFKA_SELECTOR`   | Indicates the use of a configuration file and provides its path, e.g., `'file: { path: /cluster-config.yaml }'`. |
+| `KAFKA_FAILOVER_GATEWAY_ROLES`     | Set the Gateway into failover mode, set this to `failover` for this scenario.                                    |
+| **Main Cluster**                   |                                                                                                                  |
+| `KAFKA_MAIN_BOOTSTRAP_SERVERS`     | Bootstrap server.                                                                                                |
+| `KAFKA_MAIN_SECURITY_PROTOCOL`     | Security protocol.                                                                                               |
+| `KAFKA_MAIN_SASL_MECHANISM`        | SASL mechanism.                                                                                                  |
+| `KAFKA_MAIN_SASL_JAAS_CONFIG`      | SASL jaas config.                                                                                                |
+| **Failover Cluster**               |                                                                                                                  |
+| `KAFKA_FAILOVER_BOOTSTRAP_SERVERS` | Bootstrap server.                                                                                                |
+| `KAFKA_FAILOVER_SECURITY_PROTOCOL` | Security protocol.                                                                                               |
+| `KAFKA_FAILOVER_SASL_MECHANISM`    | SASL mechanism.                                                                                                  |
+| `KAFKA_FAILOVER_SASL_JAAS_CONFIG`  | SASL jaas config.                                                                                                |
 
-| Environment Variable               | Default Value | Description                                                                                              |
-|------------------------------------|---------------|----------------------------------------------------------------------------------------------------------|
-| `GATEWAY_BACKEND_KAFKA_SELECTOR`   |               | Indicates use of a file for config, and provide path to it e.g. `'file : { path: /cluster-config.yaml}'` |
-| `KAFKA_MAIN_BOOTSTRAP_SERVERS`     |               | Bootstrap server of the main cluster                                                                     |
-| `KAFKA_MAIN_SECURITY_PROTOCOL`     |               | Security protocol of the main cluster                                                                    |
-| `KAFKA_MAIN_SASL_MECHANISM`        |               | SASL mechanism of the main cluster                                                                       |
-| `KAFKA_MAIN_SASL_JAAS_CONFIG`      |               | SASL jaas config of the main cluster                                                                     |
-| `KAFKA_FAILOVER_BOOTSTRAP_SERVERS` |               | Bootstrap server of the failover cluster                                                                 |
-| `KAFKA_FAILOVER_SECURITY_PROTOCOL` |               | Security protocol of the failover cluster                                                                |
-| `KAFKA_FAILOVER_SASL_MECHANISM`    |               | SASL mechanism of the main cluster                                                                       |
-| `KAFKA_FAILOVER_SASL_JAAS_CONFIG`  |               | SASL jaas config of the main cluster                                                                     |
-| `KAFKA_FAILOVER_GATEWAY_ROLES`     |               | Set the Gateway into failover mode, set this to `failover` for this scenario                             |
+## Internal Setup
 
-### Internal Setup
+### Licensing
 
-#### Threading
+| Environment Variable  | Default Value | Description |
+|-----------------------|---------------|-------------|
+| `GATEWAY_LICENSE_KEY` | None          | License key |
 
-| Environment Variable                | Default Value   | Description                                                                          |
-|-------------------------------------|-----------------|--------------------------------------------------------------------------------------|
-| `GATEWAY_DOWNSTREAM_THREAD`         | number of cores | The number of threads dedicated to handling IO between clients and Conduktor Gateway |
-| `GATEWAY_UPSTREAM_THREAD`           | number of cores | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |
+### Threading
 
-#### Upstream Connection
+| Environment Variable        | Default Value   | Description                                                                          |
+|-----------------------------|-----------------|--------------------------------------------------------------------------------------|
+| `GATEWAY_DOWNSTREAM_THREAD` | number of cores | The number of threads dedicated to handling IO between clients and Conduktor Gateway |
+| `GATEWAY_UPSTREAM_THREAD`   | number of cores | The number of threads dedicated to handling IO between Kafka and Conduktor Gateway   |
+
+### Upstream Connection
 
 | Environment Variable                    | Default Value | Description                                                                                                                          |
 |-----------------------------------------|---------------|--------------------------------------------------------------------------------------------------------------------------------------|
@@ -286,26 +218,20 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 
 ### Feature Flags
 
-| Environment Variable                            | Default Value      | Description                                                                                                                                                                |
-|-------------------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`             | Whether or not to enable the audit feature                                                                                                                                 |
-| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`             | Whether or not to enable we replicate kafka internal load balancing                                                                                                        |
-
-### Licensing
-
-| Environment Variable  | Default Value | Description |
-|-----------------------|---------------|-------------|
-| `GATEWAY_LICENSE_KEY` | None          | License key |
+| Environment Variable                            | Default Value | Description                                                  |
+|-------------------------------------------------|---------------|--------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_AUDIT`                   | `true`        | Whether or not to enable the audit feature                   |
+| `GATEWAY_FEATURE_FLAGS_INTERNAL_LOAD_BALANCING` | `true`        | Whether or not to enable the Gateway internal load balancing |
 
 ### Audit
 
-| Environment Variable                            | Default Value   | Description                                                                                                         |
-|-------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | `0.1.0`         | Version                                                                                                             |
-| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`    | Target topic name                                                                                                   |
-| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`            | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   |
-| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`            | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
-| `GATEWAY_AUDIT_LOG_KAFKA_`                      |                 | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |
+| Environment Variable                            | Default Value | Description                                                                                                         |
+|-------------------------------------------------|---------------|---------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | `0.1.0`       | Version                                                                                                             |
+| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | `_auditLogs`  | Target topic name                                                                                                   |
+| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | `-1`          | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   |
+| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | `-1`          | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings |
+| `GATEWAY_AUDIT_LOG_KAFKA_`                      |               | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |
 
 ### Logging
 
@@ -322,19 +248,18 @@ Setup of environment variables is similar to normally [connecting to a Kafka clu
 | `LOG4J2_IO_VERTX_LEVEL`                                | `warn`        | Vertx log level (our HTTP API framework)                                                                                    | io.vertx                                 |
 | `LOG4J2_IO_NETTY_LEVEL`                                | `error`       | Netty log level (our network framework)                                                                                     | io.netty                                 |
 | `LOG4J2_IO_MICROMETER_LEVEL`                           | `error`       | Micrometer log level (our metrics framework)                                                                                | io.micrometer                            |
-| `LOG4J2_ROOT_LEVEL`                                    | `info`        | Root logging level (applies to anything else)                                                                               | (root)                                   |
+| `LOG4J2_ROOT_LEVEL`                                    | `info`        | Root logging level (applies to anything else that hasn't been listed above)                                                 | (root)                                   |
 
 ### Product Analytics
 
-| Environment Variable                                   | Default Value | Description                                                                                                                                                                                                                                   |
-|--------------------------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GATEWAY_FEATURE_FLAGS_ANALYTICS`                      | `true`        | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. |
+| Environment Variable              | Default Value | Description                                                                                                                                                                                                                                   |
+|-----------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_FEATURE_FLAGS_ANALYTICS` | `true`        | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. |
 
+### Security provider
 
-### Sourcing Environment Variables from a File
+| Environment Variable        | Default Value | Description                                                                                                             |
+|-----------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------|
+| `GATEWAY_SECURITY_PROVIDER` | `DEFAULT`     | Specify your security provider, can be `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT` |
 
-| Environment Variable | Default Value | Description                 |
-|----------------------|---------------|-----------------------------|
-| `GATEWAY_ENV_FILE`   |               | Path to an environment file |
-
-The environment file should be a text file with each line containing an environment variable in the format `KEY=VALUE`.
+Please note that `CONSCRYPT` does not support Mac OS with aarch64.
