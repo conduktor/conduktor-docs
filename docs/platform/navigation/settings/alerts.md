@@ -47,7 +47,7 @@ import EditAlert from './assets/edit-alert.png';
 
 <img src={EditAlert} alt="Editing alerts" style={{ width: 200, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-## Alerting history
+## Alert history
 Each alert will keep a history of when it was triggered and the status over time. This gives you an overview of successful or failed deliveries. Alerts with the `firing` status will trigger a notification every hour.
 
 import AlertDetails from './assets/alert-details.png';
