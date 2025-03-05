@@ -4,145 +4,189 @@ title: SNI Routing
 description: Making the most from the ports you have
 ---
 
-
-
 # SNI Routing
 
 ## What is it, what problem does it solve?
 
+SNI (Server Name Indication) routing reduces the number of Gateway ports exposed to clients.
 
-SNI routing reduces the number of ports/services that need to be created for Gateway. You might need to do this if you are experiencing a high administrative overhead for managing ports and/or load balancers or if you are limited in how many you can control e.g. a different team manages this.
+Unlike port mapping, which differentiates brokers based on the port a client connects to, **SNI routing distinguishes brokers by the hostname the client wants to connect to**. This allows the Gateway to expose a single port while directing traffic to the appropriate broker based on the client's requested hostname.
 
-*TL;DR* clients need to address individual Kafka brokers through Gateway, when we have limited ports or they can't be updated frequently then 1:1 may not work, in which case we can run multiple broker connections through a single port.
+This is particularly useful if you are:
+- Experiencing a high administrative overhead for managing multiple ports.
+- Restricted by your security department in the number of ports you can expose.
 
-- [Relevant Context](#relevant-context)
-    - [Defining Ports](#defining-ports)
-- [Setting up SNI Routing](#setting-up-sni-routing)
-    - [1. Prepare TLS Certificates](#1-prepare-tls-certificates)
-    - [2. Configure Gateway](#2-configure-gateway)
-    - [*Optional. Trust Store Configuration*](#optional-trust-store-configuration)
-- [Debugging Tips](#useful-tips-for-debugging-and-troubleshooting)
+As the SNI routing feature is based on TLS, we will detail the expected certificate requirements as well as the necessary DNS and Gateway configuration.
 
 ## Relevant Context
 
-**Background: how does a client interact with Kafka?**
+### Client connection workflow
 
-Let's start out by describing the networking flow between Kafka clients and a Kafka cluster, using a producer as an example:
-Using a producer in this example, the producer initiates a connection with a random broker (the famous `bootstrap server`) and sends a Metadata request.  
+To understand the different steps required to set up SNI routing, let's break it down into the connection steps each client would take:
+1. Connect to Gateway advertised host
+2. Retrieve how to reach the right broker for each topic partition in the metadata returned by the Gateway
+3. Directly connect to the desired broker through the Gateway
 
-The broker responds to the producer with the cluster information, indicating which brokers (**hostnames and ports**) exist in the cluster and which broker is the leader for each topic partition. When the producer wants to send data to a topic partition, it will send a Produce request directly to the leader. The bootstrap-servers are not necessarily involved, unless they host a topic partition as well. Consumers essentially work in the same way.  
+This means that we will have to:
+- [Define which ports we need to configure](#1-defining-ports) for the Gateway to listen on and return in the metadata.
+- [Make sure the Gateway handles the TLS termination](#2-tls-termination).
+- [Prepare the keystore certificate for Gateway](#3-prepare-gateways-keystore-certificate) to include **the Gateway hostname as well as a SAN for each broker in the cluster**. Alternatively, **wildcards** `*` can be used in the SAN, if supported by your issuer and security team.
+- [Add the same entries to the DNS server](#4-configure-dns) to allow the clients to be properly routed to the Gateway advertised host and Kafka brokers through the Gateway.
+- [Configure the Gateway to use the SNI routing](#5-configure-gateway) mechanism.
 
-When we deploy Gateway, to proxy the Kafka traffic, we need to ensure that client requests are forwarded to the right brokers. In order to keep Gateway as stateless as possible we do not store and resolve the mapping of topic-partitions to brokers internally. Instead, we pass this information on to the client which will then try to contact the correct broker through Gateway. Hence, the client must be able to address each broker individually through Gateway. By default, this is done by opening one port per broker on the Gateway.
+:::note
+In order to keep Gateway as **stateless** as possible, **we do not store the metadata internally**. We simply pass it on to the client. This means that the metadata will be refreshed every time a client asks for it (e.g. when a new client connects or when the connection refreshes).
+:::
 
-![map broker to port](./images/gw-map-broker-to-port.png)
-
-
-
-###  Defining ports
-
-The starting port defaults to 6969 and can be configured using the GATEWAY_PORT_START [environment variable](/gateway/configuration/env-variables#hostport).  
-
-Determining the number of brokers can be cumbersome, but made easier by tools such as Conduktor Console (read on for How-To), but it also changes. Luckily Gateway dynamically updates this for you, but your firewall or external config may not be as responsive.
-
-Instead of relying on multiple ports on a Gateway instance we can use SNI routing to just open up a single port on each Gateway instance.
-
-> SNI stands for Server Name Indication. It is an extension to the TLS (Transport Layer Security) protocol that allows a client to indicate the hostname of the server it wants to connect to during the initial handshake.
-This allows the server to determine which certificate to present based on the requested hostname. This enables the hosting of multiple secure "resources" on a single IP address, improving resource utilization and making SSL/TLS deployments more flexible.
-
-SNI routing relies on TLS and server name indication for Gateway to determine to which broker a client request should be forwarded to. This can drastically reduce the administrative overhead for managing ports and/or load balancers. The rest of this guide talks you through setting up SNI routing.
+Let's see how to do this in practice.
 
 ## Setting up SNI routing
 
-### 1. Prepare TLS certificates
+###  1. Defining ports
 
-The certificate for a Gateway with SNI routing needs to include the Gateway host name as well as a SAN for each broker in the cluster. Alternatively, wildcards can be used in the SAN if supported by your issuer and security team. 
-See below the alternative hostnames and how they can be customized.
+With the Gateway using SNI routing, you only expose a single port for all your brokers.
 
-### 2. Configure Gateway
+However, depending on your infrastructure, you may want to differentiate between the port the Gateway container listens on and the port returned in the metadata for clients to connect.
 
-The following table shows the environment variables used to configure Gateway, the config path will be displayed in the logs at Gateway startup and can be used to double-check that the correct value has been set.
+This could be the case if you're using a load balancer:
 
+import Ports from './assets/ports-sni.png';
 
+<img src={Ports} alt="Ports with SNI routing" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-| Environment Variable                        | Configuration Path                                          | Description                                                                                                                               | Mandatory | Default  | Possible values     |
-| ------------------------------------------- | ----------------------------------------------------------- |-------------------------------------------------------------------------------------------------------------------------------------------| --------- |----------| ------------------- |
-| GATEWAY_ADVERTISED_HOST                     | hostPortconfiguration.advertisedHost                        | Needs to be set, will be used as base domain for the brokers. For example: `conduktor-gateway.sni-demo.local`                             | Yes       |          |                     |
-| GATEWAY_SECURITY_PROTOCOL                   | authenticationConfig.securityProtocol                       | The type of authentication clients should use to connect to the Gateway. Needs to be set to one of the 2 possible values for SNI routing. | Yes       |          | `SASL_SSL` or `SSL` |
-| GATEWAY_ROUTING_MECHANISM                   | routing                                                     | Needs to be set to `host` for SNI routing                                                                                                 | Yes       |          | `host`              |
-| GATEWAY_PORT_START                          | hostPortConfiguration.portStart                             | The only port to be exposed by Gateway                                                                                                    | No        | `6969`   |                     |
-| GATEWAY_ADVERTISED_HOST_PREFIX              | hostPortConfiguration.hostPrefix                            | Configure the advertised broker names, see below for more details                                                                         | No        | `broker` |                     |
-| GATEWAY_SSL_KEY_STORE_PATH                  | authenticationConfig.sslConfig.keyStore.keyStorePath        | Path for the mounted keystore                                                                                                             | Yes       |          |                     |
-| GATEWAY_SSL_KEY_STORE_PASSWORD              | authenticationConfig.sslConfig.keyStore.keyStorePassword    | Password of the keystore                                                                                                                  | Yes       |          |                     |
-| GATEWAY_SSL_KEY_PASSWORD                    | authenticationConfig.sslConfig.keyStore.keyPassword         | Password of the key                                                                                                                       | Yes       |          |                     |
-| GATEWAY_SSL_KEY_TYPE                        | authenticationConfig.sslConfig.keyStore.keyStoreType        | Keystore type                                                                                                                             | No        | `jks`    | `jks`, `p12`        |
-| GATEWAY_SSL_UPDATE_CONTEXT_INTERVAL_MINUTES | authenticationConfig.sslConfig.updateContextIntervalMinutes | Interval in minutes to refresh SSL context                                                                                                | No        | `5`      |                     |
-| GATEWAY_SNI_HOST_SEPARATOR                  | hostPortconfiguration.sniHostSeparator                      | Set the hosts separator to use while reading your SANs. The value is split on the first occurence of this separator.                      | No        | `-`      |                     |
+By default, the Gateway listens on port 6969. This port can be configured using the `GATEWAY_PORT_START` [environment variable](/gateway/configuration/env-variables/#port--sni-routing).
 
-#### *Optional. Trust store configuration*
-For client authentication, you can additionally configure a trust store (including path, password, and type).
+To configure the port that is returned in the metadata, you can use the `GATEWAY_ADVERTISED_SNI_PORT`. By default, this port will be the same as the `GATEWAY_PORT_START`.
 
-**Example**
+### 2. TLS Termination
+
+SNI routing relies on TLS and server name indication for Gateway to determine to which broker a client request should be forwarded to.
+
+For this to work, **Gateway must terminate the TLS connection**. This means that Gateway must have a valid keystore certificate for the advertised host and all the brokers in the cluster, and should be the one to handle the TLS handshake with the client.
+
+### 3. Prepare Gateway's keystore certificate
+
+The keystore certificate for Gateway with SNI routing needs to include **the Gateway advertised host, as well as a SAN for each advertised broker in the cluster**.
+
+Alternatively, **wildcards** `*` can be used in the SAN, if supported by your issuer and security team.
+
+If you need to detail all the advertised brokers in the Gateway keystore, here is the format returned by the Gateway for each broker:
+
+import AdvertisedBrokersStructure from './assets/advertised-brokers.png';
+
+<img src={AdvertisedBrokersStructure} alt="Advertised brokers structure" style={{ width: 600, display: 'block', margin: 'auto' }} />
+
+We can find:
+- The **advertised host prefix**, which is customizable with `GATEWAY_ADVERTISED_HOST_PREFIX` and defaults to `broker`
+- The **Kafka cluster ID** in the Gateway, which is not customizable and defaults to `main`.
+- The **broker ID** in the Kafka cluster, which is unique for each broker and retrieved directly from your Kafka cluster.
+- The **SNI host separator**, which is customizable with `GATEWAY_SNI_HOST_SEPARATOR` and defaults to `-`.
+- The **advertised host**, which is customizable with `GATEWAY_ADVERTISED_HOST`.
+
+**Example:**
+
+Let's say we want to advertise the Gateway as `conduktor-gateway.sni-demo.local` and we have a Kafka cluster with 3 brokers with IDs 1, 2, and 3. The SANs for the certificate would be:
+
+```properties
+conduktor-gateway.sni-demo.local
+brokermain1-conduktor-gateway.sni-demo.local
+brokermain2-conduktor-gateway.sni-demo.local
+brokermain3-conduktor-gateway.sni-demo.local
+```
+
+Another option is to use wildcards in the SANs, for example:
+
+```properties
+*.sni-demo.local
+```
+
+### 4. Configure DNS
+
+Following what has been said on the section above, we will have to create DNS entries which allow the clients to be properly routed to the **Gateway advertised host and Kafka brokers through the Gateway**.
+
+Based on the previous example, we would have to define the following DNS entries to point to the Gateway:
+
+```properties
+conduktor-gateway.sni-demo.local
+brokermain1-conduktor-gateway.sni-demo.local
+brokermain2-conduktor-gateway.sni-demo.local
+brokermain3-conduktor-gateway.sni-demo.local
+```
+
+### 5. Configure Gateway
+
+You can find below the minimum configurations required depending on the security protocol you want to use. Note that this is in addition to the `KAFKA_` properties required for the Gateway to connect to the Kafka cluster.
+
+Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing)
+
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="SASL_SSL" label="SASL_SSL">
+
 ```yaml
-GATEWAY_ADVERTISED_HOST: cdkgateway.snidemo.local
-GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST_PREFIX: brokerpassthrough
+GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST_PREFIX: broker
+GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
 
-Given the configuration above, the necessary SANs for the certificate are:
+</TabItem>
+<TabItem value="DELEGATED_SASL_SSL" label="DELEGATED_SASL_SSL">
 
-```properties
-brokerpassthroughmain<broker_id>-cdkgateway.snidemo.local
+```yaml
+GATEWAY_ROUTING_MECHANISM: host
+GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST_PREFIX: broker
+GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
+GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
 
-for each broker in the cluster. For example:
+</TabItem>
+<TabItem value="TLS" label="TLS">
 
-```properties
-brokerpassthroughmain1-cdkgateway.snidemo.local
-brokerpassthroughmain2-cdkgateway.snidemo.local
-brokerpassthroughmain3-cdkgateway.snidemo.local
+```yaml
+GATEWAY_ROUTING_MECHANISM: host
+GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST_PREFIX: broker
+GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
+GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
 
-In general, the format for the advertised brokers to be included as SANs in the Gateway certificate is:
+</TabItem>
+<TabItem value="mTLS" label="mTLS">
 
-```properties
- <host_prefix><cluster_id><broker_id>-<advertised_host>
+```yaml
+GATEWAY_ROUTING_MECHANISM: host
+GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST_PREFIX: broker
+GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
+GATEWAY_SSL_KEY_PASSWORD: conduktor
+GATEWAY_SSL_CLIENT_AUTH: REQUIRE
+GATEWAY_SSL_TRUST_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.truststore.jks
+GATEWAY_SSL_TRUST_STORE_PASSWORD: conduktor
 ```
 
-Here, the `cluster_id` is used in case we have multiple back-end Kafka clusters, and defaults to main.
-
-Note that the `GATEWAY_SNI_HOST_SEPARATOR` is used when the hostname is parsed by the Gateway, as follows, to acquire the broker Id:
-
-1. Match the full host name based on the configured prefix `<host_prefix><cluster_id>` (using the `GATEWAY_ADVERTISED_HOST_PREFIX` value)
-2. Remove this prefix, and break the resulting value (`<broker_id>-<advertised_host>`) into two based on the `GATEWAY_SNI_HOST_SEPARATOR` value, and pick the first part.
-
-The `GATEWAY_SNI_HOST_SEPARATOR` may therefore appear in the values for:
-* GATEWAY_ADVERTISED_HOST_PREFIX
-* Cluster Id
-* GATEWAY_ADVERTISED_HOST
-
-But cannot appear in a broker Id. 
-
-## 3. Configure DNS
-
-Once you have your certificates configured, you will next need to create DNS entries which allow the clients to be properly routed to the kafka brokers.  Specifically, you will need to create a DNS entry for each Broker in your cluster using the same format as the SANs you specified in your Gateway certificates:
-
-```
-<host_prefix><cluster_id><broker_id>-<advertised_host>
-```
-
-This allows the client the connect to Gateway, for Gateway to then append the relevant broker details when it passes back the connection string for the Broker(s), and the client to look this up in DNS and connect appropriately.
+</TabItem>
+</Tabs>
 
 ## Useful tips for debugging and troubleshooting
 
-* You can use Console's Broker tab to view the advertised listeners of a Gateway once the initial connection and authentication are successful:
+You can use Console's Brokers tab to view the advertised listeners of a Gateway once the initial connection and authentication are successful:
 
-![console broker view](./images/console-broker-view.png)
+![Console Brokers view](assets/console-broker-view.png)
 
-* Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L) can be used to check whether the right advertised listeners have been configured or how many brokers are in a given cluster.
-* Setting `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL` to `DEBUG` might be helpful when debugging issues.
+Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L) can be used to check whether the right advertised listeners have been configured or how many brokers are in a given cluster.
+
+Setting `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL` to `DEBUG` might be helpful when debugging issues.
 
 For a rich guide on troubleshooting please refer to the knowledge base article [SNI Routing Troubleshooting Guide](https://support.conduktor.io/hc/en-gb/articles/29104372472977-Conduktor-Gateway-SNI-Routing-Troubleshooting-Guide).
