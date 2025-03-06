@@ -12,7 +12,7 @@ Partner Zones allows you to share streaming data with external partners selectiv
 - control access to Kafka topics with **tailored permissions**
 - **monitor data usage in real-time** 
 
-![Partner Zones overview](assets/pz-overview.png)
+![Partner Zones overview](assets/pz-detail-view.png)
 
 :::info
 Partner Zones is currently in **Beta** and this functionality is only available for **Console 1.31.0** and **Gateway 3.5.0** (or later).
