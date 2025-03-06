@@ -28,6 +28,6 @@ tags: fix
 - Fixed a problem with `CreateTopics ACLs` in Gateway which previously also required the `Create cluster` permission enabled.
 - Addressed a problem with Non Delegated SASL/PLAIN token credentials, where Gateway would continue to work after service account has been deleted. To enable this feature set the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` to `true` (it currently defaults to `false`).
 - Fixed a problem in `AddPartitionsToTxnRequest` where ACLs on transactionIds in new location were not being checked when Kafka API version was >= 4.
-- An un-autorized idempotent producer will now throw a `ClusterAuthorizationException` instead of a `TransactionalIdAuthorizationException`,  making Conduktor Gateway consistent with Kafka.
+- An un-authorized idempotent producer will now throw a `ClusterAuthorizationException` instead of a `TransactionalIdAuthorizationException`,  making Conduktor Gateway consistent with Kafka.
 
 
