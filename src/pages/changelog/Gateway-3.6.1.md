@@ -20,8 +20,7 @@ tags: fix
   - accuracy of rate limiting has been improved
   - `action`/`throttleTimeInMs` properties did not work correctly and are now ignored
 - Cluster ACLs
-  - Only allow `kafka-cluster` as cluster name (this makes Gateway consistent with Kafka)
-  - Previously you could create an ACL on any cluster name but it would be re-written to ???
+  - When creating cluster ACLs using a programmatic API, only allow `kafka-cluster` for the name part of the resource. This makes  Gateway consistent with Kafka. (Previously you could create an ACL on any cluster name but it would be re-written to `*`)
 
 ### Fixes
 
