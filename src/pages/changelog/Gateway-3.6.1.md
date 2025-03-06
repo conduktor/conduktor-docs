@@ -19,7 +19,7 @@ tags: fix
 - Changes to `Limit Commit Offset Plugin`:
   - accuracy of rate limiting has been improved
   - `action`/`throttleTimeInMs` properties did not work correctly and are now ignored
-- Changes to `cluster ACLs`
+- Changes to `cluster ACLs`:
   - When creating cluster ACLs using a programmatic API, only allow `kafka-cluster` for the name part of the resource. This makes  Gateway consistent with Kafka. (Previously you could create an ACL on any cluster name but it would be re-written to `*`)
 
 ### Fixes
