@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### New Features
+### New features
 
 - New metric `gateway.apiKeys.throttle_ms` : The throttling time in Kafka responses per apiKey in milliseconds
 - Metric `gateway.apiKeys.latency.request_response` : The latency to process a request and generate a response for each ApiKey
