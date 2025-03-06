@@ -16,7 +16,7 @@ tags: fix
 
 ### Feature changes
 
-- Changes to `Limit Commit Offset Plugin`
+- Changes to `Limit Commit Offset Plugin`:
   - accuracy of rate limiting has been improved
   - `action`/`throttleTimeInMs` properties did not work correctly and are now ignored
 - Changes to `cluster ACLs`
