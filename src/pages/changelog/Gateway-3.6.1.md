@@ -28,13 +28,7 @@ tags: fix
 - Fixed a problem with the Create Topic Policy plugin which would not apply overrides to default configurations from the underlying Kafka setup.
 - Fixed a problem with `CreateTopics ACLs` in Gateway which previously also required the `Create cluster` permission enabled.
 - Addressed a problem with Non Delegated SASL/PLAIN token credentials, where Gateway would continue to work after service account has been deleted. To enable this feature set the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` to `true` (it currently defaults to `false`).
-- Fixed a problem in the Observability Plugin where it failed to apply configuration changes if optional flush interval was not set.
 - Fixed a problem in `AddPartitionsToTxnRequest` where ACLs on transactionIds in new location were not being checked when Kafka API version was >= 4.
-- Fixed inconsistencies with Kafka for `InitProducerIdRequest` on un-authorised requests 
-  - now fails with `TRANSACTIONAL_ID_AUTHORIZATION_FAILED` instead of `TRANSACTIONAL_ID_AUTHORIZATION_FAILED` when `transactionalId` is non-null
-  - now fails with `CLUSTER_AUTHORIZATION_FAILED` instead of `TRANSACTIONAL_ID_AUTHORIZATION_FAILED` when `transactionalId` is null
+- An un-autorized idempotent producer will now throw a `ClusterAuthorizationException` instead of a `TransactionalIdAuthorizationException` (making gateway consistent with Kafka)
 
 
-### Quality of Life Improvements
-
-* Improved the Encryption Plugin descriptions in the API so that they can be differentiated
