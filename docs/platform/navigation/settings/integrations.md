@@ -1,20 +1,22 @@
 ---
 sidebar_position: 6
 title: Integrations
-description: Connect Conduktor to other tools that your team uses.
+description: Connect Conduktor to other tools.
 ---
 
-## Configuring Integrations
+## Configuring integrations
 
-Conduktor console can integrate with Slack, MS Teams, and any system that receives webhooks.
-MS Teams and webhook integrations can be enabled and disabled from this page with a simple toggle.  
-**Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.**  
+Conduktor Console can integrate with Slack, MS Teams and any system that receives webhooks.
+
 Enabling the **Slack** integration requires creating a Slack application, installing this to your Slack workspace, inviting your app to the channel and adding the application token to Conduktor.  
-Enabling the **MS Teams** integration requires a webhook URL from Teams when creating alerts with this destination.
-Additional instructions for either integration can be found within Conduktor's UI as part of setup, or below.  
 
+After enabling the **MS Teams** integration you will need a Teams webhook URL to create alerts with this destination.
 
-## Slack Integration
+:::info
+Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.
+:::
+
+## Slack integration
 
 As part of configuring the Slack integration in Conduktor, you will find steps for [creating a Slack application](https://api.slack.com/apps) (a bot) using the app manifest template (provided in Conduktor). This app needs to be installed to your Slack workspace and the OAuth token added to the Conduktor integration.
 
@@ -27,7 +29,7 @@ import SlackIntegration from './assets/slack-invite.png';
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
 
 
-## Microsoft Teams Integration using Workflows
+## Microsoft Teams integration using Workflows
 
 Microsoft plans to retire existing Microsoft 365 (previously Office 365) connectors and webhooks across all cloud platforms starting 8/15/2024, with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
 
@@ -35,7 +37,7 @@ This document focusses on the Workflows integration, rather than webhooks which 
 
 You can send notifications to different rooms for different alerts. However, this room must be a Microsoft Teams "standard room" and not a "shared" room.
 
-### Workflows Setup Instructions
+### Workflows setup
 
 1.  Open the Workflows app within the chat or channel by right-clicking on the conversation, or by clicking on More options (…) then selecting Workflows.
 
@@ -92,3 +94,47 @@ import Workflows7 from './assets/workflows-7.png';
 import Workflows8 from './assets/workflows-8.png';
 
 <img src={Workflows8} alt="Workflows" style={{ width: 600, display: 'block', margin: 'auto' }} />
+
+## Webhook integration
+
+You can use a tool like [webhook.site](https://webhook.site) to check the payload sent for webhook notifications.
+
+Here's an example:
+
+```json
+{
+  "data": {
+    "metatadata": {
+      "name": "high produce rate",
+      "appInstance": null,
+      "group": "menu-team",
+      "user": null,
+      "updatedAt": "2025-01-21T14:13:34.729783423Z",
+      "updatedBy": "mary@example.com",
+      "lastTriggeredAt": null,
+      "status": "Pending"
+    },
+    "spec": {
+      "cluster": "prod-internal",
+      "threshold": 1000,
+      "operator": "GreaterThan",
+      "metric": "MessageIn",
+      "promQl": "sum(rate(kafka_partition_latest_offset{cluster_id=\"shadow-julien\"}[1m])) > 1000",
+      "description": "Miguel knows how to fix this",
+      "displayName": null,
+      "destination": {
+        "url": "https://example.com/webhook/f0c608e3-aca3-4b07-8d4d-7226f629ade9",
+        "method": "POST",
+        "headers": {
+          "example": "123"
+        },
+        "authentification": null,
+        "type": "Webhook"
+      },
+      "disable": null,
+      "type": "BrokerAlert"
+    }
+  },
+  "status": "resolved"
+}
+```
