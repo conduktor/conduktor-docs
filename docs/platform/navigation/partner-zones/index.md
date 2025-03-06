@@ -56,7 +56,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone. 
    - **Select Gateway** you want to use and click **Continue**.
-1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, all topics will be shared with **Read** access for security but you can change that. To allow adding data to topics, toggle access to **Write**. Click **Continue** when done.
+1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write**. Click **Continue** when done.
 1. Finally, **Enable global transformations** or skip to continue with the defaults. Currently, we only offer **Traffic control policies**, set to the following:
    - `Maximum Produce Rate`: 10 000 bytes/sec.
    - `Maximum Consume Rate`: 10 000 bytes/sec.
