@@ -43,11 +43,9 @@ curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docke
 ```
 
 :::info
-If you have an M4 Mac the above command will fail because of a [JDK/Docker interopability bug](https://github.com/adoptium/adoptium-support/issues/1223). Use the following work-around until a JDK fix is released in April.
+If you have an M4 Mac the above command will fail because of a [JDK/Docker interopability bug](https://github.com/adoptium/adoptium-support/issues/1223). Use the following work-around until a JDK fix is released in April: 
 
-```bash
-curl -L https://releases.conduktor.io/quick-start-m4 -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
-```
+`curl -L https://releases.conduktor.io/quick-start-m4 -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"`
 :::
 
 #### Option 2: Use your existing Kafka cluster
