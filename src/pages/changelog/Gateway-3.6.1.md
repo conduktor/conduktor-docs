@@ -11,7 +11,7 @@ tags: fix
 ### New features
 
 - New metric `gateway.apiKeys.throttle_ms` : sets the throttling time in Kafka responses per apiKey in milliseconds
-- Updated existing Metric `gateway.apiKeys.latency.request_response` : sets the latency to process a request and generate a response for each ApiKey
+- Updated existing metric `gateway.apiKeys.latency.request_response` : sets the latency to process a request and generate a response for each API key
   - It now tracks latency for all verbs (eg CONNECTION) not just FETCH/PRODUCE
 
 ### Feature changes
