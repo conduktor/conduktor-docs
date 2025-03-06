@@ -5,7 +5,7 @@ description: Securely share your Kafka streaming data with external partners.
 ---
 
 ## Overview
-Partner Zones allows you to share streaming data with external partners selectively and securely, without the need to replicate data or create duplicate Kafka clusters. You can:
+Partner Zones allow you to share streaming data with external partners selectively and securely, without the need to replicate data or create duplicate Kafka clusters. You can:
 - set up **dedicated zones** with **customized access** to data
 - create a **single source of truth** because data isn't duplicated
 - **reduce operational costs**, since you don't have to keep data streams synchronized
@@ -31,8 +31,8 @@ curl --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/passthrou
     --data-raw '{"lifeTimeSeconds": 7776000}' | jq -r ".token"
 ```
 
-1. In Console, go to **Settings** > **Clusters** and select the relevant cluster.
-1. For **Authentication method** select **SASL** and use the token.
+2. In Console, go to **Settings** > **Clusters** and select the relevant cluster.
+3. For **Authentication method** select **SASL** and use the token.
 
 
 ## Create a Partner Zone
