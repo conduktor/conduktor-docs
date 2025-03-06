@@ -10,7 +10,6 @@ Partner Zones allow you to share streaming data with external partners selective
 - create a **single source of truth** because data isn't duplicated
 - **reduce operational costs**, since you don't have to keep data streams synchronized
 - control access to Kafka topics with **tailored permissions**
-- **monitor data usage in real-time** 
 
 ![Partner Zones overview](assets/pz-detail-view.png)
 
