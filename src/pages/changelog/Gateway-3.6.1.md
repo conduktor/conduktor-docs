@@ -14,7 +14,7 @@ tags: fix
 - Metric `gateway.apiKeys.latency.request_response` : The latency to process a request and generate a response for each ApiKey
   - Updated to track latency for all verbs (eg CONNECTION) not just FETCH/PRODUCE
 
-### Feature Changes
+### Feature changes
 
 - Limit Commit Offset Plugin
   - accuracy of rate limiting has been improved
