@@ -85,19 +85,19 @@ We can find:
 
 **Example:**
 
-Let's say we want to advertise the Gateway as `conduktor-gateway.sni-demo.local` and we have a Kafka cluster with 3 brokers with IDs 1, 2, and 3. The SANs for the certificate would be:
+Let's say we want to advertise the Gateway as `gateway.conduktor.sni-demo.local` and we have a Kafka cluster with 3 brokers with IDs 1, 2, and 3. The SANs for the certificate would be:
 
 ```properties
-conduktor-gateway.sni-demo.local
-brokermain1-conduktor-gateway.sni-demo.local
-brokermain2-conduktor-gateway.sni-demo.local
-brokermain3-conduktor-gateway.sni-demo.local
+gateway.conduktor.sni-demo.local
+brokermain1-gateway.conduktor.sni-demo.local
+brokermain2-gateway.conduktor.sni-demo.local
+brokermain3-gateway.conduktor.sni-demo.local
 ```
 
 Another option is to use wildcards in the SANs, for example:
 
 ```properties
-*.sni-demo.local
+*.conduktor.sni-demo.local
 ```
 
 ### 4. Configure DNS
@@ -107,10 +107,10 @@ Following what has been said on the section above, we will have to create DNS en
 Based on the previous example, we would have to define the following DNS entries to point to the Gateway:
 
 ```properties
-conduktor-gateway.sni-demo.local
-brokermain1-conduktor-gateway.sni-demo.local
-brokermain2-conduktor-gateway.sni-demo.local
-brokermain3-conduktor-gateway.sni-demo.local
+gateway.conduktor.sni-demo.local
+brokermain1-gateway.conduktor.sni-demo.local
+brokermain2-gateway.conduktor.sni-demo.local
+brokermain3-gateway.conduktor.sni-demo.local
 ```
 
 ### 5. Configure Gateway
@@ -126,10 +126,10 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
-GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
@@ -139,10 +139,10 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
-GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
@@ -152,10 +152,10 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SSL
-GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
@@ -165,14 +165,14 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
-GATEWAY_ADVERTISED_HOST: conduktor-gateway.sni-demo.local
+GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SSL
-GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.keystore.jks
+GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
 GATEWAY_SSL_CLIENT_AUTH: REQUIRE
-GATEWAY_SSL_TRUST_STORE_PATH: /security/kafka.conduktor-gateway.sni-demo.local.truststore.jks
+GATEWAY_SSL_TRUST_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.truststore.jks
 GATEWAY_SSL_TRUST_STORE_PASSWORD: conduktor
 ```
 
