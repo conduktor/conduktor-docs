@@ -125,6 +125,7 @@ For authentication between Conduktor Gateway and Kafka see [Kafka Environment Va
 | `GATEWAY_ACL_ENABLED`                      | default to `false`                    | Enable / Disable ACLs support on the Gateway (not including Virtual Clusters)                                                                                                                                          |
 | `GATEWAY_SUPER_USERS`                      | empty                                 | Coma-separated list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/> Example: `alice,bob`.                                                                           |
 | `GATEWAY_ACL_STORE_ENABLED`                | default to `false`                    | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br />Enable / Disable ACLs support for Virtual Clusters only.                                                 |
+| `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` | default to `false`                  | Require Service Account for access in Non Delegated SASL/PLAIN token mode when ACLs are enabled. |
 
 #### SSL
 
