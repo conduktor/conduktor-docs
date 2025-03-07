@@ -52,7 +52,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - Add a descriptive **name** for the zone.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this zone in CLI/API.
    - **Service account** will also be auto-generated based on the name but you can edit this as required. [Service accounts](/platform/navigation/console/service-accounts/) are used to define permissions to Kafka resources, called ACLs (Access Control Lists).
-   - The **URL** can be entered manually, if it doesn't match the one auto-generated one. This is the URL of your partner.
+   - (Optional) Enter the **URL** of your partner.
    - Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone. 
    - **Select Gateway** you want to use and click **Continue**.
