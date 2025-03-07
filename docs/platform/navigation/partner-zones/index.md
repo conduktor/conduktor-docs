@@ -71,19 +71,21 @@ Once completed, the **Credentials** will be displayed. Copy/download and share t
 If these credentials are lost, you may have to re-create the Partner Zone.
 :::
 
-To view and manage all the zones you have access to, go to **Settings** > **Partner Zones**. You'll see the list of zones as well as:
-- the total number of zones and topics shared
-- the number of topics shared per zone
-- Gateway details for each zone
-- the status of each zone:
-  - **Pending**: the configuration isn't deployed or refreshed yet
-  - **Ready**: the configuration is up to date on Gateway
-  - **Failed**: Something unexpected happened during the creation. Check that the connected Gateway is active.
+To view and manage all the zones you have access to, go to **Settings** > **Partner Zones**. You'll see the total number of zones and topics shared, as well as a list of zones, each showing:
+- name and URL
+- the number of topics shared
+-  Gateway details
+- the status:
+  - **Pending**: means the configuration isn't deployed or refreshed yet
+  - **Ready**: shows that the configuration is up-to-date on Gateway
+  - **Failed**: indicates that something unexpected happened during the creation. Check that the connected Gateway is active.
 - the date the zone was last updated
 
-Click on a Partner Zone to view its details. 
+Click on a Partner Zone to view its details.
 
-To **delete a Partner Zone**, click the **three dots** on the right-hand side and select **Delete**. A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
+You can **delete Partner Zones** in the zone list view (click the **three dots** on the right-hand side and select **Delete**) or when viewing the details of a zone, click the **trash can** at the top right corner. 
+
+A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
 
 </TabItem>
 <TabItem value="Second Tab" label="Conduktor CLI">
