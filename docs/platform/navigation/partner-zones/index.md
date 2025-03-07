@@ -35,7 +35,7 @@ curl --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/passthrou
 
 
 ## Create a Partner Zone
-You can create a Partner Zone from **Console's UI**, or the **Conduktor CLI**.
+You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
