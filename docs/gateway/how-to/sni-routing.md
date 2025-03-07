@@ -4,9 +4,9 @@ title: SNI Routing
 description: Making the most from the ports you have
 ---
 
-# SNI Routing
+# SNI routing
 
-## What is it, what problem does it solve?
+## Overview
 
 SNI (Server Name Indication) routing reduces the number of Gateway ports exposed to clients.
 
@@ -16,9 +16,7 @@ This is particularly useful if you are:
 - Experiencing a high administrative overhead for managing multiple ports.
 - Restricted by your security department in the number of ports you can expose.
 
-As the SNI routing feature is based on TLS, we will detail the expected certificate requirements as well as the necessary DNS and Gateway configuration.
-
-## Relevant Context
+## Context
 
 ### Client connection workflow
 
@@ -28,7 +26,7 @@ To understand the different steps required to set up SNI routing, let's break it
 3. Directly connect to the desired broker through the Gateway
 
 This means that we will have to:
-- [Define which ports we need to configure](#1-defining-ports) for the Gateway to listen on and return in the metadata.
+- [Define which ports we need to configure](#1-define-ports) for the Gateway to listen on and return in the metadata.
 - [Make sure the Gateway handles the TLS termination](#2-tls-termination).
 - [Prepare the keystore certificate for Gateway](#3-prepare-gateways-keystore-certificate) to include **the Gateway hostname as well as a SAN for each broker in the cluster**. Alternatively, **wildcards** `*` can be used in the SAN, if supported by your issuer and security team.
 - [Add the same entries to the DNS server](#4-configure-dns) to allow the clients to be properly routed to the Gateway advertised host and Kafka brokers through the Gateway.
@@ -38,11 +36,9 @@ This means that we will have to:
 In order to keep Gateway as **stateless** as possible, **we do not store the metadata internally**. We simply pass it on to the client. This means that the metadata will be refreshed every time a client asks for it (e.g. when a new client connects or when the connection refreshes).
 :::
 
-Let's see how to do this in practice.
+## Set up SNI routing
 
-## Setting up SNI routing
-
-###  1. Defining ports
+###  1. Define ports
 
 With the Gateway using SNI routing, you only expose a single port for all your brokers.
 
@@ -58,11 +54,13 @@ By default, the Gateway listens on port 6969. This port can be configured using 
 
 To configure the port that is returned in the metadata, you can use the `GATEWAY_ADVERTISED_SNI_PORT`. By default, this port will be the same as the `GATEWAY_PORT_START`.
 
-### 2. TLS Termination
+### 2. TLS termination
 
-SNI routing relies on TLS and server name indication for Gateway to determine to which broker a client request should be forwarded to.
+The concept of SNI routing isn't specific to Gateway. It relies on information inside the TLS connection for the SNI router to determine how to forward network requests. To be able to access this information, the SNI router must terminate the TLS connection.
 
-For this to work, **Gateway must terminate the TLS connection**. This means that Gateway must have a valid keystore certificate for the advertised host and all the brokers in the cluster, and should be the one to handle the TLS handshake with the client.
+In our case, as the Gateway acts as SNI router, it must:
+- Handle the TLS handshake with the client
+- Have a valid keystore certificate for the advertised host (and all the brokers in the cluster)
 
 ### 3. Prepare Gateway's keystore certificate
 
