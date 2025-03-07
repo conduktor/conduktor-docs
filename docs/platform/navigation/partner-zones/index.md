@@ -61,7 +61,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - `Maximum Produce Rate`: 10 000 bytes/sec.
    - `Maximum Consume Rate`: 10 000 bytes/sec.
    - `Limit Commit Offset`: 30 attempts/min.
-1. **Carefully review** the details of the Partner Zone and make sure you're not sharing confidential data. Click **Create** when ready. 
+1. Review the details and if you're happy with the data you're about to share, click **Create**.
 
 It will *take a few moments* for the zone to be created. 
 
