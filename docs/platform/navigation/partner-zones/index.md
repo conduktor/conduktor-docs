@@ -190,7 +190,7 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
 </details>
 <details>
   <summary>Does **Generate password** invalidate the previous credentials of service account?</summary>
-  <p>No.</p>
+  <p>No, you can't invalidate the credentials. If unsure, delete the Partner Zone and re-create it.</p>
 </details>
 <details>
   <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
