@@ -153,7 +153,7 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
     The `metadata status`can have one of these values:
       - **Pending**: the configuration isn't deployed or refreshed yet
       - **Ready**: the configuration is up to date on Gateway
-      - **Failed**: something unexpected happened during the deployment
+      - **Failed**: something unexpected happened during the creation
 
 1. To securely connect to a Partner Zone through Kafka client, we've created a service account `spec.serviceAccount`. For additional security, you have to also generate a password for it:
     ```bash
