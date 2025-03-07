@@ -189,7 +189,7 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
   </p>
 </details>
 <details>
-  <summary>Does **Generate password** invalidate the credentials of service account?</summary>
+  <summary>Does **Generate password** invalidate the previous credentials of service account?</summary>
   <p>No.</p>
 </details>
 <details>
