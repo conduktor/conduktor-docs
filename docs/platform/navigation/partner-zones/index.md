@@ -72,7 +72,7 @@ If these credentials are lost, you may have to re-create the Partner Zone.
 :::
 
 To view and manage all the zones you have access to, go to **Settings** > **Partner Zones**. You'll see the list of zones as well as:
-- a total number of zones and topics shared
+- the total number of zones and topics shared
 - the number of topics shared per zone
 - Gateway details for each zone
 - the status of each zone:
