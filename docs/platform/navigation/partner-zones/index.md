@@ -78,7 +78,7 @@ To view and manage all the zones you have access to, go to **Settings** > **Part
 - the status of each zone:
   - **Pending**: the configuration isn't deployed or refreshed yet
   - **Ready**: the configuration is up to date on Gateway
-  - **Failed**: Something unexpected happened during the deployment. Check that the connected Gateway is active.
+  - **Failed**: Something unexpected happened during the creation. Check that the connected Gateway is active.
 - the date the zone was last updated
 
 Click on a Partner Zone to view its details. 
