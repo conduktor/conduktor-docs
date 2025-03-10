@@ -70,7 +70,8 @@ Find out more about our [Exchange product](https://conduktor.io/exchange).
 Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
 :::
 
-Partner Zones allows you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
+Partner Zones functionality allows you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
+
 In this release we're introducing the ability to create a Partner Zone via the Console UI with a few steps, including the ability to set traffic control policies.
 
 In upcoming releases we'll be adding:
