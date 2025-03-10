@@ -16,18 +16,21 @@ tags: features,fix
   - [Service account labels](#service-account-labels)
   - [Audit Log](#audit-log)
 - [Exchange](#exchange)
-  - [Partner Zone](#partner-zone-1)
+  - [Introducing A New Partner Zones UI for Third-Party Data Sharing](#introducing-a-new-partner-zones-ui-for-third-party-data-sharing)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 ### Breaking changes
 
 #### Partner Zone
-Gateway 3.6.1 is required for this release.
+Improvements to the new Partner Zone functionality mean that Gateway 3.6.1 must be deployed with this release of Console.
 
 ### Scale
 
 #### Role Based Navigation
+
+To improve the user experience, the primary navigation menu will only show you options relevant to your user's permissions and role.
+This allows users to focus on the task at hand and removes the distraction of features that they are unable to access.
 
 #### Alert history
 
@@ -45,10 +48,32 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 #### Audit Log
 
+All audit log events now follow the [Cloud Events specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md) and are exportable via a Kafka topic.
+The UI will let you easily filter for specific events, and will identify events triggered by the Conduktor platform.
+A full list of all the audited events can be found in the [Audit Log](/platform/navigation/settings/audit-log/) section of the documentation.
+
+The legacy audit events are still available by clicking the `Legacy audit logs` link on the Audit Log screen, however these will be removed in an upcoming release.
+
+
 ### Exchange
 
-#### Partner Zone
+**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
+Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
 
+#### Introducing A New Partner Zones UI for Third-Party Data Sharing
+
+:::info
+Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
+:::
+
+Partner Zones enable you to securely share your streaming data with external partners, without needing to replicate the data into a second, physical Kafka cluster.
+In this latest release we have introduced the ability to create your partner zone via the Console UI, including the ability to set traffic control policies.
+
+In the upcoming releases, we will be adding the following:
+- The ability to edit partner zone configurations
+- Topic renaming capability to avoid leaking internal topic names to your partners
+
+For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
 
 
 ***
