@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: SNI Routing
-description: Making the most from the ports you have
+title: SNI routing
+description: Make the most out of the ports you have
 ---
 
 # SNI routing
