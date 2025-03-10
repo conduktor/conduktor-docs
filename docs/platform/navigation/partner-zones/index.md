@@ -14,21 +14,21 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 ![Partner Zones overview](assets/pz-detail-view.png)
 
 ## Prerequisites
-To create a Partner Zone, you need:
-- **Conduktor Console** version 1.32 or later
-- **Conduktor Gateway** version 3.6.1 or later with the following configurations:
-  - `GATEWAY_SECURITY_PROTOCOL` must be `SASL_PLAIN`, `SASL_SSL` or `SSL` (`DELEGATED_SASL_*` modes are **not** supported)
-  - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` must be set to `true`
-- [Configure](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) your Gateway cluster in Console
-  - Don't forget to fill the Provider tab with Gateway API credentials
+Before creating a Partner Zone, you first have to:
+- Use **Conduktor Console 1.32** or later
+- Use **Conduktor Gateway 3.6.1** or later with the following configurations:
+  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN`, `SASL_SSL` or `SSL` (`DELEGATED_SASL_*` modes **are not supported**)
+  - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
+- [Configure your Gateway cluster](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) in Console
+  - Remember to fill in the **Provider** tab with Gateway API credentials
     ![Gateway Provider](../../guides/assets/gateway-provider.png)
 
-### Limitations
+:::warning
+Current limitations
 As of version 1.32, Partner Zones have the following limitations:
-- The partner will only be able to connect your partner zone using Local Gateway Service Accounts.
-- Passwords do not expire. If you need to revoke access to your partner, you will have to delete the Partner Zone.
-
-Both limitations will be addressed in a future release.
+- The partner will only be able to connect your zone using **Local Gateway Service Accounts**.
+- Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
+:::
 
 ## Create a Partner Zone
 You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
@@ -179,7 +179,7 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
   <p>
   This is the status of a Partner Zone:
     - **Pending**: the configuration isn't deployed or refreshed yet
-    - **Ready**: the configuration is up to date on Gateway
+    - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
   </p>
 </details>
@@ -191,13 +191,6 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
   <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
   <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16) or check Gateway/Console logs.</p>
 </details>
-
-## Limitations
-As of version 1.32, Partner Zones have the following limitations:
-- The partner will only be able to connect your partner zone using Local Gateway Service Accounts.
-- Passwords do not expire. If you need to revoke access to your partner, you will have to delete the Partner Zone.
-
-Both limitations will be addressed in a future release.
 
 ## Related resources
  - [Connect to clusters](/platform/navigation/settings/managing-clusters/)
