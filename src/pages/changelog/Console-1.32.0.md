@@ -11,7 +11,6 @@ tags: features,fix
 - [Breaking changes](#breaking-changes)
   - [Partner Zone](#partner-zone)
 - [Scale](#scale)
-  - [Role Based Navigation](#role-based-navigation)
   - [Alert history](#alert-history)
   - [Audit Log](#audit-log)
   - [Service account labels](#service-account-labels)
@@ -27,8 +26,6 @@ tags: features,fix
 Gateway 3.6.1 is required for this release.
 
 ### Scale
-
-#### Role Based Navigation
 
 #### Alert history
 
@@ -55,7 +52,7 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on the user's permissions. This helps reduce confusion by hiding functionality that users don't have access to, making onboarding easier for Platform Teams introducing users to Kafka. Find out [more about RBAC](/platform/navigation/settings/rbac).
 
-For Kafka Clusters, menu items appear based on the user's "Resource access" permissions on individual cluster, while Settings menu items are shown according to their "Service access" permissions. 
+For the console menu, items are shown based on the user's `Resource access` permissions on individual clusters, while Settings menu items are shown according to their `Service access` permissions. 
 
 ### Exchange
 
