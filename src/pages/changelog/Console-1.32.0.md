@@ -76,7 +76,7 @@ In this release we're introducing the ability to create a Partner Zone via the C
 
 In upcoming releases we'll be adding:
 - an ability to edit Partner Zone configurations
-- as well as the option to rename shared topics, to ensure no internal detail is shared with your partners
+- the option to rename shared topics, to ensure no internal details are shared with your partners
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
 
