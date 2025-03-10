@@ -13,26 +13,22 @@ Partner Zones allow you to share streaming data with external partners selective
 
 ![Partner Zones overview](assets/pz-detail-view.png)
 
-:::info
-Partner Zones is currently in **Beta** and this functionality is only available for **Console 1.31.0** and **Gateway 3.5.0** (or later).
-:::
+## Prerequisites
+To create a Partner Zone, you need:
+- **Conduktor Console** version 1.32 or later
+- **Conduktor Gateway** version 3.6.1 or later with the following configurations:
+  - `GATEWAY_SECURITY_PROTOCOL` must be `SASL_PLAIN`, `SASL_SSL` or `SSL` (`DELEGATED_SASL_*` modes are **not** supported)
+  - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` must be set to `true`
+- [Configure](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) your Gateway cluster in Console
+  - Don't forget to fill the Provider tab with Gateway API credentials
+    ![Gateway Provider](assets/gateway-provider.png)
 
-## Create credentials
-Before creating a Partner Zone, you have to first connect Conduktor Console to Conduktor Gateway and create credentials to secure the data you're about to share.
+### Limitations
+As of version 1.32, Partner Zones have the following limitations:
+- The partner will only be able to connect your partner zone using Local Gateway Service Accounts.
+- Passwords do not expire. If you need to revoke access to your partner, you will have to delete the Partner Zone.
 
-1. Access Gateway as the `admin` user and create a secret token:
-
-```bash
-curl --request POST "http://localhost:8888/admin/vclusters/v1/vcluster/passthrough/username/admin" \
-    --user "admin:conduktor" \
-    --header 'accept: application/json' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{"lifeTimeSeconds": 7776000}' | jq -r ".token"
-```
-
-2. In Console, go to **Settings** > **Clusters** and select the relevant cluster.
-3. For **Authentication method** select **SASL** and use the token.
-
+Both limitations will be addressed in a future release.
 
 ## Create a Partner Zone
 You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
