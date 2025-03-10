@@ -8,7 +8,7 @@ description: List of the audit log events tracked throughout Conduktor Console
 
 As you and your team interact with Conduktor, audit events are captured that give a detailed log of actions, providing a centralized visibility of user-related and resource-related events.
 
-The audit log ****events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
+The audit log **events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
 
 ![Admin Audit](assets/admin-audit.png)
 
@@ -139,26 +139,26 @@ Here' a list of currently available audit log event types.
 
 ### Admin related events
 
-| **Event type**                               | **Description**                                                |
-| -------------------------------------------- | -------------------------------------------------------------- |
-| **Admin.KafkaConnect.Create**                | Admin creates a Kafka Connect instance.                        |
-| **Admin.KafkaConnect.Update**                | Admin updates a Kafka Connect instance.                        |
-| **Admin.KafkaConnect.Delete**                | Admin deletes a Kafka Connect instance.                        |
-| **Admin.KsqlDB.Create**                      | Admin creates a KsqlDB instance.                               |
-| **Admin.KsqlDB.Update**                      | Admin updates a KsqlDB instance.                               |
-| **Admin.KsqlDB.Delete**                      | Admin deletes a KsqlDB instance.                               |
-| **Admin.KafkaCluster.Create**                | Admin creates a Kafka cluster.                                 |
-| **Admin.KafkaCluster.Update**                | Admin updates a Kafka cluster.                                 |
-| **Admin.KafkaCluster.Delete**                | Admin deletes a Kafka cluster.                                 |
-| **Admin.SchemaRegistry.ChangeCompatibility** | Admin updates the global compatibility of the schema registry. |
-| **Admin.Integration.Update**                 | Admin updates an alert integraion (Slack, MS Teams, Webhook).  |
-| **Admin.AdminApiKey.Create**                 | Admin creates a new admin API key.                             |
-| **Admin.AdminApiKey.Delete**                 | Admin deletes an admin API key.                                |
-| **Admin.DataMaskingPolicy.Create**           | Admin creates a data masking policy.                           |
-| **Admin.DataMaskingPolicy.Update**           | Admin updates a data masking policy.                           |
-| **Admin.DataMaskingPolicy.Delete**           | Admin deletes a data masking policy.                           |
-| **Admin.Certificate.Create**                 | Admin creates a certificate.                                   |
-| **Admin.Certificate.Delete**                 | Admin deletes a certificate.                                   |
+| **Event type**                               | **Description**                                             |
+| -------------------------------------------- | ----------------------------------------------------------- |
+| **Admin.KafkaConnect.Create**                | A Kafka Connect instance is created.                        |
+| **Admin.KafkaConnect.Update**                | A Kafka Connect instance is updated                         |
+| **Admin.KafkaConnect.Delete**                | A Kafka Connect instance is deleted.                        |
+| **Admin.KsqlDB.Create**                      | A ksqlDB instance is created.                               |
+| **Admin.KsqlDB.Update**                      | A ksqlDB instance is updated.                               |
+| **Admin.KsqlDB.Delete**                      | A ksqlDB instance is deleted.                               |
+| **Admin.KafkaCluster.Create**                | A Kafka cluster is created.                                 |
+| **Admin.KafkaCluster.Update**                | A Kafka cluster is updated.                                 |
+| **Admin.KafkaCluster.Delete**                | A Kafka cluster is deleted.                                 |
+| **Admin.SchemaRegistry.ChangeCompatibility** | The global compatibility of the schema registry is updated. |
+| **Admin.Integration.Update**                 | The alert integration (Slack, MS Teams, Webhook) is updated.|
+| **Admin.AdminApiKey.Create**                 | A new admin API key is created.                             |
+| **Admin.AdminApiKey.Delete**                 | An admin API key is deleted.                                |
+| **Admin.DataMaskingPolicy.Create**           | A data masking policy is created.                           |
+| **Admin.DataMaskingPolicy.Update**           | A data masking policy is updated.                           |
+| **Admin.DataMaskingPolicy.Delete**           | A data masking policy is deleted.                           |
+| **Admin.Certificate.Create**                 | A certificate is created.                                   |
+| **Admin.Certificate.Delete**                 | A certificate is deleted.                                   |
 
 ### Alert related events
 
@@ -296,6 +296,6 @@ CRN `platform:/user/<email>`
 </Tabs>
 
 ## Related resources
- - [Configure Audit Log Topic](/platform/guides/configure-audit-log-topic/)
+ - [Configure audit log topics](/platform/guides/configure-audit-log-topic/)
  - [Gateway audit](/gateway/interceptors/data-security/audit/)
  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
