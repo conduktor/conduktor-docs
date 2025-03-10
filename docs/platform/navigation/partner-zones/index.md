@@ -17,14 +17,13 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 Before creating a Partner Zone, you first have to:
 - Use **Conduktor Console 1.32** or later
 - Use **Conduktor Gateway 3.6.1** or later with the following configurations:
-  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN`, `SASL_SSL` or `SSL` (`DELEGATED_SASL_*` modes **are not supported**)
+  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN` or `SASL_SSL` (`DELEGATED_SASL_*` modes **are not supported**)
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
 - [Configure your Gateway cluster](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) in Console
   - Remember to fill in the **Provider** tab with Gateway API credentials
     ![Gateway Provider](../../guides/assets/gateway-provider.png)
 
-:::warning
-Current limitations
+:::warning Current limitations
 As of version 1.32, Partner Zones have the following limitations:
 - The partner will only be able to connect your zone using **Local Gateway Service Accounts**.
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
@@ -79,7 +78,13 @@ To view and manage all the zones you have access to, go to **Settings** > **Part
 
 Click on a Partner Zone to view its details.
 
-You can **delete Partner Zones** in the zone list view (click the **three dots** on the right-hand side and select **Delete**) or when viewing the details of a zone, click the **trash can** at the top right corner. Deleting a Partner Zone will remove partner's access to it. 
+## Delete a Partner Zone
+
+To delete a Partner Zone you can:
+- go to the zone list view and click the **three dots** on the right-hand side then select **Delete** or 
+- in the zone details view, click the **trash can** in the top right corner. 
+
+Deleting a Partner Zone will remove partner's access to it. 
 
 A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
 
