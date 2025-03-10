@@ -12,7 +12,7 @@ tags: features,fix
   - [Partner Zones](#partner-zones)
 - [Scale](#scale)
   - [Alert history](#alert-history)
-  - [Audit Log](#audit-log)
+  - [Audit logs](#audit-logs)
   - [Service account labels](#service-account-labels)
   - [RBAC-aware sidebar](#rbac-aware-sidebar)
 - [Exchange](#exchange)
@@ -52,9 +52,9 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
 
-#### RBAC-aware sidebar menu
+#### RBAC-aware sidebar
 
-On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on the user's permissions. This helps reduce confusion by hiding functionality that users don't have access to, making onboarding easier for Platform Teams introducing users to Kafka.
+On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
 
 In Console, items are shown based on the user's `Resource access` permissions on individual clusters, while the **Settings** menu items are shown according to the `Service access` permissions. [Find out more about RBAC](/platform/navigation/settings/rbac).
 
