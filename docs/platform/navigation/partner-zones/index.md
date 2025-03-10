@@ -5,8 +5,8 @@ description: Securely share your Kafka streaming data with external partners.
 ---
 
 ## Overview
-Partner Zones allow you to share streaming data with external partners selectively and securely, without the need to replicate data or create duplicate Kafka clusters. You can:
-- set up **dedicated zones** with **customized access** to data
+Partner Zones allow you to share Kafka topics with external partners selectively and securely. You can:
+- set up **dedicated zones** with **customized access** to Kafka topics
 - create a **single source of truth** because data isn't duplicated
 - **reduce operational costs**, since you don't have to keep data streams synchronized
 - control access to Kafka topics with **tailored permissions**
@@ -19,8 +19,16 @@ To create a Partner Zone, you need:
 - **Conduktor Gateway** version 3.6.1 or later with the following configurations:
   - `GATEWAY_SECURITY_PROTOCOL` must be `SASL_PLAIN`, `SASL_SSL` or `SSL` (`DELEGATED_SASL_*` modes are **not** supported)
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` must be set to `true`
-- [Configure](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) your Gateway cluster in Console, including the Provider tab with Gateway API credentials
-![Gateway Provider](../../guides/assets/gateway-provider.png)
+- [Configure](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) your Gateway cluster in Console
+  - Don't forget to fill the Provider tab with Gateway API credentials
+    ![Gateway Provider](../../guides/assets/gateway-provider.png)
+
+### Limitations
+As of version 1.32, Partner Zones have the following limitations:
+- The partner will only be able to connect your partner zone using Local Gateway Service Accounts.
+- Passwords do not expire. If you need to revoke access to your partner, you will have to delete the Partner Zone.
+
+Both limitations will be addressed in a future release.
 
 ## Create a Partner Zone
 You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
@@ -44,7 +52,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone. 
    - **Select Gateway** you want to use and click **Continue**.
-1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write**. Click **Continue** when done.
+1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write** (this will also include **read**). Click **Continue** when done.
 1. Finally, **Enable global transformations** or skip to continue with the defaults. Currently, we only offer **Traffic control policies**, set to the following:
    - `Maximum Produce Rate`: 10 000 bytes/sec.
    - `Maximum Consume Rate`: 10 000 bytes/sec.
@@ -71,7 +79,7 @@ To view and manage all the zones you have access to, go to **Settings** > **Part
 
 Click on a Partner Zone to view its details.
 
-You can **delete Partner Zones** in the zone list view (click the **three dots** on the right-hand side and select **Delete**) or when viewing the details of a zone, click the **trash can** at the top right corner. 
+You can **delete Partner Zones** in the zone list view (click the **three dots** on the right-hand side and select **Delete**) or when viewing the details of a zone, click the **trash can** at the top right corner. Deleting a Partner Zone will remove partner's access to it. 
 
 A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
 
@@ -107,9 +115,6 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
     ```bash
     conduktor apply -f pz.yaml
     ```
-   :::tip
-   Replace `pz.yaml` with your file name, if not using the suggestion.
-   :::
 
 1. Check the status of the Partner Zone:
     ```bash
@@ -184,7 +189,7 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
 </details>
 <details>
   <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
-  <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16) or [Console logs](/platform/navigation/settings/audit-log/).</p>
+  <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16) or check Gateway/Console logs.</p>
 </details>
 
 ## Limitations
