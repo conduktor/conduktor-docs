@@ -21,7 +21,7 @@ To create a Partner Zone, you need:
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` must be set to `true`
 - [Configure](https://docs.conduktor.io/platform/navigation/settings/managing-clusters/) your Gateway cluster in Console
   - Don't forget to fill the Provider tab with Gateway API credentials
-    ![Gateway Provider](assets/gateway-provider.png)
+    ![Gateway Provider](../../guides/assets/gateway-provider.png)
 
 ### Limitations
 As of version 1.32, Partner Zones have the following limitations:
