@@ -16,20 +16,20 @@ tags: features,fix
   - [Service account labels](#service-account-labels)
   - [RBAC-aware sidebar](#rbac-aware-sidebar)
 - [Exchange](#exchange)
-  - [Introducing Partner Zones UI for third-party data sharing](#introducing-partner-zones-ui-for-third-party-data-sharing)
+  - [Introducing Partner Zones UI](#introducing-partner-zones-ui)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 ### Breaking changes
 
 #### Partner Zones
-Improvements to the Partner Zones functionality means that **Gateway 3.6.1 must be deployed** with this release of Console.
+Improvements to Partner Zones require **Gateway 3.6.1 to be deployed** with this release of Console.
 
 ### Scale
 
 #### Alert history
 
-In the alert details page you now can also see the history of an alert's status, and notifications which may have failed to send. Find out [more about alerts](/platform/navigation/settings/alerts).
+In the alert details page you can now also see the history of an alert's status and notifications which may have failed to send. [Find out more about alerts](/platform/navigation/settings/alerts).
 
 ![Alert details page. The left-hand side lists alert properties like name and description. The right-hand side displays a heatmap-style chart with red and grey squares indicating alert health and a table below listing recent alert notifications.](/images/changelog/platform/v32/alert-details.png)
 
@@ -52,46 +52,45 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
 
-#### RBAC-aware sidebar
+#### RBAC menu
 
-The sidebar now dynamically shows/hides menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
+The RBAC (Role Based Access) left-hand menu now dynamically shows/hides menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
 
 In Console, menu items are shown based on the user's `Resource access` permissions on individual clusters, while the **Settings** menu items are shown according to the `Service access` permissions. [Find out more about RBAC](/platform/navigation/settings/rbac).
 
 
 ### Exchange
 
-**Exchange** is a new Conduktor product aimed at helping you share your data securely with your external partners.  
-Find out more about our [Exchange product](https://conduktor.io/exchange).
+Exchange is a **new Conduktor product** that enables you to **share data securely** with your external partners. [Find out more about the Exchange product](https://conduktor.io/exchange).
 
-#### Introducing Partner Zones UI for third-party data sharing
+#### Introducing Partner Zones UI
 
 :::info
-Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
+Partner Zones is currently in **Beta** and is subject to changes, as we continue building out this functionality.
 :::
 
-Partner Zones functionality allows you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
+Partner Zones enable you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
 
-In this release we're introducing the ability to create a Partner Zone via the Console UI with a few steps, including the ability to set traffic control policies.
+In this release we're introducing the option to create Partner Zones using the Console UI in just few steps, including the ability to set traffic control policies.
 
-In upcoming releases we'll be adding:
+In upcoming releases we'll be adding further enhancements, such as:
 - an ability to edit Partner Zone configurations
-- the option to rename shared topics, to ensure no internal details are shared with your partners
+- the option to rename shared topics, securing your data even further by ensuring that no internal information is shared
 
-For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
+[Find out more about Partner Zones](/platform/navigation/partner-zones).
 
 ### Quality of life improvements
 
-- Enabled the confirmation of resource deletion using the Enter key
-- Updated connector restart button labels and toast messages to accurately reflect their behaviour for Confluent Cloud connectors
+- Enabled the confirmation of resource deletion using the **Enter** key.
+- Updated the connector restart button labels and toast messages to accurately reflect their behavior for Confluent Cloud connectors.
 - Removed a legacy option to disable monitoring.
 
 ### Fixes
 
-- Fixed an issue where editing a schema registry subject would overwrite its compatibility mode with the global compatibility setting
-- Fixed an issue where creating an ACL for a service account with a duplicate name could override the existing ACL
-- Fixed an issue where the Kafka Connect failed task heatmap did not display data for days in 2025
-- Fixed an issue where the CLI would report incorrect actions taken (although teh correct actions were shown when the `--dry-run` flag was used)
+- Fixed an issue where editing a schema registry subject would overwrite its compatibility mode with the global compatibility setting.
+- Fixed an issue where creating an ACL for a service account with a duplicate name could override the existing ACL.
+- Fixed an issue where the Kafka Connect failed task heatmap didn't display data for days in 2025.
+- Fixed an issue where the CLI would report incorrect actions taken (although the correct actions were shown when the `--dry-run` flag was used).
 - When Azure Active Directory is used as an LDAP server, the `userPrincipalName` field can now be set as the field containing the email address.
-- Fixed an issue where very large numbers would show rounded in the details view of a topic message (e.g. `7777705807840271771` would display as `7777705807840271000`)
-- Fixed a UI issue where the option to reset a consumer group offset would disappear off the screen if the partition count was too large.
+- Fixed an issue where very large numbers would show rounded in the details view of a topic message (e.g. `7777705807840271771` would display as `7777705807840271000`).
+- Fixed the UI issue where the option to reset a consumer group offset would disappear off the screen, if the partition count was too large.
