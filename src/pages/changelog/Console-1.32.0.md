@@ -17,8 +17,7 @@ TODO release date: frontMatter.date.toISOString().slice(0, 10)
 
 #### Alert history
 
-The alert details page now displays information about the history of alerts' healthy/firing status, and warnings about failed notification delivery.
-Read [the alerting section of our documentation](/platform/navigation/settings/alerts) for more information.
+In the alert details page you now can also see the history of an alert's status, and notifications which may have failed to send. Find out [more about alerts](/platform/navigation/settings/alerts).
 
 ![Alert details page. The left-hand side lists alert properties like name and description. The right-hand side displays a heatmap-style chart with red and grey squares indicating alert health and a table below listing recent alert notifications.](/images/changelog/platform/v32/alert-details.png)
 
