@@ -16,14 +16,14 @@ tags: features,fix
   - [Service account labels](#service-account-labels)
   - [RBAC-aware sidebar](#rbac-aware-sidebar)
 - [Exchange](#exchange)
-  - [Introducing A New Partner Zones UI for Third-Party Data Sharing](#introducing-a-new-partner-zones-ui-for-third-party-data-sharing)
+  - [Introducing Partner Zones UI for third-party data sharing](#introducing-partner-zones-ui-for-third-party-data-sharing)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 ### Breaking changes
 
 #### Partner Zones
-Improvements to the new Partner Zone functionality mean that Gateway 3.6.1 must be deployed with this release of Console.
+Improvements to the Partner Zones functionality means that **Gateway 3.6.1 must be deployed** with this release of Console.
 
 ### Scale
 
@@ -61,21 +61,21 @@ In Console, menu items are shown based on the user's `Resource access` permissio
 
 ### Exchange
 
-**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
-Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
+**Exchange** is a new Conduktor product aimed at helping you share your data securely with your external partners.  
+Find out more about our [Exchange product](https://conduktor.io/exchange).
 
-#### Introducing A New Partner Zones UI for Third-Party Data Sharing
+#### Introducing Partner Zones UI for third-party data sharing
 
 :::info
 Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
 :::
 
-Partner Zones enable you to securely share your streaming data with external partners, without needing to replicate the data into a second, physical Kafka cluster.
-In this latest release we have introduced the ability to create your partner zone via the Console UI, including the ability to set traffic control policies.
+Partner Zones allows you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
+In this release we're introducing the ability to create a Partner Zone via the Console UI with a few steps, including the ability to set traffic control policies.
 
-In the upcoming releases, we will be adding the following:
-- The ability to edit partner zone configurations
-- Topic renaming capability to avoid leaking internal topic names to your partners
+In upcoming releases we'll be adding:
+- an ability to edit Partner Zone configurations
+- as well as the option to rename shared topics, to ensure no internal detail is shared with your partners
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
 
