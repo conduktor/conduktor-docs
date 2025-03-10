@@ -141,26 +141,26 @@ Below is the list of all the exported audit log event types that are currently a
 
 ### Admin-Related Events
 
-| **Event Type**                               | **Description**                         |
-| -------------------------------------------- | --------------------------------------- |
-| **Admin.KafkaConnect.Create**                | Admin creates a Kafka Connect instance. |
-| **Admin.KafkaConnect.Update**                | Admin updates a Kafka Connect instance. |
-| **Admin.KafkaConnect.Delete**                | Admin deletes a Kafka Connect instance. |
-| **Admin.KsqlDB.Create**                      | Admin creates a KsqlDB instance.        |
-| **Admin.KsqlDB.Update**                      | Admin updates a KsqlDB instance.        |
-| **Admin.KsqlDB.Delete**                      | Admin deletes a KsqlDB instance.        |
-| **Admin.KafkaCluster.Create**                | Admin creates a Kafka cluster.          |
-| **Admin.KafkaCluster.Update**                | Admin updates a Kafka cluster.          |
-| **Admin.KafkaCluster.Delete**                | Admin deletes a Kafka cluster.          |
-| **Admin.SchemaRegistry.ChangeCompatibility** | |
-| **Admin.Integration.Update**                 | |
-| **Admin.AdminApiKey.Create**                 | Admin creates a new admin API key.      |
-| **Admin.AdminApiKey.Delete**                 | Admin deletes an admin API key.         |
-| **Admin.DataMaskingPolicy.Create**           | Admin creates a data masking policy.    |
-| **Admin.DataMaskingPolicy.Update**           | Admin updates a data masking policy.    |
-| **Admin.DataMaskingPolicy.Delete**           | Admin deletes a data masking policy.    |
-| **Admin.Certificate.Create**                 | Admin creates a certificate.            |
-| **Admin.Certificate.Delete**                 | Admin deletes a certificate.            |
+| **Event Type**                               | **Description**                                                |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| **Admin.KafkaConnect.Create**                | Admin creates a Kafka Connect instance.                        |
+| **Admin.KafkaConnect.Update**                | Admin updates a Kafka Connect instance.                        |
+| **Admin.KafkaConnect.Delete**                | Admin deletes a Kafka Connect instance.                        |
+| **Admin.KsqlDB.Create**                      | Admin creates a KsqlDB instance.                               |
+| **Admin.KsqlDB.Update**                      | Admin updates a KsqlDB instance.                               |
+| **Admin.KsqlDB.Delete**                      | Admin deletes a KsqlDB instance.                               |
+| **Admin.KafkaCluster.Create**                | Admin creates a Kafka cluster.                                 |
+| **Admin.KafkaCluster.Update**                | Admin updates a Kafka cluster.                                 |
+| **Admin.KafkaCluster.Delete**                | Admin deletes a Kafka cluster.                                 |
+| **Admin.SchemaRegistry.ChangeCompatibility** | Admin updates the global compatibility of the schema registry. |
+| **Admin.Integration.Update**                 | Admin updates an alert integraion (Slack, MS Teams, Webhook).  |
+| **Admin.AdminApiKey.Create**                 | Admin creates a new admin API key.                             |
+| **Admin.AdminApiKey.Delete**                 | Admin deletes an admin API key.                                |
+| **Admin.DataMaskingPolicy.Create**           | Admin creates a data masking policy.                           |
+| **Admin.DataMaskingPolicy.Update**           | Admin updates a data masking policy.                           |
+| **Admin.DataMaskingPolicy.Delete**           | Admin deletes a data masking policy.                           |
+| **Admin.Certificate.Create**                 | Admin creates a certificate.                                   |
+| **Admin.Certificate.Delete**                 | Admin deletes a certificate.                                   |
 
 ### Alert-Related Events
 
