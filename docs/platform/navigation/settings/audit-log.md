@@ -4,7 +4,7 @@ title: Audit log events
 description: List of the audit log events tracked throughout Conduktor Console
 ---
 
-# Overview
+## Overview
 
 As you and your team interact with Conduktor, audit events are captured that give a detailed log of actions, providing a centralized visibility of user-related and resource-related events.
 
@@ -295,14 +295,7 @@ CRN `platform:/user/<email>`
 </TabItem>
 </Tabs>
 
-## Troubleshoot
-<details>
-  <summary>Placeholder</summary>
-  <p>
-  Here is some trouble shooting information.
-  </p>
-</details>
-
 ## Related resources
+ - [Configure Audit Log Topic](/platform/guides/configure-audit-log-topic/)
  - [Gateway audit](/gateway/interceptors/data-security/audit/)
  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
