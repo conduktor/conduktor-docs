@@ -154,8 +154,8 @@ Below is the list of all the exported audit log event types that are currently a
 | **Admin.KafkaCluster.Delete**                | Admin deletes a Kafka cluster.          |
 | **Admin.SchemaRegistry.ChangeCompatibility** | |
 | **Admin.Integration.Update**                 | |
-| **Admin.AdminApiKey.Create**                 | |
-| **Admin.AdminApiKey.Delete**                 | |
+| **Admin.AdminApiKey.Create**                 | Admin creates a new admin API key.      |
+| **Admin.AdminApiKey.Delete**                 | Admin deletes an admin API key.         |
 | **Admin.DataMaskingPolicy.Create**           | Admin creates a data masking policy.    |
 | **Admin.DataMaskingPolicy.Update**           | Admin updates a data masking policy.    |
 | **Admin.DataMaskingPolicy.Delete**           | Admin deletes a data masking policy.    |
@@ -166,19 +166,19 @@ Below is the list of all the exported audit log event types that are currently a
 
 | **Event Type**                | **Description**                         |
 | ----------------------------- | --------------------------------------- |
-| **Kafka.Alert.Create**        | |
-| **Kafka.Alert.Update**        | |
-| **Kafka.Alert.Delete**        | |
-| **Kafka.Alert.Trigger**       | |
+| **Kafka.Alert.Create**        | An alert is created.                    |
+| **Kafka.Alert.Update**        | An alert is updated.                    |
+| **Kafka.Alert.Delete**        | An alert is deleted.                    |
+| **Kafka.Alert.Trigger**       | An alert is triggered.                  |
 
 ### PartnerZone-Related Events
 
-| **Event Type**                    | **Description**                         |
-| --------------------------------- | --------------------------------------- |
-| **Admin.PartnerZone.Create**      | |
-| **Admin.PartnerZone.Update**      | |
-| **Admin.PartnerZone.Delete**      | |
-| **Admin.PartnerZone.TokenCreate** | |
+| **Event Type**                    | **Description**                                  |
+| --------------------------------- | ------------------------------------------------ |
+| **Admin.PartnerZone.Create**      | A partner zone is created.                       |
+| **Admin.PartnerZone.Update**      | A partner zone is updated.                       |
+| **Admin.PartnerZone.Delete**      | A partner zone is deleted.                       |
+| **Admin.PartnerZone.TokenCreate** | A token is created for accessing a partner zone. |
 
 
 </TabItem>
