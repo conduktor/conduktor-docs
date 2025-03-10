@@ -80,9 +80,6 @@ In upcoming releases we'll be adding:
 
 For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
 
-
-***
-
 ### Quality of life improvements
 
 - Enabled the confirmation of resource deletion using the Enter key
