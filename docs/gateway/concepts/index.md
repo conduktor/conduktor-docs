@@ -125,4 +125,4 @@ Check their dedicated Concept pages for more details.
 We offer 3 kinds of Logical Topic so far:
 - [Alias topics](/gateway/concepts/logical-topics/alias-topics/) are topics that can be accessed with a name, but really points to another real topic behind the scenes. It can be useful in a few scenarios such a topic renaming or cross virtual cluster topic sharing.
 - [Concentrated topics](/gateway/concepts/logical-topics/concentrated-topics/) allows co-locating multiple topics in the same physical topic behind the scenes. It's very useful when you want to regroup many topics with low-volume but a large number of partitions.
-- [SQL topics](/gateway/concepts/logical-topics/sql-topics/) are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.
+- [SQL topics](/gateway/interceptors/advanced-patterns-support/sql-topic/) are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.
