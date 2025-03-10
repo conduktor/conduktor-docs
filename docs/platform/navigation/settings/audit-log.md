@@ -1,34 +1,32 @@
 ---
 sidebar_position: 5
-title: Audit Log
-description: List of the Audit Log events tracked throughout the Platform
+title: Audit log events
+description: List of the audit log events tracked throughout Conduktor Console
 ---
-
-# Audit Log Events
 
 # Overview
 
-As you and your team interact with Conduktor, audit events are captured that give a detailed tracking of actions taken against Kafka. This gives you centralized visibility of user-related and resource-related events.
+As you and your team interact with Conduktor, audit events are captured that give a detailed log of actions, providing a centralized visibility of user-related and resource-related events.
 
-The audit log events can be browsed, filtered and searched directly within Conduktor's UI or exported from a Kafka topic for any further use you may have for them, such as maintaining your own audit trail in other systems.
+The audit log ****events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
 
 ![Admin Audit](assets/admin-audit.png)
 
-Clicking on an event in the audit log exposes event-specific metadata. The below example demonstrates an audit event for a new connector added, which can include metadata such as custom tags, the cluster, connector name and its ID.
+Click on an event in the audit log to exposes event-specific metadata. Here's an example of an audit event for a new connector which can include metadata such as custom tags, the cluster, connector name and its ID.
 
 ![Admin Audit Event](assets/audit-log-inspect.png)
 
-Audit log events are also exported to a Kafka topic once configured with the right [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), here you can leverage all the benefits of Conduktor when finding a message.
+Audit log events are also exported to a Kafka topic once configured with the correct [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), allowing you to leverage the benefits of Conduktor when finding a message.
 ![kafka message audit log](assets/audit-log-kafka-message.png)
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-
 <Tabs>
-<TabItem value="First Tab" label="Events">
-## Exportable Audit Log Events
+<TabItem value="First Tab" label="CloudEvents">
 
-Audit log events from within the UI are exportable from a Kafka topic. The exportable audit log events have more detail than the legacy events, providing additional information about the event that has taken place.
+## Export audit log events
+
+You can export audit log events from a Kafka topic using the Console UI. The exportable events have more detail than the legacy events, providing additional information about the event that has taken place.
 
 Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties).
 
@@ -49,7 +47,7 @@ The events conform to the [CloudEvents specification](https://github.com/cloudev
 }
 ```
 
-An example Conduktor event would look like:
+Here's an example of a Conduktor event:
 ```json
 {
 	"source": "//kafka/kafkacluster/production/topic/website-orders",
@@ -70,11 +68,11 @@ An example Conduktor event would look like:
 }
 ```
 
-Below is the list of all the exported audit log event types that are currently available. We will be expanding the coverage to UI events and more in subsequent releases.
+Here' a list of currently available audit log event types.
 
-### Kafka-Related Events
+### Kafka related events
 
-| **Event Type**                          | **Description**                                            |
+| **Event type**                          | **Description**                                            |
 | --------------------------------------- | ---------------------------------------------------------- |
 | **Kafka.Subject.Create**                | Kafka subject is created.                                  |
 | **Kafka.Subject.Update**                | Kafka subject is updated.                                  |
@@ -100,9 +98,9 @@ Below is the list of all the exported audit log event types that are currently a
 | **Kafka.ConsumerGroup.Update**          | Kafka consumer group is updated, when the offset is reset. |
 | **Kafka.ConsumerGroup.Delete**          | Kafka consumer group is deleted.                           |
 
-### IAM-Related Events
+### IAM related events
 
-| **Event Type**       | **Description**       |
+| **Event type**       | **Description**       |
 | -------------------- | --------------------- |
 | **Iam.User.Create**  | IAM user is created.  |
 | **Iam.User.Update**  | IAM user is updated.  |
@@ -113,9 +111,9 @@ Below is the list of all the exported audit log event types that are currently a
 | **Iam.Group.Update** | IAM group is updated. |
 | **Iam.Group.Delete** | IAM group is deleted. |
 
-### SelfService-Related Events
+### Self-service related events
 
-| **Event Type**                                       | **Description**                                       |
+| **Event type**                                       | **Description**                                       |
 | ---------------------------------------------------- | ----------------------------------------------------- |
 | **SelfService.Application.Create**                   | Self-service application is created.                  |
 | **SelfService.Application.Update**                   | Self-service application is updated.                  |
@@ -139,9 +137,9 @@ Below is the list of all the exported audit log event types that are currently a
 | **SelfService.ServiceAccount.Delete**                | Service account is deleted.                           |
 
 
-### Admin-Related Events
+### Admin related events
 
-| **Event Type**                               | **Description**                                                |
+| **Event type**                               | **Description**                                                |
 | -------------------------------------------- | -------------------------------------------------------------- |
 | **Admin.KafkaConnect.Create**                | Admin creates a Kafka Connect instance.                        |
 | **Admin.KafkaConnect.Update**                | Admin updates a Kafka Connect instance.                        |
@@ -162,33 +160,33 @@ Below is the list of all the exported audit log event types that are currently a
 | **Admin.Certificate.Create**                 | Admin creates a certificate.                                   |
 | **Admin.Certificate.Delete**                 | Admin deletes a certificate.                                   |
 
-### Alert-Related Events
+### Alert related events
 
-| **Event Type**                | **Description**                         |
+| **Event type**                | **Description**                         |
 | ----------------------------- | --------------------------------------- |
 | **Kafka.Alert.Create**        | An alert is created.                    |
 | **Kafka.Alert.Update**        | An alert is updated.                    |
 | **Kafka.Alert.Delete**        | An alert is deleted.                    |
 | **Kafka.Alert.Trigger**       | An alert is triggered.                  |
 
-### PartnerZone-Related Events
+### Partner Zone related events
 
-| **Event Type**                    | **Description**                                  |
+| **Event type**                    | **Description**                                  |
 | --------------------------------- | ------------------------------------------------ |
-| **Admin.PartnerZone.Create**      | A partner zone is created.                       |
-| **Admin.PartnerZone.Update**      | A partner zone is updated.                       |
-| **Admin.PartnerZone.Delete**      | A partner zone is deleted.                       |
-| **Admin.PartnerZone.TokenCreate** | A token is created for accessing a partner zone. |
+| **Admin.PartnerZone.Create**      | A Partner Zone is created.                       |
+| **Admin.PartnerZone.Update**      | A Partner Zone is updated.                       |
+| **Admin.PartnerZone.Delete**      | A Partner Zone is deleted.                       |
+| **Admin.PartnerZone.TokenCreate** | A token is created for accessing a Partner Zone. |
 
 
 </TabItem>
-<TabItem value="Second Tab" label="Legacy Events">
-## Audit Events
+<TabItem value="Second Tab" label="Legacy events">
 
-Below outlines the legacy audit events tracked by Conduktor.
+## Audit events
 
+Here's a list of legacy audit events tracked by Conduktor:
   - [Console](#console)
-  - [Data Masking](#data-masking)
+  - [Data masking](#data-masking)
   - [Topic as a Service](#topic-as-a-service)
   - [Admin](#admin)
 
@@ -244,7 +242,7 @@ CRN `kafka:/cluster/<uuid>/connect/<connect-cluster-id>/<connector-name>`
 - connector.Paused
 - connector.Resumed
 
-## Data Masking
+## Data masking
 
 ### ResourceType: `DatamaskingPolicy`
 
@@ -253,7 +251,7 @@ CRN `platform:/datamasking/<uuid>`
 - policy.Upserted
 - policy.Deleted
 
-## Self-Service
+## Self-service
 
 ### ResourceType: `Application`
 
@@ -306,4 +304,5 @@ CRN `platform:/user/<email>`
 </details>
 
 ## Related resources
+ - [Gateway audit](/gateway/interceptors/data-security/audit/)
  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
