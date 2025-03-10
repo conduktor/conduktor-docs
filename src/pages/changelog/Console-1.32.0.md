@@ -9,21 +9,21 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking changes](#breaking-changes)
-  - [Partner Zone](#partner-zone)
+  - [Partner Zones](#partner-zones)
 - [Scale](#scale)
   - [Alert history](#alert-history)
   - [Audit Log](#audit-log)
   - [Service account labels](#service-account-labels)
   - [RBAC-aware sidebar menu](#rbac-aware-sidebar-menu)
 - [Exchange](#exchange)
-  - [Partner Zone](#partner-zone-1)
+  - [Introducing A New Partner Zones UI for Third-Party Data Sharing](#introducing-a-new-partner-zones-ui-for-third-party-data-sharing)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 ### Breaking changes
 
-#### Partner Zone
-Gateway 3.6.1 is required for this release.
+#### Partner Zones
+Improvements to the new Partner Zone functionality mean that Gateway 3.6.1 must be deployed with this release of Console.
 
 ### Scale
 
@@ -36,7 +36,9 @@ In the alert details page you now can also see the history of an alert's status,
 
 #### Audit Log
 
-You can now view the new CloudEvents-based audit log events with enhanced filtering capabilities for the new resource and event types. While legacy audit log events will stop being captured in this release, existing legacy events will remain accessible through a dedicated page. Find out [more about the audit log](/platform/navigation/settings/audit-log).
+You can now view the new [CloudEvents-based](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md) audit log events with enhanced filtering capabilities for the new resource and event types, including Conduktor platform triggered events. A full list of all the audited events can be found in the [Audit Log](/platform/navigation/settings/audit-log/) section of the documentation.
+
+While legacy audit log events will stop being captured in this release, existing legacy events will remain accessible through a dedicated page until a future release.
 
 ![The audit log settings page shows a list of audit log events, with a drawer showing details of an event](/images/changelog/platform/v32/audit-log-settings.png)
 
@@ -50,14 +52,30 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 #### RBAC-aware sidebar menu
 
-On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on the user's permissions. This helps reduce confusion by hiding functionality that users don't have access to, making onboarding easier for Platform Teams introducing users to Kafka. Find out [more about RBAC](/platform/navigation/settings/rbac).
+On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on the user's permissions. This helps reduce confusion by hiding functionality that users don't have access to, making onboarding easier for Platform Teams introducing users to Kafka.
 
-For the console menu, items are shown based on the user's `Resource access` permissions on individual clusters, while Settings menu items are shown according to their `Service access` permissions. 
+For the console menu, items are shown based on the user's `Resource access` permissions on individual clusters, while Settings menu items are shown according to their `Service access` permissions. Find out [more about RBAC](/platform/navigation/settings/rbac).
+
 
 ### Exchange
 
-#### Partner Zone
+**Exchange** is a new Conduktor Product aimed at helping you share your data securely with your external partners.  
+Check the associated [Exchange Product page](https://conduktor.io/exchange) for more information.
 
+#### Introducing A New Partner Zones UI for Third-Party Data Sharing
+
+:::info
+Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
+:::
+
+Partner Zones enable you to securely share your streaming data with external partners, without needing to replicate the data into a second, physical Kafka cluster.
+In this latest release we have introduced the ability to create your partner zone via the Console UI, including the ability to set traffic control policies.
+
+In the upcoming releases, we will be adding the following:
+- The ability to edit partner zone configurations
+- Topic renaming capability to avoid leaking internal topic names to your partners
+
+For more information, check out the [Partner Zones documentation](/platform/navigation/partner-zones).
 
 
 ***
