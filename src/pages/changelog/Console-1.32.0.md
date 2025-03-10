@@ -11,10 +11,13 @@ tags: features,fix
 - [Breaking changes](#breaking-changes)
   - [Partner Zone](#partner-zone)
 - [Scale](#scale)
+  - [Role Based Navigation](#role-based-navigation)
   - [Alert history](#alert-history)
   - [Audit Log](#audit-log)
   - [Service account labels](#service-account-labels)
   - [RBAC-aware sidebar menu](#rbac-aware-sidebar-menu)
+- [Exchange](#exchange)
+  - [Partner Zone](#partner-zone-1)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
@@ -24,6 +27,8 @@ tags: features,fix
 Gateway 3.6.1 is required for this release.
 
 ### Scale
+
+#### Role Based Navigation
 
 #### Alert history
 
@@ -52,15 +57,26 @@ On Enterprise Tier, the sidebar now dynamically shows/hides menu items based on 
 
 For Kafka Clusters, menu items appear based on the user's "Resource access" permissions on individual cluster, while Settings menu items are shown according to their "Service access" permissions. 
 
+### Exchange
+
+#### Partner Zone
+
+
+
 ***
 
 ### Quality of life improvements
 
 - Enabled the confirmation of resource deletion using the Enter key
 - Updated connector restart button labels and toast messages to accurately reflect their behaviour for Confluent Cloud connectors
+- Removed a legacy option to disable monitoring.
 
 ### Fixes
 
 - Fixed an issue where editing a schema registry subject would overwrite its compatibility mode with the global compatibility setting
 - Fixed an issue where creating an ACL for a service account with a duplicate name could override the existing ACL
 - Fixed an issue where the Kafka Connect failed task heatmap did not display data for days in 2025
+- Fixed an issue where the CLI would report incorrect actions taken (although teh correct actions were shown when the `--dry-run` flag was used)
+- When Azure Active Directory is used as an LDAP server, the `userPrincipalName` field can now be set as the field containing the email address.
+- Fixed an issue where very large numbers would show rounded in the details view of a topic message (e.g. `7777705807840271771` would display as `7777705807840271000`)
+- Fixed a UI issue where the option to reset a consumer group offset would disappear off the screen if the partition count was too large.
