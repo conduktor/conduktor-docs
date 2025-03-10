@@ -16,9 +16,7 @@ This is particularly useful if you are:
 - Experiencing a high administrative overhead for managing multiple ports.
 - Restricted by your security department in the number of ports you can expose.
 
-## Context
-
-### Client connection workflow
+## Context about client connection
 
 To understand the different steps required to set up SNI routing, let's break it down into the connection steps each client would take:
 1. Connect to Gateway advertised host
@@ -100,9 +98,7 @@ Another option is to use wildcards in the SANs, for example:
 
 ### 4. Configure DNS
 
-Following what has been said on the section above, we will have to create DNS entries which allow the clients to be properly routed to the **Gateway advertised host and Kafka brokers through the Gateway**.
-
-Based on the previous example, we would have to define the following DNS entries to point to the Gateway:
+Next, create DNS entries to allow clients to be properly routed to the **Gateway advertised host and Kafka brokers through the Gateway**.
 
 ```properties
 gateway.conduktor.sni-demo.local
@@ -113,7 +109,9 @@ brokermain3-gateway.conduktor.sni-demo.local
 
 ### 5. Configure Gateway
 
-You can find below the minimum configurations required depending on the security protocol you want to use. Note that this is in addition to the `KAFKA_` properties required for the Gateway to connect to the Kafka cluster.
+Here's the minimum configurations required, depending on the security protocol you want to use for your clients to connect to the Gateway.
+
+Note that this is in addition to the `KAFKA_` properties required for the Gateway to connect to the Kafka cluster.
 
 Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing)
 
@@ -177,7 +175,7 @@ GATEWAY_SSL_TRUST_STORE_PASSWORD: conduktor
 </TabItem>
 </Tabs>
 
-## Useful tips for debugging and troubleshooting
+## Debug and troubleshoot
 
 You can use Console's Brokers tab to view the advertised listeners of a Gateway once the initial connection and authentication are successful:
 
@@ -187,4 +185,4 @@ Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L
 
 Setting `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL` to `DEBUG` might be helpful when debugging issues.
 
-For a rich guide on troubleshooting please refer to the knowledge base article [SNI Routing Troubleshooting Guide](https://support.conduktor.io/hc/en-gb/articles/29104372472977-Conduktor-Gateway-SNI-Routing-Troubleshooting-Guide).
+For more details, see a [comprehensive SNI routing troubleshooting guide](https://support.conduktor.io/hc/en-gb/articles/29104372472977-Conduktor-Gateway-SNI-Routing-Troubleshooting-Guide).
