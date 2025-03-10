@@ -9,7 +9,7 @@ tags: features,fix
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking changes](#breaking-changes)
-  - [Partner Zone](#partner-zone)
+  - [Partner Zones](#partner-zones)
 - [Scale](#scale)
   - [Role Based Navigation](#role-based-navigation)
   - [Alert history](#alert-history)
@@ -22,7 +22,7 @@ tags: features,fix
 
 ### Breaking changes
 
-#### Partner Zone
+#### Partner Zones
 Improvements to the new Partner Zone functionality mean that Gateway 3.6.1 must be deployed with this release of Console.
 
 ### Scale
