@@ -1,17 +1,25 @@
 ---
+date: 2025-03-11
 title: Console 1.32
 description: docker pull conduktor/conduktor-console:1.32.0
 solutions: console
 tags: features,fix
 ---
 
-TODO release date: frontMatter.date.toISOString().slice(0, 10)
+*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
+- [Breaking changes](#breaking-changes)
+  - [Partner Zone](#partner-zone)
 - [Scale](#scale)
   - [Alert history](#alert-history)
   - [Service account labels](#service-account-labels)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
+
+### Breaking changes
+
+#### Partner Zone
+Gateway 3.6.1 is required for this release.
 
 ### Scale
 
