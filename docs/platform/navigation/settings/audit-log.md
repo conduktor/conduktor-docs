@@ -12,11 +12,11 @@ The audit log **events can be browsed, filtered and searched** directly within C
 
 ![Admin Audit](assets/admin-audit.png)
 
-Click on an event in the audit log to exposes event-specific metadata. Here's an example of an audit event for a new connector which can include metadata such as custom tags, the cluster, connector name and its ID.
+Click on an event in the audit log to expose event-specific metadata. Here's an example of an audit event for a new connector which can include metadata such as custom tags, the cluster, connector name and its ID.
 
 ![Admin Audit Event](assets/audit-log-inspect.png)
 
-Audit log events are also exported to a Kafka topic once configured with the correct [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), allowing you to leverage the benefits of Conduktor when finding a message.
+Once configured with the correct [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), audit log events are also exported to a Kafka topic, allowing you to leverage the benefits of Conduktor when finding a message.
 ![kafka message audit log](assets/audit-log-kafka-message.png)
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
@@ -68,7 +68,7 @@ Here's an example of a Conduktor event:
 }
 ```
 
-Here' a list of currently available audit log event types.
+Here's a list of currently available audit log event types.
 
 ### Kafka related events
 
