@@ -25,6 +25,7 @@ Read [the alerting section of our documentation](/platform/navigation/settings/a
 #### Service account labels
 
 You can now edit labels on service accounts in plain Kafka clusters through the UI, in addition to the existing CLI & API support.
+
 Support for service accounts in Aiven and Confluent Cloud clusters is coming soon.
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
