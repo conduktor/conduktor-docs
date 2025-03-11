@@ -19,6 +19,7 @@ tags: features,fix
   - [Introducing Partner Zones UI](#introducing-partner-zones-ui)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
+- [Known issues](#known-issues)
 
 ### Breaking changes
 
@@ -95,3 +96,8 @@ In upcoming releases we'll be adding further enhancements, such as:
 - When Azure Active Directory is used as an LDAP server, the `userPrincipalName` field can now be set as the field containing the email address.
 - Fixed an issue where very large numbers would show rounded in the details view of a topic message (e.g. `7777705807840271771` would display as `7777705807840271000`).
 - Fixed the UI issue where the option to reset a consumer group offset would disappear off the screen, if the partition count was too large.
+
+### Known issues
+- In the Topic Consume view, equality filters (`==`) on JSON number fields is not working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`.
+  - Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there is currently no workaround for exact equality filtering.
+  - We will address this issue in a future release
