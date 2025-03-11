@@ -14,7 +14,7 @@ tags: features,fix
   - [Alert history](#alert-history)
   - [Audit logs](#audit-logs)
   - [Service account labels](#service-account-labels)
-  - [RBAC sidebar](#rbac-sidebar)
+  - [RBAC-aware menu](#rbac-aware-menu)
 - [Exchange](#exchange)
   - [Introducing Partner Zones UI](#introducing-partner-zones-ui)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -53,7 +53,7 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
 
-#### RBAC sidebar
+#### RBAC-aware menu
 
 The RBAC (Role Based Access) left-hand sidebar now dynamically shows/hides menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
 
