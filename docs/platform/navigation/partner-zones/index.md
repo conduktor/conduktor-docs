@@ -182,9 +182,8 @@ A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This
 </TabItem>
 
 <TabItem value="Second Tab" label="Conduktor CLI">
-Deleting a Partner Zone will remove partner's access to it and *can't be undone.*
+Deleting a Partner Zone will remove partner's access to it. *This can't be undone.* 
   ```bash
-     conduktor delete partnerzone
      conduktor delete PartnerZone {name}
     ```
 </TabItem>
