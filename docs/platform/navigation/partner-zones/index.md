@@ -14,7 +14,7 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 
 ## Prerequisites
 Before creating a Partner Zone, you have to:
-- have `super admin` access to Gateway
+- have `super user` access to Gateway
 - use **Conduktor Console 1.32** or later
 - use **Conduktor Gateway 3.6.1** or later with the following configurations:
   - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN` or `SASL_SSL` (`DELEGATED_SASL_*` modes are not **currently** supported)
@@ -77,9 +77,10 @@ To view and manage all the zones you have access to, go to **Settings** > **Part
 - the date the zone was last updated
 
 Click on a Partner Zone to view its details.
+
 </TabItem>
 <TabItem value="Second Tab" label="Conduktor CLI">
-Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Partner Zone.
+You can also use [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones. We recommend using CLI if you have to create many zones.
 
 1. Copy below and save it as a YAML file (e.g. `pz.yaml`): 
     ```yaml
@@ -168,6 +169,9 @@ Once Gateway is configured, you can use [Conduktor CLI (Command Line Interface)]
 </Tabs>
 
 ## Delete a Partner Zone
+
+<Tabs>
+<TabItem value="First Tab" label="Console UI">
 To delete a Partner Zone you can:
 - go to the zone list view and click the **three dots** on the right-hand side then select **Delete** or 
 - in the zone details view, click the **trash can** in the top right corner. 
@@ -175,6 +179,16 @@ To delete a Partner Zone you can:
 Deleting a Partner Zone will remove partner's access to it. 
 
 A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
+</TabItem>
+
+<TabItem value="Second Tab" label="Conduktor CLI">
+Deleting a Partner Zone will remove partner's access to it and *can't be undone.*
+  ```bash
+     conduktor delete partnerzone
+     conduktor delete PartnerZone {name}
+    ```
+</TabItem>
+</Tabs>
 
 ## Troubleshoot
 <details>
