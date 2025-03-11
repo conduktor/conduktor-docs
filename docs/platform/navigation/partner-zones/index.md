@@ -50,12 +50,9 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - (Optional) Enter the **URL** of your partner.
    - Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone. 
-   - **Select Gateway** you want to use and click **Continue**.
+   - **Select Gateway** to choose the one you want to use and click **Continue**.
 1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write** (this will also include **read**). Click **Continue** when done.
-1. Finally, **Enable global transformations** or skip to continue with the defaults. Currently, we only offer **Traffic control policies**, set to the following:
-   - `Maximum Produce Rate`: 10 000 bytes/sec.
-   - `Maximum Consume Rate`: 10 000 bytes/sec.
-   - `Limit Commit Offset`: 30 attempts/min.
+1. Finally, enable any required transformations or policies.
 1. Review the details and if you're happy with the data you're about to share, click **Create**.
 
 It will *take a few moments* for the zone to be created. 
@@ -80,9 +77,9 @@ Click on a Partner Zone to view its details.
 
 </TabItem>
 <TabItem value="Second Tab" label="Conduktor CLI">
-You can also use [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones. We recommend using CLI if you have to create many zones.
+You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones.
 
-1. Copy below and save it as a YAML file (e.g. `pz.yaml`): 
+1. Save this example to file, e.g. `pz.yaml`: 
     ```yaml
     apiVersion: v2
     kind: PartnerZone
@@ -176,13 +173,13 @@ To delete a Partner Zone you can:
 - go to the zone list view and click the **three dots** on the right-hand side then select **Delete** or 
 - in the zone details view, click the **trash can** in the top right corner. 
 
-Deleting a Partner Zone will remove partner's access to it. 
+Deleting a Partner Zone will remove a partner's access. 
 
 A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
 </TabItem>
 
 <TabItem value="Second Tab" label="Conduktor CLI">
-Deleting a Partner Zone will remove partner's access to it. *This can't be undone.* 
+Deleting a Partner Zone will remove a partner's access to it. *This can't be undone.* 
   ```bash
      conduktor delete PartnerZone {name}
     ```
