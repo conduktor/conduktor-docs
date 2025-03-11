@@ -1035,3 +1035,31 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `auditLogView`                     | Permission to browse audit log                                |
 | `taasView`                         | Permission to view Application Catalog                        | 
 
+## Partner Zone
+
+For more on Partner Zones see [the dedicated page](/platform/navigation/partner-zones/).
+
+```yaml
+# Create or update a partner zone
+apiVersion: v2
+kind: PartnerZone
+metadata:
+  name: external-partner-zone
+spec:
+  cluster: partner1
+  displayName: External Partner Zone
+  url: https://partner1.com
+  serviceAccount: johndoe
+  topics:
+    - name: topic-a
+      backingTopic: kafka-topic-a
+      permission: WRITE
+    - name: topic-b
+      backingTopic: kafka-topic-a
+      permission: READ
+  partner:
+    name: John Doe
+    role: Data analyst
+    email: johndoe@company.io
+    phone: 07827 837 177
+```
