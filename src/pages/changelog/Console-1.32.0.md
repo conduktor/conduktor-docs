@@ -26,6 +26,8 @@ tags: features,fix
 #### Partner Zones
 Improvements to Partner Zones require **Gateway 3.6.1 to be deployed** with this release of Console.
 
+See the Partner Zones [documentation](/platform/navigation/partner-zones) for full details, including required environment variables.
+
 ### Scale
 
 #### Alert history
