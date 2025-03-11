@@ -24,9 +24,7 @@ tags: features,fix
 ### Breaking changes
 
 #### Partner Zones
-Improvements to Partner Zones require **Gateway 3.6.1 to be deployed** with this release of Console.
-
-See the Partner Zones [documentation](/platform/navigation/partner-zones) for full details, including required environment variables.
+Improvements to Partner Zones require **Gateway 3.6.1 to be deployed** with this release of Console. [Find out more about Partner Zones](/platform/navigation/partner-zones) and required environment variables.
 
 ### Scale
 
@@ -100,6 +98,4 @@ In upcoming releases we'll be adding further enhancements, such as:
 - Fixed the UI issue where the option to reset a consumer group offset would disappear off the screen, if the partition count was too large.
 
 ### Known issues
-- In the Topic Consume view, equality filters (`==`) on JSON number fields is not working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`.
-  - Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there is currently no workaround for exact equality filtering.
-  - We will address this issue in a future release
+In the Topic Consume view, equality filters (`==`) on JSON number fields isn't working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`. Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there's currently no workaround for exact equality filtering. We'll address this in a future release.

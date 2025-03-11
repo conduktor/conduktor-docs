@@ -206,5 +206,6 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 
 ## Related resources
  - [Connect to clusters](/platform/navigation/settings/managing-clusters/)
- - [Service accounts](/platform/navigation/console/service-accounts/)
+ - [Manage service accounts](/platform/navigation/console/service-accounts/)
+ - [Gateway service accounts](/gateway/concepts/service-accounts-authentication-authorization/)
  - [Give us feedback/request a feature](https://conduktor.io/roadmap)

@@ -1037,7 +1037,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 ## Partner Zone
 
-For more on Partner Zones see [the dedicated page](/platform/navigation/partner-zones/).
+[Find out more about Partner Zones](/platform/navigation/partner-zones/).
 
 ```yaml
 # Create or update a partner zone
