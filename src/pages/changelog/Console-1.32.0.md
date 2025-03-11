@@ -39,7 +39,7 @@ In the alert details page you can now also see the history of an alert's status 
 
 You can now view the new [CloudEvents-based](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md) audit log events with enhanced filtering capabilities for the new resource and event types, including Conduktor platform triggered events. 
 
-For a full list of all the audited events see the [audit log docs](/platform/navigation/settings/audit-log/).
+[See the full list of all the audited events](/platform/navigation/settings/audit-log/).
 
 While legacy audit log events will stop being captured in this release, existing legacy events will remain accessible through a dedicated page until a future release.
 
