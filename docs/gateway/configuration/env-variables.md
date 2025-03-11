@@ -165,7 +165,7 @@ More context for mTLS [here](/gateway/concepts/service-accounts-authentication-a
 
 #### OAuthbearer
 
-Some of these definitions are taken from the Kafka documentation, e.g. [JKWS_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
+Some of these definitions are taken from the Kafka documentation, e.g. [SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH](https://kafka.apache.org/35/javadoc/constant-values.html#org.apache.kafka.common.config.SaslConfigs.SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH_MS_DOC).
 
 | Environment Variable               | Default Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 |------------------------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
