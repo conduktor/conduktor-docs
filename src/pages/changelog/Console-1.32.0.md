@@ -89,6 +89,7 @@ In upcoming releases we'll be adding further enhancements, such as:
 
 - Fixed an issue where editing a schema registry subject would overwrite its compatibility mode with the global compatibility setting.
 - Fixed an issue where creating an ACL for a service account with a duplicate name could override the existing ACL.
+- Fixed an issue where you could not remove the last ACL and Save in the Service Account UI.
 - Fixed an issue where the Kafka Connect failed task heatmap didn't display data for days in 2025.
 - Fixed an issue where the CLI would report incorrect actions taken (although the correct actions were shown when the `--dry-run` flag was used).
 - When Azure Active Directory is used as an LDAP server, the `userPrincipalName` field can now be set as the field containing the email address.
