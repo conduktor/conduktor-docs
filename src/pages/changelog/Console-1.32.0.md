@@ -55,7 +55,7 @@ Support for service accounts in Aiven and Confluent Cloud clusters is coming soo
 
 #### RBAC-aware menu
 
-The left-hand menu is now RBAC (Role Based Access) aware, dynamically showing/hiding menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
+The left-hand menu is now RBAC (Role Based Access Control) aware, dynamically showing/hiding menu items based on users' permissions. Hiding functionality that users don't have access to makes onboarding easier and reduces confusion.
 
 In Console, menu items are shown based on the user's `Resource access` permissions on individual clusters, while the **Settings** menu items are shown according to the `Service access` permissions. [Find out more about RBAC](/platform/navigation/settings/rbac).
 
