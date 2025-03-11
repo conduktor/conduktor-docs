@@ -16,7 +16,7 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 Before creating a Partner Zone, you have to:
 - use **Conduktor Console 1.32** or later
 - use **Conduktor Gateway 3.6.1** or later with the following configurations:
-  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN` or `SASL_SSL` (`DELEGATED_SASL_*` modes are not **currently** supported)
+  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN` or `SASL_SSL` (`DELEGATED_SASL_*` modes are not supported)
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
 - use a service account to connect to Gateway, that can access the topics you want to share
 - be logged in as an admin to Console UI, or using an admin token for the CLI
