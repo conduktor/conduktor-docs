@@ -98,17 +98,20 @@ Thus, **local and external Service Accounts are not supported in this mode**.
 
 With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate each other’s identities using TLS certificates, ensuring secure and trusted bidirectional communication. This means that both the client and Gateway authenticate one another through their respective certificates. 
 
-As a result, Gateway **cannot generate a local Service Account**, but it **can create an external Service Account linked to the client certificate's CN** (Common Name).
+As a result, Gateway extracts the user identity from the TLS certificate, which can be mapped to an external Service Account in Gateway.
 
 :::tip
-You can change the SSL principal mapping rules by setting the `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` environment variable. By default, it extracts the CN.
+The username will be of the form `CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown`.
+You can change that by setting the `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` environment variable to a customized rule. By default, it extracts the certificate distinguished name.
+
+For instance: `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES=RULE:^CN=([a-zA-Z0-9.-]*).*$$/$$1/ , DEFAULT` will extract the CN part of the certificate.
 :::
 
 [How to configure the client > Gateway connection with SSL mTLS.](/gateway/configuration/client-authentication/#mutual-tls-mtls)
 
 ### SASL Authentication
 
-With SASL authentication using OAUTHBEARER, clients authenticate with an identity (the `sub` in the OIDC JWT token) which can be mapped to an external Service Account in Gateway. You can also create a new local Service Account.
+With SASL authentication using OAUTHBEARER, clients authenticate with an identity (the `sub` in the OIDC JWT token) which can be mapped to an external Service Account in Gateway.
 
 :::note
 If you have configured OAUTHBEARER, Gateway expects the client to provide a JWT token, and the grant type should be `clientcredentials`.
