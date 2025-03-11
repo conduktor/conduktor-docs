@@ -1037,7 +1037,10 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 ## Partner Zone
 
-[Find out more about Partner Zones](/platform/navigation/partner-zones/).
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <CLI /> <GUI />
+
+Create or update a [Partner Zone](/platform/navigation/partner-zones/).
 
 ```yaml
 # Create or update a partner zone
@@ -1045,11 +1048,15 @@ apiVersion: v2
 kind: PartnerZone
 metadata:
   name: external-partner-zone
+  id: 4f09bc9c-cbac-40a3-aaa9-e0cbf6db2d19111
+  updatedAt: "2025-03-11T20:39:39.233164Z"
+  status: READY
 spec:
-  cluster: partner1
+  cluster: cdk-gateway
   displayName: External Partner Zone
+  description: An external partner to exchange data with.
   url: https://partner1.com
-  serviceAccount: johndoe
+  serviceAccount: partner-external-partner
   topics:
     - name: topic-a
       backingTopic: kafka-topic-a
@@ -1060,6 +1067,25 @@ spec:
   partner:
     name: John Doe
     role: Data analyst
-    email: johndoe@company.io
+    email: johndoe@partner.io
     phone: 07827 837 177
+  trafficControlPolicies:
+    maxProduceRate: 1e+06
+    maxConsumeRate: 1e+06
+    limitCommitOffset: 30
 ```
+
+**Metadata descriptions**
+- `name` is a technical ID of the partner zone.
+- `id` is an auto-generated ID at creation. Ignored by the CLI, returned in the response.
+- `updatedAt` is a config last updated. Ignored by the CLI, returned in the response.
+- `status` is a current state of the partner zone, `READY` or `FAILING`. Ignored by the CLI, returned in the response.
+
+**Spec descriptions**  
+- `cluster` is a cluster name referenced throughout Conduktor. This must be a Conduktor Gateway rather than a Kafka cluster.
+- `displayName` is a descriptive name, not used as a reference elsewhere.
+- `url` is a descriptive field for further context, such as a partner's website.
+- `topics.name` | `topics.backingTopic` is a name of the topic being shared.
+- `topics.permission` should be set to either `READ` or `WRITE` (which additionally grants `READ`).
+- `partner` is a descriptive fields for further context, such as who you are exchanging data with and best points of contact.
+- `trafficControlPolicies` is a policies in place to control the exchange of data.
