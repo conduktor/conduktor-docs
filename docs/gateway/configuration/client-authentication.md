@@ -173,25 +173,78 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 <u>_Note on the password :_</u>
 
-It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API as follows:
+It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API as follows.
 
+1. Create the service account, the username
+
+Request:
 ```bash
- curl \
-    --silent \
-    --request POST "http://your.gateway.url:8888/admin/vclusters/v1/vcluster/passthrough/username/jdoe" \
-    --user "admin:conduktor" \
-    --header 'Content-Type: application/json' \
-    --data-raw '{"lifeTimeSeconds": 7776000}' \
-    | jq -r ".token"
-eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzE3NjY5NTA1fQ.9YXuxZFzMEs_-HZR8t3L39LhAVK8PJsIb5X_bHsfUEA
+curl \
+  --request PUT \
+  --url 'http://localhost:8888/gateway/v2/service-account' \
+  --user admin:conduktor \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "kind" : "GatewayServiceAccount",
+    "apiVersion" : "gateway/v2",
+    "metadata" : {
+      "name" : "jdoe",
+      "vCluster" : "passthrough"
+    },
+    "spec" : { "type" : "LOCAL" }
+  }'
 ```
 
+Response:
+```json
+{
+  "resource" : {
+    "kind" : "GatewayServiceAccount",
+    "apiVersion" : "gateway/v2",
+    "metadata" : {
+      "name" : "jdoe",
+      "vCluster" : "passthrough"
+    },
+    "spec" : {
+      "type" : "LOCAL"
+    }
+  },
+  "upsertResult" : "CREATED"
+}%
+```
+
+2. Generate a token for the service account, the password
+Request:
+```bash
+curl \
+  --silent \
+  --request POST \
+  --url 'http://localhost:8888/gateway/v2/token' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "username": "jdoe",
+    "vCluster": "passthrough",
+    "lifeTimeSeconds": 3600000
+  }'
+```
+
+```json
+{"token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzQ1MzY1OTcxfQ.zPPiD17MiRnXyHJw07Cx4SKPySDi_ErJrXmi5BycR04"}%
+```
 The token conforms to the JWT token specification.
 The JWT payload contains the username, the vCluster and the expiration date:
 
 ```bash
-➜ echo -n 'eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzE3NjY5NDA4fQ' | base64 -di
-{"username":"jdoe","vcluster":"passthrough","exp":1717669408}
+jwt decode eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzQ1MzY1OTcxfQ.zPPiD17MiRnXyHJw07Cx4SKPySDi_ErJrXmi5BycR04
+
+Token claims
+------------
+{
+  "exp": 1745365971,
+  "username": "jdoe",
+  "vcluster": "passthrough"
+}
 ```
 
 ### OAuthbearer
