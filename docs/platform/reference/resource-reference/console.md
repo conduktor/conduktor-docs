@@ -808,8 +808,8 @@ This concept will be available in a future version
 Create or update a [Partner Zone](/platform/navigation/partner-zones/).
 
 ```yaml
-# Create or update a partner zone
-apiVersion: v2
+---
+apiVersion: console/v2
 kind: PartnerZone
 metadata:
   name: external-partner-zone
@@ -853,6 +853,7 @@ spec:
 Upon creation or update, the following fields will be available:
 - `metadata.updatedAt` field will be made available by consecutive get from the CLI/API.
 - `metadata.status` field will be made available by consecutive get from the CLI/API. Possible values are `PENDING`, `READY` or `FAILED`.
+- `metadata.failedReason` field will be populated in case of `FAILED` status.
 - The service account will be created if it doesn't exist and will be granted the permissions as declared in `spec.topics`
 - The traffic control policies will be applied to the service account.
 
