@@ -517,7 +517,7 @@ For details on the available exportable events refer to: [Exportable audit log e
 
 ### Conduktor SQL properties
 
-In order to use Conduktor SQL, you need to configure a second database to store the Topics data.
+In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
 You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
@@ -546,8 +546,8 @@ Advanced properties (typically, these do not need to be altered)
 
 ### Partner zone properties
 
-Advanced properties (typically, these do not need to be altered)
+Advanced properties (typically, these do not need to be altered).
 
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
-| `partner_zone.reconcile-with-gateway-every-seconds` | defines the interval at which the partner zone's state stored on the Console is synchronized with the Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
