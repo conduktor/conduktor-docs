@@ -34,6 +34,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Indexer properties](#indexer-properties)
   - [AuditLog export properties](#auditlog-export-properties)
   - [Conduktor SQL properties](#conduktor-sql-properties)
+  - [Partner zone properties](#partner-zone-properties)
 
 ## Docker image environment variables
 
@@ -69,7 +70,7 @@ description: Conduktor Console input configuration fields can be provided using 
 
 ## Console properties reference
 
-You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below. 
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
 
 Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use a .env file with key value pairs.
 
@@ -516,7 +517,7 @@ For details on the available exportable events refer to: [Exportable audit log e
 
 ### Conduktor SQL properties
 
-In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
+In order to use Conduktor SQL, you need to configure a second database to store the Topics data.
 You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
@@ -542,3 +543,11 @@ Advanced properties (typically, these do not need to be altered)
 | `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
 | `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                         | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
 | `kafka_sql.refresh_user_permissions_every_in_sec`    | Frequency at which Conduktor SQL refreshes the role permissions in the DB to match the RBAC setup in Console                          | `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`                   | false     | string    | `conduktor-sql`  |
+
+### Partner zone properties
+
+Advanced properties (typically, these do not need to be altered)
+
+| Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
+| `partner_zone.reconcile-with-gateway-every-seconds` | defines the interval at which the partner zone's state stored on the Console is synchronized with the Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | bool   | `5` (seconds) |
