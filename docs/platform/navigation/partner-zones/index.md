@@ -37,7 +37,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <TabItem value="First Tab" label="Console UI">
 Use the Console UI to create a Partner Zone in just a few steps.
 
-:::alert
+:::warning
  Currently, only `admin` users have access to Partner Zones.
 :::
 
