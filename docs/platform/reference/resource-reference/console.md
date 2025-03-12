@@ -842,8 +842,8 @@ spec:
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
 - `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
 - `spec.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
-- `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
+- `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
 - `trafficControlPolicies.maxProduceRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
 - `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
