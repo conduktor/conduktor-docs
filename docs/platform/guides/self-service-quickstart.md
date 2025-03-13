@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-title: Self-service Quickstart
-description: Getting Started with Self-service
+title: Self-service overview
+description: Get started with Self-service
 ---
 
-# Getting Started with Self-service
+# Self-service overview
 
 This guide gives an overview of Conduktor's Self-service offering through a worked example where you will:
  - Define Applications for your teams
@@ -14,7 +14,7 @@ This guide gives an overview of Conduktor's Self-service offering through a work
 
 After running the demo you will have an appreciation of how Conduktor's Self-service framework benefits teams and how it can be applied within your organization. 
 
-For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/).
+For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/).
 
 To follow-along this demo you'll need to clone our repository.
 ````shell
@@ -23,9 +23,9 @@ git clone https://github.com/conduktor/self-service-getting-started
 
 - [Central team's repo](#central-teams-repo)
 - [Application team's repo](#application-teams-repo)
-- [Worked Example](#worked-example)
+- [Worked example](#worked-example)
 - [Running the example](#running-the-example)
-  - [Set-up Demo](#set-up-demo)
+  - [Set-up demo](#set-up-demo)
   - [Apply the resources, central team perspective](#apply-the-resources-central-team-perspective)
   - [Apply the resources, application team perspective](#apply-the-resources-application-team-perspective)
   - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
@@ -46,7 +46,7 @@ Application teams can then create, modify and approve changes on their own resou
 
 The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. These concepts are detailed on the [application team resources](/platform/navigation/self-serve/#application-team-resources) of the Self-service page.
 
-## Worked Example
+## Worked example
 The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastructure as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
 The central team has defined three teams,  **clickstream**, **wikipedia** and **website-analytics** each with their own **Application**, as can be seen by their respective yaml files in `/applications`.
@@ -80,7 +80,7 @@ graph TD;
 
 ## Running the example
 
-### Set-up Demo
+### Set-up demo
 
 1. Spin up local resources, Conduktor & Kafka. A Docker compose file is provided, simply start it by navigating with your shell to the cloned repo and run the command below, you may need to download the images if you've not run them before and Docker is required
     ````bash

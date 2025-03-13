@@ -8,37 +8,37 @@ description: Kafka Self-service Overview
 
 ## Overview
 
-Self-service helps you scale Kafka usage in your organization by facilitating collaboration between the **Central Platform Team** and **Application Teams**.  
+Self-service helps you scale Kafka usage in your organization by facilitating collaboration between the **Central Platform team** and **Application teams**.  
 
 It simplifies and automates processes, establishes clear rules and ways of working, and standardizes the creation and management of Kafka resources.  
 
 This approach brings governance into your enterprise through concepts like Ownership and Applications, delegating operations to the Application Teams rather than the Central Platform Team.
 
-- For a presentation of Self-service and its key concepts, see [Get Started with Self-service](/platform/guides/self-service-quickstart)
-- For the full definition of each resource, see [Self-service Resources Reference](/platform/reference/resource-reference/self-service/)
+- For a presentation of Self-service and its key concepts, see [Get started with Self-service](/platform/guides/self-service-quickstart)
+- For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/)
 
 
-### Benefits for Central Platform Team
+### Benefits for Central Platform team
 - Define the general rules of the game
 - Enforce naming conventions
 - Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
 - Declare the Applications and their rights
-- 🍹🏖️
-### Benefits for Applications Teams
+
+### Benefits for Applications teams
 - Autonomy and responsibility over their resources
 - Isolation with Application namespaces
 - Collaboration through permission delegation without any help from the Central Platform team
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self-service relies on a central concept, the **Application**, which dictates **owernship** of Kafka resources. 
+Self-service relies on a central concept, the **Application**, which dictates **ownership** of Kafka resources. 
 
 Below outlines the relationships between [Self-service resources](/platform/reference/resource-reference/self-service).
 
 ![Self-service Concepts](assets/self-service-concepts.png)
 
 
-## Central Platform Team Resources
+## Central Platform team resources
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.
@@ -57,9 +57,9 @@ spec:
   owner: "clickstream-group"            # technical-id of the Console Group
 ````
 
-### Application Instance
+### Application instance
 **Applications** are generally deployed to one or more Kafka clusters, typically to align with the organization's development cycle or environments.
-We call this concept the **Application Instance**.
+We call this concept the **Application instance**.
 
 Each Application Instance:
 - Is linked to a Kafka Cluster and a Service Account
@@ -89,7 +89,7 @@ spec:
       patternType: PREFIXED
 ````
 
-### Application Instance Policies
+### Application instance policies
 Application Instance Policies restrict the Application Teams to create their resources following certain rules.
 These rules can be related to Kafka configs but can also apply to metadata.  
 This is what lets Platform Administrators provide a Self-service experience that doesn't look like the Wild West.
@@ -115,7 +115,7 @@ spec:
 ````
 
 
-## Application Team Resources
+## Application team resources
 Once an Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
 There are two groups of resources where Application Teams are given autonomy:
 - **Kafka-related** resources, `Topic`, `Subject`, `Connector`, `ApplicationInstancePermission`.
@@ -142,7 +142,7 @@ spec:
 
 ````
 
-### Application Instance Permission
+### Application instance permissions
 Application Instance Permissions lets teams to collaborate with each others.
 Deploying this object will grant permission to the `grantedTo` Application Instance:
 - To its Service Account (Kafka ACL)
@@ -167,7 +167,7 @@ spec:
   grantedTo: heatmap-app-dev
 ````
 
-### Application Group
+### Application group
 Create an Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 - Support Team with only Read Access in Production
@@ -214,7 +214,7 @@ spec:
 
 ````
 
-### Resource Labels
+### Resource labels
 
 Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.
 It is our objective that all resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. 
@@ -260,7 +260,7 @@ spec:
     retention.ms: "60000"
 ````
 
-## Limited Ownership mode
+## Limited ownership mode
 To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.
 - ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team.  
 - ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team.  
@@ -288,8 +288,8 @@ This way they can provide Self-service capabilities while still having Applicati
 | `kafkaConnectorCreate`            | Permission to create new connectors.                   |
 
 
-## Self-service User Interface
-For now, Self-service relies principally on the Conduktor CLI. 
+## Self-service UI
+Self-service currently relies principally on the Conduktor CLI. 
 
 The Console UI reconciles actions executed via the CLI to present Read Only views of your [Application Catalog](/platform/navigation/self-serve/application-catalog/) and [Topic Catalog](/platform/navigation/self-serve/topic-catalog/). This promotes discoverability of Kafka resources with business context inside your organization.
 

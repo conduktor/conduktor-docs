@@ -12,7 +12,7 @@ Conduktor Console can help you reprocess a message within a topic. This could be
 
 Identify a message that you wish to reprocess by finding it from within the topic view.
 
-Select the record, and click the **reprocess message** button from within the slideout component.
+Select the record, and click the **reprocess message** button from within the slide-out component.
 
 In our example below, this record is in our DLQ topic `customers-dlq` because the age of the customer is negative. Let's fix this and reprocess it to the `customers` topic, with the right age.
 

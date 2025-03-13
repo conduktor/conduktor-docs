@@ -11,8 +11,8 @@ const { redirects } = require('./src/services/redirects')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Conduktor Docs',
-  tagline: 'Dinosaurs are cool',
+  title: 'Conduktor docs',
+  tagline: 'Unlock the potential of your data',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
@@ -94,13 +94,17 @@ const config = {
                 label: 'Configuration',
                 to: 'platform/get-started/configuration/introduction',
               },
+              {
+                label: 'FAQ',
+                to: '/faq',
+              },
             ],
           },
           {
             title: 'Docs',
             items: [
               {
-                label: 'Console',
+                label: 'Platform',
                 to: '/platform',
               },
               {
@@ -117,7 +121,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Changelog',
+                label: 'Release notes',
                 href: '/changelog',
               },
               {
@@ -206,7 +210,9 @@ const config = {
       'runllm-keyboard-shortcut': 'Mod+j',
       version: 'stable',
       'runllm-preset': 'docusaurus',
-      'runllm-slack-community-url': 'https://conduktor.io/slack',
+      'runllm-community-url': 'https://conduktor.io/slack',
+      'runllm-community-type': 'slack',
+      'runllm-disclaimer': 'Answers are not covered by SLA and should be used for reference only. For official support, go to our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
       'runllm-theme-color': '#005EEC',
       async: true,

@@ -16,14 +16,15 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
   - [Database properties](#database-properties)
-  - [Session Lifetime Properties](#session-lifetime-properties)
+  - [Session lifetime properties](#session-lifetime-properties)
   - [Local users properties](#local-users-properties)
   - [Monitoring properties](#monitoring-properties)
-    - [Console Configuration for Cortex](#console-configuration-for-cortex)
-    - [Cortex Configuration](#cortex-configuration)
+    - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
+    - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
   - [SSO properties](#sso-properties)
     - [LDAP properties](#ldap-properties)
     - [OAuth2 properties](#oauth2-properties)
+    - [JWT auth properties](#jwt-auth-properties)
   - [Kafka clusters properties](#kafka-clusters-properties)
   - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
   - [Schema registry properties](#schema-registry-properties)
@@ -33,6 +34,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Indexer properties](#indexer-properties)
   - [AuditLog export properties](#auditlog-export-properties)
   - [Conduktor SQL properties](#conduktor-sql-properties)
+  - [Partner zone properties](#partner-zone-properties)
 
 ## Docker image environment variables
 
@@ -68,7 +70,20 @@ description: Conduktor Console input configuration fields can be provided using 
 
 ## Console properties reference
 
-You have multiple options to configure Console: either via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+
+Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use a .env file with key value pairs.
+
+```
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
+
+The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`, or warn if set and the file is not found
+
+```
+Warning: CDK_ENV_FILE is set but the file does not exist or is not readable.
+```
 
 In case you set both environment variable and YAML value for a specific field, the environment variable will take precedence.
 
@@ -88,7 +103,7 @@ All are valid and equivalent in YAML.
 
 ### Environment Variable Conversion
 
-At startup, Condutkor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
+At startup, Conduktor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
 
 - Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix
@@ -222,7 +237,7 @@ See database configuration [documentation](/platform/get-started/configuration/d
 | `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
 | `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
-### Session Lifetime Properties
+### Session lifetime properties
 
 Optional properties for configuring [session lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 
@@ -243,27 +258,21 @@ Optional local accounts list used to log on Console
 ### Monitoring properties
 :::caution
 Starting with version 1.18.0, if you want to benefit from our Monitoring capabilities (dashboard and alerts), you need to deploy a new image along with Console.
-
-Before 1.18:
-- `conduktor/conduktor-platform:1.17.3` or below
-
-Starting with 1.18:
 - `conduktor/conduktor-console:1.18.0` or above
 and
 - `conduktor/conduktor-console-cortex:1.18.0` or above
-
 :::
 
-This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
+This new image is based on [Cortex](https://github.com/cortexproject/cortex) and pre-configured to run with Console.
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.
 
 The configuration is split in 2 chapters:
-- Console Configuration for Cortex `conduktor/conduktor-console`
-- Cortex Configuration `conduktor/conduktor-console-cortex`
+- Monitoring Configuration for Console applies to `conduktor/conduktor-console`
+- Monitoring Configuration for Cortex applies to `conduktor/conduktor-console-cortex`
 
-#### Console Configuration for Cortex
+#### Monitoring Configuration for Console
 
 First, we need to configure Console to connect to Cortex services.
 Cortex ports are configured like this by default:
@@ -271,16 +280,27 @@ Cortex ports are configured like this by default:
 - Alert Manager port 9010
 
 
-| Property                                | Description                                  | Environment Variable                     | Mandatory | Type   | Default |
-|-----------------------------------------|----------------------------------------------|------------------------------------------|-----------|--------|---------|
-| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009       | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
-| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010      | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
-| `monitoring.callback-url`               | Console API                                  | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
-| `monitoring.notifications-callback-url` | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
-| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics          | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| Property                                | Description                                                          | Environment Variable                     | Mandatory | Type   | Default |
+|-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
+| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009                               | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
+| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010                              | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
+| `monitoring.callback-url`               | Console API                                                          | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
+| `monitoring.notifications-callback-url` | Where the Slack notification should redirect                         | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
+| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics                                  | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
+| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
+:::info
+`monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
-#### Cortex Configuration
+Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
+```
+CDK_MONITORING_USEAGGREGATEDMETRICS: true
+CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
+```
+:::
+
+#### Monitoring Configuration for Cortex
 
 See [Cortex configuration page](/platform/get-started/configuration/cortex/) for more info.
 
@@ -523,3 +543,11 @@ Advanced properties (typically, these do not need to be altered)
 | `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
 | `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                         | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
 | `kafka_sql.refresh_user_permissions_every_in_sec`    | Frequency at which Conduktor SQL refreshes the role permissions in the DB to match the RBAC setup in Console                          | `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`                   | false     | string    | `conduktor-sql`  |
+
+### Partner zone properties
+
+Advanced properties (typically, these do not need to be altered).
+
+| Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
+| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Configuring Failover
 description: Configure failover to support disaster recovery 
 ---
@@ -43,11 +43,12 @@ Conduktor Gateway acts as a 'hot-switch' to the secondary Kafka cluster, elimina
 
 Note that to initiate failover, it must be triggered through an API request to every Gateway instance. The Conduktor team can support you in finding the best solution for initiating failover, depending on your deployment specifities.
 
-![Failover](images/failover-docs.png)
+![Failover](assets/failover-docs.png)
 
 ### Configuring Gateway
 
-To set up Gateway for failover, you should configure the primary and secondary clusters along with their configuration properties. This can be achieved through a **cluster-config file**, or through **environment variables**.
+To set up Gateway for failover, you should configure the primary and secondary clusters along with their configuration properties. 
+This can be achieved through a **cluster-config file**, or through **environment variables**.
 
 #### Configuring through a cluster-config file
 
