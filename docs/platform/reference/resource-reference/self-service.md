@@ -402,11 +402,12 @@ The checks are the same as the [Service Account](/platform/reference/resource-re
 - When an ApplicationInstancePermission is removed, we don't drop the ACLs on the ServiceAccount.
   - Instead, consecutive CLI calls to apply the resource will fail, forcing the Application Team to fix.
 
-### Policy Constraints
+### Topic Policy Constraints
 
-There are currently 3 available constraints:
+There are currently 5 available constraints:
 - `Range` validates a range of numbers
 - `OneOf` validates against a list of predefined options
+- `NoneOf` rejects a value if it matches any item in the list
 - `Match` validates using Regular Expression
 - `AllowedKeys` limits a set of keys in the dictionaries
 
