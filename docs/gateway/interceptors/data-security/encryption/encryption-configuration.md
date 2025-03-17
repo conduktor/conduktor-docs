@@ -180,6 +180,7 @@ If you want to make sure the key is well created in your KMS, you have to (1) [m
 | Azure     | azure-kms://         | `azure-kms://<key-vault-name>.vault.azure.net/keys/<object-name>/<object-version>`                   | `azure-kms://my-key-vault.vault.azure.net/keys/conduktor-gateway/4ceb7a4d1f3e4738b23bea870ae8745d` |
 | AWS       | aws-kms://           | `aws-kms://arn:aws:kms:<region>:<account-id>:key/<key-id>`                                           | `aws-kms://arn:aws:kms:us-east-1:123456789012:key/password-key-id`                                 |
 | GCP       | gcp-kms://           | `gcp-kms://projects/<project-id>/locations/<location-id>/keyRings/<key-ring-id>/cryptoKeys/<key-id>` | `gcp-kms://projects/my-project/locations/us-east1/keyRings/my-key-ring/cryptoKeys/password-key-id` |
+| Gateway   | gateway-kms://       | `gateway-kms://<key-to-use-for-edek-in-backing-store>` | `gateway-kms://secret-for-{{record.value.name}}` |
 
 Note that In-Memory mode is present for testing and development purposes only - keys stored in this manner do not persist between Gateway restarts.
 
@@ -244,6 +245,7 @@ This section is detailing how to configure the different KMS within your encrypt
 | azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
 | aws       | [AWS KMS](#aws-kms)         | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
 | gcp       | [GCP KMS](#gcp-kms)         | [Google Key Management](https://cloud.google.com/security/products/security-key-management?hl=en) |
+| gateway   | [Gateway KMS](#gateway-kms) | TODO: Link to HOWTO doc |
 
 ### In-Memory KMS
 
@@ -463,3 +465,23 @@ For enhanced security, you can hide the sensitive values using [environment vari
 |------------------------------------------------------------------------------------------------------------------------------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | `serviceAccountCredentialsFilePath`                                                                                                | String | Service account key file in GCP.                                                                                                              |
 | [**Managed Identity**](https://github.com/googleapis/google-auth-library-java/blob/main/README.md#application-default-credentials) |        | Configure the KMS from the context, and not using variables. This will be overwritten if a specific KMS is configured within the interceptor. |
+
+### Gateway KMS
+
+:::warning
+This is a preview feature and is not yet ready for production deployment.
+:::
+
+To set your Gateway KMS, include this section in your interceptor config, below `gateway`.
+
+| key                                                                                                                      | type   | description                                                                                                                                   |
+|--------------------------------------------------------------------------------------------------------------------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `masterKeyId`                                                                                             | String | URI for master key used to encrypt/decrypt all EDEKs. Follows the format in [Secret Key templates](#secret-key-templates) and can use any KMS scheme except `gateway-kms://`.                                                                                                                                   |
+
+:::warning
+This is a preview feature and is not yet ready for production deployment.
+:::
+
+For complete examples using this KMS see the following snippets,
+* [Crypto Shreddable Field level encryption on Produce](./encryption-snippets.md#crypto-shreddable-field-level-encryption-on-produce)
+* [Decryption with support for Crypto Shreddable EDEKs](./encryption-snippets#decryption-with-support-for-crypto-shreddable-edeks)

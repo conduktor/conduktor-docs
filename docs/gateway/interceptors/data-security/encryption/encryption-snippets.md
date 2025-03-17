@@ -261,6 +261,45 @@ for field options. Here's how it can be defined:
 }
 ```
 
+## Crypto Shreddable Field level encryption on Produce
+
+```json
+{
+  "name": "myEncryptPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081"
+    },
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "vault-plaintext-root-token",
+        "version": 1
+      },
+      "gateway": {
+        "masterKeyId": "vault-kms://vault:8200/transit/keys/master-key"
+      }
+    },
+    "recordValue": {
+      "fields": [
+        {
+          "fieldName": "password",
+          "keySecretId": "gateway-kms://secret-for-{{record.value.name}}",
+          "algorithm": "AES128_GCM"
+        }
+      ]
+    }
+  }
+}
+```
+
+In this example a single field is configured to be encrypted with the `gateway` kms and to use `secret-for-{{record.value.name}}` as the storage key for each EDEK in the backing Kafka store. The `gateway` KMS is configured to use vault to store the master key which is used to create EDEKs. 
+
+For an example of how to decrypt a message sent with this configuration see the [Decryption with support for Crypto Shreddable EDEKs](#decryption-with-support-for-crypto-shreddable-edeks) snippet.
+
 ## Full message level encryption on Produce
 
 ```json
@@ -603,3 +642,31 @@ for field options. Here's how it can be defined:
   }
 }
 ```
+
+## Decryption with support for Crypto Shreddable EDEKs
+
+```json
+{
+  "name": "myDecryptPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081"
+    },
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "vault-plaintext-root-token",
+        "version": 1
+      },
+      "gateway": {
+        "masterKeyId": "vault-kms://vault:8200/transit/keys/master-key"
+      }
+    }
+  }
+}
+```
+
+A counterpart to the [Crypto Shreddable Field level encryption on Produce](#crypto-shreddable-field-level-encryption-on-produce) example that can decrypt fields encrypted with the `gateway` KMS.

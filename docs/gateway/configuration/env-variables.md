@@ -250,6 +250,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_AUDIT_LOG_TOPIC`           | `_conduktor_gateway_auditlogs`           | Name of audit topic                                                       |
 | `GATEWAY_VCLUSTERS_TOPIC`           | `_conduktor_gateway_vclusters`           | Name of vclusters topic                                                   |
 | `GATEWAY_GROUPS_TOPIC`              | `_conduktor_gateway_groups`              | Name of groups topic                                                      |
+| `GATEWAY_ENCRYPTION_KEYS_TOPIC`  | `_conduktor_gateway_encryption_keys`        | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors |
 
 
 ### Cluster Switching / Failover
