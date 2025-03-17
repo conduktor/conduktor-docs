@@ -1,24 +1,24 @@
 ---
 sidebar_position: 3
-title: Configure Multi-cluster
-description: Configure Gateway to support multiple upstream kafka clusters
+title: Configure Gateway for multi-clusters
+description: Configure Gateway to support multiple upstream Kafka clusters
 ---
 
 ## Overview
 
-Gateway can be configured to communicate with multiple Kafka clusters and expose their topics to your partners.
+Gateway can be configured to communicate with multiple Kafka clusters and expose their topics to your partners. 
 
-This is helpful if you want to **point your partners to a single endpoint**, and have them **access multiple Kafka clusters topics** through it.
 
-On top of it, you can expose these topics with an **alias** that doesn’t necessarily match their name on the physical Kafka clusters.
+- direct partners to a **single endpoint**
+- provide them with **access to topics in multiple Kafka clusters**
+- expose topics using **aliases** that can be different from topic names
 
-## 1. Configure Gateway
 
-To set up Gateway for Multi-cluster, you should configure:
-- one main cluster, which is used by gateway to store its internal state
-- any number of upstream kafka clusters, which are the physical kafka clusters you want to expose through Gateway.
+To set up Gateway to support multi-clusters, you should:
+- configure one main cluster which will be used by Gateway to store its internal state
+- set up any number of upstream physical Kafka clusters that you want to expose through Gateway
 
-This can be achieved through a **configuration file**, or through **environment variables**.
+This can be achieved through a **configuration file**, or **environment variables**.
 
 :::warning
 If you're using Partner virtual clusters to share data with external third parties, be aware that cluster IDs (e.g., `clusterA`, `clusterB`) may appear in the bootstrap server address or client logs. To prevent unintended exposure, **avoid using sensitive names or information in cluster IDs**.
@@ -61,7 +61,7 @@ GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /cluster-config.yaml}'
 </TabItem>
 <TabItem value="Using environment variables" label="Using environment variables">
 
-Configure your main and upstreams clusters through environment variables that you define in the Gateway container:
+Configure your main and upstream clusters through environment variables, defined in the Gateway container:
 
 ```yaml
 KAFKA_MAIN_BOOTSTRAP_SERVERS: '<main_bootstrap_servers>:9092'
@@ -146,10 +146,10 @@ curl \
 
 ## 3. Alias your topics
 
-Finally, create some alias topics inside the partner virtual cluster. These topics must exist for you to alias them.
+Finally, create aliases for existing topics in the partner virtual cluster.
 
 :::warning
-As of today, inside a partner virtual cluster, **alias topics can only point to topics from the same physical** cluster.
+Alias topics within a partner virtual cluster **can only point to topics from the same physical cluster**.
 :::
 
 <Tabs>
@@ -230,7 +230,7 @@ curl \
 
 ## 4. Create service accounts
 
-Once the virtual cluster is created and contains the topics to expose to your partners, you'll need to create service accounts and configure ACLs.
+Once the virtual cluster is created and contains the topics to expose to your partners, you'll need to create service accounts and configure ACLs (Access Control Lists).
 
 Create two service accounts for the partner virtual cluster: **one super user and one partner user**.
 
@@ -264,7 +264,7 @@ Then, apply it:
 conduktor apply -f service-accounts.yaml
 ```
 
-In order to connect to the Gateway using these service accounts, you need to get their associated password.
+In order to connect to Gateway using these service accounts, you need to get their associated password.
 
 ```shell
 conduktor run generateServiceAccountToken \
@@ -317,7 +317,7 @@ curl \
   }'
 ```
 
-In order to connect to the Gateway using these service accounts, you need to get their associated password.
+In order to connect to Gateway using these service accounts, you need to get the associated password.
 
 ```sh
 curl \
@@ -419,9 +419,9 @@ kafka-acls --bootstrap-server <partner_virtual_cluster_bootstrap_address> \
   --topic topic1
 ```
 
-For more information on service accounts and acls, see [here](/gateway/how-to/manage-service-accounts-and-acls/)
+[Find out more about service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
 
-## 6. Access the partner virtual cluster as your partner
+## 6. Test partner virtual cluster access
 
 Now that the partner user has the correct ACLs, you can use their credentials to interact with the alias topics and verify that the permissions are correctly set.
 
@@ -438,3 +438,7 @@ kafka-console-consumer --bootstrap-server localhost:6974 \
 ```
 
 Once confirmed, simply share the `mypartner-partner-user.properties` file and the correct bootstrap server details with your partner.
+
+## Related resources
+- [Manage service accounts](/gateway/how-to/manage-service-accounts-and-acls/)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
