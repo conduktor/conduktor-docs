@@ -800,6 +800,63 @@ spec:
 This concept will be available in a future version
 :::
 
+## Partner Zone
+
+**API Keys:** <AdminToken />  
+**Managed with:** <API /> <CLI /> <GUI />
+
+Create or update a [Partner Zone](/platform/navigation/partner-zones/).
+
+```yaml
+---
+apiVersion: console/v2
+kind: PartnerZone
+metadata:
+  name: external-partner-zone
+spec:
+  displayName: External Partner Zone
+  description: An external partner to exchange data with.
+  url: https://partner1.com
+  partner:
+    name: John Doe
+    role: Data analyst
+    email: johndoe@partner.io
+    phone: 07827 837 177
+  cluster: cdk-gateway
+  serviceAccount: partner-external-partner
+  topics:
+    - name: topic-a
+      backingTopic: kafka-topic-a
+      permission: WRITE
+    - name: topic-b
+      backingTopic: kafka-topic-a
+      permission: READ
+  trafficControlPolicies:
+    maxProduceRate: 1e+06
+    maxConsumeRate: 1e+06
+    limitCommitOffset: 30
+```
+
+**Partner Zone checks:**
+- `spec.displayName` is Mandatory
+- `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
+- `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
+- `spec.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+- `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
+- `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
+- `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
+- `trafficControlPolicies.maxProduceRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
+- `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
+- `trafficControlPolicies.limitCommitOffset` is **optional**. Sets the maximum number of commits requests (in requests/minute) that the partner can make per Gateway node.
+
+**Side effect in Console & Kafka:**  
+Upon creation or update, the following fields will be available:
+- `metadata.updatedAt` field will be made available by consecutive get from the CLI/API.
+- `metadata.status` field will be made available by consecutive get from the CLI/API. Possible values are `PENDING`, `READY` or `FAILED`.
+- `metadata.failedReason` field will be populated in case of `FAILED` status.
+- The service account will be created if it doesn't exist and will be granted the permissions as declared in `spec.topics`
+- The traffic control policies will be applied to the service account.
+
 ## HTTP Security Properties
 
 HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster)
@@ -1034,4 +1091,3 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `notificationChannelView`          | Permission to view Integration channels                       |
 | `auditLogView`                     | Permission to browse audit log                                |
 | `taasView`                         | Permission to view Application Catalog                        | 
-

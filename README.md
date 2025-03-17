@@ -1,6 +1,7 @@
 - [Conduktor technical docs](#conduktor-technical-docs)
 - [Deployment and structure](#deployment-notes)
 - [Docs best practice](#docs-best-practice)
+  - [Structure](#structure)
   - [Images](#images)
   - [Links](#links)
   - [Tabs](#tabs)
@@ -28,6 +29,17 @@ $ yarn start
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
 
 # Docs best practice
+
+## Structure
+When creating a new page, use this layout:
+- Overview. Introduce the concept and highlight main benefits.
+- Prerequisites. List things that have to be done/set up before using.
+- Use {feature}. Be clear, succinct and use task-oriented headings.
+- Configure {feature}. List available customization options.
+- Troubleshoot. Add a question/answer list of available solutions.
+- Related resources. Include links to topics related to the feature. Add this link at the end: 
+[Give us feedback/request a feature](https://conduktor.io/roadmap)
+
 ## Images
 Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
 
@@ -42,12 +54,12 @@ import MyImage from './assets/my-image.png';
 ```
 
 ## Links
-Use absolute links when linking to Conduktor docs, e.g. **[hardware specs](/platform/get-started/installation/hardware)**.
+Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/installation/hardware/*.
 
-You can also link to specific sections on the page, e.g. **[export properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties)**.
+You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
 ## Tabs
-You can break-up long paragraphs by using tabs, [like this](/platform/get-started/configuration/user-authentication/SSO/azure/#console-configuration). 
+Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
 
 To add tabs:
 
@@ -76,7 +88,7 @@ mySecondTab: "content"
 ````
 
 ## Tags
-You can use tags to visualize available options, [like this](/platform/reference/resource-reference/self-service/). 
+Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/). 
 
 To add tags:
 
