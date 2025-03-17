@@ -141,7 +141,7 @@ You can find snippets for each security protocol on [this page](/gateway/configu
 | `GATEWAY_SECURITY_PROTOCOL`                       | The type of authentication clients should use to connect to the gateway, valid values are `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`.                                 | The default value depends on KAFKA_SECURITY_PROTOCOL. ![](images/gateway-security-protocol-default.png) |
 | `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER`        | If no virtual cluster was detected, then user automatically falls back into the transparent virtual cluster, named `passthrough`. Reject authentication if set to `true` and vcluster is not configured for a principal.         | `false`                                                              |
 | `GATEWAY_ACL_ENABLED`                             | Enable/Disable ACLs support on the Gateway transparent virtual cluster (`passthrough`) only.                                                                                                                                     | `false`                                                              |
-| `GATEWAY_SUPER_USERS`                             | Coma-separated list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/>Example: `alice,bob`. If not set, it falls back to the usernames defined in the `GATEWAY_ADMIN_API_USERS`. | Usernames from GATEWAY_ADMIN_API_USERS                               |
+| `GATEWAY_SUPER_USERS`                             | semicolon-separated (`;`) list of service accounts that will be super users on the Gateway (**excluding Virtual Clusters**).<br/> Example: `alice;bob`.  | Usernames from GATEWAY_ADMIN_API_USERS                               |
 | `GATEWAY_ACL_STORE_ENABLED`                       | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br/>Enable/Disable ACLs support for Virtual Clusters only.                                                              | `false`                                                              |
 | `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client reauthentication after this amount of time. If set to 0, we never force the client to reauthenticate                                                                                                            | `0`                                                                  |
 
@@ -241,6 +241,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_AUDIT_LOG_TOPIC`           | Topic where the Gateway audit log is stored.                           | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`           |
 | `GATEWAY_VCLUSTERS_TOPIC`           | Topic where the virtual clusters are stored.                           | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`           |
 | `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                     | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`              |
+| `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_gateway_encryption_keys`        | 
 
 ## Internal Setup
 
