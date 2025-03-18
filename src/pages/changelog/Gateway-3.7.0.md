@@ -8,13 +8,15 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Breaking Changes 💣
+### Breaking changes
 
-#### Breaking change: separator for superusers 
-Superusers in Gateway (specified in the `GATEWAY_SUPER_USERS` environment variable) are now separated by a semicolon `;` instead of a comma `,`. 
-This change is to allow superusers identified with mTLS using their full DN form (`CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown`), 
-and makes Gateway aligned with the Kafka configuration.
-Note: This change does not affect the superusers specified in virtual clusters, as they are specified using a YAML array.
+#### Breaking change: separator for super users 
+Super users in Gateway (specified in the `GATEWAY_SUPER_USERS` environment variable) are now separated by a semicolon `;` instead of a comma `,`. 
+
+This change is to allow super users identified with mTLS using their full DN form (`CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown`), and makes Gateway aligned with the Kafka configuration.
+:::info
+This change doesn't affect super users specified in virtual clusters, as they are specified using the YAML array.
+:::
 
 ### Feature changes
 - Add support for AWS Glue Schema Registry
@@ -22,5 +24,5 @@ Note: This change does not affect the superusers specified in virtual clusters, 
 - Improve error reporting when validating interceptor configuration
 
 ### Bug fixes
-- Add `aws-java-sdk-sts` dependency to allow assume role profiles when using AWS kms
+- Add `aws-java-sdk-sts` dependency to allow assume role profiles when using AWS KMS
 - Add `jcl-over-slf4j` dependency to see logs from AWS SDK
