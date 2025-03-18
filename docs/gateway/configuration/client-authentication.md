@@ -8,7 +8,7 @@ description: Securing Conduktor Gateway
 
 ![image.png](../medias/clientsauth.png)
 
-As with Kafka brokers, Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the options available, how they work and how to configure them. The nature of your system's requirements, design and constraints will lead you to pick the most suitable option when working with our lovely experts as part of setting up Gateway with you.
+As with Kafka brokers, Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the options available, how they work and how to configure them. The nature of your system's requirements, design and constraints will lead you to pick the most suitable option.
 - [Client to Gateway Authentication](#client-to-gateway-authentication)
   - [Supported security protocols and authentication mechanisms](#supported-security-protocols-and-authentication-mechanisms)
 - [Security protocol](#security-protocol)
@@ -63,7 +63,9 @@ Here is a quick explanation of each supported security protocol:
 
 # Security protocol
 
-The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.
+The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
+
+Note you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and is never configured by the user**. Instead Gateway will try authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER` Gateway will use the OAuth configuration to try authenticate it. If a client arrives using `PLAIN` then Gateway will try use either the SSL configuration, or validate the token itself depending on the security protocol. See below for example combinations.
 
 Gateway supports all the security protocols as Apache Kafka does, you can find further information regarding what they are on the [Apache Kafka documentation](https://kafka.apache.org/documentation/#listener_configuration). In addition, Gateway adds two new security protocols `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`, as mentioned for delegating to Kafka.
 
