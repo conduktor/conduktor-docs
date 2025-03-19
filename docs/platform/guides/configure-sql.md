@@ -57,7 +57,7 @@ See [database requirements](/platform/get-started/configuration/database) and [a
 
 Configure the second database through environment variables:
 
- - `CDK_KAFKASQL_DATABASE_URL`: database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`
+ - `CDK_KAFKASQL_DATABASE_URL`: database connection url in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. If you don't have this set SQL will not appear in the sidebar.
 
 Alternatively, set each value explicitly:
 
