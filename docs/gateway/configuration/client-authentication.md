@@ -69,8 +69,7 @@ The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL`
 
 Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and is never configured by the user**. 
 
-Instead, Gateway will try authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try authenticate it. 
-
+Instead, Gateway will try authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try authenticate it.  
 If a client arrives using `PLAIN` then Gateway will try use either the SSL configuration or validate the token itself, depending on the security protocol.
 
 In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.
