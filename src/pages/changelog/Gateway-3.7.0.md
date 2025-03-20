@@ -61,7 +61,9 @@ A new KMS type `gateway-kms` is available for this feature. E.g. below is the en
 For this feature to work, the external KMS (Vault in the above example) has to also be configured.
 :::
 
-The new `gateway-kms://` can be used in any mode of encryption - full payload, field level or schema based. For example the below snippet encrypts a field, using `gateway-kms://` as the type for the field secret key:
+The new `gateway-kms://` can be used in any mode of encryption: full payload, field level or schema based. 
+
+For example, the snippet below encrypts a field using `gateway-kms://` as the type for the field secret key:
 
 ```
 "recordValue": {
