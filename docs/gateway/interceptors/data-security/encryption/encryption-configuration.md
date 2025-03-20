@@ -215,9 +215,9 @@ Now that your fields or payload are encrypted, you can decrypt them using the in
 
 ## Schema Registry configuration
 
-As soon as your records are produced using a schema, you must configure these properties in your encryption or decryption interceptors below `schemaRegistryConfig` to be able to (de)serialize them. The Gateway supports Confluent like schema registries, and AWS Glue schema registries.
+As soon as your records are produced using a schema, you have to configure these properties in your encryption/decryption interceptors after `schemaRegistryConfig` in order to (de)serialize them. Gateway supports Confluent-like and AWS Glue schema registries.
 
-| key                   | type   | default | description                                                                                                                                                                                                         |
+| Key                   | Type   | Default | Description                                                                                                                                                                                                         |
 |-----------------------|--------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `type`                | string |         | The type of schema registry to use - one of `CONFLUENT` (for confluent like, including OSS Kafka, schema registries), or `AWS` for AWS Glue schema registries.                                                      |
 | `additionalConfigs`   | map    |         | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
