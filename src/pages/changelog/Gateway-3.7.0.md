@@ -10,6 +10,17 @@ tags: features,fix
 
 ### Breaking changes
 
+#### One new backing topic is required for Gateway
+
+The [local KMS feature](#preview-feature-gateway-local-kms) introduced in Gateway 3.7.0 requires 1 new backing topic to store the keys.
+The following new topic will be created once you upgrade to Gateway 3.7.0:
+-  `_conduktor_gateway_encryption_keys`
+
+If you are happy with the default name, you have nothing to do. If you want to control the name of this topic, use the new [environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names):
+- `GATEWAY_ENCRYPTION_KEYS_TOPIC`
+
+Check the [associated Documentation](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names) for more information.
+
 #### Breaking change: separator for super users 
 Super users in Gateway (specified in the `GATEWAY_SUPER_USERS` environment variable) are now separated by a semicolon `;` instead of a comma `,`. 
 
