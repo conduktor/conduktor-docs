@@ -81,8 +81,7 @@ That will generate a specific key for this field and encrypt it, then store it i
 
 #### Decryption
 
-When using the `gateway-kms` secret key id type, the decryption configuration used to decrypt the data must also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local gateway storage. An example setup is shown below:
-
+When using the `gateway-kms` secret key ID type, the decryption configuration has to also specify the `masterKeyId` so that it can securely decrypt the keys stored in the local Gateway storage. Here's a sample setup:
 ```
 "config": {
    "topic": "secure-topic",
