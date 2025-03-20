@@ -42,7 +42,7 @@ The keys stored by Gateway are all encrypted themselves via a configured master 
 
 #### Encryption
 
-A new KMS type `gateway-kms` is available for use for this feature. E.g. below is the encryption config for the Gaterway based KMS, backed by an external Vault KMS for the actual encryption:
+A new KMS type `gateway-kms` is available for this feature. E.g. below is the encryption config for the Gateway-based KMS, backed by the master key in an external Vault KMS:
 
 ```
 "kmsConfig": {
