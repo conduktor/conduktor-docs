@@ -305,7 +305,7 @@ Here's a sample configuration for the Gateway KMS using a Vault-based master key
 }
 ```
 
-This can then be used to encrypt a field, using `gateway-kms://` as the type for the field secret key:
+This can then be used to encrypt a field using `gateway-kms://` as the secret key type:
 
 ```
 "recordValue": {
