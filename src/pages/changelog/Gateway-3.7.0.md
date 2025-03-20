@@ -29,7 +29,7 @@ This change is to allow super users identified with mTLS using their full DN for
 This change doesn't affect super users specified in virtual clusters, as they are specified using the YAML array.
 :::
 
-### Preview Feature: Gateway Local KMS
+### Preview feature: Gateway local KMS
 
 This release adds a preview feature 'local' KMS type for the encryption plugins provided in gateway. This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
 
