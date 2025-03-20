@@ -28,6 +28,14 @@ This change is to allow super users identified with mTLS using their full DN for
 This change doesn't affect super users specified in virtual clusters, as they are specified using the YAML array.
 :::
 
+#### Deprecating V1 APIs
+V1 APIs are now deprecated in favor of the V2 APIs introduced in Gateway 3.3.0 in September 2024.  
+If you are using the Conduktor CLI to operate the Gateway, you are not impacted.
+Check the following link to understand which APIs are deprecated: [Gateway API](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+**We plan to remove the V1 APIs from the Gateway in 3 releases: Gateway 3.10.0**.  
+If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.  
+If you are heavily invested in V1 APIs and need more time to transition, please let us know.
+
 ### Preview feature: Gateway local KMS
 
 This release adds a preview feature 'gateway' KMS type for the encryption plugins provided in Gateway. This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which genearte a high volume of secret key ids.
