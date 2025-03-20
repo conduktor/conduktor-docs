@@ -10,9 +10,9 @@ tags: features,fix
 
 ### Breaking changes
 
-#### One new backing topic is required for Gateway
+#### New backing topic required for Gateway
 
-The [local KMS feature](#preview-feature-gateway-local-kms) introduced in Gateway 3.7.0 requires 1 new backing topic to store the keys.
+The [local KMS feature](#preview-feature-gateway-local-kms) introduced in Gateway 3.7.0 requires a new backing topic to store the keys.
 The following new topic will be created once you upgrade to Gateway 3.7.0:
 -  `_conduktor_gateway_encryption_keys`
 
