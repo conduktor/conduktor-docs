@@ -22,9 +22,10 @@ This change doesn't affect super users specified in virtual clusters, as they ar
 
 This release adds a preview feature 'local' KMS type for the encryption plugins provided in gateway. This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
 
-:::info
-_Preview Feature_ - this feature is currently in preview mode and will be fully available soon. While we make every effort to ensure correct operation, during preview this feature is not recommended for production workloads. 
+:::warning[Preview functionality]
+This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
 :::
+
 
 The keys stored by gateway are all encrypted themselves via a configured master key externally held in your KMS - and as such are also secure as they are useless without access to the external KMS.
 
