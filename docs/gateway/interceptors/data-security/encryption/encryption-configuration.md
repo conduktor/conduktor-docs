@@ -273,7 +273,7 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 
 ### Gateway KMS
 
-This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
+This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which genearte a high volume of secret key ids.
 
 :::warning[Preview functionality]
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
