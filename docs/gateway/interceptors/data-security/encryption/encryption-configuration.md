@@ -215,13 +215,25 @@ Now that your fields or payload are encrypted, you can decrypt them using the in
 
 ## Schema Registry Configuration
 
-As soon as your records are produced using a schema, you must configure these properties in your encryption or decryption interceptors below `schemaRegistryConfig` to be able to (de)serialize them.
+As soon as your records are produced using a schema, you must configure these properties in your encryption or decryption interceptors below `schemaRegistryConfig` to be able to (de)serialize them. The Gateway supports Confluent like schema registries, and AWS Glue schema registries.
 
-| key                 | type   | default | description                                                                                                                                                                                                    |
-|---------------------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `host`              | string |         | URL of your schema registry.                                                                                                                                                                                   |
-| `cacheSize`         | string | `50`    | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                              |
-| `additionalConfigs` | map    |         | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| key                   | type   | default | description                                                                                                                                                                                                         |
+|-----------------------|--------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`                | string |         | The type of schema registry to use - one of `CONFLUENT` (for confluent like, including OSS Kafka, schema registries), or `AWS` for AWS Glue schema registries.                                                      |
+| `additionalConfigs`   | map    |         | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| **Confluent Like**    |        |         | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
+| `host`                | string |         | URL of your schema registry.                                                                                                                                                                                        |
+| `cacheSize`           | string | `50`    | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
+| **AWS Glue**          |        |         | **Configuration for AWS Glue schema registries**                                                                                                                                                                    |
+| `region`              | string |         | The AWS region for the schema registry, e.g. `us-east-1`                                                                                                                                                            |
+| `registryName`        | string |         | The name of the schema registry in AWS (leave blank for the AWS default of `default-registry`)                                                                                                                      |
+| `basicCredentials`    | string |         | Access credentials for AWS (see below section for structure)                                                                                                                                                        |
+| **AWS Credentials**   |        |         | **AWS Credentials Configuration**                                                                                                                                                                                   |
+| `accessKey`           | string |         | The access key for the connection to the schema registry.                                                                                                                                                           |
+| `secretKey`           | string |         | The secret key for the connection to the schema registry.                                                                                                                                                           |
+| `validateCredentials` | bool   | `true`  | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
+| `accountId`           | string |         | The Id for the AWS account for the connection.                                                                                                                                                                      |
+
 
 ## Use Environment Variables as Secrets
 
