@@ -20,18 +20,22 @@ This change doesn't affect super users specified in virtual clusters, as they ar
 
 ### Preview Feature: Gateway Local KMS
 
-This release adds a preview feature 'local' KMS type for the encryption plugins provided in gateway. This fetaure still ultimately delegates encryption to an external KMS, but securely stores the keys used for indivual record or field level encryption in a Kafka topic managed by the Gateway.
+This release adds a preview feature 'local' KMS type for the encryption plugins provided in gateway. This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
 
-This feature is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id), and allows you to leverage your KMS for security but efficiently store the many keys this type of configuration will generate in Gateway managed storage.
+:::info
+_Preview Feature_ - this feature is currently in preview mode and will be fully available soon. While we make every effort to ensure correct operation, during preview this feature is not recommended for production workloads. 
+:::
 
 The keys stored by gateway are all encrypted themselves via a configured master key externally held in your KMS - and as such are also secure as they are useless without access to the external KMS.
 
-A new KMS type `gateway-kms` is available for use for this feature. E.g. below is the config for the Gaterway based KMS, backed by an external Vault KMS for the actual encryption:
+#### Encryption
+
+A new KMS type `gateway-kms` is available for use for this feature. E.g. below is the encryption config for the Gaterway based KMS, backed by an external Vault KMS for the actual encryption:
 
 ```
 "kmsConfig": {
    "gateway": {
-      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key"
+      "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
    },
    "vault": {
       "uri": "http://vault:8200",
@@ -43,7 +47,7 @@ A new KMS type `gateway-kms` is available for use for this feature. E.g. below i
 
 Note that for this feature to work, the external KMS must also be configured (Vault in the example above).
 
-This can then be used to encrypt a field, using `gateway-kms://` as the type for the field secret key:
+The new `gateway-kms://` can be used in any mode of encryption - full payload, field level or schema based. For example the below snippet encrypts a field, using `gateway-kms://` as the type for the field secret key:
 
 ```
 "recordValue": {
@@ -56,9 +60,30 @@ This can then be used to encrypt a field, using `gateway-kms://` as the type for
 }
 ```
 
+
 This would generate a specific key for this field and encrypt it - and then store this key in the gateway storage (under the key `fieldKeySecret-name-{{record.key}}`). The key stored is also encrypted for security - and the secret in Vault under the `masterKeyId` is used for this.
 
+#### Decryption
 
+When using the `gateway-kms` secret key id type, the decryption configuration used to decrypt the data must also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local gateway storage. An example setup is shown below:
+
+```
+"config": {
+   "topic": "secure-topic",
+   "kmsConfig": {
+      "gateway": {
+         "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
+      },
+      "vault": {
+         "uri": "http://vault:8200",
+         "token": "my-token-for-vault",
+         "version": 1
+      }
+   }
+}
+```
+
+In future releases we may remove or alter this requirement, as part of the final work to move this new KMS storage type out of preview.
 
 
 ### Feature changes

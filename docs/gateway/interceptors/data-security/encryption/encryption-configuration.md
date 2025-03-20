@@ -261,6 +261,8 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 
 ### Gateway KMS
 
+This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
+
 :::info
 _Preview Feature_ - this feature is currently in preview mode and will be fully available soon. While we make every effort to ensure correct operation, during preview this feature is not recommended for production workloads. 
 :::
@@ -274,7 +276,7 @@ The `masterKeyId` is used to secure every key for this configuration which is st
 
 If this key is dropped from the backing KMS, then all keys stored by gateyway for that master key will become unreadable.
 
-This KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
+#### Encryption
 
 An example configuration for the gateway KMS, using a Vault based master key, is shown below:
 
@@ -309,6 +311,29 @@ This would generate a specific key for this field and encrypt it - and then stor
 Multiple records produced against this config would cause multiple keys to appear in the gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key) - however there will only be one key stored in the Vault KMS (which is used to secure then entire set up).
 
 This feature provides flexibility for your KMS storage and key management setups - and specifically is very useful for high volume crypto shredding use cases.
+
+
+#### Decryption
+
+When using the `gateway-kms` secret key id type, the decryption configuration used to decrypt the data must also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local gateway storage. An example setup is shown below:
+
+```
+"config": {
+   "topic": "secure-topic",
+   "kmsConfig": {
+      "gateway": {
+         "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
+      },
+      "vault": {
+         "uri": "http://vault:8200",
+         "token": "my-token-for-vault",
+         "version": 1
+      }
+   }
+}
+```
+
+In future releases we may remove or alter this requirement, as part of the final work to move this new KMS storage type out of preview.
 
 
 ### Vault KMS
