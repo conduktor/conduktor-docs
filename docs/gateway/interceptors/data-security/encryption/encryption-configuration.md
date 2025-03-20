@@ -347,7 +347,9 @@ Here's a sample setup:
 }
 ```
 
-In future releases we may remove or alter this requirement, as part of the final work to move this new KMS storage type out of preview.
+:::info
+This new KMS storage type might be removed or altered in future releases.
+:::
 
 
 ### Vault KMS
