@@ -237,7 +237,7 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | Topic where the offsets for concentrated topic consumption are stored.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`    |
 | `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | Topic where the deployed interceptors are stored.                                         | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs` |
 | `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | Topic where the encryption configuration is stored, in specific cases.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`  |
-| `GATEWAY_ACLS_TOPIC`                | Topic where the ACLs managed by the Gateway are stored.                                   | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                |
+| `GATEWAY_ACLS_TOPIC`                | Topic where the ACLs managed by Gateway are stored.                                   | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                |
 | `GATEWAY_AUDIT_LOG_TOPIC`           | Topic where the Gateway audit log is stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`           |
 | `GATEWAY_VCLUSTERS_TOPIC`           | Topic where the virtual clusters are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`           |
 | `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`              |
