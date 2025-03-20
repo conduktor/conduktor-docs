@@ -272,9 +272,9 @@ _Preview Feature_ - this feature is currently in preview mode and will be fully 
 | `masterKeyId` | String | The master key secret ID used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
 
 
-The `masterKeyId` is used to secure every key for this configuration which is stored by the gateway. See the section on [secret key formats](#key-stored-in-kms) above for more info on the valid formats. A valid configuration for the KMS type referenced by the master key must also be supplied.
+The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key.
 
-If this key is dropped from the backing KMS, then all keys stored by gateyway for that master key will become unreadable.
+If this key is dropped from the backing KMS, then all keys stored by Gateway for that master key will become unreadable.
 
 #### Encryption
 
