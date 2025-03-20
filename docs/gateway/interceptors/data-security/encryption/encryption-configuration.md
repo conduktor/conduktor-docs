@@ -315,7 +315,9 @@ This feature provides flexibility for your KMS storage and key management setups
 
 #### Decryption
 
-When using the `gateway-kms` secret key id type, the decryption configuration used to decrypt the data must also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local gateway storage. An example setup is shown below:
+When using the `gateway-kms` secret key ID type, the decryption configuration used to decrypt the data has to also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local Gateway storage. 
+
+Here's a sample setup:
 
 ```
 "config": {
