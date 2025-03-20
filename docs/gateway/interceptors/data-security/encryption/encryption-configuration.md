@@ -308,9 +308,9 @@ This can then be used to encrypt a field, using `gateway-kms://` as the type for
 
 That will generate a specific key for this field and encrypt it, then store it in Gateway storage (under `fieldKeySecret-name-{{record.key}}`). The stored key is also encrypted for security using `masterKeyId` secret in Vault. 
 
-Multiple records produced against this config would cause multiple keys to appear in the gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key) - however there will only be one key stored in the Vault KMS (which is used to secure then entire set up).
+Multiple records produced against this config would cause multiple keys to appear in the Gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key).  However, there will only be one key stored in the Vault KMS (which is used to secure then entire setup).
 
-This feature provides flexibility for your KMS storage and key management setups - and specifically is very useful for high volume crypto shredding use cases.
+This feature provides flexibility for your KMS storage and key management setups - and is particularly useful for high volume crypto shredding.
 
 
 #### Decryption
