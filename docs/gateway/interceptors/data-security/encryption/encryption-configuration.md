@@ -213,7 +213,7 @@ Now that your fields or payload are encrypted, you can decrypt them using the in
 | `enableAuditLogOnError`  | Boolean                                          | true                | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                  |
 | `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client) or `fail_fetch` (the client will receive an error for the fetch and no data). When implementing crypto shredding the policy should always be `return_encrypted` otherwise the consumer will become permanently blocked by messages that have been deliberately been made un-decryptable. |
 
-## Schema Registry Configuration
+## Schema Registry configuration
 
 As soon as your records are produced using a schema, you must configure these properties in your encryption or decryption interceptors below `schemaRegistryConfig` to be able to (de)serialize them. The Gateway supports Confluent like schema registries, and AWS Glue schema registries.
 
