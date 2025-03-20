@@ -240,7 +240,7 @@ This section is detailing how to configure the different KMS within your encrypt
 |-----------|-----------------------------|---------------------------------------------------------------------------------------------------|
 | keyTtlMs  | long                        | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
 | in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to the Gateway, for demo purposes only.            |
-| gateway   | [Gateway](#gateway-kms)     | Key storage managed by gateway, but with secret management still delegated to an external KMS     |
+| gateway   | [Gateway](#gateway-kms)     | Key storage managed by Gateway, but with secret management still delegated to an external KMS     |
 | vault     | [Vault KMS](#vault-kms)     | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
 | aws       | [AWS KMS](#aws-kms)         | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
