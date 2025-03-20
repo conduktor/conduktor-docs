@@ -240,6 +240,7 @@ This section is detailing how to configure the different KMS within your encrypt
 |-----------|-----------------------------|---------------------------------------------------------------------------------------------------|
 | keyTtlMs  | long                        | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
 | in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to the Gateway, for demo purposes only.            |
+| gateway   | [Gateway](#gateway-kms)     | Key storage managed by gateway, but with secret management still delegated to an external KMS     |
 | vault     | [Vault KMS](#vault-kms)     | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
 | aws       | [AWS KMS](#aws-kms)         | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
@@ -256,6 +257,59 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 * Use a gateway cluster with more than a single node
 * Or restart the Gateway
 * Or change the interceptor configuration
+
+
+### Gateway KMS
+
+:::info
+_Preview Feature_ - this feature is currently in preview mode and will be fully available soon. While we make every effort to ensure correct operation, during preview this feature is not recommended for production workloads. 
+:::
+
+| key           | type   | description                                                                                                                                                                                       |
+|---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in the gateway managed storage. This is in the same format as the `keySecretId` used for encryption, and the valid values are the same.  |
+
+
+The `masterKeyId` is used to secure every key for this configuration which is stored by the gateway. See the section on [secret key formats](#key-stored-in-kms) above for more info on the valid formats. A valid configuration for the KMS type referenced by the master key must also be supplied.
+
+If this key is dropped from the backing KMS, then all keys stored by gateyway for that master key will become unreadable.
+
+This KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It allows you to leverage your KMS for security via a single master key, but efficiently and securely store many per-record keys this type of configuration will generate in Gateway managed storage.
+
+An example configuration for the gateway KMS, using a Vault based master key, is shown below:
+
+```
+"kmsConfig": {
+   "gateway": {
+      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key"
+   },
+   "vault": {
+      "uri": "http://vault:8200",
+      "token": "my-vault-token",
+      "version": 1
+   }
+}
+```
+
+This can then be used to encrypt a field, using `gateway-kms://` as the type for the field secret key:
+
+```
+"recordValue": {
+   "fields": [
+      {
+         "fieldName": "name",
+         "keySecretId": "gateway-kms://fieldKeySecret-name-{{record.key}}"
+      }
+   ]
+}
+```
+
+This would generate a specific key for this field and encrypt it - and then store this key in the gateway storage (under the key `fieldKeySecret-name-{{record.key}}`). The key stored is also encrypted for security - and the secret in Vault under the `masterKeyId` is used for this.
+
+Multiple records produced against this config would cause multiple keys to appear in the gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key) - however there will only be one key stored in the Vault KMS (which is used to secure then entire set up).
+
+This feature provides flexibility for your KMS storage and key management setups - and specifically is very useful for high volume crypto shredding use cases.
+
 
 ### Vault KMS
 
