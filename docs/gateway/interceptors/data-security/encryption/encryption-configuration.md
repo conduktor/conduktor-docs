@@ -352,7 +352,7 @@ In future releases we may remove or alter this requirement, as part of the final
 
 ### Vault KMS
 
-To set your Vault KMS, include this section in your interceptor config, below `vault`.
+To set your Vault KMS, include this section in your interceptor config after `vault`:
 
 You can use one of these two authentication methods:
 
