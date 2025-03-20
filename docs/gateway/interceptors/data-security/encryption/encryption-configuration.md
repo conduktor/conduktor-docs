@@ -269,7 +269,7 @@ _Preview Feature_ - this feature is currently in preview mode and will be fully 
 
 | Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in the gateway managed storage. This is in the same format as the `keySecretId` used for encryption, and the valid values are the same.  |
+| `masterKeyId` | String | The master key secret ID used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
 
 
 The `masterKeyId` is used to secure every key for this configuration which is stored by the gateway. See the section on [secret key formats](#key-stored-in-kms) above for more info on the valid formats. A valid configuration for the KMS type referenced by the master key must also be supplied.
