@@ -21,7 +21,7 @@ If you are happy with the default name, you have nothing to do. If you want to c
 
 Check the [associated Documentation](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names) for more information.
 
-#### Breaking change: separator for super users 
+#### Separator for super users 
 Super users in Gateway (specified in the `GATEWAY_SUPER_USERS` environment variable) are now separated by a semicolon `;` instead of a comma `,`. 
 
 This change is to allow super users identified with mTLS using their full DN form (`CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown`), and makes Gateway aligned with the Kafka configuration.
