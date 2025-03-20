@@ -278,7 +278,7 @@ If this key is dropped from the backing KMS, then all keys stored by Gateway for
 
 #### Encryption
 
-An example configuration for the gateway KMS, using a Vault based master key, is shown below:
+Here's a sample configuration for the Gateway KMS using a Vault-based master key:
 
 ```
 "kmsConfig": {
