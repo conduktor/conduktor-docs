@@ -267,7 +267,7 @@ This new KMS type is effectively a delegated storage model, and is designed to s
 _Preview Feature_ - this feature is currently in preview mode and will be fully available soon. While we make every effort to ensure correct operation, during preview this feature is not recommended for production workloads. 
 :::
 
-| key           | type   | description                                                                                                                                                                                       |
+| Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in the gateway managed storage. This is in the same format as the `keySecretId` used for encryption, and the valid values are the same.  |
 
