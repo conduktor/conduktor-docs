@@ -99,7 +99,9 @@ When using the `gateway-kms` secret key id type, the decryption configuration us
 }
 ```
 
-In future releases we may remove or alter this requirement, as part of the final work to move this new KMS storage type out of preview.
+:::info
+This functionality might be removed or altered in future releases.
+:::
 
 
 ### Feature changes
