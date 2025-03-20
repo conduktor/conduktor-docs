@@ -38,7 +38,7 @@ This feature is currently in **preview mode** and will be available soon. We rec
 :::
 
 
-The keys stored by gateway are all encrypted themselves via a configured master key externally held in your KMS - and as such are also secure as they are useless without access to the external KMS.
+The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - and as such are also secure as they are useless without access to the external KMS.
 
 #### Encryption
 
