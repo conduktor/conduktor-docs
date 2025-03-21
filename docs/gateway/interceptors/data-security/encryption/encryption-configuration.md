@@ -232,12 +232,12 @@ As soon as your records are produced using a schema, you have to configure these
 | `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
 | `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
 | `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
-| `accountId`           | string |             | The ID for the AWS account to use.                                                                                                                                                                                  |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
 
 If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
-## Use Environment Variables as Secrets
+## Use environment variables as secrets
 
 You probably don't want your secrets to appear in your interceptors. In order to make sure this doesn't happen, you can refer to the environment variables you have set in your Gateway container.
 
@@ -275,9 +275,11 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 
 ### Gateway KMS
 
-This KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). This technique is used in crypto-shredding type scenarios e.g. encrypting records per user with their own key.  
+This KMS type is effectively a delegated storage model and is designed to support encryption use cases which generate unique secret Ids per record or even field (typically via the Mustache template support for a secret Id). This technique is used in crypto-shredding type scenarios e.g. encrypting records per user with their own key.  
 
-It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key ids.
+It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store.
+
+ For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key Ids.
 
 :::warning[Preview functionality]
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
@@ -285,7 +287,7 @@ This feature is currently in **preview mode** and will be available soon. We rec
 
 | Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `masterKeyId` | String | The master key secret ID used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
+| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
 
 
 The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.
@@ -331,7 +333,7 @@ This feature provides flexibility for your KMS storage and key management setups
 
 #### Decryption
 
-When using the `gateway-kms` secret key ID type, the decryption configuration used to decrypt the data has to also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local Gateway storage. 
+When using the `gateway-kms` secret key Id type, the decryption configuration used to decrypt the data has to also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local Gateway storage. 
 
 Here's a sample setup:
 

@@ -50,7 +50,7 @@ Currently
 | `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
 | `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
 | `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
-| `accountId`           | string |             | The ID for the AWS account to use.                                                                                                                                                                                  |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
 
 If you don't supply a `basicCredentials` section for the AWS Glue schema registry, the client used to connect will  attempt to find the connection information from the environment. The required credentials can be passed to Gateway in this way as part of core configuration.

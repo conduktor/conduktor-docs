@@ -37,8 +37,11 @@ If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.
 If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
 
-### Preview feature: Cost-Effective Crypto Shredding with Gateway KMS
+### Preview feature: introducing cost-effective Crypto Shredding with Gateway KMS
+:::warning[Preview functionality]
+This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
 
+:::
 This release introduces a a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
 With this feature, you can maintain regulatory compliance and honor user deletion requests more efficiently by:
@@ -53,11 +56,8 @@ This approach is particularly valuable for organizations that need to implement 
 
 The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - ensuring they remain secure and useless without access to the external KMS.
 
-:::warning[Preview functionality]
-This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads** until we have migrated to general availability in an upcoming release.
-:::
 
-To configure the Gateway KMS refer to the [encryption-configuration](./gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms) page.
+[Find out how to configure the Gateway KMS](./gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
 
 ### Support for AWS Glue Schema Registry
 
@@ -65,9 +65,9 @@ This release extends the support in Gateway for schema registries to include AWS
 
 
 ### Feature changes
-- Add support for `.` in the name of the `Virtual Cluster` APIs
-- More detailed errors that are not to do with interceptor validation
+- Added support for `.` in the name of the `Virtual Cluster` APIs
+- More detailed errors unrelated to interceptor validation added
 
 ### Bug fixes
-- Add `aws-java-sdk-sts` dependency to allow assume role profiles when using AWS KMS
-- Add `jcl-over-slf4j` dependency to see logs from AWS SDK
+- Added `aws-java-sdk-sts` dependency to allow assume role profiles when using AWS KMS
+- Added `jcl-over-slf4j` dependency to see logs from AWS SDK

@@ -81,9 +81,11 @@ Filtering with the where clause is still supported.
 | `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
 | `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
 | `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
-| `accountId`           | string |             | The ID for the AWS account to use.                                                                                                                                                                                  |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
-If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+If you don't supply a `basicCredentials` section for the AWS Glue schema registry, the client used to connect will  attempt to find the connection information from the environment. The required credentials can be passed to Gateway in this way as part of core configuration.
+
+Find out more about the setup for this from [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
 See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
