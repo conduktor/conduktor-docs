@@ -49,6 +49,8 @@ With this feature, you can maintain regulatory compliance and honor user deletio
 
 This approach is particularly valuable for organizations that need to implement crypto shredding across large user bases or high-volume data sets, offering both substantial cost savings and improved performance compared to managing individual keys directly in AWS KMS.  
 
+![crypto-shredding-concept](/images/changelog/gateway/v3.7.0/crypto-shredding-concept.png)
+
 The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - ensuring they remain secure and useless without access to the external KMS.
 
 :::warning[Preview functionality]
