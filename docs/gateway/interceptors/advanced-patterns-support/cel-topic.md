@@ -35,11 +35,27 @@ Currently
 
 ### Schema Registry
 
-| key               | type   | default | description                                                                                                                                                                                                                                                          |
-|:------------------|:-------|:--------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| host              | String |         | Url of schema registry                                                                                                                                                                                                                                               |
-| cacheSize         | String | `50`    | This interceptor caches schemas locally so that it doesn't have to query the schema registry                                                                                                                                                                         |
-| additionalConfigs | map    |         | Additional properties maps to specific security related parameters. For enhanced security, you can use the template `${MY_ENV_VAR}` in `map` values, then define their actual values in the environmental config variables of Gateway. (eg: -e MY_ENV_VAR=someValue) |
+| Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
+|-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                      |
+| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| **Confluent Like**    |        |             | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
+| `host`                | string |             | URL of your schema registry.                                                                                                                                                                                        |
+| `cacheSize`           | string | `50`        | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
+| **AWS Glue**          |        |             | **Configuration for AWS Glue schema registries**                                                                                                                                                                    |
+| `region`              | string |             | The AWS region for the schema registry, e.g. `us-east-1`                                                                                                                                                            |
+| `registryName`        | string |             | The name of the schema registry in AWS (leave blank for the AWS default of `default-registry`)                                                                                                                      |
+| `basicCredentials`    | string |             | Access credentials for AWS (see below section for structure)                                                                                                                                                        |
+| **AWS Credentials**   |        |             | **AWS Credentials Configuration**                                                                                                                                                                                   |
+| `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
+| `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
+| `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
+
+
+If you don't supply a `basicCredentials` section for the AWS Glue schema registry, the client used to connect will  attempt to find the connection information from the environment. The required credentials can be passed to Gateway in this way as part of core configuration.
+
+Find out more about the setup for this from [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
 See more about schema
 registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
