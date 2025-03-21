@@ -31,10 +31,10 @@ This change doesn't affect super users specified in virtual clusters, as they ar
 #### Deprecating V1 APIs
 V1 APIs are now deprecated in favor of the V2 APIs introduced in Gateway 3.3.0 in September 2024.  
 If you are using the Conduktor CLI to operate the Gateway, you are not impacted.
-Check the following link to understand which APIs are deprecated: [Gateway API](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
-**We plan to remove the V1 APIs from the Gateway in 3 releases: Gateway 3.10.0**.  
+Check the following link to understand which APIs are deprecated: [Gateway API Doc](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+**We plan to remove the V1 APIs from the Gateway in three releases time, in Gateway 3.10.0**.  
 If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.  
-If you are heavily invested in V1 APIs and need more time to transition, please let us know.
+If you are heavily invested in V1 APIs and need more time to transition, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
 ### Preview feature: Gateway local KMS
 
@@ -113,7 +113,7 @@ This functionality might be removed or altered in future releases.
 
 ### Feature changes
 - Add support for AWS Glue Schema Registry
-- Change `Virtual Cluster` APIs to allow `.` in the name
+- Add support for `.` in the name of the `Virtual Cluster` APIs
 - Improve error reporting when validating interceptor configuration
 
 ### Bug fixes
