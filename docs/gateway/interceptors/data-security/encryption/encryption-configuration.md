@@ -275,7 +275,9 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 
 ### Gateway KMS
 
-This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which genearte a high volume of secret key ids.
+This KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). This technique is used in crypto-shredding type scenarios e.g. encrypting records per user with their own key.  
+
+It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key ids.
 
 :::warning[Preview functionality]
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
@@ -286,7 +288,7 @@ This feature is currently in **preview mode** and will be available soon. We rec
 | `masterKeyId` | String | The master key secret ID used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
 
 
-The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key.
+The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.
 
 If this key is dropped from the backing KMS, then all keys stored by Gateway for that master key will become unreadable.
 
