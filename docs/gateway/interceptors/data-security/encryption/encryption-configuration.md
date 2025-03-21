@@ -351,11 +351,6 @@ Here's a sample setup:
 }
 ```
 
-:::info
-This new KMS storage type might be removed or altered in future releases.
-:::
-
-
 ### Vault KMS
 
 To set your Vault KMS, include this section in your interceptor config after `vault`:

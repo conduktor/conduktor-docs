@@ -37,7 +37,7 @@ If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.
 If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
 
-### Preview feature: Crypto Shredding Gateway local KMS
+### Preview feature: Cost-Effective Crypto Shredding with Gateway KMS
 
 This release introduces a a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
@@ -55,64 +55,7 @@ The keys stored by Gateway are all encrypted themselves via a configured master 
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads** until we have migrated to general availability in an upcoming release.
 :::
 
-#### Encryption
-
-A new KMS type `gateway-kms` is available for this feature. E.g. below is the encryption config for the Gateway-based KMS, backed by the master key in an external Vault KMS:
-
-```
-"kmsConfig": {
-   "gateway": {
-      "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
-   },
-   "vault": {
-      "uri": "http://vault:8200",
-      "token": "my-vault-token",
-      "version": 1
-   }
-}
-```
-
-
-The new `gateway-kms://` can be used in any mode of encryption: full payload, field level or schema based. 
-
-For example, the snippet below encrypts a field using `gateway-kms://` as the type for the field secret key:
-
-```
-"recordValue": {
-   "fields": [
-      {
-         "fieldName": "name",
-         "keySecretId": "gateway-kms://fieldKeySecret-name-{{record.key}}"
-      }
-   ]
-}
-```
-
-
-That will generate a specific key for this field and encrypt it, then store it in Gateway storage (under `fieldKeySecret-name-{{record.key}}`). The stored key is also encrypted for security using `masterKeyId` secret in Vault. 
-
-#### Decryption
-
-When using the `gateway-kms` secret key ID type, the decryption configuration has to also specify the `masterKeyId` so that it can securely decrypt the keys stored in the local Gateway storage. Here's a sample setup:
-```
-"config": {
-   "topic": "secure-topic",
-   "kmsConfig": {
-      "gateway": {
-         "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
-      },
-      "vault": {
-         "uri": "http://vault:8200",
-         "token": "my-token-for-vault",
-         "version": 1
-      }
-   }
-}
-```
-
-:::info
-This functionality might be removed or altered in future releases.
-:::
+To configure the Gateway KMS refer to the [encryption-configuration](./gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms) page.
 
 
 ### Feature changes
