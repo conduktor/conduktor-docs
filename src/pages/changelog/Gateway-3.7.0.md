@@ -59,9 +59,12 @@ This feature is currently in **preview mode** and will be available soon. We rec
 
 To configure the Gateway KMS refer to the [encryption-configuration](./gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms) page.
 
+### Support for AWS Glue Schema Registry
+
+This release extends the support in Gateway for schema registries to include AWS Glue schema registry. The default choice is Confluent like schema registries, and is backwards compatible with previous gateway configurations. For AWS Glue schema registry, different settings are required to connect, and this is covered in the plugin documentation.
+
 
 ### Feature changes
-- Add support for AWS Glue Schema Registry
 - Add support for `.` in the name of the `Virtual Cluster` APIs
 - More detailed errors that are not to do with interceptor validation
 
