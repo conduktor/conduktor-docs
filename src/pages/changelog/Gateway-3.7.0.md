@@ -1,5 +1,5 @@
 ---
-date: 2025-03-20
+date: 2025-03-21
 title: Gateway 3.7.0
 description: docker pull conduktor/conduktor-gateway:3.7.0
 solutions: gateway
