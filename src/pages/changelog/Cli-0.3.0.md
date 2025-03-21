@@ -18,3 +18,5 @@ tags: features,fixes
 ### Fixes
 - Fixed the release tag
 - Fixed missing key retrieval from environment
+
+For more release details refer to [the GH release](https://github.com/conduktor/ctl/releases/tag/v0.3.0)

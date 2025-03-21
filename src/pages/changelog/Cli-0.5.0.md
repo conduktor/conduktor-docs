@@ -17,3 +17,5 @@ tags: features,fixes
 
 ### Fixes
 - Fixed verbose mode in single client configuration
+
+For more release details refer to [the GH release](https://github.com/conduktor/ctl/releases/tag/v0.5.0).
