@@ -37,17 +37,23 @@ If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.
 If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
 
-### Preview feature: Gateway local KMS
+### Preview feature: Crypto Shredding Gateway local KMS
 
-This release adds a preview feature 'gateway' KMS type for the encryption plugins provided in Gateway. This new KMS type is effectively a delegated storage model, and is designed to support encryption use cases which generate unique secret ids per record or even field (typically via the mustache template support for a secret id). It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which genearte a high volume of secret key ids.
+This release introduces a a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
+With this feature, you can maintain regulatory compliance and honor user deletion requests more efficiently by:
+
+1. Storing only a single master key in your external KMS
+1. Securely managing thousands of individual encryption keys in Gateway's internal key store
+1. Deleting specific user keys when needed, rendering their data permanently inaccessible
+
+This approach is particularly valuable for organizations that need to implement crypto shredding across large user bases or high-volume data sets, offering both substantial cost savings and improved performance compared to managing individual keys directly in AWS KMS.  
+
+The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - ensuring they remain secure and useless without access to the external KMS.
 
 :::warning[Preview functionality]
-This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
+This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads** until we have migrated to general availability in an upcoming release.
 :::
-
-
-The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - and as such are also secure as they are useless without access to the external KMS.
 
 #### Encryption
 
@@ -66,9 +72,6 @@ A new KMS type `gateway-kms` is available for this feature. E.g. below is the en
 }
 ```
 
-:::info
-For this feature to work, the external KMS (Vault in the above example) has to also be configured.
-:::
 
 The new `gateway-kms://` can be used in any mode of encryption: full payload, field level or schema based. 
 
@@ -115,7 +118,7 @@ This functionality might be removed or altered in future releases.
 ### Feature changes
 - Add support for AWS Glue Schema Registry
 - Add support for `.` in the name of the `Virtual Cluster` APIs
-- Improve error reporting when validating interceptor configuration
+- More detailed errors that are not to do with interceptor validation
 
 ### Bug fixes
 - Add `aws-java-sdk-sts` dependency to allow assume role profiles when using AWS KMS
