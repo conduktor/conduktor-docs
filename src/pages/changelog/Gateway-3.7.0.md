@@ -12,7 +12,7 @@ tags: features,fix
 
 #### New backing topic required for Gateway
 
-The [local KMS feature](#preview-feature-gateway-local-kms) introduced in this release requires a new backing topic to store the keys.
+The local KMS feature introduced in this release requires a new backing topic to store the keys.
 
 When you upgrade to Gateway 3.7.0, a new topic `_conduktor_gateway_encryption_keys` will be created.
 
@@ -57,7 +57,7 @@ This approach is particularly valuable for organizations that need to implement 
 The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - ensuring they remain secure and useless without access to the external KMS.
 
 
-[Find out how to configure the Gateway KMS](./gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
+[Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
 
 ### Support for AWS Glue Schema Registry
 
