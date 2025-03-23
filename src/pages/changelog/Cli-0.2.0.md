@@ -16,4 +16,4 @@ tags: features, fixes
 ### Fixes
 - Fix for adding `prefix X-` to custom header
 
-For more release details refer to [the GH release](https://github.com/conduktor/ctl/releases/tag/v0.2.0)
+[Find out more](https://github.com/conduktor/ctl/releases/tag/v0.2.0).

@@ -27,4 +27,4 @@ tags: features,fixes
 - Various doc fixes
 - Fixed duplicate printout statements
 
-For more release details refer to [the GH release](https://github.com/conduktor/ctl/releases/tag/v0.4.0).
+[Find out more](https://github.com/conduktor/ctl/releases/tag/v0.4.0).
