@@ -63,11 +63,13 @@ In addition to all the security protocols that [Apache Kafka supports](https://k
 There is no client authentication to Gateway and all communication is exchanged without any network security.
 
 Gateway configuration:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
 ```
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=PLAINTEXT
@@ -78,6 +80,7 @@ security.protocol=PLAINTEXT
 With SSL only, there is no client authentication, but communication between the client and Gateway broker will be encrypted.
 
 Gateway configuration:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SSL
 GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
@@ -87,6 +90,7 @@ GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SSL
@@ -149,10 +153,11 @@ Gateway configuration:
 GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
 ```
+
 You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
 
-
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_PLAINTEXT
@@ -169,6 +174,7 @@ It must be a token that is obtained by a Gateway admin via the Admin (HTTP) API 
 1. Create the service account, the username
 
 Request:
+
 ```bash
 curl \
   --request PUT \
@@ -187,6 +193,7 @@ curl \
 ```
 
 Response:
+
 ```json
 {
   "resource" : {
@@ -206,6 +213,7 @@ Response:
 
 2. Generate a token for the service account, the password
 Request:
+
 ```bash
 curl \
   --silent \
@@ -223,6 +231,7 @@ curl \
 ```json
 {"token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzQ1MzY1OTcxfQ.zPPiD17MiRnXyHJw07Cx4SKPySDi_ErJrXmi5BycR04"}%
 ```
+
 The token conforms to the JWT token specification.
 The JWT payload contains the username, the vCluster and the expiration date:
 
@@ -247,6 +256,7 @@ The Oauth credentials base is managed in the configured provider.
 This mechanism will also allow you to verify some claims from your OIDC provider ( `audience` and `issuer` ).
 
 Gateway configuration:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
@@ -255,6 +265,7 @@ GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"
 ```
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_PLAINTEXT
@@ -273,8 +284,8 @@ Authentication from client is mandatory against Gateway and communication will b
 
 Supported authentication mechanisms
 
--   Plain
--   OAuthBearer
+- Plain
+- OAuthBearer
 
 #### Plain
 
@@ -283,6 +294,7 @@ Plain mechanism use Username/Password credentials to authenticate credentials ag
 Plain credentials are managed in Gateway using the HTTP API.
 
 Gateway configuration:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
@@ -290,9 +302,11 @@ GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
+
 You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9093
 security.protocol=SASL_SSL
@@ -315,6 +329,7 @@ The Oauth credentials base is managed in the configured provider.
 This mechanism will also allow you to verify some claims from your OIDC provider ( `audience` and `issuer` )
 
 Gateway configuration:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
@@ -326,6 +341,7 @@ GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ````
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_SSL
@@ -350,20 +366,19 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
--   Plain
--   Scram-sha-256
--   Scram-sha-512
-
-
-
+- Plain
+- Scram-sha-256
+- Scram-sha-512
 
 Gateway configuration:
 Using PLAIN, as used for example on Confluent Cloud:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_PLAINTEXT
 ```
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_PLAINTEXT
@@ -381,12 +396,13 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
--   Plain
--   Scram-sha-256
--   Scram-sha-512
+- Plain
+- Scram-sha-256
+- Scram-sha-512
 
 Gateway configuration:
 Using PLAIN, as used for example on Confluent Cloud:
+
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
 GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
@@ -405,8 +421,7 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-
-## Automatic security protocol detection
+## Automatic security protocol detection (Default behavior)
 
 On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol.
 
