@@ -36,8 +36,7 @@ Here is a quick explanation of each supported security protocol:
   All communication  between the client and gateway broker is exchanged without any network security.
   All credentials are managed by your backend kafka, we only provide authorization on the Gateway side based on the exchanged principal.
 
-
-## Supported security protocols and authentication mechanisms
+## Overview
 
 |                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                           | **_Clients ⟶ GW transit is encrypted_**                                                               |
 | --------------------------------------------------- |-------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
