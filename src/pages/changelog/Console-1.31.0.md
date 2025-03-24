@@ -164,8 +164,8 @@ Check the associated [Exchange Product page](https://conduktor.io/exchange) for 
 
 #### Introducing Partner Zones for Third-Party Data Sharing
 
-:::info
-Partner Zones is currently in **Beta** and is subject to changes as we continue to build out the feature.
+:::info[Preview functionality]
+Partner Zones is currently a Preview feature and is subject to change as we continue working on it.
 :::
 
 Partner Zones enable you to securely share your streaming data with external partners, without needing to replicate the data into a second, physical Kafka cluster.

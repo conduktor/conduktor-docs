@@ -6,8 +6,8 @@ description: How to configure Conduktor SQL
 
 ## Overview
 
-:::info
-This feature is in **Beta** and is subject to change as we enhance it further.
+:::info[Preview functionality]
+This is currently a Preview feature and is subject to change as we continue working on it.
 :::
 
 Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**.
@@ -284,12 +284,9 @@ If a user tries to access a table for which they lack the necessary rights, they
 ![access denied error](assets/sql-exec-access-denied.png)
 
 
-## Known Limitations
+## Known limitations
 
-There are several known limitations regarding the current beta experience.
-
-Those are:
-
+There are several known limitations with the current preview experience:
 - Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
 - If for any reason a record can't be parsed, they are ignored and the consumer continues
 - To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
