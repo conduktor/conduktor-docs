@@ -2,32 +2,16 @@
 sidebar_position: 2
 title: Client to Gateway Configuration
 description: Securing Conduktor Gateway
+toc_min_heading_level: 2
+toc_max_heading_level: 5
 ---
 
-# Client to Gateway Authentication
 
 ![image.png](../medias/clientsauth.png)
 
 Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. 
 
 Pick the most suitable option based on the nature of your system's requirements, design and constraints.
-- [Client to Gateway authentication](#client-to-gateway-authentication)
-  - [Supported security protocols and authentication mechanisms](#supported-security-protocols-and-authentication-mechanisms)
-- [Security protocol](#security-protocol)
-  - [PLAINTEXT](#plaintext)
-  - [SSL](#ssl)
-    - [Mutual TLS (mTLS)](#mutual-tls-mtls)
-  - [SASL\_PLAINTEXT](#sasl_plaintext)
-    - [Plain](#plain)
-    - [OAuthbearer](#oauthbearer)
-  - [SASL\_SSL](#sasl_ssl)
-    - [Plain](#plain-1)
-    - [OAuthbearer](#oauthbearer-1)
-  - [DELEGATED\_SASL\_PLAINTEXT](#delegated_sasl_plaintext)
-  - [DELEGATED\_SASL\_SSL](#delegated_sasl_ssl)
-- [Automatic security protocol detection (Default behavior)](#automatic-security-protocol-detection-default-behavior)
-- [Re authentication support](#re-authentication-support)
-
 
 The authentication phase on Gateway is part of the initial communication handling by Gateway to handshake, and authenticate, a Kafka client. This phase manages the encryption of the network communication and how to identify a client.
 
@@ -35,8 +19,8 @@ All open connections in Gateway result in a `Principal` that represents the auth
 
 We can split this authentication and security configuration into two aspects
 
--   Security protocol
--   Authentication mechanism
+- Security protocol
+- Authentication mechanism
 
 Security protocol defines how a Kafka client and Gateway broker should communicate and secure the connection. *How do we talk to each other, do we need to authenticate?.*
 Authentication mechanism on the other hand is the part defining how a client can authenticate it self when opening the connection. *How do we know each other?*
@@ -63,7 +47,7 @@ Here is a quick explanation of each supported security protocol:
 | **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                              | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                              |
 | **_Credentials managed by Kafka_**                  | Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN` or `SCRAM-SHA-256` or `SCRAM-SHA-512` | Security protocol: `DELEGATED_SASL_SSL`<br />Authentication mechanism: `PLAIN` or `SCRAM-SHA-256` or `SCRAM-SHA-512` |
 
-# Security protocol
+## Security protocol
 
 The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
 
@@ -74,7 +58,7 @@ If a client arrives using `PLAIN` then Gateway will try use either the SSL confi
 
 In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.
 
-## PLAINTEXT
+### PLAINTEXT
 
 There is no client authentication to Gateway and all communication is exchanged without any network security.
 
@@ -89,7 +73,7 @@ bootstrap.servers=your.gateway.hostname:9092
 security.protocol=PLAINTEXT
 ```
 
-## SSL
+### SSL
 
 With SSL only, there is no client authentication, but communication between the client and Gateway broker will be encrypted.
 
@@ -114,7 +98,7 @@ ssl.protocol=TLSv1.3
 The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify the Gateway's TLS certificate, which is stored in the keystore. 
 More info on jks truststores [here](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html).
 
-### Mutual TLS (mTLS)
+#### Mutual TLS (mTLS)
 
 Mutual TLS leverages client side certificates to authenticate a Kafka client.
 
@@ -148,12 +132,12 @@ ssl.client.auth=required
 
 The server CA certificate here is provided as a PEM file as well as the client's certificates (_ssl.keystore.xx_ keys). Jks could also be used for both client and server side authentication.
 
-## SASL_PLAINTEXT
+### SASL_PLAINTEXT
 
 Authentication from the client is mandatory against Gateway but all communications are exchanged without any network security.
 Gateway supports Plain and OAuthbearer SASL mechanisms.
 
-### Plain
+#### Plain
 
 Plain mechanism uses Username/Password credentials to authenticate credentials against Gateway.
 
@@ -254,7 +238,7 @@ Token claims
 }
 ```
 
-### OAuthbearer
+#### OAuthbearer
 
 Oauthbearer uses a OAuth2/OIDC security provider to authenticate a token in Gateway.
 
@@ -283,7 +267,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   scope=".default";
 ```
 
-## SASL_SSL
+### SASL_SSL
 
 Authentication from client is mandatory against Gateway and communication will be encrypted using TLS.
 
@@ -292,7 +276,7 @@ Supported authentication mechanisms
 -   Plain
 -   OAuthBearer
 
-### Plain
+#### Plain
 
 Plain mechanism use Username/Password credentials to authenticate credentials against Gateway.
 
@@ -322,7 +306,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 See section above for requirements on how to create tokens using the Admin (HTTP) API.
 
-### OAuthbearer
+#### OAuthbearer
 
 Oauthbearer uses a OAuth2/OIDC security provider to authenticate a token in Gateway.
 
@@ -356,7 +340,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   scope=".default";
 ```
 
-## DELEGATED_SASL_PLAINTEXT
+### DELEGATED_SASL_PLAINTEXT
 
 Authentication from client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
@@ -387,7 +371,7 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-## DELEGATED_SASL_SSL
+### DELEGATED_SASL_SSL
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
@@ -411,6 +395,7 @@ GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
 
 Client configuration:
+
 ```properties
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_SSL
@@ -421,7 +406,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 ```
 
 
-# Automatic security protocol detection (Default behavior)
+## Automatic security protocol detection
 
 On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol.
 
@@ -450,9 +435,8 @@ authenticationConfig:
 
 ```
 
-# Re authentication support
+## Re authentication support
 
 We support Apache Kafka Re authentication as Kafka brokers.
 
 See [KIP-368](https://cwiki.apache.org/confluence/display/KAFKA/KIP-368%3A+Allow+SASL+Connections+to+Periodically+Re-Authenticate) for more details
-
