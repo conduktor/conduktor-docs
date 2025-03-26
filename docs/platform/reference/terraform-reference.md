@@ -12,8 +12,10 @@ import TabItem from '@theme/TabItem';
 The [Conduktor Terraform Provider](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
 
 :::warning Warning
+
 - Conduktor Terraform Provider is currently in **Alpha** and doesn't support all Conduktor resources at this time.
 - Let us know if you have [feedback](https://conduktor.io/roadmap) or wish to be a design partner.
+
 :::
 
 ## Install & Configure
@@ -34,13 +36,14 @@ terraform {
 ### Configure
 
 To use the Conduktor Terraform Provider, you need to define some minimal configuration:
-- The mode, since the provider can also be used for Conduktor Gateway
+
+- The mode, since the provider can also be used for managing Conduktor Gateway resources
 - The URL of Conduktor Console
 - The authentication mechanism
   - Using an API key
   - Using local user (usually admin account) credentials
 
-You can find the full configuration reference [here](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
+You can find the full configuration reference on the [Terraform registry page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
 
 ### Using API key authentication
 
@@ -142,9 +145,11 @@ Provider configuration also supports environment variables for all attributes le
 
 :::info
 The configuration resolution is (by order of priority) :
+
 1. HCL values
 2. Environment variables
 3. Default values (if applicable)
+
 :::
 
 ## Provider Usage
@@ -152,6 +157,7 @@ The configuration resolution is (by order of priority) :
 Once the provider is configured all [currently available](#available-resources) resources can be used in the Terraform definition.
 
 ### Usage Example
+
 Full example of user and group creation using Conduktor Console locally available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
 
 ```hcl title="conduktor-iac.tf"
@@ -201,7 +207,9 @@ resource "conduktor_group_v2" "example_group" {
 ```
 
 Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and in a directory containing `conduktor-iac.tf` file.
+
 ```shell
+
 # Initialize terraform project
 terraform init
 
@@ -225,7 +233,6 @@ For more details on Terraform CLI commands and usage check the Hashicorp [docume
 
 For the full list of resources see the [provider page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
 
-
 #### Case of the `generic` resource
 
 The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
@@ -234,6 +241,7 @@ This is an experimental resource that has several [limitations](https://registry
 
 
 ## More documentation reference
+
 - Terraform [introduction](https://developer.hashicorp.com/terraform/intro)
 - Terraform HCL [documentation](https://developer.hashicorp.com/terraform/language)
 - Terraform CLI [documentation](https://developer.hashicorp.com/terraform/cli/commands)
