@@ -129,7 +129,7 @@ provider "conduktor" {
 
 ### Environment variables
 
-Provider configuration also supports environment variables for all attributes less the `mode`.
+Provider configuration also supports environment variables for all attributes except for `mode`.
 
 | Environment Variables                          | HCL Value        | Description |
 |------------------------------------------------|------------------|-------------|
