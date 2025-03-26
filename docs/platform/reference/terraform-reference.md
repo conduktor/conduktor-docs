@@ -34,6 +34,7 @@ terraform {
 ### Configure
 
 To use the Conduktor Terraform Provider, you need to define some minimal configuration:
+- The mode, since the provider can also be used for Conduktor Gateway
 - The URL of Conduktor Console
 - The authentication mechanism
   - Using an API key
@@ -46,7 +47,8 @@ You can find the full configuration reference [here](https://registry.terraform.
 ````hcl
 # configure provider
 provider "conduktor" {
-    console_url = "http://localhost:8080"
+    mode      = "console"
+    base_url  = "http://localhost:8080"
     api_token = "your-api-key"
 }
 ````
@@ -115,26 +117,28 @@ Short-lived User API Keys will be valid for the same duration as the configured 
 ````hcl
 # configure provider
 provider "conduktor" {
-    console_url = "http://localhost:8080"
-    admin_email    = "console-admin@mycompany.io"
+    mode           = "console"
+    base_url       = "http://localhost:8080"
+    admin_user     = "console-admin@mycompany.io"
     admin_password = "console-admin-password"
 }
 ````
 
 ### Environment variables
 
-Provider configuration also supports environment variables for all attributes.
+Provider configuration also supports environment variables for all attributes less the `mode`.
 
-| Environment Variables                | HCL Value        | Description |
-|--------------------------------------|------------------|-------------|
-| `CDK_CONSOLE_URL`  or `CDK_BASE_URL` | `console_url`    | Console base url e.g. `http://localhost:8080` |
-| `CDK_API_TOKEN` or `CDK_API_KEY`     | `api_token`      | Console [API Key](#using-api-key-authentication) |
-| `CDK_ADMIN_EMAIL`                    | `admin_email`    | Console [user login](#using-short-lived-user-credentials-authentication) email |
-| `CDK_ADMIN_PASSWORD`                 | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
-| `CDK_CERT`                           | `cert`           | Cert in PEM format to authenticate using client certificates |
-| `CDK_INSECURE`                       | `insecure`       | Skip TLS verification flag. Defaults to `false` |
-| `CDK_CA_CERT`                        | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate |
-| `CDK_KEY`                            | `key`            | Key in PEM format to authenticate using client certificates |
+| Environment Variables                          | HCL Value        | Description |
+|------------------------------------------------|------------------|-------------|
+| n/a                                            | `mode`           | Terraform Provider mode, can either be `console` or `gateway` |
+| `CDK_CONSOLE_BASE_URL`  or `CDK_BASE_URL`      | `base_url`       | Console base url e.g. `http://localhost:8080` |
+| `CDK_API_TOKEN` or `CDK_API_KEY`               | `api_token`      | Console [API Key](#using-api-key-authentication) |
+| `CDK_CONSOLE_USER` or  `CDK_ADMIN_EMAIL`       | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email |
+| `CDK_CONSOLE_PASSWORD` or `CDK_ADMIN_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_CONSOLE_CERT` or `CDK_CERT`               | `cert`           | Cert in PEM format to authenticate using client certificates |
+| `CDK_CONSOLE_INSECURE` or `CDK_INSECURE`       | `insecure`       | Skip TLS verification flag. Defaults to `false` |
+| `CDK_CONSOLE_CACERT` or `CDK_CACERT`           | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate |
+| `CDK_CONSOLE_KEY` or `CDK_KEY`                 | `key`            | Key in PEM format to authenticate using client certificates |
 
 :::info
 The configuration resolution is (by order of priority) :
@@ -156,22 +160,23 @@ terraform {
   required_providers {
     conduktor = {
         source = "conduktor/conduktor"
-        version = ">= 0.1.0"
+        version = ">= 0.4.0"
     }
   }
 }
 
 # Provider configuration
 provider "conduktor" {
-    console_url = "http://localhost:8080"
-    admin_email    = "admin@mycompany.io"
+    mode           = "console"
+    base_url       = "http://localhost:8080"
+    admin_user     = "admin@mycompany.io"
     admin_password = "admin_password"
 }
 
 # Create example_user, Bob
 resource "conduktor_user_v2" "bob" {
   name = "bob@mycompany.io"
-  spec {
+  spec = {
     firstname   = "Bob"
     lastname    = "Smith"
     permissions = [
@@ -186,7 +191,7 @@ resource "conduktor_user_v2" "bob" {
 # Create a group with Bob as a member
 resource "conduktor_group_v2" "example_group" {
   name = "team-a"
-  spec {
+  spec = {
     display_name = "team-a"
     description  = "The group of team-a"
     members      = [ conduktor_user_v2.bob.name ]
