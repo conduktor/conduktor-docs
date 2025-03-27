@@ -16,6 +16,7 @@ Conduktor Terraform Provider is currently in **Alpha** and doesn't support all t
 :::
 
 ## Install
+
 The provider should be installed automatically with `terraform init`, however we recommend to pin a specific version or range of versions using the [required_providers](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration:
 
 ```hcl
@@ -30,6 +31,7 @@ terraform {
 ```
 
 ## Configure
+
 To use the Conduktor Terraform Provider, you need to configure:
 
 - the mode, since the provider can also be used for managing Conduktor Gateway resources,
@@ -39,6 +41,7 @@ To use the Conduktor Terraform Provider, you need to configure:
 [View the full configuration reference](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
 
 ### Authenticate using API Keys
+
 ````hcl
 # configure provider
 provider "conduktor" {
@@ -116,25 +119,28 @@ provider "conduktor" {
 ````
 
 ### Environment variables
+
 The provider configuration also supports environment variables for all attributes except for `mode`.
 
-| Environment variables                          | HCL value        | Description |
-|------------------------------------------------|------------------|-------------|
-| n/a                                            | `mode`           | Terraform Provider mode: either `console` or `gateway` |
-| `CDK_CONSOLE_BASE_URL`  or `CDK_BASE_URL`      | `base_url`       | Console base URL, e.g. `http://localhost:8080` |
-| `CDK_API_TOKEN` or `CDK_API_KEY`               | `api_token`      | Console [API Key](#using-api-key-authentication) |
-| `CDK_CONSOLE_USER` or  `CDK_ADMIN_EMAIL`       | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email |
-| `CDK_CONSOLE_PASSWORD` or `CDK_ADMIN_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
-| `CDK_CONSOLE_CERT` or `CDK_CERT`               | `cert`           | Cert in PEM format to authenticate using client certificates |
-| `CDK_CONSOLE_INSECURE` or `CDK_INSECURE`       | `insecure`       | Skip TLS verification flag. Defaults to `false` |
-| `CDK_CONSOLE_CACERT` or `CDK_CACERT`           | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate |
-| `CDK_CONSOLE_KEY` or `CDK_KEY`                 | `key`            | Key in PEM format to authenticate using client certificates |
+| Environment variables  | HCL value        | Description                                                                       |
+| ---------------------- | ---------------- | --------------------------------------------------------------------------------- |
+| n/a                    | `mode`           | Terraform Provider mode: either `console` or `gateway`                            |
+| `CDK_CONSOLE_BASE_URL` | `base_url`       | Console base URL, e.g. `http://localhost:8080`                                    |
+| `CDK_API_KEY`          | `api_token`      | Console [API Key](#using-api-key-authentication)                                  |
+| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email    |
+| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_CONSOLE_CERT`     | `cert`           | Cert in PEM format to authenticate using client certificates                      |
+| `CDK_CONSOLE_INSECURE` | `insecure`       | Skip TLS verification flag. Defaults to `false`                                   |
+| `CDK_CONSOLE_CACERT`   | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate     |
+| `CDK_CONSOLE_KEY`      | `key`            | Key in PEM format to authenticate using client certificates                       |
 
 :::info
 The configuration resolution is (in order of priority):
+
 1. HCL values
 1. Environment variables
 1. Default values (if applicable)
+
 :::
 
 ## Provider usage
