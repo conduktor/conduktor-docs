@@ -65,6 +65,7 @@ Breaking changes:
 
 | Chart version | Supported Platform version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
+| [console-1.17.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.17.1) | **1.32.1**, 1.32.0, 1.31.2, 1.31.1, 1.31.0, 1.30.0, 1.29.2, 1.29.1, 1.29.0, 1.28.0, 1.27.1, 1.27.0, 1.26.0, 1.25.1, 1.25.0, 1.24.1, 1.24.0 | |
 | [console-1.17.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.17.0) | **1.32.0**, 1.31.2, 1.31.1, 1.31.0, 1.30.0, 1.29.2, 1.29.1, 1.29.0, 1.28.0, 1.27.1, 1.27.0, 1.26.0, 1.25.1, 1.25.0, 1.24.1, 1.24.0 | |
 | [console-1.16.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.16.2) | **1.31.2**, 1.31.1, 1.31.0, 1.30.0, 1.29.2, 1.29.1, 1.29.0, 1.28.0, 1.27.1, 1.27.0, 1.26.0, 1.25.1, 1.25.0, 1.24.1, 1.24.0 | |
 | [console-1.16.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/console-1.16.1) | **1.31.1**, 1.31.0, 1.30.0, 1.29.2, 1.29.1, 1.29.0, 1.28.0, 1.27.1, 1.27.0, 1.26.0, 1.25.1, 1.25.0, 1.24.1, 1.24.0 | |
