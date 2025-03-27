@@ -153,7 +153,7 @@ GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens # e.g `openssl rand -base64 32`
 ```
 
-You **must** set `GATEWAY_USER_POOL_SECRET_KEY` to a random base64 encoded value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens. You can use openssl to generate this secret key like : `openssl rand -base64 32` 
+You **must** set `GATEWAY_USER_POOL_SECRET_KEY` to a random base64 encoded value  of 256bits long to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens. You can use openssl to generate this secret key like : `openssl rand -base64 32` 
 
 Client configuration:
 
