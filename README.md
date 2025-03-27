@@ -36,9 +36,20 @@ When creating a new page, use this layout:
 - Prerequisites. List things that have to be done/set up before using.
 - Use {feature}. Be clear, succinct and use task-oriented headings.
 - Configure {feature}. List available customization options.
-- Troubleshoot. Add a question/answer list of available solutions.
+- Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
 - Related resources. Include links to topics related to the feature. Add this link at the end: 
 [Give us feedback/request a feature](https://conduktor.io/roadmap)
+
+When adding a tutorial, use this layout:
+- Overview/goal. Introduce the concept and the purpose/goal.
+- Context or requirements. Set the scene/list pre-requisites.
+- List numbered steps. Use action-oriented headings.
+- Expected results. Summarize the outcome(s), if it's more complex than something was 'successfully created/added'.
+- Related tutorials. Anything else they could learn that's relevant.
+- Related resources. Include links to topics related to the feature. Add these two links at the end:
+  - [Learn Apache Kafka](https://learn.conduktor.io/kafka/)
+  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
+
 
 ## Images
 Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
