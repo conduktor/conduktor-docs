@@ -9,7 +9,7 @@ Conduktor is the Enterprise Data Management Platform for Kafka data streaming th
 
 To maximize the value of Conduktor, use these two key components:
  - [Console](/platform/navigation/): the unified interface to develop, monitor, and manage data streaming operations
- - [Gateway](/gateway): a proxy that simplifies authentication, authorization, and traffic management
+ - [Gateway](/gateway): a vendor-agnostic Kafka proxy that provides organizations greater control over traffic management, data security, authentication and more
 
 ![Platform overview](https://framerusercontent.com/images/meFtLvvuqKtvLTZJuKgIV8xMI.png)
 
