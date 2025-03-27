@@ -13,7 +13,7 @@ To maximize the value of Conduktor, use these two key components:
 
 ![Platform overview](https://framerusercontent.com/images/meFtLvvuqKtvLTZJuKgIV8xMI.png)
 
-Conduktor Console provides a [powerful UI](/platform/navigation/) for Apache Kafka that supports you with many essential tasks when working with Kafka:
+Conduktor Console provides a [powerful UI](/platform/navigation/) that supports you with many essential tasks when working with Kafka:
 ![Console home page](assets/home.png)
 
 Conduktor Gateway is a vendor-agnostic [Kafka proxy](/gateway), deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption, traffic control policies and failover for disaster recovery.
