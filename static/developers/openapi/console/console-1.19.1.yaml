@@ -17,8 +17,8 @@ tags:
     The Conduktor REST API can be used to manage your Conduktor organizations Users, Groups and their associated Permissions. Additionally, it can be used to interact with Kafka resources that are added to your organization such as Clusters and Certificates.
 
     The APIs have predictable resource-oriented URLs. All requests and responses are in JSON and should have their `content-type` header set to `application/json`
-- name: Beta Access
-  description: Please note that access to the API is currently in Beta. As we collect
+- name: Preview Access
+  description: Please note that access to the API is currently in Preview. As we collect
     feedback around usage, it is possible that the API will change. We intend to work
     closely with customers and will give due warning of any potential changes.
 - name: Authentication
