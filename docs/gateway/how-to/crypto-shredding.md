@@ -14,18 +14,16 @@ This feature is currently in **preview**, so we strongly recommend that you **do
 
 Conduktor provides a cost-efficient and scalable crypto shredding solution that works seamlessly with Kafka. Keys are centrally managed and securely stored which ensures that deleting a key instantly makes all associated data unreadable, without the complexity of self-managed vaults, expensive per-user encryption or additional infrastructure overhead.
 
-This allows you to honor deletion requests and maintain compliance with regulations like GDPR (General Data Protection Regulation) and CCPA (California Consumer Privacy Act).
-
 ![Conduktor's crypto shredding solution](/images/changelog/gateway/v3.7.0/crypto-shredding-concept.png)
+
+This allows you to honor deletion requests and maintain compliance with regulations like GDPR (General Data Protection Regulation) and CCPA (California Consumer Privacy Act). This approach is also particularly valuable for organizations that need to implement crypto shredding at scale, across large user bases or high-volume data sets, offering both **substantial cost savings** and **improved performance** compared to managing individual keys directly in an external KMS such as AWS.
 
 Conduktor's solution:
 - stores only a single master key in your external KMS
 - securely manages thousands of individual encryption keys in Gateway's internal key store
 - deletes specific user keys when needed, rendering their data permanently inaccessible
 
-This approach is particularly valuable for organizations that need to implement crypto shredding at scale, across large user bases or high-volume data sets, offering both **substantial cost savings** and **improved performance** compared to managing individual keys directly in an external KMS such as AWS.
-
-### How does it work?
+### How does it work?
 - Conduktor generates the **user-specific encryption key** from a central master key provided by an external KMS (e.g. AWS KMS).
 - This encryption key is securely stored within Kafka.
 - All the messages from one user are encrypted using the **unique per-user key**.
