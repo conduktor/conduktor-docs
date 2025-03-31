@@ -193,7 +193,10 @@ const config = {
     analytics,
     gtm,
   ],
-  stylesheets: ['/css/stitches.css'],
+  stylesheets: [
+    '/css/stitches.css',  
+    '/css/custom.css',  
+  ],
   scripts: [
     {
       src: 'https://cdn-cookieyes.com/client_data/bb65dd08fda6eb81ef9cf1c2/script.js',
@@ -214,7 +217,9 @@ const config = {
       'runllm-community-type': 'slack',
       'runllm-disclaimer': 'Answers are not covered by SLA and should be used for reference only. For official support, go to our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
-      'runllm-theme-color': '#005EEC',
+      'runllm-theme-color': '#09343C',
+      'runllm-brand-logo' :'https://raw.githubusercontent.com/conduktor/conduktor.io-public/refs/heads/main/logo/dark-green-bg-app.png',
+      'runllm-floating-button-text': 'Ask Conduktor',
       async: true,
     },
   ],
