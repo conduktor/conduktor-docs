@@ -9,7 +9,7 @@ description: Reduce costs and maintain compliance with centralized and secure ke
 :::
 
 :::warning[Preview functionality]
-This feature is currently in **preview**, so we strongly recommend that you **don't use it in the production workloads**.
+This feature is currently in **preview**, so we strongly recommend that you **don't use it on the production workloads**.
 :::
 
 Conduktor provides a cost-efficient and scalable crypto shredding solution that works seamlessly with Kafka. Keys are centrally managed and securely stored which ensures that deleting a key instantly makes all associated data unreadable, without the complexity of self-managed vaults, expensive per-user encryption or additional infrastructure overhead.
