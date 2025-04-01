@@ -211,19 +211,33 @@ Now that your fields or payload are encrypted, you can decrypt them using the in
 | `recordKeyFields`        | List[String]                                     |                     | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.                                                                                                       |
 | `recordHeaderFields`     | List[String]                                     |                     | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.                                                                                                                |
 | `enableAuditLogOnError`  | Boolean                                          | true                | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                  |
-| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client) or `fail_fetch` (the client will receive an error for the fetch and no data). |
+| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client) or `fail_fetch` (the client will receive an error for the fetch and no data). **For crypto shredding, the policy should always be `return_encrypted`**, otherwise the consumer will become permanently blocked by messages that have been deliberately been made un-decryptable. |
 
-## Schema Registry Configuration
+## Schema Registry configuration
 
-As soon as your records are produced using a schema, you must configure these properties in your encryption or decryption interceptors below `schemaRegistryConfig` to be able to (de)serialize them.
+As soon as your records are produced using a schema, you have to configure these properties in your encryption/decryption interceptors after `schemaRegistryConfig` in order to (de)serialize them. Gateway supports Confluent-like and AWS Glue schema registries.
 
-| key                 | type   | default | description                                                                                                                                                                                                    |
-|---------------------|--------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `host`              | string |         | URL of your schema registry.                                                                                                                                                                                   |
-| `cacheSize`         | string | `50`    | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                              |
-| `additionalConfigs` | map    |         | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
+|-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                      |
+| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| **Confluent Like**    |        |             | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
+| `host`                | string |             | URL of your schema registry.                                                                                                                                                                                        |
+| `cacheSize`           | string | `50`        | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
+| **AWS Glue**          |        |             | **Configuration for AWS Glue schema registries**                                                                                                                                                                    |
+| `region`              | string |             | The AWS region for the schema registry, e.g. `us-east-1`                                                                                                                                                            |
+| `registryName`        | string |             | The name of the schema registry in AWS (leave blank for the AWS default of `default-registry`)                                                                                                                      |
+| `basicCredentials`    | string |             | Access credentials for AWS (see below section for structure)                                                                                                                                                        |
+| **AWS Credentials**   |        |             | **AWS Credentials Configuration**                                                                                                                                                                                   |
+| `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
+| `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
+| `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
-## Use Environment Variables as Secrets
+
+If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+
+## Use environment variables as secrets
 
 You probably don't want your secrets to appear in your interceptors. In order to make sure this doesn't happen, you can refer to the environment variables you have set in your Gateway container.
 
@@ -240,6 +254,7 @@ This section is detailing how to configure the different KMS within your encrypt
 |-----------|-----------------------------|---------------------------------------------------------------------------------------------------|
 | keyTtlMs  | long                        | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
 | in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to the Gateway, for demo purposes only.            |
+| gateway   | [Gateway](#gateway-kms)     | Key storage managed by Gateway, but with secret management still delegated to an external KMS     |
 | vault     | [Vault KMS](#vault-kms)     | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
 | aws       | [AWS KMS](#aws-kms)         | [AWS KMS](https://docs.aws.amazon.com/kms/)                                                       |
@@ -257,9 +272,90 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 * Or restart the Gateway
 * Or change the interceptor configuration
 
+
+### Gateway KMS
+
+This KMS type is effectively a delegated storage model and is designed to support encryption use cases which generate unique secret Ids per record or even field (typically via the Mustache template support for a secret Id). This technique is used in crypto-shredding type scenarios e.g. encrypting records per user with their own key.  
+
+It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store.
+
+ For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key Ids.
+
+:::warning[Preview functionality]
+This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
+:::
+
+| Key           | Type   | Description                                                                                                                                                                                       |
+|---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
+
+
+The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.
+
+If this key is dropped from the backing KMS, then all keys stored by Gateway for that master key will become unreadable.
+
+#### Encryption
+
+Here's a sample configuration for the Gateway KMS using a Vault-based master key:
+
+```
+"kmsConfig": {
+   "gateway": {
+      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key"
+   },
+   "vault": {
+      "uri": "http://vault:8200",
+      "token": "my-vault-token",
+      "version": 1
+   }
+}
+```
+
+This can then be used to encrypt a field using `gateway-kms://` as the secret key type:
+
+```
+"recordValue": {
+   "fields": [
+      {
+         "fieldName": "name",
+         "keySecretId": "gateway-kms://fieldKeySecret-name-{{record.key}}"
+      }
+   ]
+}
+```
+
+That will generate a specific key for this field and encrypt it, then store it in Gateway storage (under `fieldKeySecret-name-{{record.key}}`). The stored key is also encrypted for security using `masterKeyId` secret in Vault. 
+
+Multiple records produced against this config would cause multiple keys to appear in the Gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key).  However, there will only be one key stored in the Vault KMS (which is used to secure then entire setup).
+
+This feature provides flexibility for your KMS storage and key management setups - and is particularly useful for high volume crypto shredding.
+
+
+#### Decryption
+
+When using the `gateway-kms` secret key Id type, the decryption configuration used to decrypt the data has to also specify the `masterKeyId`, so that it can securely decrypt the keys stored in the local Gateway storage. 
+
+Here's a sample setup:
+
+```
+"config": {
+   "topic": "secure-topic",
+   "kmsConfig": {
+      "gateway": {
+         "masterKeyId": "vault-kms://vault:8200/transit/keys/secure-topic-master-key"
+      },
+      "vault": {
+         "uri": "http://vault:8200",
+         "token": "my-token-for-vault",
+         "version": 1
+      }
+   }
+}
+```
+
 ### Vault KMS
 
-To set your Vault KMS, include this section in your interceptor config, below `vault`.
+To set your Vault KMS, include this section in your interceptor config after `vault`:
 
 You can use one of these two authentication methods:
 

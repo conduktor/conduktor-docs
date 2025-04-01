@@ -11,8 +11,8 @@ const { redirects } = require('./src/services/redirects')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Conduktor Docs',
-  tagline: 'Dinosaurs are cool',
+  title: 'Conduktor docs',
+  tagline: 'Unlock the potential of your data',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
@@ -193,7 +193,10 @@ const config = {
     analytics,
     gtm,
   ],
-  stylesheets: ['/css/stitches.css'],
+  stylesheets: [
+    '/css/stitches.css',  
+    '/css/custom.css',  
+  ],
   scripts: [
     {
       src: 'https://cdn-cookieyes.com/client_data/bb65dd08fda6eb81ef9cf1c2/script.js',
@@ -212,9 +215,11 @@ const config = {
       'runllm-preset': 'docusaurus',
       'runllm-community-url': 'https://conduktor.io/slack',
       'runllm-community-type': 'slack',
-      'runllm-disclaimer': 'For best-effort assistance only (no SLA). For official support, visit our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
+      'runllm-disclaimer': 'Answers are not covered by SLA and should be used for reference only. For official support, go to our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
-      'runllm-theme-color': '#005EEC',
+      'runllm-theme-color': '#09343C',
+      'runllm-brand-logo' :'https://raw.githubusercontent.com/conduktor/conduktor.io-public/refs/heads/main/logo/dark-green-bg-app.png',
+      'runllm-floating-button-text': 'Ask Conduktor',
       async: true,
     },
   ],

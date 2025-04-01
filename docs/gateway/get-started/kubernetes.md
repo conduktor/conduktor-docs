@@ -5,8 +5,7 @@ description: This guide is for deploying Conduktor Gateway on a local Minikube i
 ---
 
 :::info
-We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues)
-or contact [support](https://www.conduktor.io/contact/support/).
+We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or contact [support](https://www.conduktor.io/contact/support/).
 :::
 
 # Helm chart installation
@@ -31,6 +30,8 @@ Breaking changes:
 
 | Chart version | Supported Gateway version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
+| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154) |
+| [conduktor-gateway-3.6.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.0) | **3.6.0**, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | **3.5.0**, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.4.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.1) | **3.4.1**, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.4.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.0) | **3.4.0**, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🔴 Change service account creation behavior [see here](https://github.com/conduktor/conduktor-public-charts/pull/125) <br/> 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/123) |
@@ -338,7 +339,7 @@ kafka:
   enabled: true
 ```
 
-2. Install the chart on your cluster referencing the valus.yaml file (Note: This can a take a few minutes to complete):
+2. Install the chart on your cluster referencing the values.yaml file (Note: This can a take a few minutes to complete):
 
 ```shell
 helm install mygateway conduktor/conduktor-gateway -f values.yaml

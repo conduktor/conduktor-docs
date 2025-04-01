@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
-title: Kafka Resources
-description: Kafka resources
+title: Kafka resources
+description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
 ---
 
 
@@ -41,7 +41,7 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
-## Kafka Resources
+## Kafka resources
 
 ### Topic
 Creates a Topic in Kafka.
@@ -80,7 +80,7 @@ spec:
 - `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
-**Conduktor annotations**
+**Conduktor annotations:**
 - `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
   - Previously `conduktor.io/description.editable` in 1.28 and below
 - `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
@@ -89,10 +89,10 @@ spec:
   - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
   - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
 
-**Side effect in Console & Kafka:**
-- Kafka
+**Side effects**
+- Kafka:
   - Topic is created / updated.
-  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag
+  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
 
 ### Subject
 Creates a Subject in the Schema Registry.
@@ -131,7 +131,7 @@ spec:
   format: AVRO
 ```
 
-**Schema Reference**
+**Schema reference**
 
 ```yaml
 ---
@@ -176,10 +176,10 @@ spec:
   - Unset the field if you want the compatibility mode to be the one defined at the Schema Registry global level
 - `spec.references` is optional. It specifies the names of referenced schemas
 
-**Side effect in Console & Kafka:**
-- Kafka / Schema Registry
-  - Subject is created / updated
-  - In dry-run mode, subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API
+**Side effects**
+- Kafka/Schema Registry:
+  - Subject is created/updated.
+  - In dry-run mode, Subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API.
 
 ### Connector
 Creates a connector on a Kafka Connect Cluster.
@@ -209,19 +209,23 @@ spec:
     consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
 ```
 
-**Connector checks**
+**Connector checks:**
 - `metadata.connectCluster` is a valid Kafka Connect Cluster
 - `metadata.name` must belong to the Application Instance
 
-**Conduktor annotations**
+**Conduktor annotations:**
 - `metadata.autoRestart.enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
   - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
 - `metadata.autoRestart.frequencySeconds` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
   - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below
 
 
-### Service Account
-Manages the ACLs of a service account in Kafka. Note this does not create the service account, it only assigns ACLs.
+### Service account
+Manages the ACLs (Access Control Lists) of a service account in Kafka. 
+
+:::info
+This doesn't create the service account, only assigns ACLs.
+:::
 
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API /> <GUI />
@@ -241,19 +245,29 @@ spec:
   authorization:
     type: KAFKA_ACL
     acls:
+      # List all the topics
       - type: TOPIC
-        name: click.event-stream.avro
-        patternType: PREFIXED
+        name: '*'
+        patternType: LITERAL
+        operations:
+          - Describe
+      # Read & Write on the click.event-stream.avro topic
+      - type: TOPIC
+        name: 'click.event-stream.avro'
+        patternType: LITERAL
         operations:
           - Write
-      - type: CLUSTER
-        name: kafka-cluster
-        patternType: LITERAL
+          - Read
+      # Read on all the topics prefixed by public_
+      - type: TOPIC
+        name: 'public_'
+        patternType: PREFIXED
         operations:
-          - DescribeConfigs
+          - Read
+      # Read on the consumer groups prefixed by click.event-stream.
       - type: CONSUMER_GROUP
-        name: cg-name
-        patternType: LITERAL
+        name: 'click.event-stream.'
+        patternType: PREFIXED
         operations:
           - Read
 ````
@@ -266,7 +280,7 @@ spec:
 - `spec.acls[].host` is optional, and will default to '*'.
 - `spec.acls[].permission` is optional, and will default to 'Allow'.
 
-**Side effect in Console & Kafka:**
-- Kafka
-  - Service account ACLs are created / updated.
+**Side effects**
+- Kafka:
+  - Service account ACLs are created/updated.
   - In dry-run mode, service account ACLs are validated against the aforementioned criteria, ensuring the ACL definitions are legal.

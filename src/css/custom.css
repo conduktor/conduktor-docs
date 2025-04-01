@@ -1,4 +1,5 @@
 @import 'alerts.css';
+@import 'accordion.css';
 
 /* You can override the default Infima variables here. */
 :root {
@@ -343,7 +344,7 @@ footer.footer--dark .footer__title {
 footer.footer--dark .footer__item a {
   color: var(--colors-olive11);
   transition: color 200ms ease-in-out;
-  text-decoration: none !important;
+  text-decoration: #e3e2df !important;
   font-weight: 500;
   font-size: 16px;
 }
