@@ -66,7 +66,7 @@ Exchange is a **new Conduktor product** that enables you to **share data securel
 
 #### Introducing Partner Zones UI
 
-::info[Preview functionality]
+:::info[Preview functionality]
 Partner Zones is currently a Preview feature and is subject to change as we continue working on it.
 :::
 
