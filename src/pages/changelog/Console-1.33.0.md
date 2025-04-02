@@ -3,16 +3,17 @@ date: 2025-04-08
 title: Console 1.33
 description: docker pull conduktor/conduktor-console:1.33.0
 solutions: console
-tags: features,fix
+tags: features,fixes
 ---
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking changes](#breaking-changes)
 - [Scale](#scale)
-    - [Kafka Chargeback: Grouping by Labels](#kafka-chargeback-grouping-by-labels)
-    - [Improved Cross-Team Access Control in Self-service](#improved-cross-team-access-control-in-self-service)
+    - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
+    - [Self-Service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
 - [Exchange](#exchange)
+    - [Change/fix for Exchange](#changes-for-exchange)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 - [Known issues](#known-issues)
@@ -23,18 +24,18 @@ TODO
 
 ### Scale
 
-#### Kafka Chargeback: Grouping by Labels
+#### Kafka Chargeback: group by labels
 
 TODO
 
-#### Improved Cross-Team Access Control in Self-service
+#### Self-Service: Improved cross-team access control
 
-We've enhanced permission management for cross-team access. Previously, the permissions was granted simultaneously to both users in the UI and the Kafka service account. 
-Now, permissions can be assigned separately, allowing for more precise access control.
+We've enhanced permission management for cross-team access. You can now assign different permissions to users in the UI from the Kafka service accounts, allowing for more precise access control.
 
-This permissions grants the target application instance READ access to the Service Account while denying access to the members of the Application through Console:
+Here's an example granting READ access to the service account and denying access to members of the application through Console:
+
 ````yaml
-# Permission granted to other Applications
+# Permission granted to other applications
 ---
 apiVersion: self-service/v1
 kind: ApplicationInstancePermission
@@ -55,6 +56,8 @@ spec:
 
 ### Exchange
 
+#### Changes for Exchange
+TO DO
 
 ### Quality of life improvements
 
@@ -65,4 +68,4 @@ spec:
 - TODO
 
 ### Known issues
-In the Topic Consume view, equality filters (`==`) on JSON number fields isn't working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`. Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there's currently no workaround for exact equality filtering. We'll address this in a future release.
+In the Topic Consume view, equality filters (`==`) on JSON number fields aren't working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`. Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there's currently no workaround for exact equality filtering. We'll address this in a future release.
