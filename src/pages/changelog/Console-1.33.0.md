@@ -95,7 +95,7 @@ TO DO
 - Improved performance of API for applying users and groups with many permissions
 - Bypass Self-service topic policies when using an admin API key
 - Errors thrown while producing to a topic are now properly displayed in the UI
-- Fixed the computation of the controller of a Kraft cluster in the Brokers page
+- Fixed the computation of the controller of a KRaft cluster in the Brokers page
 - Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
 - Log error when failing to create the topic for audit log
 
