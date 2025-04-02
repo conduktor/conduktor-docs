@@ -148,7 +148,7 @@ The configuration resolution is (in order of priority):
 
 ## Provider usage
 
-Once the provider is configured all [currently available](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) resources can be used in the Terraform definition.
+Once the provider is configured, all the [currently available resources](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) can be used in the Terraform definition.
 
 ### Usage example
 
