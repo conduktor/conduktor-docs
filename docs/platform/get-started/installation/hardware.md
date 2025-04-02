@@ -31,7 +31,7 @@ To ensure you meet these requirements, you must:
  
 Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide. 
 
-## Hardware Requirements
+## Hardware requirements
 
 ### Console
 
