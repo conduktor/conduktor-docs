@@ -86,11 +86,18 @@ TO DO
 
 ### Quality of life improvements
 
-- TODO
+- Add selectors for key and value formats on the single kafka message page, enabling the use of customer deserializers.
 
 ### Fixes
 
-- TODO
+- Glue: improve deserialization of Avro schemas containing a nullable union
+- Fixed an issue preventing the use of protobuf schemas with references
+- Improved performance of API for applying users and groups with many permissions
+- Bypass Self-service topic policies when using an admin API key
+- Errors thrown while producing to a topic are now properly displayed in the UI
+- Fixed the computation of the controller of a Kraft cluster in the Brokers page
+- Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
+- Log error when failing to create the topic for audit log
 
 ### Known issues
 
