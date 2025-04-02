@@ -4,7 +4,7 @@ title: System requirements
 description: Conduktor Console consists of two containers, Console and Cortex.
 ---
 
-# System Requirements
+# System requirements
 
 Conduktor Console consists of two containers, the Console container and the Cortex container.
 
