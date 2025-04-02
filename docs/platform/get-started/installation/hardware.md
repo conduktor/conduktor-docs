@@ -29,7 +29,9 @@ To ensure you meet these requirements, you must:
  - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Cortex
  - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
  
-Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide. 
+:::info
+If you're deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), see the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) for details. 
+:::
 
 ## Hardware requirements
 
