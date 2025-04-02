@@ -97,7 +97,8 @@ TO DO
 - Errors thrown while producing to a topic are now properly displayed in the UI
 - Fixed the computation of the controller of a KRaft cluster in the Brokers page
 - Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
-- Log error when failing to create the topic for audit log
+- Failure to create the topic for audit log is now recorded in the logs
+-```
 
 ### Known issues
 
