@@ -61,7 +61,7 @@ Note that if you are deploying the [Helm chart](/platform/get-started/installati
 - 8+ GB of RAM
 - [block storage](/platform/get-started/configuration/env-variables#monitoring-properties)
 
-## Deployment Architecture
+## Deployment architecture
 
 As noted in the [production requirements](#production-requirements), a complete deployment of Console depends on:
 
