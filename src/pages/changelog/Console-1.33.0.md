@@ -11,7 +11,7 @@ tags: features,fixes
 - [Breaking changes](#breaking-changes)
 - [Scale](#scale)
     - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
-    - [Self-Service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
+    - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
 - [Exchange](#exchange)
     - [Change/fix for Exchange](#changes-for-exchange)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -28,7 +28,7 @@ TODO
 
 TODO
 
-#### Self-Service: Improved cross-team access control
+#### Self-service: Improved cross-team access control
 
 We've enhanced permission management for cross-team access. You can now assign different permissions to users in the UI from the Kafka service accounts, allowing for more precise access control.
 
@@ -53,10 +53,10 @@ spec:
   grantedTo: "another-appinstance-dev"
 ````
 
-
 ### Exchange
 
 #### Changes for Exchange
+
 TO DO
 
 ### Quality of life improvements
@@ -68,4 +68,5 @@ TO DO
 - TODO
 
 ### Known issues
+
 In the Topic Consume view, equality filters (`==`) on JSON number fields aren't working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`. Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there's currently no workaround for exact equality filtering. We'll address this in a future release.

@@ -16,7 +16,7 @@ tags: features,fix
   - [Enhanced Alerting with Added Webhooks Support](#enhanced-alerting-with-added-webhooks-support)
   - [API / CLI support for Service Accounts](#api--cli-support-for-service-accounts)
   - [Labels support for Service Accounts](#labels-support-for-service-accounts)
-  - [Self-Service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
+  - [Self-service support for Application Managed Service Accounts](#self-service-support-for-application-managed-service-accounts)
   - [Application Group permissions now available on Users Permissions page](#application-group-permissions-now-available-on-users-permissions-page)
 - [Exchange](#exchange)
   - [Introducing Partner Zones for Third-Party Data Sharing](#introducing-partner-zones-for-third-party-data-sharing)
@@ -129,10 +129,10 @@ spec:
 The labels are used to filter the Service Accounts in the UI. Editing labels in the UI will be available in the next release.
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/service-account.png)
 
-#### Self-Service support for Application Managed Service Accounts
+#### Self-service support for Application Managed Service Accounts
 We have added a new mode for ApplicationInstance that allows Application Teams to have full control over their Service Accounts.  
 This mode can be enabled in the ApplicationInstance with the following flag `spec.applicationManagedServiceAccount` set to `true`.  
-When enabled, Self-Service will not synchronize the Service Account with the ApplicationInstance and will let the Application Team manage the Service Account directly.
+When enabled, Self-service will not synchronize the Service Account with the ApplicationInstance and will let the Application Team manage the Service Account directly.
 Application Managed Service Accounts can be declared in the API and CLI using the Application API Key.
 ````yaml
 ---
@@ -181,7 +181,7 @@ For more information, check out the [Partner Zones documentation](/platform/navi
 
 ### Quality of Life improvements
 
-- Added a "Groups" tab in the Application page which shows all of the Application Groups created via Self-Service
+- Added a "Groups" tab in the Application page which shows all of the Application Groups created via Self-service
 - Improved the license plan page to show the start and end date of the license, as well as the packages included in the license
 - Added the remaining days left in the sidebar when the license is expiring in less than 30 days
 - Improved how a connector's configuration is displayed in the raw JSON view by sorting the properties alphabetically
