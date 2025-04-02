@@ -1,24 +1,24 @@
 ---
 sidebar_position: 2
-title: License Management
-description: How to install, verify and renew licenses for Conduktor
+title: Manage your license
+description: Manage your Conduktor license
 ---
 
-## License installation
+## Apply your license
 
-Conduktor requires a license to enable features beyond the base features. The license can be put in the environment variables (recommended), or into the YAML configuration file.
+We recommend applying your license to the environment variables. Alternatively, you can add it to your YAML config file.
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
-<TabItem value="Environment Variables" label="Environment Variables">
+<TabItem value="Environment Variables" label="Environment variables">
 
 ```js title=".env"
 CDK_LICENSE='YOUR_LICENSE_HERE'
 ```
 
 </TabItem>
-<TabItem value="YAML  File" label="YAML File">
+<TabItem value="YAML  File" label="YAML file">
 
 ```yaml title="platform-config.yaml"
 license: 'YOUR_LICENSE_HERE'
@@ -27,38 +27,31 @@ license: 'YOUR_LICENSE_HERE'
 </TabItem>
 </Tabs>
 
-## License verification in Console
+:::info[Free access]
+You don’t need a license to access the Community version of Conduktor. The Community plan allows you to manage and monitor any number of Kafka clusters but provides only limited access to powerful Conduktor features.
 
-You can check that your license has been used to launch the Console by looking at the logs or the UI.
+The unlicensed Conduktor Gateway version has a 14-day trial and will stop working when that period ends. [Contact us](https://conduktor.io/contact) to extend your trial or find out about licensing options.
+:::
 
-### In the logs
+## Verify your license
 
-When you run the Console, you can find these meaningful logs in the head:
+Use Console to check that your license has been applied correctly. You can do this via the UI or by checking the logs.
 
-<Tabs>
-<TabItem value="As of 1.21.0" label="As of 1.21.0">
+### Use the UI
 
-```
-License Enterprise v2 is valid until 2025-12-31 00:00:00
-```
-
-</TabItem>
-<TabItem value="Before 1.21.0" label="Before 1.21.0">
-
-```
-Input configured license : Some("YOUR_LICENSE_HERE")
-License is valid ! Remaining days : 365
-```
-
-</TabItem>
-</Tabs>
-
-### In the UI
-
-You can find your plan details in `Settings` > `Plan`:
+Log into Conduktor Console then go to **Settings** > **Plan**:
 
 ![Plan details](assets/plan-details.png)
 
-## Renew or install a new license
+### Use the logs
 
-To renew or install a new license, change the `license` configuration in the YAML configuration file, or the `CDK_LICENSE` environment variable, depending on what you used. Then deploy the Conduktor Console container again.
+Run Console then check the logs in the head: `License Enterprise is valid until 2026-01-01 00:00:00`.
+
+:::note[Versions before 1.21]
+Input configured license : Some("YOUR_LICENSE_HERE")
+License is valid ! Remaining days : 365
+:::
+
+## Renew or update your license
+
+To renew an existing or apply a new license, change the `CDK_LICENSE` value in the environment variables (or the `license` value in the YAML file, depending on your setup) and re-deploy the Conduktor Console container.
