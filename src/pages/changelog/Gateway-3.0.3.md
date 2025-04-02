@@ -8,6 +8,6 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Fixed an issue impacting the vault configuration key `uri` when special characters (i.e `-`) are present in the hostname.

@@ -14,13 +14,15 @@ The intention is to show you the most relevant messages, split across the partit
 In most cases, it will give you `500 / num_partitions` messages, per partition.  
 If your topic has:  
 **10** partitions, Most Recent **500** will give you **50** messages per partition.  
-**2 **partitions, Most Recent **500** will give you **250** messages per partition.  
+**2** partitions, Most Recent **500** will give you **250** messages per partition.  
 
 Edge cases might occur and the algorithm will account for it seamlessly.  
 See image below 👇  
 :::
-![Capture d’écran 2024-01-12 à 12.12.14.png](img/most-recent-500.png)
 
+import MostRecent500 from './assets/most-recent-500.png'
+
+<img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 :::caution
 Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters

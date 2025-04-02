@@ -1,32 +1,38 @@
 import Button from '@site/src/components/atoms/Button'
 import Container from '@site/src/components/atoms/Container'
-import GradientMask from '@site/src/components/atoms/GradientMask/GradientMask'
-import GridBackground from '@site/src/components/atoms/GridBackground/GridBackground'
-import SearchInput from '@site/src/components/molecules/SearchInput'
+import GridHalfVisibleBackground from '../../atoms/GridHalfVisibleBackground/GridHalfVisibleBackground'
 import React from 'react'
 import styles from './Hero.module.scss'
 
-interface HeroProps {}
+interface HeroProps {
+}
 
 const Hero: React.FunctionComponent<HeroProps> = () => {
   return (
     <section className={styles.StyledHero}>
-      
-      <GridBackground>
-        <div className={styles.ContentContainer}>
-          <Container>
-            <h1 className={styles.Heading}>Documentation</h1>
-            <p className={styles.Paragraph}>Guides and tutorials for everything Conduktor</p>
-            <div className={styles.ButtonContainer}>
-              <Button to="/platform/category/get-started" type="transparent" hasArrow>
-                Installation and Configuration
-              </Button>
+      <div className={styles.ContentContainer}>
+        <Container>
+          <div className={styles.HeroContent}>
+            <div className={styles.HeroLeftContent}>
+              <p className={styles.HeroContentTitle}>Get Started with Conduktor</p>
+              <p className={styles.HeroContentSubtitle}>Learn how to install Conduktor and explore our Enterprise Data Management Platform For
+                Streaming.</p>
+              <div className={styles.ButtonContainer}>
+                <Button to="/platform/get-started/installation/get-started/docker/" type="brand">
+                  Get started
+                </Button>
+                <Button to="/gateway/get-started/docker/" type="colorless">
+                  Start with proxy
+                </Button>
+              </div>
             </div>
-            <SearchInput />
-          </Container>
-        </div>
-      </GridBackground>
-      <GradientMask startColor="transparent" endColor="#fff" top={0} />
+            <div className={styles.HeroRightContent}>
+              <GridHalfVisibleBackground/>
+              <img className={styles.HeroRightImage} src="/assets/images/home-hero-charts.png" alt="charts image"/>
+            </div>
+          </div>
+        </Container>
+      </div>
     </section>
   )
 }

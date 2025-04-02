@@ -1,45 +1,49 @@
 ---
 sidebar_position: 2
 title: Kubernetes
-description: The below guide details how to deploy Conduktor Gateway on a local Minikube instance.  This is not for production purposes.
+description: This guide is for deploying Conduktor Gateway on a local Minikube instance, **not production**.
 ---
 
 :::info
-We welcome contributions and feedback, if you have issues, you can either 
-open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues)
-or contact our [support](https://www.conduktor.io/contact/support/).
+We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or contact [support](https://www.conduktor.io/contact/support/).
 :::
 
 # Helm chart installation
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Gateway on your Kubernetes cluster.  This is a quick start guide to help you deploy a local instance of Gateway for non production purposes.
 
-## Compatibility Matrix
-This compatibility matrix is a resource to help you find which versions of Conduktor Gateway work on which version of our Conduktor Gateway Helm Chart.
+## Compatibility matrix
+This compatibility matrix is a resource to help you find which versions of Conduktor Gateway work on which version of our Conduktor Gateway Helm chart.
 
-> In general we recommend you use the version of Gateway that comes preconfigured with the Helm chart. If needed you can adjust the version in your values property according to the supported Gateway version.
+> We recommend you use the version of Gateway that comes pre-configured with the Helm chart. You can adjust the version in your values property according to the supported Gateway version, if required.
 
-> Breaking changes column will only list breaking change in the helmchart! You must review the Conduktor [changelog](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artefacts.
+> Breaking changes column only lists a **breaking change in the Helm chart**. See Conduktor [release notes](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
-### Helm Chart Compatibility
+### Helm chart compatibility
 
-Breaking Changes:
+Breaking changes:
 
 🟡 - Breaks additional services (e.g. Grafana dashboard changes)
 
 🔴 - Breaks overall deployment of the product (e.g. renaming variables in .values, major product releases)
 
+
 | Chart version | Supported Gateway version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
-| [conduktor-gateway-3.3.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.1) | 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.3.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.0) | 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.2.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.2) | 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/98) |
-| [conduktor-gateway-3.2.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.1) | 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.2.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.0) | 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.1.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.1) | 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.1.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.0) | 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/81) |
-| [conduktor-gateway-3.0.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.1) | 3.0.1, 3.0.0 | |
-| [conduktor-gateway-3.0.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.0) | 3.0.0 | 🔴 Major product update [see here](https://github.com/conduktor/conduktor-public-charts/pull/56) |
+| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154) |
+| [conduktor-gateway-3.6.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.0) | **3.6.0**, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | **3.5.0**, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.4.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.1) | **3.4.1**, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.4.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.0) | **3.4.0**, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🔴 Change service account creation behavior [see here](https://github.com/conduktor/conduktor-public-charts/pull/125) <br/> 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/123) |
+| [conduktor-gateway-3.3.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.1) | **3.3.1**, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.3.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.3.0) | **3.3.0**, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.2.2](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.2) | **3.2.2**, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/98) |
+| [conduktor-gateway-3.2.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.1) | **3.2.1**, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.2.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.2.0) | **3.2.1**, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.1.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.1) | **3.1.1**, 3.1.0 | |
+| [conduktor-gateway-3.1.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.1.0) | **3.1.1**, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/81) |
+| [conduktor-gateway-3.0.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.1) | **3.0.1**, 3.0.0 | |
+| [conduktor-gateway-3.0.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.0.0) | **3.0.0** | 🔴 Major product update [see here](https://github.com/conduktor/conduktor-public-charts/pull/56) |
 
 ## General requirements
 
@@ -49,9 +53,9 @@ Breaking Changes:
 * Docker 27 + ([install](https://docs.docker.com/engine/install/))
 * Basic knowledge of Kubernetes
 
-### Install the Gateway Chart
+### Install the Gateway chart
 
-#### Default Configuration:
+#### Default configuration:
 
 1. Assumes a local installation on minikube
 2. Deploys a single Kafka broker
@@ -96,7 +100,7 @@ kafka:
 
 #### Template deployment
 
-1. Copy the following template into a file called values.yaml
+1. Copy the following template into a file called **values.yaml**.
 
 ```yaml
 # Default values for conduktor-gateway
@@ -126,7 +130,7 @@ gateway:
     ## @param gateway.image.pullPolicy Kubernetes image pull policy
     pullPolicy: IfNotPresent
 
-  ## @param gateway.replicas number of gateway instances to be deployed
+  ## @param gateway.replicas number of Gateway instances to be deployed
   replicas: 2
   ## @param gateway.secretRef Secret name to load sensitive env var from
   secretRef: ""
@@ -144,7 +148,7 @@ gateway:
   ##        name: secret-test
   ##        key: SECRET_2
   extraSecretEnvVars: []
-  ## @param gateway.secretSha256sum [nullable] Optional sha256sum of the referenced secret. This could be set to have a automactic restart of gateway deployment if secret change
+  ## @param gateway.secretSha256sum [nullable] Optional sha256sum of the referenced secret. This could be set to have a automatic restart of Gateway deployment if secret change
   secretSha256sum: ""
 
   ## @param gateway.env [object] Environment variables for gateway deployment
@@ -157,7 +161,7 @@ gateway:
     # GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
     # NAMESPACE: "default"
 
-  ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by gateway
+  ## @param gateway.interceptors Json configuration for interceptors to be loaded at startup by Gateway
   interceptors: '[{
   "name": "myAuditInterceptorPlugin",
   "pluginClass": "io.conduktor.gateway.interceptor.AuditPlugin",
@@ -179,7 +183,7 @@ gateway:
 }]'
 
   portRange:
-    ## @param gateway.portRange.start Start port of the gateway port range
+    ## @param gateway.portRange.start Start port of the Gateway port range
     start: 9099
     ## @param gateway.portRange.count Max number of broker to expose
     count: 1
@@ -193,16 +197,16 @@ gateway:
     enable: false
     ## @param gateway.jmx.port jmx port to expose by default jvm args
     port: 9999
-    ## @param gateway.jmx.jvmArgs arguments to pass to the gateway container jvm
+    ## @param gateway.jmx.jvmArgs arguments to pass to the Gateway container jvm
     jvmArgs: -Dcom.sun.management.jmxremote.port={{ .Values.gateway.jmx.port }} -Dcom.sun.management.jmxremote.rmi.port={{ .Values.gateway.jmx.port }} -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1
 
   ## @param gateway.startupProbeDelay [nullable] Optional delay in second before startup probe should be running (default 10)
   startupProbeDelay: ""
 
-  ## @param gateway.podLabels Specific labels to be added to gateway pod by deployment
+  ## @param gateway.podLabels Specific labels to be added to Gateway pod by deployment
   podLabels: {}
 
-  ## @param gateway.podAnnotations gateway pod annotations
+  ## @param gateway.podAnnotations Gateway pod annotations
   podAnnotations: {}
 
   ## @param gateway.securityContext Container security context
@@ -214,18 +218,18 @@ gateway:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  ## @param gateway.volumes Define user specific volumes for gateway deployment
+  ## @param gateway.volumes Define user specific volumes for Gateway deployment
   volumes: {}
 
-  ## @param gateway.volumeMounts Define user specific volumeMounts  for gateway container in deployment
+  ## @param gateway.volumeMounts Define user specific volumeMounts  for Gateway container in deployment
   volumeMounts: {}
 
 ## @section TLS configuration
 ## @descriptionStart
-## This section is for configuring gateway to handle certificate to manage SSL endpoint inside gateway deployment
+## This section is for configuring Gateway to handle certificate to manage SSL endpoint inside Gateway deployment
 ## @descriptionEnd
 tls:
-  ## @param tls.enable Enable tls injection into gateway
+  ## @param tls.enable Enable tls injection into Gateway
   enable: false
   ## @param tls.secretRef Secret name with keystore to load
   secretRef: ""
@@ -244,7 +248,7 @@ service:
   ## This section specify external service configuration
   ## @descriptionEnd
   external:
-    ## @param service.external.enable Enable a service for external connection to gateway
+    ## @param service.external.enable Enable a service for external connection to Gateway
     enable: false
     ## @param service.external.type Type of load balancer
     type: ClusterIP
@@ -314,7 +318,7 @@ serviceAccount:
   # If AWS IAM is used, need to have create: false
   create: false
 
-## @param commonLabels Labels to be applied to all ressources created by this chart
+## @param commonLabels Labels to be applied to all resources created by this chart
 commonLabels: {}
 
 ## @param nodeSelector Container node selector
@@ -331,11 +335,11 @@ affinity: {}
 ## Enable and configure chart dependencies if not available in your deployment
 ## @descriptionEnd
 kafka:
-  ## @param kafka.enabled Deploy a kafka along side gateway (This should only used for testing purpose)
+  ## @param kafka.enabled Deploy a kafka along side Gateway (This should only used for testing purposes)
   enabled: true
 ```
 
-2. Install the chart on your cluster referencing the valus.yaml file (Note: This can a take a few minutes to complete):
+2. Install the chart on your cluster referencing the values.yaml file (Note: This can a take a few minutes to complete):
 
 ```shell
 helm install mygateway conduktor/conduktor-gateway -f values.yaml
@@ -377,6 +381,6 @@ kubectl port-forward deployment/mygateway-conduktor-gateway -n default 9099:9099
 bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
 ```
 
-### Additional Properties
+### Additional properties
 
-Additional properties can be found in the Gateway helm chart repository [here](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).
+Additional properties can be found in the Gateway [Helm chart repository](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).

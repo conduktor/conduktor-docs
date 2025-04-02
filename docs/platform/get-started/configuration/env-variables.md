@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: Configuration Properties & Environment Variables
 description: Conduktor Console input configuration fields can be provided using environment variables.
 ---
@@ -16,14 +16,15 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
   - [Global properties](#global-properties)
   - [Database properties](#database-properties)
-  - [Session Lifetime Properties](#session-lifetime-properties)
+  - [Session lifetime properties](#session-lifetime-properties)
   - [Local users properties](#local-users-properties)
   - [Monitoring properties](#monitoring-properties)
-    - [Console Configuration for Cortex](#console-configuration-for-cortex)
-    - [Cortex Configuration](#cortex-configuration)
+    - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
+    - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
   - [SSO properties](#sso-properties)
     - [LDAP properties](#ldap-properties)
     - [OAuth2 properties](#oauth2-properties)
+    - [JWT auth properties](#jwt-auth-properties)
   - [Kafka clusters properties](#kafka-clusters-properties)
   - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
   - [Schema registry properties](#schema-registry-properties)
@@ -33,42 +34,56 @@ description: Conduktor Console input configuration fields can be provided using 
   - [Indexer properties](#indexer-properties)
   - [AuditLog export properties](#auditlog-export-properties)
   - [Conduktor SQL properties](#conduktor-sql-properties)
+  - [Partner zone properties](#partner-zone-properties)
 
 ## Docker image environment variables
 
-| Environment Variable                                                                 | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
-|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------|
-| **[Logs](../troubleshooting/logs-configuration.md)**                                 |                                                                                                                                                             |                                                                                     |               |
-| `CDK_DEBUG`                                                                          | Enable Console debug logs (equivalent to `CDK_ROOT_LOG_LEVEL=DEBUG`)                                                                                        | `false`                                                                             | 1.0.0         |
-| `CDK_ROOT_LOG_LEVEL`                                                                 | Set the Console global log level (one of `DEBUG`, `INFO`, `WARN`, `ERROR`)                                                                                  | `INFO`                                                                              | 1.11.0        |
-| `CDK_ROOT_LOG_FORMAT`                                                                | Set logs format (one of `TEXT`, `JSON`)                                                                                                                     | `TEXT`                                                                              | 1.26.0        |
-| `CDK_ROOT_LOG_COLOR`                                                                 | Enable ANSI colors in logs                                                                                                                                  | `true`                                                                              | 1.11.0        |
-| `CDK_LOG_TIMEZONE`                                                                   | Timezone for dates in logs (in Olson timezone ID format, e.g. `Europe/Paris`)                                                                               | `TZ` environment variable or `UTC` if `TZ` is not defined                           | 1.28.0        |
-| **[Proxy settings](http-proxy-configuration.md)**                                    |                                                                                                                                                             |                                                                                     |               |
-| `CDK_HTTP_PROXY_HOST`                                                                | Proxy hostname                                                                                                                                              | ∅                                                                                   | 1.10.0        |
-| `CDK_HTTP_PROXY_PORT`                                                                | Proxy port                                                                                                                                                  | `80`                                                                                | 1.10.0        |
-| `CDK_HTTP_NON_PROXY_HOSTS`                                                           | List of hosts that should be reached directly, bypassing the proxy. Hosts must be separated by `\|`, end with a `*` for wildcards, and not contain any `/`. | ∅                                                                                   | 1.10.0        |
-| `CDK_HTTP_PROXY_USERNAME`                                                            | Proxy username                                                                                                                                              | ∅                                                                                   | 1.10.0        |
-| `CDK_HTTP_PROXY_PASSWORD`                                                            | Proxy password                                                                                                                                              | ∅                                                                                   | 1.10.0        |
-| **[SSL](ssl-tls-configuration.md#configure-custom-truststore-on-conduktor-console)** |                                                                                                                                                             |                                                                                     |               |
-| `CDK_SSL_TRUSTSTORE_PATH`                                                            | Truststore file path used by Console for Kafka, SSO, S3,... clients SSL/TLS verification                                                                    | ∅                                                                                   | 1.5.0         |
-| `CDK_SSL_TRUSTSTORE_PASSWORD`                                                        | Truststore password (optional)                                                                                                                              | ∅                                                                                   | 1.5.0         |
-| `CDK_SSL_TRUSTSTORE_TYPE`                                                            | Truststore type (optional)                                                                                                                                  | `jks`                                                                               | 1.5.0         |
-| `CDK_SSL_DEBUG`                                                                      | Enable SSL/TLS debug logs                                                                                                                                   | `false`                                                                             | 1.9.0         |
-| **Java**                                                                             |                                                                                                                                                             |                                                                                     |               |
-| `CDK_GLOBAL_JAVA_OPTS`                                                               | Custom JAVA_OPTS parameters passed to Console                                                                                                               | ∅                                                                                   | 1.10.0        |
-| `CONSOLE_MEMORY_OPTS`                                                                | Configure [Java memory options](memory-configuration.md)                                                                                                    | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80`                                  | 1.18.0        |
-| **Console**                                                                          |                                                                                                                                                             |                                                                                     |               |
-| `CDK_LISTENING_PORT`                                                                 | Console listening port                                                                                                                                      | `8080`                                                                              | 1.2.0         |
-| `CDK_VOLUME_DIR`                                                                     | Volume directory where Console stores data                                                                                                                  | `/var/conduktor`                                                                    | 1.0.2         |
-| `CDK_IN_CONF_FILE`                                                                   | Console configuration file location                                                                                                                         | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file) | 1.0.2         |
-| `CDK_PLUGINS_DIR`                                                                    | Volume directory for [Custom Deserializers](/platform/guides/custom-deserializers/) plugins                                                                 | `/opt/conduktor/plugins`                                                            | 1.22.0        |
-| **Nginx**                                                                            |                                                                                                                                                             |                                                                                     |               |
-| `PROXY_BUFFER_SIZE`                                                                  | Tune internal Nginx `proxy_buffer_size`                                                                                                                     | `8k`                                                                                | 1.16.0        |
+| Environment Variable                                                                                                   | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
+|------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------|
+| **[Logs](/platform/get-started/troubleshooting/logs-configuration/)**                                                  |                                                                                                                                                             |                                                                                     |               |
+| `CDK_DEBUG`                                                                                                            | Enable Console debug logs (equivalent to `CDK_ROOT_LOG_LEVEL=DEBUG`)                                                                                        | `false`                                                                             | 1.0.0         |
+| `CDK_ROOT_LOG_LEVEL`                                                                                                   | Set the Console global log level (one of `DEBUG`, `INFO`, `WARN`, `ERROR`)                                                                                  | `INFO`                                                                              | 1.11.0        |
+| `CDK_ROOT_LOG_FORMAT`                                                                                                  | Set logs format (one of `TEXT`, `JSON`)                                                                                                                     | `TEXT`                                                                              | 1.26.0        |
+| `CDK_ROOT_LOG_COLOR`                                                                                                   | Enable ANSI colors in logs                                                                                                                                  | `true`                                                                              | 1.11.0        |
+| `CDK_LOG_TIMEZONE`                                                                                                     | Timezone for dates in logs (in Olson timezone ID format, e.g. `Europe/Paris`)                                                                               | `TZ` environment variable or `UTC` if `TZ` is not defined                           | 1.28.0        |
+| **[Proxy settings](/platform/get-started/configuration/http-proxy-configuration/)**                                    |                                                                                                                                                             |                                                                                     |               |
+| `CDK_HTTP_PROXY_HOST`                                                                                                  | Proxy hostname                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_PORT`                                                                                                  | Proxy port                                                                                                                                                  | `80`                                                                                | 1.10.0        |
+| `CDK_HTTP_NON_PROXY_HOSTS`                                                                                             | List of hosts that should be reached directly, bypassing the proxy. Hosts must be separated by `\|`, end with a `*` for wildcards, and not contain any `/`. | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_USERNAME`                                                                                              | Proxy username                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| `CDK_HTTP_PROXY_PASSWORD`                                                                                              | Proxy password                                                                                                                                              | ∅                                                                                   | 1.10.0        |
+| **[SSL](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console)** |                                                                                                                                                             |                                                                                     |               |
+| `CDK_SSL_TRUSTSTORE_PATH`                                                                                              | Truststore file path used by Console for Kafka, SSO, S3,... clients SSL/TLS verification                                                                    | ∅                                                                                   | 1.5.0         |
+| `CDK_SSL_TRUSTSTORE_PASSWORD`                                                                                          | Truststore password (optional)                                                                                                                              | ∅                                                                                   | 1.5.0         |
+| `CDK_SSL_TRUSTSTORE_TYPE`                                                                                              | Truststore type (optional)                                                                                                                                  | `jks`                                                                               | 1.5.0         |
+| `CDK_SSL_DEBUG`                                                                                                        | Enable SSL/TLS debug logs                                                                                                                                   | `false`                                                                             | 1.9.0         |
+| **Java**                                                                                                               |                                                                                                                                                             |                                                                                     |               |
+| `CDK_GLOBAL_JAVA_OPTS`                                                                                                 | Custom JAVA_OPTS parameters passed to Console                                                                                                               | ∅                                                                                   | 1.10.0        |
+| `CONSOLE_MEMORY_OPTS`                                                                                                  | Configure [Java memory options](memory-configuration.md)                                                                                                    | `-XX:+UseContainerSupport -XX:MaxRAMPercentage=80`                                  | 1.18.0        |
+| **Console**                                                                                                            |                                                                                                                                                             |                                                                                     |               |
+| `CDK_LISTENING_PORT`                                                                                                   | Console listening port                                                                                                                                      | `8080`                                                                              | 1.2.0         |
+| `CDK_VOLUME_DIR`                                                                                                       | Volume directory where Console stores data                                                                                                                  | `/var/conduktor`                                                                    | 1.0.2         |
+| `CDK_IN_CONF_FILE`                                                                                                     | Console configuration file location                                                                                                                         | [`/opt/conduktor/default-platform-config.yaml`](introduction.md#configuration-file) | 1.0.2         |
+| `CDK_PLUGINS_DIR`                                                                                                      | Volume directory for [Custom Deserializers](/platform/guides/custom-deserializers/) plugins                                                                 | `/opt/conduktor/plugins`                                                            | 1.22.0        |
+| **Nginx**                                                                                                              |                                                                                                                                                             |                                                                                     |               |
+| `PROXY_BUFFER_SIZE`                                                                                                    | Tune internal Nginx `proxy_buffer_size`                                                                                                                     | `8k`                                                                                | 1.16.0        |
 
 ## Console properties reference
 
-You have multiple options to configure Console: either via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+
+Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use a .env file with key value pairs.
+
+```
+MY_ENV_VAR1=value
+MY_ENV_VAR2=otherValue
+```
+
+The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`, or warn if set and the file is not found
+
+```
+Warning: CDK_ENV_FILE is set but the file does not exist or is not readable.
+```
 
 In case you set both environment variable and YAML value for a specific field, the environment variable will take precedence.
 
@@ -88,7 +103,7 @@ All are valid and equivalent in YAML.
 
 ### Environment Variable Conversion
 
-At startup, Condutkor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
+At startup, Conduktor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
 
 - Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix
@@ -208,21 +223,23 @@ If you need more than what the free plan offers, you can [contact us](https://ww
 
 ### Database properties
 
-See database configuration [documentation](../database) for more info.
+See database configuration [documentation](/platform/get-started/configuration/database/) for more info.
 
-| Property                      | Description                                                                                                                            | Environment Variable             | Mandatory | Type   | Default |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
-| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_DATABASE_URL`               | false     | string | ∅       |
-| `database.host`               | External PostgreSQL server hostname                                                                                                    | `CDK_DATABASE_HOST`              | false     | string | ∅       |
-| `database.port`               | External PostgreSQL server port                                                                                                        | `CDK_DATABASE_PORT`              | false     | int    | ∅       |
-| `database.name`               | External PostgreSQL database name                                                                                                      | `CDK_DATABASE_NAME`              | false     | string | ∅       |
-| `database.username`           | External PostgreSQL login role                                                                                                         | `CDK_DATABASE_USERNAME`          | false     | string | ∅       |
-| `database.password`           | External PostgreSQL login password                                                                                                     | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
-| `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                      | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
+| Property                      | Description                                                                                                                                 | Environment Variable             | Mandatory | Type   | Default |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
+| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_DATABASE_URL`               | false     | string | ∅       |
+| `database.hosts[].host`       | External PostgreSQL servers hostname                                                                                                        | `CDK_DATABASE_HOSTS_0_HOST`      | false     | string | ∅       |
+| `database.hosts[].port`       | External PostgreSQL servers port                                                                                                            | `CDK_DATABASE_HOSTS_0_PORT`      | false     | int    | ∅       |
+| `database.host`               | External PostgreSQL server hostname (Deprecated, use `database.hosts` instead)                                                              | `CDK_DATABASE_HOST`              | false     | string | ∅       |
+| `database.port`               | External PostgreSQL server port (Deprecated, use `database.hosts` instead)                                                                  | `CDK_DATABASE_PORT`              | false     | int    | ∅       |
+| `database.name`               | External PostgreSQL database name                                                                                                           | `CDK_DATABASE_NAME`              | false     | string | ∅       |
+| `database.username`           | External PostgreSQL login role                                                                                                              | `CDK_DATABASE_USERNAME`          | false     | string | ∅       |
+| `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
+| `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
-### Session Lifetime Properties
+### Session lifetime properties
 
-Optional properties for configuring [session lifetime](../user-authentication/session-lifetime).
+Optional properties for configuring [session lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
 
 | Property               | Description                                                                                           | Environment Variable       | Mandatory | Type | Default Value |
 |------------------------|-------------------------------------------------------------------------------------------------------|----------------------------|-----------|------|---------------|
@@ -241,28 +258,21 @@ Optional local accounts list used to log on Console
 ### Monitoring properties
 :::caution
 Starting with version 1.18.0, if you want to benefit from our Monitoring capabilities (dashboard and alerts), you need to deploy a new image along with Console.
-
-Before 1.18:
-- `conduktor/conduktor-platform:1.17.3` or below
-
-Starting with 1.18:
 - `conduktor/conduktor-console:1.18.0` or above
 and
 - `conduktor/conduktor-console-cortex:1.18.0` or above
-
 :::
 
-This new image is based on [Cortex](https://github.com/cortexproject/cortex) and preconfigured to run with Console.
+This new image is based on [Cortex](https://github.com/cortexproject/cortex) and pre-configured to run with Console.
 Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to access to the following pages anymore:
-![](assets/monitoring-menu.png)
+You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.
 
 The configuration is split in 2 chapters:
-- Console Configuration for Cortex `conduktor/conduktor-console`
-- Cortex Configuration `conduktor/conduktor-console-cortex`
+- Monitoring Configuration for Console applies to `conduktor/conduktor-console`
+- Monitoring Configuration for Cortex applies to `conduktor/conduktor-console-cortex`
 
-#### Console Configuration for Cortex
+#### Monitoring Configuration for Console
 
 First, we need to configure Console to connect to Cortex services.
 Cortex ports are configured like this by default:
@@ -270,18 +280,29 @@ Cortex ports are configured like this by default:
 - Alert Manager port 9010
 
 
-| Property                                | Description                                  | Environment Variable                     | Mandatory | Type   | Default |
-|-----------------------------------------|----------------------------------------------|------------------------------------------|-----------|--------|---------|
-| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009       | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
-| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010      | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
-| `monitoring.callback-url`               | Console API                                  | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
-| `monitoring.notifications-callback-url` | Where the Slack notification should redirect | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
-| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics          | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| Property                                | Description                                                          | Environment Variable                     | Mandatory | Type   | Default |
+|-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
+| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009                               | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
+| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010                              | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
+| `monitoring.callback-url`               | Console API                                                          | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
+| `monitoring.notifications-callback-url` | Where the Slack notification should redirect                         | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
+| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics                                  | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
+| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
+| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
+:::info
+`monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
-#### Cortex Configuration
+Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
+```
+CDK_MONITORING_USEAGGREGATEDMETRICS: true
+CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
+```
+:::
 
-See [Cortex configuration page](../cortex/) for more info.
+#### Monitoring Configuration for Cortex
+
+See [Cortex configuration page](/platform/get-started/configuration/cortex/) for more info.
 
 ### SSO properties
 
@@ -328,6 +349,16 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 | `sso.oauth2[].preferred-jws-algorithm`  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
 | `sso.oauth2-logout`                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
 
+
+#### JWT auth properties
+
+| Property                      | Description                                   | Environment Variable            | Mandatory | Type   | Default  |
+|-------------------------------|-----------------------------------------------|---------------------------------|-----------|--------|----------|
+| `sso.jwt-auth.issuer`         | Issuer of your identity provider              | `CDK_SSO_JWTAUTH_ISSUER`        | true      | string | ∅        |
+| `sso.jwt-auth.username-claim` | Email attribute from your identity provider   | `CDK_SSO_JWTAUTH_USERNAMECLAIM` | false     | string | `email`  |
+| `sso.jwt-auth.groups-claim`   | Group attribute from your identity provider   | `CDK_SSO_JWTAUTH_GROUPSCLAIM`   | false     | string | `groups` |
+| `sso.jwt-auth.api-key-claim`  | API key attribute from your identity provider | `CDK_SSO_JWTAUTH_APIKEYCLAIM`   | false     | string | `apikey` |
+
 ### Kafka clusters properties
 
 :::caution
@@ -335,9 +366,9 @@ The new recommended way to configure clusters is through the CLI and YAML manife
 Check the associated [KafkaCluster documentation](/platform/reference/resource-reference/console/#kafkacluster)
 :::
 
-For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster Configurations](configuration-snippets.md#gitops-managing-cluster-configurations).
+For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster Configurations](/platform/get-started/configuration/configuration-snippets/#gitops-managing-cluster-configurations).
 
-You can find sample configurations on the [Configuration Snippets](configuration-snippets.md) page.
+You can find sample configurations on the [Configuration Snippets](/platform/get-started/configuration/configuration-snippets/) page.
 
 | Property                                | Description                                                    | Environment Variable                        | Mandatory | Type                                     | Default |
 |-----------------------------------------|----------------------------------------------------------------|---------------------------------------------|-----------|------------------------------------------|---------|
@@ -487,21 +518,36 @@ For details on the available exportable events refer to: [Exportable audit log e
 ### Conduktor SQL properties
 
 In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
-You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each values individually `CDK_KAFKASQL_DATABASE_*`.
+You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
 
 | Property                                             | Description                                                                                                                           | Environment Variable                               | Mandatory | Type   | Default        |
 |------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|--------|----------------|
-| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&amp;...]` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅              |
-| `kafka_sql.database.host`                            | External PostgreSQL server hostname                                                                                                   | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅              |
-| `kafka_sql.database.port`                            | External PostgreSQL server port                                                                                                       | `CDK_KAFKASQL_DATABASE_PORT`                       | false     | int    | ∅              |
-| `kafka_sql.database.name`                            | External PostgreSQL database name                                                                                                     | `CDK_KAFKASQL_DATABASE_NAME`                       | false     | string | ∅              |
-| `kafka_sql.database.username`                        | External PostgreSQL login role                                                                                                        | `CDK_KAFKASQL_DATABASE_USERNAME`                   | false     | string | ∅              |
-| `kafka_sql.database.password`                        | External PostgreSQL login password                                                                                                    | `CDK_KAFKASQL_DATABASE_PASSWORD`                   | false     | string | ∅              |
-| `kafka_sql.database.connection_timeout`              | External PostgreSQL connection timeout in seconds                                                                                     | `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`          | false     | int    | ∅              |
-| `kafka_sql.commit_offset_every_in_sec`               | Frequency at which Conduktor SQL commits offsets into Kafka and flushes rows in the database                                          | `CDK_KAFKASQL_COMMITOFFSETEVERYINSEC`              | false     | int    | `30` (seconds) |
-| `kafka_sql.clean_expired_record_every_in_hour`       | How often to check for expired records and delete them from the Database                                                              | `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`  | false     | int    | `1` (hour)     |
-| `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
-| `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                     | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
+| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅               |
+| `kafka_sql.database.hosts[].host`                    | External PostgreSQL servers hostname                                                                                                        | `CDK_KAFKASQL_DATABASE_HOSTS_0_HOST`               | false     | string | ∅               |
+| `kafka_sql.database.hosts[].port`                    | External PostgreSQL servers port                                                                                                            | `CDK_KAFKASQL_DATABASE_HOSTS_0_PORT`               | false     | int    | ∅               |
+| `kafka_sql.database.host`                            | External PostgreSQL server hostname (Deprecated, use `kafka_sql.database.hosts` instead)                                                    | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅               |
+| `kafka_sql.database.port`                            | External PostgreSQL server port (Deprecated, use `kafka_sql.database.hosts` instead)                                                        | `CDK_KAFKASQL_DATABASE_PORT`                       | false     | int    | ∅               |
+| `kafka_sql.database.name`                            | External PostgreSQL database name                                                                                                           | `CDK_KAFKASQL_DATABASE_NAME`                       | false     | string | ∅               |
+| `kafka_sql.database.username`                        | External PostgreSQL login role                                                                                                              | `CDK_KAFKASQL_DATABASE_USERNAME`                   | false     | string | ∅               |
+| `kafka_sql.database.password`                        | External PostgreSQL login password                                                                                                          | `CDK_KAFKASQL_DATABASE_PASSWORD`                   | false     | string | ∅               |
+| `kafka_sql.database.connection_timeout`              | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`          | false     | int    | ∅               |
 
+Advanced properties (typically, these do not need to be altered)
+
+| Property                                             | Description                                                                                                                           | Environment Variable                               | Mandatory | Type   | Default        |
+|------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|--------|----------------|
+| `kafka_sql.commit_offset_every_in_sec`               | Frequency at which Conduktor SQL commits offsets into Kafka and flushes rows in the database                                          | `CDK_KAFKASQL_COMMITOFFSETEVERYINSEC`              | false     | int    | `30` (seconds) |
+| `kafka_sql.clean_expired_record_every_in_hour`       | How often to check for expired records and delete them from the Database                                                              | `CDK_KAFKASQL_CLEANEXPIREDRECORDEVERYINHOUR`  | false     | int    | `1` (hour)     |
+| `kafka_sql.refresh_topic_configuration_every_in_sec` | Frequency at which Conduktor SQL looks for new topics to start indexing or stop indexing                                              | `CDK_KAFKASQL_REFRESHTOPICCONFIGURATIONEVERYINSEC` | false     | int    | `30` (seconds) |
+| `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                         | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
+| `kafka_sql.refresh_user_permissions_every_in_sec`    | Frequency at which Conduktor SQL refreshes the role permissions in the DB to match the RBAC setup in Console                          | `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`                   | false     | string    | `conduktor-sql`  |
+
+### Partner zone properties
+
+Advanced properties (typically, these do not need to be altered).
+
+| Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
+| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |

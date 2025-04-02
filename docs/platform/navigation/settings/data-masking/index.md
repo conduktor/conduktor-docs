@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Data Masking
+title: Data Policies
 description: Overview of the Data Masking feature
 ---
 
@@ -12,15 +12,14 @@ As a Console administrator, you can **secure and govern** such data by creating 
 
 :::info
 Data Masking **does not impact how the underlying data is stored**. The data will only be masked **within the Console**. For masking, or encrypting, the underlying Kafka data, you can use the [Conduktor Gateway](/gateway/).
-
 :::
 
 Policies will be applied when **consuming Kafka messages in the Console**, as shown below. We can see that the phone number, the IBAN, and the card number, have been masked with some *****.
 
-![Example of masked data](/img/data-masking/result-before.png)
+![Example of masked data](assets/masked-data.png)
 
 Here is the list of policies applied in this case.
 
-![List of policies](/img/data-masking/overview-policies.png)
+![List of policies](assets/data-policies.png)
 
-You can go to the [Create a Policy](./create-a-policy) section in order to know more, and create your own policies.
+You can go to the [Create a Policy](/platform/navigation/settings/data-masking/create-a-policy/) section in order to know more, and create your own policies.

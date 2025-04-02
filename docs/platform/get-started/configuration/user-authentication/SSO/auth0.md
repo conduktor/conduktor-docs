@@ -10,9 +10,17 @@ description: Configure Auth0 as SSO for Conduktor Console.
 
 On Auth0 side, you'll have to create a new application:
 
-- **Step 1**: Create a **Regular Web Application** ![](../../assets/auth0-create-app.png)
+- **Step 1**: Create a **Regular Web Application**
 
-- **Step 2**: Get the `client ID`, `client secret` and `domain` ![](../../assets/auth0-client-id-secret-domain.png)
+import Auth0CreateApp from './assets/auth0-create-app.png';
+
+<img src={Auth0CreateApp} alt="Auth0 create app" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 2**: Get the `client ID`, `client secret` and `domain`
+
+import Auth0ClientIdSecretDomain from './assets/auth0-client-id-secret-domain.png';
+
+<img src={Auth0ClientIdSecretDomain} alt="Auth0 client ID secret domain" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 - **Step 3**: Configure the callback URI
 
@@ -20,9 +28,9 @@ The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/c
 
 For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`, like in the screenshot below.
 
-For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
+For more details on Console redirect URI for OAuth2, you can check the [documentation](/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/#more-details-on-console-external-url).
 
-![](../../assets/auth0-callback.png)
+![](assets/auth0-callback.png)
 
 :::tip
 You can find the .well-known at: `https://<domain>/.well-known/openid-configuration`.

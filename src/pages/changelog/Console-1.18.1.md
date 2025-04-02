@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Increased timeout from 30s to 5m when indexing snapshots (used for caching list pages) of Kafka clusters
 - Fixed a DB issue that prevented authentication to succeed when the generated token was longer than 255 characters

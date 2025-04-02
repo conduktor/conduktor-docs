@@ -1,14 +1,18 @@
 export const items = [
   {
-    name: 'Blog',
-    href: 'https://www.conduktor.io/blog',
+    name: 'API reference',
+    href: 'https://developers.conduktor.io/',
   },
   {
-    name: 'Changelog',
+    name: 'Release notes',
     href: '/changelog',
   },
   {
-    name: 'FAQ',
-    to: '/faq',
+    name: 'Version support',
+    href: '/support',
+  },
+  {
+    name: 'Conduktor blog',
+    href: 'https://www.conduktor.io/blog',
   },
 ]

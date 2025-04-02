@@ -64,13 +64,13 @@ Check the availability matrix on each resource using the following labels:
 ## Resources
 
 The resources are split into 3 categories:
-- [Console Resources](./console) are resources that exist only in Console such as 
+- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as 
   - Cluster Configurations
   - Users, Groups & Permissions
   - Alerts, DataMasking Policies
-- [Kafka Resources](./kafka) are Kafka resources that gets created in the Kafka ecosystem
+- [Kafka Resources](/platform/reference/resource-reference/kafka) are Kafka resources that gets created in the Kafka ecosystem
   - Topics
   - Subjects
   - Connectors
   - ...
-- [Self-Service](./self-service) Resources 
+- [Self-Service](/platform/reference/resource-reference/self-service) Resources 

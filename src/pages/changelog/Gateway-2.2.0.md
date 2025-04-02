@@ -8,15 +8,15 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
-### Usage metrics per topic and vcluster
+#### Usage metrics per topic and vcluster
 
 The `gateway.bytes_exchanged.topic` metric now shows the total bytes exchanged, for a specific topic. This can be measured on fetch or produce.
 
 `gateway_bytes_exchanged_topic_total{vcluster="vcluster-test", topic="topic-test", apiKeys="Fetch"}`
 
-### Field level decryption
+#### Field level decryption
 
 Decryption can now be performed on a field level basis enabling encryption of several fields and then selective decryption of fields depending on the user (application).
 
@@ -46,7 +46,7 @@ curl --location ‘host:port/admin/userMappings/v1/vcluster/my-vcluster’ \
 
 This is documented within the API docs also.
 
-## General fixes 🔨
+### General fixes 🔨
 
 - Patched ACLs visibility to be isolated across vclusters
 - Consistent use of trailing slashes in the API calls, will now work including the `/` or ignoring it is supported

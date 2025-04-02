@@ -20,11 +20,11 @@ For example, if you deployed Console locally using the name `azure` in your conf
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-![](../../assets/azure-new-app.png)
+![](assets/azure-new-app.png)
 
 - **Step 2**: Create a new client secret from the **Certificates & secrets** tab
 
-![](../../assets/azure-client-secret.png)
+![](assets/azure-client-secret.png)
 
 :::warning
 You need to keep the `Value` somewhere safe, as you will not have access to it again.
@@ -32,7 +32,7 @@ You need to keep the `Value` somewhere safe, as you will not have access to it a
 
 - **Step 3**: Find the `client ID` and `tenant ID` in the **Overview** tab
 
-![](../../assets/azure-client-id.png)
+![](assets/azure-client-id.png)
 
 :::tip
 You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
@@ -75,7 +75,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the **Token configuration** tab:
 
-![](../../assets/azure-add-groups-claim.png)
+![](assets/azure-add-groups-claim.png)
 
 :::caution
 If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
@@ -114,6 +114,6 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 ### External Groups Mapping
 
-Now that your configuration is finished, you can [set up the mapping](../../external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
+Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
 
 The value you need to put as an external group is the `Object ID` of the Azure AD group.

@@ -3,6 +3,10 @@ const redirects = [
   {
     redirects: [
       {
+        from: '/platform/navigation/console/conduktor-sql/',
+        to: '/platform/guides/configure-sql/'
+      },
+      {
         from: '/learn-apache-kafka-with-conduktor',
         to: '/desktop/learn-apache-kafka-with-conduktor',
       },
@@ -379,6 +383,10 @@ const redirects = [
         to: '/platform/get-started/installation/get-started/AWS/',
       },
       {
+        from: '/platform/get-started/installation/get-started/AWS_Marketplace/',
+        to: '/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/',
+      },
+      {
         from: '/platform/installation/license-management/',
         to: '/platform/get-started/installation/license-management/',
       },
@@ -405,6 +413,10 @@ const redirects = [
       {
         from: '/platform/get-started/support/data-security/',
         to: '/platform/get-started/support/data-privacy/'
+      },
+      {
+        from: '/platform/get-started/installation/get-started/CloudFormation/',
+        to: '/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/'
       }
     ],
   },

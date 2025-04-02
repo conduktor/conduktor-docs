@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Schema based encryption
+### Schema based encryption
 
 You can now define your encryption requirement directly within your Schemas.
 
@@ -51,7 +51,7 @@ The encryption configuration now supports defaults to simplify your setups
 }
 ```
 
-## KMS now use cloud managed identities by default
+### KMS now use cloud managed identities by default
 
 To prevent setting up manual connectivity, KMS are now using cloud managed identity by default
 
@@ -60,24 +60,24 @@ To prevent setting up manual connectivity, KMS are now using cloud managed ident
 * [GCP](https://github.com/googleapis/google-auth-library-java/blob/main/README.md#application-default-credentials)
 
 
-## Cache KMS Time to Live
+### Cache KMS Time to Live
 
 You can now cache the KMS keys for a certain amount of time. This is useful to reduce the number of calls to your KMS.
 
 `keyTtlMs`: The key's time to live in milliseconds. Default is 1 hour, disable the cache by setting it to 0
 
 
-## Override Header Injections
+### Override Header Injections
 
 Header config can now be further enforced with overrides, the plugin now supports `overrideIfExists` with default set to `false`. When set to `true`, the plugin will override the header if it already exists in the request. This can be useful for if a required piece of metadata is missing in the header, you can add something automatically whilst ignoring the ones that have set the value.
 
 
-## SSL Principal Extraction
+### SSL Principal Extraction
 
 The SSL principal extraction is now configurable with `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` it will follow the same rules as [Kafka](https://kafka.apache.org/documentation/#brokerconfigs_ssl.principal.mapping.rules). 
 
 
-## General Fixes 🔨
+### General Fixes 🔨
 
 * Quieter responses to Prometheus by not publishing HTTP quantiles in the response
 * Topic configuration is now returned in all Gateway modes

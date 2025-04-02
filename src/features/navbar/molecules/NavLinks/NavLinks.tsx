@@ -19,13 +19,13 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
     <ul className={styles.StyledNavLinks}>
       <li>
         <Link className={styles.NavLink} to={isHome ? '/platform' : '/'}>
-          {isHome ? 'Console' : 'Home'}
+          {isHome ? 'Platform' : 'Home'}
         </Link>
       </li>
       {isGateway && (
         <li>
           <Link className={styles.NavLink} to={isHome ? '/gateway' : '/platform'}>
-            {isHome ? 'Gateway' : 'Console'}
+            {isHome ? 'Gateway' : 'Platform'}
           </Link>
         </li>
       )}
@@ -68,7 +68,7 @@ const NavLinks: React.FunctionComponent<NavLinksProps> = () => {
         </li>
       ))}
       <li data-get-started>
-        <Button href="https://www.conduktor.io/get-started">Get Started</Button>
+        <Button href="https://www.conduktor.io/get-started">Get started</Button>
       </li>
     </ul>
   )

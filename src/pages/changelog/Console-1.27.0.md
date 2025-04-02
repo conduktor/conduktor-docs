@@ -15,9 +15,9 @@ tags: features,fix
   - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 - [Deprecation Warning: Upcoming migration from Tags to Labels](#deprecation-warning-upcoming-migration-from-tags-to-labels-)
-## Features ✨
+### Features ✨
 
-### Kafka Connect Configuration Wizard
+#### Kafka Connect Configuration Wizard
 
 We are very excited to introduce our Configuration Wizard for Kafka Connect which is taking full advantage of the Kafka Connect Validate API:
 - Form is generated with structured configuration groups
@@ -30,12 +30,12 @@ We are very excited to introduce our Configuration Wizard for Kafka Connect whic
 
 Give it a try and let us know what you think!
 
-### Alerts for Kafka Connect
+#### Alerts for Kafka Connect
 
 On top of the Kafka Connect Graphs we shipped last release, we now have added the ability to create alerts on them.
 ![Kafka Connect Alerts](/images/changelog/platform/v27/kafka-connect-alerts.png)
 
-### Self-service: Limited Ownership mode
+#### Self-service: Limited Ownership mode
 To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.  
 - ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team
 - ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team
@@ -45,11 +45,11 @@ This is especially useful if you already have a centralized repository and exist
  - [Read more about Limited Ownership mode](/platform/navigation/self-serve)
  - [Get Started with Self-service today!](https://docs.conduktor.io/platform/navigation/self-serve#limited-ownership-mode)
 
-### Quality of Life improvements
+#### Quality of Life improvements
 - Self-service: External Group Mapping is now available for [ApplicationGroup](/platform/reference/resource-reference/self-service/#application-group)
 - The Login page now steers users towards their OIDC provider rather than basic auth when OIDC is enabled
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed an issue on Consumer group reset offset with the ToDatetime strategy
 - Fixed an issue with Console indexing that could occur when deleting and recreating subject
 - Fixed a recent regression with default replication factor when creating a topic
@@ -60,7 +60,7 @@ This is especially useful if you already have a centralized repository and exist
 - Switching Kafka cluster from the Topic details page now redirects to the Topic List
 - Console doesn't override the client.id property anymore
 
-## Deprecation Warning: Upcoming migration from Tags to Labels 💣
+### Deprecation Warning: Upcoming migration from Tags to Labels 💣
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
 
 In an upcoming release, we'll perform an automatic migration from Tags to Labels.  

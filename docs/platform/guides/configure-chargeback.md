@@ -24,14 +24,14 @@ Chargeback requires both Console & Gateway:
 ## Configuration
 To enable the Chargeback screens in Console, the following steps are necessary:
 
-1. [Configure](../navigation/settings/managing-clusters.md) the Gateway cluster in Console
+1. [Configure](/platform/navigation/settings/managing-clusters/) the Gateway cluster in Console
 2. Configure the **Provider** tab with Gateway API credentials
   - **Note** that Virtual clusters are not supported yet. When populating the provider tab, you should instead use the default value `passthrough`.
 
-![Gateway Provider](img/gateway-provider.png)
+![Gateway Provider](assets/gateway-provider.png)
 
 
-3. Deploy the [Chargeback Interceptor](../../../gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](../../../gateway/reference/cli-reference)
+3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
   ```yaml
   apiVersion: gateway/v2
   kind: Interceptor
@@ -50,4 +50,4 @@ After a few minutes, you should see your active Service Accounts appear in the C
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
-Check the [Chargeback Usage](/platform/navigation/console/chargeback/) pages for details on the different tabs and UI features.
+Check the [Chargeback Usage](/platform/navigation/chargeback/) pages for details on the different tabs and UI features.

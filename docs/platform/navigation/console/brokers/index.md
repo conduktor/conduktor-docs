@@ -17,10 +17,7 @@ The Brokers List is a summary view of all your Kafka Brokers as well as sizing a
 
 You can click on a specific Kafka Broker to get to the Brokers details page, which will give you detailed information about the Broker configuration.
 
-
-
-![img.png](img/brokers-list.png)
-
+![Brokers list](assets/brokers-list.png)
 
 ## Graphs Tab
 
@@ -32,16 +29,19 @@ The Brokers Graphs tab lets you visualize the current and past state of your Kaf
 
 Graphs can be visualized over 24 hours, 7 days or 30 days periods.
 
-![img.png](img/graphs-tab.png)
+![Brokers graphs](assets/graphs-tab.png)
 
 On each metric you have the option to create an Alert. This will open a side panel requesting you to set the parameters to triggers your Alert.
 
-![img.png](img/brokers-create-alert.png)
+import BrokerCreateAlert from './assets/brokers-create-alert.png';
 
+<img src={BrokerCreateAlert} alt="Create a Broker Alert" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 ## Alerts Tab
 
 The Brokers Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.
 
-![img.png](img/alerts-tab.png)
+![Brokers Alerts list](assets/alerts-tab.png)
+
+<!-- TODO: add the section about brokers details. When you click on a broker, you get its configuration, logs, and some graphs too -->

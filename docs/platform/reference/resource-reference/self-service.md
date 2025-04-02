@@ -122,6 +122,9 @@ spec:
 - `spec.cluster` is a valid Console Cluster technical id
 - `spec.cluster` is immutable (can't update after creation)
 - `spec.serviceAccount` is **optional**, and if present not already used by other AppInstance for the same `spec.cluster`
+- `spec.applicationManagedServiceAccount` is **optional**, default `false`. 
+  - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchronized by the ApplicationInstance component.
+  - Check dedicated section [Application-managed Service Account](#application-managed-service-account)
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
 - `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.
 - `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
@@ -196,7 +199,7 @@ spec:
       pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
 ```
 **TopicPolicy checks:**
-- `spec.policies` requires YAML paths that are paths to the [Topic resource](../kafka#topic) YAML. For example:
+- `spec.policies` requires YAML paths that are paths to the [Topic resource](/platform/reference/resource-reference/kafka/#topic) YAML. For example:
   - `metadata.name` to create constraints on Topic name
   - `metadata.labels.<key>` to create constraints on Topic label `<key>`
   - `spec.partitions` to create constraints on Partitions number
@@ -340,11 +343,71 @@ spec:
 
 <hr />
 
-### Policy Constraints
 
-There are currently 3 available constraints:
+### Application-managed Service Account
+
+:::info info
+For the regular (non Self-Service) Service Account, see [Service Account](/platform/reference/resource-reference/kafka/#service-account)
+:::
+
+In this mode, the Service Account is not configured by the Central Team at the ApplicationInstance level.  
+Instead, the Central Platform Team decides to delegate this responsibility to the Application Team, which need to declare their own Service Account(s) and its associated ACLs within the limits of what the ApplicationInstance is allowed to do.
+
+**API Keys:**  <AppToken />  
+**Managed with:** <CLI /> <API />
+
+
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  appInstance: "clickstream-app-dev"
+  cluster: shadow-it
+  name: clickstream-sa
+spec:
+  authorization:
+    type: KAFKA_ACL
+    acls:
+      - type: TOPIC
+        name: click.event-stream.avro
+        patternType: PREFIXED
+        operations:
+          - Write
+          - Read
+      - type: CLUSTER
+        name: kafka-cluster
+        patternType: LITERAL
+        operations:
+          - DescribeConfigs
+      - type: CONSUMER_GROUP
+        name: cg-name
+        patternType: LITERAL
+        operations:
+          - Read
+````
+**Service Account checks:**
+The checks are the same as the [Service Account](/platform/reference/resource-reference/kafka/#service-account) resource with additional limitations:
+
+**Limitations**:  
+- A Service Account is claimed by first Application Team declaring them
+- ACL Operations that are not aligned with Self-Service philosophy or would prevent configured Policies to apply are not allowed on Service Account
+  - **Topic**: ~~Alter~~, ~~AlterConfigs~~, ~~Create~~, ~~Delete~~, Describe, DescribeConfigs, Read, Write
+    - Topic name must refer to a Topic owned by ApplicationInstance or allowed by granted ApplicationInstancePermission
+  - **Consumer Group**: ~~Delete~~, Describe, Read
+    - Resource name must refer to a Consumer Group owned by ApplicationInstance
+  - **Cluster**: ~~Alter~~, ~~AlterConfigs~~, ~~ClusterAction~~, ~~Create~~, Describe, DescribeConfigs
+  - **Delegation Token**: 🚫 (Out of scope, must be assigned by Central Team)
+  - **Transactional Id**: 🚫 (Out of scope, must be assigned by Central Team)
+- When an ApplicationInstancePermission is removed, we don't drop the ACLs on the ServiceAccount.
+  - Instead, consecutive CLI calls to apply the resource will fail, forcing the Application Team to fix.
+
+### Topic Policy Constraints
+
+There are currently 5 available constraints:
 - `Range` validates a range of numbers
 - `OneOf` validates against a list of predefined options
+- `NoneOf` rejects a value if it matches any item in the list
 - `Match` validates using Regular Expression
 - `AllowedKeys` limits a set of keys in the dictionaries
 

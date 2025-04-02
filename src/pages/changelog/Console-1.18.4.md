@@ -8,7 +8,7 @@ tags: fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Fixed an issue that prevented Console to function properly with PgBouncer
 - Fixed an issue where properties (`default.api.timeout.ms` & `request.timeout.ms`) were mistakenly overridden, leading to possible timeouts on large Kafka Clusters

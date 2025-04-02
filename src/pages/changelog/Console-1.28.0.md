@@ -19,11 +19,11 @@ tags: features,fix
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes 🔨](#fixes-)
 
-## Features ✨
+### Features ✨
 
 ***
 
-### Conduktor SQL
+#### Conduktor SQL
 
 :::info
 This feature is in [**Beta**](/platform/guides/configure-sql) and is subject to change as we enhance it further.
@@ -66,7 +66,7 @@ We encourage you to use this feature in non-production environments and give us 
 
 ***
 
-### Monitoring improvements
+#### Monitoring improvements
 We are migrating our Monitoring dashboards into their respective resource pages for a more integrated experience.
 
 This migration will happen over the next few releases with our objective to remove the existing, generic Monitoring pages:
@@ -103,7 +103,7 @@ We have removed two metrics that were not always calculated correctly since the 
 
 ***
 
-### New CLI/API resource Alert
+#### New CLI/API resource Alert
 
 Alerts can now be created via the API or CLI in addition to the UI.  
 See below for example config, and check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details.
@@ -136,7 +136,7 @@ If you have a large number of alerts configured and need some help, we're happy 
 
 ***
 
-### Shareable Filters
+#### Shareable Filters
 Filters in the Topic Consume view are now shareable. This brings a number of benefits:
 - **Improved collaboration**: Share pre-defined views to ensure users are looking at the same subset of data
 - **Time savings**: Speed up troubleshooting and analysis with repeatable filters that share the same or similar criteria
@@ -150,7 +150,7 @@ Anyone can then load Organization filters from the dedicated section.
 
 *** 
 
-### Tags Become Labels
+#### Tags Become Labels
 
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
 
@@ -195,7 +195,7 @@ Let us know which resource you would like to see covered first.
 
 ***
 
-### Publish AuditLog CloudEvents into Kafka
+#### Publish AuditLog CloudEvents into Kafka
 It is now possible to publish Console Audit Log events into a Kafka topic directly for any further use you may have for them, such as maintaining your own audit trail in other systems.  
 
 The exportable audit log events have more detail compared to the current UI events, providing additional information about the event that has taken place.  
@@ -245,7 +245,7 @@ A full list of all the exported audit log event types is published on the [Audit
 
 ***
 
-### Logging API
+#### Logging API
 Adjust the log level of Console without requiring a restart. We've added a new API endpoint to support targeted changes to log levels dynamically.
 Check the [associated documentation](/platform/get-started/troubleshooting/logs-configuration/#runtime-logger-configuration-api) for the full list of capabilities.
 
@@ -255,7 +255,7 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 ```
 ***
 
-## Quality of Life improvements
+### Quality of Life improvements
 - Updated design and color theme
 - Added navigation breadcrumb
 - Enhanced error messages throughout the product
@@ -263,7 +263,7 @@ curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.auth
 - Declaring an ApplicationInstance with resources ending in `*` will now fail with this error message
   - `Could not apply resource ApplicationInstance/my-app-inst: resource name 'appA-*' is not allowed. Use name 'appA-' with patternType PREFIXED instead`
 
-## Fixes 🔨
+### Fixes 🔨
 - Fixed an issue with Topic Policy constraint Range where `max` value wasn't inclusive and `min` could greater than `max`
 - Fixed an issue where Topic Policies were not enforced on Topic configuration changes in Console
 - Added an error message when using the copy to clipboard button (for API Keys for instance) fails

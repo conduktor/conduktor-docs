@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: Custom Log Configuration
 description: Fine-tuning log configuration with configuration file
 ---

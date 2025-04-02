@@ -11,13 +11,13 @@ const { redirects } = require('./src/services/redirects')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Conduktor Docs',
-  tagline: 'Dinosaurs are cool',
+  title: 'Conduktor docs',
+  tagline: 'Unlock the potential of your data',
   url: 'https://docs.conduktor.io',
   baseUrl: '/',
   trailingSlash: true,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
@@ -94,13 +94,17 @@ const config = {
                 label: 'Configuration',
                 to: 'platform/get-started/configuration/introduction',
               },
+              {
+                label: 'FAQ',
+                to: '/faq',
+              },
             ],
           },
           {
             title: 'Docs',
             items: [
               {
-                label: 'Console',
+                label: 'Platform',
                 to: '/platform',
               },
               {
@@ -117,7 +121,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Changelog',
+                label: 'Release notes',
                 href: '/changelog',
               },
               {
@@ -189,7 +193,10 @@ const config = {
     analytics,
     gtm,
   ],
-  stylesheets: ['/css/stitches.css'],
+  stylesheets: [
+    '/css/stitches.css',  
+    '/css/custom.css',  
+  ],
   scripts: [
     {
       src: 'https://cdn-cookieyes.com/client_data/bb65dd08fda6eb81ef9cf1c2/script.js',
@@ -199,16 +206,20 @@ const config = {
     {
       id: 'runllm-widget-script',
       type: 'module',
-      src: 'https://cdn.jsdelivr.net/npm/@runllm/search-widget@stable/dist/run-llm-search-widget.es.js',
+      src: 'https://widget.runllm.com',
       'runllm-server-address': 'https://api.runllm.com',
       'runllm-assistant-id': '147',
       'runllm-position': 'BOTTOM_RIGHT',
       'runllm-keyboard-shortcut': 'Mod+j',
       version: 'stable',
       'runllm-preset': 'docusaurus',
-      'runllm-slack-community-url': '',
+      'runllm-community-url': 'https://conduktor.io/slack',
+      'runllm-community-type': 'slack',
+      'runllm-disclaimer': 'Answers are not covered by SLA and should be used for reference only. For official support, go to our <a href="https://support.conduktor.io" target="_blank">support portal</a>.',
       'runllm-name': 'Conduktor',
-      'runllm-theme-color': '#005EEC',
+      'runllm-theme-color': '#09343C',
+      'runllm-brand-logo' :'https://raw.githubusercontent.com/conduktor/conduktor.io-public/refs/heads/main/logo/dark-green-bg-app.png',
+      'runllm-floating-button-text': 'Ask Conduktor',
       async: true,
     },
   ],

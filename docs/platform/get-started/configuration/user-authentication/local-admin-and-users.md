@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 title: Local Admin & Users
 description: Configure and manage local admin and users
 ---
@@ -19,7 +19,9 @@ From within the **Settings** > **Users & Groups** screen, select **Create member
 
 Later on you may wish to add users from an IAC approach using the [ConsoleGroup](/platform/reference/resource-reference/console/#consolegroup) component.
 
-![console kafka UI users](../assets/console-users.png)
+import AddUsers from '../../installation/get-started/assets/add-users.png';
+
+<img src={AddUsers} alt="Add users" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
 
 ### Configuration example
@@ -66,12 +68,11 @@ For that, you can `Create members` using their **email address**. That way, when
 
 Here are the steps to follow:
 - From within the `Users & Groups` screen, select the `Create members` button.
+- Enter the email of the users you want to create, then click on `Create users`.
 
-![](../assets/admin-create-members-1.png)
-- Enter the email of the user you want to create, then click on `Create users`.
+![](assets/create-sso-users.png)
 
-![](../assets/admin-create-members-2.png)
 - Finally, you can add them to a group by going into the `Groups` section, clicking on a group, and adding the user you just created.
 
-![](../assets/admin-select-group.png)
-![](../assets/admin-add-user-to-group.png)
+![](assets/groups.png)
+![](assets/add-users-to-group.png)

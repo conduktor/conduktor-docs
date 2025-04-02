@@ -1,4 +1,5 @@
 @import 'alerts.css';
+@import 'accordion.css';
 
 /* You can override the default Infima variables here. */
 :root {
@@ -26,6 +27,13 @@
   --ifm-container-width-xl: 1216px;
   --ifm-global-radius: 4px;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --custom-color-olive-1: #F8FCFC;
+  --custom-color-primary-text: #072024;
+  --custom-color-brand: #09343C;
+  --custom-color-border-secondary: #E6E9E9;
+  --custom-color-secondary-text: #394D50;
+  --custom-color-accent-text: #E3FFCC;
+  --custom-color-tertiary-text: #6A797C;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -336,7 +344,7 @@ footer.footer--dark .footer__title {
 footer.footer--dark .footer__item a {
   color: var(--colors-olive11);
   transition: color 200ms ease-in-out;
-  text-decoration: none !important;
+  text-decoration: #e3e2df !important;
   font-weight: 500;
   font-size: 16px;
 }

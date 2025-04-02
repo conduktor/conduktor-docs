@@ -19,7 +19,7 @@ If the idle timeout value is not set, the same value as the maximum session time
 
 ## Configuration
 
-Use the below environment variables or [configuration properties](../env-variables.md#session-lifetime-properties) to configure your session lifetime requirements. 
+Use the below environment variables or [configuration properties](/platform/get-started/configuration/env-variables/#session-lifetime-properties) to configure your session lifetime requirements. 
 
 Environment variables:
 

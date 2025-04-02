@@ -8,7 +8,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-## Features ✨
+### Features ✨
 
 - [Conduktor Console](#conduktor-console)
   - [Features ✨](#features-)
@@ -25,13 +25,13 @@ tags: features,fix
 
 ***
 
-### Consume live messages
+#### Consume live messages
 You can now consume live messages from within the topic consume screen. Simply set the **limit filter** to **None** and you'll see new records flowing as they are being produced. Streaming data is beautiful, isn't it? 😉
 ![Live Consume](/images/changelog/platform/v19/live-consume.gif)
 
 ***
 
-### Consume messages infinitely
+#### Consume messages infinitely
 
 We have finally said goodbye to the 5000 records limitation! If you wish to consume 100k records, 10M records, or even an entire topic, it's now possible! Note that for performance reasons, your browser will only store the most recent 5000 records available for browsing, or for use via the export feature.
 
@@ -41,7 +41,7 @@ Warning, we're not responsible for the sudden spike in your billing for Bytes-Ou
 
 ***
 
-### Consume between dates (and obtain count statistics)
+#### Consume between dates (and obtain count statistics)
 
 If you want to know how many messages were produced **between** two datetimes, you know have a **new limit option** dedicated for this. Simply apply the following filters:
  - **Show from**: `{datetime}`
@@ -57,14 +57,14 @@ Note that in the example below, **190** records matches the filter conditions, o
 
 ***
 
-### Provider Integrations within Conduktor Console
+#### Provider Integrations within Conduktor Console
 Connect with your Kafka Provider to manage their benefits directly in Conduktor Console.  With this first iteration, we bring features to Console that are only available with the provider's APIs.  
 
 ![Provider Tab](/images/changelog/platform/v19/provider-tab.png)
 
 ***
 
-### Conduktor Gateway Integration
+#### Conduktor Gateway Integration
 You can now connect our other product artefact, Conduktor Gateway, to the Conduktor Console. This enables you to configure interceptors on Gateway virtual clusters through a dedicated set of pages accessible via the **Gateway Interceptors** tab.
 
 Note that you will need to be connected to a Gateway cluster to utilize this feature. You can explore interactive demos below:
@@ -75,7 +75,7 @@ Note that you will need to be connected to a Gateway cluster to utilize this fea
 
 ***
 
-### Aiven Cloud Integration
+#### Aiven Cloud Integration
 We now support the following resources from Aiven Cloud:
 - Manage Service Accounts
 - Manage ACLs
@@ -86,7 +86,7 @@ To manage Aiven resources, navigate to the **Service Accounts** screen when conn
 
 ***
 
-### Confluent Cloud Integration
+#### Confluent Cloud Integration
 We now support the following resources from Confluent Cloud:
 - Manage Service Accounts & ACLs
 - Manage API Keys
@@ -98,7 +98,7 @@ To manage Confluent Cloud resources, navigate to the **Service Accounts** screen
 
 ***
 
-### YAML and Environment Variables for Clusters
+#### YAML and Environment Variables for Clusters
 Kafka Clusters, Schema Registry and Kafka Connects configurations are now properly synced when configured from Yaml and Environment Variables (ie. GitOps way)
 ````yaml
 clusters:
@@ -137,7 +137,7 @@ We still recommend the use of Console API to maintain your Cluster configuration
 
 ***
 
-### Better memory configuration
+#### Better memory configuration
 
 **RUN_MODE** is gone!  
 We now rely on container CGroups limits and use up to 80% of container memory limit for JVM max heap size.
@@ -152,7 +152,7 @@ Read [this article](https://bell-sw.com/announcements/2020/10/28/JVM-in-Linux-co
 
 ***
 
-## Fixes 🔨
+### Fixes 🔨
 
 - Optimized the AdminClient instances usage across Console, by reusing a shared instance as much as possible. This will hugely decrease the number of AdminClient authentications.
 - Fixed an issue on Consumer Group details where unassigned partitions were showing as part of an active member
