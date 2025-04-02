@@ -12,7 +12,7 @@ tags: features,fixes
 - [Scale](#scale)
     - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
     - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
-    - [Support of Aiven service acocunts](#support-of-aiven-service-accounts)
+    - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
 - [Exchange](#exchange)
     - [Change/fix for Exchange](#changes-for-exchange)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -55,7 +55,7 @@ spec:
 ````
 
 #### Support of Aiven service accounts
-We've added the support of Aiven service accounts in our API and CLI. For more information, please refer to the [Service account resource definition](/platform/reference/resource-reference/kafka.md). 
+We've added the support of Aiven service accounts in our API and CLI. See [service account resource definition](/platform/reference/resource-reference/kafka.md) for details. 
 
 Here's an example granting read and write access to the `click.event-stream.avro` topic and its schema.
 
