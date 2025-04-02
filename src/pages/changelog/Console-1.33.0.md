@@ -86,7 +86,7 @@ TO DO
 
 ### Quality of life improvements
 
-- Add selectors for key and value formats on the single kafka message page, enabling the use of customer deserializers.
+- Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 
 ### Fixes
 
