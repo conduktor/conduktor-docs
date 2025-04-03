@@ -12,7 +12,7 @@ tags: features,fix
 
 #### New backing topic required for Gateway
 
-The local KMS feature introduced in this release requires a new backing topic to store the keys.
+The [Gateway KMS feature](#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms) introduced in this release requires a new backing topic to store the keys.
 
 When you upgrade to Gateway 3.7.0, a new topic `_conduktor_gateway_encryption_keys` will be created.
 
