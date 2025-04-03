@@ -153,10 +153,7 @@ sequenceDiagram
 	autonumber
 	participant A as Application 
 	participant I as Identity Provider
-	box Gateway Cluster
     participant GW as Gateway
-    participant GW2 as Gateway ACLs
-    end
     participant K as Backing Kafka
 	
 	Note over A,GW: Application uses credentials `client-id:client-secret`
@@ -167,7 +164,8 @@ sequenceDiagram
     GW->>GW: Extract `subject` from JWT
     Note over GW,K: Gateway forwards the JWT to the backing Kafka
     GW->>+K: Connects to Backing Kafka using JWT
-    K->>K: Validate credentials
+    K->>+I: Validate JWT
+    I-->>-K: Valid
     K-->>-GW: Connected
     GW-->>-A: Connected
 ```
@@ -177,15 +175,11 @@ sequenceDiagram
 	autonumber
 	participant A as Application 
 	participant I as Identity Provider
-	box Gateway Cluster
     participant GW as Gateway
-    participant GW2 as Gateway ACLs
-    end
     participant K as Backing Kafka 
     A->>+GW: Produce Record to topic `my-topic`
-    GW->>+GW2: Is `subject` allowed to produce to `my-topic`?
-    GW2-->>-GW: Allowed
     GW->>+K: Produce Record to topic `my-topic`
+    K->>K: Is `subject` allowed to produce to `my-topic`?
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
