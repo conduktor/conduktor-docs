@@ -14,21 +14,21 @@ Below outlines both the Hardware and Kafka Requirements for running Conduktor Ga
 
 ### Minimum Setup
 
-Per single node, light usage
+Per Gateway node, for light usage:
 
 - 2 CPU cores
 - 4 GB of RAM
 
-This we would expect each gateway instance to support 20-30MB/s of throughput with a minimal affect on latency.
+Running on this level of machine, each gateway instance will support around 20-30MB/s of throughput with a minimal affect on latency.
 
 ### Recommended Starting Setup
 
-Per single node, medium to high usage
+Per Gateway node, for medium to high usage:
 
 - 4 CPU cores
 - 8 GB of RAM
 
-This we would expect each gateway instance to support 40-50MB/s of throughput with a minimal affect on latency, and it is recommended that you run at least three gateway instances. 
+This we would expect each gateway instance to support 40-50MB/s of throughput with a minimal affect on latency. For production set ups, it is recommended that you run at least three gateway instances. Any further scaling is best first done horizontally (by adding more instances of Gateway to the cluster to increase throughput).
 
 ### Local Storage Requirements
 
