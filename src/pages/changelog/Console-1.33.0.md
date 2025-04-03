@@ -12,6 +12,7 @@ tags: features,fixes
 - [Scale](#scale)
     - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
     - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
+    - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
 - [Exchange](#exchange)
     - [Change/fix for Exchange](#changes-for-exchange)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -53,6 +54,30 @@ spec:
   grantedTo: "another-appinstance-dev"
 ````
 
+#### Support of Aiven service accounts
+We've added the support of Aiven service accounts in our API and CLI. See [service account resource definition](/platform/reference/resource-reference/kafka.md) for details. 
+
+Here's an example granting read and write access to the `click.event-stream.avro` topic and its schema.
+
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: aiven
+  name: clickstream-sa
+spec:
+  authorization:
+    type: AIVEN_ACL
+    acls:
+      - resourceType: TOPIC
+        name: 'click.event-stream.avro'
+        permission: readwrite
+      - type: SCHEMA
+        name: 'Subject:click.event-stream.avro'
+        permission: schema_registry_write
+````
+
 ### Exchange
 
 #### Changes for Exchange
@@ -61,11 +86,19 @@ TO DO
 
 ### Quality of life improvements
 
-- TODO
+- Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 
 ### Fixes
 
-- TODO
+- Glue: improve deserialization of Avro schemas containing a nullable union
+- Fixed an issue preventing the use of protobuf schemas with references
+- Improved performance of API for applying users and groups with many permissions
+- Bypass Self-service topic policies when using an admin API key
+- Errors thrown while producing to a topic are now properly displayed in the UI
+- Fixed the computation of the controller of a KRaft cluster in the Brokers page
+- Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
+- Failure to create the topic for audit log is now recorded in the logs
+-```
 
 ### Known issues
 

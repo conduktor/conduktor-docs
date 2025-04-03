@@ -246,7 +246,8 @@ spec:
     type: TOPIC
     name: "click.event-stream.avro"
     patternType: LITERAL
-  permission: READ
+  userPermission: NONE
+  serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
 ````
 **Application instance permission checks:**
@@ -261,7 +262,9 @@ spec:
         -   the whole prefix: `click.`
         -   a sub prefix: `click.orders.`
         -   a literal topic name: `click.orders.france`
-- `spec.permission` can be `READ` or `WRITE`
+- `spec.userPermission` can be `READ` or `WRITE` or `NONE`.
+- `spec.serviceAccountPermission` can be `READ` or `WRITE` or `NONE`.
+- `spec.permission` can be `READ` or `WRITE`. (Deprecated,  use `spec.userPermission` and `spec.serviceAccountPermission` instead)
 - `spec.grantedTo` must be an `ApplicationInstance` on the same Kafka cluster as `metadata.appInstance`
 
 **Side effect in Console & Kafka:**
