@@ -32,7 +32,7 @@ sequenceDiagram
     participant GW as Gateway
     participant GW2 as Gateway Users & ACLs Store
     end
-    participant K as Backing Kafka
+    participant K as Backing Kafka Cluster
 	
 	Note over A,GW: Application uses credentials `username:password`
     A->>+GW: Connects to Gateway using Application credentials
@@ -52,11 +52,16 @@ sequenceDiagram
     participant GW as Gateway
     participant GW2 as Gateway Users & ACLs Store
     end
-    participant K as Backing Kafka
+    box Backing Kafka Cluster
+    participant K as Backing Kafka 
+    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    end
     A->>+GW: Produce Record to topic `my-topic`
     GW->>+GW2: Is `username` allowed to produce to `my-topic`?
     GW2-->>-GW: Allowed
     GW->>+K: Produce Record to topic `my-topic`
+    K->>+K2: Is `admin` allowed to produce to `my-topic`?
+    K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
@@ -74,7 +79,7 @@ sequenceDiagram
     participant GW as Gateway
     participant GW2 as Gateway ACLs
     end
-    participant K as Backing Kafka
+    participant K as Backing Kafka Cluster
 	
 	Note over A,GW: Application uses credentials `client-id:client-secret`
 	A->>+I: Request Access Token
@@ -100,11 +105,16 @@ sequenceDiagram
     participant GW as Gateway
     participant GW2 as Gateway ACLs
     end
-    participant K as Backing Kafka
+    box Backing Kafka Cluster
+    participant K as Backing Kafka 
+    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    end
     A->>+GW: Produce Record to topic `my-topic`
     GW->>+GW2: Is `subject` allowed to produce to `my-topic`?
     GW2-->>-GW: Allowed
     GW->>+K: Produce Record to topic `my-topic`
+    K->>+K2: Is `admin` allowed to produce to `my-topic`?
+    K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
@@ -118,7 +128,7 @@ sequenceDiagram
 	autonumber
 	participant A as Application 
     participant GW as Gateway
-    participant K as Backing Kafka
+    participant K as Backing Kafka Cluster
     
 	Note over A,GW: Application uses credentials `username:password`
     A->>+GW: Connects to Gateway using Application credentials
@@ -134,11 +144,15 @@ sequenceDiagram
 	autonumber
 	participant A as Application 
     participant GW as Gateway
-    participant K as Backing Kafka
+    box Backing Kafka Cluster
+    participant K as Backing Kafka 
+    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    end
 
     A->>+GW: Produce Record to topic `my-topic`
     GW->>+K: Produce Record to topic `my-topic`
-    K->>K: Is `username` allowed to produce to `my-topic`?
+    K->>+K2: Is `username` allowed to produce to `my-topic`?
+    K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 
@@ -154,7 +168,7 @@ sequenceDiagram
 	participant A as Application 
 	participant I as Identity Provider
     participant GW as Gateway
-    participant K as Backing Kafka
+    participant K as Backing Kafka Cluster
 	
 	Note over A,GW: Application uses credentials `client-id:client-secret`
 	A->>+I: Request Access Token
@@ -174,12 +188,16 @@ sequenceDiagram
 sequenceDiagram
 	autonumber
 	participant A as Application 
-	participant I as Identity Provider
     participant GW as Gateway
+    box Backing Kafka Cluster
     participant K as Backing Kafka 
+    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    end
+    
     A->>+GW: Produce Record to topic `my-topic`
     GW->>+K: Produce Record to topic `my-topic`
-    K->>K: Is `subject` allowed to produce to `my-topic`?
+    K->>+K2: Is `subject` allowed to produce to `my-topic`?
+    K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
