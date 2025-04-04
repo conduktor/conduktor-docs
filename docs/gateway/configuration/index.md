@@ -4,153 +4,165 @@ title: Configuration
 description: Conduktor Gateway configuration
 ---
 
-Configuring Conduktor Gateway involves making decisions regarding several subjects.
+To configure Conduktor Gateway, you have to:
 
-1. Choose your [Networking](../configuration/network.md) / [Load Balancing](../reference/load-balancing.md) requirements
-2. Configure how the [Gateway connects to your Backing Kafka Cluster](../configuration/kafka-authentication.md)
-3. Configure the [Gateway to accept Client connections](../configuration/client-authentication.md)
-4. Decide whether you need [Virtual Cluster](../concepts/virtual-clusters.md) capabilities
+1. Decide on your [networking](../configuration/network.md)/[load balancing](../reference/load-balancing.md) requirements.
+1. Configure how [Gateway connects to your 'backing' Kafka cluster](../configuration/kafka-authentication.md).
+1. Configure [Gateway to accept client connections](../configuration/client-authentication.md).
+1. Decide whether you need [virtual clusters](../concepts/virtual-clusters.md).
 
-## Authentication and Authorization Flows
-:::caution
-This is a **conceptual** view of the authentication and authorization flows.  
-Specifically:
-- it does not include every network call involved within each stage
-- it does not reflect the exact order of the network calls
+## Authentication and authorization flows
+
+:::warning[Conceptual visualization]
+This is a conceptual view of the authentication and authorization flows. It **doesn't include** every network call in each stage or the exact order of the calls.
 :::
 
-### Gateway Security with Credentials managed by Gateway
- 
+### Gateway security with credentials managed by Gateway
+
 Security protocol: `SASL_PLAINTEXT` or `SASL_SSL`  
 SASL mechanism: `PLAIN`
-#### Authentication Flow
+
+#### Authentication flow
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
-	box Gateway Cluster
+	participant A as application 
+	box Gateway cluster
     participant GW as Gateway
-    participant GW2 as Gateway Users & ACLs Store
+    participant GW2 as Gateway users & ACLs store
     end
-    participant K as Backing Kafka Cluster
+    participant K as backing Kafka cluster
 	
 	Note over A,GW: Application uses credentials `username:password`
-    A->>+GW: Connects to Gateway using Application credentials
-    GW->>+GW2: Check Application credentials
+    A->>+GW: Connects to Gateway using application credentials
+    GW->>+GW2: Check application credentials
     GW2-->>-GW: Credentials are valid
     Note over GW,K: Gateway uses a DIFFERENT set of credentials `admin:password`
-    GW->>+K: Connects to Backing Kafka using Gateway credentials
+    GW->>+K: Connects to backing Kafka using Gateway credentials
     K-->>-GW: Connected
     GW-->>-A: Connected
 ```
-#### Authorization Flow (Produce Message)
+
+#### Authorization flow (produce message)
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
-	box Gateway Cluster
+	participant A as application 
+	box Gateway cluster
     participant GW as Gateway
-    participant GW2 as Gateway Users & ACLs Store
+    participant GW2 as Gateway users & ACLs store
     end
-    box Backing Kafka Cluster
-    participant K as Backing Kafka 
-    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    box Backing Kafka cluster
+    participant K as backing Kafka 
+    participant K2 as backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
     end
-    A->>+GW: Produce Record to topic `my-topic`
+    A->>+GW: Produce record to topic `my-topic`
     GW->>+GW2: Is `username` allowed to produce to `my-topic`?
     GW2-->>-GW: Allowed
-    GW->>+K: Produce Record to topic `my-topic`
+    GW->>+K: Produce record to topic `my-topic`
     K->>+K2: Is `admin` allowed to produce to `my-topic`?
     K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
 
-### Gateway Security with Oauth
+### Gateway security with Oauth
+
 Security protocol: `SASL_PLAINTEXT` or `SASL_SSL`  
 SASL mechanism: `OAUTHBEARER`
-#### Authentication Flow
+
+#### Authentication flow
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
-	participant I as Identity Provider
-	box Gateway Cluster
+	participant A as application 
+	participant I as identity provider
+	box Gateway cluster
     participant GW as Gateway
     participant GW2 as Gateway ACLs
     end
-    participant K as Backing Kafka Cluster
+    participant K as backing Kafka cluster
 	
 	Note over A,GW: Application uses credentials `client-id:client-secret`
-	A->>+I: Request Access Token
+	A->>+I: Request access token
 	I->>I: Validate credentials
-    I-->>-A: Return Access Token (JWT)
+    I-->>-A: Return access token (JWT)
     A->>+GW: Connects to Gateway using JWT
     GW->>+I: Validate JWT
     I-->>-GW: Valid
     GW->>GW: Extract `subject` from JWT
     
     Note over GW,K: Gateway uses a DIFFERENT set of credentials `admin:secret`
-    GW->>+K: Connects to Backing Kafka using Gateway credentials
+    GW->>+K: Connects to backing Kafka using Gateway credentials
     K-->>-GW: Connected
     GW-->>-A: Connected
 ```
-#### Authorization Flow (Produce Message)
+
+#### Authorization flow (produce message)
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
-	participant I as Identity Provider
-	box Gateway Cluster
+	participant A as application 
+	participant I as identity provider
+	box Gateway cluster
     participant GW as Gateway
     participant GW2 as Gateway ACLs
     end
-    box Backing Kafka Cluster
-    participant K as Backing Kafka 
-    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    box Backing Kafka cluster
+    participant K as backing Kafka 
+    participant K2 as backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
     end
-    A->>+GW: Produce Record to topic `my-topic`
+    A->>+GW: Produce record to topic `my-topic`
     GW->>+GW2: Is `subject` allowed to produce to `my-topic`?
     GW2-->>-GW: Allowed
-    GW->>+K: Produce Record to topic `my-topic`
+    GW->>+K: Produce record to topic `my-topic`
     K->>+K2: Is `admin` allowed to produce to `my-topic`?
     K2-->>-K: Allowed
     K-->>-GW: Record produced
     GW-->>-A: Record produced
 ```
 
-### Backing Kafka Security with SASL User
+### Backing Kafka security with SASL users
+
 Security protocol: `DELEGATED_SASL_PLAINTEXT` or `DELEGATED_SASL_SSL`  
 SASL mechanism: `PLAIN` (ie Confluent Cloud) or `SCRAM-SHA-256` or `SCRAM-SHA-512`
-#### Authentication Flow
+
+#### Authentication flow
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
+	participant A as application 
     participant GW as Gateway
-    participant K as Backing Kafka Cluster
-    
+    participant K as backing Kafka cluster
+
 	Note over A,GW: Application uses credentials `username:password`
-    A->>+GW: Connects to Gateway using Application credentials
+    A->>+GW: Connects to Gateway using application credentials
     Note over GW,K: Gateway uses the SAME set of credentials `username:password`
-    GW->>+K: Connects to Backing Kafka using Application credentials
+    GW->>+K: Connects to backing Kafka using application credentials
     K->>K: Validate credentials
     K-->>-GW: Connected
     GW-->>-A: Connected
 ```
-#### Authorization Flow (Produce Message)
+
+#### Authorization flow (produce message)
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
+	participant A as application 
     participant GW as Gateway
-    box Backing Kafka Cluster
-    participant K as Backing Kafka 
-    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    box Backing Kafka cluster
+    participant K as backing Kafka 
+    participant K2 as backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
     end
 
-    A->>+GW: Produce Record to topic `my-topic`
-    GW->>+K: Produce Record to topic `my-topic`
+    A->>+GW: Produce record to topic `my-topic`
+    GW->>+K: Produce record to topic `my-topic`
     K->>+K2: Is `username` allowed to produce to `my-topic`?
     K2-->>-K: Allowed
     K-->>-GW: Record produced
@@ -159,43 +171,48 @@ sequenceDiagram
 ```
 
 ### Backing Kafka Security with OAuth
+
 Security protocol: `DELEGATED_SASL_PLAINTEXT` or `DELEGATED_SASL_SSL`    
 SASL mechanism: `OAUTHBEARER`
-#### Authentication Flow
+
+#### Authentication flow
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
-	participant I as Identity Provider
+	participant A as application 
+	participant I as identity provider
     participant GW as Gateway
-    participant K as Backing Kafka Cluster
+    participant K as backing Kafka cluster
 	
-	Note over A,GW: Application uses credentials `client-id:client-secret`
-	A->>+I: Request Access Token
+	Note over A,GW: application uses credentials `client-id:client-secret`
+	A->>+I: Request access token
 	I->>I: Validate credentials
-    I-->>-A: Return Access Token (JWT)
+    I-->>-A: Return access token (JWT)
     A->>+GW: Connects to Gateway using JWT
     GW->>GW: Extract `subject` from JWT
     Note over GW,K: Gateway forwards the JWT to the backing Kafka
-    GW->>+K: Connects to Backing Kafka using JWT
+    GW->>+K: Connects to backing Kafka using JWT
     K->>+I: Validate JWT
     I-->>-K: Valid
     K-->>-GW: Connected
     GW-->>-A: Connected
 ```
-#### Authorization Flow (Produce Message)
+
+#### Authorization flow (produce message)
+
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant A as Application 
+	participant A as application 
     participant GW as Gateway
-    box Backing Kafka Cluster
-    participant K as Backing Kafka 
-    participant K2 as Backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
+    box Backing Kafka cluster
+    participant K as backing Kafka 
+    participant K2 as backing Kafka ACLs<br/>(Kafka ACLs, Confluent RBAC, etc)
     end
     
-    A->>+GW: Produce Record to topic `my-topic`
-    GW->>+K: Produce Record to topic `my-topic`
+    A->>+GW: Produce record to topic `my-topic`
+    GW->>+K: Produce record to topic `my-topic`
     K->>+K2: Is `subject` allowed to produce to `my-topic`?
     K2-->>-K: Allowed
     K-->>-GW: Record produced
