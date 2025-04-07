@@ -11,6 +11,13 @@ tags: features,fix
 ### Breaking changes
 
 #### New backing topic required for Gateway
+The upcoming data quality feature requires a new backing topic in Gateway.
+
+When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality_violation` will be created.
+
+To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable.
+
+[Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
 #### Deprecating V1 APIs
 V1 APIs are now deprecated in favor of the V2 APIs introduced in Gateway 3.3.0 in September 2024.  
@@ -41,9 +48,3 @@ Changes since [3.7.0](/changelog/#preview-feature-introducing-cost-effective-cry
 * `masterKeyId` on `config/kmsConfig/gateway/` is now validated and can not use template variables.
 
 [Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
-
-### Feature changes
-- ATODO
-
-### Bug fixes
-- TODO
