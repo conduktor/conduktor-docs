@@ -190,6 +190,6 @@ When authenticating incoming connections to the cluster, Managed Service for Apa
 
 Example below
 
-
+![adding google to console](assets/google-console-setup.png "adding google to console")
 
 
