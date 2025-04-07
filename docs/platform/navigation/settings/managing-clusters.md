@@ -126,6 +126,8 @@ The configuration should look like this in the Console:
 
 ## Connect to a Cloudera Kafka cluster
 
+Connect to Cloudera Kafka using SASL_SSL
+
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
 ![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
@@ -148,3 +150,46 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 ![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
 
 [Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
+
+
+## Connect to a Google Managed Kafka cluster
+
+### Option 1: [SASL_PLAINTEXT using a Service Account](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain)
+
+### Option 2: Connect using an Access Token
+
+First get and access token.
+
+```
+gcloud auth login --no-launch-browser
+gcloud auth print-access-token 
+```
+
+You can use the access token for authentication with the following parameters.
+
+```
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
+username="PRINCIPAL_EMAIL_ADDRESS" \
+password="ACCESS_TOKEN_VALUE";
+```
+
+Replace the following:
+
+`PRINCIPAL_EMAIL_ADDRESS`: The email address of the principal that you used to obtain the access token.
+`ACCESS_TOKEN_VALUE`: The access token value that you obtained in the previous step.
+
+When authenticating incoming connections to the cluster, Managed Service for Apache Kafka checks the following:
+
+* The access token is valid and has not expired.
+
+* The provided username matches the principal email that the access token is associated with.
+
+* The access token's principal has the permission managedkafka.clusters.connect (included in roles/managedkafka.client) on the cluster.
+
+Example below
+
+
+
+
