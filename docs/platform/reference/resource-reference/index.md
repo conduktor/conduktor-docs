@@ -81,26 +81,30 @@ Check the availability matrix on each resource using the following labels:
 
 ### Conduktor labels
 Conduktor labels are a way to add metadata to your resources. Labels are key-value pairs that can be used to filter and organize your resources.  
-Support for labels on all Conduktor resources is a subject we're actively working on.
+Support for labels on all Conduktor resources is a subject we're actively working on.  
+Check the following table for the list of currently supported and incoming resources:
+- ✅ Fully Supported
+- ⚠️ Partial support. Labels are properly stored but not displayed in the UI
+- 🚫 Not supported yet
 
-| Resource                         | Label Support |
-|----------------------------------|---------------|
-| **Console Resources**            |               |
-| ConsoleGroup                     | 🚫            |
-| ConsoleUser                      | 🚫            |
-| KafkaCluster                     | ⚠️ (CLI only) |
-| KafkaConnectCluster              | ⚠️ (CLI only) |
-| KsqlDBCluster                    | 🚫            |
-| Alert                            | ✅             |
-| PartnerZone                      | ⚠️ (CLI only) |
-| **Kafka Resources**              |               |
-| Topic                            | ✅             |
-| Subject                          | ⚠️ (CLI only) |
-| Connector                        | ⚠️ (CLI only) |
-| ServiceAccount                   | ✅             |
-| **Self-Service Resources**       |               |
-| Application                      | 🚫            |
-| ApplicationInstance              | 🚫            |
-| ApplicationInstancePermission    | 🚫            |
-| ApplicationGroup                 | 🚫            |
-| TopicPolicy                      | 🚫            |
+| Resource                      | Label Support |
+|-------------------------------|---------------|
+| **Console Resources**         |               |
+| ConsoleGroup                  | 🚫            |
+| ConsoleUser                   | 🚫            |
+| KafkaCluster                  | ⚠️ (CLI only) |
+| KafkaConnectCluster           | ⚠️ (CLI only) |
+| KsqlDBCluster                 | 🚫            |
+| Alert                         | 🚫            |
+| PartnerZone                   | ⚠️ (CLI only) |
+| **Kafka Resources**           |               |
+| Topic                         | ✅             |
+| Subject                       | ⚠️ (CLI only) |
+| Connector                     | ⚠️ (CLI only) |
+| ServiceAccount                | ✅             |
+| **Self-Service Resources**    |               |
+| Application                   | 🚫            |
+| ApplicationInstance           | 🚫            |
+| ApplicationInstancePermission | 🚫            |
+| ApplicationGroup              | 🚫            |
+| TopicPolicy                   | 🚫            |
