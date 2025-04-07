@@ -130,7 +130,7 @@ The configuration should look like this in the Console:
 
 ![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
 
-2. Download the certificates from cloudera
+2. Download the certificates from Cloudera:
 ![getting_certs_from_cloudera](assets/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
 
 3. Convert the certificates to a JKS file
