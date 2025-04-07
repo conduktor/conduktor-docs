@@ -11,21 +11,20 @@ tags: features,fix
 ### Breaking changes
 
 #### New backing topic required for Gateway
-The upcoming data quality feature requires a new backing topic in Gateway.
+An upcoming data quality feature requires a new backing topic in Gateway.
 
 When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality_violation` will be created.
 
-To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable.
-
-[Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
+To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
 #### Deprecating V1 APIs
-V1 APIs are now deprecated in favor of the V2 APIs introduced in Gateway 3.3.0 in September 2024.  
-If you are using the Conduktor CLI to operate the Gateway, you are not impacted.
-Check the following link to understand which APIs are deprecated: [Gateway API Doc](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
-**We plan to remove the V1 APIs from the Gateway in two releases time, in Gateway 3.10.0**.  
-If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.  
-If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
+The v1 APIs are now deprecated in favor of the v2 APIs, introduced in Gateway v3.3.0 in September 2024.  
+
+If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+
+:::warning[Migrate to v2 APIs]
+We plan to remove the v1 APIs from in the upcoming Gateway release (v3.10). If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+:::
 
 #### General Availability: cost-effective Crypto Shredding with Gateway KMS
 
