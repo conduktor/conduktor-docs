@@ -42,7 +42,7 @@ If you need support with this migration, please [let us know](https://support.co
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
 
 :::
-This release introduces a a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
+This release introduces a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
 With this feature, you can maintain regulatory compliance and honor user deletion requests more efficiently by:
 

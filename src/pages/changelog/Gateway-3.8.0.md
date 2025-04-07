@@ -16,7 +16,7 @@ tags: features,fix
 V1 APIs are now deprecated in favor of the V2 APIs introduced in Gateway 3.3.0 in September 2024.  
 If you are using the Conduktor CLI to operate the Gateway, you are not impacted.
 Check the following link to understand which APIs are deprecated: [Gateway API Doc](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
-**We plan to remove the V1 APIs from the Gateway in three releases time, in Gateway 3.10.0**.  
+**We plan to remove the V1 APIs from the Gateway in two releases time, in Gateway 3.10.0**.  
 If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.  
 If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
@@ -30,6 +30,17 @@ If you are using OAuth support on Confluent Cloud, as another option you can set
 ### Support for Delegated authentication using AWS_MSK_IAM mechanism
 It's now possible to use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx` when using the `AWS_MSK_IAM` mechanism.
 Gateway will use the AWS access key ID as the principal name.
+
+### General Availability: cost-effective Crypto Shredding with Gateway KMS
+
+This release makes the Gateway native crypto shredding feature available for general use. The 'gateway' KMS type on Encryption/Decryption interceptors allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
+
+Changes since [3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms),
+* It is now possible for there to be multiple gateway keys stored per secret Id. This can happen when multiple Gateway nodes are simultaneously processing the secret Id for the first time. Crypto shredding requires that every one of these keys are deleted. In order to do so the key store topic needs to be read message keys can be determined (each will have a separate `UUID`). More detail in the [reference documentation](/gateway/interceptors/data-security/encryption/encryption-configuration/#crypto-shredding).
+* In order to efficiently reuse gateway kms keys for secret Ids a new configuration option called `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
+* `masterKeyId` on `config/kmsConfig/gateway/` is now validated and can not use template variables.
+
+[Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
 
 ### Feature changes
 - ATODO

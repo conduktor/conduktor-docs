@@ -288,7 +288,7 @@ This feature is currently in **preview mode** and will be available soon. We rec
 | Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
-
+| `maxKeys` | Number | The maximum number of key references to be cached in memory so that they can be reused. To avoid creating new keys, it needs to be larger than the total number of secret Ids expected. (Default: same as `maxKeys` in cache config, or 1000000 if that is not set.) |
 
 The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.
 
@@ -301,7 +301,8 @@ Here's a sample configuration for the Gateway KMS using a Vault-based master key
 ```
 "kmsConfig": {
    "gateway": {
-      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key"
+      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key".
+      "maxKeys" : 10000000
    },
    "vault": {
       "uri": "http://vault:8200",
@@ -324,9 +325,15 @@ This can then be used to encrypt a field using `gateway-kms://` as the secret ke
 }
 ```
 
-That will generate a specific key for this field and encrypt it, then store it in Gateway storage (under `fieldKeySecret-name-{{record.key}}`). The stored key is also encrypted for security using `masterKeyId` secret in Vault. 
+When processing a record for the first time using this configuration Gateway will generate a key to encrypt this field with, encrypt it with the `masterKeyId` secret from Vault and then store it in Gateway storage. For example, if a record key was `123456` the associated field encryption key might be stored with the following key.
 
-Multiple records produced against this config would cause multiple keys to appear in the Gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key).  However, there will only be one key stored in the Vault KMS (which is used to secure then entire setup).
+```
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"2cd8125a-b55f-4214-a528-be3c9b47519b"}
+```
+
+Multiple records produced against this config would cause multiple keys to be saved in the Gateway storage (due to the `{{record.key}}` template giving a unique key for each Kafka record key). If there are multiple Gateway nodes running it is also possible for multiple keys to be generated for the same record key. Two nodes processing different records with the same record key at the same time could both think they were generating a key for the first time. In this scenario there would be two keys in the Gateway storage with the same `keyId` but they would each have a different `uuid`.
+
+Regardless, there will only ever be one key stored in the Vault KMS (which is used to secure then entire setup). 
 
 This feature provides flexibility for your KMS storage and key management setups - and is particularly useful for high volume crypto shredding.
 
@@ -352,6 +359,21 @@ Here's a sample setup:
    }
 }
 ```
+
+#### Crypto Shredding
+
+When using the `gateway-kms` secret key Id type, it is possible to efficiently crypto shred keys in the Gateway storage such that anyone using the decryption plugin immediately loses access to the associated encrypted data. 
+
+Doing so requires scanning the Gateway storage kafka topic (by default `_conduktor_gateway_encryption_keys`) for every message matching the associated qualified secretId. For example, a qualified secretId of `gateway-kms://fieldKeySecret-name-123456` might have the following keys,
+
+```
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"2cd8125a-b55f-4214-a528-be3c9b47519b"}
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"d8fcccf3-8480-4634-879a-48deed4e0e72"}
+```
+
+Publishing a message for each of these keys back to the same topic with a value of `null` (ie a tombstone) will carry out the crypto shredding.
+
+This crypto shredding process will not prevent the creation of new keys should new messages be sent using the same record key. It only ensures that messages using the crypto shredded keys remain unrecoverable.
 
 ### Vault KMS
 
