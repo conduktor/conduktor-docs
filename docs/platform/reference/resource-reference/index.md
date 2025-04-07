@@ -92,9 +92,7 @@ You can visualize the availability for each resource using the following tags:
 - <CLI /> <API /> <TF /> <GUI />  
 
 ### Conduktor labels
-Conduktor labels are a way to add metadata to your resources. Labels are key-value pairs that can be used to filter and organize your resources.  
-Support for labels on all Conduktor resources is a subject we're actively working on.
-
+Conduktor labels allow you to add metadata, filter and organize your resources. 
 Check the following table for the list of currently supported and incoming resources:
 - <FullLabelSupport />
 - <PartialLabelSupport />
