@@ -123,3 +123,29 @@ You now have two options: Either you inherit the credentials from your environme
 The configuration should look like this in the Console:
 
 ![Consol config with IAM](assets/msk-with-iam.png)
+
+## Connect to a Cloudera Kafka cluster
+
+1. Make sure you have a workload user configured to administer the cloudera kafka cluster. The user should have **ownership** of the datahub cluster. Make sure to note down the username and password for the **workload** user. Refer to the screenshot below:
+
+![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
+
+2. Download the certificates from cloudera
+![getting_certs_from_cloudera](assets/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
+
+3. Convert the certificates to a JKS file
+```
+keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file zeke-test2-cdp-env.crt
+```
+
+4. Open up the firewalls on the kafka brokers and the schema registry on the cloudera platform
+
+5.  [add the certs to you console environment](https://docs.conduktor.io/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) You can also upload the certs by just manually uploading them (see screenshot below)
+![cloudera-manually-upload-certs](assets/cloudera-manually-upload-certs.png "cloudera-manually-upload-certs")
+
+6. once you have added your Certs to console environment, simply configure the cluster link in the below screenshot. Make sure you use the **workload** user and password from the first step
+
+![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
+
+##### if you want a fully automated  turnkey example please follow the [standalone full guide here](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor)
+
