@@ -54,17 +54,10 @@ The resources presented here can be managed from the CLI, the Public API, Terraf
 - CLI, Terraform and Public API uses an API Key to validate permissions.
 - Console UI relies on RBAC model to validate what the user can do.
 
-## Limitations
-
-We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.
-
-Check the availability matrix on each resource using the following labels: 
-- <CLI /> <API /> <TF /> <GUI />  
-
 ## Resources
 
 The resources are split into 3 categories:
-- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as 
+- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as
   - Cluster Configurations
   - Users, Groups & Permissions
   - Alerts, DataMasking Policies
@@ -73,4 +66,41 @@ The resources are split into 3 categories:
   - Subjects
   - Connectors
   - ...
-- [Self-Service](/platform/reference/resource-reference/self-service) Resources 
+- [Self-Service](/platform/reference/resource-reference/self-service) Resources
+  - Application Groups
+  - Topic Policies
+  - Instance Service Accounts & ACLs
+
+
+## Limitations
+
+We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.
+
+Check the availability matrix on each resource using the following labels: 
+- <CLI /> <API /> <TF /> <GUI />  
+
+### Conduktor labels
+Conduktor labels are a way to add metadata to your resources. Labels are key-value pairs that can be used to filter and organize your resources.  
+Support for labels on all Conduktor resources is a subject we're actively working on.
+
+| Resource                         | Label Support |
+|----------------------------------|---------------|
+| **Console Resources**            |               |
+| ConsoleGroup                     | 🚫            |
+| ConsoleUser                      | 🚫            |
+| KafkaCluster                     | ⚠️ (CLI only) |
+| KafkaConnectCluster              | ⚠️ (CLI only) |
+| KsqlDBCluster                    | 🚫            |
+| Alert                            | ✅             |
+| PartnerZone                      | ⚠️ (CLI only) |
+| **Kafka Resources**              |               |
+| Topic                            | ✅             |
+| Subject                          | ⚠️ (CLI only) |
+| Connector                        | ⚠️ (CLI only) |
+| ServiceAccount                   | ✅             |
+| **Self-Service Resources**       |               |
+| Application                      | 🚫            |
+| ApplicationInstance              | 🚫            |
+| ApplicationInstancePermission    | 🚫            |
+| ApplicationGroup                 | 🚫            |
+| TopicPolicy                      | 🚫            |

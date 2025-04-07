@@ -88,6 +88,11 @@ You can now annotate service accounts with Conduktor labels for all Kafka Provid
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
 
+:::info
+Support for labels on all Conduktor resources is a subject we're actively working on.  
+Check the following page for the list of currently supported and incoming resources: [Conduktor labels](https://docs.conduktor.io/platform/reference/resource-reference/#limitations).
+:::
+
 ### Exchange
 
 #### Changes for Exchange
