@@ -133,7 +133,8 @@ The configuration should look like this in the Console:
 2. Download the certificates from Cloudera:
 ![getting_certs_from_cloudera](assets/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
 
-3. Convert the certificates to a JKS file
+3. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
+
 ```
 keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file zeke-test2-cdp-env.crt
 ```
