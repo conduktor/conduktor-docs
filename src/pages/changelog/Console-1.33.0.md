@@ -78,6 +78,16 @@ spec:
         permission: schema_registry_write
 ````
 
+#### Service account labels
+
+You can now annotate service accounts with Conduktor labels for all Kafka Providers.
+- Any Kafka Cluster
+- Conduktor Gateway
+- Confluent Cloud
+- Aiven Cloud (API/CLI only, UI coming next release)
+
+![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
+
 ### Exchange
 
 #### Changes for Exchange
@@ -87,18 +97,19 @@ TO DO
 ### Quality of life improvements
 
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
+- Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
+
 
 ### Fixes
 
 - Glue: improve deserialization of Avro schemas containing a nullable union
 - Fixed an issue preventing the use of protobuf schemas with references
 - Improved performance of API for applying users and groups with many permissions
-- Bypass Self-service topic policies when using an admin API key
 - Errors thrown while producing to a topic are now properly displayed in the UI
 - Fixed the computation of the controller of a KRaft cluster in the Brokers page
 - Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
 - Failure to create the topic for audit log is now recorded in the logs
--```
+
 
 ### Known issues
 
