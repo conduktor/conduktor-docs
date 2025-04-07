@@ -40,7 +40,17 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
 
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
 
 ## Self-service Resources
 
@@ -50,7 +60,8 @@ An application represents a streaming app or data pipeline that is responsible f
 In Self-service, it is used as a means to organize and regroup multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />
+**Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
 
 ````yaml
 # Application
@@ -82,7 +93,8 @@ This is the core concept of Self-service as it ties everything together:
 - Policies on resources
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />
+**Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
 
 ````yaml
 ---
@@ -168,6 +180,8 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
+
 
 ```yaml
 ---
@@ -231,6 +245,8 @@ Application Instance Permissions lets teams collaborate with each other.
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
+
 
 ````yaml
 # Permission granted to other Applications
@@ -278,7 +294,9 @@ spec:
 ### Application Group
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API />
+**Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
+
 
 Create Application Group to directly reflect how your Application operates.
 You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
@@ -357,7 +375,9 @@ In this mode, the Service Account is not configured by the Central Team at the A
 Instead, the Central Platform Team decides to delegate this responsibility to the Application Team, which need to declare their own Service Account(s) and its associated ACLs within the limits of what the ApplicationInstance is allowed to do.
 
 **API Keys:**  <AppToken />  
-**Managed with:** <CLI /> <API />
+**Managed with:** <CLI /> <API />  
+**Labels support:** <MissingLabelSupport />
+
 
 
 ````yaml

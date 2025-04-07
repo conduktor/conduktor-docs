@@ -40,6 +40,18 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 ## Overview
 
 The Resources Reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.   
@@ -74,37 +86,42 @@ The resources are split into 3 categories:
 
 ## Limitations
 
-We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.
-
-Check the availability matrix on each resource using the following labels: 
+### Terraform support
+We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.  
+You can visualize the availability for each resource using the following tags: 
 - <CLI /> <API /> <TF /> <GUI />  
 
 ### Conduktor labels
 Conduktor labels are a way to add metadata to your resources. Labels are key-value pairs that can be used to filter and organize your resources.  
-Support for labels on all Conduktor resources is a subject we're actively working on.  
-Check the following table for the list of currently supported and incoming resources:
-- ✅ Fully Supported
-- ⚠️ Partial support. Labels are properly stored but not displayed in the UI
-- 🚫 Not supported yet
+Support for labels on all Conduktor resources is a subject we're actively working on.
 
-| Resource                      | Label Support |
-|-------------------------------|---------------|
-| **Console Resources**         |               |
-| ConsoleGroup                  | 🚫            |
-| ConsoleUser                   | 🚫            |
-| KafkaCluster                  | ⚠️ (CLI only) |
-| KafkaConnectCluster           | ⚠️ (CLI only) |
-| KsqlDBCluster                 | 🚫            |
-| Alert                         | 🚫            |
-| PartnerZone                   | ⚠️ (CLI only) |
-| **Kafka Resources**           |               |
-| Topic                         | ✅             |
-| Subject                       | ⚠️ (CLI only) |
-| Connector                     | ⚠️ (CLI only) |
-| ServiceAccount                | ✅             |
-| **Self-Service Resources**    |               |
-| Application                   | 🚫            |
-| ApplicationInstance           | 🚫            |
-| ApplicationInstancePermission | 🚫            |
-| ApplicationGroup              | 🚫            |
-| TopicPolicy                   | 🚫            |
+Check the following table for the list of currently supported and incoming resources:
+- <FullLabelSupport />
+- <PartialLabelSupport />
+- <MissingLabelSupport />
+
+### Limitations summary
+
+| Resource                     | API/CLI Support | Terraform Support    | Label Support  | 
+|------------------------------|-----------------|----------------------|----------------|
+| **Console Resources**        |                 |                      |                |
+| ConsoleGroup                 | ✅               | ✅                    | 🚫             |
+| ConsoleUser                  | ✅               | ✅                    | 🚫             |
+| KafkaCluster                 | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KafkaConnectCluster          | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KsqlDBCluster                | ✅               | ⚠️(Generic Resource) | 🚫             |
+| Alert                        | ✅               | ⚠️(Generic Resource) | 🚫             |
+| DataMaskingPolicy            | 🚫              | 🚫                   | 🚫             |
+| Certificate                  | 🚫(V1 API only) | 🚫                   | 🚫             |
+| PartnerZone                  | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| **Kafka Resources**          |                 |                      |                |
+| Topic                        | ✅               | ✅                    | ✅              |
+| Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| ServiceAccount               | ✅               |                      | ✅              |
+| **Self-Service Resources**   |                 |                      |                |
+| Application                  | ✅               | ✅                    | 🚫             |
+| ApplicationInstance          | ✅               | ✅                    | 🚫             |
+| ApplicationInstancePermission | ✅               | ⚠️(Generic Resource) | 🚫             |
+| ApplicationGroup             | ✅               | ⚠️(Generic Resource) | 🚫             |
+| TopicPolicy                  | ✅               | ✅                    | 🚫             |

@@ -41,14 +41,26 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 ## Kafka resources
 
 ### Topic
 Creates a Topic in Kafka.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
-
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <FullLabelSupport />
 
 ````yaml
 ---
@@ -98,7 +110,8 @@ spec:
 Creates a Subject in the Schema Registry.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 **Local file**
 
@@ -185,7 +198,8 @@ spec:
 Creates a connector on a Kafka Connect Cluster.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 ```yaml
 ---
@@ -228,7 +242,8 @@ This doesn't create the service account, only assigns ACLs.
 :::
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <FullLabelSupport />
 
 Example for Kafka service accounts:
 ````yaml
