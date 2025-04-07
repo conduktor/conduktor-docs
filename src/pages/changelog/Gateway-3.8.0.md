@@ -8,6 +8,15 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
+- [Breaking changes](#breaking-changes)
+   - [New backing topic for Gateway](#new-backing-topic-required-for-gateway)
+- [Deprecating v1 APIs](#deprecating-v1-apis)
+- [General Availability: cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-KMS)
+- [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-OAUTHBEARER-mechanism)
+- [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-AWS_MSK_IAM-mechanism)
+
+
+
 ### Breaking changes
 
 #### New backing topic required for Gateway
