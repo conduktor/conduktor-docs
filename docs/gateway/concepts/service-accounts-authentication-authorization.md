@@ -76,7 +76,7 @@ You'll find more details below, but here is a summary of the supported service a
 | &nbsp;&nbsp;DELEGATED_SASL_PLAINTEXT                                    |                  ❌                  |                     ✅                     |
 | &nbsp;&nbsp;DELEGATED_SASL_SSL                                          |                  ❌                  |                     ✅                     |
 
-### Anonymous Authentication
+### Anonymous authentication
 
 #### PLAINTEXT
 
@@ -135,9 +135,8 @@ In some cases, you might want to delegate the authentication to the backing Kafk
 
 In this case, Gateway can forward the client credentials to the backing Kafka cluster, and the Kafka cluster will authenticate the client for Gateway.
 
-:::info
-Today, **delegated SASL authentication supports PLAIN, SCRAM, OAUTHBEARER and AWS_MSK_IAM mechanisms**, not GSSAPI (Kerberos).
-If you'd like us to support more mechanisms, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417)!
+:::info[Supported mechanisms]
+Currently, delegated SASL authentication only supports PLAIN, SCRAM, OAUTHBEARER and AWS_MSK_IAM mechanisms. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417) for specific requirements.
 :::
 
 In this mode, the clients authorization (ACLs) is also handled by the backing Kafka cluster. **Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster**.

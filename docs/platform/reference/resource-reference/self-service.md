@@ -52,7 +52,7 @@ export const PartialLabelSupport = () => (
 <Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
 );
 
-## Self-service Resources
+## Self-service resources
 
 ### Application
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
