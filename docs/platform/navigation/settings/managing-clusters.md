@@ -143,9 +143,8 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 5.  [add the certs to you console environment](https://docs.conduktor.io/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) You can also upload the certs by just manually uploading them (see screenshot below)
 ![cloudera-manually-upload-certs](assets/cloudera-manually-upload-certs.png "cloudera-manually-upload-certs")
 
-6. once you have added your Certs to console environment, simply configure the cluster link in the below screenshot. Make sure you use the **workload** user and password from the first step
+6. Once you've added your certs to Console, configure the cluster link in the below screenshot. Use the **workload user and password** from the first step.
 
 ![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
 
-##### if you want a fully automated  turnkey example please follow the [standalone full guide here](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor)
-
+[Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
