@@ -27,18 +27,7 @@ Check the following link to understand which APIs are deprecated: [Gateway API D
 If you are using the V1 APIs, please migrate to the V2 APIs as soon as possible.  
 If you need support with this migration, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609).
 
-
-### Support for Delegated authentication using OAUTHBEARER mechanism 
-It's now possible to use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx` when using the `OAUTHBEARER` mechanism.
-By default, Gateway will use the `sub` claim as the principal name. 
-You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name.
-If you are using OAuth support on Confluent Cloud, as another option you can set the `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
-
-### Support for Delegated authentication using AWS_MSK_IAM mechanism
-It's now possible to use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx` when using the `AWS_MSK_IAM` mechanism.
-Gateway will use the AWS access key ID as the principal name.
-
-### General Availability: cost-effective Crypto Shredding with Gateway KMS
+#### General Availability: cost-effective Crypto Shredding with Gateway KMS
 
 This release makes the Gateway native crypto shredding feature available for general use. The 'gateway' KMS type on Encryption/Decryption interceptors allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
@@ -47,4 +36,18 @@ Changes since [3.7.0](/changelog/#preview-feature-introducing-cost-effective-cry
 * In order to efficiently reuse gateway kms keys for secret Ids a new configuration option called `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
 * `masterKeyId` on `config/kmsConfig/gateway/` is now validated and can not use template variables.
 
+These are breaking changes. Any messages encryted with 'gateway' KMS type in the preview version (Gateway 3.7.0) will not be decryptable in version 3.8.0.
+
 [Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
+
+### New features
+
+#### Support for Delegated authentication using OAUTHBEARER mechanism 
+It's now possible to use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx` when using the `OAUTHBEARER` mechanism.
+By default, Gateway will use the `sub` claim as the principal name. 
+You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name.
+If you are using OAuth support on Confluent Cloud, as another option you can set the `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
+
+#### Support for Delegated authentication using AWS_MSK_IAM mechanism
+It's now possible to use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx` when using the `AWS_MSK_IAM` mechanism.
+Gateway will use the AWS access key ID as the principal name.
