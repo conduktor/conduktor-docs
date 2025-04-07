@@ -140,8 +140,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 4. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
 
-5.  [add the certs to you console environment](https://docs.conduktor.io/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) You can also upload the certs by just manually uploading them (see screenshot below)
-![cloudera-manually-upload-certs](assets/cloudera-manually-upload-certs.png "cloudera-manually-upload-certs")
+5.  In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
 
 6. Once you've added your certs to Console, configure the cluster link in the below screenshot. Use the **workload user and password** from the first step.
 
