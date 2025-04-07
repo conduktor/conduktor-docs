@@ -126,7 +126,7 @@ The configuration should look like this in the Console:
 
 ## Connect to a Cloudera Kafka cluster
 
-1. Make sure you have a workload user configured to administer the cloudera kafka cluster. The user should have **ownership** of the datahub cluster. Make sure to note down the username and password for the **workload** user. Refer to the screenshot below:
+1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
 ![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
 
