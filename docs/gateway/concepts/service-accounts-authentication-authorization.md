@@ -62,19 +62,19 @@ As mentioned earlier, Gateway supports different **clients authentication method
 
 You'll find more details below, but here is a summary of the supported service accounts for each client's authentication method:
 
-| `GATEWAY_SECURITY_PROTOCOL`          | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
-|--------------------------------------|:-----------------------------------:|:-----------------------------------------:|
-| [**Anonymous**](#anonymous-authentication) |                               |                                           |
-| &nbsp;&nbsp;PLAINTEXT                |                  ❌                  |                     ❌                     |
-| &nbsp;&nbsp;SSL                      |                  ❌                  |                     ❌                     |
+| `GATEWAY_SECURITY_PROTOCOL`                                             | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
+|-------------------------------------------------------------------------|:-----------------------------------:|:-----------------------------------------:|
+| [**Anonymous**](#anonymous-authentication)                              |                                     |                                           |
+| &nbsp;&nbsp;PLAINTEXT                                                   |                  ❌                  |                     ❌                     |
+| &nbsp;&nbsp;SSL                                                         |                  ❌                  |                     ❌                     |
 | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                                     |                                           |
-| &nbsp;&nbsp;SSL                      |                  ❌                  |                     ✅                     |
-| [**SASL**](#sasl-authentication)     |                                     |                                           |
-| &nbsp;&nbsp;SASL_PLAINTEXT           |                  ✅                  |            only if OAUTHBEARER            |
-| &nbsp;&nbsp;SASL_SSL                 |                  ✅                  |            only if OAUTHBEARER            |
-| [**Delegated SASL**](#delegated-sasl-authentication) |                      |                                           |
-| &nbsp;&nbsp;DELEGATED_SASL_PLAINTEXT |                  ❌                  |                     ✅                     |
-| &nbsp;&nbsp;DELEGATED_SASL_SSL       |                  ❌                  |                     ✅                     |
+| &nbsp;&nbsp;SSL                                                         |                  ❌                  |                     ✅                     |
+| [**SASL**](#sasl-authentication)                                        |                                     |                                           |
+| &nbsp;&nbsp;SASL_PLAINTEXT                                              |                  ✅                  |            only if `OAUTHBEARER`            |
+| &nbsp;&nbsp;SASL_SSL                                                    |                  ✅                  |            only if `OAUTHBEARER`            |
+| [**Delegated SASL**](#delegated-sasl-authentication)                    |                                     |                                           |
+| &nbsp;&nbsp;DELEGATED_SASL_PLAINTEXT                                    |                  ❌                  |                     ✅                     |
+| &nbsp;&nbsp;DELEGATED_SASL_SSL                                          |                  ❌                  |                     ✅                     |
 
 ### Anonymous Authentication
 
@@ -136,7 +136,7 @@ In some cases, you might want to delegate the authentication to the backing Kafk
 In this case, Gateway can forward the client credentials to the backing Kafka cluster, and the Kafka cluster will authenticate the client for Gateway.
 
 :::info
-Today, **delegated SASL authentication supports only PLAIN and SCRAM mechanisms**, not GSSAPI (Kerberos) or OAUTHBEARER.
+Today, **delegated SASL authentication supports PLAIN, SCRAM, OAUTHBEARER and AWS_MSK_IAM mechanisms**, not GSSAPI (Kerberos).
 If you'd like us to support more mechanisms, please [let us know](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417)!
 :::
 
