@@ -78,7 +78,7 @@ The resources are split into 3 categories:
   - Subjects
   - Connectors
   - ...
-- [Self-Service](/platform/reference/resource-reference/self-service) Resources
+- [Self-service resources](/platform/reference/resource-reference/self-service)
   - Application Groups
   - Topic Policies
   - Instance Service Accounts & ACLs
