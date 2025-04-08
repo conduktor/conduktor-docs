@@ -10,10 +10,11 @@ tags: features,fix
 
 - [Breaking changes](#breaking-changes)
    - [New backing topic for Gateway](#new-backing-topic-required-for-gateway)
-- [Deprecating v1 APIs](#deprecating-v1-apis)
-- [General Availability: cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-KMS)
-- [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-OAUTHBEARER-mechanism)
-- [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-AWS_MSK_IAM-mechanism)
+   - [Deprecating v1 APIs](#deprecating-v1-apis)
+- [General Availability: cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
+- [New features](#new-features)
+   - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer-mechanism) 
+   - [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-aws_msk_iam-mechanism)
 
 
 
