@@ -124,7 +124,9 @@ The configuration should look like this in the Console:
 
 ![Consol config with IAM](assets/msk-with-iam.png)
 
-## Connect to a Cloudera cluster using SASL_SSL
+## Connect to a Cloudera cluster
+
+This set up guide is with SASL_SSL
 
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
