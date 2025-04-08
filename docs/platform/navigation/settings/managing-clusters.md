@@ -126,8 +126,6 @@ The configuration should look like this in the Console:
 
 ## Connect to a Cloudera cluster
 
-This set up guide is with SASL_SSL
-
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
 ![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
@@ -145,7 +143,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 5. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
 
-6. Once you've added your certs to Console, configure the cluster link in the below screenshot. Use the **workload user and password** from the first step.
+6. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step. This complete set up is with SASL_SSL.
 
 ![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
 
