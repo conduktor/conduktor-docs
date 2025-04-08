@@ -27,7 +27,7 @@ When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality
 To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
 #### Deprecating V1 APIs
-The v1 APIs are now deprecated in favor of the v2 APIs, introduced in Gateway v3.3.0 in September 2024.  
+The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in September 2024.  
 
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
 
