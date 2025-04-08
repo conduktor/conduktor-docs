@@ -181,24 +181,28 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
 To edit a Partner Zone you can either:
-- go to the zone list view and click the **three dots** on the right-hand side then select **Edit**
-- go to the zone details view, click the **Edit** button in the top right corner
+- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then select **Edit**.
+- go to a specific Partner Zone's details view, click the **Edit** button in the top right corner.
 
-This will open up the Partner Zone details view in edit mode. You can edit the following details by updating the input fields:
+This will open up the Partner Zone details view in edit mode, where the following can be updated:
 
+### Partner Zone details
+
+- Name: hover over the name and click the **pencil** icon
 - URL
 - Description
 - Contact details
 
-To edit the name of the Partner Zone, hover over the name and click the **pencil** icon that appears to focus into the input field, then make the required changes.
-
 ### Topics management
 
-To add a new topic to the Partner Zone, click the **+Add topic** button at the bottom of the **Topics** section. This will open a drawer where you can search for a topic by name and select it from the list. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write** (this will also include **read**).
+- Add new topics
+- Change topic alias names
 
-For added security, you can also rename the topic that are shared. Click the **pencil icon** next to the topic name to focus into the input field, then make the required changes. Click **Continue** when done.
+Adding a topic and editing it's name behaves similar to when [creating a Partner Zone](#create-a-partner-zone).
 
-To remove an existing topic from the Partner Zone, click the **trash can** icon next to the topic listed under the **Topics** section. Note that you cannot remove the topic if it is the only topic in the Partner Zone.
+Click **Continue** when done.
+
+To remove an existing topic from the Partner Zone, click the **trash can** icon next to the topic listed under the **Topics** section. Note that you cannot currently remove the last topic in the Partner Zone from within the UI. If you need to do so, delete the Partner Zone in the top right of the Partner Zone details page. See [deleting a Partner Zone](#delete-a-partner-zone) for more.
 
 ### Traffic control policies
 
@@ -225,13 +229,13 @@ Once you have made your changes, click **Save** in the top right corner.
 
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
-To delete a Partner Zone you can:
-- go to the zone list view and click the **three dots** on the right-hand side then select **Delete** or
-- in the zone details view, click the **trash can** in the top right corner
+To delete a Partner Zone you can either:
+- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then click the **trash can** button.
+- go to a specific Partner Zone's details view, click the **trash can** button in the top right corner.
 
-Deleting a Partner Zone will remove a partner's access.
+Deleting a Partner Zone cannot be undone and will remove a partner's access.
 
-A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This can't be undone.*
+A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This cannot be undone.*
 </TabItem>
 
 <TabItem value="Second Tab" label="Conduktor CLI">
