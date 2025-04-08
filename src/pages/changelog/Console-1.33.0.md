@@ -96,17 +96,26 @@ Check the following page for the list of currently supported and incoming resour
 
 ### Conduktor Exchange
 
-#### Partner Zone improvements
+#### Rename Topics on Share
 
-We've added the ability to edit Partner Zone configurations via the Console UI. This includes the ability to:
+With Partner Zones you can now alias the name of the topic before sharing it externally with a partners, preventing the sharing of any internal naming conventions or sensitive information without replication.
 
-- Edit the Partner Zone name, URL, description and contact information
-- Add and remove topics from the Partner Zone
-- Add and remove traffic control policies
+![renaming a kafka topic in the UI](/images/changelog/platform/v33/topic-renaming.png)
 
-You can also now rename shared topics in a Partner Zone, securing your data even further by ensuring internal topic naming conventions are not shared with external partners.
+#### Modify Partner Zone details
 
-[Find out more about Partner Zones](/platform/navigation/partner-zones).
+Partner Zone information can now be easily edited within the UI such as:
+
+- Name
+- URL
+- Description
+- Contact information
+
+Additionally new topics can be added to or removed from the Partner Zone, and Traffic Control Policies such as produce or consume rate can be modified.
+
+![editing a partner zone](/images/changelog/platform/v33/edit-pz.png)
+
+Find out more about [Partner Zones](/platform/navigation/partner-zones) or [Conduktor Exchange](https://www.conduktor.io).
 
 ### Quality of life improvements
 
