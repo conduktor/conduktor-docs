@@ -281,10 +281,10 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 
 Authentication from client is mandatory against Gateway and communication will be encrypted using TLS.
 
-Supported authentication mechanisms
+Supported authentication mechanisms:
 
-- Plain
-- OAuthBearer
+- PLAIN
+- OAUTHBEARER
 
 #### Plain
 
@@ -365,10 +365,10 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
-- Plain
-- Scram-sha-256
-- Scram-sha-512
-- Oauthbearer
+- PLAIN
+- SCRAM-SHA-256
+- SCRAM-SHA-512
+- OAUTHBEARER
 - AWS_MSK_IAM
 
 Gateway configuration:
@@ -397,10 +397,10 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
-- Plain
-- Scram-sha-256
-- Scram-sha-512
-- Oauthbearer
+- PLAIN
+- SCRAM-SHA-256
+- SCRAM-SHA-512
+- OAUTHBEARER
 - AWS_MSK_IAM
 
 Gateway configuration:
