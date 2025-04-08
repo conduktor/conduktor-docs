@@ -43,10 +43,6 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <TabItem value="First Tab" label="Console UI">
 Use the Console UI to create a Partner Zone in just a few steps.
 
-:::warning
- Currently, only `admin` users have access to Partner Zones.
-:::
-
 1. In Conduktor Console, go to **Settings** > **Partner Zones** and click **+New zone**.
 1. Define the Partner Zone details:
    - Add a descriptive **name** for the zone.
@@ -67,10 +63,6 @@ Use the Console UI to create a Partner Zone in just a few steps.
 It will *take a few moments* for the zone to be created.
 
 Once completed, the **Credentials** will be displayed. Copy/download and share these as required.
-
-:::warning
-If these credentials are lost, you may have to re-create the Partner Zone.
-:::
 
 To view and manage all the zones you have access to, go to **Settings** > **Partner Zones**. You'll see the total number of zones and topics shared, as well as a list of zones, each showing:
 
