@@ -13,7 +13,7 @@ Gateway can be configured to communicate with multiple Kafka clusters and expose
 - provide them with **access to topics in multiple Kafka clusters**
 - expose topics using **aliases** that can be different from topic names
 
-## 1. Configure the Gateway
+## 1. Configure Gateway
 
 To set up Gateway to support multi-clusters, you should:
 - configure one main cluster which will be used by Gateway to store its internal state
