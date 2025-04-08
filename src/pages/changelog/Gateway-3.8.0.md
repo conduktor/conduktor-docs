@@ -11,12 +11,11 @@ tags: features,fix
 - [Breaking changes](#breaking-changes)
    - [New backing topic for Gateway](#new-backing-topic-required-for-gateway)
    - [Deprecating v1 APIs](#deprecating-v1-apis)
-- [General Availability: cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
+- Conduktor Shield:
+   - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
 - [New features](#new-features)
    - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer-mechanism) 
    - [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-aws_msk_iam-mechanism)
-
-
 
 ### Breaking changes
 
@@ -27,7 +26,7 @@ When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality
 
 To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
-#### Deprecating V1 APIs
+#### Deprecating v1 APIs
 The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in September 2024.  
 
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
