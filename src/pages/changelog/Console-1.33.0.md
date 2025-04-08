@@ -8,19 +8,18 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes)
-- [Scale](#scale)
-    - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
-    - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
-    - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
-- [Exchange](#exchange)
-    - [Change/fix for Exchange](#changes-for-exchange)
+- [Conduktor Scale](#conduktor-scale)
+  - [Kafka Chargeback: group by labels](#kafka-chargeback-group-by-labels)
+  - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
+  - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
+  - [Service account labels](#service-account-labels)
+- [Conduktor Exchange](#conduktor-exchange)
+  - [Partner Zone improvements](#partner-zone-improvements)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 - [Known issues](#known-issues)
 
-
-### Scale
+### Conduktor Scale
 
 #### Kafka Chargeback: group by labels
 
@@ -28,7 +27,6 @@ With label-based Chargeback, now you can group usage by team, environment, proje
 Add labels to service accounts, and then use them to filter and group usage in the Chargeback page.
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v33/chargeback.png)
-
 
 #### Self-service: Improved cross-team access control
 
@@ -56,6 +54,7 @@ spec:
 ````
 
 #### Support of Aiven service accounts
+
 We've added the support of Aiven service accounts in our API and CLI. See [service account resource definition](/platform/reference/resource-reference/kafka.md) for details. 
 
 Here's an example granting read and write access to the `click.event-stream.avro` topic and its schema.
@@ -82,6 +81,7 @@ spec:
 #### Service account labels
 
 You can now annotate service accounts with Conduktor labels for all Kafka Providers.
+
 - Any Kafka Cluster
 - Conduktor Gateway
 - Confluent Cloud
@@ -94,11 +94,12 @@ Support for labels on all Conduktor resources is a subject we're actively workin
 Check the following page for the list of currently supported and incoming resources: [Conduktor labels](https://docs.conduktor.io/platform/reference/resource-reference/#limitations).
 :::
 
-### Exchange
+### Conduktor Exchange
 
 #### Partner Zone improvements
 
 We've added the ability to edit Partner Zone configurations via the Console UI. This includes the ability to:
+
 - Edit the Partner Zone name, URL, description and contact information
 - Add and remove topics from the Partner Zone
 - Add and remove traffic control policies
@@ -112,7 +113,6 @@ You can also now rename shared topics in a Partner Zone, securing your data even
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
 
-
 ### Fixes
 
 - Glue: improve deserialization of Avro schemas containing a nullable union
@@ -122,7 +122,6 @@ You can also now rename shared topics in a Partner Zone, securing your data even
 - Fixed the computation of the controller of a KRaft cluster in the Brokers page
 - Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
 - Failure to create the topic for audit log is now recorded in the logs
-
 
 ### Known issues
 
