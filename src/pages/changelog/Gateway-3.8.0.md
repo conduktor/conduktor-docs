@@ -35,18 +35,18 @@ If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find
 We plan to remove the v1 APIs from in the upcoming Gateway release (v3.10). If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
 :::
 
-#### General Availability: cost-effective Crypto Shredding with Gateway KMS
+#### General availability: cost-effective Crypto Shredding with Gateway KMS
 
-This release makes the Gateway native crypto shredding feature available for general use. The 'gateway' KMS type on Encryption/Decryption interceptors allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
+This release includes general availability of the Gateway native Crypto Shredding feature for Conduktor Shield customers. The 'gateway' KMS type on encryption/decryption interceptors allows you to manage granular encryption keys for individual users/records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
-Changes since [3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms),
-* It is now possible for there to be multiple gateway keys stored per secret Id. This can happen when multiple Gateway nodes are simultaneously processing data with the same secret Id for the first time. Crypto shredding requires that every one of these keys are deleted. In order to do so the key store topic needs to be fully consumed and all of the keys associated with the target secret Id determined. Each will have a separate `UUID`. There is more detail in the [reference documentation](/gateway/interceptors/data-security/encryption/encryption-configuration/#crypto-shredding).
-* In order to efficiently reuse gateway kms keys for secret Ids a new configuration option called `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
-* `masterKeyId` on `config/kmsConfig/gateway/` is now validated and can not use template variables.
+:::warning[Breaking changes for v3.7.0 Crypto Shredding users]
+Any messages encrypted with 'gateway' KMS type in [Gateway v3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms) **will not be de-cryptable in v3.8.0**. [Find out how to re-configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
+:::
 
-These are breaking changes. Any messages encryted with 'gateway' KMS type in the preview version (Gateway 3.7.0) will not be decryptable in version 3.8.0.
-
-[Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
+Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms):
+- when multiple Gateway nodes are simultaneously processing data with the same secret Id for the first time, it's now possible for multiple Gateway keys to be stored per secret Id. Crypto Shredding requires every one of these keys to be deleted. To do so, the key store topic needs to be fully consumed and all of the keys associated with the required secret Id determined. Each will have a separate `UUID`. [Find out more](/gateway/interceptors/data-security/encryption/encryption-configuration/#crypto-shredding).
+- to efficiently re-use Gateway KMS keys for secret Ids, a new configuration option `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
+- the `masterKeyId` in **config/kmsConfig/gateway/** is now validated and can't use template variables.
 
 ### New features
 
