@@ -124,7 +124,7 @@ The configuration should look like this in the Console:
 
 ![Consol config with IAM](assets/msk-with-iam.png)
 
-## Connect to a Cloudera Kafka cluster
+## connect to a Cloudera cluster
 
 Connect to Cloudera Kafka using SASL_SSL
 
@@ -152,7 +152,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 [Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
 
 
-## Connect to a Google Managed Kafka cluster
+## connect to a Google Cloud cluster
 
 ### Option 1: [SASL_PLAINTEXT using a Service Account](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain)
 
