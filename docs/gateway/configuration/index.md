@@ -68,7 +68,7 @@ sequenceDiagram
     GW-->>-A: Record produced
 ```
 
-### Gateway security with Oauth
+### Gateway security with OAuth
 
 Security protocol: `SASL_PLAINTEXT` or `SASL_SSL`  
 SASL mechanism: `OAUTHBEARER`
