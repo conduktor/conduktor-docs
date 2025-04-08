@@ -48,16 +48,20 @@ Use the Console UI to create a Partner Zone in just a few steps.
 :::
 
 1. In Conduktor Console, go to **Settings** > **Partner Zones** and click **+New zone**.
-1. Start with the details:
+1. Define the Partner Zone details:
    - Add a descriptive **name** for the zone.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this zone in CLI/API.
    - **Service account** will also be auto-generated based on the name but you can edit this as required. [Service accounts](/platform/navigation/console/service-accounts/) are used to define permissions to Kafka resources, called ACLs (Access Control Lists).
-   - (Optional) Enter the **URL** of your partner.
-   - Enter a **Description** to explain your reasons/requirements for sharing data.
+   - (Optional) Enter a relevant **URL** for your partner.
+   - (Optional) Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone.
    - **Select Gateway** to choose the one you want to use and click **Continue**.
-1. Choose which data to share: **select the Kafka topics** to include in this zone. By default, any topics that are shared, will be shared with **Read** access for security. You can additionally allow access to **Write** (this will also include **read**). For added security, you can also rename the topic that are shared. Click the **pencil icon** next to the topic name to focus into the input field, then make the required changes. Click **Continue** when done.
-1. Finally, enable any required transformations or policies.
+1. Choose what and how to share:
+   - **Select the Kafka topics** to include in this Partner Zone, you can filter topics by custom labels you've defined or search for topic name.
+   - **Select Read/Write**. By default, any topics that are shared, will be shared with **Read**-only access, but you can additionally allow **Write** access.
+   - (Optional) **Rename topics** for how you want the consumer to read them by hovering over the name of any topic being shared, and selecting the **pencil icon**.
+   - **Continue** when done.
+1. (Optional) Protect your cluster by limiting clients with Traffic Control Policies. Limit their rate of producing, consuming or committing offsets.
 1. Review the details and if you're happy with the data you're about to share, click **Create**.
 
 It will *take a few moments* for the zone to be created.
@@ -148,7 +152,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
             phone: 07827 837 177
     ```
 
-    The `metadata status`can have one of these values:
+    The `metadata status` can have one of these values:
       - **Pending**: the configuration isn't deployed or refreshed yet
       - **Ready**: the configuration is up to date on Gateway
       - **Failed**: something unexpected happened during the creation
