@@ -96,9 +96,16 @@ Check the following page for the list of currently supported and incoming resour
 
 ### Exchange
 
-#### Changes for Exchange
+#### Partner Zone improvements
 
-TO DO
+We've added the ability to edit Partner Zone configurations via the Console UI. This includes the ability to:
+- Edit the Partner Zone name, URL, description and contact information
+- Add and remove topics from the Partner Zone
+- Add and remove traffic control policies
+
+You can also now rename shared topics in a Partner Zone, securing your data even further by ensuring internal topic naming conventions are not shared with external partners.
+
+[Find out more about Partner Zones](/platform/navigation/partner-zones).
 
 ### Quality of life improvements
 
