@@ -59,7 +59,7 @@ export const PartialLabelSupport = () => (
 Creates a Topic in Kafka.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
+**Managed with:** <CLI /> <API /> <TF /> <GUI />  
 **Labels support:** <FullLabelSupport />
 
 ````yaml

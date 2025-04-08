@@ -60,7 +60,7 @@ An application represents a streaming app or data pipeline that is responsible f
 In Self-service, it is used as a means to organize and regroup multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />  
+**Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
 ````yaml
@@ -93,7 +93,7 @@ This is the core concept of Self-service as it ties everything together:
 - Policies on resources
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />  
+**Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
 ````yaml
@@ -179,7 +179,7 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 :::
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API />  
+**Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
 
