@@ -337,7 +337,7 @@ Multiple records produced against this config would cause multiple keys to be sa
 
 If there are multiple Gateway nodes running, it's also possible for multiple keys to be generated for the same record key. 
 
-Two nodes processing different records with the same record key at the same time could both assume they were generating a key for the first time. In this scenario, there would be two keys in the Gateway storage with the same `keyId` but they would each have a different `uuid`. 
+Two nodes processing different records with the same record key at the same time could both assume they were generating a key for the first time. In this scenario, there would be two keys in the Gateway storage with the same `keyId` but they would each have a different `UUID`. 
 
 Nonetheless, there will **only ever be one key stored in the vault KMS**, which is used to secure then entire setup. 
 
