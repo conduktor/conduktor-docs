@@ -18,10 +18,15 @@ This is a conceptual view of the authentication and authorization flows. It **do
 :::
 
 ### Gateway security with credentials managed by Gateway
-
+Before:  
 Security protocol: `SASL_PLAINTEXT` or `SASL_SSL`  
-SASL mechanism: `PLAIN`
+SASL mechanism: `PLAIN`  
 
+Now:
+```env
+GATEWAY_SECURITY_MODE: GATEWAY_SECURITY
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT or SASL_SSL
+```
 #### Authentication flow
 
 ```mermaid
@@ -69,10 +74,15 @@ sequenceDiagram
 ```
 
 ### Gateway security with OAuth
-
+Before:
 Security protocol: `SASL_PLAINTEXT` or `SASL_SSL`  
 SASL mechanism: `OAUTHBEARER`
 
+Now:
+```env
+GATEWAY_SECURITY_MODE: GATEWAY_SECURITY
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT or SASL_SSL
+```
 #### Authentication flow
 
 ```mermaid
@@ -127,10 +137,15 @@ sequenceDiagram
 ```
 
 ### Backing Kafka security with SASL users
-
+Before:  
 Security protocol: `DELEGATED_SASL_PLAINTEXT` or `DELEGATED_SASL_SSL`  
 SASL mechanism: `PLAIN` (ie Confluent Cloud) or `SCRAM-SHA-256` or `SCRAM-SHA-512`
 
+Now:
+```env
+GATEWAY_SECURITY_MODE: BACKING_KAFKA_SECURITY
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT or SASL_SSL
+```
 #### Authentication flow
 
 ```mermaid
@@ -171,10 +186,15 @@ sequenceDiagram
 ```
 
 ### Backing Kafka Security with OAuth
-
+Before:  
 Security protocol: `DELEGATED_SASL_PLAINTEXT` or `DELEGATED_SASL_SSL`    
 SASL mechanism: `OAUTHBEARER`
 
+Now:
+```env
+GATEWAY_SECURITY_MODE: BACKING_KAFKA_SECURITY
+GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT or SASL_SSL
+```
 #### Authentication flow
 
 ```mermaid
