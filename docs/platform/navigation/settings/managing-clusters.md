@@ -141,7 +141,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 4. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
 
-5.  In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
+5. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
 
 6. Once you've added your certs to Console, configure the cluster link in the below screenshot. Use the **workload user and password** from the first step.
 
@@ -149,21 +149,22 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 [Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
 
-
 ## connect to a Google Cloud cluster
 
-### Option 1: [SASL_PLAINTEXT using a Service Account](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain)
+### Option 1: Use a service account
 
-### Option 2: Connect using an Access Token
+You can connect with SASL_PLAINTEXT using a service account. [Go to Google Cloud docs for instructions](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain).
 
-First get and access token.
+### Option 2: Use an access token
+
+First, get an access token:
 
 ```
 gcloud auth login --no-launch-browser
 gcloud auth print-access-token 
 ```
 
-You can use the access token for authentication with the following parameters.
+Then, use that token with the following parameters:
 
 ```
 security.protocol=SASL_SSL
@@ -173,21 +174,8 @@ username="PRINCIPAL_EMAIL_ADDRESS" \
 password="ACCESS_TOKEN_VALUE";
 ```
 
-Replace the following:
+When authenticating incoming connections to the cluster, managed service for Apache Kafka checks that:
 
-`PRINCIPAL_EMAIL_ADDRESS`: The email address of the principal that you used to obtain the access token.
-`ACCESS_TOKEN_VALUE`: The access token value that you obtained in the previous step.
-
-When authenticating incoming connections to the cluster, Managed Service for Apache Kafka checks the following:
-
-* The access token is valid and has not expired.
-
-* The provided username matches the principal email that the access token is associated with.
-
-* The access token's principal has the permission managedkafka.clusters.connect (included in roles/managedkafka.client) on the cluster.
-
-Example below
-
-![adding google to console](assets/google-console-setup.png "adding google to console")
-
-
+- the access token is valid and has not expired
+- the provided username matches the principal email that the access token is associated with
+- the access token's principal has the `managedkafka.clusters.connect` permission (included in roles/managedkafka.client) on the cluster
