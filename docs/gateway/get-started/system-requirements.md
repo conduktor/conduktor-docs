@@ -15,7 +15,7 @@ Per Gateway node, for light usage:
 - 2 CPU cores
 - 4 GB of RAM
 
-Running on this level of machine, each Gateway instance should support around 20-30 MB/s of throughput with a minimal effect on latency.
+Running on this level of machine, each Gateway instance should support around 20-30 MB/s of sustained throughput with a minimal effect on latency.
 
 ### Recommended starting setup
 
@@ -24,7 +24,7 @@ Per Gateway node, for medium to high usage:
 - 4 CPU cores
 - 8 GB of RAM
 
-Running on this level of machine, each Gateway instance should support around 40-50 MB/s of throughput with a minimal effect on latency.
+Running on this level of machine, each Gateway instance should support around 40-50 MB/s of sustained throughput with a minimal effect on latency.
 
 For **production setups** we recommended that you **run at least three Gateway instances**. Any further scaling should be done horizontally first: to increase throughput, add instances to the cluster.
 
@@ -38,7 +38,7 @@ Conduktor Gateway is **designed to scale horizontally or vertically**, as requir
 
 Depending on your needs and use cases, one or both of these methods may be used to get the best out of Conduktor. Multiple instances of Gateway can be run as a cluster and Gateway will handle the load balancing and other work distribution concerns between the nodes in a cluster.
 
-Gateway is predominantly CPU bound - it stores very little, unless you've configured or adjusted the default caching setup.
+Gateway is predominantly CPU bound - it stores very little, unless you've configured or adjusted the default caching setup. The recommendation here represents a good starting point - to further scale you should use the metrics produced by gateway to tune the installation to your workloads. 
 
 ### Interceptor impact
 
