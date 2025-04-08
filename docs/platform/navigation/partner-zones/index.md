@@ -200,6 +200,11 @@ This will open up the Partner Zone details view in edit mode, where the followin
 
 Adding a topic and editing it's name behaves similar to when [creating a Partner Zone](#create-a-partner-zone).
 
+:::warning Changing a topic alias after sharing
+If you change a topic alias after having shared the Partner Zone with a partner, this will cause their clients to crash as they won't be able to find the topic anymore.  
+Only change the topic name a second time if you are sure your partners are not already using this topic.
+:::
+
 Click **Continue** when done.
 
 To remove an existing topic from the Partner Zone, click the **trash can** icon next to the topic listed under the **Topics** section. Note that you cannot currently remove the last topic in the Partner Zone from within the UI. If you need to do so, delete the Partner Zone in the top right of the Partner Zone details page. See [deleting a Partner Zone](#delete-a-partner-zone) for more.
