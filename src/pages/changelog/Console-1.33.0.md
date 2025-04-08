@@ -24,10 +24,11 @@ tags: features,fixes
 
 #### Kafka Chargeback: group by labels
 
-With label-based Chargeback, now you can group usage by team, environment, project or anything that maps to your org structure.  
-Add labels to service accounts, and then use them to filter and group usage in the Chargeback page.
+Introducing labels for Chargeback - you can now filter and group Kafka usage by team, environment, project or business unit.
 
-![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v33/chargeback.png)
+Go to the **Chargeback** page, select the required service account and add relevant label(s). You can then use these labels to filter your view or usage reports and action as necessary. 
+
+![Manage Chargeback labels in the service account details page](/images/changelog/platform/v33/chargeback.png)
 
 
 #### Self-service: Improved cross-team access control
