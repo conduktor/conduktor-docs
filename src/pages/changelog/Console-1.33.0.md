@@ -8,19 +8,18 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes)
-- [Scale](#scale)
-    - [Kafka Chargeback: Group by labels](#kafka-chargeback-group-by-labels)
-    - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
-    - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
-- [Exchange](#exchange)
-    - [Change/fix for Exchange](#changes-for-exchange)
+- [Conduktor Scale](#conduktor-scale)
+  - [Kafka Chargeback: group by labels](#kafka-chargeback-group-by-labels)
+  - [Self-service: improved cross-team access control](#self-service-improved-cross-team-access-control)
+  - [Support for Aiven service accounts](#support-for-aiven-service-accounts)
+  - [Service account labels](#service-account-labels)
+- [Conduktor Exchange](#conduktor-exchange)
+  - [Improvements to Partner Zones](#improvements-to-partner-zones)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 - [Known issues](#known-issues)
 
-
-### Scale
+### Conduktor Scale
 
 #### Kafka Chargeback: group by labels
 
@@ -30,8 +29,7 @@ Go to the **Chargeback** page, select the required service account and add relev
 
 ![Manage Chargeback labels in the service account details page](/images/changelog/platform/v33/chargeback.png)
 
-
-#### Self-service: Improved cross-team access control
+#### Self-service: improved cross-team access control
 
 We've enhanced permission management for cross-team access. You can now assign different permissions to users in the UI from the Kafka service accounts, allowing for more precise access control.
 
@@ -56,10 +54,11 @@ spec:
   grantedTo: "another-appinstance-dev"
 ````
 
-#### Support of Aiven service accounts
-We've added the support of Aiven service accounts in our API and CLI. See [service account resource definition](/platform/reference/resource-reference/kafka.md) for details. 
+#### Support for Aiven service accounts
 
-Here's an example granting read and write access to the `click.event-stream.avro` topic and its schema.
+We've added the support for Aiven service accounts in our API and CLI. [Find out more about Kafka resources](/platform/reference/resource-reference/kafka.md).
+
+Here's an example granting READ and WRITE access to the `click.event-stream.avro` topic and its schema.
 
 ````yaml
 ---
@@ -82,30 +81,49 @@ spec:
 
 #### Service account labels
 
-You can now annotate service accounts with Conduktor labels for all Kafka Providers.
-- Any Kafka Cluster
+You can now annotate all service accounts with Conduktor labels:
+
+- Any Kafka cluster
 - Conduktor Gateway
 - Confluent Cloud
-- Aiven Cloud (API/CLI only, UI coming next release)
+- Aiven Cloud (currently using API/CLI only)
 
-![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
+To can add/edit labels, click **Edit** next to the labels, shown under the service account name:
+![Service account label details](/images/changelog/platform/v32/edit-service-account-labels.png)
 
 :::info
-Support for labels on all Conduktor resources is a subject we're actively working on.  
-Check the following page for the list of currently supported and incoming resources: [Conduktor labels](https://docs.conduktor.io/platform/reference/resource-reference/#limitations).
+We're working to add support for labels on all Conduktor resources.
 :::
 
-### Exchange
+### Conduktor Exchange
 
-#### Changes for Exchange
+#### Improvements to Partner Zones
 
-TO DO
+##### Rename shared topics
+
+You can now add aliases to the topics shared via Partner Zones. This prevents the sharing of any internal naming conventions or sensitive information, without replication.
+
+![Rename shared topics in the UI](/images/changelog/platform/v33/topic-renaming.png)
+
+##### Modify Partner Zone details
+
+Partner Zones can now be easily edited using the UI. You can edit the following:
+
+- name
+- URL
+- description
+- contact information
+- traffic control policy details
+- topics (add new or rename existing)
+
+![editing a partner zone](/images/changelog/platform/v33/edit-pz.png)
+
+Find out more about [Partner Zones](/platform/navigation/partner-zones) or [Conduktor Exchange](https://www.conduktor.io).
 
 ### Quality of life improvements
 
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
-
 
 ### Fixes
 
@@ -119,7 +137,6 @@ TO DO
 - Failure to create the topic for audit log is now recorded in the logs
 - Prevent Application Instance Token to be able to overwrite the Service Account permissions
 - Update the database schema to not use 'partition' as a column name due to conflicts with SQL keywords on EnterpriseDB
-
 
 ### Known issues
 
