@@ -216,7 +216,7 @@ Setting up your Kafka clusters for [failover](/gateway/how-to/configuring-failov
 
 ## Internal topics
 
-As the Gateway is stateless, it uses Kafka topics to store its internal state. The following environment variables can be used to configure these topics. Gateway will automatically create these topcis if they are missing, and it has permission to do so. You can also create them independetenly of Gateway, but when doing so please ensure they are configured as described below.
+As the Gateway is stateless, it uses Kafka topics to store its internal state. The following environment variables can be used to configure these topics. Gateway will automatically create these topics if they are missing and it has permission to do so. You can also create them independetenly of Gateway - but when doing so please ensure they are configured as described below.
 
 ### Internal State
 
@@ -255,7 +255,7 @@ The most important setting is the clean up policy - set by the `log.cleanup.poli
 
 The next most important setting is the replication factor. This should be set to at least 3 in production environments to ensure the data is safe, and the Gateway will warn on start up if it is set to less than 3 (but otherwise work fine). The Gateway uses the default value for your Kafka brokers for this setting when it creates the topics.
 
-For partition counts, most of the topics are low volume and can operate well with only a single partition. This is not required (the Gateway will work with multi partition topics for internal state), however there is no need to have more than 1 partition.
+For partition count, most of the topics are low volume and can operate well with only a single partition. This is not enforced (the Gateway will work with multi partition topics for internal state), however there is no need to have more than 1 partition.
 The exception to this is the audit log topic, which can have a lot of events written to it if enabled for a busy cluster. For the audit log we recommend starting with 3 partitions - this setting does not actually affect gateway performance (as it is a writer, not a reader), but will impact any other consumers you may run reading from it.
 
 | Topic                                                   | Cleanup Policy | Recommended Partitions | Other Configuration                                                                  |
