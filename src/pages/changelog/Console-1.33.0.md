@@ -129,7 +129,7 @@ Find out more about [Partner Zones](/platform/navigation/partner-zones) or [Cond
 
 - Glue: improve deserialization of Avro schemas containing a nullable union
 - Fixed an issue preventing the use of protobuf schemas with references
-- Fallback schema registry but display confluent cloud error message on error
+- Added a fallback mechanism to use the standard Kafka Connect API call when encountering an error on Confluent Cloud. If all attempts fail, the Confluent Cloud error message is now displayed to provide better clarity and troubleshooting information.
 - Improved performance of API for applying users and groups with many permissions
 - Errors thrown while producing to a topic are now properly displayed in the UI
 - Fixed the computation of the controller of a KRaft cluster in the Brokers page
