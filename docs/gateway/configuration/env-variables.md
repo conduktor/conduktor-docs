@@ -265,20 +265,19 @@ For partition count, most of the topics are low volume and can operate well with
 
 The exception to this is the audit log topic which can have a lot of events written to it, if enabled for a busy cluster. We recommend starting with 3 partitions for audit logs (this doesn't affect Gateway performance as it is a writer, not a reader), but will impact any other consumers you may run reading from it.
 
-| Topic                                                   | Cleanup policy | Recommended partitions | Other configuration                                                                  |
-|---------------------------------------------------------|----------------|------------------------|--------------------------------------------------------------------------------------|
-| _conduktor_${GATEWAY_CLUSTER_ID}_license                | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_topicmappings          | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_usermappings           | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets       | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs    | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs     | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_acls                   | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_vclusters              | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_groups                 | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys        | compact        | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation | delete         | 1                      |                                                                                      |
-| _conduktor_${GATEWAY_CLUSTER_ID}_auditlogs              | delete         | 3                      | We recommend a retention time of around 7 days for this topic due to its high volume.|
+| Topic                                                     | Cleanup policy | Recommended partitions | Other configuration                                                                  |
+|-----------------------------------------------------------|----------------|------------------------|--------------------------------------------------------------------------------------|
+| `_conduktor_${GATEWAY_CLUSTER_ID}_license`                | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_topicmappings`          | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_usermappings`           | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`       | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs`    | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`     | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                   | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`              | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_groups`                 | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        | compact        | 1                      |                                                                                      |
+| `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`              | delete         | 3                      | We recommend a retention time of around 7 days for this topic due to its high volume.|
 
 
 ## Internal setup
