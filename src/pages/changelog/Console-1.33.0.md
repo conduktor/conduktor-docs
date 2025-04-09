@@ -111,11 +111,14 @@ TO DO
 
 - Glue: improve deserialization of Avro schemas containing a nullable union
 - Fixed an issue preventing the use of protobuf schemas with references
+- Fallback schema registry but display confluent cloud error message on error
 - Improved performance of API for applying users and groups with many permissions
 - Errors thrown while producing to a topic are now properly displayed in the UI
 - Fixed the computation of the controller of a KRaft cluster in the Brokers page
 - Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
 - Failure to create the topic for audit log is now recorded in the logs
+- Prevent Application Instance Token to be able to overwrite the Service Account permissions
+- Update the database schema to not use 'partition' as a column name due to conflicts with SQL keywords on EnterpriseDB
 
 
 ### Known issues
