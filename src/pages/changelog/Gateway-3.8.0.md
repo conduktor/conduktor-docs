@@ -14,8 +14,8 @@ tags: features,fix
 - [Conduktor Shield](#conduktor-shield)
    - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
 - [New features](#new-features)
-   - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer-mechanism) 
-   - [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-aws_msk_iam-mechanism)
+   - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer) 
+   - [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-aws_msk_iam)
 
 ### Breaking changes
 
