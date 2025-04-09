@@ -27,7 +27,7 @@ Before creating a Partner Zone, you have to:
 - in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 :::warning Current limitations
-As of version 1.32, Partner Zones have the following limitations:
+As of v1.32, Partner Zones have the following limitations:
 
 - Partners will only be able to connect to your zone using **Local Gateway Service Accounts**.
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
@@ -55,7 +55,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
 1. Choose what and how to share:
    - **Select the Kafka topics** to include in this Partner Zone, you can filter topics by custom labels you've defined or search for topic name.
    - **Select Read/Write**. By default, any topics that are shared, will be shared with **Read**-only access, but you can additionally allow **Write** access.
-   - (Optional) **Rename topics** for how you want the consumer to read them by hovering over the name of any topic being shared, and selecting the **pencil icon**.
+   - (Optional) **Rename topics** for how you want the consumer to read them by hovering over the name of any topic being shared, and selecting the **pencil** button.
    - **Continue** when done.
 1. (Optional) Protect your cluster by limiting clients with Traffic Control Policies. Limit their rate of producing, consuming or committing offsets.
 1. Review the details and if you're happy with the data you're about to share, click **Create**.
@@ -181,47 +181,50 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
 To edit a Partner Zone you can either:
-- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then select **Edit**.
-- go to a specific Partner Zone's details view, click the **Edit** button in the top right corner.
+- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then select **Edit**
+- or go to a specific Partner Zone's details view, click the **Edit** button in the top right corner.
 
-This will open up the Partner Zone details view in edit mode, where the following can be updated:
+This will open the Partner Zone details window in edit mode, allowing you to:
 
-### Partner Zone details
+- update Partner Zone details (name, URL, description and contact details)
+- manage topics - add new ones or change shared the topic aliases.  
 
-- Name: hover over the name and click the **pencil** icon
+### Change zone details
+
+- Name (hover over the name and click the **pencil** button)
 - URL
 - Description
 - Contact details
 
-### Topics management
+### Manage topics
 
-- Add new topics
-- Change topic alias names
+- Add new topics (follow the steps from [creating a Partner Zone](#create-a-partner-zone))
+- Change shared topic alias
 
-Adding a topic and editing it's name behaves similar to when [creating a Partner Zone](#create-a-partner-zone).
+:::warning[Changing existing topic alias]
+If you change a topic alias **after it's been shared** with a partner, they won't be able to find the topic anymore and get an error. Only change shared topic names if you're sure that your partners are not using this topic.
+:::
 
-:::warning Changing a topic alias after sharing
-If you change a topic alias after having shared the Partner Zone with a partner, this will cause their clients to crash as they won't be able to find the topic anymore.  
-Only change the topic name a second time if you are sure your partners are not already using this topic.
+- Remove existing topics from the Partner Zone (click the **trash can** button next to the relevant topic under the **Topics** section).
+
+:::info
+ At least one topic has to exist in a Partner Zone, so you won't be able to delete the last topic via the UI. If you have to, [delete that Partner Zone](#delete-a-partner-zone).
 :::
 
 Click **Continue** when done.
 
-To remove an existing topic from the Partner Zone, click the **trash can** icon next to the topic listed under the **Topics** section. Note that you cannot currently remove the last topic in the Partner Zone from within the UI. If you need to do so, delete the Partner Zone in the top right of the Partner Zone details page. See [deleting a Partner Zone](#delete-a-partner-zone) for more.
+### Update traffic control policies
 
-### Traffic control policies
+Expand the **Traffic control policies** section by clicking on it. You can toggle the switch next to the policy you want to enable/disable and update the value.
 
-Expand the **Traffic control policies** section by clicking on it.
+Click **Save** in the top right corner when done.
 
-You can then toggle the switch next to the policy you want to enable/disable, and update the value of the policy when it is enabled.
-
-Once you have made your changes, click **Save** in the top right corner.
 </TabItem>
 <TabItem value="Second Tab" label="Conduktor CLI">
 
-1. Update the YAML file you have created previously (e.g. `pz.yaml`) to create Partner Zones with the required changes.
+1. Open the previously  created YAML file (e.g. `pz.yaml`) and make the required changes.
 
-2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the updated configuration:
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the changes:
 
     ```bash
     conduktor apply -f pz.yaml
@@ -235,8 +238,8 @@ Once you have made your changes, click **Save** in the top right corner.
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
 To delete a Partner Zone you can either:
-- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then click the **trash can** button.
-- go to a specific Partner Zone's details view, click the **trash can** button in the top right corner.
+- go to the Partner Zone page list view, and click the **three dots** on the right-hand side then click the **trash can** button
+- or go to a specific Partner Zone's details view, click the **trash can** button in the top right corner.
 
 Deleting a Partner Zone cannot be undone and will remove a partner's access.
 
