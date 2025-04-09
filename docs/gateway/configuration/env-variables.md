@@ -278,6 +278,8 @@ The exception to this is the audit log topic which can have a lot of events writ
 | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`                 | compact        | 1                      |                                                                                      |
 | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        | compact        | 1                      |                                                                                      |
 | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`              | delete         | 3                      | We recommend a retention time of around 7 days for this topic due to its high volume.|
+| `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` | delete         | 1                      |                                                                                      |
+
 
 
 ## Internal setup
