@@ -187,8 +187,8 @@ To edit a Partner Zone you can either:
 This will open the Partner Zone details window in edit mode, allowing you to:
 
 - update Partner Zone details (name, URL, description and contact details)
-- manage topics - add new ones or change shared the topic aliases.  
-
+- manage topics - add new ones or change shared the topic aliases
+- change traffic control policies
 ### Change zone details
 
 - Name (hover over the name and click the **pencil** button)
