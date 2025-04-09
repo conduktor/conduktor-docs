@@ -10,11 +10,11 @@ tags: features,fixes
 
 - [Conduktor Scale](#conduktor-scale)
   - [Kafka Chargeback: group by labels](#kafka-chargeback-group-by-labels)
-  - [Self-service: Improved cross-team access control](#self-service-improved-cross-team-access-control)
-  - [Support of Aiven service accounts](#support-of-aiven-service-accounts)
+  - [Self-service: improved cross-team access control](#self-service-improved-cross-team-access-control)
+  - [Support for Aiven service accounts](#support-for-aiven-service-accounts)
   - [Service account labels](#service-account-labels)
 - [Conduktor Exchange](#conduktor-exchange)
-  - [Partner Zone improvements](#partner-zone-improvements)
+  - [Improvements to Partner Zones](#improvements-to-partner-zones)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 - [Known issues](#known-issues)
@@ -28,7 +28,7 @@ Add labels to service accounts, and then use them to filter and group usage in t
 
 ![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v33/chargeback.png)
 
-#### Self-service: Improved cross-team access control
+#### Self-service: improved cross-team access control
 
 We've enhanced permission management for cross-team access. You can now assign different permissions to users in the UI from the Kafka service accounts, allowing for more precise access control.
 
@@ -53,11 +53,11 @@ spec:
   grantedTo: "another-appinstance-dev"
 ````
 
-#### Support of Aiven service accounts
+#### Support for Aiven service accounts
 
-We've added the support of Aiven service accounts in our API and CLI. See [service account resource definition](/platform/reference/resource-reference/kafka.md) for details. 
+We've added the support for Aiven service accounts in our API and CLI. [Find out more about Kafka resources](/platform/reference/resource-reference/kafka.md).
 
-Here's an example granting read and write access to the `click.event-stream.avro` topic and its schema.
+Here's an example granting READ and WRITE access to the `click.event-stream.avro` topic and its schema.
 
 ````yaml
 ---
@@ -80,38 +80,40 @@ spec:
 
 #### Service account labels
 
-You can now annotate service accounts with Conduktor labels for all Kafka Providers.
+You can now annotate all service accounts with Conduktor labels:
 
-- Any Kafka Cluster
+- Any Kafka cluster
 - Conduktor Gateway
 - Confluent Cloud
-- Aiven Cloud (API/CLI only, UI coming next release)
+- Aiven Cloud (currently using API/CLI only)
 
-![The service account details page shows labels underneath the service account name heading. Next to existing labels there is an edit button which you can click to open a drawer with a form to add and edit labels](/images/changelog/platform/v32/edit-service-account-labels.png)
+To can add/edit labels, click **Edit** next to the labels, shown under the service account name:
+![Service account label details](/images/changelog/platform/v32/edit-service-account-labels.png)
 
 :::info
-Support for labels on all Conduktor resources is a subject we're actively working on.  
-Check the following page for the list of currently supported and incoming resources: [Conduktor labels](https://docs.conduktor.io/platform/reference/resource-reference/#limitations).
+We're working to add support for labels on all Conduktor resources.
 :::
 
 ### Conduktor Exchange
 
-#### Rename Topics on Share
+#### Improvements to Partner Zones
 
-With Partner Zones you can now alias the name of the topic before sharing it externally with a partners, preventing the sharing of any internal naming conventions or sensitive information without replication.
+##### Rename shared topics
 
-![renaming a kafka topic in the UI](/images/changelog/platform/v33/topic-renaming.png)
+You can now add aliases to the topics shared via Partner Zones. This prevents the sharing of any internal naming conventions or sensitive information, without replication.
 
-#### Modify Partner Zone details
+![Rename shared topics in the UI](/images/changelog/platform/v33/topic-renaming.png)
 
-Partner Zone information can now be easily edited within the UI such as:
+##### Modify Partner Zone details
 
-- Name
+Partner Zones can now be easily edited using the UI. You can edit the following:
+
+- name
 - URL
-- Description
-- Contact information
-
-Additionally new topics can be added to or removed from the Partner Zone, and Traffic Control Policies such as produce or consume rate can be modified.
+- description
+- contact information
+- traffic control policy details
+- topics (add new or rename existing)
 
 ![editing a partner zone](/images/changelog/platform/v33/edit-pz.png)
 
