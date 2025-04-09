@@ -11,7 +11,7 @@ tags: features,fix
 - [Breaking changes](#breaking-changes)
    - [New backing topic for Gateway](#new-backing-topic-required-for-gateway)
    - [Deprecating v1 APIs](#deprecating-v1-apis)
-- Conduktor Shield:
+- [Conduktor Shield](#conduktor-shield)
    - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
 - [New features](#new-features)
    - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer-mechanism) 
@@ -34,6 +34,8 @@ If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find
 :::warning[Migrate to v2 APIs]
 We plan to remove the v1 APIs from in the upcoming Gateway release (v3.10). If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
 :::
+
+### Conduktor Shield
 
 #### General availability: cost-effective Crypto Shredding with Gateway KMS
 
