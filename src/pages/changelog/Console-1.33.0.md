@@ -137,6 +137,7 @@ Find out more about [Partner Zones](/platform/navigation/partner-zones) or [Cond
 - Failure to create the topic for audit log is now recorded in the logs
 - Prevent Application Instance Token to be able to overwrite the Service Account permissions
 - Update the database schema to not use 'partition' as a column name due to conflicts with SQL keywords on EnterpriseDB
+- Align LDAP user retrieval behavior with binding/connection requests to resolve issues with federated Active Directory/LDAP where users aren't found.
 
 ### Known issues
 
