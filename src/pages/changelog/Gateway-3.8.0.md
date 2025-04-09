@@ -23,7 +23,7 @@ tags: features,fixes
 
 An upcoming data quality feature requires a new backing topic in Gateway.
 
-When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality_violation` will be created.
+When you upgrade to Gateway 3.8.0, a new topic `_conduktor_gateway_data_quality_violation` will be created.
 
 To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
@@ -34,7 +34,7 @@ The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in S
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
 
 :::warning[Migrate to v2 APIs]
-We plan to remove the v1 APIs from in the upcoming Gateway release (v3.10). If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+We plan to remove the V1 APIs from the Gateway in two releases (Gateway 3.10.0). If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
 :::
 
 ### Conduktor Shield
@@ -58,6 +58,8 @@ Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-cr
 #### Support for delegated authentication using OAUTHBEARER
 
 When using the **OAUTHBEARER** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the `sub` claim as the principal name. You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name. 
+
+#### Support for Confluent Cloud Identity Pool with OAUTHBEARER
 
 If you're using OAuth support on Confluent Cloud, you can also set `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
 
