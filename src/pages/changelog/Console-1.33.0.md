@@ -1,5 +1,5 @@
 ---
-date: 2025-04-08
+date: 2025-04-09
 title: Console 1.33
 description: docker pull conduktor/conduktor-console:1.33.0
 solutions: console
