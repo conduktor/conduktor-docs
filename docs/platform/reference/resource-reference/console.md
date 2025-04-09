@@ -41,11 +41,24 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 
 ## ConsoleGroup
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates a Group with members and permissions in Console
 
@@ -122,7 +135,8 @@ resource "conduktor_group_v2" "developers-a" {
 ## ConsoleUser
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Create a user with Platform permissions.
 
@@ -208,7 +222,8 @@ Make sure you set permissions for this user, otherwise it won't have access to P
 Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -633,7 +648,8 @@ spec {
 Creates a Kafka Connect Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -697,7 +713,8 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates a ksqlDB Cluster Definition in Console.
 ````yaml
@@ -727,7 +744,8 @@ spec:
 ## Alert
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates an Alert in Console. 
 
@@ -803,7 +821,8 @@ This concept will be available in a future version
 ## Partner Zone
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 Create or update a [Partner Zone](/platform/navigation/partner-zones/).
 

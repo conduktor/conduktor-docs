@@ -143,7 +143,7 @@ You can find snippets for each security protocol on [this page](/gateway/configu
 | `GATEWAY_ACL_ENABLED`                             | Enable/Disable ACLs support on the Gateway transparent virtual cluster (`passthrough`) only.                                                                                                                             | `false`                                                                                                 |
 | `GATEWAY_SUPER_USERS`                             | semicolon-separated (`;`) list of service accounts that will be super users on Gateway (**excluding virtual clusters**).<br/> Example: `alice;bob`.                                                                      | Usernames from GATEWAY_ADMIN_API_USERS                                                                  |
 | `GATEWAY_ACL_STORE_ENABLED`                       | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br/>Enable/Disable ACLs support for Virtual Clusters only.                                                      | `false`                                                                                                 |
-| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client reauthentication after this amount of time. If set to 0, we never force the client to reauthenticate until the next connection                                                                                                    | `0`                                                                                                     |
+| `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client reauthentication after this amount of time. If set to 0, we never force the client to reauthenticate until the next connection                                                                          | `0`                                                                                                     |
 
 ### SSL
 
@@ -178,15 +178,16 @@ Some of these definitions are taken from the Kafka documentation, e.g. [SASL_OAU
 | `GATEWAY_OAUTH_JWKS_MAX_RETRY`     | The (optional) value in milliseconds for the maximum wait between attempts to retrieve the JWKS (JSON Web Key Set) from the external authentication provider. JWKS retrieval uses an exponential backoff algorithm with an initial wait based on the sasl.oauthbearer.jwks.endpoint.retry.backoff.ms setting and will double in wait length between attempts up to a maximum wait length specified by the sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms setting |
 | `GATEWAY_OAUTH_SCOPE_CLAIM_NAME`   | The OAuth claim for the scope is often named `scope`, but this (optional) setting can provide a different name to use for the scope included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                             |
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`     | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                           |
+| `GATEWAY_OAUTH_USE_CC_POOL_ID`     | Set to `true` to use the Confluent Cloud pool ID as the principal name. This is useful for Confluent Cloud users in Delegated mode who want to use the pool ID as the principal name instead of the `sub` claim.                                                                                                                                                                                                                                                      |
 
 ### Plain
 
 See [Client Authentication](/gateway/configuration/client-authentication/#plain) for details.
 
-| **Environment variable**                     | **Description**                                                                                                                                                                                                                                                                                                | **Default value**                                               |
-|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| **Environment variable**                     | **Description**                                                                                                                                                                                                                                                                                                                                                           | **Default value**                                                 |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | `GATEWAY_USER_POOL_SECRET_KEY`               | Base64 encoded value of 256bits long (e.g. `openssl rand -base64 32`). If using SASL_PLAIN or SASL_SSL, you have the ability to create local service accounts on Gateway. These service accounts will have credentials generated by Gateway based on the `GATEWAY_USER_POOL_SECRET_KEY`. We strongly recommend that you **change this value for production deployments**. | A default value is used to sign tokens and **has to be changed**. |
-| `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` | If true, verify the existence of user mapping for the service account when the user connects in Non-Delegated SASL/PLAIN mode.                                                                                                                                                                                 | `false`                                                         |
+| `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` | If true, verify the existence of user mapping for the service account when the user connects in Non-Delegated SASL/PLAIN mode.                                                                                                                                                                                                                                            | `false`                                                           |
 
 ### Security provider
 
@@ -229,19 +230,20 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 
 ### Topic Names
 
-| **Environment variable**            | **Description**                                                                           | **Default value**                                      |
-|-------------------------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------|
-| `GATEWAY_LICENSE_TOPIC`             | Topic where the license is stored.                                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_license`             |
-| `GATEWAY_TOPIC_MAPPINGS_TOPIC`      | Topic where the topics aliases are stored.                                                | `_conduktor_${GATEWAY_CLUSTER_ID}_topicmappings`       |
-| `GATEWAY_USER_MAPPINGS_TOPIC`       | Topic where the service accounts are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_usermappings`        |
-| `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | Topic where the offsets for concentrated topic consumption are stored.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`    |
-| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | Topic where the deployed interceptors are stored.                                         | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs` |
-| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | Topic where the encryption configuration is stored, in specific cases.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`  |
-| `GATEWAY_ACLS_TOPIC`                | Topic where the ACLs managed by Gateway are stored.                                   | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                |
-| `GATEWAY_AUDIT_LOG_TOPIC`           | Topic where the Gateway audit log is stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`           |
-| `GATEWAY_VCLUSTERS_TOPIC`           | Topic where the virtual clusters are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`           |
-| `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`              |
-| `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`                   | 
+| **Environment variable**            | **Description**                                                                           | **Default value**                                         |
+|-------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| `GATEWAY_LICENSE_TOPIC`             | Topic where the license is stored.                                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_license`                |
+| `GATEWAY_TOPIC_MAPPINGS_TOPIC`      | Topic where the topics aliases are stored.                                                | `_conduktor_${GATEWAY_CLUSTER_ID}_topicmappings`          |
+| `GATEWAY_USER_MAPPINGS_TOPIC`       | Topic where the service accounts are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_usermappings`           |
+| `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | Topic where the offsets for concentrated topic consumption are stored.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`       |
+| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | Topic where the deployed interceptors are stored.                                         | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs`    |
+| `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | Topic where the encryption configuration is stored, in specific cases.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`     |
+| `GATEWAY_ACLS_TOPIC`                | Topic where the ACLs managed by Gateway are stored.                                       | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                   |
+| `GATEWAY_AUDIT_LOG_TOPIC`           | Topic where the Gateway audit log is stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`              |
+| `GATEWAY_VCLUSTERS_TOPIC`           | Topic where the virtual clusters are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`              |
+| `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`                 |
+| `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        |
+| `GATEWAY_DATA_QUALITY_TOPIC`        | Topic where the data quality violation are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` |
 
 ## Internal Setup
 
@@ -263,13 +265,13 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 
 ### Audit
 
-| **Environment variable**                        | **Description**                                                                                                     | **Default value** |
-|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------|
-| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | Version                                                                                                             | `0.1.0`           |
-| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | Target topic name                                                                                                   | `_auditLogs`      |
-| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   | `-1`              |
-| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings | `-1`              |
-| `GATEWAY_AUDIT_LOG_KAFKA_`                      | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |                   |
+| **Environment variable**                        | **Description**                                                                                                     | **Default value**                            |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | Version                                                                                                             | `0.1.0`                                      |
+| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | Target topic name                                                                                                   | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs` |
+| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings   | `-1`                                         |
+| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings | `-1`                                         |
+| `GATEWAY_AUDIT_LOG_KAFKA_`                      | Overrides Kafka Producer configuration for Audit Logs ie. `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                     |                                              |
 
 ### Logging
 
@@ -293,3 +295,12 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | **Environment variable**          | **Description**                                                                                                                                                                                                                               | **Default value** |
 |-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
 | `GATEWAY_FEATURE_FLAGS_ANALYTICS` | Conduktor collects basic user analytics to understand product usage and enhance product development and improvement, such as a Gateway Started event. This is not based on any of the underlying Kafka data which is never sent to Conduktor. | `true`            |
+
+### Data Quality topic configs
+
+| **Environment variable**                        | **Description**                                                                                                            | **Default value**                                         |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| `GATEWAY_DATA_QUALITY_TOPIC`                    | Target topic name                                                                                                          | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` |
+| `GATEWAY_DATA_QUALITY_TOPIC_REPLICATION_FACTOR` | Replication factor to be used when creating the data quality topic, defaults to the one defined in your cluster settings   | cluster default                                           |
+| `GATEWAY_DATA_QUALITY_TOPIC_PARTITIONS`         | Number of partitions to be used when creating the data quality topic, defaults to the one defined in your cluster settings | cluster default                                           |
+| `GATEWAY_DATA_QUALITY_TOPIC_RETENTION_HOUR`     | Retention period (in hours) to be used when creating the data quality topic                                                | 168 (7 days)                                              |
