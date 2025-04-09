@@ -216,11 +216,11 @@ Setting up your Kafka clusters for [failover](/gateway/how-to/configuring-failov
 
 ## Internal topics
 
-As the Gateway is stateless, it uses Kafka topics to store its internal state. The following environment variables can be used to configure these topics.
+As the Gateway is stateless, it uses Kafka topics to store its internal state. The following environment variables can be used to configure these topics. Gateway will automatically create these topcis if they are missing, and it has permission to do so. You can also create them independetenly of Gateway, but when doing so please ensure they are configured as described below.
 
 ### Internal State
 
-To keep the Gateway instances stateless, internal state is stored in Kafka topics.
+Firstly, there are some general configuration settings for the Gateway internal state management which apply to all topics used.
 
 | **Environment variable**                        | **Description**                                                                                                                                                                                     | **Default value**                 |
 |-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
@@ -244,6 +244,36 @@ To keep the Gateway instances stateless, internal state is stored in Kafka topic
 | `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`                 |
 | `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        |
 | `GATEWAY_DATA_QUALITY_TOPIC`        | Topic where the data quality violation are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` |
+
+
+### Required Topic Configurations
+
+The most important setting is the clean up policy - set by the `log.cleanup.policy` configuration for the topic. Most of the topics Gateway uses are compacted, but some use time based retention. If this is not set up properly, the Gateway will error on start up. If Gateway creates the topics for you, it will set the right values.
+
+* Set `log.cleanup.policy=compact` for compaction
+* Set `log.cleanup.policy=delete` for time based retention
+
+The next most important setting is the replication factor. This should be set to at least 3 in production environments to ensure the data is safe, and the Gateway will warn on start up if it is set to less than 3 (but otherwise work fine). The Gateway uses the default value for your Kafka brokers for this setting when it creates the topics.
+
+For partition counts, most of the topics are low volume and can operate well with only a single partition. This is not required (the Gateway will work with multi partition topics for internal state), however there is no need to have more than 1 partition.
+The exception to this is the audit log topic, which can have a lot of events written to it if enabled for a busy cluster. For the audit log we recommend starting with 3 partitions - this setting does not actually affect gateway performance (as it is a writer, not a reader), but will impact any other consumers you may run reading from it.
+
+| Topic                                                   | Cleanup Policy | Recommended Partitions | Other Configuration                                                                  |
+|---------------------------------------------------------|----------------|------------------------|--------------------------------------------------------------------------------------|
+| _conduktor_${GATEWAY_CLUSTER_ID}_license                | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_topicmappings          | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_usermappings           | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets       | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs    | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs     | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_acls                   | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_vclusters              | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_groups                 | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys        | compact        | 1                      |                                                                                      |
+| _conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation | delete         | 1                      |                                                                                      | 
+| _conduktor_${GATEWAY_CLUSTER_ID}_auditlogs              | delete         | 3                      | We recommend a retention time of around 7 days for this topic due to its high volume |
+
+>>>>>>> f9cc95ac (Add config details to internal GW topics)
 
 ## Internal Setup
 
