@@ -15,6 +15,7 @@ tags: features,fixes
    - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
 - [New features](#new-features)
    - [Support for delegated authentication using OAUTHBEARER](#support-for-delegated-authentication-using-oauthbearer)
+   - [Support for Confluent Cloud Identity Pool](#support-for-confluent-cloud-identity-pool)
    - [Support for delegated authentication using AWS_MSK_IAM](#support-for-delegated-authentication-using-aws_msk_iam)
 
 ### Breaking changes
@@ -59,7 +60,7 @@ Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-cr
 
 When using the **OAUTHBEARER** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the `sub` claim as the principal name. You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name. 
 
-#### Support for Confluent Cloud Identity Pool with OAUTHBEARER
+#### Support for Confluent Cloud Identity Pool
 
 If you're using OAuth support on Confluent Cloud, you can also set `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
 
