@@ -52,12 +52,12 @@ Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-cr
 
 ### New features
 
-#### Support for delegated authentication using OAUTHBEARER mechanism 
+#### Support for delegated authentication using OAUTHBEARER 
 
 When using the **OAUTHBEARER** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the `sub` claim as the principal name. You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name. 
 
 If you're using OAuth support on Confluent Cloud, you can also set `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
 
-#### Support for delegated authentication using AWS_MSK_IAM mechanism
+#### Support for delegated authentication using AWS_MSK_IAM
 
 When using the **AWS_MSK_IAM** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the AWS access key ID as the principal name.
