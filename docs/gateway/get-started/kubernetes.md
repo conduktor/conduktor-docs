@@ -30,7 +30,10 @@ Breaking changes:
 
 | Chart version | Supported Gateway version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
-| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154) |
+| [conduktor-gateway-3.8.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.8.0) | **3.8.0**, 3.7.1, 3.7.0, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.7.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.1) | **3.7.1**, 3.7.0, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
+| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154) |
+| [conduktor-gateway-3.6.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.1) | **3.6.1**, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.6.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.0) | **3.6.0**, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | **3.5.0**, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.4.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.4.1) | **3.4.1**, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
