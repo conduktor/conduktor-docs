@@ -3,7 +3,7 @@ date: 2025-04-08
 title: Gateway 3.8.0
 description: docker pull conduktor/conduktor-gateway:3.8.0
 solutions: gateway
-tags: features,fix
+tags: features,fixes
 ---
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
@@ -14,12 +14,13 @@ tags: features,fix
 - [Conduktor Shield](#conduktor-shield)
    - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
 - [New features](#new-features)
-   - [Support for delegated authentication using OAUTHBEARER](support-for-delegated-authentication-using-oauthbearer) 
-   - [Support for delegated authentication using AWS_MSK_IAM](support-for-delegated-authentication-using-aws_msk_iam)
+   - [Support for delegated authentication using OAUTHBEARER](#support-for-delegated-authentication-using-oauthbearer)
+   - [Support for delegated authentication using AWS_MSK_IAM](#support-for-delegated-authentication-using-aws_msk_iam)
 
 ### Breaking changes
 
 #### New backing topic required for Gateway
+
 An upcoming data quality feature requires a new backing topic in Gateway.
 
 When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality_violation` will be created.
@@ -27,6 +28,7 @@ When you upgrade to Gateway 3.8.0, a new topic `_conduktor_$gateway_data_quality
 To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
 
 #### Deprecating v1 APIs
+
 The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in September 2024.  
 
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
@@ -46,13 +48,14 @@ Any messages encrypted with 'gateway' KMS type in [Gateway v3.7.0](/changelog/#p
 :::
 
 Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms):
+
 - when multiple Gateway nodes are simultaneously processing data with the same secret Id for the first time, it's now possible for multiple Gateway keys to be stored per secret Id. Crypto Shredding requires every one of these keys to be deleted. To do so, the key store topic needs to be fully consumed and all of the keys associated with the required secret Id determined. Each will have a separate `UUID`. [Find out more](/gateway/interceptors/data-security/encryption/encryption-configuration/#crypto-shredding).
 - to efficiently re-use Gateway KMS keys for secret Ids, a new configuration option `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
 - the `masterKeyId` in **config/kmsConfig/gateway/** is now validated and can't use template variables.
 
 ### New features
 
-#### Support for delegated authentication using OAUTHBEARER 
+#### Support for delegated authentication using OAUTHBEARER
 
 When using the **OAUTHBEARER** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the `sub` claim as the principal name. You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name. 
 
