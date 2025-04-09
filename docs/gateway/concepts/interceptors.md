@@ -34,10 +34,10 @@ POST /admin/interceptors/v1/interceptor/enforce-partition-limit
 }
 ````
 
-Interceptors combine with each other's in multiple different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Scoping** & **Overriding**.
+Interceptors combine with each other in multiple different ways to create very powerful interactions and solve many interesting use-cases:  **Chaining**, **Scoping** & **Overriding**.
 
 ### Chaining
-Interceptor chaining lets you deploy multiple interceptors (using different names) with different purpose, where each interceptor performs its action sequentially and independently, and pass its result to the next.
+Interceptor chaining lets you deploy multiple interceptors (using different names) with different purposes. Each interceptor performs its action sequentially and independently, and passes its result to the next.
 The order of execution is determined by the priority of each interceptor. Lower numbers gets executed first.
 :::info
 The order of execution is always calculated after scoping and overriding, such that overridden interceptor can have a different priority from its parent.
@@ -50,7 +50,7 @@ There are 4 targeting scopes available: Global, VirtualCluster, Group & ServiceA
 Check the Reference Documentation for more details.
 
 ````json
-// This interceptors only applies to service account 'sa-clickstream'
+// This interceptor only applies to service account 'sa-clickstream'
 POST /admin/interceptors/v1/username/sa-clickstream/interceptor/enforce-partition-limit
 {
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
@@ -75,8 +75,8 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 - Global
 
 :::info
-In the two examples above, the interceptors have the same name but with 2 different scope.
-The first one is global, second one is targeting user `sa-clickstream`.
+In the two JSON examples above, the interceptors have the same name (`enforce-partition-limit`) but 2 different scopes.
+The first one is global, the second one is targeting user `sa-clickstream`.
 They are not chained together, but instead the second one is overriding the first one.
 `sa-clickstream` will be allowed to create topics with 1 to 20 partitions while other service accounts will be limited to 1 to 6.
 
@@ -86,11 +86,11 @@ If they had different names, they would be chained, and the first one (less perm
 
 
 **Example**  
-In the example below, we can see how **Chaining**, **Targeting** & **Overriding** interact with each other.
-- `interceptor-C` is deployed only for Alice. (Targeting)
-- `interceptor-D` is deployed globally, but also deployed specifically for Bob (Overriding)
-- `interceptor-A` and `interceptor-B` are deployed globally
-- The priorities are then considered for the final execution order
+In the example below, we can see how **Chaining**, **Scoping** & **Overriding** interact with each other.
+- `interceptor-C` is deployed only for Alice. (Scoping)
+- `interceptor-D` is deployed globally (Scoping), but also deployed specifically for Bob (Overriding)
+- `interceptor-A` and `interceptor-B` are deployed globally (Scoping)
+- The priorities (`01`, `40`, `45` and `50`) are then considered for the final execution order (Chaining)
   ![Interceptor example](img/interceptor-example.png)
 
 When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way to go.
