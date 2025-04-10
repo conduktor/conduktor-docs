@@ -56,7 +56,7 @@ spec:
 
 #### Support for Aiven service accounts
 
-We've added the support for Aiven service accounts in our API and CLI. [Find out more about Kafka resources](/platform/reference/resource-reference/kafka.md).
+We've added the support for Aiven service accounts in our API and CLI. [Find out more about Kafka resources](/platform/reference/resource-reference/kafka/).
 
 Here's an example granting READ and WRITE access to the `click.event-stream.avro` topic and its schema.
 
