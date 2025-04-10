@@ -4,11 +4,11 @@ title: Interceptors
 description: Elevate your Kafka usage with Conduktor Gateway Interceptors
 ---
 
-Conduktor Gateway offers a number of powerful Interceptors that enhance your Kafka usage. Interceptors let you simulate different scenarios and much more.
+Conduktor Gateway offers a number of powerful Interceptors that enhance your Kafka usage.
 
 For example, you can use Interceptors to:
 
-- perform full-body or field-level encryption and decryption
+- perform full-message encryption, field-level encryption, and decryption
 - reject (during produce) or skip (during consume) records that don't match specified data quality rules
 - enforce producer configurations such as acks or compression
 - override or enforce configurations during a CreateTopic request, such as a replication factor or naming convention
@@ -17,7 +17,7 @@ For example, you can use Interceptors to:
 
 ## Using Interceptors
 
-To deploy an Interceptor, you have to prepare its configuration. Configuring and deploying an Interceptor is similar to using [Kafka Connect connectors](/platform/navigation/console/kafka-connect/#add-a-connector).
+Before deploying an Interceptor, you have to configure it, similar to using [Kafka Connect connectors](/platform/navigation/console/kafka-connect/#add-a-connector).
 
 Here's an example of an Interceptor that will block the creation of topics with more than six partitions:
 
