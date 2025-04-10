@@ -22,18 +22,30 @@ To deploy an Interceptor, you have to prepare its configuration. Configuring and
 Here's an example of an Interceptor that will block the creation of topics with more than six partitions:
 
 ````json
-POST /admin/interceptors/v1/interceptor/enforce-partition-limit
-{
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
-  "priority": 100,
-  "config": {
-    "topic": ".*",
-    "numPartition": {
-      "min": 1,
-      "max": 6,
-      "action": "BLOCK"
+curl \
+  --request PUT \
+  --url 'http://localhost:8888/gateway/v2/interceptor' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "less-than-6-partitions"
+  },
+  "spec" : {
+    "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+    "priority": 100,
+    "config": {
+      "topic": ".*",
+      "numPartition": {
+        "min": 1,
+        "max": 6,
+        "action": "BLOCK"
+      }
+    }
   }
-}
+}'
 ````
 
 ### Chaining
