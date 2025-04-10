@@ -75,18 +75,33 @@ Example:
 
 ````json
 // This interceptor only applies to service account 'sa-clickstream'
-POST /admin/interceptors/v1/username/sa-clickstream/interceptor/enforce-partition-limit
-{
-  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
-  "priority": 100,
-  "config": {
-    "topic": ".*",
-    "numPartition": {
-      "min": 1,
-      "max": 20,
-      "action": "BLOCK"
+curl \
+  --request PUT \
+  --url 'http://localhost:8888/gateway/v2/interceptor' \
+  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "less-than-6-partitions",
+    "scope": {
+      "username": "sa-clickstream"
+    }
+  },
+  "spec" : {
+    "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+    "priority": 100,
+    "config": {
+      "topic": ".*",
+      "numPartition": {
+        "min": 1,
+        "max": 6,
+        "action": "BLOCK"
+      }
+    }
   }
-}
+}'
 ````
 
 ### Overriding
