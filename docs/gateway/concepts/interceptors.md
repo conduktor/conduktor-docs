@@ -11,7 +11,7 @@ For example, you can use Interceptors to:
 - perform full-body or field-level encryption and decryption
 - reject (during produce) or skip (during consume) records that don't match specified data quality rules
 - enforce producer configurations such as acks or compression
-- override configurations during a CreateTopic request, such as a replication factor or naming convention
+- override or enforce configurations during a CreateTopic request, such as a replication factor or naming convention
 
  [View the Interceptor catalog](/gateway/category/interceptor-catalog/).
 
