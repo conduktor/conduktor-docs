@@ -10,6 +10,8 @@ To configure Conduktor Gateway, we recommend setting up environment variables. T
 
 ### Use the Gateway container
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
 <Tabs>
 <TabItem value="First tab" label="Docker">
 
