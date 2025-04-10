@@ -64,12 +64,12 @@ Interceptor scoping lets you **define affected Kafka clients** (ultimately resol
 
 There are four targeting scopes:
 
-1. Global
-1. VirtualCluster
-1. Group
-1. ServiceAccount  
+- Global
+- VirtualCluster
+- Group
+- ServiceAccount  
 
-[See resource reference details](/gateway/reference/resources-reference/).
+[See resource reference details](/gateway/reference/resources-reference/#interceptor-targeting).
 
 Example:
 
