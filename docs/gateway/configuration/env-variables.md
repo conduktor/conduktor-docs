@@ -4,8 +4,6 @@ title: Environment variables
 description: Conduktor Gateway connections to Kafka are configured by prefixed and translated environment variables.
 ---
 
-## Set environment variables
-
 To configure Conduktor Gateway, we recommend setting up environment variables. They can be **set in the Gateway container** or **taken from a file**. To make sure the values were set correctly, check the startup logs.
 
 ### Use the Gateway container
@@ -15,7 +13,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="First tab" label="Docker">
 
-You can set them during the docker-run command with `-e` or `--env`:
+You can set the environment variables during the docker-run command with `-e` or `--env`:
 
 ```shell
 docker run -d \
@@ -45,7 +43,7 @@ services:
 </TabItem>
 <TabItem value="Second tab" label="Kubernetes">
 
-You can set them in the `values.yaml` of our [Helm chart](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md):
+You can set the environment variables in the `values.yaml` of our [Helm chart](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md):
 
 ```yaml
 gateway:
@@ -74,7 +72,7 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 
 ## Networking
 
-### Port & SNI routing
+### Port and SNI routing
 
 | **Environment variable**                                                        | **Description**                                                                                                                                            | **Default value**                                                                                       |
 |---------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
@@ -127,7 +125,7 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 |--------------------------|-----------------|-------------------|
 | `GATEWAY_LICENSE_KEY`    | License key     | None              |
 
-## Connection from Gateway to Kafka
+## Connect from Gateway to Kafka
 
 Conduktor Gateway's connection to Kafka is configured by the `KAFKA_` environment variables.
 
@@ -135,7 +133,7 @@ When translating Kafka's properties, **use upper case instead** and replace the 
 
 When defining Gateway's Kafka property `bootstrap.servers`, declare it as the environment variable `KAFKA_BOOTSTRAP_SERVERS`. Any variable prefixed with `KAFKA_` will be treated as a connection parameter by Gateway. You can [find snippets for each security protocol](/gateway/configuration/kafka-authentication/).
 
-## Connection from clients to Gateway
+## Connect from clients to Gateway
 
 | **Environment variable**                          | **Description**                                                                                                                                                                                                          | **Default value**                                                                                       |
 |---------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
