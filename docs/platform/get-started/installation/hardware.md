@@ -25,6 +25,7 @@ To ensure you meet these requirements, you must:
   - Note we recommend configuring your PostgreSQL database for [high-availability](#database-connection-fail-over)
 - Setup [block storage](/platform/get-started/configuration/env-variables#monitoring-properties) (S3, GCS, Azure, Swift) to store metrics data required for Monitoring
 - Meet the [hardware requirements](#hardware-requirements) so that Conduktor has sufficient resources to run without issue
+- Running Apache Kafka version 2.5.0 or higher, and lower than version 4.0.0
 
 Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide.
 
