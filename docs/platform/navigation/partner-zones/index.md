@@ -271,7 +271,7 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 </details>
 <details>
   <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
-  <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16) or check Gateway/Console logs.</p>
+  <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) or check Gateway/Console logs.</p>
 </details>
 
 ## Related resources
