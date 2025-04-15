@@ -23,6 +23,14 @@ To follow-along this demo you'll need to clone our repository.
 git clone https://github.com/conduktor/self-service-getting-started
 ````
 
+Prefer to watch something? Checkout the video demo instead:
+<iframe
+width="560" height="315"
+src="https://www.youtube.com/embed/2LMsUolPguc?si=APLJqdJnF_hA_WD7"
+title="YouTube video player"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+
 - [Central team's repo](#central-teams-repo)
 - [Application team's repo](#application-teams-repo)
 - [Worked example](#worked-example)
