@@ -31,6 +31,7 @@ git clone https://github.com/conduktor/self-service-getting-started
   - [Apply the resources, central team perspective](#apply-the-resources-central-team-perspective)
   - [Apply the resources, application team perspective](#apply-the-resources-application-team-perspective)
   - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
+- [Conclusion](#conclusion)
 
 This demo repository (repo) contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`.
 
