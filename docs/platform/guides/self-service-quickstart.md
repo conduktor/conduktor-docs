@@ -9,21 +9,19 @@ description: Get started with Self-service
 This guide gives an overview of Conduktor's Self-service offering through a worked example where you will:
 
 - Define Applications for your teams
-- Setup policies to enforce governance over topic usage
+- Set up policies to enforce governance over topic usage
 - Expose topics in the topic catalog
 - Experience trying to create resources that breach policies
 
-After running the demo you will have an appreciation of how Conduktor's Self-service framework benefits teams and how it can be applied within your organization.
-
 For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/).
 
-To follow-along this demo you'll need to clone our repository.
+To follow-along this demo you'll need to clone our repository (repo):
 
 ````shell
 git clone https://github.com/conduktor/self-service-getting-started
 ````
 
-Prefer to watch something? Checkout the video demo instead:
+Prefer to watch instead of reading? Check out the video demo instead:
 <iframe
 width="560" height="315"
 src="https://www.youtube.com/embed/2LMsUolPguc?si=APLJqdJnF_hA_WD7"
@@ -31,17 +29,7 @@ title="YouTube video player"
 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </iframe>
 
-- [Central team's repo](#central-teams-repo)
-- [Application team's repo](#application-teams-repo)
-- [Worked example](#worked-example)
-- [Running the example](#running-the-example)
-  - [Set-up demo](#set-up-demo)
-  - [Apply the resources, central team perspective](#apply-the-resources-central-team-perspective)
-  - [Apply the resources, application team perspective](#apply-the-resources-application-team-perspective)
-  - [Attempt to create topics out of bounds](#attempt-to-create-topics-out-of-bounds)
-- [Conclusion](#conclusion)
-
-This demo repository (repo) contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`.
+This demo repo contains two directories which each represent a mock repo, `central-team-repo` and `application-team-repo`.
 
 ## Central team's repo
 
