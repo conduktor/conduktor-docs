@@ -24,5 +24,5 @@ This new functionality is not enabled by default. You can enable it by setting t
 
 ### Bug fixes
 
-- Fixed a problem with the alter topic policy interceptor where the all un-provided configurations were being blocked/overriden instead of only DELETE.
+- When using the alter topic policy interceptor, allow updating only a subset of the enforced configurations.
 - Correctly camel case capitalise upsertResult properties in APIV2 responses
