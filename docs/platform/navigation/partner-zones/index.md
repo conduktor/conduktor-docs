@@ -272,7 +272,7 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 </details>
 <details>
   <summary>Does **Generate password** invalidate the previously issued credentials of a service account?</summary>
-  <p>No, you can't invalidate issued credentials they instead have a set time to live. If you are concerned about any issued credentials, delete & re-create the Partner Zone and re-issue fresh credentials. We recommend deploying Partner Zones through IAC, see the [resource reference page](/platform/reference/resource-reference/console/#partner-zone).</p>
+  <p>No, you can't invalidate issued credentials - they instead have a set time to live. If you're concerned about any issued credentials, **delete and re-create the Partner Zone**, then re-issue fresh credentials. We recommend deploying Partner Zones using the IaC (Infrastructure as Code) approach. [Find out more on the resource reference page](/platform/reference/resource-reference/console/#partner-zone).</p>
 </details>
 
 ## Related resources
