@@ -199,7 +199,7 @@ Keys are string that starts with a letter, followed by a combination of letters,
 -   `XCHACHA20_POLY1305`
 -   `AES256_GCM`
 
-### Supported Compression Types
+### Supported compression types
 
 - `none`
 - `gzip`
@@ -207,7 +207,7 @@ Keys are string that starts with a letter, followed by a combination of letters,
 - `lz4`
 - `zstd`
 
-## Decryption Configuration - *How to decrypt?*
+## Decryption configuration
 
 Now that your fields or payload are encrypted, you can decrypt them using the interceptor `DecryptPlugin`.
 

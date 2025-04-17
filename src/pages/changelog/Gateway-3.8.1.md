@@ -16,11 +16,13 @@ tags: fixes
 
 #### Optional compression before encryption when using full payload encryption
 
-Kafka supports compression out of the box, but with limited effect when the data is already encrypted. In order to improve this when the encryption interceptor is configured Gateway now supports compressing full payload data before it is encrypted.
+Kafka supports compression out of the box but with limited effect when the data is already encrypted. To improve this, Gateway now supports **compressing full payload data before it's encrypted** (when the encryption interceptor is configured).
 
-This new functionality is not enabled by default. You can enable it by setting the new `compressionType` entry in the encryption interceptor configuration to one of 'gzip', 'snappy', 'lz4' or 'zstd'. If full payload encryption is configured for headers, record keys or record values the respective data will now be compressed before it is encrypted.
+This new functionality is not enabled by default. To enable it, add the new `compressionType` entry in the encryption interceptor configuration to either 'gzip', 'snappy', 'lz4' or 'zstd'. 
 
-[Find out more about encryption configuration](https://docs.conduktor.io/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration---how-to-encrypt)
+If the full payload encryption is configured for headers, record keys or record values, the respective data will now be compressed before it is encrypted.
+
+[Find out more about encryption configuration](https://docs.conduktor.io/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration)
 
 ### Bug fixes
 
