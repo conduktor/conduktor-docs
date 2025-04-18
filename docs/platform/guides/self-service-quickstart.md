@@ -28,7 +28,7 @@ To follow-along this demo you'll need to clone our repository (repo):
 git clone https://github.com/conduktor/self-service-getting-started
 ````
 
-This demo repo contains two directories which each representing a mock repo: `central-team-repo` and `application-team-repo`.
+This demo repo contains two directories with each representing a mock repo: `central-team-repo` and `application-team-repo`.
 
 ## Central team's repo
 
@@ -155,13 +155,13 @@ We now have everything ready to delegate to the application team.
 
 With our protective policies in place and the website analytics team's Application created, let's add some topics.
 
-1. Add topics on our cluster:
+1. Create topics on our cluster:
 
 ```bash
 conduktor apply -f ./self-service/application-team-repo/kafka-resources/topics.yaml
 ```
 
-As these topics are associated to the Application Instances, we are able to visualize this link in the Topic Catalog, which helps teams discover who (which team) owns a topic (which in turn helps to initiate a conversation or even request access to it directly as part of a pull request).
+As these topics are associated to the Application Instances, we are able to visualize this link in the Topic Catalog, this helps teams discover who (which team) owns a topic to initiate a conversation, or even request access to it directly as part of a pull request.
 
 *This may take up to 30 seconds for the new topics to appear, depending when the indexer last polled for topics.*
 
