@@ -189,6 +189,7 @@ This will open the Partner Zone details window in edit mode, allowing you to:
 - update Partner Zone details (name, URL, description and contact details)
 - manage topics - add new ones or change topic aliases
 - change traffic control policies
+
 ### Change zone details
 
 - Name (hover over the name and click the **pencil** button)
@@ -257,21 +258,21 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 ## Troubleshoot
 
 <details>
-  <summary>What does Partner Zone status mean?</summary>
+  <summary>What does the Partner Zone status mean?</summary>
   <p>
-  This is the status of a Partner Zone:
+  The status of a Partner Zone may be one of the following:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
-    - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
+    - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active
   </p>
 </details>
 <details>
-  <summary>Does **Generate password** invalidate the previous credentials of service account?</summary>
-  <p>No, you can't invalidate the credentials. If unsure, delete the Partner Zone and re-create it.</p>
+  <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
+  <p>To check the status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) to GET the state of the Partner Zone, or check the Gateway & Console logs.</p>
 </details>
 <details>
-  <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
-  <p>To check status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16) or check Gateway/Console logs.</p>
+  <summary>Does **Generate password** invalidate the previously issued credentials of a service account?</summary>
+  <p>No, you can't invalidate issued credentials - they instead have a set time to live. If you're concerned about any issued credentials, **delete and re-create the Partner Zone**, then re-issue fresh credentials. We recommend deploying Partner Zones using the IaC (Infrastructure as Code) approach. [Find out more on the resource reference page](/platform/reference/resource-reference/console/#partner-zone).</p>
 </details>
 
 ## Related resources
