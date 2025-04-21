@@ -127,7 +127,7 @@ The configuration should look like this in the Console:
 ## Connect to a Cloudera cluster
 
 :::info
-These instructions are for a setup is with **SASL_SSL** and **PLAIN** mechanism.
+These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
 :::
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
