@@ -154,7 +154,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 ## Connect to a Google Cloud cluster
 
-You can connect to Google Cloud Managed Service for Apache Kafka using **SASL_SSL protocol** and **PLAIN mechanism** with the following two options. *[(note that Google OAuthBearer is not yet supported)](https://github.com/googleapis/managedkafka?tab=readme-ov-file#google-cloud-managed-service-for-apache-kafkatm-client-auth)*
+You can connect to Google Cloud Managed Service for Apache Kafka using the **SASL_SSL protocol** or the **PLAIN mechanism** with one of the following options. 
 
 ### Option 1: Use a service account
 
