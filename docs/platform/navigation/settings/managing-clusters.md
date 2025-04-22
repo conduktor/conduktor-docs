@@ -127,7 +127,7 @@ The configuration should look like this in the Console:
 ## Connect to a Cloudera cluster
 
 :::info
-These instructions are for a setup is with **SASL_SSL**.
+These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
 :::
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
@@ -154,9 +154,11 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 ## Connect to a Google Cloud cluster
 
+You can connect to Google Cloud Managed Service for Apache Kafka using the **SASL_SSL protocol** or the **PLAIN mechanism** with one of the following options. 
+
 ### Option 1: Use a service account
 
-You can connect with SASL_PLAINTEXT using a service account. [Go to Google Cloud docs for instructions](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain).
+ [Go to Google Cloud docs for instructions](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain).
 
 ### Option 2: Use an access token
 
