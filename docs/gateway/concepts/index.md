@@ -12,7 +12,7 @@ Use this document to understand each concept of Conduktor Gateway at a high-leve
 
 Conduktor Gateway is deployed between your client applications and existing Kafka clusters. As it's Kafka protocol compliant, there are minimal adjustments required for clients other than pointing to a new bootstrap server.
 
-![conduktor-gateway](../medias/conduktor-gateway.svg)
+![Conduktor Gateway](../medias/gateway-integration.png)
 
 Conduktor Gateway extends Kafka to provide new functionalities with different techniques:
 - **Interceptors** are pluggable components that augment Kafka by intercepting specific requests of the Kafka protocol and applying operations to it.
