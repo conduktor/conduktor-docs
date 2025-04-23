@@ -13,7 +13,7 @@ To make use of rules you need to register them in a policy.
 When creating a policy you choose which rules you want to apply, and which topics you want to apply them to.
 You're then able to configure actions on the policy which take effect when a rule in the policy is violated by a message in one of your target topics.
 These actions are:
-- Report: produce events into the audit log of console when violations occur
+- Report: produce events into the policy's history logs when violations occur
 - Block: prevent the processing or transmission of data
 
 Policies created through the Console UI do not have any actions enabled by default.
@@ -41,7 +41,7 @@ You can create a data quality rule from the **Console UI**, or the **Conduktor C
 todo
 </TabItem>
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones.
+You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a rule.
 
 1. Save this example to file, e.g. `rule.yaml`:
 
@@ -74,7 +74,7 @@ You can create a data quality policy from the **Console UI**, or the **Conduktor
 todo
 </TabItem>
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones.
+You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a policy.
 
 1. Save this example to file, e.g. `policy.yaml`:
 
@@ -102,15 +102,24 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 1. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
 
     ```bash
-    conduktor apply -f rule.yaml
+    conduktor apply -f policy.yaml
     ```
 </TabItem>
 </Tabs>
 
 ## Troubleshoot
 
-todo
+<details>
+  <summary>What does Policy status mean?</summary>
+  <p>
+  This is the status of a data quality Policy:
+    - **Pending**: the configuration isn't deployed or refreshed yet
+    - **Ready**: the configuration is up-to-date on Gateway
+    - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
+  </p>
+</details>
 
 ## Related resources
 
-todo
+- [Connect to clusters](/platform/navigation/settings/managing-clusters/)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
