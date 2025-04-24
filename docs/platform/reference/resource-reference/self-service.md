@@ -248,7 +248,7 @@ spec:
 ### Self Service Policy
 Self Service Policies are used to enforce rules on the ApplicationInstance level.
 Typical use case include:
-- Safeguarding from invalid or risky Topic or Conector configuration
+- Safeguarding from invalid or risky Topic or Connector configuration
 - Enforcing naming convention
 - Enforcing metadata
 
@@ -256,9 +256,9 @@ Typical use case include:
 Self Service policies are not applied automatically.
 You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
 :::
-**API Keys:** <AdminToken />
-**Managed with:** <CLI /> <API /> <TF />
-**Labels support:** <PartialLabelSupport />
+**API Keys:** <AdminToken /> 
+**Managed with:** <CLI /> <API /> <TF /> 
+**Labels support:** <PartialLabelSupport /> 
 
 ```yaml
 ---
