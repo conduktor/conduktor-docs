@@ -295,12 +295,12 @@ spec:
 ** SelfServicePolicy checks:**
 - `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
 - `spec.rules.condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be parsed and evaluated against the resource body for example 
-  - `spec.configs["retention.ms"]` will be evaluated against the resource body
-  - `metadata.name` will be evaluated against the resource body
-  - `metadata.labels["data-criticality"]` will be evaluated against the resource body
-  - `int(string(spec.configs["retention.ms"]))` is a valid expression to convert a string to an int
-  - `spec.configs["retention.ms"]` is a valid expression to access the configs map
+  - `spec.configs["retention.ms"]` to access the configs map
+  - `metadata.name` to access the resource name
+  - `metadata.labels["data-criticality"]` to access a labels value
+  - `int(string(spec.configs["retention.ms"]))` a valid expression to convert the string value of `spec.configs["retention.ms"]` to an int
   - `metadata.labels["data-criticality"] in ["C0", "C1", "C2"]` is a valid expression to check if the label exists and is one of the values in the list
+  - `metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")` is a valid expression to check if the name matches the regex
 - `spec.rules.errorMessage` is a string that will be displayed in the Console UI when the condition is not met
 
 With the two policies declared above, the following Topic resource would succeed validation:
