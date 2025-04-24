@@ -109,6 +109,10 @@ spec:
   topicPolicyRef:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
+  policyRef:
+    - "generic-dev-topic"
+    - "clickstream-naming-rule"
+    - "generic-dev-connector"
   defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
   resources:
     - type: TOPIC
@@ -138,6 +142,7 @@ spec:
   - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchronized by the ApplicationInstance component.
   - Check dedicated section [Application-managed Service Account](#application-managed-service-account)
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
+- `spec.policyRef` is **optional**, and if present must be a valid list of [SelfServicePolicy](#self-service-policy)
 - `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.
 - `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
   - `spec.resources[].connectCluster` is **only mandatory** when `type` is `CONNECTOR`
@@ -238,6 +243,82 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
+````
+
+### Self Service Policy
+Self Service Policies are used to enforce rules on the ApplicationInstance level.
+Typical use case include:
+- Safeguarding from invalid or risky Topic or Conector configuration
+- Enforcing naming convention
+- Enforcing metadata
+
+:::caution
+Self Service policies are not applied automatically.
+You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
+:::
+**API Keys:** <AdminToken />
+**Managed with:** <CLI /> <API /> <TF />
+**Labels support:** <PartialLabelSupport />
+
+```yaml
+---
+apiVersion: self-service/v1
+kind: SelfServicePolicy
+metadata:
+    name: "generic-dev-topic"
+    labels:
+        business-unit: delivery
+spec:
+    targetKind: Connector
+    description: A policy to check some basic rule for a topic
+    rules:
+        - condition: spec.replicationFactor == 3
+          errorMessage: replication factor should be 3
+        - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+          errorMessage: retention should be between 1m and 1h
+---
+apiVersion: self-service/v1
+kind: SelfServicePolicy
+metadata:
+    name: "clickstream-naming-rule"
+    labels:
+        business-unit: delivery
+spec:
+    targetKind: Topic
+    description: A policy to check some basic rule for a topic
+    rules:
+        - condition: metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+          errorMessage: topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+        - condition: metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+          errorMessage: data-criticality should be one of C0, C1, C2
+```
+** SelfServicePolicy checks:**
+- `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
+- `spec.rules.condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be parsed and evaluated against the resource body for example 
+  - `spec.configs["retention.ms"]` will be evaluated against the resource body
+  - `metadata.name` will be evaluated against the resource body
+  - `metadata.labels["data-criticality"]` will be evaluated against the resource body
+  - `int(string(spec.configs["retention.ms"]))` is a valid expression to convert a string to an int
+  - `spec.configs["retention.ms"]` is a valid expression to access the configs map
+  - `metadata.labels["data-criticality"] in ["C0", "C1", "C2"]` is a valid expression to check if the label exists and is one of the values in the list
+- `spec.rules.errorMessage` is a string that will be displayed in the Console UI when the condition is not met
+
+With the two policies declared above, the following Topic resource would succeed validation:
+````yaml
+---
+apiVersion: kafka/v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro  # Checked by metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+  labels:
+    data-criticality: C2         # Checked by metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+spec: 
+  replicationFactor: 3           # Check by spec.replicationFactor == 3
+  partitions: 3
+  configs:
+    cleanup.policy: delete
+    retention.ms: '60000'        # Check int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
 ````
 
 ### Application Instance Permissions
