@@ -256,9 +256,10 @@ Typical use case include:
 Self Service policies are not applied automatically.
 You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
 :::
-**API Keys:** <AdminToken /> 
-**Managed with:** <CLI /> <API /> <TF /> 
-**Labels support:** <PartialLabelSupport /> 
+
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API /> <TF />  
+**Labels support:** <PartialLabelSupport />  
 
 ```yaml
 ---
