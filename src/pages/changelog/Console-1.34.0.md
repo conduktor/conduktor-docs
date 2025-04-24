@@ -16,6 +16,8 @@ tags: features,fixes
 
 ### Conduktor Scale
 
+- Add new self service policies on application instances, allowing users to create policies that check that newly created resources, for now connector and topic, are created with the right configuration. This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule instead of the previously custom matcher DSL
+
 ### Conduktor Exchange
 
 ### Quality of life improvements
