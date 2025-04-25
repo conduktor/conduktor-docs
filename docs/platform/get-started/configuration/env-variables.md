@@ -35,6 +35,7 @@ description: Conduktor Console input configuration fields can be provided using 
   - [AuditLog export properties](#auditlog-export-properties)
   - [Conduktor SQL properties](#conduktor-sql-properties)
   - [Partner zone properties](#partner-zone-properties)
+  - [Data quality properties](#data-quality-properties)
 
 ## Docker image environment variables
 
@@ -517,7 +518,7 @@ For details on the available exportable events refer to: [Exportable audit log e
 
 ### Conduktor SQL properties
 
-In order to use Conduktor SQL, you need to configure a second database to store the Topics data.  
+In order to use Conduktor SQL, you need to configure a second database to store the Topics data.
 You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
 Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
@@ -550,4 +551,15 @@ Advanced properties (typically, these do not need to be altered).
 
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
-| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+| `partner_zone.reconcile_with_gateway_every_seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+
+### Data quality properties
+
+Advanced properties (typically, these do not need to be altered).
+
+| Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
+| `data_quality.reconcile_every_seconds`              | The interval at which the data quality's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_DATAQUALITY_RECONCILEEVERYSECONDS | false     | int    | `5` (seconds) |
+| `data_quality.report_max_per_second`                | Number of violations report in data quality can be high. This value fixed the max number of violations that could be reported per second. If more violations are produced, it won't be reported in Console. | CDK_DATAQUALITY_REPORTMAXPERSECOND | false     | int    | 10 (unit) |
+| `data_quality.report_retention_day`                 | The number of retention days for the violations history logs. | CDK_DATAQUALITY_REPORTRETENTIONDAYS | false     | int    | 7 (days) |
+
