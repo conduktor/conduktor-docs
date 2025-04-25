@@ -24,6 +24,7 @@ tags: features,fixes
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
 
 ### Fixes
+- To avoid timeouts when indexing consumer groups, added a new configuration variable to limit the number of consumer groups requested per describe query.
 
 ### Known issues
 
