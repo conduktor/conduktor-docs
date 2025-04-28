@@ -376,7 +376,7 @@ curl \
   "http://localhost:8888/gateway/v2/virtual-cluster/mypartner"
 ```
 
-This will return something like this, with the bootstrap address and client properties:
+This will return something like this, with the bootstrap address and client properties for the different available authentication modes:
 
 ```json
 {
@@ -387,13 +387,17 @@ This will return something like this, with the bootstrap address and client prop
   },
   "spec": {
     "aclEnabled": true,
-    "superUsers": [ "super-user" ],
+    "superUsers": [
+      "super-user"
+    ],
     "type": "Partner",
     "bootstrapServers": "<partner_virtual_cluster_bootstrap_address>",
     "clientProperties": {
-      "security.protocol": "SASL_PLAINTEXT",
-      "sasl.mechanism": "PLAIN",
-      "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username={{username}} password={{password}};"
+      "PLAIN": {
+        "security.protocol": "SASL_PLAINTEXT",
+        "sasl.mechanism": "PLAIN",
+        "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username={{username}} password={{password}};"
+      }
     }
   }
 }
