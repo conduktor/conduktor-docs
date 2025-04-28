@@ -1098,15 +1098,16 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions
 
-| Available Platform permissions | Description |
-|------------------------------------|---------------------------------------------------------------|
-| `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
-| `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
-| `userManage`                       | Permission to manage Console users, groups & permissions      |
-| `userView`                         | Permission to view Console users, groups & permissions        |
-| `datamaskingManage`                | Permission to manage Data policies (masking rules)            |
-| `datamaskingView`                  | Permission to view Data policies                              |
-| `notificationChannelManage`        | Permission to manage Integration channels                     |
-| `notificationChannelView`          | Permission to view Integration channels                       |
-| `auditLogView`                     | Permission to browse audit log                                |
-| `taasView`                         | Permission to view Application Catalog                        | 
+| Available Platform permissions | Description                                                   |
+|--------------------------------|---------------------------------------------------------------|
+| `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`            | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                   | Permission to manage Console users, groups & permissions      |
+| `userView`                     | Permission to view Console users, groups & permissions        |
+| `datamaskingManage`            | Permission to manage Data policies (masking rules)            |
+| `datamaskingView`              | Permission to view Data policies                              |
+| `notificationChannelManage`    | Permission to manage Integration channels                     |
+| `auditLogView`                 | Permission to browse audit log                                |
+| `taasView`                     | Permission to view Application Catalog                        |
+| `chargebackManage`             | Permission to view Chargeback and manage its settings         |
+| `sqlManage`                    | Permission to view indexed topics and create SQL queries      |
