@@ -13,10 +13,10 @@ We welcome contributions and feedback. If you have issues, you can open an issue
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Gateway on your Kubernetes cluster.  This is a quick start guide to help you deploy a local instance of Gateway for non production purposes.
 
 ## Compatibility matrix
+
 This compatibility matrix is a resource to help you find which versions of Conduktor Gateway work on which version of our Conduktor Gateway Helm chart.
 
 > We recommend you use the version of Gateway that comes pre-configured with the Helm chart. You can adjust the version in your values property according to the supported Gateway version, if required.
-
 > Breaking changes column only lists a **breaking change in the Helm chart**. See Conduktor [release notes](https://docs.conduktor.io/changelog/) to determine whether there are breaking changes within the artifacts.
 
 ### Helm chart compatibility
@@ -27,13 +27,12 @@ Breaking changes:
 
 🔴 - Breaks overall deployment of the product (e.g. renaming variables in .values, major product releases)
 
-
 | Chart version | Supported Gateway version | Breaking changes |
 | ------------- | ------------------------- | ---------------- |
 | [conduktor-gateway-3.8.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.8.1) | **3.8.0**, 3.7.1, 3.7.0, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.8.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.8.0) | **3.8.0**, 3.7.1, 3.7.0, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.7.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.1) | **3.7.1**, 3.7.0, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
-| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154) |
+| [conduktor-gateway-3.7.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.7.0) | **3.7.0**, 3.6.1, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | 🟡 Updated Grafana template [see here](https://github.com/conduktor/conduktor-public-charts/pull/160) <br/> 🟡 Removed dependency on in-built Kafka cluster [see here](https://github.com/conduktor/conduktor-public-charts/pull/154).  Now the chart checks that the `KAFKA_BOOTSTRAP_SERVERS` environment variable is set in `gateway.extraSecretEnvVars` or `gateway.env` before deploying the chart. |
 | [conduktor-gateway-3.6.1](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.1) | **3.6.1**, 3.6.0, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.6.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.6.0) | **3.6.0**, 3.5.0, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
 | [conduktor-gateway-3.5.0](https://github.com/conduktor/conduktor-public-charts/releases/tag/conduktor-gateway-3.5.0) | **3.5.0**, 3.4.1, 3.4.0, 3.3.1, 3.3.0, 3.2.2, 3.2.1, 3.2.0, 3.1.1, 3.1.0 | |
@@ -93,6 +92,7 @@ kafka:
     GATEWAY_SECURITY_PROTOCOL: "PLAINTEXT"
     NAMESPACE: "default"
 ```
+
 3. Set the following property to the hostname/IP and port of your Kafka broker listeners:
 
 ```yaml
