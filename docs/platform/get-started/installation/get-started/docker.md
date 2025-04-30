@@ -10,7 +10,7 @@ description: Get started with the latest Conduktor Console Docker image in just 
 Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-Get started in a few minutes with the latest Conduktor Console Docker image. Our recommendation is to [deploy with Kuberenetes](/platform/get-started/installation/get-started/kubernetes).
+Get started in a few minutes with the latest Conduktor Console Docker image. Our recommendation is to [deploy with Kubernetes](/platform/get-started/installation/get-started/kubernetes).
 
 - [**Simple Setup**](#simple-setup): Get started with the Conduktor Console through its user-friendly interface - Perfect to **quickly** see its value.
    - [Option 1: Start with an embedded Kafka cluster](#option-1-start-with-an-embedded-kafka-cluster)
