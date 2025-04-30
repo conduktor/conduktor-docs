@@ -122,20 +122,23 @@ In earlier versions we recommend instead that you configure an HA Postgres datab
 - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
 ## Kafka ACL Requirements
-The following table outlines the required ACLs for Conduktor Console to function properly. The optional ACLs are highly recommended to take advantage of all the capabilities of the product.
+Conduktor Console requires the following ACLs to take advantage of all the capabilities of the product:
 
-| Permission | Operation        | ResourceType   | ResourceName  | PatternType | Description                                                                                            | Mandatory |
-|------------|------------------|----------------|---------------|-------------|--------------------------------------------------------------------------------------------------------|-----------|
-| ALLOW      | DESCRIBE         | TOPIC          | *             | LITERAL     | List topic, fetch metadata                                                                             | yes       |
-| ALLOW      | DESCRIBE_CONFIGS | TOPIC          | *             | LITERAL     | See topic configuration                                                                                | yes       |
-| ALLOW      | READ             | TOPIC          | *             | LITERAL     | Read data                                                                                              | yes       |
-| ALLOW      | WRITE            | TOPIC          | *             | LITERAL     | Produce messages via Console                                                                           | no        |
-| ALLOW      | CREATE           | TOPIC          | *             | LITERAL     | Create topics via Console                                                                              | no        |
-| ALLOW      | ALTER            | TOPIC          | *             | LITERAL     | Increase the number of partitions via Console                                                          | no        |
-| ALLOW      | ALTER_CONFIGS    | TOPIC          | *             | LITERAL     | Change topic configuration via Console                                                                 | no        |
-| ALLOW      | DELETE           | TOPIC          | *             | LITERAL     | Delete topic via Console                                                                               | no        |
-| ALLOW      | DESCRIBE         | CONSUMER GROUP | *             | LITERAL     | List consumer groups and fetch metadata on it                                                          | yes       |
-| ALLOW      | READ             | CONSUMER GROUP | *             | LITERAL     | Be able to fetch offset definition (used to compute lag)                                               | yes       |
-| ALLOW      | DESCRIBE         | CLUSTER        | kafka-cluster | LITERAL     | Describe Kafka ACLs, fetch the amount of data stored on disk                                           | yes       |
-| ALLOW      | DESCRIBE_CONFIGS | CLUSTER        | kafka-cluster | LITERAL     | Describe cluster/broker configuration                                                                  | yes       |
-| ALLOW      | IDEMPOTENT_WRITE | CLUSTER        | kafka-cluster | LITERAL     | Used to produce messages with enable.idempotence=true. Only necessary for AK versions 3.0.x and below. | no        |
+| Permission | Operation | ResourceType   | ResourceName  | PatternType | Description                        |
+|------------|-----------|----------------|---------------|-------------|------------------------------------|
+| ALLOW      | ALL       | TOPIC          | *             | LITERAL     | Full management of topics          |
+| ALLOW      | ALL       | CONSUMER GROUP | *             | LITERAL     | Full management of consumer groups |
+| ALLOW      | ALL       | CLUSTER        | kafka-cluster | LITERAL     | Full management of the cluster     |
+
+If you prefer to provide read-only access to Conduktor Console, these are the minimum ACLs required:
+
+| Permission | Operation        | ResourceType   | ResourceName  | PatternType | Description                                                  |
+|------------|------------------|----------------|---------------|-------------|--------------------------------------------------------------|
+| ALLOW      | DESCRIBE         | TOPIC          | *             | LITERAL     | List topic, fetch metadata                                   |
+| ALLOW      | DESCRIBE_CONFIGS | TOPIC          | *             | LITERAL     | See topic configuration                                      |
+| ALLOW      | READ             | TOPIC          | *             | LITERAL     | Read data                                                    |
+| ALLOW      | DESCRIBE         | CONSUMER GROUP | *             | LITERAL     | List consumer groups and fetch metadata on it                |
+| ALLOW      | READ             | CONSUMER GROUP | *             | LITERAL     | Be able to fetch offset definition (used to compute lag)     |
+| ALLOW      | DESCRIBE         | CLUSTER        | kafka-cluster | LITERAL     | Describe Kafka ACLs, fetch the amount of data stored on disk |
+| ALLOW      | DESCRIBE_CONFIGS | CLUSTER        | kafka-cluster | LITERAL     | Describe cluster/broker configuration                        |
+
