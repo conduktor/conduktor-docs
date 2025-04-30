@@ -8,7 +8,7 @@ description: Deploy an instance of Conduktor Console on AWS.
 
 ## Getting started
 
-This guide will demonstrate how to deploy Console in your AWS environment with all mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
+This guide will demonstrate how to deploy Console in your AWS environment with all mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS. Our recommendation is to [deploy with Kubernetes](/platform/get-started/installation/get-started/kubernetes).
 
 Rather than follow this manual guide, you might prefer to see our [Marktetplace Listing](aws-marketplace-and-cloudformation.md).
 
