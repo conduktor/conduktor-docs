@@ -81,7 +81,7 @@ const config = {
           {
             label: 'Concepts',
             position: 'left',
-            to: '/concepts',
+            to: '/guides/conduktor-concepts',
           },
           {
             label: 'Support',
@@ -117,7 +117,7 @@ const config = {
             items: [
               {
                 label: 'Release notes',
-                to: '/releases',
+                to: '/changelog',
               },
               {
                 label: 'API reference',
