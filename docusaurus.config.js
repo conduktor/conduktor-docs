@@ -1,6 +1,3 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
-
 const { themes } = require('prism-react-renderer')
 const lightCodeTheme = themes.github
 const darkCodeTheme = themes.dracula
@@ -45,11 +42,11 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./platform_sidebars.js'),
+          sidebarPath: require.resolve('./guides_sidebars.js'),
           sidebarCollapsed: true,
           sidebarCollapsible: true,
-          routeBasePath: '/platform',
-          path: './docs/platform',
+          routeBasePath: '/guides',
+          path: './docs/guides',
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
@@ -68,11 +65,30 @@ const config = {
         logo: {
           alt: 'Conduktor Docs logo',
           src: 'assets/svgs/logo.svg',
+          href: '/', 
         },
         items: [
           {
-            type: 'custom-navbar',
+            label: 'Guides',
             position: 'left',
+            to: '/guides',
+          },
+          {
+            label: 'Tutorials',
+            position: 'left',
+            to: '/tutorials',
+          },
+          {
+            label: 'Concepts',
+            position: 'left',
+            to: '/concepts',
+          },
+          {
+            label: 'Support',
+            position: 'left',
+            to: 'https://support.conduktor.io',
+            target: '_blank',
+            rel: 'noopener noreferrer',
           },
         ],
       },
@@ -80,23 +96,19 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Platform',
+            title: 'Guides',
             items: [
               {
                 label: 'Overview',
-                to: '/platform',
+                to: '/guides',
               },
               {
-                label: 'Installation',
-                to: '/platform/get-started/installation/hardware',
+                label: 'Get started',
+                to: '/guides/get-started',
               },
               {
-                label: 'Configuration',
-                to: 'platform/get-started/configuration/introduction',
-              },
-              {
-                label: 'FAQ',
-                to: '/faq',
+                label: 'Conduktor in production',
+                to: 'guides/conduktor-in-production',
               },
             ],
           },
@@ -105,15 +117,11 @@ const config = {
             items: [
               {
                 label: 'Platform',
-                to: '/platform',
+                to: '/guides',
               },
               {
                 label: 'Gateway',
                 to: '/gateway',
-              },
-              {
-                label: 'Desktop',
-                to: '/desktop',
               },
             ],
           },
@@ -163,20 +171,6 @@ const config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'desktop',
-        sidebarPath: require.resolve('./desktop_sidebars.js'),
-        sidebarCollapsed: true,
-        sidebarCollapsible: true,
-        routeBasePath: '/desktop',
-        exclude: ['./api/**/*'],
-        path: './docs/desktop',
-        lastVersion: 'current',
-        onlyIncludeVersions: ['current'],
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
         id: 'gateway',
         sidebarPath: require.resolve('./gateway_sidebars.js'),
         sidebarCollapsed: true,
@@ -188,7 +182,7 @@ const config = {
         onlyIncludeVersions: ['current'],
       },
     ],
-    redirects,
+ /*   redirects, */
     gtag,
     analytics,
     gtm,
