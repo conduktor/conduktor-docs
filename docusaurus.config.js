@@ -63,7 +63,7 @@ const config = {
     ({
       navbar: {
         logo: {
-          alt: 'Conduktor Docs logo',
+          alt: 'Conduktor logo',
           src: 'assets/svgs/logo.svg',
           href: '/', 
         },
@@ -96,7 +96,7 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Guides',
+            title: 'Conduktor guides',
             items: [
               {
                 label: 'Overview',
@@ -113,15 +113,23 @@ const config = {
             ],
           },
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Platform',
-                to: '/guides',
+                label: 'Release notes',
+                to: '/releases',
               },
               {
-                label: 'Gateway',
-                to: '/gateway',
+                label: 'API reference',
+                href: 'https://developers.conduktor.io',
+              },
+              {
+                label: 'Kafkademy',
+                href: 'https://learn.conduktor.io/kafka',
+              },
+              {
+                label: 'Conduktor blog',
+                href: 'https://conduktor.io/blog',
               },
             ],
           },
@@ -129,8 +137,8 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Release notes',
-                href: '/changelog',
+                label: 'Support portal',
+                href: 'https://support.conduktor.io',
               },
               {
                 label: 'GitHub',
