@@ -64,10 +64,15 @@ const config = {
       navbar: {
         logo: {
           alt: 'Conduktor logo',
-          src: 'assets/svgs/logo.svg',
-          href: '/', 
+          src: '/assets/svgs/logo.svg',
+          href: 'https://conduktor.io', 
+          target: '_blank',
         },
         items: [
+          {
+            label: 'Home',
+            to: '/', 
+          },
           {
             label: 'Guides',
             position: 'left',
@@ -122,14 +127,17 @@ const config = {
               {
                 label: 'API reference',
                 href: 'https://developers.conduktor.io',
+                target: '_blank',
               },
               {
                 label: 'Kafkademy',
                 href: 'https://learn.conduktor.io/kafka',
+                target: '_blank',
               },
               {
                 label: 'Conduktor blog',
                 href: 'https://conduktor.io/blog',
+                target: '_blank',
               },
             ],
           },
@@ -139,14 +147,17 @@ const config = {
               {
                 label: 'Support portal',
                 href: 'https://support.conduktor.io',
+                target: '_blank',
               },
               {
                 label: 'GitHub',
                 href: 'https://github.com/conduktor',
+                target: '_blank',
               },
               {
                 label: 'Slack',
                 href: 'https://www.conduktor.io/slack',
+                target: '_blank',
               },
             ],
           },

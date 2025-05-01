@@ -12,7 +12,7 @@ export default function DocBreadcrumbsWrapper(props) {
     <div className={styles.container}>
       <DocBreadcrumbs {...props} />
       <div className={styles.switchContainer}>
-        Quick navigation
+        On this page
         <ToggleSwitch
           defaultChecked={quickNavState}
           checked={quickNavState}
