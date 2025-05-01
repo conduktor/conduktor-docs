@@ -19,7 +19,7 @@ You can click on an Application to get to its details page.
 
 ![Application Catalog](assets/app-catalog.png)
 
-### Topic Subscription Management
+## Topic Subscription Management
 
 Application owners can review and manage topic subscription requests. When users request to subscribe to topics via the Topic Catalog, these requests appear in the Application Details page under a dedicated "Pending Requests" tab.
 
