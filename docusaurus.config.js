@@ -70,6 +70,16 @@ const config = {
         },
         items: [
           {
+            type: 'search',
+            position: 'right',
+          },
+          {
+            label: 'Get started',
+            to: 'https://conduktor.io/get-started', 
+            position: 'right',
+            className: 'navbar-free-trial-button', 
+          },
+          {
             label: 'Home',
             to: '/', 
           },
@@ -81,7 +91,7 @@ const config = {
           {
             label: 'Tutorials',
             position: 'left',
-            to: '/tutorials',
+            to: '/guides/tutorials',
           },
           {
             label: 'Concepts',
@@ -89,12 +99,39 @@ const config = {
             to: '/guides/conduktor-concepts',
           },
           {
+            label: 'Releases',
+            position: 'left',
+            to: '/changelog',
+          },
+          {
+            type: 'dropdown',
             label: 'Support',
             position: 'left',
-            to: 'https://support.conduktor.io',
-            target: '_blank',
-            rel: 'noopener noreferrer',
-          },
+            items: [
+              {
+                label: 'Options',
+                to: '/guides/support',
+              },            
+              {
+                label: 'Upgrade',
+                to: '/guides/support/upgrade',
+              },
+              {
+                label: 'Supported versions',
+                to: '/support',
+              },
+              {
+                label: 'Version matrix',
+                to: '/guides/support/version-matrix',
+              },
+              {
+                label: 'Go to support site',
+                to: 'https://support.conduktor.io',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+            ],
+          },   
         ],
       },
       footer: {
@@ -145,7 +182,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Support portal',
+                label: 'Support site',
                 href: 'https://support.conduktor.io',
                 target: '_blank',
               },

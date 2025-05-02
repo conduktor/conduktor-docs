@@ -1,23 +1,18 @@
 ---
-title: Support
+title: Support options
 sidebar_position: 3
 description: Get help and support with Conduktor.
 ---
 
-## Get support
-
-Check out ways to get help with using Conduktor:
+## Get help or support
 
 - [Contact support](https://www.conduktor.io/contact/support)
-- [Already a customer? Sign in to check the status of an open issue or raise a new ticket](https://support.conduktor.io/hc/en-gb/signin?return_to=https%3A%2F%2Fsupport.conduktor.io%2Fhc%2Fen-gb%2Frequests%2Fnew%3Fticket_form_id%3D17438312520209)
-- join Conduktor on Slack
+- [**Already a customer?** Check the status of an open issue or raise a new ticket](https://support.conduktor.io/hc/en-gb/signin?return_to=https%3A%2F%2Fsupport.conduktor.io%2Fhc%2Fen-gb%2Frequests%2Fnew%3Fticket_form_id%3D17438312520209)
+- [Join Conduktor on Slack](https://www.conduktor.io/slack)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
+- [Raise a feature request](https://support.conduktor.io/hc/en-gb/requests/new)
 
-## Check out other support resources
+## Check out other resources
 
-- release notes
-- raise a feature request
-- view supported versions 
-/src/pages/support.mdx
-/docs/support/support.md
-
+- [Release notes](/changelog)
+- [View supported versions](/support)
