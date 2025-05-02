@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Monitoring
+displayed: false
 description: Learn how to get started with Monitoring
 ---
 

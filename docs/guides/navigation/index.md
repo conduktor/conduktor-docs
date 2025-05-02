@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Console UI
+displayed: false
 description: Explore Conduktor Console UI
 ---
 Conduktor Console UI (User Interface) consists of:

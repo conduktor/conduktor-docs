@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Overview
+displayed: false
 description: All Conduktor Platform references 
 ---
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Resources Reference
+displayed: false
 description: All Conduktor resources
 ---
 

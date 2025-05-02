@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: Self-service
+displayed: false
 description: Kafka Self-service Overview
 ---
 

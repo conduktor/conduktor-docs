@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Partner Zones
+displayed: false
 description: Securely share your Kafka streaming data with external partners.
 ---
 
