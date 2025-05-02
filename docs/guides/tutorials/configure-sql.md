@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Configure SQL
+displayed: false
 description: How to configure Conduktor SQL
 ---
 

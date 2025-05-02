@@ -1,7 +1,7 @@
 ---
-title: Support options
-sidebar_position: 3
-description: Get help and support with Conduktor.
+sidebar_position: 400
+title: Get support
+description: Get help and support with using Conduktor.
 ---
 
 ## Get help or support

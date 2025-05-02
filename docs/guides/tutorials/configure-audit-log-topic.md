@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Configure Audit Log Topic
+displayed: false
 description: Send the Console Audit Log in a Kafka topic
 ---
 

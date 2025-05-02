@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: Reprocess Messages
+displayed: false
 description: Reprocess a message from a topic to another one.
 ---
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Self-service overview
+displayed: false
 description: Get started with Self-service
 ---
 
