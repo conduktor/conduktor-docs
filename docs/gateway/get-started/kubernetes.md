@@ -8,6 +8,8 @@ description: This guide is for deploying Conduktor Gateway on a local Minikube i
 We welcome contributions and feedback. If you have issues, you can open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or contact [support](https://www.conduktor.io/contact/support/).
 :::
 
+Conduktor recommends deploying with Kubernetes. For a full reference of our recommended architecture for deploying the entire Conduktor platform refer to our example GitHub repository, [conduktor-reference-architecture](https://github.com/conduktor/conduktor-reference-architecture).
+
 # Helm chart installation
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Gateway on your Kubernetes cluster.  This is a quick start guide to help you deploy a local instance of Gateway for non production purposes.
