@@ -590,3 +590,12 @@ table tr:nth-child(2n) {
 .markdown > h6 span[data-type] {
   margin-top: 4px;
 }
+
+.navbar-free-trial-button {
+  padding: 8px 16px !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  display: inline-block !important;
+  min-width: max-content !important;
+}

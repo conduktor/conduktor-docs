@@ -87,21 +87,25 @@ const config = {
             label: 'Guides',
             position: 'left',
             to: '/guides',
+            activeBaseRegex: `/guides/`,
           },
           {
             label: 'Tutorials',
             position: 'left',
             to: '/guides/tutorials',
+            activeBaseRegex: `/docs/guides/tutorials/`,
           },
           {
             label: 'Concepts',
             position: 'left',
             to: '/guides/conduktor-concepts',
+            activeBaseRegex: `/docs/guides/conduktor-concepts/`,
           },
           {
             label: 'Releases',
             position: 'left',
             to: '/changelog',
+            activeBaseRegex: `/changelog/`,
           },
           {
             type: 'dropdown',
@@ -117,7 +121,7 @@ const config = {
                 to: '/guides/support/upgrade',
               },
               {
-                label: 'Supported versions',
+                label: 'Version policy',
                 to: '/support',
               },
               {
@@ -133,6 +137,12 @@ const config = {
             ],
           },   
         ],
+      },
+      algolia: {
+        appId: process.env.REACT_APP_ALGOLIA_APPLICATION_ID,
+        apiKey: process.env.REACT_APP_ALGOLIA_API_KEY, // This should be your search-only API key, not admin key
+        indexName: process.env.REACT_APP_ALGOLIA_INDEX,
+        contextualSearch: true,
       },
       footer: {
         style: 'dark',
@@ -206,6 +216,10 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['bash', 'diff', 'json', 'hcl'],
       },
+      pages: {
+        path: 'src/pages',
+      },
+      
       colorMode: {
         disableSwitch: true,
       },
@@ -238,7 +252,7 @@ const config = {
         onlyIncludeVersions: ['current'],
       },
     ],
- /*   redirects, */
+    redirects,
     gtag,
     analytics,
     gtm,
