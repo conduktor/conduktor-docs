@@ -4,4 +4,6 @@ title: Rules and Policies
 description: Ensure data quality using Conduktor
 ---
 
-Conduktor Trust
+import ProductTrust from '@site/src/components/shared/product-trust.md';
+
+<ProductTrust />
