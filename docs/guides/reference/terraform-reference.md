@@ -1,6 +1,6 @@
 ---
-sidebar_position: 4
 title: Terraform reference
+displayed: false
 description: Terraform reference
 ---
 

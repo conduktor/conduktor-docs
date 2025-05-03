@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
 title: Console resources
+displayed: false
 description: Console resources
 ---
 

@@ -1,6 +1,6 @@
 ---
-sidebar_position: 3
 title: Self-service Resources
+displayed: false
 description: Self-service resources
 ---
 

@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
 title: Kafka resources
+displayed: false
 description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
 ---
 
@@ -56,6 +56,7 @@ export const PartialLabelSupport = () => (
 ## Kafka resources
 
 ### Topic
+
 Creates a Topic in Kafka.
 
 **API Keys:** <AdminToken />  <AppToken />  

@@ -15,4 +15,4 @@ description: Get help and support with using Conduktor.
 ## Check out other resources
 
 - [Release notes](/changelog)
-- [View supported versions](/support)
+- [View our version policy](/support)

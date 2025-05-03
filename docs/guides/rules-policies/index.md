@@ -1,5 +1,7 @@
 ---
-sidebar_position: 390
-title: Rules and Policies - use case
-description: Data quality using Conduktor
+sidebar_position: 380
+title: Rules and Policies
+description: Ensure data quality using Conduktor
 ---
+
+Conduktor Trust

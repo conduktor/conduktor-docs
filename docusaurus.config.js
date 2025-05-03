@@ -77,7 +77,7 @@ const config = {
             label: 'Get started',
             to: 'https://conduktor.io/get-started', 
             position: 'right',
-            className: 'navbar-free-trial-button', 
+            className: 'navbar-free-trial-button',
           },
           {
             label: 'Home',
@@ -100,6 +100,18 @@ const config = {
             position: 'left',
             to: '/guides/conduktor-concepts',
             activeBaseRegex: `/docs/guides/conduktor-concepts/`,
+          },
+          {
+            label: 'Resource reference',
+            position: 'left',
+            to: '/guides/reference',
+            activeBaseRegex: `/docs/guides/reference/`,
+          },
+          {
+            label: 'API reference',
+            position: 'left',
+            href: 'https://developers.conduktor.io',
+            target: '_blank',
           },
           {
             label: 'Releases',

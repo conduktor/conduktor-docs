@@ -1,5 +1,5 @@
 ---
-sidebar_position: 420
+sidebar_position: 410
 title: Upgrade
 description: Find out how to upgrade to the latest Conduktor version
 ---

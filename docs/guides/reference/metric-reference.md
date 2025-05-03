@@ -1,6 +1,6 @@
 ---
-sidebar_position: 6
 title: Metrics Reference
+displayed: false
 description: Prometheus metrics available for Console
 ---
 
