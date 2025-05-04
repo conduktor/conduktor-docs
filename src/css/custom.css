@@ -592,10 +592,33 @@ table tr:nth-child(2n) {
 }
 
 .navbar-free-trial-button {
-  padding: 8px 16px !important;
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  display: inline-block !important;
-  min-width: max-content !important;
+  background-color: var(--ifm-color-primary); /* Uses your theme's primary color */
+  color: white !important;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  font-weight: 600;
+  transition: background-color 0.3s;
 }
+
+.navbar-free-trial-button:hover {
+  background-color: var(--ifm-color-primary-dark);
+  text-decoration: none;
+}
+
+/* If you want a more specific color instead of using the theme variable */
+/*
+.navbar-free-trial-button {
+  background-color: #09343C; 
+  color: white !important;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.navbar-free-trial-button:hover {
+  background-color: #072027;
+  text-decoration: none;
+}
+*/
