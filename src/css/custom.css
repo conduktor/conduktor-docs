@@ -591,23 +591,7 @@ table tr:nth-child(2n) {
   margin-top: 4px;
 }
 
-.navbar-free-trial-button {
-  background-color: var(--ifm-color-primary); /* Uses your theme's primary color */
-  color: white !important;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  margin-left: 10px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
 
-.navbar-free-trial-button:hover {
-  background-color: var(--ifm-color-primary-dark);
-  text-decoration: none;
-}
-
-/* If you want a more specific color instead of using the theme variable */
-/*
 .navbar-free-trial-button {
   background-color: #09343C; 
   color: white !important;
@@ -621,4 +605,3 @@ table tr:nth-child(2n) {
   background-color: #072027;
   text-decoration: none;
 }
-*/

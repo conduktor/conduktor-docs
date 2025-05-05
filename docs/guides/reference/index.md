@@ -1,7 +1,7 @@
 ---
-title: Conduktor object references
+title: Conduktor resource reference
 displayed: false
-description: All Conduktor references
+description: Reference documentation for all Conduktor resources
 ---
 
 import Tabs from '@theme/Tabs';
@@ -81,16 +81,16 @@ The resources presented here can be managed from the CLI, the Public API, Terraf
 ## Resources
 
 The resources are split into 3 categories:
-- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as
+- [Console Resources](/guides/reference/console-reference) are resources that exist only in Console such as
   - Cluster Configurations
   - Users, Groups & Permissions
   - Alerts, DataMasking Policies
-- [Kafka Resources](/platform/reference/resource-reference/kafka) are Kafka resources that gets created in the Kafka ecosystem
+- [Kafka Resources](/guides/reference/kafka-reference/kafka) are Kafka resources that gets created in the Kafka ecosystem
   - Topics
   - Subjects
   - Connectors
   - ...
-- [Self-service resources](/platform/reference/resource-reference/self-service)
+- [Self-service resources](/guides/reference/self-service-reference)
   - Application Groups
   - Topic Policies
   - Instance Service Accounts & ACLs

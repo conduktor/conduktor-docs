@@ -74,7 +74,7 @@ const config = {
             position: 'right',
           },
           {
-            label: 'Get started',
+            label: 'Free trial',
             to: 'https://conduktor.io/get-started', 
             position: 'right',
             className: 'navbar-free-trial-button',
