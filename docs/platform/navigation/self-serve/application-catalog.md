@@ -19,19 +19,19 @@ You can click on an Application to get to its details page.
 
 ![Application Catalog](assets/app-catalog.png)
 
-## Topic Subscription Management
+## Manage Topic subscriptions
 
-Application owners can review and manage topic subscription requests. When users request to subscribe to topics via the Topic Catalog, these requests appear in the Application Details page under a dedicated "Pending Requests" tab.
+When users request to subscribe to topics via the Topic Catalog, these requests will appear in the Application details page under a dedicated "Pending Requests" tab. 
 
-From this interface, application owners can approve or deny incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to better align with organizational requirements, adjusting read or write access as needed.
+From this interface, application owners can approve or deny incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to better align with organizational requirements, adjusting read or write access as required.
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
 
 For teams managing infrastructure as code, subscription requests can also be approved using the CLI with YAML configuration, which automatically closes the request and finalizes the subscription. [Read more on CLI reference](/platform/reference/cli-reference/).
 
-## Application Details
+## Application details
 
-The Application Details page summarizes all the information that relates to the Application:
+The Application details page summarizes all the information that relates to the Application:
 - Application General information
 - Application Instances & Ownership
 - Subscribed topics
