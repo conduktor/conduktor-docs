@@ -6,11 +6,11 @@ description: Reference Documentation for Topic related pages
 
 When you first land on a topic consume page, the default search is configured with **Most Recent 500 messages.**
 
-:::tip WHY
+:::note WHY
 The intention is to show you the most relevant messages, split across the partitions. This algorithm guarantees to return some messages irrespective of **when** the records were produced, which we believe is a good starting point when browsing a topic for the first time.
 :::
 
-:::info HOW
+:::note HOW
 In most cases, it will give you `500 / num_partitions` messages, per partition.  
 If your topic has:  
 **10** partitions, Most Recent **500** will give you **50** messages per partition.  

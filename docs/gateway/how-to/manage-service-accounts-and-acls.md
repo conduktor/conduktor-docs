@@ -16,13 +16,13 @@ In this scenario:
 
 We will use the [Gateway API](/gateway/reference/api-reference/) to create and manage service accounts, but the following guide works with the [CLI](/gateway/reference/cli-reference/) as well.
 
-:::tip
+:::note
 For local deployments, the Gateway API documentation is available at [`http://localhost:8888`](http://localhost:8888). In this guide, we will use the `service-account` and the `token` endpoints.
 :::
 
 In the `service-account` section of the Gateway API documentation, you'll notice that to create a service account on the Gateway, you have to chose between a `local` or `external` service account.
 
-:::info TL;DR
+:::note
 A `local` service account is managed by the Gateway itself, while an `external` service account is managed by an external OIDC identity provider.
 :::
 

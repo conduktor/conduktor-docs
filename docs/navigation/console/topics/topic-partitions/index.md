@@ -24,6 +24,6 @@ The **Per broker** view pivots the data to show for each broker:
 ### Empty Partition
 On the Per partition view, you can click on the bin icon to remove the Kafka records from this specific partition.
 
-:::tip
+:::note
 If you need to delete all records from all partitions, click on the `...` icon above the Per partition / Per broker switch, and select **Empty Topic**.
 :::

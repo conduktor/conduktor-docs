@@ -8,7 +8,7 @@ description: How to manage your Kafka clusters in Conduktor Console
 
 ## Overview
 
-:::tip
+:::note
 Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect
 :::
 

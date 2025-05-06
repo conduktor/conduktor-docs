@@ -50,7 +50,7 @@ There are 3 types of API Keys:
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::tip
+:::note
 Use a Short-lived User API Key to bootstrap the first Admin Key
 :::
 

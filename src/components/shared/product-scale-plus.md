@@ -1,3 +1,3 @@
-:::info[Scale Plus functionality]
+:::danger[Scale Plus functionality]
 This feature is available with Conduktor Scale Plus only.
 :::

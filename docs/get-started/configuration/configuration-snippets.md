@@ -11,7 +11,8 @@ The Conduktor Console can be configured using a YAML configuration file or throu
 Note you can also configure your clusters within the [Admin](/platform/navigation/settings/managing-clusters/) section of Console, whereby you can also upload certificates using the [certificate store](/platform/get-started/configuration/ssl-tls-configuration/#using-the-conduktor-certificate-store).
 
 ## GitOps: Managing Cluster Configurations
-:::tip
+
+:::note
 Our recommendation is to use the Console [API](/platform/reference/api-reference/) if you wish to configure clusters with a GitOps approach. 
 :::
 

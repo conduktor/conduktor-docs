@@ -32,11 +32,11 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](assets/auth0-callback.png)
 
-:::tip
+:::note
 You can find the .well-known at: `https://<domain>/.well-known/openid-configuration`.
 :::
 
-:::caution
+:::warning
 Do not forget to select how you want to connect via the **Connections** tab of your Auth0 application.
 :::
 

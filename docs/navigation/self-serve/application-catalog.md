@@ -4,7 +4,7 @@ title: Application Catalog
 description: Kafka Self-service Overview
 ---
 
-:::tip 
+:::note
 Self-service UI is almost entirely Read-only for now.  
 Use the CLI to interact with the product.
 :::

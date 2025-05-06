@@ -46,7 +46,7 @@ import OktaIssuer from './assets/okta-issuer.png';
 
 <img src={OktaIssuer} alt="Okta issuer" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-:::tip
+:::note
 You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-configuration`.
 :::
 

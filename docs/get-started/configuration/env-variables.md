@@ -217,7 +217,7 @@ Exception: `CDK_IN_CONF_FILE` is not supported.
 | `platform.https.key.path`  | Path to the SSL private key file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_KEY_PATH`  | false     | string  | ∅           |
 | `enable_product_metrics`   | In order to improve Conduktor Console, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection.                                                        | `CDK_ENABLE_PRODUCT_METRICS`   | false     | boolean | `true`      |
 
-:::tip
+:::note
 If you need more than what the free plan offers, you can [contact us](https://www.conduktor.io/contact/sales) for a trial license.
 :::
 

@@ -32,7 +32,7 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](assets/keycloak-client-secret.png)
 
-:::tip
+:::note
 You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
 :::
 

@@ -53,7 +53,7 @@ CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 </TabItem>
 </Tabs>
 
-:::tip
+:::note
 If your LDAP server is **Active Directory** and you get an "invalid user" error when trying to log in, try setting your `search-filter` to `'(sAMAccountName={0})'`.
 :::
 

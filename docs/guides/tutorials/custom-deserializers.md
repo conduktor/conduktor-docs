@@ -13,7 +13,7 @@ Importing your Custom Deserializers will allow Console to present to your users 
 
 It assumes that you already have your Custom Deserializer available and that you know how to configure it.
 
-:::tip
+:::note
 This is especially interesting if your Deserializer is presenting data in a JSON-ish form. This will allow you to exploit the full extend of Console's filtering and visualization capabilities.
 :::
 

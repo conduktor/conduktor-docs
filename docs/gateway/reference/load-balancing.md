@@ -34,7 +34,7 @@ Consider a scenario where you have a Gateway cluster composed of two Gateway nod
 
 This mapping will be made again for every client asking for metadata, and will be made again as soon as a Gateway node is added or removed from the Gateway cluster.
 
-:::tip
+:::note
 If you have specified a `GATEWAY_RACK_ID`, then the mapping will take this into consideration, and a Gateway node in the same rack as the Kafka broker will be assigned.
 :::
 

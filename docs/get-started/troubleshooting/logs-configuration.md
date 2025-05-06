@@ -91,12 +91,12 @@ The logs will be structured using following format :
 ```
 
 
-:::tip
+:::note
 The log `timestamp` is encoded in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 :::
 
 
-:::info
+:::note
 In case of structured logging enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
 :::
 
@@ -175,7 +175,7 @@ That will output :
 ]
 ```
 
-:::tip
+:::note
 The `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it.
 Meaning that filter `authenticator` will match `io.conduktor.authenticator` and `io.conduktor.authenticator.ConduktorUserProfile` loggers.
 :::
@@ -199,7 +199,7 @@ That will output the list of loggers impacted by the update:
 ]
 ```
 
-:::tip
+:::note
 Like the `GET` endpoint, the `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it.
 The `logLevel` is **case-insensitive** and can be one of `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `OFF`.
 :::

@@ -50,6 +50,9 @@ const config = {
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
+          /*admonitions: {
+            keywords: ['product'],  
+            extendDefaults: true,},*/
         },
         theme: {
           customCss: [require.resolve('./src/css/custom.css')],

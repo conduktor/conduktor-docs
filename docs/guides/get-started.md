@@ -25,7 +25,7 @@ Get started in a few minutes with the latest Conduktor Console Docker image.
    - [Option 1: Configure using a configuration file](#option-1-using-a-configuration-file)
    - [Option 2: Configure using environment variables](#option-2-using-environment-variables)
 
-:::tip
+:::note
 As the **Conduktor Playground**, also known as **Conduktor Cloud**, does not exist anymore, we recommend using the [embedded Kafka option](#option-1-start-with-an-embedded-kafka-cluster) to get started quickly.
 :::
 
@@ -71,7 +71,7 @@ Conduktor Console is compatible with all the Kafka providers, such as Confluent,
 
 In that regard, after having completed the onboarding wizard, go to the [**Clusters**](http://localhost:8080/settings/clusters) page, and click on **Add cluster**.
 
-:::tip
+:::note
 Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect!
 :::
 
@@ -81,8 +81,7 @@ From within the cluster configuration screen, fill the:
 - Authentication details
 - Additional properties
 
-
-:::tip
+:::note
 Configuring an **SSL/TLS** cluster? Use the [Conduktor Certificates Store](/guides/get-started/configuration/ssl-tls-configuration/#using-the-conduktor-certificate-store).
 :::
 

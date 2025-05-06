@@ -53,12 +53,11 @@ import JumpCloudClientIdSecret from './assets/jumpcloud-figure-6.png';
 You need to keep the `Client Secret` somewhere safe, as you will not have access to it again.
 :::
 
-
 ## Conduktor Console Configuration
 
 On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
 
-:::tip
+:::note
 You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
 :::
 

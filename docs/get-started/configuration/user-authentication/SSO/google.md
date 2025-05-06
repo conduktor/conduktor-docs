@@ -46,7 +46,7 @@ import GoogleClientIdSecret from './assets/google-client-id-secret.png';
 
 <img src={GoogleClientIdSecret} alt="Google Client ID Secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-:::tip
+:::note
 You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
 :::
 

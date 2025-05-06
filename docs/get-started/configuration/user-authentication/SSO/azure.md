@@ -34,7 +34,7 @@ You need to keep the `Value` somewhere safe, as you will not have access to it a
 
 ![](assets/azure-client-id.png)
 
-:::tip
+:::note
 You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
 :::
 

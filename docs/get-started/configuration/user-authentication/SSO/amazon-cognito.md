@@ -36,7 +36,7 @@ Make sure that a client secret will be generated. You can select `Confidential c
 ![](assets/cognito-user-pool-id.png)
 ![](assets/cognito-client-id-secret.png)
 
-:::tip
+:::note
 You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<user pool ID>/.well-known/openid-configuration`.
 :::
 
