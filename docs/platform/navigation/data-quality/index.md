@@ -38,7 +38,15 @@ You can create a data quality rule from the **Console UI**, or the **Conduktor C
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-todo
+You can create a Rule through the Console UI through the following steps.
+
+1. In the Trust section of the sidebar in Conduktor Console go to **Rules** and click **+New Rule**.
+1. Define the Rule details:
+   - Add a descriptive **name** for the Rule.
+   - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
+   - (Optional) Enter a **Description** to explain your Rule.
+1. Define the CEL expression for your Rule:
+   - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for more details.
 </TabItem>
 <TabItem value="cli" label="Conduktor CLI">
 You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a rule.
@@ -71,7 +79,20 @@ You can create a data quality policy from the **Console UI**, or the **Conduktor
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-todo
+You can create a Policy through the Console UI through the following steps.
+
+1. In the Trust section of the sidebar in Conduktor Console go to **Policies** and click **+New Policy**.
+1. Define the Policy details:
+   - Add a descriptive **name** for the Policy.
+   - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
+   - (Optional) Enter a **Description** to explain your Rule.
+1. Select rules to be used in the Policy:
+   - Every Policy must have at least one Rule
+   - You can also create new Rules from this page
+1. Select targets for the Policy:
+   - Every Policy must have at least one target
+   - A target consists of one or more topics on a specified Gateway
+   - You can either select specific topics, or specify a prefix like `orders-*`
 </TabItem>
 <TabItem value="cli" label="Conduktor CLI">
 You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a policy.
