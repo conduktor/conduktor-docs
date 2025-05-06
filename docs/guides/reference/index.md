@@ -1,6 +1,6 @@
 ---
+sidebar_position: 400
 title: Conduktor resource reference
-displayed: false
 description: Reference documentation for all Conduktor resources
 ---
 

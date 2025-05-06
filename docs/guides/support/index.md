@@ -1,5 +1,5 @@
 ---
-sidebar_position: 400
+sidebar_position: 600
 title: Get support
 description: Get help and support with using Conduktor.
 ---

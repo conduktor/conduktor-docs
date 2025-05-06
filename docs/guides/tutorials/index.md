@@ -1,7 +1,6 @@
 ---
-id: tutorials
+sidebar_position: 500
 title: Conduktor tutorials
-displayed: false
 description: Learn Conduktor by following hands-on tutorials. 
 ---
 
