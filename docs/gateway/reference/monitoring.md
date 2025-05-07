@@ -43,7 +43,7 @@ The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 localhost:8888/metrics
 ```
 
-Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it.
+Please be aware that when `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access the endpoint.
 
 For example, using the default credentials, you can access the metrics with the following command:
 
