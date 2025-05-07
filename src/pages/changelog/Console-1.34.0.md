@@ -30,7 +30,11 @@ Subscription request management has also been enhanced, giving application owner
 
 ### Conduktor Exchange
 
-### Quality of life improvements
+#### Extended authentication mechanisms for Partner Zones
+
+In addition to Gateway local service accounts, Partner Zones now support authentication with client IDs and secrets managed by your OAuth/OIDC provider.
+
+- ### Quality of life improvements
 
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
