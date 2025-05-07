@@ -43,7 +43,7 @@ The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 localhost:8888/metrics
 ```
 
-Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it.
+Please be aware that when `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access this endpoint.
 
 For example, using the default credentials, you can access the metrics with the following command:
 
@@ -87,7 +87,7 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 
 ### Gateway Lived Events
 
-Gateway Lived Events provide comprehensive monitoring metrics about the Gateway's runtime configuration and usage. These events capture data about interceptors, virtual clusters, topics, and other important components of your Gateway setup.
+Gateway Lived Events provide detailed monitoring metrics about the Gateway's runtime configuration and usage. These events capture data about interceptors, virtual clusters, topics, and other important components of your Gateway setup.
 
 #### Available Gateway Lived Event Metrics
 
