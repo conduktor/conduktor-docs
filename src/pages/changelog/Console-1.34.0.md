@@ -38,6 +38,7 @@ Subscription request management has also been enhanced, giving application owner
 ### Fixes
 - To avoid timeouts when indexing consumer groups, added a new configuration variable to limit the number of consumer groups requested per describe query.
 - Fixed an issue where in Topic Consume page, JQ filters against big numbers loses precision in Safari.
+- Fixed an issue where messages with big number fields lose precision when being copied over to be reprocessed in the Topic Produce page.
 
 ### Known issues
 
