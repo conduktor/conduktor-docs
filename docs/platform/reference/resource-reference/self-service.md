@@ -109,6 +109,10 @@ spec:
   topicPolicyRef:
     - "generic-dev-topic"
     - "clickstream-naming-rule"
+  policyRef:
+    - "generic-dev-topic"
+    - "clickstream-naming-rule"
+    - "generic-dev-connector"
   defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
   resources:
     - type: TOPIC
@@ -138,6 +142,7 @@ spec:
   - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchronized by the ApplicationInstance component.
   - Check dedicated section [Application-managed Service Account](#application-managed-service-account)
 - `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
+- `spec.policyRef` is **optional**, and if present must be a valid list of [SelfServicePolicy](#resource-policy)
 - `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.
 - `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
   - `spec.resources[].connectCluster` is **only mandatory** when `type` is `CONNECTOR`
@@ -239,6 +244,138 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ````
+
+### Resource Policy
+Resource Policies are used to enforce rules on the ApplicationInstance level.
+Typical use case include:
+- Safeguarding from invalid or risky Topic or Connector configuration
+- Enforcing naming convention
+- Enforcing metadata
+
+:::caution
+Resource policies are not applied automatically.
+You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
+:::
+
+**API Keys:** <AdminToken />  
+**Managed with:** <CLI /> <API /> <TF />  
+**Labels support:** <PartialLabelSupport />  
+
+```yaml
+---
+apiVersion: self-service/v1
+kind: ResourcePolicy
+metadata:
+    name: "generic-dev-topic"
+    labels:
+        business-unit: delivery
+spec:
+    targetKind: Connector
+    description: A policy to check some basic rule for a topic
+    rules:
+        - condition: spec.replicationFactor == 3
+          errorMessage: replication factor should be 3
+        - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+          errorMessage: retention should be between 1m and 1h
+---
+apiVersion: self-service/v1
+kind: SelfServicePolicy
+metadata:
+    name: "clickstream-naming-rule"
+    labels:
+        business-unit: delivery
+spec:
+    targetKind: Topic
+    description: A policy to check some basic rule for a topic
+    rules:
+        - condition: metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+          errorMessage: topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+        - condition: metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+          errorMessage: data-criticality should be one of C0, C1, C2
+```
+** SelfServicePolicy checks:**
+- `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
+- `spec.rules.condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be parsed and evaluated against the resource body for example 
+  - `spec.configs["retention.ms"]` to access the configs map
+  - `metadata.name` to access the resource name
+  - `metadata.labels["data-criticality"]` to access a labels value
+  - `int(string(spec.configs["retention.ms"]))` a valid expression to convert the string value of `spec.configs["retention.ms"]` to an int
+  - `metadata.labels["data-criticality"] in ["C0", "C1", "C2"]` is a valid expression to check if the label exists and is one of the values in the list
+  - `metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")` is a valid expression to check if the name matches the regex
+- `spec.rules.errorMessage` is a string that will be displayed in the Console UI when the condition is not met
+
+With the two policies declared above, the following Topic resource would succeed validation:
+````yaml
+---
+apiVersion: kafka/v2
+kind: Topic
+metadata:
+  cluster: shadow-it
+  name: click.event-stream.avro  # Checked by metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+  labels:
+    data-criticality: C2         # Checked by metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+spec: 
+  replicationFactor: 3           # Check by spec.replicationFactor == 3
+  partitions: 3
+  configs:
+    cleanup.policy: delete
+    retention.ms: '60000'        # Check int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+````
+
+#### Moving from TopicPolicy to ResourcePolicy
+If you want to replicate the behavior of the TopicPolicy with the ResourcePolicy, here is how you can transform the different policies:
+- 
+  ```yaml
+  spec.configs.retention.ms: 
+    constraint: Range
+    max: 3600000
+    min: 60000
+  ```
+  becomes
+  ```yaml
+  - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+    errorMessage: retention should be between 1m and 1h
+  ```
+- 
+  ```yaml
+  spec.replicationFactor:
+    constraint: OneOf
+    values: ["3"]
+  ```
+  becomes
+  ```yaml
+  - condition: spec.replicationFactor == 3
+    errorMessage: replication factor should be 3
+  ```
+- 
+  ```yaml
+  metadata.name:
+    constraint: Match
+    pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+  ```
+  becomes
+  ```yaml
+  - condition: metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+    errorMessage: topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+  ```
+- 
+  ```yaml
+  metadata.labels.data-criticality:
+    constraint: OneOf
+    values: ["C0", "C1", "C2"]
+  ```
+  becomes
+  ```yaml
+  - condition: metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+    errorMessage: data-criticality should be one of C0, C1, C2
+  ```
+
+#### Cel expressions TIPS
+
+There is multiple things you should consider when writing your CEL expressions in the context of Resource Policies:
+- For field like configuration value or label value we don't know in advance the type so sometimes if you want to compare it to a number you need to convert it to a string and then to an int like this `int(string(spec.configs["retention.ms"]))`
+- For field key that contains dot or dash you need to access them with the `[]` operator like this `metadata.labels["data-criticality"]`
+- For field like label key or config key that can be absent we recommend to add a check to see if the field is present or not `has(metadata.labels.criticality) && {your condition}` or `spec.configs.exists(k, k == "retention.ms") && {your condition}` if the field had a dot or an hypen for example
 
 ### Application Instance Permissions
 Application Instance Permissions lets teams collaborate with each other.
