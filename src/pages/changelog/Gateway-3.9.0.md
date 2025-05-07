@@ -40,6 +40,7 @@ When this value is notset, the Gateway will not start. You will be prompted with
 ```
 
 A breaking change of this feature, documented [here](GATEWAY_USER_POOL_SECRET_KEY environment variable now mandatory-2) is ... #TODO
+In this scenario, you will have to recreate your Gateway users. For more documentation on managing service account users, see [docs](https://docs.conduktor.io/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account)  
 
 ### New features
 
