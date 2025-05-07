@@ -20,7 +20,7 @@ tags: features,fixes
 #### Application topic subscribe workflow
 
 
-Application owners now have expanded capabilities for managing topic subscriptions across their organization. Using the topic catalog, owners can subscribe to topics outside their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. The new interface allows for flexible permission configuration, enabling Read or Write permissions for each subscription, and granular control over both user and service account permissions.
+Application owners now have the ability to manage topic subscriptions across their organization. Using the topic catalog, owners can subscribe to topics outside their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. The new interface allows for flexible permission configuration, enabling Read or Write permissions for each subscription, and granular control over both user and service account permissions.
 
 ![Topic catalog subscribe modal](/images/changelog/platform/v34/topic-catalog-subscribe.png)
 
