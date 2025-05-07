@@ -189,9 +189,12 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 
 ### Security provider
 
-| **Environment variable**    | **Description**                                                                                                                                                                             | **Default value** |
-|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
-| `GATEWAY_SECURITY_PROVIDER` | Specify your security provider. It can be: `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT`. Please note that `CONSCRYPT` doesn't support Mac OS with aarch64. | `DEFAULT`         |
+| **Environment variable**                         | **Description**                                                                                                                                                                                | **Default value** |
+|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| `GATEWAY_SECURITY_PROVIDER`                      | Specify your security provider. It can be: `DEFAULT` (from your JRE), `BOUNCY_CASTLE`, `BOUNCY_CASTLE_FIPS` and `CONSCRYPT`. Please note that `CONSCRYPT` doesn't support Mac OS with aarch64. | `DEFAULT`         |
+| ~~`GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`~~ | ~~If true, verify the existence of user mapping for the service account when the user connects in Non-Delegated SASL/PLAIN mode.~~                                                             | ~~`false`~~       |
+
+Please note that variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` is DEPRECATED in Gateway v3.9.0. The behaviour aligns with if it were set to `true` and therefore will verify the existence of user mapping for the service account when the user connects in Non-Delegated SASL/PLAIN mode.
 
 ## Cluster switching / failover
 
