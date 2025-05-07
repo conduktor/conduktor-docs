@@ -21,7 +21,7 @@ You can click on an Application to get to its details page.
 
 ## Manage Topic subscriptions
 
-When users request to subscribe to topics via the Topic Catalog, these requests will appear in the Application details page under a dedicated "Pending Requests" tab. 
+When users request to subscribe to topics via the Topic Catalog, these requests will appear in the Application catalog page under a dedicated "Access requests" tab. 
 
 From this interface, application owners can approve or deny incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to better align with organizational requirements, adjusting read or write access as required.
 
