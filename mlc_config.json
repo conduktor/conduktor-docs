@@ -45,5 +45,9 @@
     }
   ]
   ,
-  "aliveStatusCodes": [400, 403, 429, 200, 503, 0, 999]
+  "aliveStatusCodes": [400, 403, 429, 200, 503, 504, 0, 999],
+  "timeout": "20s",
+  "retryOn429": false,
+  "retryCount": 5,
+  "fallbackRetryDelay": "30s"
 }
