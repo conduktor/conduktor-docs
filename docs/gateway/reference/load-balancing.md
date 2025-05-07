@@ -30,7 +30,7 @@ When a client connects to one of the Gateway nodes to request metadata, the foll
 
 Consider a scenario where you have a Gateway cluster composed of two Gateway nodes, connected to a Kafka cluster with three brokers. The client's metadata discovery process might look like this:
 
-![Internal Load Balancing](./images/internal-lb.png)
+![Internal Load Balancing]./images/internal-lb.png
 
 This mapping will be made again for every client asking for metadata, and will be made again as soon as a Gateway node is added or removed from the Gateway cluster.
 
@@ -42,7 +42,7 @@ If you have specified a `GATEWAY_RACK_ID`, then the mapping will take this into 
 
 If we add a new client to the diagram above, here is what it could look like:
 
-![Internal Load Balancing Multiple Clients](./images/multiple-clients.png)
+![Internal Load Balancing Multiple Clients]images/multiple-clients.png
 
 The process is repeated but will likely result in a different mapping compared to that of Client 1 due to the random assignment performed by the Gateway for the client.
 
@@ -62,7 +62,7 @@ This would look like below, where:
 2. The load balancer forwards each request to one of the Gateway nodes, regardless of the port
 3. The selected Gateway node, which knows which broker is the leader of each partition, forwards the request to the appropriate Kafka broker
 
-![External Load Balancing](./images/external-lb.png)
+![External Load Balancing]/images/external-lb.png
 
 :::warning
 When using an external load balancer, you **must** configure the `GATEWAY_ADVERTISED_LISTENER` of the Gateway nodes to the Load Balancer's hostname. If this is not done, applications will attempt to connect directly to the Gateway, bypassing the Load Balancer.

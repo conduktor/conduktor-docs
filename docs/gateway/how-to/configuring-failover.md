@@ -43,7 +43,7 @@ Conduktor Gateway acts as a 'hot-switch' to the secondary Kafka cluster, elimina
 
 Note that to initiate failover, it must be triggered through an API request to every Gateway instance. The Conduktor team can support you in finding the best solution for initiating failover, depending on your deployment specifities.
 
-![Failover](assets/failover-docs.png)
+![Failover]assets/failover-docs.png
 
 ### Configuring Gateway
 

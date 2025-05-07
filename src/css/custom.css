@@ -605,3 +605,7 @@ table tr:nth-child(2n) {
   background-color: #072027;
   text-decoration: none;
 }
+
+.navbar__items--right > :last-child {
+  padding-right: 1rem !important; /* Adjust the value as needed */
+}

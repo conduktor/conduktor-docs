@@ -15,4 +15,4 @@ The Conduktor Gateway HTTP API can be used to manage your organizations intercep
 
 From within the API documentation, you can **download** the OpenAPI specification. This allows you to import the OpenAPI specification into tools such as [Postman](https://www.postman.com/).
 
-![api-specification download.png](./images/gw-api-download.png)
+![api-specification download.png]./images/gw-api-download.png

@@ -6,7 +6,7 @@ description: Securing Conduktor Gateway
 
 # Connecting Gateway to Kafka
 
-![Gateway to Kafka security](images/gateway-to-kafka-security.png)
+![Gateway to Kafka security]images/gateway-to-kafka-security.png
 
 
 Gateway depends on a 'backing' Kafka cluster for its operation.
