@@ -15,14 +15,15 @@ tags: features,fixes
 
 ### Breaking changes
 
-#### GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED environment variable is deprecated
+#### Gateway Service Accounts are now always required when using PLAIN tokens
 
-Previously, it was configurable whether the presence of a user mapping to a local service account was required, when a user connected in Non-Delegated SASL/PLAIN mode.
-Furthermore, the default value was `false`, meaning unless specifically stated otherwise, the user mapping was not required.
+GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED environment variable is deprecated
+Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are for.
+This could be optionally configured to be required using an environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`. This environment variable is now deprecated and will behave as if this was set to `true`, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
-If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and a local service account is not present, the result is a breaking change.
+If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and your clients are connecting using tokens without a service account created, the result is a breaking change. As part of our onboarding experience this is not the recommended setup.
 
-To amend this, you must create a local service account. We can achieve this like below:
+To amend this, create the local service account. We can achieve this like below, adjusting your admin API credentials, host, name:
 
 ```bash
 curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account \
