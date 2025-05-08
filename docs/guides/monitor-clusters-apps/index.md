@@ -1,5 +1,6 @@
 ---
 sidebar_position: 280
-title: Monitor clusters and applications
+id: monitor-clusters-apps
+title: Monitor clusters and apps
 description: Monitor your Kafka clusters and applications using Conduktor
 ---

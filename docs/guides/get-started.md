@@ -1,5 +1,6 @@
 ---
 sidebar_position: 20
+id: get-started
 title: Get started
 description: Get started with Conduktor
 ---

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 240
-id: concepts
+id: index
 title: Conduktor concepts
 description: Learn Conduktor terminology
 ---

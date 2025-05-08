@@ -1,8 +1,10 @@
 ---
 sidebar_position: 340
-title: Third party data sharing
+title: Share data
 description: Share data securely with external partners using Conduktor
 ---
+
+Third-party data sharing can be done securely and selectively using Conduktor.
 
 import ProductExchange from '@site/src/components/shared/product-exchange.md';
 

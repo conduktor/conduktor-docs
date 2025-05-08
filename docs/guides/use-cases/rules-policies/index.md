@@ -1,6 +1,6 @@
 ---
 sidebar_position: 380
-title: Rules and Policies
+title: Define Rules and Policies
 description: Ensure data quality using Conduktor
 ---
 

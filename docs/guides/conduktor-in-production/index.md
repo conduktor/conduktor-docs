@@ -1,5 +1,6 @@
 ---
 sidebar_position: 30
+id: index
 title: Conduktor in production 
 description: Deploy Conduktor to production
 ---
