@@ -1,6 +1,3 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
-
 const { themes } = require('prism-react-renderer')
 const lightCodeTheme = themes.github
 const darkCodeTheme = themes.dracula
@@ -45,14 +42,17 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./platform_sidebars.js'),
+          sidebarPath: require.resolve('./guides_sidebars.js'),
           sidebarCollapsed: true,
           sidebarCollapsible: true,
-          routeBasePath: '/platform',
-          path: './docs/platform',
+          routeBasePath: '/guides',
+          path: './docs/guides',
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
+          /*admonitions: {
+            keywords: ['product'],  
+            extendDefaults: true,},*/
         },
         theme: {
           customCss: [require.resolve('./src/css/custom.css')],
@@ -66,54 +66,140 @@ const config = {
     ({
       navbar: {
         logo: {
-          alt: 'Conduktor Docs logo',
-          src: 'assets/svgs/logo.svg',
+          alt: 'Conduktor logo',
+          src: '/assets/svgs/logo.svg',
+          href: 'https://conduktor.io', 
+          target: '_blank',
         },
         items: [
           {
-            type: 'custom-navbar',
-            position: 'left',
+            type: 'search',
+            position: 'right',
           },
+          {
+            label: 'Get started',
+            to: 'https://conduktor.io/get-started', 
+            position: 'right',
+            className: 'navbar-free-trial-button',
+          },
+          {
+            label: 'Home',
+            to: '/', 
+          },
+          {
+            label: 'Guides',
+            position: 'left',
+            to: '/guides',
+            activeBaseRegex: `/guides/`,
+          },
+          {
+            label: 'Tutorials',
+            position: 'left',
+            to: '/guides/tutorials',
+            activeBaseRegex: `/docs/guides/tutorials/`,
+          },
+          {
+            label: 'Concepts',
+            position: 'left',
+            to: '/guides/conduktor-concepts',
+            activeBaseRegex: `/docs/guides/conduktor-concepts/`,
+          },
+          {
+            label: 'Resource reference',
+            position: 'left',
+            to: '/guides/reference',
+            activeBaseRegex: `/docs/guides/reference/`,
+          },
+          {
+            label: 'API reference',
+            position: 'left',
+            href: 'https://developers.conduktor.io',
+            target: '_blank',
+          },
+          {
+            label: 'Releases',
+            position: 'left',
+            to: '/changelog',
+            activeBaseRegex: `/changelog/`,
+          },
+          {
+            type: 'dropdown',
+            label: 'Support',
+            position: 'left',
+            items: [
+              {
+                label: 'Options',
+                to: '/guides/support',
+              },            
+              {
+                label: 'Upgrade',
+                to: '/guides/support/upgrade',
+              },
+              {
+                label: 'Version policy',
+                to: '/support',
+              },
+              {
+                label: 'Version matrix',
+                to: '/guides/support/version-matrix',
+              },
+              {
+                label: 'Go to support site',
+                to: 'https://support.conduktor.io',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+            ],
+          },   
         ],
+      },
+      algolia: {
+        appId: process.env.REACT_APP_ALGOLIA_APPLICATION_ID,
+        apiKey: process.env.REACT_APP_ALGOLIA_API_KEY, // This should be your search-only API key, not admin key
+        indexName: process.env.REACT_APP_ALGOLIA_INDEX,
+        contextualSearch: true,
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Platform',
+            title: 'Conduktor guides',
             items: [
               {
                 label: 'Overview',
-                to: '/platform',
+                to: '/guides',
               },
               {
-                label: 'Installation',
-                to: '/platform/get-started/installation/hardware',
+                label: 'Get started',
+                to: '/guides/get-started',
               },
               {
-                label: 'Configuration',
-                to: 'platform/get-started/configuration/introduction',
-              },
-              {
-                label: 'FAQ',
-                to: '/faq',
+                label: 'Conduktor in production',
+                to: 'guides/conduktor-in-production',
               },
             ],
           },
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Platform',
-                to: '/platform',
+                label: 'Release notes',
+                to: '/changelog',
               },
               {
-                label: 'Gateway',
-                to: '/gateway',
+                label: 'API reference',
+                href: 'https://developers.conduktor.io',
+                target: '_blank',
               },
               {
-                label: 'Desktop',
-                to: '/desktop',
+                label: 'Kafkademy',
+                href: 'https://learn.conduktor.io/kafka',
+                target: '_blank',
+              },
+              {
+                label: 'Conduktor blog',
+                href: 'https://conduktor.io/blog',
+                target: '_blank',
               },
             ],
           },
@@ -121,16 +207,19 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Release notes',
-                href: '/changelog',
+                label: 'Support site',
+                href: 'https://support.conduktor.io',
+                target: '_blank',
               },
               {
                 label: 'GitHub',
                 href: 'https://github.com/conduktor',
+                target: '_blank',
               },
               {
                 label: 'Slack',
                 href: 'https://www.conduktor.io/slack',
+                target: '_blank',
               },
             ],
           },
@@ -142,6 +231,10 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['bash', 'diff', 'json', 'hcl'],
       },
+      pages: {
+        path: 'src/pages',
+      },
+      
       colorMode: {
         disableSwitch: true,
       },
@@ -160,20 +253,6 @@ const config = {
       },
     ],
     'docusaurus-plugin-sass',
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'desktop',
-        sidebarPath: require.resolve('./desktop_sidebars.js'),
-        sidebarCollapsed: true,
-        sidebarCollapsible: true,
-        routeBasePath: '/desktop',
-        exclude: ['./api/**/*'],
-        path: './docs/desktop',
-        lastVersion: 'current',
-        onlyIncludeVersions: ['current'],
-      },
-    ],
     [
       '@docusaurus/plugin-content-docs',
       {

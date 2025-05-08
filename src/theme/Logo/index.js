@@ -35,7 +35,9 @@ export default function Logo(props) {
   const isBrowser = useIsBrowser()
   const pathname = isBrowser ? window.location.pathname : undefined
   const { imageClassName, titleClassName, ...propsRest } = props
-  const logoLink = useBaseUrl(pathname ? (pathname !== '/' ? '/platform' : '/') : logo?.href || '/')
+  // const logoLink = useBaseUrl(pathname ? (pathname !== '/' ? '/platform' : '/') : logo?.href || '/')
+  const logoLink = logo?.href || '/'
+
   // If visible title is shown, fallback alt text should be
   // an empty string to mark the logo as decorative.
   const fallbackAlt = navbarTitle ? '' : title

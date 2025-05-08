@@ -9,7 +9,7 @@ import BrowseByUsecase from "@site/src/features/home/organisms/BrowseByUsecase";
 import UsefulLinks from "@site/src/features/home/organisms/UsefulLinks";
 
 const META_DESCRIPTION =
-  'Find Documentation and FAQs for all Conduktor products, along with a weekly changelog and our Platform roadmap.'
+  'Find user guides and release notes for all Conduktor products.'
 
 export default function Home(): JSX.Element {
   useFluidContainer()
@@ -17,7 +17,7 @@ export default function Home(): JSX.Element {
   return (
     <Fragment>
       <Head>
-        <title>Conduktor Documentation</title>
+        <title>Conduktor documentation</title>
         <meta property="og:title" content="Conduktor Documentation" />
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta name="twitter:description" content={META_DESCRIPTION} />

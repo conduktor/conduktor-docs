@@ -93,7 +93,7 @@ With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate e
 
 As a result, Gateway extracts the user identity from the TLS certificate, which can be mapped to an external Service Account in Gateway.
 
-:::tip
+:::note
 The username will be of the form `CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown`.
 You can change that by setting the `GATEWAY_SSL_PRINCIPAL_MAPPING_RULES` environment variable to a customized rule. By default, it extracts the certificate distinguished name.
 

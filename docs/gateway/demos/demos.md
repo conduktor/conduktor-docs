@@ -8,7 +8,7 @@ description: Demos for Conduktor Gateway
 
 Here are some demos to get you started with Conduktor Gateway. Explore the documentation folders on the left to have a look at other scenarios.
 
-:::tip
+:::note
 
 As Gateway is quite a technical product, we recommend you to [book a demo](https://www.conduktor.io/contact/sales/?utm_source=docs&utm_medium=website) with us. We'll be happy to help you and your team to get started with the best practices and the best setup for your use case.
 :::
@@ -59,7 +59,7 @@ Question about the performance? We get you cover!
 - [Throughput Impact](./performance/throughput)
 
 
-:::tip
+:::note
 
 As Gateway is quite a technical product, we recommend you to [book a demo](https://www.conduktor.io/contact/sales/?utm_source=docs&utm_medium=website) with us. We'll be happy to help you and your team to get started with the best practices and the best setup for your use case.
 :::
