@@ -39,7 +39,7 @@ For more information on creating service accounts checkout the guide [Manage Ser
 Previous PLAIN tokens could be issued using the default signing key, or users could define the signing key using the environment variables `GATEWAY_USER_POOL_SECRET_KEY`. This is now a **required variable**, a default value is not provided for signing tokens and Gateway won't start. You'll receive an error message in the logs:
 
 ```text
-"userPoolConfig.jwt Should not be null.
+"Invalid value at 'userPoolConfig.jwt.secretKey. Should not be null.
  Have you checked environment variable GATEWAY_USER_POOL_SECRET_KEY is set?"
 ```
 
