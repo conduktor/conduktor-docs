@@ -30,7 +30,11 @@ Subscription request management has also been enhanced, giving application owner
 
 ### Conduktor Exchange
 
-### Quality of life improvements
+#### Extended authentication mechanisms for Partner Zones
+
+In addition to Gateway local service accounts, Partner Zones now support authentication with client IDs and secrets managed by your OAuth/OIDC provider.
+
+- ### Quality of life improvements
 
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
@@ -38,6 +42,7 @@ Subscription request management has also been enhanced, giving application owner
 ### Fixes
 - To avoid timeouts when indexing consumer groups, added a new configuration variable to limit the number of consumer groups requested per describe query.
 - Fixed an issue where in Topic Consume page, JQ filters against big numbers loses precision in Safari.
+- Fixed an issue where messages with big number fields lose precision when being copied over to be reprocessed in the Topic Produce page.
 
 ### Known issues
 
