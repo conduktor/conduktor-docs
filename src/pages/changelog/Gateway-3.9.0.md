@@ -10,7 +10,9 @@ tags: features,fixes
 
 - [Breaking changes](#breaking-changes)
 - [New features](#new-features)
-  - [Enhanced Confluent Cloud authentication with Service Account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping) 
+    - [Enhanced Confluent Cloud authentication with Service Account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping)
+- [Fixes](#fixes)
+    - [HashiCorp Vault token refresh resilience](#hashicorp-vault-token-refresh-resilience)
 
 ### Breaking changes
 
@@ -18,10 +20,24 @@ tags: features,fixes
 
 #### Enhanced Confluent Cloud authentication with Service Account mapping
 
-When using Confluent Cloud authentication with delegated authentication, Gateway now supports automatically resolving API keys to their associated Service Account. This feature addresses key limitations of the previous approach:
+When using Confluent Cloud authentication with delegated authentication, Gateway now supports automatically resolving
+API keys to their associated Service Account. This feature addresses key limitations of the previous approach:
 
 - **Improved interceptor targeting**: Interceptors can now target Service Accounts directly
 - **Enhanced chargeback capabilities**: Usage tracking by Service Account instead of API Key
 - **Elimination of manual mappings**: Removes the need for administrators to maintain user mappings
 
 [Find out more about Gateway Principal Resolver for Confluent Cloud](https://docs.conduktor.io/gateway/interceptors/authentication/client-authentication/#principal-resolver)
+
+### Fixes
+
+#### HashiCorp Vault token refresh resilience
+
+Fixed a problem where Gateway would stop scheduling HashiCorp Vault token refreshes after encountering an error during
+the refresh process. Previously, if Gateway attempted to refresh its Vault token during a Vault outage, it would fail to
+recover even after Vault became available again, requiring a Gateway restart.
+
+With this fix, Gateway will now:
+
+- Continue scheduling token refreshes on the regular interval
+- Automatically recover once Vault becomes available again
