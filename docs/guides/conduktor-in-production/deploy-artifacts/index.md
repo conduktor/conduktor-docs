@@ -1,5 +1,6 @@
 ---
 sidebar_position: 50
+id: index
 title: Deploy Conduktor artifacts
 description: Conduktor artifact overview
 ---

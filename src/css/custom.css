@@ -613,7 +613,7 @@ table tr:nth-child(2n) {
 /* Non-clickable heading */
 .sidebar-section-heading {
   display: block;
-  padding-left: var(--ifm-menu-link-padding-horizontal);
+  padding-left: none;
   padding-right: var(--ifm-menu-link-padding-horizontal);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 80
+id: index
 title: Automate
 description: Automate Conduktor and Kafka usage
 ---
