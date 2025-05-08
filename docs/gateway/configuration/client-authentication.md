@@ -428,20 +428,9 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 When using Confluent Cloud authentication with delegated authentication, Gateway supports automatically resolving API keys to their associated Service Account. This feature enhances security and improves usability by working with Service Account principals instead of raw API keys.
 
-#### Configuration
+For configuration details, see the [Principal Resolver environment variables](/gateway/configuration/env-variables#principal-resolver).
 
-To enable this feature, use the following environment variables:
-
-| Environment Variable                      | Description                                                                   | Default Value      |
-|-------------------------------------------|-------------------------------------------------------------------------------|--------------------|
-| `GATEWAY_PRINCIPAL_RESOLVER`              | The principal resolver to use. Currently only `CONFLUENT_CLOUD` is supported. |                    |
-| `GATEWAY_CONFLUENT_CLOUD_API_KEY`         | The Confluent Cloud API key used for accessing the Confluent Cloud API.       |                    |
-| `GATEWAY_CONFLUENT_CLOUD_API_SECRET`      | The Confluent Cloud API secret used for accessing the Confluent Cloud API.    |                    |
-| `GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE`      | The number of principals to cache.                                            | `1000`             |
-| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds.                                        | `86400000` (1 day) |
-
-#### Example Configuration
-
+Gateway configuration:
 Using environment variables:
 
 ```yaml

@@ -181,13 +181,13 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 
 ### Principal Resolver
 
-| **Environment variable**                  | **Description**                                                               |
-|-------------------------------------------|-------------------------------------------------------------------------------|
-| `GATEWAY_PRINCIPAL_RESOLVER`              | The principal resolver to use. Currently only supported is `CONFLUENT_CLOUD`. |
-| `GATEWAY_CONFLUENT_CLOUD_API_KEY`         | The Confluent Cloud API key.                                                  |
-| `GATEWAY_CONFLUENT_CLOUD_API_SECRET`      | The Confluent Cloud API secret.                                               |
-| `GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE`      | The number of principals to cache. Default is `1000`.                         |
-| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds. Default is `86400000` (1 day).         | 
+| **Environment variable**                  | **Description**                                                               | **Default value**  |
+|-------------------------------------------|-------------------------------------------------------------------------------|--------------------|
+| `GATEWAY_PRINCIPAL_RESOLVER`              | The principal resolver to use. Currently only supported is `CONFLUENT_CLOUD`. |                    |
+| `GATEWAY_CONFLUENT_CLOUD_API_KEY`         | The Confluent Cloud API key.                                                  |                    |
+| `GATEWAY_CONFLUENT_CLOUD_API_SECRET`      | The Confluent Cloud API secret.                                               |                    |
+| `GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE`      | The number of principals to cache.                                            | `1000`             |
+| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds.                                        | `86400000` (1 day) | 
 
 ### Plain authentication
 
