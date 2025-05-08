@@ -31,6 +31,7 @@ Before using data quality, you have to:
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
 - be logged in as an admin to Console UI, or using an admin token for the CLI
+- in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 ## Create a rule
 
