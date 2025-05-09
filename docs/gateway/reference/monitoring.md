@@ -87,9 +87,9 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 
 ### Gateway Lived Events
 
-Gateway Lived Events provide comprehensive monitoring metrics about the Gateway's runtime configuration and usage. These events capture data about interceptors, virtual clusters, topics, and other important components of your Gateway setup.
+Gateway Lived Events provide comprehensive monitoring metrics about the Gateway's runtime configuration and usage. These events capture data about interceptors, virtual clusters, topics, and other important components of your Gateway setup. The Prometheus metrics are detailed below.
 
-You can access Gateway Lived Events metrics either through Prometheus (as listed below) or via the REST API endpoint:
+You can access Gateway Lived Events metrics in Prometheus format from the endpoint mentioned previously, or a JSON response via the dedicated REST API endpoint:
 
 ```bash
 GET /gateway/v2/analytics/lived
@@ -130,4 +130,3 @@ For more details about using this API endpoint, refer to the [Gateway API docume
 |-------------------------------------------------------------------------------------------|---------------------------------------|
 | Gateway deployment information (with version, commit, OS, deployment method labels)       | `gateway_lived_event_info`            |
 | Gateway connection information (with security protocol, authentication mechanisms labels) | `gateway_lived_event_connection_info` |
-`
