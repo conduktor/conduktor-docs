@@ -34,11 +34,6 @@ Specify your main and upstream cluster configurations, along with a `gateway.rol
 
 ```yaml title="cluster-config.yaml"
 config:
-  main:
-    bootstrap.servers: '<main_bootstrap_servers>:9092'
-    security.protocol: 'SASL_SSL'
-    sasl.mechanism: 'PLAIN'
-    sasl.jaas.config: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<main_api_key>" password="<main_api_secret>";'
   clusterA:
     bootstrap.servers: '<clusterA_bootstrap_servers>:9092'
     security.protocol: 'SASL_SSL'
@@ -65,10 +60,10 @@ GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /cluster-config.yaml}'
 Configure your main and upstream clusters through environment variables, defined in the Gateway container:
 
 ```yaml
-KAFKA_MAIN_BOOTSTRAP_SERVERS: '<main_bootstrap_servers>:9092'
-KAFKA_MAIN_SECURITY_PROTOCOL: 'SASL_SSL'
-KAFKA_MAIN_SASL_MECHANISM: 'PLAIN'
-KAFKA_MAIN_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<main_api_key>" password="<main_api_secret>";'
+KAFKA_BOOTSTRAP_SERVERS: '<main_bootstrap_servers>:9092'
+KAFKA_SECURITY_PROTOCOL: 'SASL_SSL'
+KAFKA_SASL_MECHANISM: 'PLAIN'
+KAFKA_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<main_api_key>" password="<main_api_secret>";'
 
 KAFKA_CLUSTERA_BOOTSTRAP_SERVERS: '<clusterA_bootstrap_servers>:9092'
 KAFKA_CLUSTERA_SECURITY_PROTOCOL: 'SASL_SSL'
