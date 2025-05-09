@@ -6,6 +6,9 @@ description: Securing Conduktor Gateway
 
 # Connecting Gateway to Kafka
 
+![Gateway to Kafka security](images/gateway-to-kafka-security.png)
+
+
 Gateway depends on a 'backing' Kafka cluster for its operation.
 
 Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster. If you have not done so already it is best to set the [Client to Gateway](/gateway/configuration/client-authentication) configuration variables, that way the Gateway will know how to interact with Kafka based on how authentication is being provided by the clients, the two are related because Gateway must know whether you wish to use [delegated authentication](#delegated-authentication) or not.

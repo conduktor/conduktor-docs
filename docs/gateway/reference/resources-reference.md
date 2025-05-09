@@ -110,7 +110,7 @@ metadata:
   name: enforce-partition-limit
   scope:
     vCluster: null
-    goup: null
+    group: null
     username: null
 spec:
 

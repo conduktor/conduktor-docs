@@ -56,6 +56,7 @@ Both schema-based and list-based encryption plugins have their configuration, bu
 | `externalStorage`                                                              | Boolean                                          | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.                 |
 | `kmsConfig`                                                                    | [KMS](#kms-configuration)                        |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
 | `enableAuditLogOnError`                                                        | Boolean                                          | true            | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                                                                                                                                         |
+| `compressionType`                                                             | [Enum](#compression-type)                        | none            | The data is compressed before encryption (only for data configured with full payload encryption)                                                                                                                                                                                                                                                        |
 | [**List-Based Properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
 | `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
 | `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
@@ -198,7 +199,15 @@ Keys are string that starts with a letter, followed by a combination of letters,
 -   `XCHACHA20_POLY1305`
 -   `AES256_GCM`
 
-## Decryption Configuration - *How to decrypt?*
+### Supported compression types
+
+- `none`
+- `gzip`
+- `snappy`
+- `lz4`
+- `zstd`
+
+## Decryption configuration
 
 Now that your fields or payload are encrypted, you can decrypt them using the interceptor `DecryptPlugin`.
 
@@ -277,18 +286,12 @@ Keys in In-Memory KMS are not persisted, this means that if you do one of the fo
 
 This KMS type is effectively a delegated storage model and is designed to support encryption use cases which generate unique secret Ids per record or even field (typically via the Mustache template support for a secret Id). This technique is used in crypto-shredding type scenarios e.g. encrypting records per user with their own key.  
 
-It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level keys in the Gateway managed store.
-
- For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key Ids.
-
-:::warning[Preview functionality]
-This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
-:::
+It provides the option to leverage your KMS for security via a single master key, but efficiently and securely store many per-record level encryption keys (DEKs) in the Gateway managed store. For some architectures this can provide performance and cost savings for encryption use cases which generate a high volume of secret key Ids.
 
 | Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
-
+| `maxKeys` | Number | The maximum number of secret Id references to be cached in memory for re-use. To avoid creating new encryption keys (DEKs), this needs to be larger than the total number of expected secret Ids. By default, it's the same as `maxKeys` in cache config or 1000,000, if `maxKeys` isn't set. |
 
 The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.
 
@@ -301,7 +304,8 @@ Here's a sample configuration for the Gateway KMS using a Vault-based master key
 ```
 "kmsConfig": {
    "gateway": {
-      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key"
+      "masterKeyId": "vault-kms://vault:8200/transit/keys/applicants-1-master-key".
+      "maxKeys" : 10000000
    },
    "vault": {
       "uri": "http://vault:8200",
@@ -324,9 +328,27 @@ This can then be used to encrypt a field using `gateway-kms://` as the secret ke
 }
 ```
 
-That will generate a specific key for this field and encrypt it, then store it in Gateway storage (under `fieldKeySecret-name-{{record.key}}`). The stored key is also encrypted for security using `masterKeyId` secret in Vault. 
+When processing a record for the first time using this configuration, Gateway will 
+1. generate a DEK to encrypt the field data with
+2. turn it into an EDEK by encrypting it with the `masterKeyId` secret from vault 
+3. store the EDEK in Gateway storage. 
 
-Multiple records produced against this config would cause multiple keys to appear in the Gateway storage (due to the `{{record.key}}` template, giving a unique key for each Kafka record key).  However, there will only be one key stored in the Vault KMS (which is used to secure then entire setup).
+If a record key was `123456`, the associated EDEK would be stored on a kafka record with the following key:
+
+```
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"<UNIQUE_PER_EDEK_GENERATED>"}
+```
+
+Multiple records produced against this config would cause multiple EDEKs to be saved in the Gateway storage (due to the `{{record.key}}` template giving a unique key for each Kafka record key). 
+
+If there are multiple Gateway nodes running, it's also possible for multiple DEKs/EDEKs to be generated for the same record key. Two nodes processing different records with the same record key at the same time could both assume they were generating a DEK/EDEK for the first time. In this scenario, there would be two EDEKs in the Gateway storage with the same `keyId` but they would each have a different `UUID`. For example.
+
+```
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"2cd8125a-b55f-4214-a528-be3c9b47519b"}
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"d8fcccf3-8480-4634-879a-48deed4e0e72"}
+```
+
+Nonetheless, there will **only ever be one master key stored in the vault KMS**, which is used to encrypt every DEK.
 
 This feature provides flexibility for your KMS storage and key management setups - and is particularly useful for high volume crypto shredding.
 
@@ -352,6 +374,22 @@ Here's a sample setup:
    }
 }
 ```
+
+#### Crypto Shredding
+
+When using the `gateway-kms` secret key Id type, you can efficiently crypto shred EDEKs in the Gateway storage, so that anyone using the decryption plugin will immediately lose access to the associated encrypted data. 
+
+To do this, scan the Gateway storage Kafka topic (by default, `_conduktor_gateway_encryption_keys`) for every message matching the associated qualified secret Id.
+
+For example, a qualified secretId of `gateway-kms://fieldKeySecret-name-123456` might have the following keys:
+```
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"2cd8125a-b55f-4214-a528-be3c9b47519b"}
+{"algorithm":"AES128_GCM","keyId":"gateway-kms://fieldKeySecret-name-123456","uuid":"d8fcccf3-8480-4634-879a-48deed4e0e72"}
+```
+
+Publishing a message for each of these keys back to the same topic with a value of `null` (i.e. a tombstone) will effectively perform Crypto Shredding.
+
+This process **won't prevent the creation of new keys** if new messages are sent using the same record key;  it only ensures that messages using the crypto shredded keys remain unrecoverable.
 
 ### Vault KMS
 

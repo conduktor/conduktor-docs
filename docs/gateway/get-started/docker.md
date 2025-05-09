@@ -10,7 +10,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 Conduktor Gateway is provided as a Docker image and [Helm chart](../kubernetes).
 
-It should be deployed and managed in the best way for your organization and use case(s). This could be a single container, or more likely, multiple Gateway instances should be deployed and scaled to meet your needs. Optionally, the instances could be deployed behind a [load balancer](../reference/load-balancing.md).
+It should be deployed and managed in the best way for your organization and use case(s). This could be a single container, or more likely, multiple Gateway instances should be deployed and scaled to meet your needs. Our recommendation is to [deploy with Kubernetes](/platform/get-started/installation/get-started/kubernetes).
 
 Use this quick start guide to help you get started.
 

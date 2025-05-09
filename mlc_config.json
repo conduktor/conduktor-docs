@@ -36,5 +36,14 @@
       
     }
   ],
-  "aliveStatusCodes": [400, 403, 200, 503, 0, 999]
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+      "headers": {
+        "Accept-Encoding": "zstd, br, gzip, deflate"
+       }
+    }
+  ]
+  ,
+  "aliveStatusCodes": [400, 403, 429, 200, 503, 0, 999]
 }

@@ -25,8 +25,8 @@ tags: features,fix
 
 #### Conduktor SQL
 
-:::info
-This feature is in [**Beta**](/platform/guides/configure-sql) and is subject to change as we enhance it further.
+:::info[Preview functionality]
+This is a [preview feature](/platform/guides/configure-sql) and is subject to change as we continue working on it.
 
 It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 :::
@@ -125,7 +125,7 @@ spec:
 
 Starting today, we recommend you use the new alerts available under Brokers and Topics pages.
 
-:::caution Deprecation notice
+:::caution[Deprecation notice]
 **We do not plan to migrate existing alerts to the new Alert model.**  
 
 Original alerts will be removed in the near future in favor of the new ones.  

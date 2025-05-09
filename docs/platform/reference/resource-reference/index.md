@@ -40,6 +40,18 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 ## Overview
 
 The Resources Reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.   
@@ -54,17 +66,10 @@ The resources presented here can be managed from the CLI, the Public API, Terraf
 - CLI, Terraform and Public API uses an API Key to validate permissions.
 - Console UI relies on RBAC model to validate what the user can do.
 
-## Limitations
-
-We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.
-
-Check the availability matrix on each resource using the following labels: 
-- <CLI /> <API /> <TF /> <GUI />  
-
 ## Resources
 
 The resources are split into 3 categories:
-- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as 
+- [Console Resources](/platform/reference/resource-reference/console) are resources that exist only in Console such as
   - Cluster Configurations
   - Users, Groups & Permissions
   - Alerts, DataMasking Policies
@@ -73,4 +78,48 @@ The resources are split into 3 categories:
   - Subjects
   - Connectors
   - ...
-- [Self-Service](/platform/reference/resource-reference/self-service) Resources 
+- [Self-service resources](/platform/reference/resource-reference/self-service)
+  - Application Groups
+  - Topic Policies
+  - Instance Service Accounts & ACLs
+
+
+## Limitations
+
+### Terraform support
+We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.  
+You can visualize the availability for each resource using the following tags: 
+- <CLI /> <API /> <TF /> <GUI />  
+
+### Conduktor labels
+Conduktor labels allow you to add metadata, filter and organize your resources. 
+Check the following table for the list of currently supported and incoming resources:
+- <FullLabelSupport />
+- <PartialLabelSupport />
+- <MissingLabelSupport />
+
+### Limitations summary
+
+| Resource                     | API/CLI Support | Terraform Support    | Label Support  | 
+|------------------------------|-----------------|----------------------|----------------|
+| **Console Resources**        |                 |                      |                |
+| ConsoleGroup                 | ✅               | ✅                    | 🚫             |
+| ConsoleUser                  | ✅               | ✅                    | 🚫             |
+| KafkaCluster                 | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KafkaConnectCluster          | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KsqlDBCluster                | ✅               | ⚠️(Generic Resource) | 🚫             |
+| Alert                        | ✅               | ⚠️(Generic Resource) | 🚫             |
+| DataMaskingPolicy            | 🚫              | 🚫                   | 🚫             |
+| Certificate                  | 🚫(V1 API only) | 🚫                   | 🚫             |
+| PartnerZone                  | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| **Kafka Resources**          |                 |                      |                |
+| Topic                        | ✅               | ✅                    | ✅              |
+| Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| ServiceAccount               | ✅               |                      | ✅              |
+| **Self-Service Resources**   |                 |                      |                |
+| Application                  | ✅               | ✅                    | 🚫             |
+| ApplicationInstance          | ✅               | ✅                    | 🚫             |
+| ApplicationInstancePermission | ✅               | ⚠️(Generic Resource) | 🚫             |
+| ApplicationGroup             | ✅               | ⚠️(Generic Resource) | 🚫             |
+| TopicPolicy                  | ✅               | ✅                    | 🚫             |
