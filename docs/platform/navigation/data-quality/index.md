@@ -36,7 +36,7 @@ You can create a data quality rule from the **Console UI**, or the **Conduktor C
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-You can create a Rule through the Console UI through the following steps.
+You can create a Rule through the Console UI through the following steps:
 
 1. In the Trust section of the sidebar in Conduktor Console go to **Rules** and click **+New Rule**.
 1. Define the Rule details:
@@ -45,10 +45,11 @@ You can create a Rule through the Console UI through the following steps.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Define the CEL expression for your Rule:
    - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for more details.
+1. Click **Create**.
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Rule.
+You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Rule:
 
 1. Save this example to file, e.g. `rule.yaml`:
 
@@ -64,7 +65,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
         type: Cel
     ```
 
-1. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
 
     ```bash
     conduktor apply -f rule.yaml
@@ -121,7 +122,7 @@ You can create a data quality policy from the **Console UI**, or the **Conduktor
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-You can create a Policy through the Console UI through the following steps.
+You can create a Policy through the Console UI through the following steps:
 
 1. In the Trust section of the sidebar in Conduktor Console go to **Policies** and click **+New Policy**.
 1. Define the Policy details:
@@ -131,14 +132,17 @@ You can create a Policy through the Console UI through the following steps.
 1. Select Rules to be used in the Policy:
    - Every Policy must have at least one Rule
    - You can also create new Rules from this page
+   - Click **Continue** to move to the next step.
 1. Select targets for the Policy:
    - Every Policy must have at least one target
    - A target consists of one or more topics on a specified Gateway
    - You can either select specific topics, or specify a prefix like `orders-*`
+   - Click **Continue** to move to the next step.
+2. Review the policy, and if you are happy, confirm by clicking **Create**.
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Policy.
+You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Policy:
 
 1. Save this example to file, e.g. `policy.yaml`:
 
