@@ -95,7 +95,7 @@ You can access Gateway Lived Events metrics in Prometheus format from the endpoi
 GET /gateway/v2/analytics/lived
 ```
 
-For more details about using this API endpoint, refer to the [Gateway API documentation](https://developers.conduktor.io/?product=gateway&version=3.9.0&gatewayApiVersion=v2#tag/cli_analytics_gateway_v2_13).
+For more details about using this API endpoint, refer to the [Gateway API documentation](https://developers.conduktor.io/?product=gateway).
 
 #### Available Gateway Lived Event Metrics
 
