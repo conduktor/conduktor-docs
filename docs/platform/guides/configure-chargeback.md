@@ -37,7 +37,7 @@ To enable the Chargeback screens in Console, the following steps are necessary:
 
 
 <Tabs>
-<TabItem value="yaml-cli" label="CLI yaml">
+<TabItem value="condutkor-cli" label="Conduktor CLI">
 
   ```yaml
   apiVersion: gateway/v2
@@ -54,7 +54,7 @@ To enable the Chargeback screens in Console, the following steps are necessary:
   ```
 
 </TabItem>
-<TabItem value="json-gui" label="GUI json">
+<TabItem value="console-ui" label="Console UI">
 
 ```json
 {
