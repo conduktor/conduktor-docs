@@ -33,8 +33,7 @@ To enable the Chargeback screens in Console, the following steps are necessary:
 ![Gateway Provider](assets/gateway-provider.png)
 
 
-3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
-
+3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through the [Conduktor CLI](/gateway/reference/cli-reference) or the Console UI.
 
 <Tabs>
 <TabItem value="condutkor-cli" label="Conduktor CLI">
