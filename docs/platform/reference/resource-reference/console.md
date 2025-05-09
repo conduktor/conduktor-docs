@@ -743,7 +743,7 @@ spec:
 
 ## Alert
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <API /> <CLI /> <GUI />  
 **Labels support:** <MissingLabelSupport />
 
