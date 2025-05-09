@@ -1,6 +1,5 @@
 ---
 sidebar_position: 120
-id: index
-title: Admin
+title: Admin configurations
 description: Administer Conduktor
 ---

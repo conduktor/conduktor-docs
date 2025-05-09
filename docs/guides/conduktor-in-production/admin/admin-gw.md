@@ -334,4 +334,7 @@ First, configure `GATEWAY_ACL_STORE_ENABLED=true` and then you can use **AdminCl
 
 ## 4. Configure Gateway to accept client connections
 
+
+
 ## 5. Decide on virtual clusters
+

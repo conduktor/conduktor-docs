@@ -1,11 +1,10 @@
 ---
 sidebar_position: 80
-id: index
-title: Automate
+title: Automation using Conduktor
 description: Automate Conduktor and Kafka usage
 ---
 
-Automation overview, outcomes. 
+Automation overview, outcomes.
 
 You can use:
 
