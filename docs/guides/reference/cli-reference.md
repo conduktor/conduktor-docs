@@ -9,10 +9,12 @@ import TabItem from '@theme/TabItem';
 
 # CLI reference
 
-Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated resource reference page.
+Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline. Check for the list of supported resources and their definition in the dedicated resource reference page.
 
 Find out about how the CLI can be used for Kafka Self-service.
+
+<Tabs>
+<TabItem  value="Console" label="Console">
 
 ## Install & Configure
 
@@ -122,7 +124,8 @@ $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-## Commands Usage
+## Commands
+
 ````
 Usage:
   conduktor [flags]
@@ -524,3 +527,125 @@ spec:
     confluentEnvironmentId: "${ENV_VAR_CONFLUENT_ENV_ID:-dev}"
     confluentClusterId: "${ENV_VAR_CONFLUENT_CLUSTER_ID:-main}"
 ```
+</TabItem>
+
+<TabItem  value="CLI" label="Gateway">
+
+## Install & Configure
+
+You have 2 options to Install Conduktor CLI:
+- Native binary for individual use and testing
+- Docker build for integration in CI/CD pipelines
+
+### Native binary
+**From Github (Windows, Linux, MacOS)**  
+Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
+In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)  
+  
+**Brew (MacOS)**
+````
+brew install conduktor/brew/conduktor-cli
+````
+### Docker
+````
+docker pull conduktor/conduktor-ctl
+````
+
+### Configure
+
+To use Conduktor CLI, you need to define 3 environment variables:
+
+- The URL of Conduktor Gateway API
+- The username & password for the API
+````yaml
+export CDK_GATEWAY_BASE_URL=http://localhost:8888
+export CDK_GATEWAY_USER=admin
+export CDK_GATEWAY_PASSWORD=conduktor
+````
+
+## Commands Usage
+````
+Usage:
+  conduktor [command]
+
+Available Commands:
+  apply       upsert a resource on Conduktor
+  completion  Generate the autocompletion script for the specified shell
+  delete      delete resource of a given kind and name
+  get         get resource of a given kind
+  help        Help about any command
+  version     display the version of conduktor
+
+Flags:
+  -h, --help      help for conduktor
+  -v, --verbose   Show more information for debugging
+````
+
+### Apply
+
+The `apply` command allows you to deploy any resource.
+
+````
+Usage:
+  conduktor apply [flags]
+
+Flags:
+      --dry-run            Don't really apply change but check on backend the effect if applied
+  -f, --file stringArray   Specify the files to apply
+  -h, --help               help for apply
+
+Global Flags:
+  -v, --verbose   Show more information for debugging
+````
+
+Example:
+````
+$ conduktor apply -f .
+Interceptor/mask-sensitive-fields: NOT_CHANGED
+Interceptor/encrypt-topic-customers: NOT_CHANGED
+Interceptor/safeguard-all-topics: UPDATED
+````
+
+### Delete
+
+The `delete` command allows you to delete a resource.
+
+Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
+
+Example(s):
+````
+$ conduktor delete -f ./directoryOfResources
+$ conduktor delete -f resource.yml
+$ conduktor delete Interceptor guard-produce-policy --vcluster=passthrough
+````
+
+### Get
+
+````
+get resource of a given kind
+
+Usage:
+  conduktor get kind [name] [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+  -v, --verbose   Show more information for debugging
+````
+Examples:
+````
+$ conduktor get Interceptor
+````
+
+### Version
+
+Check the current version of your CLI using this command:
+
+````
+$ conduktor version
+Version: v0.3.0
+Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
+````
+</TabItem>
+</Tabs>
