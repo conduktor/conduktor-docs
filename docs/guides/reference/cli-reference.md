@@ -10,22 +10,24 @@ import TabItem from '@theme/TabItem';
 # CLI reference
 
 Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline.  
-Check for the list of supported resources and their definition in the dedicated [Resources reference](/platform/reference/resource-reference/) page.
+Check for the list of supported resources and their definition in the dedicated resource reference page.
 
-[Read more](https://docs.conduktor.io/platform/navigation/self-serve/) about how the CLI can be used for Kafka Self-service.
+Find out about how the CLI can be used for Kafka Self-service.
 
 ## Install & Configure
 
 You have 2 options to Install Conduktor CLI.
-- [**Native binary**](#native-binary) for individual use and testing
-- [**Docker**](#docker) build for integration in CI/CD pipelines
+
+- [Native binary](#native-binary) for individual use and testing
+- [Docker](#docker) build for integration in CI/CD pipelines
 
 ### Native binary
+
 **From Github (Windows, Linux, MacOS)**  
-Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
-In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)  
+Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases). In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon).  
   
 **Brew (MacOS)**
+
 ````
 brew install conduktor/brew/conduktor-cli
 ````
@@ -37,6 +39,7 @@ docker pull conduktor/conduktor-ctl
 ### Configure
 
 To use Conduktor CLI, you need to define 2 environment variables:
+
 - The URL of Conduktor Console
 - Your API Key
 
@@ -46,17 +49,18 @@ export CDK_API_KEY=<your-api-key>
 ````
 
 There are 3 types of API Keys:
+
 - [Admin API Keys](#admin-api-key)
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::note
-Use a Short-lived User API Key to bootstrap the first Admin Key
+:::info
+Use a short-lived user API key to bootstrap the first admin key.
 :::
 
-#### Admin API Key
-Admin API Keys grant the maximum permissions on Console.  
-They are generated either from the UI or using the CLI.
+#### Admin API key
+
+Admin API Keys grant the maximum permissions on Console. They are generated either from the UI or using the CLI.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -69,20 +73,22 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 
 </TabItem>
 <TabItem value="GUI" label="UI">
+
 Navigate to Settings / API Keys
 
 Select **New API Key** to generate a new API key.
 
-![Create API Key](assets/admin-keys.png)
+![Create API Key](/guides/admin-keys.png)
 </TabItem>
 </Tabs>
 
 <hr />
 
-#### Self-service Application API Key
-Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance](/platform/reference/resource-reference/self-service/#application-instance) for which they have been generated.  
-Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.  
-They can be obtained either from the UI or using the CLI.
+#### Self-service application API key
+
+Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance] for which they have been generated. 
+
+Check the [Self-service documentation]for details. They can be obtained either from the UI or using the CLI.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -96,15 +102,17 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 <TabItem value="GUI" label="UI">
 
 Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
-![Cluster identity](assets/create-app-api-key.png)
+![Cluster identity](/guides/create-app-api-key.png)
 
 </TabItem>
 </Tabs>
 
-#### Short-lived User API Keys
-This type of API Key have the permissions of the user who created it.  
-It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
-Short-lived User API Keys will be valid for the same duration as the [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).  
+#### Short-lived user API keys
+
+This type of API Key have the permissions of the user who created it. It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
+
+Short-lived User API Keys will be valid for the same duration as the [Session Lifetime].  
+
 **OIDC users can't generate this type of API Key.**  
 
 ````bash
@@ -192,13 +200,13 @@ spec:
 ```
 
 You can also save the output in a file, in order to edit it before applying it:
+
 ```
 conduktor template KafkaCluster -o definition.yml
 conduktor template Topic >> definition.yml   #Appending to a already existing files
 vim definition.yml # (or any other text editor you like)
 conduktor apply -f
 ```
-
 
 ### Delete
 
@@ -207,6 +215,7 @@ The `delete` command allows you to delete a resource.
 Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
 
 Example(s):
+
 ````
 $ conduktor delete -f ./directoryOfResources
 $ conduktor delete -f resource.yml
@@ -234,6 +243,7 @@ Global Flags:
 ```
 
 Examples:
+
 ```
 $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
@@ -377,6 +387,7 @@ $ conduktor token list application-instance -i=my_instance
 ```
 
 ### Version
+
 Check the current version of your CLI using this command
 ````
 $ conduktor version
@@ -389,6 +400,7 @@ Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 Conduktor CLI can be easily integrated to a CI/CD pipeline.
 
 This example presents 2 pipelines:
+
 - The first one triggers on each new PR and launches the CLI using the `--dry-run` flag, generating a report confirming that the resources can be successfully created or modified.
 - The second one triggers on a push to the `main` branch, making the changes live.
 
@@ -400,8 +412,7 @@ Consider the following folder structure:
 ````
 
 <Tabs>
-<TabItem value="github" label="Github Actions">
-
+<TabItem value="github" label="Github actions">
 
 ```yaml title=".github/workflows/on-pr.yml"
 
@@ -441,7 +452,6 @@ jobs:
 
 </TabItem>
 <TabItem value="gitlab" label="Gitlab CI/CD">
-    
 
 ```yaml title=".gitlab-ci.yml"
 conduktor-pr:
@@ -471,13 +481,12 @@ conduktor-main:
   script:
     - /bin/conduktor apply -f resources/
 ```
-    
-
+  
 </TabItem>
 </Tabs>
 
+### Using environment variables for secrets
 
-### Using Environment Variables for Secrets
 When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
 It also supports default values as fallback using POSIX notation `${ENV:-default}`.
 

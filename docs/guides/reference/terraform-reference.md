@@ -71,8 +71,11 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 
   </TabItem>
   <TabItem value="GUI" label="UI">
+
 Go to **Settings** > **API Keys** and select **New API Key**:
-![Create API Key](assets/admin-keys.png)
+
+![Create API Key](/guides/admin-keys.png)
+
   </TabItem>
   </Tabs>
 
@@ -93,7 +96,8 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
   <TabItem value="GUI" label="UI">
 
 Go to **Applications**, pick your **Application** and under the **Application Instances** tab click **New API Key**:
-![Cluster identity](assets/create-app-api-key.png)
+
+![Cluster identity](/guides/create-app-api-key.png)
 
   </TabItem>
   </Tabs>

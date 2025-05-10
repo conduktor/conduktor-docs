@@ -1,10 +1,8 @@
 ---
-title: API Reference
+title: API reference
 displayed: false
 description: Conduktor Console gives you complete visibility into your Kafka ecosystem and the ability to manage and monitor your data streaming applications
 ---
-
-# API Reference
 
 ## Overview
 
@@ -18,11 +16,11 @@ Only members of the Admin group can generate API keys and access the API.
 
 From within the API documentation portal, you can **download** the OpenAPI specification. This allows you to import the OpenAPI specification in tools such as [Postman](https://www.postman.com/).
 
-![API specification](assets/console-api.png)
+![API specification](/guides/console-api.png)
 
 ## Generate an API key
 
-To start using the Conduktor API, you can navigate to the 'API Keys' tab in [Settings](/platform/navigation/settings/api-key/), or [from the CLI](/platform/reference/cli-reference/#token).
+To start using the Conduktor API, you can navigate to the 'API Keys' tab in [Settings], or [from the CLI].
 
 ## Example request
 

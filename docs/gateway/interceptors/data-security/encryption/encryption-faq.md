@@ -116,7 +116,7 @@ To **decrypt** the data, the Gateway:
 2. Sends the <EDEK/> to the <KMS/>, which decrypts it (using the <KEK/>) and returns the <DEK/> to Gateway
 3. Decrypts the data using the <DEK/>
 
-![envelope encryption](../../../medias/encryption.png)
+![envelope encryption](/guides/encryption.png)
 
 ### Optimizing Performance with Caching
 To reduce the number of calls to the <KMS/> and avoid some of the steps detailed above, the interceptor caches the <DEK/> in memory. The cache has a configurable Time to Live (TTL), and the interceptor will call the <KMS/> to decrypt the <EDEK/> if the <DEK/> is not in the cache, as detailed in the steps 1 and 2 above.

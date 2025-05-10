@@ -25,7 +25,7 @@ To discover all functionality, see [Gateway demos](https://docs.conduktor.io/gat
 
 Conduktor Gateway is deployed between your client applications and existing Kafka clusters.   As it's Kafka protocol compliant, there are minimal adjustments required for clients other than pointing to a new bootstrap server.
 
-![Conduktor Gateway](medias/gateway-integration.png)
+[Conduktor Gateway]
 
 ### Authentication
 

@@ -6,7 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-![Client to Gateway security]images/client-to-gateway-security.png
+images/client-to-gateway-security.png
 
 Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. 
 

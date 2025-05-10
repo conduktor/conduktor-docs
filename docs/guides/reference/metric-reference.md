@@ -1,14 +1,12 @@
 ---
-title: Metrics Reference
+title: Metrics reference
 displayed: false
 description: Prometheus metrics available for Console
 ---
 
-# Metrics Reference
-
 Console exposes metrics using the Prometheus format for your Kafka resources and Console health that you can scrape and send to your external log management system.
 
-## Kafka Metrics Reference
+## Kafka metrics reference
 
 The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance.
 Data points are refreshed every 30 seconds.
@@ -51,7 +49,7 @@ Data points are refreshed every 30 seconds.
 Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead.
 :::
 
-## Console Reference
+## Console reference
 
 The metrics endpoint is located on `/api/metrics` of your deployed Console instance.
 
