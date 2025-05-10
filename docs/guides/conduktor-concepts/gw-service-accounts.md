@@ -3,18 +3,24 @@ title: Gateway service accounts
 description: Learn Conduktor terminology
 ---
 
-## Gateway Service Accounts & Authentication
+## Introduction
 
-Gateway Service Accounts are tightly coupled to the Authentication method you choose to connect your clients to the Gateway.
+The Gateway Service Accounts Groups are used to **scope interceptors for a set of service accounts**.
 
-:::info
-The objective of Authentication, whatever the method used, is to provide Conduktor Gateway with a Service Account **name** to be used in Kafka, and optionally a **set of Groups** and a **Virtual Cluster** to associate to the Service Account.
+With these Groups, you can gather all the application Service Accounts defined on the Gateway that should follow a common set of interceptors rules.
+
+:::note
+They **can't be used for managing ACLs** of these Service Accounts.
 :::
 
-There are 3 ways to authenticate users with the Gateway:
+## Creation
 
-- **Delegating** authentication to the backing cluster (Confluent Cloud API Keys for instance)
-- Using an **External** source of authentication such as OAuth/OIDC, mTLS, LDAP
-- Using Gateway **Local** Service Accounts
+You can create a Group by using the Gateway API.
 
-Check the dedicated [Authentication page]for more details.
+Object definition and additional details can be found on the [Gateway Group Resource Reference page](/gateway/reference/resources-reference/#gatewaygroup).
+
+## Apply an Interceptor to a Group
+
+After having created the Group, you can apply interceptors to it directly from within the interceptor configuration.
+
+As detailed in the [Interceptor Resource Reference page](/gateway/reference/resources-reference/#interceptor), you can define to which Group the interceptor should apply by setting the `metadata.scope.group`.
