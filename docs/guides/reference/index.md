@@ -4,12 +4,14 @@ title: Conduktor resource reference
 description: Reference documentation for all Conduktor resources
 ---
 
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 import Admonition from '@theme/Admonition';
 
 export const Highlight = ({children, color, text}) => (
+
 <span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
     {children}
 </span>
@@ -69,18 +71,21 @@ export const PartialLabelSupport = () => (
 The Resources Reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
 
 There are two kinds of API Keys to use with the CLI, Terraform and Public API:
+
 - <AdminToken /> have all permissions over all resources in Console
 - <AppToken /> permission are scoped to Application instances & Ownership model defined in Self-service
 
 In general, <AdminToken /> can bypass Application owners and "act" as an <AppToken />  
 
 The resources presented here can be managed from the CLI, the Public API, Terraform, or the Console UI.
+
 - CLI, Terraform and Public API uses an API Key to validate permissions.
 - Console UI relies on RBAC model to validate what the user can do.
 
 ## Resources
 
 The resources are split into 3 categories:
+
 - [Console Resources](/guides/reference/console-reference) are resources that exist only in Console such as
   - Cluster Configurations
   - Users, Groups & Permissions
@@ -100,12 +105,14 @@ The resources are split into 3 categories:
 ### Terraform support
 
 We're working hard to bring everything that you can do using the Console UI into the CLI, Public API, and Terraform.  
-You can visualize the availability for each resource using the following tags: 
+You can visualize the availability for each resource using the following tags:
+
 - <CLI /> <API /> <TF /> <GUI />  
 
 ### Conduktor labels
 
 Conduktor labels allow you to add metadata, filter and organize your resources. Check the following table for the list of currently supported and incoming resources:
+
 - <FullLabelSupport />
 - <PartialLabelSupport />
 - <MissingLabelSupport />
