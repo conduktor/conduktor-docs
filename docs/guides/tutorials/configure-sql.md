@@ -5,293 +5,1596 @@ displayed: false
 description: How to configure Conduktor SQL
 ---
 
-## Overview
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-:::info[Preview functionality]
-This is currently a Preview feature and is subject to change as we continue working on it.
-:::
+Use SQL to filter and project your messages.
 
-Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**.
+## View the full demo in realtime
 
-This feature enables you to troubleshoot, sample, analyze, aggregate and join data through:
+<Tabs>
+<TabItem value="Command">
 
-- Querying Kafka message data
-- Querying Kafka metadata (such as the offset, partition and timestamp)
+You can either follow all the steps manually, or watch the recording
 
-We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap). For a demo and walkthrough checkout our [dedicated video](https://youtu.be/nHWh5yS2t38).
+</TabItem>
+<TabItem value="Recording">
 
-![Conduktor SQL](assets/conduktor-sql.png)
+[![asciicast](https://asciinema.org/a/692288.svg)](https://asciinema.org/a/692288)
 
-# Table of Contents
-- [Console Configuration](#console-configuration)
-  - [Database Configuration](#database-configuration)
-  - [Additional Configuration](#additional-configuration)
-- [Index Topics for Querying](#index-topics-for-querying)
-  - [Index Topics in the UI](#index-topics-in-the-ui)
-  - [Index Topics in the CLI](#index-topics-in-the-cli)
-- [Querying the data](#querying-the-data)
-- [Database Storage Format](#database-storage-format)
-  - [Shrinker](#shrinker)
-  - [Collision Solver](#collision-solver)
-  - [Database isolation](#database-isolation)
-- [SQL security](#sql-security)
-  - [RBAC](#rbac)
-  - [Data masking](#data-masking)
-  - [UI Experience](#ui-experience)
-- [Known Limitations](#known-limitations)
+</TabItem>
+</Tabs>
 
+## Review the Docker compose environment
 
+As can be seen from `docker-compose.yaml` the demo environment consists of the following services:
 
-## Console Configuration
+* gateway1
+* gateway2
+* kafka-client
+* kafka1
+* kafka2
+* kafka3
+* schema-registry
 
-For a fully integrated Docker Compose, run our [get started](https://conduktor.io/get-started/) stack to try SQL. The below guide details how to add this feature to your existing deployment.
+<Tabs>
+<TabItem value="Command">
 
-### Database Configuration
+```sh
+cat docker-compose.yaml
+```
 
-By default, the SQL feature is disabled. You will need to add additional configuration about the database for storing the data.
-
-:::warning
-You should provision a second database for storing SQL data that is different from the existing one used by Console's backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
-
-See [database requirements](/platform/get-started/configuration/database) and [about database isolation](#database-isolation) for more guidance.
-:::
-
-Configure the second database through environment variables:
-
- - `CDK_KAFKASQL_DATABASE_URL`: database connection URL in the format `[jdbc:]postgresql://[user[:password]@]netloc[:port][/dbname][?param1=value1&...]`. 
- If you don't have this set, SQL will not appear in the sidebar.
-
-Alternatively, set each value explicitly:
-
- - `CDK_KAFKASQL_DATABASE_HOST`: Postgresql server host name
- - `CDK_KAFKASQL_DATABASE_PORT`: Postgresql server port
- - `CDK_KAFKASQL_DATABASE_NAME`: Database name
- - `CDK_KAFKASQL_DATABASE_USERNAME`: Database login role
- - `CDK_KAFKASQL_DATABASE_PASSWORD`: Database login password
- - `CDK_KAFKASQL_DATABASE_CONNECTIONTIMEOUT`: Connection timeout option in seconds
-
-### Additional Configuration
-
-Note that additional configuration can be made in relation to the indexing process:
-
- - `CDK_KAFKASQL_CONSUMER-GROUP-ID`: Consumer group name for the indexing process (default is `conduktor-sql`)
- - `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`: The interval in which the clean-up process will run to purge data outside the desired [retention period](#index-topics-in-the-ui)
-  - `CDK_KAFKA_SQL_REFRESH-TOPIC-CONFIGURATION-EVERY-IN-SEC`:  Time interval before taking into account any [`sqlStorage`](#index-topics-in-the-cli) configuration changes on Topic resources
-   - `CDK_KAFKASQL_REFRESH-USER-PERMISSIONS-EVERY-IN-SEC`: See [RBAC](#rbac)
-
-
-## Index Topics for Querying
-
-### Index Topics in the UI
-
-To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#configure-conduktor-sql) the SQL database as a dependency.
-
-Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic.
-
-When selecting a topic for indexing, you will be asked to configure the:
-
- -  **Indexed Retention Time**: The furthest point in time from which the data will be indexed. Note that any data before this point in time will be purged periodically.
-    - By default, purging happens every 1h, but it's configurable using the environment variable `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`
-
-![Conduktor SQL Indexing](assets/conduktor-sql-index.png)
-
-**Understanding the state of indexing**
-
-After choosing to index a topic, you will be able to see the state of the indexing process in the **Indexed Topics** tab. The table name will only become available when data starts to be indexed.
-
-The process gives insight into the:
-
- - **Offset lag**: The difference between the latest message offset in the Kafka topic and the current offset of the consumer group, indicating how much data is yet to be processed
- - **Time lag**: The delay between the timestamp of the latest message in the Kafka topic and the time when the message was indexed, reflecting processing latency
- - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic
-
-
-![Conduktor SQL Index Status](assets/conduktor-sql-index-status.png)
-
-
-### Index Topics in the CLI
-
-Alternatively, you can index a topic through the conduktor [CLI](/platform/reference/cli-reference/):
+</TabItem>
+<TabItem value="File Content">
 
 ```yaml
----
-apiVersion: kafka/v2
-kind: Topic
-metadata:
-  cluster: kafka-cluster-dev
-  name: customers
-  sqlStorage:
-    retentionTimeInSecond: 86400 # 1 day of retention
-    enabled: true
-spec:
-  replicationFactor: 1
-  partitions: 1
-  configs:
-    cleanup.policy: delete
+services:
+  kafka1:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+    - 9092:9092
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka1 29092 || exit 1
+      interval: 5s
+      retries: 25
+  kafka2:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka2
+    container_name: kafka2
+    ports:
+    - 9093:9093
+    environment:
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka1 29092 || exit 1
+      interval: 5s
+      retries: 25
+  kafka3:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka3
+    container_name: kafka3
+    ports:
+    - 9094:9094
+    environment:
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka3 29092 || exit 1
+      interval: 5s
+      retries: 25
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    container_name: schema-registry
+    ports:
+    - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_GROUP_ID: schema-registry
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    healthcheck:
+      test: nc -zv schema-registry 8081 || exit 1
+      interval: 5s
+      retries: 25
+  gateway1:
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
+    hostname: gateway1
+    container_name: gateway1
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+      GATEWAY_FEATURE_FLAGS_ANALYTICS: false
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    ports:
+    - 6969:6969
+    - 6970:6970
+    - 6971:6971
+    - 6972:6972
+    - 8888:8888
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+  gateway2:
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
+    hostname: gateway2
+    container_name: gateway2
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+      GATEWAY_FEATURE_FLAGS_ANALYTICS: false
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    ports:
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
+    - 8889:8888
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+```
+</TabItem>
+</Tabs>
+
+## Starting the docker environment
+
+Start all your docker processes, wait for them to be up and ready, then run in background
+
+* `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
+* `--detach`: Detached mode: Run containers in the background
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+docker compose up --detach --wait
 ```
 
-```bash
-conduktor apply -f topics.yml
+
+</TabItem>
+<TabItem value="Output">
+
+```
+ Network sql-topics_default  Creating
+ Network sql-topics_default  Created
+ Container kafka3  Creating
+ Container kafka-client  Creating
+ Container kafka1  Creating
+ Container kafka2  Creating
+ Container kafka3  Created
+ Container kafka-client  Created
+ Container kafka1  Created
+ Container kafka2  Created
+ Container gateway1  Creating
+ Container schema-registry  Creating
+ Container gateway2  Creating
+ Container gateway1  Created
+ Container gateway2  Created
+ Container schema-registry  Created
+ Container kafka3  Starting
+ Container kafka1  Starting
+ Container kafka-client  Starting
+ Container kafka2  Starting
+ Container kafka3  Started
+ Container kafka2  Started
+ Container kafka1  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka-client  Started
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container gateway1  Starting
+ Container kafka1  Healthy
+ Container gateway2  Starting
+ Container kafka1  Healthy
+ Container schema-registry  Starting
+ Container gateway1  Started
+ Container gateway2  Started
+ Container schema-registry  Started
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container kafka1  Healthy
+ Container kafka-client  Healthy
+ Container gateway1  Healthy
+ Container gateway2  Healthy
+ Container schema-registry  Healthy
+
 ```
 
-Upon execution, the console backend will index messages from the (current time) - (retention time), and subsequently start listening for new records.
+</TabItem>
+<TabItem value="Recording">
 
-## Querying the data
+[![asciicast](https://asciinema.org/a/692280.svg)](https://asciinema.org/a/692280)
 
-**Using the UI**  
-Query syntax requires the cluster technical-id is used as a prefix for the table name e.g. for the topic `customers` on the cluster `kafka-cluster-dev`:
-```sql
-SELECT *
-  FROM "kafka-cluster-dev_customers";
+</TabItem>
+</Tabs>
+
+## Creating topic cars on gateway1
+
+Creating on `gateway1`:
+
+* Topic `cars` with partitions:1 and replication-factor:1
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --replication-factor 1 \
+    --partitions 1 \
+    --create --if-not-exists \
+    --topic cars
 ```
-See [database storage format](#database-storage-format) for the underlying table structure.
-![Conduktor SQL](assets/conduktor-sql.png)
 
-**Using the CLI**  
 
-API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize a [user API key](/platform/reference/cli-reference/#short-lived-user-api-keys)
+</TabItem>
+<TabItem value="Output">
 
-```bash
-conduktor sql 'select * from "kafka-cluster-dev_customers"' -n 2
+```
+Created topic cars.
+
 ```
 
-## Database Storage Format
+</TabItem>
+<TabItem value="Recording">
 
-Each indexed topic will have its dedicated SQL table. The table's name will apply the following convention `${cluster-technical-id}_${topic-name}`.
+[![asciicast](https://asciinema.org/a/692281.svg)](https://asciinema.org/a/692281)
 
-The table will contain special column types, each of those columns is indexed:
-* `__timestamp`
-* `__partition`
-* `__offset`
-* `__checksum`: the checksum of the tuple (message(s) key, message(s) value)
-* `__headers`: the message(s) headers
-* `__schema_id`: the schema id
-* `__key`: the message(s) key
+</TabItem>
+</Tabs>
+
+## Producing 2 messages in cars
+
+Produce 2 records to the cars topic: our mock car data for cars.
+
+* A blue car
+* A red car
 
 
-The content of each record is flattened. Given the following record:
+
+
+Sending 2 events
+```json
+{
+  "type" : "Sports",
+  "price" : 75,
+  "color" : "blue"
+}
+{
+  "type" : "SUV",
+  "price" : 55,
+  "color" : "red"
+}
+```
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+echo '{"type":"Sports","price":75,"color":"blue"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --topic cars
+
+echo '{"type":"SUV","price":55,"color":"red"}' | \
+    kafka-console-producer \
+        --bootstrap-server localhost:6969 \
+        --topic cars
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+>>>>
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692282.svg)](https://asciinema.org/a/692282)
+
+</TabItem>
+</Tabs>
+
+## Consuming from cars
+
+Let's confirm the 2 records are there by consuming from the cars topic.
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --topic cars \
+    --from-beginning \
+    --max-messages 3 \
+    --timeout-ms 3000 | jq
+```
+
+
+returns 2 events
+```json
+{
+  "type" : "Sports",
+  "price" : 75,
+  "color" : "blue"
+}
+{
+  "type" : "SUV",
+  "price" : 55,
+  "color" : "red"
+}
+```
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[2024-11-26 10:35:33,455] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
+Processed a total of 2 messages
+{
+  "type": "Sports",
+  "price": 75,
+  "color": "blue"
+}
+{
+  "type": "SUV",
+  "price": 55,
+  "color": "red"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692283.svg)](https://asciinema.org/a/692283)
+
+</TabItem>
+</Tabs>
+
+## Adding interceptor red-cars
+
+Let's create the interceptor to filter out the red cars from the cars topic.
+
+
+
+
+`step-08-red-cars-interceptor.json`:
 
 ```json
 {
-    "a": {
-        "b": {
-            "c": "Hello World"
-        },
-        "userId": "109210921092"
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "red-cars"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: red-cars",
+    "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+    "priority" : 100,
+    "config" : {
+      "virtualTopic" : "red-cars",
+      "statement" : "SELECT type, price as money FROM cars WHERE color = 'red'"
     }
+  }
 }
 ```
 
-Then, you'll have the following table structure:
-| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId |
-|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|
-| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092|
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-08-red-cars-interceptor.json | jq
+```
 
 
-If records with a different shape come later, the table schema will be updated:
+</TabItem>
+<TabItem value="Output">
+
 ```json
 {
-    "newField": "Kafka"
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT type, price as money FROM cars WHERE color = 'red'"
+      }
+    }
+  },
+  "upsertResult": "CREATED"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692284.svg)](https://asciinema.org/a/692284)
+
+</TabItem>
+</Tabs>
+
+## Listing interceptors
+
+Listing interceptors on `gateway1`
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT type, price as money FROM cars WHERE color = 'red'"
+      }
+    }
+  }
+]
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692285.svg)](https://asciinema.org/a/692285)
+
+</TabItem>
+</Tabs>
+
+## Consume from the virtual topic red-cars
+
+Let's consume from our virtual topic red-cars.
+
+You now see only one car, the red one, please note that its format changed according to our SQL statement's projection.
+
+If you are wondering if you can be a bit more fancy, the answer is ... yes!
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-console-consumer \
+    --bootstrap-server localhost:6969 \
+    --topic red-cars \
+    --from-beginning \
+    --max-messages 2 \
+    --timeout-ms 3000 | jq
+```
+
+
+returns 1 event
+```json
+{
+  "type" : "SUV",
+  "money" : 55
 }
 ```
 
-| __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId | newField |
-|-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|----------------|
-| 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092| NULL           |
-| 123456790   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c18      | conduktor | 1           | something | NULL                 | NULL| Kafka           |
+</TabItem>
+<TabItem value="Output">
 
-If a record contains array, then the cardinality is to high and so we don't flatten the structure. Instead we create a JSON column containing the array content:
+```json
+[2024-11-26 10:35:42,015] ERROR Error processing message, terminating consumer process:  (kafka.tools.ConsoleConsumer$)
+org.apache.kafka.common.errors.TimeoutException
+Processed a total of 1 messages
+{
+  "type": "SUV",
+  "money": 55
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692286.svg)](https://asciinema.org/a/692286)
+
+</TabItem>
+</Tabs>
+
+## Can we do more with SQL?
+
+Yes! We sure can.
+
+```sql
+SELECT
+  type,
+  price as newPriceName,
+  color,
+  CASE
+    WHEN color = 'red' AND price > 1000 THEN 'Exceptional'
+    WHEN price > 8000 THEN 'Luxury'
+    ELSE 'Regular'
+  END as quality,
+  record.offset as record_offset,
+  record.partition as record_partition
+FROM cars
+```
+
+is an example where you mix projection, case, renaming, and kafka metadata.
+
+## Tearing down the docker environment
+
+Remove all your docker processes and associated volumes
+
+* `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
+
+
+
+
+
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+docker compose down --volumes
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+ Container kafka-client  Stopping
+ Container schema-registry  Stopping
+ Container gateway1  Stopping
+ Container gateway2  Stopping
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container gateway2  Removed
+ Container gateway1  Removed
+ Container schema-registry  Removed
+ Container kafka3  Stopping
+ Container kafka2  Stopping
+ Container kafka1  Stopping
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka3  Removed
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka1  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Network sql-topics_default  Removing
+ Network sql-topics_default  Removed
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692287.svg)](https://asciinema.org/a/692287)
+
+</TabItem>
+</Tabs>
+
+# SQL topics with Avro/ProtoBuf
+
+### View the full demo in realtime
+
+<Tabs>
+<TabItem value="Command">
+
+You can either follow all the steps manually, or watch the recording
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692279.svg)](https://asciinema.org/a/692279)
+
+</TabItem>
+</Tabs>
+
+### Review the Docker compose environment
+
+As can be seen from `docker-compose.yaml` the demo environment consists of the following services:
+
+* gateway1
+* gateway2
+* kafka-client
+* kafka1
+* kafka2
+* kafka3
+* schema-registry
+
+<Tabs>
+<TabItem value="Command">
+
+```sh
+cat docker-compose.yaml
+```
+
+</TabItem>
+<TabItem value="File Content">
+
+```yaml
+services:
+  kafka1:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+    - 9092:9092
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka1:29092,CONTROLLER://kafka1:29093,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka1 29092 || exit 1
+      interval: 5s
+      retries: 25
+  kafka2:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka2
+    container_name: kafka2
+    ports:
+    - 9093:9093
+    environment:
+      KAFKA_NODE_ID: 2
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka2:29092,CONTROLLER://kafka2:29093,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29092,EXTERNAL://localhost:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka1 29092 || exit 1
+      interval: 5s
+      retries: 25
+  kafka3:
+    image: confluentinc/cp-server:7.5.0
+    hostname: kafka3
+    container_name: kafka3
+    ports:
+    - 9094:9094
+    environment:
+      KAFKA_NODE_ID: 3
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://kafka3:29092,CONTROLLER://kafka3:29093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:29092,EXTERNAL://localhost:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:29093,2@kafka2:29093,3@kafka3:29093
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+      CLUSTER_ID: p0KPFA_mQb2ixdPbQXPblw
+    healthcheck:
+      test: nc -zv kafka3 29092 || exit 1
+      interval: 5s
+      retries: 25
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    container_name: schema-registry
+    ports:
+    - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: WARN
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_GROUP_ID: schema-registry
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    healthcheck:
+      test: nc -zv schema-registry 8081 || exit 1
+      interval: 5s
+      retries: 25
+  gateway1:
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
+    hostname: gateway1
+    container_name: gateway1
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+      GATEWAY_FEATURE_FLAGS_ANALYTICS: false
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    ports:
+    - 6969:6969
+    - 6970:6970
+    - 6971:6971
+    - 6972:6972
+    - 8888:8888
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+  gateway2:
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.5.0-SNAPSHOT
+    hostname: gateway2
+    container_name: gateway2
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29092,kafka3:29092
+      GATEWAY_ADVERTISED_HOST: localhost
+      GATEWAY_SECURITY_PROTOCOL: PLAINTEXT
+      GATEWAY_FEATURE_FLAGS_ANALYTICS: false
+    depends_on:
+      kafka1:
+        condition: service_healthy
+      kafka2:
+        condition: service_healthy
+      kafka3:
+        condition: service_healthy
+    ports:
+    - 7969:6969
+    - 7970:6970
+    - 7971:6971
+    - 7972:6972
+    - 8889:8888
+    healthcheck:
+      test: curl localhost:8888/health
+      interval: 5s
+      retries: 25
+  kafka-client:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-client
+    container_name: kafka-client
+    command: sleep infinity
+    volumes:
+    - type: bind
+      source: .
+      target: /clientConfig
+      read_only: true
+```
+</TabItem>
+</Tabs>
+
+### Starting the Docker environment
+
+Start all your Docker processes, wait for them to be up and ready, then run in background
+
+* `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
+* `--detach`: Detached mode: Run containers in the background
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+docker compose up --detach --wait
+```
+
+</TabItem>
+<TabItem value="Output">
+
+```
+ Network sql-topic-schema-registry_default  Creating
+ Network sql-topic-schema-registry_default  Created
+ Container kafka3  Creating
+ Container kafka1  Creating
+ Container kafka2  Creating
+ Container kafka-client  Creating
+ Container kafka2  Created
+ Container kafka3  Created
+ Container kafka-client  Created
+ Container kafka1  Created
+ Container gateway2  Creating
+ Container schema-registry  Creating
+ Container gateway1  Creating
+ Container schema-registry  Created
+ Container gateway1  Created
+ Container gateway2  Created
+ Container kafka-client  Starting
+ Container kafka3  Starting
+ Container kafka2  Starting
+ Container kafka1  Starting
+ Container kafka3  Started
+ Container kafka1  Started
+ Container kafka-client  Started
+ Container kafka2  Started
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka2  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka3  Healthy
+ Container kafka1  Healthy
+ Container kafka3  Healthy
+ Container kafka2  Healthy
+ Container schema-registry  Starting
+ Container kafka1  Healthy
+ Container gateway1  Starting
+ Container kafka2  Healthy
+ Container gateway2  Starting
+ Container gateway2  Started
+ Container schema-registry  Started
+ Container gateway1  Started
+ Container schema-registry  Waiting
+ Container gateway1  Waiting
+ Container gateway2  Waiting
+ Container kafka-client  Waiting
+ Container kafka1  Waiting
+ Container kafka2  Waiting
+ Container kafka3  Waiting
+ Container kafka1  Healthy
+ Container kafka2  Healthy
+ Container kafka-client  Healthy
+ Container kafka3  Healthy
+ Container schema-registry  Healthy
+ Container gateway2  Healthy
+ Container gateway1  Healthy
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692269.svg)](https://asciinema.org/a/692269)
+
+</TabItem>
+</Tabs>
+
+## Creating topic cars on gateway1
+
+Creating on `gateway1`:
+
+* Topic `cars` with partitions:1 and replication-factor:1
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --replication-factor 1 \
+    --partitions 1 \
+    --create --if-not-exists \
+    --topic cars
+```
+
+</TabItem>
+<TabItem value="Output">
+
+```
+Created topic cars.
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692270.svg)](https://asciinema.org/a/692270)
+
+</TabItem>
+</Tabs>
+
+### Listing topics in gateway1
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --list
+```
+
+</TabItem>
+<TabItem value="Output">
+
+```
+__consumer_offsets
+_conduktor_gateway_acls
+_conduktor_gateway_auditlogs
+_conduktor_gateway_consumer_offsets
+_conduktor_gateway_consumer_subscriptions
+_conduktor_gateway_encryption_configs
+_conduktor_gateway_groups
+_conduktor_gateway_interceptor_configs
+_conduktor_gateway_license
+_conduktor_gateway_topicmappings
+_conduktor_gateway_usermappings
+_conduktor_gateway_vclusters
+_confluent-command
+_confluent-link-metadata
+_schemas
+cars
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692271.svg)](https://asciinema.org/a/692271)
+
+</TabItem>
+</Tabs>
+
+### Produce avro payload
+
+<Tabs>
+
+<TabItem value="Command">
+
+```sh
+schema='{
+            "type": "record",
+            "name": "car",
+            "fields": [
+              {"name": "type", "type": "string"},
+              {"name": "price", "type": "long"},
+              {"name": "color", "type": "string"}
+            ]
+          }'
+echo '{"type":"Sports","price":75,"color":"blue"}' | \
+    kafka-avro-console-producer  \
+        --bootstrap-server localhost:6969 \
+        --topic cars \
+        --property schema.registry.url=http://localhost:8081 \
+        --property "value.schema=$schema"
+
+echo '{"type":"SUV","price":55,"color":"red"}' | \
+    kafka-avro-console-producer  \
+        --bootstrap-server localhost:6969 \
+        --topic cars \
+        --property schema.registry.url=http://localhost:8081 \
+        --property "value.schema=$schema"
+```
+
+</TabItem>
+<TabItem value="Output">
+
+```
+[2024-11-26 10:26:34,034] INFO KafkaAvroSerializerConfig values: 
+	auto.register.schemas = true
+	avro.reflection.allow.null = false
+	avro.remove.java.properties = false
+	avro.use.logical.type.converters = false
+	basic.auth.credentials.source = URL
+	basic.auth.user.info = [hidden]
+	bearer.auth.cache.expiry.buffer.seconds = 300
+	bearer.auth.client.id = null
+	bearer.auth.client.secret = null
+	bearer.auth.credentials.source = STATIC_TOKEN
+	bearer.auth.custom.provider.class = null
+	bearer.auth.identity.pool.id = null
+	bearer.auth.issuer.endpoint.url = null
+	bearer.auth.logical.cluster = null
+	bearer.auth.scope = null
+	bearer.auth.scope.claim.name = scope
+	bearer.auth.sub.claim.name = sub
+	bearer.auth.token = [hidden]
+	context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
+	http.connect.timeout.ms = 60000
+	http.read.timeout.ms = 60000
+	id.compatibility.strict = true
+	key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+	latest.cache.size = 1000
+	latest.cache.ttl.sec = -1
+	latest.compatibility.strict = true
+	max.schemas.per.subject = 1000
+	normalize.schemas = false
+	proxy.host = 
+	proxy.port = -1
+	rule.actions = []
+	rule.executors = []
+	rule.service.loader.enable = true
+	schema.format = null
+	schema.reflection = false
+	schema.registry.basic.auth.user.info = [hidden]
+	schema.registry.ssl.cipher.suites = null
+	schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	schema.registry.ssl.endpoint.identification.algorithm = https
+	schema.registry.ssl.engine.factory.class = null
+	schema.registry.ssl.key.password = null
+	schema.registry.ssl.keymanager.algorithm = SunX509
+	schema.registry.ssl.keystore.certificate.chain = null
+	schema.registry.ssl.keystore.key = null
+	schema.registry.ssl.keystore.location = null
+	schema.registry.ssl.keystore.password = null
+	schema.registry.ssl.keystore.type = JKS
+	schema.registry.ssl.protocol = TLSv1.3
+	schema.registry.ssl.provider = null
+	schema.registry.ssl.secure.random.implementation = null
+	schema.registry.ssl.trustmanager.algorithm = PKIX
+	schema.registry.ssl.truststore.certificates = null
+	schema.registry.ssl.truststore.location = null
+	schema.registry.ssl.truststore.password = null
+	schema.registry.ssl.truststore.type = JKS
+	schema.registry.url = [http://localhost:8081]
+	use.latest.version = false
+	use.latest.with.metadata = null
+	use.schema.id = -1
+	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+ (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:370)
+[2024-11-26 10:26:36,644] INFO KafkaAvroSerializerConfig values: 
+	auto.register.schemas = true
+	avro.reflection.allow.null = false
+	avro.remove.java.properties = false
+	avro.use.logical.type.converters = false
+	basic.auth.credentials.source = URL
+	basic.auth.user.info = [hidden]
+	bearer.auth.cache.expiry.buffer.seconds = 300
+	bearer.auth.client.id = null
+	bearer.auth.client.secret = null
+	bearer.auth.credentials.source = STATIC_TOKEN
+	bearer.auth.custom.provider.class = null
+	bearer.auth.identity.pool.id = null
+	bearer.auth.issuer.endpoint.url = null
+	bearer.auth.logical.cluster = null
+	bearer.auth.scope = null
+	bearer.auth.scope.claim.name = scope
+	bearer.auth.sub.claim.name = sub
+	bearer.auth.token = [hidden]
+	context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
+	http.connect.timeout.ms = 60000
+	http.read.timeout.ms = 60000
+	id.compatibility.strict = true
+	key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+	latest.cache.size = 1000
+	latest.cache.ttl.sec = -1
+	latest.compatibility.strict = true
+	max.schemas.per.subject = 1000
+	normalize.schemas = false
+	proxy.host = 
+	proxy.port = -1
+	rule.actions = []
+	rule.executors = []
+	rule.service.loader.enable = true
+	schema.format = null
+	schema.reflection = false
+	schema.registry.basic.auth.user.info = [hidden]
+	schema.registry.ssl.cipher.suites = null
+	schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	schema.registry.ssl.endpoint.identification.algorithm = https
+	schema.registry.ssl.engine.factory.class = null
+	schema.registry.ssl.key.password = null
+	schema.registry.ssl.keymanager.algorithm = SunX509
+	schema.registry.ssl.keystore.certificate.chain = null
+	schema.registry.ssl.keystore.key = null
+	schema.registry.ssl.keystore.location = null
+	schema.registry.ssl.keystore.password = null
+	schema.registry.ssl.keystore.type = JKS
+	schema.registry.ssl.protocol = TLSv1.3
+	schema.registry.ssl.provider = null
+	schema.registry.ssl.secure.random.implementation = null
+	schema.registry.ssl.trustmanager.algorithm = PKIX
+	schema.registry.ssl.truststore.certificates = null
+	schema.registry.ssl.truststore.location = null
+	schema.registry.ssl.truststore.password = null
+	schema.registry.ssl.truststore.type = JKS
+	schema.registry.url = [http://localhost:8081]
+	use.latest.version = false
+	use.latest.with.metadata = null
+	use.schema.id = -1
+	value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+ (io.confluent.kafka.serializers.KafkaAvroSerializerConfig:370)
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692272.svg)](https://asciinema.org/a/692272)
+
+</TabItem>
+</Tabs>
+
+### Consume the Avro payload back
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-avro-console-consumer  \
+    --bootstrap-server localhost:6969 \
+    --topic cars \
+    --property schema.registry.url=http://localhost:8081 \
+    --from-beginning \
+    --max-messages 2 2>&1 | grep "{" | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
 
 ```json
 {
-    "my_array": [
-        {
-            "something": "foo"
-        },
-        {
-            "something_else": "bar"
+  "type": "Sports",
+  "price": 75,
+  "color": "blue"
+}
+{
+  "type": "SUV",
+  "price": 55,
+  "color": "red"
+}
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692273.svg)](https://asciinema.org/a/692273)
+
+</TabItem>
+</Tabs>
+
+### Creating topic red-cars on gateway1
+
+Creating on `gateway1`:
+
+* Topic `red-cars` with partitions:1 and replication-factor:1
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-topics \
+    --bootstrap-server localhost:6969 \
+    --replication-factor 1 \
+    --partitions 1 \
+    --create --if-not-exists \
+    --topic red-cars
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+Created topic red-cars.
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692274.svg)](https://asciinema.org/a/692274)
+
+</TabItem>
+</Tabs>
+
+### Adding interceptor red-cars
+
+Let's create the interceptor to filter out the red cars from the cars topic.
+
+`step-10-red-cars-interceptor.json`:
+
+```json
+{
+  "kind" : "Interceptor",
+  "apiVersion" : "gateway/v2",
+  "metadata" : {
+    "name" : "red-cars"
+  },
+  "spec" : {
+    "comment" : "Adding interceptor: red-cars",
+    "pluginClass" : "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+    "priority" : 100,
+    "config" : {
+      "virtualTopic" : "red-cars",
+      "statement" : "SELECT * FROM cars WHERE color = 'red'",
+      "schemaRegistryConfig" : {
+        "host" : "http://schema-registry:8081"
+      }
+    }
+  }
+}
+```
+
+<Tabs>
+<TabItem value="Command">
+
+```sh
+curl \
+    --silent \
+    --request PUT "http://localhost:8888/gateway/v2/interceptor" \
+    --header "Content-Type: application/json" \
+    --user "admin:conduktor" \
+    --data @step-10-red-cars-interceptor.json | jq
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```json
+{
+  "resource": {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT * FROM cars WHERE color = 'red'",
+        "schemaRegistryConfig": {
+          "host": "http://schema-registry:8081"
         }
-    ]
+      }
+    }
+  },
+  "upsertResult": "CREATED"
 }
+
 ```
 
-### Shrinker
+</TabItem>
+<TabItem value="Recording">
 
-As column names are limited in size (63 characters), the field name must sometimes be shrunk. We try to do that intelligently so it is still meaningful for users.
-The head characters are removed first:
+[![asciicast](https://asciinema.org/a/692275.svg)](https://asciinema.org/a/692275)
 
-`my.reaaaally.loooooooooooooooooooooooooooooong.path.to.a.field`
+</TabItem>
+</Tabs>
 
-will give
+### Listing interceptors
 
-`m.r.oong.path.to.a.field`
+Listing interceptors on `gateway1`
 
-### Collision Solver
+<Tabs>
 
-Sometimes, the table or column names can be the same for two different topics or fields. To resolve the conflict, we suffix the name by `_${inc}` (e.g. `my.field` & `my.field_2`).
-
-Relation between a table/column and a topic/field is tracked in special metadata tables:
-* `_table_mappings`
-* `_table_fields_mappings`
-
-### Database isolation
-
-The Kafka SQL feature, while providing flexibility, introduces potential security risks. By allowing users (only admin) to execute arbitrary SQL commands, there's a chance of unauthorized access or malicious activities.
-
-To mitigate these risks, we've implemented several security measures.
-
- - **Read-Only Connections**: While not foolproof, enforcing read-only connections limits the potential for data modification
- - **SQL query pre-parsing and sanitizing**:
-    - **Schema restriction**: Restricting queries to the public schema prevents access to sensitive data in other schemas. For example, in the Conduktor database, the public schema is empty (except for the Flyway migration table which is also hidden)
-    - **Query Type Limitation**: Allowing only SELECT statements ensures that users cannot modify or delete data. For example, it forbids ROLLBACK which would break the previous limitation
-
-Despite these measures, it's crucial to isolate the Kafka indexing database from the console backend database. This isolation provides additional benefits:
-
- - **Resource Contention**: Prevents the Kafka indexing process or a user's arbitrary request from consuming excessive resources and impacting the overall system performance
- - **Data Breach Mitigation**: Limits the potential damage in case of a security breach in the SQL endpoint protection (not totally foolproof).
-
-## SQL security
-
-Conduktor's RBAC model & data masking capabilities are applicable when using SQL.
-
-### RBAC
-
-The Console RBAC model is integrated with the PostgreSQL database using PostgreSQL's built-in ROLE feature.
-
-There are two distinct processes involved:
-
-1. **Initial Role Creation:** When a user executes a SQL query on Console for the first time, the system checks if the corresponding user ROLE exists in the PostgreSQL database. If it does not, the RBAC system is consulted to determine the topics for which the user has the `kafka.topics.read` permission. The user's ROLE is then created in PostgreSQL, and read access to the relevant topic tables is granted.
-
-2. **Periodic Role Updates:** A background process in the Console periodically updates the access rights for each user ROLE to ensure they remain aligned with the RBAC permissions. The job is run every 30 seconds by default and can be customized by setting the env variable `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`.
-
-### Data masking
-
-Data masking policies are implemented similarly to RBAC. By default, access is granted to all columns in a table. However, if a data masking policy applies to a specific column for a given user, access to that column is denied.
-
-There are some limitations:
-- Instead of applying the masking policy as defined in Console, access to the entire column is restricted for simplicity
-- For JSON blob columns, we are unable to restrict access to sub-objects, so access to the entire column content is restricted instead
-- If access to a column is denied, the user cannot use a wildcard in a `SELECT` query (e.g., `SELECT * FROM table`). Attempting to do so will result in an access denied error
+<TabItem value="Command">
+```sh
+curl \
+    --silent \
+    --request GET "http://localhost:8888/gateway/v2/interceptor" \
+    --user "admin:conduktor" | jq
+```
 
 
-### UI Experience
+</TabItem>
+<TabItem value="Output">
 
-The user will only see the table(s) and field(s) they have access to on the UI:
+```json
+[
+  {
+    "kind": "Interceptor",
+    "apiVersion": "gateway/v2",
+    "metadata": {
+      "name": "red-cars",
+      "scope": {
+        "vCluster": "passthrough",
+        "group": null,
+        "username": null
+      }
+    },
+    "spec": {
+      "comment": "Adding interceptor: red-cars",
+      "pluginClass": "io.conduktor.gateway.interceptor.VirtualSqlTopicPlugin",
+      "priority": 100,
+      "config": {
+        "virtualTopic": "red-cars",
+        "statement": "SELECT * FROM cars WHERE color = 'red'",
+        "schemaRegistryConfig": {
+          "host": "http://schema-registry:8081"
+        }
+      }
+    }
+  }
+]
 
-![SQL metadata description](assets/sql-ui-security.png)
+```
 
-If a user tries to access a table for which they lack the necessary rights, they will receive an 'access denied' error:
+</TabItem>
+<TabItem value="Recording">
 
-![access denied error](assets/sql-exec-access-denied.png)
+[![asciicast](https://asciinema.org/a/692276.svg)](https://asciinema.org/a/692276)
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+kafka-avro-console-consumer  \
+    --bootstrap-server localhost:6969 \
+    --topic red-cars \
+    --property schema.registry.url=http://localhost:8081 \
+    --from-beginning \
+    --max-messages 1 2>&1 | grep "{" | jq
+```
 
 
-## Known limitations
+</TabItem>
+<TabItem value="Output">
 
-There are several known limitations with the current preview experience:
-- Data formats currently supported are plain `JSON`, and both `Avro` & `JSON` with Confluent Schema Registry
-- If for any reason a record can't be parsed, they are ignored and the consumer continues
-- To efficiently import data in Postgres, we didn't set any primary key, so a record can be there more than once
-- If you try to index a topic with a schema that is not supported, the lag value will be 0 but no records will appear in the table
-- Admin API tokens are not supported with the Conduktor CLI. To execute SQL using the CLI, please utilize the user password authentication method, or [short-lived user token](/platform/reference/cli-reference/#short-lived-user-api-keys)
+```json
+{
+  "type": "SUV",
+  "price": 55,
+  "color": "red"
+}
 
-If you identify more limitations or want to provide feedback, please [contact us](https://support.conduktor.io/).
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692277.svg)](https://asciinema.org/a/692277)
+
+</TabItem>
+</Tabs>
+
+### Tearing down the docker environment
+
+Remove all your docker processes and associated volumes
+
+* `--volumes`: Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers.
+
+<Tabs>
+
+<TabItem value="Command">
+```sh
+docker compose down --volumes
+```
+
+
+</TabItem>
+<TabItem value="Output">
+
+```
+ Container schema-registry  Stopping
+ Container kafka-client  Stopping
+ Container gateway2  Stopping
+ Container gateway1  Stopping
+ Container gateway2  Stopped
+ Container gateway2  Removing
+ Container gateway1  Stopped
+ Container gateway1  Removing
+ Container gateway2  Removed
+ Container schema-registry  Stopped
+ Container schema-registry  Removing
+ Container gateway1  Removed
+ Container schema-registry  Removed
+ Container kafka1  Stopping
+ Container kafka3  Stopping
+ Container kafka2  Stopping
+ Container kafka3  Stopped
+ Container kafka3  Removing
+ Container kafka1  Stopped
+ Container kafka1  Removing
+ Container kafka3  Removed
+ Container kafka1  Removed
+ Container kafka-client  Stopped
+ Container kafka-client  Removing
+ Container kafka-client  Removed
+ Container kafka2  Stopped
+ Container kafka2  Removing
+ Container kafka2  Removed
+ Network sql-topic-schema-registry_default  Removing
+ Network sql-topic-schema-registry_default  Removed
+
+```
+
+</TabItem>
+<TabItem value="Recording">
+
+[![asciicast](https://asciinema.org/a/692278.svg)](https://asciinema.org/a/692278)
+
+</TabItem>
+</Tabs>
