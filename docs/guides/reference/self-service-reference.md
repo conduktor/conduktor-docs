@@ -6,51 +6,8 @@ description: Self-service resources
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
 import Admonition from '@theme/Admonition';
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
-{children}
-</span>
-);
-
-export const CLI = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">CLI</Highlight>
-);
-
-export const API = () => (
-<Highlight color="#E7F9F5" text="#067A6F">API</Highlight>
-);
-
-export const TF = () => (
-<Highlight color="#FCEFFC" text="#9C2BAD">Terraform</Highlight>
-);
-
-export const GUI = () => (
-<Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
-);
-
-
-export const AppToken = () => (
-<Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
-);
-
-export const AdminToken = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
-);
-
-export const MissingLabelSupport = () => (
-<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
-);
-
-export const FullLabelSupport = () => (
-<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
-);
-
-export const PartialLabelSupport = () => (
-<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
-);
+import Label from '@site/src/components/Labels';
 
 ## Self-service resources
 
@@ -60,9 +17,9 @@ An application represents a streaming app or data pipeline that is responsible f
 
 In Self-service, it is used as a means to organize and regroup multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
 
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <TF />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 ````yaml
 # Application
@@ -88,16 +45,13 @@ None!cDeploying this object will only create the Application in Console. It can 
 
 ### Application instance
 
-Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account. This is the core concept of Self-service as it ties everything together:
+Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.
 
-- Kafka cluster
-- Service Account
-- Ownership on resources
-- Policies on resources
+This is the core concept of Self-service as it ties everything together: Kafka cluster, service account, ownership on resources and policies on resources.
 
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <TF />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 ````yaml
 ---
@@ -185,9 +139,9 @@ Topic policies are not applied automatically.
 You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.topicPolicyRef`.
 :::
 
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <TF />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 ```yaml
 ---
@@ -253,12 +207,12 @@ spec:
 
 Application instance permissions lets teams collaborate with each other.
 
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> 
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 ````yaml
-# Permission granted to other Applications
+# Permission granted to other applications
 ---
 apiVersion: self-service/v1
 kind: ApplicationInstancePermission
@@ -305,9 +259,9 @@ spec:
 
 ### Application group
 
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 Create Application Group to directly reflect how your Application operates. You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
 
@@ -387,9 +341,9 @@ In this mode, the service account is not configured by the central team at the `
 
 Instead, the central platform team decides to delegate this responsibility to the application team, which need to declare their own service account(s) and its associated ACLs within the limits of what the `ApplicationInstance` is allowed to do.
 
-**API Keys:**  <AppToken />  
-**Managed with:** <CLI /> <API />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 ````yaml
 ---

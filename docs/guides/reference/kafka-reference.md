@@ -4,54 +4,10 @@ displayed: false
 description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
 ---
 
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
 import Admonition from '@theme/Admonition';
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
-{children}
-</span>
-);
-
-export const CLI = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">CLI</Highlight>
-);
-
-export const API = () => (
-<Highlight color="#E7F9F5" text="#067A6F">API</Highlight>
-);
-
-export const TF = () => (
-<Highlight color="#FCEFFC" text="#9C2BAD">Terraform</Highlight>
-);
-
-export const GUI = () => (
-<Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
-);
-
-
-export const AppToken = () => (
-<Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
-);
-
-export const AdminToken = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
-);
-
-export const MissingLabelSupport = () => (
-<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
-);
-
-export const FullLabelSupport = () => (
-<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
-);
-
-export const PartialLabelSupport = () => (
-<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
-);
+import Label from '@site/src/components/Labels';
 
 ## Kafka resources
 
@@ -59,9 +15,9 @@ export const PartialLabelSupport = () => (
 
 Creates a Topic in Kafka.
 
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <TF /> <GUI />  
-**Labels support:** <FullLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" /> <Label type="UI" />
+- **Labels support:** <Label type="FullLabelSupport" />
 
 ````yaml
 ---
@@ -86,7 +42,9 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'
 ````
+
 **Topic checks:**
+
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the Topic is created
@@ -94,6 +52,7 @@ spec:
 - All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
 
 **Conduktor annotations:**
+
 - `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
   - Previously `conduktor.io/description.editable` in 1.28 and below
 - `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
@@ -103,16 +62,18 @@ spec:
   - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
 
 **Side effects**
+
 - Kafka:
   - Topic is created / updated.
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
 
 ### Subject
+
 Creates a Subject in the Schema Registry.
 
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
-**Labels support:** <PartialLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
+- **Labels support:** <Label type="PartialLabelSupport" />
 
 **Local file**
 
@@ -128,6 +89,7 @@ spec:
   format: AVRO
   compatibility: FORWARD_TRANSITIVE
 ```
+
 **Inline**
 
 ```yaml
@@ -179,9 +141,10 @@ spec:
 ```
 
 **Subject checks:**
+
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instance
-- One of `spec.schema` or `spec.schemaFile` must be present 
+- One of `spec.schema` or `spec.schemaFile` must be present
   - `schema` requires an inline schema
   - `schemaFile` requires a path to a file that contains the schema relative to the CLI execution path
     - **Important:** Requires [Conduktor CLI version](/platform/reference/cli-reference/#version) >=0.2.5
@@ -191,16 +154,18 @@ spec:
 - `spec.references` is optional. It specifies the names of referenced schemas
 
 **Side effects**
+
 - Kafka/Schema Registry:
   - Subject is created/updated.
   - In dry-run mode, Subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API.
 
 ### Connector
+
 Creates a connector on a Kafka Connect Cluster.
 
-**API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
-**Labels support:** <PartialLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
+- **Labels support:** <Label type="PartialLabelSupport" />
 
 ```yaml
 ---
@@ -225,28 +190,31 @@ spec:
 ```
 
 **Connector checks:**
+
 - `metadata.connectCluster` is a valid Kafka Connect Cluster
 - `metadata.name` must belong to the Application Instance
 
 **Conduktor annotations:**
+
 - `metadata.autoRestart.enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
   - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
 - `metadata.autoRestart.frequencySeconds` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
   - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below
 
-
 ### Service account
-Manages the ACLs (Access Control Lists) of a service account in Kafka. 
+
+Manages the ACLs (Access Control Lists) of a service account in Kafka.
 
 :::info
 This doesn't create the service account, only assigns ACLs.
 :::
 
-**API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <GUI />  
-**Labels support:** <FullLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
+- **Labels support:** <Label type="FullLabelSupport" />
 
 Example for Kafka service accounts:
+
 ````yaml
 ---
 apiVersion: v1
@@ -289,6 +257,7 @@ spec:
 ````
 
 Example for Aiven service accounts:
+
 ````yaml
 ---
 apiVersion: v1
@@ -318,6 +287,7 @@ spec:
 ````
 
 **Service account checks:**
+
 - `metadata.cluster` is a valid Kafka Cluster.
 - `metadata.name` is a valid, pre-existing service account.
 - `spec.authorization.type` must be 'KAFKA_ACL' or 'AIVEN_ACL'. 'AIVEN_ACL' is only supported for Aiven Kafka clusters. 'KAFKA_ACL' is not supported for Aiven Kafka clusters.
@@ -331,9 +301,10 @@ When `spec.authorization.type` equals `KAFKA_ACL`:
 When `spec.authorization.type` equals `AIVEN_ACL`:
 - `spec.acls[].resourceType` must be a valid resource type on Aiven Kafka: `TOPIC` ([Aiven ACL for topics](https://aiven.io/docs/products/kafka/concepts/acl)) or `SCHEMA` ([Aiven ACL for schema](https://aiven.io/docs/products/kafka/karapace/concepts/acl-definition))
 - `spec.acls[].name` must be a valid resource name on Aiven Kafka. For schemas, it must match `^(Config:|Subject:[A-Za-z0-9/_.*?-]+)`.
-- `spec.acls[].permission` must contain only operations that are valid for the resource type. 
+- `spec.acls[].permission` must contain only operations that are valid for the resource type.
 
 **Side effects**
+
 - Kafka:
   - Service account ACLs are created/updated.
   - In dry-run mode, service account ACLs are validated against the aforementioned criteria, ensuring the ACL definitions are legal.

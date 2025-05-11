@@ -4,60 +4,16 @@ displayed: false
 description: Console resources
 ---
 
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
 import Admonition from '@theme/Admonition';
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
-{children}
-</span>
-);
-
-export const CLI = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">CLI</Highlight>
-);
-
-export const API = () => (
-<Highlight color="#E7F9F5" text="#067A6F">API</Highlight>
-);
-
-export const TF = () => (
-<Highlight color="#FCEFFC" text="#9C2BAD">Terraform</Highlight>
-);
-
-export const GUI = () => (
-<Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
-);
-
-
-export const AppToken = () => (
-<Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
-);
-
-export const AdminToken = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
-);
-
-export const MissingLabelSupport = () => (
-<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
-);
-
-export const FullLabelSupport = () => (
-<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
-);
-
-export const PartialLabelSupport = () => (
-<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
-);
+import Label from '@site/src/components/Labels';
 
 ## ConsoleGroup
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" />
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 Creates a Group with members and permissions in Console
 
@@ -117,6 +73,7 @@ resource "conduktor_group_v2" "developers-a" {
 </Tabs>
 
 **Groups checks:**
+
 - `spec.description` is **optional**
 - `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
   - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
@@ -134,9 +91,9 @@ resource "conduktor_group_v2" "developers-a" {
 
 ## ConsoleUser
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 Create a user with Platform permissions.
 
@@ -210,6 +167,7 @@ Make sure you set permissions for this user, otherwise it won't have access to P
 :::
 
 **Users checks:**
+
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
 **Side effect in Console and Kafka:**
@@ -223,9 +181,9 @@ Make sure you set permissions for this user, otherwise it won't have access to P
 
 Creates a Kafka Cluster Definition in Console.
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />  
-**Labels support:** <PartialLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="PartialLabelSupport" />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -309,6 +267,7 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 :::
 
 **KafkaCluster checks:**
+
 - `spec.icon` (optional, default `kafka`) is a valid entry from our [Icon Sets](#icon-sets)
 - `spec.color` (optional, default `#000000`) is a HEX color for `spec.icon`
 - `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
@@ -317,13 +276,14 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 - `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
-:::warning Important
-Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid.   
-You need to check that in Console directly.
+:::warning
+Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid. You need to check that in Console directly.
 :::
 
 ### Schema Registry
-This section lets you associate a Schema Registry to your KafkaCluster
+
+This section lets you associate a Schema Registry to your KafkaCluster.
+
 #### Confluent or Confluent-like Registry
 
 <Tabs>
@@ -363,6 +323,7 @@ spec {
 </Tabs>
 
 Confluent Schema Registry checks:
+
 - `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
   - **Multiple URLs are not supported for now. Coming soon**
 - `spec.schemaRegistry.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
@@ -409,6 +370,7 @@ spec {
 </Tabs>
 
 AWS Glue Registry checks:
+
 - `spec.schemaRegistry.region` must be a valid AWS region
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
 - `spec.schemaRegistry.security.type` must be one of [`Credentials`, `FromContext`, `FromRole`]
@@ -583,6 +545,7 @@ spec:
     password: "admin"
     virtualCluster: passthrough
 ````
+
 </TabItem>
 <TabItem value="Terraform" label="Terraform">
 
@@ -654,9 +617,9 @@ spec {
 
 Creates a Kafka Connect cluster definition in Console.
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />  
-**Labels support:** <PartialLabelSupport />
+- **API key(s):** <Label type="AdminToken" />
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
+- **Labels support:** <Label type="PartialLabelSupport" />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -720,9 +683,9 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" />
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 Creates a ksqlDB Cluster Definition in Console.
 
@@ -752,11 +715,11 @@ spec:
 - `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
   - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
 
-## Alert
+## Alerts
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />  
-**Labels support:** <MissingLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
+- **Labels support:** <Label type="MissingLabelSupport" />
 
 Creates an Alert in Console.
 
@@ -831,9 +794,9 @@ spec:
 
 ## Partner Zones
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />  
-**Labels support:** <PartialLabelSupport />
+- **API key(s):** <Label type="AdminToken" /> 
+- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
+- **Labels support:**<Label type="PartialLabelSupport" />
 
 Create or update a [Partner Zone](/platform/navigation/partner-zones/).
 
@@ -933,9 +896,7 @@ HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-
 
 ## Permissions
 
-Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
-
-A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
+Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature. A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
 
 - [Topic Permissions](#topic-permissions)
 - [Subject Permissions](#subject-permissions)

@@ -11,32 +11,31 @@ Conduktor CLI (Command Line Interface) allows you to perform some operations dir
 
 ## Install and configure
 
-You have two options to install Conduktor CLI:
-
-- [Native binary](#native-binary) for individual use and testing
-- [Docker](#docker) build for integration in CI/CD pipelines
-
-<Tabs>
-<TabItem  value="Console" label="Console CLI">
+You have two options to install Conduktor CLI: **native binary** (for individual use and testing) or **Docker** for integration in CI/CD pipelines.
 
 ### Native binary
 
-**From Github (Windows, Linux, MacOS)**  
-Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases). In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon).  
+[Download from releases page on GitHub](https://github.com/conduktor/ctl/releases) on Windows, Linux or MacOS.
+
+In the **Assets** list, download the build that corresponds to your machine (for Apple Silicon use `darwin-arm64`).  
   
 **Brew (MacOS)**
 
 ````
 brew install conduktor/brew/conduktor-cli
 ````
+
 ### Docker
+
 ````
 docker pull conduktor/conduktor-ctl
 ````
+ <Tabs>
+<TabItem  value="Console" label="Console CLI">
 
-### Configure
+#### Configure Console CLI
 
-To use Conduktor CLI, you need to define 2 environment variables:
+To use Conduktor CLI, you have to define these two environment variables:
 
 - The URL of Conduktor Console
 - Your API Key
@@ -46,7 +45,7 @@ export CDK_BASE_URL=http://localhost:8080
 export CDK_API_KEY=<your-api-key>
 ````
 
-There are 3 types of API Keys:
+There are 3 types of API keys:
 
 - [Admin API Keys](#admin-api-key)
 - [Self-Service Application API Keys](#self-service-application-api-key)
@@ -56,7 +55,7 @@ There are 3 types of API Keys:
 Use a short-lived user API key to bootstrap the first admin key.
 :::
 
-#### Admin API key
+##### Admin API key
 
 Admin API Keys grant the maximum permissions on Console. They are generated either from the UI or using the CLI.
 
@@ -82,9 +81,9 @@ Select **New API Key** to generate a new API key.
 
 <hr />
 
-#### Self-service application API key
+##### Self-service application API key
 
-Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance] for which they have been generated. 
+Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance] for which they have been generated.
 
 Check the [Self-service documentation]for details. They can be obtained either from the UI or using the CLI.
 
@@ -105,7 +104,7 @@ Navigate to Applications, pick your Application, then under Application Instance
 </TabItem>
 </Tabs>
 
-#### Short-lived user API keys
+##### Short-lived user API keys
 
 This type of API Key have the permissions of the user who created it. It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
 
@@ -120,7 +119,7 @@ $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-## Commands
+### Commands
 
 ````
 Usage:
@@ -148,7 +147,7 @@ Flags:
 Use "conduktor [command] --help" for more information about a command.
 ````
 
-### Apply
+#### Apply
 
 The `apply` command allows you to deploy any resource.
 
@@ -172,7 +171,7 @@ application/clickstream-app: NotChanged
 app-instance/clickstream-app-dev: NotChanged
 ````
 
-### Template
+#### Template
 
 The `template` command allows you to get an example of a resource definition:
 ```
@@ -207,7 +206,7 @@ vim definition.yml # (or any other text editor you like)
 conduktor apply -f
 ```
 
-### Delete
+#### Delete
 
 The `delete` command allows you to delete a resource.
 
@@ -221,7 +220,7 @@ $ conduktor delete -f resource.yml
 $ conduktor delete topic myTopic
 ````
 
-### Get
+#### Get
 
 ```
 $ conduktor get user --help
@@ -248,7 +247,7 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ```
 
-#### Select the output format
+##### Select the output format
 
 By using the flag `--output` or `-o`, you can select the output format of the command.
 
@@ -362,7 +361,7 @@ By using the flag `--output` or `-o`, you can select the output format of the co
   </TabItem>
 </Tabs>
 
-### Token
+#### Token
 
 ```bash
 # To create an Admin API Key, you need to set either `CDK_API_KEY` or `CDK_USER`/`CDK_PASSWORD`:
@@ -385,7 +384,7 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 $ conduktor token list application-instance -i=my_instance
 ```
 
-### Version
+#### Version
 
 Check the current version of your CLI using this command
 ````
@@ -394,7 +393,7 @@ Version: v0.3.0
 Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 ````
 
-## Integrate Conduktor CLI with your CI/CD
+### Integrate Conduktor CLI with your CI/CD
 
 Conduktor CLI can be easily integrated to a CI/CD pipeline.
 
@@ -484,7 +483,7 @@ conduktor-main:
 </TabItem>
 </Tabs>
 
-### Using environment variables for secrets
+#### Using environment variables for secrets
 
 When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
 It also supports default values as fallback using POSIX notation `${ENV:-default}`.
@@ -527,39 +526,20 @@ spec:
 
 <TabItem  value="CLI" label="Gateway">
 
-## Install and configure
+#### Configure Gateway CLI
 
-You have 2 options to Install Conduktor CLI:
-- Native binary for individual use and testing
-- Docker build for integration in CI/CD pipelines
-
-### Native binary
-**From Github (Windows, Linux, MacOS)**  
-Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
-In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)  
-  
-**Brew (MacOS)**
-````
-brew install conduktor/brew/conduktor-cli
-````
-### Docker
-````
-docker pull conduktor/conduktor-ctl
-````
-
-### Configure
-
-To use Conduktor CLI, you need to define 3 environment variables:
+To use Conduktor CLI, you need to define these environment variables:
 
 - The URL of Conduktor Gateway API
-- The username & password for the API
+- The username and password for the API
+
 ````yaml
 export CDK_GATEWAY_BASE_URL=http://localhost:8888
 export CDK_GATEWAY_USER=admin
 export CDK_GATEWAY_PASSWORD=conduktor
 ````
 
-## Commands usage
+### Command usage
 
 ````
 Usage:
@@ -578,7 +558,7 @@ Flags:
   -v, --verbose   Show more information for debugging
 ````
 
-### Apply
+#### Apply
 
 The `apply` command allows you to deploy any resource.
 
@@ -603,7 +583,7 @@ Interceptor/encrypt-topic-customers: NOT_CHANGED
 Interceptor/safeguard-all-topics: UPDATED
 ````
 
-### Delete
+#### Delete
 
 The `delete` command allows you to delete a resource.
 
@@ -616,7 +596,7 @@ $ conduktor delete -f resource.yml
 $ conduktor delete Interceptor guard-produce-policy --vcluster=passthrough
 ````
 
-### Get
+#### Get
 
 ````
 get resource of a given kind
@@ -635,7 +615,7 @@ Examples:
 $ conduktor get Interceptor
 ````
 
-### Version
+#### Version
 
 Check the current version of your CLI using this command:
 

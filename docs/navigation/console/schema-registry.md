@@ -5,20 +5,7 @@ description: Schema Registry in Conduktor Console handles the distribution and s
 ---
 
 import Admonition from '@theme/Admonition';
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500' }}> {children} </span>
-);
-
-export const PerSubject = () => (
-<Highlight color="#a5d8ff" text="#1971c2">Per Subject</Highlight>
-);
-
-export const Globally = () => (
-<Highlight color="#ffc9c9" text="#e03131">Globally</Highlight>
-);
-
-# Schema registry
+import Label from '@site/src/components/Labels';
 
 Conduktor provides a visual interface for Schema Registry, allowing you to create and manage Subjects and Schemas with ease. Having Schema Registry ensures there is an automated way of ensuring data verification, Schema evolution, and ability for new consumers to emerge without breaking downstream.
 
@@ -79,21 +66,21 @@ You can manage your Subjects and Schemas from the Schema Registry tab. This incl
 
 ### Change subject compatibility
 
-Each Subject has a compatibility type that determines how they should deal with evolution over time. As mentioned above, updating a Subject can cause issues upstream or downstream on applications, and choosing the right compatibility type can prevent this from occurring. 
+Each Subject has a compatibility type that determines how they should deal with evolution over time. As mentioned above, updating a Subject can cause issues upstream or downstream on applications, and choosing the right compatibility type can prevent this from occurring.
 
-There are 7 possible compatibility types:
+There are seven possible compatibility types:
 
-- Backward
-- Backward Transitive
-- Forward
-- Forward Transitive
-- Full
-- Full Transitive
-- None
+1. Backward
+1. Backward Transitive
+1. Forward
+1. Forward Transitive
+1. Full
+1. Full Transitive
+1. None
 
 See the [Schema Registry docs](https://docs.confluent.io/platform/current/schema-registry/avro.html#summary) for a guide to what each type does.
 
-Compatibility can be changed <PerSubject/> or <Globally/>.
+Compatibility can be changed <Label type="PerSubject" /> or <Label type="Globally" />.
 
 ![Change Subject compatibility](assets/change-compatibility.png)
 
