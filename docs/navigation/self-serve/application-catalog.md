@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Application Catalog
+title: Application catalog
 description: Kafka Self-service Overview
 ---
 
@@ -22,8 +22,9 @@ You can click on an Application to get to its details page.
 ## Application Details
 
 The Application Details page summarizes all the information that relates to the Application:
+
 - Application General information
-- Application Instances & Ownership
+- Application Instances and Ownership
 - Subscribed topics
 - Shared topics
 - Application Groups

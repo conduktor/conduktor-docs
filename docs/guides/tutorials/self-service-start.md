@@ -49,7 +49,7 @@ The application team's repo will have sections for the different types of resour
 
 ## Worked example
 
-The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastructure as code (IaC) and container management provider e.g. a Terraform & Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
+The Central team repo has created a cluster configuration in `/clusters`. Here the cluster state is assumed to be maintained by a combination of some infrastructure as code (IaC) and container management provider e.g. a Terraform and Kubernetes type setup. No need to change this file as you'll see below a full example is provided for you to test. They may have groups defined in code here too.
 
 The central team has defined three teams,  **clickstream**, **wikipedia** and **website-analytics** each with their own **Application**, as can be seen by their respective yaml files in `/applications`.
 

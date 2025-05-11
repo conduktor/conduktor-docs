@@ -6,16 +6,13 @@ tag: ops
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-# Dynamic Header Injection & Removal
+# Dynamic header injection and removal
 
-There are multiple interceptors available for manipulating headers, either injection or regex based removal. 
+There are multiple interceptors available for manipulating headers, either injection or regex based removal.
 
 This demo will run you through some of these use cases step-by-step.
 
 ## View the full demo in realtime
-
-
-
 
 <Tabs>
 <TabItem value="Command">
@@ -215,20 +212,16 @@ services:
       target: /clientConfig
       read_only: true
 ```
+
 </TabItem>
 </Tabs>
 
-## Starting the docker environment
+## Starting the Docker environment
 
-Start all your docker processes, wait for them to be up and ready, then run in background
+Start all your Docker processes, wait for them to be up and ready, then run in background:
 
-* `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
-* `--detach`: Detached mode: Run containers in the background
-
-
-
-
-
+- `--wait`: Wait for services to be `running|healthy`. Implies detached mode.
+- `--detach`: Detached mode: Run containers in the background
 
 <Tabs>
 
@@ -321,11 +314,6 @@ Creating on `gateway1`:
 
 * Topic `users` with partitions:1 and replication-factor:1
 
-
-
-
-
-
 <Tabs>
 
 <TabItem value="Command">
@@ -337,7 +325,6 @@ kafka-topics \
     --create --if-not-exists \
     --topic users
 ```
-
 
 </TabItem>
 <TabItem value="Output">
@@ -358,9 +345,6 @@ Created topic users.
 ## Adding interceptor inject-headers
 
 Let's create the interceptor to inject various headers
-
-
-
 
 `step-06-inject-headers-interceptor.json`:
 
@@ -386,9 +370,7 @@ Let's create the interceptor to inject various headers
 }
 ```
 
-
 <Tabs>
-
 <TabItem value="Command">
 ```sh
 curl \
@@ -398,7 +380,6 @@ curl \
     --user "admin:conduktor" \
     --data @step-06-inject-headers-interceptor.json | jq
 ```
-
 
 </TabItem>
 <TabItem value="Output">
@@ -446,9 +427,6 @@ curl \
 
 Producing 2 messages in `users` in cluster `gateway1`
 
-
-
-
 Sending 2 events
 ```json
 {
@@ -467,11 +445,9 @@ Sending 2 events
 }
 ```
 
-
-
 <Tabs>
-
 <TabItem value="Command">
+
 ```sh
 echo '{"name":"tom","username":"tom@conduktor.io","password":"motorhead","visa":"#abc123","address":"Chancery lane, London"}' | \
     kafka-console-producer \
@@ -483,7 +459,6 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
         --bootstrap-server localhost:6969 \
         --topic users
 ```
-
 
 </TabItem>
 <TabItem value="Output">
@@ -504,11 +479,6 @@ echo '{"name":"laura","username":"laura@conduktor.io","password":"kitesurf","vis
 
 Verify tom and laura have the corresponding headers in cluster `gateway1`
 
-
-
-
-
-
 <Tabs>
 
 <TabItem value="Command">
@@ -522,8 +492,8 @@ kafka-console-consumer \
     --property print.headers=true | jq
 ```
 
+Returns 2 events
 
-returns 2 events
 ```json
 {
   "headers" : {
@@ -578,9 +548,6 @@ Processed a total of 2 messages
 
 Let's create the interceptor `remove-headers` to remove headers that match `X-MY-.*`
 
-
-
-
 `step-09-remove-headers-interceptor.json`:
 
 ```json
@@ -600,7 +567,6 @@ Let's create the interceptor `remove-headers` to remove headers that match `X-MY
   }
 }
 ```
-
 
 <Tabs>
 
@@ -656,11 +622,6 @@ curl \
 ## Verify tom and laura have the corresponding headers
 
 Verify tom and laura have the corresponding headers in cluster `gateway1`
-
-
-
-
-
 
 <Tabs>
 
@@ -728,11 +689,6 @@ Processed a total of 2 messages
 ## Remove interceptor remove-headers
 
 Let's delete the interceptor `remove-headers` so we can access all our headers again
-
-
-
-
-
 
 <Tabs>
 

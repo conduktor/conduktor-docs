@@ -3,17 +3,17 @@ title: Virtual clusters
 description: Learn Conduktor terminology
 ---
 
-A Virtual Cluster in Conduktor Gateway is a logical representation of a Kafka cluster.
+A virtual cluster in Conduktor Gateway is a logical representation of a Kafka cluster.
 
 This allows you to create multiple virtual clusters while maintaining a single physical Kafka cluster, enabling the simulation of multiple Kafka environments on a single physical infrastructure.
 
 ![image.png](/guides/vclusters.png)
 
-
 ## VirtualCluster
-A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
-A Virtual Cluster acts like a Kafka within a Kafka.
+A Virtual cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual cluster will be accessible only to that specific virtual cluster.
+
+A Virtual cluster acts like a Kafka within a Kafka.
 
 ```yaml
 ---
@@ -29,14 +29,15 @@ spec:
 ```
 
 **VirtualCluster checks:**
+
 - `metadata.name` must be a valid topic prefix.
-- `spec.aclEnabled` is optional, default `false`. 
+- `spec.aclEnabled` is optional, default `false`.
 
 **VirtualCluster side effects:**
+
 - All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
 - Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
 - When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
-
 
 ## AliasTopic
 

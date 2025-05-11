@@ -1,27 +1,23 @@
 ---
 title: CLI reference
 displayed: false
-description: CLI Reference
+description: CLI reference
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# CLI reference
+Conduktor CLI (Command Line Interface) allows you to perform some operations directly from your command line or a CI/CD pipeline.
 
-Conduktor CLI gives you the ability to perform some operations directly from your command line or a CI/CD pipeline. Check for the list of supported resources and their definition in the dedicated resource reference page.
+## Install and configure
 
-Find out about how the CLI can be used for Kafka Self-service.
-
-<Tabs>
-<TabItem  value="Console" label="Console">
-
-## Install & Configure
-
-You have 2 options to Install Conduktor CLI.
+You have two options to install Conduktor CLI:
 
 - [Native binary](#native-binary) for individual use and testing
 - [Docker](#docker) build for integration in CI/CD pipelines
+
+<Tabs>
+<TabItem  value="Console" label="Console CLI">
 
 ### Native binary
 
@@ -531,7 +527,7 @@ spec:
 
 <TabItem  value="CLI" label="Gateway">
 
-## Install & Configure
+## Install and configure
 
 You have 2 options to Install Conduktor CLI:
 - Native binary for individual use and testing
@@ -563,7 +559,8 @@ export CDK_GATEWAY_USER=admin
 export CDK_GATEWAY_PASSWORD=conduktor
 ````
 
-## Commands Usage
+## Commands usage
+
 ````
 Usage:
   conduktor [command]

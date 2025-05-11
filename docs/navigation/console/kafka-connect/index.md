@@ -1,19 +1,20 @@
 ---
 sidebar_position: 5
 title: Kafka Connect
-description: Schema Registry in Conduktor Platform handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
+description: Schema registry in Conduktor Console handles the distribution and synchronization of schemas to the producer and consumer for Kafka.
 ---
 
-Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable & scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place.
+Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable and scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place.
 
-## Kafka Connect Cluster List
+## Kafka Connect cluster list
 
 The Connect Cluster List is a summary view of all your configured Kafka Connect Clusters attached to your currently selected Kafka Cluster.
 
-You can filter by Connect Cluster name and order by 
-- Number of Connectors
-- Number of Tasks
-- Connect Cluster Name
+You can filter by Connect cluster name and order by:
+
+- number of Connectors
+- number of tasks
+- connect cluster name
 
 ![Connect clusters list](assets/connect-cluster-list.png)
 
@@ -21,13 +22,14 @@ The list is warning you that some tasks have failed and gives you a high level o
 
 ![Connect clusters tooltip](assets/connect-cluster-tooltip.png)
 
-## Connector List
+## Connector
 
-The Connector List page lets you search for any Connector on your currently selected Kafka Connect Cluster.
-:::caution
-Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
-Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
+The Connector list page lets you search for any Connector on your currently selected Kafka Connect cluster.
+
+:::warning
+Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics. [Check the settings](https://docs.conduktor.io/platform/admin/rbac/) for details.
 :::
+
 Multiple search capabilities can be combined to help you find the Connector you want faster.
 
 **Filtering** is possible on:
@@ -41,26 +43,26 @@ Multiple search capabilities can be combined to help you find the Connector you 
 
 **Active columns** can be picked from a list of Available columns from the side button « ⚙️ Edit columns »
 
-
-
 ![Connectors list](assets/connector-list.png)
+
 The round arrow icon next to the Connector name indicates whether the connector will be auto-restarted by Conduktor: (Grey: disabled, Green: enabled)
 
-
 Clicking a Connector in the list brings you to the Connector overview page where you can perform further actions on the selected Connector:
+
 - [Review the Connector Task details and status](/platform/navigation/console/kafka-connect/connector-overview)
 - [View and Edit the Connector configuration](/platform/navigation/console/kafka-connect/connector-config)
 - [Create and manage Alerts for this Connector](/platform/navigation/console/kafka-connect/connector-alerts)
 - [Toggle Auto-restart feature](/platform/navigation/console/kafka-connect/connector-autorestart)
 
 Several actions are also directly available from the Connectors list:
+
 - Add a Connector
-- Pause/Resume & Restart
+- Pause/Resume and Restart
 - Delete Connector
 
 All these operations can be applied either on a single Connector, or on multiple Connectors at once:
-![Bulk Connectors select](assets/connector-list-multi-select.png)
 
+![Bulk Connectors select](assets/connector-list-multi-select.png)
 
 ## Add a Connector
 
@@ -77,14 +79,15 @@ Next, you will get to our configuration wizard for Kafka Connect, which is takin
 
 ![Empty Connector form](assets/connector-add-form-initial.png)
 
-Configure your Connector to your convenience and use the **Validate** button to verify that your configuration is valid. 
+Configure your Connector to your convenience and use the **Validate** button to verify that your configuration is valid.
 
 This will highlight the parts of the configuration that are invalid, and give you precise information on how to correct your Connector configuration.
 
 ![Invalid Connector form](assets/connector-add-form-invalid.png)
 
-:::caution warning
+:::warning
 While Kafka Connect Validate API generally checks for most configuration inconsistencies, there are some limits:
+
 - It usually doesn't check for external configuration such as URL and user / passwords.
 - Some Kafka Connect Plugins classes are notoriously badly implemented and don't take full advantage of Kafka Connect Validate API
 
@@ -105,6 +108,4 @@ When you're done, click "Next" and you'll be presented with a Review screen wher
 This YAML will help you automate your deployment with the help of [Conduktor CLI](/platform/reference/cli-reference/).  
 This is entirely optional and you can just deploy your Connector from the UI by clicking "Submit".
 
-
 ![Connector review](assets/connector-add-review.png)
-

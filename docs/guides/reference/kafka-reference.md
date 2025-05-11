@@ -267,7 +267,7 @@ spec:
         patternType: LITERAL
         operations:
           - Describe
-      # Read & Write on the click.event-stream.avro topic
+      # Read and write on the click.event-stream.avro topic
       - type: TOPIC
         name: 'click.event-stream.avro'
         patternType: LITERAL
@@ -303,7 +303,7 @@ spec:
   authorization:
     type: AIVEN_ACL
     acls:
-      # Read & Write on the click.event-stream.avro topic
+      # Read and Write on the click.event-stream.avro topic
       - resourceType: TOPIC
         name: 'click.event-stream.avro'
         permission: readwrite

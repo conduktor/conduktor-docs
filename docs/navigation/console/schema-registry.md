@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
-title: Schema Registry
-description: Schema Registry in Conduktor Platform handles the distribution and synchronization of Schemas to the producer and consumer for Kafka.
+title: Schema registry
+description: Schema Registry in Conduktor Console handles the distribution and synchronization of Schemas to the producer and consumer for Kafka.
 ---
 
 import Admonition from '@theme/Admonition';
@@ -18,13 +18,13 @@ export const Globally = () => (
 <Highlight color="#ffc9c9" text="#e03131">Globally</Highlight>
 );
 
-# Schema Registry
+# Schema registry
 
 Conduktor provides a visual interface for Schema Registry, allowing you to create and manage Subjects and Schemas with ease. Having Schema Registry ensures there is an automated way of ensuring data verification, Schema evolution, and ability for new consumers to emerge without breaking downstream.
 
 Conduktor supports **Confluent**, **Confluent like** (e.g. Karapace) and **AWS Glue** Schema Registry types.
 
-![Schema Registry tab](assets/schema-registry-list.png)
+![Schema registry tab](assets/schema-registry-list.png)
 
 ## Getting Started
 
@@ -32,9 +32,9 @@ Schema Registry needs to be enabled on a per-cluster basis before any Schemas ca
 
 To see an example of setting up Schema Registry, head to [Part 3 of this blog post](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it). This example uses an Aiven cluster and Karaspace Schema Registry.
 
-## Create Subject
+## Create subject
 
-Once Schema Registry is setup, you can explore your Subjects in the **Schema Registry** tab from the left-hand menu. From there, click on the **New Subject** button in the top right corner. This will open a side panel where you can configure your new Subject.
+Once Schema Registry is setup, you can explore your Subjects in the **Schema registry** tab from the left-hand menu. From there, click on the **New subject** button in the top right corner. This will open a side panel where you can configure your new Subject.
 
 import CreateSubject from './assets/create-subject.png'
 
@@ -46,7 +46,7 @@ Conduktor Console supports the [Avro](https://avro.apache.org/docs/current/spec.
 
 ### Strategy
 
-Subjects can be applied in several ways: To topics, to records, to both topics & records, or through a custom method.
+Subjects can be applied in several ways: To topics, to records, to both topics and records, or through a custom method.
 
 - **Topic Name**: This strategy associates your Subject with a specific topic of your choosing. Simply enter the topic name that you want the Subject to apply to. You will also need to specify if the Subject will apply to the key or value of a message. The topic name field will auto-complete for you, so no need to remember specific spellings!
 
@@ -62,20 +62,22 @@ Once you have decided on your format and strategy, you will need to enter your S
 
 Once it is ready, click **Create** and the Subject will be complete.
 
-## Manage Subject & Schemas
+## Manage subject and schemas
 
-You can manage your Subjects & Schemas from the Schema Registry tab. This includes:
+You can manage your Subjects and Schemas from the Schema Registry tab. This includes:
 
-**For Subjects**:
+**For subjects**:
+
 - Change their compatibility
 - Delete them
 
-**For Schemas**:
+**For schemas**:
+
 - Update a Schema and create a new version
 - Compare Schemas from the same Subject
 - Delete them
 
-### Change Subject compatibility
+### Change subject compatibility
 
 Each Subject has a compatibility type that determines how they should deal with evolution over time. As mentioned above, updating a Subject can cause issues upstream or downstream on applications, and choosing the right compatibility type can prevent this from occurring. 
 
@@ -95,13 +97,13 @@ Compatibility can be changed <PerSubject/> or <Globally/>.
 
 ![Change Subject compatibility](assets/change-compatibility.png)
 
-### Delete Subject
+### Delete subject
 
 From the dropdown shown just above, you can also delete a Subject with the bin icon at the bottom.
 
 This will be a **soft-delete**, meaning that the Schema versions under this Subject will be removed, but their metadata such as their Schema IDs will remain for lookup.
 
-### Update Schema
+### Update schema
 
 To update a Schema, select the relevant Subject and click on **Update Schema**. This will open a side panel where you can add or remove fields from your Schema.
 
@@ -111,13 +113,13 @@ import UpdateSchema from './assets/update-schema.png'
 
 Before updating, use the **Check compatibility** button to understand if this change will break anything upstream or downstream on our applications.
 
-### Compare Schemas
+### Compare schemas
 
 If you have more than 2 Schemas associated to your Subject, you will be able to compare them. For that, simply select the two versions you'd like to compare.
 
 ![Compare Schemas](assets/compare-schemas.png)
 
-### Delete Schema
+### Delete schema
 
 To delete a Schema, select the right version in the dropdown and click on the `...`. From there, click on **Delete version**.
 

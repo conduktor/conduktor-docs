@@ -4,9 +4,7 @@ title: Clusters
 description: How to manage your Kafka clusters in Conduktor Console
 ---
 
-# Clusters
-
-## Overview
+## Cluster overview
 
 :::note
 Use our [interactive guide](https://conduktor.navattic.com/cluster-configuration) to learn how to connect your Kafka cluster, Schema Registry and Kafka Connect
@@ -19,7 +17,7 @@ By default, only users belonging to the **Admin** group, or having the `Can mana
 
 To create a new cluster configuration, click on the "Create cluster" button in the top right-hand corner.
 
-To edit an existing cluster configuration, select it from the list. You will then be able to adjust the name & color, technical ID, bootstrap servers, and additional properties. You can also enable Schema Registry and Kafka Connect for the cluster.
+To edit an existing cluster configuration, select it from the list. You will then be able to adjust the name and color, technical ID, bootstrap servers, and additional properties. You can also enable Schema Registry and Kafka Connect for the cluster.
 
 ## Connect to a secure Kafka cluster
 
@@ -35,10 +33,8 @@ sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username='<username>' password='<password>';
 ```
 
-:::info 
-
+:::info
 If your configuration references keystore or truststore path, check the [Client Certificate Authentication](https://docs.conduktor.io/platform/configuration/ssl-tls-configuration/#client-certificate-authentication) documentation.
-
 :::
 
 ## Connect to a Confluent cluster
@@ -129,24 +125,25 @@ The configuration should look like this in the Console:
 :::info
 These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
 :::
+
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
 ![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
 
-2. Download the certificates from Cloudera:
+1. Download the certificates from Cloudera:
 ![getting_certs_from_cloudera](assets/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
 
-3. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
+1. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
 
 ```
 keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file zeke-test2-cdp-env.crt
 ```
 
-4. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
+1. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
 
-5. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
+1. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
 
-6. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step. 
+1. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step. 
 
 ![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
 
@@ -154,7 +151,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 ## Connect to a Google Cloud cluster
 
-You can connect to Google Cloud Managed Service for Apache Kafka using the **SASL_SSL protocol** or the **PLAIN mechanism** with one of the following options. 
+You can connect to Google Cloud Managed Service for Apache Kafka using the **SASL_SSL protocol** or the **PLAIN mechanism** with one of the following options.
 
 ### Option 1: Use a service account
 
@@ -184,3 +181,4 @@ When authenticating incoming connections to the cluster, managed service for Apa
 - the access token is valid and has not expired
 - the provided username matches the principal email that the access token is associated with
 - the access token's principal has the `managedkafka.clusters.connect` permission (included in roles/managedkafka.client) on the cluster
+

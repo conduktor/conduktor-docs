@@ -1,12 +1,13 @@
 ---
 sidebar_position: 7
-title: Topic Graphs & Alerts
+title: Topic graphs and alerts
 description: Conduktor Platform can help you to send messages into your topic. It's a useful feature for testing something without having to write a complete application.
 ---
 
-## Topic Graphs 
+## Topic graphs
 
 When you browse any Topic Details page, you will see the associated Graphs associated to this topic:
+
 - Produce and Consume rate
 - Number of Records
 - Disk Usage
@@ -19,8 +20,7 @@ On each metric you have the option to create an Alert. This will open a side pan
 
 ![Create a Topic alert](assets/topic-create-alert.png)
 
-
-## Alerts Tab
+## Alerts tab
 
 The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.

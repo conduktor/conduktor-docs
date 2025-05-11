@@ -8,33 +8,32 @@ Console exposes metrics using the Prometheus format for your Kafka resources and
 
 ## Kafka metrics reference
 
-The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance.
-Data points are refreshed every 30 seconds.
+The metrics endpoint is located on `/monitoring/metrics` of your deployed Console instance. Data points are refreshed every 30 seconds.
 
-| Metric Name | Metric Type | Labels | Description |
+| Metric name | Metric type | Labels | Description |
 | --- | --- | --- | --- |
-| **Consumer Group Metrics** |  |  |  |
+| **Consumer group metrics** |  |  |  |
 | `kafka_consumergroup_group_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Absolute Lag of the consumer group on this topic-partition |
 | `kafka_consumergroup_group_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Lag in seconds of the consumer group on this topic-partition |
 | `kafka_consumergroup_group_offset` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Last commited offset of the consumer group on this topic-partition |
-| **Consumer Group Metrics (Aggregated)** |  |  |  |
+| **Consumer group metrics (aggregated)** |  |  |  |
 | `kafka_consumergroup_group_max_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Max group offset lag |
 | `kafka_consumergroup_group_max_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group` | Lag in seconds of the consumer group (all topics) |
 | `kafka_consumergroup_group_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Sum of Absolute Lag of the consumer group (all topics) |
 | `kafka_consumergroup_group_topic_sum_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic` | Sum of Absolute Lag of the consumer group on this topic (all partitions) |
-| **Kafka Cluster & Broker Metrics** |  |  |  |
-| `kafka_controller_kafkacontroller_activebrokercount` | gauge | `cluster_name`, `cluster_id` | Number of active Brokers on the Kafka cluster |
-| `kafka_controller_kafkacontroller_activecontrollercount` | gauge | `cluster_name`, `cluster_id` | Number of active Controllers on the Kafka cluster |
+| **Kafka cluster and broker metrics** |  |  |  |
+| `kafka_controller_kafkacontroller_activebrokercount` | gauge | `cluster_name`, `cluster_id` | Number of active brokers on the Kafka cluster |
+| `kafka_controller_kafkacontroller_activecontrollercount` | gauge | `cluster_name`, `cluster_id` | Number of active controllers on the Kafka cluster |
 | `kafka_controller_kafkacontroller_globalpartitioncount` | gauge | `cluster_name`, `cluster_id` | Total number of partitions on the Kafka cluster |
-| `kafka_controller_kafkacontroller_offlinepartitionscount` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with no active Leader |
-| `kafka_server_replicamanager_leadercount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of Partition Leaders on this Broker |
-| `kafka_server_replicamanager_partitioncount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of Partitions on this Broker |
-| `kafka_server_replicamanager_underminisrpartitioncount` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with replicas that don't meet their minimum ISR |
-| `kafka_server_replicamanager_underreplicatedpartitions` | gauge | `cluster_name`, `cluster_id` | Number of Partitions with replicas that don't meet their replication factor |
-| **Kafka Connect Metrics** |  |  |  |
-| `kafka_connect_failed_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Number of Failed tasks for this Connector |
+| `kafka_controller_kafkacontroller_offlinepartitionscount` | gauge | `cluster_name`, `cluster_id` | Number of partitions with no active Leader |
+| `kafka_server_replicamanager_leadercount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of partition Leaders on this Broker |
+| `kafka_server_replicamanager_partitioncount` | gauge | `cluster_name`, `cluster_id`, `broker_id`, `broker_host` | Number of partitions on this Broker |
+| `kafka_server_replicamanager_underminisrpartitioncount` | gauge | `cluster_name`, `cluster_id` | Number of partitions with replicas that don't meet their minimum ISR |
+| `kafka_server_replicamanager_underreplicatedpartitions` | gauge | `cluster_name`, `cluster_id` | Number of partitions with replicas that don't meet their replication factor |
+| **Kafka connect metrics** |  |  |  |
+| `kafka_connect_failed_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Number of failed tasks for this Connector |
 | `kafka_connect_total_tasks` | gauge | `cluster_name`, `cluster_id`, `connect_cluster_id`, `connector` | Total number of tasks configured for this Connector |
-| **Kafka Topic & Partition Metrics** |  |  |  |
+| **Kafka topic and partition metrics** |  |  |  |
 | `kafka_cluster_partition_underminisr` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | `1` when the partition is under min ISR |
 | `kafka_cluster_partition_underreplicated` | gauge | `cluster_name`, `cluster_id`, `topic`, `partition` | `1` when the partition is under-replicated |
 | `kafka_partition_earliest_offset` | gauge | `cluster_id`, `cluster_name`, `topic`, `partition` | Earliest offset of the current topic-partition |
@@ -53,7 +52,7 @@ Note that the label `cluster_name` is obsolete and will be removed soon. You sho
 
 The metrics endpoint is located on `/api/metrics` of your deployed Console instance.
 
-| Metric Name | Metric Type | Labels | Description |
+| Metric name | Metric type | Labels | Description |
 | --- | --- | --- | --- |
 | **Console API** |  |  |  |
 | `console_api_request_active` | gauge | `path`, `method` |  |
@@ -118,7 +117,7 @@ The metrics endpoint is located on `/api/metrics` of your deployed Console insta
 | `console_indexer_kafka_list_topics_duration_max` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_list_topics_duration_min` |  | `time_unit`, `technical_id`, `cluster_type` |  |
 | `console_indexer_kafka_list_topics_duration_sum` |  | `time_unit`, `technical_id`, `cluster_type` |  |
-| `console_indexer_kafka_total_clusters_count` | gauge |  | Total number of Kafka cluster |
+| `console_indexer_kafka_total_clusters_count` | gauge |  | Total number of Kafka clusters |
 | `console_indexer_kafka_total_duration` | histogram |  | Total duration in milliseconds to index Kafka cluster |
 | `console_indexer_kafka_total_duration_count` |  | `time_unit` |  |
 | `console_indexer_kafka_total_duration_max` |  | `time_unit` |  |
@@ -136,12 +135,12 @@ The metrics endpoint is located on `/api/metrics` of your deployed Console insta
 | `console_indexer_kafka_connect_total_duration_min` |  | `time_unit` |  |
 | `console_indexer_kafka_connect_total_duration_sum` |  | `time_unit` |  |
 | **Schema registry indexing** |  |  |  |
-| `console_indexer_schema_registry_cluster_failed_count` | gauge |  | Number of failed Schema Registry server indexing tasks |
-| `console_indexer_schema_registry_cluster_skipped_count` | gauge |  | Number of skipped Schema Registry server indexing tasks |
-| `console_indexer_schema_registry_cluster_succeeded_count` | gauge |  | Number of succeeded Schema Registry server indexing tasks |
-| `console_indexer_schema_registry_cluster_timeout_count` | gauge |  | Number of timed out Schema Registry server indexing tasks |
-| `console_indexer_schema_registry_total_clusters_count` | gauge |  | Total number of Schema Registry server |
-| `console_indexer_schema_registry_total_duration` | histogram |  | Total duration in milliseconds to index Schema Registry server |
+| `console_indexer_schema_registry_cluster_failed_count` | gauge |  | Number of failed schema registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_skipped_count` | gauge |  | Number of skipped schema registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_succeeded_count` | gauge |  | Number of succeeded schema registry server indexing tasks |
+| `console_indexer_schema_registry_cluster_timeout_count` | gauge |  | Number of timed out schema registry server indexing tasks |
+| `console_indexer_schema_registry_total_clusters_count` | gauge |  | Total number of schema registry server |
+| `console_indexer_schema_registry_total_duration` | histogram |  | Total duration in milliseconds to index schema registry server |
 | `console_indexer_schema_registry_total_duration_count` |  | `time_unit` |  |
 | `console_indexer_schema_registry_total_duration_max` |  | `time_unit` |  |
 | `console_indexer_schema_registry_total_duration_min` |  | `time_unit` |  |

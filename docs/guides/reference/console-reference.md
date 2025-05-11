@@ -124,7 +124,8 @@ resource "conduktor_group_v2" "developers-a" {
 - `spec.members` must be email addresses of members you wish to add to this group
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effect in Console & Kafka:**
+**Side effect in Console and Kafka:**
+
 - Console
   - Members of the Group are given the associated permissions in the UI over the resources
   - Members of the LDAP or OIDC groups will be automatically added or removed upon login
@@ -211,13 +212,15 @@ Make sure you set permissions for this user, otherwise it won't have access to P
 **Users checks:**
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effect in Console & Kafka:**
+**Side effect in Console and Kafka:**
+
 - Console
   - User is given the associated permissions in the UI over the resources
 - Kafka
   - No side effect
 
 ## KafkaCluster
+
 Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
@@ -485,11 +488,14 @@ Use AWS API Key/Secret to connect to the Glue Registry
 </TabItem>
 </Tabs>
 
-### Kafka Provider
+### Kafka provider
+
 This section lets you configure the Kafka Provider for this KafkaCluster.
 
-**Confluent Cloud**  
+**Confluent Cloud**
+
 Provide your Confluent Cloud details to get additional features in Console:
+
 - Confluent Cloud Service Accounts support
 - Confluent Cloud API Keys support
 
@@ -524,8 +530,10 @@ spec {
 </TabItem>
 </Tabs>
 
-**Aiven**  
-Provide your Aiven Cloud details to get additional features in Console:  
+**Aiven**
+
+Provide your Aiven Cloud details to get additional features in Console:
+
 - Aiven Service Accounts support
 - Aiven ACLs support
 
@@ -560,7 +568,8 @@ spec {
 
 **Gateway**  
 Provide your Gateway details to get additional features in Console:
-- Interceptors support
+
+- Interceptor support
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -641,10 +650,9 @@ spec {
 | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M496 127.1C496 381.3 309.1 512 255.1 512C204.9 512 16 385.3 16 127.1c0-19.41 11.7-36.89 29.61-44.28l191.1-80.01c4.906-2.031 13.13-3.701 18.44-3.701c5.281 0 13.58 1.67 18.46 3.701l192 80.01C484.3 91.1 496 108.6 496 127.1z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M416 0H32C14.38 0 0 14.38 0 32L0 400c0 8.875 7.125 16 16 16h416c8.875 0 16-7.125 16-16V32C448 14.38 433.6 0 416 0zM80 356c-11 0-20-9-20-20S69 316 80 316s20 9 20 20S91 356 80 356zM383.1 344c0 4.375-3.625 8-8 8h-144c-4.375 0-8-3.625-8-8L224 328c0-4.375 3.625-8 8-8h144c4.375 0 8 3.625 8 8L383.1 344zM384 224c0 17.62-14.38 32-32 32H96C78.38 256 64 241.6 64 224V96c0-17.62 14.38-32 32-32h256c17.62 0 32 14.38 32 32V224zM32 512h384v-64H32V512z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M495 225l-17.24 1.124c-5.25-39.5-20.76-75.63-43.89-105.9l12.1-11.37c6.875-6.125 7.25-16.75 .75-23.38L426.5 64.38c-6.625-6.5-17.25-6.125-23.38 .75l-11.37 12.1c-30.25-23.12-66.38-38.64-105.9-43.89L287 17C287.5 7.75 280.2 0 271 0h-30c-9.25 0-16.5 7.75-16 17l1.124 17.24c-39.5 5.25-75.63 20.76-105.9 43.89L108.9 65.13C102.8 58.25 92.13 57.88 85.63 64.38L64.38 85.5C57.88 92.12 58.25 102.8 65.13 108.9l12.1 11.37C54.1 150.5 39.49 186.6 34.24 226.1L17 225C7.75 224.5 0 231.8 0 241v30c0 9.25 7.75 16.5 17 16l17.24-1.124c5.25 39.5 20.76 75.63 43.89 105.9l-12.1 11.37c-6.875 6.125-7.25 16.75-.75 23.25l21.25 21.25c6.5 6.5 17.13 6.125 23.25-.75l11.37-12.1c30.25 23.12 66.38 38.64 105.9 43.89L225 495C224.5 504.2 231.8 512 241 512h30c9.25 0 16.5-7.75 16-17l-1.124-17.24c39.5-5.25 75.63-20.76 105.9-43.89l11.37 12.1c6.125 6.875 16.75 7.25 23.38 .75l21.12-21.25c6.5-6.5 6.125-17.13-.75-23.25l-12.1-11.37c23.12-30.25 38.64-66.38 43.89-105.9L495 287C504.3 287.5 512 280.2 512 271v-30C512 231.8 504.3 224.5 495 225zM281.9 98.68c24.75 4 47.61 13.59 67.24 27.71L306.5 174.6c-8.75-5.375-18.38-9.507-28.62-11.88L281.9 98.68zM230.1 98.68l3.996 64.06C223.9 165.1 214.3 169.2 205.5 174.6L162.9 126.4C182.5 112.3 205.4 102.7 230.1 98.68zM126.4 163l48.35 42.48c-5.5 8.75-9.606 18.4-11.98 28.65L98.68 230.1C102.7 205.4 112.2 182.5 126.4 163zM98.68 281.9l64.06-3.996C165.1 288.1 169.3 297.8 174.6 306.5l-48.23 42.61C112.3 329.5 102.7 306.6 98.68 281.9zM230.1 413.3c-24.75-4-47.61-13.59-67.24-27.71l42.58-48.33c8.75 5.5 18.4 9.606 28.65 11.98L230.1 413.3zM256 288C238.4 288 224 273.6 224 256s14.38-32 32-32s32 14.38 32 32S273.6 288 256 288zM281.9 413.3l-3.996-64.06c10.25-2.375 19.9-6.48 28.65-11.98l42.48 48.35C329.5 399.8 306.6 409.3 281.9 413.3zM385.6 349l-48.25-42.5c5.375-8.75 9.507-18.38 11.88-28.62l64.06 3.996C409.3 306.6 399.8 329.5 385.6 349zM349.3 234.1c-2.375-10.25-6.48-19.9-11.98-28.65L385.6 163c14.13 19.5 23.69 42.38 27.69 67.13L349.3 234.1z"></path></svg> | <svg height="16" viewBox="0 0 343 532" xmlns="http://www.w3.org/2000/svg" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path fill-rule="evenodd" clip-rule="evenodd" d="M102.353 10C61.7698 10 28.7622 43.002 28.7622 83.591C28.7622 115.928 49.7169 143.363 78.7066 153.225V175.654C39.2234 186.121 10 222.072 10 264.85C10 307.834 39.5097 343.918 79.2824 354.187V378.562C49.9871 388.257 28.7622 415.859 28.7622 448.409C28.7622 488.998 61.7698 522 102.353 522C142.937 522 175.944 488.998 175.944 448.409C175.944 415.859 154.719 388.257 125.424 378.562V354.187C141.622 350.01 156.38 341.508 168.117 329.602L186.681 342.742C185.771 347.316 185.277 352.052 185.277 356.917C185.277 397.506 218.285 430.508 258.868 430.508C299.452 430.508 332.459 397.506 332.459 356.917C332.459 316.328 299.452 283.326 258.868 283.326C239.873 283.326 222.594 290.594 209.565 302.407L191.285 289.467C193.479 281.656 194.706 273.412 194.706 264.85C194.706 256.474 193.532 248.404 191.429 240.745L209.658 227.949C222.676 239.712 239.918 246.948 258.868 246.948C299.452 246.948 332.459 213.946 332.459 173.357C332.459 132.768 299.452 99.7662 258.868 99.7662C218.285 99.7662 185.277 132.768 185.277 173.357C185.277 178.275 185.779 183.066 186.708 187.691L168.471 200.491C156.721 188.435 141.699 179.602 124.848 175.374V153.651C154.449 144.127 175.944 116.35 175.944 83.591C175.944 43.002 142.937 10 102.353 10ZM80.4234 83.591C80.4234 71.5099 90.2683 61.6623 102.353 61.6623C114.438 61.6623 124.282 71.5095 124.282 83.591C124.282 95.6724 114.438 105.52 102.353 105.52C90.2684 105.52 80.4234 95.672 80.4234 83.591ZM236.94 173.357C236.94 161.275 246.784 151.427 258.868 151.427C270.952 151.427 280.797 161.275 280.797 173.357C280.797 185.439 270.953 195.286 258.868 195.286C246.784 195.286 236.94 185.439 236.94 173.357ZM68.1079 264.85C68.1079 245.976 83.4768 230.607 102.351 230.607C121.224 230.607 136.593 245.975 136.593 264.85C136.593 283.721 121.225 299.088 102.351 299.088C83.4756 299.088 68.1079 283.721 68.1079 264.85ZM236.94 356.917C236.94 344.835 246.784 334.988 258.868 334.988C270.953 334.988 280.797 344.835 280.797 356.917C280.797 368.999 270.952 378.846 258.868 378.846C246.784 378.846 236.94 368.999 236.94 356.917ZM80.4234 448.409C80.4234 436.328 90.2684 426.48 102.353 426.48C114.438 426.48 124.282 436.328 124.282 448.409C124.282 460.491 114.438 470.338 102.353 470.338C90.2683 470.338 80.4234 460.49 80.4234 448.409Z"></path></svg> |
 | `shieldBlank` | `computerClassic` | `dharmachakra` | `kafka` |
 
-
-
 ## KafkaConnectCluster
-Creates a Kafka Connect Cluster Definition in Console.
+
+Creates a Kafka Connect cluster definition in Console.
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <TF /> <GUI />  
@@ -701,6 +709,7 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 </Tabs>
 
 **KafkaConnectCluster checks:**
+
 - `metadata.cluster` must be a valid KafkaCluster name
 - `spec.urls` must be a single URL of a Kafka Connect cluster
   - **Multiple URLs are not supported for now. Coming soon**
@@ -709,13 +718,14 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 - `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
   - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
 
-
 ## KsqlDBCluster
+
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />  
 **Labels support:** <MissingLabelSupport />
 
 Creates a ksqlDB Cluster Definition in Console.
+
 ````yaml
 ---
 apiVersion: console/v2
@@ -732,7 +742,9 @@ spec:
     username: "toto"
     password: "my-secret"
 ````
+
 **KafkaConnectCluster checks:**
+
 - `metadata.cluster` must be a valid KafkaCluster name
 - `spec.url` must be a single URL of a KsqlDB cluster
 - `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
@@ -746,7 +758,7 @@ spec:
 **Managed with:** <API /> <CLI /> <GUI />  
 **Labels support:** <MissingLabelSupport />
 
-Creates an Alert in Console. 
+Creates an Alert in Console.
 
 ````yaml
 ---
@@ -770,6 +782,7 @@ spec:
 ````
 
 **Alert checks:**
+
 - `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
 - `spec.cluster` must be a valid KafkaCluster name
@@ -813,11 +826,10 @@ spec:
 
 ## DataMaskingPolicy
 
-:::caution Not implemented yet
-This concept will be available in a future version
+:::info[Coming soon]
 :::
 
-## Partner Zone
+## Partner Zones
 
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />  
@@ -856,6 +868,7 @@ spec:
 ```
 
 **Partner Zone checks:**
+
 - `spec.displayName` is Mandatory
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
 - `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
@@ -867,31 +880,38 @@ spec:
 - `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
 - `trafficControlPolicies.limitCommitOffset` is **optional**. Sets the maximum number of commits requests (in requests/minute) that the partner can make per Gateway node.
 
-**Side effect in Console & Kafka:**  
+**Side effect in Console and Kafka:**  
 Upon creation or update, the following fields will be available:
+
 - `metadata.updatedAt` field will be made available by consecutive get from the CLI/API.
 - `metadata.status` field will be made available by consecutive get from the CLI/API. Possible values are `PENDING`, `READY` or `FAILED`.
 - `metadata.failedReason` field will be populated in case of `FAILED` status.
 - The service account will be created if it doesn't exist and will be granted the permissions as declared in `spec.topics`
 - The traffic control policies will be applied to the service account.
 
-## HTTP Security Properties
+## HTTP security properties
 
-HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster)
-### Basic Authentication
+HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster).
+
+### Basic authentication
+
 ````yaml
   security:
     type: "BasicAuth"
     username: "toto"
     password: "my-secret"
 ````
-### Bearer Token
+
+### Bearer token
+
 ````yaml
   security:
     type: "BearerToken"
     token: "toto"
 ````
-### mTLS / Client Certificate
+
+### mTLS/client certificate
+
 ````yaml
   security:
     type: "SSLAuth"
@@ -911,10 +931,9 @@ HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-
       -----END CERTIFICATE-----
 ````
 
-
 ## Permissions
 
-Permissions are used in [Groups](#consolegroup) and [Users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
+Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature.
 
 A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
 
@@ -926,7 +945,8 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - [KsqlDB Permissions](#ksqldb-permissions)
 - [Platform Permissions](#platform-permissions)
 
-### Topic Permissions
+### Topic permissions
+
 ````yaml
 # Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
 - resourceType: TOPIC
@@ -945,7 +965,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the topic or topic prefix to apply the permissions to
 - `permissions` is a list of valid topic permissions (See Table)
 
-| Available Topic Permissions | Description |
+| Available topic permissions | Description |
 |-----------------------------|--------|
 | `topicConsume`              | Permission to consume messages from the topic. |
 | `topicProduce`              | Permission to produce (write) messages to the topic. |
@@ -956,8 +976,8 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `topicAddPartition`         | Permission to add partitions to the topic. |
 | `topicEmpty`                | Permission to empty (delete all messages from) the topic. |
 
+### Subject permissions
 
-### Subject Permissions
 ````yaml
 # Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
 - resourceType: SUBJECT
@@ -975,14 +995,15 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the subject or subject prefix to apply the permissions to
 - `permissions` is a list of valid subject permissions (See Table)
 
-| Available Subject Permissions      | Description |
+| Available subject permissions      | Description |
 |------------------------------------|--------|
 | `subjectCreateUpdate`              | Permission to create or update the subject. |
 | `subjectDelete`                    | Permission to delete the subject. |
 | `subjectEditCompatibility`         | Permission to edit the subject compatibility settings. |
 | `subjectView`                      | Permission to view the subject details. |
 
-### ConsumerGroup Permissions
+### ConsumerGroup permissions
+
 ````yaml
 # Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
 - resourceType: CONSUMER_GROUP
@@ -1000,14 +1021,15 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the consumer group or consumer group prefix to apply the permissions to
 - `permissions` is a list of valid consumer group permissions (See Table)
 
-| Available ConsumerGroup Permissions | Description |
+| Available ConsumerGroup permissions | Description |
 |-------------------------------------|--------|
 | `consumerGroupCreate`               | Permission to create a new consumer group. |
 | `consumerGroupReset`                | Permission to reset the consumer group. |
 | `consumerGroupDelete`               | Permission to delete the consumer group. |
 | `consumerGroupView`                 | Permission to view the consumer group details. |
 
-### Cluster Permissions
+### Cluster permissions
+
 ```yaml
 # Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
 - resourceType: CLUSTER
@@ -1025,7 +1047,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
   - Use `*` for all clusters
 - `permissions` is a list of valid cluster permissions (See Table)
 
-| Available Cluster Permissions | Description |
+| Available cluster permissions | Description |
 |-------------------------------|--------|
 | `clusterViewBroker`           | Permission to view broker details. |
 | `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
@@ -1033,8 +1055,8 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
 | `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
 
+### KafkaConnect permissions
 
-### KafkaConnect Permissions
 ```yaml
 # Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
 - resourceType: KAFKA_CONNECT
@@ -1054,7 +1076,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `name` is the name of the connector or connector prefix to apply the permissions to
 - `permissions` is a list of valid Kafka Connect permissions (See Table)
 
-| Available KafkaConnect Permissions | Description |
+| Available KafkaConnect permission  | Description |
 |------------------------------------|--------|
 | `kafkaConnectorViewConfig`         | Permission to view the Kafka Connect configuration. |
 | `kafkaConnectorStatus`             | Permission to view the status of Kafka Connect connectors. |
@@ -1064,8 +1086,8 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `kafkaConnectPauseResume`          | Permission to pause and resume connectors. |
 | `kafkaConnectRestart`              | Permission to restart connectors. |
 
+### KsqlDB permissions
 
-### KsqlDB Permissions
 ```yaml
 # Grants all permissions on KsqlDB cluster ksql-cluster
 - resourceType: KSQLDB
@@ -1084,8 +1106,8 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 |------------------------------------|--------------------------------------------------------------------------------------|
 | `ksqldbAccess`         | Grants all permissions on the KsqlDB Cluster. |
 
+### Platform permissions
 
-### Platform Permissions
 ```yaml
 # Grants Platform permissions
 - resourceType: PLATFORM
@@ -1097,12 +1119,12 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions
 
-| Available Platform permissions | Description                                                   |
+| Available Console permissions | Description                                                    |
 |--------------------------------|---------------------------------------------------------------|
 | `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console   |
 | `certificateManage`            | Permission to add / edit / remove TLS Certificates on Console |
-| `userManage`                   | Permission to manage Console users, groups & permissions      |
-| `userView`                     | Permission to view Console users, groups & permissions        |
+| `userManage`                   | Permission to manage Console users, groups and permissions    |
+| `userView`                     | Permission to view Console users, groups and permissions      |
 | `datamaskingManage`            | Permission to manage Data policies (masking rules)            |
 | `datamaskingView`              | Permission to view Data policies                              |
 | `notificationChannelManage`    | Permission to manage Integration channels                     |

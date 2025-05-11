@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Topic Produce
+title: Topic produce
 description: Conduktor Platform can help you to send messages into your topic. It's a useful feature for testing something without having to write a complete application.
 ---
 
@@ -12,13 +12,13 @@ The Produce page lets you configure all the details necessary to produce a recor
 
 It is already configured with [sensible defaults](#sensible-defaults) that you can customize if necessary.
 
-## Configure Producer
+## Configure producer
 
 Each section from the accordion menu will allow you to configure the Kafka producer further: Key, Value, Headers, Flow and Additional options.
 
 ![Produce accordion](assets/produce-accordion.png)
 
-### Key & Value
+### Key and value
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
@@ -28,10 +28,11 @@ import ProduceSerializers from './assets/produce-serializers.png';
 
 The default serializer is **String**, unless you have a matching subject name in your Schema Registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
-:::caution
+:::warning
 If using a Schema Registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
 :::
-#### Random Data Generator
+
+#### Random data generator
 
 The "Generate once" button will generate a message that conforms to the picked Serializer.
 
@@ -78,8 +79,8 @@ Automatic Mode starts a long running process that batches several Kafka Produce.
 
 **Interval (ms):**
 
--   Interval between each produce batch in milliseconds
--   Range: [1000, 60000]
+- Interval between each produce batch in milliseconds
+- Range: [1000, 60000]
 
 **Stop conditions : The first met condition stops the producer**
 
@@ -91,8 +92,9 @@ Automatic Mode starts a long running process that batches several Kafka Produce.
     -   Range: [0, 60000]
 
 The next screenshot is an example of a produce flow, that will generate:
--   A batch of 10 records, every second for a minute
--   With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
+
+- A batch of 10 records, every second for a minute
+- With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
 import ProduceFlowMode from './assets/produce-flow-mode.png';
 
@@ -106,8 +108,8 @@ This option lets you choose the partition where to produce your record.
 
 If set to **all**, it will use the [DefaultPartitioner](https://github.com/apache/kafka/blob/3.7/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java) from KafkaClient 3.6+
 
--   StickyPartitioner when Key is null
--   `Utils.murmur2(serializedKey) % numPartitions` otherwise.
+- StickyPartitioner when Key is null
+- `Utils.murmur2(serializedKey) % numPartitions` otherwise.
 
 Default: all
 
@@ -129,9 +131,9 @@ Default: all
 
 The following items are preconfigured by default:
 
--   If you have connected a Schema Registry and there exist a subject named `<topic-name>-key` and `<topic-name>-value` , the serializers will be populated automatically to the right type (Avro / Protobuf / JsonSchema)
-    -   otherwise, the `StringSerializer` will be picked.
--   A single header `app.name=Conduktor` will be added
+- If you have connected a Schema Registry and there exist a subject named `<topic-name>-key` and `<topic-name>-value` , the serializers will be populated automatically to the right type (Avro / Protobuf / JsonSchema)
+- otherwise, the `StringSerializer` will be picked.
+- A single header `app.name=Conduktor` will be added
 
 ## Produced messages panel
 
@@ -153,7 +155,7 @@ import ProduceMessagesPanelSingle from './assets/produce-messages-panel-single.p
 
 This feature lets you produce a batch of Kafka Records based on a CSV file.
 
-The 3 required inputs are the Key & Value Serializer, and the input file itself.
+The 3 required inputs are the Key and Value Serializer, and the input file itself.
 
 import ImportCSV from './assets/produce-import-csv.png';
 
@@ -196,7 +198,7 @@ import ImportCSVSuccess from './assets/produce-import-csv-success.png';
 
 <img src={ImportCSVSuccess} alt="Import CSV Success" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-### Save & Load Producer Templates
+### Save and load producer templates
 
 If you are regularly using the same set of Producer configuration, you can save your current settings as a template for reuse.
 

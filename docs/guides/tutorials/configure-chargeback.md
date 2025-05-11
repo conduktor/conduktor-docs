@@ -10,6 +10,7 @@ description: Configure Chargeback
 Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
 As of now, the tracked metrics are:
+
 - Service Accounts produced bytes
 - Service Accounts consumed bytes
 
@@ -17,22 +18,26 @@ We plan to add more metrics to Chargeback in the future. Let us know which metri
 
 ## Requirement
 
-Chargeback requires both Console & Gateway:
-* Console 1.29.0+
-* Gateway 3.4.0+
+Chargeback requires both Console and Gateway:
 
+- Console 1.29.0+
+- Gateway 3.4.0+
 
 ## Configuration
+
 To enable the Chargeback screens in Console, the following steps are necessary:
 
 1. [Configure](/platform/navigation/settings/managing-clusters/) the Gateway cluster in Console
-2. Configure the **Provider** tab with Gateway API credentials
-  - **Note** that Virtual clusters are not supported yet. When populating the provider tab, you should instead use the default value `passthrough`.
+1. Configure the **Provider** tab with Gateway API credentials:
 
-![Gateway Provider](assets/gateway-provider.png)
+    :::info
+    Virtual clusters are not supported yet. When populating the provider tab, you should instead use the default value `passthrough`.
+    :::
 
+    ![Gateway Provider](assets/gateway-provider.png)
 
-3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
+1. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
+
   ```yaml
   apiVersion: gateway/v2
   kind: Interceptor

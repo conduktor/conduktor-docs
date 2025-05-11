@@ -4,40 +4,11 @@ title: Topic Consume
 description: Reference Documentation for Topic related pages
 ---
 
-- [Configure the Kafka Consumer](#configure-the-kafka-consumer)
-  - [Show From](#show-from)
-  - [Limit](#limit)
-  - [Partitions](#partitions)
-  - [Key \& Value Format](#key--value-format)
-    - [Automatic Deserializer](#automatic-deserializer)
-    - [Custom Deserializer](#custom-deserializer)
-    - [JSON Deserializer](#json-deserializer)
-    - [Bytes Deserializer](#bytes-deserializer)
-- [Filter records](#filter-records)
-  - [Global Search](#global-search)
-  - [Search in a Specific Field](#search-in-a-specific-field)
-  - [JS Search](#js-search)
-  - [Statistics pop-up](#statistics-pop-up)
-- [Browse records](#browse-records)
-  - [From the main table](#from-the-main-table)
-  - [Individual records](#individual-records)
-  - [Data tab](#data-tab)
-    - [Table View](#table-view)
-    - [JSON View](#json-view)
-  - [Headers tab](#headers-tab)
-  - [Metadata tab](#metadata-tab)
-- [Operations](#operations)
-  - [Export Records in CSV \& JSON](#export-records-in-csv--json)
-  - [Reprocess Record](#reprocess-record)
-  - [Save \& Load Filter Templates](#save--load-filter-templates)
-
 :::info
-**Checkout our video that presents the most important features of Topic Consume**  
-
-[Filtering and Sorting Techniques for Exploration and Troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
+Check out the video that presents the most important features of topic consume: [filter and sort techniques for exploration and troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
 :::
 
-## Configure the Kafka Consumer
+## Configure the Kafka consumer
 
 When you access a Topic from the Topic List page for the first time, a consumer is automatically triggered with default settings:
 
@@ -50,7 +21,7 @@ This default setup lets you quickly browse through the 500 most recent messages 
 
 There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
 
-### Show From
+### Show from
 
 `Show From` defines the starting point for the Kafka Consumer in your topic.
 
@@ -101,7 +72,7 @@ import PartitionsOptions from './assets/topic-partitions-choices.png';
 
 <img src={PartitionsOptions} alt="Partitions options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
-### Key & Value Format
+### Key and value format
 
 `Key format` and `Value format` lets you force the deserializer for your topic.
 
@@ -109,32 +80,31 @@ import TopicKeyFormatOptions from './assets/topic-key-format-choices.png';
 
 <img src={TopicKeyFormatOptions} alt="Key format choices" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
-#### Automatic Deserializer
+#### Automatic deserializer
 
 This is the default deserializer. **Automatic** infers the correct deserializer in the following order:
 
--   Schema Registry Deserializers (Avro, Protobuf, Json Schema)
--   JsonDeserializer
--   StringDeserializer
--   ByteDeserializer (fallback)
+- Schema Registry Deserializers (Avro, Protobuf, Json Schema)
+- JsonDeserializer
+- StringDeserializer
+- ByteDeserializer (fallback)
 
 Automatic deserializer applies to all the records within a topic, based on the one that matches the first record it encounters.
 
-#### Custom Deserializer
-If you have installed them, your Custom Deserializers will appear here.  
-Optionally configure them using the `Properties` text and your messages will show as expected.  
+#### Custom deserializer
 
-Check our guide on how to [Install & Configure Custom Deserializers](/platform/guides/custom-deserializers/) in Console.
+If you have installed them, your Custom Deserializers will appear here. Optionally, configure them using the `Properties` text and your messages will show as expected.  
+
+Check our guide on how to [Install and configure custom deserializers](/platform/guides/custom-deserializers/) in Console.
 ![Consume with a custom deserializer](assets/topic-custom-deserializer.png)
 
-
-#### JSON Deserializer
+#### JSON deserializer
 
 JSON Deserializer will explicitly fail on records that doesn't match a JSON type.
 
 ![Consume with JSON deserializer](assets/topic-json-deser-fail.png)
 
-#### Bytes Deserializer
+#### Bytes deserializer
 
 Bytes Deserializer helps you visualize your records by printing the non-ASCII characters as hexadecimal escape sequences. For instance, the following sequence of bytes:
 
@@ -158,12 +128,11 @@ will be represented like this:
 
 ![Deserializer with bytes](assets/topic-bytes-deserializer.png)
 
-
 ## Filter records
 
 Console give you 3 methods to define filters that will be executed on the server and will only return the records that matches. This is a very powerful feature that lets you quickly see the records that matter to you in large topics.
 
-### Global Search
+### Global search
 
 Global Search is the most simple type of filter you can use.
 
@@ -178,10 +147,11 @@ This might not be the preferred approach if your record is JSON-ish
 
 ![Global search](assets/topic-global-filter.png)
 
-### Search in a Specific Field
+### Search in a specific field
 
 You can make your search more fine-grained by activating "Search in a specific field".
 ![Search in a specific field](assets/topic-search-infield.png)
+
 :::info
 Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
 Examples:  
@@ -189,7 +159,8 @@ Examples:
 `data.event["correlation-id"]`  
 `data.clientAddress[0].ip`  
 :::
-### JS Search
+
+### JS search
 
 If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.  
 Check this article on [JS Filters syntax](../js-filter-syntax/) to get examples and syntax around this filter.
@@ -203,13 +174,16 @@ While the consumer is processing, you will see the following statistics window.
 
 This little window present the necessary information to let you decide wether it's worth pursuing the current search or if you should rather refine it further.
 
-Here's how to read it.
+Here's how to read it:
+
 ![Statistics](assets/topic-stats-info.png)
 
 ## Browse records
 
 ### From the main table
+
 Once the search starts, you will see messages appearing in the main table. The table has 3 columns: Timestamp, Key and Value.  
+
 :::info
 Note that the Timestamp column takes the **local timezone** of the user.  
 For example, if you are producing a message from Dublin, Ireland (UTC+1) at `14:57:38 local time`, and you then consume this message from your browser (in Dublin), you will see `14:57:38`.  
@@ -218,6 +192,7 @@ Please be aware that this isn't a mistake from Kafka itself, you are simply seei
 :::
 
 ### Individual records
+
 Upon clicking on a record from the list, a side bar will open on the right to display the entire record.
 
 :::info
@@ -254,14 +229,14 @@ The table view lets you visualize your message field by field and also gives you
 
 Filters are available for:
 
--   **string** fields
--   **number** fields
--   **bool** fields
+- **string** fields
+- **number** fields
+- **bool** fields
 
 but disabled for:
 
--   **null** fields
--   fields contained within **lists**
+- **null** fields
+- fields contained within **lists**
 
 #### JSON View
 
@@ -274,17 +249,19 @@ The basic syntax lets you focus on sub-elements of your record, as shown in the 
 .meta.domain // Renders a single String
 { id, meta } // Renders a new JSON with both elements
 ```
+
 ![See JQ filter](assets/topic-browse-json.png)
 Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-construction) for more advanced use-cases.
 
 ### Headers tab
 
 The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
+
 ![Headers tab](assets/topic-header-funnel.png)
 The resulting filter will be created:
 ![Filter on headers](assets/topic-header-filter.png)
 
-:::caution
+:::warning
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
 If your producer doesn't write header values as UTF8 String, this tab might not render properly, and header filter might not work as expected.
 :::
@@ -307,16 +284,18 @@ import MetadataTab from './assets/topic-metadata.png';
 
 ## Operations
 
-### Export Records in CSV & JSON
+### Export records in CSV and JSON
 
 You have the ability to export the records in either JSON or CSV format.
 
 CSV particularly useful in particular because you can use Console to re-import them either in a new topic or in the same topic after having modified them (or not)
+
 ![Export records from a topic](assets/topic-export.png)
+
 The resulting files will look like this:
 ![Export results](assets/topic-export-result.png)
 
-### Reprocess Record
+### Reprocess record
 
 This feature lets you pick a record from the list and reprocess it either in the same or in a different topic, while letting you change its content beforehand.
 
@@ -326,7 +305,7 @@ Upon click the Reprocess message **(1)**, you will be asked to pick a destinatio
 
 Know more about [How to reprocess records](/platform/guides/reprocess/).
 
-### Save & Load Views
+### Save and load views
 
 If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, or if you'd like to share them with your colleagues, you can save your current view as a template for reuse.
 
@@ -350,3 +329,4 @@ From here, you will see your private views, and the organization views that you 
 import SharedViews from './assets/list-shared-views.png';
 
 <img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
+

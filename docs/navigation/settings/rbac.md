@@ -1,16 +1,15 @@
 ---
 sidebar_position: 4
-title: RBAC
+title: RBAC 
 description: Using Conduktor RBAC to enable granular access to Kafka resources
 ---
 
-# RBAC
-
-## Overview
+# RBAC overview
 
 The Conduktor RBAC system enables you to restrict access to resources and enforce permissions at **User** and **Group** granularity. This is a critical step in ensuring that you have control over your Apache Kafka data.
 
 With Conduktor RBAC, you can:
+
 - Configure access to Conduktor services
 - Configure global permissions across **multiple clusters**
 - Administer permissions for Kafka resources:
@@ -35,10 +34,12 @@ With Conduktor RBAC, you can:
 ### How to assign permissions?
 
 You can assign two kinds of permissions:
+
 - Services permissions: to see and/or manage Conduktor Console services
 - Resources permissions: to interact with Kafka resources
 
 And you can assign those permissions to:
+
 - Users
 - Groups
 
@@ -51,7 +52,7 @@ Please note that permissions are additive, meaning that if a user belongs to mul
 If they have a restricted access to a topic, but belong to a group that has a full access, then they will have a full access too.
 :::
 
-### Manage Services Permissions
+### Manage services permissions
 
 You are able to restrict access to Conduktor Console services. The default set of permissions is the one below:
 
@@ -59,9 +60,10 @@ You are able to restrict access to Conduktor Console services. The default set o
 
 This set of permissions means that the user will not be able to access all the available tabs on the left e.g. to manage certificates or generate API keys.
 
-### Manage Resources Permissions
+### Manage resources permissions
 
-#### Granular Permissions
+#### Granular permissions
+
 The RBAC model is very granular and allows you to go deep into the permissions. Here is a table that recaps the ones you can assign:
 
 | Resource         | Permissions           |
@@ -81,7 +83,7 @@ The RBAC model is very granular and allows you to go deep into the permissions. 
 | Subjects         | Edit compatibility    |
 | Subjects         | Create / Update       |
 | Subjects         | Delete                |
-| Kafka connectors | View task & status    |
+| Kafka connectors | View task and status  |
 | Kafka connectors | View config           |
 | Kafka connectors | Edit config           |
 | Kafka connectors | Deploy                |
@@ -99,6 +101,7 @@ All these permissions can be applied on one specific cluster, or all your cluste
 #### Prefixes
 
 When you define a permission, you might want it to be applied to:
+
 - A specific topic, by typing `my-topic` for instance
 - All the topics, by using a wildcard `*`
 - A subset that starts with a certain prefix, by typing `my-prefix-*`
@@ -109,7 +112,7 @@ Here is an example of those three cases within the UI:
 
 The exact same works for other Kafka resources.
 
-#### Quick Select
+#### Quick select
 
 In order to save time during the permissions creation, you can use the `Quick select` to give a default set of permissions or set this up using the CLI, API or Terraform.
 
@@ -144,5 +147,3 @@ This set of permissions gives her:
 - Full access to the topic `alice-private-topic` on the cluster `test`
 - Full access on all topics, that start with the prefix `app-a-`, across all clusters and that she inherits this from the group `Project A`
 - Partial access to the topic `tracker-click-1` and `tracker-click-2` on the cluster `Cluster-A` and that she inherits this from the application `support-for-tracker`
-
-

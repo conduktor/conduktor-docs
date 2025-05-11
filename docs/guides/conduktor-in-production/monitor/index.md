@@ -6,7 +6,7 @@ description: Monitor Conduktor in production
 
 ## Gateway health and monitoring
 
-To check the health of your Gateway, you can check the endpoint `/health` on the Gateway API (port `8888` by default).
+To check the health of your Gateway, you can use the endpoint `/health` on the Gateway API (by default, on port `8888`):
 
 ```sh title='cURL Example'
 curl -s  http://localhost:8888/health | jq .
@@ -34,10 +34,9 @@ curl -s  http://localhost:8888/health | jq .
 }
 ```
 
-## Monitoring
-### How to access Prometheus metrics from Gateway
+## Access Prometheus metrics from Gateway
 
-The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
+The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`. For example:
 
 ```bash
 localhost:8888/metrics
@@ -50,8 +49,6 @@ For example, using the default credentials, you can access the metrics with the 
 ```bash title='Retrieve Gateway Metrics'
 curl conduktor-gateway:8888/metrics --user "admin:conduktor"
 ```
-
-See the [API environment variables](/gateway/configuration/env-variables/#http) for more details.
 
 ### Available metrics for Prometheus
 

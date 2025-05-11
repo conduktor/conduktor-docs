@@ -30,7 +30,7 @@ Conduktor Gateway has a significant number of Interceptors available to satisfy 
 
 A few examples:
 
-- Full-body or field-level Encryption & Decryption
+- Full-body or field-level Encryption and Decryption
 - Reject (during produce) or Skip (during consume) records that don't match business data quality rules
 - Enforce producer configurations such as acks or compression
 - Enforce or override configurations during a CreateTopic request, such as replication factor or naming convention

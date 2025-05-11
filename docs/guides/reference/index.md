@@ -73,7 +73,7 @@ The Resources Reference page lists all the concepts that can be manipulated in C
 There are two kinds of API Keys to use with the CLI, Terraform and Public API:
 
 - <AdminToken /> have all permissions over all resources in Console
-- <AppToken /> permission are scoped to Application instances & Ownership model defined in Self-service
+- <AppToken /> permission are scoped to Application instances and Ownership model defined in Self-service
 
 In general, <AdminToken /> can bypass Application owners and "act" as an <AppToken />  
 
@@ -88,7 +88,7 @@ The resources are split into 3 categories:
 
 - [Console Resources](/guides/reference/console-reference) are resources that exist only in Console such as
   - Cluster Configurations
-  - Users, Groups & Permissions
+  - Users, Groups and Permissions
   - Alerts, DataMasking Policies
 - [Kafka Resources](/guides/reference/kafka-reference/kafka) are Kafka resources that gets created in the Kafka ecosystem
   - Topics
@@ -98,7 +98,7 @@ The resources are split into 3 categories:
 - [Self-service resources](/guides/reference/self-service-reference)
   - Application Groups
   - Topic Policies
-  - Instance Service Accounts & ACLs
+  - Instance Service Accounts and ACLs
 
 ## Limitations
 

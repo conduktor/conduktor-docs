@@ -58,7 +58,7 @@ Now that LDAP or OIDC is configured, you can create the mapping between external
 
 **Create a new group with an external group mapped**
 
-From within Admin, navigate to the `Users & Groups` screen and select the `Groups` tab. 
+From within Admin, navigate to the `Users and Groups` screen and select the `Groups` tab. 
 
  - Provide the `Name`, `Description` and select `Activate external groups mapping`
  - Provide 1 or more LDAP/OIDC groups

@@ -269,7 +269,7 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 </details>
 <details>
   <summary>My Partner Zone creation failed, how do I find out what the issue is?</summary>
-  <p>To check the status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) to GET the state of the Partner Zone, or check the Gateway & Console logs.</p>
+  <p>To check the status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) to GET the state of the Partner Zone, or check the Gateway and Console logs.</p>
 </details>
 <details>
   <summary>Does **Generate password** invalidate the previously issued credentials of a service account?</summary>

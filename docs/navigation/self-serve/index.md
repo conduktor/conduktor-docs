@@ -18,34 +18,36 @@ This approach brings governance into your enterprise through concepts like Owner
 - For a presentation of Self-service and its key concepts, see [Get started with Self-service](/platform/guides/self-service-quickstart)
 - For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/)
 
-
 ### Benefits for Central Platform team
+
 - Define the general rules of the game
 - Enforce naming conventions
 - Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
 - Declare the Applications and their rights
 
 ### Benefits for Applications teams
+
 - Autonomy and responsibility over their resources
 - Isolation with Application namespaces
 - Collaboration through permission delegation without any help from the Central Platform team
 - Discoverability through Topic Catalog
 
 ## Concepts
-Self-service relies on a central concept, the **Application**, which dictates **ownership** of Kafka resources. 
+
+Self-service relies on a central concept, the **Application**, which dictates **ownership** of Kafka resources.
 
 Below outlines the relationships between [Self-service resources](/platform/reference/resource-reference/self-service).
 
 ![Self-service Concepts](assets/self-service-concepts.png)
 
-
 ## Central Platform team resources
 
 ### Application
-An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.
-Applications give business context to Kafka resources (topics, consumer groups & subjects) that directly relate to the functioning of that application or pipeline.
+
+An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka. Applications give business context to Kafka resources (topics, consumer groups and subjects) that directly relate to the functioning of that application or pipeline.
 
 **Example**
+
 ````yaml
 ---
 apiVersion: "self-service/v1"
@@ -59,17 +61,19 @@ spec:
 ````
 
 ### Application instance
-**Applications** are generally deployed to one or more Kafka clusters, typically to align with the organization's development cycle or environments.
-We call this concept the **Application instance**.
+
+**Applications** are generally deployed to one or more Kafka clusters, typically to align with the organization's development cycle or environments. We call this concept the **Application instance**.
 
 Each Application Instance:
+
 - Is linked to a Kafka Cluster and a Service Account
 - Has ownership on the Kafka resources (topics, consumer groups, subjects, ...)
 - Grants the permissions
-    - On the Service Account using Kafka ACLs (`Read & Write` on Topics, `Read` on ConsumerGroups)
-    - On the Application owner group in Conduktor Console using RBAC (`Admin` permissions)
+  - On the Service Account using Kafka ACLs (`Read and Write` on Topics, `Read` on ConsumerGroups)
+  - On the Application owner group in Conduktor Console using RBAC (`Admin` permissions)
 
 **Example**
+
 ````yaml
 # Application Instance (dev environment)
 ---
@@ -91,11 +95,11 @@ spec:
 ````
 
 ### Application instance policies
-Application Instance Policies restrict the Application Teams to create their resources following certain rules.
-These rules can be related to Kafka configs but can also apply to metadata.  
-This is what lets Platform Administrators provide a Self-service experience that doesn't look like the Wild West.
+
+Application Instance Policies restrict the Application Teams to create their resources following certain rules. These rules can be related to Kafka configs but can also apply to metadata. This is what lets Platform Administrators provide a Self-service experience that doesn't look like the Wild West.
 
 **Example**
+
 ````yaml
 # Policies that restrict the Application to a certain range of configurations
 # on topic configs, but also on topic metadata
@@ -115,14 +119,15 @@ spec:
       min: 3
 ````
 
-
 ## Application team resources
-Once an Application & Application Instance are defined, Application Teams can now organize and structure their application as they see fit.
-There are two groups of resources where Application Teams are given autonomy:
+
+Once an Application and Application Instance are defined, Application Teams can now organize and structure their application as they see fit. There are two groups of resources where Application Teams are given autonomy:
+
 - **Kafka-related** resources, `Topic`, `Subject`, `Connector`, `ApplicationInstancePermission`.
 - **Console-related** resources, in particular `ApplicationGroup`, allowing them to define internally who can do what within their Team.
 
 ### Kafka resources
+
 This is how Application Teams can create the Kafka resources they need for their applications.
 
 ````yaml
@@ -144,12 +149,15 @@ spec:
 ````
 
 ### Application instance permissions
+
 Application Instance Permissions lets teams to collaborate with each others.
 Deploying this object will grant permission to the `grantedTo` Application Instance:
+
 - To its Service Account (Kafka ACL)
 - To the Application Team members in Conduktor Console
 
 **Example**
+
 ````yaml
 # Read permission granted to the Heatmap Application on click.screen-events topic
 ---
@@ -169,13 +177,15 @@ spec:
 ````
 
 ### Application group
-Create an Application Group to directly reflect how your Application operates.
-You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
+
+Create an Application Group to directly reflect how your Application operates. You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application. For example, e.g:
+
 - Support Team with only Read Access in Production
 - DevOps Team with extended access across all environments
 - Developers with higher permissions in Dev
 
 **Example**
+
 ````yaml
 # Permissions granted to Console users in the group, CP-COMPANY-CLICKSTREAM-SUPPORT, for the clickstream-app Application
 ---
@@ -195,7 +205,7 @@ spec:
     - appInstance: clickstream-app-dev
       resourceType: TOPIC
       resourcePatternType: "LITERAL"
-      resourcePattern: "*" # All owned & subscribed topics
+      resourcePattern: "*" # All owned and subscribed topics
       permissions: ["topicViewConfig", "topicConsume"]
     - appInstance: clickstream-app-dev
       resourceType: CONSUMER_GROUP
@@ -217,10 +227,8 @@ spec:
 
 ### Resource labels
 
-Labels are key value pairs with no constraints to help you organize and surface business metadata into Console.
-It is our objective that all resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. 
+Labels are key value pairs with no constraints to help you organize and surface business metadata into Console. It is our objective that all resources that can be created using the Conduktor CLI can be annotated with metadata in the form of labels. We have label support for a subset of our resources:
 
-Today we have label support for a subset of our resources:
 - KafkaCluster
 - KafkaConnectCluster
 - Topic
@@ -228,6 +236,7 @@ Today we have label support for a subset of our resources:
 - Connector
 
 We plan to bring label support to the following resources in the future:
+
 - KsqlDBCluster
 - User
 - Group
@@ -238,6 +247,7 @@ We plan to bring label support to the following resources in the future:
 - ApplicationGroup
 
 **Example**
+
 ````yaml
 # Topic annotated with useful metadata
 ---
@@ -262,14 +272,17 @@ spec:
 ````
 
 ## Limited ownership mode
+
 To help organizations transition to Self-service more easily, we have added a new attribute on ApplicationInstance to let Platform Teams decide the level of autonomy to give to Application Teams.
+
 - ApplicationInstance resources configured with `ownershipMode: ALL`, which is the default, delegates all permissions related to that resource to the Application Team.  
 - ApplicationInstance resources configured with `ownershipMode: LIMITED` delegates only a subset of the available permissions to the Application Team.  
 
 This is especially useful if Central Team have a centralized repository and existing workflow for Topic (or other resource) creation and wants to still own that part of the process.  
+
 This way they can provide Self-service capabilities while still having Application Teams to go through their pipeline for Topic Creation, instead of Self-service.
 
-| Restricted Permissions in LIMITED | Description                                            |
+| Restricted permissions in LIMITED | Description                                            |
 |-----------------------------------|--------------------------------------------------------|
 | **Topic**                         |                                                        |
 | `topicEditConfig`                 | Permission to edit the topic configuration.            |
@@ -288,9 +301,9 @@ This way they can provide Self-service capabilities while still having Applicati
 | `kafkaConnectorDelete`            | Permission to delete connectors.                       |
 | `kafkaConnectorCreate`            | Permission to create new connectors.                   |
 
-
 ## Self-service UI
-Self-service currently relies principally on the Conduktor CLI. 
+
+Self-service currently relies principally on the Conduktor CLI.
 
 The Console UI reconciles actions executed via the CLI to present Read Only views of your [Application Catalog](/platform/navigation/self-serve/application-catalog/) and [Topic Catalog](/platform/navigation/self-serve/topic-catalog/). This promotes discoverability of Kafka resources with business context inside your organization.
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Local Admin & Users
+title: Local admin and users
 description: Configure and manage local admin and users
 ---
 
@@ -12,17 +12,16 @@ You can declare **new users** from within the Console UI, via the configuration 
 
 ### Add users in Console UI
 
-From within the **Settings** > **Users & Groups** screen, select **Create members** to add a new user.
+From within the **Settings** > **Users and groups** screen, select **Create members** to add a new user.
 
- - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
- - Alternatively, you can add users via basic authentication
+- If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
+- Alternatively, you can add users via basic authentication
 
 Later on you may wish to add users from an IAC approach using the [ConsoleGroup](/platform/reference/resource-reference/console/#consolegroup) component.
 
 import AddUsers from '../../installation/get-started/assets/add-users.png';
 
 <img src={AddUsers} alt="Add users" style={{ width: 400, display: 'block', margin: 'auto' }} />
-
 
 ### Configuration example
 
@@ -60,14 +59,14 @@ In addition to these local admin and users, you can set up **Single Sign-On (SSO
 This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
 :::
 
-
 ## Manage permissions of users before they log in
 
 To appear in the `Users` list, a user must **first log in**. But sometimes, you'd like to **manage their permissions and groups upstream**. 
 For that, you can `Create members` using their **email address**. That way, when they will log in via SSO, they will be synchronised with this account.
 
 Here are the steps to follow:
-- From within the `Users & Groups` screen, select the `Create members` button.
+
+- From within the `Users and groups` screen, select the `Create members` button.
 - Enter the email of the users you want to create, then click on `Create users`.
 
 ![](assets/create-sso-users.png)
@@ -76,3 +75,4 @@ Here are the steps to follow:
 
 ![](assets/groups.png)
 ![](assets/add-users-to-group.png)
+

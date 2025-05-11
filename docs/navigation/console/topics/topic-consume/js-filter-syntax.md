@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: JS Filters Syntax Reference
+title: JS Filters syntax reference
 description: Reference Documentation for Topic related pages
 ---
 
@@ -8,9 +8,8 @@ description: Reference Documentation for Topic related pages
 
 JS filter is used to filter Kafka records. The filter is evaluated on each record on the server. It's powerful and can handle complex filters, but requires writing JavaScript code.
 
-:::caution
-This filter is not the preferred method.  
-We recommend that you use the simpler and more performant filters: [Global Search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a Specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
+:::warning
+We recommend that you use the simpler and more performant filters: [Global search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
 :::
 
 The code has to return a boolean.
@@ -115,5 +114,3 @@ return isHighPrice && moreThanOneItem
 // Selects all the orders having a total price superior to or equal to 30 and having more than one 1 item
 
 ```
-
-          

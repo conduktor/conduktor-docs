@@ -22,7 +22,7 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](assets/azure-new-app.png)
 
-- **Step 2**: Create a new client secret from the **Certificates & secrets** tab
+- **Step 2**: Create a new client secret from the **Certificates and secrets** tab
 
 ![](assets/azure-client-secret.png)
 

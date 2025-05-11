@@ -19,8 +19,8 @@ When you arrive on the Support Portal, you will find a Knowledge Base with artic
 Here is a breakdown of our current sections:
   - **Get Started**: Pointers to help you get started with Conduktor containers and Support Portal.
   - **Troubleshooting**: Articles to help you troubleshoot common issues.
-  - **Account & Billing**: Explanations to manage your licenses and billing.
-  - **New Releases**: Release notes for each new Console & Gateway release.
+  - **Account and Billing**: Explanations to manage your licenses and billing.
+  - **New Releases**: Release notes for each new Console and Gateway release.
 
 :::note
 If you want to **get alerted by email every time we release a new version**, you can **follow** our [Console](https://support.conduktor.io/hc/en-gb/sections/16400553827473-Conduktor-Console) and [Gateway](https://support.conduktor.io/hc/en-gb/sections/16400521075217-Conduktor-Gateway) release sections!

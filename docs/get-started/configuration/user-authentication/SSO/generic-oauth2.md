@@ -59,7 +59,7 @@ In this case, the `Host` header (generally set by the browser) will be used to d
 **Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details. (default to `http`).
 :::
 
-### 3. Get the client ID & secret from application settings
+### 3. Get the client ID and secret from application settings
 
 ## Console Configuration
 
