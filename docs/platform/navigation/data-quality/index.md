@@ -12,7 +12,7 @@ You define the rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
-Before creating data quality Rules and Policies, you have to:
+Before creating data quality rules and policies, you have to:
 
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
@@ -75,7 +75,7 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 
 ### Example Rules
 
-Here are some sample data quality Rules.
+Here are some sample data quality rules.
 :::info[Amend values if using these samples]
 Make sure you amend the field values to use correct fields, if using these examples.
  :::
@@ -181,10 +181,10 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 
 ### Manage a Policy
 
-Once a policy is created, you are able to view the linked rule(s), the target(s) of the policy and change the [actions](#actions) of the policy. You can also view the violations as they have occurred if you have reporting enabled, otherwise you will only have the counts available.
+Once a Policy is created, you are able to view the linked Rule(s), the target(s) of the Policy and change the [actions](#actions) of the Policy. You can also view the violations as they have occurred if you have reporting enabled, otherwise you will only have the counts available.
 
 :::info[Enabling block action]
-Since the **Block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
+Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
 ## Troubleshoot
@@ -192,7 +192,7 @@ Since the **Block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>What does Policy status mean?</summary>
   <p>
-  This is the status of a data quality Policy:
+  This is the status of a data quality policy:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
