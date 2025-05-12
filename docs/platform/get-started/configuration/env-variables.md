@@ -6,11 +6,11 @@ description: Conduktor Console input configuration fields can be provided using 
 
 # Configuration Properties and Environment Variables
 
-- [Configuration Properties and Environment Variables](#configuration-properties-and-environment-variables)
+- [Configuration properties and environment variables](#configuration-properties-and-environment-variables)
   - [Docker image environment variables](#docker-image-environment-variables)
   - [Console properties reference](#console-properties-reference)
-    - [YAML Property Cases](#yaml-property-cases)
-    - [Environment Variable Conversion](#environment-variable-conversion)
+    - [YAML property cases](#yaml-property-cases)
+    - [Environment variable conversion](#environment-variable-conversion)
       - [Conversion edge cases](#conversion-edge-cases)
     - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
     - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
