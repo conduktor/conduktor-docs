@@ -274,7 +274,7 @@ spec:
     rules:
         - condition: spec.replicationFactor == 3
           errorMessage: replication factor should be 3
-        - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+        - condition: int(string(spec.configs["retention.ms"])) >= 60000 && int(string(spec.configs["retention.ms"])) <= 3600000
           errorMessage: retention should be between 1m and 1h
 ---
 apiVersion: self-service/v1
@@ -294,14 +294,8 @@ spec:
 ```
 ** SelfServicePolicy checks:**
 - `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
-- `spec.rules.condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be parsed and evaluated against the resource body for example 
-  - `spec.configs["retention.ms"]` to access the configs map
-  - `metadata.name` to access the resource name
-  - `metadata.labels["data-criticality"]` to access a labels value
-  - `int(string(spec.configs["retention.ms"]))` a valid expression to convert the string value of `spec.configs["retention.ms"]` to an int
-  - `metadata.labels["data-criticality"] in ["C0", "C1", "C2"]` is a valid expression to check if the label exists and is one of the values in the list
-  - `metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")` is a valid expression to check if the name matches the regex
-- `spec.rules.errorMessage` is a string that will be displayed in the Console UI when the condition is not met
+- `spec.rules[].condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be evaluated against the resource
+- `spec.rules[].errorMessage` is a string that will be displayed when the condition is not met
 
 With the two policies declared above, the following Topic resource would succeed validation:
 ````yaml
@@ -318,7 +312,7 @@ spec:
   partitions: 3
   configs:
     cleanup.policy: delete
-    retention.ms: '60000'        # Check int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+    retention.ms: '60000'        # Check int(string(spec.configs["retention.ms"])) >= 60000 && int(string(spec.configs["retention.ms"])) <= 3600000
 ````
 
 #### Moving from TopicPolicy to ResourcePolicy
@@ -335,7 +329,7 @@ Before:
   ```
 Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA4VTXWvcMBD8K1s%2FJDmIfSGBPpimEMoVWq5t6FcodR%2F25D2fOGklJNmXo%2FS%2Fd6UzpH0otV%2FEzs7s7Fj%2BWSkyVVstl%2FBARjlLkBykHcGr1RruDR6H4Ebun3UsLX%2FXQEdABs2JAqqkJxKNzV2MZDfmCN4dKFAPxJMOji1xytr06I0LJMw%2Bnynoghx02p3mOmsdw%2BrRB4pRy3GNPIw4EFzI%2FEWTnRQ3NTwEnQiObgzFGj1xdjJ6bvoSqQhjIASB8jnqnmDrgpj3Y4IeE17KGb7dvVuDlN9%2B%2BvA%2B4xbTrHKfleH848jnZYsJzYj%2FGI4Dao6pTHoaMAut5v0zTzljSJITjtuKAlpvKM7GotcBM9bJKyFfRE%2BqUY63eojfuypQkuAEb2zsqh8LeHkLz6%2FkgbMzKP0paB7%2BR1vAi1u4KcSr6rLKTt9kz3Ip6rruGL3%2BSiHv1cIet3tcTtcd7zX3LXx2XqtOPm3CzGs7BlBmjHIhWog77N2h1ilXGS21gmm1b2gSA7W4I7QNTsHlBoMbMrEoAPTOSoJz%2F6nxBKD3yvVFad9x3qwwAnnpLGG9lpvoZPpNrnsMSedqnAtzDPMYq7mRnI%2BsmllB%2BrrquqtOuDKEPPrGO8GOLfRkJLwT9meMmVQCzETJ0IpFiS%2F%2FWb9%2BA%2Bwuz6hhAwAA)
   ```yaml
-  - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
+  - condition: int(string(spec.configs["retention.ms"])) >= 60000 && int(string(spec.configs["retention.ms"])) <= 3600000
     errorMessage: retention should be between 1m and 1h
   ```
 
