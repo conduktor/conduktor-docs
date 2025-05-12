@@ -36,5 +36,18 @@
       
     }
   ],
-  "aliveStatusCodes": [400, 403, 200, 503, 0, 999]
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+      "headers": {
+        "Accept-Encoding": "zstd, br, gzip, deflate"
+       }
+    }
+  ]
+  ,
+  "aliveStatusCodes": [400, 403, 429, 200, 503, 504, 0, 999],
+  "timeout": "5s",
+  "retryOn429": false,
+  "retryCount": 2,
+  "fallbackRetryDelay": "5s"
 }

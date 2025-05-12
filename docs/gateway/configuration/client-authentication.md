@@ -6,8 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-
-![image.png](../medias/clientsauth.png)
+![Client to Gateway security](images/client-to-gateway-security.png)
 
 Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. 
 
@@ -153,7 +152,7 @@ GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
 ```
 
-The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. Otherwise, a default value for signing tokens will be used.
+The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. This must be set, a default value will not be provided.
 
 Client configuration:
 
@@ -302,7 +301,7 @@ GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
 
-You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged.
 
 Client configuration:
 

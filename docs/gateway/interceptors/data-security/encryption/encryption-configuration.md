@@ -56,6 +56,7 @@ Both schema-based and list-based encryption plugins have their configuration, bu
 | `externalStorage`                                                              | Boolean                                          | `false`         | Choose where to store your encryption settings.<br />`false` - Encryption settings will be stored within message headers.<br />`true` - Encryption settings will be stored in a topic called `_conduktor_gateway_encryption_configs` by default, this can be renamed using the environment variable `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`.                 |
 | `kmsConfig`                                                                    | [KMS](#kms-configuration)                        |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
 | `enableAuditLogOnError`                                                        | Boolean                                          | true            | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                                                                                                                                         |
+| `compressionType`                                                             | [Enum](#compression-type)                        | none            | The data is compressed before encryption (only for data configured with full payload encryption)                                                                                                                                                                                                                                                        |
 | [**List-Based Properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
 | `recordValue`                                                                  | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
 | `recordKey`                                                                    | [Value & Key Encryption](#value--key-encryption) |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
@@ -198,7 +199,15 @@ Keys are string that starts with a letter, followed by a combination of letters,
 -   `XCHACHA20_POLY1305`
 -   `AES256_GCM`
 
-## Decryption Configuration - *How to decrypt?*
+### Supported compression types
+
+- `none`
+- `gzip`
+- `snappy`
+- `lz4`
+- `zstd`
+
+## Decryption configuration
 
 Now that your fields or payload are encrypted, you can decrypt them using the interceptor `DecryptPlugin`.
 

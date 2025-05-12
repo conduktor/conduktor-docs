@@ -743,7 +743,7 @@ spec:
 
 ## Alert
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <API /> <CLI /> <GUI />  
 **Labels support:** <MissingLabelSupport />
 
@@ -842,7 +842,9 @@ spec:
     email: johndoe@partner.io
     phone: 07827 837 177
   cluster: cdk-gateway
-  serviceAccount: partner-external-partner
+  authenticationMode:
+    serviceAccount: partner-external-partner
+    type: PLAIN
   topics:
     - name: topic-a
       backingTopic: kafka-topic-a
@@ -860,7 +862,11 @@ spec:
 - `spec.displayName` is Mandatory
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
 - `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
-- `spec.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+- `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`]
+**When `spec.authenticationMode.type` is `PLAIN`**
+  - `spec.authenticationMode.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+**When `spec.authenticationMode.type` is `OAUTHBEARER`**
+  - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
@@ -1098,15 +1104,16 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions
 
-| Available Platform permissions | Description |
-|------------------------------------|---------------------------------------------------------------|
-| `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
-| `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
-| `userManage`                       | Permission to manage Console users, groups & permissions      |
-| `userView`                         | Permission to view Console users, groups & permissions        |
-| `datamaskingManage`                | Permission to manage Data policies (masking rules)            |
-| `datamaskingView`                  | Permission to view Data policies                              |
-| `notificationChannelManage`        | Permission to manage Integration channels                     |
-| `notificationChannelView`          | Permission to view Integration channels                       |
-| `auditLogView`                     | Permission to browse audit log                                |
-| `taasView`                         | Permission to view Application Catalog                        | 
+| Available Platform permissions | Description                                                   |
+|--------------------------------|---------------------------------------------------------------|
+| `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`            | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                   | Permission to manage Console users, groups & permissions      |
+| `userView`                     | Permission to view Console users, groups & permissions        |
+| `datamaskingManage`            | Permission to manage Data policies (masking rules)            |
+| `datamaskingView`              | Permission to view Data policies                              |
+| `notificationChannelManage`    | Permission to manage Integration channels                     |
+| `auditLogView`                 | Permission to browse audit log                                |
+| `taasView`                     | Permission to view Application Catalog                        |
+| `chargebackManage`             | Permission to view Chargeback and manage its settings         |
+| `sqlManage`                    | Permission to view indexed topics and create SQL queries      |
