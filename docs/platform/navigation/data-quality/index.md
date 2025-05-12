@@ -6,29 +6,28 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Bad data breaks customer experiences, drives churn, and slows growth. [Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues before they impact your business.
-You define the rules and we enforce them at the streaming layer.
+Bad data breaks customer experiences, drives churn and slows growth.
+[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business.
+You define the rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
-Before using data quality, you have to:
+Before creating data quality Rules and Policies, you have to:
 
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
-- be logged in as an admin to Console UI, or using an admin token for the CLI
+- be logged in as an admin to Console UI (or use an admin token for the CLI)
 - in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 ## Rules
 
-You can create Rules with CEL expressions which capture business logic for your data.
-For example `value.customerId.matches("[0-9]{8}")`.
+You can create Rules with CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
-:::info
-Rules do nothing on their own - you **need** to attach them to a Policy.
+:::info[Rules require Policies]
+Rules do nothing on their own - you **have to** to attach them to a Policy.
 :::
 
-The Rules page lists your Rules with a preview of their CEL expressions.
-You can visit a Rule's detail page to see its description, full CEL expression, and attached Policies.
+The Rules page lists your Rules, with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
 ### Create a Rule
 
@@ -36,9 +35,9 @@ You can create a data quality rule from the **Console UI**, or the **Conduktor C
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-You can create a Rule through the Console UI through the following steps:
+To create a Rule using the Console UI:
 
-1. In the Trust section of the sidebar in Conduktor Console go to **Rules** and click **+New Rule**.
+1. In the Trust section of the sidebar of Conduktor Console go to **Rules** and click **+New Rule**.
 1. Define the Rule details:
    - Add a descriptive **name** for the Rule.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
@@ -49,7 +48,7 @@ You can create a Rule through the Console UI through the following steps:
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Rule:
+You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to create a Rule:
 
 1. Save this example to file, e.g. `rule.yaml`:
 
@@ -76,17 +75,20 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 
 ### Example Rules
 
-Provided below are a number of example rules you may choose to set up within your system. **Note:** you need to ensure that your rules are looking at the correct field. Here we have provided examples.
+Here are some sample data quality Rules.
+:::info[Amend values if using these samples]
+Make sure you amend the field values to use correct fields, if using these examples.
+ :::
 
 <details>
-  <summary>Email RegEx Validation</summary>
+  <summary>Email RegEx validation</summary>
   <p>
-    **Note:** Email validation via RegEx is _[hard](https://colinhacks.com/essays/reasonable-email-regex)_. Your needs may be slightly different than this RegEx.
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex!
     `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
   </p>
 </details>
 <details>
-  <summary>UUID RegEx Validation</summary>
+  <summary>UUID RegEx validation</summary>
   <p>
   `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
   </p>
@@ -100,22 +102,22 @@ Provided below are a number of example rules you may choose to set up within you
 
 ## Policies
 
-**Policies** define which *Rules* you want to apply, and where (the topics or prefixes) you want to apply them to.
-You're then able to configure actions on the Policy which take effect when a Rule in the Policy is violated by a message in one of your target topics.
+A Policy is made up of Rules that are applied to topics/prefixes.
 
-On each Policy's detail page you can see its description, Rules, targets, the number of messages evaluated and the number of violations since the Policy was created.
-From this page you can also enable (and disable) actions for the Policy.
+Once created, Policies can be assigned [actions](#actions) to take effect when certain criteria is met (e.g., a Rule in the Policy is violated).
+
+The Policy's detail page shows its description, linked Rules, targets, the number of messages evaluated and the number of violations since the Policy was created. You can also enable (and disable) actions for the Policy from this page.
 
 The Policies page lists your Policies with their actions and targets.
 
 ### Actions
 
-The available actions for a policy are:
+The available actions to enable for a Policy are:
 
-- **Report**: produce events into the Policy's history logs when violations occur
-- **Block**: prevent the processing or transmission of data
+- **Report**: when violations occur, log these as events in the Policy's history
+- **Block**: when a violation occurs, prevent data from being processing or transmission
 
-Policies created through the Console UI do not have any actions enabled by default. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions.If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
 ### Create a Policy
 
@@ -181,10 +183,8 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 
 Once a policy is created, you are able to view the linked rule(s), the target(s) of the policy and change the [actions](#actions) of the policy. You can also view the violations as they have occurred if you have reporting enabled, otherwise you will only have the counts available.
 
-:::info Toggling Block Action
-As the Block action has the ability to stop data from being sent to the requested topic, the user **must** confirm that that this is what they desire by entering `"BLOCK"` when prompted by the modal.
-
-The inverse is also true, and as such the user must enter `"UNBLOCK"` when attempting to disable this action.
+:::info[Enabling block action]
+Since the **Block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
 ## Troubleshoot
@@ -192,7 +192,7 @@ The inverse is also true, and as such the user must enter `"UNBLOCK"` when attem
 <details>
   <summary>What does Policy status mean?</summary>
   <p>
-  This is the status of a data quality policy:
+  This is the status of a data quality Policy:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
@@ -201,7 +201,7 @@ The inverse is also true, and as such the user must enter `"UNBLOCK"` when attem
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Header names often have dashes (e.g. `Content-Type`) and as such cannot be accessed using dot notation. Instead you need to use bracket notation and access via the `headers['Content-Type']` format instead.
+  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
   </p>
 </details>
 
