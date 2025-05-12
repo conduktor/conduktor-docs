@@ -7,7 +7,7 @@ description: Reference Documentation for Topic related pages
 ## Topic List
 
 The Topic page lets you search for any topic on your currently selected Kafka cluster.
-:::caution
+:::warning
 Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.  
 Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
 :::
@@ -86,7 +86,7 @@ import CreateTopicAdvanced from './assets/topic-create-advanced.png';
 ### Add partitions
 
 Increase the number of partitions for your topic. Number of partitions cannot be decreased.
-:::caution
+:::warning
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 :::
 

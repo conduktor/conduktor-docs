@@ -24,6 +24,6 @@ import MostRecent500 from './assets/most-recent-500.png'
 
 <img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
-:::caution
+:::warning
 Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters
 :::

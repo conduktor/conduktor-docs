@@ -122,7 +122,7 @@ Now that your configuration is finished, you can [setup the mapping](/platform/g
 
 The value you need to put as an external group is the name of the Keycloak group.
 
-:::caution
+:::warning
 If you've selected `Full group path` in the mapper details of the scope, you will need to use the full path instead of the name of the group.
 :::
 

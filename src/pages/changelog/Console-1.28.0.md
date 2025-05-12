@@ -125,7 +125,7 @@ spec:
 
 Starting today, we recommend you use the new alerts available under Brokers and Topics pages.
 
-:::caution[Deprecation notice]
+:::warning[Deprecation notice]
 **We do not plan to migrate existing alerts to the new Alert model.**  
 
 Original alerts will be removed in the near future in favor of the new ones.  

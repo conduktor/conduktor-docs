@@ -77,7 +77,7 @@ If you want to use the `external groups mapping` to map groups between your Cond
 
 ![](assets/azure-add-groups-claim.png)
 
-:::caution
+:::warning
 If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
 :::
 

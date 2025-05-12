@@ -164,7 +164,7 @@ Examples:
 
 If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.  
 Check this article on [JS Filters syntax](../js-filter-syntax/) to get examples and syntax around this filter.
-:::caution
+:::warning
 While it is the option that can potentially address the most complex use-cases, it is not the recommended or the fastest one.
 :::
 

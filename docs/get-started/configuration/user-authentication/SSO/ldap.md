@@ -74,7 +74,7 @@ Here is the mapping between LDAP user's information and Conduktor Console:
 
 To retrieve the groups each user belongs to, you have to set `groups-enabled` to `true`, and populate the attributes `groups-base` and `groups-filter`. You can find an example of a snippet in the [TL;DR](#tldr).
 
-:::caution
+:::warning
 Be aware that depending on your LDAP `objectClass`, the attribute used to filter groups might be changed. 
 
 For example: 

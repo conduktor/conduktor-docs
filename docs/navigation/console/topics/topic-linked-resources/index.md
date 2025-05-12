@@ -24,7 +24,7 @@ The Schema tab displays the Key subject and Value subject associated to your top
 The ACL tab displays the list of Kafka permissions associated to the current Topic.
 ![Capture](assets/topic-acls.png)
 
-:::caution 
+:::warning 
 Only the permissions from the default Kafka authorizer implementation, AclAuthorizer available using AdminClient are listed currently.  
 If you are using one of Console's other supported ACL (Aiven, Confluent Cloud), use the dedicated Service Account page instead.
 :::

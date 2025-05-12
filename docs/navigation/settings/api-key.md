@@ -28,7 +28,7 @@ import SaveAPIKey from './assets/api-save-key.png';
 
 <img src={SaveAPIKey} alt="Save API key" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-:::caution
+:::warning
 The generated API Key won't be visible anymore after closing this screen to make sure to save it properly.
 :::
 

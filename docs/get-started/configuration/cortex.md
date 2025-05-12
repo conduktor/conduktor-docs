@@ -4,7 +4,7 @@ title: Cortex Configuration
 description: Cortex Configuration
 ---
 
-:::caution
+:::warning
 This Configuration is for Cortex dependency image `conduktor/conduktor-console-cortex`
 :::
 

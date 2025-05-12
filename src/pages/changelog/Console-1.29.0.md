@@ -27,7 +27,7 @@ tags: features,fix
 #### Changes to Conduktor.io Labels
 
 We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations. 
-:::caution
+:::warning
 This change impacts you if you:
 - Update the Topic Catalog description of Topic resources via CLI/API
 - Configure Connect automatic restart with the CLI/API
@@ -69,7 +69,7 @@ This change enforces the following password requirements:
 - At least 8 characters in length
 - Includes at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special symbol
 
-:::caution
+:::warning
 This change impacts you if:
 - Your Admin password doesn't comply with the new password policy (`CDK_ADMIN_PASSWORD`)
 - You have local user configured through YAML or Env variables (`CDK_AUTH_LOCALUSERS_0_PASSWORD`)

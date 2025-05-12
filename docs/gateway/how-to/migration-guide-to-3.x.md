@@ -39,7 +39,7 @@ As a consequence, existing 2.x topics must be explicitly given via the environme
 
 
 
-__Caution:__ 
+__Warning:__ 
 Do not use the same name for 2 topics even in different versions of Gateway as it could make the data migration fail.
 
 * Remove
@@ -89,7 +89,7 @@ bootstrap.servers=PLAINTEXT://your.kafka.host:9092
 ```
 
 
-__Cautions__: from this point, the changes made on Gateway 2.x can be lost in the migration process. Until the migration it finished it is recommended to :
+__warnings__: from this point, the changes made on Gateway 2.x can be lost in the migration process. Until the migration it finished it is recommended to :
 * Stop using the Gateway 2.x API
 * Stop creating concentrated topics
 

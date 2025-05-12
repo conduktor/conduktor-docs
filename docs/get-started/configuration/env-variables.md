@@ -256,7 +256,7 @@ Optional local accounts list used to log on Console
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |
 
 ### Monitoring properties
-:::caution
+:::warning
 Starting with version 1.18.0, if you want to benefit from our Monitoring capabilities (dashboard and alerts), you need to deploy a new image along with Console.
 - `conduktor/conduktor-console:1.18.0` or above
 and
@@ -361,7 +361,7 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 
 ### Kafka clusters properties
 
-:::caution
+:::warning
 The new recommended way to configure clusters is through the CLI and YAML manifests.
 Check the associated [KafkaCluster documentation](/platform/reference/resource-reference/console/#kafkacluster)
 :::
