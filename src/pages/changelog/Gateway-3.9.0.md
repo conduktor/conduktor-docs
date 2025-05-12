@@ -12,6 +12,7 @@ tags: features,fixes
   - [Gateway Service Accounts are now always required when using PLAIN tokens](#gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
   - [Gateway JWT signing key must always be set](#gateway-jwt-signing-key-must-always-be-set)
 - [New features](#new-features)
+  - [Dynamic Header Injection from Record Values](#dynamic-header-injection-from-record-values)
 - [Fixes](#fixes)
   - [HashiCorp Vault token refresh resilience](#hashicorp-vault-token-refresh-resilience)
 
@@ -47,6 +48,35 @@ In this scenario, you will have to recreate and re-issue your Gateway tokens. Fo
 
 ### New features
 
+
+#### Dynamic Header Injection from Record Payloads
+
+The Header Injection Interceptor has been enhanced to support deriving header values directly from record payloads.
+This powerful feature allows you to extract:
+- The entire record key or value and inject it as a header
+- Specific fields from record keys or values inject them as headers
+
+You can now reference record fields using mustache syntax:
+```json
+{
+  "config": {
+    "topic": "topic.*",
+    "headers": {
+      "X-CLIENT_IP": "{{userIp}} testing",
+      "X-USER-ID": "{{record.key.id}}",
+      "X-USER-EMAIL": "{{record.value.email}}"
+    },
+    "overrideIfExists": true
+  }
+}
+```
+
+This feature supports:
+- Extracting values from JSON, AVRO, PROTOBUF serialized records
+- Accessing record fields using dot notation
+- Referencing the entire key or value payload
+- Using mustache syntax for dynamic header values
+
 ### Fixes
 
 #### HashiCorp Vault token refresh resilience
@@ -59,3 +89,4 @@ With this fix, Gateway will now:
 
 - Continue scheduling token refreshes on the regular interval
 - Automatically recover once Vault becomes available again
+
