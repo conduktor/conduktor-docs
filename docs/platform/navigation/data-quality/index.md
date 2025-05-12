@@ -117,7 +117,7 @@ The available actions to enable for a Policy are:
 - **Report**: when violations occur, log these as events in the Policy's history
 - **Block**: when a violation occurs, prevent data from being processing or transmission
 
-By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions.If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
 ### Create a Policy
 
