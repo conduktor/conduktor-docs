@@ -10,9 +10,11 @@
 - [Update public API docs](#update-public-api-docs)
 
 # Conduktor technical docs
+
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
 # Deployment and structure
+
 In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**). 
 
 For a local preview (on *localhost:3000*), run `yarn start`. 
@@ -31,7 +33,9 @@ We're using [Vercel](https://vercel.com/) for hosting and the build will try to 
 # Docs best practice
 
 ## Structure
+
 When creating a new page, use this layout:
+
 - Overview. Introduce the concept and highlight main benefits.
 - Prerequisites. List things that have to be done/set up before using.
 - Use {feature}. Be clear, succinct and use task-oriented headings.
@@ -40,7 +44,8 @@ When creating a new page, use this layout:
 - Related resources. Include links to topics related to the feature. Add this link at the end: 
 [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
-When adding a tutorial, use this layout:
+When adding a tutorial (step-by-step guide), use this layout:
+
 - Overview/goal. Introduce the concept and the purpose/goal.
 - Context or requirements. Set the scene/list pre-requisites.
 - List numbered steps. Use action-oriented headings.
@@ -50,32 +55,45 @@ When adding a tutorial, use this layout:
   - [Learn Apache Kafka](https://learn.conduktor.io/kafka/)
   - [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
-
 ## Images
-Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
 
-All images will be auto-sized to fit the width of the content pane. 
+All images are stored in `src/static/guides`. Embed all images like this:
+
+```md
+![Internal load balancing diagram](/guides/internal-lb.png)
+```
 
 To resize an image:
 
 ```md
-import MyImage from './assets/my-image.png';
+import MyImage from '/guides/my-image.png';
 
 <img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
 ```
 
-## Links
-Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/installation/hardware/*.
+You can also make an image clickable (and open in another tab) - useful for detailed diagrams:
 
-You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
+```md
+<a href="/guides/internal-lb.png" target="_blank" rel="noopener">
+  <img src="/guides/internal-lb.png" alt="Internal load balancing diagram" />
+</a>
+```
+
+## Links
+
+Use absolute links when linking to Conduktor docs, e.g. */guides/get-started/hardware/*.
+
+You can also link to a specific section on a page, e.g. */guides/get-started/hardware/#hardware-requirements*.
 
 ## Tabs
+
 Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
 
-To add tabs:
+To add tabs, add the following:
 
 ````md
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value="First Tab" label="First Tab">
@@ -98,32 +116,52 @@ mySecondTab: "content"
 </Tabs>
 ````
 
-## Tags
-Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/). 
+## Labels
 
-To add tags:
+Use labels to visualize available options, [like these resources](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
+
+To add labels:
 
 ```md
-import Admonition from '@theme/Admonition';
+import Label from '@site/src/components/Labels';
 
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500' }}> {children} </span>
-);
+This resource can be managed using <Label type="UI" />, <Label type="CLI" /> and <Label type="API" />.
+```
 
-export const Tag1 = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">Tag 1</Highlight>
-);
+To see all the available labels, go to `/src/components/Labels.js`.
 
-<Tag1/>
+## Re-use of content
+
+### Preview functionality
+
+To add:
+
+```md
+import AlertPreview from '@site/src/components/shared/alert-preview.md';
+
+<AlertPreview />
+```
+
+### Available in {product name}
+
+To add:
+
+```md
+
+import ProductTrust from '@site/src/components/shared/product-trust.md';
+<ProductTrust />
 ```
 
 # Update release notes
+
 Every new version of Gateway and Console has to have release notes.
 
 To update release notes:
+
 1. Go to **src/pages/changelog**.
 1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
 1. Make sure your file has the following header:
+
 ```
 ---
 date: 2025-11-25
@@ -135,6 +173,7 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 ```
+
 1. Document all the changes in the release. If it's a major release, consider adding an index/table of contents to make it easier to read.
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
 ```
@@ -148,9 +187,11 @@ import Console1310 from './changelog/Console-1.31.0.md';
 ```
 
 # Update public API docs
+
 API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
 
 To update the public docs:
+
 1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
 - [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
 - [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
