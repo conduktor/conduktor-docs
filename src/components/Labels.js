@@ -11,17 +11,17 @@ const LABEL_STYLES = {
 
   
   AppToken: {
-    backgroundColor: '#DCE8F7', // light blue
-    color: '#2E6EA6',           // medium blue
+    backgroundColor: '#DCE8F7', 
+    color: '#2E6EA6',           
     text: 'Application API key',
   },
   AdminToken: {
-    backgroundColor: '#D0E0F0', // slightly deeper blue background
+    backgroundColor: '#D0E0F0', 
     color: '#1A4971',           // darker blue text for restriction indication
     text: 'Admin API key',
   },
 
- // Schema registry labels 
+ // These have been removed from schema registry page (were only used once and use blue/red colors)
   PerSubject: { backgroundColor: '#a5d8ff', color: '#1971c2', text: 'Per subject' },
   Global: { backgroundColor: '#ffc9c9', color: '#e03131', text: 'Global' },
 };

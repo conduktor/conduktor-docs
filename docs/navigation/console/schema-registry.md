@@ -80,7 +80,7 @@ There are seven possible compatibility types:
 
 See the [Schema Registry docs](https://docs.confluent.io/platform/current/schema-registry/avro.html#summary) for a guide to what each type does.
 
-Compatibility can be changed <Label type="PerSubject" /> or <Label type="Globally" />.
+Compatibility can be changed **per subject** or **globally**.
 
 ![Change Subject compatibility](assets/change-compatibility.png)
 
