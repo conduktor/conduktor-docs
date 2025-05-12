@@ -17,8 +17,10 @@ tags: features,fixes
 
 ### Conduktor Scale
 
-#### Application topic subscribe workflow
 
+- Add new self service policies on application instances, allowing users to create policies that check that newly created resources, for now connector and topic, are created with the right configuration. This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule instead of the previously custom matcher DSL
+
+#### Application topic subscribe workflow
 
 Application owners now have the ability to manage topic subscriptions across their organization. Using the topic catalog, owners can subscribe to topics outside their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. The new interface allows for flexible permission configuration, enabling Read or Write permissions for each subscription, and granular control over both user and service account permissions.
 
@@ -28,18 +30,21 @@ Subscription request management has also been enhanced, giving application owner
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
 
+
 ### Conduktor Exchange
 
 #### Extended authentication mechanisms for Partner Zones
 
-In addition to Gateway local service accounts, Partner Zones now support authentication with client IDs and secrets managed by your OAuth/OIDC provider.
+Partner applications can now authenticate to your Partner Zones using client IDs & secrets managed by your OAuth/OIDC provider.
 
-- ### Quality of life improvements
+### Quality of life improvements
 
-- Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
+- Add selectors for key and value formats on the single Kafka message page, enabling the use of custom deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
+- On the **Settings > Alerts** page you can now see the cluster referenced by each alert
 
 ### Fixes
+
 - To avoid timeouts when indexing consumer groups, added a new configuration variable to limit the number of consumer groups requested per describe query.
 - Fixed an issue where in Topic Consume page, JQ filters against big numbers loses precision in Safari.
 - Fixed an issue where messages with big number fields lose precision when being copied over to be reprocessed in the Topic Produce page.
