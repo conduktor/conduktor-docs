@@ -57,6 +57,8 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - **Select Read/Write**. By default, any topics that are shared, will be shared with **Read**-only access, but you can additionally allow **Write** access.
    - (Optional) **Rename topics** for how you want the consumer to read them by hovering over the name of any topic being shared, and selecting the **pencil** button.
    - **Continue** when done.
+1. Select the preferred authentication mechanism to connect to the Partner Zone. Enter the service account name required to connect to the Partner Zone.
+   - For credentials managed by OAuth, the service account name needs to match the "sub" claim in the token.
 1. (Optional) Protect your cluster by limiting clients with Traffic Control Policies. Limit their rate of producing, consuming or committing offsets.
 1. Review the details and if you're happy with the data you're about to share, click **Create**.
 
