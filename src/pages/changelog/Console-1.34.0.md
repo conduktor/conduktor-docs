@@ -35,7 +35,7 @@ Partner applications can now authenticate to your Partner Zones using client IDs
 
 ### Quality of life improvements
 
-- Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
+- Add selectors for key and value formats on the single Kafka message page, enabling the use of custom deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
 - On the **Settings > Alerts** page you can now see the cluster referenced by each alert
 
