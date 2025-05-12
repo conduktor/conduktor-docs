@@ -48,6 +48,8 @@ Partner applications can now authenticate to your Partner Zones using client IDs
 - To avoid timeouts when indexing consumer groups, added a new configuration variable to limit the number of consumer groups requested per describe query.
 - Fixed an issue where in Topic Consume page, JQ filters against big numbers loses precision in Safari.
 - Fixed an issue where messages with big number fields lose precision when being copied over to be reprocessed in the Topic Produce page.
+- Fixed an issue where only the first 1,000 schemas were indexed
+- Fixed an issue where opening a message with more than 1MB of data would freeze the UI because of the table view. It now defaults to the JSON view.
 
 ### Known issues
 
