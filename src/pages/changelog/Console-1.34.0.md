@@ -33,10 +33,11 @@ Subscription request management has also been enhanced, giving application owner
 
 Partner applications can now authenticate to your Partner Zones using client IDs & secrets managed by your OAuth/OIDC provider.
 
-- ### Quality of life improvements
+### Quality of life improvements
 
 - Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
 - Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
+- On the **Settings > Alerts** page you can now see the cluster referenced by each alert
 
 ### Fixes
 
