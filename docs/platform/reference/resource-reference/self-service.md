@@ -245,10 +245,11 @@ spec:
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ````
 
-### Resource Policy
-Resource Policies are used to enforce rules on the ApplicationInstance level.
-Typical use case include:
-- Safeguarding from invalid or risky Topic or Connector configuration
+### Resource policy
+
+Resource policies are used to enforce rules on the ApplicationInstance level. Typical use case include:
+
+- Safeguarding from invalid or risky topic or connector configuration
 - Enforcing naming convention
 - Enforcing metadata
 
@@ -373,15 +374,19 @@ Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA3V
   ```
 
 
-#### CEL expressions tips
+#### Tips for CEL expressions
 
-There is multiple things you should consider when writing your CEL expressions in the context of Resource Policies:
-- For field like configuration value or label value we don't know in advance the type so sometimes if you want to compare it to a number you need to convert it to a string and then to an int like this `int(string(spec.configs["retention.ms"]))`
-- For field key that contains dot `.` or dash `-`, you need to access them with the `[]` operator: `metadata.labels["data-criticality"]`
-- For field like label key or config key that can be absent we recommend to add a check to see if the field is present or not `has(metadata.labels.criticality) && {your condition}` or `"retention.ms" in spec.configs && {your condition}` if the field had a dot or a dash for example
+There are multiple things you should consider when writing your CEL expressions in the context of resource policies:
 
-### Application Instance Permissions
-Application Instance Permissions lets teams collaborate with each other.
+- For field like configuration value/label value, that you don't know the type of, so if you want to compare it to a number, you need to convert it to a string and then to an int like this: `int(string(spec.configs["retention.ms"]))`
+
+- For field key that contains dots `.` or dashes `-`, you need to access them with the `[]` operator: `metadata.labels["data-criticality"]`
+
+- For field like label key/config key that can be absent, we recommend adding a check to see if the field is present: `has(metadata.labels.criticality) && {your condition}`. If the field has a dot or dash, use `"retention.ms" in spec.configs && {your condition}`.
+
+### Application instance permissions
+
+Application instance permissions lets teams collaborate with each other.
 
 **API Keys:** <AdminToken />  <AppToken />  
 **Managed with:** <CLI /> <API />  
@@ -565,11 +570,10 @@ The checks are the same as the [Service Account](/platform/reference/resource-re
 - When an ApplicationInstancePermission is removed, we don't drop the ACLs on the ServiceAccount.
   - Instead, consecutive CLI calls to apply the resource will fail, forcing the Application Team to fix.
 
-### Topic Policy Constraints
+### Topic policy constraints
 
-:::caution obsolete
+:::warning[Obsolete]
 TopicPolicy resource is now deprecated in favor of [ResourcePolicy](#resource-policy).
-
 :::
 
 There are currently 5 available constraints:

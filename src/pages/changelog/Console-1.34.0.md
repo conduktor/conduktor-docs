@@ -9,7 +9,7 @@ tags: features,fixes
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Conduktor Scale](#conduktor-scale)
-  - [Application topic subscribe workflow](#application-topic-subscribe-workflow)
+  - [Subscribe to application topics](#subscribe-to-application-topics)
 - [Conduktor Exchange](#conduktor-exchange)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
@@ -17,16 +17,23 @@ tags: features,fixes
 
 ### Conduktor Scale
 
+Added new Self-service policies on application instances, allowing you to create policies that check whether the newly created resources (connector and topic) are created with the right configuration.
 
-- Add new self service policies on application instances, allowing users to create policies that check that newly created resources, for now connector and topic, are created with the right configuration. This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule instead of the previously custom matcher DSL
+This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule, instead of the previously custom matcher DSL (Domain-Specific Language).
 
-#### Application topic subscribe workflow
+#### Subscribe to application topics
 
-Application owners now have the ability to manage topic subscriptions across their organization. Using the topic catalog, owners can subscribe to topics outside their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. The new interface allows for flexible permission configuration, enabling Read or Write permissions for each subscription, and granular control over both user and service account permissions.
+Application owners now have the ability to manage topic subscriptions across their organization. 
+
+Using the Topic Catalog, owners can subscribe to topics outside of their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. 
+
+The new interface provides flexible permission configuration, enabling read or write permissions for each subscription, as well as granular control over both user and service account permissions.
 
 ![Topic catalog subscribe modal](/images/changelog/platform/v34/topic-catalog-subscribe.png)
 
-Subscription request management has also been enhanced, giving application owners the ability to review pending requests and approve or deny them through both the UI and CLI. During this process, administrators can modify the originally requested permissions to better align with organizational requirements. For teams preferring infrastructure-as-code approaches, approving requests using YAML configuration automatically closes the request, streamlining the workflow.
+Subscription request management has also been enhanced, giving application owners the ability to review pending requests and approve or deny them through both the UI and CLI. 
+
+During this process, administrators can modify the originally requested permissions to better align with organizational requirements. For teams preferring infrastructure-as-code approaches, approving requests using YAML configuration automatically closes the request, streamlining the workflow.
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
 
@@ -39,9 +46,9 @@ Partner applications can now authenticate to your Partner Zones using client IDs
 
 ### Quality of life improvements
 
-- Add selectors for key and value formats on the single Kafka message page, enabling the use of custom deserializers.
-- Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
-- On the **Settings > Alerts** page you can now see the cluster referenced by each alert
+- Added selectors for key and value formats on the single Kafka message page, enabling the use of custom deserializers.
+- Creating resources owned by an application instance using an Admin API key now bypasses Self-service topic policies.
+- You can now see clusters referenced by each alert in the **Settings > Alerts** page.
 
 ### Fixes
 

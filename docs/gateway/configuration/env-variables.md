@@ -179,7 +179,7 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`     | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims, if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                           |
 | `GATEWAY_OAUTH_USE_CC_POOL_ID`     | Set to `true` to use the Confluent Cloud pool ID as the principal name. This is useful for Confluent Cloud users in Delegated mode who want to use the pool ID as the principal name instead of the `sub` claim.                                                                                                                                                                                                                                                      |
 
-### Principal Resolver
+### Principal resolver
 
 | **Environment variable**                  | **Description**                                                               | **Default value**  |
 |-------------------------------------------|-------------------------------------------------------------------------------|--------------------|

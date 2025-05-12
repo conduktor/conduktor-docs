@@ -85,21 +85,24 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 | The total errors per API key for the specified virtual cluster and username                      | `gateway_error_per_apiKeys`                       |
 | The current inflight API keys of the specified virtual cluster and username                      | `gateway_current_inflight_apiKeys`                |
 
-### Gateway Lived Events
+### Gateway lived events
 
-Gateway Lived Events provide comprehensive monitoring metrics about the Gateway's runtime configuration and usage. These events capture data about interceptors, virtual clusters, topics, and other important components of your Gateway setup. The Prometheus metrics are detailed below.
+Gateway's lived events provide comprehensive monitoring metrics about Gateway's runtime configuration and usage. 
 
-You can access Gateway Lived Events metrics in Prometheus format from the endpoint mentioned previously, or a JSON response via the dedicated REST API endpoint:
+These events capture data about interceptors, virtual clusters, topics and other important components of your Gateway setup. The Prometheus metrics are detailed below.
+
+You can access Gateway lived event metrics in the Prometheus format from the endpoint mentioned previously, or a JSON response via the dedicated REST API endpoint:
+
 
 ```bash
 GET /gateway/v2/analytics/lived
 ```
 
-For more details about using this API endpoint, refer to the [Gateway API documentation](https://developers.conduktor.io/?product=gateway).
+[Find out about using this Gateway API endpoint](https://developers.conduktor.io/?product=gateway).
 
-#### Available Gateway Lived Event Metrics
+#### Available Gateway lived event metrics
 
-##### Interceptor Metrics
+##### Interceptor metrics
 
 | Metric description                                        | Metric value                                       |
 |-----------------------------------------------------------|----------------------------------------------------|
@@ -109,14 +112,14 @@ For more details about using this API endpoint, refer to the [Gateway API docume
 | Number of topics covered by a specific interceptor        | `gateway_lived_event_interceptor_topics_covered`   |
 | Total number of unique topics covered by all interceptors | `gateway_lived_event_unique_topics_covered`        |
 
-##### Account and Group Metrics
+##### Account and group metrics
 
 | Metric description                       | Metric value                                 |
 |------------------------------------------|----------------------------------------------|
 | Total number of Gateway service accounts | `gateway_lived_event_service_accounts_total` |
 | Total number of Gateway groups           | `gateway_lived_event_groups_total`           |
 
-##### Topic and Virtual Cluster Metrics
+##### Topic and virtual cluster metrics
 
 | Metric description                  | Metric value                                    |
 |-------------------------------------|-------------------------------------------------|
@@ -124,7 +127,7 @@ For more details about using this API endpoint, refer to the [Gateway API docume
 | Total number of concentrated topics | `gateway_lived_event_topics_concentrated_total` |
 | Total number of virtual clusters    | `gateway_lived_event_vclusters_total`           |
 
-##### Gateway Information Metrics
+##### Gateway information metrics
 
 | Metric description                                                                        | Metric value                          |
 |-------------------------------------------------------------------------------------------|---------------------------------------|

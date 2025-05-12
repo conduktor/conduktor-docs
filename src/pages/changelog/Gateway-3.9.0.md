@@ -19,10 +19,11 @@ tags: features,fixes
 
 ### Breaking changes
 
-#### Gateway Service Accounts are now always required when using PLAIN tokens
+#### Gateway service accounts are now always required when using PLAIN tokens
 
-Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to.
-This could be configured to require the service account exists using an environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`. This **environment variable is now deprecated** and will behave as if this was set to `true`, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
+Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`. 
+
+This **environment variable is now deprecated** and will behave as if it was set to `true`, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
 If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and your clients are connecting using tokens without a service account created, the result is a breaking change. As part of our onboarding experience this is not the recommended setup, we recommend creating the service account before creating tokens, so we expect customers to be mostly unaffected.
 
@@ -34,7 +35,7 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
         -d '{"kind": "GatewayServiceAccount", "apiVersion": "gateway/v2", "metadata": { "name": "admin", "vCluster": "passthrough"  }, "spec": { "type": "LOCAL" }}' 
 ```
 
-For more information on creating service accounts checkout the guide [Manage Service Accounts & ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
+[Find out about creating service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
 
 #### Gateway JWT signing key must always be set
 
@@ -49,23 +50,25 @@ In this scenario, you will have to recreate and re-issue your Gateway tokens. Fo
 
 ### New features
 
-#### Enhanced Confluent Cloud authentication with Service Account mapping
+#### Enhanced Confluent Cloud authentication with service account mapping
 
-When using Confluent Cloud authentication with delegated authentication, Gateway now supports automatically resolving
-API keys to their associated Service Account. This feature addresses key limitations of the previous approach:
+When using Confluent Cloud with delegated authentication, Gateway now supports automatically resolving
+API keys to their associated service account. This feature addresses key limitations of the previous approach:
 
-- **Improved interceptor targeting**: Interceptors can now target Service Accounts directly
-- **Enhanced chargeback capabilities**: Usage tracking by Service Account instead of API Key
+- **Improved Interceptor targeting**: Interceptors can now target service accounts directly
+- **Enhanced Chargeback capabilities**: Usage tracking by service account instead of API key
 - **Elimination of manual mappings**: Removes the need for administrators to maintain user mappings
 
-[Find out more about Gateway Principal Resolver for Confluent Cloud](https://docs.conduktor.io/gateway/interceptors/authentication/client-authentication/#principal-resolver)
+[Find out more about Gateway principal resolver for Confluent Cloud](https://docs.conduktor.io/gateway/interceptors/authentication/client-authentication/#principal-resolver)
 
-#### Dynamic Header Injection from Record Payloads
+#### Dynamic header Injection from record payloads
 
-The Header Injection Interceptor has been enhanced to support deriving header values directly from record payloads.
+The header injection Interceptor has been enhanced to support deriving header values directly from record payloads.
+
 This powerful feature allows you to extract:
-- The entire record key or value and inject it as a header
-- Specific fields from record keys or values inject them as headers
+
+- the entire record key or value and inject it as a header
+- specific fields from record keys or values and inject them as headers
 
 You can now reference record fields using mustache syntax:
 ```json

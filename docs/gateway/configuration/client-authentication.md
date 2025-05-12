@@ -423,14 +423,13 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-### Principal Resolver
+### Principal resolver
 
-When using Confluent Cloud authentication with delegated authentication, Gateway supports automatically resolving API keys to their associated Service Account. This feature enhances security and improves usability by working with Service Account principals instead of raw API keys.
+When using Confluent Cloud with delegated authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
 
-For configuration details, see the [Principal Resolver environment variables](/gateway/configuration/env-variables#principal-resolver).
+[See principal resolver environment variables for details](/gateway/configuration/env-variables#principal-resolver).
 
-Gateway configuration:
-Using environment variables:
+Use environment variables:
 
 ```yaml
 GATEWAY_PRINCIPAL_RESOLVER: CONFLUENT
@@ -440,7 +439,7 @@ GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE: 1000 # default
 GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS: 86400000 # 1 day default
 ```
 
-Or using a configuration file
+Use configuration file:
 
 ```yaml
 authenticationConfig:
@@ -493,9 +492,9 @@ sequenceDiagram
   end
 ```
 
-## Automatic security protocol detection (Default behavior)
+## Automatic security protocol detection
 
-On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol.
+By default, on startup Gateway will attempt to detect the security protocol to use based on Kafka configuration, if no protocols are specified.
 
 If there is also no security protocol on the backing Kafka cluster, then we set the security protocol to `PLAINTEXT` by default.
 

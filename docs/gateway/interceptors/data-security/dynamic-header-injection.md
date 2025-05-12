@@ -36,14 +36,14 @@ Here are the values we can expand
 
 ## Configuration
 
-| config               | type                                             | description                                                                                                                                           |
+| Config               | Type                                             | Description                                                                                                                                           |
 |:---------------------|:-------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
 | topic                | String                                           | Regular expression that matches topics from your produce request                                                                                      |
 | headers              | Map                                              | Map of header key and header value will be injected, with the header value we can use `{{userIp}}` for the user ip information we want to be injected |
 | overrideIfExists     | boolean                                          | Default `false`, configuration to override header on already exist                                                                                    |
-| schemaRegistryConfig | [SchemaRegistry](#schema-registry-configuration) | Configuration of your Schema Registry, required if you want to inject headers into data produced using Avro, JSON or Protobuf schemas                 |
+| schemaRegistryConfig | [SchemaRegistry](#schema-registry-configuration) | Configuration of your schema registry, required if you want to inject headers into data produced using Avro, JSON or Protobuf schemas                 |
 
-## Schema Registry configuration
+## Schema registry configuration
 
 As soon as your records are produced using a schema, you have to configure these properties in your encryption/decryption interceptors after `schemaRegistryConfig` in order to (de)serialize them. Gateway supports Confluent-like and AWS Glue schema registries.
 
@@ -65,15 +65,17 @@ As soon as your records are produced using a schema, you have to configure these
 | `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                           |
 
 
-If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+If you don't supply a `basicCredentials` section for the AWS Glue schema registry, the client used to connect will instead attempt to find the connection information it needs from the environment. 
+
+The credentials required can be passed this way to Gateway as part of its core configuration. [Find out about the setup from AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
 ## Use environment variables as secrets
 
-You probably don't want your secrets to appear in your interceptors. In order to make sure this doesn't happen, you can refer to the environment variables you have set in your Gateway container.
+You probably don't want your secrets to appear in your Interceptors. To make sure this doesn't happen, you can refer to the environment variables you set in Gateway container.
 
 For that, you can simply use the format `${MY_ENV_VAR}`.
 
-We recommend you use this for Schema Registry or Vault secrets, and any other values you'd like to hide in the configuration.
+We recommend that you use this for schema registry, Vault secrets and any other values you'd like to hide in the configuration.
 
 ## Example
 

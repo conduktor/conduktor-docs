@@ -30,7 +30,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="Using a configuration file" label="Using a configuration file">
 
-Define your main cluster via environment variables outside the configuration file. Within the configuration file itself, specify your upstream cluster configurations, along with a `gateway.roles` entry to mark these upstream clusters.
+Define your main cluster via the environment variables outside of the configuration file. Within the configuration file itself, specify your upstream cluster configurations with a `gateway.roles` entry to mark these upstream clusters.
 
 ```yaml title="cluster-config.yaml"
 config:
