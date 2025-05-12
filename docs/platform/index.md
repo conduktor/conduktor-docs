@@ -17,7 +17,8 @@ Conduktor Console provides a [powerful UI](/platform/navigation/) that supports 
 ![Console home page](assets/home.png)
 
 Conduktor Gateway is a vendor-agnostic [Kafka proxy](/gateway), deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption, traffic control policies and failover for disaster recovery.
-![conduktor-gateway](../gateway/medias/conduktor-gateway.svg)
+
+![Conduktor Gateway](../gateway/medias/gateway-integration.png)
 
 ## Next steps
  - [Get started with Console](/platform/get-started/installation/get-started/docker)

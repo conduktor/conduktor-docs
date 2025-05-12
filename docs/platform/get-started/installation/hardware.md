@@ -13,6 +13,7 @@ Jump to:
 - [Production Requirements](#production-requirements)
 - [Hardware Requirements](#hardware-requirements)
 - [Deployment Architecture](#deployment-architecture)
+- [Kafka ACL Requirements](#kafka-acl-requirements)
 
 ## Production Requirements
 
@@ -119,3 +120,25 @@ In earlier versions we recommend instead that you configure an HA Postgres datab
 - [**Patroni**](https://www.cybertec-postgresql.com/en/patroni-setting-up-a-highly-available-postgresql-cluster/): Automates Postgres replication and failover
 - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances
 - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
+
+## Kafka ACL Requirements
+Conduktor Console requires the following ACLs to take advantage of all the capabilities of the product:
+
+| Permission | Operation | ResourceType   | ResourceName  | PatternType | Description                        |
+|------------|-----------|----------------|---------------|-------------|------------------------------------|
+| ALLOW      | ALL       | TOPIC          | *             | LITERAL     | Full management of topics          |
+| ALLOW      | ALL       | CONSUMER GROUP | *             | LITERAL     | Full management of consumer groups |
+| ALLOW      | ALL       | CLUSTER        | kafka-cluster | LITERAL     | Full management of the cluster     |
+
+If you prefer to provide read-only access to Conduktor Console, these are the minimum ACLs required:
+
+| Permission | Operation        | ResourceType   | ResourceName  | PatternType | Description                                                  |
+|------------|------------------|----------------|---------------|-------------|--------------------------------------------------------------|
+| ALLOW      | DESCRIBE         | TOPIC          | *             | LITERAL     | List topic, fetch metadata                                   |
+| ALLOW      | DESCRIBE_CONFIGS | TOPIC          | *             | LITERAL     | See topic configuration                                      |
+| ALLOW      | READ             | TOPIC          | *             | LITERAL     | Read data                                                    |
+| ALLOW      | DESCRIBE         | CONSUMER GROUP | *             | LITERAL     | List consumer groups and fetch metadata on it                |
+| ALLOW      | READ             | CONSUMER GROUP | *             | LITERAL     | Be able to fetch offset definition (used to compute lag)     |
+| ALLOW      | DESCRIBE         | CLUSTER        | kafka-cluster | LITERAL     | Describe Kafka ACLs, fetch the amount of data stored on disk |
+| ALLOW      | DESCRIBE_CONFIGS | CLUSTER        | kafka-cluster | LITERAL     | Describe cluster/broker configuration                        |
+
