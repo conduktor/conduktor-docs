@@ -6,7 +6,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Bad data breaks customer experiences, drives churn, and slows growth. Trust helps teams catch and fix data quality issues before they impact your business.
+Bad data breaks customer experiences, drives churn, and slows growth. [Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues before they impact your business.
 You define the rules and we enforce them at the streaming layer.
 
 ## Prerequisites
@@ -81,6 +81,7 @@ Provided below are a number of example rules you may choose to set up within you
 <details>
   <summary>Email RegEx Validation</summary>
   <p>
+    **Note:** Email validation via RegEx is _[hard](https://colinhacks.com/essays/reasonable-email-regex)_. Your needs may be slightly different than this RegEx.
     `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
   </p>
 </details>
