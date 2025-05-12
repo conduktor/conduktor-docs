@@ -17,6 +17,9 @@ tags: features,fixes
 
 ### Conduktor Scale
 
+
+- Add new self service policies on application instances, allowing users to create policies that check that newly created resources, for now connector and topic, are created with the right configuration. This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule instead of the previously custom matcher DSL
+
 #### Application topic subscribe workflow
 
 Application owners now have the ability to manage topic subscriptions across their organization. Using the topic catalog, owners can subscribe to topics outside their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. The new interface allows for flexible permission configuration, enabling Read or Write permissions for each subscription, and granular control over both user and service account permissions.
@@ -26,6 +29,7 @@ Application owners now have the ability to manage topic subscriptions across the
 Subscription request management has also been enhanced, giving application owners the ability to review pending requests and approve or deny them through both the UI and CLI. During this process, administrators can modify the originally requested permissions to better align with organizational requirements. For teams preferring infrastructure-as-code approaches, approving requests using YAML configuration automatically closes the request, streamlining the workflow.
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
+
 
 ### Conduktor Exchange
 
