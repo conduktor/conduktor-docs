@@ -252,9 +252,8 @@ Typical use case include:
 - Enforcing naming convention
 - Enforcing metadata
 
-:::caution
-Resource policies are not applied automatically.
-You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
+:::info
+Use the following CEL playground to test your expressions: [CEL Playground](https://playcel.undistro.io/)
 :::
 
 **API Keys:** <AdminToken />  
@@ -279,7 +278,7 @@ spec:
           errorMessage: retention should be between 1m and 1h
 ---
 apiVersion: self-service/v1
-kind: SelfServicePolicy
+kind: ResourcePolicy
 metadata:
     name: "clickstream-naming-rule"
     labels:
@@ -323,59 +322,69 @@ spec:
 ````
 
 #### Moving from TopicPolicy to ResourcePolicy
+
 If you want to replicate the behavior of the TopicPolicy with the ResourcePolicy, here is how you can transform the different policies:
-- 
+
+**Range Constraint**  
+Before:
   ```yaml
   spec.configs.retention.ms: 
     constraint: Range
     max: 3600000
     min: 60000
   ```
-  becomes
+Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA4VTXWvcMBD8K1s%2FJDmIfSGBPpimEMoVWq5t6FcodR%2F25D2fOGklJNmXo%2FS%2Fd6UzpH0otV%2FEzs7s7Fj%2BWSkyVVstl%2FBARjlLkBykHcGr1RruDR6H4Ebun3UsLX%2FXQEdABs2JAqqkJxKNzV2MZDfmCN4dKFAPxJMOji1xytr06I0LJMw%2Bnynoghx02p3mOmsdw%2BrRB4pRy3GNPIw4EFzI%2FEWTnRQ3NTwEnQiObgzFGj1xdjJ6bvoSqQhjIASB8jnqnmDrgpj3Y4IeE17KGb7dvVuDlN9%2B%2BvA%2B4xbTrHKfleH848jnZYsJzYj%2FGI4Dao6pTHoaMAut5v0zTzljSJITjtuKAlpvKM7GotcBM9bJKyFfRE%2BqUY63eojfuypQkuAEb2zsqh8LeHkLz6%2FkgbMzKP0paB7%2BR1vAi1u4KcSr6rLKTt9kz3Ip6rruGL3%2BSiHv1cIet3tcTtcd7zX3LXx2XqtOPm3CzGs7BlBmjHIhWog77N2h1ilXGS21gmm1b2gSA7W4I7QNTsHlBoMbMrEoAPTOSoJz%2F6nxBKD3yvVFad9x3qwwAnnpLGG9lpvoZPpNrnsMSedqnAtzDPMYq7mRnI%2BsmllB%2BrrquqtOuDKEPPrGO8GOLfRkJLwT9meMmVQCzETJ0IpFiS%2F%2FWb9%2BA%2Bwuz6hhAwAA)
   ```yaml
   - condition: int(string(spec.configs["retention.ms"])) > 60000 && int(string(spec.configs["retention.ms"])) < 3600000
     errorMessage: retention should be between 1m and 1h
   ```
-- 
+
+**Value Constraint**  
+Before:
   ```yaml
   spec.replicationFactor:
     constraint: OneOf
     values: ["3"]
   ```
-  becomes
+Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA3VTTWvcMBD9K1Nf0kLsLQn0YMghlC20bNvQr1DwZVae9QpLIyHJ3iyl%2F70j2W0oIdZlmDfvvfnAvypFpmqrzQbuyShnCZKDdCR4u93BncHzENzE%2FYuOpeT%2FHOgIyKA5UUCV9Eyisb%2BNkezenMG7EwXqgXjWwbElTlmbHrxxgYTZ55iCLshJp%2BPi66x1DNsHHyhGLeEOeZhwIHgp%2Fq%2Ba3Enppob7oBPB2U2htEaPnKNYr0XfIxVhDIQgUI6j7gkOLkjzfkrQY8JLieHn7ccdSPrD18%2BfMm4xrSp3WRkuvkx8UaaY0Uz4jDkOqDmm4vRosApt1%2FkzTzljSDYnHHcQBbTeUFwbi14HzFgnL3pSTSBvtCq5d7Jwqbq5gevqssry77ORXLKu647R6x8UcjMtjHgYcTNfdTxq7lv45rxWndwjYea1HQMoM0W5YgvxiL071TrlLKOlVjCtxoZmuVIdkyzRNjgHlwsM7snEogDQOytjr%2FVL4QKg98r1RWlcJimMJ9O0cJ3zHkPSORvXhHJ80MNfG6u5keWc%2Bd8%2BpK6rrrpqwZUh5Mk33gl2bqEnQ4kWLEjEWbqxhfTmtXyZKDu00qKsL%2F8Ov%2F8A22by1BYDAAA%3D)
   ```yaml
   - condition: spec.replicationFactor == 3
     errorMessage: replication factor should be 3
   ```
-- 
-  ```yaml
-  metadata.name:
-    constraint: Match
-    pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
-  ```
-  becomes
-  ```yaml
-  - condition: metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
-    errorMessage: topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
-  ```
-- 
+
+**In List Constraint**  
+Before:
   ```yaml
   metadata.labels.data-criticality:
     constraint: OneOf
     values: ["C0", "C1", "C2"]
   ```
-  becomes
+Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA3VTTY%2FTQAz9KyaXBalJl0XikNtqVSRQgRUfu0KEgztxU6vzpZlJuhXiv%2BOZBFUgkRzi%2BNnPz2%2BSn5UiXbXVeg2PpJUzBMlBOhDcbbZwr%2FE8BDfa%2FllnpeTvHHAEtMA2UUCVeCLh2N3GSGanz%2BDdiQL1QHbi4KwhmzI3PXntAklnn2MKXJATp8M81xnjLGyefKAYWcIt2mHEgeC5zH%2FRZCVFTQ2PgRPB2Y2hSKNLz0FGL0VfIxViDIQgUI4j9wR7F0S8HxP0mHAlMXy7fb8FSb%2F7%2FPFDxg2mheU%2BM8PVp9FelS0m1CP%2BZzgOyDamMukyYCHaLPvnPuW0JnFOetxeGNB4TXERFj0HzFgnt6GEmaTRuCMdv3dVfquVGMAKNadzV%2F3IGwhyd91VK5Dny%2BV5I1i1Kh1vsxw577quO4ueHyhkyS0ccX%2FE9XTT2SPbvoUvzrO6zG07C6D0GOWsW4gH7N2p5pSzFg21grE6NjTJWdYxidWmwSm4XDBLLgwAvTNizlI%2FF84Aeq9cX5iOS%2Bk%2FG7Ygm4ktpApXIC8cxaE38vk50fUq5z2GxDkbl4Ryds%2FDHwGGbSPmnq1qFgap6yrxaMaVJrSjb7wTTGb2pCnRjAWJbKZuTGl6fS1XbhR3jYgXY%2FPv9Os311aOeVYDAAA%3D)
   ```yaml
   - condition: metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
     errorMessage: data-criticality should be one of C0, C1, C2
   ```
 
-#### Cel expressions TIPS
+**Regex Constraint**  
+Before:
+  ```yaml
+  metadata.name:
+    constraint: Match
+    pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+  ```
+Now: [(Open in Playground)](https://playcel.undistro.io/?content=H4sIAAAAAAAAA3VTbYsTMRD%2BK%2BMiXIu32%2BMEwf12SAWl6uHbIa7CNDttY5NJSLLb66n%2F3Um6Uvzg7pfpPPO8ZLL9WSkyVVstFnBHRjlLkBykHcGL5QpuDR63wQ3cP%2BpYRv7tgY6ADJoTBVRJjyQa65sYya7NEbw7UKAeiEcdHFvilLXp3hsXSJh9rinoghx02p18nbWOYXnvA8WopVwhbwfcEszEf97kJCVNDXdBJ4KjG0KJRmfOTqynoU%2BRijAGQhAo11H3BBsXJLwfEvSY8FJq%2BHLzZgXSfv3h3duMW0yTym1Whov3A1%2BUU4xoBvyPOW5Rc0zF6WwwCS2n82eecsaQbE44biMKaL2hOAWLXgfMWCevpYRZpGG01EgstaM466rvymi17%2BRpvmL9cFU%2Fr789KT9nOAb360d0PH%2FcVfPqssr8VzmO3Hdd1x2j158p5Mgt7HGzx8V43fFec9%2FCR%2Be1Ovu2HQMoM0S56xbiDnt3qHXK3ZyohZKjoVHuso5JVm2bHCAPGFyTiUUBoHdWljPNnwZPAHqvXF%2BU9p0cnlRhBPIyWfbwUj4yJ%2B5Pc99jSDp349RQjjd6%2B9fGam5khUdWzaQgc1113VUnXBlCHnzjnWDHFnoylOiEBak4Sze2kJ5dyZOJskMrEWV9%2BU%2Fz%2Bw9HD%2BgYPAMAAA%3D%3D)
+  ```yaml
+  - condition: metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+    errorMessage: topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
+  ```
+
+
+#### CEL expressions tips
 
 There is multiple things you should consider when writing your CEL expressions in the context of Resource Policies:
 - For field like configuration value or label value we don't know in advance the type so sometimes if you want to compare it to a number you need to convert it to a string and then to an int like this `int(string(spec.configs["retention.ms"]))`
-- For field key that contains dot or dash you need to access them with the `[]` operator like this `metadata.labels["data-criticality"]`
-- For field like label key or config key that can be absent we recommend to add a check to see if the field is present or not `has(metadata.labels.criticality) && {your condition}` or `spec.configs.exists(k, k == "retention.ms") && {your condition}` if the field had a dot or an hypen for example
+- For field key that contains dot `.` or dash `-`, you need to access them with the `[]` operator: `metadata.labels["data-criticality"]`
+- For field like label key or config key that can be absent we recommend to add a check to see if the field is present or not `has(metadata.labels.criticality) && {your condition}` or `"retention.ms" in spec.configs && {your condition}` if the field had a dot or a dash for example
 
 ### Application Instance Permissions
 Application Instance Permissions lets teams collaborate with each other.
@@ -563,6 +572,11 @@ The checks are the same as the [Service Account](/platform/reference/resource-re
   - Instead, consecutive CLI calls to apply the resource will fail, forcing the Application Team to fix.
 
 ### Topic Policy Constraints
+
+:::caution obsolete
+TopicPolicy resource is now deprecated in favor of [ResourcePolicy](#resource-policy).
+
+:::
 
 There are currently 5 available constraints:
 - `Range` validates a range of numbers
