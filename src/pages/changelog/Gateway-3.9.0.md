@@ -19,15 +19,15 @@ tags: features,fixes
 
 ### Breaking changes
 
-#### Gateway service accounts are now always required when using PLAIN tokens
+#### Gateway service accounts are now always required, when using PLAIN tokens
 
-Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`. 
+Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`.
 
 This **environment variable is now deprecated** and will behave as if it was set to `true`, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
-If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and your clients are connecting using tokens without a service account created, the result is a breaking change. As part of our onboarding experience this is not the recommended setup, we recommend creating the service account before creating tokens, so we expect customers to be mostly unaffected.
+If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and your clients are connecting using tokens without a local service account created, the result is a breaking change. We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, we recommend creating the service account before creating tokens. Customers using a DELEGATED security protocol are unaffected.
 
-To amend this, create any missing local service accounts. We can achieve this like below, adjusting your admin API credentials, host and name:
+If you do hit this issue, it can be amended by creating any missing local service accounts with a similar command to the below, adjusting your admin API credentials, host and name:
 
 ```bash
 curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account \
@@ -37,9 +37,9 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
 
 [Find out about creating service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
 
-#### Gateway JWT signing key must always be set
+#### Gateway JWT signing key must always be set, when using PLAIN tokens
 
-Previous PLAIN tokens could be issued using the default signing key, or users could define the signing key using the environment variables `GATEWAY_USER_POOL_SECRET_KEY`. This is now a **required variable**, a default value is not provided for signing tokens and Gateway won't start. You'll receive an error message in the logs:
+Previously PLAIN tokens could be issued using the default signing key, or users could define the signing key using the environment variables `GATEWAY_USER_POOL_SECRET_KEY`. This is now **required that users define the signing key** with this variable. A default value has been removed, and Gateway won't start if configured to use local service accounts. Customers using a DELEGATED security protocol are unaffected. You'll receive an error message in the logs:
 
 ```text
 "Invalid value at 'userPoolConfig.jwt.secretKey. Should not be null.
@@ -71,6 +71,7 @@ This powerful feature allows you to extract:
 - specific fields from record keys or values and inject them as headers
 
 You can now reference record fields using mustache syntax:
+
 ```json
 {
   "config": {
@@ -86,6 +87,7 @@ You can now reference record fields using mustache syntax:
 ```
 
 This feature supports:
+
 - Extracting values from JSON, AVRO, PROTOBUF serialized records
 - Accessing record fields using dot notation
 - Referencing the entire key or value payload
@@ -103,4 +105,3 @@ With this fix, Gateway will now:
 
 - Continue scheduling token refreshes on the regular interval
 - Automatically recover once Vault becomes available again
-
