@@ -171,7 +171,12 @@ spec:
         - ConsumerGroup: READ
 
 
-### Topic Policy
+### Topic Policy (obsolete)
+
+:::warning[Obsolete]
+TopicPolicy resource is now deprecated in favor of [ResourcePolicy](#resource-policy).
+:::
+
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
 Typical use case include:
 - Safeguarding from invalid or risky Topic configuration
@@ -253,8 +258,9 @@ Resource policies are used to enforce rules on the ApplicationInstance level. Ty
 - Enforcing naming convention
 - Enforcing metadata
 
-:::info
-Use the following CEL playground to test your expressions: [CEL Playground](https://playcel.undistro.io/)
+:::caution
+Resource policies are not applied automatically.  
+You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
 :::
 
 **API Keys:** <AdminToken />  
@@ -270,7 +276,7 @@ metadata:
     labels:
         business-unit: delivery
 spec:
-    targetKind: Connector
+    targetKind: Topic
     description: A policy to check some basic rule for a topic
     rules:
         - condition: spec.replicationFactor == 3
@@ -297,6 +303,10 @@ spec:
 - `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
 - `spec.rules[].condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be evaluated against the resource
 - `spec.rules[].errorMessage` is a string that will be displayed when the condition is not met
+
+:::info
+Use the following CEL playground to test your expressions: [CEL Playground](https://playcel.undistro.io/)
+:::
 
 With the two policies declared above, the following Topic resource would succeed validation:
 ````yaml
@@ -571,10 +581,6 @@ The checks are the same as the [Service Account](/platform/reference/resource-re
   - Instead, consecutive CLI calls to apply the resource will fail, forcing the Application Team to fix.
 
 ### Topic policy constraints
-
-:::warning[Obsolete]
-TopicPolicy resource is now deprecated in favor of [ResourcePolicy](#resource-policy).
-:::
 
 There are currently 5 available constraints:
 - `Range` validates a range of numbers

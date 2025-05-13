@@ -17,9 +17,24 @@ tags: features,fixes
 
 ### Conduktor Scale
 
-Added new Self-service policies on application instances, allowing you to create policies that check whether the newly created resources (connector and topic) are created with the right configuration.
+#### Kafka Connect Policies
+Central Teams can now configure Self-service policies targeting Connector resources.  
 
-This will replace the existing policies on the topic in the future. the new policies use the [CEL language](https://cel.dev) to express the rule, instead of the previously custom matcher DSL (Domain-Specific Language).
+````yaml
+---
+apiVersion: self-service/v1
+kind: ResourcePolicy
+metadata:
+  name: "limit-max-tasks"
+spec:
+  targetKind: Connector
+  description: "Limit max tasks to 1"
+  rules:
+    - condition: spec.configs["tasks.max"] == "1"
+      errorMessage: Connector tasks.max must be set to 1
+````
+The new policies use the [CEL language](https://cel.dev) to express the rule. Supported `targetKind` are `Connector` and `Topic`.  
+Check the dedicated [ResourcePolicy section](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#resource-policy) in the docs for more information.
 
 #### Subscribe to application topics
 
