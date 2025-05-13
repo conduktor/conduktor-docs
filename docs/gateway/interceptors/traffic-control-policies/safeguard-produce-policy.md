@@ -1,5 +1,5 @@
 ---
-version: 3.0.0
+version: 3.9.0
 title: Produce Policy
 description: Increase resilience and data quality by ensuring produced messages adhere to the specified configuration requirements.
 parent: governance
@@ -10,12 +10,11 @@ license: enterprise
 
 `The produce policy interceptor` will impose limits on incoming messages to kafka to ensure that messages going to kafka adhere to the configured specification.
 
-
 ### What happens when sending an invalid request
 
 Any request that doesn't match the interceptor's configuration will be blocked and return the corresponding error message.
 
-For example: you want to send record without header, but the interceptor is being configured `recordHeaderRequired=true`.
+For example: you want to send a record without a header, but the interceptor is configured with `recordHeaderRequired=true`.
 
 When you send that request to the cluster, the following error is returned:
 
@@ -27,45 +26,48 @@ Request parameters do not satisfy the configured policy. Headers are required
 ## Configuration
 
 | key                  | type                                  | default | description                                                                                                           |
-|:---------------------|:--------------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------|
+| :------------------- | :------------------------------------ | :------ | :-------------------------------------------------------------------------------------------------------------------- |
 | topic                | String                                | `.*`    | Topics that match this regex will have the interceptor applied. If no value is set, it will be applied to all topics. |
-| acks                 | [Acks](#acks)                         |         | Configuration for acks modes                                                                                          |
+| acks                 | [Acks](#acks)                         |         | Configuration for acks modes. Note `acks=0` is still blocked but is ignored by the client.                            |
 | recordHeaderRequired | [Boolean](#boolean)                   |         | Configuration of header usage                                                                                         |
 | compressions         | [Compression Type](#compression-type) |         | Configuration for compression types                                                                                   |
 | idempotenceRequired  | [Boolean](#boolean)                   |         | Configuration for idempotency usage                                                                                   |
 | transactionRequired  | [Boolean](#boolean)                   |         | Configuration for transaction usage                                                                                   |
 | version              | [Version](#version)                   |         | Configuration for produce version                                                                                     |
 
-
 ### Acks
 
-| key    | type              | default | description                                                     |
-|:-------|:------------------|:--------|:----------------------------------------------------------------|
-| value  | Array[integer]    |         | Only these acks modes are allowed, allowed values: -1, 0, 1     |
-| action | [Action](#action) | `BLOCK` | Action to take if the value is outside the specified range.     |
+| key            | type              | default | description                                                                                                               |
+| :------------- | :---------------- | :------ | :------------------------------------------------------------------------------------------------------------------------ |
+| value          | Array[integer]    |         | Only these acks modes are allowed, allowed values: -1, 0, 1. Note `acks=0` is still blocked but is ignored by the client. |
+| action         | [Action](#action) | `BLOCK` | Action to take if the value is outside the specified range.                                                               |
+| throttleTimeMs | int               | 100     | Value to throttle with (only applicable when action is set to `THROTTLE`).                                                |
 
 ### Boolean
 
-| key    | type                  | default | description                                                                                  |
-|:-------|:----------------------|:--------|:---------------------------------------------------------------------------------------------|
-| value  | Boolean               |         | Value for the configuration. If action is `OVERRIDE`, will use this value for override value |
-| action | [Action](#action)     | `BLOCK` | Action to take if the value is outside the specified range.                                  |
+| key            | type              | default | description                                                                                  |
+|:---------------|:------------------|:--------|:---------------------------------------------------------------------------------------------|
+| value          | Boolean           |         | Value for the configuration. If action is `OVERRIDE`, will use this value for override value |
+| action         | [Action](#action) | `BLOCK` | Action to take if the value is outside the specified range.                                  |
+| throttleTimeMs | int               | 100     | Value to throttle with (only applicable when action is set to `THROTTLE`).                   |
 
 ### Version
 
-| key    | type              | default | description                                                   |
-|:-------|:------------------|:--------|:--------------------------------------------------------------|
-| min    | int               |         | Minimum value of produce version                              |
-| max    | int               |         | Maximum value of produce version                              |
-| action | [Action](#action) | `BLOCK` | Action to take if the value is outside the specified range.   |
+| key            | type              | default | description                                                                |
+|:---------------|:------------------|:--------|:---------------------------------------------------------------------------|
+| min            | int               |         | Minimum value of produce version                                           |
+| max            | int               |         | Maximum value of produce version                                           |
+| action         | [Action](#action) | `BLOCK` | Action to take if the value is outside the specified range.                |
+| throttleTimeMs | int               | 100     | Value to throttle with (only applicable when action is set to `THROTTLE`). |
 
 ### Compression Type
 
-| key           | type                             | default  | description                                                                |
-|:--------------|:---------------------------------|:---------|:---------------------------------------------------------------------------|
-| values        | Set[[Compression](#compression)] |          | Set of string contains compression types.                                  |
-| action        | [Action](#action)                | `BLOCK`  | Action to take if the value is outside the specified range.  `             |
-| overrideValue | [Compression](#compression)      |          | Value to override with (only applicable when action is set to `OVERRIDE`). |
+| key            | type                             | default  | description                                                                |
+|:---------------|:---------------------------------|:---------|:---------------------------------------------------------------------------|
+| values         | Set[[Compression](#compression)] |          | Set of string contains compression types.                                  |
+| action         | [Action](#action)                | `BLOCK`  | Action to take if the value is outside the specified range.  `             |
+| overrideValue  | [Compression](#compression)      |          | Value to override with (only applicable when action is set to `OVERRIDE`). |
+| throttleTimeMs | int                              | 100      | Value to throttle with (only applicable when action is set to `THROTTLE`). |
 
 ### Compression
 
@@ -79,6 +81,7 @@ Request parameters do not satisfy the configured policy. Headers are required
 
 - `BLOCK` → when fail, save in audit and return error.
 - `INFO` → execute API with wrong value, save in audit.
+- `THROTTLE` → when fail, save in audit and the request will be throttled with time = `throttleTimeMs`.
 
 ## Example
 
