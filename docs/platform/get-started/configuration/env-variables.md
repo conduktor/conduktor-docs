@@ -6,35 +6,36 @@ description: Conduktor Console input configuration fields can be provided using 
 
 # Configuration Properties and Environment Variables
 
-
-- [Docker image environment variables](#docker-image-environment-variables)
-- [Console properties reference](#console-properties-reference)
-  - [YAML Property Cases](#yaml-property-cases)
-  - [Environment Variable Conversion](#environment-variable-conversion)
-    - [Conversion edge cases](#conversion-edge-cases)
-  - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
-  - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
-  - [Global properties](#global-properties)
-  - [Database properties](#database-properties)
-  - [Session lifetime properties](#session-lifetime-properties)
-  - [Local users properties](#local-users-properties)
-  - [Monitoring properties](#monitoring-properties)
-    - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
-    - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
-  - [SSO properties](#sso-properties)
-    - [LDAP properties](#ldap-properties)
-    - [OAuth2 properties](#oauth2-properties)
-    - [JWT auth properties](#jwt-auth-properties)
-  - [Kafka clusters properties](#kafka-clusters-properties)
-  - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
-  - [Schema registry properties](#schema-registry-properties)
-    - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
-  - [Kafka Connect properties](#kafka-connect-properties)
-  - [ksqlDB properties](#ksqldb-properties)
-  - [Indexer properties](#indexer-properties)
-  - [AuditLog export properties](#auditlog-export-properties)
-  - [Conduktor SQL properties](#conduktor-sql-properties)
-  - [Partner zone properties](#partner-zone-properties)
+- [Configuration properties and environment variables](#configuration-properties-and-environment-variables)
+  - [Docker image environment variables](#docker-image-environment-variables)
+  - [Console properties reference](#console-properties-reference)
+    - [YAML property cases](#yaml-property-cases)
+    - [Environment variable conversion](#environment-variable-conversion)
+      - [Conversion edge cases](#conversion-edge-cases)
+    - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
+    - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
+    - [Global properties](#global-properties)
+    - [Database properties](#database-properties)
+    - [Session lifetime properties](#session-lifetime-properties)
+    - [Local users properties](#local-users-properties)
+    - [Monitoring properties](#monitoring-properties)
+      - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
+      - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
+    - [SSO properties](#sso-properties)
+      - [LDAP properties](#ldap-properties)
+      - [OAuth2 properties](#oauth2-properties)
+      - [JWT auth properties](#jwt-auth-properties)
+    - [Kafka clusters properties](#kafka-clusters-properties)
+    - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
+    - [Schema registry properties](#schema-registry-properties)
+      - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
+    - [Kafka Connect properties](#kafka-connect-properties)
+    - [ksqlDB properties](#ksqldb-properties)
+    - [Indexer properties](#indexer-properties)
+    - [AuditLog export properties](#auditlog-export-properties)
+    - [Conduktor SQL properties](#conduktor-sql-properties)
+    - [Partner zone properties](#partner-zone-properties)
+    - [Data quality properties](#data-quality-properties)
 
 ## Docker image environment variables
 
@@ -94,12 +95,12 @@ Lists start at index 0 and are provided using `_idx_` syntax.
 ### YAML Property Cases
 
 YAML configuration supports multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for property fragments such as:
+
 - `clusters[].schemaRegistry.ignoreUntrustedCertificate`
 - `clusters[].schema-registry.ignore-untrusted-certificate`
 - `clusters[].schemaregistry.ignoreuntrustedcertificate`
 
 All are valid and equivalent in YAML.
-
 
 ### Environment Variable Conversion
 
@@ -132,6 +133,7 @@ When converting environment variables to YAML configuration, environment variabl
 Because of YAML multiple case formats support, the conversion rules have some edge cases when trying to mix environment variables and YAML configuration.
 
 Extra rules when mixing environment variables and YAML configuration:
+
 - Don't use `camelCase` in YAML configuration. Use `kebab-case` or `lowercase`
 - Stick to one compatible case format for a given property fragment using the following compatibility matrix
 
@@ -181,7 +183,6 @@ with the following environment variables:
 | `DB_HOST`            | `some_host` |
 | `DB_NAME`            | `cdk`       |
 
-
 This will be expanded to:
 
 ```yaml title="Expanded configuration"
@@ -227,7 +228,7 @@ See database configuration [documentation](/platform/get-started/configuration/d
 
 | Property                      | Description                                                                                                                                 | Environment Variable             | Mandatory | Type   | Default |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
-| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_DATABASE_URL`               | false     | string | ∅       |
+| `database.url`                | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...]` | `CDK_DATABASE_URL`               | false     | string | ∅       |
 | `database.hosts[].host`       | External PostgreSQL servers hostname                                                                                                        | `CDK_DATABASE_HOSTS_0_HOST`      | false     | string | ∅       |
 | `database.hosts[].port`       | External PostgreSQL servers port                                                                                                            | `CDK_DATABASE_HOSTS_0_PORT`      | false     | int    | ∅       |
 | `database.host`               | External PostgreSQL server hostname (Deprecated, use `database.hosts` instead)                                                              | `CDK_DATABASE_HOST`              | false     | string | ∅       |
@@ -256,11 +257,14 @@ Optional local accounts list used to log on Console
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |
 
 ### Monitoring properties
+
 :::caution
 Starting with version 1.18.0, if you want to benefit from our Monitoring capabilities (dashboard and alerts), you need to deploy a new image along with Console.
+
 - `conduktor/conduktor-console:1.18.0` or above
 and
 - `conduktor/conduktor-console-cortex:1.18.0` or above
+
 :::
 
 This new image is based on [Cortex](https://github.com/cortexproject/cortex) and pre-configured to run with Console.
@@ -269,6 +273,7 @@ Cortex is a custom implementation of Prometheus used in several production syste
 You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.
 
 The configuration is split in 2 chapters:
+
 - Monitoring Configuration for Console applies to `conduktor/conduktor-console`
 - Monitoring Configuration for Cortex applies to `conduktor/conduktor-console-cortex`
 
@@ -276,9 +281,9 @@ The configuration is split in 2 chapters:
 
 First, we need to configure Console to connect to Cortex services.
 Cortex ports are configured like this by default:
+
 - Query port 9009
 - Alert Manager port 9010
-
 
 | Property                                | Description                                                          | Environment Variable                     | Mandatory | Type   | Default |
 |-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
@@ -294,10 +299,12 @@ Cortex ports are configured like this by default:
 `monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
 Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
+
 ```
 CDK_MONITORING_USEAGGREGATEDMETRICS: true
 CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 ```
+
 :::
 
 #### Monitoring Configuration for Cortex
@@ -348,7 +355,6 @@ See [authentication documentation](/platform/category/configure-sso/) for snippe
 | `sso.oauth2[].allow-unsigned-id-tokens` | Allow unsigned ID tokens                                            | `CDK_SSO_OAUTH2_0_ALLOWUNSIGNEDIDTOKENS` | false     | boolean                                                                                                                                      | false   |
 | `sso.oauth2[].preferred-jws-algorithm`  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
 | `sso.oauth2-logout`                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
-
 
 #### JWT auth properties
 
@@ -525,7 +531,7 @@ Check the [Configure SQL guide](/platform/guides/configure-sql/) to get started.
 
 | Property                                             | Description                                                                                                                           | Environment Variable                               | Mandatory | Type   | Default        |
 |------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|--------|----------------|
-| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...] ` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅               |
+| `kafka_sql.database.url`                             | External PostgreSQL configuration URL in format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...]` | `CDK_KAFKASQL_DATABASE_URL`                        | false     | string | ∅               |
 | `kafka_sql.database.hosts[].host`                    | External PostgreSQL servers hostname                                                                                                        | `CDK_KAFKASQL_DATABASE_HOSTS_0_HOST`               | false     | string | ∅               |
 | `kafka_sql.database.hosts[].port`                    | External PostgreSQL servers port                                                                                                            | `CDK_KAFKASQL_DATABASE_HOSTS_0_PORT`               | false     | int    | ∅               |
 | `kafka_sql.database.host`                            | External PostgreSQL server hostname (Deprecated, use `kafka_sql.database.hosts` instead)                                                    | `CDK_KAFKASQL_DATABASE_HOST`                       | false     | string | ∅               |
@@ -551,4 +557,14 @@ Advanced properties (typically, these do not need to be altered).
 
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment Variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
-| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+| `partner_zone.reconcile_with_gateway_every_seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+
+### Data quality properties
+
+Advanced properties (typically, these do not need to be altered).
+
+| Property                                            | Description                                                                                                                                                                                                                                                     | Environment variable                             | Mandatory | Type   | Default       |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
+| `data_quality.reconcile_every_seconds`              | The interval at which the data quality's state on Console is synchronized with Gateway. A lower value results in faster alignment between the required state and the current state on the Gateway. The default value is 5 seconds. | CDK_DATAQUALITY_RECONCILEEVERYSECONDS | false     | int    | `5` (seconds) |
+| `data_quality.report_max_per_second`                | The number of violations reported in data quality can be high. This value fixes the max number of violations that will be reported, per second. If more violations are produced, they won't be reported in Console. | CDK_DATAQUALITY_REPORTMAXPERSECOND | false     | int    | 10 (unit) |
+| `data_quality.report_retention_day`                 | The number of days that the violation history logs will be retained. | CDK_DATAQUALITY_REPORTRETENTIONDAYS | false     | int    | 7 (days) |
