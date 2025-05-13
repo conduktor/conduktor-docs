@@ -12,7 +12,6 @@ For a full reference of our recommended Conduktor platform deployment architectu
 :::info
 We welcome contributions and feedback. If you have issues, you can either open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or [contact support](https://www.conduktor.io/contact/support/).
 :::
->>>>>>> main
 
 # Helm chart installation
 
