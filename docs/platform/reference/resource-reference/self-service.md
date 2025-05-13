@@ -171,10 +171,10 @@ spec:
         - ConsumerGroup: READ
 
 
-### Topic Policy (obsolete)
+### Topic Policy
 
-:::warning[Obsolete]
-TopicPolicy resource is now deprecated in favor of [ResourcePolicy](#resource-policy).
+:::info
+Consider using the more advanced [ResourcePolicy](#resource-policy) resource instead.
 :::
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
