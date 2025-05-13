@@ -152,7 +152,7 @@ GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
 ```
 
-The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. Otherwise, a default value for signing tokens will be used.
+The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. This must be set, a default value will not be provided.
 
 Client configuration:
 
@@ -301,7 +301,7 @@ GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
 
-You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged.
 
 Client configuration:
 
@@ -423,9 +423,78 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-## Automatic security protocol detection (Default behavior)
+### Principal resolver
 
-On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol.
+When using Confluent Cloud with delegated authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
+
+[See principal resolver environment variables for details](/gateway/configuration/env-variables#principal-resolver).
+
+Use environment variables:
+
+```yaml
+GATEWAY_PRINCIPAL_RESOLVER: CONFLUENT
+GATEWAY_CONFLUENT_CLOUD_API_KEY: your-api-key
+GATEWAY_CONFLUENT_CLOUD_API_SECRET: your-api-secret
+GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE: 1000 # default
+GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS: 86400000 # 1 day default
+```
+
+Use configuration file:
+
+```yaml
+authenticationConfig:
+  principalResolver: CONFLUENT_CLOUD
+  confluentCloud:
+    apiKey: ${GATEWAY_CONFLUENT_CLOUD_API_KEY}
+    apiSecret: ${GATEWAY_CONFLUENT_CLOUD_API_SECRET}
+    cacheConfig:
+      maxSize: ${GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE|1000}
+      ttlMs: ${GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS|86400000} # 1 day
+```
+
+When enabled, Gateway will automatically resolve API keys (like XIGMNERQXOUKXDQU) to their associated Service Accounts (like sa-72839j).
+
+#### Authentication flow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant A as Application
+  box "Gateway cluster"
+    participant GW as Gateway
+    participant GPR as Gateway Principal Resolver
+  end
+  participant K as Backing Kafka Cluster
+  participant CC as Confluent Cloud
+
+  Note over A,GW: Application uses credentials `apiKey:apiSecret`
+  A  ->> GW: Connect to Gateway using application credentials
+  GW ->> K : Gateway forward authentication to Kafka
+
+  alt Authentication failed
+    K  -->> GW: AUTH_FAILED
+    GW -->> A : AUTH_FAILED
+  else Authentication successful (principalToken)
+    K  -->> GW: AUTH_OK(principalToken)
+    GW ->> GW: extractPrincipal(principalToken)
+    GW ->> GPR: isConfluentCloudResolverEnabled()
+
+    alt Opt‑in=true
+      GW ->> CC: GET /iam/v2/api-keys/{apiKeyId}
+      CC -->> GW: { service_account: "sa-72839j", ... }
+      GW ->> GW: cacheMapping(apiKeyId -> serviceAccount)
+      Note over GW,K: Principal resolved to Service Account sa‑72839j
+    else Opt‑in = false
+      Note over GW,K: Principal remains apiKeyId
+    end
+
+    GW -->> A : CONNECTED
+  end
+```
+
+## Automatic security protocol detection
+
+By default, on startup Gateway will attempt to detect the security protocol to use based on Kafka configuration, if no protocols are specified.
 
 If there is also no security protocol on the backing Kafka cluster, then we set the security protocol to `PLAINTEXT` by default.
 
