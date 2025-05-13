@@ -121,7 +121,11 @@ In earlier versions we recommend instead that you configure an HA Postgres datab
 - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances
 - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
+<<<<<<< HEAD
 ## Kafka ACL requirements
+=======
+## Kafka ACL Requirements
+>>>>>>> main
 Conduktor Console requires the following ACLs to take advantage of all the capabilities of the product:
 
 | Permission | Operation | ResourceType   | ResourceName  | PatternType | Description                        |

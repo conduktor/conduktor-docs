@@ -9,6 +9,11 @@ Deploy a production-ready instance of Conduktor on Kubernetes.
 
 For a full reference of our recommended Conduktor platform deployment architecture, [see our sample GitHub repository](https://github.com/conduktor/conduktor-reference-architecture).
 
+:::info
+We welcome contributions and feedback. If you have issues, you can either open an issue on our [GitHub repository](https://github.com/conduktor/conduktor-public-charts/issues) or [contact support](https://www.conduktor.io/contact/support/).
+:::
+>>>>>>> main
+
 # Helm chart installation
 
 Conduktor provides a [Helm repository](https://helm.conduktor.io) containing a chart that will deploy Conduktor Platform on your Kubernetes cluster.
