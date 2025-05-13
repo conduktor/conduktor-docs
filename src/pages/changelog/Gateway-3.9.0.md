@@ -59,7 +59,7 @@ API keys to their associated service account. This feature addresses key limitat
 - **Enhanced Chargeback capabilities**: Usage tracking by service account instead of API key
 - **Elimination of manual mappings**: Removes the need for administrators to maintain user mappings
 
-[Find out more about Gateway principal resolver for Confluent Cloud](https://docs.conduktor.io/gateway/interceptors/authentication/client-authentication/#principal-resolver)
+[Find out more about Gateway principal resolver for Confluent Cloud](/gateway/configuration/client-authentication/#principal-resolver)
 
 #### Dynamic header Injection from record payloads
 
