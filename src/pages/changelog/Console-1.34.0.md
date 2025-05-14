@@ -73,6 +73,11 @@ Partner applications can now authenticate to your Partner Zones using client IDs
 - Fixed an issue where only the first 1,000 schemas were indexed
 - Fixed an issue where opening a message with more than 1MB of data would freeze the UI because of the table view. It now defaults to the JSON view.
 - Fixed an issue impacting Kafka Connect sink connectors where providing consumer override values as configuration would lead to a validation failure.
+- Fixed an issue where deleted clusters are still present in the RBAC system, causing issues on the CLI api.
+- Fixed an issue where kafka config on huge numbers are not being displayed correctly in the UI.
+- Fixed an issue where Partition on topic details are not sorted correctly.
+- Fixed an issue where lag is not correctly calculated after a topic is deleted and recreated with the same name.
+- Display correctly the list of consumer groups in the topic details page using RBAC.
 
 ### Known issues
 
