@@ -30,7 +30,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="Using a configuration file" label="Using a configuration file">
 
-Define your main cluster via environment variables outside the configuration file. Within the configuration file itself, specify your upstream cluster configurations, along with a `gateway.roles` entry to mark these upstream clusters.
+Define your main cluster via the environment variables outside of the configuration file. Within the configuration file itself, specify your upstream cluster configurations with a `gateway.roles` entry to mark these upstream clusters.
 
 ```yaml title="cluster-config.yaml"
 config:
@@ -371,7 +371,7 @@ curl \
   "http://localhost:8888/gateway/v2/virtual-cluster/mypartner"
 ```
 
-This will return something like this, with the bootstrap address and client properties:
+This will return something like this, with the bootstrap address and client properties for the different available authentication modes:
 
 ```json
 {
@@ -382,13 +382,17 @@ This will return something like this, with the bootstrap address and client prop
   },
   "spec": {
     "aclEnabled": true,
-    "superUsers": [ "super-user" ],
+    "superUsers": [
+      "super-user"
+    ],
     "type": "Partner",
     "bootstrapServers": "<partner_virtual_cluster_bootstrap_address>",
     "clientProperties": {
-      "security.protocol": "SASL_PLAINTEXT",
-      "sasl.mechanism": "PLAIN",
-      "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username={{username}} password={{password}};"
+      "PLAIN": {
+        "security.protocol": "SASL_PLAINTEXT",
+        "sasl.mechanism": "PLAIN",
+        "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username={{username}} password={{password}};"
+      }
     }
   }
 }

@@ -10,12 +10,12 @@ Conduktor Console is provided as a single Docker container.
 
 Jump to:
 
-- [Production Requirements](#production-requirements)
-- [Hardware Requirements](#hardware-requirements)
-- [Deployment Architecture](#deployment-architecture)
-- [Kafka ACL Requirements](#kafka-acl-requirements)
+- [Production requirements](#production-requirements)
+- [Hardware requirements](#hardware-requirements)
+- [Deployment architecture](#deployment-architecture)
+- [Kafka ACL requirements](#kafka-acl-requirements)
 
-## Production Requirements
+## Production requirements
 
 For production environments, there are **mandatory requirements** to ensure your deployment is **reliable**, **durable**, and **can be recovered easily**.
 
@@ -122,6 +122,7 @@ In earlier versions we recommend instead that you configure an HA Postgres datab
 - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
 ## Kafka ACL Requirements
+
 Conduktor Console requires the following ACLs to take advantage of all the capabilities of the product:
 
 | Permission | Operation | ResourceType   | ResourceName  | PatternType | Description                        |

@@ -19,9 +19,19 @@ You can click on an Application to get to its details page.
 
 ![Application Catalog](assets/app-catalog.png)
 
-## Application Details
+## Manage Topic subscriptions
 
-The Application Details page summarizes all the information that relates to the Application:
+When users request to subscribe to topics via the Topic Catalog, these requests will appear in the Application catalog page under the **Access requests** tab. 
+
+From this tab, **application owners can approve or deny** incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to align with organizational requirements, adjusting read or write access, as needed.
+
+![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
+
+For teams managing infrastructure as code, subscription requests can also be approved using the CLI with YAML configuration which automatically closes the request and finalizes the subscription. [Find out more about CLI reference](/platform/reference/cli-reference/).
+
+## Application details
+
+The Application details page summarizes all the information related to the application:
 - Application General information
 - Application Instances & Ownership
 - Subscribed topics
@@ -43,4 +53,6 @@ To see a list of Application Groups that belong to an Application, click on the 
 From there, if you want to see the full details of a Group, click on the table row for the Group. This will open a side panel with the Group details in the same YAML format that you can also retrieve via the CLI.
 
 ![Application Group Details](assets/app-group-details.png)
+
+
 
