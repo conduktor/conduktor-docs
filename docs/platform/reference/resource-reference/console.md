@@ -774,7 +774,7 @@ spec:
 - `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
 - `spec.cluster` must be a valid KafkaCluster name
-- `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
+- `spec.type` must be one of [`BrokerAlert`, `TopicAlert`, `KafkaConnectAlert`, `ConsumerGroupAlert`]
   - Check the section below for the additional mandatory fields needed for each `spec.type`
 - `spec.metric` is depending on the `spec.type`
   - Check section below
