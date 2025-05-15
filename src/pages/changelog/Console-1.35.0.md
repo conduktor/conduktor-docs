@@ -6,7 +6,7 @@ solutions: console
 tags: features,fixes
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+_Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 - [Conduktor Scale](#conduktor-scale)
 - [Conduktor Exchange](#conduktor-exchange)
@@ -24,5 +24,7 @@ tags: features,fixes
 ### Quality of life improvements
 
 ### Fixes
+
+- Fixed an issue where changing the cluster did not clear the search filter in Consumer Groups / Topics pages.
 
 ### Known issues
