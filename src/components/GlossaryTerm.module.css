@@ -1,0 +1,13 @@
+.glossaryTerm {
+  text-decoration: none;
+  position: relative;
+  color: var(--ifm-color-primary);
+  font-weight: 500;
+  border-bottom: 1px dotted var(--ifm-color-primary);
+  cursor: help;
+}
+
+.glossaryTerm:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+}
