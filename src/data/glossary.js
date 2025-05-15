@@ -27,7 +27,7 @@ const glossaryTerms = [
     {
         term: "CLI",
         definition: "Command Line Interface. [Conduktor CLI](../guides/conduktor-in-production/deploy-artifacts/cli) is an artifact that communicates with other artifacts' API. There are two options for installing Conduktor CLI: native binary or Docker.",
-        slug: "term"
+        slug: "cli"
     },
     {
         term: "Cluster",
@@ -50,69 +50,69 @@ const glossaryTerms = [
         slug: "cortex"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Data Mesh",
+        definition: "A decentralized approach to data architecture where domain teams own their data. [Find out more](https://www.datamesh-architecture.com).",
+        slug: "data-mesh"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Data Streaming Governance",
+        definition: "Centralized control over streaming data, ensuring security, compliance, and efficient operations.",
+        slug: "data-streaming-governance"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Desktop",
+        definition: "A legacy Conduktor product (Desktop Application). Will be sunsetted by 2026.",
+        slug: "desktop"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "DLQ",
+        definition: "Dead Letter Queue: A Kafka topic where unprocessable messages are stored for debugging.",
+        slug: "dlq"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "EDA",
+        definition: "Event-Driven Architecture: A software design pattern where systems react to events in real-time.",
+        slug: "eda"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "EDM",
+        definition: "Enterprise Data Management is the practice of centrally governing, securing, and optimizing data across an organization. Conduktor\'s focus and uniqueness is on EDM for data streaming, designed for managing real-time data streaming at scale, ensuring security, compliance, and governance.",
+        slug: "edm"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Exchange",
+        definition: "Conduktor product for sharing and receiving streaming data across teams and trusted partners — without added overhead or data duplication. Turn real-time data into revenue. [Find out more](https://conduktor.io/exchange).",
+        slug: "exchange"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Data hub",
+        definition: "Use Conduktor's data hub to drive real-time decisions by fully controlling your operational data and how it flows through your organization. [Find out more](https://conduktor.io).",
+        slug: "data-hub"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Shield",
+        definition: "Description. [Find out more](https://conduktor.io/shield).",
+        slug: "shield"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Scale",
+        definition: "Description. [Find out more](https://conduktor.io/scale).",
+        slug: "scale"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Gateway",
+        definition: "A network proxy for Apache Kafka, where most of the Conduktor magic happens. Available as a Docker image (`conduktor-gateway`). [Find out more](../guides/conduktor-in-production/deploy-artifacts/gateway).",
+        slug: "gateway"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Interceptors",
+        definition: "Conduktor interceptors are configurable plugins of Conduktor Gateway that allow any part of Kafka protocol to be observed, manipulated and transformed. [Find out more](../guides/conduktor-concepts/interceptors).",
+        slug: "interceptors"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Kafka Connect",
+        definition: "A tool for integrating Kafka with external data sources.",
+        slug: "kafka-connect"
     },
     {
         term: "Term",
