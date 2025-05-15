@@ -2,7 +2,7 @@ const glossaryTerms = [
     {
         term: "Apache Flink",
         definition: "A distributed stream processing framework that enables stateful computations on real-time and batch data at scale.",
-        slug: "apache-kafka"
+        slug: "apache-flink"
     },
     {
       term: "Apache Kafka",
@@ -26,7 +26,7 @@ const glossaryTerms = [
     },
     {
         term: "CLI",
-        definition: "Command Line Interface. Conduktor CLI is an artifact that communicates with other artifacts' API. There are two options for installing Conduktor CLI: native binary or Docker.",
+        definition: "Command Line Interface. [Conduktor CLI](../guides/conduktor-in-production/deploy-artifacts/cli) is an artifact that communicates with other artifacts' API. There are two options for installing Conduktor CLI: native binary or Docker.",
         slug: "term"
     },
     {
@@ -35,19 +35,19 @@ const glossaryTerms = [
         slug: "cluster"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Community",
+        definition: "Conduktor Community is the free version.",
+        slug: "community"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Consumer",
+        definition: "A Consumer in Kafka is an application that reads data from Kafka topics.",
+        slug: "consumer"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Cortex",
+        definition: "An artifact (`conduktor-console-cortex`) that's deployed alongside Platform to provide it with the monitoring metrics.",
+        slug: "cortex"
     },
     {
         term: "Term",
