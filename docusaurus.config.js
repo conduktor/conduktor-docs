@@ -125,7 +125,7 @@ const config = {
           {
             label: 'Glossary',
             position: 'left',
-            to: '/guides/conduktor-concepts/glossary',
+            to: '/glossary',
           },
           {
             type: 'dropdown',

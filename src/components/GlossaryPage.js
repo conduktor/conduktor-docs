@@ -40,12 +40,18 @@ export default function GlossaryPage() {
       <div className={styles.alphabetNav}>
         {letters.map(letter => (
           <button
-            key={letter}
-            className={`${styles.letterButton} ${activeLetter === letter ? styles.activeLetter : ''}`}
-            onClick={() => setActiveLetter(letter)}
-          >
-            {letter}
-          </button>
+          key={letter}
+          className={`${styles.letterButton} ${activeLetter === letter ? styles.activeLetter : ''}`}
+          onClick={() => {
+            setActiveLetter(letter);
+            const element = document.getElementById(`letter-${letter}`);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
+          {letter}
+        </button>        
         ))}
       </div>
 
