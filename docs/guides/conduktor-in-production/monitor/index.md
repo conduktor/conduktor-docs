@@ -1,7 +1,7 @@
 ---
 sidebar_position: 60
-title: Monitor  
-description: Monitor Conduktor in production
+title: Monitor deployment
+description: Monitor your Conduktor deployment
 ---
 
 ## Gateway health and monitoring

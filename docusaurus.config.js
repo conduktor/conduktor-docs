@@ -105,7 +105,7 @@ const config = {
             activeBaseRegex: `/docs/guides/conduktor-concepts/`,
           },
           {
-            label: 'Resource reference',
+            label: 'Resources',
             position: 'left',
             to: '/guides/reference',
             activeBaseRegex: `/docs/guides/reference/`,
@@ -117,10 +117,15 @@ const config = {
             target: '_blank',
           },
           {
-            label: 'Releases',
+            label: 'Release notes',
             position: 'left',
             to: '/changelog',
             activeBaseRegex: `/changelog/`,
+          },
+          {
+            label: 'Glossary',
+            position: 'left',
+            to: '/guides/conduktor-concepts/glossary',
           },
           {
             type: 'dropdown',

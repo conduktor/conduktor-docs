@@ -1,13 +1,11 @@
 ---
-title: Glossary
-description: A comprehensive glossary of Conduktor and Apache Kafka terminology
-sidebar_position: 10
+sidebar_position: 550
+title: Conduktor glossary
+description: An alphabetical list of Conduktor terminology
 ---
 
 import GlossaryPage from '@site/src/components/GlossaryPage';
 
-# Conduktor glossary
-
-This glossary provides definitions for common terms used throughout the Conduktor documentation.
+Here's an alphabetical list of Conduktor terminology.
 
 <GlossaryPage />

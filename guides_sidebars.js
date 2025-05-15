@@ -76,11 +76,11 @@ module.exports = {
     },  
     {
       type: 'category',
-      label: 'Monitor clusters and apps',
-      link: { type: 'doc', id: 'monitor-clusters-apps/index' },
+      label: 'Monitor brokers and apps',
+      link: { type: 'doc', id: 'monitor-brokers-apps/index' },
       items: [
-        'monitor-clusters-apps/monitor-metrics',
-        'monitor-clusters-apps/alerts',
+        'monitor-brokers-apps/monitor-metrics',
+        'monitor-brokers-apps/alerts',
       ],
     },  
 
