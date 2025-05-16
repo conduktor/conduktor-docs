@@ -5,13 +5,12 @@ title: Conduktor concepts
 description: Learn Conduktor terminology
 ---
 
-For an alphabetical list of all our terminology, [check out the Conduktor glossary](./glossary).
+For an alphabetical list of all our terminology, [check out Conduktor glossary](/glossary).
 
 ### Gateway
 
 When working with <GlossaryTerm>Apache Kafka</GlossaryTerm>, you'll need to configure various broker settings.
 When working with Apache Kafka, you'll need to configure various <GlossaryTerm>broker</GlossaryTerm> settings.
-
 
 Conduktor Gateway is deployed between your client applications and existing Kafka clusters. As it's Kafka protocol compliant, there are minimal adjustments required for clients other than pointing to a new bootstrap server.
 

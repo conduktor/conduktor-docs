@@ -21,22 +21,22 @@ const glossaryTerms = [
     },
     {
         term: "Artifact",
-        definition: "The underlying components that power our products (e.g. Scale). Currently, these components are packaged as Docker images AKA artifacts. Artifacts are what you deploy in your infrastructure and connect to Kafka/other systems to get business value. The artifacts today are: `conduktor-console`, `conduktor-console-cortex`, `conduktor-gateway`.",
+        definition: "Artifacts are the underlying components that power Conduktor products such as [Exchange](#exchange). These components are packaged as Docker images. Artifacts are what you deploy in your infrastructure and connect to [Kafka](#kafka) or other systems to get business value. There are three artifacts: `conduktor-console`, `conduktor-console-cortex` and `conduktor-gateway`.",
         slug: "artifact"
     },
     {
         term: "CLI",
-        definition: "Command Line Interface. [Conduktor CLI](../guides/conduktor-in-production/deploy-artifacts/cli) is an artifact that communicates with other artifacts' API. There are two options for installing Conduktor CLI: native binary or Docker.",
+        definition: "Command Line Interface. Conduktor CLI is an [artifact](#artifact) that communicates with other artifacts\' API. Two installation options are available: **native binary** or **Docker**. [Find out more](../guides/conduktor-in-production/deploy-artifacts/cli).",
         slug: "cli"
     },
     {
         term: "Cluster",
-        definition: "A group of Kafka brokers working together to handle data streams. There are also clusters of Gateways (or Kafka Connect workers, Flink clusters, etc).",
+        definition: "A group of Kafka [brokers](#broker) working together to handle data streams. There are also clusters of Gateways (or Kafka Connect workers, Flink clusters, etc).",
         slug: "cluster"
     },
     {
         term: "Community",
-        definition: "Conduktor Community is the free version.",
+        definition: "Conduktor Community is the free version. [Get started now](https://conduktor.io/get-started).",
         slug: "community"
     },
     {
@@ -46,7 +46,7 @@ const glossaryTerms = [
     },
     {
         term: "Cortex",
-        definition: "An artifact (`conduktor-console-cortex`) that's deployed alongside Platform to provide it with the monitoring metrics.",
+        definition: "An [artifact](#artifact) `conduktor-console-cortex` that's deployed alongside [Console](#console) to provide it with the monitoring metrics. [Find out more](../guides/conduktor-in-production/deploy-artifacts/cortex)",
         slug: "cortex"
     },
     {
@@ -55,13 +55,13 @@ const glossaryTerms = [
         slug: "data-mesh"
     },
     {
-        term: "Data Streaming Governance",
+        term: "Data streaming governance",
         definition: "Centralized control over streaming data, ensuring security, compliance, and efficient operations.",
         slug: "data-streaming-governance"
     },
     {
         term: "Desktop",
-        definition: "A legacy Conduktor product (Desktop Application). Will be sunsetted by 2026.",
+        definition: "A legacy Conduktor product (Desktop Application). Will be sunsetted by 2026. [Find out more and get support with your migration](https://conduktor.io/desktop)",
         slug: "desktop"
     },
     {
@@ -76,7 +76,7 @@ const glossaryTerms = [
     },
     {
         term: "EDM",
-        definition: "Enterprise Data Management is the practice of centrally governing, securing, and optimizing data across an organization. Conduktor\'s focus and uniqueness is on EDM for data streaming, designed for managing real-time data streaming at scale, ensuring security, compliance, and governance.",
+        definition: "Enterprise Data Management: the practice of centrally governing, securing and optimizing data across an organization. Conduktor\'s focus and uniqueness is on EDM for data streaming, designed for managing real-time data streaming at scale, ensuring security, compliance and governance. [Book a demo](https://conduktor.io/contact/demo).",
         slug: "edm"
     },
     {
@@ -86,17 +86,17 @@ const glossaryTerms = [
     },
     {
         term: "Data hub",
-        definition: "Use Conduktor's data hub to drive real-time decisions by fully controlling your operational data and how it flows through your organization. [Find out more](https://conduktor.io).",
+        definition: "Use Conduktor's data hub to drive real-time decisions by fully controlling your operational data and how it flows through your organization. [Book a demo](https://conduktor.io/contact/demo).",
         slug: "data-hub"
     },
     {
         term: "Shield",
-        definition: "Description. [Find out more](https://conduktor.io/shield).",
+        definition: "Conduktor product for.......... [Find out more](https://conduktor.io/shield).",
         slug: "shield"
     },
     {
         term: "Scale",
-        definition: "Description. [Find out more](https://conduktor.io/scale).",
+        definition: "Conduktor product for............... [Find out more](https://conduktor.io/scale).",
         slug: "scale"
     },
     {
@@ -105,9 +105,9 @@ const glossaryTerms = [
         slug: "gateway"
     },
     {
-        term: "Interceptors",
+        term: "Interceptor",
         definition: "Conduktor interceptors are configurable plugins of Conduktor Gateway that allow any part of Kafka protocol to be observed, manipulated and transformed. [Find out more](../guides/conduktor-concepts/interceptors).",
-        slug: "interceptors"
+        slug: "interceptor"
     },
     {
         term: "Kafka Connect",
@@ -115,39 +115,110 @@ const glossaryTerms = [
         slug: "kafka-connect"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Kafkademy",
+        definition: "Conduktor's free online learning site on all things Kafka. [Check it out](https://learn.conduktor.io/kafka/).",
+        slug: "kafkademy"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "ksqlDB",
+        definition: "A streaming SQL engine for real-time analytics on Kafka.",
+        slug: "ksqlDB"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Message retention",
+        definition: "How long Kafka stores messages before they are deleted.",
+        slug: "message-retention"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Partition",
+        definition: "A subset of a topic that helps distribute load across multiple [brokers](#broker).",
+        slug: "partition"
     },
     {
-        term: "Term",
-        definition: "Description.",
-        slug: "term"
+        term: "Platform",
+        definition: "Conduktor Platform refers to the overall Conduktor offering that combines all artifacts (such as `conduktor-console` and `conduktor-gateway`).",
+        slug: "platform"
     },             
-
-
-
-
-
-
-
-
-
+    {
+        term: "Console",
+        definition: "This is the Conduktor offering that you can see - it has the UI and provides access to our APIs. Console is available as a Docker image (`conduktor-console`). [Find out more](../guides/conduktor-in-production/deploy-artifacts/console).",
+        slug: "Console"
+    },       
+    {
+        term: "Policy",
+        definition: "A Policy is a collection of validation [Rules](#rules) that guide how data streaming environments are managed, monitored, and secured. These policies help organizations enforce best practices, security measures, and compliance requirements.",
+        slug: "policy"
+    },       
+    {
+        term: "Rule",
+        definition: "A Rule is ",
+        slug: "rule"
+    },             
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },   
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },       
+    {
+        term: "Term",
+        definition: "Description",
+        slug: "term"
+    },   
 
 
 

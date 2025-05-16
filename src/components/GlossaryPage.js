@@ -9,7 +9,7 @@ export default function GlossaryPage() {
   const [activeLetter, setActiveLetter] = useState(null);
   
   useEffect(() => {
-    // Sort terms alphabetically
+    // Sort alphabetically
     const sortedTerms = [...glossaryTerms].sort((a, b) => 
       a.term.localeCompare(b.term)
     );
@@ -51,7 +51,7 @@ export default function GlossaryPage() {
     }
   }, []);
 
-  // Update active letter based on scroll position
+  // Update active letter on scroll
   useEffect(() => {
     const handleScroll = () => {
       const letterSections = document.querySelectorAll('[id^="letter-"]');
