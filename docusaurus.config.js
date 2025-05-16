@@ -105,7 +105,7 @@ const config = {
             activeBaseRegex: `/docs/guides/conduktor-concepts/`,
           },
           {
-            label: 'Resources',
+            label: 'Resource reference',
             position: 'left',
             to: '/guides/reference',
             activeBaseRegex: `/docs/guides/reference/`,

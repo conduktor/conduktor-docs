@@ -90,16 +90,6 @@ const glossaryTerms = [
         slug: "data-hub"
     },
     {
-        term: "Shield",
-        definition: "Conduktor product for.......... [Find out more](https://conduktor.io/shield).",
-        slug: "shield"
-    },
-    {
-        term: "Scale",
-        definition: "Conduktor product for............... [Find out more](https://conduktor.io/scale).",
-        slug: "scale"
-    },
-    {
         term: "Gateway",
         definition: "A network proxy for Apache Kafka, where most of the Conduktor magic happens. Available as a Docker image (`conduktor-gateway`). [Find out more](../guides/conduktor-in-production/deploy-artifacts/gateway).",
         slug: "gateway"
@@ -146,89 +136,84 @@ const glossaryTerms = [
     },       
     {
         term: "Policy",
-        definition: "A Policy is a collection of validation [Rules](#rules) that guide how data streaming environments are managed, monitored, and secured. These policies help organizations enforce best practices, security measures, and compliance requirements.",
+        definition: "A Policy is a collection of validation [Rules](#rule) that are applied to topics or prefixes. Policies can have actions assigned which will take effect when specified criteria is met. For example, the processing of messages is blocked when a violation occurs. [Find out more](../guides/use-cases/rules-policies).",
         slug: "policy"
     },       
     {
         term: "Rule",
-        definition: "A Rule is ",
+        definition: "A Rule is a CEL expression that captures business logic for your data. You then attach the Rule(s) to a [Policies](#policy) which will validate data at the streaming layer before messages are processed. [Find out more](../guides/use-cases/rules-policies).",
         slug: "rule"
     },             
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Producer",
+        definition: "A producer in Kafka is an application that writes data to Kafka topics.",
+        slug: "producer"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Product",
+        definition: "Each Conduktor product (such as [Scale](#scale)) is a collection of [artifacts](#artifact). Each product uses different artifacts based on the license tier to provide business value. [Find out more](https://conduktor.io/pricing).",
+        slug: "product"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
-    },       
-    {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
-    },       
-    {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
-    },       
-    {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
-    },       
-    {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
-    },       
-    {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Scale",
+        definition: "Conduktor product for organizations scaling data streaming use cases and users, empowering teams to manage resources autonomously. [Find out more](https://conduktor.io/scale).",
+        slug: "scale"
     },   
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Shield",
+        definition: "Conduktor product for organizations looking to adhere to regulatory compliance, protect sensitive information and ensure business continuity. [Find out more](https://conduktor.io/shield).",
+        slug: "shield"
+    }, 
+    {
+        term: "Schema Registry",
+        definition: "A central repository for managing Kafka message schemas, ensuring compatibility.",
+        slug: "schema-registry"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Self-service",
+        definition: "A GitOps framework within [Scale](#scale) that provides developer autonomy. [Find out more](../guides/use-cases/self-service).",
+        slug: "self-service"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Streaming observability",
+        definition: "Visibility into the health and performance of data streams, enabling proactive troubleshooting.",
+        slug: "streaming-observability"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Terraform",
+        definition: "To terraform means to prepare/transform data so it can be used as code. Conduktor uses Alpha as the terraform provider. [Find out more](../guides/conduktor-in-production/automate/terraform-automation).",
+        slug: "terraform"
     },       
     {
-        term: "Term",
-        definition: "Description",
-        slug: "term"
+        term: "Topic",
+        definition: "A category to which records (messages) are sent and from which they are consumed.",
+        slug: "topic"
     },   
-
-
-
-
-
-
-
-
-
-
+    {
+        term: "Trust",
+        definition: "Conduktor product for organizations looking to proactively enforce data quality and observability in their streaming ecosystem. Preventing costly issues early and driving reusable data products, while protecting downstream apps, analytics, and AI from data pollution.",
+        slug: "trust"
+    },       
+    {
+        term: "Partner Zones",
+        definition: "Partner Zones allow you to share Kafka [topics](#topic) with external partners selectively and securely. [Find out more](../guides/use-cases/third-party-data).",
+        slug: "partner-zones"
+    },       
+    {
+        term: "Chargeback",
+        definition: "Chargeback lets you visualize the cost allocation of [service accounts](#service-account) on a few key metrics. [Find out more](../guides/use-cases/chargeback).",
+        slug: "chargeback"
+    }, 
+    {
+        term: "Service account",
+        definition: "You can define two types of service accounts in [Gateway](#gateway): **local** or **external**. [Find out more](../guides/conduktor-concepts/gw-service-accounts).",
+        slug: "service-account"
+    },   
+    {
+        term: "Indexing",
+        definition: "Indexing is a background process in [Console](#console) that collects changes in an internal table, in turn allowing you to perform actions like sort, filter and much more, which you couldn't do with any out-of-the-box Kafka implementations. [Find out more](../guides/conduktor-concepts/indexing).",
+        slug: "indexing"
+    },    
   ];
   
   export default glossaryTerms;
