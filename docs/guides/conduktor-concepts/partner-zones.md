@@ -2,3 +2,5 @@
 title: Partner Zones
 description: Learn Conduktor terminology
 ---
+
+<GlossaryTerm>Partner Zones</GlossaryTerm>

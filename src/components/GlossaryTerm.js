@@ -1,26 +1,41 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import styles from './GlossaryTerm.module.css';
-import glossaryTerms from '../data/glossary';
+import glossaryData from '@site/src/data/glossary';
 
-export default function GlossaryTerm({ children }) {
-  // Find term definition
-  const term = glossaryTerms.find(
-    t => t.term.toLowerCase() === children.toLowerCase()
+export default function GlossaryTerm({children}) {
+  const searchTerm = children.toLowerCase().trim();
+  
+  // First try exact match
+  let term = glossaryData.find(item => 
+    item.term.toLowerCase() === searchTerm
   );
-
-  // If term not found in glossary, just render text
+  
+  // If no exact match, try singular/plural variations
   if (!term) {
+    // Remove 's' from end if present
+    const singularTerm = searchTerm.endsWith('s') ? searchTerm.slice(0, -1) : searchTerm;
+    // Add 's' to end if not present
+    const pluralTerm = searchTerm.endsWith('s') ? searchTerm : searchTerm + 's';
+    
+    term = glossaryData.find(item => {
+      const itemTerm = item.term.toLowerCase();
+      return itemTerm === singularTerm || itemTerm === pluralTerm;
+    });
+  }
+  
+  if (!term) {
+    console.log(`❌ Term not found: "${children}"`);
     return <span>{children}</span>;
   }
-
+  
   return (
-    <Link 
-      to={`/guides/conduktor-concepts/glossary#${term.slug}`}
+    <span 
       className={styles.glossaryTerm} 
-      title={term.definition}
+      data-tooltip={term.tooltip || term.definition}
+      title={term.tooltip || term.definition}
     >
       {children}
-    </Link>
+    </span>
   );
 }

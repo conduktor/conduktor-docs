@@ -1,11 +1,15 @@
 - [Conduktor technical docs](#conduktor-technical-docs)
-- [Deployment and structure](#deployment-notes)
-- [Docs best practice](#docs-best-practice)
+- [Deployment and structure](#deployment-and-structure)
+- [Docs guidelines](#best-practice-guidelines)
   - [Structure](#structure)
   - [Images](#images)
   - [Links](#links)
   - [Tabs](#tabs)
-  - [Tags](#tags)
+  - [Labels](#labels)
+  - [Glossary](#glossary)
+  - [Re-use of content](#re-use-of-content)
+    - [Preview functionality](#preview-functionality)
+    - [Product availability](#available-in-product-name)
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
@@ -15,9 +19,9 @@ Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
 # Deployment and structure
 
-In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**). 
+In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
 
-For a local preview (on *localhost:3000*), run `yarn start`. 
+For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
@@ -30,7 +34,7 @@ $ yarn start
 
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
 
-# Docs best practice
+# Best practice guidelines
 
 ## Structure
 
@@ -129,6 +133,33 @@ This resource can be managed using <Label type="UI" />, <Label type="CLI" /> and
 ```
 
 To see all the available labels, go to `/src/components/Labels.js`.
+
+## Glossary
+
+### Add a tooltip
+
+When first introducing Conduktor terminology (e.g. Chargeback), make that word into a glossary term (will display a tooltip when hovered over and formatted) like this:
+
+```md
+Use <GlossaryTerm>Chargeback</GlossaryTerm> to visualize your Kafka costs.
+```
+
+### Add new terms to glossary
+
+If the term isn't defined, you can add it to **src/data/glossary.js**.
+
+❗️ Check that the term doesn't exist first. Duplicate entries will break the build. Add the **singular version of the word**:
+
+```md
+  {
+    term: "New term",
+    tooltip: "This is the concise text that will appear as tooltip.",
+    definition: "This is the full definition of the term. Feel free to format with links etc.",
+    slug: "new-term"
+  },
+```
+
+Note that glossary should pick up all the spelling variations (like capitalization).
 
 ## Re-use of content
 

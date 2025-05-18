@@ -5,9 +5,9 @@ description: Learn Conduktor terminology
 
 import Label from '@site/src/components/Labels';
 
-Conduktor Gateway offers a number of powerful Interceptors that enhance your Kafka usage.
+Conduktor Gateway offers a number of powerful <GlossaryTerm>Interceptors</GlossaryTerm> that enhance your Kafka usage.
 
-For example, you can use Interceptors to:
+For example, you can use to:
 
 - perform full-message encryption, field-level encryption, and decryption
 - reject (during produce) or skip (during consume) records that don't match specified data quality rules

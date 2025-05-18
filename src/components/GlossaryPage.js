@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './GlossaryPage.module.css';
-import glossaryTerms from '../data/glossary';
+import glossaryData from '@site/src/data/glossary';
 import ReactMarkdown from 'react-markdown';
 
 export default function GlossaryPage() {
@@ -10,7 +10,7 @@ export default function GlossaryPage() {
   
   useEffect(() => {
     // Sort alphabetically
-    const sortedTerms = [...glossaryTerms].sort((a, b) => 
+    const sortedTerms = [...glossaryData].sort((a, b) => 
       a.term.localeCompare(b.term)
     );
     
@@ -29,7 +29,7 @@ export default function GlossaryPage() {
     // Check for hash in URL to directly navigate to a term
     if (window.location.hash) {
       const termSlug = window.location.hash.substring(1);
-      const term = glossaryTerms.find(t => t.slug === termSlug);
+      const term = glossaryData.find(t => t.slug === termSlug);
       if (term) {
         const letter = term.term.charAt(0).toUpperCase();
         setActiveLetter(letter);
