@@ -630,3 +630,40 @@ table tr:nth-child(2n) {
 .sidebar-section-heading:hover {
   background-color: transparent !important;
 }
+/* Reorder navbar items to put toggle before search */
+.navbar__items--right {
+  display: flex;
+  align-items: center;
+}
+
+/* Move the color mode toggle before search */
+.navbar__items--right .colorModeToggle_DEfp {
+  order: 1;
+  margin-right: 0.5rem;
+}
+
+/* Ensure search comes after toggle */
+.navbar__items--right .navbar__search {
+  order: 2;
+}
+
+/* Keep other right items after both */
+.navbar__items--right .navbar__item:not(:has(.colorModeToggle_DEfp)):not(:has([class*="searchBox"])) {
+  order: 3;
+}
+
+/* Adjust spacing */
+.navbar__items--right .navbar__item {
+  margin-left: 0.5rem;
+}
+
+.navbar__items--right .navbar__item:first-child {
+  margin-left: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 996px) {
+  .navbar__items--right .colorModeToggle_DEfp {
+    margin-right: 0.25rem;
+  }
+}

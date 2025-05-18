@@ -241,8 +241,11 @@ const config = {
       },
       
       colorMode: {
-        disableSwitch: true,
+       disableSwitch: false,
+       defaultMode: 'light',
+      respectPrefersColorScheme: true,
       },
+
       docs: {
         sidebar: {
           autoCollapseCategories: true,
