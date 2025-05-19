@@ -10,7 +10,7 @@ tags: features,fixes
 
 - [Breaking changes](#breaking-changes)
   - [Gateway Service Accounts are now always required when using PLAIN tokens](#gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
-  - [Gateway JWT signing key must always be set](#gateway-jwt-signing-key-must-always-be-set)
+  - [Local service account token signing key is now mandatory](#local-service-account-token-signing-key-is-now-mandatory)
 - [New features](#new-features)
   - [Enhanced Confluent Cloud authentication with Service Account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping)
   - [Dynamic Header Injection from Record Values](#dynamic-header-injection-from-record-values)
@@ -37,16 +37,27 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
 
 [Find out about creating service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
 
-#### Gateway JWT signing key must always be set, when using PLAIN tokens
+#### Local service account token signing key is now mandatory
 
-Previously PLAIN tokens could be issued using the default signing key, or users could define the signing key using the environment variables `GATEWAY_USER_POOL_SECRET_KEY`. This is now **required that users define the signing key** with this variable. A default value has been removed, and Gateway won't start if configured to use local service accounts. Customers using a DELEGATED security protocol are unaffected. You'll receive an error message in the logs:
+##### You're impacted if:
 
-```text
-"Invalid value at 'userPoolConfig.jwt.secretKey. Should not be null.
- Have you checked environment variable GATEWAY_USER_POOL_SECRET_KEY is set?"
+- your Gateway security protocol (for the client connection to Gateway) is `SASL_SSL` or `SASL_PLAINTEXT`
+- you're using local service accounts, managed by Gateway
+- and `GATEWAY_USER_POOL_SECRET_KEY` wasn't already set
+
+##### Do I have to do anything?
+
+- Yes. Set `GATEWAY_USER_POOL_SECRET_KEY`. We recommend using the following command line to generate the hash:
+
+```
+openssl rand -base64 32.
 ```
 
-In this scenario, you will have to recreate and re-issue your Gateway tokens. For more documentation on managing service account users, see [docs](/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account).
+##### Why did we make this change?
+
+Previously, when we signed the tokens for the local service accounts, we used a key that's set to a default value. The issue with that is that anybody who knows that default value is able to create their own tokens and connect to Gateway, if you've not changed the key.
+
+To prevent this, we now ask you to set the key and store it safely, so that nobody unauthorized could create identities. [Find out more about managing service accounts](/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account).
 
 ### New features
 
