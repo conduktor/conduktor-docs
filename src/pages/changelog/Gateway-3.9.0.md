@@ -50,7 +50,7 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
 - Yes. Set `GATEWAY_USER_POOL_SECRET_KEY`. We recommend using the following command line to generate the hash:
 
 ```
-openssl rand -base64 32.
+openssl rand -base64 32
 ```
 
 ##### Why did we make this change?
