@@ -153,7 +153,7 @@ If the term isn't defined, you can add it to **src/data/glossary.js**.
 ```md
   {
     term: "New term",
-    tooltip: "This is the concise text that will appear as tooltip.",
+    tooltip: "This is the concise text that will appear as a tooltip. Limit to max of two sentences and avoid formatting.",
     definition: "This is the full definition of the term. Feel free to format with links etc.",
     slug: "new-term"
   },
