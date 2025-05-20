@@ -44,7 +44,7 @@ This document will step through,
 
 1. setting up a local Gateway to encrypt sensitive user data sent to a Kafka topic using the Gateway KMS
 2. decrypting data read off the same Kafka topic via Gateway (in order to demonstrate normal working conditions)
-3. crypto shredding `EDEKs` such that associated data can no longer be decrypted by Gateway
+3. crypto shredding an `EDEK` such that associated data can no longer be decrypted by Gateway
 
 We will configure Gateway to encrypt sensitive customer data (`password`, `visa`) using a `DEK` derived from a unique customer identifier (`userId`). Other data (eg `name`) will be left un-encrypted. All of the data will come from the same simple json payload. For example, we might expect to see
 
@@ -380,7 +380,7 @@ Interceptor/sensitive customer data encryption: Created
 
 ```json
 {
-  "name": "my-encrypt-interceptor",
+  "name": "sensitive customer data encryption",
   "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
   "priority": 100,
   "config": {
@@ -422,9 +422,10 @@ To apply this configuration
 5. Type `Encrypt` into the search bar and select `Encrypt on produce specific record fields or the entire payload`
 6. Paste the JSON above into the text box (replacing the existing JSON) and click `Deploy Interceptor` (at the bottom of the screen)
 
+You should now be back on the `Kafka Gateway` page with a single interceptor called `sensitive customer data encryption` configured in the table.
+
 </TabItem>
 </Tabs>
-
 
 
 The reference documentation has more information about [configuring Encryption in Gateway](/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration---how-to-encrypt) for other use-cases.
@@ -437,7 +438,7 @@ With encryption configured we can now produce records via Gateway that will be e
 <TabItem value="Produce and check via CLI" label="Produce and check via CLI">
 
 ```bash
-# 1. Create a 'customers' topic to match the topic 'my-encrypt-interceptor' is configured to encrypt records produced to
+# 1. Create a 'customers' topic to match the topic 'sensitive customer data encryption' is configured to encrypt records produced to
 docker compose exec kafka-client kafka-topics --create \
   --bootstrap-server kafka-1:9092 \
   --replication-factor 1 \
@@ -450,19 +451,30 @@ docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
   --topic customers
 
-# 2. Produce a record with '10000002' to topic 'customers' (we'll compare this to our crypto shredded record later)
+# 3. Produce a record with '10000002' to topic 'customers' (we'll compare this to our crypto shredded record later)
 echo '{ "userId" : 10000002, "name" : "Mary Brown", "password" : "abc123", "visa" : 4111111111111111 }' | \
 docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
   --topic customers
 
-# 3. Consume all the records in the 'customers' topic (use command 'ctrl-c' to exit)
+# 4. Consume all the records in the 'customers' topic (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
   --bootstrap-server conduktor-gateway:6969 --topic customers --from-beginning
 ```
 
 </TabItem>
 <TabItem value="Produce and check via GUI" label="Produce and check via GUI">
+
+1. Click on `Topics` in the [Console](http://localhost:8080) left hand menu. There should be no topics shown on the `Topics` page.
+2. Click on the floating `New topic` button in the top right hand corner
+3. Enter `customers` in the `Topic name` field (the same topic we have `my-encrypt-interceptor` configured to encrypt records produced to).
+4. Click on the floating `Create topic` button in the bottom right hand corner (you can leave all the other fields with their defaults).
+5. Click on the `Produce` tab of the topic detail page for `customers` you have been redirected to.
+6. Copy the following text into the `Value` box `{ "userId" : 10000001, "name" : "Joe Smith", "password" : "admin123", "visa" : 4111111145551142 }`
+7. Click `Produce` at the bottom of the table. The record should appear on the right hand side. Later we will crypto shred the sensitive data in this record.
+8. Repeat steps 6. - 7. again with the following text `{ "userId" : 10000002, "name" : "Mary Brown", "password" : "abc123", "visa" : 4111111111111111 }`. Later we will compare this to our crypto shredded record.
+9. Click on the `Consume` tab at the top of the page next to the `Produce` tab clicked earlier.
+
 </TabItem>
 </Tabs>
 
@@ -492,7 +504,11 @@ curl \
 </TabItem>
 <TabItem value="Inspect Vault tokens via GUI" label="Inspect Vault tokens via GUI">
 
-TODO!!
+1. [login to Vault](http://localhost:8200) 
+   - Method: `Token` (should be pre-selected)
+   - Password: `vault-plaintext-root-token`
+2. Navigate to `Secrets engines` > `transit/`
+3. There should be exactly one key (`master-key`).
 
 </TabItem>
 </Tabs>
@@ -513,7 +529,11 @@ docker compose exec kafka-client kafka-console-consumer \
 </TabItem>
 <TabItem value="Inspect Vault tokens via GUI" label="Inspect Vault tokens via GUI">
 
-TODO!!
+1. Click on `Topics` in the [Console](http://localhost:8080) left hand menu. There should be no topics shown on the `Topics` page.
+2. There should just be the topic `customers` that we created earlier. The **Encryption Keys Store** topic is hidden by default.
+3. Use the `Internal topics` selector above the topics table to select `Show`. A lot more topics should now appear.
+4. Type `encryption` into the search bar next to the `Internal topics` selector.
+5. Click on the `_conduktor_gateway_encryption_keys` topic. This is the default  **Encryption Keys Store** topic.
 
 </TabItem>
 </Tabs>
@@ -529,16 +549,17 @@ There are two records (one for each `EDEK`) to match the two `keyIds`. As the nu
 
 The record **Key** is composed of, 
 - `algorithm`: as hardcoded in the configuration and then used to generate the associated `DEK` in this record
-- `keyId`: as templated in the configuration and evaluated using data (`userId`) from the associated record
+- `keyId`: as templated in the configuration and evaluated using data from the associated record (the `userId` field)
 - `uuid`: uniquely generated per inserted record
+
 The record **Value** is composed of,
-- `EDEK`: ie the `DEK` generated by Gateway and encrypted using the Gateway `KMS`
+- `edek`: the `DEK` generated by Gateway and encrypted using the Gateway `KMS`
 
 :::info
-The key `uuid` is necessary because it is possible for two different gateway nodes to process a record with the same `keyId` for the first time at the same time. In such a scenario two records with the same `keyId` but a different `uuid` would be created (thus avoiding a race condition). This means that it is possible (although relatively rare) for the same `keyId` to have multiple **encryption keys**.
+The `uuid` field is necessary because it is possible for two different gateway nodes to process a record with the same `userId` for the first time at the same time. In such a scenario two **Encryption Keys Store** records with the same `keyId` but a different `uuid` would be created (thus avoiding a race condition). This means that it is possible (although relatively rare) for the same `keyId` to have multiple `EDEKs` (ie for there to be multiple `EDEKs` for the same user).
 :::
 
-:::tip:::
+:::tip
 Make a note of the UUID returned for `"keyId":"gateway-kms://secret-for-10000001"` as we will need it for crypto shredding the associated `EDEK` in step 7: [Crypto shredding](#7-crypto-shredding).
 :::
 
@@ -585,33 +606,37 @@ Interceptor/sensitive customer data decryption: Created
 </TabItem>
 <TabItem value="Console UI" label="Console UI">
 
-
 ```json
 {
-  "kind": "Interceptor",
-  "apiVersion": "gateway/v2",
-  "metadata": {
-    "name": "sensitive customer data decryption"
-  },
-  "spec": {
-    "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
-    "priority": 100,
-    "config": {
-      "topic": "customers",
-      "kmsConfig": {
-        "vault": {
-          "uri": "http://vault:8200",
-          "token": "${VAULT_TOKEN}",
-          "version": 1
-        },
-        "gateway": {
-          "masterKeyId": "vault-kms://vault:8200/transit/keys/master-key"
-        }
+  "name": "sensitive customer data decryption",
+  "pluginClass": "io.conduktor.gateway.interceptor.DecryptPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "customers",
+    "kmsConfig": {
+      "vault": {
+        "uri": "http://vault:8200",
+        "token": "vault-plaintext-root-token",
+        "version": 1
+      },
+      "gateway": {
+        "masterKeyId": "vault-kms://vault:8200/transit/keys/master-key"
       }
     }
   }
 }
 ```
+
+To apply this configuration 
+
+1. Click on `Kafka Gateway` in the [Console](http://localhost:8080) left hand menu. 
+2. Click on the `+ New Interceptor` button on the right hand side.
+5. Type `Decrypt` into the search bar and select `Decrypt on consume any record fields encrypted by the gateway or the entire payload` (the only available interceptor)
+6. Paste the JSON above into the text box (replacing the existing JSON) and click `Deploy Interceptor` (at the bottom of the screen)
+
+You should now be back on the `Kafka Gateway` page with two interceptors now configured.
+- The `sensitive customer data encryption` that we configured earlier.
+- The new `sensitive customer data decryption` interceptor that we just created.
 
 </TabItem>
 </Tabs>
@@ -624,6 +649,7 @@ With a decryption interceptor configured on consumption from the same topic we h
 <TabItem value="Decrypt and consume via CLI" label="Decrypt and consume via CLI">
 
 ```bash
+# (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
     --bootstrap-server conduktor-gateway:6969 --topic customers \
     --from-beginning
@@ -632,7 +658,8 @@ docker compose exec kafka-client kafka-console-consumer \
 </TabItem>
 <TabItem value="Decrypt and consume via GUI" label="Decrypt and consume via GUI">
 
-TODO 
+1. Click on `Topics` in the [Console](http://localhost:8080) left hand menu. It should still show all of the topics including the Gateway internal configuration topics.
+2. Type `customers` into the search bar next to the `Internal topics` selector and click on it in the table when it appears.
 
 </TabItem>
 </Tabs>
@@ -658,7 +685,7 @@ For this HOWTO we only published two records and both had a different `keyId` so
 <TabItem value="Crypto shred and check via CLI" label="Crypto shred and check via GUI">
 
 ```bash
-
+# 1. Produce a record that tombstones the EDEK associated with 'keyId': 'gateway-kms://secret-for-10000001'
 echo '{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"<UUID_FOR_10000001_FROM_STEP_4>"}|NULL' | \
   docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
@@ -667,6 +694,7 @@ echo '{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uui
   --property "key.separator=|" \
   --property "null.marker=NULL"
 
+# 2. Consume all the records in the 'Encryption Keys Store' topic (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
   --bootstrap-server conduktor-gateway:6969 --topic _conduktor_gateway_encryption_keys \
   --from-beginning --property print.key=true --property key.separator="|"
@@ -675,21 +703,33 @@ docker compose exec kafka-client kafka-console-consumer \
 </TabItem>
 <TabItem value="Crypto shred and check via GUI" label="Crypto shred and check via GUI">
 
-TODO 
+1. Click on `Topics` in the [Console](http://localhost:8080) left hand menu. It should still show all of the topics including the Gateway internal configuration topics.
+2. Type `encryption` into the search bar next to the `Internal topics` selector.
+3. Click on the `_conduktor_gateway_encryption_keys` topic.
+4. Find the record which includes the `"keyId":"gateway-kms://secret-for-10000001"` and open it
+5. Click the `Reprocess message` button in the bottom right hand corner.
+6. Selet `_conduktor_gateway_encryption_keys` as the `Target topic`.
+7. Click the `Edit and publish` button in the bottom right hand corner. You should be redirected to a produce window with all of the message already filled out in the table.
+8. The `Value` table entry contains the existing `EDEK`. Select `Null` from the drop down text above it so that the `EDEK` filled text box is removed from the screen.
+9. Click the `Produce` button at the bottom of the screen. The produced message with a now `null` value will be displayed on the right hand side of the screen.
 
 </TabItem>
 </Tabs>
 
-The records in the **Encryption Keys Store** topic should now show the latest record value for the `EDEK` we crypto shredded as `null` (or empty if consuming via the CLI). Gateway will now be unable to decrypt data associated with it. You can check for yourself by repeating [Step 4: Inspecting the created keys](#4-inspecting-the-created-keys).
+The records in the **Encryption Keys Store** topic should now show the latest record value for the `EDEK` we crypto shredded as `null` (or empty if consuming via the CLI). Gateway will now be unable to decrypt data associated with it. 
 
-```
-{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"9871c88e-d5dd-4cb2-86e0-4d65ef0a8361"}|{"edek":"vault:v1:rTbfUBpiPM23WAGu2njeeeqty60BzIPedhl6CL3jaViGDP9Nf0EfRe9+0pbD4A=="}
-{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000002","uuid":"381e3464-8876-4bcc-9b75-ff49d19a918f"}|{"edek":"vault:v1:c8h+LWonSpPi0Q8Zd8KjHE9GTcxXzvUwAEULDVPQdxDKkSLtiN9teE8lhDeHNw=="}
-{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"9871c88e-d5dd-4cb2-86e0-4d65ef0a8361"}|
-```
+You can check for yourself by repeating [Step 4: Inspecting the created keys](#4-inspecting-the-created-keys). You should expect to see something like the following (in reverse order if using the GUI),
+
+| Key   | Value |
+| ----- | ----- |
+| `{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"9871c88e-d5dd-4cb2-86e0-4d65ef0a8361"}` | `{"edek":"vault:v1:rTbfUBpiPM23WAGu2njeeeqty60BzIPedhl6CL3jaViGDP9Nf0EfRe9+0pbD4A=="}` |
+| `{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000002","uuid":"381e3464-8876-4bcc-9b75-ff49d19a918f"}` | `{"edek":"vault:v1:c8h+LWonSpPi0Q8Zd8KjHE9GTcxXzvUwAEULDVPQdxDKkSLtiN9teE8lhDeHNw=="}` |
+| `{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"9871c88e-d5dd-4cb2-86e0-4d65ef0a8361"}` | `null` |
+
+The latest record value for `"keyId":"gateway-kms://secret-for-10000001"` (or first entry if using the GUI) should be `null`. This indicates that it has been crypto shredded.
 
 :::note
-The sample data above now shows two records for `"keyId":"gateway-kms://secret-for-10000001"` and you are likely to see the same. This is because Kafka compaction isn't instantaneous. Gateway guarantees to use the latest record and to prevent decryption if the associated `EDEK` has been shredded. However, the earlier record still exists on disk and its `EDEK` is available to anyone who consumes the Kafka topic directly. This means that it is technically possible for someone with access to the topic and the `KEK` to recover crypto-shredded data. The key should eventually be deleted because the topic is configured for compaction, but there is no guarantee of when that will occur. Reducing the time until (encrypted) encryption keys are deleted from disk is possible, but beyond the scope of this HOWTO. The important thing to remember is that Gateway (and therefore users) will be instantly unable to decrypt data that has been crypto shredded, as the next section will demonstrate.
+There are two entries for `"keyId":"gateway-kms://secret-for-10000001"` because Kafka compaction isn't instantaneous. Gateway guarantees to use the latest record and to prevent decryption if the associated `EDEK` has been shredded. However, the earlier record still exists on disk and its `EDEK` is available to anyone who consumes the Kafka topic directly. This means that it is technically possible for someone with access to the topic and the `KEK` to recover crypto-shredded data. The key should eventually be deleted because the topic is configured for compaction, but there is no guarantee of when that will occur. Reducing the time until (encrypted) encryption keys are deleted from disk is possible, but beyond the scope of this HOWTO. The important thing to remember is that Gateway (and therefore users) will be instantly unable to decrypt data that has been crypto shredded, as the next section will demonstrate.
 :::
 
 ### 8: Verify crypto shredded record no longer decrypts 
