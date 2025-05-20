@@ -414,8 +414,8 @@ Interceptor/sensitive customer data encryption: Created
 To apply this configuration 
 
 1. [login to the console](http://localhost:8080) 
-  - Username: `admin@demo.dev`
-  - Password: `adminP4ss!`
+   - Username: `admin@demo.dev`
+   - Password: `adminP4ss!`
 2. Make sure `cdk-gateway` is selected as your working cluster (selector in top left hand corner)
 3. Click on `Kafka Gateway` in the left hand menu
 4. Click on `Create my first interceptor`
@@ -425,7 +425,9 @@ To apply this configuration
 </TabItem>
 </Tabs>
 
-The reference documentation has more information about [configuring Encryption in Gateway](/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration---how-to-encrypt).
+
+
+The reference documentation has more information about [configuring Encryption in Gateway](/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration---how-to-encrypt) for other use-cases.
 
 ### 3: Producing encrypted data
 
@@ -435,22 +437,26 @@ With encryption configured we can now produce records via Gateway that will be e
 <TabItem value="Produce and check via CLI" label="Produce and check via CLI">
 
 ```bash
+# 1. Create a 'customers' topic to match the topic 'my-encrypt-interceptor' is configured to encrypt records produced to
 docker compose exec kafka-client kafka-topics --create \
   --bootstrap-server kafka-1:9092 \
   --replication-factor 1 \
   --partitions 3 \
   --topic customers
 
+# 2. Produce a record with '10000001' to topic 'customers' (we'll crypto shred this later)
 echo '{ "userId" : 10000001, "name" : "Joe Smith", "password" : "admin123", "visa" : 4111111145551142 }' | \
 docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
   --topic customers
 
+# 2. Produce a record with '10000002' to topic 'customers' (we'll compare this to our crypto shredded record later)
 echo '{ "userId" : 10000002, "name" : "Mary Brown", "password" : "abc123", "visa" : 4111111111111111 }' | \
 docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
   --topic customers
 
+# 3. Consume all the records in the 'customers' topic (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
   --bootstrap-server conduktor-gateway:6969 --topic customers --from-beginning
 ```
@@ -469,7 +475,7 @@ You should see something like the following final output for the customer data s
 
 ### 4: Inspecting the created keys
 
-Gateway creates keys on demand, so now that we've produced two messages with two different secretIds (`secret-for-10000001` and `secret-for-10000002`) we would expect to see associated **encryption keys** persisted in a keystore. We would not expect to see them in our Vault KMS. This should only ever contain the master key (`/transit/keys/master-key`) which was used to encrypt them. Take a look for yourself,
+Gateway creates keys on demand, so now that we've produced two messages with two different `secretIds` (`secret-for-10000001` and `secret-for-10000002`) we would expect to see associated **EDEKs** persisted in a keystore. We would not expect to see them in our Vault KMS. This should only ever contain the master key (`/transit/keys/master-key`) which was used to encrypt them. Take a look for yourself,
 
 <Tabs>
 <TabItem value="Inspect Vault tokens via CLI" label="Inspect Vault tokens via CLI">
@@ -491,12 +497,13 @@ TODO!!
 </TabItem>
 </Tabs>
 
-Instead we would expect to see the **encryption keys** in the Gateway key store (the Kafka topic `_conduktor_gateway_encryption_keys`)
+Instead we would expect to see the **EDEKs** in the Gateway **Encryption Keys Store** (the Kafka topic `_conduktor_gateway_encryption_keys`)
 
 <Tabs>
 <TabItem value="Inspect Vault tokens via CLI" label="Inspect Vault tokens via CLI">
 
 ```bash
+# (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
   --bootstrap-server conduktor-gateway:6969 --topic _conduktor_gateway_encryption_keys \
   --from-beginning --property print.key=true --property key.separator="|"
@@ -520,18 +527,20 @@ You should see something like the following,
 
 There are two records (one for each `EDEK`) to match the two `keyIds`. As the number of records with different `keyIds` grows this can lead to **substantial cost savings** and **improved performance** over storing the same keys in the KMS. 
 
-The record key is composed of, 
-- `algorithm`: as hardcoded in the configuration and then used to generate the associated DEK in this record
+The record **Key** is composed of, 
+- `algorithm`: as hardcoded in the configuration and then used to generate the associated `DEK` in this record
 - `keyId`: as templated in the configuration and evaluated using data (`userId`) from the associated record
 - `uuid`: uniquely generated per inserted record
-The record value is composed of,
+The record **Value** is composed of,
 - `EDEK`: ie the `DEK` generated by Gateway and encrypted using the Gateway `KMS`
 
-> [!NOTE]
-> The key `uuid` is necessary because it is possible for two different gateway nodes to process a record with the same `keyId` for the first time at the same time. In such a scenario two records with the same `keyId` but a different `uuid` would be created (thus avoiding a race condition). This means that it is possible (although relatively rare) for the same `keyId` to have multiple **encryption keys**.
+:::info
+The key `uuid` is necessary because it is possible for two different gateway nodes to process a record with the same `keyId` for the first time at the same time. In such a scenario two records with the same `keyId` but a different `uuid` would be created (thus avoiding a race condition). This means that it is possible (although relatively rare) for the same `keyId` to have multiple **encryption keys**.
+:::
 
-> [!TIP]
-> Make a note of the UUID returned for `"keyId":"gateway-kms://secret-for-10000001"` as we will need it for crypto shredding the associated `EDEK` in step 7: [Crypto shredding](#7-crypto-shredding).
+:::tip:::
+Make a note of the UUID returned for `"keyId":"gateway-kms://secret-for-10000001"` as we will need it for crypto shredding the associated `EDEK` in step 7: [Crypto shredding](#7-crypto-shredding).
+:::
 
 ### 5: Gateway Decryption interceptor configuration
 
@@ -635,8 +644,9 @@ You should see the following records exactly as they were originally sent.
 {"userId":10000002,"name":"Mary Brown","password":"abc123","visa":4111111111111111}
 ```
 
-> [!NOTE]
-> Even though we now produce and consume un-encrypted data the `password` and `visa` fields are still encrypted at rest (ie on disk in the Kafka broker). If you were to delete the decryption interceptor all of the fields would go back to remaining encrypted when consumed.
+:::note
+Even though we now produce and consume un-encrypted data the `password` and `visa` fields are still encrypted at rest (ie on disk in the Kafka broker). If you were to delete the decryption interceptor all of the fields would go back to remaining encrypted when consumed.
+:::
 
 ### 7: Crypto shredding 
 
@@ -678,8 +688,9 @@ The records in the **Encryption Keys Store** topic should now show the latest re
 {"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"9871c88e-d5dd-4cb2-86e0-4d65ef0a8361"}|
 ```
 
-> [!NOTE]
-> The sample data above now shows two records for `"keyId":"gateway-kms://secret-for-10000001"` and you are likely to see the same. This is because Kafka compaction isn't instantaneous. Gateway guarantees to use the latest record and to prevent decryption if the associated `EDEK` has been shredded. However, the earlier record still exists on disk and its `EDEK` is available to anyone who consumes the Kafka topic directly. This means that it is technically possible for someone with access to the topic and the `KEK` to recover crypto-shredded data. The key should eventually be deleted because the topic is configured for compaction, but there is no guarantee of when that will occur. Reducing the time until (encrypted) encryption keys are deleted from disk is possible, but beyond the scope of this HOWTO. The important thing to remember is that Gateway (and therefore users) will be instantly unable to decrypt data that has been crypto shredded, as the next section will demonstrate.
+:::note
+The sample data above now shows two records for `"keyId":"gateway-kms://secret-for-10000001"` and you are likely to see the same. This is because Kafka compaction isn't instantaneous. Gateway guarantees to use the latest record and to prevent decryption if the associated `EDEK` has been shredded. However, the earlier record still exists on disk and its `EDEK` is available to anyone who consumes the Kafka topic directly. This means that it is technically possible for someone with access to the topic and the `KEK` to recover crypto-shredded data. The key should eventually be deleted because the topic is configured for compaction, but there is no guarantee of when that will occur. Reducing the time until (encrypted) encryption keys are deleted from disk is possible, but beyond the scope of this HOWTO. The important thing to remember is that Gateway (and therefore users) will be instantly unable to decrypt data that has been crypto shredded, as the next section will demonstrate.
+:::
 
 ### 8: Verify crypto shredded record no longer decrypts 
 
@@ -690,5 +701,6 @@ If you repeat step 6 ([Consuming and decrypting data](#6-consuming-and-decryptin
 {"userId":10000002,"name":"Mary Brown","password":"abc123","visa":4111111111111111}
 ```
 
-> [!NOTE]
-> Gateway crypto-shredding only applies to historical records. If a new record was produced for `userId`: `10000001` at this point then a new `EDEK` would be created (with a new `UUID` that doesn't conflict) and the new record would be decryptable. (Historical records would remain crypto-shredded.)
+:::note
+Gateway crypto-shredding only applies to historical records. If a new record was produced for `userId`: `10000001` at this point then a new `EDEK` would be created (with a new `UUID` that doesn't conflict) and the new record would be decryptable. (Historical records would remain crypto-shredded.)
+:::
