@@ -23,11 +23,18 @@ tags: features,fixes
 
 Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`.
 
-This **environment variable is now deprecated** and will behave as if it was set to `true`, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
+##### You're impacted if 
 
-If your Gateway was not configured with `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`, and your clients are connecting using tokens without a local service account created, the result is a breaking change. We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, we recommend creating the service account before creating tokens. Customers using a DELEGATED security protocol are unaffected.
+- **your Gateway was not previously configured** with the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED=true`
+- and your clients are connecting using PLAIN tokens without having a corresponding local service account already created.
 
-If you do hit this issue, it can be amended by creating any missing local service accounts with a similar command to the below, adjusting your admin API credentials, host and name:
+Note: **Customers using the DELEGATED security protocol are unaffected.**
+
+##### Do I have to do anything?
+
+- Yes, if you are affected.
+- You must create any **missing local service accounts** that your tokens rely on. 
+- You can do this using the following command, adjusting your admin API credentials, host and name as appropriate
 
 ```bash
 curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account \
@@ -36,6 +43,14 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
 ```
 
 [Find out about creating service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
+
+##### Why did we make this change?
+
+We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, we recommend creating the service account before creating tokens.
+
+This change improves **security and consistency** by enforcing that all PLAIN tokens must correspond to a pre-existing local service account. While previously this was configurable via the `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` environment variable, **this variable is now deprecated** and will behave as if it was set to `true`.
+
+This enforces best practises that were previously only encouraged, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
 #### Local service account token signing key is now mandatory
 
