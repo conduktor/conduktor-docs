@@ -317,8 +317,7 @@ output "admin_sa_token" {
 </Tabs>
 
 **GatewayServiceAccount checks:**
-- When `spec.type` is `EXTERNAL`, the `spec.externalNames` has to be a non-empty list of external names. Each name has to be unique across all declared GatewayServiceAccount.
-  - **At the moment** we only support a list of one element. Support for multiple externalNames will be added in the future.
+When `spec.type` is `EXTERNAL`, the `spec.externalNames` has to be a non-empty list of external names. Each name has to be unique across all declared GatewayServiceAccount. We currently only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
 - When `spec.type` is `EXTERNAL`:
