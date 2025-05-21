@@ -47,7 +47,7 @@ export const AdminToken = () => (
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Deploys an Interceptor on the Gateway
+Deploys an Interceptor on Gateway
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -186,7 +186,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-# This interceptor targets everyone (Including Virtual Clusters)
+# This Interceptor targets everyone (including virtual clusters)
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   scope = {
@@ -199,7 +199,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   }
 }
 
-# This interceptor targets everyone (Excluding Virtual Clusters)
+# This Interceptor targets everyone (excluding virtual clusters)
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   spec = {
@@ -207,7 +207,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   }
 }
 
-# This interceptor targets only `admin` service account
+# This Interceptor only targets the `admin` service account
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   scope = {
@@ -219,7 +219,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
 }
 
 
-# This interceptor targets only `read-only` virtual cluster
+# This Interceptor only targets the `read-only` virtual cluster
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   scope = {
@@ -259,7 +259,7 @@ There are a few cases where you **must** declare GatewayServiceAccount objects:
 
 ````yaml
 ---
-# External User renamed
+# External user renamed
 apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
@@ -317,8 +317,7 @@ output "admin_sa_token" {
 </Tabs>
 
 **GatewayServiceAccount checks:**
-- When `spec.type` is `EXTERNAL`:
-  - `spec.externalNames` must be a non-empty list of external names. Each name must be unique across all declared GatewayServiceAccount.
+- When `spec.type` is `EXTERNAL`, the `spec.externalNames` has to be a non-empty list of external names. Each name has to be unique across all declared GatewayServiceAccount.
   - **At the moment** we only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
