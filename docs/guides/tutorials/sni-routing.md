@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 title: SNI routing
+displayed: false
 description: Make the most out of the ports you have
 ---
 

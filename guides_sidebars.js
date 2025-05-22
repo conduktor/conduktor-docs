@@ -71,7 +71,6 @@ module.exports = {
             },
           ],
         },
-        'manage-kafka/configure-sql',
       ],
     },  
     {
