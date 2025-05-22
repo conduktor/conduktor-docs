@@ -205,6 +205,27 @@ Since the **block** action has the ability to **stop data from being sent** to t
   </p>
 </details>
 
+## Behaviour when multiple policy target a common topic
+
+Here’s a corrected and polished version of your text:
+
+---
+
+## Behavior When Multiple Policies Target a Common Topic
+
+When multiple policies target the same topic, two scenarios can occur when a record is produced:
+
+* **None of the policies block the record; all are evaluated:**
+
+  * The evaluation count is increased for all of them.
+  * The violation count is increased for each violated policy.
+  * A report is generated for each violated policy that has reporting enabled.
+
+* **One or more policies would block the record. In this scenario, one of the blocking policies blocks the record first and hides it from the others:**
+
+  * For the first blocking policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
+  * For the others: no counts are increased, and no reports are generated.
+
 ## Related resources
 
 - [Connect to clusters](/platform/navigation/settings/managing-clusters/)
