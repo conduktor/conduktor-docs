@@ -3,9 +3,9 @@ sidebar_position: 350
 title: Perform chaos testing
 description: Chaos testing with Conduktor
 ---
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import ProductShield from '@site/src/components/shared/product-shield.md';
 
-# Perform chaos testing
+<ProductShield />
 
 Chaos testing <GlossaryTerm>Interceptors</GlossaryTerm> in Conduktor are like stress tests for your data systems.
 
@@ -76,6 +76,7 @@ This only works on Produce and Fetch requests.
   }
 }
 ```
+
 ## Simulate duplicate messages
 
 Duplicate Messages will duplicate records when the client produces/consumes the records to/from kafka.

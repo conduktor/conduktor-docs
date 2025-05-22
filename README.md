@@ -5,6 +5,7 @@
   - [Images](#images)
   - [Links](#links)
   - [Tabs](#tabs)
+  - [Dropdowns](#dropdowns)
   - [Labels](#labels)
   - [Glossary](#glossary)
   - [Re-use of content](#re-use-of-content)
@@ -120,6 +121,15 @@ mySecondTab: "content"
 </Tabs>
 ````
 
+## Dropdowns
+
+Use these collapsible dropdowns for troubleshooting sections or other Q&A type content.
+
+<details>
+  <summary>Question?</summary>
+  <div>Answer has to be in the same block of text due to HTML limitations in Markdown.</div>
+</details>
+
 ## Labels
 
 Use labels to visualize available options, [like these resources](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
@@ -180,6 +190,7 @@ To add:
 ```md
 
 import ProductTrust from '@site/src/components/shared/product-trust.md';
+
 <ProductTrust />
 ```
 
