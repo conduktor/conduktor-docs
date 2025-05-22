@@ -32,7 +32,6 @@ Note: **Customers using the DELEGATED security protocol are unaffected.**
 
 ##### Do I have to do anything?
 
-- Yes, if you are affected.
 - You must create any **missing local service accounts** that your tokens rely on. 
 - You can do this using the following command, adjusting your admin API credentials, host and name as appropriate
 
