@@ -1,16 +1,16 @@
 ---
-title: Topics
+title: Logical topics
 description: Learn Conduktor terminology
 ---
 ## Logical topics
 
-Logical topics are abstractions over real Kafka topics to provide additional functionalities not possible by default. Conduktor offers three types of logical topics:
+Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default. We offer three types of logical topics:
 
-1. [Alias topics](#alias-topics) are topics that can be accessed with a name, but really points to another real topic behind the scenes. It can be useful in a few scenarios such a topic renaming or cross virtual cluster topic sharing.
+1. [Alias topics](#alias-topics) are topics that can be accessed with a name, but point to another real topic behind the scenes. They can be useful in a few scenarios such as topic renaming or cross-virtual cluster topic sharing.
 
-1. [Concentrated topics](#concentrated-topics) allow co-locating multiple topics in the same physical topic behind the scenes. It's very useful when you want to regroup many topics with low-volume but a large number of partitions.
+1. [Concentrated topics](#concentrated-topics) allow co-locating multiple topics in the same physical topic behind the scenes. This is very useful when you want to regroup many topics with low-volume but a large number of partitions.
 
-1. [SQL topics](#sql-topics) are using SQL language to query & filter an existing topic, very useful to filter out the records that doesn't correspond to your business needs.
+1. [SQL topics](#sql-topics) are using SQL language to query and filter an existing topic. This is very useful when filtering out the records that don't correspond to your business needs.
 
 ## Alias topics
 
@@ -18,7 +18,7 @@ Alias topics are logical topics that target a different physical topic. They act
 
 ### Purpose
 
-One of Kafka's limitations is that you cannot rename topics.
+One of Kafka's limitations is that you can't rename topics.
 
 ### Use
 
@@ -35,13 +35,13 @@ For example, if you create an alias topic, `applicationB_orders` pointing to a p
 
 ## Concentrated topics
 
-Concentrated topics transparently act as pointers to a single physical topic on your Kafka cluster.  They allow you to reduce costs on low-volume topics by co-locating messages.  
+Concentrated topics transparently act as pointers to a single physical topic on your Kafka cluster. They allow you to reduce costs on low-volume topics by co-locating messages.  
 
 They are completely transparent to consumers and producers and allow you to emulate different partition counts irrespective of the backing physical topic's partition count.
 
 ### Use
 
-To create concentrated topics, first deploy a `ConcentrationRule`:
+To create concentrated topics, first deploy `ConcentrationRule`:
 
 ````yaml
 ---
@@ -70,7 +70,7 @@ kafka-topics \
 
 ![Topic Concentration](/guides/concentrated-topic.png)
 
-We now have two concentrated topics (`concentrated.topicA` & `concentrated.topicB`) with partition counts of 3 and 4 respectively, mapped to a single physical topic (`physical.topic`) with three partitions.
+We now have two concentrated topics (`concentrated.topicA` and `concentrated.topicB`) with partition counts of 3 and 4 respectively, mapped to a single physical topic (`physical.topic`) with three partitions.
 
 To ensure that consumers don't consume messages from other partitions or from other concentrated topics, we store the concentrated partition and the concentrated topic name in the record headers. Gateway will automatically filter the messages that should be returned to the consumer.
 
@@ -140,7 +140,7 @@ With concentrated topics, the enforced retention policy is the physical topic's 
 When `autoManaged` is enabled:
 
 - backing topics are automatically created with the default cluster configuration and partition count.
-- concentrated topics created with higher `retention.ms` and `retention.bytes` are allowed. It automatically extends the configuration of the backing topic.
+- concentrated topics created with higher `retention.ms` and `retention.bytes` are allowed. This automatically extends the configuration of the backing topic.
 
 ````yaml
 ---
@@ -191,7 +191,7 @@ Configs for topic 'physical.topic' are:
 As we can see, the retention has been updated.
 
 :::warning
-If one user requests a topic with infinite retention (`retention.ms = -1`), **all the topics** with the same cleanup policy associated with the rule will also inherit this extended configuration and have infinite retention.
+If one user requests a topic with infinite retention (`retention.ms = -1`), **all the topics** with the same cleanup policy associated with the rule **will also inherit** this extended configuration and have infinite retention.
 :::
 
 ### Message count, lag and offset (in)correctness
@@ -269,11 +269,11 @@ SELECT
   FROM cars
 ```
 
-This supports for `FetchResponse` only: (i.e., resulting topic is read-only).
+This supports `FetchResponse` only (i.e., resulting topic is read-only):
 
 `SELECT [list of fields] FROM [topic name] WHERE [field filter criteria]`
 
-Note that topic names with dash `-` characters have to be double quoted, as the dash is not a valid character for a SQL name. For example: if you have a topic `our-orders`, use `SELECT * FROM "our-orders" WHERE ...`
+Note that topic names with dash `-` characters have to be double quoted, as the dash is not a valid character for a SQL name. For example, if you have a topic `our-orders`, use `SELECT * FROM "our-orders" WHERE ...`
 
 Other limitations:
 

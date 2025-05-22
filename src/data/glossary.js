@@ -156,7 +156,7 @@ const glossaryData = [
     {
         term: "Policy",
         tooltip: "A collection of validation Rules that's applied to Kafka topics or prefixes.",
-        definition: "A Policy is a collection of validation [Rules](#rule) that's applied to topics or prefixes. Policies can have actions which will take effect when specified criteria is met. For example, the processing of messages is blocked when a violation occurs. [Find out more](../guides/use-cases/rules-policies).",
+        definition: "A Policy is a collection of validation [Rules](#rule) that's applied to [topics](topic) or prefixes. Policies can have actions which will take effect when specified criteria is met. For example, the processing of messages is blocked when a violation occurs. [Find out more](../guides/use-cases/rules-policies).",
         slug: "policy"
     },       
     {
@@ -214,6 +214,12 @@ const glossaryData = [
         term: "Topic",
         definition: "A category to which records (messages) are sent and from which they are consumed.",
         slug: "topic"
+    },   
+    {
+        term: "Logical topic",
+        tooltip: "Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default.",
+        definition: "Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default. We offer three types of logical topics: alias, concentrated and SQL. [Find out more](../guides/conduktor-concepts/logical-topics).",
+        slug: "logical-topic"
     },   
     {
         term: "Trust",
