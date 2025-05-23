@@ -17,7 +17,7 @@ filters out the configurations by name. In the example below, we display only co
 
 **Raw** / **Friendly**  
 Formats the information either in its original form or in a more human readable way.  
-For instance, `retention.ms` can be reprensented as Raw(`43200000`) or Friendly(`12h`)  
+For instance, `retention.ms` can be represented as Raw(`43200000`) or Friendly(`12h`)  
 Default: `Friendly`
 
 **Show Overrides only**
