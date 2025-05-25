@@ -7,7 +7,7 @@ description: Make the most out of the ports you have
 
 ## Overview
 
-SNI (Server Name Indication) routing reduces the number of Gateway ports exposed to clients.
+<GlossaryTerm>SNI</GlossaryTerm> routing reduces the number of Gateway ports exposed to clients.
 
 Unlike port mapping, which differentiates brokers based on the port a client connects to, **SNI routing distinguishes brokers by the hostname the client wants to connect to**. This allows the Gateway to expose a single port while directing traffic to the appropriate broker based on the client's requested hostname.
 

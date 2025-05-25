@@ -9,8 +9,8 @@ description: Learn Conduktor by following hands-on tutorials.
 
 - [Audit log topics](/guides/tutorials/configure-audit-log-topic)
 - [SQL with Conduktor](/guides/tutorials/configure-sql)
-- [Custom deserializers](/docs/guides/tutorials/custom-deserializers)
-- [SNI routing](/guides/tutorials/sni-routing.md)
+- [Custom deserializers](/guides/tutorials/custom-deserializers)
+- [SNI routing](/guides/tutorials/sni-routing)
 
 ## Use
 

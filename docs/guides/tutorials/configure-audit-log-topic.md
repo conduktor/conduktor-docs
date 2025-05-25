@@ -1,26 +1,23 @@
 ---
 sidebar_position: 4
-title: Configure Audit Log Topic
+title: Configure audit log topic
 displayed: false
 description: Send the Console Audit Log in a Kafka topic
 ---
 
-## Introduction
+## Overview
 
-By default, Console's Audit Log is stored in the connected PostgreSQL database.
-From version [1.28.0](/changelog#console-1280), you can have Console emit this Audit Log to a Kafka topic. 
+By default, <GlossaryTerm>Console</GlossaryTerm>'s audit log is stored in the connected PostgreSQL database but from [version 1.28.0](/changelog#console-1280), you can have Console emit it to a Kafka topic.
 
 Complementing this with the [export feature](/platform/navigation/console/topics/topic-consume/consume/#export-records-in-csv--json), you can easily integrate the Console Audit Log with your SIEM or log management system.
 
-Let's see how to configure the Audit Log to be sent to a Kafka topic, and then export it as CSV or JSON.
+[See the full list of audit log events](/platform/navigation/settings/audit-log/#exportable-audit-log-events).
 
-:::info
-You can find the full list of Audit Log events [here](/platform/navigation/settings/audit-log/#exportable-audit-log-events).
-:::
+Let's see how to configure the audit log to be sent to a Kafka topic and then export it as CSV or JSON.
 
-## Send the Console Audit Log to a Kafka Topic
+## Send the Console audit log to a Kafka topic
 
-In the Console deployment configuration, you simply have to set the following properties:
+In the Console deployment configuration, set the following properties:
 
 ```yaml
 CDK_AUDITLOGPUBLISHER_CLUSTER: my-kafka-cluster                 # Mandatory
@@ -33,34 +30,25 @@ Once you've added these properties in your Console deployment configuration, sim
 
 This will create a new topic (if it doesn't exist) in the cluster named `my-kafka-cluster`. This new topic will be named `_conduktor_console_audit_log`, and will have 1 partition and a replication factor of 1.
 
-Please note that the principal used by Console to connect to your Kafka cluster must have the following minimum set of permissions:
+Note that the principal used by Console to connect to your Kafka cluster has to have the following minimum set of permissions:
 
-**Topics**: Create, Describe, DescribeConfigs, Write
-**Cluster**: Create, Describe, DescribeConfigs
+- Topics: Create, Describe, DescribeConfigs, Write
+- Cluster: Create, Describe, DescribeConfigs
 
 ![Minimum permissions for Audit log topic](assets/minimum-set-acls.png)
 
-## Troubleshooting
+## Export the audit log
 
-If you don't see the topic `_conduktor_console_audit_log` in your Kafka cluster, you can check the Console logs for any error message, but first be sure to check if internal topics are Hidden.
+To export the audit log from this Kafka topic, open Console and go to the **Consume** page of this topic.
 
-Otherwise, this is probably because of a misconfigured name of the Kafka cluster. In that case, you will see this message showing up regularly in the logs:
-```
-Failed to publish audit log event: Not found. Could not find cluster my-kafka-cluster
-```
+Here, click on the *...* button at the top right of the records table and select either `Export to CSV` or `Export to JSON`.
 
-Please make sure that the Kafka cluster name matches with the ID you can see in the clusters dropdown in the Console:
+You can then import that file in your SIEM or log management system.
 
-import ClustersDropdown from './assets/clusters-dropdown.png';
+## Troubleshoot
 
-<img src={ClustersDropdown} alt="Clusters Dropdown" style={{width: 300, display: 'block', margin: 'auto'}} />
-
-## Export the Audit Log
-
-In order to export the Audit Log from this Kafka topic, you should go to the Consume page of this topic in the Console.
-
-Here, click on the `...` button on the top right of the records table, and select either `Export to CSV` or `Export to JSON`.
-
-![Export to CSV or JSON](assets/audit-log-topic.png)
-
-You can now import that file in your SIEM or log management system.
+<details>
+  <summary>I don't see the `_conduktor_console_audit_log` topic in your Kafka cluster</summary>
+  <div> Check whether **internal topics are hidden**, if not, check the Console logs for errors. Otherwise, the issue could be a misconfigured name of the Kafka cluster. In that's the case, you'll see this message in the logs: *Failed to publish audit log event: Not found. Could not find cluster my-kafka-cluster*. Make sure that the Kafka **cluster name matches the ID you can see** in the clusters dropdown in Console.
+  </div>
+</details>

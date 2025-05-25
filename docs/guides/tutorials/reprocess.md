@@ -1,27 +1,21 @@
 ---
 sidebar_position: 5
-title: Reprocess Messages
+title: Reprocess messages
 displayed: false
 description: Reprocess a message from a topic to another one.
 ---
 
-# Reprocess Messages
+## Overview
 
-Conduktor Console can help you reprocess a message within a topic. This could be used for reprocessing a message from an existing DLQ (Dead Letter Queue), or for pushing any message into another topic.
+Conduktor <GlossaryTerm>Console</GlossaryTerm> can help you reprocess messages within a <GlossaryTerm>topic</GlossaryTerm>.
 
-## Find a record to reprocess
+This could be used for reprocessing messages from an existing <GlossaryTerm>DLQ</GlossaryTerm> or for pushing messages into another topic.
 
-Identify a message that you wish to reprocess by finding it from within the topic view.
+## Select a message to reprocess and a new target topic
 
-Select the record, and click the **reprocess message** button from within the slide-out component.
+In Console, go to **Topics** and click on the the message. In the drawer window, click **Reprocess message** at the bottom. 
 
-In our example below, this record is in our DLQ topic `customers-dlq` because the age of the customer is negative. Let's fix this and reprocess it to the `customers` topic, with the right age.
-
-![Select the record](assets/select-record.png)
-
-## Choose the target topic
-
-On the subsequent screen, select the **target topic** that you wish to publish the message.
+In the next page, select the **target topic** that you want to publish the message to.
 
 Here, we want to reprocess the message in the `customers` topic.
 

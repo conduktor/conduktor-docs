@@ -251,6 +251,11 @@ const glossaryData = [
         definition: "Indexing is a background process in [Console](#console) that collects changes in an internal table, in turn allowing you to perform actions like sort, filter and much more, which you couldn\'t do with any out-of-the-box Kafka implementations. [Find out more](../guides/conduktor-concepts/indexing).",
         slug: "indexing"
     },    
+    {
+        term: "SNI",
+        definition: "Server Name Indication.",
+        slug: "indexing"
+    },       
   ];
   
  export default glossaryData;
