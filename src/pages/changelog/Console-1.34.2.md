@@ -11,4 +11,4 @@ tags: fixes
 ### Fixes
 
 - Improve memory efficiency on kafka consumer
-- Fixed an issue related to audit events of the application permission request type.
+- Fixed an issue related to audit log events of the application permission request type.
