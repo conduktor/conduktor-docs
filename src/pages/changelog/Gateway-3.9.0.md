@@ -9,28 +9,26 @@ tags: features,fixes
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Breaking changes](#breaking-changes)
-  - [Gateway Service Accounts are now always required when using PLAIN tokens](#gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
-  - [Local service account token signing key is now mandatory](#local-service-account-token-signing-key-is-now-mandatory)
+  - [Gateway Service Accounts are now always required when using PLAIN tokens](#1-gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
+  - [Local service account token signing key is now mandatory](#2-local-service-account-token-signing-key-is-now-mandatory)
 - [New features](#new-features)
   - [Enhanced Confluent Cloud authentication with Service Account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping)
-  - [Dynamic Header Injection from Record Values](#dynamic-header-injection-from-record-values)
+  - [Dynamic Header Injection from Record Payloads](#dynamic-header-injection-from-record-payloads)
 - [Fixes](#fixes)
   - [HashiCorp Vault token refresh resilience](#hashicorp-vault-token-refresh-resilience)
 
 ### Breaking changes
 
-#### Gateway service accounts are now always required, when using PLAIN tokens
-
-Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`.
+#### 1. Gateway service accounts are now always required, when using PLAIN tokens
 
 ##### You're impacted if 
 
 - **your Gateway was not previously configured** with the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED=true`
 - and your clients are connecting using PLAIN tokens without having a corresponding local service account already created.
 
-Note: **Customers using the DELEGATED security protocol are unaffected.**
+Note: **Customers using either mTLS or DELEGATED security protocol are unaffected.**
 
-##### Do I have to do anything?
+##### Do you have to do anything?
 
 - You must create any **missing local service accounts** that your tokens rely on. 
 - You can do this using the following command, adjusting your admin API credentials, host and name as appropriate
@@ -45,21 +43,22 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
 
 ##### Why did we make this change?
 
-We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, we recommend creating the service account before creating tokens.
+Previously, PLAIN tokens could be issued to connect to Gateway without having to create the service account they are linked to. This could be configured to require that the service account exists using the environment variable `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED`.
 
-This change improves **security and consistency** by enforcing that all PLAIN tokens must correspond to a pre-existing local service account. While previously this was configurable via the `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` environment variable, **this variable is now deprecated** and will behave as if it was set to `true`.
+This change improves **security and consistency** by enforcing that all PLAIN tokens must correspond to a pre-existing local service account. The `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` variable **is now deprecated** and will behave as if it was set to `true`.
 
 This enforces best practises that were previously only encouraged, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
-#### Local service account token signing key is now mandatory
+We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, as we recommend creating the service account before creating tokens.
+
+#### 2. Local service account token signing key is now mandatory
 
 ##### You're impacted if:
 
 - your Gateway security protocol (for the client connection to Gateway) is `SASL_SSL` or `SASL_PLAINTEXT`
-- you're using local service accounts, managed by Gateway
 - and `GATEWAY_USER_POOL_SECRET_KEY` wasn't already set
 
-##### Do I have to do anything?
+##### Do you have to do anything?
 
 - Yes. Set `GATEWAY_USER_POOL_SECRET_KEY`. We recommend using the following command line to generate the hash:
 
