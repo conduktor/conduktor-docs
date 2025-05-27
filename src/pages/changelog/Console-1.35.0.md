@@ -26,5 +26,6 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 ### Fixes
 
 - Fixed an issue where changing the cluster did not clear the search filter in Consumer Groups / Topics pages.
+- Fixed an issue where navigating to a schema registry with a name containing non-escaped characters such as `/` would redirect to the home page.
 
 ### Known issues
