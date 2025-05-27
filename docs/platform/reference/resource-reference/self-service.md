@@ -63,6 +63,9 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 **Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 # Application
 ---
@@ -75,6 +78,25 @@ spec:
   description: "FreeForm text, probably multiline markdown"
   owner: "groupA" # technical-id of the Conduktor Console Group
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_application_v1" "clickstream-app" {
+  name = "clickstream-app"
+  spec = {
+    title       = "Clickstream App"
+    description = "FreeForm text, probably multiline markdown"
+    # technical-id of the Conduktor Console Group. 
+    # Could also reference existing resource in Terraform state with conduktor_console_group_v2.groupa.name
+    owner       = "groupA" 
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 
 **Application checks:**
 -   `spec.owner` is a valid Console Group
@@ -96,6 +118,9 @@ This is the core concept of Self-service as it ties everything together:
 **Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 apiVersion: self-service/v1
@@ -114,6 +139,7 @@ spec:
     - "clickstream-naming-rule"
     - "generic-dev-connector"
   defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
+  applicationManagedServiceAccount: false
   resources:
     - type: TOPIC
       patternType: PREFIXED
@@ -133,6 +159,59 @@ spec:
       ownershipMode: LIMITED # Topics are still maintained by Central Team
       name: "legacy-click."
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_application_instance_v1" "clickstream-dev" {
+  name        = "clickstream-dev"
+  application = "clickstream-app"
+  spec = {
+    cluster   = "shadow-it"
+    service_account = "my-service-account"
+    topic_policy_ref = [
+      "generic-dev-topic",
+      "clickstream-naming-rule"
+    ]
+    default_catalog_visibility = "PUBLIC"
+    resources = [
+      {
+        type         = "TOPIC"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type         = "CONSUMER_GROUP"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type         = "SUBJECT"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type            = "CONNECTOR"
+        connect_cluster = "shadow-connect"
+        name            = "click."
+        pattern_type    = "PREFIXED"
+      },
+      {
+        type           = "TOPIC"
+        name           = "legacy-click."
+        pattern_type   = "PREFIXED"
+        ownership_mode = "LIMITED" # Topics are still maintained by Central Team
+      }
+    ]
+    application_managed_service_account = false
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **AppInstance checks:**
 - `metadata.application` is a valid Application
 - `spec.cluster` is a valid Console Cluster technical id
@@ -193,6 +272,9 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 **Labels support:** <MissingLabelSupport />
 
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ```yaml
 ---
 apiVersion: self-service/v1
@@ -222,6 +304,54 @@ spec:
       constraint: Match
       pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
 ```
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_topic_policy_v1" "generic-dev-topic" {
+  name = "generic-dev-topic"
+  spec = {
+    policies = {
+      "metadata.labels.data-criticality" = {
+        one_of = {
+          values = [ "C0", "C1", "C2" ]
+        }
+      },
+      "spec.configs.retention.ms" = {
+        range = {
+          optional = false
+          max      = 3600000
+          min      = 60000
+        }
+      },
+      "spec.replicationFactor" = {
+        none_of = {
+          optional = true
+          values = [ "3" ]
+        }
+      }
+    }
+  }
+}
+
+resource "conduktor_console_topic_policy_v1" "clickstream-naming-rule" {
+  name = "clickstream-naming-rule"
+  spec = {
+    policies = {
+      "metadata.name" = {
+        match = {
+          pattern = "^click\.(?<event>[a-z0-9-]+)\.(avro|json)$"
+        }
+      },
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **TopicPolicy checks:**
 - `spec.policies` requires YAML paths that are paths to the [Topic resource](/platform/reference/resource-reference/kafka/#topic) YAML. For example:
   - `metadata.name` to create constraints on Topic name
