@@ -50,6 +50,8 @@ const config = {
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
+          remarkPlugins: [],
+          rehypePlugins: [],
           /*admonitions: {
             keywords: ['product'],  
             extendDefaults: true,},*/

@@ -4,12 +4,12 @@ title: Automation using Conduktor
 description: Automate Conduktor and Kafka usage
 ---
 
-Automation overview, outcomes.
+There are various options for automating your work. You can use our:
 
-You can use:
+- [API](../api-automation/)
+- [CLI](../cli-automation/)
+- [Terraform](../terraform-automation)
 
-- [API](./automate/api-automation/)
+What are the automation outcomes?
 
-- CLI
-
-- Terraform
+Related resources?
