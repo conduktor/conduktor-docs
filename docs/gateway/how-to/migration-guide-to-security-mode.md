@@ -18,13 +18,13 @@ The valid inputs for `$GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_
 
 ## Why?
 
-We are splitting the security configuration into two steps in order to simplify the user experience. 
+We are splitting the security configuration into two steps in order to simplify the user experience.
 
 ## Am I affected?
 
 This change is backwards compatible, we still support delegated protocols. Your current configuration will automatically map like so:
 
-| **3.9.0 $GATEWAY_SECURITY_PROTOCOL** | → **3.10.0** $GATEWAY_SECURITY_PROTOCOL | → **3.10.0**  $GATEWAY_SECURITY_MODE |
+| **3.9.0 GATEWAY_SECURITY_PROTOCOL** | → **3.10.0** GATEWAY_SECURITY_PROTOCOL | → **3.10.0**  GATEWAY_SECURITY_MODE |
 |--------------------------------------|-----------------------------------------|--------------------------------------|
 | `PLAINTEXT`                          | `PLAINTEXT`                             | `GATEWAY_MANAGED`                    |
 | `SASL_PLAINTEXT`                     | `SASL_PLAINTEXT`                        | `GATEWAY_MANAGED`                    |
@@ -56,12 +56,12 @@ to your backing Kafka cluster using `SASL_SSL`:
 - **Before** (in previous versions):
 
   ```yaml
-  ${GATEWAY_SECURITY_PROTOCOL}: DELEGATED_SASL_SSL
+  GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
   ```
 
 - **Now** (in 3.10.0 and later):
   
   ```yaml
-  ${GATEWAY_SECURITY_MODE}: KAFKA_MANAGED
-  ${GATEWAY_SECURITY_PROTOCOL}: SASL_SSL
+  GATEWAY_SECURITY_MODE: KAFKA_MANAGED
+  GATEWAY_SECURITY_PROTOCOL: SASL_SSL
   ```
