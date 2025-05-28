@@ -16,34 +16,44 @@ The authentication phase on Gateway is part of the initial communication handlin
 
 All open connections in Gateway result in a `Principal` that represents the authenticated identity of the Kafka client.
 
-We can split this authentication and security configuration into two aspects
+We can split this authentication and security configuration into three aspects
 
+- Security mode
 - Security protocol
 - Authentication mechanism
 
+Security Mode defines who is responsible for handling the authentication process in your system. *Who is managing credentials, your backend Kafka or Gateway?*
+
 Security protocol defines how a Kafka client and Gateway broker should communicate and secure the connection. *How do we talk to each other, do we need to authenticate?.*
+
 Authentication mechanism on the other hand is the part defining how a client can authenticate itself when opening the connection. *How do we know each other?*
 
-Here is a quick explanation of each supported security protocol:
-* **PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
-* **SSL**: With SSL-only clients don't need any client authentication but communication between the client and Gateway broker will be encrypted.
-* **mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
+Here is a quick explanation of each supported security mode and security protocol:
+* **GATEWAY_MANAGED & PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
+* **GATEWAY_MANAGED & SSL**: With SSL-only clients don't need any client authentication but communication between the client and Gateway broker will be encrypted.
+* **GATEWAY_MANAGED & mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
   `Principal` for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate).
-* **SASL PLAINTEXT**: Brokers don't need any client authentication and all communication is exchanged without any network security.
-* **SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
-* **DELEGATED_SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
+* **GATEWAY_MANAGED & SASL PLAINTEXT**: Brokers don't need any client authentication and all communication is exchanged without any network security.
+* **GATEWAY_MANAGED & SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
+* **KAFKA_MANAGED & SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
   All communication  between the client and gateway broker is exchanged without any network security.
   All credentials are managed by your backend kafka, we only provide authorization on the Gateway side based on the exchanged principal.
 
 ## Overview
 
-|                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                                                               | **_Clients ⟶ GW transit is encrypted_**                                                                                                         |
-|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| **_Anonymous access only_**                         | Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None`                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `None`                                                                                  |
-| **_Credentials managed by Gateway_**                | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`                                                                            | Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`                                                                            |
-| **_Gateway configured with OAuth_**                 | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER`                                                                      | Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER`                                                                      |
-| **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                                                                  |
-| **_Credentials managed by Kafka_**                  | Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` | Security protocol: `DELEGATED_SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` |
+|                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                                                                                              | **_Clients ⟶ GW transit is encrypted_**                                                                                                                              |
+|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **_Anonymous access only_**                         | Security Mode: `GATEWAY_MANAGED` Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None`                                                                                | Security Mode: `GATEWAY_MANAGED` Security protocol: `SSL`<br />Authentication mechanism: `None`                                                                      |
+| **_Credentials managed by Gateway_**                | Security Mode: `GATEWAY_MANAGED` Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`                                                                          | Security Mode: `GATEWAY_MANAGED` Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`                                                                |
+| **_Gateway configured with OAuth_**                 | Security Mode: `GATEWAY_MANAGED` Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER`                                                                    | Security Mode: `GATEWAY_MANAGED` Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER`                                                          |
+| **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                                                                                                 | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                                                                                       |
+| **_Credentials managed by Kafka_**                  | Security Mode: `KAFKA_MANAGED` Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` | Security mode: `KAFKA_MANAGED` Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` |
+
+## Security Mode
+
+> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0)
+
+The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your back end kafka cluster, `KAFKA_MANAGED`.
 
 ## Security protocol
 
