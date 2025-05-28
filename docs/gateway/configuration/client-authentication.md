@@ -51,7 +51,9 @@ Here is a quick explanation of each supported security mode and security protoco
 
 ## Security Mode
 
-> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0)
+:::info
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0)
+:::
 
 The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your back end kafka cluster, `KAFKA_MANAGED`.
 
