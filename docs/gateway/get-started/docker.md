@@ -107,7 +107,7 @@ Below shows the most simple way to get started with Confluent Cloud.
 :::info
 By default, Gateway assumes you want the same security protocol between your clients and Gateway, as between your Gateway and Kafka.
 
-However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_PROTOCOL`. For quick start purposes, this avoids needing to configure SSL certificates when connecting to Conduktor Gateway. 
+However, this example uses `SASL_PLAINTEXT` for the `GATEWAY_SECURITY_PROTOCOL` with `KAFKA_MANAGED` for the `GATEWAY_SECURITY_MODE`. For quick start purposes, this avoids needing to configure SSL certificates when connecting to Conduktor Gateway. 
 :::
 
 ```bash
@@ -116,7 +116,8 @@ However, this example uses `DELEGATED_SASL_PLAINTEXT` for the `GATEWAY_SECURITY_
   -e KAFKA_SASL_MECHANISM=PLAIN \
   -e KAFKA_SECURITY_PROTOCOL=SASL_SSL \
   -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="$CONFLUENT_CLOUD_API_KEY" password="$CONFLUENT_CLOUD_API_SECRET' \
-  -e GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_PLAINTEXT \
+  -e GATEWAY_SECURITY_PROTOCOL=SASL_PLAINTEXT \
+  -e GATEWAY_SECURITY_MODE=KAFKA_MANAGED \
   -e GATEWAY_ADVERTISED_HOST=localhost \
   -e GATEWAY_CLUSTER_ID=test \
   -p 6969-6999:6969-6999 \
