@@ -354,7 +354,15 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   scope=".default";
 ```
 
-### DELEGATED_SASL_PLAINTEXT
+### ⚠️ DELEGATED_SASL_PLAINTEXT (Deprecated)
+
+> As of **Gateway 3.10.0**, the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+>
+> These values remain supported for backward compatibility but are no longer recommended for new configurations.
+>
+> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](../how-to/migration-guide-to-security-mode.md) before proceeding.
+
+
 
 Authentication from client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
@@ -386,7 +394,13 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-### DELEGATED_SASL_SSL
+### ⚠️ DELEGATED_SASL_SSL (Deprecated)
+
+> As of **Gateway 3.10.0**, the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+>
+> These values remain supported for backward compatibility but are no longer recommended for new configurations.
+>
+> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](../how-to/migration-guide-to-security-mode.md) before proceeding.
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
