@@ -92,7 +92,7 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 
 
 <a id="delegated-note"></a>
-> **[1]** ⚠️ As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md), the `DELEGATED_SASL_SSL` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> **[1]** ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
