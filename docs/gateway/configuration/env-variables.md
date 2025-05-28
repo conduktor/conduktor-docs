@@ -87,8 +87,16 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 | [**SNI routing specific**](/gateway/how-to/sni-routing)                         |                                                                                                                                                             |                                                                                                         |
 | `GATEWAY_ADVERTISED_SNI_PORT`                                                   | The port returned in the Gateway’s metadata for clients to connect to when using SNI routing.                                                               | `GATEWAY_PORT_START`                                                                                    |
 | `GATEWAY_ADVERTISED_HOST_PREFIX`                                                | Configures the advertised broker names.                                                                                                                     | `broker`                                                                                                |
-| `GATEWAY_SECURITY_PROTOCOL`                                                     | Defines the security protocol that clients should use to connect to Gateway. **Must be set to `SSL`, `SASL_SSL`, or `DELEGATED_SASL_SSL`** for SNI routing. | The default value depends on KAFKA_SECURITY_PROTOCOL. ![](images/gateway-security-protocol-default.png) |
+| `GATEWAY_SECURITY_PROTOCOL`                                                     | Defines the security protocol that clients should use to connect to Gateway. **Must be set to `SSL`, `SASL_SSL`, or `DELEGATED_SASL_SSL`<sup>[1](#delegated-note)</sup>** for SNI routing. | The default value depends on KAFKA_SECURITY_PROTOCOL. ![](images/gateway-security-protocol-default.png) |
 | `GATEWAY_SNI_HOST_SEPARATOR`                                                    | The separator used to construct returned metadata.                                                                                                          | `-`                                                                                                     |
+
+
+<a id="delegated-note"></a>
+> **[1]** ⚠️ As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md), the `DELEGATED_SASL_SSL` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+>
+> These values remain supported for backward compatibility but are no longer recommended for new configurations.
+>
+> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 ### Load balancing
 
