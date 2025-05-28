@@ -54,13 +54,14 @@ For example, if you want to set up a Gateway configuration that delegates authen
 to your backing Kafka cluster using `SASL_SSL`:
 
 - **Before** (in previous versions):
-  ```
+
+  ```yaml
   ${GATEWAY_SECURITY_PROTOCOL}: DELEGATED_SASL_SSL
   ```
 
 - **Now** (in 3.10.0 and later):
-  ```
+  
+  ```yaml
   ${GATEWAY_SECURITY_MODE}: KAFKA_MANAGED
   ${GATEWAY_SECURITY_PROTOCOL}: SASL_SSL
   ```
-
