@@ -18,8 +18,8 @@ tags: features,fixes
 
 #### `GATEWAY_SECURITY_MODE` environment variable
 
-This release introduces the `GATEWAY_SECURITY_MODE` environment variable, which allows you to set the security mode for Gateway. This aims to simplify the decision path around `DELEGATED_XXX` security protocols
-by separating this configuration in two steps.
+This release introduces the `GATEWAY_SECURITY_MODE` environment variable,
+which simplifies the configuration process by splitting out **what** manages authentication/authorization (valid values: `KAFKA_MANAGED` or `GATEWAY_MANAGED`) from **how** it should be managed (still set in the `GATEWAY_SECURITY_PROTOCOL` environment variable).
 
 This is a non-breaking change, still supporting existing configurations whilst encouraging a new approach.
 
