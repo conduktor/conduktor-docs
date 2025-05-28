@@ -51,7 +51,7 @@ Here is a quick explanation of each supported security mode and security protoco
 
 ## Security Mode
 
-> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0)
+> As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md)
 
 The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your back end kafka cluster, `KAFKA_MANAGED`.
 
@@ -66,7 +66,7 @@ If a client arrives using `PLAIN` then Gateway will try to use either the SSL co
 
 ⚠️In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.⚠️
 
-> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> ⚠️ As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
@@ -372,7 +372,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 
 ### ⚠️ DELEGATED_SASL_PLAINTEXT (Deprecated)
 
-> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
@@ -412,7 +412,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 ### ⚠️ DELEGATED_SASL_SSL (Deprecated)
 
-> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> As of [Gateway 3.10.0](../../../src/pages/changelog/Gateway-3.10.0.md), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
