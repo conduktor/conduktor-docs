@@ -55,19 +55,22 @@ This external Service Account will be the one used in Gateway to apply **ACLs** 
 
 Gateway supports different client authentication methods, depending on whether you're using local or external Service Accounts.
 
-| `GATEWAY_SECURITY_PROTOCOL`                                             | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
-|-------------------------------------------------------------------------|:-----------------------------------:|:-----------------------------------------:|
-| [**Anonymous**](#anonymous-authentication)                              |                                     |                                           |
-| &nbsp;&nbsp;PLAINTEXT                                                   |                  ❌                  |                     ❌                     |
-| &nbsp;&nbsp;SSL                                                         |                  ❌                  |                     ❌                     |
-| [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                                     |                                           |
-| &nbsp;&nbsp;SSL                                                         |                  ❌                  |                     ✅                     |
-| [**SASL**](#sasl-authentication)                                        |                                     |                                           |
-| &nbsp;&nbsp;SASL_PLAINTEXT                                              |                  ✅                  |            only if `OAUTHBEARER`            |
-| &nbsp;&nbsp;SASL_SSL                                                    |                  ✅                  |            only if `OAUTHBEARER`            |
-| [**Delegated SASL**](#delegated-sasl-authentication)                    |                                     |                                           |
-| &nbsp;&nbsp;DELEGATED_SASL_PLAINTEXT                                    |                  ❌                  |                     ✅                     |
-| &nbsp;&nbsp;DELEGATED_SASL_SSL                                          |                  ❌                  |                     ✅                     |
+| `GATEWAY_SECURITY_MODE` | `GATEWAY_SECURITY_PROTOCOL`                                                                                                                                       | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------:|:-----------------------------------------:|
+|                         | [**Anonymous**](#anonymous-authentication)                                                                                                                        |                                     |                                           |
+| `GATEWAY_MANAGED`       | &nbsp;&nbsp;PLAINTEXT                                                                                                                                             |                  ❌                  |                     ❌                     |
+| `GATEWAY_MANAGED`       | &nbsp;&nbsp;SSL                                                                                                                                                   |                  ❌                  |                     ❌                     |
+|                         | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls)                                                                                           |                                     |                                           |
+| `GATEWAY_MANAGED`       | &nbsp;&nbsp;SSL                                                                                                                                                   |                  ❌                  |                     ✅                     |
+|                         | [**SASL**](#sasl-authentication)                                                                                                                                  |                                     |                                           |
+| `GATEWAY_MANAGED`       | &nbsp;&nbsp;SASL_PLAINTEXT                                                                                                                                        |                  ✅                  |           only if `OAUTHBEARER`           |
+| `GATEWAY_MANAGED`       | &nbsp;&nbsp;SASL_SSL                                                                                                                                              |                  ✅                  |           only if `OAUTHBEARER`           |
+|                         | [**Delegated SASL**](#delegated-sasl-authentication) ⚠️ Deprecated, see [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) |                                     |                                           |
+|                         |                                                                                                                                                                   |                                     |                                           |
+|                         | &nbsp;&nbsp;DELEGATED_SASL_PLAINTEXT                                                                                                                              |                  ❌                  |                     ✅                     |
+|                         | &nbsp;&nbsp;DELEGATED_SASL_SSL                                                                                                                                    |                  ❌                  |                     ✅                     |
+| `KAFKA_MANAGED`         | &nbsp;&nbsp;SASL_PLAINTEXT                                                                                                                                        |                  ❌                  |                     ✅                     |
+| `KAFKA_MANAGED`         | &nbsp;&nbsp;SASL_SSL                                                                                                                                              |                  ❌                  |                     ✅                     |
 
 ### Anonymous authentication
 
@@ -116,7 +119,7 @@ It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that
 
 [How to configure the client > Gateway connection with SASL.](/gateway/configuration/client-authentication/#sasl_plaintext)
 
-:::warning DELEGATED & NON-DELEGATED MODES
+:::warning KAFKA_MANAGED & GATEWAY_MANAGED MODES
 With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
 - **Delegate them to the backing Kafka cluster** ([Delegated SASL Authentication](#delegated-sasl-authentication)) - Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
 - **Handle them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - Gateway authenticates the clients and manages their ACLs
@@ -142,7 +145,7 @@ As such:
 Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Alias Topics](/gateway/concepts/logical-topics/alias-topics) and [Concentrated Topics](/gateway/concepts/logical-topics/concentrated-topics)) are not available in the Delegated SASL mode.
 :::
 
-[How to configure the client > Gateway connection with DELEGATED_SASL.](/gateway/configuration/client-authentication/#delegated_sasl_plaintext)
+[How to configure the client > Gateway connection with KAFKA_MANAGED.](/gateway/configuration/client-authentication/#security-protocol)
 
 ## Authorization Management (ACLs)
 
