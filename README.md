@@ -68,12 +68,22 @@ All images are stored in `src/static/guides`. Embed all images like this:
 ![Internal load balancing diagram](/guides/internal-lb.png)
 ```
 
+Note that all images will have a defined styling applied but you can override this when required.
+
 To resize an image:
 
 ```md
-import MyImage from '/guides/my-image.png';
+Make it smaller
+<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
 
-<img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
+Make it larger
+<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
+
+Set a specific pixel width
+<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
+
+Make it full width:
+<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
 ```
 
 You can also make an image clickable (and open in another tab) - useful for detailed diagrams:

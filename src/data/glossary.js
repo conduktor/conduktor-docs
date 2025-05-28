@@ -254,8 +254,13 @@ const glossaryData = [
     {
         term: "SNI",
         definition: "Server Name Indication.",
-        slug: "indexing"
-    },       
+        slug: "sni"
+    },     
+    {
+        term: "SIEM",
+        definition: "Security Information and Event Management.",
+        slug: "siem"
+    },         
   ];
   
  export default glossaryData;

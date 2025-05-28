@@ -285,6 +285,15 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
   <p>No, you can't invalidate issued credentials - they instead have a set time to live. If you're concerned about any issued credentials, **delete and re-create the Partner Zone**, then re-issue fresh credentials. We recommend deploying Partner Zones using the IaC (Infrastructure as Code) approach. [Find out more on the resource reference page](/platform/reference/resource-reference/console/#partner-zone).</p>
 </details>
 
+## Audit log events
+
+  | **Event type**                    | **Description**                                  |
+  | --------------------------------- | ------------------------------------------------ |
+  | **Admin.PartnerZone.Create**      | A Partner Zone is created.                       |
+  | **Admin.PartnerZone.Update**      | A Partner Zone is updated.                       |
+  | **Admin.PartnerZone.Delete**      | A Partner Zone is deleted.                       |
+  | **Admin.PartnerZone.TokenCreate** | A token is created for accessing a Partner Zone. |
+
 ## Related resources
 
 - [Connect to clusters](/platform/navigation/settings/managing-clusters/)

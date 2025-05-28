@@ -667,3 +667,19 @@ table tr:nth-child(2n) {
     margin-right: 0.25rem;
   }
 }
+.markdown img {
+  max-width: 70%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+  .markdown img {
+    max-width: 100%;
+  }
+}
