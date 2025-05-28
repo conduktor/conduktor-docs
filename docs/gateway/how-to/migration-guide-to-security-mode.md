@@ -16,7 +16,7 @@ The valid inputs for `$GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_
 
 We are splitting the security configuration into two steps in order to simplify the user experience. 
 
-## What do I need to do?
+## Am I affected?
 
 This change is backwards compatible, we still support delegated protocols. Your current configuration will automatically map like so:
 
@@ -29,7 +29,9 @@ This change is backwards compatible, we still support delegated protocols. Your 
 | `DELEGATED_SASL_PLAINTEXT`           | `SASL_PLAINTEXT`                        | `KAFKA_MANAGED`                      |
 | `DELEGATED_SASL_SSL`                 | `SASL_SSL`                              | `KAFKA_MANAGED`                      |
 
-However, we strongly encourage users to set up configurations using both environment variables and migrate from usage of `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`.
+## What do I need to do?
+
+We strongly encourage users to set up configurations using the new `GATEWAY_SECURITY_MODE` environment variable and migrate from usage of `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`.
 
 You can use this table to guide your possible configurations.
 
