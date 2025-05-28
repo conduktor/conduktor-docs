@@ -8,6 +8,10 @@ description: How to migrate to the new Gateway security mode
 
 ## What is changing?
 
+:::info
+This migration guide is for Gateway v3.10.0 and later
+:::
+
 We have introduced a new environment variable, `$GATEWAY_SECURITY_MODE`, to define where authentication takes place. As part of this, we are deprecating (although still supporting) `DELEGATED_XXX` inputs for `${GATEWAY_SECURITY_PROTOCOL}`.
 
 The valid inputs for `$GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. For more details see [documentation](../configuration/env-variables.md#connect-from-clients-to-gateway).
