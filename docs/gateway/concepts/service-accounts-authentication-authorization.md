@@ -146,13 +146,13 @@ Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Alia
 
 ## Authorization Management (ACLs)
 
-### In Delegated Mode
+### In Kafka Managed Mode
 
 Authorization (ACLs) is handled by the backing Kafka cluster. 
 
 Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster.
 
-### In Non-Delegated Mode
+### In Gateway Managed Mode
 
 Authorization (ACLs) is managed by Gateway, so you have to define the ACLs for your applications in Gateway. This is done using the Kafka ACLs commands, or the Conduktor Console UI.
 
