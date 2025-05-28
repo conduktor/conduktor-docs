@@ -1,3 +1,9 @@
+---
+sidebar_position: 8
+title: Migration Guide to Gateway Security Mode
+description: How to migrate to the new Gateway security mode
+---
+
 # Gateway Security Mode
 
 ## What is changing?
