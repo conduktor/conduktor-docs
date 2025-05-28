@@ -22,7 +22,7 @@ We can split this authentication and security configuration into two aspects
 - Authentication mechanism
 
 Security protocol defines how a Kafka client and Gateway broker should communicate and secure the connection. *How do we talk to each other, do we need to authenticate?.*
-Authentication mechanism on the other hand is the part defining how a client can authenticate it self when opening the connection. *How do we know each other?*
+Authentication mechanism on the other hand is the part defining how a client can authenticate itself when opening the connection. *How do we know each other?*
 
 Here is a quick explanation of each supported security protocol:
 * **PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
@@ -51,10 +51,16 @@ The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL`
 
 Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and is never configured by the user**. 
 
-Instead, Gateway will try authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try authenticate it.  
-If a client arrives using `PLAIN` then Gateway will try use either the SSL configuration or validate the token itself, depending on the security protocol.
+Instead, Gateway will try to authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try to authenticate it.  
+If a client arrives using `PLAIN` then Gateway will try to use either the SSL configuration or validate the token itself, depending on the security protocol.
 
-In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.
+⚠️In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.⚠️
+
+> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+>
+> These values remain supported for backward compatibility but are no longer recommended for new configurations.
+>
+> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](../how-to/migration-guide-to-security-mode.md) before proceeding.
 
 ### PLAINTEXT
 
@@ -356,7 +362,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 
 ### ⚠️ DELEGATED_SASL_PLAINTEXT (Deprecated)
 
-> As of **Gateway 3.10.0**, the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
@@ -396,7 +402,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 ### ⚠️ DELEGATED_SASL_SSL (Deprecated)
 
-> As of **Gateway 3.10.0**, the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+> As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
