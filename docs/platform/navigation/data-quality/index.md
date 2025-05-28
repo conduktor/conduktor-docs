@@ -205,12 +205,6 @@ Since the **block** action has the ability to **stop data from being sent** to t
   </p>
 </details>
 
-## Behaviour when multiple policy target a common topic
-
-Here’s a corrected and polished version of your text:
-
----
-
 ## Behavior When Multiple Policies Target a Common Topic
 
 When multiple policies target the same topic, two scenarios can occur when a record is produced:
