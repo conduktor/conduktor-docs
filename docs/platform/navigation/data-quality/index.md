@@ -203,7 +203,7 @@ Since the **block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example, use the <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode> format.
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
   </p>
 </details>
 
