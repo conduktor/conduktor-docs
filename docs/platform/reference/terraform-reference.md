@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 # Terraform reference
 
-The [Conduktor Terraform provider](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
+The Conduktor Terraform provider gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
+
+You can also read about the provider on the [Terraform Provider Page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) directly.
 
 :::warning Warning
 Conduktor Terraform Provider is currently in **Alpha** and doesn't support all the Conduktor resources yet. [Get in touch](https://conduktor.io/roadmap) if you have feedback or would like to be a design partner.
@@ -51,7 +53,7 @@ provider "conduktor" {
 }
 ````
 
-There are two types of API Keys: **admin** and **Self-service application**. 
+There are two types of API Keys: **admin** and **Self-service application**.
 
 <Tabs>
 <TabItem  value="admin-api-key" label="Admin API Key">
@@ -100,6 +102,7 @@ Go to **Applications**, pick your **Application** and under the **Application In
 <hr />
 
 ### Authenticate using short-lived user credentials
+
 This type of API Key will have the permissions of the user who created it. It only works for **Local** and **LDAP** users.
 
 Short-lived user API Keys will be valid for the same duration as the configured [session lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).
@@ -144,9 +147,11 @@ The configuration resolution is (in order of priority):
 :::
 
 ## Provider usage
-Once the provider is configured all [currently available](#available-resources) resources can be used in the Terraform definition.
+
+Once the provider is configured, all the [currently available resources](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) can be used in the Terraform definition.
 
 ### Usage example
+
 A full example of user and group creation using Conduktor Console locally is available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
 
 ```hcl title="conduktor-iac.tf"
@@ -216,14 +221,16 @@ Log in using an external SSO (LDAP or OIDC) with email `bob@mycompany.io` and yo
 To revert the Conduktor state, you can destroy the created resources using `terraform destroy`. [Find out more about Terraform CLI commands](https://developer.hashicorp.com/terraform/cli/commands).
 
 #### Case of the `generic` resource
+
 The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
 
-This is an experimental resource that has several [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases. 
+This is an experimental resource that has several [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases.
 
 Don't include it in your production workflows as this is unsupported.
 
 ## Related resources
-- [Full list of resources](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
+
+- [Full list of resources](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs)
 - [Terraform introduction](https://developer.hashicorp.com/terraform/intro)
 - [Terraform HCL docs](https://developer.hashicorp.com/terraform/language)
 - [Terraform CLI docs](https://developer.hashicorp.com/terraform/cli/commands)

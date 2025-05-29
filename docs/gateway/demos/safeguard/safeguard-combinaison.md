@@ -410,7 +410,7 @@ echo '{"type":"Mercedes","color":"black","price":6000}' | \
 <TabItem value="Output">
 
 ```
->>>>>>
+
 
 ```
 

@@ -47,7 +47,11 @@ export const AdminToken = () => (
 **API Keys:** <AdminToken />  
 **Managed with:** <API /> <CLI /> <GUI />
 
-Deploys an Interceptor on the Gateway
+Deploys an Interceptor on Gateway
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 apiVersion: gateway/v2
@@ -68,6 +72,36 @@ spec:
       max: 5
       action: "INFO"
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  #scope = {
+  #  vcluster = "aaa"
+  #  group    = "bbb"
+  #  username = "ccc"
+  #}
+  spec = {
+    plugin_class = "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin"
+    priority     = 100
+    config = jsonencode({
+      topic = "myprefix-.*"
+      numPartition = {
+        min    = 5
+        max    = 5
+        action = "INFO"
+      }
+    })
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Interceptor checks:**
 - `metadata.scope` is optional (default empty). 
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
@@ -101,6 +135,10 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 :::
 
 **Examples**
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 # This interceptor targets everyone (Including Virtual Clusters)
@@ -110,7 +148,7 @@ metadata:
   name: enforce-partition-limit
   scope:
     vCluster: null
-    goup: null
+    group: null
     username: null
 spec:
 
@@ -142,8 +180,59 @@ metadata:
     vCluster: read-only
 spec:
   
-
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+# This Interceptor targets everyone (including virtual clusters)
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    vcluster = null
+    group    = null
+    username = null
+  }
+  spec = {
+    
+  }
+}
+
+# This Interceptor targets everyone (excluding virtual clusters)
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  spec = {
+    
+  }
+}
+
+# This Interceptor only targets the `admin` service account
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    username = "admin"
+  }
+  spec = {
+    
+  }
+}
+
+
+# This Interceptor only targets the `read-only` virtual cluster
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    vcluster = "read-only"
+  }
+  spec = {
+    
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 
 ## GatewayServiceAccount
 GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
@@ -165,9 +254,12 @@ There are a few cases where you **must** declare GatewayServiceAccount objects:
 - Renaming Service Accounts for easier clarity when using Interceptors
 - Attaching Service Accounts to Virtual Clusters
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
-# External User renamed
+# External user renamed
 apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
@@ -186,10 +278,46 @@ metadata:
 spec:
   type: LOCAL
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_gateway_service_account_v2" "application1-sa" {
+  name = "application1"
+  spec = {
+    type = "EXTERNAL"
+    external_names = [ "00u9vme99nxudvxZA0h7" ]
+  }
+}
+
+resource "conduktor_gateway_service_account_v2" "admin-sa" {
+  name = "admin"
+  vcluster = "vc-B"
+  spec = {
+    type = "LOCAL"
+  }
+}
+
+# Generate local service account token
+resource "conduktor_gateway_token_v2" "admin-sa-token" {
+  vcluster         = "vc-B"
+  username         = "user10"
+  lifetime_seconds = 3600
+}
+
+# Define output to use generated local service account token
+output "admin_sa_token" {
+  value     = conduktor_gateway_token_v2.admin-sa-token.token
+  sensitive = true
+}
+````
+
+</TabItem>
+</Tabs>
+
 **GatewayServiceAccount checks:**
-- When `spec.type` is `EXTERNAL`:
-  - `spec.externalNames` must be a non-empty list of external names. Each name must be unique across all declared GatewayServiceAccount.
-  - **At the moment** we only support a list of one element. Support for multiple externalNames will be added in the future.
+When `spec.type` is `EXTERNAL`, the `spec.externalNames` has to be a non-empty list of external names. Each name has to be unique across all declared GatewayServiceAccount. We currently only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
 - When `spec.type` is `EXTERNAL`:

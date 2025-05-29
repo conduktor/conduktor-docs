@@ -12,7 +12,7 @@ tags: features,fix
 
 #### New backing topic required for Gateway
 
-The local KMS feature introduced in this release requires a new backing topic to store the keys.
+The [Gateway KMS feature](#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms) introduced in this release requires a new backing topic to store the keys.
 
 When you upgrade to Gateway 3.7.0, a new topic `_conduktor_gateway_encryption_keys` will be created.
 
@@ -42,7 +42,7 @@ If you need support with this migration, please [let us know](https://support.co
 This feature is currently in **preview mode** and will be available soon. We recommend that you **don't use it in the production workloads**.
 
 :::
-This release introduces a a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
+This release introduces a preview feature that significantly reduces the cost and complexity of implementing crypto shredding at scale. The new 'gateway' KMS type allows you to manage granular encryption keys for individual users or records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
 With this feature, you can maintain regulatory compliance and honor user deletion requests more efficiently by:
 

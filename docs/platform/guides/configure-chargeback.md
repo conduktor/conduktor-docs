@@ -4,6 +4,8 @@ title: Configure Chargeback
 description: Configure Chargeback
 ---
 
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+
 ## Overview
 
 Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
@@ -31,7 +33,11 @@ To enable the Chargeback screens in Console, the following steps are necessary:
 ![Gateway Provider](assets/gateway-provider.png)
 
 
-3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
+3. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through the [Conduktor CLI](/gateway/reference/cli-reference) or the Console UI.
+
+<Tabs>
+<TabItem value="condutkor-cli" label="Conduktor CLI">
+
   ```yaml
   apiVersion: gateway/v2
   kind: Interceptor
@@ -45,6 +51,26 @@ To enable the Chargeback screens in Console, the following steps are necessary:
       replicationFactor: 3
       flushIntervalInSecond: 300
   ```
+
+</TabItem>
+<TabItem value="console-ui" label="Console UI">
+
+```json
+{
+   "name": "observability-interceptor",
+   "pluginClass": "io.conduktor.gateway.interceptor.observability.ObservabilityPlugin",
+   "priority": 100,
+   "config": {
+      "topicName": "observability",
+      "replicationFactor": 3,
+      "flushIntervalInSecond": 300
+   }
+}
+```
+
+</TabItem>
+</Tabs>
+
 
 After a few minutes, you should see your active Service Accounts appear in the Chargeback UI.
 

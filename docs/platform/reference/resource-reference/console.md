@@ -41,11 +41,24 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 
 ## ConsoleGroup
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates a Group with members and permissions in Console
 
@@ -81,9 +94,9 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_group_v2" "developers-a" {
+resource "conduktor_console_group_v2" "developers-a" {
   name = "developers-a"
-  spec {
+  spec = {
     display_name    = "Developers Team A"
     description     = "Members of the Team A - Developers"
     external_groups = [ "LDAP-GRP-A-DEV" ]
@@ -122,7 +135,8 @@ resource "conduktor_group_v2" "developers-a" {
 ## ConsoleUser
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Create a user with Platform permissions.
 
@@ -157,10 +171,10 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_group_v2" "john.doe@company.org" {
+resource "conduktor_console_user_v2" "john.doe@company.org" {
   name = "john.doe@company.org"
   
-  spec {
+  spec = {
     firstname = "John"
     lastname  = "Doe"
     
@@ -208,7 +222,8 @@ Make sure you set permissions for this user, otherwise it won't have access to P
 Creates a Kafka Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -249,9 +264,9 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
+resource "conduktor_console_kafka_cluster_v2" "my-dev-cluster" {
   name = "my-dev-cluster"
-  spec {
+  spec = {
     display_name                 = "My Dev Cluster"
     icon                         = "kafka"
     color                        = "#000000"
@@ -328,7 +343,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   schema_registry = {
     type = "ConfluentLike"
     url = "http://localhost:8080
@@ -374,7 +389,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   schema_registry = {
     type          = "Glue"
     region        = "eu-west-1"
@@ -496,7 +511,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type                     = "Confluent"
     key                      = "yourApiKey123456"
@@ -531,7 +546,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type         = "Aiven"
     api_token    = "a1b2c3d4e5f6g7h8i9j0"
@@ -564,7 +579,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type            = "Gateway"
     url             = "http://gateway:8888"
@@ -633,7 +648,8 @@ spec {
 Creates a Kafka Connect Cluster Definition in Console.
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <TF /> <GUI />
+**Managed with:** <API /> <CLI /> <TF /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -662,10 +678,10 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_kafka_connect_v2" "connect-1" {
+resource "conduktor_console_kafka_connect_v2" "connect-1" {
   name    = "connect-1"
   cluster = "my-dev-kafka-cluster"
-  spec {
+  spec = {
     display_name = "Connect 1"
     urls         = "http://localhost:8083"
     headers = {
@@ -697,7 +713,8 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates a ksqlDB Cluster Definition in Console.
 ````yaml
@@ -726,8 +743,9 @@ spec:
 
 ## Alert
 
-**API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**API Keys:** <AdminToken />  <AppToken />  
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <MissingLabelSupport />
 
 Creates an Alert in Console. 
 
@@ -803,7 +821,8 @@ This concept will be available in a future version
 ## Partner Zone
 
 **API Keys:** <AdminToken />  
-**Managed with:** <API /> <CLI /> <GUI />
+**Managed with:** <API /> <CLI /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 Create or update a [Partner Zone](/platform/navigation/partner-zones/).
 
@@ -823,7 +842,9 @@ spec:
     email: johndoe@partner.io
     phone: 07827 837 177
   cluster: cdk-gateway
-  serviceAccount: partner-external-partner
+  authenticationMode:
+    serviceAccount: partner-external-partner
+    type: PLAIN
   topics:
     - name: topic-a
       backingTopic: kafka-topic-a
@@ -841,7 +862,11 @@ spec:
 - `spec.displayName` is Mandatory
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
 - `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
-- `spec.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+- `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`]
+**When `spec.authenticationMode.type` is `PLAIN`**
+  - `spec.authenticationMode.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+**When `spec.authenticationMode.type` is `OAUTHBEARER`**
+  - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
@@ -1079,15 +1104,16 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - `resourceType`: `PLATFORM`
 - `permissions` is a list of valid Platform permissions
 
-| Available Platform permissions | Description |
-|------------------------------------|---------------------------------------------------------------|
-| `clusterConnectionsManage`         | Permission to add / edit / remove Kafka clusters on Console   |
-| `certificateManage`                | Permission to add / edit / remove TLS Certificates on Console |
-| `userManage`                       | Permission to manage Console users, groups & permissions      |
-| `userView`                         | Permission to view Console users, groups & permissions        |
-| `datamaskingManage`                | Permission to manage Data policies (masking rules)            |
-| `datamaskingView`                  | Permission to view Data policies                              |
-| `notificationChannelManage`        | Permission to manage Integration channels                     |
-| `notificationChannelView`          | Permission to view Integration channels                       |
-| `auditLogView`                     | Permission to browse audit log                                |
-| `taasView`                         | Permission to view Application Catalog                        | 
+| Available Platform permissions | Description                                                   |
+|--------------------------------|---------------------------------------------------------------|
+| `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console   |
+| `certificateManage`            | Permission to add / edit / remove TLS Certificates on Console |
+| `userManage`                   | Permission to manage Console users, groups & permissions      |
+| `userView`                     | Permission to view Console users, groups & permissions        |
+| `datamaskingManage`            | Permission to manage Data policies (masking rules)            |
+| `datamaskingView`              | Permission to view Data policies                              |
+| `notificationChannelManage`    | Permission to manage Integration channels                     |
+| `auditLogView`                 | Permission to browse audit log                                |
+| `taasView`                     | Permission to view Application Catalog                        |
+| `chargebackManage`             | Permission to view Chargeback and manage its settings         |
+| `sqlManage`                    | Permission to view indexed topics and create SQL queries      |

@@ -6,8 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-
-![image.png](../medias/clientsauth.png)
+![Client to Gateway security](images/client-to-gateway-security.png)
 
 Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. 
 
@@ -38,13 +37,13 @@ Here is a quick explanation of each supported security protocol:
 
 ## Overview
 
-|                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                           | **_Clients ⟶ GW transit is encrypted_**                                                               |
-| --------------------------------------------------- |-------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| **_Anonymous access only_**                         | Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None`                                                   | Security protocol: `SSL`<br />Authentication mechanism: `None`                                              |
-| **_Credentials managed by Gateway_**                | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`                                             | Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`                                        |
-| **_Gateway configured with Oauth_**                 | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER`                                       | Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER`                                  |
-| **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                              | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                              |
-| **_Credentials managed by Kafka_**                  | Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN` or `SCRAM-SHA-256` or `SCRAM-SHA-512` | Security protocol: `DELEGATED_SASL_SSL`<br />Authentication mechanism: `PLAIN` or `SCRAM-SHA-256` or `SCRAM-SHA-512` |
+|                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                                                               | **_Clients ⟶ GW transit is encrypted_**                                                                                                         |
+|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| **_Anonymous access only_**                         | Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None`                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `None`                                                                                  |
+| **_Credentials managed by Gateway_**                | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`                                                                            | Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`                                                                            |
+| **_Gateway configured with OAuth_**                 | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER`                                                                      | Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER`                                                                      |
+| **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                                                                  |
+| **_Credentials managed by Kafka_**                  | Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` | Security protocol: `DELEGATED_SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` |
 
 ## Security protocol
 
@@ -153,7 +152,7 @@ GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
 ```
 
-The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. Otherwise, a default value for signing tokens will be used.
+The`GATEWAY_USER_POOL_SECRET_KEY` **has to be** set to a random base64 encoded value of 256bits long to ensure that tokens aren't forged. For example: `openssl rand -base64 32`. This must be set, a default value will not be provided.
 
 Client configuration:
 
@@ -207,7 +206,7 @@ Response:
     }
   },
   "upsertResult" : "CREATED"
-}%
+}
 ```
 
 2. Generate a token for the service account, the password
@@ -228,7 +227,7 @@ curl \
 ```
 
 ```json
-{"token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzQ1MzY1OTcxfQ.zPPiD17MiRnXyHJw07Cx4SKPySDi_ErJrXmi5BycR04"}%
+{"token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Impkb2UiLCJ2Y2x1c3RlciI6InBhc3N0aHJvdWdoIiwiZXhwIjoxNzQ1MzY1OTcxfQ.zPPiD17MiRnXyHJw07Cx4SKPySDi_ErJrXmi5BycR04"}
 ```
 
 The token conforms to the JWT token specification.
@@ -281,10 +280,10 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 
 Authentication from client is mandatory against Gateway and communication will be encrypted using TLS.
 
-Supported authentication mechanisms
+Supported authentication mechanisms:
 
-- Plain
-- OAuthBearer
+- PLAIN
+- OAUTHBEARER
 
 #### Plain
 
@@ -302,7 +301,7 @@ GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
 
-You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged. Otherwise it will use a default value for signing tokens.
+You must set `GATEWAY_USER_POOL_SECRET_KEY` to a random value to ensure that tokens cannot be forged.
 
 Client configuration:
 
@@ -365,9 +364,11 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
-- Plain
-- Scram-sha-256
-- Scram-sha-512
+- PLAIN
+- SCRAM-SHA-256
+- SCRAM-SHA-512
+- OAUTHBEARER
+- AWS_MSK_IAM
 
 Gateway configuration:
 Using PLAIN, as used for example on Confluent Cloud:
@@ -395,9 +396,11 @@ All credentials are managed by your backing Kafka, we only provide Authorization
 
 Supported authentication mechanisms on the backing Kafka are:
 
-- Plain
-- Scram-sha-256
-- Scram-sha-512
+- PLAIN
+- SCRAM-SHA-256
+- SCRAM-SHA-512
+- OAUTHBEARER
+- AWS_MSK_IAM
 
 Gateway configuration:
 Using PLAIN, as used for example on Confluent Cloud:
@@ -420,9 +423,78 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-## Automatic security protocol detection (Default behavior)
+### Principal resolver
 
-On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol.
+When using Confluent Cloud with delegated authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
+
+[See principal resolver environment variables for details](/gateway/configuration/env-variables#principal-resolver).
+
+Use environment variables:
+
+```yaml
+GATEWAY_PRINCIPAL_RESOLVER: CONFLUENT
+GATEWAY_CONFLUENT_CLOUD_API_KEY: your-api-key
+GATEWAY_CONFLUENT_CLOUD_API_SECRET: your-api-secret
+GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE: 1000 # default
+GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS: 86400000 # 1 day default
+```
+
+Use configuration file:
+
+```yaml
+authenticationConfig:
+  principalResolver: CONFLUENT_CLOUD
+  confluentCloud:
+    apiKey: ${GATEWAY_CONFLUENT_CLOUD_API_KEY}
+    apiSecret: ${GATEWAY_CONFLUENT_CLOUD_API_SECRET}
+    cacheConfig:
+      maxSize: ${GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE|1000}
+      ttlMs: ${GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS|86400000} # 1 day
+```
+
+When enabled, Gateway will automatically resolve API keys (like XIGMNERQXOUKXDQU) to their associated Service Accounts (like sa-72839j).
+
+#### Authentication flow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant A as Application
+  box "Gateway cluster"
+    participant GW as Gateway
+    participant GPR as Gateway Principal Resolver
+  end
+  participant K as Backing Kafka Cluster
+  participant CC as Confluent Cloud
+
+  Note over A,GW: Application uses credentials `apiKey:apiSecret`
+  A  ->> GW: Connect to Gateway using application credentials
+  GW ->> K : Gateway forward authentication to Kafka
+
+  alt Authentication failed
+    K  -->> GW: AUTH_FAILED
+    GW -->> A : AUTH_FAILED
+  else Authentication successful (principalToken)
+    K  -->> GW: AUTH_OK(principalToken)
+    GW ->> GW: extractPrincipal(principalToken)
+    GW ->> GPR: isConfluentCloudResolverEnabled()
+
+    alt Opt‑in=true
+      GW ->> CC: GET /iam/v2/api-keys/{apiKeyId}
+      CC -->> GW: { service_account: "sa-72839j", ... }
+      GW ->> GW: cacheMapping(apiKeyId -> serviceAccount)
+      Note over GW,K: Principal resolved to Service Account sa‑72839j
+    else Opt‑in = false
+      Note over GW,K: Principal remains apiKeyId
+    end
+
+    GW -->> A : CONNECTED
+  end
+```
+
+## Automatic security protocol detection
+
+By default, on startup Gateway will attempt to detect the security protocol to use based on Kafka configuration, if no protocols are specified.
 
 If there is also no security protocol on the backing Kafka cluster, then we set the security protocol to `PLAINTEXT` by default.
 

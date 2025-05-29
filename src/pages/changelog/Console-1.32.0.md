@@ -66,8 +66,8 @@ Exchange is a **new Conduktor product** that enables you to **share data securel
 
 #### Introducing Partner Zones UI
 
-:::info
-Partner Zones is currently in **Beta** and is subject to changes, as we continue building out this functionality.
+:::info[Preview functionality]
+Partner Zones is currently a Preview feature and is subject to change as we continue working on it.
 :::
 
 Partner Zones enable you to securely share your Kafka streaming data with external partners, without the need to replicate that data into a second, physical Kafka cluster.
