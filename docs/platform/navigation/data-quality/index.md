@@ -82,23 +82,26 @@ Make sure you amend the field values to use correct fields, if using these examp
  :::
 
 <details>
-<summary>Email RegEx validation</summary>
-Your requirements may be different from this RegEx, as email validation via RegEx is complex.
-
-<CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
-
+  <summary>Email RegEx validation</summary>
+  <p>
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
+    <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
+  </p>
 </details>
 
 <details>
-<summary>UUID RegEx validation</summary>
-<CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
+  <summary>UUID RegEx validation</summary>
+  <p>
+    <CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
+  </p>
 </details>
 
 <details>
-<summary>Ensure Header is JSON</summary>
-<CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
+  <summary>Ensure Header is JSON</summary>
+  <p>
+    <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
+  </p>
 </details>
-
 ## Policies
 
 A Policy is made up of Rules that are applied to topics/prefixes.
