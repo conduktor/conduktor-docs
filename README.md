@@ -137,7 +137,7 @@ Use these collapsible dropdowns for troubleshooting sections or other Q&A type c
 
 <details>
   <summary>Question?</summary>
-  <div>Answer has to be in the same block of text due to HTML limitations in Markdown.</div>
+  <d>Answer has to be in the same block of text due to HTML limitations in Markdown.</p>
 </details>
 
 ### Make code copyable
@@ -145,16 +145,10 @@ Use these collapsible dropdowns for troubleshooting sections or other Q&A type c
 import CopyableCode from '@site/src/components/CopyableCode';
 
 <details>
-<summary>Want to see some code?</summary>
-<p>Yes please. Here it is:</p>
-  
-<CopyableCode language="bash">
-Code
-block
-here
-</CopyableCode>
-
-<CopyableCode language="bash">Code line</CopyableCode>
+  <summary>How do I handle headers with dashes?</summary>
+  <p>
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
+  </p>
 </details>
 
 ## Labels

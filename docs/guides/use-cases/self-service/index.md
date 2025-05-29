@@ -6,9 +6,6 @@ description: Use Self-service capabilities in Conduktor
 
 
 
-
-
-
 ### Audit log events
 
   | **Event type**                                       | **Description**                                       |
