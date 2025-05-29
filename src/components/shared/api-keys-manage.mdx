@@ -3,6 +3,8 @@
   Used in: API and CLI sections
 */}
 
+import Label from '@site/src/components/Labels';
+
 ## Manage API keys
 
 To use the Conduktor <GlossaryTerm>API</GlossaryTerm> or <GlossaryTerm>CLI</GlossaryTerm>, you first need to generate an API key. To see available operations, check out the [CLI reference](/guides/automate/cli) and [API reference](/guides/automate/api) guides.
@@ -13,9 +15,10 @@ You can manage API keys using <GlossaryTerm>Console</GlossaryTerm>.
 
 ### Create API keys
 
-To generate a new **admin API key**, go to **Settings** > **API Keys**.
+- To generate a new <Label type="AdminToken" />, go to **Settings** > **API Keys**. Click **New API Key** at the top-right. 
+- Alternatively, application owners can also generate <Label type="AppToken" />. Go to **Application Catalog** > **Instances** tab and click **New API Key**.
 
-Click **New API Key** at the top-right. Give it a unique name and click **Generate Key**. You can then copy it and use as required.
+Give it a unique name and click **Generate Key**. You can then copy it and use as required.
 
 ![API Key generated](/guides/api-save-key.png)
 

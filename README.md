@@ -140,6 +140,23 @@ Use these collapsible dropdowns for troubleshooting sections or other Q&A type c
   <div>Answer has to be in the same block of text due to HTML limitations in Markdown.</div>
 </details>
 
+### Make code copyable
+
+import CopyableCode from '@site/src/components/CopyableCode';
+
+<details>
+<summary>Want to see some code?</summary>
+<p>Yes please. Here it is:</p>
+  
+<CopyableCode language="bash">
+Code
+block
+here
+</CopyableCode>
+
+<CopyableCode language="bash">Code line</CopyableCode>
+</details>
+
 ## Labels
 
 Use labels to visualize available options, [like these resources](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).

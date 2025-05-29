@@ -5,7 +5,7 @@ slug: /
 description: Conduktor is the Enterprise Data Management platform for real-time data streaming
 ---
 
-Conduktor is the Enterprise Data Management platform for Kafka data streaming that integrates with your existing infrastructure to provide centralized visibility and control over real-time data.
+Conduktor is the data hub for operational data and AI that integrates with your existing infrastructure, providing centralized visibility and control.
 
 It's a fully self-hosted solution that depends on Docker to run. You can [get started for free](https://www.conduktor.io/get-started) using the Conduktor Community version.
 
