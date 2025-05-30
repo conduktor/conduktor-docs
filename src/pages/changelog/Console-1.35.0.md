@@ -27,5 +27,8 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 - Fixed an issue where changing the cluster did not clear the search filter in Consumer Groups / Topics pages.
 - Fixed an issue where navigating to a schema registry with a name containing non-escaped characters such as `/` would redirect to the home page.
+- Fixed an issue where the equality filter on JSON number fields was not working correctly against large numbers in the Topic Consume view.
+- The JSON view of a message in a topic no longer coerces large number fields to a string.
+- Fixed an issue where the full message was not displayed correctly in the tooltip when hovering over it in the Topic Consume view table.
 
 ### Known issues
