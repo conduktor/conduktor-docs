@@ -207,7 +207,7 @@ Since the **block** action has the ability to **stop data from being sent** to t
   </p>
 </details>
 <details>
-  <summary>Why does <code>type(value.age) == int</code> fail, even when using integers or Avro?</summary>
+  <summary>Why <code>type()</code> can't figure out the good numeric Types?</summary>
   <p>
     Whether your data is sent as <strong>JSON</strong> or <strong>Avro</strong>, Conduktor Gateway internally converts the payload to JSON before applying CEL rules.
     In JSON, all numeric values are treated as a generic <code>number</code> — there is no distinction between <code>int</code> and <code>double</code>.
