@@ -30,38 +30,6 @@ Rules do nothing on their own - you **have to** to attach them to a Policy.
 
 The Rules page lists your Rules, with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
-### Known Limitation
-
-#### `type()` and Numeric Types
-
-When using the CEL function `type()` in a `DataQualityRule`, **be aware of how numeric types are handled**:
-
-- Regardless of the input format (JSON **or** Avro), payloads are **converted to JSON** internally for CEL evaluation.
-- In **JSON**, there is **no distinction between `int` and `double`** — all numbers are treated as a generic `number`.
-- As a result, CEL rules like `type(value.age) == int` can **fail unexpectedly**, even if:
-  - You're using **Avro** with an explicit `int` schema
-  - The input value is a clearly valid integer (e.g., `12`)
-
-```json
-{
-  "age": 12
-}
-```
-
-**Recommended Workaround**
-
-Instead of relying on type() for numeric type validation, use range-based checks:
-```yaml
-celExpression: value.age > 0 && value.age < 130
-```
-
-This approach:
-* Implicitly validates that value.age is a number
-* Avoids fragile type checks
-* Works reliably across both JSON and Avro inputs
-
-
-
 ### Create a Rule
 
 You can create a data quality rule from the **Console UI**, or the **Conduktor CLI**.
