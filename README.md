@@ -1,4 +1,5 @@
-- [Conduktor technical docs](#conduktor-technical-docs)
+# Conduktor technical docs
+
 - [Deployment and structure](#deployment-and-structure)
 - [Docs guidelines](#best-practice-guidelines)
   - [Structure](#structure)
@@ -14,11 +15,9 @@
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
-# Conduktor technical docs
+## Deployment and structure
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
-
-# Deployment and structure
 
 In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
 
@@ -35,9 +34,9 @@ $ yarn start
 
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
 
-# Best practice guidelines
+## Best practice guidelines
 
-## Structure
+### Structure
 
 When creating a new page, use this layout:
 
@@ -60,7 +59,7 @@ When adding a tutorial (step-by-step guide), use this layout:
   - [Learn Apache Kafka](https://learn.conduktor.io/kafka/)
   - [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
-## Images
+### Images
 
 All images are stored in `src/static/guides`. Embed all images like this:
 
@@ -94,13 +93,13 @@ You can also make an image clickable (and open in another tab) - useful for deta
 </a>
 ```
 
-## Links
+### Links
 
 Use absolute links when linking to Conduktor docs, e.g. */guides/get-started/hardware/*.
 
 You can also link to a specific section on a page, e.g. */guides/get-started/hardware/#hardware-requirements*.
 
-## Tabs
+### Tabs
 
 Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
 
@@ -131,7 +130,7 @@ mySecondTab: "content"
 </Tabs>
 ````
 
-## Dropdowns
+### Dropdowns
 
 Use these collapsible dropdowns for troubleshooting sections or other Q&A type content.
 
@@ -140,7 +139,7 @@ Use these collapsible dropdowns for troubleshooting sections or other Q&A type c
   <d>Answer has to be in the same block of text due to HTML limitations in Markdown.</p>
 </details>
 
-### Make code copyable
+#### Make code copyable
 
 import CopyableCode from '@site/src/components/CopyableCode';
 
@@ -151,7 +150,7 @@ import CopyableCode from '@site/src/components/CopyableCode';
   </p>
 </details>
 
-## Labels
+### Labels
 
 Use labels to visualize available options, [like these resources](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
@@ -165,9 +164,9 @@ This resource can be managed using <Label type="UI" />, <Label type="CLI" /> and
 
 To see all the available labels, go to `/src/components/Labels.js`.
 
-## Glossary
+### Glossary
 
-### Add a tooltip
+#### Add a tooltip
 
 When first introducing Conduktor terminology (e.g. Chargeback), make that word into a glossary term (will display a tooltip when hovered over and formatted) like this:
 
@@ -175,7 +174,7 @@ When first introducing Conduktor terminology (e.g. Chargeback), make that word i
 Use <GlossaryTerm>Chargeback</GlossaryTerm> to visualize your Kafka costs.
 ```
 
-### Add new terms to glossary
+#### Add new terms to glossary
 
 If the term isn't defined, you can add it to **src/data/glossary.js**.
 
@@ -192,9 +191,9 @@ If the term isn't defined, you can add it to **src/data/glossary.js**.
 
 Note that glossary should pick up all the spelling variations (like capitalization).
 
-## Re-use of content
+### Re-use of content
 
-### Preview functionality
+#### Preview functionality
 
 To add:
 
@@ -204,7 +203,7 @@ import AlertPreview from '@site/src/components/shared/alert-preview.md';
 <AlertPreview />
 ```
 
-### Available in {product name}
+#### Available in {product name}
 
 To add:
 
@@ -215,7 +214,7 @@ import ProductTrust from '@site/src/components/shared/product-trust.md';
 <ProductTrust />
 ```
 
-# Update release notes
+## Update release notes
 
 Every new version of Gateway and Console has to have release notes.
 
@@ -249,7 +248,7 @@ import Console1310 from './changelog/Console-1.31.0.md';
 ---
 ```
 
-# Update public API docs
+## Update public API docs
 
 API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
 

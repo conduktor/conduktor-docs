@@ -7,7 +7,7 @@ description: Monitor your Kafka brokers and applications using Conduktor
 
 ## Monitoring overview
 
-Conduktor offers real-time statistics which provides insight into the most important Kafka metrics. [Configure a Cortex instance](/platform/get-started/configuration/cortex/) to set up monitoring and seamlessly integrate it with existing systems.
+Conduktor offers real-time statistics which provides insight into the most important Kafka metrics. [Deploy and configure a Cortex instance](/guides/conduktor-in-production/deploy-artifacts/cortex) to enable monitoring and seamlessly integrate it with your existing systems.
 
 [Set up alerts](/guides/monitor-brokers-apps/alerts) to get notified about important [metrics](/guides/monitor-brokers-apps/monitor-metrics).
 
@@ -31,6 +31,7 @@ To support understanding of your Kafka application state, you can monitor:
 
 ## Related resources
 
+- [Deploy Cortex](/guides/conduktor-in-production/deploy-artifacts/cortex)
 - [See all available metrics](/guides/monitor-brokers-apps/monitor-metrics)
 - [Set up alerts](/guides/monitor-brokers-apps/alerts)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
