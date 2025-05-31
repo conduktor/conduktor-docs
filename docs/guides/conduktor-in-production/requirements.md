@@ -4,16 +4,22 @@ title: Technical requirements
 description: Conduktor technical requirements
 ---
 
-# Requirements table
+## Hardware
 
+| Component | Usage | RAM | CPU cores | Disc space |
+| :------ | :--- | :--- | :--- | :--- |
+| Gateway | Light  | 4 GB | 2 | N/A |
+| Gateway | Medium | 8 GB | 4 | N/A |
+| Console | Min | 3 GB | 2 | 5 GB |
+|  |  |  |   |  |
 
+## Software
 
+TBC - what's recommended vs supported in e.g. Java versions?
 
-## Gateway
+## Gateway requirements
 
 Conduktor Gateway is provided as a [Docker image](../docker) and a [Helm chart](../kubernetes). These are hardware and Kafka requirements for Gateway.
-
-## Hardware requirements
 
 ### Minimum setup
 
@@ -39,7 +45,7 @@ For **production setups** we recommended that you **run at least three Gateway i
 
 Gateway itself doesn't use local storage but certain interceptors, such as [large message handling](/gateway/interceptors/advanced-patterns-support/large-message-and-batch-handling), might require temporary local storage.
 
-## Scaling Gateway
+### Scaling Gateway
 
 Conduktor Gateway is **designed to scale horizontally or vertically**, as required.
 
@@ -55,7 +61,7 @@ The interceptors sit in line with the processing of a request, so they affect th
 
 For high CPU loads, you should also add more memory in addition to cores. We recommend to configure 4 GB of RAM per CPU. This provides more headroom for the underlying memory management to run (predominantly for the garbage collection in the JVM).
 
-## Kafka requirements
+### Kafka requirements
 
 Conduktor Gateway requires Apache Kafka version to be 2.5.0 or higher, and lower than version 4.0.0.
 
@@ -65,20 +71,11 @@ Gateway should connect to Kafka as an 'admin user'. At a minimum, this user shou
 - commit offsets
 - describe cluster information
 
-
-
-# Console System Requirements
+## Console requirements
 
 Conduktor Console is provided as a single Docker container.
 
-Jump to:
-
-- [Production Requirements](#production-requirements)
-- [Hardware Requirements](#hardware-requirements)
-- [Deployment Architecture](#deployment-architecture)
-- [Kafka ACL Requirements](#kafka-acl-requirements)
-
-## Production Requirements
+### Production requirements
 
 For production environments, there are **mandatory requirements** to ensure your deployment is **reliable**, **durable**, and **can be recovered easily**.
 
@@ -93,17 +90,17 @@ To ensure you meet these requirements, you must:
 
 Note that if you are deploying the [Helm chart](/platform/get-started/installation/get-started/kubernetes/), the [production requirements](/platform/get-started/installation/get-started/kubernetes#production-requirements) are clearly outlined in the installation guide.
 
-## Hardware Requirements
+### Hardware requirements
 
 To configure Conduktor Console for particular hardware, you can use container CGroups limits. More details [here](/platform/get-started/configuration/memory-configuration)
 
-### Minimum
+#### Minimum
 
 - 2 CPU cores
 - 3 GB of RAM
 - 5 GB of disk space
 
-### Recommended
+#### Recommended
 
 - 4+ CPU cores
 - 4+ GB of RAM
@@ -111,7 +108,7 @@ To configure Conduktor Console for particular hardware, you can use container CG
 
 See more about [environment variables](/platform/get-started/configuration/env-variables/), or starting the Platform in [Docker Quick Start](/platform/get-started/installation/get-started/docker/).
 
-## Deployment Architecture
+### Deployment architecture
 
 As noted in the [production requirements](#production-requirements), a complete deployment of Console depends on:
 
@@ -145,13 +142,13 @@ graph TD
     Cortex --> |Historical Data| BlockStorage[Block Storage]
 ```
 
-### State Persistence in PostgreSQL
+### State persistence in PostgreSQL
 
-#### Single Instance (Pre-Console 1.25.0)
+#### Single instance (Pre-Console 1.25.0)
 
 In the pre-1.25.0 architecture, Kafka Monitoring maintained its state in-memory. This posed several problems in a multi-instance setup, such as discrepancies in metrics or failures when trying to distribute monitoring tasks across instances.
 
-#### Multiple Instances (Post-Console 1.25.0)
+#### Multiple instances (Post-Console 1.25.0)
 
 From Console 1.25.0 onwards, the monitoring state is now stored in the external PostgreSQL database, allowing the state to be shared and accessed by all instances of Console. This change brings several advantages:
 
@@ -159,11 +156,11 @@ From Console 1.25.0 onwards, the monitoring state is now stored in the external 
 - **Redundancy & Fault Tolerance**: If the leader instance fails, another instance takes over as the leader, without losing any monitoring data.
 - **Prometheus Metrics**: Every Console instance is now capable of exposing [Prometheus metrics](/platform/reference/metric-reference/) through the API. This allows for real-time monitoring of the application regardless of which instance is the leader, as the monitoring state is available to all instances.
 
-### High-Availability Limitations
+### High-Availability limitations
 
  While the architecture introduced in Console 1.25 greatly improves the **UI layers horizontal scalability**, there are notable limitations related to the use of Cortex for metrics storage.
 
-#### Cortex in Standalone Mode
+#### Cortex in standalone mode
 
 The system currently uses Cortex in standalone mode, which does not inherently provide high availability. The implications of this limitation are:
 
@@ -171,7 +168,7 @@ The system currently uses Cortex in standalone mode, which does not inherently p
 - **Alerting Unavailability**: In the event of a Cortex failure, alerting functionality inside Console will not be present until the container is restarted.
 - **No Redundancy**: Without a multi-node or clustered setup for Cortex, the system lacks the resilience and failover capabilities that are present in other components like Console and PostgreSQL.
 
-#### Database Connection Fail-over
+#### Database connection fail-over
 
 Since version 1.30 Console supports using multiple database URLs in configuration to achieve high availability (HA). For example, [Connection Fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over) as seen in the case of PostgreSQL.
 
@@ -184,7 +181,8 @@ In earlier versions we recommend instead that you configure an HA Postgres datab
 - **PgBouncer** or **HAProxy**: For connection pooling and distributing connections across multiple Postgres instances
 - **Cloud-managed solutions**: Managed Postgres services like AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL often provide built-in HA
 
-## Kafka ACL Requirements
+### Kafka ACL requirements
+
 Conduktor Console requires the following ACLs to take advantage of all the capabilities of the product:
 
 | Permission | Operation | ResourceType   | ResourceName  | PatternType | Description                        |
@@ -204,4 +202,3 @@ If you prefer to provide read-only access to Conduktor Console, these are the mi
 | ALLOW      | READ             | CONSUMER GROUP | *             | LITERAL     | Be able to fetch offset definition (used to compute lag)     |
 | ALLOW      | DESCRIBE         | CLUSTER        | kafka-cluster | LITERAL     | Describe Kafka ACLs, fetch the amount of data stored on disk |
 | ALLOW      | DESCRIBE_CONFIGS | CLUSTER        | kafka-cluster | LITERAL     | Describe cluster/broker configuration                        |
-
