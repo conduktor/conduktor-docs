@@ -23,6 +23,8 @@ which simplifies the configuration process by splitting out **what** manages aut
 
 This is a non-breaking change, still supporting existing configurations whilst encouraging a new approach.
 
+This change also allows for the deprecation of the `ACL_ENABLED` environment variable. Whilst we still support it, we strongly encourage users to use the `GATEWAY_SECURITY_MODE` environment variable.
+
 Please see [How to: Migration Guide to Security Mode](../../../docs/gateway/how-to/migration-guide-to-security-mode.md) for more details.
 
 ### Fixes
