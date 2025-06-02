@@ -28,6 +28,8 @@ We are splitting the security configuration into two steps in order to simplify 
 
 Previously both these questions were resolved by the GATEWAY_SECURITY_PROTOCOL. Instead, we set _the what_ using `GATEWAY_SECURITY_MODE` and simplify the options for the how, which is still set using `GATEWAY_SECURITY_PROTOCOL`.
 
+We will also derive whether acl is enabled from our security mode, meaning we can decommission the `GATEWAY_ACL_ENABLED` environment variable.
+
 ## Am I affected?
 
 This change is backwards compatible, we still support delegated protocols. Your current configuration will automatically map like so:
@@ -41,7 +43,7 @@ This change is backwards compatible, we still support delegated protocols. Your 
 | `DELEGATED_SASL_PLAINTEXT`           | `SASL_PLAINTEXT`                        | `KAFKA_MANAGED`                      |
 | `DELEGATED_SASL_SSL`                 | `SASL_SSL`                              | `KAFKA_MANAGED`                      |
 
-We still support `ACL_ENABLED` variable. Were set, we will continue to honor the value. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `ACL_ENABLED` is set to true.
+We still support `GATEWAY_ACL_ENABLED` variable. Where set, we will continue to honor valid configurations. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `ACL_ENABLED` is set to true.
 
 ## What do I need to do?
 
