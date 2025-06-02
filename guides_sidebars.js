@@ -122,7 +122,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Control traffic',
+      label: 'Control traffic with policies',
       link: { type: 'doc', id: 'use-cases/control-traffic/index' },
       items: [],
     },
