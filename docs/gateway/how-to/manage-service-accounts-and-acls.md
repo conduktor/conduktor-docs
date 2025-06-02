@@ -10,7 +10,7 @@ In this how-to guide, you will learn how to manage service accounts on the Gatew
 
 In this scenario:
 - The SASL_PLAINTEXT security protocol is used for the communication between Clients > Gateway > Kafka
-- The ACLs are enabled on the passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`)
+- The ACLs are enabled on the passthrough virtual cluster (`GATEWAY_SECURITY_MODE: GATEWAY_MANAGED`)
 - The ACLs super-user is named `GATEWAY_SUPER_USERS: local-acl-admin`
 - The Gateway API admin credentials are the defaults
 
@@ -71,7 +71,7 @@ services:
       # Gateway configuration
       GATEWAY_MIN_BROKERID: 1
       # Enable ACLs on the passthrough virtual cluster, with the super user
-      GATEWAY_ACL_ENABLED: true
+      GATEWAY_SECURITY_MODE: GATEWAY_MANAGED
       GATEWAY_SUPER_USERS: local-acl-admin
     healthcheck:
       test: curl localhost:8888/health || exit 1
