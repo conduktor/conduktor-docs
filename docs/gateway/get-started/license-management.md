@@ -6,7 +6,7 @@ description: Manage your Conduktor license for Gateway
 
 ## Apply your license
 
-In order to enjoy your Enterprise Gateway plan, you'll have to configure all your Gateways to use the license key we provided to you.
+In order to enjoy your Enterprise Gateway plan, you'll have to configure every Gateway deployment to use the license key provided.
 
 This license has to be set as an environment variable in your Gateway configuration:
 
