@@ -44,8 +44,8 @@ For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environ
     - [OAuthbearer](#oauthbearer-1)
   - [AWS MSK cluster with IAM](#aws-msk-cluster-with-iam)
   - [Service Account and ACL Requirements](#service-account-and-acl-requirements)
-    - [Delegated Authentication](#delegated-authentication)
-    - [Non-Delegated](#non-delegated)
+    - [Kafka Managed Authentication](#kafka-managed-authentication)
+    - [Gateway Managed Authentication](#gateway-managed-authentication)
 
 
 # Supported Protocols
