@@ -67,7 +67,7 @@ When the Gateway starts, it will log the license information:
 
 ### In the Gateway metrics
 
-You can monitor the days left before expiration using this metric from the [Gateway metrics endpoint](/gateway/reference/monitoring/#how-to-access-prometheus-metrics-from-gateway): `gateway.license.remaining_days`.
+You can monitor the days left before expiration using this metric from the [Gateway metrics endpoint](/gateway/reference/monitoring/#how-to-access-prometheus-metrics-from-gateway): `gateway_license_remaining_days`.
 
 We highly recommend you to set up an alert for when the license is about to expire.
 
