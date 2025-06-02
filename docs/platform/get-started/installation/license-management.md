@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Manage your license
-description: Manage your Conduktor license for the Console
+description: Manage your Conduktor license for Console
 ---
 
 ## Apply your license
