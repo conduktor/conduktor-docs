@@ -457,7 +457,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 ### Principal resolver
 
-When using Confluent Cloud with delegated authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
+When using Confluent Cloud with Kafka managing authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
 
 [See principal resolver environment variables for details](/gateway/configuration/env-variables#principal-resolver).
 
@@ -532,14 +532,14 @@ If there is also no security protocol on the backing Kafka cluster, then we set 
 
 Here is our mapping from the Kafka cluster's defined protocol:
 
-| Kafka cluster security protocol | Gateway cluster inferred security protocol |
-| ------------------------------- | ------------------------------------------ |
-| SASL_SSL                        | DELEGATED_SASL_SSL                         |
-| SASL_PLAINTEXT                  | DELEGATED_SASL_PLAINTEXT                   |
-| SSL                             | SSL                                        |
-| PLAINTEXT                       | PLAINTEXT                                  |
+| Kafka cluster security protocol | Gateway cluster inferred security mode | Gateway cluster inferred security protocol |
+|---------------------------------|----------------------------------------|--------------------------------------------|
+| SASL_SSL                        | KAFKA_MANAGED                          | SASL_SSL                                   |
+| SASL_PLAINTEXT                  | KAFKA_MANAGED                          | SASL_PLAINTEXT                             |
+| SSL                             | GATEWAY_MANAGED                        | SSL                                        |
+| PLAINTEXT                       | GATEWAY_MANAGED                        | PLAINTEXT                                  |
 
-For reference you can always see the inferred security protocol on the startup log of Gateway .
+For reference, you can always see the inferred security protocol on the startup log of Gateway .
 
 ```
 2024-03-07T15:40:12.260+0100 [      main] [INFO ] [Bootstrap:70] - Computed configuration :
@@ -548,6 +548,7 @@ gatewayClusterId: "gateway"
 ...
 authenticationConfig:
   securityProtocol: "SASL_PLAINTEXT"
+  securityMode: "KAFKA_MANAGED"
   sslConfig:
 ...
 
