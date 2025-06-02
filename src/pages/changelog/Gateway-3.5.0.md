@@ -55,7 +55,7 @@ See [the encryption configuration docs](/gateway/interceptors/data-security/encr
 
 We have altered the behaviour of the Gateway when your license expires to provide a better experience. The behaviour is now as below:
 
-* We have added new metric `gateway.license.remaining_days` which you can monitor to track the time left on your license
+* We have added new metric `gateway_license_remaining_days` which you can monitor to track the time left on your license
 * If the Gateway is currently running, do not automatically exit on license expiry. Rather, Gateway will now log a warning every hour that your license is expired:
 
 ```text
