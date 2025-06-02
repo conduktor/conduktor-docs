@@ -85,7 +85,7 @@ License will expire in less than X day(s)! You need to renew your license to con
 License has expired! You need to add a valid license to continue using Conduktor Gateway. Checkout our documentation if unsure how to set the license.
 :::
 
-**Once the license has expired**, the Gateway will fail to start up with a license expired error as soon as you restart the container.
+The Gateway container will then fail on restart with a "license expired error".
 
 ## Change the License
 
