@@ -29,15 +29,22 @@ Security protocol defines how a Kafka client and Gateway broker should communica
 Authentication mechanism on the other hand is the part defining how a client can authenticate itself when opening the connection. *How do we know each other?*
 
 Here is a quick explanation of each supported security mode and security protocol:
-* **GATEWAY_MANAGED & PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
-* **GATEWAY_MANAGED & SSL**: With SSL-only clients don't need any client authentication but communication between the client and Gateway broker will be encrypted.
-* **GATEWAY_MANAGED & mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
+
+**GATEWAY MANAGED**
+
+* **PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
+* **SSL**: With SSL-only clients don't need any client authentication but communication between the client and Gateway broker will be encrypted.
+* **mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
   `Principal` for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate).
-* **GATEWAY_MANAGED & SASL PLAINTEXT**: Brokers don't need any client authentication and all communication is exchanged without any network security.
-* **GATEWAY_MANAGED & SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
-* **KAFKA_MANAGED & SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
+* **SASL PLAINTEXT**: Brokers don't need any client authentication and all communication is exchanged without any network security.
+* **SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
+
+**KAFKA MANAGED**
+* **SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to the back end Kafka for validation. Gateway will intercept exchanged authentication data to detect authenticated principals.
   All communication  between the client and gateway broker is exchanged without any network security.
   All credentials are managed by your backend kafka, we only provide authorization on the Gateway side based on the exchanged principal.
+* **SASL_SSL**: Authentication from the client is mandatory and will be forwarded to the backend Kafka cluster for validation. All communication between the client and the Gateway broker is encrypted using TLS. The Gateway will intercept the SASL authentication exchange to detect authenticated principals. 
+All credentials are managed by your backend Kafka.
 
 ## Overview
 
