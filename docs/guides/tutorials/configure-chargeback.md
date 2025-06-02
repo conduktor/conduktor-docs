@@ -7,16 +7,11 @@ description: Configure Chargeback
 
 ## Overview
 
-Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
+<GlossaryTerm>Chargeback</GlossaryTerm> allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
-As of now, the tracked metrics are:
+Currently, the tracked metrics are: **bytes produced and consumed by service accounts**. We'll be adding more metrics soon.
 
-- Service Accounts produced bytes
-- Service Accounts consumed bytes
-
-We plan to add more metrics to Chargeback in the future. Let us know which metrics you would like to see next.
-
-## Requirement
+## Pre-requisites
 
 Chargeback requires both Console and Gateway:
 
@@ -25,16 +20,12 @@ Chargeback requires both Console and Gateway:
 
 ## Configuration
 
-To enable the Chargeback screens in Console, the following steps are necessary:
+To enable the Chargeback in <GlossaryTerm>Console</GlossaryTerm>:
 
-1. [Configure](/platform/navigation/settings/managing-clusters/) the Gateway cluster in Console
-1. Configure the **Provider** tab with Gateway API credentials:
+1. Go to **Settings** > **Clusters** and select your cluster.
+1. In the **Provider** tab, Select **Gateway** and enter API details with the default virtual cluster value of `passthrough`.
 
-    :::info
-    Virtual clusters are not supported yet. When populating the provider tab, you should instead use the default value `passthrough`.
-    :::
-
-    ![Gateway Provider](assets/gateway-provider.png)
+    ![Gateway provider](/guides/gateway-provider.png)
 
 1. Deploy the [Chargeback Interceptor](/gateway/interceptors/observability/chargeback) on Gateway. This can be done through Console UI or using the Gateway API/[CLI](/gateway/reference/cli-reference)
 
@@ -52,8 +43,4 @@ To enable the Chargeback screens in Console, the following steps are necessary:
       flushIntervalInSecond: 300
   ```
 
-After a few minutes, you should see your active Service Accounts appear in the Chargeback UI.
-
-![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
-
-Check the [Chargeback Usage](/platform/navigation/chargeback/) pages for details on the different tabs and UI features.
+After a few minutes, you should see your active service accounts appear on the **Chargeback** page in Console.

@@ -139,7 +139,7 @@ conduktor apply -f ./self-service/central-team-repo/topic-policies/
 
 The policies we've created are visible within the UI, under Topic Policies:
 
-![Topic Policies](assets/topic-policies.png)
+![Topic Policies](/guides/topic-policies.png)
 1. Create the team resources, the Application and the Application Instances
 
 ```bash
@@ -148,7 +148,7 @@ conduktor apply -f ./self-service/central-team-repo/applications/website-analyti
 
 Applications and their instances are visible in the **Applications Catalog**:
 
-![Application Instances](assets/app-catalog.png)
+![Application Instances](/guides/app-catalog.png)
 
 We now have everything ready to delegate to the application team.
 
@@ -166,7 +166,7 @@ As these topics are associated to the Application Instances, we are able to visu
 
 *This may take up to 30 seconds for the new topics to appear, depending when the indexer last polled for topics.*
 
-![Topic Catalog](assets/topic-catalog.png)
+![Topic Catalog](/guides/topic-catalog.png)
 
 ### Attempt to create topics out of bounds
 
@@ -189,7 +189,7 @@ conduktor token create application-instance -i=website-analytics-prod my-new-key
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
 ````
 
-![Create Application Instance API key](assets/create-app-api-key.png)
+![Create Application Instance API key](/guides/create-app-api-key.png)
 
 1. Leave the CLI container:
 

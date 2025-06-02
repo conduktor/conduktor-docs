@@ -4,6 +4,7 @@ title: SNI routing
 displayed: false
 description: Make the most out of the ports you have
 ---
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Overview
 
@@ -46,7 +47,7 @@ However, depending on your infrastructure, you may want to differentiate between
 
 This could be the case if you're using a load balancer:
 
-import Ports from './assets/ports-sni.png';
+import Ports from '/guides/ports-sni.png';
 
 <img src={Ports} alt="Ports with SNI routing" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -71,7 +72,7 @@ Alternatively, **wildcards** `*` can be used in the SAN, if supported by your is
 
 If you need to detail all the advertised brokers in the Gateway keystore, here is the format returned by the Gateway for each broker:
 
-import AdvertisedBrokersStructure from './assets/advertised-brokers.png';
+import AdvertisedBrokersStructure from '/guides/advertised-brokers.png';
 
 <img src={AdvertisedBrokersStructure} alt="Advertised brokers structure" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -118,8 +119,6 @@ Here's the minimum configurations required, depending on the security protocol y
 Note that this is in addition to the `KAFKA_` properties required for the Gateway to connect to the Kafka cluster.
 
 Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing)
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value="SASL_SSL" label="SASL_SSL">
@@ -183,7 +182,7 @@ GATEWAY_SSL_TRUST_STORE_PASSWORD: conduktor
 
 You can use Console's Brokers tab to view the advertised listeners of a Gateway once the initial connection and authentication are successful:
 
-![Console Brokers view](assets/console-broker-view.png)
+![Console Brokers view](/guides/console-broker-view.png)
 
 Alternatively, [kcat](https://github.com/edenhill/kcat)'s metadata list mode (-L) can be used to check whether the right advertised listeners have been configured or how many brokers are in a given cluster.
 

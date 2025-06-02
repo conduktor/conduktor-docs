@@ -4,6 +4,7 @@ title: Configure custom deserializers
 displayed: false
 description: Reference Documentation for Topic related pages
 ---
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ### Overview
 
@@ -18,8 +19,6 @@ Your custom deserializer is available and you know how to configure it.
 ## Install custom deserializer
 
 Console looks for jars present in folder `/opt/conduktor/plugins` during startup. There are different ways of making your custom deserializers available in Console.
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value="Docker Compose" label="Docker Compose">

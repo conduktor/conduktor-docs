@@ -19,7 +19,7 @@ In the next page, select the **target topic** that you want to publish the messa
 
 Here, we want to reprocess the message in the `customers` topic.
 
-import SelectTargetTopic from './assets/select-target-topic.png';
+import SelectTargetTopic from '/guides/select-target-topic.png';
 
 <img src={SelectTargetTopic} alt="Select Target Topic" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -27,8 +27,8 @@ import SelectTargetTopic from './assets/select-target-topic.png';
 
 The previous step leads us to the **Produce** page of the target topic, with an auto-populated form containing our record. From there, we can easily modify its key, value and headers.
 
-![Reprocess the record](assets/reprocess-record.png)
+![Reprocess the record](/guides/reprocess-record.png)
 
 When you're ready, you can press the **Produce** button and you will see your record being produced. Go to the **Consume** page of this topic in order to retrieve your reprocessed record.
 
-![Consume the reprocessed record](assets/consume-reprocess-record.png)
+![Consume the reprocessed record](/guides/consume-reprocess-record.png)
