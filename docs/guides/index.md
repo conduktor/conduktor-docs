@@ -22,10 +22,11 @@ Console home page
 
 ## Related resources
 
-- [Get started with Conduktor](/get-started/get-started.md)
+- [Get started with Conduktor](/guides/get-started)
 - [Check out release notes](https://conduktor.io/changelog)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
 - [Contact support](https://www.conduktor.io/contact/support)
+
 
 
 

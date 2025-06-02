@@ -4,52 +4,113 @@ description: Learn Conduktor terminology
 ---
 
 import Label from '@site/src/components/Labels';
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-Conduktor Gateway offers a number of powerful <GlossaryTerm>Interceptors</GlossaryTerm> that enhance your Kafka usage.
+Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of powerful Interceptors that enhance your Kafka usage. For example, you can use them to:
 
-For example, you can use to:
-
-- perform full-message encryption, field-level encryption, and decryption
+- perform full-body or field-level encryption and decryption
 - reject (during produce) or skip (during consume) records that don't match specified data quality rules
 - enforce producer configurations such as acks or compression
-- override or enforce configurations during a CreateTopic request, such as a replication factor or naming convention
+- override or enforce configurations during a *CreateTopic* request, such as a replication factor or naming convention
 
- [View the Interceptor catalog](/gateway/category/interceptor-catalog/).
+## Configure and use
 
-## Using Interceptors
+To deploy an Interceptor, you need to prepare its configuration. Here's an example for an interceptor that will **block the creation of topics with more than six partitions**:
 
-Before deploying an Interceptor, you have to configure it, similar to using [Kafka Connect connectors](/platform/navigation/console/kafka-connect/#add-a-connector).
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
-Here's an example of an Interceptor that will block the creation of topics with more than six partitions:
-
-````json
-curl \
-  --request PUT \
-  --url 'http://localhost:8888/gateway/v2/interceptor' \
-  --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "kind" : "Interceptor",
-  "apiVersion" : "gateway/v2",
-  "metadata" : {
-    "name" : "less-than-6-partitions"
-  },
-  "spec" : {
-    "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
-    "priority": 100,
-    "config": {
-      "topic": ".*",
-      "numPartition": {
-        "min": 1,
-        "max": 6,
-        "action": "BLOCK"
+  ````json
+  curl \
+    --request PUT \
+    --url 'http://localhost:8888/gateway/v2/interceptor' \
+    --header 'Authorization: Basic YWRtaW46Y29uZHVrdG9y' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+    "kind" : "Interceptor",
+    "apiVersion" : "gateway/v2",
+    "metadata" : {
+      "name" : "less-than-6-partitions"
+    },
+    "spec" : {
+      "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+      "priority": 100,
+      "config": {
+        "topic": ".*",
+        "numPartition": {
+          "min": 1,
+          "max": 6,
+          "action": "BLOCK"
+        }
       }
     }
-  }
-}'
+  }'
+  ````
+
+</TabItem>
+
+<TabItem  value="API" label="API">
+
+
+````json
+POST /admin/interceptors/v1/interceptor/enforce-partition-limit
+{
+  "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "numPartition": {
+      "min": 1,
+      "max": 6,
+      "action": "BLOCK"
+    }
+}
+}
 ````
 
-### Chaining
+</TabItem>
+</Tabs>
+
+Interceptors also combine with each other to create very powerful interactions and solve many interesting use-cases in different ways.
+
+One option is to [chain](#chain-interceptors) them together, so that each Interceptor performs its action sequentially and independently, then passes the result to the next Interceptor to action.
+
+The order of execution is determined by the **priority** of each Interceptor. Lower numbers gets executed first.
+
+ ```mermaid
+flowchart LR
+    A[User App]
+    subgraph G [Gateway]
+        direction LR
+        Auth[Authentication & </br> Authorization]
+        subgraph I [Dynamic interceptor pipeline]
+            direction LR
+            I1(Plugin </br> priority: 1 </br> interceptor)
+            I2(Plugin </br> priority: 10 </br> interceptor1 & interceptor2)
+            I3(Plugin </br> priority: 42 </br> interceptor)
+            I1 <--> I2 <--> I3
+        end
+        subgraph Core [Core features]
+            direction TB
+            LT(Logical Topics)
+            VC(Virtual clusters)
+        end
+        Auth <--> I
+    end
+    subgraph K [Main Kafka cluster]
+    B1(broker 1)
+    B2(broker 2)
+    B3(broker 3)
+    B1 === B2 === B3
+    end
+    A --> Auth
+    I <--> Core
+    Core <--> K
+```
+
+More advanced behaviors can also be configured such as [Scoping](#interceptor-scope) and **Overriding**. They are presented in the detailed Interceptor Concepts page.
+
+### Chain Interceptors
 
 Interceptors can be chained, allowing you to create powerful interactions for various scenarios.
 
@@ -59,9 +120,9 @@ Each Interceptor can have a distinct purpose that's unrelated to other Intercept
 The order of execution is calculated **after scoping and overriding**. For example, an overridden Interceptor can have a different priority from its parent.
 :::
 
-### Scoping
+### Interceptor scope
 
-Interceptor scoping lets you **define affected Kafka clients** (ultimately resolved as Service Accounts).
+Interceptor scoping lets you **define affected Kafka clients** (ultimately resolved as service accounts).
 
 There are four targeting scopes:
 
