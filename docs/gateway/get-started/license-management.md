@@ -79,7 +79,7 @@ We highly recommend you to set up an alert for when the license is about to expi
 License will expire in less than X day(s)! You need to renew your license to continue using Conduktor Gateway. Checkout our documentation (https://docs.conduktor.io/gateway/get-started/license-management/) if unsure how to set the license.
 :::
 
-**After expiration**, the Gateway will continue running and log a warning every hour that your license has expired:
+**After expiration**, the Gateway will continue running, until the next restart, and will log a warning every hour that your license has expired:
 
 :::note[License expired warning]
 License has expired! You need to add a valid license to continue using Conduktor Gateway. Checkout our documentation if unsure how to set the license.
