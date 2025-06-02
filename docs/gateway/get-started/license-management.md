@@ -1,10 +1,10 @@
 ---
 sidebar_position: 4
-title: License Management
-description: Configure the Conduktor Enterprise license with your Gateway
+title: Manage your license
+description: Manage your Conduktor license for the Gateway
 ---
 
-## License installation
+## Apply your license
 
 In order to enjoy your Enterprise Gateway plan, you'll have to configure all your Gateways to use the license key we provided to you.
 
@@ -14,7 +14,9 @@ This license has to be set as an environment variable in your Gateway configurat
 GATEWAY_LICENSE_KEY="YOUR_LICENSE_HERE"
 ```
 
-## License verification
+## Verify your license
+
+### In Kafka
 
 You can check that your license has been used to launch the Gateway by looking at the license internal topic it has created.
 
@@ -51,12 +53,37 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 </TabItem>
 </Tabs>
 
-And you can find the details of the license in the Gateway logs:
+### In the Gateway logs
 
-```
-2024-11-01T14:38:09.961+0000 [main] [INFO] [PersistentLicenseService:94] - Applied new license with expiry: 2026-01-01T00:00:00.000Z
-```
+You can check that your license has been applied correctly by looking at the Gateway logs.
 
+When the Gateway starts, it will log the license information:
+
+:::note[Gateway logs]
+[INFO] [PersistentLicenseService:114] - Applied new license with expiry: 2026-06-29T00:00:00.000Z
+
+[INFO] [PersistentLicenseService:86] - Enterprise license found, valid until: 2026-06-29T00:00:00.000Z
+:::
+
+### In the Gateway metrics
+
+You can monitor the days left before expiration using this metric from the [Gateway metrics endpoint](/gateway/reference/monitoring/#how-to-access-prometheus-metrics-from-gateway): `gateway.license.remaining_days`
+
+## License expiration
+
+**One week before expiration**, you'll see this warning in your logs:
+
+:::note[License expiration warning]
+License will expire in less than X day(s)! You need to renew your license to continue using Conduktor Gateway. Checkout our documentation (https://docs.conduktor.io/gateway/get-started/license-management/) if unsure how to set the license.
+:::
+
+**After expiration**, the Gateway will continue running and log a warning every hour that your license has expired:
+
+:::note[License expired warning]
+License has expired! You need to add a valid license to continue using Conduktor Gateway. Checkout our documentation if unsure how to set the license.
+:::
+
+**Once the license has expired**, the Gateway will fail to start up with a license expired error as soon as you restart the container.
 
 ## Change the License
 
