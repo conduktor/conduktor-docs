@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: Manage your license
-description: Manage your Conduktor license for the Gateway
+description: Manage your Conduktor license for Gateway
 ---
 
 ## Apply your license
