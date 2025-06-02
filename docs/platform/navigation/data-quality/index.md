@@ -3,6 +3,7 @@ title: Data quality
 description: Data quality allows you to define checks and actions to apply on data produced into Kafka
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import CopyableCode from '@site/src/components/CopyableCode';
 
 ## Overview
 
@@ -83,23 +84,24 @@ Make sure you amend the field values to use correct fields, if using these examp
 <details>
   <summary>Email RegEx validation</summary>
   <p>
-    Your requirements may be different from this RegEx, as email validation via RegEx is complex!
-    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
-  </p>
-</details>
-<details>
-  <summary>UUID RegEx validation</summary>
-  <p>
-  `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
-  </p>
-</details>
-<details>
-  <summary>Ensure Header is JSON</summary>
-  <p>
-  `headers['Content-Type'] == 'application/json'`
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
+    <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
   </p>
 </details>
 
+<details>
+  <summary>UUID RegEx validation</summary>
+  <p>
+    <CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
+  </p>
+</details>
+
+<details>
+  <summary>Ensure Header is JSON</summary>
+  <p>
+    <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
+  </p>
+</details>
 ## Policies
 
 A Policy is made up of Rules that are applied to topics/prefixes.
@@ -117,7 +119,7 @@ The available actions to enable for a Policy are:
 - **Report**: when violations occur, log these as events in the Policy's history
 - **Block**: when a violation occurs, prevent data from being processed or transmitted
 
-By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
 ### Create a Policy
 
@@ -201,7 +203,7 @@ Since the **block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
   </p>
 </details>
 
