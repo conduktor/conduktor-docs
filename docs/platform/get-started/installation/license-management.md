@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Manage your license
-description: Manage your Conduktor license
+description: Manage your Conduktor license for the Console
 ---
 
 ## Apply your license
@@ -45,12 +45,19 @@ Log into Conduktor Console then go to **Settings** > **Plan**:
 
 ### Use the logs
 
-Run Console then check the logs in the head: `License Enterprise is valid until 2026-01-01 00:00:00`.
+Run Console then check the logs in the head:
 
-:::note[Versions before 1.21]
-Input configured license : Some("YOUR_LICENSE_HERE")
-License is valid ! Remaining days : 365
+:::note[Console logs]
+INFO  i.c.a.license.PlatformLicenseLoader - License Enterprise v3 is valid until 2026-01-31 00:00:00
 :::
+
+## License expiration
+
+**30 days before expiration**: You will see a warning tag in the UI, at the top of each page, as well as next to the Plan tab.
+
+![License expiration warning](assets/before-expiration.png)
+
+**At expiration**: You will revert to the freemium plan and no longer enjoy the enterprise features. This may lead to errors in the UI and restricted actions.
 
 ## Renew or update your license
 
