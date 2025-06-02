@@ -104,8 +104,14 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Share data',
+      label: 'Share data externally',
       link: { type: 'doc', id: 'use-cases/third-party-data/index' },
+      items: [],
+    },
+        {
+      type: 'category',
+      label: 'Define Rules and Policies',
+      link: { type: 'doc', id: 'use-cases/rules-policies/index' },
       items: [],
     },
     {
@@ -128,11 +134,10 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Define Rules and Policies',
-      link: { type: 'doc', id: 'use-cases/rules-policies/index' },
+      label: 'Cache data',
+      link: { type: 'doc', id: 'use-cases/cache-data/index' },
       items: [],
     },
-
 
 
     {

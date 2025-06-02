@@ -1,6 +1,6 @@
 ---
 sidebar_position: 340
-title: Share data
+title: Share data externally
 description: Share data securely with external partners using Conduktor
 ---
 
@@ -10,7 +10,7 @@ import ProductExchange from '@site/src/components/shared/product-exchange.md';
 
 <ProductExchange />
 
-# Partner Zones 
+## Partner Zones
 
 import AlertPreview from '@site/src/components/shared/alert-preview.md';
 

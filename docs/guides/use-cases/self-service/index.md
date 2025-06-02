@@ -16,14 +16,14 @@ This approach brings governance into your enterprise through concepts like Owner
 - For a presentation of Self-service and its key concepts, see [Get started with Self-service](/platform/guides/self-service-quickstart)
 - For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/)
 
-### Benefits for Central Platform team
+## Benefits for Central Platform team
 
 - Define the general rules of the game
 - Enforce naming conventions
 - Safeguard from invalid or expensive configurations (wrong replication factor, high partition number, ...)
 - Declare the Applications and their rights
 
-### Benefits for Applications teams
+## Benefits for Applications teams
 
 - Autonomy and responsibility over their resources
 - Isolation with Application namespaces
