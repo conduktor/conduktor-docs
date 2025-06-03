@@ -148,7 +148,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule 
 ```
 As Confluent Cloud uses certificates signed by a well-known CA, you normally do not need to specify a trust-store.
 
-Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `SASL_PLAINTEXT` and `GATEWAY_SECURITY_MODE` to `KAFKA_MANAGED`. Then clients will be able to authenticate using their own API keys/secrets. Delegated is [explained below](#delegated-authentication).
+Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `SASL_PLAINTEXT` and `GATEWAY_SECURITY_MODE` to `KAFKA_MANAGED`. Then clients will be able to authenticate using their own API keys/secrets. Kafka Managed mode is [explained below](#kafka-managed-authentication).
 
 ### SASL SCRAM
 
