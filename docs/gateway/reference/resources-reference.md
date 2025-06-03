@@ -292,8 +292,43 @@ spec:
 **VirtualCluster side effects:**
 - All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
 - Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
-- When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
 
+### Virtual Cluster ACLs
+
+When `spec.aclEnabled` is set to `true` it is possible to connect to Gateway as one of the `superUsers` using the Kafka Admin API and manage the ACLs of other service accounts in the Virtual Cluster as you would users in a real Kafka Cluster. 
+
+Managing ACLs with the Kafka Admin API is extremely powerful, but can also be cumbersome. For some use-cases it is desirable to configure everything using the REST api instead. If no `superUsers` are defined we allow you to configure ACLs directly on the Virtual Cluster resource instead. For example,
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ aclEnabled: true # defaults to false
+ aclBindings:
+  - pattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    entry:
+      principal: some.user
+      operation: READ
+      permissionType: ALLOW
+  - pattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    entry:
+      principal: some.user
+      operation: WRITE
+      permissionType: ALLOW
+```
+
+:::danger
+ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster.
+:::
 
 ## AliasTopic
 
