@@ -8,8 +8,7 @@ import CopyableCode from '@site/src/components/CopyableCode';
 ## Overview
 
 Bad data breaks customer experiences, drives churn and slows growth.
-[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business.
-You define the rules and we'll enforce them at the streaming layer.
+[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
@@ -77,9 +76,10 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 ### Example Rules
 
 Here are some sample data quality rules.
+
 :::info[Amend values if using these samples]
 Make sure you amend the field values to use correct fields, if using these examples.
- :::
+:::
 
 <details>
   <summary>Email RegEx validation</summary>
@@ -88,7 +88,6 @@ Make sure you amend the field values to use correct fields, if using these examp
     <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
   </p>
 </details>
-
 <details>
   <summary>UUID RegEx validation</summary>
   <p>
@@ -102,6 +101,7 @@ Make sure you amend the field values to use correct fields, if using these examp
     <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
   </p>
 </details>
+
 ## Policies
 
 A Policy is made up of Rules that are applied to topics/prefixes.
@@ -189,6 +189,21 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
+### Using multiple Policies
+
+When multiple policies target the same topic, two scenarios can occur when a record is produced:
+
+- **None of the Policies block** the record and all are evaluated:
+
+   - The evaluation count is increased for all of the Policies.
+   - The violation count is increased for each violated Policy.
+   - A report is generated for each violated Policy (that has reporting enabled).
+
+- **One or more Policies block** the record production. In this scenario, one of the Policies blocks the record first and then hides it from others:
+
+   - For the first blocking Policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
+   - For the other Policies: no counts are increased and no reports are generated.
+
 ## Troubleshoot
 
 <details>
@@ -203,24 +218,9 @@ Since the **block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
+  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
   </p>
 </details>
-
-## Behavior When Multiple Policies Target a Common Topic
-
-When multiple policies target the same topic, two scenarios can occur when a record is produced:
-
-* **None of the policies block the record; all are evaluated:**
-
-  * The evaluation count is increased for all of them.
-  * The violation count is increased for each violated policy.
-  * A report is generated for each violated policy that has reporting enabled.
-
-* **One or more policies would block the record. In this scenario, one of the blocking policies blocks the record first and hides it from the others:**
-
-  * For the first blocking policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
-  * For the others: no counts are increased, and no reports are generated.
 
 ## Related resources
 
