@@ -627,7 +627,7 @@ spec:
       resourceType: CONNECTOR
       patternType: "LITERAL"
       name: "*" # All owned connectors
-      permissions: ["kafkaConnectViewConfig", "kafkaConnectStatus", "kafkaConnectRestart"]
+      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectRestart"]
   members:
     - user1@company.org
     - user2@company.org
