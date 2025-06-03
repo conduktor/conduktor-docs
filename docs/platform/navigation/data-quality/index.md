@@ -218,7 +218,7 @@ When multiple policies target the same topic, two scenarios can occur when a rec
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
   </p>
 </details>
 
