@@ -95,7 +95,7 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
-> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 ### Load balancing
 
@@ -161,7 +161,7 @@ During shutdown, Gateway closes client connections in controlled manner to simul
 > 
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
-> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 #### Security Defaults
 
