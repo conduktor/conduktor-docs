@@ -56,15 +56,14 @@ Here is a quick explanation of each supported security mode and security protoco
 | **Clients are identified by certificates (mTLS)** | Not possible (mTLS means encryption) | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SSL`<br />Authentication mechanism: `MTLS` |
 | **Credentials managed by Kafka** | Security Mode: `KAFKA_MANAGED`<br />Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or `AWS_MSK_IAM` | Security Mode: `KAFKA_MANAGED`<br />Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or `AWS_MSK_IAM` |
 
-
 ## Security Mode
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0) the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0) the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable, `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer the recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your back end kafka cluster, `KAFKA_MANAGED`.
@@ -81,11 +80,11 @@ If a client arrives using `PLAIN` then Gateway will try to use either the SSL co
 ⚠️In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.⚠️
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 ### PLAINTEXT
@@ -389,11 +388,11 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 ### ⚠️ DELEGATED_SASL_PLAINTEXT (Deprecated)
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 
@@ -431,11 +430,11 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 ### ⚠️ DELEGATED_SASL_SSL (Deprecated)
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
