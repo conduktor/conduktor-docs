@@ -66,13 +66,13 @@ The `DELEGATED` values remain supported for backward compatibility but are no lo
 If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
-The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your back end kafka cluster, `KAFKA_MANAGED`.
+The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your Kafka cluster will, `KAFKA_MANAGED`.
 
 ## Security protocol
 
-The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
+The Gateway broker security scheme must be defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
 
-Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and is never configured by the user**. 
+Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and never needs to be configured by the user**.
 
 Instead, Gateway will try to authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try to authenticate it.  
 If a client arrives using `PLAIN` then Gateway will try to use either the SSL configuration or validate the token itself, depending on the security protocol.
