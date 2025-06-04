@@ -81,7 +81,7 @@ Thus, authentication cannot take place and so **local and external Service Accou
 
 #### SSL (Encryption Only)
 
-If you use SSL for encryption only, Gateway presents a keystore certificate trusted by the client’s truststore, without authenticating the client. 
+If you use SSL for encryption only, Gateway presents a keystore certificate trusted by the client's truststore, without authenticating the client. 
 
 Thus, **local and external Service Accounts are not supported in this mode**.
 
@@ -89,7 +89,7 @@ Thus, **local and external Service Accounts are not supported in this mode**.
 
 ### SSL with Client Authentication (mTLS)
 
-With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate each other’s identities using TLS certificates, ensuring secure and trusted bidirectional communication. This means that both the client and Gateway authenticate one another through their respective certificates. 
+With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate each other's identities using TLS certificates, ensuring secure and trusted bidirectional communication. This means that both the client and Gateway authenticate one another through their respective certificates. 
 
 As a result, Gateway extracts the user identity from the TLS certificate, which can be mapped to an external Service Account in Gateway.
 
@@ -151,6 +151,14 @@ Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Alia
 Authorization (ACLs) is handled by the backing Kafka cluster. 
 
 Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster.
+
+> **Note:** When using Kafka 4.0, the following ACLs are no longer supported:
+> - LeaderAndIsr
+> - StopReplica
+> - UpdateMetadata
+> - ControlledShutdown
+>
+> If you are using these ACLs in your Gateway configuration, you will need to update your security policies accordingly.
 
 ### In Non-Delegated Mode
 
