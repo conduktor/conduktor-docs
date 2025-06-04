@@ -208,11 +208,11 @@ Depending on the Client to Gateway authentication method you choose, the Service
 We can enforce delegating authentication to Kafka by setting `${GATEWAY_SECURITY_MODE}` to `KAFKA_MANAGED`.
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 In Kafka Managed mode, the credentials provided to establish the connection between the Client and the Gateway are the same used from the Gateway to the backing Kafka.  
@@ -247,7 +247,7 @@ When in `KAFKA_MANAGED` mode, ACLs will be disabled.
 
 These `GATEWAY_ACL_STORE_ENABLED` environment variable remains supported for backward compatibility but is no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 [Jump to top](#supported-protocols).
