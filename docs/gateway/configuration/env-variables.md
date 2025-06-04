@@ -92,11 +92,11 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 | `GATEWAY_SNI_HOST_SEPARATOR`                                                    | The separator used to construct returned metadata.                                                                                                                                                                               | `-`                                                                                                                                                  |
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 
 ### Load balancing
@@ -155,13 +155,13 @@ When defining Gateway's Kafka property `bootstrap.servers`, declare it as the en
 | `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client re-authentication after this amount of time. If set to 0, we never force the client to re-authenticate until the next connection                                                                           | `0`                                                                                                                                                |
 
 :::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
 `GATEWAY_ACL_ENABLED` has been deprecated, with behaviour derived from security mode instead.
  
-These values remain supported for backward compatibility but are no longer recommended for new configurations.
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
 #### Security Defaults
 
