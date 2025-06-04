@@ -88,7 +88,7 @@ Thus, authentication cannot take place and so **local and external Service Accou
 
 #### SSL (Encryption Only)
 
-If you use SSL for encryption only, Gateway presents a keystore certificate trusted by the client’s truststore, without authenticating the client.
+If you use SSL for transport layer encryption only, Gateway presents a keystore certificate trusted by the client’s truststore, without authenticating the client.
 
 Thus, **local and external Service Accounts are not supported in this mode**.
 
@@ -126,8 +126,8 @@ It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that
 :::warning KAFKA_MANAGED & GATEWAY_MANAGED MODES
 With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
 
-- **Allow the backing Kafka cluser to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
-- **Manage them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - Gateway authenticates the clients and manages their ACLs
+- **Allow the backing Kafka cluser to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - In this mode Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
+- **Manage them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - In this mode Gateway authenticates the clients and manages their ACLs
 :::
 
 ### Kafka Managed SASL Authentication
@@ -140,7 +140,7 @@ In this case, Gateway can forward the client credentials to the backing Kafka cl
 Currently, Kafka managed SASL authentication only supports PLAIN, SCRAM, OAUTHBEARER and AWS_MSK_IAM mechanisms. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417) for specific requirements.
 :::
 
-In this mode, the clients authorization (ACLs) is also handled by the backing Kafka cluster. **Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster**.
+In this mode, the client's authorization (ACLs) is also handled by the backing Kafka cluster. **Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster**.
 
 As such:
 
