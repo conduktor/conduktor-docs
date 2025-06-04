@@ -73,7 +73,7 @@ Gateway supports different client authentication methods, depending on both the 
 ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of the security mode, set by an additional environment variable `GATEWAY_SECURITY_MODE`.
 These values remain supported for backward compatibility but plan to be deprecated, and are no longer the recommendation for new configurations.
 
-If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/docs/gateway/how-to/migration-guide-to-security-mode).
+If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode).
 :::
 
 ### Anonymous authentication
