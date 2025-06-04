@@ -91,11 +91,13 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 | `GATEWAY_SECURITY_PROTOCOL`                                                     | Defines the security protocol that clients should use to connect to Gateway. **Must be set to `SSL` or `SASL_SSL` when in `GATEWAY_MANAGED` security mode, or `SASL_SSL` when in `KAFKA_MANAGED` security mode, for SNI routing. | The default value depends on combination of `GATEWAY_SECURITY_PROTOCOL` and `KAFKA_SECURITY_PROTOCOL`. [See security defaults](#security-defaults)   |
 | `GATEWAY_SNI_HOST_SEPARATOR`                                                    | The separator used to construct returned metadata.                                                                                                                                                                               | `-`                                                                                                                                                  |
 
-> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
->
-> These values remain supported for backward compatibility but are no longer recommended for new configurations.
->
-> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+
+These values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 
 ### Load balancing
 
@@ -155,14 +157,15 @@ During shutdown, Gateway closes client connections in controlled manner to simul
 | `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client re-authentication after this amount of time. If set to 0, we never force the client to re-authenticate until the next connection                                                                           | `0`                                                                                                                                                |
 | `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS`       | The pause between disconnection of broker clients during shutdown process. Set to `1000` or higher for librdkafka clients.                                                                                                  | `0`                                                                                                                                                |
 
-> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
->
-> `GATEWAY_ACL_ENABLED` has been deprecated, with behaviour derived from security mode instead.
-> 
-> These values remain supported for backward compatibility but are no longer recommended for new configurations.
->
-> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
 
+`GATEWAY_ACL_ENABLED` has been deprecated, with behaviour derived from security mode instead.
+ 
+These values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 #### Security Defaults
 
 This decision tree explains how Gateway determines default values for `GATEWAY_SECURITY_PROTOCOL` and `GATEWAY_SECURITY_MODE` when one or both are not explicitly set.
