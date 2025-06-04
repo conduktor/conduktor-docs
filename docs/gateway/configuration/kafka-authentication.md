@@ -207,11 +207,13 @@ Depending on the Client to Gateway authentication method you choose, the Service
 ### Kafka Managed Authentication
 We can enforce delegating authentication to Kafka by setting `${GATEWAY_SECURITY_MODE}` to `KAFKA_MANAGED`.
 
-> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
->
-> These values remain supported for backward compatibility but are no longer recommended for new configurations.
->
-> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of additional environment variable `GATEWAY_SECURITY_MODE`.
+
+These values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using DELEGATED security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 
 In Kafka Managed mode, the credentials provided to establish the connection between the Client and the Gateway are the same used from the Gateway to the backing Kafka.  
 As a result, the Client will inherit the ACLs of the service account configured on the backing cluster.
@@ -236,12 +238,16 @@ This Service Account must have all the necessary ACLs to perform not only the Ga
 
 When in Gateway Managed mode, ACLs will be enabled. You can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
 
-> ⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `GATEWAY_ACL_STORE_ENABLED` environment variable has been deprecated.
-> Instead, when `GATEWAY_SECURITY_MODE` is set to `GATEWAY_MANAGED`, ACLs will be enabled.
-> When in `KAFKA_MANAGED` mode, ACLs will be disabled.
->
-> These `GATEWAY_ACL_STORE_ENABLED` environment variable remains supported for backward compatibility but is no longer recommended for new configurations.
->
-> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `GATEWAY_ACL_STORE_ENABLED` environment variable has been deprecated.
+
+Instead, when `GATEWAY_SECURITY_MODE` is set to `GATEWAY_MANAGED`, ACLs will be enabled.
+
+When in `KAFKA_MANAGED` mode, ACLs will be disabled.
+
+These `GATEWAY_ACL_STORE_ENABLED` environment variable remains supported for backward compatibility but is no longer recommended for new configurations.
+
+If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 
 [Jump to top](#supported-protocols).
