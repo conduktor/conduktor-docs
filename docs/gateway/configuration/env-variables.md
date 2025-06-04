@@ -161,16 +161,17 @@ During shutdown, Gateway closes client connections in controlled manner to simul
 As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
 `GATEWAY_ACL_ENABLED` has been deprecated, with behaviour derived from security mode instead.
- 
+
 The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
 If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
-#### Security Defaults
+
+### Security Defaults
 
 This decision tree explains how Gateway determines default values for `GATEWAY_SECURITY_PROTOCOL` and `GATEWAY_SECURITY_MODE` when one or both are not explicitly set.
 
-##### 🔹 Case 1: `GATEWAY_SECURITY_PROTOCOL` is **not set**, `GATEWAY_SECURITY_MODE` is **not set**
+#### 🔹 Case 1: `GATEWAY_SECURITY_PROTOCOL` is **not set**, `GATEWAY_SECURITY_MODE` is **not set**
 
 - Infer security values based on Kafka configuration
 
@@ -181,7 +182,7 @@ This decision tree explains how Gateway determines default values for `GATEWAY_S
   | `PLAINTEXT`              | `PLAINTEXT`                           | `GATEWAY_MANAGED`                 |
   | `SSL`                    | `SSL`                                 | `GATEWAY_MANAGED`                 |
 
-##### 🔹 Case 2: `GATEWAY_SECURITY_PROTOCOL` is **not set**, `GATEWAY_SECURITY_MODE` **is set**
+#### 🔹 Case 2: `GATEWAY_SECURITY_PROTOCOL` is **not set**, `GATEWAY_SECURITY_MODE` **is set**
 
 - Infer security values based on Kafka configuration and Gateway security mode
   - Note we will not infer an invalid combination
