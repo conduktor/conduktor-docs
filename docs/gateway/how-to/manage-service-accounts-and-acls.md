@@ -392,7 +392,7 @@ Here is the type of properties file you may use to connect to the Gateway using 
 ```properties title="external-client.properties"
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=OAUTHBEARER
-sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
 sasl.oauthbearer.token.endpoint.url="TO_FILL"
 sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="TO_FILL" clientSecret="TO_FILL" scope=".default";
 ```
