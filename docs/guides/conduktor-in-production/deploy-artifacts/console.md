@@ -874,7 +874,7 @@ clusters:
 
 To configure Conduktor Console logs globally, you can use the following environment variables:
 
-| Environment Variable  | Default value |                                                                          |
+| Environment variable  | Default value |                                                                          |
 | --------------------  | ------------- | ------------------------------------------------------------------------ |
 | `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global Console log level, one of `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG` |
 | `CDK_ROOT_LOG_FORMAT` | `TEXT`        | Log format, one of `TEXT` or `JSON` (sice 1.26.0)                        |
@@ -890,7 +890,7 @@ To configure Conduktor Console logs on a per-module basis, you can use the envir
 
 Possible values for all of them are: `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG`, and `TRACE`.
 
-| Environment Variable          | Default value        | Description                                                                                                                             |
+| Environment variable          | Default value        | Description                                                                                                                             |
 | ----------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | `PLATFORM_STARTUP_LOG_LEVEL`  | `INFO`               | Set the setup/configuration process logs level. By default, it is set to `INFO`, but switches to `DEBUG` if `CDK_ROOT_LOG_LEVEL: DEBUG`. |
 | `CONSOLE_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                                      |
@@ -1323,41 +1323,11 @@ curl -s  http://localhost:8080/api/versions | jq .
 # }
 ```
 
-
 # Configuration properties and environment variables
-
-- [Docker image environment variables](#docker-image-environment-variables)
-- [Console properties reference](#console-properties-reference)
-  - [YAML Property Cases](#yaml-property-cases)
-  - [Environment Variable Conversion](#environment-variable-conversion)
-    - [Conversion edge cases](#conversion-edge-cases)
-  - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
-  - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
-  - [Global properties](#global-properties)
-  - [Database properties](#database-properties)
-  - [Session lifetime properties](#session-lifetime-properties)
-  - [Local users properties](#local-users-properties)
-  - [Monitoring properties](#monitoring-properties)
-    - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
-    - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
-  - [SSO properties](#sso-properties)
-    - [LDAP properties](#ldap-properties)
-    - [OAuth2 properties](#oauth2-properties)
-    - [JWT auth properties](#jwt-auth-properties)
-  - [Kafka clusters properties](#kafka-clusters-properties)
-  - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
-  - [Schema registry properties](#schema-registry-properties)
-    - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
-  - [Kafka Connect properties](#kafka-connect-properties)
-  - [ksqlDB properties](#ksqldb-properties)
-  - [Indexer properties](#indexer-properties)
-  - [AuditLog export properties](#auditlog-export-properties)
-  - [Conduktor SQL properties](#conduktor-sql-properties)
-  - [Partner zone properties](#partner-zone-properties)
 
 ## Docker image environment variables
 
-| Environment Variable                                                                                                   | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
+| Environment variable                                                                                                   | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
 |------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------|
 | **[Logs](/platform/get-started/troubleshooting/logs-configuration/)**                                                  |                                                                                                                                                             |                                                                                     |               |
 | `CDK_DEBUG`                                                                                                            | Enable Console debug logs (equivalent to `CDK_ROOT_LOG_LEVEL=DEBUG`)                                                                                        | `false`                                                                             | 1.0.0         |
@@ -1490,7 +1460,7 @@ database:
 
 with the following environment variables:
 
-| Environment Variable | Value       |
+| Environment variable | Value       |
 |----------------------|-------------|
 | `DB_LOGIN`           | `usr`       |
 | `DB_PWD`             | `pwd`       |
@@ -1547,7 +1517,7 @@ See [database configuration](#) for details.
 
 ### Session lifetime properties
 
-| Property               | Description                                                                                           | Environment Variable       | Mandatory | Type | Default value |
+| Property               | Description                                                                                           | Environment variable       | Mandatory | Type | Default value |
 |------------------------|-------------------------------------------------------------------------------------------------------|----------------------------|-----------|------|---------------|
 | `auth.sessionLifetime` | Max session lifetime in seconds                                                                       | `CDK_AUTH_SESSIONLIFETIME` | false     | int  | `259200`      |
 | `auth.idleTimeout`     | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT`     | false     | int  | `259200`      |
@@ -1556,7 +1526,7 @@ See [database configuration](#) for details.
 
 Optional local account list used to log into Console.
 
-| Property                      | Description   | Environment Variable             | Mandatory | Type   | Default Value          |
+| Property                      | Description   | Environment variable             | Mandatory | Type   | Default value          |
 |-------------------------------|---------------|----------------------------------|-----------|--------|------------------------|
 | `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCALUSERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |
@@ -1572,7 +1542,7 @@ First, we need to configure Console to connect to Cortex services. By default, C
 - Query port: 9009
 - Alert manager port: 9010
 
-| Property                                | Description                                                          | Environment Variable                     | Mandatory | Type   | Default |
+| Property                                | Description                                                          | Environment variable                     | Mandatory | Type   | Default |
 |-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
 | `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009                               | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
 | `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010                              | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
@@ -1601,14 +1571,14 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 
 [See authentication guide for snippets](/platform/category/configure-sso/).
 
-| Property                         | Description                                                              | Environment Variable                 | Mandatory | Type    | Default |
+| Property                         | Description                                                              | Environment variable                 | Mandatory | Type    | Default |
 |----------------------------------|--------------------------------------------------------------------------|--------------------------------------|-----------|---------|---------|
 | `sso.ignoreUntrustedCertificate` | Disable SSL checks                                                       | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
 | `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and OAuth2) as PEM | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       |
 
 #### LDAP properties
 
-| Property                             | Description                                                                                                                                                                                        | Environment Variable                   | Mandatory | Type         | Default              |
+| Property                             | Description                                                                                                                                                                                        | Environment variable                   | Mandatory | Type         | Default              |
 |--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|-----------|--------------|----------------------|
 | `sso.ldap[].name`                    | Ldap connection name                                                                                                                                                                               | `CDK_SSO_LDAP_0_NAME`                  | true      | string       | ∅                    |
 | `sso.ldap[].server`                  | Ldap server host and port                                                                                                                                                                          | `CDK_SSO_LDAP_0_SERVER`                | true      | string       | ∅                    |
@@ -1628,7 +1598,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 
 #### OAuth2 properties
 
-| Property                                | Description                                                         | Environment Variable                     | Mandatory | Type                                                                                                                                         | Default |
+| Property                                | Description                                                         | Environment variable                     | Mandatory | Type                                                                                                                                         | Default |
 |-----------------------------------------|---------------------------------------------------------------------|------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | `sso.oauth2[].name`                     | OAuth2 connection name                                              | `CDK_SSO_OAUTH2_0_NAME`                  | true      | string                                                                                                                                       | ∅       |
 | `sso.oauth2[].default`                  | Use as default                                                      | `CDK_SSO_OAUTH2_0_DEFAULT`               | true      | boolean                                                                                                                                      | ∅       |
@@ -1651,7 +1621,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 | `sso.jwt-auth.groups-claim`   | Group attribute from your identity provider   | `CDK_SSO_JWTAUTH_GROUPSCLAIM`   | false     | string | `groups` |
 | `sso.jwt-auth.api-key-claim`  | API key attribute from your identity provider | `CDK_SSO_JWTAUTH_APIKEYCLAIM`   | false     | string | `apikey` |
 
-### Kafka clusters properties
+### Kafka cluster properties
 
 :::warning
 The new recommended way to configure clusters is through the CLI and YAML manifests. [Check KafkaCluster documentation for details](/platform/reference/resource-reference/console/#kafkacluster).
@@ -1661,7 +1631,7 @@ For more information on configuring your Kafka clusters using GitOps processes, 
 
 You can find sample configurations on the [Configuration snippets](/platform/get-started/configuration/configuration-snippets/) page.
 
-| Property                                | Description                                                    | Environment Variable                        | Mandatory | Type                                     | Default |
+| Property                                | Description                                                    | Environment variable                        | Mandatory | Type                                     | Default |
 |-----------------------------------------|----------------------------------------------------------------|---------------------------------------------|-----------|------------------------------------------|---------|
 | `clusters[].id`                         | String used to uniquely identify your Kafka cluster            | `CDK_CLUSTERS_0_ID`                         | true      | string                                   | ∅       |
 | `clusters[].name`                       | Alias or user-friendly name for your Kafka cluster             | `CDK_CLUSTERS_0_NAME`                       | true      | string                                   | ∅       |
@@ -1676,7 +1646,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-clusters-pr
 
 However, you can get additional benefits by setting the flavor of your cluster. This corresponds to the `Provider` tab of your cluster configuration in Console.
 
-| Property                                        | Description                                                 | Environment Variable                                | Mandatory | Type   | Default |
+| Property                                        | Description                                                 | Environment variable                                | Mandatory | Type   | Default |
 |-------------------------------------------------|-------------------------------------------------------------|-----------------------------------------------------|-----------|--------|---------|
 | `clusters[].kafkaFlavor.type`                   | Kafka flavor type, one of `Confluent`, `Aiven`, `Gateway`   | `CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE`                   | false     | string | ∅       |
 | **Flavor is `Confluent`**                       | Manage Confluent Cloud service accounts, API keys, and ACLs |                                                     |           |        |         |
@@ -1696,7 +1666,7 @@ However, you can get additional benefits by setting the flavor of your cluster. 
 
 ### Schema registry properties
 
-| Property                                               | Description                                  | Environment Variable                                       | Mandatory | Type                                 | Default |
+| Property                                               | Description                                  | Environment variable                                       | Mandatory | Type                                 | Default |
 |--------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
 | `clusters[].schemaRegistry.url`                        | The schema registry URL                      | `CDK_CLUSTERS_0_SCHEMAREGISTRY_URL`                        | true      | string                               | ∅       |
 | `clusters[].schemaRegistry.ignoreUntrustedCertificate` | Skip SSL certificate validation              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean                              | `false` |
@@ -1712,7 +1682,7 @@ However, you can get additional benefits by setting the flavor of your cluster. 
 
 #### Amazon Glue schema registry properties
 
-| Property                                               | Description                                                                      | Environment Variable                                       | Mandatory | Type   | Default |
+| Property                                               | Description                                                                      | Environment variable                                       | Mandatory | Type   | Default |
 |--------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------------------------------|-----------|--------|---------|
 | `clusters[].schemaRegistry.region`                     | The Glue schema registry region                                                  | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION`                     | true      | string | ∅       |
 | `clusters[].schemaRegistry.registryName`               | The Glue schema registry name                                                    | `CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME`               | false     | string | ∅       |
@@ -1727,7 +1697,7 @@ However, you can get additional benefits by setting the flavor of your cluster. 
 
 ### Kafka Connect properties
 
-| Property                                                | Description                                                     | Environment Variable                                        | Mandatory | Type    | Default |
+| Property                                                | Description                                                     | Environment variable                                        | Mandatory | Type    | Default |
 |---------------------------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------|-----------|---------|---------|
 | `clusters[].kafkaConnects[].id`                         | String used to uniquely identify your Kafka Connect             | `CDK_CLUSTERS_0_KAFKACONNECTS_0_ID`                         | true      | string  | ∅       |
 | `clusters[].kafkaConnects[].name`                       | Name your Kafka Connect                                         | `CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME`                       | true      | string  | ∅       |
@@ -1745,9 +1715,9 @@ However, you can get additional benefits by setting the flavor of your cluster. 
 
 ### ksqlDB properties
 
-We support ksqlDB integration as of Conduktor Console `1.21.0`.
+We support ksqlDB integration as of Conduktor Console v1.21.0.
 
-| Property                                          | Description                                          | Environment Variable                                  | Mandatory | Type    | Default |
+| Property                                          | Description                                          | Environment variable                                  | Mandatory | Type    | Default |
 |---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|---------|---------|
 | `clusters[].ksqlDBs[].id`                         | String used to uniquely identify your ksqlDB Cluster | `CDK_CLUSTERS_0_KSQLDBS_0_ID`                         | true      | string  | ∅       |
 | `clusters[].ksqlDBs[].name`                       | Name of your ksqlDB Cluster                          | `CDK_CLUSTERS_0_KSQLDBS_0_NAME`                       | true      | string  | ∅       |
@@ -1767,7 +1737,7 @@ We support ksqlDB integration as of Conduktor Console `1.21.0`.
 The [indexer](/platform/navigation/console/about-indexing/) is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
 You should modify these parameters only if you see an issue with the performance of the indexer.
 
-| Property                                             | Description                                                                                                                                   | Environment Variable                               | Mandatory | Type | Default           |
+| Property                                             | Description                                                                                                                                   | Environment variable                               | Mandatory | Type | Default           |
 |------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
 | **Lag exporter**                                     |                                                                                                                                               |                                                    |           |      |                   |
 | `lagexporter.frequency`                              | Frequency in seconds of the execution of the lag exporter                                                                                     | `CDK_LAGEXPORTER_FREQUENCY`                        | false     | int  | `30`              |
@@ -1799,7 +1769,7 @@ You should modify these parameters only if you see an issue with the performance
 The audit log can be exported to a Kafka topic, once configured in Console.
 For details on the available exportable events refer to: [Exportable audit log events](docs/platform/navigation/settings/audit-log.md#exportable-audit-log-events).
 
-| Property                                            | Description                                           | Environment Variable                                  | Mandatory | Type   | Default |
+| Property                                            | Description                                           | Environment variable                                  | Mandatory | Type   | Default |
 |-----------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|-----------|--------|---------|
 | `audit_log_publisher.cluster`                       | The cluster ID where the audit logs will be exported  | `CDK_AUDITLOGPUBLISHER_CLUSTER`                       | false     | string | ∅       |
 | `audit_log_publisher.topicName`                     | The topic name where the audit logs will be exported  | `CDK_AUDITLOGPUBLISHER_TOPICNAME`                     | false     | string | ∅       |
