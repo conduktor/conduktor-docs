@@ -174,7 +174,7 @@ This decision tree explains how Gateway determines default values for `GATEWAY_S
 
 - Infer security values based on Kafka configuration
 
-  | Kafka Security Protocol  | Inferred `$GATEWAY_SECURITY_PROTOCOL` | Inferred `$GATEWAY_SECURITY_MODE` |
+  | Kafka Security Protocol  | Inferred `GATEWAY_SECURITY_PROTOCOL` | Inferred `GATEWAY_SECURITY_MODE` |
   |--------------------------|---------------------------------------|-----------------------------------|
   | `SASL_PLAINTEXT`         | `SASL_PLAINTEXT`                      | `KAFKA_MANAGED`                   |
   | `SASL_SSL`               | `SASL_SSL`                            | `KAFKA_MANAGED`                   |
@@ -184,26 +184,26 @@ This decision tree explains how Gateway determines default values for `GATEWAY_S
 ##### 🔹 Case 2: `GATEWAY_SECURITY_PROTOCOL` is **not set**, `GATEWAY_SECURITY_MODE` **is set**
 
 - Infer security values based on Kafka configuration and Gateway security mode
-    - note we will not infer an invalid combination
+  - Note we will not infer an invalid combination
 
-| $GATEWAY_SECURITY_MODE  | Kafka Security Protocol | Inferred `$GATEWAY_SECURITY_PROTOCOL`         |
+| GATEWAY_SECURITY_MODE  | Kafka Security Protocol | Inferred `GATEWAY_SECURITY_PROTOCOL`         |
 |-------------------------|-------------------------|-----------------------------------------------|
 | `KAFKA_MANAGED`         | `SASL_PLAINTEXT`        | `SASL_PLAINTEXT`                              |
 | `KAFKA_MANAGED`         | `SASL_SSL`              | `SASL_SSL`                                    |
 | `GATEWAY_MANAGED`       | `PLAINTEXT`             | `PLAINTEXT`                                   |
 | `GATEWAY_MANAGED`       | `SSL`                   | `SSL`                                         |
-| _Any other combination_ |                         | _No default; we will ask you to set manually_ |
+| *Any other combination* |                         | *No default; we will ask you to set manually* |
 
 #### 🔹 Case 3: `GATEWAY_SECURITY_PROTOCOL` **is set**, `GATEWAY_SECURITY_MODE` is **not set**
 
-| `$GATEWAY_SECURITY_PROTOCOL`              | Inferred `$GATEWAY_SECURITY_MODE` |
+| `GATEWAY_SECURITY_PROTOCOL`              | Inferred `GATEWAY_SECURITY_MODE` |
 |-------------------------------------------|-----------------------------------|
 | `SASL_PLAINTEXT`                          | `GATEWAY_MANAGED`                 |
 | `SASL_SSL`                                | `GATEWAY_MANAGED`                 |
 | `PLAINTEXT`                               | `GATEWAY_MANAGED`                 |
 | `SSL`                                     | `GATEWAY_MANAGED`                 |
-| `DELEGATED_SASL_PLAINTEXT` _(deprecated)_ | `KAFKA_MANAGED`                   |
-| `DELEGATED_SASL_SSL`      _(deprecated)_  | `KAFKA_MANAGED`                   |
+| `DELEGATED_SASL_PLAINTEXT` *(deprecated)* | `KAFKA_MANAGED`                   |
+| `DELEGATED_SASL_SSL`      *(deprecated)*  | `KAFKA_MANAGED`                   |
 
 ### SSL authentication
 
