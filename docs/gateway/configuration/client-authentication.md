@@ -79,7 +79,7 @@ If a client arrives using `PLAIN` then Gateway will try to use either the SSL co
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
-> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 ### PLAINTEXT
 
@@ -385,7 +385,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
-> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 
 
@@ -425,7 +425,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 >
 > These values remain supported for backward compatibility but are no longer recommended for new configurations.
 >
-> 👉 We strongly recommend reviewing the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+> If you are using DELEGATED security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
