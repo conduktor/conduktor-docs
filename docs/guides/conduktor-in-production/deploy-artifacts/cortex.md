@@ -4,26 +4,15 @@ title: Cortex
 description: Deploy Cortex
 ---
 
-
 To enable monitoring via <GlossaryTerm>Console</GlossaryTerm>, you have to deploy and configure the `console-cortex` artifact.
-
-## Prerequisites
-
-Console is available?
 
 ## Deploy and configure Cortex
 
-:::warning
-This Configuration is for Cortex dependency image `conduktor/conduktor-console-cortex`
-:::
-
 The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
 
-By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
-You can mount a volume on this folder to keep metrics data between updates.
-Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
+By default, data will be stored in `/var/conduktor/monitoring` inside the running image. You can mount a volume on this folder to keep metrics data between updates. Alternatively, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`.
 
-| Environment Variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
+| Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
 | `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
@@ -33,8 +22,8 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `CDK_MONITORING_STORAGE_S3_REGION`            | S3 storage region.                                                                                        | false     | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_BUCKET`            | S3 storage bucket name.                                                                                   | true      | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_S3_INSECURE`          | S3 storage SSL/TLS check flag.                                                                            | false     | bool   | `false`                 | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | Access key ID of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                                                                       | false      | string | ∅                       | `1.18.0` |
-| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | Secret access key of an AWS IAM identity for Monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                            | false      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_ACCESSKEYID`       | Access key ID of an AWS IAM identity for monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                                                                       | false      | string | ∅                       | `1.18.0` |
+| `CDK_MONITORING_STORAGE_S3_SECRETACCESSKEY`   | Secret access key of an AWS IAM identity for monitoring to upload logs to S3. If set to false, and if you are running on a Kubernetes deployment, Monitoring can attempt to leverage AWS IRSA for the Pod’s service account when connecting to S3.                                                                            | false      | string | ∅                       | `1.18.0` |
 | **GCS**                                       |                                                                                                          |           |        |                         |          |
 | `CDK_MONITORING_STORAGE_GCS_BUCKETNAME`       | GCS storage bucket name.                                                                                  | true      | string | ∅                       | `1.18.0` |
 | `CDK_MONITORING_STORAGE_GCS_SERVICEACCOUNT`   | GCS storage service account JSON content.                                                                 | true      | string | ∅                       | `1.18.0` |
@@ -90,8 +79,7 @@ services:
 ### Overriding with YAML
 
 **Cortex**  
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
-This is not currently available for Alert Manager. 
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`. This is not currently available for Alert Manager.
 
 For example, create a file `cortex.yaml` add in only your overrides:
 ```yaml
