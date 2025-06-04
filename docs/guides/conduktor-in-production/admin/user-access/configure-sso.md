@@ -5,6 +5,8 @@ description: Configure SSO in Conduktor
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
+We offer several options when configuring SSO (Single Sign-On).
+
 ## Configure LDAP as SSO
 
 [View the list of LDAP properties](#ldap-config-properties). Here's a sample snippet containing server, users and groups to put in your configuration file.
@@ -52,7 +54,7 @@ CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 If your LDAP server is **Active Directory** and you get an "invalid user" error when trying to log in, try setting your `search-filter` to `'(sAMAccountName={0})'`.
 :::
 
-### Users information
+#### User mapping
 
 Here is the mapping between LDAP user's information and Conduktor Console:
 
@@ -65,7 +67,7 @@ Here is the mapping between LDAP user's information and Conduktor Console:
 | `givenName`       | User first name                           |
 | `displayName`     | User display name                         |
 
-### Groups
+#### Groups
 
 To retrieve the groups each user belongs to, you have to set `groups-enabled` to `true`, and populate the attributes `groups-base` and `groups-filter`. 
 
@@ -76,7 +78,7 @@ Note that depending on your LDAP `objectClass`, the attribute used to filter gro
 | `groupOfNames`       | `"member={0}"`            |
 | `groupOfUniqueNames` | `"uniqueMember={0}"`      |
 
-### Map to external groups
+##### Map to external groups
 
 Now that your configuration is finished, you can set up a **mapping** between your LDAP groups and your Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on their LDAP groups.
 
@@ -87,6 +89,21 @@ To create this mapping, you have to create a group from Console, and mention the
 After the user logged in, we can see they've been added to the group, without any action:
 ![](/guides/egm-after-login.png)
 
+#### Configure LDAPS certificate
+
+For LDAPs (LDAP over SSL) connection, you have to provide a trusted certificate using Java JKS TrustStore file. See [SSL/TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details.
+
+LDAPS SSL certificate can also be passed as PEM encoded string using the property `sso.trustedCertificates`.
+
+```yaml title="platform-config.yaml"
+sso:
+  ignoreUntrustedCertificate: false
+  trustedCertificates: |
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+```
+
 ## Configure Auth0 as SSO
 
 [View the list of Auth0 properties](#oauth2-config-properties).
@@ -94,9 +111,11 @@ After the user logged in, we can see they've been added to the group, without an
 On Auth0 side, you'll have to create a new application:
 
 1. Create a regular web application:
-    <img src="/guides/auth0-create-app.png" alt="Auth01" style={{maxWidth: '30%'}} />
+    <img src="/guides/auth0-create-app.png" alt="Auth01"/>
+
 1. Get the `client ID`, `client secret` and `domain`:
-    <img src="/guides/auth0-client-id-secret-domain.png" alt="Auth02" style={{maxWidth: '30%'}} />
+    <img src="/guides/auth0-client-id-secret-domain.png" alt="Auth02" />
+
 1. Configure the callback URI.nThe redirect URI can be something like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`.
 
 ![](/guides/auth0-callback.png)
@@ -105,7 +124,7 @@ On Auth0 side, you'll have to create a new application:
 Remember to specify how you want to connect using the **Connections** tab of your Auth0 application.
 :::
 
-### Configure Console
+#### Configure Console
 
 On the Console side, you can add the snippet below to your configuration file. Replace the `client ID`, `client secret` and `domain` with values from step 2 above.
 
@@ -136,6 +155,779 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 </TabItem>
 </Tabs>
 
+## Configure Amazon Cognito as SSO
+
+On Amazon Cognito side, you'll have to create a user pool with an application:
+
+1. Create a new user pool
+  ![](/guides/cognito-user-pool.png)
+
+2. Configure the application client. You can select the name you want, shown here as `Conduktor Console` and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`.
+
+Make sure that a client secret will be generated - select `Confidential client`.
+
+  ![](/guides/cognito-app-client.png)
+
+3. Set the scopes `profile`, `email` and `openid` in the **Advanced app settings**:
+
+  ![](/guides/cognito-scopes.png)
+
+4. Get the `user pool ID`, `client ID`, and `client secret`, that you'll use in the configuration file of Console
+
+  ![](/guides/cognito-user-pool-id.png)
+  ![](/guides/cognito-client-id-secret.png)
+
+:::note
+You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<user pool ID>/.well-known/openid-configuration`.
+:::
+
+#### Configure Console
+
+On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, `region`, and `pool ID`, with what you got during step 4.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "cognito"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      openid:
+        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="cognito"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
+```
+
+</TabItem>
+</Tabs>
+
+#### Configure groups
+
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Amazon Cognito, you must set the property `groups-claim` to `"cognito:groups"` in Console configuration file. Below is the full snippet for your configuration file:
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "cognito"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      groups-claim: "cognito:groups"
+      openid:
+        issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="cognito"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPS-CLAIM="cognito:groups"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
+```
+
+</TabItem>
+</Tabs>
+
+##### Map to external groups
+
+Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
+
+The value you need to put as an external group is the `Object ID` of the Amazon Cognito group.
+
+
+## Configure Entra ID as SSO
+
+On the Entra ID (formerly Azure Active Directory) side, you'll have to create a new application:
+
+- **Step 1**: Create a new application in `App registrations` and set the callback URI
+
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+
+For example, if you deployed Console locally using the name `azure` in your configuration file, you can use `http://localhost:8080/oauth/callback/azure`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
+
+![](/guides/azure-new-app.png)
+
+- **Step 2**: Create a new client secret from the **Certificates and secrets** tab
+
+![](/guides/azure-client-secret.png)
+
+:::warning
+You need to keep the `Value` somewhere safe, as you will not have access to it again.
+:::
+
+- **Step 3**: Find the `client ID` and `tenant ID` in the **Overview** tab
+
+![](/guides/azure-client-id.png)
+
+:::note
+You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
+:::
+
+#### Configure Console
+
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during steps 2 and 3.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "azure"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      openid:
+        issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="azure"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2.0"
+```
+
+</TabItem>
+</Tabs>
+
+#### Configure groups
+
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the **Token configuration** tab:
+
+![](/guides/azure-add-groups-claim.png)
+
+:::warning
+If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
+:::
+
+Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "azure"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      groups-claim: "groups"
+      openid:
+        issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="azure"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2.0"
+```
+
+</TabItem>
+</Tabs>
+
+##### Map to external groups
+
+Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
+
+The value you need to put as an external group is the `Object ID` of the Azure AD group.
+
+
+## Configure Google as SSO
+
+On Google side:
+
+- **Step 1**: Create an application on the **OAuth consent screen** tab
+
+The scopes needed are `email`, `profile`, and `openid`.
+Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
+
+import GoogleScopes from '/guides/google-scopes.png';
+
+<img src={GoogleScopes} alt="Google Scopes" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 2**: Restrict access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
+
+import GoogleUserTypeInternal from '/guides/google-user-type-internal.png';
+
+<img src={GoogleUserTypeInternal} alt="Google Users type internal" style={{ width: 300, display: 'block', margin: 'auto' }} />
+
+- **Step 3**: Create a new `OAuth client ID`
+
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+
+For example, if you deployed Console locally using the name `google` in your configuration file, you can use `http://localhost:8080/oauth/callback/google`, like on the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
+
+import GoogleCreateClient from '/guides/google-create-client.png';
+
+<img src={GoogleCreateClient} alt="Google Create Client" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 4**: Get the `client ID` and the `secret ID`
+
+After the creation, the pop-up below appears. You can save the client ID and secret as JSON if you want.
+
+import GoogleClientIdSecret from '/guides/google-client-id-secret.png';
+
+<img src={GoogleClientIdSecret} alt="Google Client ID Secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+:::note
+You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
+:::
+
+:::info
+If you need to add an **authorized domain** to your Google account, you can follow [this guide](https://support.google.com/cloud/answer/6158849?hl=en-GB#authorized-domains&zippy=%2Cauthorized-domains).
+:::
+
+#### Configure Console
+
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret with what you got during the step 4.
+
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "google"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      scopes: "openid,email,profile"
+      openid:
+        issuer: "https://accounts.google.com"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="google"
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
+```
+
+</TabItem>
+</Tabs>
+
+#### Configure groups
+
+An additional scope `https://www.googleapis.com/auth/cloud-identity.groups.readonly` is required if you want to sync Google Group with Conduktor Groups.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "google"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      scopes: "openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
+      openid:
+        issuer: "https://accounts.google.com"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="google"
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile,https://www.googleapis.com/auth/cloud-identity.groups.readonly"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
+```
+
+</TabItem>
+</Tabs>
+
+##### Map to external groups
+
+Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
+
+The value you need to put as an external group is the `email` address of the Google Group.
+
+
+## Configure JumpCloud as SSO
+
+On the JumpCloud side, you'll have to create a new application:
+
+- **Step 1**: Create a new application in `SSO Applications`.
+![](/guides/jumpcloud-figure-1.png)
+
+- **Step 2**: Select a `Custom Application` as shown below.
+![](/guides/jumpcloud-figure-2.png)
+
+Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in the screenshot below.
+![](/guides/jumpcloud-figure-3.png)
+
+Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in the screenshot below and configure this application.
+
+![](/guides/jumpcloud-figure-4.png)
+
+- **Step 3**: Add `Redirect URI(s)` and `Login URL`.
+
+The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application. 
+
+Enter the redirect URI in the following way:
+
+`http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`.
+
+For example, if you deployed Console locally using the name `jumpcloud` in your configuration file, you can use
+`https://localhost:8080/oauth/callback/jumpcloud`, as seen in the screenshot below.
+
+Enter the Login URL, which is the URL users need to log into this application. In the example below, this is `https://localhost:8080` .
+
+![](/guides/jumpcloud-figure-5.png)
+
+
+- **Step 4**: Find the `Client ID` and `Client Secret`.
+
+After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
+ 
+import JumpCloudClientIdSecret from '/guides/jumpcloud-figure-6.png';
+
+<img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
+
+:::warning
+You need to keep the `Client Secret` somewhere safe, as you will not have access to it again.
+:::
+
+#### Configure Console
+
+On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
+
+:::note
+You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
+:::
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "jumpcloud"
+      client-id: "<Client ID>"
+      client-secret: "<Client Secret>"
+      groups-claim: "groups" #if wanting to use groups mapping
+      openid:
+        issuer: "https://oauth.id.jumpcloud.com/"
+```
+Or using environment variables:
+
+```json
+CDK_SSO_OAUTH2_0_NAME="jumpcloud"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
+```
+
+#### Configure groups
+
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and JumpCloud:
+
+From the JumpCloud side, ensure you have:
+
+- Checked `Email` and `Profile` under the standard scopes
+- Set the `email_verified` to true
+- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` value of your Console's configuration
+
+See the example screenshot shown below.
+
+![](/guides/jumpcloud-figure-7.png)
+
+From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
+Below is the full snippet for your configuration file:
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "jumpcloud"
+      client-id: "<Client ID>"
+      client-secret: "<Client Secret>"
+      groups-claim: "groups"
+      openid:
+        issuer: "https://oauth.id.jumpcloud.com/"
+```
+
+Or using environment variables:
+
+```json
+CDK_SSO_OAUTH2_0_NAME="jumpcloud"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
+```
+
+##### Map to external groups
+
+Now that your configuration is finished, you can [set up the mapping](https://docs.conduktor.io/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between JumpCloud and Conduktor Console groups. This way, when a user logs in, they will be automatically added to the corresponding Conduktor Console groups, based on the groups they belong to in JumpCloud.
+
+The value you need to put as an external group is the name of the JumpCloud group.
+
+## Configure Keycloak as SSO
+
+On Keycloak side, you'll have to create a new application:
+
+- **Step 1**: create a new OpenID Connect client, and set the `client ID`
+
+![](/guides/keycloak-create-client.png)
+
+- **Step 2**: Select the **Client authentication**
+
+![](/guides/keycloak-client-config.png)
+
+- **Step 3**: Configure the redirect URI 
+
+You can configure it as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
+
+For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like in the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
+
+![](/guides/keycloak-callback.png)
+
+- **Step 4**: Get the `client secret` in the **Credentials** tab
+
+![](/guides/keycloak-client-secret.png)
+
+:::note
+You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
+:::
+
+#### Configure Console
+
+On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during the previous steps.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "keycloak"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      openid:
+        issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="keycloak"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
+```
+
+</TabItem>
+</Tabs>
+
+#### Configure groups
+
+If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Keycloak, you must create a scope and add it to your Keycloak application:
+
+- **Step 1**: Create the scope and configure the mapper to **Group Membership**
+
+![](/guides/keycloak-scope.png)
+![](/guides/keycloak-scope-mapper.png)
+
+You can add the claim to the token you want. In this example, the **UserInfo**.
+
+- **Step 2**: Add the scope to the application
+
+![](/guides/keycloak-add-scope-app.png)
+
+Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "keycloak"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      groups-claim: "groups"
+      openid:
+        issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="keycloak"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
+```
+
+</TabItem>
+</Tabs>
+
+##### Map to external groups
+
+Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
+
+The value you need to put as an external group is the name of the Keycloak group.
+
+:::warning
+If you've selected `Full group path` in the mapper details of the scope, you will need to use the full path instead of the name of the group.
+:::
+
+## Configure Okta as SSO
+
+On Okta side, create a new application:
+
+- **Step 1**: Create an **OpenID Connect web application**
+
+import OktaCreateApp from '/guides/okta-create-app.png';
+
+<img src={OktaCreateApp} alt="Okta create app" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 2**: Configure the callback URI
+
+The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+
+For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like in the screenshot below.
+
+For more details on Console redirect URI for OAuth2, you can check the [documentation](/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/#more-details-on-console-external-url).
+
+import OktaCallbackUri from '/guides/okta-callback-uri.png';
+
+<img src={OktaCallbackUri} alt="Okta callback URI" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 3**: Configure **app assignments**, and save changes 
+
+import OktaAssignments from '/guides/okta-assignments.png';
+
+<img src={OktaAssignments} alt="Okta assignments" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 4**: Get `client ID` and `client secret`, that you'll use in the configuration file of Console
+
+import OktaClientIdSecret from '/guides/okta-client-id-secret.png';
+
+<img src={OktaClientIdSecret} alt="Okta client ID secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+- **Step 5**: Find the `issuer URL` in the **Sign On** tab of your application. It's made like `https://<domain>.okta.com`
+
+import OktaIssuer from '/guides/okta-issuer.png';
+
+<img src={OktaIssuer} alt="Okta issuer" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+:::note
+You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-configuration`.
+:::
+
+#### Configure Console
+
+On the Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret` and `domain`, with what you got during steps 4 and 5.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "okta"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      openid:
+        issuer: "https://<domain>.okta.com"
+```
+
+:::note
+Please note that if you are using a custom auth server in Okta, the OPENID_ISSUER should be in the form `https://<yourOktaDomain>/oauth2/<authorizationServerId>/` rather than `https://<domain>.okta.com`. [Find out more about token customization](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main/).
+:::
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="okta"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>.okta.com"
+```
+
+</TabItem>
+</Tabs>
+
+## Configure an OIDC/OAuth2 provider as SSO
+
+Conduktor supports various OIDC (OpenID Connect) providers, including:
+
+- [Entra ID](#configure-entra-id-as-sso)
+- [Google](#configure-google-as-sso)
+- [Amazon Cognito](#configure-amazon-cognito-as-sso)
+- [Keycloak](#configure-keycloak-as-sso)
+- [Okta](#configure-okta-as-sso)
+- [Auth0](#configure-auth0-as-sso)
+
+For others, follow these generic steps.
+
+1. Create an OIDC (OpenID Connect) application in your chosen provider. This [application should use standard OAuth2/OIDC authorization code flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) with `CLIENT_SECRET_BASIC` authentication method.
+
+2. Set OAuth2 authorized redirect URI in your application
+
+For the OAuth2 authorization code flow to work, the OAuth2 provider needs to know; and authorize; where to redirect the user after the authentication process. 
+This is called the `redirect URI` or `callback URI`. 
+
+The redirect URI will look like this:    
+`http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
+
+Where `<Console host>` and `<Console port>` depend on the Console external URL used and/or configured, and `<OAuth2 config name>` is the name of the OAuth2 configuration in your Console configuration file see [Console configuration](#console-configuration) step.
+
+#### More details on Console external URL
+
+When Console initiate the OAuth2 authorization code flow, it tells the OIDC provider where to redirect the user after the authentication process.
+
+But to forge this redirect URI, Console has several choices: 
+
+##### Console external URL is configured
+
+If the Console external URL is configured using environment variable `CDK_PLATFORM_EXTERNAL_URL` or configuration `platform.external.url`, it will use it.    
+**But SSO will work ONLY if Console is accessed using this URL.** 
+If you try to log in from the second URL you will be redirected to the first URL and then lose browser authentication cookies meaning the SSO will not work.
+
+##### Console external URL is NOT configured
+
+When no external Console URL is enforced, Console will use requests headers to resolve this external URL.
+This is recommended if Console is accessed using multiple URLs (internal, external, etc) and have SSO on each of them.
+
+The resolution strategy is the following:
+
+1. Use the [`Forwarded`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded) header. This is the preferred method if you are using a **reverse proxy in front of Console**. 
+It uses the `host` and `proto` directives (if set) of `Forwarded` header to determine the external URL.
+2. Use the `X-Forwarded-*` headers. Support for the non-standard forwarded headers coming from some **reverse proxy** implementations.
+It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` headers to determine the external URL.
+3. Use the `Host` header. Used if you access to Console directly, without a reverse proxy.
+In this case, the `Host` header (generally set by the browser) will be used to determine the external URL.
+
+:::note
+**Port** will be guessed depending on the content of the `Host` header and fallback to Console configured port using environment variable `CDK_LISTENING_PORT` (default to `8080`).   
+**Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details. (default to `http`).
+:::
+
+4. Get the client ID and secret from application settings
+
+#### Configure Console
+
+On Console side, you need to configure several properties to enable OIDC SSO.
+
+Required properties are:
+- `sso.oauth2.name`: the name of the OAuth2 configuration. This name will be used in the redirect URI defined on your provider in the steps before. It must be unique.
+- `sso.oauth2.client-id`: the client ID of your OAuth2 application.
+- `sso.oauth2.client-secret`: the client secret of your OAuth2 application.
+- `sso.oauth2.openid.issuer`: the issuer URL of your OpenID Connect provider. This url is used to discover the provider configuration using the `.well-known/openid-configuration` path.
+
+Optionally, you can configure the following properties:
+
+- `sso.oauth2.scopes`: the list of scopes to request during the authorization code flow. [See OAuth2 configuration for details](#configure-auth0-as-sso).
+
+##### Example
+
+The provider exposes its configuration using the well-known endpoint: `https://<oidc domain>/.well-known/openid-configuration`. Here's an example of a configuration file for a generic OIDC provider.
+
+<Tabs>
+<TabItem value="YAML  File" label="YAML file">
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "oidc-provider"
+      client-id: "<client ID>"
+      client-secret: "<client ID>"
+      openid:
+        issuer: "https://<oidc domain>/"
+```
+
+</TabItem>
+<TabItem value="Environment Variables" label="Environment variables">
+
+```json title=".env"
+CDK_SSO_OAUTH2_0_NAME="oidc-provider"
+CDK_SSO_OAUTH2_0_DEFAULT=true
+CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
+CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<oidc domain>/"
+```
+
+</TabItem>
+</Tabs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## SSO config properties
 
 | Property                         | Description                                                              | Environment variable                 | Mandatory | Type    | Default |
@@ -143,7 +935,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 | `sso.ignoreUntrustedCertificate` | Disable SSL checks                                                       | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
 | `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and OAuth2) as PEM | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       |
 
-#### OAuth2 config properties
+### OAuth2 config properties
 
 | Property                                | Description                                                         | Environment variable                     | Mandatory | Type                                                                                                                                         | Default |
 |-----------------------------------------|---------------------------------------------------------------------|------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|---------|
@@ -159,7 +951,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 | `sso.oauth2[].preferred-jws-algorithm`  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
 | `sso.oauth2-logout`                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
 
-#### LDAP config properties
+### LDAP config properties
 
 | Property                             | Description                                                                                                                                                                                        | Environment variable                   | Mandatory | Type         | Default              |
 |--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|-----------|--------------|----------------------|
