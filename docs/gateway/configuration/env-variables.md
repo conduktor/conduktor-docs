@@ -149,7 +149,7 @@ During shutdown, Gateway closes client connections in controlled manner to simul
 | **Environment variable**                          | **Description**                                                                                                                                                                                                             | **Default value**                                                                                                                                  |
 |---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GATEWAY_SECURITY_MODE`                           | Define where authentication takes place, Gateway or Kafka. Valid values are: `GATEWAY_MANAGED`, `KAFKA_MANAGED`. Note that `KAFKA_MANAGED` mode is incompatible with `PLAINTEXT` or `SSL` Gateway security protocols.       | The default value depends on combination of `GATEWAY_SECURITY_PROTOCOL` and `KAFKA_SECURITY_PROTOCOL`. [See security defaults](#security-defaults) |
-| `GATEWAY_SECURITY_PROTOCOL`                       | The type of authentication clients should use to connect to Gateway. Valid values are: `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` (deprecated), and `DELEGATED_SASL_SSL` (deprecated).    | The default value depends on combination of `GATEWAY_SECURITY_MODE` and `KAFKA_SECURITY_PROTOCOL`. [See security defaults](#security-defaults)     | 
+| `GATEWAY_SECURITY_PROTOCOL`                       | The type of authentication clients should use to connect to Gateway. Valid values are: `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` (deprecated), and `DELEGATED_SASL_SSL` (deprecated).    | The default value depends on combination of `GATEWAY_SECURITY_MODE` and `KAFKA_SECURITY_PROTOCOL`. [See security defaults](#security-defaults)     |
 | `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER`        | If no virtual cluster was detected, the user then automatically falls back into the transparent virtual cluster called `passthrough`. Reject authentication if set to `true` and vcluster isn't configured for a principal. | `false`                                                                                                                                            |
 | `GATEWAY_ACL_ENABLED` (deprecated)                | Enable/disable ACLs support on the Gateway transparent virtual cluster (`passthrough`) only.                                                                                                                                | `false`                                                                                                                                            |
 | `GATEWAY_SUPER_USERS`                             | Semicolon-separated (`;`) list of service accounts that will be super users on Gateway (**excluding virtual clusters**).<br/> Example: `alice;bob`.                                                                         | Usernames from GATEWAY_ADMIN_API_USERS                                                                                                             |
@@ -249,7 +249,7 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 | `GATEWAY_CONFLUENT_CLOUD_API_KEY`         | The Confluent Cloud API key.                                                  |                    |
 | `GATEWAY_CONFLUENT_CLOUD_API_SECRET`      | The Confluent Cloud API secret.                                               |                    |
 | `GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE`      | The number of principals to cache.                                            | `1000`             |
-| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds.                                        | `86400000` (1 day) | 
+| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds.                                        | `86400000` (1 day) |
 
 ### Plain authentication
 
@@ -320,8 +320,6 @@ Firstly, there are some general configuration settings for Gateway internal stat
 | `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        |
 | `GATEWAY_DATA_QUALITY_TOPIC`        | Topic where the data quality violation are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` |
 
-
-
 ### Required topic configuration
 
 The most important setting is `log.cleanup.policy` which defines the clean up policy for the topic. Most of the topics used by Gateway are compacted, but some use time-based retention. If this isn't set up properly, Gateway will throw an error on startup. Set the following:
@@ -351,8 +349,6 @@ The exception to this is the audit log topic which can have a lot of events writ
 | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        | compact        | 1                      |                                                                                      |
 | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`              | delete         | 3                      | We recommend a retention time of around 7 days for this topic due to its high volume.|
 | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` | delete         | 1                      |                                                                                      |
-
-
 
 ## Internal setup
 
