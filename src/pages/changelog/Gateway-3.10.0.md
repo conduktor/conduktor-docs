@@ -27,6 +27,6 @@ This change:
 - Deprecates the `GATEWAY_ACL_ENABLED` environment variable, as ACL behavior is now derived from the security mode
 - Is non-breaking, supporting existing configurations while encouraging the new approach
 
-Please see [How to: Migration Guide to Security Mode](../../../docs/gateway/how-to/migration-guide-to-security-mode.md) for more details.
+Please see [How to: Migration Guide to Security Mode](/gateway/how-to/migration-guide-to-security-mode) for more details.
 
 ### Fixes
