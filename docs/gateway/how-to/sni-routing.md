@@ -39,7 +39,7 @@ In order to keep Gateway as **stateless** as possible, **we do not store the met
 
 ## Set up SNI routing
 
-###  1. Define ports
+### 1. Define ports
 
 With the Gateway using SNI routing, you only expose a single port for all your brokers.
 
@@ -137,7 +137,7 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
 
 </TabItem>
-<TabItem value="KAFKA_MANAGED" label="KAFKA_MANAGED">
+<TabItem value="KAFKA_MANAGED SASL_SSL" label="KAFKA_MANAGED SASL_SSL">
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
@@ -151,7 +151,7 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 ```
 
 </TabItem>
-<TabItem value="TLS" label="TLS">
+<TabItem value="SSL" label="SSL">
 
 ```yaml
 GATEWAY_ROUTING_MECHANISM: host
