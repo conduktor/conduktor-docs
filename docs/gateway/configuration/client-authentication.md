@@ -36,7 +36,7 @@ Here is a quick explanation of each supported security mode and security protoco
 - **SSL**: With SSL-only clients don't need to authenticate but communication between the client and Gateway broker will be encrypted.
 - **mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to achieve authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
   The `Principal` for an mTLS connection can be mapped from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate).
-- **SASL PLAINTEXT**: Client authentication is required using SASL mechanisms (such as PLAIN or OAUTH), but all communication is transmitted in plaintext without network encryption. This provides authentication without the overhead of TLS encryption.
+- **SASL PLAINTEXT**: Client authentication is required using SASL mechanisms (such as PLAIN or OAUTHBEARER), but all communication is transmitted in plaintext without network encryption. This provides authentication without the overhead of TLS encryption.
 - **SASL SSL**: Client authentication is mandatory using SASL mechanisms, and all communication is encrypted using TLS.
 
 **KAFKA MANAGED**
