@@ -126,8 +126,9 @@ It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that
 :::warning KAFKA_MANAGED & GATEWAY_MANAGED MODES
 With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
 
-- **Allow the backing Kafka cluser to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - In this mode Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
-- **Manage them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - In this mode Gateway authenticates the clients and manages their ACLs
+- **Allow the backing Kafka cluser to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - In this mode Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACL rules
+- **Manage them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - In this mode, Gateway manages the clients authentication and authorization, based on their associated ACL rules
+
 :::
 
 ### Kafka Managed SASL Authentication
