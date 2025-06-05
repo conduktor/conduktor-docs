@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Crypto shredding
+title: Secure Encryption Key Deletion
 description: Reduce costs and maintain compliance with centralized and secure key management
 ---
 
@@ -11,7 +11,14 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 :::info[**Conduktor Shield** feature]
 :::
 
-Conduktor provides a cost-efficient and scalable crypto shredding solution that works seamlessly with Kafka. Keys are centrally managed and securely stored which ensures that deleting a key instantly makes all associated data unreadable, without the complexity of self-managed vaults, expensive per-user encryption or additional infrastructure overhead.
+Conduktor provides a cost-efficient and scalable solution for securely deleting encryption keys (crypto shredding) that works seamlessly with Kafka. Keys are centrally managed and securely stored which ensures that deleting a key instantly makes all associated data unreadable, without the complexity of self-managed vaults, expensive per-user encryption or additional infrastructure overhead.
+
+:::tip **Crypto Shredding Explained**
+> *Crypto shredding is like throwing away the only key to a locked safe. Without the key, the contents are inaccessible forever.*
+
+Crypto shredding is the process of making encrypted data permanently unreadable by securely deleting the encryption keys.
+:::
+
 
 ![Conduktor's crypto shredding solution](/images/changelog/gateway/v3.7.0/crypto-shredding-concept.png)
 
@@ -74,6 +81,13 @@ encrypted as,
 The following Docker Compose file will minimally configure Kafka, the Conduktor platform and a Vault KMS instance to work together. We will then manually configure them for our encryption use-case.
 
 <Tabs>
+<TabItem value="Start the environment" label="Start the environment">
+
+```bash
+docker compose -f docker-compose.yaml up -d
+```
+
+</TabItem>
 <TabItem value="docker-compose.yaml" label="docker-compose.yaml">
 
 ```yaml title="docker-compose.yml"
@@ -310,13 +324,6 @@ volumes:
 ```
 
 </TabItem>
-<TabItem value="Start the environment" label="Start the environment">
-
-```bash
-docker compose -f docker-compose.yaml up -d
-```
-
-</TabItem>
 </Tabs>
 
 ### 2. Gateway Encryption interceptor configuration
@@ -430,7 +437,7 @@ You should now be back on the `Kafka Gateway` page with a single interceptor cal
 
 The reference documentation has more information about [configuring Encryption in Gateway](/gateway/interceptors/data-security/encryption/encryption-configuration/#encryption-configuration---how-to-encrypt) for other use-cases.
 
-### 3: Producing encrypted data
+### 3. Producing encrypted data
 
 With encryption configured we can now produce records via Gateway that will be encrypted at rest on disk in the backing Kafka cluster and when re-reading via Kafka or Gateway.
 
@@ -485,7 +492,7 @@ You should see something like the following final output for the customer data s
 {"userId":10000002,"name":"Mary Brown","password":"AAAABQAAAAJJLWtew1NLwZdoDS87B0qSV8/MdZ9sTWj2EVN1c3j+yXHX0FVx8fOEcA9A/flr7RwONuByQ9GeuZA=","visa":"AAAAAgAAAAJJLWtew1NLwZdoDS87B0qS/3NEgLjPO/32aD5LFN56FmpyRCZzfJ4HN8cgHxTCorNdBup5pnlbi8tFgKKWnqrUnRNTBq5haKXsbJm4/mcd3XFWSSJeIkXtuxb1Lb2SUOVQQiZDmbk3o3p9nVcPCRYR7sx04+++S3Sj6VqM7n8="}
 ```
 
-### 4: Inspecting the created keys
+### 4. Inspecting the created keys
 
 Gateway creates keys on demand, so now that we've produced two messages with two different `secretIds` (`secret-for-10000001` and `secret-for-10000002`) we would expect to see associated **EDEKs** persisted in a keystore. We would not expect to see them in our Vault KMS. This should only ever contain the master key (`/transit/keys/master-key`) which was used to encrypt them. Take a look for yourself,
 
@@ -563,7 +570,7 @@ The `uuid` field is necessary because it is possible for two different gateway n
 Make a note of the UUID returned for `"keyId":"gateway-kms://secret-for-10000001"` as we will need it for crypto shredding the associated `EDEK` in step 7: [Crypto shredding](#7-crypto-shredding).
 :::
 
-### 5: Gateway Decryption interceptor configuration
+### 5. Gateway Decryption interceptor configuration
 
 Before we can demonstrate crypto shredding we should show records being decrypted. The following decryption interceptor configuration mirrors the encryption interceptor configuration that we added earlier.
 
@@ -641,7 +648,7 @@ You should now be back on the `Kafka Gateway` page with two interceptors now con
 </TabItem>
 </Tabs>
 
-### 6: Consuming and decrypting data
+### 6. Consuming and decrypting data
 
 With a decryption interceptor configured on consumption from the same topic we have been encrypting data produced to it is now possible to decrypt and read the records we produced and observed as encrypted earlier.
 
@@ -675,7 +682,7 @@ You should see the following records exactly as they were originally sent.
 Even though we now produce and consume un-encrypted data the `password` and `visa` fields are still encrypted at rest (ie on disk in the Kafka broker). If you were to delete the decryption interceptor all of the fields would go back to remaining encrypted when consumed.
 :::
 
-### 7: Crypto shredding 
+### 7. Crypto shredding 
 
 Records encrypted with Gateway KMS can have their `EDEKs` crypto shredded by tombstoning the associated record in the **Encryption Keys Store** topic. The same `keyId` can have multiple record entries so it is important to tombstone every record sharing the same `keyId` (each will have a unique `uuid`). Conduktor doesn't currently offer an automated solution for this process. You need to read the entire topic manually and find every record which has the `keyId` which needs tombstoning.
 
@@ -732,7 +739,7 @@ The latest record value for `"keyId":"gateway-kms://secret-for-10000001"` (or fi
 There are two entries for `"keyId":"gateway-kms://secret-for-10000001"` because Kafka compaction isn't instantaneous. Gateway guarantees to use the latest record and to prevent decryption if the associated `EDEK` has been shredded. However, the earlier record still exists on disk and its `EDEK` is available to anyone who consumes the Kafka topic directly. This means that it is technically possible for someone with access to the topic and the `KEK` to recover crypto-shredded data. The key should eventually be deleted because the topic is configured for compaction, but there is no guarantee of when that will occur. Reducing the time until (encrypted) encryption keys are deleted from disk is possible, but beyond the scope of this HOWTO. The important thing to remember is that Gateway (and therefore users) will be instantly unable to decrypt data that has been crypto shredded, as the next section will demonstrate.
 :::
 
-### 8: Verify crypto shredded record no longer decrypts 
+### 8. Verify crypto shredded record no longer decrypts 
 
 If you repeat step 6 ([Consuming and decrypting data](#6-consuming-and-decrypting-data)) you should now see that only the data from one of the records is decrypted. The data associated with the `EDEK` that we crypto-shredded (for `userId`: `10000001`) remains encrypted.
 
