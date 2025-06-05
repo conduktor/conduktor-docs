@@ -1,12 +1,12 @@
 ---
 sidebar_position: 360
-title: Control traffic with policies
+title: Apply Traffic Control Policies
 description: Implement policies using Conduktor
 ---
 
 ## Overview
 
-Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of <GlossaryTerm>Interceptors</GlossaryTerm> that apply traffic control policies to data.
+Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of <GlossaryTerm>Interceptors</GlossaryTerm> that apply <GlossaryTerm>Traffic Control Policies</GlossaryTerm> to data.
 
 ## Alter broker config
 

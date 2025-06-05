@@ -122,8 +122,8 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Control traffic with policies',
-      link: { type: 'doc', id: 'use-cases/control-traffic/index' },
+      label: 'Apply Traffic Control Policies',
+      link: { type: 'doc', id: 'use-cases/apply-traffic-control-policies/index' },
       items: [],
     },
     {

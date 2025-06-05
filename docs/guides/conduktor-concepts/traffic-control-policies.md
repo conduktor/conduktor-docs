@@ -1,9 +1,9 @@
 ---
-title: Traffic control policies
+title: Traffic Control Policies
 description: Learn Conduktor terminology
 ---
 
-Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of <GlossaryTerm>Interceptors</GlossaryTerm> that apply traffic control policies to data:
+Traffic Control Policies allow you to apply regulations and logic to data, such as:
 
 - Alter broker config
 - Alter topic config
@@ -20,4 +20,4 @@ Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of <GlossaryTerm>
 - Remove message headers
 - Topic required schema ID policy
 
-[Find out how to apply each of these policies](/guides/use-cases/control-traffic/).
+[Find out how to apply each of them](/guides/use-cases/apply-traffic-control-policies/).

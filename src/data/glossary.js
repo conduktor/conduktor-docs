@@ -104,7 +104,7 @@ const glossaryData = [
     {
         term: "Gateway",
         tooltip: "A vendor-agnostic Kafka proxy that provides greater control over traffic management, data security, authentication and more.",
-        definition: "Conduktor Gateway is a vendor-agnostic Kafka proxy, deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption, traffic control policies and failover for disaster recovery. Available as a Docker image `conduktor-gateway`. [Find out more](../guides/conduktor-in-production/deploy-artifacts/gateway).",
+        definition: "Conduktor Gateway is a vendor-agnostic Kafka proxy, deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption and failover for disaster recovery. Available as a Docker image `conduktor-gateway`. [Find out more](../guides/conduktor-in-production/deploy-artifacts/gateway).",
         slug: "gateway"
     },
     {
@@ -260,6 +260,11 @@ const glossaryData = [
         term: "SIEM",
         definition: "Security Information and Event Management.",
         slug: "siem"
+    },         
+    {
+        term: "Traffic Control Policy",
+        definition: "Conduktor provides a number of Traffic Control Policies that can be applied to your Kafka data to protect or enforce best practice.",
+        slug: "traffic-control-policy"
     },         
   ];
   
