@@ -13,17 +13,20 @@ SNI (Server Name Indication) routing reduces the number of Gateway ports exposed
 Unlike port mapping, which differentiates brokers based on the port a client connects to, **SNI routing distinguishes brokers by the hostname the client wants to connect to**. This allows the Gateway to expose a single port while directing traffic to the appropriate broker based on the client's requested hostname.
 
 This is particularly useful if you are:
+
 - Experiencing a high administrative overhead for managing multiple ports.
 - Restricted by your security department in the number of ports you can expose.
 
 ## Context about client connection
 
 To understand the different steps required to set up SNI routing, let's break it down into the connection steps each client would take:
+
 1. Connect to Gateway advertised host
 2. Retrieve how to reach the right broker for each topic partition in the metadata returned by the Gateway
 3. Directly connect to the desired broker through the Gateway
 
 This means that we will have to:
+
 - [Define which ports we need to configure](#1-define-ports) for the Gateway to listen on and return in the metadata.
 - [Make sure the Gateway handles the TLS termination](#2-tls-termination).
 - [Prepare the keystore certificate for Gateway](#3-prepare-gateways-keystore-certificate) to include **the Gateway hostname as well as a SAN for each broker in the cluster**. Alternatively, **wildcards** `*` can be used in the SAN, if supported by your issuer and security team.
@@ -57,6 +60,7 @@ To configure the port that is returned in the metadata, you can use the `GATEWAY
 The concept of SNI routing isn't specific to Gateway. It relies on information inside the TLS connection for the SNI router to determine how to forward network requests. To be able to access this information, the SNI router must terminate the TLS connection.
 
 In our case, as the Gateway acts as SNI router, it must:
+
 - Handle the TLS handshake with the client
 - Have a valid keystore certificate for the advertised host (and all the brokers in the cluster)
 
@@ -73,6 +77,7 @@ import AdvertisedBrokersStructure from './assets/advertised-brokers.png';
 <img src={AdvertisedBrokersStructure} alt="Advertised brokers structure" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 We can find:
+
 - The **advertised host prefix**, which is customizable with `GATEWAY_ADVERTISED_HOST_PREFIX` and defaults to `broker`
 - The **Kafka cluster ID** in the Gateway, which is not customizable and defaults to `main`.
 - The **broker ID** in the Kafka cluster, which is unique for each broker and retrieved directly from your Kafka cluster.
