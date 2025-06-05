@@ -1,7 +1,7 @@
 ---
-sidebar_position: 8
+sidebar_position: 7
 title: Migration Guide to Gateway Security Mode
-description: How to migrate to the new Gateway security mode
+description: How to migrate to Gateway security mode
 ---
 
 # Gateway Security Mode
@@ -9,30 +9,34 @@ description: How to migrate to the new Gateway security mode
 ## What is changing?
 
 :::info
-This migration guide is for Gateway v3.10.0 and later
+This guide is for migrating authentication and authorisation to the new configuration in Gateway v3.10.0 and later
 :::
 
-We have introduced a new environment variable, `$GATEWAY_SECURITY_MODE`, to define where authentication takes place.
+We have introduced a new environment variable, `GATEWAY_SECURITY_MODE`, to define where authentication takes place.
 
-As part of this, we are deprecating (although still supporting) `DELEGATED_XXX` inputs for `${GATEWAY_SECURITY_PROTOCOL}`.
-We are also deprecating (although still supporting) environment variable `ACL_ENABLED`, as this will be determined by security mode.
+As part of this, we are deprecating (although still supporting) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`.
+We are also changing the behaviour of `ACL_ENABLED`, rather than `false` this will be determined by the security mode. But can still be manually set by the user.
 
-The valid inputs for `$GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. For more details see [documentation](../configuration/env-variables.md#connect-from-clients-to-gateway).
+The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. For more details see [documentation](../configuration/env-variables.md#connect-from-clients-to-gateway).
+
+:::warning
+If you are using a security protocol that has an ANONYMOUS identity (`PLAINTEXT`, or `SSL` without mTLS) then you will face authorisation errors because ACLs are now enabled by default for Gateway Managed security. To remove authorisation from your setup set `ACL_ENABLED: false` in the Gateway environment variables.
+:::
 
 ## Why?
 
-We are splitting the security configuration into two steps in order to simplify the user experience. The two questions we pose are:
+We are splitting the security configuration into two steps in order to simplify the user experience. The two questions you should think about are:
 
 - **What is responsible for authentication?** Kafka, or Gateway?
-- **How will we be authenticating?** Set the appropriate protocol
+- **How will your Kafka clients be authenticating?** Set the appropriate protocol.
 
-Previously both these questions were resolved by the GATEWAY_SECURITY_PROTOCOL. Instead, we set _the what_ using `GATEWAY_SECURITY_MODE` and simplify the options for the how, which is still set using `GATEWAY_SECURITY_PROTOCOL`.
+Previously both these questions were resolved by the GATEWAY_SECURITY_PROTOCOL. Instead, we set *the what is responsiblet* using `GATEWAY_SECURITY_MODE` and simplify the options for *the how*, which still uses `GATEWAY_SECURITY_PROTOCOL`.
 
-We will also derive whether acl is enabled from our security mode, meaning we can decommission the `GATEWAY_ACL_ENABLED` environment variable.
+We will also enable or disable ACLs on Gateway from the security mode, meaning the `GATEWAY_ACL_ENABLED` environment variable only needs to be used when disabling ACLs on Gateway.
 
 ## Am I affected?
 
-This change is backwards compatible, we still support delegated protocols. Your current configuration will automatically map like so:
+This change is backwards compatible, we still support the delegated protocols. Your current configuration will automatically map like so:
 
 | **3.9.0 GATEWAY_SECURITY_PROTOCOL** | → **3.10.0** GATEWAY_SECURITY_PROTOCOL | → **3.10.0**  GATEWAY_SECURITY_MODE |
 |--------------------------------------|-----------------------------------------|--------------------------------------|
@@ -43,7 +47,7 @@ This change is backwards compatible, we still support delegated protocols. Your 
 | `DELEGATED_SASL_PLAINTEXT`           | `SASL_PLAINTEXT`                        | `KAFKA_MANAGED`                      |
 | `DELEGATED_SASL_SSL`                 | `SASL_SSL`                              | `KAFKA_MANAGED`                      |
 
-We still support `GATEWAY_ACL_ENABLED` variable. Where set, we will continue to honor valid configurations. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `ACL_ENABLED` is set to true.
+We still support `GATEWAY_ACL_ENABLED` variable. Where set, we will continue to honor valid configurations. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `ACL_ENABLED` is set to true. You cannot managed ACLs on the Gateway if you are authenticating.
 
 ## What do I need to do?
 
