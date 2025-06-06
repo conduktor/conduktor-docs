@@ -1,12 +1,12 @@
 ---
 version: 3.0.0
-title: Schema Payload Validation
+title: 
 description: Avoid outages from missing or badly formatted records, ensure all messages adhere to a schema
 parent: governance
 license: enterprise
 ---
 
-## Introduction
+## Validate schema payload
 
 Ensuring that all records sent through your Kafka system conform to an agreed structure enables your Kafka consumers to confidently and independently access data. Records with missing or invalid schemas can cause application outages, as consumers may be unable to process the unexpected record format.
 
@@ -14,7 +14,7 @@ More than this though, the use of schemas can broadly only assert structural cor
 
 As a final point, while correct structure can be enforced in a Kafka ecosystem at a client level - each client needs to ensure that it knows and follows the expectations for the data. You cannot prevent one client correctly writing AVRO to a topic, while another one writes plain JSON to the same topic. If the second client doesn't know the rules it can't follow them.  
 
-## Centralized Policy Enforcement
+#### Enforce centralized policies
 
 The Schema validation interceptor comes into play here, and provides functionality which you can configure once in your Kafka system on the source for data (a topic) to ensure that:
 
@@ -22,11 +22,11 @@ The Schema validation interceptor comes into play here, and provides functionali
 - The record contents adhere to that schema
 - The fields (values) in any given record comply to business validation rules you have set in the schema
 
-This policy provides a centralized enforcement of the validation of these rules at the point of write to Kafka. This enforcement cannot be bypassed or ignored by a client, so provides a strong guarantee that data actually written in to Kafka does match your rule set.    
+This policy provides a centralized enforcement of the validation of these rules at the point of write to Kafka. This enforcement cannot be bypassed or ignored by a client, so provides a strong guarantee that data actually written in to Kafka does match your rule set.
 
 Learn more about the Schema Registry and Schemas [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
-## How does the Policy Work?
+##### How does the Policy Work?
 
 The policy operates on Produce Requests made to kafka, and will inspect the entire batch of records in a request. Based on its setup, it performs various checks and then will take an action if it finds any problems.
 
@@ -35,6 +35,7 @@ The first important thing to note is that the Policy will do *nothing* if there 
 Next point of note is that the policy will only check the value for a kafka record, and does not currently support checking the key or headers for a record. 
 
 The core config values for the policy itself are:
+
 * `topic` : the topic/s to apply the rule to
 * `schemaIdRequired` : whether records must/must not have a schema assigned to them
 * `validateSchema` : whether the policy should check if the data for the record matches the schema found for the record. 
@@ -48,7 +49,7 @@ There are three levels of check you can apply:
 | `schemaIdRequired = true`, `validateSchema = false` | Ensures that records have a valid schema set, and that schema exists in the Schema Registry. Does not check whether the value actually matches the schema though |
 | `schemaIdRequired = true`, `validateSchema = true`  | Ensures that records have a valid schema set, that schema exists in the Schema Registry and that the value in the record matches the schema. This includes any data validation rules in the schema (see below) as well as a structural check | 
 
-### Action
+#### Action
 
 If any problems are found, the policy will take an action as configured. The `action` can be set to one of:
 
@@ -56,12 +57,11 @@ If any problems are found, the policy will take an action as configured. The `ac
 - `INFO` → In this mode the data is always written to Kafka whether it passes the checks or not - but any problems found recorded in the audit log.
 - `THROTTLE` → If any records in the batch fail the policy checks, the data is still written to Kafka but the request will be throttled with time = `throttleTimeMs`, forcing the client to back off. Any problems found are recorded in the audit log.
 
-### Dead Letter Topic
+#### Dead Letter Topic
 
 If a dead letter topic service is configured for the Gateway, then you can optionally supply a topic name for this policy to use for any records which are considered invalid. This topic will be created with the default config for your Kafka setup.
 
 Any record which the policy considers invalid is written to the dead letter topic, and has some headers added for audit purposes. Please note that this is done in the `AUDIT_LOG_ONLY` mode also, even though the records in this mode are still written to the "real" topic.
-
 
 | Header       | Message                                                               |
 |:-------------|:----------------------------------------------------------------------|
@@ -73,24 +73,23 @@ The generation of these headers can be disabled if required, through the `addErr
 
 If no `deadLetterTopic` is configured for the policy, then no messages will be written out in this manner.
 
-## Configuration
+#### Configuration
 
 The full configuration topics for the policy are as below.
 
-| name                 | type                                     | default | description                                                                                                                             |
+| Name                 | Type                                     | Default | Description                                                                                                                             |
 |:---------------------|:-----------------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------------|
-| topic                | String                                   | `.*`    | Topics that match this regex will have the interceptor applied                                                                          |
+| topic                | String                                   | `.*`    | Topics that match this regex will have the Interceptor applied                                                                          |
 | schemaIdRequired     | Boolean                                  | `false` | Records must/must not have schemaId                                                                                                     |
-| validateSchema       | Boolean                                  | `false` | If true, deserialize the record, validate the record structure and fields within the data itself ([see more](#schema-payload-validate)) |
+| validateSchema       | Boolean                                  | `false` | If true, deserialize the record, validate the record structure and fields within the data itself.|
 | action               | `BLOCK`, `INFO`, `THROTTLE`              | `BLOCK` | Action to take if the value is outside the specified range.                                                                             |
-| schemaRegistryConfig | [Schema Registry](#schema-registry)      | N/A     | Schema Registry Config                                                                                                                  | 
+| schemaRegistryConfig | Schema registry                 | N/A     | Schema registry Config                                                                                                                  | 
 | celCacheSize         | int                                      | 100     | In memory cache size for cel expressions, balancing speed and resource use, optimize performance.                                       |
 | deadLetterTopic      | String                                   |         | Dead letter topic. Not used if this parameter is not set.                                                                               |
 | addErrorHeader       | Boolean                                  | `true`  | Add or not add the error information headers into dead letter topic                                                                     |
 | throttleTimeMs       | int                                      | 100     | Value to throttle with (only applicable when action is set to `THROTTLE`).                                                              |
 
-
-### Schema Registry
+#### Schema Registry
 
 | Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
 |-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -113,7 +112,7 @@ If you do not supply a `basicCredentials` section for the AWS Glue schema regist
 
 See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
-## Example
+#### Example
 
 ```json
 {
@@ -133,7 +132,7 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
 }
 ```
 
-### Schema Registry with secured template
+##### Schema Registry with secured template
 
 ```json
 {
@@ -158,7 +157,7 @@ See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-
 }
 ```
 
-## Schema Payload Validations
+#### Schema Payload Validations
 
 When configured to do so, the Schema Validation interceptor supports validating the value in a Kafka record against a specific set custom constraints for AvroSchema records. 
 This is similar to the validations provided by JsonSchema, such as:
@@ -174,7 +173,7 @@ Current supported String `format` values:
 This interceptor also supports further validating elements from the whole payload against specific custom constraints - or Metadata Rules - using an expression
 based on the [CEL (Common Expression Language)](https://github.com/google/cel-spec) format. This provides a means to define more advanced rules dependent on *multiple* values in a record. 
 
-### Metadata rule
+#### Metadata rule
 
 | key        | type   | description                                                                                                     |
 |:-----------|:-------|:----------------------------------------------------------------------------------------------------------------|
@@ -182,7 +181,7 @@ based on the [CEL (Common Expression Language)](https://github.com/google/cel-sp
 | expression | string | CEL expression for validation, must return `BOOLEAN`                                                            |
 | message    | string | Error message if payload not matches the `expression` with namespace `message.` represents for produced message |
 
-### Json Schema Example
+#### Json Schema Example
 
 In Json Schema, constraints and rules are defined directly in the schema. Here's an example that includes various validations:
 
@@ -261,7 +260,7 @@ In Json Schema, constraints and rules are defined directly in the schema. Here's
 }
 ```
 
-### Avro Schema Example
+#### Avro Schema Example
 
 In Avro, constraints and rules are defined directly in the schema. Here's an example that includes various validations:
 

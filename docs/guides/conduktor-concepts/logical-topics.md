@@ -12,15 +12,17 @@ Conduktor logical topics are abstractions of real Kafka <GlossaryTerm>topics</Gl
 
 1. [SQL topics](#sql-topics) are using SQL language to query and filter an existing topic. This is very useful when filtering out the records that don't correspond to your business needs.
 
+1. [Unlimited topics](#unlimited-topics) allow you to represent data from a set of topics on a single underlying topic. This means that you won't overuse your Kafka resources.
+
 ## Alias topics
 
 Alias topics are logical topics that target a different physical topic. They act like pointers to another physical topic.
 
-### Purpose
+#### Purpose
 
 One of Kafka's limitations is that you can't rename topics.
 
-### Use
+####  Use
 
 Gateway manages an alias topic mapping in it's internal configuration by registering a target physical topic. This topic will be presented to Kafka clients like a regular topic. However, all requests for this topic will be forwarded to the physical topic.
 
@@ -28,7 +30,7 @@ This means that consumer groups, fetch and produce are shared. Also, the alias t
 
 For example, if you create an alias topic, `applicationB_orders` pointing to a physical topic `orders`, a client that's able to access the physical one would be able to see both topics.
 
-### Limitations
+####  Limitations
 
 - ACLs using delegated Kafka security SASL delegated security protocols aren't supported.
 - Alias topics can't reference another alias topic.
@@ -39,7 +41,7 @@ Concentrated topics transparently act as pointers to a single physical topic on 
 
 They are completely transparent to consumers and producers and allow you to emulate different partition counts irrespective of the backing physical topic's partition count.
 
-### Use
+####  Use
 
 To create concentrated topics, first deploy `ConcentrationRule`:
 
@@ -74,9 +76,9 @@ We now have two concentrated topics (`concentrated.topicA` and `concentrated.top
 
 To ensure that consumers don't consume messages from other partitions or from other concentrated topics, we store the concentrated partition and the concentrated topic name in the record headers. Gateway will automatically filter the messages that should be returned to the consumer.
 
-### Limitations
+####  Limitations
 
-#### Compact and delete+compact topics
+##### Compact and delete+compact topics
 
 You can create concentrated topics with any *cleanup.policy*, but your `ConcentrationRule` has to have a backing topic for each of them, otherwise it won't let you create the topic.
 
@@ -106,7 +108,7 @@ Error while executing topic command : Cleanup Policy is invalid
 
 Backing topic cleanup policies are checked when you deploy a new `ConcentrationRule`. This prevents you from declaring a backing topic with a *cleanup.policy* of delete on the *ConcentrationRule* `spec.physicalTopic.compact` field.
 
-#### Restricted topic configurations
+##### Restricted topic configurations
 
 The following list of topic properties are the only allowed properties for concentrated topics:
 
@@ -135,7 +137,7 @@ This behavior can be altered with the flag `spec.autoManaged`.
 With concentrated topics, the enforced retention policy is the physical topic's retention policy, and not the policy requested at the concentrated topic creation time. The `retention.ms` and `retention.bytes` are not cleanup but retention guarantees.
 :::
 
-### Auto-managed backing topics
+#### Auto-managed backing topics
 
 When `autoManaged` is enabled:
 
@@ -194,7 +196,7 @@ As we can see, the retention has been updated.
 If one user requests a topic with infinite retention (`retention.ms = -1`), **all the topics** with the same cleanup policy associated with the rule **will also inherit** this extended configuration and have infinite retention.
 :::
 
-### Message count, lag and offset (in)correctness
+#### Message count, lag and offset (in)correctness
 
 By default, concentrated topic reports the offsets of their backing topics. This impacts the calculations of **Lag** and **Message Count** that relies on partition **EndOffset** and group **CommitedOffset**.
 
@@ -290,7 +292,7 @@ Other limitations:
     - Header: `.. WHERE record.header.someHeaderKey = 'some thing'`
     - Offset: `.. WHERE record.offset = 1`
 
-### Schemas and projections
+#### Schemas and projections
 
 If your data uses a schema, then it's not possible to make use of the projection feature here because the resulting data will no longer match the original schema. For plain JSON topics, you can use the `SELECT` clause to alter the shape of the data returned; however, for schema'd data (Avro and Protobuf) you must not use a projection, i.e. the select should be in the form:
 
@@ -385,7 +387,7 @@ Currently
     - Header: `.. record.header.someHeaderKey == 'some thing'`
     - Offset: `.. record.offset == 1`
 
-## Configuration
+#### Configuration
 
 | key                  | type                                | description                                                                                                                              |
 |:---------------------|:------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|
@@ -395,7 +397,7 @@ Currently
 | schemaRegistryConfig | [Schema Registry](#schema-registry) | Schema Registry Config                                                                                                                   |
 | celCacheSize         | int                                 | In memory cache size for cel expressions, balancing speed and resource use, optimize performance.                                        |
 
-### Schema Registry
+#### Schema Registry
 
 | Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
 |-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -422,7 +424,7 @@ Find out more about the setup for this from [AWS documentation](https://docs.aws
 See more about schema
 registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
-## Example
+#### Example
 
 ```json
 {
@@ -464,3 +466,48 @@ registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-wh
   }
 }
 ```
+
+## Unlimited topics
+
+Occasionally, topics have to be created for logical, rather than technical reasons (e.g. to differentiate between business units) which can result in considerable overuse of Kafka resources.
+
+Conduktor's topic concentration allows data from a set of topics to be represented on a single underlying topic. Clients connecting through Conduktor Gateway can use concentrated topics as usual without any additional configuration.
+
+For example, let's say we have the following topics:
+
+- us_east_orders - 100 partitions
+- us_west_orders - 100 partitions
+- emea_orders - 100 partitions
+- latam_orders - 100 partitions
+
+The total Kafka resource requirement is 400 partitions. With topic concentration, all of these topics can be concentrated to a single topic, using only 1/4 of resources:
+
+- concentrated_orders - 100 partitions
+
+#### Configuration
+
+Topic concentration is configured via Gateway Enterprise Edition's admin HTTP API.
+
+| Property name | Type | Description |
+| :-- | --- | :-- |
+| logicalTopicRegex | string | A regular expression to match all topic names that will be concentrated, specified as a URL parameter |
+| topicName | string | The name of the underlying topic to concentrate to |
+
+#### Example
+
+This will match all the topics that end with *orders* and concentrate them to **concentrated_orders**.
+
+```bash
+curl
+  -u "superUser:superUser"
+  --request POST 'conduktor-gateway:8888/topicMappings/someTenant/.*orders'
+  --header 'Content-Type: application/json'
+  --data-raw '{
+    "topicName": "concentrated_orders",
+    "isConcentrated": true
+  }'
+```
+
+#### Consumer offsets
+
+When consuming from a concentrated topic, messages and ordering is always preserved but any metadata calculations (primarily lag and message count) are unlikely to be as expected. This is because the associated metadata is from the backing Kafka topic, rather than the concentrated topic seen from the perspective of the consumer. This is a known limitation.
