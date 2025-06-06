@@ -5,6 +5,402 @@ description: Deploy Console
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
+## Configure Console
+
+Conduktor <GlossaryTerm>Console</GlossaryTerm> can be configured using either a configuration file `platform-config.yaml` or **environment variables**. This is used to set up your organization's environment. Configuration can be used to declare:
+
+- Organization name
+- External database (**required**)
+- User authentication (Basic or SSO)
+- Console license
+
+:::info[Recommendation]
+We recommend using the Console UI (**Settings** > **Clusters** page) to configure Kafka cluster, schema registry and Kafka connect. This has several advantages over the YAML configuration:
+
+- Intuitive interface with live update capabilities
+- Centralized and secured with RBAC and audit logs events
+- Certificate store to help with custom certificates configuration (no more JKS files and volume mounts)
+
+:::
+
+### Security considerations
+
+- The configuration file should be protected by file system permissions.
+- The database should have at-rest data encryption enabled on the data volume and have limited network connectivity.
+
+#### Configuration file
+
+```yaml title="platform-config.yaml"
+organization:
+  name: demo
+
+admin:
+  email: admin@company.io
+  password: admin
+
+database:
+  url: postgresql://conduktor:change_me@host:5432/conduktor
+  # OR in a decomposed way
+  # host: "host"
+  # port: 5432
+  # name: "conduktor"
+  # username: "conduktor"
+  # password: "change_me"
+  # connection_timeout: 30 # in seconds
+
+auth:
+  local-users:
+    - email: user@conduktor.io
+      password: user
+
+license: '<your license key>'
+```
+
+#### Bind file
+
+The `docker-compose` below shows how to bind your **platform-config.yaml** file.
+
+You can alternatively use environment variables. The `CDK_IN_CONF_FILE` variable is used to indicate that a configuration file is being used and the location to find it.
+
+```yaml title="docker-compose.yaml"
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-console:
+    image: conduktor/conduktor-console
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+      - type: bind
+        source: "./platform-config.yaml"
+        target: /opt/conduktor/platform-config.yaml
+        read_only: true
+    environment:
+      CDK_IN_CONF_FILE: /opt/conduktor/platform-config.yaml
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
+```
+
+#### Environment override
+
+Input configuration fields can also be provided using environment variables. Here's an example of `docker-compose` that uses environment variables for configuration:
+
+```yaml title="docker-compose.yaml
+services:  
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "change_me"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  conduktor-console:
+    image: conduktor/conduktor-console
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    healthcheck:
+      test: curl -f http://localhost:8080/platform/api/modules/health/live || exit 1
+      interval: 10s
+      start_period: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:change_me@postgresql:5432/conduktor"
+      CDK_LICENSE: "<your license key>"
+      CDK_ORGANIZATION_NAME: "demo"
+      CDK_ADMIN_EMAIL: "admin@company.io"
+      CDK_ADMIN_PASSWORD: "admin"
+
+volumes:
+  pg_data: {}
+  conduktor_data: {}
+```
+
+### Container user and permissions
+
+Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`. All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.
+
+## Configure memory usage
+
+We rely on container *CGroups limits* and use *up to 80%* of the container memory limit for JVM max heap size.
+
+```bash
+-XX:+UseContainerSupport -XX:MaxRAMPercentage=80
+```
+
+You only need to care about the limits that you set on your container.
+
+<Tabs>
+<TabItem value="Console Helm" label="Console helm">
+
+```yaml
+# Values.yaml
+...
+platform:
+  resources:
+    limits:
+      memory: 8Gi
+...
+```
+
+</TabItem>
+<TabItem value="Kubernetes" label="Kubernetes">
+
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+...
+template:
+  spec:
+    containers:
+      - name: console
+        image: conduktor/conduktor-console
+        resources:
+          limits:
+            memory: 8G
+...
+```
+
+</TabItem>
+<TabItem value="Docker Compose" label="Docker Compose">
+
+```yaml
+# docker-compose.yaml
+...
+  conduktor-console:
+    image: conduktor/conduktor-console
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+...
+```
+
+</TabItem>
+</Tabs>
+
+## Configure SSL/TLS
+
+Depending on the environment, Conduktor might need to access external services (such as Kafka clusters, SSO servers, databases or object storage) that require a custom certificate for SSL/TLS communication.
+
+You can configure this using:
+
+- Console UI (recommended) - you can manage your certificates in a dedicated screen and configure SSL authentication from the broker setup wizard.
+- volume mount - this method is only required if you have LDAPS. Do not use it for Kafka or Kafka components.
+
+|                                | Kafka clusters | Schema registry / Kafka Connect | LDAPS, OIDC     |
+| ------------------------------ | -------------- | ------------------------------- | --------------- |
+| SSL to secure data in transit  | UI          | UI                           | UI            |
+| SSL to authenticate the client | UI          | UI                           | Not supported |
+
+#### Use the Conduktor certificate store
+
+:::info[Recommended use]
+This option is recommended for Kafka, Kafka Connect and Schema Registry connections.
+:::
+
+You can import and parse the certificates as text or files. The supported formats are:
+
+- .crt
+- .pem
+- .jks
+- .p12
+
+#### Upload certificates
+
+You can add cluster configurations from **Settings** > **Clusters** page. When you add the bootstrap server to your configuration, a check will be made to validate if the certificate is issued by a valid authority.
+
+If the response indicates the certificate is not issued by a valid authority, you have two options:
+
+- **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
+- **Upload Certificate**: This option will enable you to upload the certificate (`.crt`, `.pem`, `.jks` or `.p12` files), or paste the certificate as text
+
+import ClusterCertificate from '/guides/cluster-certificate.png';
+
+<img src={ClusterCertificate} alt="Cluster Certificate" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
+
+![](/guides/cluster-connection-secure.png)
+
+#### Add truststores
+
+You can also manage organization truststores using the **Settings** > **Certificates** page. Simply add all of your certificates by uploading them or pasting them as text. In doing this, the SSL context will be derived when you configure Kafka, Kafka Connect and Schema Registry connections.
+
+![](/guides/certificates.png)
+
+#### Mount custom truststore
+
+:::info[Recommended use]
+This option is recommended for SSO, DB or other external services requiring SSL/TLS communication.
+:::
+
+Conduktor supports SSL/TLS connections using Java truststore.
+
+#### Create TrustStore (JKS) from certificate in PEM format
+
+If you already have a truststore, you can ignore this step.
+
+You need a `keytool` program that is usually packaged on JDK distributions and a certificate in PEM format (`.pem` or `.crt`).
+
+```bash
+keytool  \
+    -importcert \
+    -noprompt \
+    -trustcacerts \
+    -keystore ./truststore.jks \       # Output truststore jks file
+    -alias "my-domain.com" \           # Certificate alias inside the truststore (usually the certificate subject)
+    -file ./my-certificate-file.pem \  # Input certificate file
+    -storepass changeit \              # Truststore password
+    -storetype JKS
+```
+
+#### Configure custom truststore via Conduktor Console
+
+Mount the truststore file into the `conduktor-console` container and pass the correct environment variables for locating truststore file inside the container (and password, if needed).
+
+If the truststore file is `truststore.jks` with password `changeit`, mount truststore file into `/opt/conduktor/certs/truststore.jks` inside the container.
+
+If run from Docker :
+
+```bash
+ docker run --rm \
+   --mount "type=bind,source=$PWD/truststore.jks,target=/opt/conduktor/certs/truststore.jks" \
+   -e CDK_SSL_TRUSTSTORE_PATH="/opt/conduktor/certs/truststore.jks" \
+   -e CDK_SSL_TRUSTSTORE_PASSWORD="changeit" \
+  conduktor/conduktor-console
+```
+
+From docker-compose :
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./truststore.jks
+        target: /opt/conduktor/certs/truststore.jks
+        read_only: true
+    environment:
+      CDK_SSL_TRUSTSTORE_PATH: '/opt/conduktor/certs/truststore.jks'
+      CDK_SSL_TRUSTSTORE_PASSWORD: 'changeit'
+```
+
+#### Client certificate authentication
+
+:::info[Recommended use]
+This option is recommended for mTLS.
+:::
+
+This mechanism uses TLS protocol to authenticate the client. Also known as:
+
+- Mutual SSL, Mutual TLS, mTLS
+- Two-Way SSL, SSL Certificate Authentication
+- Digital Certificate Authentication, Public Key Infrastructure (PKI) Authentication
+
+#### Use the UI (keystore method)
+
+Use the keystore file from your Kafka admin or provider (in **.jks** or **.p12** format).
+
+Click the "Import from keystore" button to select a keystore file from your filesystem.
+![](/guides/cluster-keystore.png)
+
+Fill in the required keystore password and key password and click "Import".
+
+import ImportFromKeystore from '/guides/import-from-keystore.png';
+
+<img src={ImportFromKeystore} alt="Import from keystore" style={{ width: 500, display: 'block', margin: 'auto' }} />
+
+You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
+![](/guides/cluster-keystore-imported.png)
+
+#### Use the UI (Access key & Access certificate method)
+
+Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
+
+- An Access key (`.key` file)
+- An Access certificate (`.pem` or `.crt` file)
+
+Here's an example with Aiven:
+![](/guides/aiven-certificates.png)
+
+You can paste the contents of the two files into Conduktor or [import from keystore](#use-the-ui-keystore-method).
+
+#### Use volume mount
+
+You can mount the keystore file in the `conduktor-console` image:
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./keystore.jks
+        target: /opt/conduktor/certs/keystore.jks
+        read_only: true
+```
+
+Then from the UI, choose the SSL Authentication method **Keystore file is mounted on the volume** and fill in the required fields
+![](/guides/keystore-from-volume.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Configure Postgres database
 
 Conduktor Console **requires a Postgres database to store its state**.
@@ -1813,3 +2209,109 @@ Advanced configuration for [Partner Zones](/guides/conduktor-concepts/partner-zo
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
 | `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which Partner Zone's state (that's stored on Console) is synchronized with Gateway. A lower value results in faster alignment between the required state and the current state on the Gateway. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+
+
+## Configure HTTP proxy
+
+Specify the proxy settings for Conduktor to use when accessing Internet. The HTTP proxy works for both HTTP and [HTTPS](#configure-https) connection.
+
+There are five properties you can set to specify the proxy that will be used by the HTTP protocol handler:
+
+- `CDK_HTTP_PROXY_HOST`: the host name of the proxy server  
+- `CDK_HTTP_PROXY_PORT`: the port number. Default value is 80.  
+- `CDK_HTTP_NON_PROXY_HOSTS`: a list of hosts that should be reached directly, bypassing the proxy. This is a list of patterns separated by `|`. The patterns may start or end with a `*` for wildcards, we do not support `/`. Any host matching one of these patterns will be reached through a direct connection instead of through a proxy.  
+- `CDK_HTTP_PROXY_USERNAME`: the proxy username  
+- `CDK_HTTP_PROXY_PASSWORD`: the proxy password
+
+#### Example
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - 8080:8080
+    environment:
+      CDK_HTTP_PROXY_HOST: "proxy.mydomain.com"
+      CDK_HTTP_PROXY_PORT: 8000
+      CDK_HTTP_NON_PROXY_HOSTS: "*.mydomain.com"
+```
+
+### Configure HTTPS
+
+To configure Conduktor Console to respond to HTTPS requests, you have to define a certificate and a private key.
+
+The server certificate is a public entity that's sent to every client that connects to the server and it should be provided as a PEM file.
+
+Configuration properties are:
+
+- `platform.https.cert.path` or environment variable `CDK_PLATFORM_HTTPS_CERT_PATH`: the path to server certificate file
+- `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH`: the path to server private key file  
+
+:::note[Enable read access]
+Both the certificate and private key files have to allow read from user `conduktor-platform` (UID 10001 GID 0) but don't need to be readable system-wide.
+:::
+
+#### Sample configuration using docker-compose
+
+In this example, server certificate and key (**server.crt** and **server.key**) are stored in the same directory as the `docker-compose` file.
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - 8080:8080
+    volumes: 
+      - type: bind
+        source: ./server.crt
+        target: /opt/conduktor/certs/server.crt
+        read_only: true
+      - type: bind
+        source: ./server.key
+        target: /opt/conduktor/certs/server.key
+        read_only: true
+    environment:
+      CDK_PLATFORM_HTTPS_CERT_PATH: '/opt/conduktor/certs/server.crt'
+      CDK_PLATFORM_HTTPS_KEY_PATH: '/opt/conduktor/certs/server.key'
+```
+
+If the monitoring image `conduktor/conduktor-console-cortex` is running as well, you have to provide the CA public certificate to the monitoring image to allow metrics scraping on HTTPS.
+
+```yaml
+ services:
+   conduktor-console:
+     image: conduktor/conduktor-console
+     ports:
+       - 8080:8080
+     volumes:
+       - type: bind
+         source: ./server.crt
+         target: /opt/conduktor/certs/server.crt
+         read_only: true
+       - type: bind
+         source: ./server.key
+         target: /opt/conduktor/certs/server.key
+         read_only: true
+     environment:
+       # HTTPS configuration
+       CDK_PLATFORM_HTTPS_CERT_PATH: '/opt/conduktor/certs/server.crt'
+       CDK_PLATFORM_HTTPS_KEY_PATH: '/opt/conduktor/certs/server.key'
+       # monitoring configuration
+       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
+       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
+       CDK_MONITORING_CALLBACK-URL: https://conduktor-console:8080/monitoring/api/
+       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
+       
+   conduktor-monitoring:
+     image: conduktor/conduktor-console-cortex
+     volumes:
+       - type: bind
+         source: ./server.crt
+         target: /opt/conduktor/certs/server.crt
+         read_only: true
+     environment:
+       CDK_CONSOLE-URL: "https://conduktor-console:8080"
+       CDK_SCRAPER_SKIPSSLCHECK: "false" # can be set to true if you don't want to check the certificate
+       CDK_SCRAPER_CAFILE: "/opt/conduktor/certs/server.crt"
+```
