@@ -22,7 +22,7 @@ Crypto shredding is the process of making encrypted data permanently unreadable 
 
 ![Conduktor's crypto shredding solution](/images/changelog/gateway/v3.7.0/crypto-shredding-concept.png)
 
-This allows you to honor deletion requests and maintain compliance with regulations like GDPR (General Data Protection Regulation) and CCPA (California Consumer Privacy Act). The approach is also particularly valuable for organizations that need to implement crypto shredding at scale, across large user bases or high-volume data sets, offering both **substantial cost savings** and **improved performance** compared to managing individual keys directly in an external KMS such as AWS.
+Conduktor's crypto shredding solution allows you to honor deletion requests and maintain compliance with regulations like GDPR (General Data Protection Regulation) and CCPA (California Consumer Privacy Act). It is also particularly valuable for organizations that need to operate at scale across large user bases or high-volume data sets, offering both **substantial cost savings** and **improved performance** compared to managing individual keys directly in an external KMS such as AWS.
 
 Conduktor's solution:
 
