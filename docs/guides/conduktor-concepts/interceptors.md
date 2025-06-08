@@ -193,7 +193,7 @@ Here's an example combining Interceptors **chaining**, **scoping** and **overrid
 
 When you need Interceptors to apply conditionally, targeting by Service Account is the most straightforward way.
 
-## Interceptor
+## Deploy Interceptor
 
 **API key(s):** <Label type="AdminToken" />
 **Managed with:** <Label type="API" /> <Label type="CLI" /> <Label type="UI" />
@@ -429,3 +429,268 @@ spec:
 :::warning
 If a ConcentrationRule spec changes, it will not affect previously created concentrated topics, it will only affect the topics created after the change.
 :::
+
+## Audit Interceptor
+
+This <GlossaryTerm>Interceptor</GlossaryTerm> logs information from API key requests. To use it, inject it and implement `ApiKeyAuditLog` interface for audit.
+
+The currently supported Kafka API requests are:
+
+- ProduceRequest (PRODUCE)
+- FetchRequest (FETCH)
+- CreateTopicRequest (CREATE_TOPICS)
+- DeleteTopicRequest (DELETE_TOPICS)
+- AlterConfigRequest (ALTER_CONFIGS)
+
+### Configure
+
+| Name            | Type         | Default | Description                                                             |
+|:----------------|:-------------|:--------|:------------------------------------------------------------------------|
+| topic           | String       | `.*`    | Topics that match this regex will have the Interceptor applied          |
+| apiKeys         | Set[string]  |         | Set of Kafka API keys to be audited                                     |
+| vcluster        | String       | `.*`    | vcluster that matches this regex will have the Interceptor applied        |
+| username        | String       | `.*`    | username that matches this regex will have the Interceptor applied        |
+| consumerGroupId | String       | `.*`    | consumerGroupId that matches this regex will have the Interceptor applied |
+| topicPartitions | Set[Integer] |         | Set of topic partitions to be audited                                   |
+
+### Example
+
+```json
+{
+  "name": "myAuditInterceptorPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.AuditPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "apiKeys": [
+      "PRODUCE",
+      "FETCH"
+    ],
+    "vcluster": ".*",
+    "username": ".*",
+    "consumerGroupId": ".*",
+    "topicPartitions": [
+      1,
+      2
+    ]
+  }
+}
+```
+
+
+
+## Data masking Interceptor
+
+Field level data masking <GlossaryTerm>Interceptor</GlossaryTerm> masks sensitive fields within messages as they are consumed.
+
+### Configuration
+
+Policies will be actioned and applied when consuming messages.
+
+| Key      | Type                    | Default | Description                                                    |
+|:---------|:------------------------|:--------|:---------------------------------------------------------------|
+| topic    | String                  | `.*`    | Topics that match this regex will have the Interceptor applied |
+| policies | List[[Policy](#policy)] |         | List of your masking policies                                  |
+
+### Policy
+
+| Key                  |Type                               | Description                                                                                                                                                                                    |
+|:---------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name                 | String                             | Unique name for identifying your policy                                                                                                                                                        |                                                                                                    
+| Fields               | List                               | List of fields that should be obfuscated with the masking rule. Fields can be nested structure with dot `.` such as `education.account.username`, `banks[0].accountNo` or `banks[*].accountNo` |
+| rule                 | [Rule](#rule)                      | Rule                                                                                                                                                                                           |
+| schemaRegistryConfig | [SchemaRegistry](#schema-registry) | Schema registry                                                                                                                                                                                | 
+
+### Rule
+
+| Key           | Type                          | Default    | Description                                                 |
+|:--------------|:------------------------------|:-----------|:------------------------------------------------------------|
+| type          | [Masking Type](#masking-type) | `MASK_ALL` | Masking type                                                |
+| maskingChar   | char                          | `*`        | Character that the data masked                              |
+| numberOfChars | number                        |            | number of masked characters, required if `type != MASK_ALL` |
+
+### Masking type
+
+- `MASK_ALL`: data will be masked,
+- `MASK_FIRST_N`: The first `n` characters will be masked
+- `MASK_LAST_N`: The last `n` characters will be masked
+
+### Schema registry
+
+| Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
+|-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                      |
+| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| **Confluent Like**    |        |             | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
+| `host`                | string |             | URL of your schema registry.                                                                                                                                                                                        |
+| `cacheSize`           | string | `50`        | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
+| **AWS Glue**          |        |             | **Configuration for AWS Glue schema registries**                                                                                                                                                                    |
+| `region`              | string |             | The AWS region for the schema registry, e.g. `us-east-1`                                                                                                                                                            |
+| `registryName`        | string |             | The name of the schema registry in AWS (leave blank for the AWS default of `default-registry`)                                                                                                                      |
+| `basicCredentials`    | string |             | Access credentials for AWS (see below section for structure)                                                                                                                                                        |
+| **AWS Credentials**   |        |             | **AWS Credentials Configuration**                                                                                                                                                                                   |
+| `accessKey`           | string |             | The access key for the connection to the schema registry.                                                                                                                                                           |
+| `secretKey`           | string |             | The secret key for the connection to the schema registry.                                                                                                                                                           |
+| `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
+| `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
+
+:::warning[Missing credentials]
+If you don't supply a `basicCredentials` section for the AWS Glue schema registry, the client used to connect will instead attempt to find the connection information is needs from the environment and the credentials required can be passed this way to the Gateway as part of its core configuration. [Find out more about this setup from AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+:::
+
+[Read our blog about schema registry](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/).
+
+### Example
+
+```json
+{
+  "name": "myFieldLevelDataMaskingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
+  "priority": 100,
+  "config": {
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081"
+    },
+    "policies": [
+      {
+        "name": "Mask password",
+        "rule": {
+          "type": "MASK_ALL"
+        },
+        "fields": [
+          "password"
+        ]
+      },
+      {
+        "name": "Mask visa",
+        "rule": {
+          "type": "MASK_LAST_N",
+          "maskingChar": "X",
+          "numberOfChars": 4
+        },
+        "fields": [
+          "visa"
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Secured schema registry
+
+```json
+{
+  "name": "myFieldLevelDataMaskingPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.FieldLevelDataMaskingPlugin",
+  "priority": 100,
+  "config": {
+    "schemaRegistryConfig": {
+      "host": "http://schema-registry:8081",
+      "additionalConfigs": {
+        "schema.registry.url": "${SR_URL}",
+        "basic.auth.credentials.source": "${SR_BASIC_AUTH_CRED_SRC}",
+        "basic.auth.user.info": "${SR_BASIC_AUTH_USER_INFO}"
+      }
+    },
+    "policies": [
+      {
+        "name": "Mask password",
+        "rule": {
+          "type": "MASK_ALL"
+        },
+        "fields": [
+          "password"
+        ]
+      },
+      {
+        "name": "Mask visa",
+        "rule": {
+          "type": "MASK_LAST_N",
+          "maskingChar": "X",
+          "numberOfChars": 4
+        },
+        "fields": [
+          "visa"
+        ]
+      }
+    ]
+  }
+}
+```
+
+
+## Dynamic header injection Interceptor
+
+Conduktor Gateway's dynamic header <GlossaryTerm>Interceptor</GlossaryTerm> injects headers (such as user ip) to the messages as they are produced through Gateway.
+
+We support templating in this format: `X-CLIENT_IP: "{{userIp}} testing"`.
+
+Here are the values we can expand:
+
+- uuid
+- userIp
+- vcluster
+- user
+- clientId
+- gatewayIp
+- gatewayHost
+- gatewayVersion
+- apiKey
+- apiKeyVersion
+- timestampMillis
+
+### Configuration
+
+|Config           | Type    | Description                                                                                                                                           |
+|:-----------------|:--------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
+| topic            | String  | Regular expression that matches topics from your produce request                                                                                      |
+| headers          | Map     | Map of header key and header value will be injected, with the header value we can use `{{userIp}}` for the user ip information we want to be injected |
+| overrideIfExists | boolean | Default `false`, configuration to override header on already exist                                                                                    |
+
+### Example
+
+```json
+{
+  "name": "myDynamicHeaderInjectionInterceptor",
+  "pluginClass": "io.conduktor.gateway.interceptor.DynamicHeaderInjectionPlugin",
+  "priority": 100,
+  "config": {
+    "topic": "topic.*",
+    "headers": {
+      "X-CLIENT_IP": "{{userIp}} testing"
+    },
+    "overrideIfExists": true
+  }
+}
+```
+
+Let's produce a simple record to the `injectHeaderTopic` topic.
+
+```bash
+echo 'inject_header' | docker-compose exec -T kafka-client \
+    kafka-console-producer  \
+        --bootstrap-server conduktor-gateway:6969 \
+        --producer.config /clientConfig/gateway.properties \
+        --topic injectHeaderTopic
+```
+
+Let's consume from our `injectHeaderTopic`.
+
+```bash
+docker-compose exec kafka-client \
+  kafka-console-consumer \
+    --bootstrap-server conduktor-gateway:6969 \
+    --consumer.config /clientConfig/gateway.properties \
+    --topic injectHeaderTopic \
+    --from-beginning \
+    --max-messages 1 \
+    --property print.headers=true
+```
+
+You should see the message with headers as below
+
+```
+X-USER_IP:172.19.0.3 testing   inject_header
+```
+

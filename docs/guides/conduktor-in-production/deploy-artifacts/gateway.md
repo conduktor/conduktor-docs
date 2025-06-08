@@ -15,11 +15,11 @@ Conduktor Gateway is deployed between your client applications and existing Kafk
 
 This can be used to provide functionality that is not available in Kafka natively, such as:
 
- - **Centrally configure encryption** at the field-level or full payload, to secure your data during transit and at rest, before the cluster
- - **Mask sensitive data** across topics and set access rules, so users only see what they’re authorized to
- - **Set granular RBAC controls** to manage access and permissions for data at the cluster, team or individual level 
- - **Leverage multi-tenancy** with virtual clusters to optimize resources and reduce operational overheads
- - **Empower development teams** to manage their data within a federated control framework, accelerating project delivery
+- **Centrally configure encryption** at the field-level or full payload, to secure your data during transit and at rest, before the cluster
+- **Mask sensitive data** across topics and set access rules, so users only see what they’re authorized to
+- **Set granular RBAC controls** to manage access and permissions for data at the cluster, team or individual level 
+- **Leverage multi-tenancy** with virtual clusters to optimize resources and reduce operational overheads
+- **Empower development teams** to manage their data within a federated control framework, accelerating project delivery
 
 Conduktor Gateway is vendor-agnostic, meaning it supports all Kafka providers (Confluent, AWS MSK, Redpanda, Aiven, Apache Kafka), both cloud and on-premise.
 
@@ -70,13 +70,16 @@ flowchart LR
     Core <--> K
 ```
 
-### What about scaling?
+### Scaling
+
 The Gateway is stateless and can be scaled horizontally by adding more instances and distributing the incoming traffic using a load balancer.
 
-### What about resilience?
+### Resilience
+
 Much like Kafka, if a broker dies it can be restarted whilst Gateway keeps running. As the Gateway is Kafka protocol compliant, your applications remain available.
 
-### What about latency?
+### Latency
+
 By default, the Gateway operates with minimal impact on performance, typically adding only milliseconds of latency. However, if you begin implementing more resource-intensive features, such as encryption utilizing a Key Management Service (KMS), there will naturally be a slight increase in overhead.
 
 ## Configure Gateway
@@ -1239,13 +1242,13 @@ Firstly, there are some general configuration settings for Gateway internal stat
 | `GATEWAY_TOPIC_MAPPINGS_TOPIC`      | Topic where the topics aliases are stored.                                                | `_conduktor_${GATEWAY_CLUSTER_ID}_topicmappings`          |
 | `GATEWAY_USER_MAPPINGS_TOPIC`       | Topic where the service accounts are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_usermappings`           |
 | `GATEWAY_CONSUMER_OFFSETS_TOPIC`    | Topic where the offsets for concentrated topic consumption are stored.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_consumer_offsets`       |
-| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | Topic where the deployed interceptors are stored.                                         | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs`    |
+| `GATEWAY_INTERCEPTOR_CONFIGS_TOPIC` | Topic where the deployed Interceptors are stored.                                         | `_conduktor_${GATEWAY_CLUSTER_ID}_interceptor_configs`    |
 | `GATEWAY_ENCRYPTION_CONFIGS_TOPIC`  | Topic where the encryption configuration is stored, in specific cases.                    | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_configs`     |
 | `GATEWAY_ACLS_TOPIC`                | Topic where the ACLs managed by Gateway are stored.                                       | `_conduktor_${GATEWAY_CLUSTER_ID}_acls`                   |
 | `GATEWAY_AUDIT_LOG_TOPIC`           | Topic where the Gateway audit log is stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_auditlogs`              |
 | `GATEWAY_VCLUSTERS_TOPIC`           | Topic where the virtual clusters are stored.                                              | `_conduktor_${GATEWAY_CLUSTER_ID}_vclusters`              |
 | `GATEWAY_GROUPS_TOPIC`              | Topic where the service account groups are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_groups`                 |
-| `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        |
+| `GATEWAY_ENCRYPTION_KEYS_TOPIC`     | Name of the topic for storing EDEKs when `gateway` KMS enabled in encryption Interceptors | `_conduktor_${GATEWAY_CLUSTER_ID}_encryption_keys`        |
 | `GATEWAY_DATA_QUALITY_TOPIC`        | Topic where the data quality violation are stored.                                        | `_conduktor_${GATEWAY_CLUSTER_ID}_data_quality_violation` |
 
 #### Required topic configuration
@@ -1314,7 +1317,7 @@ The exception to this is the audit log topic which can have a lot of events writ
 | `LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL`              | Low-level networking, connection mapping, authentication, authorization.                                                    | `info`            | io.conduktor.proxy.network               |
 | `LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL`            | Requests processing and forwarding. At `trace`, log requests sent.                                                          | `info`            | io.conduktor.proxy.thread.UpstreamThread |
 | `LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL` | Requests and responses rewriting. Logs responses payload in `debug` (useful for checking METADATA).                         | `info`            | io.conduktor.proxy.rebuilder.components  |
-| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | Various. Logs ACL checks and interceptor targeting at `debug`. Logs post-interceptor requests/response payload at `trace`.  | `info`            | io.conduktor.proxy.service               |
+| `LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL`              | Various. Logs ACL checks and Interceptor targeting at `debug`. Logs post-interceptor requests/response payload at `trace`.  | `info`            | io.conduktor.proxy.service               |
 | `LOG4J2_IO_CONDUKTOR_LEVEL`                            | Get even more logs not covered by specific packages.                                                                        | `info`            | io.conduktor                             |
 | `LOG4J2_ORG_APACHE_KAFKA_LEVEL`                        | Kafka log level.                                                                                                            | `warn`            | org.apache.kafka                         |
 | `LOG4J2_IO_KCACHE_LEVEL`                               | Kcache log level (our persistence library).                                                                                 | `warn`            | io.kcache                                |
