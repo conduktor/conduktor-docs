@@ -135,6 +135,8 @@ When defining Gateway's Kafka property `bootstrap.servers`, declare it as the en
 
 ## Connect from clients to Gateway
 
+During shutdown, Gateway closes client connections in controlled manner to simulate rolling Kafka broker restart, with `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS` pause between brokers. For librdkafka clients, set `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS` to `1000` or higher to prevent them from crashing during shutdown because of `ALL_BROKERS_DOWN` error.
+
 | **Environment variable**                          | **Description**                                                                                                                                                                                                          | **Default value**                                                                                       |
 |---------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | `GATEWAY_SECURITY_PROTOCOL`                       | The type of authentication clients should use to connect to Gateway. Valid values are: `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL`, `SSL`, `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL`.                         | The default value depends on KAFKA_SECURITY_PROTOCOL. ![](images/gateway-security-protocol-default.png) |
@@ -143,6 +145,7 @@ When defining Gateway's Kafka property `bootstrap.servers`, declare it as the en
 | `GATEWAY_SUPER_USERS`                             | Semicolon-separated (`;`) list of service accounts that will be super users on Gateway (**excluding virtual clusters**).<br/> Example: `alice;bob`.                                                                      | Usernames from GATEWAY_ADMIN_API_USERS                                                                  |
 | `GATEWAY_ACL_STORE_ENABLED`                       | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br/>Enable/disable ACLs support for Virtual Clusters only.                                                      | `false`                                                                                                 |
 | `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client re-authentication after this amount of time. If set to 0, we never force the client to re-authenticate until the next connection                                                                                                    | `0`                                                                                                     |
+| `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS`       | The pause between disconnection of broker clients during shutdown process. Set to `1000` or higher for librdkafka clients.                                                                                                  | `0`                                                                                                     |
 
 ### SSL authentication
 
