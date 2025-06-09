@@ -12,7 +12,7 @@ const client = algoliasearch(
 )
 
 ;(async () => {
-  const pages = await globby(['docs/platform', 'docs/gateway'], {
+  const pages = await globby(['docs/platform'], {
     expandDirectories: {
       extensions: ['md', 'mdx'],
     },
@@ -27,8 +27,6 @@ const client = algoliasearch(
       .replace('docs', '')
       .replace('/index', '')
       .replace(/\/\d{2}-/g, '/');
-    // the real slug of /gateway/concepts/06-Interceptors-and-plugins/02-Targeting.md
-    // is /gateway/concepts/Interceptors-and-plugins/Targeting
 
     if (!data.title) throw new Error(`Title is missing for ${slug}`)
     if (!data.description) throw new Error(`Description is missing for ${slug}`)

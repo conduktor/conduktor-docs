@@ -263,20 +263,7 @@ const config = {
       },
     ],
     'docusaurus-plugin-sass',
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'gateway',
-        sidebarPath: require.resolve('./gateway_sidebars.js'),
-        sidebarCollapsed: true,
-        sidebarCollapsible: true,
-        routeBasePath: '/gateway',
-        exclude: ['./api/**/*'],
-        path: './docs/gateway',
-        lastVersion: 'current',
-        onlyIncludeVersions: ['current'],
-      },
-    ],
+
     redirects,
     gtag,
     analytics,

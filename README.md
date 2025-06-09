@@ -21,7 +21,7 @@
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
-In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
+In most cases, you'll be editing Markdown files in the **guides** directory.
 
 For a local preview (on *localhost:3000*), run `yarn start`.
 
