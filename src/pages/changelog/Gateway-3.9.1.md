@@ -12,6 +12,4 @@ tags: fixes
 
 Fixed a security vulnerability in `commons-beanutils` (CVE-2025-48734).
 
-This patch release upgrades or patches the affected dependency to mitigate the risk associated with this CVE.  
-
-No other changes or new features are included in this release.
+This release patches the affected dependency to mitigate the risk associated with this CVE.  
