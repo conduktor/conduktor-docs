@@ -1,17 +1,16 @@
-# Conduktor Documentation
+# Conduktor technical docs
+
+- [Deployment and structure](#deployment-and-structure)
+- [Docs best practice](#docs-best-practice)
+  - [Structure](#structure)
+  - [Images](#images)
+  - [Links](#links)
+  - [Tabs](#tabs)
+  - [Tags](#tags)
+- [Update release notes](#update-release-notes)
+- [Update public API docs](#update-public-api-docs)
 
 [![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
-
-- [Conduktor Documentation](#conduktor-documentation)
-  - [Deployment and structure](#deployment-and-structure)
-  - [Docs best practice](#docs-best-practice)
-    - [Structure](#structure)
-    - [Images](#images)
-    - [Links](#links)
-    - [Tabs](#tabs)
-    - [Tags](#tags)
-  - [Update release notes](#update-release-notes)
-  - [Update public API docs](#update-public-api-docs)
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
