@@ -73,12 +73,28 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 </TabItem>
 </Tabs>
 
+### Built-in Rules
+
+There are some built-in rules provided out of the box for validation that cannot be achieved with CEL.
+
+:::info[Supported Schema Registries]
+Currently this supports **Confluent** and **Confluent like** (e.g. Redpanda) schema registries. Other types (e.g. AWS Glue) are not supported.
+:::
+
+#### EnforceAvro
+
+`EnforceAvro` ensures that:
+
+- Your messages have a Schema ID prepended to the message content.
+- The schema ID exists within your Schema Registry.
+- The schema it references is of type `avro`.
+
 ### Example Rules
 
 Here are some sample data quality rules.
 :::info[Amend values if using these samples]
 Make sure you amend the field values to use correct fields, if using these examples.
- :::
+:::
 
 <details>
   <summary>Email RegEx validation</summary>
