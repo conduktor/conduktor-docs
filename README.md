@@ -15,6 +15,8 @@
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
+[![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
+
 ## Deployment and structure
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
@@ -25,11 +27,10 @@ For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
-```
-$ yarn
-$ yarn build
-$ yarn start
-
+```bash
+yarn
+yarn build
+yarn start
 ```
 
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
@@ -45,8 +46,8 @@ When creating a new page, use this layout:
 - Use {feature}. Be clear, succinct and use task-oriented headings.
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
-- Related resources. Include links to topics related to the feature. Add this link at the end: 
-[Give us feedback/request a feature](https://conduktor.io/roadmap)
+- Related resources. Include links to topics related to the feature. Add this link at the end:
+  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
 When adding a tutorial (step-by-step guide), use this layout:
 
