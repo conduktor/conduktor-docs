@@ -694,3 +694,106 @@ You should see the message with headers as below
 X-USER_IP:172.19.0.3 testing   inject_header
 ```
 
+
+export const Highlight = ({children, color, text}) => (
+<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
+{children}
+</span>
+);
+
+export const KMS = () => (
+<Highlight color="#F8F1EE" text="#7D5E54">KMS</Highlight>
+);
+
+export const KEK = () => (
+<Highlight color="#E7F9F5" text="#067A6F">KEK</Highlight>
+);
+
+export const EDEK = () => (
+<Highlight color="#F0F4FF" text="#3451B2">EDEK</Highlight>
+);
+
+export const DEK = () => (
+<Highlight color="#FEEFF6" text="#CB1D63">DEK</Highlight>
+);
+
+## Encryption Interceptor overview
+
+This <GlossaryTerm>Interceptor</GlossaryTerm> is a robust and versatile solution for securing data within Kafka records. Its primary function is to safeguard sensitive information from unauthorized access, thereby enhancing data security both in transit and at rest. The key features are:
+
+- **Field-Level encryption**: encrypts specific fields within Kafka records, e.g. passwords or PII (Personally Identifiable Information). This is very useful when only certain parts of a message contain sensitive data.
+
+- **Full Message encryption**: encrypts the entire Kafka record, ensuring that all contents of the message are secured. This is particularly useful when the entire message is sensitive.
+
+### How it works
+
+Once configured, the encryption and decryption processes are seamlessly managed by the interceptor.
+
+**Encryption**: The interceptor identifies the data that needs to be encrypted & the KMS details to share the encryption key, Gateway will then encrypt and produce the message.
+
+**Decryption**: Similar to encryption, the interceptor can decrypt either the entire message, specific fields or all the fields, based on your configuration.
+
+### Flexibility and Compatibility
+
+You can refine how it's encrypted with a choice of algorithm and KMS provider.
+
+**Multiple Encryption Algorithms**: The interceptor supports a variety of encryption algorithms, allowing you to choose the one that best meets your security requirements.
+
+**KMS Integration**: It integrates with various Key Management Services (KMS), providing flexibility in how you manage and store encryption keys.
+
+### Use encryption Interceptor
+
+#### Encrypt data
+
+1. **Identify data**. The Interceptor first determines, based on its configuration, what data needs to be encrypted. This may include the entire message, specific fields or all the fields within the message. For example, if you have configured the interceptor to encrypt a `password` field, it will target this field within the incoming Kafka record for encryption.  
+
+2. **Retrieve key**. The interceptor then generates a key and shares it with the the configured KMS (Key Management Service) or retrieves it, if it exists. Supported KMS options include *Vault*, *Azure*, *AWS*, *GCP* or an in-memory service for local development only. The key is fetched using the `keySecretId` specified in your configuration to ensure the correct key is utilized.
+
+3. **Encrypt**. Once the key is generated/retrieved, the Interceptor encrypts the identified data using the specified encryption algorithm. The original data within the message is now replaced with the encrypted version.
+
+4. **Transmit**. Finally, the encrypted data is either stored as is if it is an *Avro record* or converted into a *JSON format* and is then transmitted as a string to the designated destination.
+
+#### Decrypt data
+
+1. **Identify data**. The Interceptor first determines, based on its configuration, which data needs to be decrypted. This may include the entire message, specific fields, or all the fields within the message.
+
+2. **Retrieve key**. Next, the Interceptor retrieves the decryption key from the KMS. Typically, this is the same key that was used during encryption. The correct key is obtained using the `keySecretId` provided in your Interceptor configuration and that's stored in the header of the record, on the backing Kafka.
+
+3. **Decrypt**. The Interceptor then decrypts the identified data using the retrieved key and the specified encryption algorithm. The decrypted data replaces the encrypted data within the message.
+
+4. **Consume**. Once decrypted, the message is ready for consumption by the end-user or application. The Interceptor ensures that the decrypted data is correctly formatted and fully compatible with the Kafka record structure.
+
+:::info[Transparent process]
+These encryption and decryption processes are fully transparent to the end-user or application. The Interceptor manages all these operations, allowing you to concentrate on the core business logic.
+:::
+
+### Manage keys
+
+The Interceptor uses the `envelope encryption` technique to encrypt data. Here are some key terms we'll use:
+
+|  Term   | Definition                                                                                                                                               |
+|:-------:|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <KMS/>  | **Key Management Service**: A system responsible for managing and storing cryptographic keys, including the <KEK/>.                                      |
+| <KEK/>  | **Key Encryption Key**: A key stored in the <KMS/>, used to encrypt the <DEK/>. Notably, the <KEK/> is never exposed to or known by the interceptor.     |
+| <DEK/>  | **Data Encryption Key**: A key generated by the interceptor, used to encrypt the actual data.                                                            |
+| <EDEK/> | **Encrypted Data Encryption Key**: The <DEK/> that has been encrypted by the <KEK/>, ensuring that the <DEK/> remains secure when stored or transmitted. |
+
+To **encrypt** the data, the Gateway:
+
+1. Generates a <DEK/> that is used to encrypt the data
+2. Sends the <DEK/> to the <KMS/>, so it encrypts it using its <KEK/> and returns the <EDEK/> to the Gateway
+3. Cache the <DEK/> & <EDEK/> in memory for a [configurable Time to Live (TTL)](#optimizing-performance-with-caching)
+4. Encrypts the data using the <DEK/>
+5. Stores the <EDEK/> alongside the encrypted data, and both are sent to the backing Kafka
+
+To **decrypt** the data, the Gateway:
+
+1. Retrieves the <EDEK/> that's stored with the encrypted data
+2. Sends the <EDEK/> to the <KMS/>, which decrypts it (using the <KEK/>) and returns the <DEK/> to Gateway
+3. Decrypts the data using the <DEK/>
+
+![envelope encryption](/guides/encryption.png)
+
+### Optimizing performance with caching
+
+To reduce the number of calls to the <KMS/> and avoid some of the steps detailed above, the interceptor caches the <DEK/> in memory. The cache has a configurable Time to Live (TTL), and the interceptor will call the <KMS/> to decrypt the <EDEK/> if the <DEK/> is not in the cache, as detailed in the steps 1 and 2 above.

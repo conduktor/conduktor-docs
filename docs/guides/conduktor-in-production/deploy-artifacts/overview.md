@@ -10,6 +10,6 @@ Conduktor platform consists of these <GlossaryTerm>artifacts</GlossaryTerm>:
 
 - [Console](/guides/conduktor-in-production/deploy-artifacts/console) - the UI
 
-- [Conduktor CLI](/guides/conduktor-in-production/deploy-artifacts/cli) - the Command Line Interface
+- [Conduktor CLI](/guides/conduktor-in-production/automate/cli-automation) - the Command Line Interface
 
 - [Cortex](/guides/conduktor-in-production/deploy-artifacts/cortex) - the monitoring component
