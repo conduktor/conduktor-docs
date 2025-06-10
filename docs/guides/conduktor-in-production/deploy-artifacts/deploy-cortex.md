@@ -1,6 +1,6 @@
 ---
 sidebar_position: 80
-title: Cortex
+title: Deploy Cortex
 description: Deploy Cortex
 ---
 
