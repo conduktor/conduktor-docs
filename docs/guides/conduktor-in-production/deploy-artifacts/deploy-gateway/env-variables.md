@@ -1,11 +1,9 @@
 ---
 sidebar_position: 62
-title: Gateway environment variables
-description: Deploy Gateway
+title: Define Gateway environment variables
+description: Define Gateway environment variables
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
-# Define Gateway environment variables 
 
 To configure Conduktor Gateway, we recommend setting up environment variables. They can be **set in the Gateway container** or **taken from a file**. To make sure the values were set correctly, check the startup logs.
 
