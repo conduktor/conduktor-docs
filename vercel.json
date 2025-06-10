@@ -5,6 +5,11 @@
       "source": "/desktop/conduktor-first-steps/install",
       "destination": "/platform/category/get-started/", 
       "permanent": true
+    },
+    { 
+      "source": "/platform/category/get-started/",
+      "destination": "/guides/get-started/", 
+      "permanent": true
     }
   ]
 }

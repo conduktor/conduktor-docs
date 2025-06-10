@@ -1,6 +1,6 @@
 ---
 sidebar_position: 70
-title: Console
+title: Deploy Console
 description: Deploy Console
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
