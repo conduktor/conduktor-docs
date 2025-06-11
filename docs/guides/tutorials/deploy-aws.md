@@ -1,12 +1,12 @@
 ---
 sidebar_position: 8
-title: Deploy Conduktor on AWS CloudAWS CloudFormation
+title: Deploy Conduktor on AWS
 displayed: false
 description: Deploy Conduktor on AWS CloudAWS CloudFormation
 ---
 
 
-## Deploy Conduktor on AWS
+## Overview
 
 This guide will show how to deploy <GlossaryTerm>Console</GlossaryTerm> in your AWS environment with all the mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
 
