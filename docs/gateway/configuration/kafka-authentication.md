@@ -127,11 +127,11 @@ KAFKA_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.apache.kafka.common.security.oauthb
 KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId=“<>” clientSecret=“<>” scope=“.default”;
 ```
 
-> **Note:** When using Kafka 4.0, you must set the `org.apache.kafka.sasl.oauthbearer.allowed.urls` property in your Gateway/client configuration:
-> ```
-> JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=https://www.example.com
-> ```
-> Also, ensure you're using the new OAuth callback handler: `org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler`
+:::note
+When using Kafka 4.0, you must set the `org.apache.kafka.sasl.oauthbearer.allowed.urls` property in your Gateway configuration. 
+For example: `JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=https://www.example.com`.
+Also, ensure you're using the new OAuth callback handler: `org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler`
+:::
 
 ## SASL_SSL
 Kafka cluster that uses SASL for authentication and TLS (formerly SSL) for encryption in transit.

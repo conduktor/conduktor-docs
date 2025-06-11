@@ -39,7 +39,7 @@ The local Service Accounts are useful if you want to **manage the clients creden
 
 ### External Service Accounts
 
-For external Service Accounts, the **clients credentials are created and handled by a third-party identity provider** (OIDC, mTLS). 
+For external Service Accounts, the **clients credentials are created and handled by a third-party identity provider** (OIDC, mTLS).
 
 However, you might want to:
 - Refer to them using a friendly name in Gateway
@@ -81,7 +81,7 @@ Thus, authentication cannot take place and so **local and external Service Accou
 
 #### SSL (Encryption Only)
 
-If you use SSL for encryption only, Gateway presents a keystore certificate trusted by the client's truststore, without authenticating the client. 
+If you use SSL for encryption only, Gateway presents a keystore certificate trusted by the client’s truststore, without authenticating the client.
 
 Thus, **local and external Service Accounts are not supported in this mode**.
 
@@ -89,7 +89,7 @@ Thus, **local and external Service Accounts are not supported in this mode**.
 
 ### SSL with Client Authentication (mTLS)
 
-With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate each other's identities using TLS certificates, ensuring secure and trusted bidirectional communication. This means that both the client and Gateway authenticate one another through their respective certificates. 
+With mutual TLS (mTLS) authentication, both Kafka clients and Gateway validate each other’s identities using TLS certificates, ensuring secure and trusted bidirectional communication. This means that both the client and Gateway authenticate one another through their respective certificates.
 
 As a result, Gateway extracts the user identity from the TLS certificate, which can be mapped to an external Service Account in Gateway.
 
@@ -120,7 +120,7 @@ It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that
 With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
 - **Delegate them to the backing Kafka cluster** ([Delegated SASL Authentication](#delegated-sasl-authentication)) - Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACLs
 - **Handle them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - Gateway authenticates the clients and manages their ACLs
-:::
+  :::
 
 ### Delegated SASL Authentication
 
@@ -148,17 +148,9 @@ Virtual resources ([Virtual Clusters](/gateway/concepts/virtual-clusters), [Alia
 
 ### In Delegated Mode
 
-Authorization (ACLs) is handled by the backing Kafka cluster. 
+Authorization (ACLs) is handled by the backing Kafka cluster.
 
 Any calls to the Kafka ACLs API made on Gateway will be forwarded to the backing Kafka cluster.
-
-> **Note:** When using Kafka 4.0, the following ACLs are no longer supported:
-> - LeaderAndIsr
-> - StopReplica
-> - UpdateMetadata
-> - ControlledShutdown
->
-> If you are using these ACLs in your Gateway configuration, you will need to update your security policies accordingly.
 
 ### In Non-Delegated Mode
 
