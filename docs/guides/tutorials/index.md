@@ -14,6 +14,7 @@ description: Learn Conduktor by following hands-on tutorials.
 
 ## Use
 
+- [Deploy Conduktor from AWS CloudFormation](/guides/tutorials/deploy-aws)
 - [Set up Chargeback](/guides/tutorials/configure-chargeback)
 - [Get started with Self-service](/guides/tutorials/self-service-start)
 - [Reprocess messages](/guides/tutorials/reprocess)
