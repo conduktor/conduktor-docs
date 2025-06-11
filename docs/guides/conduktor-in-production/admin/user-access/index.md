@@ -1,11 +1,13 @@
 ---
 sidebar_position: 170
-title: Configure user access
-description: Configure user access to Conduktor
+id: index
+title: Define user access
+description: Define user access to Conduktor
 ---
 
 ## Overview
 
+Our recommendations?
 
 ## Authentication options
 

@@ -3,6 +3,7 @@ sidebar_position: 160
 title: Audit logs
 description: Manage audit logs
 ---
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Audit log event overview
 
@@ -20,8 +21,6 @@ Once configured with the correct [environment variables](docs/platform/get-start
 ![kafka message audit log](/guides/audit-log-kafka-message.png)
 
 ## View and export audit logs
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value="First Tab" label="CloudEvents">
@@ -50,6 +49,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
   ```
 
   Here's an example of a Conduktor event:
+  
   ```json
   {
     "source": "//kafka/kafkacluster/production/topic/website-orders",

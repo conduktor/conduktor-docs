@@ -1,7 +1,7 @@
 ---
 sidebar_position: 230
-title: Create data policies 
-description: Manage data policies in Conduktor
+title: Create data masking policies 
+description: Manage data masking policies in Conduktor Console
 ---
 
 ## Overview
