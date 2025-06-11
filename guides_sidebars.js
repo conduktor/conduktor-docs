@@ -75,6 +75,7 @@ module.exports = {
           },
             'conduktor-in-production/admin/set-up-rbac',
             'conduktor-in-production/admin/audit-logs',
+            'conduktor-in-production/admin/gw-policies',  
             'conduktor-in-production/admin/data-mask',                
           ],
         },

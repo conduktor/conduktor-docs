@@ -25,10 +25,10 @@ Once deployed, you’ll have access to a fully functional Kafka stack integrated
 1. The intercepted **data flows through the Conduktor Gateway proxy and lands in a Redpanda Kafka cluster** with a *schema registry* enforcing structure and compatibility across topics.
 1. Conduktor Console provides a **centralized UI-based control plane** to manage both the Redpanda Kafka cluster and Conduktor Gateway, allowing you to:
 
-- monitor topics, schemas, consumer groups and connectors
-- define and apply Gateway policies
-- trace message flows
-- audit activity across the entire stack
+    - monitor topics, schemas, consumer groups and connectors
+    - define and apply Gateway policies
+    - trace message flows
+    - audit activity across the entire stack
 
 ## Data policies
 
@@ -52,14 +52,11 @@ curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docke
 
 [Here's the Docker Compose file](https://raw.githubusercontent.com/conduktor/conduktor-platform/main/quick-start.yml) for the get-started stack. For advanced configuration see:
 
-- Gateway configuration properties and env variables
-- Console configuration properties and env variables
-- ...
-- ...
+- [Gateway environment variables](/guides/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables)
+- [Console environment variables](/guides/conduktor-in-production/deploy-artifacts/deploy-console/env-variables)
 
 ## Next steps
 
-- Configure your own Kafka clusters
-- Deploy Conduktor in production
-- Check out Conduktor concepts
-- 
+- [Configure your own Kafka clusters](/guides/conduktor-in-production/admin/configure-clusters)
+- [Deploy Conduktor in production](/guides/conduktor-in-production/index)
+- [Check out Conduktor concepts](/guides/conduktor-concepts/index)
