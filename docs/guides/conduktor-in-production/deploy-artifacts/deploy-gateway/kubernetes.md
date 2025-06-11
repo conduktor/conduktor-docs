@@ -1,6 +1,6 @@
 ---
 sidebar_position: 61
-title: Deploy with Kubernetes
+title: Deploy Gateway with Kubernetes
 description: Deploy Gateway with Kubernetes
 ---
 
