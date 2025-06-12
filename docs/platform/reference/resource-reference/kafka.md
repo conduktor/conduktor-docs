@@ -62,6 +62,9 @@ Creates a Topic in Kafka.
 **Managed with:** <CLI /> <API /> <TF /> <GUI />  
 **Labels support:** <FullLabelSupport />
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 ---
 apiVersion: kafka/v2
@@ -85,6 +88,43 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_topic_v2" "click-event-stream-avro" {
+  name    = "click.event-stream.avro"
+  cluster = "shadow-it"
+  labels  = {
+    domain  = "clickstream"
+    appcode = "clk"
+  }
+  description = <<EOT
+  # Event Stream from Click Application
+  This is a multiline markdown description that will appear in the Topic Catalog
+  EOT
+  description_is_editable = false
+  catalog_visibility      = "PUBLIC"
+  spec = {
+    replication_factor = 3
+    partitions         = 3
+    configs = {
+      "cleanup.policy" = "delete"
+      "retention.ms"   = "60000"
+    }
+  }
+
+  #Optional: Prevents the topic from being deleted
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Topic checks:**
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances

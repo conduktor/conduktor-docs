@@ -3,16 +3,16 @@ title: Data quality
 description: Data quality allows you to define checks and actions to apply on data produced into Kafka
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import CopyableCode from '@site/src/components/CopyableCode';
 
 ## Overview
 
 Bad data breaks customer experiences, drives churn and slows growth.
-[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business.
-You define the rules and we'll enforce them at the streaming layer.
+[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
-Before creating data quality rules and policies, you have to:
+Before creating data quality Rules and Policies, you have to:
 
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
@@ -31,7 +31,7 @@ The Rules page lists your Rules, with a preview of their CEL expressions. Open R
 
 ### Create a Rule
 
-You can create a data quality rule from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Rule from the **Console UI**, or the **Conduktor CLI**.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -75,28 +75,30 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 
 ### Example Rules
 
-Here are some sample data quality rules.
+Here are some sample data quality Rules.
+
 :::info[Amend values if using these samples]
 Make sure you amend the field values to use correct fields, if using these examples.
- :::
+:::
 
 <details>
   <summary>Email RegEx validation</summary>
   <p>
-    Your requirements may be different from this RegEx, as email validation via RegEx is complex!
-    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
+    <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
   </p>
 </details>
 <details>
   <summary>UUID RegEx validation</summary>
   <p>
-  `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
+    <CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
   </p>
 </details>
+
 <details>
   <summary>Ensure Header is JSON</summary>
   <p>
-  `headers['Content-Type'] == 'application/json'`
+    <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
   </p>
 </details>
 
@@ -117,11 +119,11 @@ The available actions to enable for a Policy are:
 - **Report**: when violations occur, log these as events in the Policy's history
 - **Block**: when a violation occurs, prevent data from being processed or transmitted
 
-By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
 ### Create a Policy
 
-You can create a data quality policy from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Policy from the **Console UI**, or the **Conduktor CLI**.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -141,7 +143,7 @@ You can create a Policy through the Console UI through the following steps:
    - A target consists of one or more topics on a specified Gateway
    - You can either select specific topics, or specify a prefix like `orders-*`
    - Click **Continue** to move to the next step.
-2. Review the policy, and if you are happy, confirm by clicking **Create**.
+2. Review the Policy, and if you are happy, confirm by clicking **Create**.
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
@@ -187,12 +189,27 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
+### Using multiple Policies
+
+When multiple Policies target the same topic, there are two scenarios that can occur when a record is produced:
+
+- **None** of the Policies block the record and all are evaluated
+
+  - The evaluation count is increased for all of the Policies.
+  - The violation count is increased for each violated Policy.
+  - A report is generated for each violated Policy (that has reporting enabled).
+
+- **One or more** of the Policies block the record production. In this scenario, one of the Policies blocks the record first and then hides it from others
+
+  - For the first blocking Policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
+  - For the other Policies: no counts are increased and no reports are generated.
+
 ## Troubleshoot
 
 <details>
   <summary>What does Policy status mean?</summary>
   <p>
-  This is the status of a data quality policy:
+  This is the status of a data quality Policy:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
@@ -201,7 +218,7 @@ Since the **block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
   </p>
 </details>
 

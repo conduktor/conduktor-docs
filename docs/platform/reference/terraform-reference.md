@@ -19,7 +19,7 @@ Conduktor Terraform Provider is currently in **Alpha** and doesn't support all t
 
 ## Install
 
-The provider should be installed automatically with `terraform init`, however we recommend to pin a specific version or range of versions using the [required_providers](https://developer.hashicorp.com/terraform/language/providers/requirements) configuration:
+The provider should be installed automatically with `terraform init`, however we recommend to pin a specific version or range of versions using the [required_providers](https://developer.hashicorp.com/terraform/language/providers/configuration) configuration:
 
 ```hcl
 terraform {

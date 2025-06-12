@@ -89,24 +89,26 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
     apiVersion: v2
     kind: PartnerZone
     metadata:
-      name: external-partner-zone
+        name: external-partner-zone
     spec:
-      cluster: partner1
-      displayName: External Partner Zone
-      url: https://partner1.com
-      serviceAccount: johndoe
-      topics:
+        cluster: partner1
+        displayName: External Partner Zone
+        url: https://partner1.com
+        authenticationMode:
+            serviceAccount: partner-external-partner
+            type: PLAIN
+        topics:
         - name: topic-a
           backingTopic: kafka-topic-a
           permission: WRITE
         - name: topic-b
           backingTopic: kafka-topic-a
           permission: READ
-      partner:
-        name: John Doe
-        role: Data analyst
-        email: johndoe@company.io
-        phone: 07827 837 177
+        partner:
+          name: John Doe
+          role: Data analyst
+          email: johndoe@company.io
+          phone: 07827 837 177
     ```
 
 1. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
