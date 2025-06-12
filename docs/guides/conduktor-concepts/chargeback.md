@@ -29,4 +29,7 @@ This topic is then utilized by the Console to display Chargeback metrics. Charge
 }
 ```
 
-[Check out Chargeback tutorial](/guides/tutorials/configure-chargeback).
+## Related resources
+
+- [Check out Chargeback tutorial](/guides/tutorials/configure-chargeback)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

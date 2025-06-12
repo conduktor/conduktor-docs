@@ -10,3 +10,9 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 - **reduce operational costs**, since you don't have to keep data streams synchronized
 
 ![Partner Zones overview](/guides/pz-detail-view.png)
+
+## Related resources
+
+- [Get started with Partner Zones](/guides/use-cases/third-party-data)
+- [View resource reference](/guides/reference/console-reference/#partner-zones)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

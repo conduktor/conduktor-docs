@@ -9,6 +9,7 @@ It centers around a GitOps approach to resource management, access requests, and
 
 ## Related resources
 
-- [Use Self-service](/guides/use-cases/self-service/index)
+- [Use Self-service](/guides/use-cases/self-service)
 - [Check out the quick start tutorial](/guides/tutorials/self-service-start)
 - [View resource reference](/guides/reference/self-service-reference)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

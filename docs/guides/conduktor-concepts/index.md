@@ -5,6 +5,6 @@ title: Conduktor concepts
 description: Learn Conduktor terminology
 ---
 
-Conduktor introduces a number of its own concepts to deliver the capabilities provided in our core products.
+Conduktor terminology consists of a number of concepts that reflect the core capabilities we provided in our products.
 
-For an alphabetical list of all our terminology, [check out Conduktor glossary](/glossary).
+For an interactive alphabetical list, [check out the interactive Conduktor glossary](/glossary).

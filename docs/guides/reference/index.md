@@ -24,8 +24,7 @@ import Label from '@site/src/components/Labels';
 | Gateway   | [Gateway configuration reference](../../gateway/configuration/env-variables)  |
 | Gateway   | [Gateway CLI reference](../../gateway/reference/cli-reference)  |
 | Gateway   | [Gateway resources reference](../../gateway/reference/resources-reference)  |
-| Interceptor   | [Gateway Interceptor reference](./resource-reference/)  |
-
+| Interceptors  | [Gateway Interceptor reference](./resource-reference/)  |
 
 
 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>

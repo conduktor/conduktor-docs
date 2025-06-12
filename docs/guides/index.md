@@ -26,3 +26,4 @@ Console home page
 - [Check out release notes](https://conduktor.io/changelog)
 - [Arrange a technical demo](https://www.conduktor.io/contact/demo)
 - [Contact support](https://www.conduktor.io/contact/support)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
