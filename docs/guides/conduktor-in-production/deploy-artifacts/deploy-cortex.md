@@ -192,7 +192,8 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 
 ## Related resources
 
-- [Conduktor monitoring](/guides/monitor-brokers-apps/index)
+- [Conduktor monitoring](/guides/monitor-brokers-apps)
+- [Gateway and Console healthcheck monitoring](/guides/conduktor-in-production/monitor)
 - [See all available metrics](/guides/monitor-brokers-apps/monitor-metrics)
 - [Set up alerts](/guides/monitor-brokers-apps/alerts)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
