@@ -8,11 +8,11 @@ Upgrade to the latest Conduktor version.
 
 ## Release cadence
 
-Conduktor plans to provide a new release at least monthly. We suggest that upgrades are done no more than two versions apart at a time.
+Conduktor provides a new release roughly every month. We suggest that upgrades are done no more than two versions apart at a time.
 
 [Subscribe to get notified about new releases](https://support.conduktor.io/hc/en-gb/articles/20131942687889-How-to-get-notified-when-there-is-a-new-version-of-Conduktor-Console-or-Gateway).
 
-## Upgrade process
+## Console upgrade process
 
 Conduktor is released as a Docker container. To upgrade from one release to the next (in production):
 
@@ -28,11 +28,6 @@ docker pull conduktor/conduktor-console
 
 1. Check the logs and the UI to ensure the upgrade was successful.
 
-## Related resources
-
-- [View our version policy](/support)
-
-
 ## Gateway migration guide
 
 Migrating Gateway from v2.x to a 3.x.
@@ -45,7 +40,6 @@ flowchart TD
     A[Configuration changes] --> B[Migrate the data]
     B --> C[Deploy Gateway 3.x]
 ```
-
 
 ##### 1. Configuration changes
 
@@ -179,7 +173,7 @@ Gateway `3.3.0` introduces API V2 to bring an enhanced user experience when inte
 
 If you are migrating from API V1 to V2, your Gateway resources will be preserved (meaning, you can interact with old resources via the V2 API), and only minimal attention is required for the below resources:
 
-#### Virtual Clusters
+#### Virtual clusters
 
 - The automation will derive the boolean value `aclEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable.
 - The migration will not populate the `superUsers` list automatically, so this must be addressed as part of your migration.
@@ -207,3 +201,6 @@ If you were using Local Users (and generating tokens) with API V1, new actions a
 
 **Required action**: You will need to first declare LOCAL users in V2 APIs to then be able to generate tokens.
 
+## Related resources
+
+- [View our version policy](/support)

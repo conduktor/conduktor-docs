@@ -1,11 +1,11 @@
 ---
 sidebar_position: 210
-title: Session lifetime 
+title: Manage session timeout 
 description: Session lifetime in Conduktor
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-## Session lifetime overview
+## Session timeout overview
 
 Conduktor uses long and short-lived tokens to verify authenticated users. By default, **the maximum session lifetime is three days**. This means that you can close Console and return within the three day window to continue your session without needing to re-authenticate.
 

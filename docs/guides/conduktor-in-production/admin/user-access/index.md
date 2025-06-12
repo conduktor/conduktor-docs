@@ -5,9 +5,7 @@ title: Define user access
 description: Define user access to Conduktor
 ---
 
-## Overview
-
-Our recommendations?
+We recommend configuring SSO for production deployments.
 
 ## Authentication options
 

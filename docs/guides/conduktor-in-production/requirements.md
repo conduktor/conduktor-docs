@@ -6,16 +6,11 @@ description: Conduktor technical requirements
 
 ## Hardware
 
-| Component | Usage | RAM | CPU cores | Disc space |
+| Component | Usage | RAM | CPU cores | Disk space |
 | :------ | :--- | :--- | :--- | :--- |
 | Gateway | Light  | 4 GB | 2 | N/A |
 | Gateway | Medium | 8 GB | 4 | N/A |
 | Console | Min | 3 GB | 2 | 5 GB |
-|  |  |  |   |  |
-
-## Software
-
-TBC - what's recommended vs supported in e.g. Java versions?
 
 ## Gateway requirements
 

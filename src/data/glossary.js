@@ -92,7 +92,7 @@ const glossaryData = [
     {
         term: "Exchange",
         tooltip: "Conduktor product for sharing third party data.",
-        definition: "Conduktor product for sharing and receiving streaming data across teams and trusted partners — without added overhead or data duplication. Turn real-time data into revenue. [Find out more](https://conduktor.io/exchange).",
+        definition: "Conduktor product for sharing and receiving streaming data with third party trusted partners — without added overhead or data duplication. Turn real-time data into revenue. [Find out more](https://conduktor.io/exchange).",
         slug: "exchange"
     },
     {
@@ -156,7 +156,7 @@ const glossaryData = [
     {
         term: "Policy",
         tooltip: "A collection of validation Rules that's applied to Kafka topics or prefixes.",
-        definition: "A Policy is a collection of validation [Rules](#rule) that's applied to [topics](topic) or prefixes. Policies can have actions which will take effect when specified criteria is met. For example, the processing of messages is blocked when a violation occurs. [Find out more](../guides/use-cases/rules-policies).",
+        definition: "A Policy in Conduktor is a configurable control that automates governance and compliance across your data ecosystem. There are different types of policies, such as TopicPolicy within our Self-service framework and DataQualityPolicy in the Trust [product](#product).",
         slug: "policy"
     },       
     {
@@ -173,8 +173,8 @@ const glossaryData = [
     {
         term: "Product",
         tooltip: "Conduktor products are: Scale, Shield, Exchange and Trust.",
-        definition: "Each Conduktor product (such as [Scale](#scale)) is a collection of [artifacts](#artifact). Each product uses different artifacts based on the license tier to provide business value. [Find out more](https://conduktor.io/pricing).",
-        slug: "product"
+        definition: "Conduktor products (Scale, Shield, Exchange and Trust) are the commercial offerings that customers purchase, providing access to specific capabilities on the Conduktor platform. Each product uses different [artifacts](#artifact) based on the license tier to provide business value. [Find out more](https://conduktor.io/pricing).",
+        slug: "product" 
     },       
     {
         term: "Scale",

@@ -9,11 +9,11 @@ Conduktor platform consists of these <GlossaryTerm>artifacts</GlossaryTerm>:
 
 - [Gateway](#gateway)- a network proxy for Apache Kafka, complete with an extensible and dynamic plugin mechanism that can be used to add technical and business logic on top of your existing Kafka deployment.
 
-- [Console](#console) - the centralized UI-based control plane for managing Kafka
-
-- [Conduktor CLI](/guides/conduktor-in-production/automate/cli-automation) - an alternative to the UI, our Command Line Interface lets you automate repetitive actions.
+- [Console](#console) - the centralized UI-based control plane for managing Kafka.
 
 - [Cortex](/guides/conduktor-in-production/deploy-artifacts/cortex) - the monitoring component for Conduktor Platform that runs in the background.
+
+- [Conduktor CLI](/guides/conduktor-in-production/automate/cli-automation) - our Command Line Interface lets you automate operations.
 
 ## Gateway
 
@@ -94,9 +94,9 @@ By default, the Gateway operates with minimal impact on performance, typically a
 
 ## Console
 
-## CLI
-
 ## Cortex
+
+## CLI
 
 ### Related resources
 

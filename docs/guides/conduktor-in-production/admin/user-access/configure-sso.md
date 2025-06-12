@@ -1,7 +1,7 @@
 ---
 sidebar_position: 180
-title: Configure SSO
-description: Configure SSO in Conduktor
+title: Configure SSO in Console
+description: Configure SSO in Conduktor Console
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
