@@ -75,7 +75,7 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 
 ### Built-in Rules
 
-There are some built-in rules provided out of the box for validation that cannot be achieved with CEL.
+There are some built-in Rules provided out of the box for validation that cannot be achieved with CEL.
 
 :::info[Supported Schema Registries]
 Currently this supports **Confluent** and **Confluent like** (e.g. Redpanda) schema registries. Other types (e.g. AWS Glue) are not supported.
@@ -135,6 +135,15 @@ The available actions to enable for a Policy are:
 
 By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
+### Permissions
+
+Each Policy is owned by a group.
+A policy can only be viewed by members of its ownership group (and admins).
+A policy can only target topics within the scope of the 'manage data quality' permissions on the ownership group.
+Modifying the 'manage data quality' permission on a group will not impact any existing policies associated with that group.
+
+![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](assets/topic-dq-manage-permission.png)
+
 ### Create a Policy
 
 You can create a data quality policy from the **Console UI**, or the **Conduktor CLI**.
@@ -147,6 +156,7 @@ You can create a Policy through the Console UI through the following steps:
 1. Define the Policy details:
    - Add a descriptive **name** for the Policy.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
+   - Select a group to own the Policy. This controls who can view and manage the Policy, and which resources can be targeted.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Select Rules to be used in the Policy:
    - Every Policy must have at least one Rule
@@ -170,6 +180,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
     kind: DataQualityPolicy
     metadata:
         name: check-order-payload
+        group: orders-team
     spec:
         displayName: Verify the order items
         description: Verify the order items payloads on purchase-pipeline topic.
