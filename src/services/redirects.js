@@ -4,419 +4,419 @@ const redirects = [
     redirects: [
       {
         from: '/platform/navigation/console/conduktor-sql/',
-        to: '/guides'
+        to: '/guide'
       },
       {
         from: '/learn-apache-kafka-with-conduktor',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/brokers-management',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consumer-groups-management',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-access-control-list-acl',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-connect',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-streams',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/monitoring',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/producing-data',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/schema-registry-management',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/topics-management',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/import-export-configurations',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/misc/configuring-conduktor',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/misc/data-security',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/misc/faq',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/misc/internet-troubleshooting',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/portal/account-management',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/install',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/licenses-and-activations',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/login-troubleshooting',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/sign-in',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/advanced-consumer',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/custom-deserializers',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/filtering-and-projecting-data',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/pick-your-format-wisely',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-access-control-list-acl/acls-advanced-insights',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-connect/features',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/kafka-connect/security',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb/connect-conduktor-to-ksqldb-clusters',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb/how-to-query-with-ksqldb',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb/ksqldb-faq',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/ksqldb/what-to-do-with-ksqldb',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/producing-data/produce-random-data',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/schema-registry-management/avro-tools',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/schema-registry-management/schema-compatibilities',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/topics-management/how-to',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/topics-management/smart-groups',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/topics-management/topic-details',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/import-export-configurations/github-enterprise',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-on-windows-wsl-2',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-under-docker',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/portal/account-management/managing-permissions-rbac',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/install/linux',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/install/mac',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/install/update',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/install/windows',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/licenses-and-activations/offline-licenses',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/login-troubleshooting/certificates-faq',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/login-troubleshooting/internet-proxy',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/sign-in-section/sign-in/single-sign-on',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/custom-deserializers/aws-glue-schema-registry',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/proxy/features',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/proxy',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/proxy/configuration/env-variables',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/gateway/category/interceptors-catalog/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/admin/managing-clusters',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/introduction/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/env-variables/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/configuration-snippets/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/cortex/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/database/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/http-proxy-configuration',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/https-configuration/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/ssl-tls-configuration/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/memory-configuration/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/configure-sso/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/local-admin-and-users/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/external-group-sync/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/session-lifetime/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/ldap/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/ldaps',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/generic-oauth2/',
-        to: '/guides/',
+        to: '/guide/',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/azure/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/google/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/amazon-cognito/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/keycloak/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/okta/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/user-authentication/SSO/auth0/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/configuration/api-overview/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/get-started/docker/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/get-started/kubernetes/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/get-started/aws/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/get-started/installation/get-started/AWS_Marketplace/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/license-management/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/hardware/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/Upgrades/',
-        to: '/guides/',
+        to: '/guide/',
       },
       {
         from: '/platform/admin/rbac/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/installation/get-started/docker-compose/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/navigation/self-serve/getting-started/',
-        to: '/guides',
+        to: '/guide',
       },
       {
         from: '/platform/get-started/support/data-security/',
-        to: '/guides'
+        to: '/guide'
       },
       {
         from: '/platform/get-started/installation/get-started/CloudFormation/',
-        to: '/guides'
+        to: '/guide'
       }
     ],
   },

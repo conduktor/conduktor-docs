@@ -3,16 +3,16 @@ import Container from '@site/src/components/atoms/Container'
 import React from 'react'
 import Badge from '../../atoms/Badge'
 import Heading from '../../atoms/Heading'
-import { items } from './Guides.constants'
-import styles from './Guides.module.scss'
+import { items } from './guide.constants'
+import styles from './guide.module.scss'
 
-interface GuidesProps {}
+interface guideProps {}
 
-const Guides: React.FunctionComponent<GuidesProps> = () => {
+const guide: React.FunctionComponent<guideProps> = () => {
   return (
-    <section className={styles.StyledGuides}>
+    <section className={styles.Styledguide}>
       <Container>
-        <Heading>Deployment guides</Heading>
+        <Heading>Deployment guide</Heading>
         <ul className={styles.List}>
           {items.map((item, itemIndex) => (
             <li className={styles.ListItem} key={itemIndex}>
@@ -40,4 +40,4 @@ const Guides: React.FunctionComponent<GuidesProps> = () => {
   )
 }
 
-export default Guides
+export default guide

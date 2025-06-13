@@ -89,14 +89,14 @@ Update the passwords in your YAML or environment variables to meet the new polic
 #### Conduktor Chargeback: Track and Allocate Costs & Resource Consumption
 
 :::info[Preview functionality]
-This is a [preview feature](/platform/guides/configure-chargeback/) and is subject to change as we continue working on it.
+This is a [preview feature](/platform/guide/configure-chargeback/) and is subject to change as we continue working on it.
 :::
 
 Conduktor Chargeback allows organizations to track and allocate costs & usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
-Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get started with Chargeback.
+Check the dedicated [Quickstart](/platform/guide/configure-chargeback/) to get started with Chargeback.
 ***
 
 #### Console Homepage

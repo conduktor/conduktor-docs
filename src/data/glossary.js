@@ -28,7 +28,7 @@ const glossaryData = [
     {
         term: "CLI",
         tooltip: "Command Line Interface.",
-        definition: "Command Line Interface. Conduktor CLI is an [artifact](#artifact) that communicates with other artifacts\' API. Two installation options are available: **native binary** or **Docker**. [Find out more](../guides/conduktor-in-production/deploy-artifacts/cli).",
+        definition: "Command Line Interface. Conduktor CLI is an [artifact](#artifact) that communicates with other artifacts\' API. Two installation options are available: **native binary** or **Docker**. [Find out more](../guide/conduktor-in-production/deploy-artifacts/cli).",
         slug: "cli"
     },
     {
@@ -51,7 +51,7 @@ const glossaryData = [
     {
         term: "Cortex",
         tooltip: "A Conduktor artifact (component) that provides monitoring functionality for Console.",
-        definition: "An [artifact](#artifact) `conduktor-console-cortex` that\'s deployed alongside [Console](#console) to provide it with the monitoring metrics. [Find out more](../guides/conduktor-in-production/deploy-artifacts/cortex)",
+        definition: "An [artifact](#artifact) `conduktor-console-cortex` that\'s deployed alongside [Console](#console) to provide it with the monitoring metrics. [Find out more](../guide/conduktor-in-production/deploy-artifacts/cortex)",
         slug: "cortex"
     },
     {
@@ -104,19 +104,19 @@ const glossaryData = [
     {
         term: "Gateway",
         tooltip: "A vendor-agnostic Kafka proxy that provides greater control over traffic management, data security, authentication and more.",
-        definition: "Conduktor Gateway is a vendor-agnostic Kafka proxy, deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption and failover for disaster recovery. Available as a Docker image `conduktor-gateway`. [Find out more](../guides/conduktor-in-production/deploy-artifacts/gateway).",
+        definition: "Conduktor Gateway is a vendor-agnostic Kafka proxy, deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption and failover for disaster recovery. Available as a Docker image `conduktor-gateway`. [Find out more](../guide/conduktor-in-production/deploy-artifacts/gateway).",
         slug: "gateway"
     },
     {
         term: "Interceptor",
         tooltip: "Conduktor Interceptors are Gateway plugins that transform and manipulate data.",
-        definition: "Conduktor Interceptors are configurable Gateway plugins that allow any part of Kafka protocol to be observed, manipulated and transformed. [Find out more](../guides/conduktor-concepts/interceptors).",
+        definition: "Conduktor Interceptors are configurable Gateway plugins that allow any part of Kafka protocol to be observed, manipulated and transformed. [Find out more](../guide/conduktor-concepts/interceptors).",
         slug: "interceptor"
     },
     {
         term: "Kafka Connect",
         tooltip: "A tool for integrating Kafka with external data sources.",
-        definition: "Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable & scalable way. Conduktor provides a simple interface for managing all of your *source* and *sink* connectors in one place. [Find out more](../guides/manage-kafka/kafka-resources/kafka-connect).",
+        definition: "Kafka Connect is a tool to stream data between Apache Kafka and other data systems in a reliable & scalable way. Conduktor provides a simple interface for managing all of your *source* and *sink* connectors in one place. [Find out more](../guide/manage-kafka/kafka-resources/kafka-connect).",
         slug: "kafka-connect"
     },
     {
@@ -150,7 +150,7 @@ const glossaryData = [
     {
         term: "Console",
         tooltip: "The unified interface to develop, monitor and manage data streaming operations.",
-        definition: "This is the Conduktor offering that you can see - the unified interface to develop, monitor and manage data streaming operations. Console is available as a Docker image `conduktor-console`. [Find out more](../guides/conduktor-in-production/deploy-artifacts/console).",
+        definition: "This is the Conduktor offering that you can see - the unified interface to develop, monitor and manage data streaming operations. Console is available as a Docker image `conduktor-console`. [Find out more](../guide/conduktor-in-production/deploy-artifacts/console).",
         slug: "Console"
     },       
     {
@@ -162,7 +162,7 @@ const glossaryData = [
     {
         term: "Rule",
         tooltip: "A Rule captures business logic that\'s applied to data. Rules have to be attached to Policies to take effect.",
-        definition: "A Rule is a CEL expression that captures business logic for your data. You then attach the Rule(s) to one or more [Policies](#policy) which will validate data at the streaming layer **before messages are processed**. [Find out more](../guides/use-cases/rules-policies).",
+        definition: "A Rule is a CEL expression that captures business logic for your data. You then attach the Rule(s) to one or more [Policies](#policy) which will validate data at the streaming layer **before messages are processed**. [Find out more](../guide/use-cases/rules-policies).",
         slug: "rule"
     },             
     {
@@ -196,7 +196,7 @@ const glossaryData = [
     {
         term: "Self-service",
         tooltip: "Self-service helps you scale Kafka usage in your organization by facilitating collaboration between the central platform and application teams. ",
-        definition: "A GitOps framework within [Scale](#scale) that provides developer autonomy. It helps you scale Kafka usage in your organization by facilitating collaboration between the central platform and application teams. [Find out more](../guides/use-cases/self-service).",
+        definition: "A GitOps framework within [Scale](#scale) that provides developer autonomy. It helps you scale Kafka usage in your organization by facilitating collaboration between the central platform and application teams. [Find out more](../guide/use-cases/self-service).",
         slug: "self-service"
     },       
     {
@@ -207,7 +207,7 @@ const glossaryData = [
     {
         term: "Terraform",
         tooltip: "To terraform means to prepare/transform data, so it can be used as code.",
-        definition: "To terraform means to prepare/transform data, so it can be used as code. Conduktor uses Alpha as the terraform provider. [Find out more](../guides/conduktor-in-production/automate/terraform-automation).",
+        definition: "To terraform means to prepare/transform data, so it can be used as code. Conduktor uses Alpha as the terraform provider. [Find out more](../guide/conduktor-in-production/automate/terraform-automation).",
         slug: "terraform"
     },       
     {
@@ -218,7 +218,7 @@ const glossaryData = [
     {
         term: "Logical topic",
         tooltip: "Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default.",
-        definition: "Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default. We offer three types of logical topics: alias, concentrated and SQL. [Find out more](../guides/conduktor-concepts/logical-topics).",
+        definition: "Conduktor logical topics are abstractions of real Kafka topics that provide additional functionality that's not available by default. We offer three types of logical topics: alias, concentrated and SQL. [Find out more](../guide/conduktor-concepts/logical-topics).",
         slug: "logical-topic"
     },   
     {
@@ -230,25 +230,25 @@ const glossaryData = [
     {
         term: "Partner Zones",
         tooltip: "Partner Zones allow you to share Kafka topics with external partners selectively and securely.",
-        definition: "Partner Zones allow you to share Kafka [topics](#topic) with external partners selectively and securely. [Find out more](../guides/use-cases/third-party-data).",
+        definition: "Partner Zones allow you to share Kafka [topics](#topic) with external partners selectively and securely. [Find out more](../guide/use-cases/third-party-data).",
         slug: "partner-zones"
     },       
     {
         term: "Chargeback",
         tooltip: "Chargeback lets you visualize the cost allocation of service accounts.",
-        definition: "Chargeback lets you visualize the cost allocation of [service accounts](#service-account) on a few key metrics. [Find out more](../guides/use-cases/chargeback).",
+        definition: "Chargeback lets you visualize the cost allocation of [service accounts](#service-account) on a few key metrics. [Find out more](../guide/use-cases/chargeback).",
         slug: "chargeback"
     }, 
     {
         term: "Service account",
         tooltip: "A non-human identity used by Kafka clients to authenticate and perform actions on resources.",
-        definition: "A service account is a non-human identity used by Kafka clients to authenticate and perform actions on resources through [Gateway](#gateway). You can define two types of service accounts: **local** or **external**. [Find out more](../guides/conduktor-concepts/gw-service-accounts).",
+        definition: "A service account is a non-human identity used by Kafka clients to authenticate and perform actions on resources through [Gateway](#gateway). You can define two types of service accounts: **local** or **external**. [Find out more](../guide/conduktor-concepts/gw-service-accounts).",
         slug: "service-account"
     },   
     {
         term: "Indexing",
         tooltip: "A background process in Console that allows you to perform various actions on data.",
-        definition: "Indexing is a background process in [Console](#console) that collects changes in an internal table, in turn allowing you to perform actions like sort, filter and much more, which you couldn\'t do with any out-of-the-box Kafka implementations. [Find out more](../guides/conduktor-concepts/indexing).",
+        definition: "Indexing is a background process in [Console](#console) that collects changes in an internal table, in turn allowing you to perform actions like sort, filter and much more, which you couldn\'t do with any out-of-the-box Kafka implementations. [Find out more](../guide/conduktor-concepts/indexing).",
         slug: "indexing"
     },    
     {

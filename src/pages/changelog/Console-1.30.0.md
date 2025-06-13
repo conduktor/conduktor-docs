@@ -29,7 +29,7 @@ This new update brings full RBAC support on Conduktor SQL:
 
 You can now bring SQL to all users within your organization.  
 
-For more detailed information, check out the [SQL security](/platform/guides/configure-sql#sql-security) section.
+For more detailed information, check out the [SQL security](/platform/guide/configure-sql#sql-security) section.
 
 #### Add support for multi-hosts database configuration
 
@@ -72,7 +72,7 @@ A full list of all the exported audit log event types is published on the [Audit
 - The User permission page provides a clearer distinction between inherited and user-specific permissions.
 - Topic policy validation errors message are easier to read when using the CLI
 - Added support for Array and Boolean types in Conduktor SQL
-- Added Kafka Key column and other metadata in Conduktor SQL Topics ([Full list](/platform/guides/configure-sql/#database-storage-format))
+- Added Kafka Key column and other metadata in Conduktor SQL Topics ([Full list](/platform/guide/configure-sql/#database-storage-format))
 
 ### Fixes 🔨
 - Fixed a pagination issue in the SQL Indexed Topics view

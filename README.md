@@ -21,7 +21,7 @@
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
-In most cases, you'll be editing Markdown files in the **guides** directory.
+In most cases, you'll be editing Markdown files in the **guide** directory.
 
 For a local preview (on *localhost:3000*), run `yarn start`.
 
@@ -62,10 +62,10 @@ When adding a tutorial (step-by-step guide), use this layout:
 
 ### Images
 
-All images are stored in `src/static/guides`. Embed all images like this:
+All images are stored in `src/static/guide`. Embed all images like this:
 
 ```md
-![Internal load balancing diagram](/guides/internal-lb.png)
+![Internal load balancing diagram](/guide/internal-lb.png)
 ```
 
 Note that all images will have a defined styling applied but you can override this when required.
@@ -74,31 +74,31 @@ To resize an image:
 
 ```md
 Make it smaller
-<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
+<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
 
 Make it larger
-<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
+<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
 
 Set a specific pixel width
-<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
+<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
 
 Make it full width:
-<img src="/guides/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
+<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
 ```
 
 You can also make an image clickable (and open in another tab) - useful for detailed diagrams:
 
 ```md
-<a href="/guides/internal-lb.png" target="_blank" rel="noopener">
-  <img src="/guides/internal-lb.png" alt="Internal load balancing diagram" />
+<a href="/guide/internal-lb.png" target="_blank" rel="noopener">
+  <img src="/guide/internal-lb.png" alt="Internal load balancing diagram" />
 </a>
 ```
 
 ### Links
 
-Use absolute links when linking to Conduktor docs, e.g. */guides/get-started/hardware/*.
+Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hardware/*.
 
-You can also link to a specific section on a page, e.g. */guides/get-started/hardware/#hardware-requirements*.
+You can also link to a specific section on a page, e.g. */guide/get-started/hardware/#hardware-requirements*.
 
 ### Tabs
 

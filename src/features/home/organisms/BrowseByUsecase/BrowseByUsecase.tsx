@@ -8,7 +8,7 @@ import Heading from '../../atoms/Heading'
 const BrowseByUsecase = () => {
 
   return (
-    <section className={styles.StyledGuides}>
+    <section className={styles.Styledguide}>
       <Container>
         <Heading>
           Browse by use case

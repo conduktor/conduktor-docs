@@ -26,7 +26,7 @@ tags: features,fix
 #### Conduktor SQL
 
 :::info[Preview functionality]
-This is a [preview feature](/platform/guides/configure-sql) and is subject to change as we continue working on it.
+This is a [preview feature](/platform/guide/configure-sql) and is subject to change as we continue working on it.
 
 It's currently only available to Console **Admins**, and will be made available for all users when integrated with our security model (i.e. RBAC, Data Masking).
 :::
@@ -37,7 +37,7 @@ This allows you to troubleshoot, sample, analyze, aggregate and join data throug
  - Querying Kafka message data
  - Querying Kafka metadata (such as the offset, partition and timestamp)
 
-Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
+Read the [dedicated guide](/platform/guide/configure-sql) on configuring SQL.
 
 **Query through the UI**
 
@@ -60,7 +60,7 @@ curl \
 
 **Important information regarding SQL**
 
-To use the feature there is a dependency on provisioning a new database. As a user, you have the choice of which topics you wish to index. Learn more about this and how to configure SQL using the [dedicated guide](/platform/guides/configure-sql).
+To use the feature there is a dependency on provisioning a new database. As a user, you have the choice of which topics you wish to index. Learn more about this and how to configure SQL using the [dedicated guide](/platform/guide/configure-sql).
 
 We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap).
 

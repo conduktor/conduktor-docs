@@ -7,7 +7,7 @@ export const items = [
   {
     question: 'How can we deploy Conduktor?',
     answer:
-      'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.). See the full list of deployment guides here <a href="https://docs.conduktor.io/platform/category/deployment-options/" target="_blank">here</a>',
+      'Conduktor runs as docker container that you can deploy wherever you like. With the Docker container you can run Conduktor in any platform that runs Docker containers (ECS/EKS/Fargate, EC2, Kubernetes, GKE, Azure Container service, etc.). See the full list of deployment guide here <a href="https://docs.conduktor.io/platform/category/deployment-options/" target="_blank">here</a>',
   },
   {
     question: 'Does Role Based Access Control (RBAC) in Conduktor platform apply to Kafka also?',

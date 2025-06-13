@@ -1,0 +1,34 @@
+---
+sidebar_position: 5
+title: Reprocess messages
+displayed: false
+description: Reprocess a message from a topic to another one.
+---
+
+## Overview
+
+Conduktor <GlossaryTerm>Console</GlossaryTerm> can help you reprocess messages within a <GlossaryTerm>topic</GlossaryTerm>.
+
+This could be used for reprocessing messages from an existing <GlossaryTerm>DLQ</GlossaryTerm> or for pushing messages into another topic.
+
+## Select a message to reprocess and a new target topic
+
+In Console, go to **Topics** and click on the the message. In the drawer window, click **Reprocess message** at the bottom. 
+
+In the next page, select the **target topic** that you want to publish the message to.
+
+Here, we want to reprocess the message in the `customers` topic.
+
+import SelectTargetTopic from '/guide/select-target-topic.png';
+
+<img src={SelectTargetTopic} alt="Select Target Topic" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
+## Edit and process the message
+
+The previous step leads us to the **Produce** page of the target topic, with an auto-populated form containing our record. From there, we can easily modify its key, value and headers.
+
+![Reprocess the record](/guide/reprocess-record.png)
+
+When you're ready, you can press the **Produce** button and you will see your record being produced. Go to the **Consume** page of this topic in order to retrieve your reprocessed record.
+
+![Consume the reprocessed record](/guide/consume-reprocess-record.png)

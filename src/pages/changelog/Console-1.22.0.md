@@ -80,7 +80,7 @@ Console's support for Custom Deserializers is finally here!
 A picture is worth a thousand words:
 ![Custom Deser](/images/changelog/platform/v22/custom-deser.png)
 
-Check our dedicated How-To guide [Installing and Configuring Custom Deserializers](https://docs.conduktor.io/platform/guides/custom-deserializers/).
+Check our dedicated How-To guide [Installing and Configuring Custom Deserializers](https://docs.conduktor.io/platform/guide/custom-deserializers/).
 
 ### Fixes 🔨
 

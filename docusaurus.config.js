@@ -42,11 +42,11 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./guides_sidebars.js'),
+          sidebarPath: require.resolve('./guide_sidebars.js'),
           sidebarCollapsed: true,
           sidebarCollapsible: true,
-          routeBasePath: '/guides',
-          path: './docs/guides',
+          routeBasePath: '/guide',
+          path: './docs/guide',
           lastVersion: 'current',
           onlyIncludeVersions: ['current'],
           exclude: ['./api/**/*'],
@@ -89,28 +89,28 @@ const config = {
             to: '/', 
           },
           {
-            label: 'Guides',
+            label: 'Guide',
             position: 'left',
-            to: '/guides',
-            activeBaseRegex: `/guides/`,
+            to: '/guide',
+            activeBaseRegex: `/guide/`,
           },
           {
             label: 'Tutorials',
             position: 'left',
-            to: '/guides/tutorials',
-            activeBaseRegex: `/docs/guides/tutorials/`,
+            to: '/guide/tutorials',
+            activeBaseRegex: `/docs/guide/tutorials/`,
           },
           {
             label: 'Concepts',
             position: 'left',
-            to: '/guides/conduktor-concepts',
-            activeBaseRegex: `/docs/guides/conduktor-concepts/`,
+            to: '/guide/conduktor-concepts',
+            activeBaseRegex: `/docs/guide/conduktor-concepts/`,
           },
           {
             label: 'Resource reference',
             position: 'left',
-            to: '/guides/reference',
-            activeBaseRegex: `/docs/guides/reference/`,
+            to: '/guide/reference',
+            activeBaseRegex: `/docs/guide/reference/`,
           },
           {
             label: 'API reference',
@@ -136,11 +136,11 @@ const config = {
             items: [
               {
                 label: 'Options',
-                to: '/guides/support',
+                to: '/guide/support',
               },            
               {
                 label: 'Upgrade',
-                to: '/guides/support/upgrade',
+                to: '/guide/support/upgrade',
               },
               {
                 label: 'Version policy',
@@ -148,7 +148,7 @@ const config = {
               },
               {
                 label: 'Version matrix',
-                to: '/guides/support/version-matrix',
+                to: '/guide/support/version-matrix',
               },
               {
                 label: 'Go to support site',
@@ -170,19 +170,19 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Conduktor guides',
+            title: 'Conduktor guide',
             items: [
               {
                 label: 'Overview',
-                to: '/guides',
+                to: '/guide',
               },
               {
                 label: 'Get started',
-                to: '/guides/get-started',
+                to: '/guide/get-started',
               },
               {
                 label: 'Conduktor in production',
-                to: 'guides/conduktor-in-production',
+                to: 'guide/conduktor-in-production',
               },
             ],
           },

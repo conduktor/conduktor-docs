@@ -8,7 +8,7 @@ import ProductButton from "@site/src/features/home/atoms/ProductButton";
 const BrowseByProducts = () => {
 
   return (
-    <section className={styles.StyledGuides}>
+    <section className={styles.Styledguide}>
       <Container>
         <Heading>Browse by Products</Heading>
         <ul className={styles.List}>

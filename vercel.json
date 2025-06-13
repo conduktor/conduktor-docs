@@ -8,7 +8,7 @@
     },
     { 
       "source": "/platform/category/get-started/",
-      "destination": "/guides/get-started/", 
+      "destination": "/guide/get-started/", 
       "permanent": true
     }
   ]

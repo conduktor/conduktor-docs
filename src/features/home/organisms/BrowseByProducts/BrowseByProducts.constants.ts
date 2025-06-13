@@ -5,7 +5,7 @@ export const products = [
     items: [
       [ 'Configuration', '/platform/get-started/configuration/env-variables', '/assets/svgs/products/configuration.svg' ],
       [ 'RBAC', '/platform/navigation/settings/rbac', '/assets/svgs/products/rbac.svg'  ],
-      [ 'Self-service Quickstart', '/platform/guides/self-service-quickstart/', '/assets/svgs/products/self-service-quickstart.svg'  ],
+      [ 'Self-service Quickstart', '/platform/guide/self-service-quickstart/', '/assets/svgs/products/self-service-quickstart.svg'  ],
       [ 'Kafka Resource Management', '/platform/navigation/console/', '/assets/svgs/products/kafka-resource-management.svg'  ],
       [ 'Monitoring & Alerting', '/platform/navigation/monitoring/', '/assets/svgs/products/monitoring-and-alerting.svg'  ],
       [ 'Traffic Control Policies', '/gateway/category/traffic-control-policies/', '/assets/svgs/products/traffic.svg'  ],

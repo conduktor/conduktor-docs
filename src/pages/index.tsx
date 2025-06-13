@@ -9,7 +9,7 @@ import BrowseByUsecase from "@site/src/features/home/organisms/BrowseByUsecase";
 import UsefulLinks from "@site/src/features/home/organisms/UsefulLinks";
 
 const META_DESCRIPTION =
-  'Find user guides and release notes for all Conduktor products.'
+  'Find user guide and release notes for all Conduktor products.'
 
 export default function Home(): JSX.Element {
   useFluidContainer()

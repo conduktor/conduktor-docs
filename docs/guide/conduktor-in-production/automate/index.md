@@ -1,0 +1,22 @@
+---
+sidebar_position: 80
+id: index
+title: Automation with Conduktor
+description: Automate various actions and tasks with Conduktor API, CLI and Terraform
+---
+
+Conduktor lets you automate various tasks, such as: managing users, groups, permissions, Kafka resources and Conduktor resources.
+
+You can use:
+
+- [API](/guide/conduktor-in-production/automate/api-automation)
+- [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation)
+- [Terraform](/guide/conduktor-in-production/automate/terraform-automation)
+
+You can automate:
+
+- [Console resources](/guide/reference/console-reference)
+- [Gateway resources](/guide/reference/gateway-reference)
+- [Kafka resources](/guide/reference/kafka-reference)
+- [Self-service resources](/guide/reference/self-service-reference)
+- [Metric resources](/guide/reference/metric-reference)

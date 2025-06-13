@@ -13,7 +13,7 @@ export const items = [
   },
   {
     name: 'Reference',
-    description: 'Browse configurations, OpenAPI documentation, and guides for using Terraform and our CLI.',
+    description: 'Browse configurations, OpenAPI documentation, and guide for using Terraform and our CLI.',
     to: '/platform/reference/',
     icon: '/assets/svgs/products/reference.svg',
   }
