@@ -11,9 +11,9 @@ Conduktor platform consists of these <GlossaryTerm>artifacts</GlossaryTerm>:
 
 - [Console](#console) - the centralized UI-based control plane for managing Kafka.
 
-- [Cortex](/guide/conduktor-in-production/deploy-artifacts/cortex) - the monitoring component for Conduktor Platform that runs in the background.
+- [Cortex](#cortex) - the monitoring component for Conduktor Platform that runs in the background.
 
-- [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) - our Command Line Interface lets you automate operations.
+- [Conduktor CLI](#conduktor-cli) - our Command Line Interface that lets you automate operations.
 
 ## Gateway
 
@@ -21,15 +21,15 @@ Conduktor Gateway is deployed between your client applications and existing Kafk
 
 ![Conduktor Gateway](/guide/gateway-integration.png)
 
-### Benefits
+### Gateway benefits
 
 This can be used to provide functionality that is not available in Kafka natively, such as:
 
-- **Centrally configure encryption** at the field-level or full payload, to secure your data during transit and at rest, before the cluster
-- **Mask sensitive data** across topics and set access rules, so users only see what they’re authorized to
-- **Set granular RBAC controls** to manage access and permissions for data at the cluster, team or individual level 
-- **Leverage multi-tenancy** with virtual clusters to optimize resources and reduce operational overheads
-- **Empower development teams** to manage their data within a federated control framework, accelerating project delivery
+- **Centrally configure encryption** at the field-level or full payload, to secure your data during transit and at rest, before the cluster.
+- **Mask sensitive data** across topics and set access rules, so users only see what they’re authorized to.
+- **Set granular RBAC controls** to manage access and permissions for data at the cluster, team or individual level.
+- **Leverage multi-tenancy** with virtual clusters to optimize resources and reduce operational overhead.
+- **Empower development teams** to manage their data within a federated control framework, accelerating project delivery.
 
 Conduktor Gateway is vendor-agnostic, meaning it supports all Kafka providers (Confluent, AWS MSK, Redpanda, Aiven, Apache Kafka), both cloud and on-premise.
 
@@ -92,13 +92,40 @@ Much like Kafka, if a broker dies it can be restarted whilst Gateway keeps runni
 
 By default, the Gateway operates with minimal impact on performance, typically adding only milliseconds of latency. However, if you begin implementing more resource-intensive features, such as encryption utilizing a Key Management Service (KMS), there will naturally be a slight increase in overhead.
 
+[Find out how to deploy Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway).
+
 ## Console
+
+Conduktor Console is a centralized, user-friendly control plane designed for managing all your data streaming operations. It provides deep visibility into your Kafka ecosystem and unifies all Kafka APIs into a single, streamlined interface.
+
+### Console benefits
+
+Key benefits enabled by deploying Conduktor Console are:
+
+- **Unified Kafka resource management**: manage topics, schema registry, consumer groups, Kafka connect, ksqlDB, ACLs and service accounts.
+- **Conduktor Gateway management**: configure and oversee the Conduktor Gateway with ease.
+- **Real-time monitoring and alerting**: gain insights and receive alerts on the health and performance of your streaming applications.
+- **Data exploration**: explore Kafka data with rich tooling and **SQL capabilities** for faster debugging and insights.
+- **Self-service capabilities**: empower teams to automate workflows with centrally defined governance policies.
+
+[Find out how to deploy Console](/guide/conduktor-in-production/deploy-artifacts/deploy-console).
 
 ## Cortex
 
-## CLI
+Cortex is the **monitoring and alerting engine** within Conduktor, running in the background to ensure the health and performance of your data streaming environment. It continuously collects and stores metrics, evaluates alerting rules, and triggers notifications when predefined thresholds are exceeded.
+
+Fully **integrated with Conduktor Console**, Cortex delivers a seamless and comprehensive monitoring experience—bringing observability and alerting directly into the same interface you use to manage your Kafka ecosystem.
+
+[Find out how to deploy Cortex](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex).
+
+## Conduktor CLI
+
+The powerful Conduktor Command Line Interface (CLI) enables developers and operators to interact with Conduktor and their Kafka ecosystem programmatically. It’s ideal for scripting, automation and integrating Kafka workflows into CI/CD pipelines. Our CLI provides direct access to manage various Conduktor and Kafka resources.
+
+[Find out more about CLI](/guide/conduktor-in-production/automate/cli-automation).
 
 ### Related resources
 
 - [Check out our recommended architecture on GitHub](https://github.com/conduktor/conduktor-reference-architecture)
-- [Try out Conduktor tutorials](/guide/tutorials/index)
+- [Learn Conduktor concepts](/glossary)
+- [Try out Conduktor tutorials](/guide/tutorials)
