@@ -205,7 +205,7 @@ In Delegated Authentication, the credentials provided to establish the connectio
 As a result, the Client will inherit the ACLs of the service account configured on the backing cluster.
 
 On top of that, Gateway needs its own Service Account with the following ACLs to operate correctly:
-- Read on internal topics and they should (ofc) exist
+- Read on internal topics and they should exist
 - Describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
@@ -214,7 +214,7 @@ On top of that, Gateway needs its own Service Account with the following ACLs to
 In Non-Delegated Authentication (Local, Oauth or mTLS), the connection is using the Gateway's Service Account to connect to the backing Kafka.
 
 This Service Account must have all the necessary ACLs to perform not only the Gateway operations:
-- Read on internal topics and they should (ofc) exist
+- Read on internal topics and they should exist
 - Describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
