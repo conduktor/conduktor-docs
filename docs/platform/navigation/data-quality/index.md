@@ -73,12 +73,28 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 </TabItem>
 </Tabs>
 
+### Built-in Rules
+
+There are some built-in Rules provided out of the box for validation that cannot be achieved with CEL.
+
+:::info[Supported Schema Registries]
+Currently this supports **Confluent** and **Confluent like** (e.g. Redpanda) schema registries. Other types (e.g. AWS Glue) are not supported.
+:::
+
+#### EnforceAvro
+
+`EnforceAvro` ensures that:
+
+- Your messages have a Schema ID prepended to the message content.
+- The schema ID exists within your Schema Registry.
+- The schema it references is of type `avro`.
+
 ### Example Rules
 
 Here are some sample data quality rules.
 :::info[Amend values if using these samples]
 Make sure you amend the field values to use correct fields, if using these examples.
- :::
+:::
 
 <details>
   <summary>Email RegEx validation</summary>
@@ -119,6 +135,15 @@ The available actions to enable for a Policy are:
 
 By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
+### Permissions
+
+Each Policy is owned by a group.
+A policy can only be viewed by members of its ownership group (and admins).
+A policy can only target topics within the scope of the 'manage data quality' permissions on the ownership group.
+Modifying the 'manage data quality' permission on a group will not impact any existing policies associated with that group.
+
+![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](assets/topic-dq-manage-permission.png)
+
 ### Create a Policy
 
 You can create a data quality policy from the **Console UI**, or the **Conduktor CLI**.
@@ -131,6 +156,7 @@ You can create a Policy through the Console UI through the following steps:
 1. Define the Policy details:
    - Add a descriptive **name** for the Policy.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
+   - Select a group to own the Policy. This controls who can view and manage the Policy, and which resources can be targeted.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Select Rules to be used in the Policy:
    - Every Policy must have at least one Rule
@@ -154,6 +180,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
     kind: DataQualityPolicy
     metadata:
         name: check-order-payload
+        group: orders-team
     spec:
         displayName: Verify the order items
         description: Verify the order items payloads on purchase-pipeline topic.
@@ -186,6 +213,43 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 :::info[Enabling block action]
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
+
+### Alerting based on Policy violations
+
+You can create alerts connected to Policies to be notified when violations occur.
+Unlike some other alert types, data quality policy alerts can only be owned by users or groups.
+
+<Tabs>
+<TabItem value="ui" label="Console UI">
+TODO - should this just point to [the existing alert page?](/platform/navigation/settings/alerts/)
+</TabItem>
+
+<TabItem value="cli" label="Conduktor CLI">
+You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to create a data quality policy alert:
+
+1. Save this example to file, e.g. `alert.yaml`:
+
+    ```yaml
+    apiVersion: v3
+    kind: Alert
+    metadata:
+      name: alert
+      group: my-group
+    spec:
+      type: DataQualityPolicyAlert
+      policyName: my-policy
+      triggerAfter: 1
+      withinInSeconds: 30
+    ```
+
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+
+    ```bash
+    conduktor apply -f alert.yaml
+    ```
+
+</TabItem>
+</Tabs>
 
 ## Troubleshoot
 
