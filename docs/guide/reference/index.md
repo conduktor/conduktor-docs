@@ -10,7 +10,7 @@ import Label from '@site/src/components/Labels';
 
 ## Overview
 
-| Console component | Reference |
+<!-- | Console component | Reference |
 |----------|----------|
 | Console   | [Console API reference](https://developers.conduktor.io/?product=console)  |
 | Console   | [Console configuration reference](../get-started/configuration/env-variables)  |
@@ -25,7 +25,7 @@ import Label from '@site/src/components/Labels';
 | Gateway   | [Gateway CLI reference](../../gateway/reference/cli-reference)  |
 | Gateway   | [Gateway resources reference](../../gateway/reference/resources-reference)  |
 | Interceptors  | [Gateway Interceptor reference](./resource-reference/)  |
-
+ -->
 
 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
 
@@ -39,12 +39,24 @@ import Label from '@site/src/components/Labels';
       </thead>
       <tbody>
         <tr>
-          <td>Console API</td>
+          <td>API</td>
           <td>[Console API reference](https://developers.conduktor.io/?product=console)</td>
         </tr>
         <tr>
-          <td>Row 2A</td>
-          <td>Row 2B</td>
+          <td>Config</td>
+          <td>[Console config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables)</td>
+        </tr>
+        <tr>
+          <td>CLI</td>
+          <td>[Console CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-console-cli)</td>
+        </tr>
+        <tr>
+          <td>Terraform</td>
+          <td>[Terraform reference](/guide/conduktor-in-production/automate/terraform-automation)</td>
+        </tr>
+        <tr>
+          <td>Resources</td>
+          <td>[Conduktor resource reference](#resources)</td>
         </tr>
       </tbody>
     </table>
@@ -54,34 +66,32 @@ import Label from '@site/src/components/Labels';
     <table>
       <thead>
         <tr>
-          <th>Header B1</th>
-          <th>Header B2</th>
+          <th>Gateway component</th>
+          <th>Link to section</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Row 1C</td>
-          <td>Row 1D</td>
+          <td>API</td>
+          <td>[Gateway API reference](https://developers.conduktor.io/?product=gateway)</td>
         </tr>
         <tr>
-          <td>Row 2C</td>
-          <td>Row 2D</td>
+          <td>Config</td>
+          <td>[Gateway config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables)</td>
+        </tr>
+        <tr>
+          <td>CLI</td>
+          <td>[Gateway CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-gateway-cli)</td>
+        </tr>
+        <tr>
+          <td>Resources</td>
+          <td>[Gateway resource reference](/guide/reference/gateway-reference)</td>
         </tr>
       </tbody>
     </table>
   </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
 
 The resources reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
 

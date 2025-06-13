@@ -10,13 +10,14 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 Conduktor CLI (Command Line Interface) allows you to perform some operations directly from your command line or a CI/CD pipeline.
 
-## Install and configure
+You have two options to install Conduktor CLI:
 
-You have two options to install Conduktor CLI: **native binary** (for individual use and testing) or **Docker** for integration in CI/CD pipelines.
+- [Native binary](#native-binary) - for individual use and testing or
+- [Docker](#docker) - for integration in CI/CD pipelines
 
 ## Native binary
 
-[Download from releases page on GitHub](https://github.com/conduktor/ctl/releases) on Windows, Linux or MacOS.
+[Download the latest binary from GitHub](https://github.com/conduktor/ctl/releases) on Windows, Linux or MacOS.
 
 In the **Assets** list, download the build that corresponds to your machine (for Apple Silicon use `darwin-arm64`).  
   
@@ -26,15 +27,13 @@ In the **Assets** list, download the build that corresponds to your machine (for
 brew install conduktor/brew/conduktor-cli
 ````
 
-### Docker
+## Docker
 
 ````
 docker pull conduktor/conduktor-ctl
 ````
- <Tabs>
-<TabItem  value="Console" label="Console CLI">
 
-#### Configure Console CLI
+## Configure Console CLI
 
 To use Conduktor CLI, you have to define these two environment variables:
 
@@ -46,22 +45,19 @@ export CDK_BASE_URL=http://localhost:8080
 export CDK_API_KEY=<your-api-key>
 ````
 
-There are 3 types of API keys:
+There are three types of API keys:
 
 - [Admin API Keys](#admin-api-key)
 - [Self-Service Application API Keys](#self-service-application-api-key)
 - [Short-lived User API Keys](#short-lived-user-api-keys)
 
-:::info
+:::info[First key]
 Use a short-lived user API key to bootstrap the first admin key.
 :::
 
-##### Admin API key
+#### Admin API key
 
 Admin API Keys grant the maximum permissions on Console. They are generated either from the UI or using the CLI.
-
-<Tabs>
-<TabItem  value="CLI" label="CLI">
 
 ````bash
 # Generate a key named my-admin-key
@@ -69,43 +65,18 @@ $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-</TabItem>
-<TabItem value="GUI" label="UI">
-
-Navigate to Settings / API Keys
-
-Select **New API Key** to generate a new API key.
-
-![Create API Key](/guide/admin-keys.png)
-</TabItem>
-</Tabs>
-
-<hr />
-
-##### Self-service application API key
+#### Self-service application API key
 
 Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance] for which they have been generated.
 
 Check the [Self-service documentation]for details. They can be obtained either from the UI or using the CLI.
-
-<Tabs>
-<TabItem  value="CLI" label="CLI">
 
 ````bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-</TabItem>
-<TabItem value="GUI" label="UI">
-
-Navigate to Applications, pick your Application, then under Application Instances tabs, you will find a button to generate an API Key:
-![Cluster identity](/guide/create-app-api-key.png)
-
-</TabItem>
-</Tabs>
-
-##### Short-lived user API keys
+#### Short-lived user API keys
 
 This type of API Key have the permissions of the user who created it. It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
 
@@ -120,7 +91,7 @@ $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-### Commands
+### Console CLI commands
 
 ````
 Usage:
@@ -248,7 +219,7 @@ $ conduktor get app-instance
 $ conduktor get app-instance clickstream-app-dev
 ```
 
-##### Select the output format
+##### Select output format
 
 By using the flag `--output` or `-o`, you can select the output format of the command.
 
@@ -394,11 +365,9 @@ Version: v0.3.0
 Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 ````
 
-### Integrate Conduktor CLI with your CI/CD
+### CI/CD pipeline integration example
 
-Conduktor CLI can be easily integrated to a CI/CD pipeline.
-
-This example presents 2 pipelines:
+Conduktor CLI can be easily integrated to a CI/CD pipeline. This example presents two pipelines:
 
 - The first one triggers on each new PR and launches the CLI using the `--dry-run` flag, generating a report confirming that the resources can be successfully created or modified.
 - The second one triggers on a push to the `main` branch, making the changes live.
@@ -484,7 +453,7 @@ conduktor-main:
 </TabItem>
 </Tabs>
 
-#### Using environment variables for secrets
+### Use environment variables for secrets
 
 When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
 It also supports default values as fallback using POSIX notation `${ENV:-default}`.
@@ -523,9 +492,6 @@ spec:
     confluentEnvironmentId: "${ENV_VAR_CONFLUENT_ENV_ID:-dev}"
     confluentClusterId: "${ENV_VAR_CONFLUENT_CLUSTER_ID:-main}"
 ```
-</TabItem>
-
-<TabItem  value="CLI" label="Gateway">
 
 ## Configure Gateway CLI
 
@@ -540,7 +506,7 @@ export CDK_GATEWAY_USER=admin
 export CDK_GATEWAY_PASSWORD=conduktor
 ````
 
-### Command usage
+### Gateway CLI commands
 
 ````
 Usage:
@@ -625,6 +591,3 @@ $ conduktor version
 Version: v0.3.0
 Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
 ````
-</TabItem>
-</Tabs>
-
