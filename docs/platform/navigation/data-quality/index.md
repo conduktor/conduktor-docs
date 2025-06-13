@@ -214,6 +214,43 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
+### Alerting based on Policy violations
+
+You can create alerts connected to Policies to be notified when violations occur.
+Unlike some other alert types, data quality policy alerts can only be owned by users or groups.
+
+<Tabs>
+<TabItem value="ui" label="Console UI">
+TODO - should this just point to [the existing alert page?](/platform/navigation/settings/alerts/)
+</TabItem>
+
+<TabItem value="cli" label="Conduktor CLI">
+You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to create a data quality policy alert:
+
+1. Save this example to file, e.g. `alert.yaml`:
+
+    ```yaml
+    apiVersion: v3
+    kind: Alert
+    metadata:
+      name: alert
+      group: my-group
+    spec:
+      type: DataQualityPolicyAlert
+      policyName: my-policy
+      triggerAfter: 1
+      withinInSeconds: 30
+    ```
+
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+
+    ```bash
+    conduktor apply -f alert.yaml
+    ```
+
+</TabItem>
+</Tabs>
+
 ## Troubleshoot
 
 <details>
