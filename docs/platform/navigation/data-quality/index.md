@@ -139,7 +139,8 @@ By default, Policies created using the Console UI don't have any actions enabled
 
 Each Policy is owned by a group.
 A policy can only be viewed by members of its ownership group (and admins).
-A policy can only target topics within the scope of the 'manage data quality' permissions on the ownership group.
+A policy can only target topics within the scope of the 'manage data quality' permissions on the ownership group, even if the user creating the policy is an admin.
+Policies owned by the admin group can target any topic.
 Modifying the 'manage data quality' permission on a group will not impact any existing policies associated with that group.
 
 ![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](assets/topic-dq-manage-permission.png)
