@@ -16,6 +16,18 @@ It assumes that you already have your Custom Deserializer available and that you
 This is especially interesting if your Deserializer is presenting data in a JSON-ish form. This will allow you to exploit the full extend of Console's filtering and visualization capabilities.
 :::
 
+### Create your Custom Deserializer
+To create your Custom Deserializer, you need to implement the [org.apache.kafka.common.serialization.Deserializer](https://kafka.apache.org/40/javadoc/org/apache/kafka/common/serialization/Deserializer.html) interface.
+The object returned by the `deserialize` method will be transformed into a JSON object and displayed in Console.
+
+Console requires that your Custom Deserializer is packaged in a single JAR file that contains all the necessary dependencies (also known as Fat JAR or Uber JAR).
+
+If you are using sbt to build your project, we suggest you use the [sbt-assembly](https://github.com/sbt/sbt-assembly) plugin to create the Fat JAR.
+The assembly merge strategy should be configured properly to include all the necessary classes and resources for your deserializer to work.
+A misconfiguration of the merge strategy is the first cause of issues when using Custom Deserializers in Console.
+
+Similar plugins exist for other build systems to build a Fat jar like the [Maven Assembly Plugin](https://maven.apache.org/plugins/maven-assembly-plugin/) for Maven.
+
 You can find some Kafka deserializer implementation examples in this open-source Github repository: [my_custom_deserializers](https://github.com/conduktor/my_custom_deserializers)
 
 ### Install your Custom Deserializer
