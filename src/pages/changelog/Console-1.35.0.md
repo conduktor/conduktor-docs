@@ -100,6 +100,8 @@ Consumer group lag alerts now support topic-level scoping, allowing you to creat
 ### Conduktor Trust
 
 ### Quality of life improvements
+- Add new fields to the onboarding page.
+- CRUD operations for the labels in the Consumer group details page.
 
 ### Fixes
 
@@ -109,5 +111,6 @@ Consumer group lag alerts now support topic-level scoping, allowing you to creat
 - The JSON view of a message in a topic no longer coerces large number fields to a string.
 - Fixed an issue where the full message was not displayed correctly in the tooltip when hovering over it in the Topic Consume view table.
 - Fixed an issue where the UI cannot redirect to the correct cluster when switching console instances.
+- Fixed the logo in the onboarding page dark mode.
 
 ### Known issues
