@@ -174,6 +174,9 @@ resource "conduktor_console_application_instance_v1" "clickstream-dev" {
       "generic-dev-topic",
       "clickstream-naming-rule"
     ]
+    policy_ref = [
+      "generic-resource-policy"
+    ]
     default_catalog_visibility = "PUBLIC"
     resources = [
       {

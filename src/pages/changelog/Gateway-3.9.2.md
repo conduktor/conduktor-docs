@@ -1,7 +1,7 @@
 ---
-date: 2025-06-09
-title: Gateway 3.9.1
-description: docker pull conduktor/conduktor-gateway:3.9.1
+date: 2025-06-11
+title: Gateway 3.9.2
+description: docker pull conduktor/conduktor-gateway:3.9.2
 solutions: gateway
 tags: fixes
 ---
