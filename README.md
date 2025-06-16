@@ -1,5 +1,6 @@
-- [Conduktor technical docs](#conduktor-technical-docs)
-- [Deployment and structure](#deployment-notes)
+# Conduktor technical docs
+
+- [Deployment and structure](#deployment-and-structure)
 - [Docs best practice](#docs-best-practice)
   - [Structure](#structure)
   - [Images](#images)
@@ -9,30 +10,30 @@
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
-# Conduktor technical docs
+[![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
-# Deployment and structure
+## Deployment and structure
 
-In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**). 
+In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
 
-For a local preview (on *localhost:3000*), run `yarn start`. 
+For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
 ```
-$ yarn
-$ yarn build
-$ yarn start
+yarn
+yarn build
+yarn start
 
 ```
 
 We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
 
-# Docs best practice
+## Docs best practice
 
-## Structure
+### Structure
 
 When creating a new page, use this layout:
 
@@ -41,7 +42,7 @@ When creating a new page, use this layout:
 - Use {feature}. Be clear, succinct and use task-oriented headings.
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
-- Related resources. Include links to topics related to the feature. Add this link at the end: 
+- Related resources. Include links to topics related to the feature. Add this link at the end:
 [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
 When adding a tutorial, use this layout:
@@ -55,11 +56,11 @@ When adding a tutorial, use this layout:
   - [Learn Apache Kafka](https://learn.conduktor.io/kafka/)
   - [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
-## Images
+### Images
 
 Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
 
-All images will be auto-sized to fit the width of the content pane. 
+All images will be auto-sized to fit the width of the content pane.
 
 To resize an image:
 
@@ -69,15 +70,15 @@ import MyImage from './assets/my-image.png';
 <img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
 ```
 
-## Links
+### Links
 
 Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/installation/hardware/*.
 
 You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
-## Tabs
+### Tabs
 
-Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
+Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
 To add tabs:
 
@@ -105,9 +106,9 @@ mySecondTab: "content"
 </Tabs>
 ````
 
-## Tags
+### Tags
 
-Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/). 
+Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
 To add tags:
 
@@ -125,7 +126,7 @@ export const Tag1 = () => (
 <Tag1/>
 ```
 
-# Update release notes
+## Update release notes
 
 Every new version of Gateway and Console has to have release notes.
 
@@ -149,8 +150,8 @@ tags: features,fix
 
 1. Document all the changes in the release. If it's a:
 
-  - **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
-  - release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
+- **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
+- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
 
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
 
@@ -166,15 +167,17 @@ import Console1310 from './changelog/Console-1.31.0.md';
 ---
 ```
 
-# Update public API docs
+## Update public API docs
 
 API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
 
 To update the public docs:
 
 1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
+
 - [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
 - [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
 - [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
+
 1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
 1. Add the new version to `static/developers/openapi/manifest.json`.
