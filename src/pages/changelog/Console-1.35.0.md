@@ -9,6 +9,8 @@ tags: features,fixes
 _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 - [Conduktor Scale](#conduktor-scale)
+  - [Resource Policies now covers Subject and ApplicationGroup](#resource-policies-now-covers-subject-and-applicationgroup)
+  - [Revamped Application Catalog](#revamped-application-catalog)
 - [Conduktor Exchange](#conduktor-exchange)
 - [Conduktor Trust](#conduktor-trust)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -74,6 +76,13 @@ spec:
     - "applicationgroup-restrictions"
 ````
 Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configured at Application level will be applied to all Application Instances under that Application.
+
+
+#### Revamped Application Catalog
+
+The Application Catalog has been completely redesigned to improve application discovery and team collaboration. The new Application List page provides a unified view of all accessible applications with advanced search and filtering capabilities, including filtering by ownership to see only applications you own and filtering by labels for better organization. Clear team ownership visibility, topic and subscription information, and hover cards displaying instance details at a glance help you quickly find what you need and identify the right contacts.
+
+The enhanced Application Details page now supports adding and editing labels to applications for better categorization and organization. A new dedicated Access Requests page provides better management of requests specific to each application, making it easier to track and handle permission requests while maintaining clear visibility into application access patterns. 
 
 ### Conduktor Exchange
 
