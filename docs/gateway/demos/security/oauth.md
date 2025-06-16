@@ -162,6 +162,7 @@ services:
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
       GATEWAY_OAUTH_EXPECTED_ISSUER: http://keycloak:18080/realms/conduktor
+      JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
     depends_on:
       kafka1:
         condition: service_healthy
@@ -190,6 +191,7 @@ services:
       GATEWAY_FEATURE_FLAGS_ANALYTICS: false
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
       GATEWAY_OAUTH_EXPECTED_ISSUER: http://keycloak:18080/realms/conduktor
+      JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
     depends_on:
       kafka1:
         condition: service_healthy
@@ -361,7 +363,7 @@ cat user-1.properties
 
 ```properties
 sasl.mechanism=OAUTHBEARER
-sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
 sasl.oauthbearer.token.endpoint.url=http://localhost:18080/realms/conduktor/protocol/openid-connect/token
 sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="m2m" clientSecret="m2m" scope="email gateway";
 security.protocol=SASL_PLAINTEXT
