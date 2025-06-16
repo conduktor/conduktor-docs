@@ -218,10 +218,14 @@ Since the **block** action has the ability to **stop data from being sent** to t
 
 You can create alerts connected to Policies to be notified when violations occur.
 Unlike some other alert types, data quality policy alerts can only be owned by users or groups.
+[Find out more about other alert types](/platform/navigation/settings/alerts).
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-TODO - should this just point to [the existing alert page?](/platform/navigation/settings/alerts/)
+You can create a data quality policy alert through the Console UI from the details page of a Policy (by clicking on the button near the violations graph) or from the alert tab on the Policies list page.
+
+A data quality policy alert needs to specify a specific Policy, and a threshold: trigger after X violations within Y minutes/hours/days.
+This threshold replaces the combination of metric, operator, and value found in other alert types.
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
