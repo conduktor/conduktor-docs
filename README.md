@@ -12,10 +12,11 @@
 # Conduktor technical docs
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
-# Deployment and structure
-In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**). 
+## Deployment and structure
 
-For a local preview (on *localhost:3000*), run `yarn start`. 
+In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
+
+For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
@@ -37,8 +38,8 @@ When creating a new page, use this layout:
 - Use {feature}. Be clear, succinct and use task-oriented headings.
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
-- Related resources. Include links to topics related to the feature. Add this link at the end: 
-[Give us feedback/request a feature](https://conduktor.io/roadmap)
+- Related resources. Include links to topics related to the feature. Add this link at the end:
+  [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
 When adding a tutorial, use this layout:
 - Overview/goal. Introduce the concept and the purpose/goal.
@@ -70,7 +71,7 @@ Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/i
 You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
 ## Tabs
-Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
+Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
 To add tabs:
 
@@ -99,7 +100,7 @@ mySecondTab: "content"
 ````
 
 ## Tags
-Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/). 
+Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
 To add tags:
 
