@@ -58,5 +58,5 @@ curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docke
 ## Next steps
 
 - [Configure your own Kafka clusters](/guide/conduktor-in-production/admin/configure-clusters)
-- [Deploy Conduktor in production](/guide/conduktor-in-production/index)
-- [Check out Conduktor concepts](/guide/conduktor-concepts/index)
+- [Deploy Conduktor in production](/guide/conduktor-in-production)
+- [Check out Conduktor concepts](/guide/conduktor-concepts)
