@@ -180,6 +180,9 @@ resource "conduktor_console_application_instance_v1" "clickstream-dev" {
       "generic-dev-topic",
       "clickstream-naming-rule"
     ]
+    policy_ref = [
+      "generic-resource-policy"
+    ]
     default_catalog_visibility = "PUBLIC"
     resources = [
       {
@@ -627,7 +630,7 @@ spec:
       resourceType: CONNECTOR
       patternType: "LITERAL"
       name: "*" # All owned connectors
-      permissions: ["kafkaConnectViewConfig", "kafkaConnectStatus", "kafkaConnectRestart"]
+      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectRestart"]
   members:
     - user1@company.org
     - user2@company.org

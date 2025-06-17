@@ -46,18 +46,37 @@ The new interface provides flexible permission configuration, enabling read or w
 
 ![Topic catalog subscribe modal](/images/changelog/platform/v34/topic-catalog-subscribe.png)
 
-Subscription request management has also been enhanced, giving application owners the ability to review pending requests and approve or deny them through both the UI and CLI. 
+Subscription request management has also been enhanced, giving application owners the ability to review pending requests and approve or deny them through both the UI and CLI.
 
 During this process, administrators can modify the originally requested permissions to better align with organizational requirements. For teams preferring infrastructure-as-code approaches, approving requests using YAML configuration automatically closes the request, streamlining the workflow.
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
 
-
 ### Conduktor Exchange
 
 #### Extended authentication mechanisms for Partner Zones
 
-Partner applications can now authenticate to your Partner Zones using client IDs & secrets managed by your OAuth/OIDC provider.
+Partner applications can now authenticate to your Partner Zones using client IDs & secrets managed by your OAuth/OIDC provider. The Partner Zone schema is changed to reflect the new authentication modes. This is a breaking change which should be updated as below:
+
+```yaml
+kind: PartnerZone
+metadata:
+  name: external-partner-zone
+spec:
+  cluster: partner1
+  displayName: External Partner Zone
+  url: https://partner1.com
+  # serviceAccount: johndoe # <-- Previously, spec.serviceAccount
+  authenticationMode: # New schema. spec.authenticationMode.serviceAccount , and, spec.authenticationMode.type of PLAIN or OAUTHBEARER
+        serviceAccount: partner-external-partner
+        type: PLAIN
+  topics:
+    - name: topic-a
+      backingTopic: kafka-topic-a
+      permission: WRITE
+```
+
+For more information see the [reference page](/platform/reference/resource-reference/console/#partner-zone).
 
 ### Quality of life improvements
 
