@@ -216,7 +216,7 @@ Modifying group permissions won't affect any Policies associated with the group.
 
 ### Set up Policy violation alerts
 
-You can create alerts that are triggered when a Policy violation happens. The data quality alerts can only be owned by groups ([see permissions above](#assign-permissions)).
+You can create alerts that are triggered when a Policy violation happens. Data quality alerts can be owned by groups or individual users.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
