@@ -257,6 +257,22 @@ You can use the CLI to create a data quality policy alert:
 </TabItem>
 </Tabs>
 
+### Using multiple Policies
+
+When multiple Policies target the same topic, there are two scenarios that can occur when a record is produced:
+
+- **None** of the Policies block the record and all are evaluated
+
+  - The evaluation count is increased for all of the Policies.
+  - The violation count is increased for each violated Policy.
+  - A report is generated for each violated Policy (that has reporting enabled).
+
+- **One or more** of the Policies block the record production. In this scenario, one of the Policies blocks the record first and then hides it from others
+
+  - For the first blocking Policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
+  - For the other Policies: no counts are increased and no reports are generated.Add commentMore actions
+
+
 ## Troubleshoot
 
 <details>
