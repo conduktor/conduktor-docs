@@ -88,5 +88,6 @@ Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configu
 - Fixed an issue where the equality filter on JSON number fields was not working correctly against large numbers in the Topic Consume view.
 - The JSON view of a message in a topic no longer coerces large number fields to a string.
 - Fixed an issue where the full message was not displayed correctly in the tooltip when hovering over it in the Topic Consume view table.
+- The screenshot showing users how to find the project name and service name in Aiven Cloud is displayed correctly again.
 
 ### Known issues
