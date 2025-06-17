@@ -86,6 +86,9 @@ Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configu
 ### Quality of life improvements
 
 - Leading and trailing white spaces will now be printed as "⎵" for display purposes and to provide more clarity to user. A tooltip will additionally be added to let users know when this is happening and to give them the "raw" value if they need it. The actual value will not be changed, this is just a visual helper.
+- Improve container [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context) configuration on Conduktor Console and Cortex containers that allow to :
+  - **run with differents UID and GID** than default `10001:0`
+  - run **unprivileged** with all **linux capabilities dropped**
 
 ### Fixes
 
@@ -97,6 +100,7 @@ Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configu
 - The screenshot showing users how to find the project name and service name in Aiven Cloud is displayed correctly again.
 - Fixed an error that would occur when no partitions were selected in Topics page filters.
 - Fixed a bug that would cause service accounts with white spaces to not be accessible correctly.
+- Cleanup data volume on start to ensure that old data is not re-used when using persistant volume between restarts.
 
 ### Known issues
 
