@@ -94,9 +94,9 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_group_v2" "developers-a" {
+resource "conduktor_console_group_v2" "developers-a" {
   name = "developers-a"
-  spec {
+  spec = {
     display_name    = "Developers Team A"
     description     = "Members of the Team A - Developers"
     external_groups = [ "LDAP-GRP-A-DEV" ]
@@ -171,10 +171,10 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_group_v2" "john.doe@company.org" {
+resource "conduktor_console_user_v2" "john.doe@company.org" {
   name = "john.doe@company.org"
   
-  spec {
+  spec = {
     firstname = "John"
     lastname  = "Doe"
     
@@ -264,9 +264,9 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
+resource "conduktor_console_kafka_cluster_v2" "my-dev-cluster" {
   name = "my-dev-cluster"
-  spec {
+  spec = {
     display_name                 = "My Dev Cluster"
     icon                         = "kafka"
     color                        = "#000000"
@@ -343,7 +343,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   schema_registry = {
     type = "ConfluentLike"
     url = "http://localhost:8080
@@ -389,7 +389,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   schema_registry = {
     type          = "Glue"
     region        = "eu-west-1"
@@ -511,7 +511,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type                     = "Confluent"
     key                      = "yourApiKey123456"
@@ -546,7 +546,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type         = "Aiven"
     api_token    = "a1b2c3d4e5f6g7h8i9j0"
@@ -579,7 +579,7 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-spec {
+spec = {
   kafka_flavor = {
     type            = "Gateway"
     url             = "http://gateway:8888"
@@ -678,10 +678,10 @@ spec:
 <TabItem value="Terraform" label="Terraform">
 
 ````hcl
-resource "conduktor_kafka_connect_v2" "connect-1" {
+resource "conduktor_console_kafka_connect_v2" "connect-1" {
   name    = "connect-1"
   cluster = "my-dev-kafka-cluster"
-  spec {
+  spec = {
     display_name = "Connect 1"
     urls         = "http://localhost:8083"
     headers = {
