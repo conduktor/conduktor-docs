@@ -15,11 +15,11 @@ This guide is for migrating authentication and authorisation to the new configur
 We have introduced a new environment variable, `GATEWAY_SECURITY_MODE`, to define where authentication takes place.
 
 As part of this, we are deprecating (although still supporting) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`. The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. For more details see [documentation](../configuration/env-variables.md#connect-from-clients-to-gateway).
-We are also changing the default behaviour of `ACL_ENABLED`.
+We are also changing the default behaviour of `GATEWAY_ACL_ENABLED`.
 Previously, when left unset this was always defaulted to be `false`. Going forward it will be determined by the security mode. You'll find more details below.
 
 :::warning
-If you are using a security protocol that has an ANONYMOUS identity (`PLAINTEXT`, or `SSL` without mTLS) then you will face authorisation errors because ACLs are now enabled by default for Gateway Managed security. To remove authorisation from your setup set `ACL_ENABLED: false` in the Gateway environment variables.
+If you are using a security protocol that has an ANONYMOUS identity (`PLAINTEXT`, or `SSL` without mTLS) then you will face authorisation errors because ACLs are now enabled by default for Gateway Managed security. To remove authorisation from your setup set `GATEWAY_ACL_ENABLED: false` in the Gateway environment variables.
 :::
 
 ## Why?
@@ -37,7 +37,7 @@ We will also enable or disable ACLs on Gateway from the security mode, meaning t
 
 All our customers are affected. Even though this change is backwards-compatible (we still support the delegated protocols for the `GATEWAY_SECURITY_PROTOCOL`), we recommend you migrate to the new environment variables. You can find more details in the [What do I need to do](#what-do-i-need-to-do).
 
-We still support the `GATEWAY_ACL_ENABLED` variable. Where set, we will continue to honor valid configurations. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `ACL_ENABLED` is set to true. **You cannot manage ACLs on the Gateway if you are authenticating on the Kafka cluster.**
+We still support the `GATEWAY_ACL_ENABLED` variable. Where set, we will continue to honor valid configurations. However, if `GATEWAY_SECURITY_MODE` is set to `KAFKA_MANAGED`, we will provide an error message if `GATEWAY_ACL_ENABLED` is set to true. **You cannot manage ACLs on the Gateway if you are authenticating on the Kafka cluster.**
 
 ## What do I need to do?
 
@@ -51,7 +51,7 @@ You can use this table to guide your possible configurations.
 1. Add the relevant `GATEWAY_SECURITY_MODE` environment variable to your deployment configuration
 1. Replace the `GATEWAY_SECURITY_PROTOCOL`
     1. If you are already using a `GATEWAY_MANAGED` setup, this will be no change
-1. If you are using an unauthorised setup, with `PLAINTEXT` or `SSL` and `KAFKA_MANAGED`, you will need to disable ACLs by adding `ACL_ENABLED: false` in your configuration. Otherwise, you'll get an error in your startup logs.
+1. If you are using an unauthorised setup, with `PLAINTEXT` or `SSL` and `KAFKA_MANAGED`, you will need to disable ACLs by adding `GATEWAY_ACL_ENABLED: false` in your configuration. Otherwise, you'll get an error in your startup logs.
 
 | **3.9.0** GATEWAY_SECURITY_PROTOCOL | → **3.10.0** GATEWAY_SECURITY_PROTOCOL | → **3.10.0**  GATEWAY_SECURITY_MODE |
 |-------------------------------------|----------------------------------------|-------------------------------------|
@@ -77,13 +77,13 @@ For example, if you want to set up a Gateway configuration that delegates authen
   GATEWAY_SECURITY_PROTOCOL: SASL_SSL
   ```
   
-### ACL_ENABLED
+### GATEWAY_ACL_ENABLED
 
-When `GATEWAY_SECURITY_MODE` is set, there is no longer a need to provide `ACL_ENABLED`. Unless you want to disable ACLs, in which case add `ACL_ENABLED: false` to your configuration. The behaviour of ACLs on passthrough will be like so:
+When `GATEWAY_SECURITY_MODE` is set, there is no longer a need to provide `GATEWAY_ACL_ENABLED`. Unless you want to disable ACLs, in which case add `GATEWAY_ACL_ENABLED: false` to your configuration. The behaviour of ACLs on passthrough will be like so:
 
 | GATEWAY_SECURITY_MODE | ACL is enabled |
 |-----------------------|----------------|
 | GATEWAY_MANAGED       | true           |
 | KAFKA_MANAGED         | false          |
 
-You may have existing dev builds that previously configured `ACL_ENABLED` to be `false` due to being unset. To maintain this behaviour, you must now explicitly override `ACL_ENABLED` to be false.  
+You may have existing dev builds that previously configured `GATEWAY_ACL_ENABLED` to be `false` due to being unset. To maintain this behaviour, you must now explicitly override `GATEWAY_ACL_ENABLED` to be false.  
