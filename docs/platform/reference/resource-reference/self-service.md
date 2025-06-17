@@ -63,6 +63,9 @@ In Self-service, it is used as a means to organize and regroup multiple deployme
 **Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ````yaml
 # Application
 ---
@@ -74,11 +77,36 @@ spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
   owner: "groupA" # technical-id of the Conduktor Console Group
+  policyRef:
+    - "global-topic-policy"
+    - "application-group-policy"
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_application_v1" "clickstream-app" {
+  name = "clickstream-app"
+  spec = {
+    title       = "Clickstream App"
+    description = "FreeForm text, probably multiline markdown"
+    # technical-id of the Conduktor Console Group. 
+    # Could also reference existing resource in Terraform state with conduktor_console_group_v2.groupa.name
+    owner       = "groupA" 
+  }
+}
+````
+
+</TabItem>
+</Tabs>
 
 **Application checks:**
 -   `spec.owner` is a valid Console Group
 -   Delete MUST fail if there are associated `ApplicationInstance`
+-  `spec.policyRef` is **optional**, and if present must be a valid list of [SelfServicePolicy](#resource-policy)
+  - Rules defined at the Application level will apply across all ApplicationInstances of the same Application.
+
 
 **Side effect in Console & Kafka:**  
 None.  
@@ -95,6 +123,9 @@ This is the core concept of Self-service as it ties everything together:
 **API Keys:** <AdminToken />  
 **Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 ---
@@ -114,6 +145,7 @@ spec:
     - "clickstream-naming-rule"
     - "generic-dev-connector"
   defaultCatalogVisibility: PUBLIC # makes all owned topics visible in the Topic Catalog by default
+  applicationManagedServiceAccount: false
   resources:
     - type: TOPIC
       patternType: PREFIXED
@@ -133,6 +165,62 @@ spec:
       ownershipMode: LIMITED # Topics are still maintained by Central Team
       name: "legacy-click."
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_application_instance_v1" "clickstream-dev" {
+  name        = "clickstream-dev"
+  application = "clickstream-app"
+  spec = {
+    cluster   = "shadow-it"
+    service_account = "my-service-account"
+    topic_policy_ref = [
+      "generic-dev-topic",
+      "clickstream-naming-rule"
+    ]
+    policy_ref = [
+      "generic-resource-policy"
+    ]
+    default_catalog_visibility = "PUBLIC"
+    resources = [
+      {
+        type         = "TOPIC"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type         = "CONSUMER_GROUP"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type         = "SUBJECT"
+        name         = "click."
+        pattern_type = "PREFIXED"
+      },
+      {
+        type            = "CONNECTOR"
+        connect_cluster = "shadow-connect"
+        name            = "click."
+        pattern_type    = "PREFIXED"
+      },
+      {
+        type           = "TOPIC"
+        name           = "legacy-click."
+        pattern_type   = "PREFIXED"
+        ownership_mode = "LIMITED" # Topics are still maintained by Central Team
+      }
+    ]
+    application_managed_service_account = false
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **AppInstance checks:**
 - `metadata.application` is a valid Application
 - `spec.cluster` is a valid Console Cluster technical id
@@ -174,7 +262,7 @@ spec:
 ### Topic Policy
 
 :::info
-Consider using the more advanced [ResourcePolicy](#resource-policy) resource instead.
+Deprecated. Consider using the more advanced [ResourcePolicy](#resource-policy) resource instead.
 :::
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
@@ -192,6 +280,9 @@ You must explicitly link them to [ApplicationInstance](#application-instance) wi
 **Managed with:** <CLI /> <API /> <TF />  
 **Labels support:** <MissingLabelSupport />
 
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ```yaml
 ---
@@ -222,6 +313,54 @@ spec:
       constraint: Match
       pattern: ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$
 ```
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_topic_policy_v1" "generic-dev-topic" {
+  name = "generic-dev-topic"
+  spec = {
+    policies = {
+      "metadata.labels.data-criticality" = {
+        one_of = {
+          values = [ "C0", "C1", "C2" ]
+        }
+      },
+      "spec.configs.retention.ms" = {
+        range = {
+          optional = false
+          max      = 3600000
+          min      = 60000
+        }
+      },
+      "spec.replicationFactor" = {
+        none_of = {
+          optional = true
+          values = [ "3" ]
+        }
+      }
+    }
+  }
+}
+
+resource "conduktor_console_topic_policy_v1" "clickstream-naming-rule" {
+  name = "clickstream-naming-rule"
+  spec = {
+    policies = {
+      "metadata.name" = {
+        match = {
+          pattern = "^click\.(?<event>[a-z0-9-]+)\.(avro|json)$"
+        }
+      },
+    }
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **TopicPolicy checks:**
 - `spec.policies` requires YAML paths that are paths to the [Topic resource](/platform/reference/resource-reference/kafka/#topic) YAML. For example:
   - `metadata.name` to create constraints on Topic name
@@ -260,7 +399,7 @@ Resource policies are used to enforce rules on the ApplicationInstance level. Ty
 
 :::caution
 Resource policies are not applied automatically.  
-You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
+You must explicitly link them to [ApplicationInstance](#application-instance) or [Application](#application) with `spec.policyRef`.
 :::
 
 **API Keys:** <AdminToken />  
@@ -300,7 +439,7 @@ spec:
           errorMessage: data-criticality should be one of C0, C1, C2
 ```
 ** SelfServicePolicy checks:**
-- `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
+- `spec.targetKind` can be `Topic`, `Connector`, `Subject` or `ApplicationGroup`.
 - `spec.rules[].condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be evaluated against the resource
 - `spec.rules[].errorMessage` is a string that will be displayed when the condition is not met
 
@@ -491,7 +630,7 @@ spec:
       resourceType: CONNECTOR
       patternType: "LITERAL"
       name: "*" # All owned connectors
-      permissions: ["kafkaConnectViewConfig", "kafkaConnectStatus", "kafkaConnectRestart"]
+      permissions: ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectRestart"]
   members:
     - user1@company.org
     - user2@company.org
