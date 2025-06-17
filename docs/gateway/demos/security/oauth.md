@@ -152,7 +152,7 @@ services:
       interval: 5s
       retries: 25
   gateway1:
-    image: conduktor/conduktor-gateway:3.3.2
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.9.0-SNAPSHOT
     hostname: gateway1
     container_name: gateway1
     environment:
@@ -163,6 +163,7 @@ services:
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
       GATEWAY_OAUTH_EXPECTED_ISSUER: http://keycloak:18080/realms/conduktor
       JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
+      GATEWAY_USER_POOL_SECRET_KEY: changeitbutlongercauseweneed256key
     depends_on:
       kafka1:
         condition: service_healthy
@@ -181,7 +182,7 @@ services:
       interval: 5s
       retries: 25
   gateway2:
-    image: conduktor/conduktor-gateway:3.3.2
+    image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.9.0-SNAPSHOT
     hostname: gateway2
     container_name: gateway2
     environment:
@@ -192,6 +193,7 @@ services:
       GATEWAY_OAUTH_JWKS_URL: http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
       GATEWAY_OAUTH_EXPECTED_ISSUER: http://keycloak:18080/realms/conduktor
       JAVA_TOOL_OPTIONS: -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://keycloak:18080/realms/conduktor/protocol/openid-connect/certs
+      GATEWAY_USER_POOL_SECRET_KEY: changeitbutlongercauseweneed256key
     depends_on:
       kafka1:
         condition: service_healthy
@@ -385,7 +387,9 @@ Creating on `gateway1`:
 <Tabs>
 
 <TabItem value="Command">
+
 ```sh
+JAVA_TOOL_OPTIONS="-Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://localhost:18080/realms/conduktor/protocol/openid-connect/token" \
 kafka-topics \
     --bootstrap-server localhost:6969 \
     --command-config user-1.properties \
@@ -431,17 +435,12 @@ Error while executing topic command : Timed out waiting for a node assignment. C
 
 ## Listing topics in gateway1
 
-
-
-
-
-
-
-
 <Tabs>
 
 <TabItem value="Command">
+
 ```sh
+JAVA_TOOL_OPTIONS="-Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://localhost:18080/realms/conduktor/protocol/openid-connect/token" \
 kafka-topics \
     --bootstrap-server localhost:6969 \
     --command-config user-1.properties \
@@ -544,6 +543,7 @@ Remove all your docker processes and associated volumes
 <Tabs>
 
 <TabItem value="Command">
+
 ```sh
 docker compose down --volumes
 ```
