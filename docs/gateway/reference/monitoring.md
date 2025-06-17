@@ -57,6 +57,7 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 
 | Metric description                                                                               | Metric value                                      |
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| The number of days remaining before the license expiration                                       | `gateway_license_remaining_days`                  |
 | The number of connections closed per second                                                      | `gateway_upstream_connection_close_rate`          |
 | The total number of connections closed                                                           | `gateway_upstream_connection_close_total`         |
 | The number of new connections established per second                                             | `gateway_upstream_connection_creation_rate`       |

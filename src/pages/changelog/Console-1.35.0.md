@@ -21,18 +21,20 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 ### Conduktor Scale
 
 #### Resource Policies now covers Subject and ApplicationGroup
+
 Central Platform Teams can further define the ways of working for their Application Teams by assigning resource policies for Subjects and Application Groups.  
 A few interesting use cases include:
+
 - Restrict Application Teams to only using Avro, or enforce a specific compatibility mode such as FORWARD_TRANSITIVE.
 - Prevent Application Teams from adding members to Application Groups directly, steering them toward External Group Mapping instead.
 - Limit the actions that can be performed in the UI by locking some permissions away.
 
-````yaml
+```yaml
 ---
 apiVersion: self-service/v1
 kind: ResourcePolicy
 metadata:
-  name: "applicationgroup-restrictions"
+  name: 'applicationgroup-restrictions'
   labels:
     business-unit: delivery
 spec:
@@ -48,7 +50,7 @@ spec:
 apiVersion: self-service/v1
 kind: ResourcePolicy
 metadata:
-  name: "subject-format-and-compatibility-policy"
+  name: 'subject-format-and-compatibility-policy'
   labels:
     business-unit: delivery
 spec:
@@ -59,23 +61,25 @@ spec:
       errorMessage: Only AVRO or PROTOBUF formats are allowed
     - condition: spec.compatibility == "FORWARD_TRANSITIVE"
       errorMessage: compatibility mode must be FORWARD_TRANSITIVE
-````
+```
 
 ResourcePolicy that target ApplicationGroup must be defined at the Application level:
-````yaml
+
+```yaml
 # Application
 ---
 apiVersion: self-service/v1
 kind: Application
 metadata:
-  name: "clickstream-app"
+  name: 'clickstream-app'
 spec:
-  title: "Clickstream App"
-  description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of the Conduktor Console Group
+  title: 'Clickstream App'
+  description: 'FreeForm text, probably multiline markdown'
+  owner: 'groupA' # technical-id of the Conduktor Console Group
   policyRef:
-    - "applicationgroup-restrictions"
-````
+    - 'applicationgroup-restrictions'
+```
+
 Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configured at Application level will be applied to all Application Instances under that Application.
 
 
@@ -103,6 +107,8 @@ Consumer group lag alerts now support topic-level scoping, allowing you to creat
 - Add new fields to the onboarding page.
 - CRUD operations for the labels in the Consumer group details page.
 
+- Leading and trailing white spaces will now be printed as "⎵" for display purposes and to provide more clarity to user. A tooltip will additionally be added to let users know when this is happening and to give them the "raw" value if they need it. The actual value will not be changed, this is just a visual helper.
+
 ### Fixes
 
 - Fixed an issue where changing the cluster did not clear the search filter in Consumer Groups / Topics pages.
@@ -112,5 +118,12 @@ Consumer group lag alerts now support topic-level scoping, allowing you to creat
 - Fixed an issue where the full message was not displayed correctly in the tooltip when hovering over it in the Topic Consume view table.
 - Fixed an issue where the UI cannot redirect to the correct cluster when switching console instances.
 - Fixed the logo in the onboarding page dark mode.
+- The screenshot showing users how to find the project name and service name in Aiven Cloud is displayed correctly again.
+- Fixed an error that would occur when no partitions were selected in Topics page filters.
+- Fixed a bug that would cause service accounts with white spaces to not be accessible correctly.
 
 ### Known issues
+
+```
+
+```
