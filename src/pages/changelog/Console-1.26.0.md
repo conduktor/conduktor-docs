@@ -19,9 +19,9 @@ Regardless, as soon as the prometheus team fix this issue, it will be patched im
 
 - [Manage Connectors using the CLI](#manage-connectors-using-the-cli)
 - [Self-service support for Connectors](#self-service-support-for-connectors)
-- [Enhanced UI and Graphs for Kafka Connect](#enhanced-ui-and-graphs-for-kafka-connect)
+- [Enhanced UI and graphs for Kafka Connect](#enhanced-ui-and-graphs-for-kafka-connect)
 - [Quality of life improvements](#quality-of-life-improvements)
-- [Deprecation warning: Upcoming migration from Tags to Labels](#deprecation-warning-upcoming-migration-from-tags-to-labels-)
+- [Deprecation warning: Upcoming migration from Tags to Labels](#deprecation-warning-upcoming-migration-from-tags-to-labels)
 
 #### Manage Connectors using the CLI
 
@@ -47,7 +47,7 @@ spec:
 #### Self-service support for Connectors
 
 Application Teams can now manage their Connectors with Self-service.  
-From now on, you can grant ownership to connectors on Self-service [Application Instance](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#application-instance).
+From now on, you can grant ownership to connectors on Self-service [application instance](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#application-instance).
 ````yaml
 ---
 apiVersion: self-service/v1
@@ -65,7 +65,7 @@ spec:
       name: "click."
 ````
 
-#### Enhanced UI and Graphs for Kafka Connect
+#### Enhanced UI and graphs for Kafka Connect
 
 We have revisited the Kafka Connect UI in multiple ways to improve your experience:
 
@@ -75,6 +75,7 @@ We have revisited the Kafka Connect UI in multiple ways to improve your experien
 ![Kafka Connect Graphs](/images/changelog/platform/v26/console-connect-graphs.png)
 
 #### Support for High Availability (HA) Console
+
 Multiple Console instances can now be deployed in parallel to achieve high availability. 
 
 This applies to the deployment of `conduktor-console`, while `conduktor-console-cortex` is currently limited to a single instance. The design ensures minimal impact on the cluster by assigning only one instance to handle the indexing of Kafka data used for performance monitoring.
@@ -90,7 +91,7 @@ This applies to the deployment of `conduktor-console`, while `conduktor-console-
 - Topic Policies from Self-service are now properly enforced from the UI, as well as both the API and CLI
 - Fix Kafka Connect Cluster list showing invalid number of running tasks
 
-#### Deprecation Warning: Upcoming migration from Tags to Labels
+#### Deprecation warning: upcoming migration from Tags to Labels
 
 With the introduction of the Self-service resource manifests, we brought customers a means to annotate all their resources with labels. Labels are more structured than the existing Conduktor tags, thereby allowing for more precise filtering capabilities, as can be seen in the Topic Catalog.
 

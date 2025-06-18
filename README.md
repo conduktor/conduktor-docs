@@ -77,6 +77,7 @@ Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/i
 You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
 ## Tabs
+
 Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
 To add tabs:
@@ -106,6 +107,7 @@ mySecondTab: "content"
 ````
 
 ## Tags
+
 Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
 To add tags:
