@@ -12,24 +12,23 @@ toc_max_heading_level: 4
 
 Gateway depends on a 'backing' Kafka cluster for its operation.
 
-Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster.
-If you have not done so already it is best to set the [Client to Gateway](/gateway/configuration/client-authentication) configuration variables,
-that way the Gateway will know how to interact with Kafka based on how authentication is being provided by the clients.
-The two are related because Gateway must know whether you wish Kafka to manage authentication or not. For more detail, see [Kafka Managed Authentication](#kafka-managed-authentication).
+Configuring the Gateway connection to the backing Kafka cluster is similar to configuring a standard Kafka client's connection to a cluster. If you haven't done so already, set the [client to Gateway](/gateway/configuration/client-authentication) configuration variables. This way Gateway will know how to interact with Kafka based on how authentication is being provided by the clients.
 
-The configuration is done via environment variables, as it is for the other aspects of a Gateway configuration.
+The two are related because Gateway must know whether you want Kafka to manage authentication or not. [Find out more about Kafka managed authentication](#kafka-managed-authentication).
 
-All environment variables that start with `KAFKA_` are mapped to configuration properties for connecting Gateway to the Kafka cluster.
-As Gateway is based on the Java-based Kafka-clients, it supports all configuration properties that Java-clients do.
-Kafka configuration properties are mapped to Gateway environment variables as follows:
+The configuration is done via environment variables.
 
-- Add a `KAFKA_` prefix
-- Replace each dot, `.` , with an underscore, `_`
-- Convert to uppercase
+All the environment variables that start with `KAFKA_` are mapped to configuration properties for connecting Gateway to the Kafka cluster.
 
-For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environment variable.
+As Gateway is based on the Java-based Kafka-clients, it supports all configuration properties that Java-clients do. Kafka configuration properties are mapped to Gateway environment variables like this:
 
-## Supported Protocols
+- add a `KAFKA_` prefix
+- replace each dot `.` with an underscore, `_`
+- convert to uppercase
+
+For example: `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environment variable.
+
+## Supported protocols
 
 You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.  
 
@@ -139,7 +138,7 @@ KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule 
 
 As Confluent Cloud uses certificates signed by a well-known CA, you normally do not need to specify a trust-store.
 
-Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `SASL_PLAINTEXT` and `GATEWAY_SECURITY_MODE` to `KAFKA_MANAGED`. Then clients will be able to authenticate using their own API keys/secrets. Kafka Managed mode is [explained below](#kafka-managed-authentication).
+Note: In case you are using this in a PoC setting without TLS encryption between *clients* and Gateway, you should set `GATEWAY_SECURITY_PROTOCOL` to `SASL_PLAINTEXT` and `GATEWAY_SECURITY_MODE` to `KAFKA_MANAGED`. Then clients will be able to authenticate using their own API keys/secrets.
 
 #### SASL SCRAM
 
@@ -193,58 +192,54 @@ KAFKA_AWS_ACCESS_KEY_ID: <access-key-id>
 KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
 ```
 
-### Service Account and ACL Requirements
+### Service account and ACL requirements
 
 Depending on the Client to Gateway authentication method you choose, the Service Account used to connect the Gateway might need different ACLs to operate properly.
 
-#### Kafka Managed Authentication
+#### Kafka managed authentication
 
 We can enforce delegating authentication to Kafka by setting `${GATEWAY_SECURITY_MODE}` to `KAFKA_MANAGED`.
 
-:::warning
+:::warning[Deprecated protocols]
 As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
 The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you're using `DELEGATED` security protocols, [see the security mode migration guide](/gateway/how-to/migration-guide-to-security-mode) before continuing.
 :::
 
-In Kafka Managed mode, the credentials provided to establish the connection between the Client and the Gateway are the same used from the Gateway to the backing Kafka.  
-As a result, the Client will inherit the ACLs of the service account configured on the backing cluster.
+In Kafka managed mode, the credentials provided to establish the connection between the Client and the Gateway are the same used from the Gateway to the backing Kafka. Therefore, the client will inherit the ACLs of the service account configured on the backing cluster.
 
-On top of that, Gateway needs its own Service Account with the following ACLs to operate correctly:
+In addition, Gateway needs its own service account with the following ACLs to operate correctly:
 
-- Read on internal topics and they should (ofc) exist
+- `Read` on internal topics and they should exist
 - Describe consumer group for internal topic
 - Describe on cluster
 - Describe topics for alias topics creation
 
-#### Gateway Managed Authentication
+#### Gateway managed authentication
 
 We can enforce Gateway managing authentication by setting `${GATEWAY_SECURITY_MODE}` to `GATEWAY_MANAGED`.
 
-In Gateway Managed Authentication (Local, Oauth or mTLS), the connection is using the Gateway's Service Account to connect to the backing Kafka.
+In Gateway managed Authentication (local, Oauth or mTLS), the connection is using the Gateway's service account to connect to the backing Kafka.
 
-This Service Account must have all the necessary ACLs to perform not only the Gateway operations:
+This service account has to have all the necessary ACLs to perform not only these Gateway operations:
 
-- Read on internal topics and they should (ofc) exist
+- `Read` on internal topics and they should exist
 - Describe consumer group for internal topic
 - Describe on cluster
-- Describe topics for alias topics creation
-... but also all the permissions necessary to serve all Gateway users.
+- Describe topics for alias topics creation but also all the permissions necessary to serve all Gateway users.
 
-When in Gateway Managed mode, ACLs will be enabled. You can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
+When in Gateway managed mode, ACLs will be enabled. You can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
 
-:::warning
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `GATEWAY_ACL_STORE_ENABLED` environment variable has been deprecated.
+:::warning[Deprecated variable]
+As of [Gateway v3.10.0](/changelog/Gateway-3.10.0), the `GATEWAY_ACL_STORE_ENABLED` environment variable has been deprecated.
 
 Instead, when `GATEWAY_SECURITY_MODE` is set to `GATEWAY_MANAGED`, ACLs will be enabled.
 
 When in `KAFKA_MANAGED` mode, ACLs will be disabled.
 
-These `GATEWAY_ACL_STORE_ENABLED` environment variable remains supported for backward compatibility but is no longer recommended for new configurations.
+This `GATEWAY_ACL_STORE_ENABLED` environment variable continues to be supported for backward compatibility but is no longer recommended for new configurations.
 
-If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you're using `DELEGATED` security protocols, [See the migration to security mode guide](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
 :::
-
-[Jump to top](#supported-protocols).
