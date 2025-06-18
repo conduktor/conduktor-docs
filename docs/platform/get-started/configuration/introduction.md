@@ -119,7 +119,7 @@ For more information, see [Environment Variables](../env-variables/).
 
 Below is an example of docker-compose that uses environment variables for configuration.
 
-```yaml title="docker-compose.yaml
+```yaml title="docker-compose.yaml"
 services:  
   postgresql:
     image: postgres:14
@@ -160,6 +160,63 @@ volumes:
 
 ## Container user and permissions
 
-Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
+By default, Console is running as a non-root user `conduktor-platform` with UID `10001` and GID `0`.
 
-All files inside the container volume `/var/conduktor` are owned by `conduktor-platform` user.
+With all files inside the container volume `/var/conduktor` readable by everyone by default.
+
+But you can still run the container with different UID and GID and a more restrictive security context.
+
+For example on docker compose : 
+
+```yaml title="docker-compose.yaml"
+services:  
+  conduktor-console:
+    image: conduktor/conduktor-console
+    user: "424242:424242" # UID/GID 424242
+    read_only: true
+    privileged: false
+    cap_drop:
+      - ALL
+    #...
+```
+
+Or on kubernetes using our [Helm chart](https://github.com/conduktor/conduktor-public-charts/tree/main/charts/console) : 
+```yaml title="values.yaml"
+
+platform: 
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    privileged: false
+    runAsGroup: 424242
+    runAsNonRoot: true
+    runAsUser: 424242
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsGroup: 424242
+    runAsUser: 424242
+    fsGroup: 424242
+    supplementalGroups: [ 424242, 434343 ]
+
+platformCortex:
+  enabled: true
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    privileged: false
+    runAsGroup: 424242
+    runAsNonRoot: true
+    runAsUser: 424242
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsGroup: 424242
+    runAsUser: 424242
+    fsGroup: 424242
+    supplementalGroups: [ 424242, 434343 ]
+```
