@@ -28,5 +28,3 @@ This change:
 - Is backwards compatible, supporting existing configurations while encouraging the new approach
 
 Please see [How to: Migration Guide to Security Mode](/gateway/how-to/migration-guide-to-security-mode) for full guidance on how to adopt the new security configuration.
-
-### Fixes
