@@ -69,11 +69,10 @@ Gateway supports different client authentication methods, depending on both the 
 | `KAFKA_MANAGED`   | SASL\_PLAINTEXT                                                         |                  ❌                 |                     ✅                    |
 |                   | SASL\_SSL                                                               |                  ❌                 |                     ✅                    |
 
-:::warning
-⚠️ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of the security mode, set by an additional environment variable `GATEWAY_SECURITY_MODE`.
-These values remain supported for backward compatibility but plan to be deprecated, and are no longer the recommendation for new configurations.
+:::warning[Deprecated protocols]
+As of [Gateway v3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of the security mode, set by an additional environment variable `GATEWAY_SECURITY_MODE`. These values remain supported for backward compatibility but will be deprecated in future and are no longer the recommendation for new configurations.
 
-If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode).
+If you're using `DELEGATED` security protocols, [review the security mode migration guide](/gateway/how-to/migration-guide-to-security-mode).
 :::
 
 ### Anonymous authentication
@@ -86,7 +85,7 @@ Thus, authentication cannot take place and so **local and external Service Accou
 
 [How to configure the client > Gateway connection with PLAINTEXT.](/gateway/configuration/client-authentication/#plaintext)
 
-#### SSL (Encryption Only)
+#### SSL (encryption only)
 
 If you use SSL for transport layer encryption only, Gateway presents a keystore certificate trusted by the client’s truststore, without authenticating the client.
 
@@ -123,11 +122,11 @@ It is the same for both SASL_PLAINTEXT and SASL_SSL. The only difference is that
 
 [How to configure the client > Gateway connection with SASL.](/gateway/configuration/client-authentication/#sasl_plaintext)
 
-:::warning KAFKA_MANAGED & GATEWAY_MANAGED MODES
-With Conduktor Gateway, you can decide **where you'd like the client authentication & authorization to be made**. This means that you can either:
+:::warning[KAFKA_MANAGED and GATEWAY_MANAGED modes]
+With Conduktor Gateway, you can **decide where you'd like the client authentication and authorization to be made**. This means that you can either:
 
-- **Allow the backing Kafka cluser to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - In this mode Gateway forwards the clients credentials to the Kafka cluster to authenticate them and retrieve their ACL rules
-- **Manage them with Gateway** (using the supported [Clients Authentication Methods](#client-authentication-methods)) - In this mode, Gateway manages the clients authentication and authorization, based on their associated ACL rules
+- **allow the backing Kafka cluster to manage them** ([Kafka Managed SASL Authentication](#kafka-managed-sasl-authentication)) - in this mode Gateway forwards the client credentials to the Kafka cluster to authenticate them and retrieve their ACL rules. Or you can
+- **manage them with Gateway** (using the supported [client authentication methods](#client-authentication-methods)) - in this mode, Gateway manages the client authentication and authorization, based on their associated ACL rules.
 
 :::
 
