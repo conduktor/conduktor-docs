@@ -43,7 +43,7 @@ When creating a new page, use this layout:
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
 - Related resources. Include links to topics related to the feature. Add this link at the end:
-[Give us feedback/request a feature](https://conduktor.io/roadmap)
+  [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
 When adding a tutorial, use this layout:
 
@@ -76,7 +76,7 @@ Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/i
 
 You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
-### Tabs
+## Tabs
 
 Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
@@ -106,7 +106,7 @@ mySecondTab: "content"
 </Tabs>
 ````
 
-### Tags
+## Tags
 
 Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
