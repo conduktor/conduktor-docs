@@ -28,12 +28,12 @@ Central platform teams can further define the ways of working for their teams by
 - Preventing application teams from adding members to application groups directly, directing them to use the external group mapping instead.
 - Limiting the actions that can be performed in the UI by locking certain permissions.
 
-````yaml
+```yaml
 ---
 apiVersion: self-service/v1
 kind: ResourcePolicy
 metadata:
-  name: "applicationgroup-restrictions"
+  name: 'applicationgroup-restrictions'
   labels:
     business-unit: delivery
 spec:
@@ -49,7 +49,7 @@ spec:
 apiVersion: self-service/v1
 kind: ResourcePolicy
 metadata:
-  name: "subject-format-and-compatibility-policy"
+  name: 'subject-format-and-compatibility-policy'
   labels:
     business-unit: delivery
 spec:
@@ -60,23 +60,25 @@ spec:
       errorMessage: Only AVRO or PROTOBUF formats are allowed
     - condition: spec.compatibility == "FORWARD_TRANSITIVE"
       errorMessage: compatibility mode must be FORWARD_TRANSITIVE
-````
+```
 
 ResourcePolicy that target ApplicationGroup must be defined at the Application level:
-````yaml
+
+```yaml
 # Application
 ---
 apiVersion: self-service/v1
 kind: Application
 metadata:
-  name: "clickstream-app"
+  name: 'clickstream-app'
 spec:
-  title: "Clickstream App"
-  description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of the Conduktor Console Group
+  title: 'Clickstream App'
+  description: 'FreeForm text, probably multiline markdown'
+  owner: 'groupA' # technical-id of the Conduktor Console Group
   policyRef:
-    - "applicationgroup-restrictions"
-````
+    - 'applicationgroup-restrictions'
+```
+
 
 Additionally, ResourcePolicy targeting `Topic`, `Subject` or `Connector` configured at Application level will be applied to all Application Instances under that Application.
 
@@ -114,5 +116,12 @@ This makes it easier for teams sharing consumer groups who need topic-specific v
 - Fixed an issue where the full message was not displayed correctly in the tooltip when hovering over it in the topic consume view table.
 - Fixed an issue where the UI didn't redirect to the correct cluster when switching Console instances.
 - Fixed the logo in the onboarding page dark mode.
+- The screenshot showing users how to find the project name and service name in Aiven Cloud is displayed correctly again.
+- Fixed an error that would occur when no partitions were selected in Topics page filters.
+- Fixed a bug that would cause service accounts with white spaces to not be accessible correctly.
 
 ### Known issues
+
+```
+
+```

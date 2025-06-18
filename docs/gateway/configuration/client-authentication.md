@@ -8,7 +8,7 @@ toc_max_heading_level: 5
 
 ![Client to Gateway security](images/client-to-gateway-security.png)
 
-Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. 
+Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them.
 
 Pick the most suitable option based on the nature of your system's requirements, design and constraints.
 
@@ -16,45 +16,76 @@ The authentication phase on Gateway is part of the initial communication handlin
 
 All open connections in Gateway result in a `Principal` that represents the authenticated identity of the Kafka client.
 
-We can split this authentication and security configuration into two aspects
+We can split this authentication and security configuration into three aspects
 
+- Security mode
 - Security protocol
 - Authentication mechanism
 
-Security protocol defines how a Kafka client and Gateway broker should communicate and secure the connection. *How do we talk to each other, do we need to authenticate?.*
-Authentication mechanism on the other hand is the part defining how a client can authenticate it self when opening the connection. *How do we know each other?*
+Security Mode defines what is responsible for handling the authentication process in your system. *What is managing credentials, the Kafka cluster or Gateway?*
 
-Here is a quick explanation of each supported security protocol:
-* **PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security.
-* **SSL**: With SSL-only clients don't need any client authentication but communication between the client and Gateway broker will be encrypted.
-* **mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to enable an authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
-  `Principal` for mTLS connection can be detected from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate).
-* **SASL PLAINTEXT**: Brokers don't need any client authentication and all communication is exchanged without any network security.
-* **SASL SSL**: Authentication from the client is mandatory against Gateway and communication will be encrypted using TLS.
-* **DELEGATED_SASL_PLAINTEXT**: Authentication from the client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect authenticated principals.
-  All communication  between the client and gateway broker is exchanged without any network security.
-  All credentials are managed by your backend kafka, we only provide authorization on the Gateway side based on the exchanged principal.
+Security protocol defines how a Kafka client and Gateway broker should communicate and secure the connection. *How do we talk to each other, do we need to authenticate?.*
+
+Authentication mechanism defines how a client can authenticate itself when opening the connection. *How do we know each other?*
+
+Here is a quick explanation of each supported security mode and security protocol:
+
+**GATEWAY MANAGED**
+
+- **PLAINTEXT**: Brokers don't need client authentication; all communication is exchanged without network security or client identification.
+- **SSL**: With SSL-only clients don't need to authenticate but communication between the client and Gateway broker will be encrypted.
+- **mTLS**: This security protocol is not originally intended to provide authentication, but you can use the mTLS option below to achieve authentication. mTLS leverages SSL mutual authentication to identify a Kafka client.
+  The `Principal` for an mTLS connection can be mapped from the subject certificate using the same feature as in Apache Kafka, the [SSL principal mapping](https://docs.confluent.io/platform/current/kafka/configure-mds/mutual-tls-auth-rbac.html#principal-mapping-rules-for-tls-ssl-listeners-extract-a-principal-from-a-certificate).
+- **SASL PLAINTEXT**: Client authentication is required using SASL mechanisms (such as PLAIN or OAUTHBEARER), but all communication is transmitted in plaintext without network encryption. This provides authentication without the overhead of TLS encryption.
+- **SASL SSL**: Client authentication is mandatory using SASL mechanisms, and all communication is encrypted using TLS.
+
+**KAFKA MANAGED**
+
+- **SASL_PLAINTEXT**: As above, client authentication is required using SASL mechanisms, but will be forwarded to the Kafka cluster for validation. Gateway will intercept exchanged authentication data to detect authenticated principals.
+  All communication  between the client and Gateway broker is exchanged without any network security.
+  All credentials are managed by your Kafka cluster, Gateway only provides authorization based on the exchanged principal.
+- **SASL_SSL**: As above, client authentication is required using SASL mechanisms and will be forwarded to the Kafka cluster for validation. All communication between the client and the Gateway broker is encrypted using TLS. The Gateway will intercept the SASL authentication exchange to detect authenticated principals. All credentials are managed by your Kafka cluster.
 
 ## Overview
 
-|                                                     | **_Clients ⟶ GW transit in plaintext_**                                                                                                               | **_Clients ⟶ GW transit is encrypted_**                                                                                                         |
-|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| **_Anonymous access only_**                         | Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None`                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `None`                                                                                  |
-| **_Credentials managed by Gateway_**                | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`                                                                            | Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`                                                                            |
-| **_Gateway configured with OAuth_**                 | Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER`                                                                      | Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER`                                                                      |
-| **_Clients are identified by certificates (mTLS)_** | Not possible (mTLS means encryption)                                                                                                                  | Security protocol: `SSL`<br />Authentication mechanism: `MTLS`                                                                                  |
-| **_Credentials managed by Kafka_**                  | Security protocol: `DELEGATED_SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` | Security protocol: `DELEGATED_SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or`AWS_MSK_IAM` |
+| | **Clients ⟶ GW transit in plaintext** | **Clients ⟶ GW transit is encrypted** |
+|---|---|---|
+| **Anonymous access only** | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `PLAINTEXT`<br />Authentication mechanism: `None` | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SSL`<br />Authentication mechanism: `None` |
+| **Credentials managed by Gateway** | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN` | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN` |
+| **Gateway configured with OAuth** | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `OAUTHBEARER` | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SASL_SSL`<br />Authentication mechanism: `OAUTHBEARER` |
+| **Clients are identified by certificates (mTLS)** | Not possible (mTLS means encryption) | Security Mode: `GATEWAY_MANAGED`<br />Security protocol: `SSL`<br />Authentication mechanism: `MTLS` |
+| **Credentials managed by Kafka** | Security Mode: `KAFKA_MANAGED`<br />Security protocol: `SASL_PLAINTEXT`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or `AWS_MSK_IAM` | Security Mode: `KAFKA_MANAGED`<br />Security protocol: `SASL_SSL`<br />Authentication mechanism: `PLAIN`, `SCRAM-SHA-256`, `SCRAM-SHA-512`, `OAUTHBEARER` or `AWS_MSK_IAM` |
+
+## Security Mode
+
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0) the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable, `GATEWAY_SECURITY_MODE`.
+
+The `DELEGATED` values remain supported for backward compatibility but are no longer the recommended for new configurations.
+
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
+
+The Gateway security mode is defined by the `GATEWAY_SECURITY_MODE` configuration. This will define whether the Gateway will manage your credentials, `GATEWAY_MANAGED`, or your Kafka cluster will, `KAFKA_MANAGED`.
 
 ## Security protocol
 
-The Gateway broker security scheme is defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
+The Gateway broker security scheme must be defined by the `GATEWAY_SECURITY_PROTOCOL` configuration.  
 
-Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and is never configured by the user**. 
+Note that you don't set an authentication mechanism on the client to Gateway side of the proxy, i.e. `GATEWAY_SASL_MECHANISM` **does not exist and never needs to be configured by the user**.
 
-Instead, Gateway will try authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try authenticate it.  
-If a client arrives using `PLAIN` then Gateway will try use either the SSL configuration or validate the token itself, depending on the security protocol.
+Instead, Gateway will try to authenticate the client as it presents itself. For example, if a client is using `OAUTHBEARER`, Gateway will use the OAuth configuration to try to authenticate it.  
+If a client arrives using `PLAIN` then Gateway will try to use either the SSL configuration or validate the token itself, depending on the security protocol.
 
-In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.
+⚠️In addition to all the security protocols that [Apache Kafka supports](https://kafka.apache.org/documentation/#listener_configuration), Gateway adds two new protocols:`DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` for delegating to Kafka.⚠️
+
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
+
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 
 ### PLAINTEXT
 
@@ -354,7 +385,17 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
   scope=".default";
 ```
 
-### DELEGATED_SASL_PLAINTEXT
+### ⚠️ DELEGATED_SASL_PLAINTEXT (Deprecated)
+
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
+
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
+
+
 
 Authentication from client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
@@ -386,7 +427,15 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
-### DELEGATED_SASL_SSL
+### ⚠️ DELEGATED_SASL_SSL (Deprecated)
+
+:::warning
+As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security protocols have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
+
+The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
+
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+:::
 
 Authentication from the client is mandatory but will be forwarded to Kafka. Gateway will intercept exchanged authentication data to detect an authenticated principal.
 
@@ -425,7 +474,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 ### Principal resolver
 
-When using Confluent Cloud with delegated authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
+When using Confluent Cloud with Kafka managing authentication, Gateway automatically resolves API keys to their associated service account. This enhances security and improves usability by working with the service account principals instead of raw API keys.
 
 [See principal resolver environment variables for details](/gateway/configuration/env-variables#principal-resolver).
 
@@ -500,14 +549,14 @@ If there is also no security protocol on the backing Kafka cluster, then we set 
 
 Here is our mapping from the Kafka cluster's defined protocol:
 
-| Kafka cluster security protocol | Gateway cluster inferred security protocol |
-| ------------------------------- | ------------------------------------------ |
-| SASL_SSL                        | DELEGATED_SASL_SSL                         |
-| SASL_PLAINTEXT                  | DELEGATED_SASL_PLAINTEXT                   |
-| SSL                             | SSL                                        |
-| PLAINTEXT                       | PLAINTEXT                                  |
+| Kafka cluster security protocol | Gateway cluster inferred security mode | Gateway cluster inferred security protocol |
+|---------------------------------|----------------------------------------|--------------------------------------------|
+| SASL_SSL                        | KAFKA_MANAGED                          | SASL_SSL                                   |
+| SASL_PLAINTEXT                  | KAFKA_MANAGED                          | SASL_PLAINTEXT                             |
+| SSL                             | GATEWAY_MANAGED                        | SSL                                        |
+| PLAINTEXT                       | GATEWAY_MANAGED                        | PLAINTEXT                                  |
 
-For reference you can always see the inferred security protocol on the startup log of Gateway .
+For reference, you can always see the inferred security protocol on the startup log of Gateway .
 
 ```
 2024-03-07T15:40:12.260+0100 [      main] [INFO ] [Bootstrap:70] - Computed configuration :
@@ -516,6 +565,7 @@ gatewayClusterId: "gateway"
 ...
 authenticationConfig:
   securityProtocol: "SASL_PLAINTEXT"
+  securityMode: "KAFKA_MANAGED"
   sslConfig:
 ...
 

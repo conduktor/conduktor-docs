@@ -1,9 +1,11 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: Migration Guide to 3.x
 description: Migrating from a deployed 2.x to a 3.x version of Gateway
 ---
 # Migration guide to 3.x
+
+Migrating from a deployed 2.x to a 3.x version of Gateway.
 
 ## Steps: 
 
