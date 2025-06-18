@@ -1,53 +1,50 @@
 ---
 sidebar_position: 1
-title: Application Catalog
+title: Applications Catalog
 description: Kafka Self-service Overview
 ---
 
 :::tip 
-Self-service UI is almost entirely Read-only for now.  
-Use the CLI to interact with the product.
+Self-service UI is almost entirely Read-only for now.  Use the CLI to interact with the product.
 :::
 
-## Application Catalog List Page
+## Applications Catalog
 
-The Application Catalog provides a comprehensive view of all Applications deployed in your organization, designed to improve application discovery and team collaboration.
+The **Applications Catalog** page in Console is designed to improve application discovery and team collaboration by providing a comprehensive view of all the applications deployed in your organization.
 
+You can search for an application by any element available in the list (name, description, owner). You can also:
 
-You can search applications by any element available in the list: Name, Description, Owner. The enhanced filtering capabilities include:
-
-- **Ownership Filter**: Filter to see only applications you own using the "My applications" tab
-- **Label Filtering**: Filter applications by labels for better organization and categorization
-- **Advanced Search**: Search across application names, descriptions, and metadata
-
+- **filter by ownership**: see only applications you own using the **My applications** tab
+- **search using label**: filter applications by labels for better organization and categorization
+- **use advanced search**: search across application names, descriptions and metadata
 
 Each application entry displays:
+
 - Application name and description
-- Owner group information with team member avatars
+- Owner group and team member avatars
 - Public topics count
 - Subscription information (incoming/outgoing)
 - Application instances count
-- Instance Details - Hover over any application to see instance details in a convenient hover card
+- Instance details (hover over an application to see instance details)
 
-You can click on an Application to navigate to its detailed page.
+Click on an application to view its details.
 
 ![Application Catalog](assets/app-catalog.png)
 
+## Manage topic subscriptions
 
-## Manage Topic subscriptions
+When users request to subscribe to topics via the Topic Catalog page, these requests can be managed using the **Application Catalog** page, the **Access requests** tab.
 
-When users request to subscribe to topics via the Topic Catalog, these requests will appear in the Application catalog page under the **Access requests** tab. 
-
-From this tab, **application owners can approve or deny** incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to align with organizational requirements, adjusting read or write access, as needed.
-
+Using this tab **application owners can approve or deny** incoming subscription requests. During the approval process, administrators can modify the originally requested permissions to align with organizational requirements, adjusting read or write access, as needed.
 
 ![Application catalog request approval](/images/changelog/platform/v34/app-catalog-request.png)
 
 For teams managing infrastructure as code, subscription requests can also be approved using the CLI with YAML configuration which automatically closes the request and finalizes the subscription. [Find out more about CLI reference](/platform/reference/cli-reference/).
 
-## Application Details
+## Application details
 
-The Application details page summarizes all the information related to the application:
+The application details page summarizes all the information related to the application:
+
 - Application General information
 - Application Instances & Ownership
 - Subscribed topics
@@ -55,22 +52,20 @@ The Application details page summarizes all the information related to the appli
 - Application Groups
 - Access Requests
 
-You can add and edit labels to applications for better categorization and organization.
+For better categorization and organization of applications labels.
 
-Additionally, if you belong to the owner Group of the Application, you can generate Application Instance API Keys to use with the CLI to create resources.
+If you're the owner of an application group, you can generate application **instance API keys** to use with the CLI to create resources.
 
 import AppDetails from './assets/app-details.png';
 
 <img src={AppDetails} alt="Application details" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
-### Application Groups Tab
+### Groups Tab
 
-To see a list of Application Groups that belong to an Application, click on the **Groups** tab.
+To see a list of application groups that belong to an application, open on the **Groups** tab.
 
 ![Application Groups](assets/app-groups.png)
 
-From there, if you want to see the full details of a Group, click on the table row for the Group. This will open a side panel with the Group details in the same YAML format that you can also retrieve via the CLI.
+To see the details of the group, click on it in the table. A side panel showing the same YAML will be shown. You can also retrieve this via the CLI.
 
 ![Application Group Details](assets/app-group-details.png)
-
-
