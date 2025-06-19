@@ -24,5 +24,5 @@ Also, the alias topic will not replace the original one. For example, if you cre
 
 # Limitations
 
-* ACLs when using delegated Kafka security ([SASL delegated security protocols](/gateway/concepts/service-accounts-authentication-authorization/#delegated-sasl-authentication)) aren't supported on alias topics.
+* ACLs when using Kafka managed security mode ([Kafka Managed security protocols](/gateway/concepts/service-accounts-authentication-authorization/#kafka-managed-sasl-authentication)) aren't supported on alias topics.
 * Alias topics can't reference another alias topic.

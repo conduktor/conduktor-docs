@@ -77,6 +77,9 @@ spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
   owner: "groupA" # technical-id of the Conduktor Console Group
+  policyRef:
+    - "global-topic-policy"
+    - "application-group-policy"
 ````
 
 </TabItem>
@@ -101,6 +104,9 @@ resource "conduktor_console_application_v1" "clickstream-app" {
 **Application checks:**
 -   `spec.owner` is a valid Console Group
 -   Delete MUST fail if there are associated `ApplicationInstance`
+-  `spec.policyRef` is **optional**, and if present must be a valid list of [SelfServicePolicy](#resource-policy)
+  - Rules defined at the Application level will apply across all ApplicationInstances of the same Application.
+
 
 **Side effect in Console & Kafka:**  
 None.  
@@ -256,7 +262,7 @@ resource "conduktor_console_application_instance_v1" "clickstream-dev" {
 ### Topic Policy
 
 :::info
-Consider using the more advanced [ResourcePolicy](#resource-policy) resource instead.
+Deprecated. Consider using the more advanced [ResourcePolicy](#resource-policy) resource instead.
 :::
 
 Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
@@ -393,7 +399,7 @@ Resource policies are used to enforce rules on the ApplicationInstance level. Ty
 
 :::caution
 Resource policies are not applied automatically.  
-You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.policyRef`.
+You must explicitly link them to [ApplicationInstance](#application-instance) or [Application](#application) with `spec.policyRef`.
 :::
 
 **API Keys:** <AdminToken />  
@@ -433,7 +439,7 @@ spec:
           errorMessage: data-criticality should be one of C0, C1, C2
 ```
 ** SelfServicePolicy checks:**
-- `spec.targetKind` can be `Topic` or `Connector` but it will cover more resources in the future
+- `spec.targetKind` can be `Topic`, `Connector`, `Subject` or `ApplicationGroup`.
 - `spec.rules[].condition` is a valid CEL expression, see [CEL documentation](https://cel.dev) for more information, it will be evaluated against the resource
 - `spec.rules[].errorMessage` is a string that will be displayed when the condition is not met
 
