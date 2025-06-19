@@ -98,10 +98,6 @@ Consumer group lag alerts now support topic-level scoping, allowing you to creat
 
 This makes it easier for teams sharing consumer groups who need topic-specific visibility.
 
-### Conduktor Exchange
-
-### Conduktor Trust
-
 ### Quality of life improvements
 
 - Added new fields to the onboarding page.
@@ -124,9 +120,3 @@ This makes it easier for teams sharing consumer groups who need topic-specific v
 - Fixed an error that would occur when no partitions were selected in Topics page filters.
 - Fixed a bug that would cause service accounts with white spaces to not be accessible correctly.
 - Cleanup data volume on start to ensure that old data is not re-used when using persistant volume between restarts.
-
-### Known issues
-
-```
-
-```
