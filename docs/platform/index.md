@@ -5,7 +5,9 @@ slug: /
 description: Conduktor is the Enterprise Data Management Platform for real-time data streaming
 ---
 
-Conduktor is the Enterprise Data Management Platform for Kafka data streaming that integrates with your existing infrastructure to provide centralized visibility and control over real-time data. It's a fully self-hosted solution that depends on Docker to run. You can [get started for free](https://www.conduktor.io/get-started) using the Conduktor Community version. 
+Conduktor is the data hub for operational data and AI that integrates with your existing infrastructure, providing centralized visibility and control.
+
+It's a fully self-hosted solution that depends on Docker to run. You can [get started for free](https://www.conduktor.io/get-started) using the Conduktor Community version.
 
 To maximize the value of Conduktor, use these two key components:
  - [Console](/platform/navigation/): the unified interface to develop, monitor, and manage data streaming operations
@@ -17,7 +19,8 @@ Conduktor Console provides a [powerful UI](/platform/navigation/) that supports 
 ![Console home page](assets/home.png)
 
 Conduktor Gateway is a vendor-agnostic [Kafka proxy](/gateway), deployed between your client applications and existing Kafka clusters. It can be used to provide functionality that is not available in Kafka natively, such as centrally configured encryption, traffic control policies and failover for disaster recovery.
-![conduktor-gateway](../gateway/medias/conduktor-gateway.svg)
+
+![Conduktor Gateway](../gateway/medias/gateway-integration.png)
 
 ## Next steps
  - [Get started with Console](/platform/get-started/installation/get-started/docker)

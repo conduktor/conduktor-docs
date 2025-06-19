@@ -41,14 +41,29 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
+export const MissingLabelSupport = () => (
+<Highlight color="#F5F5F5" text="#666666">Label Support Incoming</Highlight>
+);
+
+export const FullLabelSupport = () => (
+<Highlight color="#E6F4EA" text="#1B7F4B">Full Label Support</Highlight>
+);
+
+export const PartialLabelSupport = () => (
+<Highlight color="#FFF8E1" text="#B26A00">Partial Label Support (No UI yet)</Highlight>
+);
+
 ## Kafka resources
 
 ### Topic
 Creates a Topic in Kafka.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <TF /> <GUI />  
+**Labels support:** <FullLabelSupport />
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ````yaml
 ---
@@ -73,6 +88,43 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'
 ````
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+````hcl
+resource "conduktor_console_topic_v2" "click-event-stream-avro" {
+  name    = "click.event-stream.avro"
+  cluster = "shadow-it"
+  labels  = {
+    domain  = "clickstream"
+    appcode = "clk"
+  }
+  description = <<EOT
+  # Event Stream from Click Application
+  This is a multiline markdown description that will appear in the Topic Catalog
+  EOT
+  description_is_editable = false
+  catalog_visibility      = "PUBLIC"
+  spec = {
+    replication_factor = 3
+    partitions         = 3
+    configs = {
+      "cleanup.policy" = "delete"
+      "retention.ms"   = "60000"
+    }
+  }
+
+  #Optional: Prevents the topic from being deleted
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+````
+
+</TabItem>
+</Tabs>
+
 **Topic checks:**
 - `metadata.cluster` is a valid Kafka Cluster
 - `metadata.name` must belong to the Application Instances
@@ -98,7 +150,8 @@ spec:
 Creates a Subject in the Schema Registry.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 **Local file**
 
@@ -185,7 +238,8 @@ spec:
 Creates a connector on a Kafka Connect Cluster.
 
 **API Keys:** <AdminToken />  <AppToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <PartialLabelSupport />
 
 ```yaml
 ---
@@ -228,9 +282,10 @@ This doesn't create the service account, only assigns ACLs.
 :::
 
 **API Keys:** <AdminToken />  
-**Managed with:** <CLI /> <API /> <GUI />
+**Managed with:** <CLI /> <API /> <GUI />  
+**Labels support:** <FullLabelSupport />
 
-
+Example for Kafka service accounts:
 ````yaml
 ---
 apiVersion: v1
@@ -271,14 +326,51 @@ spec:
         operations:
           - Read
 ````
+
+Example for Aiven service accounts:
+````yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: aiven
+  name: clickstream-sa
+  labels:
+    domain: clickstream
+    appcode: clk
+spec:
+  authorization:
+    type: AIVEN_ACL
+    acls:
+      # Read & Write on the click.event-stream.avro topic
+      - resourceType: TOPIC
+        name: 'click.event-stream.avro'
+        permission: readwrite
+      # Read on all the topics prefixed by public_
+      - type: TOPIC
+        name: 'public*'
+        permission: read
+      # Write on the click.event-stream.avro schema
+      - type: SCHEMA
+        name: 'Subject:click.event-stream.avro'
+        permission: schema_registry_write
+````
+
 **Service account checks:**
 - `metadata.cluster` is a valid Kafka Cluster.
 - `metadata.name` is a valid, pre-existing service account.
-- `spec.authorization.type` must be 'KAFKA_ACL'. This is the default implementations which store ACLs in the cluster metadata. This is the only supported type in this API for now.
+- `spec.authorization.type` must be 'KAFKA_ACL' or 'AIVEN_ACL'. 'AIVEN_ACL' is only supported for Aiven Kafka clusters. 'KAFKA_ACL' is not supported for Aiven Kafka clusters.
+
+When `spec.authorization.type` equals `KAFKA_ACL`:
 - `spec.acls[].type` must be a valid resource type on Kafka ([Kafka ACL Operations and Resources](https://kafka.apache.org/documentation/#operations_resources_and_protocols))
 - `spec.acls[].operations` must contain only operations that are valid for the resource type.
 - `spec.acls[].host` is optional, and will default to '*'.
 - `spec.acls[].permission` is optional, and will default to 'Allow'.
+
+When `spec.authorization.type` equals `AIVEN_ACL`:
+- `spec.acls[].resourceType` must be a valid resource type on Aiven Kafka: `TOPIC` ([Aiven ACL for topics](https://aiven.io/docs/products/kafka/concepts/acl)) or `SCHEMA` ([Aiven ACL for schema](https://aiven.io/docs/products/kafka/karapace/concepts/acl-definition))
+- `spec.acls[].name` must be a valid resource name on Aiven Kafka. For schemas, it must match `^(Config:|Subject:[A-Za-z0-9/_.*?-]+)`.
+- `spec.acls[].permission` must contain only operations that are valid for the resource type. 
 
 **Side effects**
 - Kafka:

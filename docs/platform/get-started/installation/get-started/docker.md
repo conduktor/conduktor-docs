@@ -10,7 +10,7 @@ description: Get started with the latest Conduktor Console Docker image in just 
 Pre-requisite: [Docker Compose](https://docs.docker.com/compose/install)
 :::
 
-Get started in a few minutes with the latest Conduktor Console Docker image.
+Get started in a few minutes with the latest Conduktor Console Docker image. Our recommendation is to [deploy with Kubernetes](/platform/get-started/installation/get-started/kubernetes).
 
 - [**Simple Setup**](#simple-setup): Get started with the Conduktor Console through its user-friendly interface - Perfect to **quickly** see its value.
    - [Option 1: Start with an embedded Kafka cluster](#option-1-start-with-an-embedded-kafka-cluster)
@@ -41,12 +41,6 @@ Start Conduktor Console with 2 clusters pre-configured:
 ```bash
 curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
 ```
-
-:::info
-If you have an M4 Mac the above command will fail because of a [JDK/Docker interopability bug](https://github.com/adoptium/adoptium-support/issues/1223). Use the following work-around until a JDK fix is released in April: 
-
-`curl -L https://releases.conduktor.io/quick-start-m4 -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"`
-:::
 
 #### Option 2: Use your existing Kafka cluster
 

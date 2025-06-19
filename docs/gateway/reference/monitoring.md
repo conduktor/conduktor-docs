@@ -43,7 +43,7 @@ The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`, for example:
 localhost:8888/metrics
 ```
 
-Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it. 
+Please be aware that when `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access the endpoint.
 
 For example, using the default credentials, you can access the metrics with the following command:
 
@@ -57,6 +57,7 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 
 | Metric description                                                                               | Metric value                                      |
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| The number of days remaining before the license expiration                                       | `gateway_license_remaining_days`                  |
 | The number of connections closed per second                                                      | `gateway_upstream_connection_close_rate`          |
 | The total number of connections closed                                                           | `gateway_upstream_connection_close_total`         |
 | The number of new connections established per second                                             | `gateway_upstream_connection_creation_rate`       |
@@ -84,3 +85,52 @@ See the [API environment variables](/gateway/configuration/env-variables/#http) 
 | The total bytes exchanged within the context of the specified topic                              | `gateway_bytes_exchanged_topic_total`             |
 | The total errors per API key for the specified virtual cluster and username                      | `gateway_error_per_apiKeys`                       |
 | The current inflight API keys of the specified virtual cluster and username                      | `gateway_current_inflight_apiKeys`                |
+
+### Gateway lived events
+
+Gateway's lived events provide comprehensive monitoring metrics about Gateway's runtime configuration and usage. 
+
+These events capture data about interceptors, virtual clusters, topics and other important components of your Gateway setup. The Prometheus metrics are detailed below.
+
+You can access Gateway lived event metrics in the Prometheus format from the endpoint mentioned previously, or a JSON response via the dedicated REST API endpoint:
+
+
+```bash
+GET /gateway/v2/analytics/lived
+```
+
+[Find out about using this Gateway API endpoint](https://developers.conduktor.io/?product=gateway).
+
+#### Available Gateway lived event metrics
+
+##### Interceptor metrics
+
+| Metric description                                        | Metric value                                       |
+|-----------------------------------------------------------|----------------------------------------------------|
+| Total number of interceptor types                         | `gateway_lived_event_interceptors_types_total`     |
+| Total number of interceptor instances                     | `gateway_lived_event_interceptors_instances_total` |
+| Number of instances for a specific interceptor            | `gateway_lived_event_interceptor_instance_count`   |
+| Number of topics covered by a specific interceptor        | `gateway_lived_event_interceptor_topics_covered`   |
+| Total number of unique topics covered by all interceptors | `gateway_lived_event_unique_topics_covered`        |
+
+##### Account and group metrics
+
+| Metric description                       | Metric value                                 |
+|------------------------------------------|----------------------------------------------|
+| Total number of Gateway service accounts | `gateway_lived_event_service_accounts_total` |
+| Total number of Gateway groups           | `gateway_lived_event_groups_total`           |
+
+##### Topic and virtual cluster metrics
+
+| Metric description                  | Metric value                                    |
+|-------------------------------------|-------------------------------------------------|
+| Total number of alias topics        | `gateway_lived_event_topics_alias_total`        |
+| Total number of concentrated topics | `gateway_lived_event_topics_concentrated_total` |
+| Total number of virtual clusters    | `gateway_lived_event_vclusters_total`           |
+
+##### Gateway information metrics
+
+| Metric description                                                                        | Metric value                          |
+|-------------------------------------------------------------------------------------------|---------------------------------------|
+| Gateway deployment information (with version, commit, OS, deployment method labels)       | `gateway_lived_event_info`            |
+| Gateway connection information (with security protocol, authentication mechanisms labels) | `gateway_lived_event_connection_info` |

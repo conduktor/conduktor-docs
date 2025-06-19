@@ -123,3 +123,64 @@ You now have two options: Either you inherit the credentials from your environme
 The configuration should look like this in the Console:
 
 ![Consol config with IAM](assets/msk-with-iam.png)
+
+## Connect to a Cloudera cluster
+
+:::info
+These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
+:::
+1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
+
+![cloudera-user-management](assets/cloudera-user-management.png "cloudera-user-management")
+
+2. Download the certificates from Cloudera:
+![getting_certs_from_cloudera](assets/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
+
+3. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
+
+```
+keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file zeke-test2-cdp-env.crt
+```
+
+4. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
+
+5. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
+
+6. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step. 
+
+![adding cloudera to console](assets/cloudera-console-setup.png "adding cloudera to console")
+
+[Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
+
+## Connect to a Google Cloud cluster
+
+You can connect to Google Cloud Managed Service for Apache Kafka using the **SASL_SSL protocol** or the **PLAIN mechanism** with one of the following options. 
+
+### Option 1: Use a service account
+
+ [Go to Google Cloud docs for instructions](https://cloud.google.com/managed-service-for-apache-kafka/docs/authentication-kafka#sasl-plain).
+
+### Option 2: Use an access token
+
+First, get an access token:
+
+```
+gcloud auth login --no-launch-browser
+gcloud auth print-access-token 
+```
+
+Then, use that token with the following parameters:
+
+```
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
+username="PRINCIPAL_EMAIL_ADDRESS" \
+password="ACCESS_TOKEN_VALUE";
+```
+
+When authenticating incoming connections to the cluster, managed service for Apache Kafka checks that:
+
+- the access token is valid and has not expired
+- the provided username matches the principal email that the access token is associated with
+- the access token's principal has the `managedkafka.clusters.connect` permission (included in roles/managedkafka.client) on the cluster

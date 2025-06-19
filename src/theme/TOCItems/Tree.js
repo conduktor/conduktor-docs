@@ -12,7 +12,7 @@ export default function TreeWrapper(props) {
 
   return (
     <div ref={ref}>
-      <strong className={styles.title}>Quick nav</strong>
+      <strong className={styles.title}>On this page</strong>
       <Tree {...props} />
       <Feedback tiny />
     </div>
