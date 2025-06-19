@@ -216,6 +216,7 @@ module.exports = {
         'tutorials/configure-sql',
         'tutorials/custom-deserializers',
         'tutorials/deploy-aws',
+        'tutorials/migrate-gw-security',
       ],
     }, 
 

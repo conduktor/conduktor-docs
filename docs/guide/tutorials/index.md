@@ -11,6 +11,7 @@ description: Learn Conduktor by following hands-on tutorials.
 - [SQL with Conduktor](/guide/tutorials/configure-sql)
 - [Custom deserializers](/guide/tutorials/custom-deserializers)
 - [SNI routing](/guide/tutorials/sni-routing)
+- Existing customers only: [Migrate to new Gateway security mode](/guide/tutorials/migrate-gw-security)
 
 ## Use
 
