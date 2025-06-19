@@ -20,15 +20,16 @@ docker pull conduktor/conduktor-console:1.21.0
 
 ### Features ✨
 
-- [ksqlDB](#ksql-db)
+- [ksqlDB](#ksqldb)
 - [Metrics available via Prometheus](#subscribe-to-metrics-via-the-prometheus-endpoint)
 - [Smart tables for Connect and Schema Registry](#smart-tables-for-kafka-connect-and-schema-registry-subjects)
 - [Add Local Users from the UI](#add-local-users-from-the-ui)
-- [Fixes](#fixes-🔨)
+- [Fixes](#fixes)
 
 ---
 
 #### ksqlDB
+
 Say hello to seamless integration with ksqlDB for you and your team on Conduktor Console.   
 Grant permission to whom can access the interface to create queries, setup new connections and visualise the existing connections.
 
@@ -64,7 +65,8 @@ Choose what columns to hide the noise. Filter on name, tags and other resource m
 Don't have SSO ? Now you can add Users directly from the Users & Groups page in Settings, instead of modifying the config file and restarting the Console.
 ![Add Users](/images/changelog/platform/v21/add-users.png)
 
-### Fixes 🔨
+### Fixes
+
 - Added support for complex union-type avro messages in Console Producer
 - Fixed a blank screen issue after login due to case-sensitivity bug with email address
 - Fixed an issue where Message Reprocessing didn't work after refreshing the page

@@ -31,9 +31,9 @@ Request parameters do not satisfy the configured policy. Topic 'topicName' with 
 | topic          | String                                            | `.*`    | Topics that match this regex will have the interceptor applied. If no value is set, it will be applied to all topics. |
 | isolationLevel | [IsolationLevel](#isolation-level)                |         | Configuration for isolation level                                                                                     |
 | rackIdRequired | [Boolean](#boolean)                               |         | Configuration of rankId usage                                                                                         |
-| fetchMaxBytes  | [SafeguardIntegerConfig](#safeguardIntegerConfig) |         | Configuration for maxBytes                                                                                            |
-| fetchMinBytes  | [SafeguardIntegerConfig](#safeguardIntegerConfig) |         | Configuration for minBytes                                                                                            |
-| maxWaitMs      | [SafeguardIntegerConfig](#safeguardIntegerConfig) |         | Configuration for maxWaitMs                                                                                           |
+| fetchMaxBytes  | SafeguardIntegerConfig      |         | Configuration for maxBytes                                                                                            |
+| fetchMinBytes  | SafeguardIntegerConfig |         | Configuration for minBytes                                                                                            |
+| maxWaitMs      | SafeguardIntegerConfig|         | Configuration for maxWaitMs                                                                                           |
 | version        | [Version](#version)                               |         | Configuration for fetch version                                                                                       |
 
 

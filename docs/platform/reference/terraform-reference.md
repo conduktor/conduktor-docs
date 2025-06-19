@@ -129,9 +129,9 @@ The provider configuration also supports environment variables for all attribute
 | ---------------------- | ---------------- | --------------------------------------------------------------------------------- |
 | n/a                    | `mode`           | Terraform Provider mode: either `console` or `gateway`                            |
 | `CDK_CONSOLE_BASE_URL` | `base_url`       | Console base URL, e.g. `http://localhost:8080`                                    |
-| `CDK_API_KEY`          | `api_token`      | Console [API Key](#using-api-key-authentication)                                  |
-| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email    |
-| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_API_KEY`          | `api_token`      | Console [API Key](#authenticate-using-api-keys)                                  |
+| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#authenticate-using-short-lived-user-credentials) email    |
+| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#authenticate-using-short-lived-user-credentials) password |
 | `CDK_CONSOLE_CERT`     | `cert`           | Cert in PEM format to authenticate using client certificates                      |
 | `CDK_CONSOLE_INSECURE` | `insecure`       | Skip TLS verification flag. Defaults to `false`                                   |
 | `CDK_CONSOLE_CACERT`   | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate     |

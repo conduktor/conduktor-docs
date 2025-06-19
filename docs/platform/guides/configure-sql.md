@@ -22,6 +22,7 @@ We encourage you to use this feature in non-production environments and give us 
 ![Conduktor SQL](assets/conduktor-sql.png)
 
 # Table of Contents
+
 - [Console Configuration](#console-configuration)
   - [Database Configuration](#database-configuration)
   - [Additional Configuration](#additional-configuration)
@@ -83,7 +84,7 @@ Note that additional configuration can be made in relation to the indexing proce
 
 ### Index Topics in the UI
 
-To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#configure-conduktor-sql) the SQL database as a dependency.
+To create a new indexed topic, you can use the UI by navigating to the new **SQL** tab. Note you will only see this tab if you have [configured](#console-configuration) the SQL database as a dependency.
 
 Currently, only Admins have the `kafka.topics.config.sql` permission required to opt topics in for indexing. This permission is verified whenever a user attempts to update the [`sqlStorage`](#index-topics-in-the-cli) configuration for a topic.
 

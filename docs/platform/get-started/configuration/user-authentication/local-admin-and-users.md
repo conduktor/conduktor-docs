@@ -14,7 +14,7 @@ You can declare **new users** from within the Console UI, via the configuration 
 
 From within the **Settings** > **Users & Groups** screen, select **Create members** to add a new user.
 
- - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-login)
+ - If you already have SSO configured, see [managing permissions of users before they login](#manage-permissions-of-users-before-they-log-in)
  - Alternatively, you can add users via basic authentication
 
 Later on you may wish to add users from an IAC approach using the [ConsoleGroup](/platform/reference/resource-reference/console/#consolegroup) component.
@@ -59,7 +59,6 @@ In addition to these local admin and users, you can set up **Single Sign-On (SSO
 :::info
 This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
 :::
-
 
 ## Manage permissions of users before they log in
 

@@ -20,7 +20,7 @@ Create topic policy limits on topic creation to ensure that any topics created i
 | namingConvention                | [Regex](#regex)                                   |         | Configuration for validating topic name convention             |
 | numPartition                    | [Integer](#integer)                               |         | Configuration for number of partitions                         |
 | replicationFactor               | [Integer](#integer)                               |         | Configuration for number of replicas                           |
-| cleanupPolicy                   | [Cleanup Policy](#cleanuppolicy)                  |         | Configuration for cleanup.policy                               |
+| cleanupPolicy                   | Cleanup Policy                                    |         | Configuration for cleanup.policy                               |
 | compressionType                 | [Compression Type](#compression-type)             |         | Configuration for compression.type                             |
 | deleteRetentionMs               | [Long](#long)                                     |         | Configuration for delete.retention.ms                          |
 | fileDeleteDelayMs               | [Long](#long)                                     |         | Configuration for file.delete.delay.ms                         |
@@ -31,7 +31,7 @@ Create topic policy limits on topic creation to ensure that any topics created i
 | maxMessageBytes                 | [Integer](#integer)                               |         | Configuration for max.message.bytes                            |
 | messageTimestampDifferenceMaxMs | [Long](#long)                                     |         | Configuration for message.timestamp.difference.max.ms          |
 | messageTimestampType            | [Message Timestamp Type](#message-timestamp-type) |         | Configuration for message.timestamp.type                       |
-| minCleanableDirtyRatio          | [Double](#double)                                 |         | Configuration for min.cleanable.dirty.ratio                    |
+| minCleanableDirtyRatio          | Double                                            |         | Configuration for min.cleanable.dirty.ratio                    |
 | minCompactionLagMs              | [Long](#long)                                     |         | Configuration for min.compaction.lag.ms                        |
 | minInsyncReplicas               | [Integer](#integer)                               |         | Configuration for min.insync.replicas                          |
 | preallocate                     | [Boolean](#boolean)                               |         | Configuration for preallocate                                  |

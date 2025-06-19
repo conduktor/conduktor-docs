@@ -56,6 +56,7 @@ export const PartialLabelSupport = () => (
 ## Kafka resources
 
 ### Topic
+
 Creates a Topic in Kafka.
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -130,7 +131,7 @@ resource "conduktor_console_topic_v2" "click-event-stream-avro" {
 - `metadata.name` must belong to the Application Instances
 - `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the Topic is created
 - `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
-- All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
+- All properties are validated against [TopicPolicies](#topic) attached to the Application Instance
 
 **Conduktor annotations:**
 - `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
@@ -147,6 +148,7 @@ resource "conduktor_console_topic_v2" "click-event-stream-avro" {
   - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
 
 ### Subject
+
 Creates a Subject in the Schema Registry.
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -235,6 +237,7 @@ spec:
   - In dry-run mode, Subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API.
 
 ### Connector
+
 Creates a connector on a Kafka Connect Cluster.
 
 **API Keys:** <AdminToken />  <AppToken />  
@@ -275,6 +278,7 @@ spec:
 
 
 ### Service account
+
 Manages the ACLs (Access Control Lists) of a service account in Kafka. 
 
 :::info

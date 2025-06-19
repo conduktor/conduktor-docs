@@ -191,7 +191,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
     - [Self-service](#self-service)
     - [Admin](#admin)
 
-  #### Console
+#### Console
 
   ##### ResourceType: `Topic`
 
@@ -243,7 +243,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
   - connector.Paused
   - connector.Resumed
 
-  #### Data masking
+#### Data masking
 
   ##### ResourceType: `DatamaskingPolicy`
 
@@ -252,7 +252,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
   - policy.Upserted
   - policy.Deleted
 
-  #### Self-service
+#### Self-service
 
   ##### ResourceType: `Application`
 
@@ -265,7 +265,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
     from / to
   - application.access-request.Rejected
 
-  #### Admin
+#### Admin
 
   ##### ResourceType: `Cluster`
 

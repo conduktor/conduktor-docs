@@ -55,6 +55,7 @@ export const PartialLabelSupport = () => (
 ## Self-service resources
 
 ### Application
+
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
 
 In Self-service, it is used as a means to organize and regroup multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under the same umbrella.
@@ -113,6 +114,7 @@ None.
 Deploying this object will only create the Application in Console. It can be viewed in the Application Catalog.
 
 ### Application Instance
+
 Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.  
 This is the core concept of Self-service as it ties everything together:
 - Kafka cluster
@@ -229,7 +231,7 @@ resource "conduktor_console_application_instance_v1" "clickstream-dev" {
 - `spec.applicationManagedServiceAccount` is **optional**, default `false`. 
   - If set to `true`, the service account ACLs will be managed by the Application owners directly instead of being synchronized by the ApplicationInstance component.
   - Check dedicated section [Application-managed Service Account](#application-managed-service-account)
-- `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [TopicPolicy](#topic-policy)
+- `spec.topicPolicyRef` is **optional**, and if present must be a valid list of [Topic Policy](#topic-policy)
 - `spec.policyRef` is **optional**, and if present must be a valid list of [SelfServicePolicy](#resource-policy)
 - `spec.defaultCatalogVisibility` is **optional**, default `PUBLIC`. Can be `PUBLIC` or `PRIVATE`.
 - `spec.resources[].type` can be `TOPIC`, `CONSUMER_GROUP`, `SUBJECT` or `CONNECTOR`
@@ -369,7 +371,7 @@ resource "conduktor_console_topic_policy_v1" "clickstream-naming-rule" {
   - `spec.replicationFactor` to create constraints on Replication Factor
   - `spec.configs.<key>` to create constraints on Topic config `<key>`
 - `spec.policies.<key>.constraint` can be `Range`, `OneOf` or `Match`
-  - Read the [Policy Constraints](#policy-constraints) section for each constraint's specification
+  - Read the [Policy Constraints](#topic-policy-constraints) section for each constraint's specification
 
 With the two Topic policies declared above, the following Topic resource would succeed validation:
 ````yaml

@@ -9,8 +9,9 @@ This Configuration is for Cortex dependency image `conduktor/conduktor-console-c
 :::
 
 ## Table of Contents
+
 - [Example configuration](#example-configuration)
-- [Overriding Configuration](#overriding-configuration)
+- [Overriding configuration](#overriding-configuration)
   - [Overriding with YAML](#overriding-with-yaml)
   - [Overriding with ConfigMap](#overriding-with-configmap)
 - [Troubleshooting](#troubleshooting)
@@ -18,14 +19,11 @@ This Configuration is for Cortex dependency image `conduktor/conduktor-console-c
   - [No Slack notification alerts](#no-slack-notification-alerts)
 - [Endpoint Authentication](#endpoint-authentication)
 
-
 The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
 
-By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
-You can mount a volume on this folder to keep metrics data between updates.
-Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
+By default, data will be stored in `/var/conduktor/monitoring` inside the running image. You can mount a volume on this folder to keep metrics data between updates. Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
 
-| Environment Variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
+| Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
 | `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
@@ -63,6 +61,7 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
 
 ## Example configuration
+
 In a docker compose it may look like the following:
 ````yaml
 version: '3.8'
@@ -86,9 +85,10 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ````
 
-## Overriding Configuration
+## Overriding configuration
 
 ### Overriding with YAML
+
 **Cortex**  
 Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
 This is not currently available for Alert Manager. 
@@ -161,6 +161,7 @@ platformCortex:
 ## Troubleshooting  
 
 ### No metrics in the monitoring page  
+
 Go to `http://localhost:9090/targets` to see Prometheus scraping target status. 
 
 If it fails, check that you can query metrics endpoint from `conduktor-console-cortex` container. 
@@ -168,6 +169,7 @@ If it fails, check that you can query metrics endpoint from `conduktor-console-c
 You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](/platform/get-started/configuration/https-configuration/#https-configuration).
 
 ### No Slack notification alerts
+
 1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console. 
 2. Don't forget to manually add Slack App bot to the channel integrations you want to use for alerts notifications.
 3. Enable notifications in the **Alerts** tab, and select the same channel as previously. 
@@ -175,5 +177,6 @@ You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFI
 
 If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
 
-## Endpoint Authentication
+## Endpoint authentication
+
 Monitoring is not designed to be interacted with through the API endpoints by end users, only Console. As such no ingress is available externally and you should not set one up as there is no authentication mechanism.

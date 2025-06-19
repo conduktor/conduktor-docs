@@ -33,15 +33,15 @@ Cache Interceptor offers several benefits:
 | config      | type                         | default | description                                                                                                                       |
 |:------------|------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------|
 | topic       | String                       | `.*`    | Topic regex, topic that match this regex will have the interceptor applied. If no value is set, it will be applied to all topics. |
-| cacheConfig | [Cache Config](#cacheConfig) |         | Configuration for cache.                                                                                                          |
+| cacheConfig | Cache Config                 |         | Configuration for cache.                                                                                                          |
 
 ### CacheConfig
 
 | config        | type                             | description                        |
 |:--------------|----------------------------------|:-----------------------------------|
 | type          | enum (IN_MEMORY, ROCKSDB)        | Default: IN_MEMORY.                |
-| rocksdbConfig | [Rocksdb Config](#rocksdbConfig) | Configuration for rocksdb cache.   |
-| inMemConfig   | [In Mem Config](#inMemConfig)    | Configuration for im-memory cache. |
+| rocksdbConfig | Rocksdb Config                   | Configuration for rocksdb cache.   |
+| inMemConfig   | In Mem Config                    | Configuration for im-memory cache. |
 
 ### RocksdbConfig
 

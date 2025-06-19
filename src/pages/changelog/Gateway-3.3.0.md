@@ -86,9 +86,11 @@ The group groupB is still used by the following interceptor(s): enforce-partitio
 We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
 
 #### Support for HTTPS APIs
+
 It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
 
 #### Better UX for ACLs and superUsers
+
 To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
  - ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
@@ -156,7 +158,6 @@ If any of the encryption headers are detected in a message when encryption is ab
 Note this is no longer supported, and the Gateway will now throw an exception if the encryption plugin attempts to apply schema (tag) based processing to a Protobuf message.
 
 Note that any data previously written in this mode can still be read back - as the decrypt does not use the schemas at all, rather it uses the message header to know what was encrypted.
-
 
 ### General fixes
 

@@ -22,16 +22,17 @@ The process should take no more than 15 - 30 minutes.
 
 Before you proceed, it is important to make sure that you have either already created a new Virtual Private Cloud (VPC) or are planning to use an existing one. This is important to ensure that your environment is secure and isolated. Additionally, we strongly recommend avoiding the use of the default VPC, as it can pose a security risk due to its common configuration.
 
-## Networking & Architecture 
+## Networking and architecture
+
 ![AWS Deployment](assets/conduktor.ecs.drawio.svg)
 
-## Deployment Steps
+## Deployment steps
 
 - [Deployment on AWS](#deployment-on-aws)
   - [Getting started](#getting-started)
   - [Security](#security)
-  - [Networking \& Architecture](#networking--architecture)
-  - [Deployment Steps](#deployment-steps)
+  - [Networking and architecture](#networking-and-architecture)
+  - [Deployment steps](#deployment-steps)
     - [Step 1: Create a PostgreSQL database via Amazon RDS](#step-1-create-a-postgresql-database-via-amazon-rds)
     - [Step 2: Create a new Task definition on ECS](#step-2-create-a-new-task-definition-on-ecs)
     - [Step 2.1: Add the core console container](#step-21-add-the-core-console-container)
