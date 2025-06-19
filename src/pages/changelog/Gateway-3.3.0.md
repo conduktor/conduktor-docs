@@ -8,7 +8,8 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Upcoming Breaking change 💣
+### Upcoming Breaking change
+
 :::info
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
@@ -20,13 +21,13 @@ Today, the token as the password for local Gateway service accounts contains all
 
 In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behaviors.
 
-**This breaking change is due for release 3.5.0.**   
+**This breaking change is due for release 3.5.0.**
 For this release 3.3.0, and next product release 3.4.0, we'll only raise the following warning in the logs:  
 ````
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ````
 
-### Features ✨
+### Features
 
 - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
 - [Support for HTTPS APIs](#support-for-https-apis)
@@ -36,6 +37,7 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 #### New V2 APIs and CLI support
 
 We’re excited to introduce our new Gateway API, designed for seamless integration with our CLI. This update allows you to deploy Gateway resources using infrastructure-as-code with straightforward, clearly defined concepts:
+
 - Interceptor
 - GatewayServiceAccount
 - GatewayGroup
@@ -156,7 +158,7 @@ Note this is no longer supported, and the Gateway will now throw an exception if
 Note that any data previously written in this mode can still be read back - as the decrypt does not use the schemas at all, rather it uses the message header to know what was encrypted.
 
 
-### General fixes 🔨
+### General fixes
 
 - Large double values (where > Float Max) are now supported in field-level encryption for Avro and Protobuf
 - Bytes and fixed fields now properly supported in field-level encryption for Avro
@@ -178,6 +180,7 @@ Note that any data previously written in this mode can still be read back - as t
 - Fix an issue with Concentrated Topics creation with Redpanda
 
 ### Known issues
+
 - We are aware of an issue with `kcat` when the new environment variable `GATEWAY_MIN_BROKERID` is not aligned with the first BrokerId of your Kafka cluster.
   - As a workaround, you can either define `GATEWAY_MIN_BROKERID` to your first Kafka BrokerId or use `kcat` with the `-E` flag
 - It is not possible to add Service Accounts to GatewayGroups using API V2 unless they are previously declared as GatewayServiceAccount.
@@ -185,4 +188,4 @@ Note that any data previously written in this mode can still be read back - as t
   - API V1 (user-mapping) is not impacted
 - If you perform a rolling upgrade to 3.3.0, Gateway nodes in earlier versions will show the following error in the logs: `[ERROR] [KafkaCache:1007] - Failed to deserialize a value org.apache.avro.AvroTypeException: Expected field name not found: clusterId`
   - This is fine and will not cause any further problems
-- If you use Virtual Clusters and ACLs: After updating to 3.3.0, you must manage VirtualCluster's ACL and superUsers through V2 API. 
+- If you use Virtual Clusters and ACLs: After updating to 3.3.0, you must manage VirtualCluster's ACL and superUsers through V2 API.

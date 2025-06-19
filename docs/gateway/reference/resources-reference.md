@@ -105,23 +105,24 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
 **Interceptor checks:**
 - `metadata.scope` is optional (default empty). 
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
-  - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
+  - Check the dedicated [Interceptor targeting](#interceptor-targeting) section
 - `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptor-catalog/)
 - `spec.priority` is **mandatory**
 - `spec.config` is a valid config for the `pluginClass`
 
-### Interceptor Targeting
-You can activate your Interceptor only in specific scenarios. Use the table below to configure Targeting settings.
+### Interceptor targeting
+
+You can activate your Interceptor only in specific scenarios. Use the table below to configure targeting settings.
 
 | Use case                                            | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` |
 |-----------------------------------------------------|---------------------------|------------------------|---------------------------|
 | Global Interceptor (Including Virtual Clusters)     | Set to `null`             | Set to `null`          | Set to `null`             |
 | Global Interceptor (**Excluding** Virtual Clusters) | Empty                     | Empty                  | Empty                     |
-| Username Targeting                                  | Empty                     | Empty                  | Set                       |
-| Group Targeting                                     | Empty                     | Set                    | Empty                     |
-| Virtual Cluster Targeting                           | Set                       | Empty                  | Empty                     |
-| Virtual Cluster + Username Targeting                | Set                       | Empty                  | Set                       |
-| Virtual Cluster + Group Targeting                   | Set                       | Set                    | Empty                     |
+| Username targeting                                  | Empty                     | Empty                  | Set                       |
+| Group targeting                                     | Empty                     | Set                    | Empty                     |
+| Virtual Cluster targeting                           | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username targeting                | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group targeting                   | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
@@ -235,10 +236,10 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
 </Tabs>
 
 ## GatewayServiceAccount
+
 GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
 
-GatewayServiceAccount resource is enabled or not depending on your Gateway configuration.   
-This is to prevent you to declare a resource that is incompatible with your current configuration:
+GatewayServiceAccount resource is enabled or not depending on your Gateway configuration. This is to prevent you to declare a resource that is incompatible with your current configuration:
 
 | GATEWAY_SECURITY         | LOCAL GatewayServiceAccount | EXTERNAL GatewayServiceAccount        |
 |--------------------------|--|--------------------------|

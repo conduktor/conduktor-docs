@@ -3,25 +3,25 @@ title: Data quality
 description: Data quality allows you to define checks and actions to apply on data produced into Kafka
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import CopyableCode from '@site/src/components/CopyableCode';
 
 ## Overview
 
 Bad data breaks customer experiences, drives churn and slows growth.
-[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business.
-You define the rules and we'll enforce them at the streaming layer.
+[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
-Before creating data quality rules and policies, you have to:
+Before creating data quality Rules and Policies, you have to:
 
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
-- be logged in as an admin to Console UI (or use an admin token for the CLI)
+- be logged in as an admin to Console UI or use an admin token for the Conduktor Command Line Interface (CLI)
 - in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 ## Rules
 
-You can create Rules with CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+You can create Rules with the Common Expression Language (CEL) expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
 :::info[Rules require Policies]
 Rules do nothing on their own - you **have to** to attach them to a Policy.
@@ -31,7 +31,7 @@ The Rules page lists your Rules, with a preview of their CEL expressions. Open R
 
 ### Create a Rule
 
-You can create a data quality rule from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Rule from the **Console UI**, or the **Conduktor CLI**.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -73,30 +73,48 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 </TabItem>
 </Tabs>
 
-### Example Rules
+### Built-in Rules
 
-Here are some sample data quality rules.
-:::info[Amend values if using these samples]
-Make sure you amend the field values to use correct fields, if using these examples.
- :::
+We provide built-in validation Rules that can't be achieved with CEL.
+
+:::info[Supported schema registries]
+We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
+:::
+
+#### EnforceAvro
+
+`EnforceAvro` ensures that:
+
+- Your messages have a schema ID prepended to the message content.
+- The schema ID exists within your schema registry.
+- The schema it references is of type `avro`.
+
+### Sample Rules
+
+Here are some examples of data quality rules.
+
+:::info[Adjust values]
+Make sure you amend these examples to use your values.
+:::
 
 <details>
   <summary>Email RegEx validation</summary>
   <p>
-    Your requirements may be different from this RegEx, as email validation via RegEx is complex!
-    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
+    <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
   </p>
 </details>
 <details>
   <summary>UUID RegEx validation</summary>
   <p>
-  `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
+    <CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
   </p>
 </details>
+
 <details>
   <summary>Ensure Header is JSON</summary>
   <p>
-  `headers['Content-Type'] == 'application/json'`
+    <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
   </p>
 </details>
 
@@ -117,11 +135,11 @@ The available actions to enable for a Policy are:
 - **Report**: when violations occur, log these as events in the Policy's history
 - **Block**: when a violation occurs, prevent data from being processed or transmitted
 
-By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, please [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
+By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
 ### Create a Policy
 
-You can create a data quality policy from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Policy from the **Console UI**, or the **Conduktor CLI**.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -131,6 +149,7 @@ You can create a Policy through the Console UI through the following steps:
 1. Define the Policy details:
    - Add a descriptive **name** for the Policy.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
+   - Select a group to own the Policy. This controls who can view and manage the Policy, and which resources can be targeted.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Select Rules to be used in the Policy:
    - Every Policy must have at least one Rule
@@ -141,7 +160,7 @@ You can create a Policy through the Console UI through the following steps:
    - A target consists of one or more topics on a specified Gateway
    - You can either select specific topics, or specify a prefix like `orders-*`
    - Click **Continue** to move to the next step.
-2. Review the policy, and if you are happy, confirm by clicking **Create**.
+2. Review the Policy, and if you are happy, confirm by clicking **Create**.
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
@@ -154,6 +173,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
     kind: DataQualityPolicy
     metadata:
         name: check-order-payload
+        group: orders-team
     spec:
         displayName: Verify the order items
         description: Verify the order items payloads on purchase-pipeline topic.
@@ -187,12 +207,78 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
+### Assign permissions
+
+Policies are owned by user groups and can be created by admin users or groups with the `Manage data quality` permission enabled.
+
+To apply this permission to a group, go to **Settings** > **Groups** and in the **Resource access** tab tick the `Manage data quality` checkbox for the relevant resources, as required.
+
+Modifying group permissions won't affect any Policies associated with the group.
+
+### Set up Policy violation alerts
+
+You can create alerts that are triggered when a Policy violation happens. Data quality alerts can be owned by groups or individual users.
+
+<Tabs>
+<TabItem value="ui" label="Console UI">
+
+To create a data quality policy alert via the UI, go to the details page of a Policy (click on the button next to the violations graph) or from the alert tab on the Policies list page.
+
+A data quality policy alert needs to specify a Policy and a threshold: trigger after X violations within Y minutes/hours/days. This threshold replaces the combination of metric, operator and value used in other alerts.
+
+[Find out more about alerts](/platform/navigation/settings/alerts).
+
+</TabItem>
+
+<TabItem value="cli" label="Conduktor CLI">
+
+You can use the CLI to create a data quality policy alert:
+
+1. Save this example to file, e.g. `alert.yaml`:
+
+    ```yaml
+    apiVersion: v3
+    kind: Alert
+    metadata:
+      name: alert
+      group: my-group
+    spec:
+      type: DataQualityPolicyAlert
+      policyName: my-policy
+      triggerAfter: 1
+      withinInSeconds: 30
+    ```
+
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+
+    ```bash
+    conduktor apply -f alert.yaml
+    ```
+
+</TabItem>
+</Tabs>
+
+### Using multiple Policies
+
+When multiple Policies target the same topic, there are two scenarios that can occur when a record is produced:
+
+- **None** of the Policies block the record and all are evaluated
+
+  - The evaluation count is increased for all of the Policies.
+  - The violation count is increased for each violated Policy.
+  - A report is generated for each violated Policy (that has reporting enabled).
+
+- **One or more** of the Policies block the record production. In this scenario, one of the Policies blocks the record first and then hides it from others
+
+  - For the first blocking Policy, both the violation and evaluation counts are increased. If reporting is enabled for that policy, a report is generated.
+  - For the other Policies: no counts are increased and no reports are generated.
+
 ## Troubleshoot
 
 <details>
   <summary>What does Policy status mean?</summary>
   <p>
-  This is the status of a data quality policy:
+  This is the status of a data quality Policy:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
@@ -201,7 +287,7 @@ Since the **block** action has the ability to **stop data from being sent** to t
 <details>
   <summary>How do I handle headers with dashes?</summary>
   <p>
-  Use bracket notation instead of dot notation. For example, use the `headers['Content-Type']` format.
+  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
   </p>
 </details>
 
