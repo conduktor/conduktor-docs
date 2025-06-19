@@ -21,6 +21,7 @@ You have 2 options to Install Conduktor CLI.
 - [**Docker**](#docker) build for integration in CI/CD pipelines
 
 ### Native binary
+
 **From Github (Windows, Linux, MacOS)**  
 Download Conduktor CLI from the [Releases page on GitHub](https://github.com/conduktor/ctl/releases).  
 In the Assets lists, download the build that corresponds to your machine (`darwin-arm64` for Apple Silicon)  
@@ -29,7 +30,9 @@ In the Assets lists, download the build that corresponds to your machine (`darwi
 ````
 brew install conduktor/brew/conduktor-cli
 ````
+
 ### Docker
+
 ````
 docker pull conduktor/conduktor-ctl
 ````
@@ -55,6 +58,7 @@ Use a Short-lived User API Key to bootstrap the first Admin Key
 :::
 
 #### Admin API Key
+
 Admin API Keys grant the maximum permissions on Console.  
 They are generated either from the UI or using the CLI.
 
@@ -80,6 +84,7 @@ Select **New API Key** to generate a new API key.
 <hr />
 
 #### Self-service Application API Key
+
 Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance](/platform/reference/resource-reference/self-service/#application-instance) for which they have been generated.  
 Check the [Self-service documentation](/platform/navigation/self-serve/) for more details.  
 They can be obtained either from the UI or using the CLI.
@@ -102,6 +107,7 @@ Navigate to Applications, pick your Application, then under Application Instance
 </Tabs>
 
 #### Short-lived User API Keys
+
 This type of API Key have the permissions of the user who created it.  
 It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
 Short-lived User API Keys will be valid for the same duration as the [Session Lifetime](/platform/get-started/configuration/user-authentication/session-lifetime/).  
@@ -115,6 +121,7 @@ AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKF
 ````
 
 ## Commands Usage
+
 ````
 Usage:
   conduktor [flags]
@@ -377,6 +384,7 @@ $ conduktor token list application-instance -i=my_instance
 ```
 
 ### Version
+
 Check the current version of your CLI using this command
 ````
 $ conduktor version
@@ -478,6 +486,7 @@ conduktor-main:
 
 
 ### Using Environment Variables for Secrets
+
 When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
 It also supports default values as fallback using POSIX notation `${ENV:-default}`.
 

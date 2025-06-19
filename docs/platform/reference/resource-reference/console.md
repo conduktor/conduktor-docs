@@ -934,6 +934,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 - [Platform Permissions](#platform-permissions)
 
 ### Topic Permissions
+
 ````yaml
 # Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
 - resourceType: TOPIC
@@ -965,6 +966,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 
 ### Subject Permissions
+
 ````yaml
 # Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
 - resourceType: SUBJECT
@@ -990,6 +992,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `subjectView`                      | Permission to view the subject details. |
 
 ### ConsumerGroup Permissions
+
 ````yaml
 # Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
 - resourceType: CONSUMER_GROUP
@@ -1015,6 +1018,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 | `consumerGroupView`                 | Permission to view the consumer group details. |
 
 ### Cluster Permissions
+
 ```yaml
 # Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
 - resourceType: CLUSTER
@@ -1042,6 +1046,7 @@ A permission applies to a certain `resourceType`, which affect the necessary fie
 
 
 ### KafkaConnect Permissions
+
 ```yaml
 # Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
 - resourceType: KAFKA_CONNECT

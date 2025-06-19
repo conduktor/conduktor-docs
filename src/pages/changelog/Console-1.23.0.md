@@ -11,6 +11,7 @@ tags: features,fix
 ### Future Breaking Changes
 
 #### New Docker image name
+
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
 
 We will publish newer versions using both names for this release and the **next release** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
@@ -86,7 +87,7 @@ spec:
 
 #### Topic Catalog
 
-We've introduced the Topic Catalog, to help teams discover Kafka Topics within your organization. Quickly get visbility on ownership and business metadata on your choice for topics.
+We've introduced the Topic Catalog, to help teams discover Kafka Topics within your organization. Quickly get visibility on ownership and business metadata on your choice for topics.
 
 Add topics to applications to see them appear within the catalog across all your clusters, searchable by name and labels.
 
@@ -138,6 +139,7 @@ You can now customise the columns you want to display in the Consume Page. Let u
 - Searching in screens now trims whitespace from the text supplied
 
 ### Fixes
+
 - Fixed an issue with the Test Connection button that didn't work after a successful response
 - Fixed an issue with the indexing of Confluent Cloud Managed Connect
 - Fixed an issue with the Kafka Connect List where filter by Connect Cluster wouldn't work in some cases

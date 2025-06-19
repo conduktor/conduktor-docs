@@ -8,11 +8,11 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking Changes 💣](#breaking-changes-)
+- [Breaking Changes](#breaking-changes)
   - [Changes to Conduktor.io Labels](#changes-to-conduktorio-labels)
   - [Local Users Password policy update](#local-users-password-policy-update)
-- [Features ✨](#features-)
-  - [Conduktor Chargeback](#conduktor-chargeback-track-and-allocate-costs--resource-consumption)
+- [Features](#features)
+  - [Conduktor Chargeback](#conduktor-chargeback-track-and-allocate-costs-and-resource-consumption)
   - [Console Homepage](#console-homepage)
   - [Consumer Group pages overhaul](#consumer-group-pages-overhaul)
   - [Self-Service Topic Catalog visibility](#self-service-topic-catalog-visibility)
@@ -20,9 +20,9 @@ tags: features,fix
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
   - [Expanded Terraform Provider](#expanded-terraform-provider-kafka-cluster-schema-registry-kafka-connect)
 - [Quality of Life improvements](#quality-of-life-improvements)
-- [Fixes 🔨](#fixes-)
+- [Fixes](#fixes)
 
-### Breaking Changes 💣
+### Breaking Changes
 
 #### Changes to Conduktor.io Labels
 
@@ -64,6 +64,7 @@ Could not apply resource Topic/click.event-stream.avro: Invalid value for: body 
 ---
 
 #### Local Users Password policy update
+
 Passwords for console Local Users configured through YAML and environment variables must comply with a new password policy.
 This change enforces the following password requirements:
 - At least 8 characters in length
@@ -84,9 +85,9 @@ Update the passwords in your YAML or environment variables to meet the new polic
 
 ---
 
-### Features ✨
+### Features
 
-#### Conduktor Chargeback: Track and Allocate Costs & Resource Consumption
+#### Conduktor Chargeback: Track and Allocate Costs and Resource Consumption
 
 :::info[Preview functionality]
 This is a [preview feature](/platform/guides/configure-chargeback/) and is subject to change as we continue working on it.
@@ -100,6 +101,7 @@ Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get 
 ***
 
 #### Console Homepage
+
 The cluster homepage have been redesigned to present you with the most useful information in one single view:
 - The health of your Kafka Cluster with a few key metrics and graphs
 - The state of Console Indexing modules for this Kafka Cluster
@@ -142,6 +144,7 @@ It is also possible to change the default Topic Catalog visibility of all Topics
 Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance).
 
 #### Self-Service New Topic Policy Allowed Keys
+
 We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
 ````yaml
 ---
@@ -178,6 +181,7 @@ A full list of all the exported audit log event types is published on the [Audit
 ***
 
 #### Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect
+
 We've expanded the scope of our Terraform provider, you can now create additional resources: Kafka cluster with schema registry, and Kafka connect clusters using Terraform. With this version also comes some additional small fixes as requested by the community, see the dedicated [provider releases page](https://github.com/conduktor/terraform-provider-conduktor/releases) for the full list.
 
 All [examples](https://github.com/conduktor/terraform-provider-conduktor/blob/main/docs/resources/console_kafka_cluster_v2.md) are available in our provider repo such as the below snippet for a Confluent Kafka cluster and schema registry (with mTLS) definition.
@@ -230,13 +234,14 @@ EOT
 ***
 
 ### Quality of Life improvements
+
 - Improved the performance of the Automatic deserializer
 - Improved the performance of the Schema Registry indexing process
 - Added support for Google Cloud Identity group claims
 - Added License expiry warning in the UI when there is less than 30 days left
 
+### Fixes
 
-### Fixes 🔨
 - Fixed an issue where Custom Deserializers weren't working as expected
 - Fixed an issue where the ManageClusters permission wasn't working as expected
 - Fixed an issue that prevented creating a KafkaCluster and a Topic on that newly declared KafkaCluster in a single CLI apply command

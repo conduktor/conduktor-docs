@@ -29,7 +29,7 @@ description: Reference Documentation for Topic related pages
 - [Operations](#operations)
   - [Export Records in CSV \& JSON](#export-records-in-csv--json)
   - [Reprocess Record](#reprocess-record)
-  - [Save \& Load Filter Templates](#save--load-filter-templates)
+  - [Save and load views](#save-and-load-views)
 
 :::info
 **Checkout our video that presents the most important features of Topic Consume**  
@@ -326,7 +326,7 @@ Upon click the Reprocess message **(1)**, you will be asked to pick a destinatio
 
 Know more about [How to reprocess records](/platform/guides/reprocess/).
 
-### Save & Load Views
+### Save and load views
 
 If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, or if you'd like to share them with your colleagues, you can save your current view as a template for reuse.
 
