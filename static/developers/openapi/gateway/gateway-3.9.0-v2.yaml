@@ -130,7 +130,7 @@ tags:
     virtual cluster, or `passthrough` if omitted).
 
     This token can be used to authenticate against the Gateway API in the `sasl_plaintext` authentication mode.
-    More information on this case here : https://docs.conduktor.io/gateway/concepts/Clients/#sasl_plaintext
+    More information on this case here : https://docs.conduktor.io/gateway/how-to/manage-service-accounts-and-acls/
 
     ### Available operations
 
@@ -144,7 +144,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Virtual%20Cluster/
+    https://docs.conduktor.io/gateway/concepts/virtual-clusters/
 
     ### Available operations
 
@@ -167,7 +167,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Logical_topics/Alias%20topics/
+    https://docs.conduktor.io/gateway/concepts/logical-topics/alias-topics/
 
     ### Available operations
 
@@ -189,7 +189,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
+    https://docs.conduktor.io/gateway/concepts/logical-topics/concentrated-topics/
 
     ### Available operations
 
@@ -211,7 +211,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Logical_topics/Concentration/
+    https://docs.conduktor.io/gateway/concepts/logical-topics/concentrated-topics/
 
     ### Available operations
 
@@ -235,7 +235,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
+    https://docs.conduktor.io/gateway/concepts/interceptors/
 
     ### Available operations
 
@@ -260,7 +260,7 @@ tags:
   description: |+
     ### Definition
 
-    https://docs.conduktor.io/gateway/concepts/Interceptors-and-plugins/
+    https://docs.conduktor.io/gateway/concepts/interceptors/
 
     ### Available operations
 
@@ -344,7 +344,7 @@ tags:
 
 
   x-displayName: group
-- name: cli_analytics_gateway_v2_13
+- name: analytics
   description: |+
     ### Definition
 
@@ -363,7 +363,6 @@ tags:
     <SchemaDefinition schemaRef="#/components/schemas/GatewayLivedEvent" />
 
 
-  x-displayName: analytics
 paths:
   /gateway/v2/token:
     post:
@@ -1096,7 +1095,7 @@ paths:
 
         [![Generally Available](https://img.shields.io/badge/Lifecycle-Generally%20Available-blue)](#tag/Versioning)
 
-        List the concentrated topics of a vcluster
+        List the concentrated topics of a virtual cluster.
 
       operationId: List the concentrated topics
       parameters:
@@ -1186,7 +1185,7 @@ paths:
 
         [![Generally Available](https://img.shields.io/badge/Lifecycle-Generally%20Available-blue)](#tag/Versioning)
 
-        List the concentration rules of a vcluster
+        List the concentration rules of a virtual cluster
 
       operationId: List the concentration rules
       parameters:
@@ -1281,7 +1280,7 @@ paths:
 
         [![Generally Available](https://img.shields.io/badge/Lifecycle-Generally%20Available-blue)](#tag/Versioning)
 
-        Upsert a concentration rule in a vcluster
+        Upsert a concentration rule in a virtual cluster
 
       operationId: Upsert a concentration rule
       parameters:
@@ -1413,7 +1412,7 @@ paths:
 
         [![Generally Available](https://img.shields.io/badge/Lifecycle-Generally%20Available-blue)](#tag/Versioning)
 
-        Delete a concentration rule in a vcluster
+        Delete a concentration rule in a virtual cluster
 
       operationId: Delete a concentration rule
       requestBody:
@@ -2613,7 +2612,7 @@ paths:
   /gateway/v2/analytics/lived:
     get:
       tags:
-      - cli_analytics_gateway_v2_13
+      - analytics
       description: |2+
 
         [![Generally Available](https://img.shields.io/badge/Lifecycle-Generally%20Available-blue)](#tag/Versioning)
@@ -2661,6 +2660,8 @@ paths:
                 kafkaSaslMechanism: SCRAM-SHA-256
                 gatewaySecurityProtocol: SASL_SSL
                 gatewaySaslMechanism: SCRAM-SHA-256
+                gatewaySecurityMode: GATEWAY_MANAGED
+                gatewaySecurityProtocol_v2: SASL_SSL
         '400':
           description: The request is not valid
           content:
@@ -2914,7 +2915,8 @@ components:
       - name
       properties:
         name:
-          description: The name of the concentration rule (identifier in a vCluster)
+          description: The name of the concentration rule (identifier in a virtual
+            cluster)
           type: string
         vCluster:
           description: The virtual cluster of the concentration rule. Default to `passthrough`
@@ -2928,7 +2930,8 @@ components:
       - name
       properties:
         name:
-          description: The name of the concentration rule (identifier in a vCluster)
+          description: The name of the concentration rule (identifier in a virtual
+            cluster)
           type: string
           format: ^[a-zA-Z0-9._-]+$
         vCluster:
@@ -3119,6 +3122,10 @@ components:
           type: string
         gatewaySaslMechanism:
           type: string
+        gatewaySecurityMode:
+          type: string
+        gatewaySecurityProtocol_v2:
+          type: string
     GatewayServiceAccount:
       title: GatewayServiceAccount
       oneOf:
@@ -3240,7 +3247,7 @@ components:
       type: object
       properties:
         vCluster:
-          description: An optional vCluster to filter the interceptors
+          description: An optional virtual cluster to filter the interceptors
           type: string
         group:
           description: An optional group to filter the interceptors
@@ -3454,7 +3461,8 @@ components:
       - token
       properties:
         token:
-          description: The token created for the given username on the given vcluster.
+          description: The token created for the given username on the given virtual
+            cluster.
           type: string
     Unauthorized:
       title: Unauthorized
@@ -3557,3 +3565,4 @@ x-tagGroups:
   - cli_gateway-service-account_gateway_v2_10
   - cli_gateway-group_gateway_v2_11
   - token
+  - analytics

@@ -188,16 +188,16 @@ tags:
   x-displayName: connector
 - name: cli_indexed-topic_sql_v1_15
   x-displayName: indexed-topic
-- name: cli_alert_monitoring_v2_16
-  x-displayName: alert
-- name: cli_alert_monitoring_v3_16
-  x-displayName: alert
-- name: cli_partner-zone_console_v2_17
+- name: cli_partner-zone_console_v2_16
   x-displayName: partner-zone
-- name: cli_data-quality-rule_data-quality_v1_18
+- name: cli_data-quality-rule_data-quality_v1_17
   x-displayName: data-quality-rule
-- name: cli_data-quality-policy_data-quality_v1_19
+- name: cli_data-quality-policy_data-quality_v1_18
   x-displayName: data-quality-policy
+- name: cli_alert_monitoring_v2_19
+  x-displayName: alert
+- name: cli_alert_monitoring_v3_19
+  x-displayName: alert
 paths:
   /public/v1/clusters/{clusterName}/service-accounts:
     get:
@@ -2071,6 +2071,8 @@ paths:
                   topics:
                   - topic1
                   maxLagTimeInSeconds: 100
+                  labels:
+                    label: value
                   type: IndexedConsumerGroup
                 page: 1
                 totalPages: 1
@@ -3220,1061 +3222,10 @@ paths:
             --header 'Authorization: Bearer $BEARER' \
             --location \
             --max-redirs 32
-  /public/monitoring/v2/cluster/{cluster}/alert/{alert-name}:
-    get:
-      tags:
-      - cli_alert_monitoring_v2_16
-      description: Beta
-      operationId: get-alert-by-name
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: alert-name
-        in: path
-        required: true
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertOutputResourceV2'
-              example:
-                apiVersion: v2
-                kind: Alert
-                metadata:
-                  name: alert
-                  cluster: my-cluster
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  type: KafkaConnectAlert
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      deprecated: true
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert/alert' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    delete:
-      tags:
-      - cli_alert_monitoring_v2_16
-      description: Beta
-      operationId: delete-alert
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: alert-name
-        in: path
-        required: true
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      responses:
-        '200':
-          description: ''
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      deprecated: true
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request DELETE \
-            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert/alert' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-  /public/monitoring/v2/cluster/{cluster}/alert:
-    get:
-      tags:
-      - cli_alert_monitoring_v2_16
-      description: Beta
-      operationId: list-alert-resources
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: connector
-        in: query
-        description: Filter by connector name
-        required: false
-        schema:
-          type: string
-      - name: connect
-        in: query
-        description: Filter by connect name
-        required: false
-        schema:
-          type: string
-          minLength: 1
-      - name: topic
-        in: query
-        description: Filter by topic name
-        required: false
-        schema:
-          type: string
-      - name: consumerGroup
-        in: query
-        description: Filter by consumer group name
-        required: false
-        schema:
-          type: string
-      - name: alertType
-        in: query
-        description: 'Filter by alert type '
-        required: false
-        schema:
-          $ref: '#/components/schemas/AlertType'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AlertOutputResourceV2'
-              example:
-              - apiVersion: v2
-                kind: Alert
-                metadata:
-                  name: alert
-                  cluster: my-cluster
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  type: KafkaConnectAlert
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this name exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this name exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      deprecated: true
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    put:
-      tags:
-      - cli_alert_monitoring_v2_16
-      description: Beta
-      operationId: create-or-update-alert
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: dryMode
-        in: query
-        required: false
-        schema:
-          default: false
-          type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AlertResourceV2'
-            example:
-              apiVersion: v2
-              kind: Alert
-              metadata:
-                name: alert
-                cluster: cluster
-              spec:
-                connectName: connect
-                connectorName: connector
-                threshold: 1
-                operator: GreaterThan
-                metric: FailedTaskCount
-                type: KafkaConnectAlert
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertApplyResultV2'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: The request does not match one of the business rules
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: The request does not match one of the business rules
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      deprecated: true
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request PUT \
-            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert?dryMode=false' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
-            --location \
-            --max-redirs 32
-    post:
-      tags:
-      - cli_alert_monitoring_v2_16
-      description: Beta
-      operationId: create-alert
-      parameters:
-      - name: cluster
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AlertResourceV2'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertCreateResultV2'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      deprecated: true
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
-            --location \
-            --max-redirs 32
-  /public/monitoring/v3/alert/{alert-name}:
-    get:
-      tags:
-      - cli_alert_monitoring_v3_16
-      description: Beta
-      operationId: get-alert-by-name
-      parameters:
-      - name: appInstance
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: group
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: user
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: alert-name
-        in: path
-        required: true
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertOutputResourceV3'
-              example:
-                apiVersion: v3
-                kind: Alert
-                metadata:
-                  name: alert
-                  appInstance: my-app
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  cluster: cluster
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  destination:
-                    url: http://localhost:8080/hook
-                    method: POST
-                    type: Webhook
-                  type: KafkaConnectAlert
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/monitoring/v3/alert/alert?appInstance=my-app' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    delete:
-      tags:
-      - cli_alert_monitoring_v3_16
-      description: Beta
-      operationId: delete-alert
-      parameters:
-      - name: appInstance
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: group
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: user
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: alert-name
-        in: path
-        required: true
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      responses:
-        '200':
-          description: ''
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: Resource link to an other resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource link to an other resource
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request DELETE \
-            --url 'http://localhost:8080/public/monitoring/v3/alert/alert?appInstance=my-app' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-  /public/monitoring/v3/alert:
-    get:
-      tags:
-      - cli_alert_monitoring_v3_16
-      description: Beta
-      operationId: list-alert-resources
-      parameters:
-      - name: appInstance
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: group
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: user
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: cluster
-        in: query
-        description: Filter by cluster name
-        required: false
-        schema:
-          type: string
-      - name: connector
-        in: query
-        description: Filter by connector name
-        required: false
-        schema:
-          type: string
-      - name: connect
-        in: query
-        description: Filter by connect name
-        required: false
-        schema:
-          type: string
-          minLength: 1
-      - name: topic
-        in: query
-        description: Filter by topic name
-        required: false
-        schema:
-          type: string
-      - name: consumerGroup
-        in: query
-        description: Filter by consumer group name
-        required: false
-        schema:
-          type: string
-      - name: alertType
-        in: query
-        description: 'Filter by alert type '
-        required: false
-        schema:
-          $ref: '#/components/schemas/AlertType'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AlertOutputResourceV3'
-              example:
-              - apiVersion: v3
-                kind: Alert
-                metadata:
-                  name: alert
-                  appInstance: my-app
-                  updatedAt: '1970-01-01T00:00:00Z'
-                  updatedBy: someone@somewhere.com
-                  lastTriggeredAt: '1970-01-01T00:00:00Z'
-                  status: Pending
-                spec:
-                  cluster: cluster
-                  connectName: connect
-                  connectorName: connector
-                  metric: FailedTaskCount
-                  threshold: 1
-                  operator: GreaterThan
-                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
-                  destination:
-                    url: http://localhost:8080/hook
-                    method: POST
-                    type: Webhook
-                  type: KafkaConnectAlert
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this name exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this name exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request GET \
-            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app' \
-            --header 'Authorization: Bearer $BEARER' \
-            --location \
-            --max-redirs 32
-    put:
-      tags:
-      - cli_alert_monitoring_v3_16
-      description: Beta
-      operationId: create-or-update-alert
-      parameters:
-      - name: appInstance
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: group
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: user
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: dryMode
-        in: query
-        required: false
-        schema:
-          default: false
-          type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AlertResourceV3'
-            example:
-              apiVersion: v3
-              kind: Alert
-              metadata:
-                name: alert
-                appInstance: my-app
-              spec:
-                cluster: cluster
-                connectName: connect
-                connectorName: connector
-                threshold: 1
-                operator: GreaterThan
-                metric: FailedTaskCount
-                destination:
-                  channel: test
-                  type: Slack
-                type: KafkaConnectAlert
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertApplyResultV3'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: The request does not match one of the business rules
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: The request does not match one of the business rules
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request PUT \
-            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app&dryMode=false' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v3","kind":"Alert","metadata":{"name":"alert","appInstance":"my-app"},"spec":{"cluster":"cluster","connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","destination":{"channel":"test","type":"Slack"},"type":"KafkaConnectAlert"}}' \
-            --location \
-            --max-redirs 32
-    post:
-      tags:
-      - cli_alert_monitoring_v3_16
-      description: Beta
-      operationId: create-alert
-      parameters:
-      - name: appInstance
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: group
-        in: query
-        required: false
-        schema:
-          type: string
-          pattern: ^[0-9a-z_\-.]+$
-      - name: user
-        in: query
-        required: false
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AlertResourceV3'
-        required: true
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertCreateResultV3'
-        '400':
-          description: The request is not valid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-              example:
-                title: The request is not valid
-        '401':
-          description: The user is not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Unauthorized'
-              example:
-                title: The user is not authenticated
-        '403':
-          description: The user doesn't have sufficient privilege to do this operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Forbidden'
-              example:
-                title: The user doesn't have sufficient privilege to do this operation
-        '404':
-          description: No alert with this technical id exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFound'
-              example:
-                title: No alert with this technical id exists
-        '409':
-          description: Resource already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Conflict'
-              example:
-                title: Resource already exists
-        '500':
-          description: An unexpected error occurred in the server
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerError'
-              example:
-                title: An unexpected error occurred in the server
-      security:
-      - httpAuth: []
-      x-codeSamples:
-      - lang: Shell + Curl
-        source: |-
-          curl \
-            --request POST \
-            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app' \
-            --header 'Authorization: Bearer $BEARER' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v3","kind":"Alert","metadata":{"name":"alert","appInstance":"my-app"},"spec":{"cluster":"cluster","connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","destination":{"channel":"test","type":"Slack"},"type":"KafkaConnectAlert"}}' \
-            --location \
-            --max-redirs 32
   /public/data-quality/v1/data-quality-rule/{data-quality-rule-name}:
     get:
       tags:
-      - cli_data-quality-rule_data-quality_v1_18
+      - cli_data-quality-rule_data-quality_v1_17
       description: Get DataQualityRule by name
       operationId: get-data-quality-rule-by-name
       parameters:
@@ -4303,8 +3254,10 @@ paths:
                   attachedPolicies:
                   - name: policy1
                     displayName: policy1
+                    readAccess: true
                   - name: policy2
                     displayName: policy2
+                    readAccess: true
                   builtIn: false
                 spec:
                   celExpression: value.user == 'admin'
@@ -4364,7 +3317,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_data-quality-rule_data-quality_v1_18
+      - cli_data-quality-rule_data-quality_v1_17
       description: Delete a DataQualityRule
       operationId: delete-data-quality-rule
       parameters:
@@ -4439,7 +3392,7 @@ paths:
   /public/data-quality/v1/data-quality-rule:
     get:
       tags:
-      - cli_data-quality-rule_data-quality_v1_18
+      - cli_data-quality-rule_data-quality_v1_17
       description: List DataQualityRule resources
       operationId: list-data-quality-rule-resources
       responses:
@@ -4463,8 +3416,10 @@ paths:
                   attachedPolicies:
                   - name: policy1
                     displayName: policy1
+                    readAccess: true
                   - name: policy2
                     displayName: policy2
+                    readAccess: true
                   builtIn: false
                 spec:
                   celExpression: value.user == 'admin'
@@ -4524,7 +3479,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_data-quality-rule_data-quality_v1_18
+      - cli_data-quality-rule_data-quality_v1_17
       description: Create or update a DataQualityRule
       operationId: create-or-update-data-quality-rule
       parameters:
@@ -4621,7 +3576,7 @@ paths:
   /public/data-quality/v1/data-quality-policy/{data-quality-policy-name}:
     get:
       tags:
-      - cli_data-quality-policy_data-quality_v1_19
+      - cli_data-quality-policy_data-quality_v1_18
       description: Get DataQualityPolicy by name
       operationId: get-data-quality-policy-by-name
       parameters:
@@ -4643,6 +3598,7 @@ paths:
                 kind: DataQualityPolicy
                 metadata:
                   name: my-policy
+                  group: my-group
                   status: ready
                   statusInfo: Policy my-policy is ready
                   createdAt: '1970-01-01T00:00:00Z'
@@ -4719,7 +3675,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_data-quality-policy_data-quality_v1_19
+      - cli_data-quality-policy_data-quality_v1_18
       description: Delete a DataQualityPolicy
       operationId: delete-data-quality-policy
       parameters:
@@ -4794,7 +3750,7 @@ paths:
   /public/data-quality/v1/data-quality-policy:
     get:
       tags:
-      - cli_data-quality-policy_data-quality_v1_19
+      - cli_data-quality-policy_data-quality_v1_18
       description: List DataQualityPolicy resources
       operationId: list-data-quality-policy-resources
       responses:
@@ -4811,6 +3767,7 @@ paths:
                 kind: DataQualityPolicy
                 metadata:
                   name: my-policy
+                  group: my-group
                   status: ready
                   statusInfo: Policy my-policy is ready
                   createdAt: '1970-01-01T00:00:00Z'
@@ -4887,7 +3844,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_data-quality-policy_data-quality_v1_19
+      - cli_data-quality-policy_data-quality_v1_18
       description: Create or update a DataQualityPolicy
       operationId: create-or-update-data-quality-policy
       parameters:
@@ -4907,6 +3864,7 @@ paths:
               kind: DataQualityPolicy
               metadata:
                 name: my-policy
+                group: my-group
               spec:
                 displayName: My policy
                 description: My policy description
@@ -4990,13 +3948,13 @@ paths:
             --url 'http://localhost:8080/public/data-quality/v1/data-quality-policy?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"DataQualityPolicy","metadata":{"name":"my-policy"},"spec":{"displayName":"My policy","description":"My policy description","rules":["my-rule"],"targets":[{"cluster":"my-cluster1","topic":"topic","patternType":"LITERAL"},{"cluster":"my-cluster2","topic":"topic-*","patternType":"PREFIXED"}],"actions":{"report":{"enabled":true},"block":{"enabled":true}}}}' \
+            --data-raw '{"apiVersion":"v1","kind":"DataQualityPolicy","metadata":{"name":"my-policy","group":"my-group"},"spec":{"displayName":"My policy","description":"My policy description","rules":["my-rule"],"targets":[{"cluster":"my-cluster1","topic":"topic","patternType":"LITERAL"},{"cluster":"my-cluster2","topic":"topic-*","patternType":"PREFIXED"}],"actions":{"report":{"enabled":true},"block":{"enabled":true}}}}' \
             --location \
             --max-redirs 32
   /public/partner-zone/v2/{partner-zone-name}/generate-credentials:
     post:
       tags:
-      - cli_partner-zone_console_v2_17
+      - cli_partner-zone_console_v2_16
       description: Generate service account credentials
       operationId: generate-credentials
       parameters:
@@ -5147,7 +4105,7 @@ paths:
   /public/console/v2/partner-zone/{partner-zone-name}:
     get:
       tags:
-      - cli_partner-zone_console_v2_17
+      - cli_partner-zone_console_v2_16
       description: Get PartnerZone by name
       operationId: get-partner-zone-by-name
       parameters:
@@ -5258,7 +4216,7 @@ paths:
             --max-redirs 32
     delete:
       tags:
-      - cli_partner-zone_console_v2_17
+      - cli_partner-zone_console_v2_16
       description: Delete a PartnerZone
       operationId: delete-partner-zone
       parameters:
@@ -5333,7 +4291,7 @@ paths:
   /public/console/v2/partner-zone:
     get:
       tags:
-      - cli_partner-zone_console_v2_17
+      - cli_partner-zone_console_v2_16
       description: List PartnerZone resources
       operationId: list-partner-zone-resources
       responses:
@@ -5439,7 +4397,7 @@ paths:
             --max-redirs 32
     put:
       tags:
-      - cli_partner-zone_console_v2_17
+      - cli_partner-zone_console_v2_16
       description: Create or update a PartnerZone
       operationId: create-or-update-partner-zone
       parameters:
@@ -6838,6 +5796,9 @@ paths:
                 metadata:
                   name: my-app-instance-prod
                   application: my-app
+                  labels:
+                    env: prod
+                    team: my-team
                 spec:
                   cluster: prod-cluster
                   topicPolicyRef:
@@ -7007,6 +5968,9 @@ paths:
                 metadata:
                   name: my-app-instance-prod
                   application: my-app
+                  labels:
+                    env: prod
+                    team: my-team
                 spec:
                   cluster: prod-cluster
                   topicPolicyRef:
@@ -7096,6 +6060,9 @@ paths:
               metadata:
                 name: my-app-instance-prod
                 application: my-app
+                labels:
+                  env: prod
+                  team: my-team
               spec:
                 cluster: prod-cluster
                 topicPolicyRef:
@@ -7177,7 +6144,7 @@ paths:
             --url 'http://localhost:8080/public/self-serve/v1/application-instance?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app"},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"policyRef":["my-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account","defaultCatalogVisibility":"PUBLIC"}}' \
+            --data-raw '{"apiVersion":"v1","kind":"ApplicationInstance","metadata":{"name":"my-app-instance-prod","application":"my-app","labels":{"env":"prod","team":"my-team"}},"spec":{"cluster":"prod-cluster","topicPolicyRef":["my-topic-policy"],"policyRef":["my-policy"],"resources":[{"type":"TOPIC","name":"my-topic","patternType":"LITERAL"},{"type":"CONSUMER_GROUP","name":"my-consumer-group","patternType":"LITERAL"}],"serviceAccount":"my-service-account","defaultCatalogVisibility":"PUBLIC"}}' \
             --location \
             --max-redirs 32
   /public/self-serve/v1/application/{application-name}:
@@ -7199,15 +6166,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationResourceV1'
+                $ref: '#/components/schemas/ApplicationOutputResourceV1'
               example:
                 apiVersion: v1
                 kind: Application
                 metadata:
                   name: my-application
+                  labels:
+                    business-unit: delivery
                 spec:
                   title: My Application
                   owner: me
+                  policyRef:
+                  - my-policy
+                  createdAt: '1970-01-01T00:00:00Z'
         '400':
           description: The request is not valid
           content:
@@ -7347,15 +6319,20 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ApplicationResourceV1'
+                  $ref: '#/components/schemas/ApplicationOutputResourceV1'
               example:
               - apiVersion: v1
                 kind: Application
                 metadata:
                   name: my-application
+                  labels:
+                    business-unit: delivery
                 spec:
                   title: My Application
                   owner: me
+                  policyRef:
+                  - my-policy
+                  createdAt: '1970-01-01T00:00:00Z'
         '400':
           description: The request is not valid
           content:
@@ -7429,9 +6406,13 @@ paths:
               kind: Application
               metadata:
                 name: my-application
+                labels:
+                  business-unit: delivery
               spec:
                 title: My Application
                 owner: me
+                policyRef:
+                - my-policy
         required: true
       responses:
         '200':
@@ -7498,7 +6479,7 @@ paths:
             --url 'http://localhost:8080/public/self-serve/v1/application?dryMode=false' \
             --header 'Authorization: Bearer $BEARER' \
             --header 'Content-Type: application/json' \
-            --data-raw '{"apiVersion":"v1","kind":"Application","metadata":{"name":"my-application"},"spec":{"title":"My Application","owner":"me"}}' \
+            --data-raw '{"apiVersion":"v1","kind":"Application","metadata":{"name":"my-application","labels":{"business-unit":"delivery"}},"spec":{"title":"My Application","owner":"me","policyRef":["my-policy"]}}' \
             --location \
             --max-redirs 32
   /public/self-serve/v1/catalog:
@@ -8973,6 +7954,14 @@ paths:
       - cli_resource-policy_self-serve_v1_6
       description: List ResourcePolicy resources
       operationId: list-resource-policy-resources
+      parameters:
+      - name: application-instance
+        in: query
+        description: Filter by application instance name
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
       responses:
         '200':
           description: ''
@@ -9045,7 +8034,7 @@ paths:
         source: |-
           curl \
             --request GET \
-            --url 'http://localhost:8080/public/self-serve/v1/resource-policy' \
+            --url 'http://localhost:8080/public/self-serve/v1/resource-policy?application-instance=example-instance' \
             --header 'Authorization: Bearer $BEARER' \
             --location \
             --max-redirs 32
@@ -11220,9 +10209,10 @@ paths:
     post:
       tags:
       - tokens
-      description: Create a new admin API token for the organization. It can be called
-        with an already existing admin API TOKEN or with a user token having admin
-        permission
+      description: |
+        Create a new admin API token for the organization. It can be called with an already existing admin API TOKEN or with a user token having admin permission.
+        You can obtain a user token with the following command:
+        `curl -s localhost:8080/api/login -d '{"username":"{{username}}","password":"{{password}}"}' | jq -r ".refresh_token"`
       operationId: create-an-admin-token
       requestBody:
         content:
@@ -13749,6 +12739,7 @@ paths:
                 groups:
                 - name: Admin
                   groupId: admin
+                lastLoginDate: '2023-10-01T12:00:00Z'
               - userId: jane.doe@conduktor.io
                 firstName: Jane
                 lastName: Doe
@@ -13757,6 +12748,7 @@ paths:
                 phoneNumber: '+33612345678'
                 country: France
                 platformRole: member
+                lastLoginDate: '2023-10-01T12:00:00Z'
         '400':
           description: Invalid value
           content:
@@ -13875,6 +12867,7 @@ paths:
                 groups:
                 - name: Admin
                   groupId: admin
+                lastLoginDate: '2023-10-01T12:00:00Z'
         '400':
           description: Invalid value
           content:
@@ -13932,11 +12925,13 @@ paths:
         '204':
           description: The user was deleted
         '400':
-          description: Invalid value
+          description: The request is not valid
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
         '401':
           description: The user is not authenticated
           content:
@@ -14979,6 +13974,1057 @@ paths:
             --header 'Authorization: Bearer $BEARER' \
             --location \
             --max-redirs 32
+  /public/monitoring/v2/cluster/{cluster}/alert/{alert-name}:
+    get:
+      tags:
+      - cli_alert_monitoring_v2_19
+      description: Beta
+      operationId: get-alert-by-name
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: alert-name
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertOutputResourceV2'
+              example:
+                apiVersion: v2
+                kind: Alert
+                metadata:
+                  name: alert
+                  cluster: my-cluster
+                  updatedAt: '1970-01-01T00:00:00Z'
+                  updatedBy: someone@somewhere.com
+                  lastTriggeredAt: '1970-01-01T00:00:00Z'
+                  status: Pending
+                spec:
+                  connectName: connect
+                  connectorName: connector
+                  metric: FailedTaskCount
+                  threshold: 1
+                  operator: GreaterThan
+                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
+                  type: KafkaConnectAlert
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      deprecated: true
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert/alert' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+    delete:
+      tags:
+      - cli_alert_monitoring_v2_19
+      description: Beta
+      operationId: delete-alert
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: alert-name
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: Resource link to an other resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: Resource link to an other resource
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      deprecated: true
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert/alert' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+  /public/monitoring/v2/cluster/{cluster}/alert:
+    get:
+      tags:
+      - cli_alert_monitoring_v2_19
+      description: Beta
+      operationId: list-alert-resources
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: connector
+        in: query
+        description: Filter by connector name
+        required: false
+        schema:
+          type: string
+      - name: connect
+        in: query
+        description: Filter by connect name
+        required: false
+        schema:
+          type: string
+          minLength: 1
+      - name: topic
+        in: query
+        description: Filter by topic name
+        required: false
+        schema:
+          type: string
+      - name: consumerGroup
+        in: query
+        description: Filter by consumer group name
+        required: false
+        schema:
+          type: string
+      - name: alertType
+        in: query
+        description: 'Filter by alert type '
+        required: false
+        schema:
+          $ref: '#/components/schemas/AlertType'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlertOutputResourceV2'
+              example:
+              - apiVersion: v2
+                kind: Alert
+                metadata:
+                  name: alert
+                  cluster: my-cluster
+                  updatedAt: '1970-01-01T00:00:00Z'
+                  updatedBy: someone@somewhere.com
+                  lastTriggeredAt: '1970-01-01T00:00:00Z'
+                  status: Pending
+                spec:
+                  connectName: connect
+                  connectorName: connector
+                  metric: FailedTaskCount
+                  threshold: 1
+                  operator: GreaterThan
+                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
+                  type: KafkaConnectAlert
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this name exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this name exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      deprecated: true
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+    put:
+      tags:
+      - cli_alert_monitoring_v2_19
+      description: Beta
+      operationId: create-or-update-alert
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dryMode
+        in: query
+        required: false
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertResourceV2'
+            example:
+              apiVersion: v2
+              kind: Alert
+              metadata:
+                name: alert
+                cluster: cluster
+              spec:
+                connectName: connect
+                connectorName: connector
+                threshold: 1
+                operator: GreaterThan
+                metric: FailedTaskCount
+                type: KafkaConnectAlert
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertApplyResultV2'
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: The request does not match one of the business rules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: The request does not match one of the business rules
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      deprecated: true
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert?dryMode=false' \
+            --header 'Authorization: Bearer $BEARER' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
+            --location \
+            --max-redirs 32
+    post:
+      tags:
+      - cli_alert_monitoring_v2_19
+      description: Beta
+      operationId: create-alert
+      parameters:
+      - name: cluster
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertResourceV2'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertCreateResultV2'
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: Resource already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: Resource already exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      deprecated: true
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request POST \
+            --url 'http://localhost:8080/public/monitoring/v2/cluster/my-cluster/alert' \
+            --header 'Authorization: Bearer $BEARER' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"apiVersion":"v2","kind":"Alert","metadata":{"name":"alert","cluster":"cluster"},"spec":{"connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","type":"KafkaConnectAlert"}}' \
+            --location \
+            --max-redirs 32
+  /public/monitoring/v3/alert/{alert-name}:
+    get:
+      tags:
+      - cli_alert_monitoring_v3_19
+      description: Beta
+      operationId: get-alert-by-name
+      parameters:
+      - name: appInstance
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: alert-name
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertOutputResourceV3'
+              example:
+                apiVersion: v3
+                kind: Alert
+                metadata:
+                  name: alert
+                  appInstance: my-app
+                  updatedAt: '1970-01-01T00:00:00Z'
+                  updatedBy: someone@somewhere.com
+                  lastTriggeredAt: '1970-01-01T00:00:00Z'
+                  status: Pending
+                spec:
+                  cluster: cluster
+                  connectName: connect
+                  connectorName: connector
+                  metric: FailedTaskCount
+                  threshold: 1
+                  operator: GreaterThan
+                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
+                  destination:
+                    url: http://localhost:8080/hook
+                    method: POST
+                    type: Webhook
+                  type: KafkaConnectAlert
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8080/public/monitoring/v3/alert/alert?appInstance=my-app' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+    delete:
+      tags:
+      - cli_alert_monitoring_v3_19
+      description: Beta
+      operationId: delete-alert
+      parameters:
+      - name: appInstance
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: alert-name
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: Resource link to an other resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: Resource link to an other resource
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request DELETE \
+            --url 'http://localhost:8080/public/monitoring/v3/alert/alert?appInstance=my-app' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+  /public/monitoring/v3/alert:
+    get:
+      tags:
+      - cli_alert_monitoring_v3_19
+      description: Beta
+      operationId: list-alert-resources
+      parameters:
+      - name: appInstance
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: cluster
+        in: query
+        description: Filter by cluster name
+        required: false
+        schema:
+          type: string
+      - name: connector
+        in: query
+        description: Filter by connector name
+        required: false
+        schema:
+          type: string
+      - name: connect
+        in: query
+        description: Filter by connect name
+        required: false
+        schema:
+          type: string
+          minLength: 1
+      - name: topic
+        in: query
+        description: Filter by topic name
+        required: false
+        schema:
+          type: string
+      - name: consumerGroup
+        in: query
+        description: Filter by consumer group name
+        required: false
+        schema:
+          type: string
+      - name: alertType
+        in: query
+        description: 'Filter by alert type '
+        required: false
+        schema:
+          $ref: '#/components/schemas/AlertType'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlertOutputResourceV3'
+              example:
+              - apiVersion: v3
+                kind: Alert
+                metadata:
+                  name: alert
+                  appInstance: my-app
+                  updatedAt: '1970-01-01T00:00:00Z'
+                  updatedBy: someone@somewhere.com
+                  lastTriggeredAt: '1970-01-01T00:00:00Z'
+                  status: Pending
+                spec:
+                  cluster: cluster
+                  connectName: connect
+                  connectorName: connector
+                  metric: FailedTaskCount
+                  threshold: 1
+                  operator: GreaterThan
+                  promQl: kafka_connect_failed_tasks{cluster_name="f9af33a6-88ee-534f-cb62-46094d233d5c",cluster_id="shadow-julien",connect_cluster_id="cloud-confluent",connector="elasticsearch-ksqldb"}
+                  destination:
+                    url: http://localhost:8080/hook
+                    method: POST
+                    type: Webhook
+                  type: KafkaConnectAlert
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this name exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this name exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request GET \
+            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app' \
+            --header 'Authorization: Bearer $BEARER' \
+            --location \
+            --max-redirs 32
+    put:
+      tags:
+      - cli_alert_monitoring_v3_19
+      description: Beta
+      operationId: create-or-update-alert
+      parameters:
+      - name: appInstance
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: dryMode
+        in: query
+        required: false
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertResourceV3'
+            example:
+              apiVersion: v3
+              kind: Alert
+              metadata:
+                name: alert
+                appInstance: my-app
+              spec:
+                cluster: cluster
+                connectName: connect
+                connectorName: connector
+                threshold: 1
+                operator: GreaterThan
+                metric: FailedTaskCount
+                destination:
+                  channel: test
+                  type: Slack
+                type: KafkaConnectAlert
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertApplyResultV3'
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: The request does not match one of the business rules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: The request does not match one of the business rules
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request PUT \
+            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app&dryMode=false' \
+            --header 'Authorization: Bearer $BEARER' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"apiVersion":"v3","kind":"Alert","metadata":{"name":"alert","appInstance":"my-app"},"spec":{"cluster":"cluster","connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","destination":{"channel":"test","type":"Slack"},"type":"KafkaConnectAlert"}}' \
+            --location \
+            --max-redirs 32
+    post:
+      tags:
+      - cli_alert_monitoring_v3_19
+      description: Beta
+      operationId: create-alert
+      parameters:
+      - name: appInstance
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: group
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+      - name: user
+        in: query
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertResourceV3'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertCreateResultV3'
+        '400':
+          description: The request is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              example:
+                title: The request is not valid
+        '401':
+          description: The user is not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+              example:
+                title: The user is not authenticated
+        '403':
+          description: The user doesn't have sufficient privilege to do this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+              example:
+                title: The user doesn't have sufficient privilege to do this operation
+        '404':
+          description: No alert with this technical id exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              example:
+                title: No alert with this technical id exists
+        '409':
+          description: Resource already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              example:
+                title: Resource already exists
+        '500':
+          description: An unexpected error occurred in the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+              example:
+                title: An unexpected error occurred in the server
+      security:
+      - httpAuth: []
+      x-codeSamples:
+      - lang: Shell + Curl
+        source: |-
+          curl \
+            --request POST \
+            --url 'http://localhost:8080/public/monitoring/v3/alert?appInstance=my-app' \
+            --header 'Authorization: Bearer $BEARER' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{"apiVersion":"v3","kind":"Alert","metadata":{"name":"alert","appInstance":"my-app"},"spec":{"cluster":"cluster","connectName":"connect","connectorName":"connector","threshold":1,"operator":"GreaterThan","metric":"FailedTaskCount","destination":{"channel":"test","type":"Slack"},"type":"KafkaConnectAlert"}}' \
+            --location \
+            --max-redirs 32
 components:
   schemas:
     AIVEN_ACL:
@@ -15521,6 +15567,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/BrokerAlertOutputV3'
       - $ref: '#/components/schemas/ConsumerGroupAlertOutputV3'
+      - $ref: '#/components/schemas/DataQualityPolicyAlertOutputV3'
       - $ref: '#/components/schemas/KafkaConnectAlertOutputV3'
       - $ref: '#/components/schemas/TopicAlertOutputV3'
       discriminator:
@@ -15528,6 +15575,7 @@ components:
         mapping:
           BrokerAlert: '#/components/schemas/BrokerAlertOutputV3'
           ConsumerGroupAlert: '#/components/schemas/ConsumerGroupAlertOutputV3'
+          DataQualityPolicyAlert: '#/components/schemas/DataQualityPolicyAlertOutputV3'
           KafkaConnectAlert: '#/components/schemas/KafkaConnectAlertOutputV3'
           TopicAlert: '#/components/schemas/TopicAlertOutputV3'
     AlertSpecV2:
@@ -15549,6 +15597,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/BrokerAlertV3'
       - $ref: '#/components/schemas/ConsumerGroupAlertV3'
+      - $ref: '#/components/schemas/DataQualityPolicyAlertV3'
       - $ref: '#/components/schemas/KafkaConnectAlertV3'
       - $ref: '#/components/schemas/TopicAlertV3'
       discriminator:
@@ -15556,6 +15605,7 @@ components:
         mapping:
           BrokerAlert: '#/components/schemas/BrokerAlertV3'
           ConsumerGroupAlert: '#/components/schemas/ConsumerGroupAlertV3'
+          DataQualityPolicyAlert: '#/components/schemas/DataQualityPolicyAlertV3'
           KafkaConnectAlert: '#/components/schemas/KafkaConnectAlertV3'
           TopicAlert: '#/components/schemas/TopicAlertV3'
     AlertStatus:
@@ -15571,6 +15621,7 @@ components:
       enum:
       - BrokerAlert
       - ConsumerGroupAlert
+      - DataQualityPolicyAlert
       - KafkaConnectAlert
       - TopicAlert
     AllAclForPrincipal:
@@ -15750,6 +15801,8 @@ components:
         application:
           type: string
           pattern: ^[0-9a-z_\-.]+$
+        labels:
+          $ref: '#/components/schemas/Map_LabelKey_String'
     ApplicationInstancePermissionApplyResultV1:
       title: ApplicationInstancePermissionApplyResultV1
       type: object
@@ -15898,6 +15951,26 @@ components:
         name:
           type: string
           pattern: ^[0-9a-z_\-.]+$
+        labels:
+          $ref: '#/components/schemas/Map_LabelKey_String'
+    ApplicationOutputResourceV1:
+      title: ApplicationOutputResourceV1
+      type: object
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          pattern: v1
+        kind:
+          $ref: '#/components/schemas/ApplicationKind'
+        metadata:
+          $ref: '#/components/schemas/ApplicationMetadata'
+        spec:
+          $ref: '#/components/schemas/OutputApplicationSpec'
     ApplicationPolicyMetadata:
       title: ApplicationPolicyMetadata
       type: object
@@ -15946,31 +16019,21 @@ components:
         metadata:
           $ref: '#/components/schemas/ApplicationMetadata'
         spec:
-          $ref: '#/components/schemas/ApplicationSpec'
-    ApplicationSpec:
-      title: ApplicationSpec
-      type: object
-      required:
-      - title
-      - owner
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        owner:
-          type: string
+          $ref: '#/components/schemas/InputApplicationSpec'
     AttachedPolicy:
       title: AttachedPolicy
       type: object
       required:
       - name
+      - readAccess
       properties:
         name:
           type: string
           pattern: ^[0-9a-z_\-.]+$
         displayName:
           type: string
+        readAccess:
+          type: boolean
     AuthenticationMode:
       title: AuthenticationMode
       type: object
@@ -16754,6 +16817,8 @@ components:
           type: string
         disable:
           type: boolean
+        topicName:
+          type: string
         type:
           type: string
           const: ConsumerGroupAlert
@@ -16790,6 +16855,8 @@ components:
           $ref: '#/components/schemas/Destination'
         disable:
           type: boolean
+        topicName:
+          type: string
         type:
           type: string
           const: ConsumerGroupAlert
@@ -16818,6 +16885,8 @@ components:
           type: string
         disable:
           type: boolean
+        topicName:
+          type: string
         type:
           type: string
           const: ConsumerGroupAlert
@@ -16851,6 +16920,8 @@ components:
           $ref: '#/components/schemas/Destination'
         disable:
           type: boolean
+        topicName:
+          type: string
         type:
           type: string
           const: ConsumerGroupAlert
@@ -16858,11 +16929,13 @@ components:
       title: ConsumerGroupFilter
       oneOf:
       - $ref: '#/components/schemas/OnConsumerGroupName'
+      - $ref: '#/components/schemas/OnLabels'
       - $ref: '#/components/schemas/OnState'
       discriminator:
         propertyName: type
         mapping:
           OnConsumerGroupName: '#/components/schemas/OnConsumerGroupName'
+          OnLabels: '#/components/schemas/OnLabels'
           OnState: '#/components/schemas/OnState'
     ConsumerGroupMetricType:
       title: ConsumerGroupMetricType
@@ -16995,6 +17068,69 @@ components:
         type:
           type: string
           const: Credentials
+    DataQualityPolicyAlertOutputV3:
+      title: DataQualityPolicyAlertOutputV3
+      type: object
+      required:
+      - policyName
+      - triggerAfter
+      - withinInSeconds
+      - promQl
+      - type
+      properties:
+        policyName:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+        triggerAfter:
+          type: integer
+          format: int64
+        withinInSeconds:
+          type: integer
+          format: int64
+        promQl:
+          type: string
+        description:
+          type: string
+        displayName:
+          type: string
+        destination:
+          $ref: '#/components/schemas/Destination'
+        disable:
+          type: boolean
+        type:
+          type: string
+          const: DataQualityPolicyAlert
+    DataQualityPolicyAlertV3:
+      title: DataQualityPolicyAlertV3
+      type: object
+      required:
+      - policyName
+      - triggerAfter
+      - withinInSeconds
+      - type
+      properties:
+        policyName:
+          type: string
+          pattern: ^[0-9a-z_\-.]+$
+        triggerAfter:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
+        withinInSeconds:
+          type: integer
+          format: int64
+          exclusiveMinimum: 0
+        description:
+          type: string
+        displayName:
+          type: string
+        destination:
+          $ref: '#/components/schemas/Destination'
+        disable:
+          type: boolean
+        type:
+          type: string
+          const: DataQualityPolicyAlert
     DataQualityPolicyApplyResultV1:
       title: DataQualityPolicyApplyResultV1
       type: object
@@ -17016,17 +17152,21 @@ components:
       type: object
       required:
       - name
+      - group
       properties:
         name:
           type: string
           pattern: ^[0-9a-z_\-.]+$
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
+        group:
+          type: string
     DataQualityPolicyMetadataOutput:
       title: DataQualityPolicyMetadataOutput
       type: object
       required:
       - name
+      - group
       - status
       - statusInfo
       - createdAt
@@ -17039,6 +17179,8 @@ components:
           pattern: ^[0-9a-z_\-.]+$
         labels:
           $ref: '#/components/schemas/Map_LabelKey_String'
+        group:
+          type: string
         status:
           $ref: '#/components/schemas/Status'
         statusInfo:
@@ -17248,9 +17390,23 @@ components:
     Destination:
       title: Destination
       oneOf:
+      - $ref: '#/components/schemas/Email'
       - $ref: '#/components/schemas/Slack'
       - $ref: '#/components/schemas/Teams'
       - $ref: '#/components/schemas/Webhook'
+    Email:
+      title: Email
+      type: object
+      required:
+      - to
+      - subject
+      properties:
+        to:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
     EnforceAvro:
       title: EnforceAvro
       type: object
@@ -17601,6 +17757,7 @@ components:
       - name
       - state
       - members
+      - labels
       - type
       properties:
         name:
@@ -17621,6 +17778,8 @@ components:
         maxLagTimeInSeconds:
           type: integer
           format: int64
+        labels:
+          $ref: '#/components/schemas/Map_LabelKey_String'
         type:
           type: string
           const: IndexedConsumerGroup
@@ -17732,6 +17891,25 @@ components:
           format: int64
         enabled:
           type: boolean
+    InputApplicationSpec:
+      title: InputApplicationSpec
+      type: object
+      required:
+      - title
+      - owner
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        policyRef:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            pattern: ^[0-9a-z_\-.]+$
     Interceptor:
       title: Interceptor
       type: object
@@ -18761,6 +18939,22 @@ components:
         type:
           type: string
           const: OnConsumerGroupName
+    OnLabels:
+      title: OnLabels
+      type: object
+      required:
+      - key
+      - type
+      properties:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+          const: OnLabels
     OnState:
       title: OnState
       type: object
@@ -18864,6 +19058,29 @@ components:
       enum:
       - asc
       - desc
+    OutputApplicationSpec:
+      title: OutputApplicationSpec
+      type: object
+      required:
+      - title
+      - owner
+      - createdAt
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        policyRef:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            pattern: ^[0-9a-z_\-.]+$
+        createdAt:
+          type: string
+          format: date-time
     OwnershipMode:
       title: OwnershipMode
       type: string
@@ -19240,7 +19457,9 @@ components:
       title: PolicyKind
       type: string
       enum:
+      - ApplicationGroup
       - Connector
+      - Subject
       - Topic
     PublicCreateGroupRequest:
       title: PublicCreateGroupRequest
@@ -19398,6 +19617,9 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/PublicGroupOfUser'
+        lastLoginDate:
+          type: string
+          format: date-time
     Query:
       title: Query
       type: object
@@ -20126,9 +20348,10 @@ components:
             - topicConsume
             - topicProduce
             - topicEditConfig
-            - topicCreate
             - topicAddPartition
             - topicDelete
+            - topicDataQualityManage
+            - topicCreate
         resourceType:
           type: string
           const: TOPIC
@@ -20159,9 +20382,10 @@ components:
             - topicConsume
             - topicProduce
             - topicEditConfig
-            - topicCreate
             - topicAddPartition
             - topicDelete
+            - topicDataQualityManage
+            - topicCreate
         resourceType:
           type: string
           enum:
@@ -20385,9 +20609,10 @@ components:
             - topicConsume
             - topicProduce
             - topicEditConfig
-            - topicCreate
             - topicAddPartition
             - topicDelete
+            - topicDataQualityManage
+            - topicCreate
         resourceType:
           type: string
           enum:
@@ -20898,6 +21123,9 @@ components:
       properties:
         name:
           type: string
+        lastLoginDate:
+          type: string
+          format: date-time
     UserPermissions:
       title: UserPermissions
       type: object
@@ -20993,11 +21221,11 @@ x-tagGroups:
   - cli_kafka-cluster_console_v2_2
   - cli_kafka-connect-cluster_console_v2_3
   - cli_ksql-d-b-cluster_console_v2_4
-  - cli_partner-zone_console_v2_17
+  - cli_partner-zone_console_v2_16
 - name: 💎 dataquality/v1
   tags:
-  - cli_data-quality-rule_data-quality_v1_18
-  - cli_data-quality-policy_data-quality_v1_19
+  - cli_data-quality-rule_data-quality_v1_17
+  - cli_data-quality-policy_data-quality_v1_18
 - name: 🐞 debug/v1
   tags:
   - logging
@@ -21028,10 +21256,10 @@ x-tagGroups:
   - cli_connector_kafka_v2_14
 - name: 🩺 monitoring/v2
   tags:
-  - cli_alert_monitoring_v2_16
+  - cli_alert_monitoring_v2_19
 - name: 🩺 monitoring/v3
   tags:
-  - cli_alert_monitoring_v3_16
+  - cli_alert_monitoring_v3_19
 - name: 🚀 self-serve/v1
   tags:
   - cli_topic-policy_self-serve_v1_5
