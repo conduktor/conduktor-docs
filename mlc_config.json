@@ -1,4 +1,5 @@
 {
+  "projectBaseUrl": "${workspaceFolder}",
   "ignorePatterns": [
     {
       "pattern": "^http://localhost.*"
@@ -11,7 +12,6 @@
     },
     {
       "pattern": "^https://staging-learn.conduktor.io/.*"
-      
     },
     {
       "pattern": "^https://*.vercel.app/.*"
@@ -33,18 +33,21 @@
     },
     {
       "pattern": "^https://github.com/conduktor/console-plus/.*"
-      
     }
   ],
   "httpHeaders": [
     {
-      "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+      "urls": [
+        "https://github.com/",
+        "https://guides.github.com/",
+        "https://help.github.com/",
+        "https://docs.github.com/"
+      ],
       "headers": {
         "Accept-Encoding": "zstd, br, gzip, deflate"
-       }
+      }
     }
-  ]
-  ,
+  ],
   "aliveStatusCodes": [400, 403, 429, 200, 503, 504, 0, 999],
   "timeout": "5s",
   "retryOn429": false,

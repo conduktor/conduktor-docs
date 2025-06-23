@@ -22,12 +22,12 @@ Note: On versions earlier then 3.2.0, you will need to specify the `localDiskDir
 | key                | type            | default | description                                                                                            |
 |:-------------------|:----------------|:--------|:-------------------------------------------------------------------------------------------------------|
 | topic              | String          | `.*`    | Topics that match this regex will have the interceptor applied                                         |
-| s3Config           | [S3](#s3)       |         | Amazon S3 Configuration                                                                                |
+| s3Config           | S3              |         | Amazon S3 Configuration                                                                                |
 | azureConfig        | [Azure](#azure) |         | Azure Blob Storage Configuration                                                                       |
 | minimumSizeInBytes | int             |         | Only upload to s3 for batch/message record has size greater than or equal to this `minimumSizeInBytes` |
 | localDiskDirectory | string          |         | Local temp storage, used when we download file from S3 while fetching messages                         |
 
-### S3 
+### S3
 
 By default, s3 credentials default on managed identity. They will be overwritten if a specific `basic credentials` (`accessKey` and `secretKey`) 
 or `session credentials` (`accessKey`, `secretKey` and `sessionToken`) is configured.

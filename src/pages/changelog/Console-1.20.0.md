@@ -8,15 +8,14 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Features ✨
-
-- [UI Navigation Overhaul](#ui-navigation-overhaul)
-- [Sort, Filter and Customize the Topic List & Consumer Group List](#sort-filter-and-customize-the-topic-list-consumer-group-list)
-- [Import records from CSV](#import-records-from-csv)
-- [Other features and improvements](#other-features-and-improvements)
+- [Features](#features)
+  - [UI Navigation Overhaul](#ui-navigation-overhaul)
+  - [Sort, filter and customize the Topic and Consumer Group lists](#sort-filter-and-customize-the-topic-and-consumer-group-lists)
+  - [Import records from CSV](#import-records-from-csv)
+  - [Other features and improvements](#other-features-and-improvements)
 - [Fixes](#fixes)
 
----
+### Features
 
 #### UI Navigation Overhaul
 
@@ -24,13 +23,12 @@ Transition more seamlessly between different areas of the Console with a new UI 
 
 ![New navigation](/images/changelog/platform/v20/new-navigation.png)
 
----
+#### Sort, filter and customize the Topic and Consumer Group lists
 
-#### Sort, Filter and Customize the Topic List & Consumer Group List
-
-It probably looks underwhelming on the surface, but trust us... it's big! 🚀
+It probably looks underwhelming on the surface, but trust us... it's big!
 
 On the menu:
+
 - Sortable columns (size, messages count, partitions, ...). You can now sort by what matters to you. For example, the highest message count or the most partitions.
 - Instant results. We are not querying Kafka, so it's fast whether you have 10 topics or 1,000 topics.
 - Choose the columns that matter and hide away the ones that don't.
@@ -40,29 +38,26 @@ On the menu:
 
 Need more? Give us feedback on [smart tables](https://conduktor.io/roadmap).
 
----
-
 #### Import records from CSV
 
-Need to dump previously exported data back into Kafka? See how your application responsds to pre-prepared test data? We (finally) got you covered! From within a topic, navigate to the producer tab to utilize the new import CSV functionality. 
+Need to dump previously exported data back into Kafka? See how your application responds to pre-prepared test data? We (finally) got you covered! From within a topic, navigate to the producer tab to utilize the new import CSV functionality.
+
 ![Import CSV](/images/changelog/platform/v20/import-csv.png)
 
 Give us [feedback](https://conduktor.io/roadmap) on this feature.
 
----
-
 #### Other features and improvements
 
-When adding a filter to search in a specific field, the input is now an autocomplete text field instead of a dropdown list. It's now even quicker to create your own filters on the fly!  
+When adding a filter to search in a specific field, the input is now an autocomplete text field instead of a dropdown list. It's now even quicker to create your own filters on the fly!
 ![Autocomplete](/images/changelog/platform/v20/autocomplete.png)
 
-The Table view quick filter buttons now generates Simple Filters instead of advanced JS filters.  
+The Table view quick filter buttons now generates Simple Filters instead of advanced JS filters.
 ![Table Filter](/images/changelog/platform/v20/table-filters.png)
 
-Say goodbye to internal UUIDs! URLs are now taking advantage of the user-defined technical id making sharable links all the more readable with colleagues.  
+Say goodbye to internal UUIDs! URLs are now taking advantage of the user-defined technical id making sharable links all the more readable with colleagues.
 ![Technical ID](/images/changelog/platform/v20/technical-id.png)
 
-### Fixes 🔨
+### Fixes
 
 - Hide Provider tab secrets on the Cluster Configuration page
 - Adding an ACL in the Service Account page now adds the entry at the bottom of the list
