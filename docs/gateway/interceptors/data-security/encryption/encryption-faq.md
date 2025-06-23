@@ -77,8 +77,6 @@ Details on how the encryption takes place step by step. Jump to the [diagram](#k
 
 And is then transmitted as a string to the designated destination.
 
-You can find more details about this last point [here](#encryption-on-data-with-avro-json-schema-and-protocol-buffers).
-
 #### How Does Gateway Decrypt Data?
 
 1. **Data Identification**: The interceptor first determines, based on its configuration, which data needs to be decrypted. This may include the entire message, specific fields, or all the fields within the message.
