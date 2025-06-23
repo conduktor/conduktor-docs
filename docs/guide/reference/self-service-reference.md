@@ -1,5 +1,5 @@
 ---
-title: Self-service Resources
+title: Self-service resources
 displayed: false
 description: Self-service resources
 ---
@@ -9,9 +9,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 import Label from '@site/src/components/Labels';
 
-## Self-service resources
-
-### Application
+## Application
 
 An application represents a streaming app or data pipeline that is responsible for producing, consuming or processing data from Kafka.  
 
@@ -41,13 +39,13 @@ spec:
 
 **Side effect in Console and Kafka:**
 
-None!cDeploying this object will only create the Application in Console. It can be viewed in the Application Catalog.
+None!cDeploying this object will only create the application in Console. It can be viewed in the Application Catalog.
 
-### Application instance
+## ApplicationInstance
 
-Application Instance represent an actual deployment of an application on a Kafka Cluster for a Service Account.
+Application instance represents an actual deployment of an application on a Kafka cluster for a service account.
 
-This is the core concept of Self-service as it ties everything together: Kafka cluster, service account, ownership on resources and policies on resources.
+This is the core concept of Self-service, as it ties everything together: Kafka cluster, service account, ownership on resources and policies on resources.
 
 - **API key(s):** <Label type="AdminToken" /> 
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
@@ -102,8 +100,7 @@ spec:
   - `spec.resources[].connectCluster` is **only mandatory** when `type` is `CONNECTOR`
   - `spec.resources[].connectCluster` is a valid Connect Cluster linked to the Kafka Cluster `spec.cluster`
 - `spec.resources[].patternType` can be `PREFIXED` or `LITERAL`
-- `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster
-    -   ie: If there is already an owner for `click.` this is forbidden:
+- `spec.resources[].name` must not overlap with any other `ApplicationInstance` on the same cluster. I.e.: if there's already an owner for `click.` this is forbidden:
         -   `click.orders.`: Resource is a child-resource of `click`
         -   `cli`: Resource is a parent-resource of `click`
 - `spec.resources[].ownershipMode` is **optional**, default `ALL`. Can be `ALL` or `LIMITED`
@@ -121,22 +118,20 @@ spec:
       - Everything else (restart connector, Browse and Produce from Topic, ...) is still available
   - [Read More about ownershipMode here](/platform/navigation/self-serve/#limited-ownership-mode)
 - Kafka
-    - Service Account is granted the following ACLs over the declared resources depending on the type:
-        - Topic: READ, WRITE, DESCRIBE_CONFIGS
-        - ConsumerGroup: READ
+  - Service Account is granted the following ACLs over the declared resources depending on the type:
+    - Topic: READ, WRITE, DESCRIBE_CONFIGS
+    - ConsumerGroup: READ
 
-### Topic policy
+## TopicPolicy
 
-Topic Policies force Application Teams to conform to Topic rules set at their ApplicationInstance level.  
-Typical use case include:
+Topic policies force application teams to conform to topic rules, set at their `ApplicationInstance` level. Typical use case include:
 
-- Safeguarding from invalid or risky Topic configuration
-- Enforcing naming convention
+- Safeguarding from invalid or risky topic configuration
+- Enforcing a naming convention
 - Enforcing metadata
 
-:::warning
-Topic policies are not applied automatically.  
-You must explicitly link them to [ApplicationInstance](#application-instance) with `spec.topicPolicyRef`.
+:::warning[Manual application]
+Topic policies are not applied automatically. You have to explicitly link them to an [ApplicationInstance](#application-instance) with `spec.topicPolicyRef`.
 :::
 
 - **API key(s):** <Label type="AdminToken" />
@@ -184,7 +179,7 @@ spec:
 - `spec.policies.<key>.constraint` can be `Range`, `OneOf` or `Match`
   - Read the [Policy Constraints](#policy-constraints) section for each constraint's specification
 
-With the two Topic policies declared above, the following Topic resource would succeed validation:
+With the two topic policies declared above, the following topic resource would succeed validation:
 
 ````yaml
 ---
@@ -203,7 +198,7 @@ spec:
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ````
 
-### Application instance permissions
+## ApplicationInstancePermission
 
 Application instance permissions lets teams collaborate with each other.
 
@@ -257,19 +252,19 @@ spec:
     - `READ`: READ, DESCRIBE_CONFIGS
     - `WRITE`: READ, WRITE, DESCRIBE_CONFIGS
 
-### Application group
+## ApplicationGroup
+
+Create application group to directly reflect how your application operates. You can create as many application groups as required, to restrict or represent the different teams that use Console. For example:
+
+- support team with only `Read` access in production environment
+- devOps team with extended access across all environments
+- engineering team with higher permissions in dev environment only
 
 - **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
 - **Managed with:** <Label type="CLI" /> <Label type="API" />
 - **Labels support:** <Label type="MissingLabelSupport" />
 
-Create Application Group to directly reflect how your Application operates. You can create as many Application Groups as required to restrict or represent the different teams that use Console on your Application, e.g.:
-
-- Support Team with only Read Access in Production
-- DevOps Team with extended access across all environments
-- Developers with higher permissions in Dev
-
-**Example**
+### Example
 
 ````yaml
 # Permissions granted to Console users in the Application
@@ -331,7 +326,7 @@ spec:
 - Kafka
   - No side-effects
 
-### Application-managed service account
+## Application-managed service account
 
 :::info
 For the regular (non Self-Service) Service Account, see [Service Account](/platform/reference/resource-reference/kafka/#service-account)

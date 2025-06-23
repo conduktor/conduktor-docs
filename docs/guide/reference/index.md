@@ -99,37 +99,25 @@ import Label from '@site/src/components/Labels';
 
 The resources reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
 
-There are two kinds of API keys that you can use with the CLI, Terraform and public API:
+There are two kinds of API keys that you can use with the Conduktor CLI, the API and Terraform:
 
-- <Label type="AdminToken" /> have all permissions over all resources in Console
-- <Label type="AppToken" /> permission are scoped to Application instances and ownership model defined in Self-service
-
-In general, <Label type="AdminToken" /> can bypass Application owners and "act" as an <Label type="AppToken" />. 
+- <Label type="AdminToken" /> - have all the permissions over all the resources in Console. In general, *AdminToken* can bypass application owners.
+- <Label type="AppToken" /> - permissions are limited to application instances and ownership is defined via Self-service
 
 The resources presented here can be managed from the CLI, the API, Terraform, or the Console UI.
 
 - CLI, Terraform and Public API uses an API Key to validate permissions.
 - Console UI relies on RBAC model to validate what the user can do.
 
-## Resources
+## Conduktor resources
 
-The resources are split into 3 categories:
+The resources are split into three categories:
 
-- [Console Resources](/guide/reference/console-reference) are resources that exist only in Console such as
-  - Cluster Configurations
-  - Users, Groups and Permissions
-  - Alerts, DataMasking Policies
-- [Kafka Resources](/guide/reference/kafka-reference/kafka) are Kafka resources that gets created in the Kafka ecosystem
-  - Topics
-  - Subjects
-  - Connectors
-  - ...
-- [Self-service resources](/guide/reference/self-service-reference)
-  - Application Groups
-  - Topic Policies
-  - Instance Service Accounts and ACLs
+- [Console resources](/guide/reference/console-reference) exist only in Console. For example, users, groups, permissions, cluster configurations, alerts. data masking policies.
+- [Kafka resources](/guide/reference/kafka-reference) get created in the Kafka ecosystem, e.g.: topics, subjects, connectors.
+- [Self-service resources](/guide/reference/self-service-reference) are: application groups, topic policies, application instances.
 
-## Limitations
+### Limitations
 
 We're working hard to bring everything that you can do using Console UI into the Conduktor CLI, APIs and Terraform.
 
@@ -137,7 +125,7 @@ For a quick visual reference, each resource will list the supported systems with
 
 <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" /> 
 
-## Conduktor labels
+### Conduktor labels
 
 Conduktor labels allow you to add metadata, filter and organize your resources. Check the following table for the list of currently supported resources.
 
@@ -145,7 +133,7 @@ Conduktor labels allow you to add metadata, filter and organize your resources. 
 - <Label type="PartialLabelSupport" />
 - <Label type="MissingLabelSupport" />
 
-| Resource                     | API/CLI support | Terraform support    | Label support  | 
+| Resource                     | API/CLI support | Terraform support    | Label support  |
 |------------------------------|-----------------|----------------------|----------------|
 | **Console resources**        |                 |                      |                |
 | ConsoleGroup                 | ✅               | ✅                    | 🚫             |
@@ -161,7 +149,7 @@ Conduktor labels allow you to add metadata, filter and organize your resources. 
 | Topic                        | ✅               | ✅                    | ✅              |
 | Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
 | Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| ServiceAccount               | ✅               |                      | ✅              |
+| ServiceAccount               | ✅               |    ?????????????                  | ✅              |
 | **Self-service resources**   |                 |                      |                |
 | Application                  | ✅               | ✅                    | 🚫             |
 | ApplicationInstance          | ✅               | ✅                    | 🚫             |

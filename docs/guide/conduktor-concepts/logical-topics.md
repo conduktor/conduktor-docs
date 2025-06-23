@@ -22,7 +22,7 @@ Alias topics are logical topics that target a different physical topic. They act
 
 One of Kafka's limitations is that you can't rename topics.
 
-####  Use
+#### Use
 
 Gateway manages an alias topic mapping in it's internal configuration by registering a target physical topic. This topic will be presented to Kafka clients like a regular topic. However, all requests for this topic will be forwarded to the physical topic.
 
@@ -511,3 +511,8 @@ curl
 #### Consumer offsets
 
 When consuming from a concentrated topic, messages and ordering is always preserved but any metadata calculations (primarily lag and message count) are unlikely to be as expected. This is because the associated metadata is from the backing Kafka topic, rather than the concentrated topic seen from the perspective of the consumer. This is a known limitation.
+
+## Related resources
+
+- [View AliasTopic reference](/guide/reference/gateway-reference/#aliastopic)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
