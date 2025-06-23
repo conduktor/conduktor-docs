@@ -8,11 +8,8 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes)
 - [New features](#new-features)
-- [Fixes](#fixes)
-
-### Breaking changes
+  - [`GATEWAY_SECURITY_MODE` environment variable](#gateway_security_mode-environment-variable)
 
 ### New features
 

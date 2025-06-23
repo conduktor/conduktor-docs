@@ -209,11 +209,15 @@ Since the **block** action has the ability to **stop data from being sent** to t
 
 ### Assign permissions
 
-Policies are owned by user groups and can be created by admin users or groups with the `Manage data quality` permission enabled.
+Policies are **owned by user groups** and can be created by admin users or groups with the `Manage data quality` permission enabled.
 
 To apply this permission to a group, go to **Settings** > **Groups** and in the **Resource access** tab tick the `Manage data quality` checkbox for the relevant resources, as required.
 
-Modifying group permissions won't affect any Policies associated with the group.
+:::info[Applying permissions]
+Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
+:::
+
+![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](./assets/topic-dq-manage-permission.png)
 
 ### Set up Policy violation alerts
 
