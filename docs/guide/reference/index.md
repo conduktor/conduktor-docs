@@ -87,6 +87,10 @@ import Label from '@site/src/components/Labels';
           <td>Resources</td>
           <td>[Gateway resource reference](/guide/reference/gateway-reference)</td>
         </tr>
+        <tr>
+          <td>Interceptors</td>
+          <td>[Gateway Interceptor reference](/guide/reference/interceptor-reference)</td>
+        </tr>
       </tbody>
     </table>
   </div>

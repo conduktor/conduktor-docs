@@ -4,7 +4,36 @@ displayed: false
 description: Gateway Interceptor resources
 ---
 
-Here's a list of all the <GlossaryTerm>Interceptor</GlossaryTerm>.
+export const Highlight = ({children, color, text}) => (
+<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
+{children}
+</span>
+);
+
+export const KMS = () => (
+<Highlight color="#F8F1EE" text="#7D5E54">KMS</Highlight>
+);
+
+export const KEK = () => (
+<Highlight color="#E7F9F5" text="#067A6F">KEK</Highlight>
+);
+
+export const EDEK = () => (
+<Highlight color="#F0F4FF" text="#3451B2">EDEK</Highlight>
+);
+
+export const DEK = () => (
+<Highlight color="#FEEFF6" text="#CB1D63">DEK</Highlight>
+);
+
+Here's a list of all the <GlossaryTerm>Interceptors</GlossaryTerm>:
+
+- [Audit](#audit-interceptor)
+- [Data masking](#data-masking-interceptor)
+- [Dynamic header injection](#dynamic-header-injection-interceptor)
+- [Encryption](#encryption-interceptor)
+
+[Find out how to deploy an Interceptor](/guide/conduktor-concepts/interceptors).
 
 ## Audit Interceptor
 
@@ -18,7 +47,7 @@ The currently supported Kafka API requests are:
 - DeleteTopicRequest (DELETE_TOPICS)
 - AlterConfigRequest (ALTER_CONFIGS)
 
-### Configure
+### Configure audit Interceptor
 
 | Name            | Type         | Default | Description                                                             |
 |:----------------|:-------------|:--------|:------------------------------------------------------------------------|
@@ -29,7 +58,7 @@ The currently supported Kafka API requests are:
 | consumerGroupId | String       | `.*`    | consumerGroupId that matches this regex will have the Interceptor applied |
 | topicPartitions | Set[Integer] |         | Set of topic partitions to be audited                                   |
 
-### Example
+### Audit Interceptor example
 
 ```json
 {
@@ -57,7 +86,7 @@ The currently supported Kafka API requests are:
 
 Field level data masking <GlossaryTerm>Interceptor</GlossaryTerm> masks sensitive fields within messages as they are consumed.
 
-### Configuration
+### Configure data masking Interceptor
 
 Policies will be actioned and applied when consuming messages.
 
@@ -66,16 +95,16 @@ Policies will be actioned and applied when consuming messages.
 | topic    | String                  | `.*`    | Topics that match this regex will have the Interceptor applied |
 | policies | List[[Policy](#policy)] |         | List of your masking policies                                  |
 
-### Policy
+#### Policy
 
 | Key                  |Type                               | Description                                                                                                                                                                                    |
 |:---------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Name                 | String                             | Unique name for identifying your policy                                                                                                                                                        |                                                                                                    
+| Name                 | String                             | Unique name for identifying your policy                                                                                                                                                        |
 | Fields               | List                               | List of fields that should be obfuscated with the masking rule. Fields can be nested structure with dot `.` such as `education.account.username`, `banks[0].accountNo` or `banks[*].accountNo` |
 | rule                 | [Rule](#rule)                      | Rule                                                                                                                                                                                           |
-| schemaRegistryConfig | [SchemaRegistry](#schema-registry) | Schema registry                                                                                                                                                                                | 
+| schemaRegistryConfig | [SchemaRegistry](#schema-registry) | Schema registry                                                                                                                                                                                |
 
-### Rule
+#### Rule
 
 | Key           | Type                          | Default    | Description                                                 |
 |:--------------|:------------------------------|:-----------|:------------------------------------------------------------|
@@ -83,18 +112,18 @@ Policies will be actioned and applied when consuming messages.
 | maskingChar   | char                          | `*`        | Character that the data masked                              |
 | numberOfChars | number                        |            | number of masked characters, required if `type != MASK_ALL` |
 
-### Masking type
+#### Masking type
 
 - `MASK_ALL`: data will be masked,
 - `MASK_FIRST_N`: The first `n` characters will be masked
 - `MASK_LAST_N`: The last `n` characters will be masked
 
-### Schema registry
+#### Schema registry
 
 | Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
 |-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                      |
-| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using [environment variables as secrets](#use-environment-variables-as-secrets).​ |
+| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using environment variables as secrets.​|
 | **Confluent Like**    |        |             | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
 | `host`                | string |             | URL of your schema registry.                                                                                                                                                                                        |
 | `cacheSize`           | string | `50`        | Number of schemas that can be cached locally by this interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
@@ -114,7 +143,7 @@ If you don't supply a `basicCredentials` section for the AWS Glue schema registr
 
 [Read our blog about schema registry](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/).
 
-### Example
+### Data masking Interceptor example
 
 ```json
 {
@@ -195,9 +224,7 @@ If you don't supply a `basicCredentials` section for the AWS Glue schema registr
 
 ## Dynamic header injection Interceptor
 
-Conduktor Gateway's dynamic header <GlossaryTerm>Interceptor</GlossaryTerm> injects headers (such as user ip) to the messages as they are produced through Gateway.
-
-We support templating in this format: `X-CLIENT_IP: "{{userIp}} testing"`.
+This Interceptor injects headers (such as user IP) to the messages as they are produced through Gateway. We support templating in this format: `X-CLIENT_IP: "{{userIp}} testing"`.
 
 Here are the values we can expand:
 
@@ -213,7 +240,7 @@ Here are the values we can expand:
 - apiKeyVersion
 - timestampMillis
 
-### Configuration
+### Configure header injection Interceptor
 
 |Config           | Type    | Description                                                                                                                                           |
 |:-----------------|:--------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -221,7 +248,7 @@ Here are the values we can expand:
 | headers          | Map     | Map of header key and header value will be injected, with the header value we can use `{{userIp}}` for the user ip information we want to be injected |
 | overrideIfExists | boolean | Default `false`, configuration to override header on already exist                                                                                    |
 
-### Example
+### Header injection Interceptor example
 
 ```json
 {
@@ -263,34 +290,11 @@ docker-compose exec kafka-client \
 
 You should see the message with headers as below
 
-```
+```md
 X-USER_IP:172.19.0.3 testing   inject_header
 ```
 
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500', }}>
-{children}
-</span>
-);
-
-export const KMS = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">KMS</Highlight>
-);
-
-export const KEK = () => (
-<Highlight color="#E7F9F5" text="#067A6F">KEK</Highlight>
-);
-
-export const EDEK = () => (
-<Highlight color="#F0F4FF" text="#3451B2">EDEK</Highlight>
-);
-
-export const DEK = () => (
-<Highlight color="#FEEFF6" text="#CB1D63">DEK</Highlight>
-);
-
-## Encryption Interceptor overview
+## Encryption Interceptor
 
 This <GlossaryTerm>Interceptor</GlossaryTerm> is a robust and versatile solution for securing data within Kafka records. Its primary function is to safeguard sensitive information from unauthorized access, thereby enhancing data security both in transit and at rest. The key features are:
 
@@ -351,7 +355,7 @@ The Interceptor uses the `envelope encryption` technique to encrypt data. Here a
 | <DEK/>  | **Data Encryption Key**: A key generated by the interceptor, used to encrypt the actual data.                                                            |
 | <EDEK/> | **Encrypted Data Encryption Key**: The <DEK/> that has been encrypted by the <KEK/>, ensuring that the <DEK/> remains secure when stored or transmitted. |
 
-To **encrypt** the data, the Gateway:
+To **encrypt** the data, Gateway:
 
 1. Generates a <DEK/> that is used to encrypt the data
 2. Sends the <DEK/> to the <KMS/>, so it encrypts it using its <KEK/> and returns the <EDEK/> to the Gateway
@@ -359,7 +363,7 @@ To **encrypt** the data, the Gateway:
 4. Encrypts the data using the <DEK/>
 5. Stores the <EDEK/> alongside the encrypted data, and both are sent to the backing Kafka
 
-To **decrypt** the data, the Gateway:
+To **decrypt** the data, Gateway:
 
 1. Retrieves the <EDEK/> that's stored with the encrypted data
 2. Sends the <EDEK/> to the <KMS/>, which decrypts it (using the <KEK/>) and returns the <DEK/> to Gateway
@@ -370,3 +374,9 @@ To **decrypt** the data, the Gateway:
 ### Optimizing performance with caching
 
 To reduce the number of calls to the <KMS/> and avoid some of the steps detailed above, the interceptor caches the <DEK/> in memory. The cache has a configurable Time to Live (TTL), and the interceptor will call the <KMS/> to decrypt the <EDEK/> if the <DEK/> is not in the cache, as detailed in the steps 1 and 2 above.
+
+## Related resources
+
+- [Use and configure Interceptors](/guide/conduktor-concepts/interceptors)
+- [View Gateway resource reference](/guide/reference/gateway-reference)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

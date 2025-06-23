@@ -8,12 +8,15 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 import Label from '@site/src/components/Labels';
 
+These are high-level Gateway object specifications for Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
+
 ## Deploy Interceptor
 
 **API key(s):** <Label type="AdminToken" />
 **Managed with:** <Label type="API" /> <Label type="CLI" /> <Label type="UI" />
 
-Deploys an Interceptor on the Gateway
+Deploys an <GlossaryTerm>Interceptor</GlossaryTerm> on <GlossaryTerm>Gateway</GlossaryTerm>.
+
 ````yaml
 ---
 apiVersion: gateway/v2
@@ -70,7 +73,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 
 :::
 
-**Examples**
+#### Examples
 
 ````yaml
 ---
@@ -246,3 +249,9 @@ spec:
 :::warning[Spec changes]
 If a *ConcentrationRule* spec changes, it will not affect previously created concentrated topics, it will only affect the topics created after the change.
 :::
+
+## Related resources
+
+- [Use and configure Interceptors](/guide/conduktor-concepts/interceptors)
+- [View Interceptor reference](/guide/reference/interceptor-reference)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
