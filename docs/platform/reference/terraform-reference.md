@@ -7,8 +7,6 @@ description: Terraform reference
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Terraform reference
-
 The Conduktor Terraform provider gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
 
 You can also read about the provider on the [Terraform Provider Page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) directly.
@@ -44,14 +42,14 @@ To use the Conduktor Terraform Provider, you need to configure:
 
 ### Authenticate using API Keys
 
-````hcl
+```hcl
 # configure provider
 provider "conduktor" {
     mode      = "console"
     base_url  = "http://localhost:8080"
     api_token = "your-api-key"
 }
-````
+```
 
 There are two types of API Keys: **admin** and **Self-service application**.
 
@@ -63,11 +61,11 @@ Admin API Keys grant the maximum permissions on Console.
   <Tabs>
   <TabItem  value="CLI" label="CLI">
 
-````bash
+```bash
 # Generate a key named my-admin-key
 $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
   </TabItem>
   <TabItem value="GUI" label="UI">
@@ -84,10 +82,10 @@ Self-service Application API Key permissions are **limited to the scope of the A
   <Tabs>
   <TabItem  value="CLI" label="CLI">
 
-````bash
+```bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
   </TabItem>
   <TabItem value="GUI" label="UI">
@@ -111,7 +109,7 @@ Short-lived user API Keys will be valid for the same duration as the configured 
 OIDC users can't be used.
 :::
 
-````hcl
+```hcl
 # configure provider
 provider "conduktor" {
     mode           = "console"
@@ -119,7 +117,7 @@ provider "conduktor" {
     admin_user     = "console-admin@mycompany.io"
     admin_password = "console-admin-password"
 }
-````
+```
 
 ### Environment variables
 
@@ -129,9 +127,9 @@ The provider configuration also supports environment variables for all attribute
 | ---------------------- | ---------------- | --------------------------------------------------------------------------------- |
 | n/a                    | `mode`           | Terraform Provider mode: either `console` or `gateway`                            |
 | `CDK_CONSOLE_BASE_URL` | `base_url`       | Console base URL, e.g. `http://localhost:8080`                                    |
-| `CDK_API_KEY`          | `api_token`      | Console [API Key](#using-api-key-authentication)                                  |
-| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email    |
-| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_API_KEY`          | `api_token`      | Console [API Key](#authenticate-using-api-keys)                                  |
+| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#authenticate-using-short-lived-user-credentials) email    |
+| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#authenticate-using-short-lived-user-credentials) password |
 | `CDK_CONSOLE_CERT`     | `cert`           | Cert in PEM format to authenticate using client certificates                      |
 | `CDK_CONSOLE_INSECURE` | `insecure`       | Skip TLS verification flag. Defaults to `false`                                   |
 | `CDK_CONSOLE_CACERT`   | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate     |

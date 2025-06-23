@@ -32,7 +32,6 @@ export const GUI = () => (
 <Highlight color="#F6F4FF" text="#422D84">Console UI</Highlight>
 );
 
-
 export const AppToken = () => (
 <Highlight color="#F0F4FF" text="#3451B2">Application API Key</Highlight>
 );
@@ -41,10 +40,9 @@ export const AdminToken = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">Admin API Key</Highlight>
 );
 
-
 ## Interceptor
 
-**API Keys:** <AdminToken />  
+**API Keys:** <AdminToken />
 **Managed with:** <API /> <CLI /> <GUI />
 
 Deploys an Interceptor on Gateway
@@ -52,7 +50,7 @@ Deploys an Interceptor on Gateway
 <Tabs>
 <TabItem  value="CLI" label="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: Interceptor
@@ -71,12 +69,12 @@ spec:
       min: 5
       max: 5
       action: "INFO"
-````
+```
 
 </TabItem>
 <TabItem value="Terraform" label="Terraform">
 
-````hcl
+```hcl
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   #scope = {
@@ -97,31 +95,33 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
     })
   }
 }
-````
+```
 
 </TabItem>
 </Tabs>
 
 **Interceptor checks:**
-- `metadata.scope` is optional (default empty). 
+
+- `metadata.scope` is optional (default empty).
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
-  - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
+  - Check the dedicated [Interceptor targeting](#interceptor-targeting) section
 - `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptor-catalog/)
 - `spec.priority` is **mandatory**
 - `spec.config` is a valid config for the `pluginClass`
 
-### Interceptor Targeting
-You can activate your Interceptor only in specific scenarios. Use the table below to configure Targeting settings.
+### Interceptor targeting
+
+You can activate your Interceptor only in specific scenarios. Use the table below to configure targeting settings.
 
 | Use case                                            | `metadata.scope.vcluster` | `metadata.scope.group` | `metadata.scope.username` |
 |-----------------------------------------------------|---------------------------|------------------------|---------------------------|
 | Global Interceptor (Including Virtual Clusters)     | Set to `null`             | Set to `null`          | Set to `null`             |
 | Global Interceptor (**Excluding** Virtual Clusters) | Empty                     | Empty                  | Empty                     |
-| Username Targeting                                  | Empty                     | Empty                  | Set                       |
-| Group Targeting                                     | Empty                     | Set                    | Empty                     |
-| Virtual Cluster Targeting                           | Set                       | Empty                  | Empty                     |
-| Virtual Cluster + Username Targeting                | Set                       | Empty                  | Set                       |
-| Virtual Cluster + Group Targeting                   | Set                       | Set                    | Empty                     |
+| Username targeting                                  | Empty                     | Empty                  | Set                       |
+| Group targeting                                     | Empty                     | Set                    | Empty                     |
+| Virtual Cluster targeting                           | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username targeting                | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group targeting                   | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
@@ -132,6 +132,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 - Group
 - VirtualCluster
 - Global
+
 :::
 
 **Examples**
@@ -139,7 +140,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 <Tabs>
 <TabItem  value="CLI" label="CLI">
 
-````yaml
+```yaml
 ---
 # This interceptor targets everyone (Including Virtual Clusters)
 apiVersion: gateway/v2
@@ -169,7 +170,7 @@ metadata:
   scope:
     username: admin
 spec:
-  
+
 ---
 # This interceptor targets only `read-only` virtual cluster
 apiVersion: gateway/v2
@@ -179,13 +180,13 @@ metadata:
   scope:
     vCluster: read-only
 spec:
-  
-````
+
+```
 
 </TabItem>
 <TabItem value="Terraform" label="Terraform">
 
-````hcl
+```hcl
 # This Interceptor targets everyone (including virtual clusters)
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
@@ -195,7 +196,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
     username = null
   }
   spec = {
-    
+
   }
 }
 
@@ -203,7 +204,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
 resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   name = "enforce-partition-limit"
   spec = {
-    
+
   }
 }
 
@@ -214,7 +215,7 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
     username = "admin"
   }
   spec = {
-    
+
   }
 }
 
@@ -226,19 +227,19 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
     vcluster = "read-only"
   }
   spec = {
-    
+
   }
 }
-````
+```
 
 </TabItem>
 </Tabs>
 
 ## GatewayServiceAccount
-GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.  
 
-GatewayServiceAccount resource is enabled or not depending on your Gateway configuration.   
-This is to prevent you to declare a resource that is incompatible with your current configuration:
+GatewayServiceAccount is generally optional when using Oauth, mTLS or Delegated Backing Kafka authentication.
+
+GatewayServiceAccount resource is enabled or not depending on your Gateway configuration. This is to prevent you to declare a resource that is incompatible with your current configuration:
 
 | GATEWAY_SECURITY         | LOCAL GatewayServiceAccount | EXTERNAL GatewayServiceAccount        |
 |--------------------------|--|--------------------------|
@@ -250,6 +251,7 @@ This is to prevent you to declare a resource that is incompatible with your curr
 | DELEGATED_SASL_SSL       | 🚫 | ✅                        |
 
 There are a few cases where you **must** declare GatewayServiceAccount objects:
+
 - Creating Local Service Accounts
 - Renaming Service Accounts for easier clarity when using Interceptors
 - Attaching Service Accounts to Virtual Clusters
@@ -257,7 +259,7 @@ There are a few cases where you **must** declare GatewayServiceAccount objects:
 <Tabs>
 <TabItem  value="CLI" label="CLI">
 
-````yaml
+```yaml
 ---
 # External user renamed
 apiVersion: gateway/v2
@@ -266,7 +268,7 @@ metadata:
   name: application1
 spec:
   type: EXTERNAL
-  externalNames: 
+  externalNames:
   - 00u9vme99nxudvxZA0h7
 ---
 # Local User on Virtual Cluster vc-B
@@ -277,12 +279,12 @@ metadata:
   name: admin
 spec:
   type: LOCAL
-````
+```
 
 </TabItem>
 <TabItem value="Terraform" label="Terraform">
 
-````hcl
+```hcl
 resource "conduktor_gateway_service_account_v2" "application1-sa" {
   name = "application1"
   spec = {
@@ -311,7 +313,7 @@ output "admin_sa_token" {
   value     = conduktor_gateway_token_v2.admin-sa-token.token
   sensitive = true
 }
-````
+```
 
 </TabItem>
 </Tabs>
@@ -320,17 +322,18 @@ output "admin_sa_token" {
 When `spec.type` is `EXTERNAL`, the `spec.externalNames` has to be a non-empty list of external names. Each name has to be unique across all declared GatewayServiceAccount. We currently only support a list of one element. Support for multiple externalNames will be added in the future.
 
 **GatewayServiceAccount side effects:**
+
 - When `spec.type` is `EXTERNAL`:
   - During Client connection, the authenticated user will be checked against the list of `externalNames` to decide which GatewayServiceAccount it is.
 - When `spec.type` is `LOCAL`:
   - Access to `/gateway/v2/tokens` endpoint to generate a password for this Service Account
   - Switching a GatewayServiceAccount `spec.type` from `LOCAL` to `EXTERNAL` does not invalidate previously emitted tokens. They will keep on working for their TTL)
 
-
 ## GatewayGroup
+
 Gateway Group lets you add multiple users in the same GatewayGroup for easier Interceptor targeting capabilities.
 
-````yaml
+```yaml
 ---
 # Users added to the group manually
 apiVersion: gateway/v2
@@ -342,20 +345,23 @@ spec:
     - name: admin
     - vCluster: vc-B
       name: "0000-AAAA-BBBB-CCCC"
-````
+```
+
 **GatewayGroup checks:**
+
 - `spec.members[].name` is mandatory.
   - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
+
 - All members of the group will be affected by Interceptors deployed with this group's scope.
 
 ## ConcentrationRule
 
 Concentration Rules allow you to define patterns where topic creation won't generate a physical topic, but will instead use our Topic Concentration feature.
 
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: ConcentrationRule
@@ -370,8 +376,10 @@ spec:
     deleteCompact: titi-cd
   autoManaged: false
   offsetCorrectness: false
-````
+```
+
 **ConcentrationRule checks:**
+
 - `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 - `spec.physicalTopics.delete` is mandatory. Must be a valid topic name with a `cleanup.policy` set to `delete`
 - `spec.physicalTopics.compact` is optional. Must be a valid topic name with a `cleanup.policy` set to `compact`
@@ -380,22 +388,24 @@ spec:
 - `spec.offsetCorrectness` is optional, default `false`
 
 **ConcentrationRule side effects:**
-- Once the Concentration Rule is deployed, topics created with a name matching the `spec.pattern` will not be created as real Kafka topics but as Concentrated Topics instead.  
+
+- Once the Concentration Rule is deployed, topics created with a name matching the `spec.pattern` will not be created as real Kafka topics but as Concentrated Topics instead.
 - Depending on the topic's `cleanup.policy`, the topic's data will be stored in one of the configured physical topics.
 - If a topic creation request is made with a `cleanup.policy` that isn't configured in the ConcentrationRule, topic creation will fail.
 - It is not possible to update `cleanup.policy` of a concentrated topic.
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
-- If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each of the Concentrated Topic records. 
+- If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each of the Concentrated Topic records.
   - This allows for a proper calculation of Message Count and Consumer Group Lag.
   - There are some limitation. Read more about [Offset Correctness here](/gateway/concepts/logical-topics/concentrated-topics/#known-issues-and-limitations-with-offset-correctness)
 - If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
 
 :::caution
-If a ConcentrationRule spec changes, it will not affect previously created Concentrated Topics.  
+If a ConcentrationRule spec changes, it will not affect previously created Concentrated Topics.
 It will only affect the Topics created after the change.
 :::
 
 ## VirtualCluster
+
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
 A Virtual Cluster acts like a Kafka within a Kafka.
@@ -414,14 +424,15 @@ spec:
 ```
 
 **VirtualCluster checks:**
+
 - `metadata.name` must be a valid topic prefix.
-- `spec.aclEnabled` is optional, default `false`. 
+- `spec.aclEnabled` is optional, default `false`.
 
 **VirtualCluster side effects:**
+
 - All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
 - Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
 - When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
-
 
 ## AliasTopic
 

@@ -8,45 +8,47 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Future Breaking Changes 💣
-#### New docker image name
+### Future Breaking Changes
+
+#### New Docker image name
+
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
 
 We will publish newer versions using both names for the next **two releases** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
 
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.22.0
-````
+```
 
-### Features ✨
+### Features
 
-- [Conduktor Console](#conduktor-console)
-  - [Future Breaking Changes 💣](#future-breaking-changes-)
-    - [New docker image name](#new-docker-image-name)
-  - [Features ✨](#features-)
-    - [Topic as a Service becomes Self-service](#topic-as-a-service-becomes-self-service)
-    - [Conduktor CLI](#conduktor-cli)
-    - [Custom Deserializers](#custom-deserializers)
-  - [Fixes 🔨](#fixes-)
-
----
+- [Future Breaking Changes](#future-breaking-changes)
+  - [New Docker image name](#new-docker-image-name)
+- [Features](#features)
+  - [Topic as a Service becomes Self-service](#topic-as-a-service-becomes-self-service)
+  - [Conduktor CLI](#conduktor-cli)
+  - [Custom Deserializers](#custom-deserializers)
+- [Fixes](#fixes)
 
 #### Topic as a Service becomes Self-service
 
 Self-service is a replacement for Topic as a Service. It is more centered towards a GitOps way of working, though we have performed a migration for existing TaaS applications to ensure a seamless transition to the new model:
+
 - Applications + Environments are migrated to `Application` and `ApplicationInstance`
 - Cross Application accesses are migrated to `ApplicationInstancePermission`
 - The Application list becomes Application Catalog
 - At the moment, we decided that we should control everything from the CLI only. The UI will remain Read-Only for now, but the intention is to bring back UI-driven operations in a future release.
 
-[Read More about Self-service](https://docs.conduktor.io/platform/navigation/self-serve/)  
+[Read More about Self-service](https://docs.conduktor.io/platform/navigation/self-serve/)
 
 To start using Self-service, you must download our Conduktor CLI which lets you deploy resource files in Console.
 
 #### Conduktor CLI
+
 Console now has a CLI! [Get Started](https://docs.conduktor.io/platform/reference/cli-reference/) with it today.
 
 For now, we only support the following resources:
+
 - Application
 - ApplicationInstance
 - ApplicationInstancePermission
@@ -55,7 +57,7 @@ Our objective is to let Application Teams and Central Teams manage both Console 
 
 More to come, automate everything!
 
-````yaml
+```yaml
 ---
 apiVersion: "v1"
 kind: "ApplicationInstance"
@@ -72,17 +74,17 @@ spec:
     - type: GROUP
       name: "click."
       patternType: PREFIXED
-````
+```
 
 #### Custom Deserializers
 
-Console's support for Custom Deserializers is finally here!  
-A picture is worth a thousand words:
-![Custom Deser](/images/changelog/platform/v22/custom-deser.png)
+Console's support for Custom Deserializers is finally here:
 
-Check our dedicated How-To guide [Installing and Configuring Custom Deserializers](https://docs.conduktor.io/platform/guides/custom-deserializers/).
+![Custom Deserializer](/images/changelog/platform/v22/custom-deser.png)
 
-### Fixes 🔨
+[Check out the guide to installing and configuring custom deserializers](https://docs.conduktor.io/platform/guides/custom-deserializers/).
+
+### Fixes
 
 - Fixed an issue with controller metrics in Monitoring when the Kafka cluster is using KRaft
 - Added support for Broker, Connect, and ksqlDB `id` field and TLS authentication in the YAML configuration file and Environment variables. This implies you might have a duplicate Connect instance if you use a YAML file with an ID for your Connect cluster. Check the [Environment Variables](https://docs.conduktor.io/platform/get-started/configuration/env-variables/#kafka-connect-properties) page for more details

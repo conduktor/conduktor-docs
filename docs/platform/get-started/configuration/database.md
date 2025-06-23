@@ -72,7 +72,7 @@ There are several options available when configuring an external database:
      In either case, this connection url is using a standard PostgreSQL url in the format `[jdbc:]postgresql://[user[:password]@][[netloc][:port],...][/dbname][?param1=value1&...]`
 
 2. From decomposed configuration fields
-   - With the `CDK_DATABASE_*` env vars. (see the [environment variables list](#configuration-using-environment-variables))
+   - With the `CDK_DATABASE_*` env variables.
    - With the `database.*` on configuration file.
 
 ```yaml

@@ -8,30 +8,31 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Future Breaking Changes 💣
-#### New docker image name
+### Future Breaking Changes
+
+#### New Docker image name
+
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.
 
 We will publish newer versions using both names for this release and the **next release** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
 
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.23.0
-````
+```
 
-### Features ✨
+### Features
 
-- [Conduktor Console](#conduktor-console)
-  - [Future Breaking Changes 💣](#future-breaking-changes-)
-    - [New docker image name](#new-docker-image-name)
-  - [Features ✨](#features-)
-    - [Self-service](#self-service)
-      - [Topic](#topic)
-      - [TopicPolicy](#topicpolicy)
-      - [Topic Catalog](#topic-catalog)
-      - [Application API Keys](#application-api-keys)
-    - [Editable columns on the Consume Page](#editable-columns-on-the-consume-page)
-    - [Quality of Life improvements](#quality-of-life-improvements)
-  - [Fixes 🔨](#fixes-)
+- [Future Breaking Changes](#future-breaking-changes)
+  - [New Docker image name](#new-docker-image-name)
+- [Features](#features)
+  - [Self-service](#self-service)
+  - [Topic](#topic)
+  - [TopicPolicy](#topicpolicy)
+  - [Topic Catalog](#topic-catalog)
+  - [Application API Keys](#application-api-keys)
+  - [Editable columns on the Consume Page](#editable-columns-on-the-consume-page)
+  - [Quality of Life improvements](#quality-of-life-improvements)
+- [Fixes](#fixes)
 
 ---
 
@@ -39,13 +40,13 @@ docker pull conduktor/conduktor-console:1.23.0
 
 There's a host of new functionality available providing our first truly powerful self-service release. This comes from the addition of two new resources (Topic, TopicPolicy), application tokens, a topic catalog and service account synchronization.
 
-
-Application Teams can now manage their Topic resource lifecycle through IaC with the addition of the [Topic](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#topic) object, and they can do this safely with Platform Teams putting in place a [Topic Policy](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#topic-policy) to restrict expensive configurations and enforce naming standards.  
+Application Teams can now manage their Topic resource lifecycle through IaC with the addition of the [Topic](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#topic) object, and they can do this safely with Platform Teams putting in place a [Topic Policy](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#topic-policy) to restrict expensive configurations and enforce naming standards.
 
 Checkout the definitions below and find the full list of resource definitions via the [Resource Reference](https://docs.conduktor.io/platform/reference/resource-reference/) documentation.
 
 #### Topic
-This creates a Topic in the defined cluster. 
+
+This creates a Topic in the defined cluster.
 
 ```yaml
 ---
@@ -63,9 +64,11 @@ spec:
     retention.ms: '60000'
 ```
 
-#### TopicPolicy 
+#### TopicPolicy
+
 TopicPolicy lets Platform Team define governance rules to restrict Application Teams to create Topics with misconfigurations.
 This is also useful to enforce naming convention or metadata annotation by Application Teams.
+
 ```yaml
 ---
 apiVersion: "v1"
@@ -82,18 +85,20 @@ spec:
       values: ["3"]
     spec.configs.retention.ms:
       constraint: Range
-      max: 604800000  # 7d 
+      max: 604800000  # 7d
       min: 3600000    # 1h
 ```
+
 #### Topic Catalog
 
-We've introduced the Topic Catalog, to help teams discover Kafka Topics within your organization. Quickly get visbility on ownership and business metadata on your choice for topics.
+We've introduced the Topic Catalog, to help teams discover Kafka Topics within your organization. Quickly get visibility on ownership and business metadata on your choice for topics.
 
 Add topics to applications to see them appear within the catalog across all your clusters, searchable by name and labels.
 
 ![topic catalog](/images/changelog/platform/v23/TopicCatalog.png)
 
 #### Application API Keys
+
 Generate ApplicationInstance API Keys to create any ApplicationInstance scoped resources.
 Only ApplicationInstancePermission and Topic are supported at the moment.
 
@@ -105,12 +110,14 @@ In addition, Service Account's ACLs are now synchronized with the permissions fr
 
 #### Editable columns on the Consume Page
 
-You can now customise the columns you want to display in the Consume Page. Let us know if there's any additional metadata you want to see!
+You can now customize the columns you want to display in the Consume Page. Let us know if there's any additional metadata you want to see!
 
 ![Editable Columns](/images/changelog/platform/v23/qol-consume.png)
 
 #### Quality of Life improvements
+
 **Topic pages**
+
 - SchemaId is now displayed from the Message Viewer panel
 - Header count is now displayed from the Message Viewer panel
 - The More Options "..." button has been moved so that it's available from every Topic details tab
@@ -118,27 +125,31 @@ You can now customise the columns you want to display in the Consume Page. Let u
 - Added an "Add partitions" button in Partitions tab
 
 **Schema Registry pages**
+
 - The current schema is now inside a read-only area
 - Increased the width of the side panel when creating/updating schemas
 - Full height is used in the panel to show/edit the schema
 
 **Kafka Connect pages**
+
 - Kafka Connect List can now be sorted by the number of Tasks
 - Removing a Connector now properly redirects the user to the Connector list instead of the Configuration tab of the deleted Connector
 - Topics column is now sourced from more configuration keys (`kafka.topic`, `kafka.topics`, `topic`, `topics`)
 
 **Settings**
+
 - Permissions on KafkaConnect and ksqlDB now properly display the name instead of the UUID
 - Adding Users to Groups can now be done from the User details page directly
 - Added the Group name in the UI to be used in the API or CLI
 
 **Other**
+
 - Added Gateway version on the Interceptor List page
 - Added a configuration option to toggle OIDC logout when logging out from Console
 - Searching in screens now trims whitespace from the text supplied
 
+### Fixes
 
-### Fixes 🔨
 - Fixed an issue with the Test Connection button that didn't work after a successful response
 - Fixed an issue with the indexing of Confluent Cloud Managed Connect
 - Fixed an issue with the Kafka Connect List where filter by Connect Cluster wouldn't work in some cases

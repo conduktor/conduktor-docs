@@ -1,14 +1,14 @@
 # Conduktor technical docs
 
-- [Deployment and structure](#deployment-and-structure)
-- [Docs best practice](#docs-best-practice)
-  - [Structure](#structure)
-  - [Images](#images)
-  - [Links](#links)
+- [Conduktor technical docs](#conduktor-technical-docs)
+  - [Deployment and structure](#deployment-and-structure)
+  - [Docs best practice](#docs-best-practice)
+    - [Structure](#structure)
+    - [Images](#images)
+    - [Links](#links)
   - [Tabs](#tabs)
-  - [Tags](#tags)
-- [Update release notes](#update-release-notes)
-- [Update public API docs](#update-public-api-docs)
+  - [Update release notes](#update-release-notes)
+  - [Update public API docs](#update-public-api-docs)
 
 [![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
 
@@ -22,7 +22,7 @@ For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
-```
+```bash
 yarn
 yarn build
 yarn start
@@ -43,7 +43,7 @@ When creating a new page, use this layout:
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
 - Related resources. Include links to topics related to the feature. Add this link at the end:
-[Give us feedback/request a feature](https://conduktor.io/roadmap)
+  [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
 When adding a tutorial, use this layout:
 
@@ -76,13 +76,13 @@ Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/i
 
 You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
 
-### Tabs
+## Tabs
 
 Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
 To add tabs:
 
-````md
+```md
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
@@ -102,11 +102,12 @@ My second tab content:
 ```yaml title="second-tab.yaml"
 mySecondTab: "content"
 ```
+
 </TabItem>
 </Tabs>
-````
+```
 
-### Tags
+## Tags
 
 Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
 
@@ -136,7 +137,7 @@ To update release notes:
 1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
 1. Make sure your file has the following header:
 
-```
+```md
 ---
 date: 2025-11-25
 title: Chargeback
@@ -155,13 +156,13 @@ tags: features,fix
 
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
 
-```
+```md
 import Console1310 from './changelog/Console-1.31.0.md';
 ```
 
 1. Finally, add an entry at the top of the page, linking to your file. E.g.:
 
-```
+```md
 ## Console 1.131.0
 <Console1310 />
 ---
