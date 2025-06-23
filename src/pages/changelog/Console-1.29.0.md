@@ -26,64 +26,68 @@ tags: features,fix
 
 #### Changes to Conduktor.io Labels
 
-We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations. 
+We have moved the `conduktor.io` labels previously available on **Connector** and **Topic** resources to new locations.
+
 :::caution
 This change impacts you if you:
+
 - Update the Topic Catalog description of Topic resources via CLI/API
 - Configure Connect automatic restart with the CLI/API
 
 You are not impacted if you perform these actions through the UI.
 :::
+
 We recognize this change breaches the API contract and have carefully considered its implications. We remain committed to minimizing breaking changes and will continue to do our best to ensure that such changes are rare and well-justified.
 
 As we expand the number of Conduktor-related features, this separation reduces the risk of conflicts, simplifies resource management, and provides flexibility for future improvements:
+
 - Labels used for sorting and filtering throughout the product
 - Conduktor-specific annotations used to drive behaviors on the resources
 
 Topic Resource
+
 - `metadata.labels.'conduktor.io/description'` → `metadata.description`
 - `metadata.labels.'conduktor.io/description.editable'` → `metadata.descriptionIsEditable`
 
 Connector Resource
+
 - `metadata.labels.'conduktor.io/auto-restart-enabled'` → `metadata.autoRestart.enabled`
 - `metadata.labels.'conduktor.io/auto-restart-frequency'` → `metadata.autoRestart.frequencySeconds`
 
 Their associated values have been automatically migrated under the new names.
-
 
 #### Important Note for CLI Users
 
 Applying YAML files with old `conduktor.io` labels will fail in Conduktor Console 1.29. Be sure to update your YAML files to reflect the new labels.
 
 Example error for outdated YAML:
-```
+
+```bash
 $ conduktor apply -f topic.yaml
 Could not apply resource Topic/click.event-stream.avro: Invalid value for: body (Couldn't decode key. at 'metadata.labels.conduktor.io/description')
 ```
 
----
-
 #### Local Users Password policy update
 
-Passwords for console Local Users configured through YAML and environment variables must comply with a new password policy.
-This change enforces the following password requirements:
+Passwords for console Local Users configured through YAML and environment variables must comply with a new password policy. This change enforces the following password requirements:
+
 - At least 8 characters in length
 - Includes at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special symbol
 
 :::caution
 This change impacts you if:
+
 - Your Admin password doesn't comply with the new password policy (`CDK_ADMIN_PASSWORD`)
 - You have local user configured through YAML or Env variables (`CDK_AUTH_LOCALUSERS_0_PASSWORD`)
 :::
+
 Passwords set in existing installations that do not meet these requirements **will prevent Console from starting**, throwing a startup error in the logs like this:
-````
+
+````md
 2024-11-21T14:25:47,434Z [console] ERROR zio-slf4j-logger - zio.Config$Error$InvalidData: (Invalid data at admin: Password must contain at least 8 characters including 1 uppercase letter, 1 lowercase letter, 1 number and 1 special symbol)
 ````
 
-Local Users previously created with the UI are not impacted.  
-Update the passwords in your YAML or environment variables to meet the new policy before upgrading.
-
----
+Local Users previously created with the UI are not impacted. Update the passwords in your YAML or environment variables to meet the new policy before upgrading.
 
 ### Features
 
@@ -98,22 +102,21 @@ Conduktor Chargeback allows organizations to track and allocate costs & usage as
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
 
 Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get started with Chargeback.
-***
 
 #### Console Homepage
 
 The cluster homepage have been redesigned to present you with the most useful information in one single view:
+
 - The health of your Kafka Cluster with a few key metrics and graphs
 - The state of Console Indexing modules for this Kafka Cluster
 - Quick access to your most recently viewed resources
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/console-homepage.png)
 
-***
-
 #### Consumer Group pages overhaul
 
 Consumer group details page is now organized in a way that helps understand the status of your Consumer Group more easily:
+
 - Topics tab shows the Consumer Group info grouped by its subscribed Topics
 - Members tab shows the Consumer Group info grouped by its active members
 
@@ -123,11 +126,10 @@ On top of that graphs are now directly available in the resource page for Lag an
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/consumer-groups.png)
 
-***
-
 #### Self-Service Topic Catalog visibility
 
 You can now choose which Topics should be visible in the Topic Catalog by annotating their YAML.
+
 ````yaml
 ---
 apiVersion: kafka/v2
@@ -146,6 +148,7 @@ Check the associated [documentation](/platform/reference/resource-reference/self
 #### Self-Service New Topic Policy Allowed Keys
 
 We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
+
 ````yaml
 ---
 # Limits the Topic spec.configs to only have retention.ms and cleanup.policy keys
@@ -161,14 +164,13 @@ spec:
         - retention.ms
         - cleanup.policy
 ````
-This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.  
-Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints).
 
-***
+This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team. Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints).
 
 #### More Audit Log CloudEvents into Kafka
 
 We have made more events available for the Audit Log Publisher:
+
 - IAM.User.Logout
 - IAM.User.Login
 - Kafka.ConsumerGroup.Duplicate
@@ -176,9 +178,6 @@ We have made more events available for the Audit Log Publisher:
 - Kafka.ConsumerGroup.Update ( when we reset the offset of the consumer group )
 
 A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
-
-
-***
 
 #### Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect
 

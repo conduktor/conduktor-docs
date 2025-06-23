@@ -22,7 +22,7 @@ For a local preview (on *localhost:3000*), run `yarn start`.
 
 If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
 
-```
+```bash
 yarn
 yarn build
 yarn start
@@ -136,7 +136,7 @@ To update release notes:
 1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
 1. Make sure your file has the following header:
 
-```
+```md
 ---
 date: 2025-11-25
 title: Chargeback
@@ -155,13 +155,13 @@ tags: features,fix
 
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
 
-```
+```md
 import Console1310 from './changelog/Console-1.31.0.md';
 ```
 
 1. Finally, add an entry at the top of the page, linking to your file. E.g.:
 
-```
+```md
 ## Console 1.131.0
 <Console1310 />
 ---

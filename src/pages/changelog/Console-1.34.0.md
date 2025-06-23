@@ -9,8 +9,10 @@ tags: features,fixes
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
 - [Conduktor Scale](#conduktor-scale)
+  - [Kafka Connect Policies](#kafka-connect-policies)
   - [Subscribe to application topics](#subscribe-to-application-topics)
 - [Conduktor Exchange](#conduktor-exchange)
+  - [Extended authentication mechanisms for Partner Zones](#extended-authentication-mechanisms-for-partner-zones)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 - [Known issues](#known-issues)
@@ -18,6 +20,7 @@ tags: features,fixes
 ### Conduktor Scale
 
 #### Kafka Connect Policies
+
 Central Teams can now configure Self-service policies targeting Connector resources.  
 
 ````yaml
@@ -33,14 +36,14 @@ spec:
     - condition: spec.configs["tasks.max"] == "1"
       errorMessage: Connector tasks.max must be set to 1
 ````
-The new policies use the [CEL language](https://cel.dev) to express the rule. Supported `targetKind` are `Connector` and `Topic`.  
-Check the dedicated [ResourcePolicy section](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#resource-policy) in the docs for more information.
 
-#### Subscribe to application topics
+The new policies use the [CEL language](https://cel.dev) to express the rule. Supported `targetKind` are `Connector` and `Topic`. [Find out more about the resourcePolicy](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#resource-policy).
+
+### Subscribe to application topics
 
 Application owners now have the ability to manage topic subscriptions across their organization. 
 
-Using the Topic Catalog, owners can subscribe to topics outside of their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster. 
+Using the Topic Catalog, owners can subscribe to topics outside of their own application, selecting from their list of applications and focusing only on valid instances that share the same Kafka cluster.
 
 The new interface provides flexible permission configuration, enabling read or write permissions for each subscription, as well as granular control over both user and service account permissions.
 

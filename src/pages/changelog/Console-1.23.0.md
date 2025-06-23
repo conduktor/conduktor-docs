@@ -22,14 +22,14 @@ docker pull conduktor/conduktor-console:1.23.0
 
 ### Features
 
- - [Self-service](#self-service)
-      - [Topic](#topic)
-      - [TopicPolicy](#topicpolicy)
-      - [Topic Catalog](#topic-catalog)
-      - [Application API Keys](#application-api-keys)
-    - [Editable columns on the Consume Page](#editable-columns-on-the-consume-page)
-    - [Quality of Life improvements](#quality-of-life-improvements)
-  - [Fixes](#fixes)
+- [Self-service](#self-service)
+  - [Topic](#topic)
+  - [TopicPolicy](#topicpolicy)
+  - [Topic Catalog](#topic-catalog)
+  - [Application API Keys](#application-api-keys)
+  - [Editable columns on the Consume Page](#editable-columns-on-the-consume-page)
+- [Quality of Life improvements](#quality-of-life-improvements)
+- [Fixes](#fixes)
 
 ---
 
@@ -106,12 +106,14 @@ In addition, Service Account's ACLs are now synchronized with the permissions fr
 
 #### Editable columns on the Consume Page
 
-You can now customise the columns you want to display in the Consume Page. Let us know if there's any additional metadata you want to see!
+You can now customize the columns you want to display in the Consume Page. Let us know if there's any additional metadata you want to see!
 
 ![Editable Columns](/images/changelog/platform/v23/qol-consume.png)
 
 #### Quality of Life improvements
+
 **Topic pages**
+
 - SchemaId is now displayed from the Message Viewer panel
 - Header count is now displayed from the Message Viewer panel
 - The More Options "..." button has been moved so that it's available from every Topic details tab
@@ -119,21 +121,25 @@ You can now customise the columns you want to display in the Consume Page. Let u
 - Added an "Add partitions" button in Partitions tab
 
 **Schema Registry pages**
+
 - The current schema is now inside a read-only area
 - Increased the width of the side panel when creating/updating schemas
 - Full height is used in the panel to show/edit the schema
 
 **Kafka Connect pages**
+
 - Kafka Connect List can now be sorted by the number of Tasks
 - Removing a Connector now properly redirects the user to the Connector list instead of the Configuration tab of the deleted Connector
 - Topics column is now sourced from more configuration keys (`kafka.topic`, `kafka.topics`, `topic`, `topics`)
 
 **Settings**
+
 - Permissions on KafkaConnect and ksqlDB now properly display the name instead of the UUID
 - Adding Users to Groups can now be done from the User details page directly
 - Added the Group name in the UI to be used in the API or CLI
 
 **Other**
+
 - Added Gateway version on the Interceptor List page
 - Added a configuration option to toggle OIDC logout when logging out from Console
 - Searching in screens now trims whitespace from the text supplied
