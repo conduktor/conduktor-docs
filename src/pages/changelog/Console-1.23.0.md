@@ -16,9 +16,9 @@ We have renamed the Console docker image to `conduktor/conduktor-console` to cla
 
 We will publish newer versions using both names for this release and the **next release** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
 
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.23.0
-````
+```
 
 ### Features
 
