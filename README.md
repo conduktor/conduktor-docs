@@ -1,14 +1,14 @@
 # Conduktor technical docs
 
-- [Deployment and structure](#deployment-and-structure)
-- [Docs best practice](#docs-best-practice)
-  - [Structure](#structure)
-  - [Images](#images)
-  - [Links](#links)
+- [Conduktor technical docs](#conduktor-technical-docs)
+  - [Deployment and structure](#deployment-and-structure)
+  - [Docs best practice](#docs-best-practice)
+    - [Structure](#structure)
+    - [Images](#images)
+    - [Links](#links)
   - [Tabs](#tabs)
-  - [Tags](#tags)
-- [Update release notes](#update-release-notes)
-- [Update public API docs](#update-public-api-docs)
+  - [Update release notes](#update-release-notes)
+  - [Update public API docs](#update-public-api-docs)
 
 [![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
 
@@ -82,7 +82,7 @@ Use tabs to break-up long paragraphs or provide options, [like this](https://doc
 
 To add tabs:
 
-````md
+```md
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
@@ -102,9 +102,10 @@ My second tab content:
 ```yaml title="second-tab.yaml"
 mySecondTab: "content"
 ```
+
 </TabItem>
 </Tabs>
-````
+```
 
 ## Tags
 
