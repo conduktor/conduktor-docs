@@ -8,24 +8,23 @@ description: Cortex Configuration
 This Configuration is for Cortex dependency image `conduktor/conduktor-console-cortex`
 :::
 
-## Table of Contents
+- [Environment variables](#environment-variables)
 - [Example configuration](#example-configuration)
-- [Overriding Configuration](#overriding-configuration)
+- [Overriding configuration](#overriding-configuration)
   - [Overriding with YAML](#overriding-with-yaml)
   - [Overriding with ConfigMap](#overriding-with-configmap)
 - [Troubleshooting](#troubleshooting)
   - [No metrics in the monitoring page](#no-metrics-in-the-monitoring-page)
   - [No Slack notification alerts](#no-slack-notification-alerts)
-- [Endpoint Authentication](#endpoint-authentication)
+- [Endpoint authentication](#endpoint-authentication)
 
+## Environment variables
 
-The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.  
+The only required property is `CDK_CONSOLE-URL`, everything else is related to storage for the metrics.
 
-By default, data will be stored in `/var/conduktor/monitoring` inside the running image.
-You can mount a volume on this folder to keep metrics data between updates.
-Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
+By default, data will be stored in `/var/conduktor/monitoring` inside the running image. You can mount a volume on this folder to keep metrics data between updates. Otherwise, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`
 
-| Environment Variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
+| Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
 | `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
@@ -63,15 +62,17 @@ Otherwise, you can use the storage parameters described below to store the data 
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
 
 ## Example configuration
-In a docker compose it may look like the following:
-````yaml
+
+In a Docker Compose file it may look like the following:
+
+```yaml
 version: '3.8'
 services:
   conduktor-console:
     image: conduktor/conduktor-console
     ports:
       - "8080:8080"
-    environment: 
+    environment:
       CDK_MONITORING_CORTEX-URL: http://conduktor-monitoring:9009/
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
@@ -84,23 +85,28 @@ services:
       - "9090:9090" # prometheus api
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
-````
+```
 
-## Overriding Configuration
+## Overriding configuration
+
+You can override the configuration of Cortex in two main ways.
 
 ### Overriding with YAML
-**Cortex**  
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.    
-This is not currently available for Alert Manager. 
+
+**Cortex**
+Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`.
+This is not currently available for Alert Manager.
 
 For example, create a file `cortex.yaml` add in only your overrides:
+
 ```yaml
 limits:
   ingestion_rate: 50000
   max_series_per_metric: 100000
 ```
-Mount to `/opt/override-configs/cortex.yaml`.  
-Spin up the container. Exec into the container and confirm the contents, replace `2` with the number of lines of override you wish to see, or remove grep to get the whole file:  
+
+Mount to `/opt/override-configs/cortex.yaml`.
+Spin up the container. Exec into the container and confirm the contents, replace `2` with the number of lines of override you wish to see, or remove grep to get the whole file:
 `cat /var/conduktor/configs/monitoring-cortex.yaml | grep limits -A2`.
 
 You should see a similar entry to the below in the opening logs:
@@ -109,7 +115,7 @@ You should see a similar entry to the below in the opening logs:
 INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
 ```
 
-**Prometheus**  
+**Prometheus**
 Prometheus configuration can be overridden with replace, by mounting a YAML file into path `/opt/override-configs/prometheus.yaml`. For an alternative path set the location using an environment variable `PROMETHEUS_OVERRIDE_CONFIG_FILE`.
 
 You should see a similar entry to the below in the opening logs:
@@ -142,10 +148,11 @@ data:
       evaluation_interval: 15s
 ```
 
-On chart `values.yaml` : 
+On chart `values.yaml` :
+
 ```yaml
 platformCortex:
-  extraVolumes: 
+  extraVolumes:
     - name: cortex-config-override
       configMap:
         name: conduktor-console-cortex-config
@@ -158,22 +165,25 @@ platformCortex:
           subPath: prometheus.yaml
 ```
 
-## Troubleshooting  
+## Troubleshooting
 
-### No metrics in the monitoring page  
-Go to `http://localhost:9090/targets` to see Prometheus scraping target status. 
+### No metrics in the monitoring page
 
-If it fails, check that you can query metrics endpoint from `conduktor-console-cortex` container. 
+Go to `http://localhost:9090/targets` to see Prometheus scraping target status.
+
+If it fails, check that you can query metrics endpoint from `conduktor-console-cortex` container.
 
 You might also have to configure `CDK_SCRAPER_SKIPSSLCHECK` or `CDK_SCRAPER_CAFILE` if `conduktor-console` is configured with [TLS termination](/platform/get-started/configuration/https-configuration/#https-configuration).
 
 ### No Slack notification alerts
-1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console. 
+
+1. Follow the steps to configure Slack integration in the **Integrations** tab. You'll be asked to create a Slack App and to set OAuth2 authentication token on Console.
 2. Don't forget to manually add Slack App bot to the channel integrations you want to use for alerts notifications.
-3. Enable notifications in the **Alerts** tab, and select the same channel as previously. 
+3. Enable notifications in the **Alerts** tab, and select the same channel as previously.
 4. [Create some alerts](/platform/navigation/monitoring/getting-started/create-alert#create-an-alert/).
 
-If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/). 
+If you still have issues with monitoring and alerting setup please [contact our support team](https://support.conduktor.io/).
 
-## Endpoint Authentication
+## Endpoint authentication
+
 Monitoring is not designed to be interacted with through the API endpoints by end users, only Console. As such no ingress is available externally and you should not set one up as there is no authentication mechanism.
