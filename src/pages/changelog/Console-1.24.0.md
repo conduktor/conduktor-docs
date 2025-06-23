@@ -18,9 +18,9 @@ We have renamed the Console docker image to `conduktor/conduktor-console` to cla
 
 Please modify your installation to reflect this change in advance of us deprecating the name `conduktor/conduktor-platform`.
 
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.24.0
-````
+```
 
 #### Change in ApplicationInstance Resource Type from GROUP to CONSUMER_GROUP
 
@@ -38,14 +38,18 @@ spec:
 
 ### Features
 
-- [Self-service](#self-service)
+- [Breaking Changes](#breaking-changes)
+  - [New Docker image name](#new-docker-image-name)
+  - [Change in ApplicationInstance Resource Type from GROUP to CONSUMER\_GROUP](#change-in-applicationinstance-resource-type-from-group-to-consumer_group)
+- [Features](#features)
+  - [Self-service](#self-service)
   - [Subject](#subject)
   - [ApplicationGroup](#applicationgroup)
   - [Topic Catalog](#topic-catalog)
-- [Manage Groups and Users using the CLI](#manage-groups-and-users-using-the-cli)
-- [Topic list columns Produce Rate and Last Activity](#topic-list-columns-produce-rate-and-last-activity)
-- [Active Data Policies in Topic Consume page](#active-data-policies-in-topic-consume-page)
-- [Quality of Life improvements](#quality-of-life-improvements)
+  - [Manage Groups and Users using the CLI](#manage-groups-and-users-using-the-cli)
+  - [Topic list columns Produce Rate and Last Activity](#topic-list-columns-produce-rate-and-last-activity)
+  - [Active Data Policies in Topic Consume page](#active-data-policies-in-topic-consume-page)
+  - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 #### Self-service
@@ -127,7 +131,7 @@ Looking to request access to another applications resources? You can now generat
 
 Manage your Console Group and Permissions lifecycle through IaC with the addition of the **Group** and **User** objects. Check out the example below and find the full definition via the [Resource Reference](https://docs.conduktor.io/platform/reference/resource-reference/) documentation.
 
-````yaml
+```yaml
 ---
 apiVersion: v2
 kind: Group
@@ -150,7 +154,7 @@ spec:
         - topicViewConfig
         - topicConsume
         - topicProduce
-````
+```
 
 #### Topic list columns Produce Rate and Last Activity
 

@@ -23,10 +23,11 @@ tags: features,fix
 In a previous release, we introduced Conduktor SQL. It was restricted to Admins because it did not apply any permission model.
 
 This new update brings full RBAC support on Conduktor SQL:
-- Users & Groups can only see and query the tables for which they have an associated Topic permission in Console
-- Data masking policies are applied (with limitations) 
 
-You can now bring SQL to all users within your organization.  
+- Users & Groups can only see and query the tables for which they have an associated Topic permission in Console
+- Data masking policies are applied (with limitations)
+
+You can now bring SQL to all users within your organization.
 
 For more detailed information, check out the [SQL security](/platform/guides/configure-sql#sql-security) section.
 
@@ -43,9 +44,9 @@ For more information, check out the [Multi-host configuration](/platform/get-sta
 
 #### Delegating authentication to an identity provider
 
-Console can now be configured to accept a JWT token from an external identity provider.  
-It allows you to directly use your identity provider for managing access to Console.  
-A common use case of this feature is to delegate authentication to your API gateway.  
+Console can now be configured to accept a JWT token from an external identity provider.
+It allows you to directly use your identity provider for managing access to Console.
+A common use case of this feature is to delegate authentication to your API gateway.
 
 For the full configuration details, check out the [documentation](/platform/get-started/configuration/user-authentication/jwt-auth).
 

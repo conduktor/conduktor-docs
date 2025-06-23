@@ -10,15 +10,16 @@ tags: features,fix
 
 - [Breaking Changes](#breaking-changes)
   - [Changes to Conduktor.io Labels](#changes-to-conduktorio-labels)
+  - [Important Note for CLI Users](#important-note-for-cli-users)
   - [Local Users Password policy update](#local-users-password-policy-update)
 - [Features](#features)
-  - [Conduktor Chargeback](#conduktor-chargeback-track-and-allocate-costs-and-resource-consumption)
+  - [Conduktor Chargeback: Track and Allocate Costs and Resource Consumption](#conduktor-chargeback-track-and-allocate-costs-and-resource-consumption)
   - [Console Homepage](#console-homepage)
   - [Consumer Group pages overhaul](#consumer-group-pages-overhaul)
   - [Self-Service Topic Catalog visibility](#self-service-topic-catalog-visibility)
   - [Self-Service New Topic Policy Allowed Keys](#self-service-new-topic-policy-allowed-keys)
   - [More Audit Log CloudEvents into Kafka](#more-audit-log-cloudevents-into-kafka)
-  - [Expanded Terraform Provider](#expanded-terraform-provider-kafka-cluster-schema-registry-kafka-connect)
+  - [Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect](#expanded-terraform-provider-kafka-cluster-schema-registry-kafka-connect)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
@@ -79,13 +80,14 @@ This change impacts you if:
 
 - Your Admin password doesn't comply with the new password policy (`CDK_ADMIN_PASSWORD`)
 - You have local user configured through YAML or Env variables (`CDK_AUTH_LOCALUSERS_0_PASSWORD`)
+
 :::
 
 Passwords set in existing installations that do not meet these requirements **will prevent Console from starting**, throwing a startup error in the logs like this:
 
-````md
+```md
 2024-11-21T14:25:47,434Z [console] ERROR zio-slf4j-logger - zio.Config$Error$InvalidData: (Invalid data at admin: Password must contain at least 8 characters including 1 uppercase letter, 1 lowercase letter, 1 number and 1 special symbol)
-````
+```
 
 Local Users previously created with the UI are not impacted. Update the passwords in your YAML or environment variables to meet the new policy before upgrading.
 
@@ -120,7 +122,7 @@ Consumer group details page is now organized in a way that helps understand the 
 - Topics tab shows the Consumer Group info grouped by its subscribed Topics
 - Members tab shows the Consumer Group info grouped by its active members
 
-Both Topics and Members lists can be explored further down to individual member/topic-partition assignments.  
+Both Topics and Members lists can be explored further down to individual member/topic-partition assignments.
 
 On top of that graphs are now directly available in the resource page for Lag and Time Lag, as well as a dedicated tab to manage Alerts.
 
@@ -130,7 +132,7 @@ On top of that graphs are now directly available in the resource page for Lag an
 
 You can now choose which Topics should be visible in the Topic Catalog by annotating their YAML.
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -140,16 +142,16 @@ metadata:
   catalogVisibility: PUBLIC # or PRIVATE
 spec:
   ...
-````
+```
 
-It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly  
+It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly
 Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance).
 
 #### Self-Service New Topic Policy Allowed Keys
 
-We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.  
+We have added a new constraint `AllowedKeys` to our Self-Service Topic Policy that restricts the properties that can be configured on a Topic.
 
-````yaml
+```yaml
 ---
 # Limits the Topic spec.configs to only have retention.ms and cleanup.policy keys
 apiVersion: self-service/v1
@@ -163,7 +165,7 @@ spec:
       keys:
         - retention.ms
         - cleanup.policy
-````
+```
 
 This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team. Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints).
 

@@ -19,21 +19,27 @@ This breaking change only impacts Local Gateway service accounts generated throu
 If you are not using Local Gateway services accounts (OIDC, mTLS, Delegated Kafka), you are **not** impacted.
 :::
 
-Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.  
+Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.
 
 In an **upcoming** release, we will strictly enforce that the username and the token matches. This will help reduce inconsistencies and avoid unexpected behaviors.
 
 **This breaking change is due for release 3.5.0.**
-For this release 3.3.0, and next product release 3.4.0, we'll only raise the following warning in the logs:  
+For this release 3.3.0, and next product release 3.4.0, we'll only raise the following warning in the logs:
 
-````md
+```md
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
-````
+```
 
-- [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
-- [Support for HTTPS APIs](#support-for-https-apis)
-- [Better UX for ACLs and superUsers](#better-ux-for-acls-and-superusers)
-- [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
+- [Upcoming Breaking change](#upcoming-breaking-change)
+  - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
+  - [Support for HTTPS APIs](#support-for-https-apis)
+  - [Better UX for ACLs and superUsers](#better-ux-for-acls-and-superusers)
+  - [Enable ACLs for Gateway (excl. Virtual Clusters)](#enable-acls-for-gateway-excl-virtual-clusters)
+  - [Enable ACLs for Virtual Clusters](#enable-acls-for-virtual-clusters)
+  - [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
+  - [Field-Level Encryption: Preserving Message Format to Enhance Usability](#field-level-encryption-preserving-message-format-to-enhance-usability)
+  - [Attempt to apply encryption to a message more than once will now fail](#attempt-to-apply-encryption-to-a-message-more-than-once-will-now-fail)
+  - [Deprecated support for Schema Based (tag) encryption with Protobuf](#deprecated-support-for-schema-based-tag-encryption-with-protobuf)
 - [General fixes](#general-fixes)
 - [Known issues](#known-issues)
 
@@ -50,7 +56,7 @@ We’re excited to introduce our new Gateway API, designed for seamless integrat
 
 Check the [CLI reference](/gateway/reference/cli-reference) to get started, and the [resources reference for more information on each concept](/gateway/reference/resources-reference/).
 
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: GatewayGroup
@@ -83,9 +89,9 @@ Interceptor/enforce-partition-limit: Created
 
 $ conduktor delete GatewayGroup groupB
 The group groupB is still used by the following interceptor(s): enforce-partition-limit
-````
+```
 
-**Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible. 
+**Note**: API V1 is still available, but we recommend that new users and those with simple Gateway configurations begin using the V2 API as soon as possible.
 We will announce a deprecation plan in the coming weeks and notify you in advance of which Gateway version will be the last to support the V1 APIs.
 
 #### Support for HTTPS APIs
@@ -97,16 +103,16 @@ It is now possible to configure HTTPS and mTLS authentication on the Gateway HTT
 To coincide with the clearly defined concepts established in API V2, we are making changes to ACLs management in Gateway.
 
 - ACLs and Super Users on the Gateway (excluding Virtual Clusters) must be configured through Environment Variables.
-- ACLs and Super Users on Virtual Clusters must now be driven explicitly through API/CLI.  
+- ACLs and Super Users on Virtual Clusters must now be driven explicitly through API/CLI.
 
 #### Enable ACLs for Gateway (excl. Virtual Clusters)
 
 Configure both environment variables:
 
-````shell
+```shell
 GATEWAY_ACL_ENABLED=true # default false
 GATEWAY_SUPER_USERS=alice,bob
-````
+```
 
 If `GATEWAY_SUPER_USERS` is not set, it will default to `GATEWAY_ADMIN_API_USERS` for backward compatibility.
 
@@ -157,7 +163,7 @@ Fields which cannot be encrypted in-place (effectively any non-string field) hav
 | fixed[] | every byte filled with charater "*" |
 | boolean | false |
 
-Note that the same default values are now used across all relevant plugins when manipulating a non-string field - Data Masking, Partial Decrypt, and Encrypt on Fetch. 
+Note that the same default values are now used across all relevant plugins when manipulating a non-string field - Data Masking, Partial Decrypt, and Encrypt on Fetch.
 
 #### Attempt to apply encryption to a message more than once will now fail
 

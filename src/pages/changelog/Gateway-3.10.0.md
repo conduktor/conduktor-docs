@@ -10,7 +10,7 @@ tags: features,fixes
 
 - [Breaking changes](#breaking-changes)
 - [New features](#new-features)
-- [Fixes](#fixes)
+  - [`GATEWAY_SECURITY_MODE` environment variable](#gateway_security_mode-environment-variable)
 
 ### Breaking changes
 

@@ -11,10 +11,12 @@ tags: features,fix
 - [Features](#features)
   - [Conduktor SQL](#conduktor-sql)
   - [Monitoring improvements](#monitoring-improvements)
+  - [Topic Monitoring](#topic-monitoring)
+  - [Cluster Health](#cluster-health)
   - [New CLI/API resource Alert](#new-cliapi-resource-alert)
   - [Shareable Filters](#shareable-filters)
-  - [Tags become Labels](#tags-become-labels)
-  - [Publish Audit Log CloudEvents into Kafka](#publish-auditlog-cloudevents-into-kafka)
+  - [Tags Become Labels](#tags-become-labels)
+  - [Publish AuditLog CloudEvents into Kafka](#publish-auditlog-cloudevents-into-kafka)
   - [Logging API](#logging-api)
 - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
@@ -32,8 +34,9 @@ It's currently only available to Console **Admins**, and will be made available 
 Index data from Kafka topics in a database to enable data to be queried from the **UI**, **API** or **CLI** using **SQL**.
 
 This allows you to troubleshoot, sample, analyze, aggregate and join data through:
- - Querying Kafka message data
- - Querying Kafka metadata (such as the offset, partition and timestamp)
+
+- Querying Kafka message data
+- Querying Kafka metadata (such as the offset, partition and timestamp)
 
 Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
 
@@ -44,11 +47,13 @@ Read the [dedicated guide](/platform/guides/configure-sql) on configuring SQL.
 **Query through the API & CLI**
 
 **CLI (upgrade to v0.3.1):**
+
 ```bash
 conduktor sql 'select * from "kafka-cluster-dev_customer_orders"' -n 2
 ```
 
 **API:**
+
 ```bash
 curl \
  --header "Authorization: $token" \
@@ -88,7 +93,7 @@ The 3 existing graphs have been moved to the Topic details.  We have also added 
 
 #### Cluster Health
 
-The charts and alerts are now available under the Brokers page with cleaner graphs.  
+The charts and alerts are now available under the Brokers page with cleaner graphs.
 
 - Produce Rate and Consume Rate
 - Disk Usage
@@ -98,6 +103,7 @@ The charts and alerts are now available under the Brokers page with cleaner grap
 ![Kafka Connect Wizard](/images/changelog/platform/v28/broker-monitoring.png)
 
 We have removed two metrics that were not always calculated correctly since the removal of the JMX integration back in release 1.15 (May 2023).
+
 - Active Controller Count
 - Unclean Leader Election
 
@@ -105,10 +111,10 @@ We have removed two metrics that were not always calculated correctly since the 
 
 #### New CLI/API resource Alert
 
-Alerts can now be created via the API or CLI in addition to the UI.  
+Alerts can now be created via the API or CLI in addition to the UI.
 See below for example config, and check the [Alerts documentation](/platform/reference/resource-reference/console/#alert) for more details.
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: Alert
@@ -121,14 +127,14 @@ spec:
   metric: MessageCount
   operator: GreaterThan
   threshold: 0
-````
+```
 
 Starting today, we recommend you use the new alerts available under Brokers and Topics pages.
 
 :::caution[Deprecation notice]
-**We do not plan to migrate existing alerts to the new Alert model.**  
+**We do not plan to migrate existing alerts to the new Alert model.**
 
-Original alerts will be removed in the near future in favor of the new ones.  
+Original alerts will be removed in the near future in favor of the new ones.
 We'll let you know a few releases in advance.
 
 If you have a large number of alerts configured and need some help, we're happy to help, please get in touch with our support.
@@ -155,15 +161,18 @@ With the introduction of the Self-service resource manifests, we brought custome
 In this release, we'll perform an automatic migration from Tags to Labels.
 
 Tags written with the naming convention `<key>/<value>` will automatically be added as similar labels:
-- `<key>: <value>`  
+
+- `<key>: <value>`
 
 If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created with a `tag-` prefix as follows:
-````yaml
+
+```yaml
 tag-<value>: true
-````
+```
 
 Here's an example of how tags will be migrated into labels:
-````yaml
+
+```yaml
 # Tags defined on topic:
 - format/avro
 - project/supplychain
@@ -182,22 +191,22 @@ labels:
   tag-color/red: true # Because conflict on "color"
   tag-wikipedia: true # Because wikipedia is not a key value pair
   tag-non-prod: true # Becuase non-prod is not a key value pair
-````
+```
 
 The Topic list and Topic details page have been modified to use labels instead of tags.
 
 ![Kafka Connect Wizard](/images/changelog/platform/v28/topic-labels.png)
 
-We plan to bring this capability on all resources (Connectors, Service Accounts, Consumer Groups, ...) over the next few releases.  
+We plan to bring this capability on all resources (Connectors, Service Accounts, Consumer Groups, ...) over the next few releases.
 Let us know which resource you would like to see covered first.
 
 ***
 
 #### Publish AuditLog CloudEvents into Kafka
 
-It is now possible to publish Console Audit Log events into a Kafka topic directly for any further use you may have for them, such as maintaining your own audit trail in other systems.  
+It is now possible to publish Console Audit Log events into a Kafka topic directly for any further use you may have for them, such as maintaining your own audit trail in other systems.
 
-The exportable audit log events have more detail compared to the current UI events, providing additional information about the event that has taken place.  
+The exportable audit log events have more detail compared to the current UI events, providing additional information about the event that has taken place.
 
 The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
@@ -217,23 +226,24 @@ The events conform to the [CloudEvents specification](https://github.com/cloudev
 ```
 
 An example Conduktor event would look like:
+
 ```json
 {
-	"source": "//kafka/kafkacluster/production/topic/website-orders",
-	"data": {
-		"eventType": "Kafka.Topic.Create",
-		// Additional event specific data...
-		"metadata": {
-			"name": "website-orders",
-			"cluster": "production"
-		}
-		// Additional event specific metadata...
-	},
-	"datacontenttype": "application/json",
-	"id": "ad85122c-0041-421e-b04b-6bc2ec901e08",
-	"time": "2024-10-10T07:52:07.483140Z",
-	"type": "AuditLogEventType(Kafka,Topic,Create)",
-	"specversion": "1.0"
+ "source": "//kafka/kafkacluster/production/topic/website-orders",
+ "data": {
+  "eventType": "Kafka.Topic.Create",
+  // Additional event specific data...
+  "metadata": {
+   "name": "website-orders",
+   "cluster": "production"
+  }
+  // Additional event specific metadata...
+ },
+ "datacontenttype": "application/json",
+ "id": "ad85122c-0041-421e-b04b-6bc2ec901e08",
+ "time": "2024-10-10T07:52:07.483140Z",
+ "type": "AuditLogEventType(Kafka,Topic,Create)",
+ "specversion": "1.0"
 }
 ```
 
@@ -250,6 +260,7 @@ Check the [associated documentation](/platform/get-started/troubleshooting/logs-
 curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
   -H "Authorization: Bearer $API_KEY"
 ```
+
 ***
 
 ### Quality of Life improvements

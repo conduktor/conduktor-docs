@@ -44,7 +44,7 @@ If you want to know how many messages were produced **between** two datetimes, y
 
 ![Consume Between Dates](/images/changelog/platform/v19/between-dates.png)
 
-It works particularly well in conjunction with **filters**, whereby you can now count how many messages matched your filters and how many total messages were produced between those dates. 
+It works particularly well in conjunction with **filters**, whereby you can now count how many messages matched your filters and how many total messages were produced between those dates.
 
 Note that in the example below, **190** records matches the filter conditions, out of the total **10,522** consumed.
 
@@ -52,7 +52,7 @@ Note that in the example below, **190** records matches the filter conditions, o
 
 #### Provider Integrations within Conduktor Console
 
-Connect with your Kafka Provider to manage their benefits directly in Conduktor Console.  With this first iteration, we bring features to Console that are only available with the provider's APIs.  
+Connect with your Kafka Provider to manage their benefits directly in Conduktor Console.  With this first iteration, we bring features to Console that are only available with the provider's APIs.
 
 ![Provider Tab](/images/changelog/platform/v19/provider-tab.png)
 
@@ -94,7 +94,7 @@ To manage Confluent Cloud resources, navigate to the **Service Accounts** screen
 
 Kafka Clusters, Schema Registry and Kafka Connects configurations are now properly synced when configured from Yaml and Environment Variables (ie. GitOps way)
 
-````yaml
+```yaml
 clusters:
   - id: ccloud
     name: Confluent Cloud ABCD
@@ -103,7 +103,7 @@ clusters:
       security.protocol=SASL_SSL
       sasl.mechanism=PLAIN
       sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
-        username='<CLUSTER-API-KEY>' \ 
+        username='<CLUSTER-API-KEY>' \
         password='<CLUSTER-API-PASSWORD>';
     kafkaflavor: # Optional, for Service Accounts & Api Key support
       type: Confluent
@@ -123,8 +123,7 @@ clusters:
         security:
           username: username
           password: password
-    
-````
+```
 
 Previously, configuring clusters using Yaml or Environment Variables was acting as INSERT-only (ie. Not Gitops).
 
@@ -132,15 +131,15 @@ We still recommend the use of Console API to maintain your Cluster configuration
 
 #### Better memory configuration
 
-**RUN_MODE** is gone!  
+**RUN_MODE** is gone!
 We now rely on container CGroups limits and use up to 80% of container memory limit for JVM max heap size.
 Our settings are the following
 
-```` shell
+``` shell
 -XX:+UseContainerSupport -XX:MaxRAMPercentage=80
-````
+```
 
-**What does it mean for you?**  
+**What does it mean for you?**
 You now only need to care about the limits that you set to your container. [Find out more](https://bell-sw.com/announcements/2020/10/28/JVM-in-Linux-containers-surviving-the-isolation/).
 
 ***

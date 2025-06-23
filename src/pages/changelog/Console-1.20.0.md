@@ -8,13 +8,14 @@ tags: features,fix
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-### Features
-
-- [UI Navigation Overhaul](#ui-navigation-overhaul)
-- [Sort, filter and customize the Topic and Consumer Group lists](#sort-filter-and-customize-the-topic-and-consumer-group-lists)
-- [Import records from CSV](#import-records-from-csv)
-- [Other features and improvements](#other-features-and-improvements)
+- [Features](#features)
+  - [UI Navigation Overhaul](#ui-navigation-overhaul)
+  - [Sort, filter and customize the Topic and Consumer Group lists](#sort-filter-and-customize-the-topic-and-consumer-group-lists)
+  - [Import records from CSV](#import-records-from-csv)
+  - [Other features and improvements](#other-features-and-improvements)
 - [Fixes](#fixes)
+
+### Features
 
 #### UI Navigation Overhaul
 
@@ -47,13 +48,13 @@ Give us [feedback](https://conduktor.io/roadmap) on this feature.
 
 #### Other features and improvements
 
-When adding a filter to search in a specific field, the input is now an autocomplete text field instead of a dropdown list. It's now even quicker to create your own filters on the fly!  
+When adding a filter to search in a specific field, the input is now an autocomplete text field instead of a dropdown list. It's now even quicker to create your own filters on the fly!
 ![Autocomplete](/images/changelog/platform/v20/autocomplete.png)
 
-The Table view quick filter buttons now generates Simple Filters instead of advanced JS filters.  
+The Table view quick filter buttons now generates Simple Filters instead of advanced JS filters.
 ![Table Filter](/images/changelog/platform/v20/table-filters.png)
 
-Say goodbye to internal UUIDs! URLs are now taking advantage of the user-defined technical id making sharable links all the more readable with colleagues.  
+Say goodbye to internal UUIDs! URLs are now taking advantage of the user-defined technical id making sharable links all the more readable with colleagues.
 ![Technical ID](/images/changelog/platform/v20/technical-id.png)
 
 ### Fixes

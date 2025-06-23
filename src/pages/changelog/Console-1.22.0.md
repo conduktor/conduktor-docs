@@ -16,13 +16,15 @@ We have renamed the Console docker image to `conduktor/conduktor-console` to cla
 
 We will publish newer versions using both names for the next **two releases** only. Please modify your installation to reflect this change in advance of us deprecating the name `conduktor-platform`.
 
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.22.0
-````
+```
 
 ### Features
 
-- [New Docker image name](#new-docker-image-name)
+- [Future Breaking Changes](#future-breaking-changes)
+  - [New Docker image name](#new-docker-image-name)
+- [Features](#features)
   - [Topic as a Service becomes Self-service](#topic-as-a-service-becomes-self-service)
   - [Conduktor CLI](#conduktor-cli)
   - [Custom Deserializers](#custom-deserializers)
@@ -37,7 +39,7 @@ Self-service is a replacement for Topic as a Service. It is more centered toward
 - The Application list becomes Application Catalog
 - At the moment, we decided that we should control everything from the CLI only. The UI will remain Read-Only for now, but the intention is to bring back UI-driven operations in a future release.
 
-[Read More about Self-service](https://docs.conduktor.io/platform/navigation/self-serve/)  
+[Read More about Self-service](https://docs.conduktor.io/platform/navigation/self-serve/)
 
 To start using Self-service, you must download our Conduktor CLI which lets you deploy resource files in Console.
 
@@ -55,7 +57,7 @@ Our objective is to let Application Teams and Central Teams manage both Console 
 
 More to come, automate everything!
 
-````yaml
+```yaml
 ---
 apiVersion: "v1"
 kind: "ApplicationInstance"
@@ -72,7 +74,7 @@ spec:
     - type: GROUP
       name: "click."
       patternType: PREFIXED
-````
+```
 
 #### Custom Deserializers
 

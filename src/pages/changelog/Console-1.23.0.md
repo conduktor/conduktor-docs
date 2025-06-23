@@ -22,13 +22,16 @@ docker pull conduktor/conduktor-console:1.23.0
 
 ### Features
 
-- [Self-service](#self-service)
+- [Future Breaking Changes](#future-breaking-changes)
+  - [New Docker image name](#new-docker-image-name)
+- [Features](#features)
+  - [Self-service](#self-service)
   - [Topic](#topic)
   - [TopicPolicy](#topicpolicy)
   - [Topic Catalog](#topic-catalog)
   - [Application API Keys](#application-api-keys)
   - [Editable columns on the Consume Page](#editable-columns-on-the-consume-page)
-- [Quality of Life improvements](#quality-of-life-improvements)
+  - [Quality of Life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
 ---
@@ -37,7 +40,7 @@ docker pull conduktor/conduktor-console:1.23.0
 
 There's a host of new functionality available providing our first truly powerful self-service release. This comes from the addition of two new resources (Topic, TopicPolicy), application tokens, a topic catalog and service account synchronization.
 
-Application Teams can now manage their Topic resource lifecycle through IaC with the addition of the [Topic](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#topic) object, and they can do this safely with Platform Teams putting in place a [Topic Policy](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#topic-policy) to restrict expensive configurations and enforce naming standards.  
+Application Teams can now manage their Topic resource lifecycle through IaC with the addition of the [Topic](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#topic) object, and they can do this safely with Platform Teams putting in place a [Topic Policy](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#topic-policy) to restrict expensive configurations and enforce naming standards.
 
 Checkout the definitions below and find the full list of resource definitions via the [Resource Reference](https://docs.conduktor.io/platform/reference/resource-reference/) documentation.
 
@@ -65,6 +68,7 @@ spec:
 
 TopicPolicy lets Platform Team define governance rules to restrict Application Teams to create Topics with misconfigurations.
 This is also useful to enforce naming convention or metadata annotation by Application Teams.
+
 ```yaml
 ---
 apiVersion: "v1"
@@ -81,7 +85,7 @@ spec:
       values: ["3"]
     spec.configs.retention.ms:
       constraint: Range
-      max: 604800000  # 7d 
+      max: 604800000  # 7d
       min: 3600000    # 1h
 ```
 
