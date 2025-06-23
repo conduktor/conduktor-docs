@@ -21,12 +21,12 @@ Before creating data quality Rules and Policies, you have to:
 
 - use **Conduktor Console 1.34** or later
 - use **Conduktor Gateway 3.9** or later
-- be logged in as an admin to Console UI (or use an admin token for the CLI)
-- in Console, [configure your Gateway cluster](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials
+- be logged in as an admin to Console UI or use an admin token for the Conduktor Command Line Interface (CLI)
+- in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 ## Rules
 
-You can create Rules with CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+You can create Rules with the Common Expression Language (CEL) expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
 :::info[Rules require Policies]
 Rules do nothing on their own - you **have to** to attach them to a Policy.
@@ -69,7 +69,7 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
         type: Cel
     ```
 
-2. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
 
     ```bash
     conduktor apply -f rule.yaml
@@ -78,12 +78,28 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 </TabItem>
 </Tabs>
 
-### Example Rules
+### Built-in Rules
 
-Here are some sample data quality Rules.
+We provide built-in validation Rules that can't be achieved with CEL.
 
-:::info[Amend values if using these samples]
-Make sure you amend the field values to use correct fields, if using these examples.
+:::info[Supported schema registries]
+We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
+:::
+
+#### EnforceAvro
+
+`EnforceAvro` ensures that:
+
+- Your messages have a schema ID prepended to the message content.
+- The schema ID exists within your schema registry.
+- The schema it references is of type `avro`.
+
+### Sample Rules
+
+Here are some examples of data quality rules.
+
+:::info[Adjust values]
+Make sure you amend these examples to use your values.
 :::
 
 <details>
@@ -138,6 +154,7 @@ You can create a Policy through the Console UI through the following steps:
 1. Define the Policy details:
    - Add a descriptive **name** for the Policy.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
+   - Select a group to own the Policy. This controls who can view and manage the Policy, and which resources can be targeted.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Select Rules to be used in the Policy:
    - Every Policy must have at least one Rule
@@ -161,6 +178,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
     kind: DataQualityPolicy
     metadata:
         name: check-order-payload
+        group: orders-team
     spec:
         displayName: Verify the order items
         description: Verify the order items payloads on purchase-pipeline topic.
@@ -193,6 +211,61 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 :::info[Enabling block action]
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
+
+### Assign permissions
+
+Policies are **owned by user groups** and can be created by admin users or groups with the `Manage data quality` permission enabled.
+
+To apply this permission to a group, go to **Settings** > **Groups** and in the **Resource access** tab tick the `Manage data quality` checkbox for the relevant resources, as required.
+
+:::info[Applying permissions]
+Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
+:::
+
+![The 'manage data quality' permission in the topics table](/guide/topic-dq-manage-permission.png)
+
+### Set up Policy violation alerts
+
+You can create alerts that are triggered when a Policy violation happens. Data quality alerts can be owned by groups or individual users.
+
+<Tabs>
+<TabItem value="ui" label="Console UI">
+
+To create a data quality policy alert via the UI, go to the details page of a Policy (click on the button next to the violations graph) or from the alert tab on the Policies list page.
+
+A data quality policy alert needs to specify a Policy and a threshold: trigger after X violations within Y minutes/hours/days. This threshold replaces the combination of metric, operator and value used in other alerts.
+
+[Find out more about alerts](/platform/navigation/settings/alerts).
+
+</TabItem>
+
+<TabItem value="cli" label="Conduktor CLI">
+
+You can use the CLI to create a data quality policy alert:
+
+1. Save this example to file, e.g. `alert.yaml`:
+
+    ```yaml
+    apiVersion: v3
+    kind: Alert
+    metadata:
+      name: alert
+      group: my-group
+    spec:
+      type: DataQualityPolicyAlert
+      policyName: my-policy
+      triggerAfter: 1
+      withinInSeconds: 30
+    ```
+
+2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+
+    ```bash
+    conduktor apply -f alert.yaml
+    ```
+
+</TabItem>
+</Tabs>
 
 ### Using multiple Policies
 
