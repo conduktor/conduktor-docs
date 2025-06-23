@@ -217,7 +217,7 @@ To apply this permission to a group, go to **Settings** > **Groups** and in the 
 Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
 :::
 
-![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](/docs/platform/navigation/data-quality/assets/topic-dq-manage-permission.png)
+![The 'manage data quality' permission is the final column in the topics table in resource access tab of the group settings page](./assets/topic-dq-manage-permission.png)
 
 ### Set up Policy violation alerts
 
