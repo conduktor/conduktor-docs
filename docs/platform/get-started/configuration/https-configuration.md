@@ -13,7 +13,7 @@ Configuration properties are:
 - `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH` : path to server private key file  
 
 :::note
-The certificate and private key files must allow read from user `conduktor-platform` (uid 10001 gid 0), but don't need to be readable system-wide.
+The certificate and private key files must allow read from user `conduktor-platform` (by default UID 10001, GID 0), but don't need to be readable system-wide.
 :::
 
 ## Example configuration using docker-compose
