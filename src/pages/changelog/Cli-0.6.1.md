@@ -10,6 +10,7 @@ tags: fixes
 
 ### Fixes
 
-- Addresses a minor regression in error handling from v0.6.0 for resource applies: The CLI now correctly exits with a non-zero status code if any resource apply operation fails. This ensures that automation and CI/CD pipelines can reliably detect failures.
+- Fixed an intermittent failure on some apply runs where kind ordering would not be respected. In some scenarios the parent resource is not made before the child (e.g.  ApplicationInstances being created before Applications) and the run would fail, this could be fixed by attempting a retry.
+- Fixed an issue where failed runs would not return an exit code, leading to silent failures in CI actions.
 
 [Find out more](https://github.com/conduktor/ctl/releases/tag/v0.6.1).
