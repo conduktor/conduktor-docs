@@ -3,7 +3,7 @@ date: 2025-06-24
 title: Conduktor CLI
 description: docker pull conduktor/conduktor-ctl:v0.6.1
 solutions: cli
-tags: features,fixes
+tags: fixes
 ---
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
