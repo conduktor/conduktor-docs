@@ -10,7 +10,7 @@ tags: fixes
 
 ### Fixes
 
-- Fixed an intermittent failure on some apply runs where kind ordering would not be respected. In some scenarios the parent resource is not made before the child (e.g.  ApplicationInstances being created before Applications) and the run would fail, this could be fixed by attempting a retry.
-- Fixed an issue where failed runs would not return an exit code, leading to silent failures in CI actions.
+- Fixed an issue introcuded in `v0.6.0`, where intermittent failure on some apply runs where kind ordering would not be respected. In some scenarios the parent resource is not made before the child (e.g.  ApplicationInstances being created before Applications) and the run would fail, this could be fixed by attempting a retry.
+- Fixed an issue introduced in `v0.6.0` where failed runs would not return an exit code, leading to silent failures in CI actions.
 
 [Find out more](https://github.com/conduktor/ctl/releases/tag/v0.6.1).
