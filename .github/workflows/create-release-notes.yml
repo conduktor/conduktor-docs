@@ -25,11 +25,6 @@ jobs:
         with:
           ref: main
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-
       - name: Validate inputs
         run: |
           if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" && -z "${{ github.event.inputs.cli_version }}" ]]; then
@@ -169,10 +164,8 @@ jobs:
             CONSOLE_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.console_version }} | tr -d '.')
             CONSOLE_IMPORT="import Console$CONSOLE_VERSION_NO_DOTS from './changelog/Console-${{ github.event.inputs.console_version }}.md';"
             
-            # Add Console import statement before the previous Console entry
-            sed -i '' "1,/import Console[0-9]* from/{/import Console[0-9]* from/i\\
-            ${CONSOLE_IMPORT}
-            }" "src/pages/changelog.mdx"
+            # Add Console import statement before the first existing Console import
+            sed -i "0,/^import Console[0-9]* from/{s/^import Console/import Console$CONSOLE_VERSION_NO_DOTS from '.\/changelog\/Console-${{ github.event.inputs.console_version }}.md';\n&/}" src/pages/changelog.mdx
             
             # Add Console section at the top of the release notes content
             CONTENT_TO_ADD="${CONTENT_TO_ADD}## Console ${{ github.event.inputs.console_version }}\\
@@ -186,10 +179,8 @@ jobs:
             GATEWAY_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.gateway_version }} | tr -d '.')
             GATEWAY_IMPORT="import Gateway$GATEWAY_VERSION_NO_DOTS from './changelog/Gateway-${{ github.event.inputs.gateway_version }}.md';"
             
-            # Add Gateway import statement before the previous Gateway entry
-            sed -i '' "1,/import Gateway[0-9]* from/{/import Gateway[0-9]* from/i\\
-            ${GATEWAY_IMPORT}
-            }" "src/pages/changelog.mdx"
+            # Add Gateway import statement before the first existing Gateway import
+            sed -i "0,/^import Gateway[0-9]* from/{s/^import Gateway/import Gateway$GATEWAY_VERSION_NO_DOTS from '.\/changelog\/Gateway-${{ github.event.inputs.gateway_version }}.md';\n&/}" src/pages/changelog.mdx
             
             # Add Gateway section at the top of the release notes content
             CONTENT_TO_ADD="## Gateway ${{ github.event.inputs.gateway_version }}\\
@@ -203,10 +194,8 @@ jobs:
             CLI_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.cli_version }} | tr -d '.')
             CLI_IMPORT="import Cli$CLI_VERSION_NO_DOTS from './changelog/Cli-${{ github.event.inputs.cli_version }}.md';"
             
-            # Add CLI import statement before the previous CLI entry
-            sed -i '' "1,/import Cli[0-9]* from/{/import Cli[0-9]* from/i\\
-            ${CLI_IMPORT}
-            }" "src/pages/changelog.mdx"
+            # Add CLI import statement before the first existing CLI import
+            sed -i "0,/^import Cli[0-9]* from/{s/^import Cli/import Cli$CLI_VERSION_NO_DOTS from '.\/changelog\/Cli-${{ github.event.inputs.cli_version }}.md';\n&/}" src/pages/changelog.mdx
 
             # Add CLI section to the release notes content (after Gateway if present, otherwise at top)
             if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
