@@ -6,6 +6,10 @@ description: Chargeback
 
 ## Overview
 
+:::danger[Scale Plus functionality]
+This feature is available with [Conduktor Scale Plus](https://conduktor.io/scale) only.
+:::
+
 Chargeback lets you visualize the cost allocation of Service Accounts on a few key metrics.
 :::info
 At the moment, the data is aggregated per Service Account and the available metrics collected are the produced and consumed bytes.  
