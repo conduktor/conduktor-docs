@@ -1,0 +1,173 @@
+name: Update API Documentation
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      console_version:
+        description: 'Console Version (e.g., 1.37.0)'
+        required: false
+      gateway_version:
+        description: 'Gateway Version (e.g., 3.12.0)'
+        required: false
+
+jobs:
+  update-api-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout docs repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Validate inputs
+        run: |
+          if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" ]]; then
+            echo "::error::At least one of console_version or gateway_version must be provided"
+            exit 1
+          fi
+
+      - name: Create branch
+        run: |
+          BRANCH_NAME="update-api-docs"
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            BRANCH_NAME="${BRANCH_NAME}-console-${{ github.event.inputs.console_version }}"
+          fi
+          
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            BRANCH_NAME="${BRANCH_NAME}-gateway-${{ github.event.inputs.gateway_version }}"
+          fi
+          
+          git checkout -b "$BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Checkout Console Plus repository
+        if: ${{ github.event.inputs.console_version != '' }}
+        uses: actions/checkout@v3
+        with:
+          repository: conduktor/console-plus
+          ref: release-${{ github.event.inputs.console_version }}
+          path: console-plus
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy Console API docs
+        if: ${{ github.event.inputs.console_version != '' }}
+        run: |
+          # Copy the API documentation file
+          cp console-plus/modules/consoleplus/app/src/main/resources/public-api-doc.yaml \
+             static/developers/openapi/console/console-${{ github.event.inputs.console_version }}.yaml
+          
+          echo "Console API docs copied successfully"
+
+      - name: Checkout Conduktor Proxy (Gateway) repository
+        if: ${{ github.event.inputs.gateway_version != '' }}
+        uses: actions/checkout@v3
+        with:
+          repository: conduktor/conduktor-proxy
+          ref: ${{ github.event.inputs.gateway_version }}
+          path: conduktor-proxy
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy Gateway API docs
+        if: ${{ github.event.inputs.gateway_version != '' }}
+        run: |
+          # Copy the v1 API documentation file
+          cp conduktor-proxy/proxy/src/main/resources/gateway-API.yaml \
+             static/developers/openapi/gateway/gateway-${{ github.event.inputs.gateway_version }}-v1.yaml
+          
+          # Copy the v2 API documentation file
+          cp conduktor-proxy/api-definition/src/main/resources/openapi.yaml \
+             static/developers/openapi/gateway/gateway-${{ github.event.inputs.gateway_version }}-v2.yaml
+          
+          echo "Gateway API docs copied successfully"
+
+      - name: Update manifest.json
+        run: |
+          cd $GITHUB_WORKSPACE
+          
+          # Use jq to update the manifest.json file
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            # Add console version to the array if it doesn't exist
+            jq --arg version "${{ github.event.inputs.console_version }}" \
+               'if (.console | index($version)) then . else .console += [$version] | .console |= sort_by(split(".") | map(tonumber)) end' \
+               static/developers/openapi/manifest.json > tmp.json && mv tmp.json static/developers/openapi/manifest.json
+            
+            echo "Added console version ${{ github.event.inputs.console_version }} to manifest"
+          fi
+          
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            # Add gateway version to the array if it doesn't exist
+            jq --arg version "${{ github.event.inputs.gateway_version }}" \
+               'if (.gateway | index($version)) then . else .gateway += [$version] | .gateway |= sort_by(split(".") | map(tonumber)) end' \
+               static/developers/openapi/manifest.json > tmp.json && mv tmp.json static/developers/openapi/manifest.json
+            
+            echo "Added gateway version ${{ github.event.inputs.gateway_version }} to manifest"
+          fi
+
+      - name: Commit changes
+        run: |
+          # Add all changed files
+          git add static/developers/openapi/
+          
+          # Check if there are any changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          # Build commit message
+          COMMIT_MSG="Update API documentation for "
+          COMPONENTS=()
+          
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            COMPONENTS+=("Console ${{ github.event.inputs.console_version }}")
+          fi
+          
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            COMPONENTS+=("Gateway ${{ github.event.inputs.gateway_version }}")
+          fi
+          
+          # Join components with proper formatting
+          if [[ ${#COMPONENTS[@]} -eq 1 ]]; then
+            COMMIT_MSG="${COMMIT_MSG}${COMPONENTS[0]}"
+          elif [[ ${#COMPONENTS[@]} -eq 2 ]]; then
+            COMMIT_MSG="${COMMIT_MSG}${COMPONENTS[0]} and ${COMPONENTS[1]}"
+          fi
+          
+          git commit -m "$COMMIT_MSG"
+          echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+
+      - name: Push branch
+        run: |
+          git push origin "$BRANCH_NAME"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BRANCH_NAME }}
+          base: main
+          title: "${{ env.COMMIT_MSG }}"
+          body: |
+            This PR updates API documentation by copying OpenAPI specifications from the source repositories:
+            
+            ${{ github.event.inputs.console_version != '' && format('- Console {0}: Copied from console-plus repository tag release-{0}', github.event.inputs.console_version) || '' }}
+            ${{ github.event.inputs.gateway_version != '' && format('- Gateway {0}: Copied from conduktor-proxy repository tag {0}', github.event.inputs.gateway_version) || '' }}
+            
+            **Files updated:**
+            ${{ github.event.inputs.console_version != '' && format('- `static/developers/openapi/console/console-{0}.yaml`', github.event.inputs.console_version) || '' }}
+            ${{ github.event.inputs.gateway_version != '' && format('- `static/developers/openapi/gateway/gateway-{0}-v1.yaml`', github.event.inputs.gateway_version) || '' }}
+            ${{ github.event.inputs.gateway_version != '' && format('- `static/developers/openapi/gateway/gateway-{0}-v2.yaml`', github.event.inputs.gateway_version) || '' }}
+            - `static/developers/openapi/manifest.json` (updated version arrays)
+            
+            Please review the API documentation before merging.
+          draft: true
