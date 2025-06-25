@@ -6,15 +6,12 @@ on:
       console_version:
         description: 'Console Version (e.g., 1.37.0)'
         required: false
-      console_release_date:
-        description: 'Console Release Date (YYYY-MM-DD)'
-        required: false
       gateway_version:
         description: 'Gateway Version (e.g., 3.12.0)'
         required: false
-      gateway_release_date:
-        description: 'Gateway Release Date (YYYY-MM-DD)'
-        required: false
+      release_date:
+        description: 'Release Date (YYYY-MM-DD)'
+        required: true
 
 jobs:
   create-release-notes:
@@ -34,16 +31,6 @@ jobs:
         run: |
           if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" ]]; then
             echo "::error::At least one of console_version or gateway_version must be provided"
-            exit 1
-          fi
-          
-          if [[ -n "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.console_release_date }}" ]]; then
-            echo "::error::Console release date must be provided when console version is specified"
-            exit 1
-          fi
-          
-          if [[ -n "${{ github.event.inputs.gateway_version }}" && -z "${{ github.event.inputs.gateway_release_date }}" ]]; then
-            echo "::error::Gateway release date must be provided when gateway version is specified"
             exit 1
           fi
           
@@ -73,7 +60,7 @@ jobs:
           CONSOLE_FILE="src/pages/changelog/Console-${{ github.event.inputs.console_version }}.md"
           cat > "$CONSOLE_FILE" << EOL
           ---
-          date: ${{ github.event.inputs.console_release_date }}
+          date: ${{ github.event.inputs.release_date }}
           title: Console ${{ github.event.inputs.console_version }}
           description: Conduktor Console ${{ github.event.inputs.console_version }}
           solutions: console
@@ -105,7 +92,7 @@ jobs:
           GATEWAY_FILE="src/pages/changelog/Gateway-${{ github.event.inputs.gateway_version }}.md"
           cat > "$GATEWAY_FILE" << EOL
           ---
-          date: ${{ github.event.inputs.gateway_release_date }}
+          date: ${{ github.event.inputs.release_date }}
           title: Gateway ${{ github.event.inputs.gateway_version }}
           description: docker pull conduktor/conduktor-gateway:${{ github.event.inputs.gateway_version }}
           solutions: gateway
@@ -219,8 +206,8 @@ jobs:
           title: "Add release notes for ${{ github.event.inputs.console_version != '' && format('Console {0}', github.event.inputs.console_version) || '' }}${{ github.event.inputs.console_version != '' && github.event.inputs.gateway_version != '' && ' and ' || '' }}${{ github.event.inputs.gateway_version != '' && format('Gateway {0}', github.event.inputs.gateway_version) || '' }}"
           body: |
             This PR adds release notes for:
-            ${{ github.event.inputs.console_version != '' && format('- Console {0} (released {1})', github.event.inputs.console_version, github.event.inputs.console_release_date) || '' }}
-            ${{ github.event.inputs.gateway_version != '' && format('- Gateway {0} (released {1})', github.event.inputs.gateway_version, github.event.inputs.gateway_release_date) || '' }}
+            ${{ github.event.inputs.console_version != '' && format('- Console {0} (released {1})', github.event.inputs.console_version, github.event.inputs.release_date) || '' }}
+            ${{ github.event.inputs.gateway_version != '' && format('- Gateway {0} (released {1})', github.event.inputs.gateway_version, github.event.inputs.release_date) || '' }}
             
             Please add the release notes content to the markdown files before merging.
           draft: true
