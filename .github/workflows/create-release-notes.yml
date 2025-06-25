@@ -1,0 +1,226 @@
+name: Create Release Notes
+
+on:
+  workflow_dispatch:
+    inputs:
+      console_version:
+        description: 'Console Version (e.g., 1.37.0)'
+        required: false
+      console_release_date:
+        description: 'Console Release Date (YYYY-MM-DD)'
+        required: false
+      gateway_version:
+        description: 'Gateway Version (e.g., 3.12.0)'
+        required: false
+      gateway_release_date:
+        description: 'Gateway Release Date (YYYY-MM-DD)'
+        required: false
+
+jobs:
+  create-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Validate inputs
+        run: |
+          if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" ]]; then
+            echo "::error::At least one of console_version or gateway_version must be provided"
+            exit 1
+          fi
+          
+          if [[ -n "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.console_release_date }}" ]]; then
+            echo "::error::Console release date must be provided when console version is specified"
+            exit 1
+          fi
+          
+          if [[ -n "${{ github.event.inputs.gateway_version }}" && -z "${{ github.event.inputs.gateway_release_date }}" ]]; then
+            echo "::error::Gateway release date must be provided when gateway version is specified"
+            exit 1
+          fi
+          
+          echo "Validation passed!"
+
+      - name: Create branch
+        run: |
+          BRANCH_NAME=""
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            BRANCH_NAME="console-${{ github.event.inputs.console_version }}"
+          fi
+          
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            if [[ -n "$BRANCH_NAME" ]]; then
+              BRANCH_NAME="${BRANCH_NAME}_gateway-${{ github.event.inputs.gateway_version }}"
+            else
+              BRANCH_NAME="gateway-${{ github.event.inputs.gateway_version }}"
+            fi
+          fi
+          
+          git checkout -b "$BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create Console release note file
+        if: ${{ github.event.inputs.console_version != '' }}
+        run: |
+          CONSOLE_FILE="src/pages/changelog/Console-${{ github.event.inputs.console_version }}.md"
+          cat > "$CONSOLE_FILE" << EOL
+          ---
+          date: ${{ github.event.inputs.console_release_date }}
+          title: Console ${{ github.event.inputs.console_version }}
+          description: Conduktor Console ${{ github.event.inputs.console_version }}
+          solutions: console
+          tags: features,fixes
+          ---
+          
+          *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
+          ## Breaking Changes
+
+          - \`Delete if not applicable\`
+
+          ## New Features
+
+          - \`Delete if not applicable\`
+
+          ## Quality of life improvements
+
+          - \`Delete if not applicable\`
+
+          ## Fixes
+
+          - \`Delete if not applicable\`
+          EOL
+
+      - name: Create Gateway release note file
+        if: ${{ github.event.inputs.gateway_version != '' }}
+        run: |
+          GATEWAY_FILE="src/pages/changelog/Gateway-${{ github.event.inputs.gateway_version }}.md"
+          cat > "$GATEWAY_FILE" << EOL
+          ---
+          date: ${{ github.event.inputs.gateway_release_date }}
+          title: Gateway ${{ github.event.inputs.gateway_version }}
+          description: docker pull conduktor/conduktor-gateway:${{ github.event.inputs.gateway_version }}
+          solutions: gateway
+          tags: features,fixes
+          ---
+          
+          *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
+          ## Breaking Changes
+
+          - \`Delete if not applicable\`
+
+          ## New Features
+
+          - \`Delete if not applicable\`
+
+          ## Quality of life improvements
+
+          - \`Delete if not applicable\`
+
+          ## Fixes
+
+          - \`Delete if not applicable\`
+          EOL
+
+      - name: Update changelog.mdx
+        run: |
+          # Initialize content string
+          CONTENT_TO_ADD=""
+          
+          # Process Console version if provided
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            CONSOLE_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.console_version }} | tr -d '.')
+            CONSOLE_IMPORT="import Console$CONSOLE_VERSION_NO_DOTS from './changelog/Console-${{ github.event.inputs.console_version }}.md';"
+            
+            # Add Console import statement before the previous Console entry
+            sed -i '' "1,/import Console[0-9]* from/{/import Console[0-9]* from/i\\
+            ${CONSOLE_IMPORT}
+            }" "src/pages/changelog.mdx"
+            
+            # Add Console section at the top of the release notes content
+            CONTENT_TO_ADD="${CONTENT_TO_ADD}## Console ${{ github.event.inputs.console_version }}\\
+          <Console$CONSOLE_VERSION_NO_DOTS />\\
+          ---\\
+          "
+          fi
+          
+          # Process Gateway version if provided
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            GATEWAY_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.gateway_version }} | tr -d '.')
+            GATEWAY_IMPORT="import Gateway$GATEWAY_VERSION_NO_DOTS from './changelog/Gateway-${{ github.event.inputs.gateway_version }}.md';"
+            
+            # Add Gateway import statement before the previous Gateway entry
+            sed -i '' "1,/import Gateway[0-9]* from/{/import Gateway[0-9]* from/i\\
+            ${GATEWAY_IMPORT}
+            }" "src/pages/changelog.mdx"
+            
+            # Add Gateway section at the top of the release notes content
+            CONTENT_TO_ADD="## Gateway ${{ github.event.inputs.gateway_version }}\\
+          <Gateway$GATEWAY_VERSION_NO_DOTS />\\
+          ---\\
+          ${CONTENT_TO_ADD}"
+          fi
+          
+          # Add new sections at the top of the release notes (after the initial text) if there is content to add
+          if [[ -n "$CONTENT_TO_ADD" ]]; then
+            sed -i "/^# Conduktor release notes/,/^<br \/>/ {/^<br \/>/ a\\
+          ${CONTENT_TO_ADD}
+          }" src/pages/changelog.mdx
+          fi
+
+      - name: Commit changes
+        run: |
+          # Always add changelog.mdx
+          git add src/pages/changelog.mdx
+          
+          # Add Console file if provided
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            git add src/pages/changelog/Console-${{ github.event.inputs.console_version }}.md
+          fi
+          
+          # Add Gateway file if provided
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            git add src/pages/changelog/Gateway-${{ github.event.inputs.gateway_version }}.md
+          fi
+          
+          # Build commit message
+          COMMIT_MSG="Add release notes for "
+          if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
+            COMMIT_MSG="${COMMIT_MSG}Console ${{ github.event.inputs.console_version }}"
+            if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+              COMMIT_MSG="${COMMIT_MSG} and "
+            fi
+          fi
+          if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+            COMMIT_MSG="${COMMIT_MSG}Gateway ${{ github.event.inputs.gateway_version }}"
+          fi
+          
+          git commit -m "$COMMIT_MSG"
+
+      - name: Push branch
+        run: |
+          git push origin "$BRANCH_NAME"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BRANCH_NAME }}
+          base: main
+          title: "Add release notes for ${{ github.event.inputs.console_version != '' && format('Console {0}', github.event.inputs.console_version) || '' }}${{ github.event.inputs.console_version != '' && github.event.inputs.gateway_version != '' && ' and ' || '' }}${{ github.event.inputs.gateway_version != '' && format('Gateway {0}', github.event.inputs.gateway_version) || '' }}"
+          body: |
+            This PR adds release notes for:
+            ${{ github.event.inputs.console_version != '' && format('- Console {0} (released {1})', github.event.inputs.console_version, github.event.inputs.console_release_date) || '' }}
+            ${{ github.event.inputs.gateway_version != '' && format('- Gateway {0} (released {1})', github.event.inputs.gateway_version, github.event.inputs.gateway_release_date) || '' }}
+            
+            Please add the release notes content to the markdown files before merging.
+          draft: true
