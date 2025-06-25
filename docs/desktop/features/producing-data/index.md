@@ -132,7 +132,7 @@ Conduktor has a notion of "template" to save & reuse what you're producing to yo
 
 You can create as many template as you want, and duplicate them to easily create them from existing ones. It's also possible to create a template from a consumed message!
 
-:::danger
+:::warning
 Do not forget to click "SAVE" on the bottom right of the dialog to save your modification,
 otherwise you'll lose them.
 :::

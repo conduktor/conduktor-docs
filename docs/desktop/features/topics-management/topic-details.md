@@ -74,7 +74,7 @@ Go to the Configuration tab on the topic:
 
 ![](../../assets/screenshot-2020-09-20-at-21.57.51.png)
 
-:::danger
+:::warning
 It's possible you do not have access to the configuration of a Topic because your Kafka user does
 not have the necessary ACLs configured.
 :::

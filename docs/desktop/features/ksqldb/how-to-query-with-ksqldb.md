@@ -10,7 +10,7 @@ description: Do you prefer Pushing or Pulling?
 
 You can create streams or tables using a simple KSQL editor. You can have many queries, just add empty lines between each queries, for them to be considered independent. They will be execute one by one in different statements.
 
-:::danger
+:::warning
 It's for KSQL stream queries, not metadata queries like "SHOW STREAMS;".
 :::
 

@@ -11,9 +11,9 @@
   --ifm-color-warning-contrast-foreground: #B54708;
   --ifm-color-warning-contrast-background: #FFFCF5;
 
-  --ifm-color-danger-dark: rgba(240, 68, 56, 1);
-  --ifm-color-danger-contrast-foreground: #B42318;
-  --ifm-color-danger-contrast-background: #FFFBFA;
+  --ifm-color-danger-dark: rgb(9, 52, 60, 1);
+  --ifm-color-danger-contrast-foreground: #09343C;
+  --ifm-color-danger-contrast-background: #eeffe1;
   
   --ifm-alert-padding-vertical: 1.5rem;
   --ifm-alert-padding-horizontal: 1.5rem;
