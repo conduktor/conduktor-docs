@@ -4,8 +4,11 @@ title: Apply Chargeback
 description: Chargeback in Conduktor
 ---
 
-
 ## Overview
+
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 Chargeback lets you visualize the cost allocation of service accounts on a few key metrics. Chargeback data can be viewed from the perspective of Overall Cost, Ingress or Egress. Cost is user configured $ per byte.
 

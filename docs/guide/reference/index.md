@@ -43,7 +43,7 @@ import Label from '@site/src/components/Labels';
           <td>[Console API reference](https://developers.conduktor.io/?product=console)</td>
         </tr>
         <tr>
-          <td>Config</td>
+          <td>Console config</td>
           <td>[Console config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables)</td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@ import Label from '@site/src/components/Labels';
         </tr>
         <tr>
           <td>Resources</td>
-          <td>[Conduktor resource reference](#resources)</td>
+          <td>[Console resource reference](/guide/reference/console-reference)</td>
         </tr>
       </tbody>
     </table>
@@ -76,7 +76,7 @@ import Label from '@site/src/components/Labels';
           <td>[Gateway API reference](https://developers.conduktor.io/?product=gateway)</td>
         </tr>
         <tr>
-          <td>Config</td>
+          <td>Gateway config</td>
           <td>[Gateway config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables)</td>
         </tr>
         <tr>
@@ -84,12 +84,12 @@ import Label from '@site/src/components/Labels';
           <td>[Gateway CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-gateway-cli)</td>
         </tr>
         <tr>
-          <td>Resources</td>
-          <td>[Gateway resource reference](/guide/reference/gateway-reference)</td>
-        </tr>
-        <tr>
           <td>Interceptors</td>
           <td>[Gateway Interceptor reference](/guide/reference/interceptor-reference)</td>
+        </tr>
+        <tr>
+          <td>Resources</td>
+          <td>[Gateway resource reference](/guide/reference/gateway-reference)</td>
         </tr>
       </tbody>
     </table>
@@ -99,39 +99,30 @@ import Label from '@site/src/components/Labels';
 
 The resources reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
 
-There are two kinds of API keys that you can use with the Conduktor CLI, the API and Terraform:
+There are two kinds of API keys that you can use with the Conduktor <GlossaryTerm>CLI</GlossaryTerm>, the API and Terraform:
 
 - <Label type="AdminToken" /> - have all the permissions over all the resources in Console. In general, *AdminToken* can bypass application owners.
 - <Label type="AppToken" /> - permissions are limited to application instances and ownership is defined via Self-service
 
-The resources presented here can be managed from the CLI, the API, Terraform, or the Console UI.
+## Resource categories
 
-- CLI, Terraform and Public API uses an API Key to validate permissions.
-- Console UI relies on RBAC model to validate what the user can do.
+Our resources can be managed via the CLI, the API, Terraform (using the API keys), or Console UI (which relies on <GlossaryTerm>RBAC</GlossaryTerm>).
 
-## Conduktor resources
-
-The resources are split into three categories:
+There are three categories:
 
 - [Console resources](/guide/reference/console-reference) exist only in Console. For example, users, groups, permissions, cluster configurations, alerts. data masking policies.
 - [Kafka resources](/guide/reference/kafka-reference) get created in the Kafka ecosystem, e.g.: topics, subjects, connectors.
-- [Self-service resources](/guide/reference/self-service-reference) are: application groups, topic policies, application instances.
+- [Self-service resources](/guide/reference/self-service-reference) such as application groups and topic policies.
 
-### Limitations
+## Conduktor labels
 
-We're working hard to bring everything that you can do using Console UI into the Conduktor CLI, APIs and Terraform.
-
-For a quick visual reference, each resource will list the supported systems with relevant tags:
-
-<Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" /> 
-
-### Conduktor labels
-
-Conduktor labels allow you to add metadata, filter and organize your resources. Check the following table for the list of currently supported resources.
+Conduktor Console labels allow you to add metadata, filter, categorize and organize your resources. Check the following table for the list of currently supported resources.
 
 - <Label type="FullLabelSupport" />
 - <Label type="PartialLabelSupport" />
 - <Label type="MissingLabelSupport" />
+
+## Supported resources
 
 | Resource                     | API/CLI support | Terraform support    | Label support  |
 |------------------------------|-----------------|----------------------|----------------|
@@ -149,7 +140,7 @@ Conduktor labels allow you to add metadata, filter and organize your resources. 
 | Topic                        | ✅               | ✅                    | ✅              |
 | Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
 | Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| ServiceAccount               | ✅               |    ?????????????                  | ✅              |
+| ServiceAccount               | ✅               |                      | ✅              |
 | **Self-service resources**   |                 |                      |                |
 | Application                  | ✅               | ✅                    | 🚫             |
 | ApplicationInstance          | ✅               | ✅                    | 🚫             |

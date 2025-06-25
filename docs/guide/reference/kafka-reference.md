@@ -4,8 +4,7 @@ displayed: false
 description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 import Label from '@site/src/components/Labels';
 
@@ -13,7 +12,7 @@ import Label from '@site/src/components/Labels';
 
 ### Topic
 
-Creates a Topic in Kafka.
+Creates a topic in Kafka.
 
 - **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="TF" /> <Label type="UI" />
@@ -45,31 +44,28 @@ spec:
 
 **Topic checks:**
 
-- `metadata.cluster` is a valid Kafka Cluster
-- `metadata.name` must belong to the Application Instances
-- `spec.replicationFactor` and `spec.partitions` are immutable and cannot be modified once the Topic is created
-- `spec.configs` must be valid [Kafka Topic configs](https://kafka.apache.org/documentation/#topicconfigs)
-- All properties are validated against [TopicPolicies](#topic-policy) attached to the Application Instance
+- `metadata.cluster` is a valid Kafka cluster
+- `metadata.name` has to belong to the application instance
+- `spec.replicationFactor` and `spec.partitions` are immutable and can't be modified once the topic is created
+- `spec.configs` has to be a valid [Kafka topic config](https://kafka.apache.org/documentation/#topicconfigs)
+
+All the properties are validated against the topic policies attached to the application instance.
 
 **Conduktor annotations:**
 
-- `metadata.description` is optional. The description field in markdown that will be displayed in the Topic Catalog view
-  - Previously `conduktor.io/description.editable` in 1.28 and below
-- `metadata.descriptionIsEditable` is optional (defaults `"true"`). Defines whether the description can be updated in the UI
-  - Previously `conduktor.io/description.editable` in 1.28 and below
-- `metadata.catalogVisibility` is **optional**. Can be `PUBLIC` or `PRIVATE`. 
-  - When the topic is linked to a Self-Service Application, defines whether the topic is visible (`PUBLIC`) in the Topic Catalog or not (`PRIVATE`).
-  - If empty, the Topic Catalog Visibility is inherited from the ApplicationInstance field `spec.defaultCatalogVisibility`.
+- `metadata.description` (optional), the description field in markdown that will be displayed in the **Topic Catalog** page in the UI.
+- `metadata.descriptionIsEditable` (optional), defaults to `true`. Defines whether the description can be updated in the UI.
+- `metadata.catalogVisibility` (optional), can be `PUBLIC` or `PRIVATE`. When the topic is linked to a Self-service application, defines whether the topic is visible (`PUBLIC`) in the **Topic Catalog** or not (`PRIVATE`). If empty, the visibility in the topic list is inherited from `spec.defaultCatalogVisibility`.
 
-**Side effects**
+**Side effects:**
 
 - Kafka:
   - Topic is created / updated.
-  - In dry-run mode, topic creation is validated against the Kafka Cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
+  - In dry-run mode, topic creation is validated against the Kafka cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
 
 ### Subject
 
-Creates a Subject in the Schema Registry.
+Creates a subject in the schema registry.
 
 - **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
@@ -142,26 +138,24 @@ spec:
 
 **Subject checks:**
 
-- `metadata.cluster` is a valid Kafka Cluster
-- `metadata.name` must belong to the Application Instance
-- One of `spec.schema` or `spec.schemaFile` must be present
-  - `schema` requires an inline schema
-  - `schemaFile` requires a path to a file that contains the schema relative to the CLI execution path
-    - **Important:** Requires [Conduktor CLI version](/platform/reference/cli-reference/#version) >=0.2.5
-- `spec.format` is mandatory. Defines the schema format: AVRO, PROTOBUF, JSON
-- `spec.compatibility` is optional. Defines the subject compatibility mode: BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE, FULL, FULL_TRANSITIVE, NONE
-  - Unset the field if you want the compatibility mode to be the one defined at the Schema Registry global level
-- `spec.references` is optional. It specifies the names of referenced schemas
+- `metadata.cluster` is a valid Kafka cluster.
+- `metadata.name` has to belong to the application instance.
+- Mandatory `spec.schema` or `spec.schemaFile`should be set:
+  - `schema` requires an inline schema.
+  - `schemaFile` requires a path to a file that contains the schema relative to the <GlossaryTerm>CLI</GlossaryTerm> (version >=0.2.5) execution path.
+- `spec.format` is mandatory. Defines the schema format: AVRO, PROTOBUF or JSON.
+- `spec.compatibility` (optional), defines the subject compatibility mode: `BACKWARD`, `BACKWARD_TRANSITIVE`, `FORWARD`, `FORWARD_TRANSITIVE`, `FULL`, `FULL_TRANSITIVE` or `NONE`. If undefined, the compatibility mode will be the one defined at the schema registry global level.
+- `spec.references` (optional), specifies the names of referenced schemas.
 
-**Side effects**
+**Side effects:**
 
-- Kafka/Schema Registry:
-  - Subject is created/updated.
-  - In dry-run mode, Subject will be checked against the Schema Registry's [/compatibility/subjects/:subject/versions API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility) API.
+- Kafka/schema registry:
+  - subject is created/updated.
+  - in dry-run mode, subject will be checked against the schema registry's [compatibility API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility).
 
 ### Connector
 
-Creates a connector on a Kafka Connect Cluster.
+Creates a connector on a Kafka Connect cluster.
 
 - **API key(s):** <Label type="AdminToken" /> <Label type="AppToken" />
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
@@ -191,29 +185,23 @@ spec:
 
 **Connector checks:**
 
-- `metadata.connectCluster` is a valid Kafka Connect Cluster
-- `metadata.name` must belong to the Application Instance
+- `metadata.connectCluster` is a valid Kafka Connect cluster
+- `metadata.name` has to belong to the application instance
 
 **Conduktor annotations:**
 
-- `metadata.autoRestart.enabled` is optional (default `"false"`). Defines whether the Console Automatic Restart feature is enabled for this Connector
-  - Previously `conduktor.io/auto-restart-enabled` in 1.28 and below
-- `metadata.autoRestart.frequencySeconds` is optional (default `600`, meaning 10 minutes). Defines the delay between consecutive restart attempts
-  - Previously `conduktor.io/auto-restart-frequency` in 1.28 and below
+- `metadata.autoRestart.enabled` (optional), default is `"false"`. Defines whether Console's automatic restart feature is enabled for this connector.
+- `metadata.autoRestart.frequencySeconds` (optional), default is `600`, meaning 10 minutes. Defines the delay between consecutive restart attempts.
 
 ### Service account
 
-Manages the ACLs (Access Control Lists) of a service account in Kafka.
-
-:::info
-This doesn't create the service account, only assigns ACLs.
-:::
+Manages the <GlossaryTerm>ACLs</GlossaryTerm> of a service account in Kafka. This **does not create the service account**, only assigns the ACLs.
 
 - **API key(s):** <Label type="AdminToken" /> 
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />
 - **Labels support:** <Label type="FullLabelSupport" />
 
-Example for Kafka service accounts:
+Kafka service account example:
 
 ````yaml
 ---
@@ -256,7 +244,7 @@ spec:
           - Read
 ````
 
-Example for Aiven service accounts:
+Aiven service account example:
 
 ````yaml
 ---
@@ -288,22 +276,24 @@ spec:
 
 **Service account checks:**
 
-- `metadata.cluster` is a valid Kafka Cluster.
+- `metadata.cluster` is a valid Kafka cluster.
 - `metadata.name` is a valid, pre-existing service account.
-- `spec.authorization.type` must be 'KAFKA_ACL' or 'AIVEN_ACL'. 'AIVEN_ACL' is only supported for Aiven Kafka clusters. 'KAFKA_ACL' is not supported for Aiven Kafka clusters.
+- `spec.authorization.type` has to be `KAFKA_ACL` (not supported for Aiven Kafka clusters) or `AIVEN_ACL` (is only supported for Aiven Kafka clusters).
 
-When `spec.authorization.type` equals `KAFKA_ACL`:
-- `spec.acls[].type` must be a valid resource type on Kafka ([Kafka ACL Operations and Resources](https://kafka.apache.org/documentation/#operations_resources_and_protocols))
-- `spec.acls[].operations` must contain only operations that are valid for the resource type.
-- `spec.acls[].host` is optional, and will default to '*'.
-- `spec.acls[].permission` is optional, and will default to 'Allow'.
+  When set to `KAFKA_ACL`:
 
-When `spec.authorization.type` equals `AIVEN_ACL`:
-- `spec.acls[].resourceType` must be a valid resource type on Aiven Kafka: `TOPIC` ([Aiven ACL for topics](https://aiven.io/docs/products/kafka/concepts/acl)) or `SCHEMA` ([Aiven ACL for schema](https://aiven.io/docs/products/kafka/karapace/concepts/acl-definition))
-- `spec.acls[].name` must be a valid resource name on Aiven Kafka. For schemas, it must match `^(Config:|Subject:[A-Za-z0-9/_.*?-]+)`.
-- `spec.acls[].permission` must contain only operations that are valid for the resource type.
+  - `spec.acls[].type` has to be a [valid Kafka resource type](https://kafka.apache.org/documentation/#operations_resources_and_protocols).
+  - `spec.acls[].operations` has to contain only operations that are valid for the resource type.
+  - `spec.acls[].host` (optional), will default to `*`.
+  - `spec.acls[].permission` (optional), will default to `Allow`.
 
-**Side effects**
+  When set to `AIVEN_ACL`:
+
+  - `spec.acls[].resourceType` has to be a [valid resource type on Aiven Kafka](https://aiven.io/docs/products/kafka/concepts/acl) for `TOPIC` or [a valid resource for](https://aiven.io/docs/products/kafka/karapace/concepts/acl-definition) `SCHEMA`.
+  - `spec.acls[].name` has to be a valid resource name on Aiven Kafka. For schemas, it has to match `^(Config:|Subject:[A-Za-z0-9/_.*?-]+)`.
+  - `spec.acls[].permission` has to contain only operations that are valid for the resource type.
+
+**Side effects:**
 
 - Kafka:
   - Service account ACLs are created/updated.

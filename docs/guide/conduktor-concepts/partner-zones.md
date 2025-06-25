@@ -11,6 +11,10 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 
 ![Partner Zones overview](/guide/pz-detail-view.png)
 
+import ProductExchange from '@site/src/components/shared/product-exchange.md';
+
+<ProductExchange />
+
 ## Related resources
 
 - [Get started with Partner Zones](/guide/use-cases/third-party-data)

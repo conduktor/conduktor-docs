@@ -7,6 +7,10 @@ This <GlossaryTerm>Interceptor</GlossaryTerm> will watch produce and consume to 
 
 This topic is then utilized by the Console to display Chargeback metrics. Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
+
 ### Configuration overview
 
 | Name              | Type   | Default | Description                                                                      |

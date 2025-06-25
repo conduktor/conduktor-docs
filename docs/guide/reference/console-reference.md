@@ -15,7 +15,7 @@ import Label from '@site/src/components/Labels';
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
 - **Labels support:** <Label type="MissingLabelSupport" />
 
-Creates a Group with members and permissions in Console
+Creates a group with members and permissions in Console.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -81,13 +81,13 @@ resource "conduktor_group_v2" "developers-a" {
 - `spec.members` must be email addresses of members you wish to add to this group
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effect in Console and Kafka:**
+**Side effects in Console and Kafka:**
 
 - Console
   - Members of the Group are given the associated permissions in the UI over the resources
   - Members of the LDAP or OIDC groups will be automatically added or removed upon login
 - Kafka
-  - No side effect
+  - No side effects
 
 ## ConsoleUser
 
@@ -95,7 +95,7 @@ resource "conduktor_group_v2" "developers-a" {
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
 - **Labels support:** <Label type="MissingLabelSupport" />
 
-Create a user with Platform permissions.
+Creates a user with Console permissions.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -162,24 +162,24 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 </TabItem>
 </Tabs>
 
-:::warning
-Make sure you set permissions for this user, otherwise it won't have access to Platform functionality (such as `Application Catalog` or `Data Policies`) and Kafka resources.
+:::warning[Mandatory permissions]
+Make sure you set permissions for this user, otherwise it won't have access to Console functionality (such as **Application Catalog** or Kafka resources.
 :::
 
-**Users checks:**
+**User checks:**
 
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
-**Side effect in Console and Kafka:**
+**Side effects in Console and Kafka:**
 
 - Console
   - User is given the associated permissions in the UI over the resources
 - Kafka
-  - No side effect
+  - No side effects
 
 ## KafkaCluster
 
-Creates a Kafka Cluster Definition in Console.
+Creates a Kafka cluster definition in Console.
 
 - **API key(s):** <Label type="AdminToken" /> 
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
@@ -261,9 +261,8 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 </TabItem>
 </Tabs>
 
-:::info
-`metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` work together to build the visual identity of the KafkaCluster throughout Console.
-![Cluster identity](/guide/cluster-visual-identity.png)
+:::info[Cluster identity]
+`metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` are combined to create the visual identity of the KafkaCluster within Console.
 :::
 
 **KafkaCluster checks:**
@@ -276,13 +275,13 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 - `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
-:::warning
-Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, ...) is valid. You need to check that in Console directly.
+:::warning[Validate configuration]
+Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, etc.) is valid. You need to check that in Console directly.
 :::
 
-### Schema Registry
+### Schema registry
 
-This section lets you associate a Schema Registry to your KafkaCluster.
+This section lets you associate a schema registry to your KafkaCluster.
 
 #### Confluent or Confluent-like Registry
 
@@ -322,7 +321,7 @@ spec {
 </TabItem>
 </Tabs>
 
-Confluent Schema Registry checks:
+Confluent schema registry checks:
 
 - `spec.schemaRegistry.urls` must be a single URL of a Kafka Connect cluster
   - **Multiple URLs are not supported for now. Coming soon**
@@ -331,7 +330,7 @@ Confluent Schema Registry checks:
 - `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
   - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
 
-#### AWS Glue Registry
+#### AWS Glue registry
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -369,14 +368,14 @@ spec {
 </TabItem>
 </Tabs>
 
-AWS Glue Registry checks:
+**AWS Glue registry checks:**
 
 - `spec.schemaRegistry.region` must be a valid AWS region
 - `spec.schemaRegistry.registryName` must be a valid AWS Glue Registry in this region
 - `spec.schemaRegistry.security.type` must be one of [`Credentials`, `FromContext`, `FromRole`]
 
 **Credentials**  
-Use AWS API Key/Secret to connect to the Glue Registry
+Use AWS API Key/Secret to connect to the Glue registry.
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -452,14 +451,14 @@ Use AWS API Key/Secret to connect to the Glue Registry
 
 ### Kafka provider
 
-This section lets you configure the Kafka Provider for this KafkaCluster.
+This section lets you configure the Kafka provider for this KafkaCluster.
 
 **Confluent Cloud**
 
 Provide your Confluent Cloud details to get additional features in Console:
 
-- Confluent Cloud Service Accounts support
-- Confluent Cloud API Keys support
+- Confluent Cloud service account support
+- Confluent Cloud API key support
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -496,7 +495,7 @@ spec {
 
 Provide your Aiven Cloud details to get additional features in Console:
 
-- Aiven Service Accounts support
+- Aiven service accounts support
 - Aiven ACLs support
 
 <Tabs>
@@ -565,7 +564,7 @@ spec {
 </TabItem>
 </Tabs>
 
-### Icon Sets
+### Icon sets
 
 | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M352 351.1h-71.25l47.44-105.4c3.062-6.781 1.031-14.81-4.906-19.31c-5.969-4.469-14.22-4.312-19.94 .4687l-153.6 128c-5.156 4.312-7.094 11.41-4.781 17.72c2.281 6.344 8.281 10.56 15.03 10.56h71.25l-47.44 105.4c-3.062 6.781-1.031 14.81 4.906 19.31C191.6 510.9 194.1 512 198.4 512c3.656 0 7.281-1.25 10.25-3.719l153.6-128c5.156-4.312 7.094-11.41 4.781-17.72C364.8 356.2 358.8 351.1 352 351.1zM416 128c-.625 0-1.125 .25-1.625 .25C415.5 123 416 117.6 416 112C416 67.75 380.3 32 336 32c-24.62 0-46.25 11.25-61 28.75C256.4 24.75 219.3 0 176 0C114.1 0 64 50.13 64 112c0 7.25 .75 14.25 2.125 21.25C27.75 145.8 0 181.5 0 224c0 53 43 96 96 96h46.63l140.2-116.8c8.605-7.195 19.53-11.16 30.76-11.16c10.34 0 20.6 3.416 29.03 9.734c17.96 13.61 24.02 37.45 14.76 57.95L330.2 320H416c53 0 96-43 96-96S469 128 416 128z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M430.8 304.9c10 5.625 19 12.37 27 20.37C487.1 292.8 529 272 576 272v-64c-61 0-116.2 24.62-156.8 64.25C424.9 282.2 429 293.2 430.8 304.9zM399.2 325.6C399.4 323.8 400 321.9 400 320c0-35.25-28.75-64-64-64c-12.62 0-24.25 3.75-34.13 10C284.2 227.1 245.4 200 200 200c-61.88 0-112 50.12-112 112c0 3 .75 5.75 .875 8.75C39.25 324.4 0 365.4 0 416c0 53 43 96 96 96h272c53 0 96-43 96-96C464 374 436.8 338.6 399.2 325.6zM238.6 173.6c21 5.875 40.38 16.5 56.62 31C359.6 119.4 461.2 64 576 64V0C437.1 0 314.2 68.75 238.6 173.6zM325.8 225.1C333.2 224.2 362.5 219.8 394.2 244C440.6 197.2 504.9 168 576 168v-64C474.8 104 384.4 151.4 325.8 225.1z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M96.2 200.1C96.07 197.4 96 194.7 96 192C96 103.6 167.6 32 256 32C315.3 32 367 64.25 394.7 112.2C409.9 101.1 428.3 96 448 96C501 96 544 138.1 544 192C544 204.2 541.7 215.8 537.6 226.6C596 238.4 640 290.1 640 352C640 422.7 582.7 480 512 480H144C64.47 480 0 415.5 0 336C0 273.2 40.17 219.8 96.2 200.1z"></path></svg> | <svg height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentcolor" tabindex="-1" focusable="false" aria-hidden="true" role="img" class="ui-c-aIcSi ui-c-aIcSi-ckVrXY-size-regular ui-c-gulvcB"><path d="M475.6 384.1C469.7 394.3 458.9 400 447.9 400c-5.488 0-11.04-1.406-16.13-4.375l-25.09-14.64l5.379 20.29c3.393 12.81-4.256 25.97-17.08 29.34c-2.064 .5625-4.129 .8125-6.164 .8125c-10.63 0-20.36-7.094-23.21-17.84l-17.74-66.92L288 311.7l.0002 70.5l48.38 48.88c9.338 9.438 9.244 24.62-.1875 33.94C331.5 469.7 325.4 472 319.3 472c-6.193 0-12.39-2.375-17.08-7.125l-14.22-14.37L288 480c0 17.69-14.34 32-32.03 32s-32.03-14.31-32.03-32l-.0002-29.5l-14.22 14.37c-9.322 9.438-24.53 9.5-33.97 .1875c-9.432-9.312-9.525-24.5-.1875-33.94l48.38-48.88L223.1 311.7l-59.87 34.93l-17.74 66.92c-2.848 10.75-12.58 17.84-23.21 17.84c-2.035 0-4.1-.25-6.164-.8125c-12.82-3.375-20.47-16.53-17.08-29.34l5.379-20.29l-25.09 14.64C75.11 398.6 69.56 400 64.07 400c-11.01 0-21.74-5.688-27.69-15.88c-8.932-15.25-3.785-34.84 11.5-43.75l25.96-15.15l-20.33-5.508C40.7 316.3 33.15 303.1 36.62 290.3S53.23 270 66.09 273.4L132 291.3L192.5 256L132 220.7L66.09 238.6c-2.111 .5625-4.225 .8438-6.305 .8438c-10.57 0-20.27-7.031-23.16-17.72C33.15 208.9 40.7 195.8 53.51 192.3l20.33-5.508L47.88 171.6c-15.28-8.906-20.43-28.5-11.5-43.75c8.885-15.28 28.5-20.44 43.81-11.5l25.09 14.64L99.9 110.7C96.51 97.91 104.2 84.75 116.1 81.38C129.9 77.91 142.1 85.63 146.4 98.41l17.74 66.92L223.1 200.3l-.0002-70.5L175.6 80.88C166.3 71.44 166.3 56.25 175.8 46.94C185.2 37.59 200.4 37.72 209.8 47.13l14.22 14.37L223.1 32c0-17.69 14.34-32 32.03-32s32.03 14.31 32.03 32l.0002 29.5l14.22-14.37c9.307-9.406 24.51-9.531 33.97-.1875c9.432 9.312 9.525 24.5 .1875 33.94l-48.38 48.88L288 200.3l59.87-34.93l17.74-66.92c3.395-12.78 16.56-20.5 29.38-17.03c12.82 3.375 20.47 16.53 17.08 29.34l-5.379 20.29l25.09-14.64c15.28-8.906 34.91-3.75 43.81 11.5c8.932 15.25 3.785 34.84-11.5 43.75l-25.96 15.15l20.33 5.508c12.81 3.469 20.37 16.66 16.89 29.44c-2.895 10.69-12.59 17.72-23.16 17.72c-2.08 0-4.193-.2813-6.305-.8438L379.1 220.7L319.5 256l60.46 35.28l65.95-17.87C458.8 270 471.9 277.5 475.4 290.3c3.473 12.78-4.082 25.97-16.89 29.44l-20.33 5.508l25.96 15.15C479.4 349.3 484.5 368.9 475.6 384.1z"></path></svg> |
 |:---:|:---:|:---:|:---:|
@@ -673,13 +672,11 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 **KafkaConnectCluster checks:**
 
-- `metadata.cluster` must be a valid KafkaCluster name
-- `spec.urls` must be a single URL of a Kafka Connect cluster
-  - **Multiple URLs are not supported for now. Coming soon**
-- `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
-  - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
+- `metadata.cluster` has to be a valid KafkaCluster name.
+- `spec.urls` has to be a single URL of a Kafka Connect cluster. Multiple URLs are not currently supported.
+- `spec.ignoreUntrustedCertificate` (optional, default `false`). Has to be `true` or `false`.
+- `spec.headers` (optional) has to be key-value pairs of HTTP headers.
+- `spec.security.type` (optional) has to be `BasicAuth`, `BearerToken` or `SSLAuth`. [Find out more](#http-security-properties).
 
 ## KsqlDBCluster
 
@@ -687,7 +684,7 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
 - **Labels support:** <Label type="MissingLabelSupport" />
 
-Creates a ksqlDB Cluster Definition in Console.
+Creates a ksqlDB cluster definition in Console.
 
 ````yaml
 ---
@@ -708,12 +705,11 @@ spec:
 
 **KafkaConnectCluster checks:**
 
-- `metadata.cluster` must be a valid KafkaCluster name
-- `spec.url` must be a single URL of a KsqlDB cluster
-- `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.security.type` (optional) must be one of [`BasicAuth`, `BearerToken`, `SSLAuth`]
-  - See [HTTP Security Properties](#http-security-properties) for the detailed list of options
+- `metadata.cluster` has to be a valid KafkaCluster name.
+- `spec.url` has to be a single URL of a KsqlDB cluster.
+- `spec.ignoreUntrustedCertificate` (optional), default is `false`. Has to be `true` or `false`.
+- `spec.headers` (optional) has to be key-value pairs of HTTP headers.
+- `spec.security.type` (optional) has to be `BasicAuth`, `BearerToken` or `SSLAuth`. [Find out more](#http-security-properties).
 
 ## Alerts
 
@@ -721,7 +717,7 @@ spec:
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
 - **Labels support:** <Label type="MissingLabelSupport" />
 
-Creates an Alert in Console.
+Creates an alert in Console.
 
 ````yaml
 ---
@@ -746,51 +742,25 @@ spec:
 
 **Alert checks:**
 
-- `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
-- `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
-- `spec.cluster` must be a valid KafkaCluster name
-- `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
-  - Check the section below for the additional mandatory fields needed for each `spec.type`
-- `spec.metric` is depending on the `spec.type`
-  - Check section below
-- `spec.operator` must be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
-- `spec.threshold` must be a number
-- `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
-
-**When `spec.destination.type` is `Slack`**
-- `spec.destination.channel` must be a valid Slack channel id
-
-**When `spec.destination.type` is `Teams`**
-- `spec.destination.url` must be a valid Teams webhook URL
-
-**When `spec.destination.type` is `Webhook`**
-- `spec.destination.url` must be a valid URL
-- `spec.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
-- `spec.destination.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
-  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` must be set
-  - when is `BearerToken` `spec.destination.authentification.token` must be set
-
-**When `spec.type` is `BrokerAlert`**
-- `spec.metric` must be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
-
-**When `spec.type` is `TopicAlert`**
-- `spec.metric` must be one of [`MessageCount`, `MessageIn`, `MessageOut`, `MessageSize`]
-- `spec.topicName` must be a Kafka Topic that the owner can access
-
-**When `spec.type` is `KafkaConnectAlert`**
-- `spec.metric` must be `FailedTaskCount`
-- `spec.connectName` must be a valid KafkaConnect Cluster associated to this `spec.cluster` Kafka Cluster
-- `spec.connectorName` must be a Kafka Connect Connector that the owner can access
-
-**When `spec.type` is `ConsumerGroupAlert`**
-- `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
-- `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
-
-## DataMaskingPolicy
-
-:::info[Coming soon]
-:::
+- `metadata.user`|`metadata.group`|`metadata.appInstance` has to be a valid user, group or appInstance.
+- `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`. When set to:
+  - `Slack`: has to be a valid Slack channel ID
+  - `Teams`: has to be a valid Teams webhook URL
+  - `Webhook`:
+    - `spec.destination.url` has to be a valid URL
+    - `spec.destination.method` has to be `GET`, `POST`, `PUT` or `DELETE`
+    - `spec.destination.headers` (optional) has to be key-value pairs of HTTP headers
+    - `spec.destination.authentication.type` (optional) has to be `BasicAuth` (define `spec.destination.authentication.username` and `spec.destination.authentication.password`) or `BearerToken` (define `spec.destination.authentication.token`).
+- `spec.cluster` has to be a valid KafkaCluster name.
+- `spec.type` has to be `BrokerAlert`,`TopicAlert`, `KafkaConnectAlert` or `ConsumerGroupAlert`. When set to:
+  - `BrokerAlert`: `spec.metric` has to be `MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount` or `UnderReplicatedPartitionCount`.
+  - `TopicAlert`: `spec.metric` has to be `MessageCount`, `MessageIn`, `MessageOut` or `MessageSize` and the `spec.topicName` has to be a Kafka topic that the owner can access.
+  - `KafkaConnectAlert`:`spec.metric` has to be `FailedTaskCount`;`spec.connectName` has to be a valid KafkaConnect cluster associated to this `spec.cluster` Kafka cluster and `spec.connectorName` has to be a Kafka Connect Connector that the owner can access.
+  - `ConsumerGroupAlert`:`spec.metric` has to be `OffsetLag` or `TimeLag` and `spec.consumerGroupName` has to be a Kafka Consumer group that the owner can access.
+- `spec.metric` depends on the `spec.type`.
+- `spec.operator` has to be `GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual` or `NotEqual`.
+- `spec.threshold` has to be a number.
+- `spec.disable` (optional), default is `false`. Has to be `true` or `false`.
 
 ## Partner Zones
 
@@ -798,7 +768,7 @@ spec:
 - **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
 - **Labels support:**<Label type="PartialLabelSupport" />
 
-Create or update a [Partner Zone](/platform/navigation/partner-zones/).
+Create or update a [Partner Zone](/guide/conduktor-concepts/partner-zones).
 
 ```yaml
 ---
@@ -832,29 +802,30 @@ spec:
 
 **Partner Zone checks:**
 
-- `spec.displayName` is Mandatory
-- `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
-- `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
-- `spec.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
-- `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
-- `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
-- `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
-- `trafficControlPolicies.maxProduceRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
-- `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
-- `trafficControlPolicies.limitCommitOffset` is **optional**. Sets the maximum number of commits requests (in requests/minute) that the partner can make per Gateway node.
+- `spec.displayName` is mandatory.
+- `spec.description`, `spec.url` and `spec.partner` (optional), useful for context information.
+- `spec.cluster` has to be a valid Console cluster technical ID with the **Provider configured as *Gateway***.
+- `spec.serviceAccount` has to be a local Gateway service account. It doesn't need to exist before creating the Partner Zone, the service account will be created automatically.
+- `topics[].name` is the name of the topic as it should appear to your external partner. This can be different from `backingTopic`.
+- `topics[].backingTopic` is the internal name of the topic that you want to share.
+- `topics[].permission` has to be set to either `READ` or `WRITE` (which includes `READ`).
+- `trafficControlPolicies.maxProduceRate` (optional), sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
+- `trafficControlPolicies.maxConsumeRate` (optional), sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
+- `trafficControlPolicies.limitCommitOffset` (optional), sets the maximum number of commit requests (in requests/minute) that the partner can make per Gateway node.
 
-**Side effect in Console and Kafka:**  
-Upon creation or update, the following fields will be available:
+**Side effects in Console and Kafka:**  
 
-- `metadata.updatedAt` field will be made available by consecutive get from the CLI/API.
-- `metadata.status` field will be made available by consecutive get from the CLI/API. Possible values are `PENDING`, `READY` or `FAILED`.
-- `metadata.failedReason` field will be populated in case of `FAILED` status.
-- The service account will be created if it doesn't exist and will be granted the permissions as declared in `spec.topics`
+Once created or updated, the following fields will be made available:
+
+- `metadata.updatedAt` (by consecutive *get* from the CLI/API).
+- `metadata.status` (by consecutive *get* from the CLI/API.) Possible values are `PENDING`, `READY` or `FAILED`.
+- `metadata.failedReason` will be populated in case of `FAILED` status.
+- The service account will be created if it doesn't exist and will be granted the permissions as declared in `spec.topics`.
 - The traffic control policies will be applied to the service account.
 
 ## HTTP security properties
 
-HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster), [KsqlDBCluster](#ksqldbcluster).
+HTTP security properties are used in KafkaCluster ([schema registry](#confluent-or-confluent-like-registry)), [KafkaConnect](#kafkaconnectcluster) and [KsqlDBCluster](#ksqldbcluster).
 
 ### Basic authentication
 
@@ -896,20 +867,22 @@ HTTP security properties are used in KafkaCluster ([Schema Registry](#confluent-
 
 ## Permissions
 
-Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and lets you configure all the access to any Kafka resource or Console feature. A permission applies to a certain `resourceType`, which affect the necessary fields as detailed below.
+Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and lets you configure access to any Kafka resource or Console feature.
 
-- [Topic Permissions](#topic-permissions)
-- [Subject Permissions](#subject-permissions)
-- [ConsumerGroup Permissions](#consumergroup-permissions)
-- [Cluster Permissions](#cluster-permissions)
-- [KafkaConnect Permissions](#kafkaconnect-permissions)
-- [KsqlDB Permissions](#ksqldb-permissions)
-- [Platform Permissions](#platform-permissions)
+A permission applies to a certain `resourceType` which affects the required fields.
+
+- [Topic permissions](#topic-permissions)
+- [Subject permissions](#subject-permissions)
+- [ConsumerGroup permissions](#consumergroup-permissions)
+- [Cluster permissions](#cluster-permissions)
+- [KafkaConnect permissions](#kafkaconnect-permissions)
+- [KsqlDB permissions](#ksqldb-permissions)
+- [Console permissions](#console-permissions)
 
 ### Topic permissions
 
 ````yaml
-# Grants Consume, Produce and View Config to all topics toto-* on shadow-it cluster
+# Grants consume, produce and view config to all topics toto-* on shadow-it cluster
 - resourceType: TOPIC
   cluster: shadow-it
   patternType: PREFIXED
@@ -924,7 +897,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `cluster` is a valid Kafka cluster
 - `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the topic or topic prefix to apply the permissions to
-- `permissions` is a list of valid topic permissions (See Table)
+- `permissions` is a list of valid topic permissions
 
 | Available topic permissions | Description |
 |-----------------------------|--------|
@@ -940,7 +913,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 ### Subject permissions
 
 ````yaml
-# Grants View and Edit Compatibility to all subjects starting with sub-* on shadow-it cluster
+# Grants view and edit compatibility to all subjects starting with sub-* on shadow-it cluster
 - resourceType: SUBJECT
   cluster: shadow-it
   patternType: PREFIXED
@@ -954,7 +927,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `cluster` is a valid Kafka cluster
 - `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the subject or subject prefix to apply the permissions to
-- `permissions` is a list of valid subject permissions (See Table)
+- `permissions` is a list of valid subject permissions
 
 | Available subject permissions      | Description |
 |------------------------------------|--------|
@@ -966,7 +939,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 ### ConsumerGroup permissions
 
 ````yaml
-# Grants View and Reset on all consumer groups starting with group-* on shadow-it cluster
+# Grants view and reset on all consumer groups starting with group-* on shadow-it cluster
 - resourceType: CONSUMER_GROUP
   cluster: shadow-it
   patternType: PREFIXED
@@ -980,7 +953,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `cluster` is a valid Kafka cluster
 - `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the consumer group or consumer group prefix to apply the permissions to
-- `permissions` is a list of valid consumer group permissions (See Table)
+- `permissions` is a list of valid consumer group permissions
 
 | Available ConsumerGroup permissions | Description |
 |-------------------------------------|--------|
@@ -992,7 +965,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 ### Cluster permissions
 
 ```yaml
-# Grants View Broker, Edit Schema Registry Compatibility, Edit Broker, View ACL, and Manage ACL on shadow-it cluster
+# Grants view and edit broker, edit schema registry compatibility, view ACL and manage ACL on shadow-it cluster
 - resourceType: CLUSTER
   name: shadow-it
   permissions:
@@ -1006,20 +979,20 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `resourceType`: `CLUSTER`
 - `name` is the name of the cluster to apply the permissions to
   - Use `*` for all clusters
-- `permissions` is a list of valid cluster permissions (See Table)
+- `permissions` is a list of valid cluster permissions
 
 | Available cluster permissions | Description |
 |-------------------------------|--------|
 | `clusterViewBroker`           | Permission to view broker details. |
-| `clusterEditSRCompatibility` | Permission to edit Schema Registry compatibility settings. |
+| `clusterEditSRCompatibility` | Permission to edit schema registry compatibility settings. |
 | `clusterEditBroker`          | Permission to edit broker configuration. |
-| `clusterViewACL`             | Permission to view Access Control Lists (ACLs) for the cluster. |
-| `clusterManageACL`           | Permission to manage Access Control Lists (ACLs) for the cluster. |
+| `clusterViewACL`             | Permission to view (ACLs) for the cluster. |
+| `clusterManageACL`           | Permission to manage (ACLs) for the cluster. |
 
 ### KafkaConnect permissions
 
 ```yaml
-# Grants Create and Delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
+# Grants create and delete on all connectors starting with connector-* on shadow-it cluster and kafka-connect-cluster
 - resourceType: KAFKA_CONNECT
   cluster: shadow-it
   kafkaConnect: kafka-connect-cluster
@@ -1035,7 +1008,7 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `kafkaConnect` is a valid Kafka Connect cluster
 - `patternType` is either `PREFIXED` or `LITERAL`
 - `name` is the name of the connector or connector prefix to apply the permissions to
-- `permissions` is a list of valid Kafka Connect permissions (See Table)
+- `permissions` is a list of valid Kafka Connect permissions
 
 | Available KafkaConnect permission  | Description |
 |------------------------------------|--------|
@@ -1061,16 +1034,16 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 - `resourceType`: `KSQLDB`
 - `cluster` is a valid Kafka cluster
 - `ksqlDB` is a valid Kafka Connect cluster
-- `permissions` is a list of valid KsqlDB permissions (See Table)
+- `permissions` is a list of valid KsqlDB permissions
 
-| Available KafkaConnect Permissions | Description                                                                          |
-|------------------------------------|--------------------------------------------------------------------------------------|
-| `ksqldbAccess`         | Grants all permissions on the KsqlDB Cluster. |
+| Available KafkaConnect permissions | Description                       |
+|------------------------------------|-----------------------------------|
+| `ksqldbAccess`         | Grants all permissions on the KsqlDB cluster. |
 
-### Platform permissions
+### Console permissions
 
 ```yaml
-# Grants Platform permissions
+# Grants Console permissions
 - resourceType: PLATFORM
   permissions:
     - userView
@@ -1078,18 +1051,18 @@ Permissions are used in [groups](#consolegroup) and [users](#consoleuser) and le
 ```
 
 - `resourceType`: `PLATFORM`
-- `permissions` is a list of valid Platform permissions
+- `permissions` is a list of valid Console permissions
 
-| Available Console permissions | Description                                                    |
-|--------------------------------|---------------------------------------------------------------|
-| `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console   |
-| `certificateManage`            | Permission to add / edit / remove TLS Certificates on Console |
-| `userManage`                   | Permission to manage Console users, groups and permissions    |
-| `userView`                     | Permission to view Console users, groups and permissions      |
-| `datamaskingManage`            | Permission to manage Data policies (masking rules)            |
-| `datamaskingView`              | Permission to view Data policies                              |
-| `notificationChannelManage`    | Permission to manage Integration channels                     |
-| `auditLogView`                 | Permission to browse audit log                                |
-| `taasView`                     | Permission to view Application Catalog                        |
-| `chargebackManage`             | Permission to view Chargeback and manage its settings         |
-| `sqlManage`                    | Permission to view indexed topics and create SQL queries      |
+| Available Console permissions | Description                                                     |
+|--------------------------------|----------------------------------------------------------------|
+| `clusterConnectionsManage`     | Permission to add / edit / remove Kafka clusters on Console.   |
+| `certificateManage`            | Permission to add / edit / remove TLS certificates on Console. |
+| `userManage`                   | Permission to manage Console users, groups and permissions.    |
+| `userView`                     | Permission to view Console users, groups and permissions.      |
+| `datamaskingManage`            | Permission to manage data policies (masking rules).            |
+| `datamaskingView`              | Permission to view data policies.                              |
+| `notificationChannelManage`    | Permission to manage integration channels.                     |
+| `auditLogView`                 | Permission to browse audit log.                                |
+| `taasView`                     | Permission to view Application Catalog.                        |
+| `chargebackManage`             | Permission to view Chargeback and manage its settings.         |
+| `sqlManage`                    | Permission to view indexed topics and create SQL queries.      |

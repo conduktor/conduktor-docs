@@ -265,7 +265,12 @@ const glossaryData = [
         term: "Traffic Control Policy",
         definition: "Conduktor provides a number of Traffic Control Policies that can be applied to your Kafka data to protect or enforce best practice.",
         slug: "traffic-control-policy"
-    },         
+    },   
+    {
+        term: "RBAC",
+        definition: "Role-Based Access Control: the method of restricting access to users based on their role.",
+        slug: "rbac"
+    },     
   ];
   
  export default glossaryData;
