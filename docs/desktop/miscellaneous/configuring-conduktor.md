@@ -46,7 +46,7 @@ By default, Conduktor is limited to 2GB of memory heap. It's possible to increas
 - Windows: `C:\Program Files\Conduktor\app\Conduktor.cfg`
 - Linux: `/opt/conduktor/lib/app/Conduktor.cfg`
 
-:::danger
+:::warning
 We do **NOT** recommend to alter this file, **all changes will be lost** when upgrading Conduktor
 :::
 
