@@ -9,6 +9,9 @@ on:
       gateway_version:
         description: 'Gateway Version (e.g., 3.12.0)'
         required: false
+      cli_version:
+        description: 'CLI Version (e.g., 0.6.2)'
+        required: false
       release_date:
         description: 'Release Date (YYYY-MM-DD)'
         required: true
@@ -29,12 +32,10 @@ jobs:
 
       - name: Validate inputs
         run: |
-          if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" ]]; then
-            echo "::error::At least one of console_version or gateway_version must be provided"
+          if [[ -z "${{ github.event.inputs.console_version }}" && -z "${{ github.event.inputs.gateway_version }}" && -z "${{ github.event.inputs.cli_version }}" ]]; then
+            echo "::error::At least one of console_version, gateway_version, or cli_version must be provided"
             exit 1
           fi
-          
-          echo "Validation passed!"
 
       - name: Create branch
         run: |
@@ -48,6 +49,14 @@ jobs:
               BRANCH_NAME="${BRANCH_NAME}_gateway-${{ github.event.inputs.gateway_version }}"
             else
               BRANCH_NAME="gateway-${{ github.event.inputs.gateway_version }}"
+            fi
+          fi
+          
+          if [[ -n "${{ github.event.inputs.cli_version }}" ]]; then
+            if [[ -n "$BRANCH_NAME" ]]; then
+              BRANCH_NAME="${BRANCH_NAME}_cli-${{ github.event.inputs.cli_version }}"
+            else
+              BRANCH_NAME="cli-${{ github.event.inputs.cli_version }}"
             fi
           fi
           
@@ -118,6 +127,38 @@ jobs:
           - \`Delete if not applicable\`
           EOL
 
+      - name: Create CLI release note file
+        if: ${{ github.event.inputs.cli_version != '' }}
+        run: |
+          CLI_FILE="src/pages/changelog/Cli-${{ github.event.inputs.cli_version }}.md"
+          cat > "$CLI_FILE" << EOL
+          ---
+          date: ${{ github.event.inputs.release_date }}
+          title: Conduktor CLI ${{ github.event.inputs.cli_version }}
+          description: Conduktor CLI ${{ github.event.inputs.cli_version }}
+          solutions: cli
+          tags: features,fixes
+          ---
+          
+          *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+
+          ## Breaking Changes
+
+          - \`Delete if not applicable\`
+
+          ## New Features
+
+          - \`Delete if not applicable\`
+
+          ## Quality of life improvements
+
+          - \`Delete if not applicable\`
+
+          ## Fixes
+
+          - \`Delete if not applicable\`
+          EOL
+
       - name: Update changelog.mdx
         run: |
           # Initialize content string
@@ -157,6 +198,30 @@ jobs:
           ${CONTENT_TO_ADD}"
           fi
           
+          # Process CLI version if provided
+          if [[ -n "${{ github.event.inputs.cli_version }}" ]]; then
+            CLI_VERSION_NO_DOTS=$(echo ${{ github.event.inputs.cli_version }} | tr -d '.')
+            CLI_IMPORT="import Cli$CLI_VERSION_NO_DOTS from './changelog/Cli-${{ github.event.inputs.cli_version }}.md';"
+            
+            # Add CLI import statement before the previous CLI entry
+            sed -i '' "1,/import Cli[0-9]* from/{/import Cli[0-9]* from/i\\
+            ${CLI_IMPORT}
+            }" "src/pages/changelog.mdx"
+
+            # Add CLI section to the release notes content (after Gateway if present, otherwise at top)
+            if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
+              CONTENT_TO_ADD="## Conduktor CLI ${{ github.event.inputs.cli_version }}\\
+          <Cli$CLI_VERSION_NO_DOTS />\\
+          ---\\
+          ${CONTENT_TO_ADD}"
+            else
+              CONTENT_TO_ADD="${CONTENT_TO_ADD}## Conduktor CLI ${{ github.event.inputs.cli_version }}\\
+          <Cli$CLI_VERSION_NO_DOTS />\\
+          ---\\
+          "
+            fi
+          fi
+          
           # Add new sections at the top of the release notes (after the initial text) if there is content to add
           if [[ -n "$CONTENT_TO_ADD" ]]; then
             sed -i "/^# Conduktor release notes/,/^<br \/>/ {/^<br \/>/ a\\
@@ -179,19 +244,38 @@ jobs:
             git add src/pages/changelog/Gateway-${{ github.event.inputs.gateway_version }}.md
           fi
           
+          # Add CLI file if provided
+          if [[ -n "${{ github.event.inputs.cli_version }}" ]]; then
+            git add src/pages/changelog/Cli-${{ github.event.inputs.cli_version }}.md
+          fi
+          
           # Build commit message
           COMMIT_MSG="Add release notes for "
+          COMPONENTS=()
+          
           if [[ -n "${{ github.event.inputs.console_version }}" ]]; then
-            COMMIT_MSG="${COMMIT_MSG}Console ${{ github.event.inputs.console_version }}"
-            if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
-              COMMIT_MSG="${COMMIT_MSG} and "
-            fi
+            COMPONENTS+=("Console ${{ github.event.inputs.console_version }}")
           fi
+          
           if [[ -n "${{ github.event.inputs.gateway_version }}" ]]; then
-            COMMIT_MSG="${COMMIT_MSG}Gateway ${{ github.event.inputs.gateway_version }}"
+            COMPONENTS+=("Gateway ${{ github.event.inputs.gateway_version }}")
+          fi
+          
+          if [[ -n "${{ github.event.inputs.cli_version }}" ]]; then
+            COMPONENTS+=("CLI ${{ github.event.inputs.cli_version }}")
+          fi
+          
+          # Join components with proper formatting
+          if [[ ${#COMPONENTS[@]} -eq 1 ]]; then
+            COMMIT_MSG="${COMMIT_MSG}${COMPONENTS[0]}"
+          elif [[ ${#COMPONENTS[@]} -eq 2 ]]; then
+            COMMIT_MSG="${COMMIT_MSG}${COMPONENTS[0]} and ${COMPONENTS[1]}"
+          else
+            COMMIT_MSG="${COMMIT_MSG}${COMPONENTS[0]}, ${COMPONENTS[1]}, and ${COMPONENTS[2]}"
           fi
           
           git commit -m "$COMMIT_MSG"
+          echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
 
       - name: Push branch
         run: |
@@ -203,11 +287,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ env.BRANCH_NAME }}
           base: main
-          title: "Add release notes for ${{ github.event.inputs.console_version != '' && format('Console {0}', github.event.inputs.console_version) || '' }}${{ github.event.inputs.console_version != '' && github.event.inputs.gateway_version != '' && ' and ' || '' }}${{ github.event.inputs.gateway_version != '' && format('Gateway {0}', github.event.inputs.gateway_version) || '' }}"
+          title: "${{ env.COMMIT_MSG }}"
           body: |
             This PR adds release notes for:
             ${{ github.event.inputs.console_version != '' && format('- Console {0} (released {1})', github.event.inputs.console_version, github.event.inputs.release_date) || '' }}
             ${{ github.event.inputs.gateway_version != '' && format('- Gateway {0} (released {1})', github.event.inputs.gateway_version, github.event.inputs.release_date) || '' }}
+            ${{ github.event.inputs.cli_version != '' && format('- CLI {0} (released {1})', github.event.inputs.cli_version, github.event.inputs.release_date) || '' }}
             
             Please add the release notes content to the markdown files before merging.
           draft: true
