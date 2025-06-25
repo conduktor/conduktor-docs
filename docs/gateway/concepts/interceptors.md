@@ -119,9 +119,9 @@ The order of precedence from highest (overrides all others) to lowest (easiest t
 In the two JSON examples above, both Interceptors have the same name (`enforce-partition-limit`) but two different scopes: the first one is global, the second one is targeting user `sa-clickstream`. These Interceptors aren't chained but the second one is overriding the first one. The `sa-clickstream` service account will be allowed to create topics with 1 to 20 partitions, while other service accounts will be limited to six. If these Interceptors had different names, they would be chained, so the first one would enforce the restriction to 6 partitions.
 :::
 
-#### Ordering
+### Ordering
 
-Interceptors with different names but the same scope and priority are ordered based on to the 'first come, first served' approach: the Interceptor that's added first will be executed first.
+Interceptors with different names but the same scope and priority are ordered based on the 'first come, first served' approach: the Interceptor that's added first will be executed first.
 
 To ensure the execution is what you expect, specify the priorities in the required order in the backing topic used by Gateway.
 
