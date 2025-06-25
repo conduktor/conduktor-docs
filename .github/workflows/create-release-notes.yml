@@ -77,11 +77,11 @@ jobs:
           
           *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-          ## Breaking Changes
+          ## Breaking changes
 
           - \`Delete if not applicable\`
 
-          ## New Features
+          ## New features
 
           - \`Delete if not applicable\`
 
@@ -109,11 +109,11 @@ jobs:
           
           *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-          ## Breaking Changes
+          ## Breaking changes
 
           - \`Delete if not applicable\`
 
-          ## New Features
+          ## New features
 
           - \`Delete if not applicable\`
 
@@ -141,11 +141,11 @@ jobs:
           
           *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-          ## Breaking Changes
+          ## Breaking changes
 
           - \`Delete if not applicable\`
 
-          ## New Features
+          ## New features
 
           - \`Delete if not applicable\`
 
