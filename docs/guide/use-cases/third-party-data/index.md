@@ -12,10 +12,6 @@ import ProductExchange from '@site/src/components/shared/product-exchange.md';
 
 ## Partner Zones
 
-import AlertPreview from '@site/src/components/shared/alert-preview.md';
-
-<AlertPreview />
-
 Partner Zones allow you to share Kafka topics with external partners selectively and securely. You can:
 
 - set up **dedicated zones** with **customized access** to Kafka topics
