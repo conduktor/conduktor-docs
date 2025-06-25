@@ -60,7 +60,7 @@ The order of execution is calculated **after scoping and overriding**. For examp
 
 ### Scoping
 
-Interceptor scoping lets you **define affected Kafka clients** (ultimately resolved as Service Accounts).
+Interceptor scoping lets you **define affected Kafka clients** (ultimately resolved as service accounts).
 
 There are four targeting scopes:
 
@@ -117,6 +117,16 @@ The order of precedence from highest (overrides all others) to lowest (easiest t
 
 :::info[Overriding caveat]
 In the two JSON examples above, both Interceptors have the same name (`enforce-partition-limit`) but two different scopes: the first one is global, the second one is targeting user `sa-clickstream`. These Interceptors aren't chained but the second one is overriding the first one. The `sa-clickstream` service account will be allowed to create topics with 1 to 20 partitions, while other service accounts will be limited to six. If these Interceptors had different names, they would be chained, so the first one would enforce the restriction to 6 partitions.
+:::
+
+#### Ordering
+
+Interceptors with different names but the same scope and priority are ordered based on to the 'first come, first served' approach: the Interceptor that's added first will be executed first.
+
+To ensure the execution is what you expect, specify the priorities in the required order in the backing topic used by Gateway.
+
+:::warning[Ordering caveat]
+If topics are compacted, the Interceptor order might change.
 :::
 
 ### Interceptor interaction example
