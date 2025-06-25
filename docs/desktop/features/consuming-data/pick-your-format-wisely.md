@@ -121,7 +121,7 @@ If you try to consume Avro data without properly configuring it (and because it 
 
 On the contrary, if you try to read non-Avro data using the Avro format, you'll end up with a list of errors (Conduktor doesn't stop, in case it was test records for instance):
 
-:::danger ERR: Unknown magic byte! 
+:::warning ERR: Unknown magic byte! 
 :::
 
 ![](<../../assets/screenshot-2020-06-25-at-16.15.21 (1).png>)

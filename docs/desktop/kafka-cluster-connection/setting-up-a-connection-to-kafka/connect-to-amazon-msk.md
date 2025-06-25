@@ -52,7 +52,7 @@ The networking layer looks like this (not public):
 
 ### Alternative: Another Proxy
 
-:::danger
+:::warning
 If you get some errors such as "Exception in upstream channel.:
 java.lang.IllegalArgumentException: Invalid version for API key METADATA: 11", your proxy may be
 incompatible with your version of Apache Kafka.

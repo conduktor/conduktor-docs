@@ -114,7 +114,7 @@ Not familiar with regexes? Let's present a few use-case to understand their powe
   - `london|paris`: this will match values containing either london or paris
   - `[wz]` it's the "same" but for single characters only \('w' or 'z'\)
 
-:::danger Beware of **"special"** characters like **"(" "{'{'}"** or **"."**, they need to be **"escaped"**.
+:::warning Beware of **"special"** characters like **"(" "{'{'}"** or **"."**, they need to be **"escaped"**.
 
 If you want to match **"1.2.2"** or **"1.2.3"**, use **"1\.2\.[23]"** and NOT **"1.2.[23]"** or you will match **"**1**0**2**4**3**": "."** means **"any character"** 
 :::

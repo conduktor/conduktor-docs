@@ -7,6 +7,10 @@ import CopyableCode from '@site/src/components/CopyableCode';
 
 ## Overview
 
+:::danger[Trust functionality]
+This feature is available with [Conduktor Trust](https://conduktor.io/trust) only.
+:::
+
 Bad data breaks customer experiences, drives churn and slows growth.
 [Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
 

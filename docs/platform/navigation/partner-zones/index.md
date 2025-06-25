@@ -6,6 +6,10 @@ description: Securely share your Kafka streaming data with external partners.
 
 ## Overview
 
+:::danger[Exchange functionality]
+This feature is available with [Conduktor Exchange](https://conduktor.io/exchange) only.
+:::
+
 Partner Zones allow you to share Kafka topics with external partners selectively and securely. You can:
 
 - set up **dedicated zones** with **customized access** to Kafka topics

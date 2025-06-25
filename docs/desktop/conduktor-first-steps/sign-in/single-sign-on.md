@@ -66,7 +66,7 @@ There are two important fields you need to declare your Application:
 
 #### Required claims
 
-:::danger
+:::warning
 Due to some limitation on Auth0, we need that your SAML assertion contains custom claims. Check your IdP documentation to on how to do this.
 
 Okta documentation: [Configure SAML attributes](https://support.okta.com/help/s/article/How-to-define-and-configure-a-custom-SAML-attribute-statement?language=en_US)
@@ -93,7 +93,7 @@ Leave most default as-is except for the "Sign-in redirect URL": `https://auth.co
 
 #### Required claims
 
-:::danger
+:::warning
 Due to some limitation on Auth0, we need that your OIDC token contains custom claims. Check your IdP documentation to on how to do this.
 
 Okta documentation: [Configure OIDC attributes](https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/main)
