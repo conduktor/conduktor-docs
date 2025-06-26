@@ -5,19 +5,27 @@ title: Conduktor in production
 description: Deploy Conduktor to production
 ---
 
-## Deployment overview?
+## Deployment overview ??
 
-Adapt the diagram from the overview to make it more technical, identifying each component/artifact and give an idea of the ecosystem from the technical perspective.
+TBC
 
-## Deployment options?
+Adapt the diagram from the overview to make it more technical
+identify each component/artifact
 
-You can deploy Conduktor using:
+give an idea of the ecosystem from the technical perspective.
 
-- Docker
-- Kubernetes
-- AWS
-- Marketplaces?
+## Deployment options
 
-## Recommended deployment?
+### Docker (recommended)
 
-We recommend using Docker.
+- [Console](/guide/conduktor-in-production/deploy-artifacts/deploy-console)
+- [Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway)
+
+### Kubernetes
+
+- [Console](/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes)
+- [Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes)
+
+### AWS
+
+- [Console](/guide/tutorials/deploy-aws)
