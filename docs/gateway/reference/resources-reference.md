@@ -417,7 +417,7 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclMode: DISABLED # Means no authorisation checks done on connections
+ aclMode: DISABLED # No authorisation for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
 ```
 
 ### Kafka API powered ACLs
@@ -432,7 +432,7 @@ metadata:
  name: "mon-app-A"
 spec:
  aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent
- superUsers: # This doesn't create or associate users with the Virtual Cluster. Use GatewayServiceAccount resource to do that.
+ superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
  - username1
  - username2
 ```
