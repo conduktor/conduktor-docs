@@ -437,7 +437,7 @@ spec:
  - username2
 ```
 
-Connecting to Gateway as one of the `superUsers` using the Kafka Admin API allows you to manage ACLs on other service accounts in the Virtual Cluster as you would on a real Kafka Cluster.
+Connecting to Gateway as one of the service accounts named in the `superUsers` list, allows you to manage ACLs for other service accounts within the Virtual Cluster using the Kafka Admin API. The same way you would on a real Kafka Cluster.
 
 :::info
 `spec.aclMode` is a new feature added in Gateway 3.11.0. Older versions of Gateway only had a `spec.aclEnabled` boolean field. This field is still supported in Gateway 3.11.0 but is deprecated. 
