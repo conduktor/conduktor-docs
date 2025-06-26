@@ -407,7 +407,7 @@ It will only affect the Topics created after the change.
 ## VirtualCluster
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
-A Virtual Cluster acts like a Kafka within a Kafka. Here is a basic example,
+A Virtual Cluster acts like a Kafka cluster within a Kafka cluster. Here is a basic example,
 
 
 ```yaml
