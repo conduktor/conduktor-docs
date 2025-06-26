@@ -19,9 +19,8 @@ This example builds a **complete Conduktor deployment** that consists of all Con
 Once deployed, you’ll have access to a fully functional Kafka stack integrated with Conduktor’s UI and backend services. This environment is ideal for trying out Conduktor’s features before deploying to a production environment.
 
 <a href="/guide/get-start-overview.png" target="_blank" rel="noopener">
-  <img src="/guide/get-start-overview.png" alt="Get started" style={{maxWidth: '100%'}} style={{paddingTop: '10px'}} />
+  <img src="/guide/get-start-overview.png" alt="Get started"/>
 </a>
-
 
 1. The **data generation service** publishes a continuous stream of synthetic events that *simulate an e-commerce business*.
 1. Conduktor **Gateway intercepts Kafka traffic** to apply real-time operational controls — including *encryption*, *decryption*, *data masking*, and *Traffic Control Policies* — without requiring changes to producers or consumers.
