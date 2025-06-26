@@ -5,12 +5,19 @@ title: Conduktor in production
 description: Deploy Conduktor to production
 ---
 
-## Deployment overview
+## Deployment overview?
 
-Technical diagram, breaking up the main diagram, highlighting main areas.
+Adapt the diagram from the overview to make it more technical, identifying each component/artifact and give an idea of the ecosystem from the technical perspective.
 
-## Deployment options
+## Deployment options?
 
-Docker, Kubernetes, AWS, how you can deploy each component.
+You can deploy Conduktor using:
 
-## Recommended deployment ?
+- Docker
+- Kubernetes
+- AWS
+- Marketplaces?
+
+## Recommended deployment?
+
+We recommend using Docker.
