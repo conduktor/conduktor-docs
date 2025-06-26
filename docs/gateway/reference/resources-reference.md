@@ -457,7 +457,7 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclMode: REST_API # Means ACLs must be set in this resource using the acls field
+ aclMode: REST_API # Means ACLs must be set in this resource using the below acls field
  acls:
   - resourcePattern:
       resourceType: TOPIC
