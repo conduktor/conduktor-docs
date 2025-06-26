@@ -1,7 +1,7 @@
 ---
 sidebar_position: 210
 title: Manage session timeout 
-description: Session lifetime in Conduktor
+description: Session timeout (lifetime) in Conduktor
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 

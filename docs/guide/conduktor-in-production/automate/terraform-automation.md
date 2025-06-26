@@ -8,9 +8,7 @@ import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Conduktor Terraform overview
 
-The Conduktor Terraform provider gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment.
-
-You can also read about the provider on the [Terraform Provider Page](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs) directly.
+The Conduktor Terraform provider gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment. [Find out more](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
 
 :::warning[Alpha feature]
 Conduktor Terraform Provider is currently in **Alpha** and doesn't support all the Conduktor resources yet. [Get in touch](https://conduktor.io/roadmap) if you have feedback or would like to be a design partner.
@@ -78,7 +76,7 @@ Go to **Settings** > **API Keys** and select **New API Key**:
 </TabItem>
 <TabItem value="self-service-application-api-key" label="Self-service Application API Key">
 
-Self-service Application API Key permissions are **limited to the scope of the ApplicationInstance** for which they have been generated. [Find out more about Self-service](/guide/use-cases/self-service/index).
+Self-service Application API Key permissions are **limited to the scope of the ApplicationInstance** for which they have been generated. [Find out more about Self-service](/guide/use-cases/self-service).
 
   <Tabs>
   <TabItem  value="CLI" label="CLI">
@@ -104,7 +102,7 @@ Go to **Applications**, pick your **Application** and under the **Application In
 
 This type of API Key will have the permissions of the user who created it. It only works for **Local** and **LDAP** users.
 
-Short-lived user API Keys will be valid for the same duration as the configured [session lifetime](/guide/conduktor-in-production/admin/user-access/session-lifetime).
+Short-lived user API Keys will be valid for the same duration as the configured [session timeout](/guide/conduktor-in-production/admin/user-access/session-lifetime).
 
 :::info[Limitation]
 OIDC users can't be used.
@@ -128,9 +126,9 @@ The provider configuration also supports environment variables for all attribute
 | ---------------------- | ---------------- | --------------------------------------------------------------------------------- |
 | n/a                    | `mode`           | Terraform Provider mode: either `console` or `gateway`                            |
 | `CDK_CONSOLE_BASE_URL` | `base_url`       | Console base URL, e.g. `http://localhost:8080`                                    |
-| `CDK_API_KEY`          | `api_token`      | Console [API Key](#using-api-key-authentication)                                  |
-| `CDK_CONSOLE_USER`     | `admin_user`     | Console [user login](#using-short-lived-user-credentials-authentication) email    |
-| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console [user login](#using-short-lived-user-credentials-authentication) password |
+| `CDK_API_KEY`          | `api_token`      | Console API key                                |
+| `CDK_CONSOLE_USER`     | `admin_user`     | Console user login email    |
+| `CDK_CONSOLE_PASSWORD` | `admin_password` | Console user login password |
 | `CDK_CONSOLE_CERT`     | `cert`           | Cert in PEM format to authenticate using client certificates                      |
 | `CDK_CONSOLE_INSECURE` | `insecure`       | Skip TLS verification flag. Defaults to `false`                                   |
 | `CDK_CONSOLE_CACERT`   | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate     |
@@ -199,7 +197,7 @@ resource "conduktor_group_v2" "example_group" {
 }
 ```
 
-Then on a terminal with Terraform [installed](https://developer.hashicorp.com/terraform/install) and in a directory containing `conduktor-iac.tf` file.
+Then on a terminal with Terraform installed and in a directory containing `conduktor-iac.tf` file:
 
 ```shell
 
@@ -213,9 +211,7 @@ terraform plan
 terraform apply
 ```
 
-Now if you navigate to the Conduktor UI, you will see a new user, Bob, and team-a's group created.
-
-Log in using an external SSO (LDAP or OIDC) with email `bob@mycompany.io` and you'll be recognized by Conduktor as being in the `team-a` group.
+Now if you navigate to the Conduktor UI, you will see a new user, Bob, and team-a's group created. Log in using an external SSO (LDAP or OIDC) with email `bob@mycompany.io` and you'll be recognized by Conduktor as being in the `team-a` group.
 
 To revert the Conduktor state, you can destroy the created resources using `terraform destroy`. [Find out more about Terraform CLI commands](https://developer.hashicorp.com/terraform/cli/commands).
 
