@@ -121,9 +121,11 @@ In the two JSON examples above, both Interceptors have the same name (`enforce-p
 
 ### Ordering
 
-Interceptor priority determines the order. The 'first come, first served' approach is applied: the Interceptor that's added first will be executed first, based on its `priority` value.
+The Interceptor order is determined by its `priority`: a lower value (e.g. 1) will be executed *before* a higher one (e.g. 100).
 
-If you want to ensure that Interceptors are executed in a particular order in the backing topic used by Gateway, make sure to specify the correct `priority` for each Interceptor.
+To ensure that Interceptors are executed in a particular order, specify a unique and correct `priority` for each Interceptor.
+
+Gateway doesn't guarantee the order that Interceptors with the same priority are applied.
 
 ### Interceptor interaction example
 
