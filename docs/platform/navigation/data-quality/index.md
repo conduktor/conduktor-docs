@@ -299,23 +299,21 @@ When multiple Policies target the same topic, there are two scenarios that can o
   </p>
 </details>
 <details>
-  <summary>Why <code>type()</code> can't figure out the good numeric Types?</summary>
+  <summary>Why can't <code>type()</code> figure out the right numeric types?</summary>
   <p>
-    Whether your data is sent as <strong>JSON</strong> or <strong>Avro</strong>, Conduktor Gateway internally converts the payload to JSON before applying CEL rules.
-    In JSON, all numeric values are treated as a generic <code>number</code> — there is no distinction between <code>int</code> and <code>double</code>.
-    As a result, expressions like <code>type(value.age) == int</code> may <strong>fail unexpectedly</strong>, even if:
+    Whether your data is sent as <strong>JSON</strong> or <strong>Avro</strong>, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between <code>int</code> and <code>double</code>. As a result, expressions like <code>type(value.age) == int</code> may <strong>fail unexpectedly</strong>, even if:
     <ul>
-      <li>The original value is a valid integer (e.g., <code>12</code>)</li>
-      <li>You are using an Avro schema where <code>age</code> is explicitly typed as <code>int</code></li>
+      <li>the original value is a valid integer (e.g., 12)</li>
+      <li>you're using an Avro schema where age is explicitly entered as an integer</li>
     </ul>
-    This happens because the Avro type information is <em>lost during the conversion to JSON</em>.
+    This is because the Avro type information is lost during the conversion to JSON.
 
-    ✅ <strong>Recommended workaround:</strong>
-    Use logic-based expressions like: <code>value.age &gt; 0 &amp;&amp; value.age &lt; 130</code>. This implicitly checks that the field is numeric and falls within a valid range, avoiding the pitfalls of type inference.
+    <strong>Recommended workaround:</strong>
+    Use logic-based expressions like: <CopyableCode language="bash">value.age > 0 && value.age < 130</CopyableCode> This implicitly checks that the field is numeric and falls within a valid range, avoiding type inference.
 
-    ⚠️ <strong>Note:</strong> CEL currently cannot evaluate against Avro schemas directly — it only sees the JSON-converted payload.
+    <strong>Note:</strong> CEL currently can't evaluate against Avro schemas directly — it only sees the JSON-converted payload.
 
-    🛠️ <strong>Troubleshooting tip:</strong> Enable Gateway debug logs to inspect how data is interpreted during rule evaluation and understand why a rule may have failed.
+    We recommend enabling Gateway debug logs to inspect how data is interpreted during rule evaluation and to understand why it may have failed.
   </p>
 </details>
 
