@@ -4,36 +4,6 @@ title: Define Console environment variables
 description: Define Console environment variables
 ---
 
-  - [Docker image environment variables](#docker-image-environment-variables)
-  - [Console properties reference](#console-properties-reference)
-    - [YAML property cases](#yaml-property-cases)
-    - [Environment variable conversion](#environment-variable-conversion)
-      - [Conversion edge cases](#conversion-edge-cases)
-    - [Support of shell expansion in the YAML configuration file](#support-of-shell-expansion-in-the-yaml-configuration-file)
-    - [Support of `*_FILE` environment variables](#support-of-_file-environment-variables)
-    - [Global properties](#global-properties)
-    - [Database properties](#database-properties)
-    - [Session lifetime properties](#session-lifetime-properties)
-    - [Local users properties](#local-users-properties)
-    - [Monitoring properties](#monitoring-properties)
-      - [Monitoring Configuration for Console](#monitoring-configuration-for-console)
-      - [Monitoring Configuration for Cortex](#monitoring-configuration-for-cortex)
-    - [SSO properties](#sso-properties)
-      - [LDAP properties](#ldap-properties)
-      - [OAuth2 properties](#oauth2-properties)
-      - [JWT auth properties](#jwt-auth-properties)
-    - [Kafka clusters properties](#kafka-clusters-properties)
-    - [Kafka vendor specific properties](#kafka-vendor-specific-properties)
-    - [Schema registry properties](#schema-registry-properties)
-      - [Amazon Glue schema registry properties](#amazon-glue-schema-registry-properties)
-    - [Kafka Connect properties](#kafka-connect-properties)
-    - [ksqlDB properties](#ksqldb-properties)
-    - [Indexer properties](#indexer-properties)
-    - [AuditLog export properties](#auditlog-export-properties)
-    - [Conduktor SQL properties](#conduktor-sql-properties)
-    - [Partner zone properties](#partner-zone-properties)
-    - [Data quality properties](#data-quality-properties)
-
 ## Docker image environment variables
 
 | Environment variable                                                                                                   | Description                                                                                                                                                 | Default value                                                                       | Since Console version |
@@ -68,28 +38,28 @@ description: Define Console environment variables
 
 ## Console properties reference
 
-You have multiple options to configure Console: via environment variables, or via a YAML configuration file. You can find a mapping of the configuration fields in the `platform-config.yaml` to environment variables below.
+You can configure Console via environment variables or using the YAML file.
 
-Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use a .env file with key value pairs.
+Environment variables can be set on the container or imported from a file.  When importing from a file, mount the file into the container and provide its path by setting the environment variable `CDK_ENV_FILE`. Use the **.env** file with key value pairs.
 
-```
+```bash
 MY_ENV_VAR1=value
 MY_ENV_VAR2=otherValue
 ```
 
 The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`, or warn if set and the file is not found
 
-```
+```bash
 Warning: CDK_ENV_FILE is set but the file does not exist or is not readable.
 ```
 
-In case you set both environment variable and YAML value for a specific field, the environment variable will take precedence.
+:::note[Syntax and precedence]
+Lists start at index 0 and are provided using the `_idx_` syntax.
 
-:::note
-Lists start at index 0 and are provided using `_idx_` syntax.
+If you set *both* the environment variable and a YAML value for a specific field, **the environment variable will take precedence**.
 :::
 
-### YAML property cases
+## YAML property cases
 
 YAML configuration supports multiple case formats (`camelCase`/`kebab-case`/`lowercase`) for property fragments such as:
 
@@ -99,17 +69,18 @@ YAML configuration supports multiple case formats (`camelCase`/`kebab-case`/`low
 
 All are valid and equivalent in YAML.
 
-### Environment variable conversion
+## Environment variable conversion
 
-At startup, Conduktor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are as follows:
+At startup, Conduktor Console will merge environment variables and YAML based configuration files into one unified configuration. The conversion rules are:
 
 - Filter for environment variables that start with `CDK_`
 - Remove the `CDK_` prefix
-- Convert the variable name to lowercase
+- Convert the variable name to lower case
 - Replace `_` with `.` for nested properties
-- Replace `_[0-9]+_` with `[0-9].` for list properties. (Lists start at index 0)
+- Replace `_[0-9]+_` with `[0-9].` for list properties. Lists start at index 0.
 
-For example, the environment variables `CDK_DATABASE_URL` will be converted to `database.url`, or `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted into `sso.oauth2[0].openid.issuer`.
+For example, the environment variable `CDK_DATABASE_URL` will be converted to `database.url`; `CDK_SSO_OAUTH2_0_OPENID_ISSUER` will be converted to `sso.oauth2[0].openid.issuer`.
+
 The YAML equivalent would be:
 
 ```yaml
@@ -142,7 +113,7 @@ Compatibility matrix:
 | `lowercase`      | 🚫                 | ✅          |
 | `camelCase`      | 🚫                 | 🚫          |
 
-For example `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` environment variable :
+For example, the `CDK_CLUSTERS_0_SCHEMAREGISTRY_IGNOREUNTRUSTEDCERTIFICATE` environment variable :
 
 ```yaml
 # Is equivalent to and compatible with
@@ -159,10 +130,9 @@ And conversely, for `CDK_CLUSTERS_0_SCHEMA-REGISTRY_IGNORE-UNTRUSTED-CERTIFICATE
 
 That's why camelCase is not recommended in YAML configuration when mixing with environment variables.
 
-### Support of shell expansion in the YAML configuration file
+## Shell expansion in the YAML configuration file
 
-Console supports shell expansion for environment variables and home tilde `~`.
-This is useful if you have to use custom environment variables in your configuration.
+Console supports shell expansion for environment variables and home tilde `~`. This is useful if you have to use custom environment variables in your configuration.
 
 For example, you can use the following syntax:
 
@@ -187,22 +157,21 @@ database:
   url: "jdbc:postgresql://usr:pwd@some_host:5432/cdk"
 ```
 
-:::note
-If you want to escape the shell expansion, you can use the following syntax: `$$`.
-For example, if you want `admin.password` to be `secret$123`, you should set `admin.password: "secret$$123"`.
+:::note[Alternative syntax]
+If you want to escape the shell expansion, you can use the following syntax: `$$`. For example, if you want `admin.password` to be `secret$123`, set `admin.password: "secret$$123"`.
 :::
 
-### Support of `*_FILE` environment variables
+## Support for *_FILE environment variables
 
 When an environment variable ending with `_FILE` is set to a file path, its corresponding unprefixed environment variable will be replaced with the content of that file.
 
 For instance, if you set `CDK_LICENSE_FILE=/run/secrets/license`, the value of `CDK_LICENSE` will be overridden by the content of the file located at `/run/secrets/license`.
 
-:::warning
-Exception: `CDK_IN_CONF_FILE` is not supported.
+:::info[Exception]
+The `CDK_IN_CONF_FILE` is not supported.
 :::
 
-### Global properties
+## Global properties
 
 | Property                   | Description                                                                                                                                                                                                 | Environment variable           | Mandatory | Type    | Default     |
 |----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|-----------|---------|-------------|
@@ -215,7 +184,7 @@ Exception: `CDK_IN_CONF_FILE` is not supported.
 | `platform.https.key.path`  | Path to the SSL private key file                                                                                                                                                                            | `CDK_PLATFORM_HTTPS_KEY_PATH`  | false     | string  | ∅           |
 | `enable_product_metrics`   | In order to improve Conduktor Console, we collect anonymous usage metrics. Set to `false`, this configuration disable all of our metrics collection.                                                        | `CDK_ENABLE_PRODUCT_METRICS`   | false     | boolean | `true`      |
 
-### Database properties
+## Database properties
 
 | Property                      | Description                                                                                                                                 | Environment Variable             | Mandatory | Type   | Default |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|-----------|--------|---------|
@@ -229,14 +198,14 @@ Exception: `CDK_IN_CONF_FILE` is not supported.
 | `database.password`           | External PostgreSQL login password                                                                                                          | `CDK_DATABASE_PASSWORD`          | false     | string | ∅       |
 | `database.connection_timeout` | External PostgreSQL connection timeout in seconds                                                                                           | `CDK_DATABASE_CONNECTIONTIMEOUT` | false     | int    | ∅       |
 
-### Session lifetime properties
+## Session lifetime properties
 
 | Property               | Description                                                                                           | Environment Variable       | Mandatory | Type | Default value |
 |------------------------|-------------------------------------------------------------------------------------------------------|----------------------------|-----------|------|---------------|
 | `auth.sessionLifetime` | Max session lifetime in seconds                                                                       | `CDK_AUTH_SESSIONLIFETIME` | false     | int  | `259200`      |
 | `auth.idleTimeout`     | Max idle session time in seconds (access token lifetime). Should be lower than `auth.sessionLifetime` | `CDK_AUTH_IDLETIMEOUT`     | false     | int  | `259200`      |
 
-### Local user properties
+## Local user properties
 
 Optional local accounts list, used to log into Console.
 
@@ -245,23 +214,16 @@ Optional local accounts list, used to log into Console.
 | `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCALUSERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |
 
-### Monitoring properties
+## Monitoring properties
 
-This new image is based on [Cortex](https://github.com/cortexproject/cortex) and pre-configured to run with Console. Cortex is a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
+<GlossaryTerm>Cortex</GlossaryTerm> is pre-configured to run with Console. It's a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-You can choose to not deploy `conduktor/conduktor-console-cortex` (Cortex) image. In this case, you will not be able to see the monitoring graphs and configure alerts.
+You can choose to not deploy the Cortex image (`conduktor/conduktor-console-cortex`). Hoewever, you will then not be able to see the monitoring graphs or configure alerts.
 
-The configuration is split in 2 chapters:
+First, we need to configure Console to connect to Cortex services. By default these are Cortex ports:
 
-- Monitoring Configuration for Console applies to `conduktor/conduktor-console`
-- Monitoring Configuration for Cortex applies to `conduktor/conduktor-console-cortex`
-
-#### Monitoring configuration for Console
-
-First, we need to configure Console to connect to Cortex services. Cortex ports are configured like this by default:
-
-- Query port 9009
-- Alert Manager port 9010
+- Query port **9009**
+- Alert manager port **9010**
 
 | Property                                | Description                                                          | Environment variable                     | Mandatory | Type   | Default |
 |-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
@@ -278,21 +240,21 @@ First, we need to configure Console to connect to Cortex services. Cortex ports 
 
 Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
 
-```
+```yaml
 CDK_MONITORING_USEAGGREGATEDMETRICS: true
 CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 ```
 
 :::
 
-### SSO properties
+## SSO properties
 
 | Property                         | Description                                                              | Environment variable                 | Mandatory | Type    | Default |
 |----------------------------------|--------------------------------------------------------------------------|--------------------------------------|-----------|---------|---------|
 | `sso.ignoreUntrustedCertificate` | Disable SSL checks                                                       | `CDK_SSO_IGNOREUNTRUSTEDCERTIFICATE` | false     | boolean | `false` |
 | `sso.trustedCertificates`        | SSL public certificates for SSO authentication (LDAPS and OAuth2) as PEM | `CDK_SSO_TRUSTEDCERTIFICATES`        | false     | string  | ∅       |
 
-#### LDAP properties
+### LDAP properties
 
 | Property                             | Description                                                                                                                                                                                        | Environment variable                   | Mandatory | Type         | Default              |
 |--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|-----------|--------------|----------------------|
@@ -312,7 +274,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 | `sso.ldap[].groups-attribute`        | Sets the group attribute name. Defaults to `cn`.                                                                                                                                                   | `CDK_SSO_LDAP_0_GROUPSATTRIBUTE`       | false     | string       | `"cn"`               |
 | `sso.ldap[].properties`              | Additional properties that will be passed to identity provider context.                                                                                                                            | `CDK_SSO_LDAP_0_PROPERTIES`            | false     | dictionary   | ∅                    |
 
-#### OAuth2 properties
+### OAuth2 properties
 
 | Property                                | Description                                                         | Environment variable                     | Mandatory | Type                                                                                                                                         | Default |
 |-----------------------------------------|---------------------------------------------------------------------|------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|---------|
@@ -328,7 +290,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 | `sso.oauth2[].preferred-jws-algorithm`  | Configure preferred JWS algorithm                                   | `CDK_SSO_OAUTH2_0_PREFERREDJWSALGORITHM` | false     | string one of: "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES256K", "ES384", "ES512", "PS256", "PS384", "PS512", "EdDSA" | ∅       |
 | `sso.oauth2-logout`                     | Wether the central identity provider logout should be called or not | `CDK_SSO_OAUTH2LOGOUT`                   | false     | boolean                                                                                                                                      | true    |
 
-#### JWT auth properties
+### JWT auth properties
 
 | Property                      | Description                                   | Environment variable            | Mandatory | Type   | Default  |
 |-------------------------------|-----------------------------------------------|---------------------------------|-----------|--------|----------|
@@ -337,7 +299,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 | `sso.jwt-auth.groups-claim`   | Group attribute from your identity provider   | `CDK_SSO_JWTAUTH_GROUPSCLAIM`   | false     | string | `groups` |
 | `sso.jwt-auth.api-key-claim`  | API key attribute from your identity provider | `CDK_SSO_JWTAUTH_APIKEYCLAIM`   | false     | string | `apikey` |
 
-### Kafka cluster properties
+## Kafka cluster properties
 
 | Property                                | Description                                                    | Environment variable                        | Mandatory | Type                                     | Default |
 |-----------------------------------------|----------------------------------------------------------------|---------------------------------------------|-----------|------------------------------------------|---------|
@@ -348,7 +310,7 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 | `clusters[].bootstrapServers`           | List of host:port for your Kafka brokers separated by coma `,` | `CDK_CLUSTERS_0_BOOTSTRAPSERVERS`           | true      | string                                   | ∅       |
 | `clusters[].properties`                 | Any cluster configuration properties                           | `CDK_CLUSTERS_0_PROPERTIES`                 | false     | string where each line is a property     | ∅       |
 
-### Kafka vendor specific properties
+## Kafka vendor specific properties
 
 Note that you only need to set the [Kafka cluster properties](#kafka-cluster-properties) to use the core features of Console. For additional benefits though, set the flavor of your cluster. To define that, go to **Settings** > **Clusters** and open the **Provider** tab.
 
@@ -370,7 +332,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | `clusters[].kafkaFlavor.password`               | Gateway API password                                        | `CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD`               | true      | string | ∅       |
 | `clusters[].kafkaFlavor.virtualCluster`         | Gateway virtual cluster                                     | `CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER`         | true      | string | ∅       |
 
-### Schema registry properties
+## Schema registry properties
 
 | Property                                               | Description                                  | Environment variable                                       | Mandatory | Type                                 | Default |
 |--------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|-----------|--------------------------------------|---------|
@@ -386,7 +348,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | `clusters[].schemaRegistry.security.key`               | Access Key                                   | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_KEY`               | false     | string                               | ∅       |
 | `clusters[].schemaRegistry.security.certificateChain`  | Access certificate                           | `CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_CERTIFICATECHAIN`  | false     | string                               | ∅       |
 
-#### Amazon Glue schema registry properties
+### Amazon Glue properties
 
 | Property                                               | Description                                                                      | Environment variable                                       | Mandatory | Type   | Default |
 |--------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------------------------------|-----------|--------|---------|
@@ -401,7 +363,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | **FromRole Security**                                  |                                                                                  |                                                            |           |        |         |
 | `clusters[].schemaRegistry.amazonSecurity.role`        | Authentication role                                                              | `CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE`        | true      | string | ∅       |
 
-### Kafka Connect properties
+## Kafka Connect properties
 
 | Property                                                | Description                                                     | Environment variable                                        | Mandatory | Type    | Default |
 |---------------------------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------|-----------|---------|---------|
@@ -419,7 +381,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | `clusters[].kafkaConnects[].security.key`               | Access key                                                      | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_KEY`               | false     | string  | ∅       |
 | `clusters[].kafkaConnects[].security.certificateChain`  | Access certificate                                              | `CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
 
-### ksqlDB properties
+## ksqlDB properties
 
 | Property                                          | Description                                          | Environment variable                                  | Mandatory | Type    | Default |
 |---------------------------------------------------|------------------------------------------------------|-------------------------------------------------------|-----------|---------|---------|
@@ -436,9 +398,11 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | `clusters[].ksqlDBs[].security.key`               | Access key                                           | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string  | ∅       |
 | `clusters[].ksqlDBs[].security.certificateChain`  | Access certificate                                   | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
 
-### Indexer properties
+## Indexing properties
 
-<GlossaryTerm>Indexing</GlossaryTerm> is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects). You should only modify these parameters if you see an issue with the performance.
+<GlossaryTerm>Indexing</GlossaryTerm> fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects). 
+
+You should only modify these parameters if you see an issue with the performance.
 
 | Property                                             | Description                                                                                                                                   | Environment variable                               | Mandatory | Type | Default           |
 |------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
@@ -468,7 +432,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 | `kafka_admin.batch_parallel_size`                    | Maximum of batched requests that can be sent in parallel                                                                                      | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
 | `kafka_admin.record_size_limit`                      | Maximum size in bytes of a single message to display in the consume page. For larger messages, you'll get a link to open in a dedicated page. | `CDK_KAFKAADMIN_RECORDSIZELIMIT`                   | false     | int  | `102400` (bytes)  |
 
-### AuditLog export properties
+## Audit log export properties
 
 The audit log can be exported to a Kafka topic, once configured in Console.
 
@@ -479,7 +443,7 @@ The audit log can be exported to a Kafka topic, once configured in Console.
 | `audit_log_publisher.topicConfig.partition`         | The number of partitions for the audit log topic      | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_PARTITION`         | false     | int    | `1`     |
 | `audit_log_publisher.topicConfig.replicationFactor` | The replication factor for the audit log topic        | `CDK_AUDITLOGPUBLISHER_TOPICCONFIG_REPLICATIONFACTOR` | false     | int    | `1`     |
 
-### Conduktor SQL properties
+## Conduktor SQL properties
 
 In order to use Conduktor SQL, you need to configure a second database to store the Topics data. You can configure Conduktor SQL Database using `CDK_KAFKASQL_DATABASE_URL` or alternatively, set each value individually `CDK_KAFKASQL_DATABASE_*`.
 
@@ -505,7 +469,7 @@ Advanced properties (typically, these do not need to be altered)
 | `kafka_sql.consumer_group_id`                        | Consumer group used to identify Conduktor SQL                                                                                         | `CDK_KAFKASQL_CONSUMER-GROUP-ID`                   | false     | string    | `conduktor-sql`  |
 | `kafka_sql.refresh_user_permissions_every_in_sec`    | Frequency at which Conduktor SQL refreshes the role permissions in the DB to match the RBAC setup in Console                          | `CDK_KAFKASQL_REFRESHUSERPERMISSIONSEVERYINSEC`                   | false     | string    | `conduktor-sql`  |
 
-### Partner zone properties
+## Partner Zones properties
 
 Advanced properties (typically, these do not need to be altered).
 
@@ -513,9 +477,9 @@ Advanced properties (typically, these do not need to be altered).
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
 | `partner_zone.reconcile_with_gateway_every_seconds` | The interval at which the partner zone's state that is stored on Console, is synchronized with Gateway. A lower value results in faster alignment between the desired state and the current state on the Gateway. The default value is set to 5 seconds. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
 
-### Data quality properties
+## Data quality properties
 
-Advanced properties (typically, these do not need to be altered).
+Advanced properties for Rules and Policies. Typically, these do not need to be altered.
 
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
