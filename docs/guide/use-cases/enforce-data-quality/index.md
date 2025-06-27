@@ -12,34 +12,34 @@ import ProductTrust from '@site/src/components/shared/product-trust.md';
 
 ## Overview
 
-Bad data breaks customer experiences, drives churn and slows growth.
-[Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
+Bad data breaks customer experiences, drives churn and slows growth. [Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
 
 ## Prerequisites
 
 Before creating data quality Rules and Policies, you have to:
 
-- use **Conduktor Console 1.34** or later
-- use **Conduktor Gateway 3.9** or later
-- be logged in as an admin to Console UI or use an admin token for the Conduktor Command Line Interface (CLI)
-- in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
+- use **Conduktor Console 1.34** or later,
+- use **Conduktor Gateway 3.9** or later,
+- be logged in as an admin to Console UI or use an admin token for the Conduktor <GlossaryTerm>CLI</GlossaryTerm>,
+- [configure your Gateway cluster in Console](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials.
 
 ## Rules
 
-You can create Rules with the Common Expression Language (CEL) expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+You can create Rules with the <GlossaryTerm>CEL</GlossaryTerm> expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
 :::info[Rules require Policies]
 Rules do nothing on their own - you **have to** to attach them to a Policy.
 :::
 
-The Rules page lists your Rules, with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
+The Rules page lists your Rules with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
 ### Create a Rule
 
-You can create a data quality Rule from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Rule using the <GlossaryTerm>Console</GlossaryTerm> UI or the Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
+
 To create a Rule using the Console UI:
 
 1. In the Trust section of the sidebar of Conduktor Console go to **Rules** and click **+New Rule**.
@@ -53,7 +53,8 @@ To create a Rule using the Console UI:
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to create a Rule:
+
+You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
 
 1. Save this example to file, e.g. `rule.yaml`:
 
@@ -69,7 +70,7 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
         type: Cel
     ```
 
-2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+2. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f rule.yaml
@@ -144,13 +145,13 @@ By default, Policies created using the Console UI don't have any actions enabled
 
 ### Create a Policy
 
-You can create a data quality Policy from the **Console UI**, or the **Conduktor CLI**.
+You can create a data quality Policy using the <GlossaryTerm>Console</GlossaryTerm> UI or the Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
-You can create a Policy through the Console UI through the following steps:
+To can create a Policy using the Console UI:
 
-1. In the Trust section of the sidebar in Conduktor Console go to **Policies** and click **+New Policy**.
+1. Under the *Trust* section of the main menu, go to **Policies** and click **+New Policy**.
 1. Define the Policy details:
    - Add a descriptive **name** for the Policy.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Policy in CLI/API.
@@ -165,11 +166,13 @@ You can create a Policy through the Console UI through the following steps:
    - A target consists of one or more topics on a specified Gateway
    - You can either select specific topics, or specify a prefix like `orders-*`
    - Click **Continue** to move to the next step.
-2. Review the Policy, and if you are happy, confirm by clicking **Create**.
+1. Review the Policy, and if you are happy, confirm by clicking **Create**.
+
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create a Policy:
+
+You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Policy:
 
 1. Save this example to file, e.g. `policy.yaml`:
 
@@ -195,7 +198,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
             enabled: true
     ```
 
-1. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+1. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f policy.yaml
@@ -222,7 +225,7 @@ To apply this permission to a group, go to **Settings** > **Groups** and in the 
 Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
 :::
 
-![The 'manage data quality' permission](./assets/topic-dq-manage-permission.png)
+![The 'manage data quality' permission](/guide/topic-dq-manage-permission.png)
 
 ### Set up Policy violation alerts
 
@@ -235,13 +238,13 @@ To create a data quality policy alert via the UI, go to the details page of a Po
 
 A data quality policy alert needs to specify a Policy and a threshold: trigger after X violations within Y minutes/hours/days. This threshold replaces the combination of metric, operator and value used in other alerts.
 
-[Find out more about alerts](/platform/navigation/settings/alerts).
+[Find out more about alerts](/guide/monitor-brokers-apps/alerts).
 
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
 
-You can use the CLI to create a data quality policy alert:
+You can use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a data quality policy alert:
 
 1. Save this example to file, e.g. `alert.yaml`:
 
@@ -258,7 +261,7 @@ You can use the CLI to create a data quality policy alert:
       withinInSeconds: 30
     ```
 
-2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+2. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f alert.yaml
@@ -320,5 +323,5 @@ When multiple Policies target the same topic, there are two scenarios that can o
 
 ## Related resources
 
-- [Connect to clusters](/platform/navigation/settings/managing-clusters/)
+- [Connect to clusters](/guide/conduktor-in-production/admin/configure-clusters)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
