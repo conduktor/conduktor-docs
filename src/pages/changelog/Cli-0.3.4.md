@@ -1,7 +1,7 @@
 ---
 date: 2025-01-10
 title: Conduktor CLI
-description: docker pull conduktor/conduktor-cli:0.3.4
+description: docker pull conduktor/conduktor-ctl:v0.3.4
 solutions: cli
 tags: features,fixes
 ---

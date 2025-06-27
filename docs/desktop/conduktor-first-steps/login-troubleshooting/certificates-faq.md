@@ -85,7 +85,7 @@ If you are using Windows and Mac, and your organization has pushed certificates 
 
 This means that you don't need to define the trust store for each individual component anymore.&#x20;
 
-:::danger
+:::warning
 Unfortunately, we were not able to integrate **ksqlDB** in our new certificate model
 yet.
 :::
