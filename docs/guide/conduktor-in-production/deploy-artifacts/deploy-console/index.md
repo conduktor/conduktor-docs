@@ -378,7 +378,6 @@ services:
 Then from the UI, choose the SSL Authentication method **Keystore file is mounted on the volume** and fill in the required fields
 ![](/guide/keystore-from-volume.png)
 
-
 ## Configure Postgres database
 
 Conduktor Console **requires a Postgres database to store its state**.

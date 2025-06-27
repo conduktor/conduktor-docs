@@ -37,6 +37,8 @@ We're using [Vercel](https://vercel.com/) for hosting and the build will try to 
 
 ## Best practice guidelines
 
+[Check out Conduktor terminology, writing and ToV guidelines](https://conduktor.slite.com/api/s/APsVcreNLD8oT9/Technical-content).
+
 ### Structure
 
 When creating a new page, use this layout:
@@ -102,7 +104,7 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 
 ### Tabs
 
-Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone). 
+Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
 
 To add tabs, add the following:
 
@@ -225,7 +227,7 @@ To update release notes:
 1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
 1. Make sure your file has the following header:
 
-```
+```md
 ---
 date: 2025-11-25
 title: Chargeback
@@ -238,12 +240,16 @@ tags: features,fix
 ```
 
 1. Document all the changes in the release. If it's a major release, consider adding an index/table of contents to make it easier to read.
+
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
-```
+
+```md
 import Console1310 from './changelog/Console-1.31.0.md';
 ```
+
 1. Finally, add an entry at the top of the page, linking to your file. E.g.:
-```
+
+```md
 ## Console 1.131.0
 <Console1310 />
 ---
@@ -256,8 +262,10 @@ API docs live on *host:8888* of the deployed Gateway/Console and are also publis
 To update the public docs:
 
 1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
+
 - [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
 - [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
 - [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
+
 1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
 1. Add the new version to `static/developers/openapi/manifest.json`.
