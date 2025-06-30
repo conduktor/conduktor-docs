@@ -231,15 +231,3 @@ This service account has to have all the necessary ACLs to perform not only thes
 - Describe topics for alias topics creation but also all the permissions necessary to serve all Gateway users.
 
 When in Gateway managed mode, ACLs will be enabled. You can use AdminClient to maintain ACLs with any service account declared in `GATEWAY_ADMIN_API_USERS`.
-
-:::warning[Deprecated variable]
-As of [Gateway v3.10.0](/changelog/Gateway-3.10.0), the `GATEWAY_ACL_STORE_ENABLED` environment variable has been deprecated.
-
-Instead, when `GATEWAY_SECURITY_MODE` is set to `GATEWAY_MANAGED`, ACLs will be enabled.
-
-When in `KAFKA_MANAGED` mode, ACLs will be disabled.
-
-This `GATEWAY_ACL_STORE_ENABLED` environment variable continues to be supported for backward compatibility but is no longer recommended for new configurations.
-
-If you're using `DELEGATED` security protocols, [See the migration to security mode guide](/docs/gateway/how-to/migration-guide-to-security-mode) before proceeding.
-:::
