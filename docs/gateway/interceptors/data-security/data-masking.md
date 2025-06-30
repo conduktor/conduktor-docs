@@ -14,10 +14,12 @@ Field level data masking interceptor masks sensitive fields within messages as t
 
 Policies will be actioned and applied when consuming messages. 
 
-| key      | type                    | default | description                                                    |
-|:---------|:------------------------|:--------|:---------------------------------------------------------------|
-| topic    | String                  | `.*`    | Topics that match this regex will have the interceptor applied |
-| policies | List[[Policy](#policy)] |         | List of your masking policies                                  |
+| key         | type                    | default       | description                                                                                                   |
+|:------------|:------------------------|:--------------|:--------------------------------------------------------------------------------------------------------------|
+| topic       | String                  | `.*`          | Topics that match this regex will have the interceptor applied                                                |
+| policies    | List[[Policy](#policy)] |               | List of your masking policies                                                                                 |
+| errorPolicy | [String](#error-policy) | `fail_fetch`  | Determines the plugin behaviour when it cannot parse a fetched message. One of `fail_fetch` or `skip_masking` |
+
 
 ### Policy
 
@@ -41,6 +43,15 @@ Policies will be actioned and applied when consuming messages.
 * `MASK_ALL`: data will be masked,
 * `MASK_FIRST_N`: The first `n` characters will be masked
 * `MASK_LAST_N`: The last `n` characters will be masked
+
+### Error Policy
+
+You can control the plugin behaviour when it cannot parse a fetched message through its `errorPolicy`.
+This can be set to one of `fail_fetch` or `skip_masking`.
+
+The default mode is `fail_fetch` and in this mode the plugin will return a failure to read the batch which the fetch record is part of, effectively blocking any consumer.
+
+In `skip_masking` mode, if there is a failure to parse a message being fetched (e.g. an encrpyted record is read in) then that record is skipped, and returned un-masked.
 
 ### Schema Registry
 
