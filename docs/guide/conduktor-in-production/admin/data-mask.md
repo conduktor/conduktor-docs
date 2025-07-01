@@ -24,15 +24,13 @@ Here is the list of policies applied in this case.
 
 You can go to the [Create a policy](/platform/navigation/settings/data-masking/create-a-policy/) section in order to know more, and create your own policies.
 
-## Create a policy
+## Create a data masking policy
 
-In order to create a Data Masking policy and protect your data, you should navigate to the **Data Policies** section of the **Settings**. If you don't see this tab, you may not have the appropriate permissions to create policies.
+In order to create a Data Masking policy and protect your data, go to **Settings** > **Data Policies**.
 
 ![List of policies](/guide/data-policies.png)
 
-Here, you can click on **New policy** and fill out the form with the policy details.
-
-Here are the information you'll have to fill:
+Click **New Policy** and fill in the required details:
 
 | Policy detail                       | Description                                                                                                                                           |
 |-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -51,7 +49,7 @@ import PolicyConfig from '/guide/policy-config.png'
 
 In the case above, the policy will mask the field `credit_card`, for all the users **except people from the group "Order Owners"**, on the topic prefixed by `payment-` of the `Prod Kafka Cluster`.
 
-## Validate a Policy
+## Validate a policy
 
 Once you have created a policy, you should validate it through the Conduktor Console. 
 
