@@ -217,6 +217,7 @@ module.exports = {
         'tutorials/custom-deserializers',
         'tutorials/deploy-aws',
         'tutorials/migrate-gw-security',
+        'tutorials/custom-log',
       ],
     }, 
 

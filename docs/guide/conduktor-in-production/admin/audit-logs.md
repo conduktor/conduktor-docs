@@ -17,7 +17,7 @@ Click on an event in the audit log to expose event-specific metadata. Here's an 
 
 ![Admin Audit Event](/guide/audit-log-inspect.png)
 
-Once configured with the correct [environment variables](docs/platform/get-started/configuration/env-variables.md#auditlog-export-properties), audit log events are also exported to a Kafka topic, allowing you to leverage the benefits of Conduktor when finding a message.
+Once configured with the correct [environment variables](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables/#audit-log-export-properties), audit log events are also exported to a Kafka topic, allowing you to leverage the benefits of Conduktor when finding a message.
 ![kafka message audit log](/guide/audit-log-kafka-message.png)
 
 ## View and export audit logs
@@ -29,7 +29,7 @@ Once configured with the correct [environment variables](docs/platform/get-start
 
   You can export audit log events from a Kafka topic using the Console UI. The exportable events have more detail than the legacy events, providing additional information about the event that has taken place.
 
-  Learn how to configure audit events for export via [configuration properties](/platform/get-started/configuration/env-variables/#auditlog-export-properties).
+  Learn how to configure audit events for export via [configuration properties](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables/#audit-log-export-properties).
 
   The events conform to the [CloudEvents specification](https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md), a vendor-neutral format that follows the following structure:
 
@@ -297,104 +297,9 @@ Once configured with the correct [environment variables](docs/platform/get-start
 </TabItem>
 </Tabs>
 
-## Customize logging configuration
-
-If you want to further customize your logging at an individual logger-level, you can use a custom log4j configuration file.
-
-You must bind mount your custom log4j configuration file to the `/app/resources/log4j2.xml` path in the container.
-
-Here is the default configuration file:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration status="warn">
-
-    <Properties>
-        <Property name="LOG4J2_TIME_FORMAT">yyyy-MM-dd'T'HH:mm:ss.SSSZ</Property>
-        <Property name="LOG4J2_APPENDER_LAYOUT">pattern</Property>
-        <Property name="LOG4J2_ROOT_LEVEL">info</Property>
-        <Property name="LOG4J2_ORG_APACHE_KAFKA_LEVEL">warn</Property>
-        <Property name="LOG4J2_IO_KCACHE_LEVEL">warn</Property>
-        <Property name="LOG4J2_IO_VERTX_LEVEL">warn</Property>
-        <Property name="LOG4J2_IO_NETTY_LEVEL">error</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL">info</Property>
-        <Property name="LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL">warn</Property>
-        <Property name="LOG4J2_IO_MICROMETER_LEVEL">error</Property>
-        <Property name="LOG4J2_IO_CONFLUENT_LEVEL">warn</Property>
-    </Properties>
-
-    <appenders>
-        <Console name="json" target="SYSTEM_OUT">
-            <JsonLayout complete="false" compact="true" eventEol="true" properties="true"
-                        objectMessageAsJsonObject="true">
-                <KeyValuePair key="timestamp" value="$${date:${env:LOG4J2_TIME_FORMAT}}"/>
-            </JsonLayout>
-        </Console>
-        <Console name="pattern" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{${env:LOG4J2_TIME_FORMAT}} [%red{%10.25t}] [%green{%-5p}] [%blue{%c{1}:%L}] - %m%n"/>
-        </Console>
-    </appenders>
-
-    <loggers>
-        <logger name="org.apache.kafka" level="${env:LOG4J2_ORG_APACHE_KAFKA_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.kcache" level="${env:LOG4J2_IO_KCACHE_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.vertx" level="${env:LOG4J2_IO_VERTX_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.netty" level="${env:LOG4J2_IO_NETTY_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor" level="${env:LOG4J2_IO_CONDUKTOR_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor.proxy.authorization" level="${env:LOG4J2_IO_CONDUKTOR_PROXY_AUTHORIZATION_LEVEL}"
-                additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor.proxy.rebuilder.components"
-                level="${env:LOG4J2_IO_CONDUKTOR_PROXY_REBUILDER_COMPONENTS_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor.proxy.service" level="${env:LOG4J2_IO_CONDUKTOR_PROXY_SERVICE_LEVEL}"
-                additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor.proxy.thread.UpstreamThread" level="${env:LOG4J2_IO_CONDUKTOR_UPSTREAM_THREAD_LEVEL}"
-                additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.conduktor.proxy.network" level="${env:LOG4J2_IO_CONDUKTOR_PROXY_NETWORK_LEVEL}"
-                additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.micrometer" level="${env:LOG4J2_IO_MICROMETER_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="org.hibernate.validator.internal.util" level="ERROR" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-        <logger name="io.confluent" level="${env:LOG4J2_IO_CONFLUENT_LEVEL}" additivity="false">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </logger>
-
-        <AsyncRoot level="${env:LOG4J2_ROOT_LEVEL}">
-            <appender-ref ref="${env:LOG4J2_APPENDER_LAYOUT}"/>
-        </AsyncRoot>
-    </loggers>
-</configuration>
-
-```
-
 ## Related resources
 
-- [Configure audit log topics](/platform/guide/configure-audit-log-topic/)
-- [Gateway audit](/gateway/interceptors/data-security/audit/)
+- [Configure audit log topics](/guide/tutorials/configure-audit-log-topic)
+- [Customize logs](/guide/tutorials/custom-log)
+- [Gateway audit](/guide/reference/interceptor-reference/#audit-interceptor)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
