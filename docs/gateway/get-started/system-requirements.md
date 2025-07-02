@@ -57,3 +57,5 @@ Gateway should connect to Kafka as an 'admin user'. At a minimum, this user shou
 - manage topics and consumer groups
 - commit offsets
 - describe cluster information
+
+> **Note:** When using Kafka 4.0, please refer to the [Gateway 3.11.0 changelog](/changelog/Gateway-3.11.0) for important compatibility notes regarding ACL changes, OAuth authentication, and deprecated features.

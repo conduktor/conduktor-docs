@@ -299,7 +299,7 @@ Client configuration:
 bootstrap.servers=your.gateway.hostname:9092
 security.protocol=SASL_PLAINTEXT
 sasl.mechanism=OAUTHBEARER
-sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
 sasl.oauthbearer.token.endpoint.url=https://login.microsoftonline.com/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/oauth2/token
 sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
  clientId="yourClientID" \
@@ -377,7 +377,7 @@ security.protocol=SASL_SSL
 sasl.mechanism=OAUTHBEARER
 ssl.truststore.location=/path/to/your/truststore.jks
 ssl.truststore.password=yourTruststorePassword
-sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
 sasl.oauthbearer.token.endpoint.url=https://login.microsoftonline.com/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/oauth2/token
 sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
   clientId="yourClientID" \
