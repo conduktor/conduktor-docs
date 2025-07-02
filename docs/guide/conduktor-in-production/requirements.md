@@ -3,6 +3,7 @@ sidebar_position: 40
 title: Technical requirements
 description: Conduktor technical requirements
 ---
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Hardware
 
@@ -85,7 +86,7 @@ If you're deploying the [Helm chart](/guide/conduktor-in-production/deploy-artif
 
 ### Hardware requirements
 
-To configure Conduktor Console for particular hardware, you can use container CGroups limits. [Find out more about memory configuration](/platform/get-started/configuration/memory-configuration).
+To configure Conduktor Console for particular hardware, you can use container CGroups limits. [Find out more about memory configuration](#memory-configuration).
 
 #### Minimum
 
@@ -100,6 +101,70 @@ To configure Conduktor Console for particular hardware, you can use container CG
 - 10+ GB of disk space
 
 [Check out the environment variables](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables) or [get started with Docker](/guide/get-started).
+
+### Memory configuration
+
+:::info
+**RUN_MODE** has been deprecated. We now rely on container CGroups limits and use up to 80% of the container memory limit for JVM max heap size.
+:::
+
+```bash
+-XX:+UseContainerSupport -XX:MaxRAMPercentage=80
+```
+
+You now only need to care about the limits that you set on your container.  
+
+<Tabs>
+<TabItem value="Console Helm" label="Console Helm">
+
+```yaml
+# Values.yaml
+...
+platform:
+  resources:
+    limits:
+      memory: 8Gi
+...
+```
+
+</TabItem>
+<TabItem value="Kubernetes" label="Kubernetes">
+
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+...
+template:
+  spec:
+    containers:
+      - name: console
+        image: conduktor/conduktor-console
+        resources:
+          limits:
+            memory: 8G
+...
+```
+
+</TabItem>
+<TabItem value="Docker Compose" label="Docker Compose">
+
+```yaml
+# docker-compose.yaml
+...
+  conduktor-console:
+    image: conduktor/conduktor-console
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+...
+```
+
+</TabItem>
+</Tabs>
+
+[Find out more about JVM in Linux containers](https://bell-sw.com/announcements/2020/10/28/JVM-in-Linux-containers-surviving-the-isolation/).
 
 ### Deployment architecture
 

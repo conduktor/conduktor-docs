@@ -58,7 +58,7 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'Admin',
+          label: 'Admin actions',
           link: { type: 'doc', id: 'conduktor-in-production/admin/index' },
           items: [
             'conduktor-in-production/admin/configure-clusters',
