@@ -131,7 +131,7 @@ There are four targeting scopes:
 - Group
 - ServiceAccount  
 
-[See resource reference details](/gateway/reference/resources-reference/#interceptor-targeting).
+[See resource reference details](/guide/reference/resources-reference/#interceptor-targeting).
 
 Example:
 

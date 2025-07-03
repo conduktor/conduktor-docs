@@ -11,6 +11,7 @@ description: Learn Conduktor by following hands-on tutorials.
 - [Set up Chargeback](/guide/tutorials/configure-chargeback)
 - [Self-service quick start](/guide/tutorials/self-service-start)
 - [Reprocess messages](/guide/tutorials/reprocess)
+- [Manage service accounts using Gateway](/guide/tutorials/manage-gw-sa)
 
 ## Configure
 

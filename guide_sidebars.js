@@ -218,6 +218,7 @@ module.exports = {
         'tutorials/deploy-aws',
         'tutorials/migrate-gw-security',
         'tutorials/custom-log',
+         'tutorials/manage-gw-sa',       
       ],
     }, 
 
