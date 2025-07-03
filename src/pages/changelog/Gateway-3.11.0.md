@@ -10,8 +10,15 @@ tags: features,fixes
 
 - [Breaking changes](#breaking-changes)
 - [New features](#new-features)
+  -  [Auto-Create Topics Feature](#auto-create-topics-feature)
 
 ### Breaking changes
 
 ### New features
 
+#### Auto-Create Topics Feature
+
+- **New auto-create topics configuration**: Added support for automatically creating topics when producing or consuming through the Gateway
+- **Environment variable control**: New `GATEWAY_AUTO_CREATE_TOPICS_ENABLE` environment variable (default: `false`) to enable/disable the feature
+- **Kafka property integration**: Leverages the Kafka property `auto.create.topics.enable` when the feature is enabled
+- **Concentrated topics limitation**: When auto-create topics is enabled, topics that would normally be concentrated will be created as physical topics instead
