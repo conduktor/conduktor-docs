@@ -3,24 +3,22 @@ title: Gateway service accounts
 description: Learn Conduktor terminology
 ---
 
-## Introduction
+Application service accounts defined in <GlossaryTerm>Gateway</GlossaryTerm> that follow a common set of <GlossaryTerm>Interceptor</GlossaryTerm> rules can be grouped.
 
-The Gateway Service Accounts Groups are used to **scope interceptors for a set of service accounts**.
+This allows you to [scope Interceptors](/guide/conduktor-concepts/interceptors/#interceptor-scope) for multiple service accounts.
 
-With these Groups, you can gather all the application Service Accounts defined on the Gateway that should follow a common set of interceptors rules.
-
-:::note
-They **can't be used for managing ACLs** of these Service Accounts.
+:::info[Limitation]
+These groups **can't be used for managing ACLs** of the service accounts.
 :::
 
-## Creation
+## Create a service account group
 
-You can create a Group by using the Gateway API.
+Use the [Gateway API](https://developers.conduktor.io/?product=gateway) to create a `group`.
 
-Object definition and additional details can be found on the [Gateway Group Resource Reference page](/gateway/reference/resources-reference/#gatewaygroup).
+[Find out more about this resource](/guide/reference/gateway-reference/#gatewaygroup).
 
-## Apply an Interceptor to a Group
+## Apply an Interceptor to a group
 
-After having created the Group, you can apply interceptors to it directly from within the interceptor configuration.
+Once a group is created, you can apply Interceptors to it directly from within the Interceptor configuration.
 
-As detailed in the [Interceptor Resource Reference page](/gateway/reference/resources-reference/#interceptor), you can define to which Group the interceptor should apply by setting the `metadata.scope.group`.
+Use `metadata.scope.group` to define which group the Interceptor should apply to. [Find out more](/guide/reference/gateway-reference/#interceptor-targeting).
