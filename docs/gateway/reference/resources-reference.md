@@ -463,20 +463,20 @@ spec:
       resourceType: TOPIC
       name: customers
       patternType: LITERAL
-    principal: some.user
+    principal: User:username1
     operation: READ
     permissionType: ALLOW
   - resourcePattern:
       resourceType: TOPIC
       name: customers
       patternType: LITERAL
-    principal: some.user
+    principal: User:username1
     operation: WRITE
     permissionType: ALLOW
 ```
 
 :::warning
-ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. Be very careful about changing a virtual cluster `aclMode` from `KAFKA_API` to `REST_API`.
+ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid updating `aclMode` from `KAFKA_API` to `REST_API` (you can update from `KAFKA_API` to `DISABLED` to `REST_API` if you really want to override all existing ACLs).
 :::
 
 ## AliasTopic
