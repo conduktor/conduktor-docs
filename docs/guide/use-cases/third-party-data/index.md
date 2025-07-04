@@ -53,7 +53,7 @@ Use the Console UI to create a Partner Zone in just a few steps.
 1. Define the Partner Zone details:
    - Add a descriptive **name** for the zone.
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this zone in CLI/API.
-   - **Service account** will also be auto-generated based on the name but you can edit this as required. [Service accounts](/platform/navigation/console/service-accounts/) are used to define permissions to Kafka resources, called ACLs (Access Control Lists).
+   - **Service account** will also be auto-generated based on the name but you can edit this as required. [Service accounts](/guide/manage-kafka/kafka-resources/service-accounts-acls) are used to define permissions to Kafka resources, called ACLs (Access Control Lists).
    - (Optional) Enter a relevant **URL** for your partner.
    - (Optional) Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone.
@@ -85,7 +85,7 @@ Click on a Partner Zone to view its details.
 
 </TabItem>
 <TabItem value="Second Tab" label="Conduktor CLI">
-You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference/cli-reference/) to create Partner Zones.
+You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-in-production/automate/cli-automation) to create Partner Zones.
 
 1. Save this example to file, e.g. `pz.yaml`:
 
@@ -113,7 +113,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
         phone: 07827 837 177
     ```
 
-1. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the configuration:
+1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f pz.yaml
@@ -231,7 +231,7 @@ Click **Save** in the top right corner when done.
 
 1. Open the previously  created YAML file (e.g. `pz.yaml`) and make the required changes.
 
-2. Use [Conduktor CLI](/gateway/reference/cli-reference/) to apply the changes:
+2. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the changes:
 
     ```bash
     conduktor apply -f pz.yaml
@@ -244,7 +244,9 @@ Click **Save** in the top right corner when done.
 
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
+
 To delete a Partner Zone you can either:
+
 - go to the Partner Zone page list view, and click the **three dots** on the right-hand side then click the **trash can** button
 - or go to a specific Partner Zone's details view, click the **trash can** button in the top right corner.
 
@@ -254,10 +256,13 @@ A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This
 </TabItem>
 
 <TabItem value="Second Tab" label="Conduktor CLI">
+
 Deleting a Partner Zone will remove a partner's access to it. *This can't be undone.*
+
   ```bash
      conduktor delete PartnerZone {name}
-    ```
+  ```
+
 </TabItem>
 </Tabs>
 
@@ -278,7 +283,7 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 </details>
 <details>
   <summary>Does **Generate password** invalidate the previously issued credentials of a service account?</summary>
-  <p>No, you can't invalidate issued credentials - they instead have a set time to live. If you're concerned about any issued credentials, **delete and re-create the Partner Zone**, then re-issue fresh credentials. We recommend deploying Partner Zones using the IaC (Infrastructure as Code) approach. [Find out more on the resource reference page](/platform/reference/resource-reference/console/#partner-zone).</p>
+  <p>No, you can't invalidate issued credentials - they instead have a set time to live. If you're concerned about any issued credentials, **delete and re-create the Partner Zone**, then re-issue fresh credentials. We recommend deploying Partner Zones using the IaC (Infrastructure as Code) approach. [Find out more about this resource](/guide/reference/console-reference/#partner-zones).</p>
 </details>
 
 ## Audit log events
@@ -292,7 +297,8 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 
 ## Related resources
 
-- [Connect to clusters](/platform/navigation/settings/managing-clusters/)
-- [Manage service accounts](/platform/navigation/console/service-accounts/)
-- [Gateway service accounts](/gateway/concepts/service-accounts-authentication-authorization/)
+- [View resource reference](/guide/reference/console-reference/#partner-zones)
+- [Connect to clusters](/guide/conduktor-in-production/admin/configure-clusters)
+- [Manage service accounts](/guide/manage-kafka/kafka-resources/service-accounts-acls)
+- [Find out more about Gateway service accounts](/guide/conduktor-concepts/gw-service-accounts)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)

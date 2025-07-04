@@ -22,7 +22,7 @@ When the Conduktor Console needs to connect to a secure Kafka cluster, you must 
 
 For example:
 
-```
+```md
 security.protocol=SASL_SSL
 sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username='<username>' password='<password>';
@@ -138,7 +138,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 1. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
 
-1. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step. 
+1. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step.
 
 ![adding cloudera to console](/guide/cloudera-console-setup.png "adding cloudera to console")
 
@@ -156,14 +156,14 @@ You can connect to Google Cloud Managed Service for Apache Kafka using the **SAS
 
 First, get an access token:
 
-```
+```bash
 gcloud auth login --no-launch-browser
 gcloud auth print-access-token 
 ```
 
 Then, use that token with the following parameters:
 
-```
+```bash
 security.protocol=SASL_SSL
 sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required \
