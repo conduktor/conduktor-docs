@@ -2,6 +2,9 @@
 title: Cache data
 description: Cache data in Conduktor
 ---
+import ProductScalePlusExchange from '@site/src/components/shared/product-scale-exchange.md';
+
+<ProductScalePlusExchange /> 
 
 ## Overview
 

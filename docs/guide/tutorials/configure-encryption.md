@@ -6,6 +6,9 @@ description: Configure encryption for your data
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import ProductShield from '@site/src/components/shared/product-shield.md';
+
+<ProductShield /> 
 
 ## Configure encryption
 

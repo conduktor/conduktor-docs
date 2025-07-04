@@ -2,6 +2,9 @@
 title: Traffic Control Policies
 description: Learn Conduktor terminology
 ---
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 Traffic Control Policies allow you to apply regulations and logic to data, such as:
 
@@ -15,9 +18,9 @@ Traffic Control Policies allow you to apply regulations and logic to data, such 
 - [Limit connection attempts](/guide/use-cases/apply-traffic-control-policies/#limit-connection-attempts-policy)
 - [Limit join group](/guide/use-cases/apply-traffic-control-policies/#limit-join-group-policy)
 - [Limit producer rate](/guide/use-cases/apply-traffic-control-policies/#producer-rate-limiting-policy)
-- [Produce policy](/guide/use-cases/apply-traffic-control-policies/#produce-policy)
+- [Produce requests](/guide/use-cases/apply-traffic-control-policies/#produce-policy)
 - [Read-only topic policy](/guide/use-cases/apply-traffic-control-policies/#read-only-topic-policy)
 - [Remove message headers](/guide/use-cases/apply-traffic-control-policies/#message-header-removal-policy)
-- [Topic required schema ID policy](/guide/use-cases/apply-traffic-control-policies/#topic-required-schema-id-policy)
+- [Schema ID required](/guide/use-cases/apply-traffic-control-policies/#topic-required-schema-id-policy)
 
 [Find out how to apply each of them](/guide/use-cases/apply-traffic-control-policies/).

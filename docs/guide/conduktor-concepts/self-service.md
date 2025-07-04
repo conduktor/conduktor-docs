@@ -2,6 +2,9 @@
 title: Self-service
 description: Learn Conduktor terminology
 ---
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 Conduktor's Self-service framework helps you scale Kafka usage in your organization by facilitating collaboration between central Platform teams and Application teams.
 

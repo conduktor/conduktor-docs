@@ -5,6 +5,9 @@ description: Handle large Kafka messages using Conduktor
 ---
 
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 ## IS THIS DEMO OUT OF DATE??
 

@@ -4,6 +4,9 @@ title: Self-service quick start
 displayed: false
 description: Get started with Self-service
 ---
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 This guide gives an overview of Conduktor's Self-service offering through a worked example where you will:
 
@@ -12,7 +15,7 @@ This guide gives an overview of Conduktor's Self-service offering through a work
 - Expose topics in the topic catalog
 - Experience trying to create resources that breach policies
 
-For the full definition of each resource, see [Self-service resource reference](/platform/reference/resource-reference/self-service/).
+For the full definition of each resource, see [Self-service resource reference](/guide/reference/self-service-reference).
 
 Prefer to watch instead of reading? Check out the full demo in video (24 min):
 
@@ -35,7 +38,7 @@ This demo repo contains two directories with each representing a mock repo: `cen
 
 This repo is where the central team would make, or approve, changes.
 
-It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies. [Find out more about these concepts](/platform/navigation/self-serve/#concepts).
+It should contain definitions of infrastructure e.g. the cluster configuration and definitions of the Applications, Application Instances and Application Instance policies.
 
 ## Application team's repo
 
@@ -45,7 +48,7 @@ This model works because the central team has delegated appropriate scope by cre
 
 Application teams can then create, modify and approve changes on their own resources without having to request further action from the central team.
 
-The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups. [Find out more about these resources](/platform/navigation/self-serve/#application-team-resources).
+The application team's repo will have sections for the different types of resource, Kafka resources, Application Instance Permissions and Application Groups.
 
 ## Worked example
 
@@ -140,6 +143,7 @@ conduktor apply -f ./self-service/central-team-repo/topic-policies/
 The policies we've created are visible within the UI, under Topic Policies:
 
 ![Topic Policies](/guide/topic-policies.png)
+
 1. Create the team resources, the Application and the Application Instances
 
 ```bash
@@ -212,7 +216,7 @@ docker compose exec -it conduktor-ctl /bin/sh
 
 With the CLI running using the **application instance API key**, we can properly do the test. Now back to the example.
 
-Earlier, the central team set up the `generic-prod-topic-policy` ([check out the file](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/topic-policies/generic-prod-topic-policy.yaml) if needed), which specifies the following rules:  
+Earlier, the central team set up the `generic-prod-topic-policy` ([check out the file](https://github.com/conduktor/self-service-getting-started/blob/main/central-team-repo/topic-policies/generic-prod-topic-policy.yaml), which specifies the following rules:  
 
 - a `data-criticality` label must be provided with one of the specified values
 - the number of partitions must be in a certain range
@@ -289,7 +293,7 @@ You'll notice you get some errors followed by some successes, this is because th
 
 The last message is the one of interest, an appropriate error from the policy we just reviewed:
 
-```text
+```md
 Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doesn't match the expected constraints:
 - At `metadata.labels.data-criticality` got "C5" expecting OneOf("C0", "C1", "C2")
 - At `spec.configs.retention.ms` got null expecting Range(604800000, 2419000000)
@@ -298,7 +302,7 @@ Could not apply resource Topic/website-analytics.add-to-cart-fail: The Topic doe
 
 ## Conclusion
 
-You can copy the example repos and start mapping your own team structure. This demo doesn't cover everything, so do explore how to [grant permissions to other teams](/platform/reference/resource-reference/self-service/#application-instance-permissions) on your owned resources or how to [set up teams within your Application](/platform/reference/resource-reference/self-service/#application-group).
+You can copy the example repos and start mapping your own team structure. This demo doesn't cover everything, so do explore how to [grant permissions to other teams](/guide/reference/self-service-resource-reference/#application-instance-permissions) on your owned resources or how to [set up teams within your Application](/guide/reference/self-service-resource-reference/#application-group).
 
 To close down the resources, exit the CLI container with `Ctrl + D` and run `docker compose down -v`.
 

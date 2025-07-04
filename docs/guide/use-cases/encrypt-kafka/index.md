@@ -3,6 +3,9 @@ sidebar_position: 330
 title: Encrypt Kafka data
 description: Encrypt Kafka data using Conduktor
 ---
+import ProductShield from '@site/src/components/shared/product-shield.md';
+
+<ProductShield /> 
 
 <GlossaryTerm>Gateway</GlossaryTerm> can encrypt your data on produce or on consume:
 

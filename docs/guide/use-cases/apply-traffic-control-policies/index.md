@@ -3,6 +3,9 @@ sidebar_position: 360
 title: Apply Traffic Control Policies
 description: Implement policies using Conduktor
 ---
+import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
+
+<ProductScalePlus /> 
 
 ## Overview
 
@@ -1084,3 +1087,10 @@ Topic required schema id policy Interceptor will return the following errors whe
   }
 }
 ```
+
+## Related resources
+
+- [See the full list of Traffic Control Policies](/guide/conduktor-concepts/traffic-control-policies)
+- [Find out how to deploy an Interceptor](/guide/conduktor-concepts/interceptors)
+- [View resource reference](/guides/reference/self-service-reference)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
