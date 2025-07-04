@@ -10,7 +10,7 @@ This guide is for migrating authentication and authorization to the new configur
 
 We have introduced a new environment variable: `GATEWAY_SECURITY_MODE` which determines where authentication takes place.
 
-As part of this, we're deprecating (but will still support) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`. The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. [Find out more about the client to Gateway connection](../configuration/env-variables.md#connect-from-clients-to-gateway).
+As part of this, we're deprecating (but will still support) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`. The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. [Find out more about the client to Gateway connection](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/#4-configure-gateway-to-accept-client-connections).
 
 We're also changing the default behavior of `GATEWAY_ACL_ENABLED`. Previously, when left undefined, it defaulted to `false`. It will now be determined by the security mode.
 
@@ -27,7 +27,7 @@ We're splitting the security configuration into two steps to simplify the user e
 
 Previously, both these were resolved by the GATEWAY_SECURITY_PROTOCOL. Instead, we set *the what is responsible* using `GATEWAY_SECURITY_MODE` and simplify the options for *the how*, which still uses `GATEWAY_SECURITY_PROTOCOL`.
 
-We'll also enable/disable ACLs on Gateway from the security mode, meaning that the `GATEWAY_ACL_ENABLED` environment variable **only needs to be used when disabling ACLs** on Gateway, on the passthrough. The behavior for the virtual clusters is handled in the [virtual cluster configuration](/gateway/reference/resources-reference/#virtualcluster).
+We'll also enable/disable ACLs on Gateway from the security mode, meaning that the `GATEWAY_ACL_ENABLED` environment variable **only needs to be used when disabling ACLs** on Gateway, on the passthrough. The behavior for the virtual clusters is handled in the [Virtual Cluster configuration](/guide/reference/gateway-reference/#virtualcluster).
 
 ## Am I affected?
 

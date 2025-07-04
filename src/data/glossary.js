@@ -241,7 +241,7 @@ const glossaryData = [
     }, 
     {
         term: "Service account",
-        tooltip: "A non-human identity used by Kafka clients to authenticate and perform actions on resources.",
+        tooltip: "A service account is a non-human identity used by Kafka clients to authenticate and perform actions on resources.",
         definition: "A service account is a non-human identity used by Kafka clients to authenticate and perform actions on resources through [Gateway](#gateway). You can define two types of service accounts: **local** or **external**. [Find out more](../guide/conduktor-concepts/gw-service-accounts).",
         slug: "service-account"
     },   

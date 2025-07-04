@@ -422,7 +422,7 @@ ssl.protocol=TLSv1.3
 
 The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify the Gateway's TLS certificate, which is stored in the keystore. [Find out more about jks truststores](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html).
 
-##### Mutual TLS (mTLS)
+#### mTLS
 
 Mutual TLS leverages client side certificates to authenticate a Kafka client.
 
@@ -1360,7 +1360,7 @@ kafka-console-consumer --bootstrap-server localhost:6974 \
 
 Once confirmed, simply share the `mypartner-partner-user.properties` file and the correct bootstrap server details with your partner.
 
-### Related resources
+## Related resources
 
 - [Manage service accounts](/gateway/how-to/manage-service-accounts-and-acls/)
 - [Resource reference](/guide/reference/gateway-reference)

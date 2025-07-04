@@ -42,7 +42,6 @@ docker compose -f docker-compose.yaml up -d
 </TabItem>
 <TabItem value="docker-compose.yaml" label="docker-compose.yaml">
 
-
 ```yaml title="docker-compose.yml"
 services:
   conduktor-gateway:
@@ -173,7 +172,7 @@ services:
 
 Depending on your version of Java, you may have to run the below command in your shell session.
 
-Newer versions of Java don't support security manager and current versions of Kafka CLI commands will fail without this being set. 
+Newer versions of Java don't support security manager and current versions of Kafka CLI commands will fail without this being set.
 
 If you get errors when running the later commands with authentication, run this command:
 

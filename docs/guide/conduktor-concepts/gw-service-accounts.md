@@ -23,6 +23,8 @@ In <GlossaryTerm>Gateway</GlossaryTerm>, you can define **two types** of <Glossa
 
 The local service accounts are useful if you want to **manage the clients credentials directly within Conduktor Gateway**. You can easily create, update, and delete them directly from Gateway's Admin API.
 
+[Find out how to manage a local service account using Gateway](/guide/tutorials/manage-gw-sa/#manage-a-local-service-account).
+
 ### External service accounts
 
 For external service accounts, the **clients credentials are created and handled by a third-party identity provider** (e.g. OIDC, mTLS).
@@ -35,6 +37,8 @@ However, you might want to:
 In these scenarios, you should create an external service account in Gateway, and link it to the principal given by your identity provider.
 
 This external service account will be the one used in Gateway to apply **ACLs** and <GlossaryTerm>Interceptors</GlossaryTerm>, and will be logged in the **Gateway Audit Log** internal topic.
+
+[Find out how to manage an external service accounts using Gateway](/guide/tutorials/manage-gw-sa/#manage-an-external-service-account).
 
 ## Gateway service account groups
 
@@ -61,6 +65,6 @@ Use `metadata.scope.group` to define which group the Interceptor should apply to
 ## Related resources
 
 - [Manage service accounts and ACLs using Console](/guide/manage-kafka/kafka-resources/service-accounts-acls)
-- [Manage service accounts using Gateway](/guide/conduktor-concepts/gw-authen-author)
+- [Manage service accounts using Gateway](/guide/tutorials/manage-gw-sa)
 - [Gateway authentication and authorization](/guide/conduktor-concepts/gw-authen-author)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
