@@ -4,53 +4,57 @@ title: Apply Chargeback
 description: Chargeback in Conduktor
 ---
 
-## Overview
-
 import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
 
 <ProductScalePlus /> 
 
+## Overview
+
 Chargeback lets you visualize the cost allocation of service accounts on a few key metrics. Chargeback data can be viewed from the perspective of Overall Cost, Ingress or Egress. Cost is user configured $ per byte.
 
-- **Overall Cost** displays the total dollar cost by adding together the Ingress + Egress costs
-- **Ingress** shows the produced data per Service Account, by cost, percentage or bytes
-- **Egress** shows the consumed data per Service Account, by cost, percentage or bytes
+- **Overall Cost** displays the total dollar cost by adding together the Ingress and Egress costs
+- **Ingress** shows the produced data per service account, by cost, percentage or bytes
+- **Egress** shows the consumed data per service account, by cost, percentage or bytes
 
-The measured period can be changed from 7D, 30D, 6M, 12M, or YTD (Year To Date).
+The measured period can be changed from 7D, 30D, 6M, 12M or YTD (Year To Date).
 
 ![Chargeback graph](/guide/chargeback.png)
 
-The configuration button lets you configure the Dollar cost of a Produced GB and a Consumed GB. This allows you to align the chargeback model with your specific infrastructure costs.
+You can change the currency (from Dollars to GBP) of the cost of produced/consumed bytes per GB. This allows you to align the Chargeback model with your specific infrastructure costs.
 
-![Chargeback Configuration](/guide/chargeback-configuration.png)
+![Chargeback configuration](/guide/chargeback-configuration.png)
 
-## Exporting Chargeback data
+## Export Chargeback data
 
 To facilitate external analysis and reporting, the data shown in the table can be exported as a CSV file.
 
-To export the data, click on the "Export all" button located at the top right corner of the graph.
+To export the data, click  **Export all** at the top right of the graph.
 
 The default exported file name will be `Chargeback_<startDate>_<endDate>_<activeTabName>.csv`.
 
 ![A screenshot of the Chargeback section in the console, showing a graph and a data table with cost and usage metrics over time. The 'Export all' button is highlighted in the top right corner of the graph.](/guide/chargeback-data-export.png)
 
-### Filter and sort data
+### 1. Apply the required filters
 
-Any filters or sorting applied to the table will be reflected in the exported data. Only the data matching your current view will be included in the CSV file.
+Any filters or sorting applied to the table will be reflected in the exported data.
 
-### Select data to export
+Only data matching your current view will be included in the CSV file.
+
+### 2. Specify what data to export
 
 The exported data will depend on the currently selected tab:
-- Selecting the **Overall Cost** tab will export the cost values
-- Selecting the **Ingress** or **Egress** tab will export the produced/consumed bytes
 
-#### Select time periods for export
+- the **Overall Cost** tab will export the cost values
+- the **Ingress** or **Egress** tab will export the produced/consumed bytes
+
+### 3. Select the time period
 
 The exported data will be formatted based on the selected time period:
 
-- Selecting **7D** or **30D** will export the relevant data broken down per day
-- Selecting **6M**, **12M** or **YTD** will export the relevant data broken down per month
+- **7D** or **30D** will export the relevant data split by days
+- **6M**, **12M** or **YTD** will export the relevant data split by months
 
-## Configure Chargeback
+## Related resources
 
-When you want to set this up checkout the dedicated page on how to [configure chargeback](docs/platform/guide/configure-chargeback.md).
+- [Configure Chargeback](/guide/tutorials/configure-chargeback)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

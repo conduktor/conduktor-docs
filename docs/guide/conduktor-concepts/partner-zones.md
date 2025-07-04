@@ -2,6 +2,9 @@
 title: Partner Zones
 description: Learn Conduktor terminology
 ---
+import ProductExchange from '@site/src/components/shared/product-exchange.md';
+
+<ProductExchange />
 
 Partner Zones allow you to share Kafka topics with external partners selectively and securely. You can:
 
@@ -10,10 +13,6 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 - **reduce operational costs**, since you don't have to keep data streams synchronized
 
 ![Partner Zones overview](/guide/pz-detail-view.png)
-
-import ProductExchange from '@site/src/components/shared/product-exchange.md';
-
-<ProductExchange />
 
 ## Related resources
 

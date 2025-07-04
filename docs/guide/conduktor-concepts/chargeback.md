@@ -3,37 +3,18 @@ title: Chargeback
 description: Learn Conduktor terminology
 ---
 
-This <GlossaryTerm>Interceptor</GlossaryTerm> will watch produce and consume to store metrics about incoming and outgoing traffic (bytes) in a topic.
-
-This topic is then utilized by the Console to display Chargeback metrics. Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
-
 import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
 
 <ProductScalePlus /> 
 
-### Configuration overview
+Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
-| Name              | Type   | Default | Description                                                                      |
-|:------------------|:-------|:--------|:---------------------------------------------------------------------------------|
-| topicName         | String |         | Topics used to store observability metrics. If this topic already exists in your cluster, it must have only one partition. If the topic does not exist, Gateway will create this when you deploy the plugin. |
-| replicationFactor | Int    |         | The replication factor to set if Gateway needs to create the topic.               |
-| flushIntervalInSecond | Int    |    300     | The periodic interval for flushing metrics to the specified topic.               |
+Currently, the tracked metrics are: **bytes produced and consumed by service accounts**. We'll be adding more metrics soon.
 
-### Example
-
-```json
-{
-  "name": "myObservabilityInterceptorPlugin",
-  "pluginClass": "io.conduktor.gateway.interceptor.observability.ObservabilityPlugin",
-  "priority": 100,
-  "config": {
-    "topicName": "observability",
-    "replicationFactor": 3
-  }
-}
-```
+![Chargeback graph](/guide/chargeback.png)
 
 ## Related resources
 
-- [Check out Chargeback tutorial](/guide/tutorials/configure-chargeback)
+- [Configure Chargeback](/guide/tutorials/configure-chargeback)
+- [Apply Chargeback](/guide/use-cases/chargeback)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
