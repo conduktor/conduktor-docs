@@ -15,6 +15,7 @@ description: Learn Conduktor by following hands-on tutorials.
 
 ## Configure
 
+- [Configure encryption](/guide/tutorials/configure-encryption)
 - [Audit log topics](/guide/tutorials/configure-audit-log-topic)
 - [Custom deserializers](/guide/tutorials/custom-deserializers)
 - [Customize logs](/guide/tutorials/custom-log)

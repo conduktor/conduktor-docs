@@ -204,5 +204,5 @@ When you need Interceptors to apply conditionally, targeting by Service Account 
 
 ## Related resources
 
-- [Gateway resource reference](/guide/reference/gateway-reference)
+- [Interceptor reference](/guide/reference/gateway-reference)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
