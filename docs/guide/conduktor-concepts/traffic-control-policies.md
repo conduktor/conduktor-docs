@@ -5,19 +5,19 @@ description: Learn Conduktor terminology
 
 Traffic Control Policies allow you to apply regulations and logic to data, such as:
 
-- Alter broker config
-- Alter topic config
-- ClientId required policy
-- Consumer group policy
-- Create topic policy
-- Fetch policy
-- Limit commit offset
-- Limit connection
-- Limit join group
-- Limit producer rate
-- Produce policy
-- Read-only topic policy
-- Remove message headers
-- Topic required schema ID policy
+- [Alter broker config](/guide/use-cases/apply-traffic-control-policies/#alter-broker-config)
+- [Alter topic config](/guide/use-cases/apply-traffic-control-policies/#alter-topic-config)
+- [ClientId required policy](/guide/use-cases/apply-traffic-control-policies/#clientid-required)
+- [Consumer group policy](/guide/use-cases/apply-traffic-control-policies/#consumer-group-policy)
+- [Create topic policy](/guide/use-cases/apply-traffic-control-policies/#create-topic-policy)
+- [Fetch policy](/guide/use-cases/apply-traffic-control-policies/#fetch-policy)
+- [Limit commit offset](/guide/use-cases/apply-traffic-control-policies/#limit-commit-offset-policy)
+- [Limit connection attempts](/guide/use-cases/apply-traffic-control-policies/#limit-connection-attempts-policy)
+- [Limit join group](/guide/use-cases/apply-traffic-control-policies/#limit-join-group-policy)
+- [Limit producer rate](/guide/use-cases/apply-traffic-control-policies/#producer-rate-limiting-policy)
+- [Produce policy](/guide/use-cases/apply-traffic-control-policies/#produce-policy)
+- [Read-only topic policy](/guide/use-cases/apply-traffic-control-policies/#read-only-topic-policy)
+- [Remove message headers](/guide/use-cases/apply-traffic-control-policies/#message-header-removal-policy)
+- [Topic required schema ID policy](/guide/use-cases/apply-traffic-control-policies/#topic-required-schema-id-policy)
 
 [Find out how to apply each of them](/guide/use-cases/apply-traffic-control-policies/).
