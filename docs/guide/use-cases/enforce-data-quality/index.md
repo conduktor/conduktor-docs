@@ -324,4 +324,5 @@ When multiple Policies target the same topic, there are two scenarios that can o
 ## Related resources
 
 - [Connect to clusters](/guide/conduktor-in-production/admin/configure-clusters)
+- [Learn about data masking functionality](/guide/conduktor-in-production/admin/data-mask)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
