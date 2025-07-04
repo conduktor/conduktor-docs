@@ -59,7 +59,7 @@ Breaking changes:
 
 ### Install the Gateway chart
 
-#### Default configuration:
+#### Default configuration
 
 1. Assumes a local installation on minikube
 2. Deploys a single Kafka broker
@@ -118,7 +118,7 @@ global:
 
 ## @section Conduktor-gateway configurations
 ## @descriptionStart
-## This section contains configuration of the gateway
+## This section contains configuration of Gateway
 ## @descriptionEnd
 gateway:
   ## @section Conduktor-gateway image configuration
@@ -362,9 +362,9 @@ kubectl get pods
 kubectl port-forward deployment/mygateway-conduktor-gateway -n default 8888:8888
 ```
 
-5. Validate you can connect to the Gateway Admin interface in your browser:
+5. Validate you can connect to the Gateway admin interface in your browser:
 
-```
+```md
 http://localhost:8888
 ```
 
@@ -388,5 +388,4 @@ bin/kafka-topics.sh --create --topic orders --bootstrap-server localhost:9099
 
 ### Additional properties
 
-Additional properties can be found in the Gateway [Helm chart repository](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).
-
+Additional properties can be found in the [Gateway's Helm chart repository](https://github.com/conduktor/conduktor-public-charts/blob/main/charts/gateway/README.md).

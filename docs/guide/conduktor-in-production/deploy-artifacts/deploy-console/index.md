@@ -1210,7 +1210,7 @@ Advanced configuration for [Partner Zones](/guide/conduktor-concepts/partner-zon
 
 | Property                                            | Description                                                                                                                                                                                                                                                     | Environment variable                             | Mandatory | Type   | Default       |
 |-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------|--------|---------------|
-| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which Partner Zone's state (that's stored on Console) is synchronized with Gateway. A lower value results in faster alignment between the required state and the current state on the Gateway. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
+| `partner_zone.reconcile-with-gateway-every-seconds` | The interval at which Partner Zone's state (that's stored on Console) is synchronized with Gateway. A lower value results in faster alignment between the required state and the current state on Gateway. | CDK_PARTNERZONE_RECONCILEWITHGATEWAYEVERYSECONDS | false     | int    | `5` (seconds) |
 
 
 ## Configure HTTP proxy

@@ -215,7 +215,7 @@ As soon as your records are produced using a schema, you have to configure these
 | `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
 | `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
-If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
 ### Use environment variables as secrets
 
@@ -232,7 +232,7 @@ Find out how to configure the different KMS within your encrypt and decrypt Inte
 | Key       | Type                        | Description                                                                                       |
 |-----------|-----------------------------|---------------------------------------------------------------------------------------------------|
 | keyTtlMs  | long                        | Key's time-to-live in milliseconds. The default is 1 hour. Disable the cache by setting it to 0.  |
-| in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to the Gateway, for demo purposes only.            |
+| in-memory | [In-Memory](#in-memory-kms) | In Memory KMS that is not persistent, internal to Gateway, for demo purposes only.            |
 | gateway   | [Gateway](#gateway-kms)     | Key storage managed by Gateway, but with secret management still delegated to an external KMS     |
 | vault     | [Vault KMS](#vault-kms)     | [HashiCorp Vault KMS](https://developer.hashicorp.com/vault/docs/secrets/key-management)          |
 | azure     | [Azure KMS](#azure-kms)     | [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault)                           |
@@ -247,9 +247,9 @@ This should not be used on production data.
 
 Keys in In-Memory KMS are not persisted, this means that if you do one of the following, you won't be able to decrypt old records, loosing the data.
 
-- Use a gateway cluster with more than a single node
-- Or restart the Gateway
-- Or change the interceptor configuration
+- Use a Gateway cluster with more than a single node or
+- restart Gateway or
+- change the Interceptor configuration
 
 #### Gateway KMS
 
@@ -259,7 +259,7 @@ It provides the option to leverage your KMS for security via a single master key
 
 | Key           | Type   | Description                                                                                                                                                                                       |
 |---------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
+| `masterKeyId` | String | The master key secret Id used to encrypt any keys stored in the Gateway managed storage. This is in the same format as the `keySecretId` that's used for encryption and the valid values are the same.  |
 | `maxKeys` | Number | The maximum number of secret Id references to be cached in memory for re-use. To avoid creating new encryption keys (DEKs), this needs to be larger than the total number of expected secret Ids. By default, it's the same as `maxKeys` in cache config or 1000,000, if `maxKeys` isn't set. |
 
 The `masterKeyId` is used to secure every key for this configuration, stored by Gateway. [Find out more about the secret key formats](#key-stored-in-kms). You have to also supply a valid configuration for the KMS type referenced by the master key so this can be used.

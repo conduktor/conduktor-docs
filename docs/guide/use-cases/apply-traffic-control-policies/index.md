@@ -618,7 +618,7 @@ Kafka is allowing the creation of topics freely, which leads to invalid topics b
 
 Any request that doesn't match the Interceptor's configuration will be blocked and return the corresponding error message. For example: you want to send fetch request with isolationLevel=read_committed, but the Interceptor is being configured `isolationLevel=read_uncommitted`.
 
-When you send that request to the cluster, consumer will retry the request and the following error is logged in the gateway:
+When you send that request to the cluster, consumer will retry the request and the following error is logged in Gateway:
 
 ```sh
 org.apache.kafka.common.errors.PolicyViolationException: 

@@ -66,8 +66,8 @@ curl conduktor-gateway:8888/metrics --user "admin:conduktor"
 | The number of active connections per vcluster                                                    | `gateway_active_connections_vcluster`             |
 | The latency to process a request and generate a response                                         | `gateway_latency_request_response`                |
 | The latency to process a request and generate a response for each ApiKey                         | `gateway_apiKeys_latency_request_response`        |
-| The total number of bytes exchanged through the gateway                                          | `gateway_bytes_exchanged`                         |
-| The total bytes exchanged within the context of the specified virtual cluster                    | `gateway_bytes_exchanged_vcluster`                |
+| The total number of bytes exchanged through Gateway                                          | `gateway_bytes_exchanged`                         |
+| The total bytes exchanged within the context of the specified Virtual Cluster                    | `gateway_bytes_exchanged_vcluster`                |
 | A counter on number of rebuilding kafka request                                                  | `gateway_thread_request_rebuild`                  |
 | The number of pending tasks on our Gateway thread (where all rebuilding request/response happen) | `gateway_thread_tasks`                            |
 | The number of connections from Gateway to the backing Kafka cluster                              | `gateway_upstream_connections_upstream_connected` |

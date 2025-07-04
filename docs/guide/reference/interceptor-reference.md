@@ -367,7 +367,7 @@ The Interceptor uses the `envelope encryption` technique to encrypt data. Here a
 To **encrypt** the data, Gateway:
 
 1. Generates a <DEK/> that is used to encrypt the data
-2. Sends the <DEK/> to the <KMS/>, so it encrypts it using its <KEK/> and returns the <EDEK/> to the Gateway
+2. Sends the <DEK/> to the <KMS/>, so it encrypts it using its <KEK/> and returns the <EDEK/> to Gateway
 3. Cache the <DEK/> & <EDEK/> in memory for a [configurable Time to Live (TTL)](#optimizing-performance-with-caching)
 4. Encrypts the data using the <DEK/>
 5. Stores the <EDEK/> alongside the encrypted data, and both are sent to the backing Kafka

@@ -105,6 +105,7 @@ The data can be migrated before Gateway 3.x is deployed. Gateway 2.x 's data won
 This prevents from any service interruption.
 
 __Prerequisites__:
+
 - The target Kafka cluster must be reachable
 - Docker is installed
 - Create a properties file according to your Kafka cluster configuration. Here is an example:
@@ -115,8 +116,8 @@ bootstrap.servers=PLAINTEXT://your.kafka.host:9092
 # Add any other Kafka properties here
 ```
 
+__warnings__: from this point, the changes made on Gateway 2.x can be lost in the migration process. Until the migration it finished it is recommended to:
 
-__warnings__: from this point, the changes made on Gateway 2.x can be lost in the migration process. Until the migration it finished it is recommended to :
 * Stop using the Gateway 2.x API
 * Stop creating concentrated topics
 
@@ -137,6 +138,7 @@ docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
 ```
 
 Expected output:
+
 ```bash
 2024-03-19T09:53:34.843+0000 [      main] [INFO ] [TopicMappingRegistryCommand:83] - Loading topic mapping from source topic _topicMappings
 2024-03-19T09:53:35.186+0000 [      main] [INFO ] [TopicMappingRegistryCommand:85] - Loading topic registry from source topic _topicRegistry
@@ -148,7 +150,7 @@ Expected output:
 Replace the following placeholders with the actual topic names:
 * targetInterceptorsTopicName = value of GATEWAY_INTERCEPTOR_CONFIGS_TOPIC environment variable
 * sourceInterceptorsTopicName = value of GATEWAY_INTERCEPTOR_STORE_BACKING_TOPIC environment variable
- 
+
 ```bash
 docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
     harbor.cdkt.dev/public/conduktor-gateway-migration:3.0.1 \
@@ -158,6 +160,7 @@ docker run -v ~/my-kafka.properties:/tmp/my-kafka.properties \
 ```
 
 Expected output:
+
 ```bash
 2024-03-19T10:00:23.362+0000 [      main] [INFO ] [InterceptorConfigurationCommand:56] - Loading topic mapping from source topic _interceptorConfigs
 2024-03-19T10:00:23.585+0000 [      main] [INFO ] [InterceptorConfigurationCommand:61] - Insert in target topic _conduktor_gateway_interceptor_configs new configurations
@@ -201,6 +204,3 @@ If you were using Local Users (and generating tokens) with API V1, new actions a
 
 **Required action**: You will need to first declare LOCAL users in V2 APIs to then be able to generate tokens.
 
-## Related resources
-
-- [View our version policy](/support)

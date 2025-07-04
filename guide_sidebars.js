@@ -172,7 +172,6 @@ module.exports = {
       label: 'Monitor brokers and apps',
       link: { type: 'doc', id: 'monitor-brokers-apps/index' },
       items: [
-        'monitor-brokers-apps/monitor-metrics',
         'monitor-brokers-apps/alerts',
       ],
     },      

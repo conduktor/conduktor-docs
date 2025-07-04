@@ -74,7 +74,7 @@ GATEWAY_LICENSE_KEY="YOUR_LICENSE_HERE"
 
 ### Verify your license
 
-You can check that your license has been used to launch the Gateway by looking at the license internal topic it has created.
+You can check that your license has been used to launch Gateway by looking at the license internal topic it has created.
 
 The default name of this topic is `_conduktor_gateway_license`, but it might be different if:
 
@@ -111,7 +111,7 @@ In this topic, you'll find the license expiration date.
 
 And you can find the details of the license in the Gateway logs:
 
-```
+```md
 2025-05-20T14:38:09.961+0000 [main] [INFO] [PersistentLicenseService:94] - Applied new license with expiry: 2026-01-01T00:00:00.000Z
 ```
 

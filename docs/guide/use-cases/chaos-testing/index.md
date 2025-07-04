@@ -181,8 +181,8 @@ This interceptor is useful for testing applications to ensure that they behave a
 
 | key               | type | description                                                                                                                                                                                                                                                           |
 |:------------------|:-----|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| appliedPercentage | int  | The percentage of requests flowing through the gateway that will have increased latency applied for them. For example, an applied percentage of 10 will add a latency of the value of latencyMs to 10% of requests and responses. The value must be between 0 and 10. |
-| latencyMs         | long | The number of milliseconds to add to the request. The latency in milliseconds that will be applied to the requests and responses flowing through the gateway. The value must be between 0 and (don't mind... max int, or 10 seconds, or something else)?              |
+| appliedPercentage | int  | The percentage of requests flowing through Gateway that will have increased latency applied for them. For example, an applied percentage of 10 will add a latency of the value of latencyMs to 10% of requests and responses. The value must be between 0 and 10. |
+| latencyMs         | long | The number of milliseconds to add to the request. The latency in milliseconds that will be applied to the requests and responses flowing through Gateway. The value must be between 0 and (don't mind... max int, or 10 seconds, or something else)?              |
 
 ##### Example
 

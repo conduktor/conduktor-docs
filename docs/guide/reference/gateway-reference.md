@@ -280,7 +280,7 @@ spec:
 
 ## AliasTopic
 
-An Alias Topic allows a real Kafka topic to appear as a logical topic within the Gateway. This is useful for aliasing topics or making a topic accessible within a Virtual Cluster.
+An Alias Topic allows a real Kafka topic to appear as a logical topic within Gateway. This is useful for aliasing topics or making a topic accessible within a Virtual Cluster.
 
 ```yaml
 ---

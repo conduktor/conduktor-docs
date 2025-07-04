@@ -35,7 +35,7 @@ The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in S
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
 
 :::warning[Migrate to v2 APIs]
-**We plan to remove the V1 APIs from the Gateway in two releases (Gateway 3.10.0).** If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+**We plan to remove the V1 APIs from Gateway in two releases (Gateway 3.10.0).** If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
 :::
 
 ### Conduktor Shield

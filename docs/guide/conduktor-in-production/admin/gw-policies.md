@@ -197,7 +197,7 @@ This policy provides a centralized enforcement of the validation of these rules 
 
 The policy operates on Produce Requests made to Kafka, and will inspect the entire batch of records in a request. Based on its setup, it performs various checks and then will take an action if it finds any problems.
 
-The first important thing to note is that the Policy will do *nothing* if there is no Audit Log configured for the gateway (as it does not want to silently reject any data). So for the policy to work at all, you **must have the Audit Log configured**.
+The first important thing to note is that the Policy will do *nothing* if there is no Audit Log configured for Gateway (as it does not want to silently reject any data). So for the policy to work at all, you **must have the Audit Log configured**.
 
 Next point of note is that the policy will only check the value for a Kafka record, and does not currently support checking the key or headers for a record.
 
@@ -226,7 +226,7 @@ If any problems are found, the policy will take an action as configured. The `ac
 
 #### Dead letter topic
 
-If a dead letter topic service is configured for the Gateway, then you can optionally supply a topic name for this policy to use for any records which are considered invalid. This topic will be created with the default config for your Kafka setup.
+If a dead letter topic service is configured for Gateway, then you can optionally supply a topic name for this policy to use for any records which are considered invalid. This topic will be created with the default config for your Kafka setup.
 
 Any record which the policy considers invalid is written to the dead letter topic, and has some headers added for audit purposes. Please note that this is done in the `AUDIT_LOG_ONLY` mode also, even though the records in this mode are still written to the "real" topic.
 
@@ -275,7 +275,7 @@ The full configuration topics for the policy are as below.
 | `validateCredentials` | bool   | `true`      | `true` / `false` flag to determine whether the credentials provided should be validated when set.                                                                                                                   |
 | `accountId`           | string |             | The Id for the AWS account to use.                                                                                                                                                                                  |
 
-If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to the Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
+If you do not supply a `basicCredentials` section for the AWS Glue schema registry, the client we use to connect will instead attempt to find the connection information is needs from the environment, and the credentials required can be passed this way to Gateway as part of its core configuration. More information on the setup for this is found in the [AWS documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default).
 
 [Read our blog about schema registry](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/).
 

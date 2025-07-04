@@ -90,7 +90,7 @@ Here's the same example but with multiple clients:
 
 ![Internal Load Balancing Multiple Clients](/guide/multiple-clients.png)
 
-The process is repeated but will likely result in a different mapping compared to that of Client 1 due to the random assignment performed by the Gateway for the client.
+The process is repeated but will likely result in a different mapping compared to that of Client 1 due to the random assignment performed by Gateway for the client.
 
 #### Internal load balancing limitations
 
@@ -126,7 +126,7 @@ Gateway depends on a 'backing' Kafka cluster for its operation.
 
 Configuring the Gateway connection to the backing Kafka cluster closely resembles configuring a standard Kafka client's connection to a cluster.
 
-If you've not done so already, it's best to set the client to Gateway configuration variables, that way the Gateway will know how to interact with Kafka based on how authentication is being provided by the clients, the two are related because Gateway must know whether you wish to use [delegated authentication](#delegated-authentication) or not.
+If you've not done so already, it's best to set the client to Gateway configuration variables, that way Gateway will know how to interact with Kafka based on how authentication is being provided by the clients, the two are related because Gateway must know whether you wish to use [delegated authentication](#delegated-authentication) or not.
 
 The configuration is done via environment variables, as it is for the other aspects of a Gateway configuration.
 
@@ -307,11 +307,11 @@ KAFKA_AWS_SECRET_ACCESS_KEY: <secret-access-key>
 
 ### Service account and ACL requirements
 
-Depending on the client to Gateway authentication method you choose, the service account used to connect the Gateway might need different ACLs to operate properly.
+Depending on the client to Gateway authentication method you choose, the service account used to connect Gateway might need different ACLs to operate properly.
 
 #### Delegated authentication
 
-In delegated authentication, the credentials provided to establish the connection between the client and the Gateway are the same used from Gateway to the backing Kafka. As a result, the client will inherit the ACLs of the service account configured on the backing cluster.
+In delegated authentication, the credentials provided to establish the connection between the client and Gateway are the same used from Gateway to the backing Kafka. As a result, the client will inherit the ACLs of the service account configured on the backing cluster.
 
 On top of that, Gateway needs its own service account with the following ACLs to operate correctly:
 
@@ -420,7 +420,7 @@ ssl.truststore.password=yourTruststorePassword
 ssl.protocol=TLSv1.3
 ```
 
-The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify the Gateway's TLS certificate, which is stored in the keystore. [Find out more about jks truststores](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html).
+The truststore contains certificates from trusted Certificate Authorities (CAs) used to verify Gateway's TLS certificate, which is stored in the keystore. [Find out more about JKS truststores](https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html).
 
 #### mTLS
 
@@ -670,7 +670,7 @@ sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginMo
 Authentication from client is mandatory but will be forwarded to Kafka for checking. Gateway will intercept exchanged authentication data to detect an authenticated principal:
 
 - All communication between the client and Gateway broker are exchanged without any network security.
-- All credentials are managed by your backing Kafka, we only provide Authorization on the Gateway side based on the exchanged principal.
+- All credentials are managed by your backing Kafka, we only provide authorization on the Gateway side based on the exchanged principal.
 
 Supported authentication mechanisms on the backing Kafka are:
 
@@ -805,8 +805,8 @@ $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.propertie
 $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.properties --list
 orders
 
-# If we contact directly the backing cluster instead of the gateway, 
-# we can see both topics under a different name. This is the actual topic name on the Kafka cluster, which is observed when not interacting through the Gateway.
+# If we contact directly the backing cluster instead of Gateway, 
+# we can see both topics under a different name. This is the actual topic name on the Kafka cluster, which is observed when not interacting through Gateway.
 $ kafka-topics.sh --bootstrap-server=backing-kafka:9092  --list
 vc-alice.orders
 vc-bob.orders
@@ -821,15 +821,15 @@ Reconfiguring clients would at least involve changing the bootstrap servers of t
 
 Essentially, this implies that the central operations/Kafka team (who would be responsible for initiating the failover-process) would have knowledge about all clients, which in practice is not feasible. The failover capability of Gateway solves this by redirecting client connections from the primary to the secondary cluster. This can be initiated at a central location using the Gateway HTTP API without having to reconfigure/restart each Kafka client individually.
 
-#### Pre-requisites
+#### Prerequisites
 
 #### Data replication is already in place
 
 Gateway does not currently provide any mechanism to replicate already written data from the primary to the secondary cluster. Therefore, to make use of our solution, you should already have this mechanism in place. Common solutions for this include:
 
- - MirrorMaker 2
- - Confluent Replicator
- - Confluent Cluster Linking
+- MirrorMaker 2
+- Confluent Replicator
+- Confluent Cluster Linking
 
 Note that none of these solutions (and therefore neither Conduktor's failover solution) can guarantee the absence of data loss during a disaster scenario.
 
@@ -839,8 +839,8 @@ No specific client configuration is necessary, besides ensuring that clients hav
 
 #### System requirements
 
- - Gateway version `3.3.0`+
- - Kafka brokers version `2.8.2`+
+- Gateway version `3.3.0`+
+- Kafka brokers version `2.8.2`+
 
 Note that due to a current limitation in Kafka clients, the primary and secondary Kafka clusters must have some broker id's in common (see [KIP-899](https://cwiki.apache.org/confluence/display/KAFKA/KIP-899%3A+Allow+producer+and+consumer+clients+to+rebootstrap)). This ensures clients can recognize the secondary cluster as a legitimate continuation of the primary one.
 

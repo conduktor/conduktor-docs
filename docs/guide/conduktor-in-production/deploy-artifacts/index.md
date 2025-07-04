@@ -82,15 +82,15 @@ flowchart LR
 
 #### Scaling
 
-The Gateway is stateless and can be scaled horizontally by adding more instances and distributing the incoming traffic using a load balancer.
+Gateway is stateless and can be scaled horizontally by adding more instances and distributing the incoming traffic using a load balancer.
 
 #### Resilience
 
-Much like Kafka, if a broker dies it can be restarted whilst Gateway keeps running. As the Gateway is Kafka protocol compliant, your applications remain available.
+Much like Kafka, if a broker dies it can be restarted whilst Gateway keeps running. As Gateway is Kafka protocol compliant, your applications remain available.
 
 #### Latency
 
-By default, the Gateway operates with minimal impact on performance, typically adding only milliseconds of latency. However, if you begin implementing more resource-intensive features, such as encryption utilizing a Key Management Service (KMS), there will naturally be a slight increase in overhead.
+By default, Gateway operates with minimal impact on performance, typically adding only milliseconds of latency. However, if you begin implementing more resource-intensive features, such as encryption utilizing a Key Management Service (KMS), there will naturally be a slight increase in overhead.
 
 [Find out how to deploy Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway).
 
