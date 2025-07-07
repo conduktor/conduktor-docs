@@ -475,6 +475,8 @@ spec:
     permissionType: ALLOW
 ```
 
+This example demonstrates two basic ACLs, but any ACL valid with the Kafka API is also valid to be set via REST (eg `*` wildcards). For a complete understanding of the options available checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
+
 :::warning
 ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid updating `aclMode` from `KAFKA_API` to `REST_API` (you can update from `KAFKA_API` to `DISABLED` to `REST_API` if you really want to override all existing ACLs).
 :::
