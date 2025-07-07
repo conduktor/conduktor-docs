@@ -15,6 +15,18 @@ tags: features,fixes
 
 ### New features
 
+#### aclMode enum replaces aclEnabled flag on Virtual Cluster REST resource
+
+The `aclMode` field has been added to support more options for methods of setting ACLs on a Virtual Cluster resource. The `aclEnabled` flag is deprecated by this change but remains fully supported.
+
+The different settings can be understood by checking the following table,
+
+| aclMode   | aclEnabled    | effect |
+| --------- | ------------- | ------ |
+| DISABLED  | false         | no acl checks |  
+| KAFKA_API | true          | acls configurable using Kafka API |  
+| REST_API  | no equivalent | acls configurable using REST API (see next section) |  
+
 #### Set Virtual Cluster ACLs directly using REST
 
 Gateway now supports managing the ACLs for Virtual Clusters directly using the REST API. (This is a backwards compatible change.)
