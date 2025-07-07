@@ -24,3 +24,4 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 ### Fixes
 
+- Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop
