@@ -379,6 +379,10 @@ resource "conduktor_console_topic_policy_v1" "clickstream-naming-rule" {
 
 With the two Topic policies declared above, the following Topic resource would succeed validation:
 
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ```yaml
 ---
 apiVersion: kafka/v2
@@ -396,6 +400,30 @@ spec:
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
 ```
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+resource "conduktor_console_topic_v2" "click-event-steam-avro" {
+  cluster = "shadow-it"
+  name    = "click.event-stream.avro"  # Checked by Match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$ on `metadata.name`
+  labels  = {
+    "data-criticality" = "C2"          # Checked by OneOf ["C0", "C1", "C2"] on `metadata.labels.data-criticality`
+  }
+  spec = {
+    replicationFactor = 3              # Checked by OneOf ["3"] on `spec.replicationFactor`
+    partitions        = 3
+    configs           = {
+      "cleanup.policy" = "delete"
+      "retention.ms"   = "60000"       # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ### Resource policy
 
 Resource policies are used to enforce rules on the ApplicationInstance level. Typical use case include:
@@ -412,6 +440,9 @@ You must explicitly link them to [ApplicationInstance](#application-instance) or
 **API Keys:** <AdminToken />
 **Managed with:** <CLI /> <API /> <TF />
 **Labels support:** <PartialLabelSupport />
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ```yaml
 ---
@@ -446,6 +477,56 @@ spec:
           errorMessage: data-criticality should be one of C0, C1, C2
 ```
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+resource "conduktor_console_resource_policy_v1" "generic-dev-topic" {
+  name    = "generic-dev-topic"
+  labels  = {
+    "business-unit" = "delivery"
+  }
+  spec = {
+    target_kind = "Topic"
+    description = "A policy to check some basic rule for a topic"
+    rules = [
+      {
+        condition     = "spec.replicationFactor == 3"
+        error_message = "replication factor should be 3"
+      },
+      {
+        condition     = "int(string(spec.configs[\"retention.ms\"])) >= 60000 && int(string(spec.configs[\"retention.ms\"])) <= 3600000"
+        error_message = "retention should be between 1m and 1h"
+      }
+    ]
+  }
+}
+
+resource "conduktor_console_resource_policy_v1" "clickstream-naming-rule" {
+  name    = "clickstream-naming-rule"
+  labels  = {
+    "business-unit" = "delivery"
+  }
+  spec = {
+    target_kind = "Topic"
+    description = "A policy to check some basic rule for a topic"
+    rules = [
+      {
+        condition     = "metadata.name.matches(\"^click\\.[a-z0-9-]+\\.(avro|json)$\")"
+        error_message = "topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$"
+      },
+      {
+        condition     = "metadata.labels[\"data-criticality\"] in [\"C0\", \"C1\", \"C2\"]"
+        error_message = "data-criticality should be one of C0, C1, C2"
+      }
+    ]
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 **SelfServicePolicy checks:**
 
 - `spec.targetKind` can be `Topic`, `Connector`, `Subject` or `ApplicationGroup`.
@@ -457,6 +538,9 @@ Use the following CEL playground to test your expressions: [CEL Playground](http
 :::
 
 With the two policies declared above, the following Topic resource would succeed validation:
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
 
 ```yaml
 ---
@@ -474,6 +558,30 @@ spec:
     cleanup.policy: delete
     retention.ms: '60000'        # Check int(string(spec.configs["retention.ms"])) >= 60000 && int(string(spec.configs["retention.ms"])) <= 3600000
 ```
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+resource "conduktor_console_topic_v2" "click-event-steam-avro" {
+  cluster = "shadow-it"
+  name    = "click.event-stream.avro"  # Checked by metadata.name.matches("^click\\.[a-z0-9-]+\\.(avro|json)$")
+  labels  = {
+    "data-criticality" = "C2"          # Checked by metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
+  }
+  spec = {
+    replicationFactor = 3              # Check by spec.replicationFactor == 3
+    partitions        = 3
+    configs           = {
+      "cleanup.policy" = "delete"
+      "retention.ms"   = "60000"       # Check int(string(spec.configs["retention.ms"])) >= 60000 && int(string(spec.configs["retention.ms"])) <= 3600000
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 #### Moving from TopicPolicy to ResourcePolicy
 
@@ -562,6 +670,10 @@ Application instance permissions lets teams collaborate with each other.
 **Managed with:** <CLI /> <API />
 **Labels support:** <MissingLabelSupport />
 
+
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ```yaml
 # Permission granted to other Applications
 ---
@@ -580,6 +692,31 @@ spec:
   serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
 ```
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+# Permission granted to other Applications
+resource "conduktor_console_application_instance_permission_v1" "clickstream-app-dev-to-another" {
+  application  = "clickstream-app"
+  app_instance = "clickstream-app-dev"
+  name         = "clickstream-app-dev-to-another"
+  spec = {
+    resource = {
+      type         = "TOPIC"
+      name         = "click.event-stream.avro"
+      pattern_type = "LITERAL"
+    }
+    user_permission            = "NONE"
+    service_account_permission = "READ"
+    granted_to                 = "another-appinstance-dev"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 **Application instance permission checks:**
 
@@ -623,6 +760,9 @@ You can create as many Application Groups as required to restrict or represent t
 
 **Example**
 
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
 ```yaml
 # Permissions granted to Console users in the Application
 ---
@@ -662,6 +802,56 @@ spec:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 ```
 
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+resource "conduktor_console_application_group_v1" "clickstream-support" {
+  application = "clickstream-app"
+  name        = "clickstream-support"
+  spec = {
+    display_name = "Support Clickstream"
+    description  = <<EOT
+      Members of the Support Group are allowed:
+        Read access on all the resources
+        Can restart owned connectors
+        Can reset offsets
+      EOT
+    permissions = [
+      {
+        app_instance  = "clickstream-app-dev"
+        resource_type = "TOPIC"
+        pattern_type  = "LITERAL"
+        name          = "*" # All owned & subscribed topics
+        permissions   = ["topicViewConfig", "topicConsume"]
+      },
+      {
+        app_instance  = "clickstream-app-dev"
+        resource_type = "CONSUMER_GROUP"
+        pattern_type  = "LITERAL"
+        name          = "*" # All owned consumer groups
+        permissions   = ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
+      },
+      {
+        app_instance    = "clickstream-app-dev"
+        resource_type   = "CONNECTOR"
+        pattern_type    = "LITERAL"
+        name            = "*" # All owned connectors
+        connect_cluster = "local-connect"
+        permissions     = ["kafkaConnectorViewConfig", "kafkaConnectorStatus", "kafkaConnectRestart"]
+      },
+    ]
+    members = [
+      "user1@company.org",
+      "user2@company.org"
+    ]
+    external_groups = ["GP-COMPANY-CLICKSTREAM-SUPPORT"]
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 **Application instance permission checks:**
 
 - `spec.permissions[].appInstance` must be an Application Instance associated to this Application (`metadata.application`)
