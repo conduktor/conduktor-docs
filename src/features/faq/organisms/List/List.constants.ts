@@ -105,6 +105,6 @@ export const items = [
     question:
       'I cannot see the last active date of a user, how can I perform a clean-up?',
     answer:
-      'You can review the last login time of a user from within the Settings > Users view. '
+      'You can review the last login time of a user from within the Settings > Users view, or use the API to get user details.'
   }
 ]
