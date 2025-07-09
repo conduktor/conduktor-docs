@@ -513,7 +513,7 @@ resource "conduktor_console_resource_policy_v1" "clickstream-naming-rule" {
     rules = [
       {
         condition     = "metadata.name.matches(\"^click\\.[a-z0-9-]+\\.(avro|json)$\")"
-        error_message = "topic name should match ^click\.(?<event>[a-z0-9-]+)\.(avro|json)$"
+        error_message = "topic name should match ^click.(?<event>[a-z0-9-]+).(avro|json)$"
       },
       {
         condition     = "metadata.labels[\"data-criticality\"] in [\"C0\", \"C1\", \"C2\"]"
