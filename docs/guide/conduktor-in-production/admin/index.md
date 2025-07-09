@@ -4,9 +4,9 @@ title: Admin actions
 description: Administer Conduktor Platform
 ---
 
-Admin to do: in order (if matters) of importance.
+Follow recommended steps in the [architecture deployment repo](https://github.com/conduktor/conduktor-reference-architecture).
 
-What's mandatory vs optional/custom/edge cases?
+Other admin actions:
 
 - [Configure Gateway clusters](/guide/conduktor-in-production/admin/configure-clusters)
 - [Define user access](/guide/conduktor-in-production/admin/user-access)
@@ -14,13 +14,3 @@ What's mandatory vs optional/custom/edge cases?
 - [View audit logs](/guide/conduktor-in-production/admin/audit-logs)
 - [Create Gateway policies](/guide/conduktor-in-production/admin/gw-policies)
 - [Create data masking policies](/guide/conduktor-in-production/admin/data-mask)
-
-## Our recommendations?
-
-## Quick vs complex setup?
-
-Must:
-- user access
-
-Optional:
-- the rest?

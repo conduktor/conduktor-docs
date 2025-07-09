@@ -5,15 +5,6 @@ title: Conduktor in production
 description: Deploy Conduktor to production
 ---
 
-## Deployment overview ??
-
-TBC
-
-Adapt the diagram from the overview to make it more technical
-identify each component/artifact
-
-give an idea of the ecosystem from the technical perspective.
-
 ## Deployment options
 
 ### Docker (recommended)

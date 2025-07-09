@@ -5,19 +5,19 @@ description: Conduktor technical requirements
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
-## Hardware
+## Min hardware spec
 
-| Component | Usage | RAM | CPU cores | Disk space |
-| :------ | :--- | :--- | :--- | :--- |
-| Gateway | Light  | 4 GB | 2 | N/A |
-| Gateway | Medium | 8 GB | 4 | N/A |
-| Console | Min | 3 GB | 2 | 5 GB |
+|  |Gateway | Console |
+| :------ | :--- |:--- |
+| RAM | 4 GB  | 3 GB |
+| CPU cores | 2 | 2|
+| Disk space | N/A | 5 GB |
 
 ## Gateway requirements
 
 Conduktor <GlossaryTerm>Gateway</GlossaryTerm> is provided as a [Docker image](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway) and a [Helm chart](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes).
 
-### Minimum setup
+#### Minimum setup
 
 Per Gateway node, for light usage:
 
@@ -26,7 +26,7 @@ Per Gateway node, for light usage:
 
 Running on this level of machine, each Gateway instance should support around *20-30 MB/s* of sustained throughput with a minimal effect on latency.
 
-### Recommended starting setup
+#### Recommended starting setup
 
 Per Gateway node, for medium to high usage:
 
@@ -37,11 +37,11 @@ Running on this level of machine, each Gateway instance should support around *4
 
 For **production setups** we recommended that you **run at least three Gateway instances**. Any further scaling should be done horizontally first: to increase throughput, add instances to the cluster.
 
-### Local storage requirements
+#### Local storage requirements
 
 Gateway itself doesn't use local storage but certain interceptors, such as [large message handling](/guide/use-cases/manage-large-messages), might require temporary local storage.
 
-### Scaling Gateway
+#### Scaling Gateway
 
 Conduktor Gateway is **designed to scale horizontally or vertically**, as required.
 
@@ -49,7 +49,7 @@ Depending on your needs and use cases, one or both of these methods may be used 
 
 Gateway is predominantly CPU bound - it stores very little, unless you've configured or adjusted the default caching setup. The recommendation here represents a good starting point - to further scale you should use the metrics produced by gateway to tune the installation to your workloads.
 
-### Interceptor impact
+#### Interceptor impact
 
 Gateway should be tuned to your workloads based on the <GlossaryTerm>Interceptors</GlossaryTerm> you intend to run - they generate most of the CPU load for Gateway.
 
@@ -57,7 +57,7 @@ The Interceptors sit in line with the processing of a request, so they affect th
 
 For high CPU loads, you should also add more memory in addition to cores. We recommend to configure 4 GB of RAM per CPU. This provides more headroom for the underlying memory management to run (predominantly for the garbage collection in the JVM).
 
-### Kafka requirements
+#### Kafka requirements
 
 Conduktor Gateway requires Apache Kafka version to be 2.5.0 or higher (but lower than v4.0.0).
 
@@ -194,9 +194,9 @@ graph TD
     Cortex --> |Historical Data| BlockStorage[Block Storage]
 ```
 
-### State persistence in PostgreSQL
+#### State persistence in PostgreSQL
 
-#### Multiple instances
+##### Multiple instances
 
 From Console v1.25.0, the monitoring state is stored in the external PostgreSQL database, allowing it to be shared and accessed by all instances of Console. This brings several advantages:
 
@@ -204,7 +204,7 @@ From Console v1.25.0, the monitoring state is stored in the external PostgreSQL 
 - **Redundancy and fault tolerance**: if the leader instance fails, another one takes over as the leader without losing any monitoring data.
 - **Prometheus metrics**: every Console instance is now capable of exposing [Prometheus metrics](/guide/monitor-brokers-apps/monitor-metrics) through the API. This allows for real-time monitoring of the application regardless of which instance is the leader - the monitoring state is available to all instances.
 
-### High-availability limitations
+#### High-availability limitations
 
  While this architecture greatly improves the UI layers' horizontal scalability, there are notable limitations related to the use of <GlossaryTerm>Cortex</GlossaryTerm> for metrics storage.
 
@@ -215,7 +215,7 @@ The system currently uses Cortex in standalone mode, which doesn't inherently pr
 - **Metric  and alerting unavailability**: in the event of Cortex failure, monitoring data and alerting functionality inside Console might not be accessible until the container is restarted.
 - **No redundancy**: without a multi-node or clustered setup for Cortex, the system lacks the resilience and failover capabilities that are present in other components like Console and PostgreSQL.
 
-#### Database connection fail-over
+##### Database connection fail-over
 
 Since v1.30 Console supports using multiple database URLs in configuration to achieve high availability (HA). For example, [connection fail-over](https://jdbc.postgresql.org/documentation/use/#connection-fail-over).
 
@@ -244,3 +244,8 @@ If you prefer to provide read-only access to Conduktor Console, these are the mi
 | ALLOW      | READ             | CONSUMER GROUP | *             | LITERAL     | Be able to fetch offset definition (used to compute lag)     |
 | ALLOW      | DESCRIBE         | CLUSTER        | kafka-cluster | LITERAL     | Describe Kafka ACLs, fetch the amount of data stored on disk |
 | ALLOW      | DESCRIBE_CONFIGS | CLUSTER        | kafka-cluster | LITERAL     | Describe cluster/broker configuration                        |
+
+## Related resources
+
+- [Recommended architecture - repo](https://github.com/conduktor/conduktor-reference-architecture)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
