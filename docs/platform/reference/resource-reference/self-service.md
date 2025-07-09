@@ -411,7 +411,7 @@ resource "conduktor_console_topic_v2" "click-event-steam-avro" {
     "data-criticality" = "C2"          # Checked by OneOf ["C0", "C1", "C2"] on `metadata.labels.data-criticality`
   }
   spec = {
-    replicationFactor = 3              # Checked by OneOf ["3"] on `spec.replicationFactor`
+    replication_factor = 3              # Checked by OneOf ["3"] on `spec.replicationFactor`
     partitions        = 3
     configs           = {
       "cleanup.policy" = "delete"
@@ -570,7 +570,7 @@ resource "conduktor_console_topic_v2" "click-event-steam-avro" {
     "data-criticality" = "C2"          # Checked by metadata.labels["data-criticality"] in ["C0", "C1", "C2"]
   }
   spec = {
-    replicationFactor = 3              # Check by spec.replicationFactor == 3
+    replication_factor = 3              # Check by spec.replicationFactor == 3
     partitions        = 3
     configs           = {
       "cleanup.policy" = "delete"
