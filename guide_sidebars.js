@@ -252,8 +252,7 @@ module.exports = {
       label: 'Support options',
       link: { type: 'doc', id: 'support/index' },
       items: [
-        'support/upgrade', 
-        'support/version-matrix' 
+        'support/upgrade'
       ],
     },  
   ],

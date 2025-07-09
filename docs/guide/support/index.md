@@ -62,4 +62,4 @@ We also regularly run pen-testing campaigns with third-party companies and alway
 
 As part of SOC2 certification, Conduktor has developed clear procedures for incident response and tracking their resolution.
 
-[Find out more](https://conduktor.io/blog/what-we-learned-from-soc2-type2-write-what-you-do-do-what-you-write).
+[Read our blog about SOC2](https://conduktor.io/blog/what-we-learned-from-soc2-type2-write-what-you-do-do-what-you-write).

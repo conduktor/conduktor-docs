@@ -139,16 +139,12 @@ const config = {
                 to: '/guide/support',
               },            
               {
-                label: 'Upgrade',
+                label: 'Upgrade or migrate',
                 to: '/guide/support/upgrade',
               },
               {
                 label: 'Version policy',
                 to: '/support',
-              },
-              {
-                label: 'Version matrix',
-                to: '/guide/support/version-matrix',
               },
               {
                 label: 'Go to support site',
