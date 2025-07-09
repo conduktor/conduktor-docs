@@ -879,6 +879,22 @@ spec:
     maxProduceRate: 1e+06
     maxConsumeRate: 1e+06
     limitCommitOffset: 30
+  headers:
+    addOnProduce:
+        - key: partner-name
+          value: external-analytics-partner
+          overrideIfExists: false
+        - key: client-info
+          value: "Client:{{clientId}}, from IP:{{userIp}}"
+          overrideIfExists: true
+        - key: kafka-api
+          value: "Kafka API Key:{{apiKey}}, version {{apiKeyVersion}}"
+          overrideIfExists: true
+        - key: produce-metadata
+          value: "User:{{user}}, via Gateay:{{gatewayHost}}, at timestampMillis:{{timestampMillis}}"
+          overrideIfExists: true
+    removeOnConsume:
+        - keyRegex: my_team_prefix.*
 ```
 
 **Partner Zone checks:**
@@ -894,9 +910,15 @@ spec:
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
+
 - `trafficControlPolicies.maxProduceRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
 - `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
 - `trafficControlPolicies.limitCommitOffset` is **optional**. Sets the maximum number of commits requests (in requests/minute) that the partner can make per Gateway node.
+
+- `headers.addOnProduce.key`is **optional**. Sets the key of a key:value pair to be added when producing to the partner zone i.e. from the partner producing messages.
+- `headers.addOnProduce.value` is **optional**. Sets the value of a key:value pair to be added when producing to the partner zone i.e. from the partner producing messages.
+- `headers.addOnProduce.overrideIfExists` is **optional**. Determines what to do if this header already exists.
+- `headers.RemoveOnConsume` is **optional**. Regular expression for finding the keys of headers to be removed on consume of the partner zone, i.e. when the partner is reading messages.
 
 **Side effect in Console & Kafka:**
 Upon creation or update, the following fields will be available:
