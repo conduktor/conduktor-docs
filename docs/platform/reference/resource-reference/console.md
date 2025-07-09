@@ -918,7 +918,7 @@ spec:
 - `headers.addOnProduce.key`is **optional**. Sets the key of a key:value pair to be added when producing to the partner zone i.e. from the partner producing messages.
 - `headers.addOnProduce.value` is **optional**. Sets the value of a key:value pair to be added when producing to the partner zone i.e. from the partner producing messages.
 - `headers.addOnProduce.overrideIfExists` is **optional**. Determines what to do if this header already exists.
-- `headers.RemoveOnConsume` is **optional**. Regular expression for finding the keys of headers to be removed on consume of the partner zone, i.e. when the partner is reading messages.
+- `headers.RemoveOnConsume.keyRegex` is **optional**. Regular expression for finding the keys of headers to be removed on consume of the partner zone, i.e. when the partner is reading messages.
 
 **Side effect in Console & Kafka:**
 Upon creation or update, the following fields will be available:
