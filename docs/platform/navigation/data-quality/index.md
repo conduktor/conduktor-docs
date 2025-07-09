@@ -27,7 +27,7 @@ You can create Rules with the Common Expression Language (CEL) expressions which
 Rules do nothing on their own - you **have to** to attach them to a Policy.
 :::
 
-The Rules page lists your Rules, with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
+The Rules page lists your Rules, with a preview of their CEL expressions. On a Rule's detail page you can view its description, full CEL expression, attached Policies and create a new Policy with the current Rule pre-selected.
 
 ### Create a Rule
 
@@ -81,13 +81,21 @@ We provide built-in validation Rules that can't be achieved with CEL.
 We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
 :::
 
-#### EnforceAvro
+#### Enforce Avro
 
-`EnforceAvro` ensures that:
+Enforce Avro ensures that:
 
 - Your messages have a schema ID prepended to the message content.
 - The schema ID exists within your schema registry.
 - The schema it references is of type `avro`.
+
+#### Enforce schema ID
+
+Enforce schema ID ensures that:
+
+- Your messages have a schema ID prepended to the message content.
+
+It does not check your schema registry.
 
 ### Sample Rules
 
@@ -118,15 +126,20 @@ Make sure you amend these examples to use your values.
   </p>
 </details>
 
+### Editing Rules
+
+You can only edit Rules that have not been used in any Policies, and you cannot edit any built-in Rules.
+When editing a Rule from its details page, you can update its name, description and CEL expression.
+
 ## Policies
 
 A Policy is made up of Rules that are applied to topics/prefixes.
 
 Once created, Policies can be assigned [actions](#actions) to take effect when certain criteria is met (e.g., a Rule in the Policy is violated).
 
-The Policy's detail page shows its description, linked Rules, targets, the number of messages evaluated and the number of violations since the Policy was created. You can also enable (and disable) actions for the Policy from this page.
+The Policy's detail page shows its description, linked Rules, targets, the number of messages evaluated and the number of violations over time. You can also enable (and disable) actions for the Policy from this page, and see the status of its deployment on target clusters.
 
-The Policies page lists your Policies with their actions and targets.
+The Policies page lists your Policies with their actions, targets, and displays the number of violations for each policy within the time window selected at the top of the page.
 
 ### Actions
 
@@ -206,6 +219,8 @@ Once a Policy is created, you are able to view the linked Rule(s), the target(s)
 :::info[Enabling block action]
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
+
+When editing a Policy you can update its name, description, and targets. You cannot edit the linked Rules of a Policy.
 
 ### Assign permissions
 
