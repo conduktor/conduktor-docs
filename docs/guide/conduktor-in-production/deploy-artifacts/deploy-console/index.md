@@ -23,6 +23,8 @@ We recommend using the Console UI (**Settings** > **Clusters** page) to configur
 
 :::
 
+[Check out the recommended deployment on GitHub](https://github.com/conduktor/conduktor-reference-architecture).
+
 ### Security considerations
 
 - The configuration file should be protected by file system permissions.

@@ -1,16 +1,13 @@
 ---
 sidebar_position: 120
 title: Admin actions
-description: Administer Conduktor Platform
+description: Administer Conduktor
 ---
 
-Follow recommended steps in the [architecture deployment repo](https://github.com/conduktor/conduktor-reference-architecture).
 
-Other admin actions:
+We recommend these admin actions in <GlossaryTerm>Condole</GlossaryTerm> to start with:
 
-- [Configure Gateway clusters](/guide/conduktor-in-production/admin/configure-clusters)
-- [Define user access](/guide/conduktor-in-production/admin/user-access)
-- [Set up RBAC in Console](/guide/conduktor-in-production/admin/set-up-rbac)
-- [View audit logs](/guide/conduktor-in-production/admin/audit-logs)
-- [Create Gateway policies](/guide/conduktor-in-production/admin/gw-policies)
-- [Create data masking policies](/guide/conduktor-in-production/admin/data-mask)
+1. [Configure Kafka clusters](/guide/conduktor-in-production/admin/configure-clusters).
+1. [Define user access](/guide/conduktor-in-production/admin/user-access) including [user groups](/guide/conduktor-in-production/admin/user-access/map-external-groups).
+    - [Set up RBAC](/guide/conduktor-in-production/admin/set-up-rbac).
+1. [Configure audit logs](/guide/conduktor-in-production/admin/audit-logs).
