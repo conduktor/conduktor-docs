@@ -1,5 +1,4 @@
 import React from 'react'
-import AngelListIcon from './assets/icons/angellist'
 import GitHubIcon from './assets/icons/github'
 import LinkedInIcon from './assets/icons/linkedin'
 import TwitterIcon from './assets/icons/twitter'
@@ -19,16 +18,11 @@ export const socialIconsItems = [
   {
     href: 'https://github.com/conduktor/',
     icon: <GitHubIcon />,
-    title: 'Github',
+    title: 'GitHub',
   },
   {
     href: 'https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ',
     icon: <YouTubeIcon />,
     title: 'Youtube',
-  },
-  {
-    href: 'https://angel.co/company/conduktor',
-    icon: <AngelListIcon />,
-    title: 'AngelList',
   },
 ]
