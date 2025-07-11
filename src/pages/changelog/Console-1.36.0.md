@@ -40,6 +40,17 @@ Like email alerts, webhook bodies support dynamic variable insertion using handl
 
 #### Redesigned Application Catalog and Application Details
 
+Application details page:
+- Display a List of the application instances with labels and stats.
+- Includes an editor for modifying the application description.
+- Display the groups list for the application with the owner group pinned.
+
+Application instance page: 
+- Header section displaying stats and labels, with the ability to add, edit, or delete labels.
+- Contains multiple tabs: Details, External Access, Alerts, and API Keys.
+- Within the Details tab, information is divided into two sections: Ownership and Resource Policies.
+
+
 
 #### Labels on Consumer Groups
 
