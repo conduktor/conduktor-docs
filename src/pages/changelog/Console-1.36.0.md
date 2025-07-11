@@ -43,6 +43,11 @@ Like email alerts, webhook bodies support dynamic variable insertion using handl
 
 #### Labels on Consumer Groups
 
+Labels are now displayed across various consumer groups views, along with new filtering capabilities:
+
+- The consumer groups list now shows labels and allows filtering by them.
+- Topic lists within both the consumer groups and member details pages now support label-based filtering.
+- In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
 
 #### 
 
