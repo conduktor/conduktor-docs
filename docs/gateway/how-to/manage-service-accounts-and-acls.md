@@ -488,7 +488,7 @@ Now you can create a properties file, `local-acl-admin.properties` using the cre
 
 ## Auto-Create Topics Authorization
 
-When `GATEWAY_AUTO_CREATE_TOPICS_ENABLE` is set to `true`, users require specific ACL permissions to automatically create topics when producing or consuming through the Gateway.
+When `GATEWAY_AUTO_CREATE_TOPICS_ENABLED` is set to `true`, users require specific ACL permissions to automatically create topics when producing or consuming through the Gateway.
 
 ### Required Permissions
 
@@ -525,4 +525,4 @@ kafka-acls --bootstrap-server localhost:6969 \
 ### Important Notes
 
 - **Concentrated Topics Limitation**: When auto-create topics is enabled, concentrated topics are not supported. Topics that would normally be concentrated will be created as physical topics instead.
-- **Default Configuration**: Auto-create topics is disabled by default (`GATEWAY_AUTO_CREATE_TOPICS_ENABLE=false`).
+- **Default Configuration**: Auto-create topics is disabled by default (`GATEWAY_AUTO_CREATE_TOPICS_ENABLED=false`).
