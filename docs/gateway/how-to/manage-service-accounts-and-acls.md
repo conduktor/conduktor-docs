@@ -485,3 +485,44 @@ curl \
 Note that the same modification applies for external Service Accounts.
 
 Now you can create a properties file, `local-acl-admin.properties` using the credentials you just generated. Refer to the previous sections for creating ACLs for local & external Service Accounts.
+
+## Auto-Create Topics Authorization
+
+When `GATEWAY_AUTO_CREATE_TOPICS_ENABLE` is set to `true`, users require specific ACL permissions to automatically create topics when producing or consuming through the Gateway.
+
+### Required Permissions
+
+Users need one of the following ACL permissions to create topics automatically:
+
+1. **CLUSTER resource with CREATE operation** - Allows creating any topic
+2. **TOPIC resource with CREATE operation** - Allows creating specific topics
+
+### Example ACLs for Auto-Create Topics
+
+#### Allow creating any topic (CLUSTER level)
+
+```bash title="Allow creating any topic"
+kafka-acls --bootstrap-server localhost:6969 \
+  --command-config local-acl-admin.properties \
+  --add \
+  --allow-principal User:local-app-finance-dev \
+  --operation create \
+  --cluster
+```
+
+#### Allow creating specific topics (TOPIC level)
+
+```bash title="Allow creating specific topics"
+kafka-acls --bootstrap-server localhost:6969 \
+  --command-config local-acl-admin.properties \
+  --add \
+  --allow-principal User:local-app-finance-dev \
+  --operation create \
+  --topic finance- \
+  --resource-pattern-type prefixed
+```
+
+### Important Notes
+
+- **Concentrated Topics Limitation**: When auto-create topics is enabled, concentrated topics are not supported. Topics that would normally be concentrated will be created as physical topics instead.
+- **Default Configuration**: Auto-create topics is disabled by default (`GATEWAY_AUTO_CREATE_TOPICS_ENABLE=false`).
