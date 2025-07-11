@@ -9,7 +9,7 @@ tags: features,fixes
 _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 - [Conduktor Scale](#conduktor-scale)
-  - [Email alert destination](#email-alert-destination)
+  - [Email Alert Destination](#email-alert-destination)
   - [Configurable Webhook Body](#configurable-webhook-body)
   - [Redesigned Application Catalog and Application Details](#redesigned-application-catalog-and-application-details)
   - [Labels on Consumer Groups](#labels-on-consumer-groups)
@@ -22,12 +22,13 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 ### Conduktor Scale
 
 
-#### Email alert destination
+#### Email Alert Destination
 
 Email can now be configured as an alert destination. Set up your SMTP server with TLS encryption and authentication to enable secure email delivery directly to your inbox.
 
 Create customized email alerts with custom subjects and body content per alert. Dynamic variables like `{{clusterName}}` and `{{threshold}}` can be embedded using handlebars syntax for context-aware notifications that provide meaningful alert details.
 
+![Email alert destination](/images/changelog/platform/v36/email-integration.png)
 
 
 #### Configurable Webhook Body

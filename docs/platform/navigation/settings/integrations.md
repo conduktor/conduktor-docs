@@ -32,6 +32,8 @@ Channels that have not had the application invited cannot be set as destinations
 
 The email integration allows you to receive alert notifications directly in your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
 
+![Email integration](/images/changelog/platform/v36/email-integration.png)
+
 Setting up email alerts requires two main configuration steps:
 
 1. **Server Settings**: Configure your SMTP server details to enable email delivery
@@ -44,6 +46,7 @@ Setting up email alerts requires two main configuration steps:
    - **Sender Email**: The email address that will appear as the sender for all alerts (e.g., `conduktor-alerts@company.com`)
    - **Username & Password**: Your email server authentication credentials
    - **Test Configuration**: Click "Test configuration" to verify your settings before saving
+
 
 Once your email integration is configured, you can create email alerts with customizable destination addresses, subjects, and body content. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically in the body of the email.
 
