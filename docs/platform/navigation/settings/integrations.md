@@ -6,7 +6,7 @@ description: Connect Conduktor to other tools.
 
 ## Configuring integrations
 
-Conduktor Console can integrate with Slack, MS Teams and any system that receives webhooks.
+Conduktor Console can integrate with Slack, MS Teams, email, and any system that receives webhooks.
 
 Enabling the **Slack** integration requires creating a Slack application, installing this to your Slack workspace, inviting your app to the channel and adding the application token to Conduktor.  
 
@@ -28,6 +28,24 @@ import SlackIntegration from './assets/slack-invite.png';
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
 
+## Email integration
+
+The email integration allows you to receive alert notifications directly in your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
+
+Setting up email alerts requires two main configuration steps:
+
+1. **Server Settings**: Configure your SMTP server details to enable email delivery
+   - **SMTP Server**: Enter your email server address with port (e.g., `mail.company.com:587`)
+   - **TLS Encryption**: Enable TLS encryption for secure email transmission (recommended)
+   - **SSL Configuration**: Option to skip SSL checks or upload custom certificates for enhanced security
+   - **Upload custom certificates**: Upload custom certificates for enhanced security
+
+2. **Authentication**: Provide credentials for authenticating with your email server
+   - **Sender Email**: The email address that will appear as the sender for all alerts (e.g., `conduktor-alerts@company.com`)
+   - **Username & Password**: Your email server authentication credentials
+   - **Test Configuration**: Click "Test configuration" to verify your settings before saving
+
+Once your email integration is configured, you can create email alerts with customizable destination addresses, subjects, and body content. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically in the body of the email.
 
 ## Microsoft Teams integration using Workflows
 
