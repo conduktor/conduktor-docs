@@ -405,10 +405,10 @@ It will only affect the Topics created after the change.
 :::
 
 ## VirtualCluster
-
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
-A Virtual Cluster acts like a Kafka within a Kafka.
+A Virtual Cluster acts like a Kafka cluster within a Kafka cluster. Here is a basic example,
+
 
 ```yaml
 ---
@@ -417,22 +417,69 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclEnabled: true # defaults to false
- superUsers:
+ aclMode: DISABLED # No authorisation for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
+```
+
+### Kafka API powered ACLs
+
+You can give Virtual Clusters all of the ACL features of a standard Kafka cluster by changing the `spec.aclMode` to `KAFKA_API` as demonstrated in this example,
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent
+ superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
  - username1
  - username2
 ```
 
-**VirtualCluster checks:**
+Connecting to Gateway as one of the service accounts named in the `superUsers` list, allows you to manage ACLs for other service accounts within the Virtual Cluster using the Kafka Admin API. The same way you would on a real Kafka Cluster.
 
-- `metadata.name` must be a valid topic prefix.
-- `spec.aclEnabled` is optional, default `false`.
+:::info
+`spec.aclMode` is a new feature added in Gateway 3.11.0. Older versions of Gateway only had a `spec.aclEnabled` boolean field. This field is still supported in Gateway 3.11.0 but is deprecated. 
 
-**VirtualCluster side effects:**
+* `aclEnabled: false` === `aclMode: DISABLED`
+* `aclEnabled: true` === `aclMode: KAFKA_API`
+:::
 
-- All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
-- Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
-- When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
+### REST API ACLs
+
+Managing ACLs with the Kafka Admin API is extremely powerful, but can also be cumbersome. For some use-cases it is desirable to configure everything using the REST api instead. This can be done by setting the `aclMode` to `REST_API`. For example,
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ aclMode: REST_API # Means ACLs must be set in this resource using the below acls field
+ acls:
+  - resourcePattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    principal: User:username1
+    operation: READ
+    permissionType: ALLOW
+  - resourcePattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    principal: User:username1
+    operation: WRITE
+    permissionType: ALLOW
+```
+
+This example demonstrates two basic ACLs, but any ACL valid with the Kafka API is also valid to be set via REST (eg `*` wildcards). For a complete understanding of the options available checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
+
+:::warning
+ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid updating `aclMode` from `KAFKA_API` to `REST_API` (you can update from `KAFKA_API` to `DISABLED` to `REST_API` if you really want to override all existing ACLs).
+:::
 
 ## AliasTopic
 
