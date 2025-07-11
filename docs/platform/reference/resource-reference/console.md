@@ -886,11 +886,13 @@ spec:
 - `spec.displayName` is Mandatory
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
 - `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
-- `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`]
-**When `spec.authenticationMode.type` is `PLAIN`**
-  - `spec.authenticationMode.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
-**When `spec.authenticationMode.type` is `OAUTHBEARER`**
-  - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
+- `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`, `MTLS`]
+  - **When `spec.authenticationMode.type` is `PLAIN`**
+    - `spec.authenticationMode.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
+  - **When `spec.authenticationMode.type` is `OAUTHBEARER`**
+    - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
+  - **When `spec.authenticationMode.type` is `MTLS`**
+    - `spec.authenticationMode.serviceAccount` must be a External Gateway Service Account. It needs to exist before creating the Partner Zone.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
