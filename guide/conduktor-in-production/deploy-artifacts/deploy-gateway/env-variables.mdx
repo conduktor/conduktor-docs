@@ -353,23 +353,20 @@ The exception to this is the audit log topic which can have a lot of events writ
 
 #### Audit
 
-| **Environment variable**                        | **Description**                                                                                                      | **Default value** |
-|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|-------------------|
-| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | Version of the log.                                                                                                  | `0.1.0`           |
-| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | Target topic name.                                                                                                   | `_auditLogs`      |
-| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings.   | `-1`              |
-| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings. | `-1`              |
-| `GATEWAY_AUDIT_LOG_KAFKA_`                      | Overrides Kafka Producer configuration for audit logs, i.e.: `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                   |                   |
-| `GATEWAY_AUDIT_LOG_EVENT_TYPES`                 | Comma-separated list of event types for audit log, defaults to `ALL` to generate audit log for all event types.      | `ALL`             |
+| **Environment variable**                        | **Description**                                                                                                     | **Default value** |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------|
+| `GATEWAY_AUDIT_LOG_CONFIG_SPEC_VERSION`         | Version of the log.                                                                                                 | `0.1.0`           |
+| `GATEWAY_AUDIT_LOG_SERVICE_BACKING_TOPIC`       | Target topic name.                                                                                                  | `_auditLogs`      |
+| `GATEWAY_AUDIT_LOG_REPLICATION_FACTOR_OF_TOPIC` | Replication factor to be used when creating the audit topic, defaults to the one defined in your cluster settings.  | `-1`              |
+| `GATEWAY_AUDIT_LOG_NUM_PARTITIONS_OF_TOPIC`     | Number of partitions to be used when creating the audit topic, defaults to the one defined in your cluster settings.| `-1`              |
+| `GATEWAY_AUDIT_LOG_KAFKA_`                      | Overrides Kafka Producer configuration for audit logs, i.e.: `GATEWAY_AUDIT_LOG_KAFKA_LINGER_MS=0`                  |                   |
+| `GATEWAY_AUDIT_LOG_EVENT_TYPES`                 | Comma-separated list of event types for audit log, defaults to `ALL` to generate audit log for all event types.     | `ALL`             |
 
 `GATEWAY_AUDIT_LOG_EVENT_TYPES` valid value is `ALL` (default) or a comma-separated list of the following:
 - `CONNECTION` for initial connection event, i.e. receiving Kafka's `API_VERSIONS` request
 - `AUTHENTICATION` for authentication success or failure event
 - `AUTHORIZATION` for authorization success or failure event
-- `SAFEGUARD` for events in [Data Quality Producer interceptors](/gateway/category/data-quality/) and [Traffic Control Policies interceptors](/gateway/category/traffic-control-policies/)
-- `APIKEYS_REQUEST` for events in [Audit interceptor](/gateway/interceptors/data-security/audit/)
 - `REST_API` for all REST v1 admin requests and all REST v2 requests (see [API Reference](/gateway/reference/api-reference/))
-- `INTERCEPTOR` for error events in [Encryption interceptors](/gateway/category/encryption/)
 - `ACL_ADMIN` for ACL management events done via Kafka Admin API, i.e. `CREATE_ACLS` and `DELETE_ACLS` requests
 
 #### Logging
