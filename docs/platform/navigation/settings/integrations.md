@@ -32,7 +32,10 @@ Channels that have not had the application invited cannot be set as destinations
 
 The email integration allows you to receive alert notifications directly in your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
 
-![Email integration](/images/changelog/platform/v36/email-integration.png)
+import EmailIntegration from './assets/email-integration.png';
+
+<img src={EmailIntegration} alt="Email integration" style={{ width: 500, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
 
 Setting up email alerts requires two main configuration steps:
 

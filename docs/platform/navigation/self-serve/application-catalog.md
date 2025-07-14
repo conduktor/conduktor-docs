@@ -4,7 +4,9 @@ title: Applications Catalog
 description: Kafka Self-service Overview
 ---
 
-:::tip Self-service UI is almost entirely Read-only for now. Use the CLI to interact with the product. :::
+:::tip 
+Self-service UI is almost entirely Read-only for now. Use the CLI to interact with the product. 
+:::
 
 ## Applications Catalog
 
@@ -44,7 +46,7 @@ For teams managing infrastructure as code, subscription requests can also be app
 The application details page summarizes all the information related to the application:
 
 - Application General Information
-- Application Instances Overview
+- Application Instances List
 - Application Groups
 - Access Requests
 
@@ -52,7 +54,7 @@ For better categorization and organization of applications, you can add & remove
 
 import AppDetails from './assets/app-details.png';
 
-<img src={AppDetails} alt="Application details" style={{ width: 400, display: 'block', margin: 'auto' }} />
+<img src={AppDetails} alt="Application details" style={{ width: '100%', display: 'block', margin: 'auto' }} />
 
 ## Application Instance Details
 
@@ -65,13 +67,3 @@ The application instance details page includes:
 - Granted Permissions: Detailed view of permissions granted to and from this instance
 - API Key Management: Generate and manage API keys for CLI operations
 - Resource Policies: Instance-specific policies and restrictions
-
-### Groups Tab
-
-To see a list of application groups that belong to an application, open on the **Groups** tab.
-
-![Application Groups](assets/app-groups.png)
-
-To see the details of the group, click on it in the table. A side panel showing the same YAML will be shown. You can also retrieve this via the CLI.
-
-![Application Group Details](assets/app-group-details.png)

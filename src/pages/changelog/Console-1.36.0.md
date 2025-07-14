@@ -27,7 +27,7 @@ Email can now be configured as an alert destination. Set up your SMTP server wit
 
 Create customized email alerts with custom subjects and body content per alert. Dynamic variables like `{{clusterName}}` and `{{threshold}}` can be embedded using handlebars syntax for context-aware notifications that provide meaningful alert details.
 
-![Email alert destination](/images/changelog/platform/v36/email-integration.png)
+Follow [this guide](/platform/navigation/settings/integrations/#email-integration) to set up email integration in your environment.
 
 #### Configurable Webhook Body
 
