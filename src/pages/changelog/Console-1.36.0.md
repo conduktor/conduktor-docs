@@ -18,6 +18,12 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 ### Conduktor Exchange
 
+#### Partner Zone support for mTLS
+
+mTLS is now supported as an authentication mode type when creating a Partner Zone i.e. `spec.authenticationMode.type` can now be additionally set to `MTLS`.
+
+As a result of the work to enable this new authentication mode, customers are required to delete their existing Partner Zones and re-create them.
+
 ### Conduktor Trust
 
 ### Quality of life improvements
