@@ -28,7 +28,7 @@ Before creating a Partner Zone, you have to:
 - in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
 
 :::warning Current limitations
-As of v1.32, Partner Zones have the following limitations:
+As of v1.36, Partner Zones have the following limitations:
 
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
 :::
