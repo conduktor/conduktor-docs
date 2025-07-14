@@ -893,7 +893,7 @@ spec:
     - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
   - **When `spec.authenticationMode.type` is `MTLS`**
     - `spec.authenticationMode.serviceAccount` must be an External Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The external service account will be created automatically.
-    - The customer will need to register and provide SSL certificates to the console and the gateway. The `CN` in the certificates will need to match the name of the external service account provided during the Partner Zone creation process.
+    - The customer will need to register and provide SSL certificates to the Console and the Gateway. The `CN` in the certificates will need to match the name of the external service account provided during the Partner Zone creation process.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
 - `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
