@@ -13,7 +13,6 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
   - [Configurable Webhook Body](#configurable-webhook-body)
   - [Redesigned Application Catalog and Application Details](#redesigned-application-catalog-and-application-details)
   - [Labels on Consumer Groups](#labels-on-consumer-groups)
-  - [](#)
 - [Conduktor Exchange](#conduktor-exchange)
 - [Conduktor Trust](#conduktor-trust)
 - [Quality of life improvements](#quality-of-life-improvements)
