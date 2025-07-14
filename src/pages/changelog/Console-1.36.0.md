@@ -24,7 +24,7 @@ mTLS is now supported as an authentication mode type when creating a Partner Zon
 
 As a result of the work to enable this new authentication mode, customers are required to delete their existing Partner Zones and re-create them.
 
-Find more about the [supported authentication mode types](/platform/reference/resource-reference), and about the [creation of partner zones](/platform/navigation/partner-zones).
+To find out more, head over to the documentation for the [supported authentication mode types](/platform/reference/resource-reference/console/#partner-zone) and the [prerequisites for creating partner zones](/platform/navigation/partner-zones/#prerequisites).
 
 ### Conduktor Trust
 
