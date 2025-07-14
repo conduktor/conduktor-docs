@@ -417,7 +417,7 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclMode: DISABLED # No authorisation for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
+ aclEnabled: false # No authorisation for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
 ```
 
 ### Kafka API powered ACLs
@@ -431,20 +431,14 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent
+ aclEnabled: true # (uses aclMode to determine how the acls are enabled or defaults to KAFKA_API if it is not set)
+ aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent 
  superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
  - username1
  - username2
 ```
 
 Connecting to Gateway as one of the service accounts named in the `superUsers` list, allows you to manage ACLs for other service accounts within the Virtual Cluster using the Kafka Admin API. The same way you would on a real Kafka Cluster.
-
-:::info
-`spec.aclMode` is a new feature added in Gateway 3.11.0. Older versions of Gateway only had a `spec.aclEnabled` boolean field. This field is still supported in Gateway 3.11.0 but is deprecated. 
-
-* `aclEnabled: false` === `aclMode: DISABLED`
-* `aclEnabled: true` === `aclMode: KAFKA_API`
-:::
 
 ### REST API ACLs
 
@@ -457,6 +451,7 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
+ aclEnabled: true
  aclMode: REST_API # Means ACLs must be set in this resource using the below acls field
  acls:
   - resourcePattern:
@@ -478,7 +473,7 @@ spec:
 This example demonstrates two basic ACLs, but any ACL valid with the Kafka API is also valid to be set via REST (eg `*` wildcards). For a complete understanding of the options available checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
 
 :::warning
-ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid updating `aclMode` from `KAFKA_API` to `REST_API` (you can update from `KAFKA_API` to `DISABLED` to `REST_API` if you really want to override all existing ACLs).
+ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid changing `aclMode` once it has been set. (Remember: creating a Virtual Cluster with `aclEnabled: true` and no `aclMode` will still result in `aclMode: KAFKA_API`).
 :::
 
 ## AliasTopic
