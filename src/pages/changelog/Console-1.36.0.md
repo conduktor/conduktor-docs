@@ -14,17 +14,23 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
+### Breaking changes
+
+Condutkor Exchange has a breaking change in bringing support for mTLS connections, any existing partner zones must be re-created. See the Conduktor Exchange section below for details.
+
 ### Conduktor Scale
 
 ### Conduktor Exchange
 
 #### Partner Zone support for mTLS
 
-mTLS is now supported as an authentication mode type when creating a Partner Zone i.e. `spec.authenticationMode.type` can now be additionally set to `MTLS`.
+Partners can now connect their clients to your partner zone using mTLS.
 
-As a result of the work to enable this new authentication mode, customers are required to delete their existing Partner Zones and re-create them.
+This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 
-To find out more, head over to the documentation for the [supported authentication mode types](/platform/reference/resource-reference/console/#partner-zone) and the [prerequisites for creating partner zones](/platform/navigation/partner-zones/#prerequisites).
+This is a breaking change for existing Partner Zones, they must be deleted and re-created even if not using mTLS.
+
+To find out more, head over to the documentation for [supported authentication mode types](/platform/reference/resource-reference/console/#partner-zone) and [prerequisites for creating partner zones](/platform/navigation/partner-zones/#prerequisites).
 
 ### Conduktor Trust
 
