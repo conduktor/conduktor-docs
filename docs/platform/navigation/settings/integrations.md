@@ -53,6 +53,23 @@ Setting up email alerts requires two main configuration steps:
 
 Once your email integration is configured, you can create email alerts with customizable destination addresses, subjects, and body content. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically in the body of the email.
 
+### Email alerts used for Teams
+
+We directly integrate with Microsoft Teams using Workflows, but some organizations are not allowed to use this feature. In this case, you can use the email integration to send alerts to Microsoft Teams channels.
+
+For that, after your have setup the email integration as explained above, you need to get the channel email address. Each channel has its dedicated email address. You can find this in the channel settings under "Get email address".
+
+import GetEmail1 from './assets/teams-get-email-1.png';
+
+<img src={GetEmail1} alt="Get channel email 1" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
+From there, you can select which email addresses is authorized to send emails to this channel, and finally copy the email address to use in your Conduktor alert.
+
+import GetEmail2 from './assets/teams-get-email-2.png';
+
+<img src={GetEmail2} alt="Get channel email 2" style={{ width: 400, display: 'block', margin: 'auto', marginBottom: '20px' }} />
+
+
 ## Microsoft Teams integration using Workflows
 
 Microsoft plans to retire existing Microsoft 365 (previously Office 365) connectors and webhooks across all cloud platforms starting 8/15/2024, with plans to disable the ability to create new connectors and webhooks. Followed by connectors and webhook's functionality ceasing at the end of the year. Power Automate workflows are the intended solution to replace the connectors and webhooks.
