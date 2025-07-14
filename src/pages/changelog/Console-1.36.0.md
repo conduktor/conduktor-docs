@@ -21,7 +21,6 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 ### Conduktor Scale
 
-
 #### Email Alert Destination
 
 Email can now be configured as an alert destination. Set up your SMTP server with TLS encryption and authentication to enable secure email delivery directly to your inbox.
@@ -30,27 +29,25 @@ Create customized email alerts with custom subjects and body content per alert. 
 
 ![Email alert destination](/images/changelog/platform/v36/email-integration.png)
 
-
 #### Configurable Webhook Body
 
 Webhook alert destinations now support full payload customization. In addition to existing headers customizations, you can now secure your webhooks with Basic Auth or Bearer Token authentication. You can now also customize the body of the webhook payload to be sent when the alert is triggered.
 
 Like email alerts, webhook bodies support dynamic variable insertion using handlebars syntax, allowing you to create context-aware webhook payloads tailored to your specific monitoring needs.
 
-
 #### Redesigned Application Catalog and Application Details
 
 Application details page:
+
 - Display a List of the application instances with labels and stats.
 - Includes an editor for modifying the application description.
 - Display the groups list for the application with the owner group pinned.
 
-Application instance page: 
+Application instance page:
+
 - Header section displaying stats and labels, with the ability to add, edit, or delete labels.
 - Contains multiple tabs: Details, External Access, Alerts, and API Keys.
 - Within the Details tab, information is divided into two sections: Ownership and Resource Policies.
-
-
 
 #### Labels on Consumer Groups
 
@@ -60,7 +57,13 @@ Labels are now displayed across various consumer groups views, along with new fi
 - Topic lists within both the consumer groups and member details pages now support label-based filtering.
 - In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
 
-#### 
+#### Revamped Application Details page
+
+The **Application Details** page has been redesigned to provide a cleaner, more focused view of application-level information. The revamped page now emphasizes high-level application metadata, ownership details, and cross-instance insights.
+
+#### New Application Instance Details page
+
+We've introduced a dedicated **Application Instance Details** page that consolidates all instance-specific operational information that was previously embedded within the main application details view.
 
 ### Conduktor Exchange
 

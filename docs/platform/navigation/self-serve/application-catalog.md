@@ -4,9 +4,7 @@ title: Applications Catalog
 description: Kafka Self-service Overview
 ---
 
-:::tip 
-Self-service UI is almost entirely Read-only for now.  Use the CLI to interact with the product.
-:::
+:::tip Self-service UI is almost entirely Read-only for now. Use the CLI to interact with the product. :::
 
 ## Applications Catalog
 
@@ -45,20 +43,28 @@ For teams managing infrastructure as code, subscription requests can also be app
 
 The application details page summarizes all the information related to the application:
 
-- Application General information
-- Application Instances & Ownership
-- Subscribed topics
-- Shared topics
+- Application General Information
+- Application Instances Overview
 - Application Groups
 - Access Requests
 
-For better categorization and organization of applications labels.
-
-If you're the owner of an application group, you can generate application **instance API keys** to use with the CLI to create resources.
+For better categorization and organization of applications, you can add & remove labels on this page.
 
 import AppDetails from './assets/app-details.png';
 
 <img src={AppDetails} alt="Application details" style={{ width: 400, display: 'block', margin: 'auto' }} />
+
+## Application Instance Details
+
+We've introduced a dedicated **Application Instance Details** page that consolidates all instance-specific operational information. This new page provides comprehensive visibility into individual application instances and can be accessed by clicking on a specific instance from the Application Details page.
+
+The application instance details page includes:
+
+- Instance Configuration: Cluster assignment, Incoming / Outgoing subscriptions and public topics
+- Resource Ownership: Topics, consumer groups, and subjects owned by this specific instance
+- Granted Permissions: Detailed view of permissions granted to and from this instance
+- API Key Management: Generate and manage API keys for CLI operations
+- Resource Policies: Instance-specific policies and restrictions
 
 ### Groups Tab
 
