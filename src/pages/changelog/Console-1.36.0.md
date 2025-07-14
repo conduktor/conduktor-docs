@@ -56,14 +56,6 @@ Labels are now displayed across various consumer groups views, along with new fi
 - Topic lists within both the consumer groups and member details pages now support label-based filtering.
 - In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
 
-#### Revamped Application Details page
-
-The **Application Details** page has been redesigned to provide a cleaner, more focused view of application-level information. The revamped page now emphasizes high-level application metadata, ownership details, and cross-instance insights.
-
-#### New Application Instance Details page
-
-We've introduced a dedicated **Application Instance Details** page that consolidates all instance-specific operational information that was previously embedded within the main application details view.
-
 ### Conduktor Exchange
 
 ### Conduktor Trust
