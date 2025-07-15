@@ -888,11 +888,11 @@ spec:
 - `spec.cluster` must be a valid Console cluster technical id with the **Provider configured as** `Gateway`.
 - `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`, `MTLS`]
   - When `spec.authenticationMode.type` is `PLAIN`
-    - `spec.authenticationMode.serviceAccount` will be **created automatically by the Gateway**, it doesn't need to exist before creating the Partner Zone. This is Local Gateway Service Account.
+    - `spec.authenticationMode.serviceAccount` will be **created automatically**, it doesn't need to exist before creating the Partner Zone. This is Local Gateway Service Account.
   - When `spec.authenticationMode.type` is `OAUTHBEARER`
-    - `spec.authenticationMode.serviceAccount` needs to **match the "sub"** (subject) claim present **in the OAuth token**. This is an External Gateway Service Account.
+    - `spec.authenticationMode.serviceAccount` will be **created automatically** and needs to **match the "sub"** (subject) claim present **in the OAuth token**. This is an External Gateway Service Account.
   - When `spec.authenticationMode.type` is `MTLS`
-    - `spec.authenticationMode.serviceAccount` will be **created automatically by the Gateway**, it doesn't need to exist before creating the Partner Zone. This is an External Gateway Service Account.
+    - `spec.authenticationMode.serviceAccount` will be **created automatically**, it doesn't need to exist before creating the Partner Zone. This is an External Gateway Service Account.
     - You still need to **create the certificate and share this with the partner**, a certificate where the `CN` matches the name of this service account.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
