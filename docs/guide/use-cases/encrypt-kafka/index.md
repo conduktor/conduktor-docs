@@ -25,7 +25,7 @@ We support Avro, Protobuf and JSON.
 
 ## Decryption
 
-
+Use the `DecryptPlugin` Interceptor to decrypt data. [Find out more](/guide/tutorials/configure-encryption/#configure-decryption).
 
 ## Related resources
 
