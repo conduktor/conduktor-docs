@@ -3,6 +3,7 @@ sidebar_position: 20
 id: get-started
 title: Get started
 description: Get started with Conduktor
+keywords: ['deploy', 'start', 'get started']
 ---
 import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
