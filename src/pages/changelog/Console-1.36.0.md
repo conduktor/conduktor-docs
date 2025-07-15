@@ -8,24 +8,33 @@ tags: features,fixes
 
 _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
-- [Conduktor Scale](#conduktor-scale)
 - [Conduktor Exchange](#conduktor-exchange)
-- [Conduktor Trust](#conduktor-trust)
+    - [Breaking change](#breaking-change)
+    - [mTLS support for Partner Zones added](#partner-zones-support-for-mtls)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
-### Conduktor Scale
-
 ### Conduktor Exchange
 
-### Conduktor Trust
+#### Breaking change
 
-### Quality of life improvements
+With support for mTLS connections, Partner Zones now have a breaking change: all **existing Partner Zones have to be re-created** (even if not using mTLS).
 
-- Users will now be redirected to the page they were on when they logged in again when their session expired
-- Improved navigation between Partner Zones in the list view via keyboard
+#### Partner Zones: support for mTLS
 
-### Fixes
+Partners can now connect their clients to your Partner Zone using mTLS.
 
+This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
+
+[Find out more about supported authentication modes](/platform/reference/resource-reference/console/#partner-zone) and [prerequisites for creating Partner Zones](/platform/navigation/partner-zones/#prerequisites).
+
+## Quality of life improvements
+
+- Users will now be redirected to the page they were on when they logged in again after session expiry
+- Improved navigation between Partner Zones in the list view using keyboard
+
+## Fixes
+
+- Partner Zones are now created instantly, instead of waiting for the next reconciliation loop to pass. Other updates will continue to sync in line with the reconciliation loop.
 - Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop.
 - Fixed an error that occurred when no partitions were selected in the topic consume view. You will now see a warning that no messages will be shown if partitions filter is set to none.
