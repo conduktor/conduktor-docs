@@ -20,48 +20,38 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 ### Conduktor Scale
 
-#### Email Alert Destination
+#### Email alert destinations
 
-Email can now be configured as an alert destination. Set up your SMTP server with TLS encryption and authentication to enable secure email delivery directly to your inbox.
+You can now set emails as alert destinations. Set up your SMTP server with TLS encryption and authentication to enable secure email delivery directly to your inbox.
 
 Create customized email alerts with custom subjects and body content per alert. Dynamic variables like `{{clusterName}}` and `{{threshold}}` can be embedded using handlebars syntax for context-aware notifications that provide meaningful alert details.
 
-Follow [this guide](/platform/navigation/settings/integrations/#email-integration) to set up email integration in your environment.
+[Find out how to configure email integration](/platform/navigation/settings/integrations/#email-integration).
 
-#### Configurable Webhook Body
+#### Configurable webhook body
 
-Webhook alert destinations now support full payload customization. In addition to existing headers customizations, you can now secure your webhooks with Basic Auth or Bearer Token authentication. You can now also customize the body of the webhook payload to be sent when the alert is triggered.
+Webhook alert destinations now support full payload customization. In addition to existing header customizations, you can now secure your webhooks with **basic auth** or **bearer token** authentication and customize the body of the webhook payload to be sent when an alert is triggered.
 
 Like email alerts, webhook bodies support dynamic variable insertion using handlebars syntax, allowing you to create context-aware webhook payloads tailored to your specific monitoring needs.
 
-#### Redesigned Application Catalog and Application Details
+#### Redesigned Application Catalog and Application details pages in Console
 
 Application details page:
 
-- Display a List of the application instances with labels and stats.
-- Includes an editor for modifying the application description.
-- Display the groups list for the application with the owner group pinned.
+- displays a list of the application instances with labels and stats.
+- includes an editor for modifying the application description.
+- shows the application groups list with the owner group pinned.
 
 Application instance page:
 
-- Header section displaying stats and labels, with the ability to add, edit, or delete labels.
-- Contains multiple tabs: Details, External Access, Alerts, and API Keys.
-- Within the Details tab, information is divided into two sections: Ownership and Resource Policies.
+- header section displays stats and labels, with the ability to manage labels.
+- contains multiple tabs: Details, External access, Alerts, and API keys.
+- within the Details tab, information is divided into two sections: ownership and resource policies.
 
-#### Labels on Consumer Groups
+#### Labels on Consumer groups
 
 Labels are now displayed across various consumer groups views, along with new filtering capabilities:
 
 - The consumer groups list now shows labels and allows filtering by them.
 - Topic lists within both the consumer groups and member details pages now support label-based filtering.
 - In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
-
-### Conduktor Exchange
-
-### Conduktor Trust
-
-### Quality of life improvements
-
-### Fixes
-
-- Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop
