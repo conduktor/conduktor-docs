@@ -59,13 +59,13 @@ gateway:
 
 ### Use a file
 
-You can mount a file with the key-value pairs into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`.
+You can mount a file with the key-value pairs into the container and provide its path by setting the environment variable `GATEWAY_ENV_FILE`. Note these variables should be exported by the file as they are injected in the wrapper that starts the Gateway process.
 
 ```env title="Example"
-KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092
-KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT
-KAFKA_SASL_MECHANISM=PLAIN
-KAFKA_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';
+export KAFKA_BOOTSTRAP_SERVERS=kafka1:9092,kafka2:9092
+export KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT
+export KAFKA_SASL_MECHANISM=PLAIN
+export KAFKA_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username='usr' password='pwd';
 ```
 
 You'll get a confirmation in the logs: `Sourcing environment variables from $GATEWAY_ENV_FILE` (or a warning if the file isn't found: `Warning: GATEWAY_ENV_FILE is set but the file does not exist or is not readable.`).
