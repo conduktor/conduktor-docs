@@ -3,6 +3,7 @@ sidebar_position: 10
 title: Conduktor overview
 slug: /
 description: Conduktor is the Enterprise Data Management platform for real-time data streaming
+keywords: ['overview', 'setup', 'get started']
 ---
 
 Conduktor is the data hub for operational data and AI that integrates with your existing infrastructure, providing centralized visibility and control.
