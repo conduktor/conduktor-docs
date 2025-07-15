@@ -36,3 +36,5 @@ This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 ## Fixes
 
 - Partner Zones are now created instantly, instead of waiting for the next reconciliation loop to pass. Other updates will continue to sync in line with the reconciliation loop.
+- Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop.
+- Fixed an error that occurred when no partitions were selected in the topic consume view. You will now see a warning that no messages will be shown if partitions filter is set to none.

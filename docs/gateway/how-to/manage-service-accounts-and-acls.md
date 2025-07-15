@@ -9,6 +9,7 @@ description: How to manage service accounts on the Gateway
 In this how-to guide, you will learn how to manage service accounts on the Gateway. We will cover the creation of both **local and external service accounts**, and how to **assign ACLs to them**.
 
 In this scenario:
+
 - The SASL_PLAINTEXT security protocol is used for the communication between Clients > Gateway > Kafka
 - The ACLs are enabled on the passthrough virtual cluster (`GATEWAY_SECURITY_MODE: GATEWAY_MANAGED`)
 - The ACLs super-user is named `GATEWAY_SUPER_USERS: local-acl-admin`
@@ -174,7 +175,8 @@ services:
 </Tabs>
 
 ### Export Java security manager config (optional)
-Depending on your version of Java you may need to run the below command in your shell session. Newer versions of Java have dropped support for security manager and current versions of Kafka CLI commands will fail without this being set. If you get errors when running the later commands with authentication, run this command. 
+
+Depending on your version of Java you may need to run the below command in your shell session. Newer versions of Java have dropped support for security manager and current versions of Kafka CLI commands will fail without this being set. If you get errors when running the later commands with authentication, run this command.
 
 ```bash
 export KAFKA_OPTS="-Djava.security.manager=allow"  
@@ -189,9 +191,9 @@ kafka-topics --create --bootstrap-server localhost:19092 --topic finance-data
 kafka-topics --create --bootstrap-server localhost:19092 --topic finance-report
 ```
 
-## Manage a Local Service Account
+## Manage a local service account
 
-### Create a Local Service Account
+### Create a local service account
 
 A local service account is managed by the Gateway itself. This means we have to ask the Gateway to create it for us, by giving it a name.
 
@@ -239,7 +241,7 @@ This will return a JSON object with the `token` field containing the secret key.
 
 This means that, we can now connect to the Gateway passthrough virtual cluster using the `local-app-finance-dev` service account and its secret key. Let's do so.
 
-### Connect to the Gateway with a Local Service Account
+### Connect to the Gateway with a local service account
 
 Create a properties file, `local-client.properties` with the credentials we just generated to connect to the Gateway:
 
@@ -257,11 +259,12 @@ kafka-topics --list --bootstrap-server localhost:6969 --command-config local-cli
 
 In this case, the command doesn't return anything because we have enabled ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources, it's not authorized. Let's modify the ACLs so this service account can list topics.
 
-## Create ACLs for a Local Service Account
+## Create ACLs for a local service account
 
-### Create an ACL Admin Local Service Account
+### Create an ACL admin local service account
 
-In order to modify the ACLs, we recommend you define a dedicated **ACL admin service account**.  
+In order to modify the ACLs, we recommend you define a dedicated **ACL admin service account**.
+
 This is a privileged service account and must be defined in the Gateway configuration using the environment variable **`GATEWAY_SUPER_USERS`**, in the case of the `passthrough` Virtual Cluster. In our example, we have named this `local-acl-admin`.
 
 Repeat the steps, as before, using the name `local-acl-admin`. Create the service account, get its credentials, save them to file.
@@ -305,7 +308,6 @@ curl \
 </TabItem>
 </Tabs>
 
-
 Store the generated credentials in a new file, `local-acl-admin.properties`.
 
 ```properties title="local-acl-admin.properties"
@@ -316,7 +318,7 @@ sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule require
 
 As this user is an ACLs admin, it has access to all the Gateway topics and can create & modify ACLs for the other service accounts.
 
-### Create ACLs for another Local Service Account, using the ACL Admin Service Account
+### Create ACLs for another local service account using the ACL admin service account
 
 In order for the `local-app-finance-dev` service account to be able to interact with its topics, we need to give it the `WRITE` permission on its prefix. Run the following command to do so:
 
@@ -349,7 +351,7 @@ finance-data
 finance-report
 ```
 
-## Manage an External Service Account
+## Manage an external service account
 
 An external service account is managed by an external OIDC identity provider. This means we only have to make the Gateway aware of this external service account by giving it its OIDC principal (this is the `externalNames`). The credentials that will be used by this application are already defined in the OIDC identity provider.
 
@@ -383,7 +385,7 @@ curl \
 
 Now you can apply some interceptors to this service account, by referring to the service account name, `azure-app-billing-dev`.
 
-### Connect to the Gateway with an External Service Account
+### Connect to Gateway with an external service account
 
 You can now connect to the Gateway using the `azure-app-billing-dev` service account.
 
@@ -405,7 +407,7 @@ kafka-topics --list --bootstrap-server localhost:6969 --command-config external-
 
 In this case, the command wouldn't return anything because we have enabled the ACLs on this passthrough virtual cluster (`GATEWAY_ACL_ENABLED: true`). It means that my local service account doesn't have the right permissions to see any resources, it's not authorized. The next step is then to give it some ACLs so it can list topics.
 
-## Create ACLs for an External Service Account
+## Create ACLs for an external service account
 
 The steps here are exactly the same as the ones for the [local service account](#create-acls-for-a-local-service-account). Please follow them but using the `azure-app-billing-dev` service account instead of `local-app-finance-dev`.
 
@@ -425,7 +427,7 @@ The example above is using a default `passthrough` Virtual Cluster. If you are u
 
 First, let's see how to create a Virtual Cluster with the ACLs enabled, and a super user declared. Then, we'll see how to create the super user credentials, in order to give permissions to the applications service account.
 
-### Create the Virtual Cluster with an ACL Admin
+### Create the Virtual Cluster with an ACL admin
 
 The below creates a Virtual Cluster called `my-vcluster`, that will have ACLs enabled, and a super user named `local-acl-admin`.
 
@@ -446,7 +448,7 @@ curl \
 }'
 ```
 
-### Service Account Creation in a Virtual Cluster
+### Service account creation in a Virtual Cluster
 
 Now that the Virtual Cluster `my-vcluster` exists, create the local Service Account for the super user:
 
@@ -485,3 +487,46 @@ curl \
 Note that the same modification applies for external Service Accounts.
 
 Now you can create a properties file, `local-acl-admin.properties` using the credentials you just generated. Refer to the previous sections for creating ACLs for local & external Service Accounts.
+
+## Auto-create topic authorization
+
+When `GATEWAY_AUTO_CREATE_TOPICS_ENABLED` is set to `true`, users require specific ACL permissions to automatically create topics when producing or consuming through Gateway.
+
+### Required permissions
+
+You have to have one of the following ACL permissions to create topics automatically:
+
+1. **CLUSTER resource with CREATE operation** - allows creating any topic
+2. **TOPIC resource with CREATE operation** - allows creating specific topics
+
+### Example ACLs for auto-create topics
+
+#### Allow creating any topic (CLUSTER level)
+
+```bash title="Allow creating any topic"
+kafka-acls --bootstrap-server localhost:6969 \
+  --command-config local-acl-admin.properties \
+  --add \
+  --allow-principal User:local-app-finance-dev \
+  --operation create \
+  --cluster
+```
+
+#### Allow creating specific topics (TOPIC level)
+
+```bash title="Allow creating specific topics"
+kafka-acls --bootstrap-server localhost:6969 \
+  --command-config local-acl-admin.properties \
+  --add \
+  --allow-principal User:local-app-finance-dev \
+  --operation create \
+  --topic finance- \
+  --resource-pattern-type prefixed
+```
+
+:::warning[Concentrated topics limitation]
+
+When auto-create topics is enabled, concentrated topics are not supported. Topics that would normally be concentrated will be created as physical topics instead.
+
+Auto-create topics is disabled by default (`GATEWAY_AUTO_CREATE_TOPICS_ENABLED=false`).
+:::
