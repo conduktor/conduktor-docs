@@ -422,7 +422,7 @@ spec:
 
 ### Kafka API powered ACLs
 
-You can give Virtual Clusters all of the ACL features of a standard Kafka cluster by changing the `spec.aclMode` to `KAFKA_API` as demonstrated in this example,
+You can give Virtual Clusters all of the ACL features of a standard Kafka cluster by setting `spec.aclEnabled` to `true` and defining `spec.aclMode` as `KAFKA_API`,
 
 ```yaml
 ---
@@ -472,8 +472,8 @@ spec:
 
 This example demonstrates two basic ACLs, but any ACL valid with the Kafka API is also valid to be set via REST (eg `*` wildcards). For a complete understanding of the options available checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
 
-:::warning
-ACLs passed in this manner will overwrite **ALL** existing ACLs for the Virtual Cluster. For this reason we forbid changing `aclMode` once it has been set. (Remember: creating a Virtual Cluster with `aclEnabled: true` and no `aclMode` will still result in `aclMode: KAFKA_API`).
+:::info
+We do not allow the `aclMode` to be changed once it is set. When `aclEnabled` is set to `true` without specifiying the `aclMode` the system sets it to its default value of `KAFKA_API`. This means that if you set the `aclEnabled` flag to true but do not set the `aclMode` you cannot later change it to `REST_API`. We do this because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` changes are cumulative whereas `REST_API` is idempotent)
 :::
 
 ## AliasTopic
