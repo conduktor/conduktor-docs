@@ -405,10 +405,10 @@ It will only affect the Topics created after the change.
 :::
 
 ## VirtualCluster
+
 A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
-A Virtual Cluster acts like a Kafka cluster within a Kafka cluster. Here is a basic example,
-
+A Virtual Cluster acts like a Kafka cluster within a Kafka cluster. Here's a simple example:
 
 ```yaml
 ---
@@ -417,7 +417,7 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclEnabled: false # No authorisation for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
+ aclEnabled: false # No authorization for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
 ```
 
 ### Kafka API powered ACLs

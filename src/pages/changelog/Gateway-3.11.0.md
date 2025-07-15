@@ -8,23 +8,22 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes)
 - [New features](#new-features)
+    - [Use REST to set Virtual Cluster ACLs](#set-virtual-cluster-acls-directly-using-rest)
 
-### Breaking changes
+## New features
 
-### New features
-
-#### Set Virtual Cluster ACLs directly using REST
+### Set Virtual Cluster ACLs directly using REST
 
 Gateway now supports managing the ACLs for Virtual Clusters directly using the REST API. (This is a backwards compatible change.)
 
-Previously the only way to set ACLs on a Virtual Cluster was,
-1. Create a Virtual Cluster with a Kafka Super User defined
-2. Use the Kafka Super User to individually create ACLs using the Kafka Admin API
+Previously, the only way to set ACLs on a Virtual Cluster was to:
 
-By allowing nearly any Kafka ACL setup to be configured using a single call to the Virtual Cluster REST endpoint (some cluster ACLs are restricted) the overall complexity is greatly simplified for simple use-cases.
+1. create a Virtual Cluster with a Kafka super user defined, then
+1. as the Kafka super user, individually create ACLs using the Kafka admin API.
 
-This change will not suit every use-case. We will continue to support setting ACLs directly using the Kafka Admin API as a Super User as well.
+By allowing nearly any Kafka ACL setup to be configured using a single call to the Virtual Cluster REST endpoint (some cluster ACLs are restricted), the overall complexity is greatly simplified for most use cases.
 
-[Find out more about the new ACLs features in Virtual Cluster Resource](/gateway/reference/resources-reference/#virtual-cluster-acls)
+We'll continue to support setting ACLs directly using the Kafka admin API as a super user, since this change won't apply to all scenarios and use cases.
+
+[Find out more about the new ACLs features in the Virtual Cluster resource reference](/gateway/reference/resources-reference/#virtual-cluster-acls).
