@@ -16,7 +16,7 @@ On Amazon Cognito side, you'll have to create a user pool with an application:
 
 - **Step 2**: Configure the application client
 
-You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`.
 
 For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`, like in the screenshot below.
 
@@ -97,9 +97,9 @@ sso:
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="cognito"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="cognito:groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="cognito:groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 

@@ -27,11 +27,11 @@ Following this, enter general information for your custom application, including
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
 
-The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application. 
+The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application.
 
 Enter the redirect URI in the following way:
 
-`http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
+`http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`.
 
 For example, if you deployed Console locally using the name `jumpcloud` in your configuration file, you can use
 `https://localhost:8080/oauth/callback/jumpcloud`, as seen in the screenshot below.
@@ -44,7 +44,7 @@ Enter the Login URL, which is the URL users need to log into this application. I
 - **Step 4**: Find the `Client ID` and `Client Secret`.
 
 After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
- 
+
 import JumpCloudClientIdSecret from './assets/jumpcloud-figure-6.png';
 
 <img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
@@ -56,7 +56,7 @@ You need to keep the `Client Secret` somewhere safe, as you will not have access
 
 ## Conduktor Console Configuration
 
-On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
+On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4.
 
 :::tip
 You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
@@ -77,9 +77,9 @@ Or using environment variables:
 ```json
 CDK_SSO_OAUTH2_0_NAME="jumpcloud"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 ```
 
@@ -90,13 +90,13 @@ If you want to use the `external groups mapping` to map groups between your Cond
 From the JumpCloud side, ensure you have:
 - Checked `Email` and `Profile` under the standard scopes
 - Set the `email_verified` to true
-- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` value of your Console's configuration
+- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPSCLAIM` value of your Console's configuration
 
 See the example screenshot shown below.
 
 ![](assets/jumpcloud-figure-7.png)
 
-From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
+From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file.
 Below is the full snippet for your configuration file:
 
 ```yaml title="platform-config.yaml"
@@ -115,9 +115,9 @@ Or using environment variables:
 ```json
 CDK_SSO_OAUTH2_0_NAME="jumpcloud"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 ```
 

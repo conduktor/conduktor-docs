@@ -18,7 +18,7 @@ On Keycloak side, you'll have to create a new application:
 
 ![](assets/keycloak-client-config.png)
 
-- **Step 3**: Configure the redirect URI 
+- **Step 3**: Configure the redirect URI
 
 You can configure it as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
@@ -106,9 +106,9 @@ sso:
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="keycloak"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
