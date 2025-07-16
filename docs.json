@@ -3,11 +3,11 @@
   "theme": "almond",
   "name": "Conduktor docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#09343C",
+    "light": "#09343C",
+    "dark": "#09343C"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "static/img/favicon.ico",
   "navigation": {
     "tabs": [
       {
