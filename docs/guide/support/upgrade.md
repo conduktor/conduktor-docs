@@ -18,19 +18,15 @@ Conduktor is released as a Docker container. To upgrade from one release to the 
 
 1. Make a database dump (just in case you need to roll-back).
 
-1. Pull the latest image from Docker hub:
+2. Pull the latest image from Docker hub:
 
-```bash
-docker pull conduktor/conduktor-console
-```
+  ```bash
+  docker pull conduktor/conduktor-console
+  ```
 
-1. Change the version of your container (either in your docker-compose, or helm chart) and deploy it again.
+3. Change the version of your container (either in your docker-compose, or helm chart) and deploy it again.
 
-1. Check the logs and the UI to ensure the upgrade was successful.
-
-## Gateway upgrade process
-
-Coming soon.
+4. Check the logs and the UI to ensure the upgrade was successful.
 
 ## Migrate from API v1 to v2
 
