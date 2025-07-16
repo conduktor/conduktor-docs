@@ -31,7 +31,7 @@ The Redirect URI is where JumpCloud sends the authentication response and ID tok
 
 Enter the redirect URI in the following way:
 
-`http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`.
+`http(s)://<Console host>:<Console port>/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `jumpcloud` in your configuration file, you can use
 `https://localhost:8080/oauth/callback/jumpcloud`, as seen in the screenshot below.

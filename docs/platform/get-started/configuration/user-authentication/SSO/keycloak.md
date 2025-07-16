@@ -18,7 +18,7 @@ On Keycloak side, you'll have to create a new application:
 
 ![](assets/keycloak-client-config.png)
 
-- **Step 3**: Configure the redirect URI
+- **Step 3**: Configure the redirect URI 
 
 You can configure it as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`
 
