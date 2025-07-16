@@ -16,7 +16,7 @@
           {
             "group": "Conduktor concepts",
             "pages": [
-              "concepts/introduction"
+              "guide/conduktor-concepts/index"
             ]
           }
         ]
@@ -27,7 +27,7 @@
           {
             "group": "Conduktor tutorials",
             "pages": [
-              "essentials/navigation"
+              "guide/tutorials/index"
             ]
           }
         ]
