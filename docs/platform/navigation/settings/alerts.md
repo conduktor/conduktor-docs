@@ -56,7 +56,7 @@ Once you've [configured your integrations](/platform/navigation/settings/integra
 
 - **Destination email**: specify the recipient's email - this is where the notifications will be sent.
 - **Subject**: customize the email subject line to make them easily identifiable.
-- **Body**: the body of the email. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically.
+- **Body**: the body of the email. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`, for url because the template engine can escape the whole url, you will have to use `{{{url}}}` to not escape the url) to embed alert variables dynamically.
 
 Email alerts will be sent from the sender address configured in your email integration settings.
 
@@ -65,7 +65,7 @@ Email alerts will be sent from the sender address configured in your email integ
 - **Method**: select the HTTP method to use for the webhook request (POST, PUT).
 - **URL**: any webhook endpoint that accepts POST requests.
 - **Custom Headers**: add custom headers, as needed.
-- **Body**: receives structured JSON payload with alert details and metadata. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically.
+- **Body**: receives structured JSON payload with alert details and metadata. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`, for url because the template engine can escape the whole url, you will have to use `{{{url}}}` to not escape the url) to embed alert variables dynamically.
 - **Authentication**: configure authentication, if required by your webhook endpoint (basic auth or bearer token).
 
 Click **Send test** for any external destinations to verify your configuration before saving the alert.
