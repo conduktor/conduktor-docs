@@ -27,7 +27,7 @@ Following this, enter general information for your custom application, including
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
 
-The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application.
+The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application. 
 
 Enter the redirect URI in the following way:
 
@@ -56,7 +56,7 @@ You need to keep the `Client Secret` somewhere safe, as you will not have access
 
 ## Conduktor Console Configuration
 
-On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4.
+On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
 
 :::tip
 You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
