@@ -44,7 +44,7 @@ Enter the Login URL, which is the URL users need to log into this application. I
 - **Step 4**: Find the `Client ID` and `Client Secret`.
 
 After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
-
+ 
 import JumpCloudClientIdSecret from './assets/jumpcloud-figure-6.png';
 
 <img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
