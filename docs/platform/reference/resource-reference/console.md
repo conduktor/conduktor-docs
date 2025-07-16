@@ -787,53 +787,53 @@ spec:
 
 **Alert checks:**
 
-- `metadata.user`|`metadata.group`|`metadata.appInstance` must be a valid user, group or appInstance
+- `metadata.user`|`metadata.group`|`metadata.appInstance` has to be a valid user, group or appInstance
 - `metadata.destination.type` can be either `Slack`, `Teams` or `Webhook`
-- `spec.cluster` must be a valid KafkaCluster name
-- `spec.type` must be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
+- `spec.cluster` has to be a valid KafkaCluster name
+- `spec.type` has to be one of [`BrokerAlert`,`TopicAlert`,`KafkaConnectAlert`]
   - Check the section below for the additional mandatory fields needed for each `spec.type`
 - `spec.metric` is depending on the `spec.type`
   - Check section below
-- `spec.operator` must be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
-- `spec.threshold` must be a number
-- `spec.disable` (optional, default `false`) must be one of [`true`, `false`]
+- `spec.operator` has to be one of [`GreaterThan`, `GreaterThanOrEqual`, `LessThan`, `LessThanOrEqual`, `NotEqual`]
+- `spec.threshold` has to be a number
+- `spec.disable` (optional, default `false`) has to be one of [`true`, `false`]
 
 **When `spec.destination.type` is `Slack`**
 
-- `spec.destination.channel` must be a valid Slack channel id
+- `spec.destination.channel` has to be a valid Slack channel id
 
 **When `spec.destination.type` is `Teams`**
 
-- `spec.destination.url` must be a valid Teams webhook URL
+- `spec.destination.url` has to be a valid Teams webhook URL
 
 **When `spec.destination.type` is `Webhook`**
 
-- `spec.destination.url` must be a valid URL
-- `spec.destination.method` must be one of [`GET`, `POST`, `PUT`, `DELETE`]
-- `spec.destination.headers` (optional) must be key-value pairs of HTTP Headers
-- `spec.destination.authentification.type` (optional) must be one of [`BasicAuth`, `BearerToken`]
-  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` must be set
-  - when is `BearerToken` `spec.destination.authentification.token` must be set
+- `spec.destination.url` has to be a valid URL
+- `spec.destination.method` has to be one of [`GET`, `POST`, `PUT`, `DELETE`]
+- `spec.destination.headers` (optional) has to be key-value pairs of HTTP Headers
+- `spec.destination.authentification.type` (optional) has to be one of [`BasicAuth`, `BearerToken`]
+  - when is `BasicAuth` `spec.destination.authentification.username` and `spec.destination.authentification.password` has to be set
+  - when is `BearerToken` `spec.destination.authentification.token` has to be set
 
 **When `spec.type` is `BrokerAlert`**
 
-- `spec.metric` must be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
+- `spec.metric` has to be one of [`MessageIn`, `MessageOut`, `MessageSize`, `OfflinePartitionCount`, `PartitionCount`, `UnderMinIsrPartitionCount`, `UnderReplicatedPartitionCount`]
 
 **When `spec.type` is `TopicAlert`**
 
-- `spec.metric` must be one of [`MessageCount`, `MessageIn`, `MessageOut`, `MessageSize`]
-- `spec.topicName` must be a Kafka Topic that the owner can access
+- `spec.metric` has to be one of [`MessageCount`, `MessageIn`, `MessageOut`, `MessageSize`]
+- `spec.topicName` has to be a Kafka Topic that the owner can access
 
 **When `spec.type` is `KafkaConnectAlert`**
 
-- `spec.metric` must be `FailedTaskCount`
-- `spec.connectName` must be a valid KafkaConnect Cluster associated to this `spec.cluster` Kafka Cluster
-- `spec.connectorName` must be a Kafka Connect Connector that the owner can access
+- `spec.metric` has to be `FailedTaskCount`
+- `spec.connectName` has to be a valid KafkaConnect Cluster associated to this `spec.cluster` Kafka Cluster
+- `spec.connectorName` has to be a Kafka Connect Connector that the owner can access
 
 **When `spec.type` is `ConsumerGroupAlert`**
 
-- `spec.metric` must be one of [`OffsetLag`, `TimeLag`]
-- `spec.consumerGroupName` must be a Kafka Consumer Group that the owner can access
+- `spec.metric` has to be one of [`OffsetLag`, `TimeLag`]
+- `spec.consumerGroupName` has to be a Kafka Consumer Group that the owner can access
 
 ## DataMaskingPolicy
 
@@ -883,17 +883,20 @@ spec:
 
 **Partner Zone checks:**
 
-- `spec.displayName` is Mandatory
+- `spec.displayName` is mandatory
 - `spec.description`, `spec.url` and `spec.partner` are **optional** context informations.
-- `spec.cluster` must be a valid Console cluster technical id **with the Provider** configured as `Gateway`.
-- `spec.authenticationMode.type` must be one of [`PLAIN`, `OAUTHBEARER`]
-**When `spec.authenticationMode.type` is `PLAIN`**
-  - `spec.authenticationMode.serviceAccount` must be a Local Gateway Service Account. It doesn't need to exist before creating the Partner Zone. The service account will be created automatically.
-**When `spec.authenticationMode.type` is `OAUTHBEARER`**
-  - `spec.authenticationMode.serviceAccount` needs to match the "sub" OAuth claim.
+- `spec.cluster` has to be a valid Console cluster technical ID with the **Provider** set as `Gateway`.
+- `spec.authenticationMode.type` has to be one of [`PLAIN`, `OAUTHBEARER`, `MTLS`]
+  - When `spec.authenticationMode.type` is `PLAIN`
+    - `spec.authenticationMode.serviceAccount` will be **created automatically**, it doesn't need to exist before creating the Partner Zone. This is a local Gateway service account.
+  - When `spec.authenticationMode.type` is `OAUTHBEARER`
+    - `spec.authenticationMode.serviceAccount` will be **created automatically** and needs to **match the "sub"** (subject) claim present **in the OAuth token**. This is an external Gateway service account.
+  - When `spec.authenticationMode.type` is `MTLS`
+    - `spec.authenticationMode.serviceAccount` will be **created automatically**, it doesn't need to exist before creating the Partner Zone. This is an external Gateway service account.
+    - You still need to **create the certificate and share it with the partner**. The certificate has to have the `CN` match the name of this service account.
 - `topics[].name` is the name of the topic as it should appear to your partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share with your partner.
-- `topics[].permission` must be set to either `READ` or `WRITE` (which additionally grants `READ`).
+- `topics[].permission` has to be set to either `READ` or `WRITE` (which additionally grants `READ`).
 - `trafficControlPolicies.maxProduceRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can produce messages to the topics per Gateway node.
 - `trafficControlPolicies.maxConsumeRate` is **optional**. Sets the maximum rate (in bytes/s) at which the partner can consume messages from the topics per Gateway node.
 - `trafficControlPolicies.limitCommitOffset` is **optional**. Sets the maximum number of commits requests (in requests/minute) that the partner can make per Gateway node.
@@ -928,7 +931,7 @@ HTTP Security Properties are used in KafkaCluster ([Schema Registry](#confluent-
     token: "toto"
 ```
 
-### mTLS / Client Certificate
+### mTLS / Client certificate
 
 ```yaml
   security:
