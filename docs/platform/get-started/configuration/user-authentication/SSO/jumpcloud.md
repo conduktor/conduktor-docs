@@ -96,7 +96,7 @@ See the example screenshot shown below.
 
 ![](assets/jumpcloud-figure-7.png)
 
-From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file.
+From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
 Below is the full snippet for your configuration file:
 
 ```yaml title="platform-config.yaml"
