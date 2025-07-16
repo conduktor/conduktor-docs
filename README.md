@@ -32,9 +32,6 @@ yarn
 yarn build
 yarn start
 ```
-
-We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
-
 ## Best practice guidelines
 
 [Check out Conduktor terminology, writing and ToV guidelines](https://conduktor.slite.com/api/s/APsVcreNLD8oT9/Technical-content).
