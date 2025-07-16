@@ -9,9 +9,9 @@ tags: features,fixes
 _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
 
 - [Conduktor Scale](#conduktor-scale)
-  - [Email Alert Destination](#email-alert-destination)
+  - [Email Alert Destinations](#email-alert-destinations)
   - [Configurable Webhook Body](#configurable-webhook-body)
-  - [Redesigned Application Catalog and Application Details](#redesigned-application-catalog-and-application-details)
+  - [Redesigned Application Catalog and Application Details](#redesigned-application-catalog-and-application-details-pages-in-console)
   - [Labels on Consumer Groups](#labels-on-consumer-groups)
 - [Conduktor Exchange](#conduktor-exchange)
     - [Breaking change](#breaking-change)
