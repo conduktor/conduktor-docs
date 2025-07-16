@@ -76,6 +76,7 @@ This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 
 - Users will now be redirected to the page they were on when they logged in again after session expiry
 - Improved navigation between Partner Zones in the list view using keyboard
+- Improved configurability of circuit breaker behaviour for indexed tasks. See more at [/platform/get-started/configuration/env-variables/#indexer-properties]
 
 ## Fixes
 
