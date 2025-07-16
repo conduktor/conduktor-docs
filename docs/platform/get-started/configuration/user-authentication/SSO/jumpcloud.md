@@ -77,9 +77,9 @@ Or using environment variables:
 ```json
 CDK_SSO_OAUTH2_0_NAME="jumpcloud"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 ```
 
@@ -90,7 +90,7 @@ If you want to use the `external groups mapping` to map groups between your Cond
 From the JumpCloud side, ensure you have:
 - Checked `Email` and `Profile` under the standard scopes
 - Set the `email_verified` to true
-- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPS-CLAIM` value of your Console's configuration
+- The same value in `group attribute` as in the `groups-claim` or `CDK_SSO_OAUTH2_0_GROUPSCLAIM` value of your Console's configuration
 
 See the example screenshot shown below.
 
@@ -115,9 +115,9 @@ Or using environment variables:
 ```json
 CDK_SSO_OAUTH2_0_NAME="jumpcloud"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<Client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<Client Secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<Client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<Client Secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://oauth.id.jumpcloud.com/"
 ```
 

@@ -97,9 +97,9 @@ sso:
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="cognito"
 CDK_SSO_OAUTH2_0_DEFAULT=true
-CDK_SSO_OAUTH2_0_CLIENT-ID="<client ID>"
-CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
-CDK_SSO_OAUTH2_0_GROUPS-CLAIM="cognito:groups"
+CDK_SSO_OAUTH2_0_CLIENTID="<client ID>"
+CDK_SSO_OAUTH2_0_CLIENTSECRET="<client secret>"
+CDK_SSO_OAUTH2_0_GROUPSCLAIM="cognito:groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
