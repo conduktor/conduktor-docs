@@ -66,6 +66,10 @@ If you do not supply a `basicCredentials` section for the AWS Glue schema regist
 
 See more about schema registry [here](https://www.conduktor.io/blog/what-is-the-schema-registry-and-why-do-you-need-to-use-it/)
 
+:::warning[Limitation for non-structured keys/values]
+When the message key or value can't be transformed into a JSON-like structure, the whole message won't be displayed.
+:::
+
 ## Example
 
 ```json
