@@ -50,7 +50,7 @@
                   {
                     "group": "Deploy Cortex",
                     "pages": [
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-cortex/index"      
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"      
                     ]
                   }
                 ]
@@ -63,16 +63,19 @@
         "tab": "Concepts",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
+            "group": "Conduktor concepts",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "guide/conduktor-concepts/index",
+              "guide/conduktor-concepts/chargeback",
+              "guide/conduktor-concepts/gw-authen-author",
+              "guide/conduktor-concepts/gw-service-accounts",   
+              "guide/conduktor-concepts/indexing",
+              "guide/conduktor-concepts/interceptors",   
+              "guide/conduktor-concepts/logical-topics",
+              "guide/conduktor-concepts/partner-zones",   
+              "guide/conduktor-concepts/self-service",
+              "guide/conduktor-concepts/traffic-control-policies",
+              "guide/conduktor-concepts/virtual-clusters"               
             ]
           }
         ]

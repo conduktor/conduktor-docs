@@ -1,9 +1,8 @@
 ---
 title: Indexing
-description: Learn Conduktor terminology
 ---
 
-In <GlossaryTerm>Console</GlossaryTerm>, many of the list pages (e.g. Topics, Consumer Groups, Schema Registry, Kafka Connect) are served from an **internal table** instead of making *AdminClient* calls to Kafka.
+In Console, many of the list pages (e.g. Topics, Consumer Groups, Schema Registry, Kafka Connect) are served from an **internal table** instead of making *AdminClient* calls to Kafka.
 
 Theses tables are updated by a background process we call Indexing. The Indexing process collects changes to your Kafka every 30 seconds and stores that metadata in internal tables.
 
