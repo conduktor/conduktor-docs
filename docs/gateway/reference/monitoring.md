@@ -4,7 +4,104 @@ title: Health & Monitoring
 description: Health & Monitoring
 ---
 
-## Health
+## Liveness Endpoint
+
+`/health/live`
+
+Returns a status HTTP 200 when Gateway is up.
+
+```shell title="cURL example"
+curl -s http://localhost:8888/health/live
+```
+
+Could be used to set up probes on Kubernetes or docker-compose.
+
+### docker-compose probe setup
+
+```yaml
+healthcheck:
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8888}/health/live',
+    ]
+  interval: 10s
+  timeout: 5s
+  retries: 3
+```
+
+### Kubernetes liveness probe
+
+```yaml title="Port configuration"
+ports:
+  - containerPort: 8888
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+livenessProbe:
+  httpGet:
+    path: /health/live
+    port: httpprobe
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+```
+
+## Readiness/Startup Endpoint
+
+`/health/ready`
+
+Returns readiness of the Gateway.
+Modules status :
+
+- `NOTREADY` (initial state)
+- `READY`
+
+This endpoint returns a 200 status code if Gateway is in a `READY` state. Otherwise, it returns a 503 status code if Gateway is not ready to accept traffic yet.
+
+```shell title="cURL example"
+curl -s  http://localhost:8888/health/ready
+# READY
+```
+
+### Kubernetes startup probe
+
+```yaml title="Port configuration"
+
+ports:
+  - containerPort: 8888
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+startupProbe:
+    httpGet:
+        path: /health/ready
+        port: httpprobe
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
+```
+
+
+## Console Versions
+
+`/versions`
+
+This endpoint return the Gateway version.
+
+```shell title="cURL example"
+curl -s  http://localhost:8888/versions | jq .
+# {
+#  "gateway": "3.12.0-SNAPSHOT"
+# }
+```
+
+## Health [Deprecated]
 
 To check the health of your Gateway, you can check the endpoint `/health` on the Gateway API (port `8888` by default).
 
