@@ -34,7 +34,23 @@
                   {
                     "group": "Deploy Gateway",
                     "pages": [
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index"
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"                      
+                    ]
+                  },
+                  {
+                    "group": "Deploy Console",
+                    "pages": [
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"                      
+                    ]
+                  },
+                  {
+                    "group": "Deploy Cortex",
+                    "pages": [
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-cortex/index"      
                     ]
                   }
                 ]
