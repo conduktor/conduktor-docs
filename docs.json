@@ -49,7 +49,7 @@
           {
             "group": "Conduktor reference",
             "pages": [
-              "guide/reference"
+              "guide/reference/index"
             ]
           }
         ]
@@ -61,6 +61,18 @@
             "group": "Changelog",
             "pages": [
               "src/pages/changelog"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Support",
+        "groups": [
+          {
+            "group": "Support",
+            "pages": [
+              "guide/support/index",
+              "guide/support/upgrade"              
             ]
           }
         ]
