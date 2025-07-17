@@ -1,12 +1,10 @@
 ---
-sidebar_position: 220
 title: Delegated JWT authentication 
-description: Delegated JWT authentication in Conduktor
 ---
 
 ## Overview
 
-<GlossaryTerm>Console</GlossaryTerm> allows you to delegate authentication to an external identity provider.
+Console allows you to delegate authentication to an external identity provider.
 
 A common use case is to protect Console by putting an API gateway between Console and its clients. The authentication flow of the client is performed by the API gateway and the token from the identity provider is sent directly to Console. In this case, no authentication is performed by Console, it only checks that the token is valid and issued by the trusted identity provider.
 

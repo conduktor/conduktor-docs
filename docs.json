@@ -44,7 +44,8 @@
                     "pages": [
                       "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
                       "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"                      
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"                         
                     ]
                   },
                   {
@@ -52,7 +53,34 @@
                     "pages": [
                       "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"      
                     ]
-                  }
+                  },
+                  {
+                    "group": "Monitor",
+                    "pages": [
+                      "guide/conduktor-in-production/monitor/index"      
+                    ]
+                  }, 
+                  {
+                    "group": "Manage licenses",
+                    "pages": [
+                      "guide/conduktor-in-production/manage-licenses/index"      
+                    ]
+                  }, 
+                  {
+                    "group": "Automate",
+                    "pages": [
+                      "guide/conduktor-in-production/automate/index",
+                      "guide/conduktor-in-production/automate/api-automation",
+                      "guide/conduktor-in-production/automate/cli-automation",
+                      "guide/conduktor-in-production/automate/terraform-automation"                                                  
+                    ]
+                  },   
+                  {
+                    "group": "Manage licenses",
+                    "pages": [
+                      "guide/conduktor-in-production/manage-licenses/index"      
+                    ]
+                  }                                                     
                 ]
               }
             ]

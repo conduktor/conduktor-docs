@@ -10,14 +10,13 @@ Conduktor Console can be configured using either a configuration file `platform-
 - User authentication (Basic or SSO)
 - Console license
 
-:::info[Recommendation]
+<Note>
 We recommend using the Console UI (**Settings** > **Clusters** page) to configure Kafka cluster, schema registry and Kafka connect. This has several advantages over the YAML configuration:
 
 - Intuitive interface with live update capabilities
 - Centralized and secured with RBAC and audit logs events
 - Certificate store to help with custom certificates configuration (no more JKS files and volume mounts)
-
-:::
+</Note>
 
 [Check out the recommended deployment on GitHub](https://github.com/conduktor/conduktor-reference-architecture).
 
@@ -878,9 +877,9 @@ When an environment variable ending with `_FILE` is set to a file path, its corr
 
 For example, if you set `CDK_LICENSE_FILE=/run/secrets/license`, the value of `CDK_LICENSE` will be overridden by the content of the file located at `/run/secrets/license`.
 
-:::warning[Exception]
+<Warning>
 The `CDK_IN_CONF_FILE` is not supported.
-:::
+</Warning>
 
 ### Global properties
 
@@ -948,24 +947,24 @@ First, we need to configure Console to connect to Cortex services. By default, C
 | `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
 | `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
-:::info
+<Info>
 `monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
 Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
 
-```
+```md
 CDK_MONITORING_USEAGGREGATEDMETRICS: true
 CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 ```
-:::
+</Info>
 
 #### Monitoring configuration for Cortex
 
-[See Cortex configuration for details](/platform/get-started/configuration/cortex/).
+[See Cortex configuration for details](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex/).
 
 ### SSO properties
 
-[See authentication guide for snippets](/platform/category/configure-sso/).
+[See authentication guide for snippets](/guide/admin/configure-sso/).
 
 | Property                         | Description                                                              | Environment variable                 | Mandatory | Type    | Default |
 |----------------------------------|--------------------------------------------------------------------------|--------------------------------------|-----------|---------|---------|
@@ -1019,9 +1018,9 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 
 ### Kafka cluster properties
 
-:::warning
+<Warning>
 The new recommended way to configure clusters is through the CLI and YAML manifests. [Check KafkaCluster documentation for details](/platform/reference/resource-reference/console/#kafkacluster).
-:::
+</Warning>
 
 For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster configurations](/platform/get-started/configuration/configuration-snippets/#gitops-managing-cluster-configurations).
 
@@ -1248,9 +1247,9 @@ Configuration properties are:
 - `platform.https.cert.path` or environment variable `CDK_PLATFORM_HTTPS_CERT_PATH`: the path to server certificate file
 - `platform.https.key.path` or environment variable `CDK_PLATFORM_HTTPS_KEY_PATH`: the path to server private key file  
 
-:::note[Enable read access]
+<Note>
 Both the certificate and private key files have to allow read from user `conduktor-platform` (UID 10001 GID 0) but don't need to be readable system-wide.
-:::
+</Note>
 
 #### Sample configuration using docker-compose
 

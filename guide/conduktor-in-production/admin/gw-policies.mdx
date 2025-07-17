@@ -1,12 +1,10 @@
 ---
-sidebar_position: 150
 title: Create Gateway policies
-description: Create Conduktor Gateway policies
 ---
 
 ## Validate producer data quality
 
-Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a data quality producer policy that uses a SQL-like language to assert data quality before it's being produced, based on a simple SQL statement.
+Conduktor Gateway offers a data quality producer policy that uses a SQL-like language to assert data quality before it's being produced, based on a simple SQL statement.
 
 Records in the topic from the FROM clause have to match the WHERE clause for the statement in order to be considered valid. This is particularly useful if your data is plain JSON with no schema but it can also be applied to AVRO, Protobuf data.
 
@@ -51,7 +49,7 @@ In the statement, the list of selected fields is actually ignored - the importan
 
 `SELECT [ignored!] FROM [topic name] WHERE [field filter criteria]`
 
-Only one topic can be specified in the FROM clause (joins will be ignored), and the topic name is matched explicitly (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The <GlossaryTerm>Interceptor</GlossaryTerm> currently supports values in JSON, AVRO and Protobuf formats.
+Only one topic can be specified in the FROM clause (joins will be ignored), and the topic name is matched explicitly (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The Interceptor currently supports values in JSON, AVRO and Protobuf formats.
 
 **Please Note**: Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
 
@@ -183,7 +181,7 @@ Finally, while correct structure can be enforced in a Kafka ecosystem at a clien
 
 #### Enforce centralized policies
 
-The schema validation <GlossaryTerm>Interceptor</GlossaryTerm> provides functionality that can be configured once in your Kafka system on the source for data (a topic), to ensure that:
+The schema validation Interceptor provides functionality that can be configured once in your Kafka system on the source for data (a topic), to ensure that:
 
 - All records produced to Kafka have a schema set
 - The record contents adhere to that schema
