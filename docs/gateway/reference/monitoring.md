@@ -52,9 +52,12 @@ curl -s  http://localhost:8888/health/ready
 # READY
 ```
 
-Could be used to set up probes on Docker or Kubernetes.
+Could be used to set up probes on docker-compose or Kubernetes.
 
 ### docker-compose probe setup
+
+**NOTE:**
+The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
 
 ```yaml
 healthcheck:
@@ -66,6 +69,7 @@ healthcheck:
   interval: 5s
   retries: 25
 ```
+
 
 ### Kubernetes startup probe
 
