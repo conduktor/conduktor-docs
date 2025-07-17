@@ -11,6 +11,17 @@
   "navigation": {
     "tabs": [
       {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Conduktor guide",
+            "pages": [
+              "guide/get-started"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Concepts",
         "groups": [
           {
@@ -38,7 +49,7 @@
           {
             "group": "Conduktor reference",
             "pages": [
-              "quickstart2"
+              "guide/reference"
             ]
           }
         ]
@@ -49,7 +60,7 @@
           {
             "group": "Changelog",
             "pages": [
-              "changelog/changelog"
+              "src/pages/changelog"
             ]
           }
         ]
