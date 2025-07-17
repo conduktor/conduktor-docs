@@ -1,22 +1,44 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
-  "name": "Conduktor docs",
+  "theme": "mint",
+  "name": "Conduktor Documentation",
   "colors": {
     "primary": "#09343C",
-    "light": "#09343C",
-    "dark": "#09343C"
+    "light": "#BCFE68",
+    "dark": "#15803D"
   },
-  "favicon": "static/img/favicon.ico",
+  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
+        "tab": "Home",
+        "pages": ["index"]
+      },
+      {
         "tab": "Guide",
+
         "groups": [
           {
-            "group": "Conduktor guide",
+            "group": "Conduktor",
+            "pages": ["guide/index", "guide/get-started"]
+          },
+          {
+            "group": "Conduktor in production",
             "pages": [
-              "guide/get-started"
+              "guide/conduktor-in-production/index",
+              "guide/conduktor-in-production/requirements",
+              {
+                "group": "Deploy Conduktor artifacts",
+                "pages": [
+                  "guide/conduktor-in-production/deploy-artifacts/index",
+                  {
+                    "group": "Deploy Gateway",
+                    "pages": [
+                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index"
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ]
@@ -25,19 +47,16 @@
         "tab": "Concepts",
         "groups": [
           {
-            "group": "Conduktor concepts",
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
             "pages": [
-              "guide/conduktor-concepts/index",
-              "guide/conduktor-concepts/chargeback",
-              "guide/conduktor-concepts/gw-authen-author",
-              "guide/conduktor-concepts/gw-service-accounts",
-              "guide/conduktor-concepts/indexing",
-              "guide/conduktor-concepts/interceptors",
-              "guide/conduktor-concepts/logical-topics",
-              "guide/conduktor-concepts/partner-zones",
-              "guide/conduktor-concepts/self-service",
-              "guide/conduktor-concepts/traffic-control-policies",
-              "guide/conduktor-concepts/virtual-clusters"              
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
@@ -46,9 +65,16 @@
         "tab": "Tutorials",
         "groups": [
           {
-            "group": "Conduktor tutorials",
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
             "pages": [
-              "guide/tutorials/index"
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
@@ -57,9 +83,34 @@
         "tab": "Reference",
         "groups": [
           {
-            "group": "Conduktor reference",
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
             "pages": [
-              "guide/reference/index"
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
@@ -68,9 +119,16 @@
         "tab": "Release notes",
         "groups": [
           {
-            "group": "Changelog",
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
             "pages": [
-              "src/pages/changelog"
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
@@ -79,41 +137,57 @@
         "tab": "Support",
         "groups": [
           {
-            "group": "Support",
+            "group": "API Documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoint Examples",
             "pages": [
-              "guide/support/index",
-              "guide/support/upgrade"              
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           }
         ]
       }
-    ]
-  },
-  "global": {
-    "anchors": [
-      {
-        "anchor": "Kafkademy",
-        "href": "https://learn.conduktor.io/kafka",
-        "icon": "book-open-cover"
-      }
-    ]
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Community",
+          "href": "https://conduktor.io/slack",
+          "icon": "slack"
+        },
+        {
+          "anchor": "Kafkademy",
+          "href": "https://learn.conduktor.io/kafka/",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://conduktor.io/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [],
     "primary": {
       "type": "button",
       "label": "Get started",
-      "href": "https://www.conduktor.io/get-started"
+      "href": "https://conduktor.io/get-started"
     }
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/conduktor",
-      "slack": "https://www.conduktor.io/slack"
+      "linkedin": "https://www.linkedin.com/company/conduktor",
+      "github": "https://github.com/conduktor/",
+      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
     }
   }
 }
