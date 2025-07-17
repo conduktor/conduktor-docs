@@ -5,13 +5,6 @@
   - [Structure](#structure)
   - [Images](#images)
   - [Links](#links)
-  - [Tabs](#tabs)
-  - [Dropdowns](#dropdowns)
-  - [Labels](#labels)
-  - [Glossary](#glossary)
-  - [Re-use of content](#re-use-of-content)
-    - [Preview functionality](#preview-functionality)
-    - [Product availability](#available-in-product-name)
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
@@ -32,6 +25,7 @@ yarn
 yarn build
 yarn start
 ```
+
 ## Best practice guidelines
 
 [Check out Conduktor terminology, writing and ToV guidelines](https://conduktor.slite.com/api/s/APsVcreNLD8oT9/Technical-content).
@@ -61,10 +55,10 @@ When adding a tutorial (step-by-step guide), use this layout:
 
 ### Images
 
-All images are stored in `src/static/guide`. Embed all images like this:
+All images are stored in `/images`. Embed all images like this:
 
 ```md
-![Internal load balancing diagram](/guide/internal-lb.png)
+![Internal load balancing diagram](/images/internal-lb.png)
 ```
 
 Note that all images will have a defined styling applied but you can override this when required.
@@ -73,23 +67,23 @@ To resize an image:
 
 ```md
 Make it smaller
-<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
+<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
 
 Make it larger
-<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
+<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
 
 Set a specific pixel width
-<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
+<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
 
 Make it full width:
-<img src="/guide/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
+<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
 ```
 
 You can also make an image clickable (and open in another tab) - useful for detailed diagrams:
 
 ```md
-<a href="/guide/internal-lb.png" target="_blank" rel="noopener">
-  <img src="/guide/internal-lb.png" alt="Internal load balancing diagram" />
+<a href="/images/internal-lb.png" target="_blank" rel="noopener">
+  <img src="/images/internal-lb.png" alt="Internal load balancing diagram" />
 </a>
 ```
 
@@ -98,121 +92,6 @@ You can also make an image clickable (and open in another tab) - useful for deta
 Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hardware/*.
 
 You can also link to a specific section on a page, e.g. */guide/get-started/hardware/#hardware-requirements*.
-
-### Tabs
-
-Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
-
-To add tabs, add the following:
-
-````md
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-<TabItem value="First Tab" label="First Tab">
-
-My first tab content:
-
-```yaml title="first-tab.yaml"
-myFirstTab: "content"
-```
-
-</TabItem>
-<TabItem value="Second Tab" label="Second Tab">
-
-My second tab content:
-
-```yaml title="second-tab.yaml"
-mySecondTab: "content"
-```
-</TabItem>
-</Tabs>
-````
-
-### Dropdowns
-
-Use these collapsible dropdowns for troubleshooting sections or other Q&A type content.
-
-<details>
-  <summary>Question?</summary>
-  <d>Answer has to be in the same block of text due to HTML limitations in Markdown.</p>
-</details>
-
-#### Make code copyable
-
-import CopyableCode from '@site/src/components/CopyableCode';
-
-<details>
-  <summary>How do I handle headers with dashes?</summary>
-  <p>
-  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
-  </p>
-</details>
-
-### Labels
-
-Use labels to visualize available options, [like these resources](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
-
-To add labels:
-
-```md
-import Label from '@site/src/components/Labels';
-
-This resource can be managed using <Label type="UI" />, <Label type="CLI" /> and <Label type="API" />.
-```
-
-To see all the available labels, go to `/src/components/Labels.js`.
-
-### Glossary
-
-#### Add a tooltip
-
-When first introducing Conduktor terminology (e.g. Chargeback), make that word into a glossary term (will display a tooltip when hovered over and formatted) like this:
-
-```md
-Use <GlossaryTerm>Chargeback</GlossaryTerm> to visualize your Kafka costs.
-```
-
-#### Add new terms to glossary
-
-If the term isn't defined, you can add it to **src/data/glossary.js**.
-
-❗️ Check that the term doesn't exist first. Duplicate entries will break the build. Add the **singular version of the word**:
-
-```md
-  {
-    term: "New term",
-    tooltip: "This is the concise text that will appear as a tooltip. Limit to max of two sentences and avoid formatting.",
-    definition: "This is the full definition of the term. Feel free to format with links etc.",
-    slug: "new-term"
-  },
-```
-
-Note that glossary should pick up all the spelling variations (like capitalization).
-
-### Re-use of content
-
-#### Preview functionality
-
-To add:
-
-```md
-import AlertPreview from '@site/src/components/shared/alert-preview.md';
-
-<AlertPreview />
-```
-
-#### Available in {product name}
-
-To add:
-
-```md
-
-import ProductTrust from '@site/src/components/shared/product-trust.md';
-
-<ProductTrust />
-```
 
 ## Update release notes
 
