@@ -27,7 +27,17 @@
           {
             "group": "Conduktor concepts",
             "pages": [
-              "guide/conduktor-concepts/index"
+              "guide/conduktor-concepts/index",
+              "guide/conduktor-concepts/chargeback",
+              "guide/conduktor-concepts/gw-authen-author",
+              "guide/conduktor-concepts/gw-service-accounts",
+              "guide/conduktor-concepts/indexing",
+              "guide/conduktor-concepts/interceptors",
+              "guide/conduktor-concepts/logical-topics",
+              "guide/conduktor-concepts/partner-zones",
+              "guide/conduktor-concepts/self-service",
+              "guide/conduktor-concepts/traffic-control-policies",
+              "guide/conduktor-concepts/virtual-clusters"              
             ]
           }
         ]
