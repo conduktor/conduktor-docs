@@ -18,22 +18,7 @@ Returns a status HTTP 200 when Console is up.
 curl -s  http://localhost:8080/api/health/live
 ```
 
-Could be used to set up probes on Kubernetes or docker-compose.
-
-#### docker-compose probe setup
-
-```yaml
-healthcheck:
-  test:
-    [
-      'CMD-SHELL',
-      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/live',
-    ]
-  interval: 10s
-  start_period: 120s # Leave time for the psql init scripts to run
-  timeout: 5s
-  retries: 3
-```
+Could be used to set up probes on Kubernetes.
 
 #### Kubernetes liveness probe
 
@@ -69,6 +54,26 @@ This endpoint returns a 200 status code if Console is in a `READY` state. Otherw
 ```shell title="cURL example"
 curl -s  http://localhost:8080/api/health/ready
 # READY
+```
+
+Could be used to set up probe or docker-compose or Kubernetes.
+
+#### docker-compose probe setup
+
+**NOTE:**
+The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
+
+```yaml
+healthcheck:
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/ready',
+    ]
+  interval: 10s
+  start_period: 120s # Leave time for the psql init scripts to run
+  timeout: 5s
+  retries: 3
 ```
 
 #### Kubernetes startup probe
