@@ -78,7 +78,7 @@ When a client connects to one of the Gateway nodes to request metadata, the foll
 
 For example, you have a Gateway cluster composed of two Gateway nodes, connected to a Kafka cluster with three brokers. The client's metadata discovery process might look like this:
 
-![Internal load balancing](/guide/internal-lb.png)
+![Internal load balancing](/images/internal-lb.png)
 
 This mapping will be made again for every client asking for metadata, and will be made again as soon as a Gateway node is added or removed from the Gateway cluster.
 
@@ -88,7 +88,7 @@ If you have specified a `GATEWAY_RACK_ID`, then the mapping will take this into 
 
 Here's the same example but with multiple clients:
 
-![Internal Load Balancing Multiple Clients](/guide/multiple-clients.png)
+![Internal Load Balancing Multiple Clients](/images/multiple-clients.png)
 
 The process is repeated but will likely result in a different mapping compared to that of Client 1 due to the random assignment performed by Gateway for the client.
 
@@ -108,7 +108,7 @@ Here's an example where:
 1. The load balancer forwards each request to one of the Gateway nodes, regardless of the port.
 1. The selected Gateway node, which knows which broker is the leader of each partition, forwards the request to the appropriate Kafka broker.
 
-![External Load Balancing](/guide/external-lb.png)
+![External Load Balancing](/images/external-lb.png)
 
 :::warning
 When using an external load balancer, you **must** configure the `GATEWAY_ADVERTISED_LISTENER` of the Gateway nodes to the Load Balancer's hostname. If this isn't done, applications will attempt to connect directly to Gateway, bypassing the Load Balancer.
@@ -120,7 +120,7 @@ This requires you to handle load balancing manually, as you won't have the advan
 
 ## 3. Connect Gateway to Kafka
 
-![Gateway to Kafka security](/guide/gateway-to-kafka-security.png)
+![Gateway to Kafka security](/images/gateway-to-kafka-security.png)
 
 Gateway depends on a 'backing' Kafka cluster for its operation.
 
@@ -337,7 +337,7 @@ First, configure `GATEWAY_ACL_STORE_ENABLED=true` and then you can use **AdminCl
 
 ## 4. Configure Gateway to accept client connections
 
-![Client to Gateway security](/guide/client-to-gateway-security.png)
+![Client to Gateway security](/images/client-to-gateway-security.png)
 
 Gateway brokers support multiple security schemes for Kafka clients to connect with. Each section has specific details of the available options, how they work and how to configure them. Pick the most suitable option based on the nature of your system's requirements, design and constraints.
 
@@ -767,7 +767,7 @@ A Virtual Cluster in Conduktor Gateway is a logical representation of a Kafka cl
 
 This allows you to create multiple virtual clusters while maintaining a single physical Kafka cluster, enabling the simulation of multiple Kafka environments on a single physical infrastructure.
 
-![image.png](/guide/vclusters.png)
+![virtual clusters](/images/vclusters.png)
 
 :::info[Optional feature]
 Virtual Clusters are entirely optional. If you choose to not configure any, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This is the default mode and all topics/resources will be visible and accessible as usual, without any additional configuration.  

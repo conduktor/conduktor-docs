@@ -246,19 +246,19 @@ If the response indicates the certificate is not issued by a valid authority, yo
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
 - **Upload Certificate**: This option will enable you to upload the certificate (`.crt`, `.pem`, `.jks` or `.p12` files), or paste the certificate as text
 
-import ClusterCertificate from '/guide/cluster-certificate.png';
+import ClusterCertificate from '/images/cluster-certificate.png';
 
 <img src={ClusterCertificate} alt="Cluster Certificate" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
 
-![](/guide/cluster-connection-secure.png)
+![](/images/cluster-connection-secure.png)
 
 #### Add truststores
 
 You can also manage organization truststores using the **Settings** > **Certificates** page. Simply add all of your certificates by uploading them or pasting them as text. In doing this, the SSL context will be derived when you configure Kafka, Kafka Connect and Schema Registry connections.
 
-![](/guide/certificates.png)
+![](/images/certificates.png)
 
 #### Mount custom truststore
 
@@ -337,16 +337,16 @@ This mechanism uses TLS protocol to authenticate the client. Also known as:
 Use the keystore file from your Kafka admin or provider (in **.jks** or **.p12** format).
 
 Click the "Import from keystore" button to select a keystore file from your filesystem.
-![](/guide/cluster-keystore.png)
+![](/images/cluster-keystore.png)
 
 Fill in the required keystore password and key password and click "Import".
 
-import ImportFromKeystore from '/guide/import-from-keystore.png';
+import ImportFromKeystore from '/images/import-from-keystore.png';
 
 <img src={ImportFromKeystore} alt="Import from keystore" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
-![](/guide/cluster-keystore-imported.png)
+![](/images/cluster-keystore-imported.png)
 
 #### Use the UI (Access key & Access certificate method)
 
@@ -356,7 +356,7 @@ Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
 - An Access certificate (`.pem` or `.crt` file)
 
 Here's an example with Aiven:
-![](/guide/aiven-certificates.png)
+![](/images/aiven-certificates.png)
 
 You can paste the contents of the two files into Conduktor or [import from keystore](#use-the-ui-keystore-method).
 
@@ -378,7 +378,7 @@ services:
 ```
 
 Then from the UI, choose the SSL Authentication method **Keystore file is mounted on the volume** and fill in the required fields
-![](/guide/keystore-from-volume.png)
+![](/images/keystore-from-volume.png)
 
 ## Configure Postgres database
 

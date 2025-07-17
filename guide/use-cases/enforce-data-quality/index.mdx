@@ -225,7 +225,7 @@ To apply this permission to a group, go to **Settings** > **Groups** and in the 
 Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
 :::
 
-![The 'manage data quality' permission](/guide/topic-dq-manage-permission.png)
+![The 'manage data quality' permission](/images/topic-dq-manage-permission.png)
 
 ### Set up Policy violation alerts
 
@@ -238,13 +238,13 @@ To create a data quality policy alert via the UI, go to the details page of a Po
 
 A data quality policy alert needs to specify a Policy and a threshold: trigger after X violations within Y minutes/hours/days. This threshold replaces the combination of metric, operator and value used in other alerts.
 
-[Find out more about alerts](/guide/monitor-brokers-apps/alerts).
+[Find out more about alerts](/images/monitor-brokers-apps/alerts).
 
 </TabItem>
 
 <TabItem value="cli" label="Conduktor CLI">
 
-You can use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a data quality policy alert:
+You can use the [Conduktor CLI](/images/conduktor-in-production/automate/cli-automation) to create a data quality policy alert:
 
 1. Save this example to file, e.g. `alert.yaml`:
 

@@ -28,7 +28,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
 :::
 
-![Topics](/guide/topic-list.png)
+![Topics](/images/topic-list.png)
 
 ## Operations
 
@@ -44,7 +44,7 @@ The default choices made by Console are generally safe for most typical Kafka Pr
 [Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
 :::
 
-import CreateTopic from '/guide/topic-create.png';
+import CreateTopic from '/images/topic-create.png';
 
 <img src={CreateTopic} alt="Create a topic" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -80,7 +80,7 @@ Upon toggling the Advanced configuration, you will be shown all the available to
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 :::
 
-import CreateTopicAdvanced from '/guide/topic-create-advanced.png';
+import CreateTopicAdvanced from '/images/topic-create-advanced.png';
 
 <img src={CreateTopicAdvanced} alt="Topic advanced properties" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -92,7 +92,7 @@ Increase the number of partitions for your topic. Number of partitions cannot be
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 :::
 
-import AddPartitions from '/guide/topic-add-partitions.png';
+import AddPartitions from '/images/topic-add-partitions.png';
 
 <img src={AddPartitions} alt="Add partitions" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -102,7 +102,7 @@ This lets you delete all records from a topic. This operation is permanent and i
 
 If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
 
-import EmptyTopic from '/guide/topic-empty.png';
+import EmptyTopic from '/images/topic-empty.png';
 
 <img src={EmptyTopic} alt="Empty a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -110,7 +110,7 @@ import EmptyTopic from '/guide/topic-empty.png';
 
 This lets you delete the topic from Kafka. This operation is permanent and irreversible.
 
-import DeleteTopic from '/guide/topic-delete.png';
+import DeleteTopic from '/images/topic-delete.png';
 
 <img src={DeleteTopic} alt="Delete a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -120,13 +120,13 @@ You can help categorize your Topics further using key-value pairs called labels.
 
 To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
 
-import EditLabel from '/guide/label-edit.png';
+import EditLabel from '/images/label-edit.png';
 
 <img src={EditLabel} alt="Edit labels" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
 A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
 
-import LabelNew from '/guide/label-new.png';
+import LabelNew from '/images/label-new.png';
 
 <img src={LabelNew} alt="Add new labels" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -145,28 +145,28 @@ It is already configured with [sensible defaults](#sensible-defaults) that you c
 
 Each section from the accordion menu will allow you to configure the Kafka producer further: Key, Value, Headers, Flow and Additional options.
 
-![Produce accordion](/guide/produce-accordion.png)
+![Produce accordion](/images/produce-accordion.png)
 
 ### Key and value
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
-import ProduceSerializers from '/guide/produce-serializers.png';
+import ProduceSerializers from '/images/produce-serializers.png';
 
 <img src={ProduceSerializers} alt="Produce serializers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
-The default serializer is **String**, unless you have a matching subject name in your Schema Registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
+The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
 :::warning
-If using a Schema Registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
+If using a schema registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
 :::
 
 #### Random data generator
 
 The "Generate once" button will generate a message that conforms to the picked Serializer.
 
-This works with Schema Registry serializers as well:
-![Produce random data](/guide/produce-random-data-gen.png)
+This works with schema registry serializers as well:
+![Produce random data](/images/produce-random-data-gen.png)
 
 ### Headers
 
@@ -174,7 +174,7 @@ The Headers section lets you add headers to your message.
 
 Header Key and Header Value both expect valid UTF8 String.
 
-import ProduceHeaders from '/guide/produce-headers.png';
+import ProduceHeaders from '/images/produce-headers.png';
 
 <img src={ProduceHeaders} alt="Produce headers" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -225,7 +225,7 @@ The next screenshot is an example of a produce flow, that will generate:
 - A batch of 10 records, every second for a minute
 - With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
-import ProduceFlowMode from '/guide/produce-flow-mode.png';
+import ProduceFlowMode from '/images/produce-flow-mode.png';
 
 <img src={ProduceFlowMode} alt="Produce flow mode" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -268,11 +268,11 @@ The following items are preconfigured by default:
 
 Kafka records produced through this screen will be available from the Produced message panel, which acts similarly as the Consume page, allowing you to review your produced record and check the Key, Value, Headers and Metadata
 
-![Produced messages](/guide/produce-messages-panel.png)
+![Produced messages](/images/produce-messages-panel.png)
 
 By clicking on one of the records that you just produced, you can see its content and metadata.
 
-import ProduceMessagesPanelSingle from '/guide/produce-messages-panel-single.png';
+import ProduceMessagesPanelSingle from '/images/produce-messages-panel-single.png';
 
 <img src={ProduceMessagesPanelSingle} alt="Produce messages panel single" style={{ width: 700, display: 'block', margin: 'auto' }} />
 
@@ -280,13 +280,13 @@ import ProduceMessagesPanelSingle from '/guide/produce-messages-panel-single.png
 
 ### Import CSV
 
-![Import as CSV button](/guide/produce-import-csv-button.png)
+![Import as CSV button](/images/produce-import-csv-button.png)
 
 This feature lets you produce a batch of Kafka Records based on a CSV file.
 
 The 3 required inputs are the Key and Value Serializer, and the input file itself.
 
-import ImportCSV from '/guide/produce-import-csv.png';
+import ImportCSV from '/images/produce-import-csv.png';
 
 <img src={ImportCSV} alt="Import CSV" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -323,7 +323,7 @@ While in progress, you'll see a loading state.
 
 Once the import is finished, you'll get a summary message.
 
-import ImportCSVSuccess from '/guide/produce-import-csv-success.png';
+import ImportCSVSuccess from '/images/produce-import-csv-success.png';
 
 <img src={ImportCSVSuccess} alt="Import CSV Success" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
@@ -333,7 +333,7 @@ If you are regularly using the same set of Producer configuration, you can save 
 
 At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
 
-import ProduceTemplates from '/guide/produce-templates.png';
+import ProduceTemplates from '/images/produce-templates.png';
 
 <img src={ProduceTemplates} alt="Produce templates" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -351,13 +351,13 @@ The **Per partition** view presents the data available for each partition:
 - Begin and End Offsets
 - Broker Ids of the Partition Leader (green) and Followers (grey)
 
-![Per partition](/guide/per-partition.png)
+![Per partition](/images/per-partition.png)
 
 The **Per broker** view pivots the data to show for each broker:  
 - Partitions where the broker is Leader
 - Partitions where the broker is Follower
 
-![Per broker](/guide/per-broker.png)
+![Per broker](/images/per-broker.png)
 
 ### Empty Partition
 On the Per partition view, you can click on the bin icon to remove the Kafka records from this specific partition.
@@ -374,18 +374,18 @@ If you need to find related resources, your can use one of the following tabs to
 
 The Topic Consumer Groups tab displays the consumer groups associated to the current Topic.
 
-![Capture](/guide/topic-consumers.png)
+![Capture](/images/topic-consumers.png)
 
 ### Linked Schema Registry Subjects
 
 The Schema tab displays the Key subject and Value subject associated to your topic, assuming your have defined them using [TopicNameStrategy](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/index.html#how-the-naming-strategies-work).
 
-![Capture](/guide/topic-subjects.png)
+![Capture](/images/topic-subjects.png)
 
 ### Linked ACLs
 
 The ACL tab displays the list of Kafka permissions associated to the current Topic.
-![Capture](/guide/topic-acls.png)
+![Capture](/images/topic-acls.png)
 
 :::warning 
 Only the permissions from the default Kafka authorizer implementation, AclAuthorizer available using AdminClient are listed currently.  
@@ -402,18 +402,18 @@ When you browse any Topic Details page, you will see the associated Graphs assoc
 
 Graphs can be visualized over 24h, 7 days or 30 days periods.
 
-![Topic Graphs](/guide/topic-graphs.png)
+![Topic Graphs](/images/topic-graphs.png)
 
 On each metric you have the option to create an Alert. This will open a side panel requesting you to set the parameters to triggers your Alert.
 
-![Create a Topic alert](/guide/topic-create-alert.png)
+![Create a Topic alert](/images/topic-create-alert.png)
 
 ## Alerts tab
 
 The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.
 
-![List Topic alerts](/guide/alerts-tab.png)
+![List Topic alerts](/images/alerts-tab.png)
 
 
 ## Topic consume
@@ -431,7 +431,7 @@ When you access a Topic from the Topic List page for the first time, a consumer 
 -   Partitions: `All`
 
 This default setup lets you quickly browse through the 500 most recent messages produced in the topic.
-![Default topic consumer](/guide/topic-default.png)
+![Default topic consumer](/images/topic-default.png)
 
 There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
 
@@ -439,7 +439,7 @@ There's a good chance this will not correspond to your requirements, so let's ex
 
 `Show From` defines the starting point for the Kafka Consumer in your topic.
 
-import ShowFromOptions from '/guide/topic-show-from-choices.png';
+import ShowFromOptions from '/images/topic-show-from-choices.png';
 
 <img src={ShowFromOptions} alt="Show from options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -464,7 +464,7 @@ The possible values are as follow:
 
 `Limit` defines when your consumer must stop.
 
-import LimitOptions from '/guide/topic-limit-choices.png';
+import LimitOptions from '/images/topic-limit-choices.png';
 
 <img src={LimitOptions} alt="Limit options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -482,7 +482,7 @@ Possible choices are:
 
 `Partitions` lets you restrict the consumer to only consume from certain partitions of your topic. By default, records from **all partitions** are consumed.
 
-import PartitionsOptions from '/guide/topic-partitions-choices.png';
+import PartitionsOptions from '/images/topic-partitions-choices.png';
 
 <img src={PartitionsOptions} alt="Partitions options" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -490,7 +490,7 @@ import PartitionsOptions from '/guide/topic-partitions-choices.png';
 
 `Key format` and `Value format` lets you force the deserializer for your topic.
 
-import TopicKeyFormatOptions from '/guide/topic-key-format-choices.png';
+import TopicKeyFormatOptions from '/images/topic-key-format-choices.png';
 
 <img src={TopicKeyFormatOptions} alt="Key format choices" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -510,13 +510,13 @@ Automatic deserializer applies to all the records within a topic, based on the o
 If you have installed them, your Custom Deserializers will appear here. Optionally, configure them using the `Properties` text and your messages will show as expected.  
 
 Check our guide on how to [Install and configure custom deserializers](/platform/guide/custom-deserializers/) in Console.
-![Consume with a custom deserializer](/guide/topic-custom-deserializer.png)
+![Consume with a custom deserializer](/images/topic-custom-deserializer.png)
 
 #### JSON deserializer
 
 JSON Deserializer will explicitly fail on records that doesn't match a JSON type.
 
-![Consume with JSON deserializer](/guide/topic-json-deser-fail.png)
+![Consume with JSON deserializer](/images/topic-json-deser-fail.png)
 
 #### Bytes deserializer
 
@@ -540,7 +540,7 @@ will be represented like this:
 \x00\x00\x00\x00\x07\x10I'm AVRO
 ```
 
-![Deserializer with bytes](/guide/topic-bytes-deserializer.png)
+![Deserializer with bytes](/images/topic-bytes-deserializer.png)
 
 ## Filter records
 
@@ -559,12 +559,12 @@ Internally, this will treat the record Key or Value as text to apply the operati
 This might not be the preferred approach if your record is JSON-ish
 :::
 
-![Global search](/guide/topic-global-filter.png)
+![Global search](/images/topic-global-filter.png)
 
 ### Search in a specific field
 
 You can make your search more fine-grained by activating "Search in a specific field".
-![Search in a specific field](/guide/topic-search-infield.png)
+![Search in a specific field](/images/topic-search-infield.png)
 
 :::info
 Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
@@ -590,7 +590,7 @@ This little window present the necessary information to let you decide wether it
 
 Here's how to read it:
 
-![Statistics](/guide/topic-stats-info.png)
+![Statistics](/images/topic-stats-info.png)
 
 ## Browse records
 
@@ -612,13 +612,13 @@ Use the arrow keys to navigate between messages: ⬆️ ⬇️
 
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
 
-import RecordDetails from '/guide/topic-browse.png';
+import RecordDetails from '/images/topic-browse.png';
 
 <img src={RecordDetails} alt="Record details" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
 The **Share** button will lead you to a page dedicated to this record, allowing you to share it with your colleagues, and to get more details about it.
 
-import ShareRecord from '/guide/record-details.png';
+import ShareRecord from '/images/record-details.png';
 
 <img src={ShareRecord} alt="Share a record" style={{ width: 700, display: 'block', margin: 'auto' }} />
 
@@ -628,7 +628,7 @@ The Data tab lets you visualize your record's Key and Value.
 
 If your record Value is serialized with JSON or using a Schema Registry it is presented by default using the Table view. You can also switch to the JSON view if necessary.
 
-import DataTabs from '/guide/topic-browse-json-table.png';
+import DataTabs from '/images/topic-browse-json-table.png';
 
 <img src={DataTabs} alt="Data tabs" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -661,7 +661,7 @@ The basic syntax lets you focus on sub-elements of your record, as shown in the 
 { id, meta } // Renders a new JSON with both elements
 ```
 
-![See JQ filter](/guide/topic-browse-json.png)
+![See JQ filter](/images/topic-browse-json.png)
 
 Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-construction) for more advanced use-cases.
 
@@ -669,9 +669,9 @@ Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-const
 
 The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
 
-![Headers tab](/guide/topic-header-funnel.png)
+![Headers tab](/images/topic-header-funnel.png)
 The resulting filter will be created:
-![Filter on headers](/guide/topic-header-filter.png)
+![Filter on headers](/images/topic-header-filter.png)
 
 :::warning
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
@@ -690,7 +690,7 @@ The metadata tab gives you all the other information regarding your record that 
 - Compression type
 - Schema ID if any
 
-import MetadataTab from '/guide/topic-metadata.png';
+import MetadataTab from '/images/topic-metadata.png';
 
 <img src={MetadataTab} alt="Metadata tab" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -702,10 +702,10 @@ You have the ability to export the records in either JSON or CSV format.
 
 CSV particularly useful in particular because you can use Console to re-import them either in a new topic or in the same topic after having modified them (or not)
 
-![Export records from a topic](/guide/topic-export.png)
+![Export records from a topic](/images/topic-export.png)
 
 The resulting files will look like this:
-![Export results](/guide/topic-export-result.png)
+![Export results](/images/topic-export-result.png)
 
 ### Reprocess record
 
@@ -713,7 +713,7 @@ This feature lets you pick a record from the list and reprocess it either in the
 
 Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjustments before **(3)**.
 
-![Reprocess a record](/guide/topic-reprocess.png)
+![Reprocess a record](/images/topic-reprocess.png)
 
 Know more about [How to reprocess records](/platform/guide/reprocess/).
 
@@ -724,21 +724,21 @@ If you are regularly using the same set of Consume Configuration (Show From, Lim
 **Create a new view**
 
 Click on the Save icon button to save your current view as a template:
-![Save a new view](/guide/save-new-view.png)
+![Save a new view](/images/save-new-view.png)
 
 From there, you can name your view, add a description, and select whether this view is private, or if you want everyone in your organization to be able to see it and use it.
 
-![Fill the view details](/guide/create-shared-view.png)
+![Fill the view details](/images/create-shared-view.png)
 
 **List the existing views**
 
 To list the existing views, click on the folder icon:
 
-![List existing views](/guide/shared-views.png)
+![List existing views](/images/shared-views.png)
 
 From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
 
-import SharedViews from '/guide/list-shared-views.png';
+import SharedViews from '/images/list-shared-views.png';
 
 <img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
@@ -755,7 +755,7 @@ In most cases, it will give you `500 / num_partitions` messages, per partition. 
 
 Edge cases might occur and the algorithm will account for it seamlessly.
 
-import MostRecent500 from '/guide/most-recent-500.png'
+import MostRecent500 from '/images/most-recent-500.png'
 
 <img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -879,7 +879,7 @@ return isHighPrice && moreThanOneItem
 
 The Topic Configuration tab lets you visualize and edit your topic configuration.
 
-![Topic configuration](/guide/topic-config-list.png)
+![Topic configuration](/images/topic-config-list.png)
 
 On top of the table you have different fields to help you:
 
@@ -909,7 +909,7 @@ When clicking on the edit button from the table rows, a new screen will appear w
 - The Kafka default value
 - The current value
 
-import EditTopicConfiguration from '/guide/topic-config-item.png';
+import EditTopicConfiguration from '/images/topic-config-item.png';
 
 <img src={EditTopicConfiguration} alt="Edit Topic configuration" style={{ width: 400, display: 'block', margin: 'auto' }} />
 

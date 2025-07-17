@@ -19,7 +19,7 @@ This feature enables you to troubleshoot, sample, analyze, aggregate and join da
 
 We encourage you to use this feature in non-production environments and give us [feedback](https://conduktor.io/roadmap). For a demo and walkthrough checkout our [dedicated video](https://youtu.be/nHWh5yS2t38).
 
-![Conduktor SQL](/guide/conduktor-sql.png)
+![Conduktor SQL](/images/conduktor-sql.png)
 
 ## Console configuration
 
@@ -71,7 +71,7 @@ When selecting a topic for indexing, you will be asked to configure the:
  -  **Indexed Retention Time**: The furthest point in time from which the data will be indexed. Note that any data before this point in time will be purged periodically.
     - By default, purging happens every 1h, but it's configurable using the environment variable `CDK_KAFKASQL_CLEAN-EXPIRED-RECORD-EVERY-IN-HOUR`
 
-![Conduktor SQL Indexing](/guide/conduktor-sql-index.png)
+![Conduktor SQL Indexing](/images/conduktor-sql-index.png)
 
 **Understanding the state of indexing**
 
@@ -84,7 +84,7 @@ The process gives insight into the:
  - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic
 
 
-![Conduktor SQL Index Status](/guide/conduktor-sql-index-status.png)
+![Conduktor SQL Index Status](/images/conduktor-sql-index-status.png)
 
 
 ### Index Topics in the CLI
@@ -125,7 +125,7 @@ SELECT *
 
 [See database storage format](#database-storage-format) for the underlying table structure.
 
-![Conduktor SQL](/guide/conduktor-sql.png)
+![Conduktor SQL](/images/conduktor-sql.png)
 
 **Using the CLI**  
 

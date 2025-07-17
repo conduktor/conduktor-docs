@@ -16,11 +16,11 @@ Data Masking **does not impact how the underlying data is stored**. The data wil
 
 Policies will be applied when **consuming Kafka messages in the Console**, as shown below. We can see that the phone number, the IBAN, and the card number, have been masked with some *****.
 
-![Example of masked data](/guide/masked-data.png)
+![Example of masked data](/images/masked-data.png)
 
 Here is the list of policies applied in this case.
 
-![List of policies](/guide/data-policies.png)
+![List of policies](/images/data-policies.png)
 
 You can go to the [Create a policy](/platform/navigation/settings/data-masking/create-a-policy/) section in order to know more, and create your own policies.
 
@@ -28,7 +28,7 @@ You can go to the [Create a policy](/platform/navigation/settings/data-masking/c
 
 In order to create a Data Masking policy and protect your data, go to **Settings** > **Data Policies**.
 
-![List of policies](/guide/data-policies.png)
+![List of policies](/images/data-policies.png)
 
 Click **New Policy** and fill in the required details:
 
@@ -43,7 +43,7 @@ Click **New Policy** and fill in the required details:
 | Resources                           | List of resources where the policy must be applied, like clusters or topics. To add new resources, you can click on **Add resource**.                 |
 | Exclude Users or Groups from policy | In case you want some users or groups to see the data, you can exclude them from the policy.                                                          |
 
-import PolicyConfig from '/guide/policy-config.png'
+import PolicyConfig from '/images/policy-config.png'
 
 <img src={PolicyConfig} alt="Policy configuration" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
@@ -56,6 +56,6 @@ Once you have created a policy, you should validate it through the Conduktor Con
 * Navigate to a topic that contains data where your policy should be applied
 * Check that the expected fields are obfuscated using the appropriate masking rule
 
-![Example of masked data](/guide/masked-data.png)
+![Example of masked data](/images/masked-data.png)
 
 We can see that the name and the credit_card are completely hidden, as we defined in the masking rules.

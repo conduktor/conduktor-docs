@@ -8,7 +8,7 @@ description: Configure Kafka clusters with Conduktor
 
 To can add, update, and delete Kafka cluster configurations, go to **Settings** > **Clusters**. By default, only users belonging to the **Admin** group, or having the `Can manage Cluster configurations` permission, will be able to view and manage the clusters.
 
-![Cluster admin](/guide/clusters-list.png)
+![Cluster admin](/images/clusters-list.png)
 
 To create a new cluster configuration, click on the "Create cluster" button in the top right-hand corner.
 
@@ -38,11 +38,11 @@ Via your Confluent cluster dashboard, select the **Clients** tab within **Data i
 
 Select **Java** as the language.
 
-![Confluent client](/guide/confluent-client.png)
+![Confluent client](/images/confluent-client.png)
 
 Create the **Kafka cluster API key**. You also have the option to create the **Schema Registry API Key** if you are using Schema Registry.
 
-![Confluent snippet](/guide/confluent-api-key.png)
+![Confluent snippet](/images/confluent-api-key.png)
 
 **Copy** the configuration to your clipboard.
 
@@ -50,7 +50,7 @@ You can now go back to Conduktor Console to configure your Kafka cluster. You ca
 
 You can test the connection and if successful, you will see a green **Connected** label.
 
-![Confluent configuration in Console](/guide/confluent-config.png)
+![Confluent configuration in Console](/images/confluent-config.png)
 
 Click **Create Configuration** to save your cluster.
 
@@ -63,7 +63,7 @@ When connecting to an Aiven cluster, you have two options.
 To connect to your Aiven cluster using SSL, you need to provide the **Access Key**, **Access Certificate**, and **CA Certificate**.
 You also need the cluster **Bootstrap server**, labelled as **Service URI** within the Aiven console.
 
-![Aiven certificates](/guide/aiven-certs.png)
+![Aiven certificates](/images/aiven-certs.png)
 
 In the Console, after having filled the bootstrap server, you'll have to upload the CA certificate in order to connect to your Aiven cluster.
 
@@ -71,23 +71,23 @@ Then, simply select **SSL** as authentication method, and paste the **Access Key
 
 The configuration should look like this:
 
-![Console config with SSL](/guide/aiven-with-ssl.png)
+![Console config with SSL](/images/aiven-with-ssl.png)
 
 ### Option 2: With SASL_SSL
 
 To connect to your Aiven cluster using SASL_SSL, you need to provide the **Bootstrap server** labelled as **Service URI**, **User**, and **Password**. You can find these in the Aiven console.
 
-![Aiven SASL](/guide/aiven-sasl-ssl.png)
+![Aiven SASL](/images/aiven-sasl-ssl.png)
 
 The configuration in the Console should look like this:
 
-![Console config with SASL_SSL](/guide/aiven-with-sasl-ssl.png)
+![Console config with SASL_SSL](/images/aiven-with-sasl-ssl.png)
 
 ## Connect to a MSK cluster
 
 For connecting to MSK, you first need to create an IAM user.
 
-![MSK IAM user](/guide/msk-iam-user.png)
+![MSK IAM user](/images/msk-iam-user.png)
 
 After that, you have to give it permissions to connect to your MSK cluster.
 
@@ -106,14 +106,14 @@ After that, you have to give it permissions to connect to your MSK cluster.
 
 Finally, generate an access key.
 
-![MSK Access key](/guide/msk-access-key.png)
+![MSK Access key](/images/msk-access-key.png)
 
 In the Console, fill the **Bootstrap server** and select **AWS IAM** as an authentication method.
 You now have two options: Either you inherit the credentials from your environment (with environment variables) or you can fill the **Access Key** and **Secret Key**.
 
 The configuration should look like this in the Console:
 
-![Consol config with IAM](/guide/msk-with-iam.png)
+![Consol config with IAM](/images/msk-with-iam.png)
 
 ## Connect to a Cloudera cluster
 
@@ -123,10 +123,10 @@ These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
 
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
-![cloudera-user-management](/guide/cloudera-user-management.png "cloudera-user-management")
+![cloudera-user-management](/images/cloudera-user-management.png)
 
 1. Download the certificates from Cloudera:
-![getting_certs_from_cloudera](/guide/getting_certs_from_cloudera.png "getting_certs_from_cloudera")
+![getting_certs_from_cloudera](/images/getting_certs_from_cloudera.png)
 
 1. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
 
@@ -140,7 +140,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 1. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step.
 
-![adding cloudera to console](/guide/cloudera-console-setup.png "adding cloudera to console")
+![adding cloudera to console](/images/cloudera-console-setup.png)
 
 [Here's a fully automated turnkey example](https://github.com/conduktor/conduktor-cloudera-quickstart-demo?tab=readme-ov-file#cloudera--conduktor).
 
