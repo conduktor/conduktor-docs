@@ -14,21 +14,7 @@ Returns a status HTTP 200 when Gateway is up.
 curl -s http://localhost:8888/health/live
 ```
 
-Could be used to set up probes on Kubernetes or docker-compose.
-
-### docker-compose probe setup
-
-```yaml
-healthcheck:
-  test:
-    [
-      'CMD-SHELL',
-      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8888}/health/live',
-    ]
-  interval: 10s
-  timeout: 5s
-  retries: 3
-```
+Could be used to set up probes on Kubernetes.
 
 ### Kubernetes liveness probe
 
@@ -64,6 +50,21 @@ This endpoint returns a 200 status code if Gateway is in a `READY` state. Otherw
 ```shell title="cURL example"
 curl -s  http://localhost:8888/health/ready
 # READY
+```
+
+Could be used to set up probes on Docker or Kubernetes.
+
+### docker-compose probe setup
+
+```yaml
+healthcheck:
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8888}/health/ready',
+    ]
+  interval: 5s
+  retries: 25
 ```
 
 ### Kubernetes startup probe
