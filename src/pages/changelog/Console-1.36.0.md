@@ -87,3 +87,7 @@ This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 - Kafka Connect clusters are no longer visible to users who do not have permission on any of their connectors.
 - Error messages are now more informative when attempting to create a service account on a resource for which the caller lacks permission.
 - Resolve case sensitivity issue with email addresses in the application group payload that causes mismatches in RBAC configuration.
+
+## Known Issues
+
+If a resource policy is attached to an application instance, the self-service Application Instance page may display a validation error in the frontend.
