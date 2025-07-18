@@ -36,7 +36,7 @@ export const items = [
   {
     question: 'What schema registries do you support?',
     answer:
-      'Conduktor Console currently supports Confluent Schema Registry, as well as AWS Glue Schema registry. Conduktor Gateway supports Confluent Schema Registry only.',
+      'Conduktor supports Confluent Schema Registry, as well as AWS Glue Schema registry.',
   },
   {
     question: 'Do you have Terraform or CloudFormation?',
@@ -76,12 +76,12 @@ export const items = [
   {
     question:
       'What platforms do the monitoring and alerting capabilities integrate with?',
-    answer: 'Conduktor integrates with Microsoft Teams and Slack for third-party alerting. Conduktor also exposes metrics in <a href="https://docs.conduktor.io/platform/reference/metric-reference/" target="_blank">Prometheus format</a> so that they can be scraped and integrated with an external log management system.',
+    answer: 'Conduktor integrates with Microsoft Teams, Slack and webhooks. Conduktor also exposes metrics in <a href="https://docs.conduktor.io/platform/reference/metric-reference/" target="_blank">Prometheus format</a> so that they can be scraped and integrated with an external log management system.',
   },
   {
     question: 'How are the cluster credentials I enter on the platform stored?',
     answer:
-      'They are secrets that are encrypted to/from the DB (via AES encryption algorithm), of which the key is accessible only via our internal DevOps team.',
+      'They are secrets that are encrypted to/from the DB (via AES encryption algorithm), of which the key is accessible only via your internal DevOps team.',
   },
   {
     question:
@@ -105,6 +105,6 @@ export const items = [
     question:
       'I cannot see the last active date of a user, how can I perform a clean-up?',
     answer:
-      'You can review the last login time of a user from within the Settings > Users view. '
+      'You can review the last login time of a user from within the Settings > Users view, or use the API to get user details.'
   }
 ]

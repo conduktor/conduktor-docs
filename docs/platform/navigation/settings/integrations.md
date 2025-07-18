@@ -20,7 +20,7 @@ Disabling an integration used by existing alerts will not delete the alerts, but
 
 As part of configuring the Slack integration in Conduktor, you will find steps for [creating a Slack application](https://api.slack.com/apps) (a bot) using the app manifest template (provided in Conduktor). This app needs to be installed to your Slack workspace and the OAuth token added to the Conduktor integration.
 
-Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack. 
+Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack.
 
 import SlackIntegration from './assets/slack-invite.png';
 
@@ -116,13 +116,13 @@ import Workflows6 from './assets/workflows-6.png';
 
 <img src={Workflows6} alt="Workflows" style={{ width: 800, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-8.  Head to the integrations settings in Conduktor and turn on the Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
+8. Head to the integrations settings in Conduktor and turn on the Teams integration. You can now [create alerts](/platform/navigation/settings/alerts/#alert-creation) with the destination "Microsoft Teams" and use the URL found in previous steps. You can test your connection by clicking on the test button.
 
 import Workflows7 from './assets/workflows-7.png';
 
 <img src={Workflows7} alt="Workflows" style={{ width: 600, display: 'block', margin: 'auto', marginBottom: '20px' }} />
 
-9.  Fire some alerts and you should now see alert messages being posted in Microsoft teams under the channel you specified
+9. Fire some alerts and you should now see alert messages being posted in Microsoft teams under the channel you specified
 
 import Workflows8 from './assets/workflows-8.png';
 
@@ -137,7 +137,7 @@ Here's an example:
 ```json
 {
   "data": {
-    "metatadata": {
+    "metadata": {
       "name": "high produce rate",
       "appInstance": null,
       "group": "menu-team",

@@ -100,26 +100,27 @@ Check the following table for the list of currently supported and incoming resou
 
 ### Limitations summary
 
-| Resource                     | API/CLI Support | Terraform Support    | Label Support  | 
-|------------------------------|-----------------|----------------------|----------------|
-| **Console Resources**        |                 |                      |                |
-| ConsoleGroup                 | ✅               | ✅                    | 🚫             |
-| ConsoleUser                  | ✅               | ✅                    | 🚫             |
-| KafkaCluster                 | ✅               | ✅                    | ⚠️ (Not in UI) |
-| KafkaConnectCluster          | ✅               | ✅                    | ⚠️ (Not in UI) |
-| KsqlDBCluster                | ✅               | ⚠️(Generic Resource) | 🚫             |
-| Alert                        | ✅               | ⚠️(Generic Resource) | 🚫             |
-| DataMaskingPolicy            | 🚫              | 🚫                   | 🚫             |
-| Certificate                  | 🚫(V1 API only) | 🚫                   | 🚫             |
-| PartnerZone                  | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| **Kafka Resources**          |                 |                      |                |
-| Topic                        | ✅               | ✅                    | ✅              |
-| Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| ServiceAccount               | ✅               |                      | ✅              |
-| **Self-Service Resources**   |                 |                      |                |
-| Application                  | ✅               | ✅                    | 🚫             |
-| ApplicationInstance          | ✅               | ✅                    | 🚫             |
-| ApplicationInstancePermission | ✅               | ⚠️(Generic Resource) | 🚫             |
-| ApplicationGroup             | ✅               | ⚠️(Generic Resource) | 🚫             |
-| TopicPolicy                  | ✅               | ✅                    | 🚫             |
+| Resource                      | API/CLI Support | Terraform Support    | Label Support  | 
+|-------------------------------|-----------------|----------------------|----------------|
+| **Console Resources**         |                 |                      |                |
+| ConsoleGroup                  | ✅              | ✅                   | 🚫             |
+| ConsoleUser                   | ✅              | ✅                   | 🚫             |
+| KafkaCluster                  | ✅              | ✅                   | ⚠️ (Not in UI) |
+| KafkaConnectCluster           | ✅              | ✅                   | ⚠️ (Not in UI) |
+| KsqlDBCluster                 | ✅              | ⚠️(Generic Resource) | 🚫             |
+| Alert                         | ✅              | ⚠️(Generic Resource) | 🚫             |
+| DataMaskingPolicy             | 🚫              | 🚫                   | 🚫             |
+| Certificate                   | 🚫(V1 API only) | 🚫                   | 🚫             |
+| PartnerZone                   | ✅              | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| **Kafka Resources**           |                 |                      |                |
+| Topic                         | ✅              | ✅                   | ✅             |
+| Subject                       | ✅              | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| Connector                     | ✅              | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| ServiceAccount                | ✅              |                      | ✅             |
+| **Self-Service Resources**    |                 |                      |                |
+| Application                   | ✅              | ✅                   | 🚫             |
+| ApplicationInstance           | ✅              | ✅                   | 🚫             |
+| ApplicationInstancePermission | ✅              | ✅                   | 🚫             |
+| ApplicationGroup              | ✅              | ✅                   | 🚫             |
+| TopicPolicy                   | ✅              | ✅                   | 🚫             |
+| ResourcePolicy                | ✅              | ✅                   | 🚫             |

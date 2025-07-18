@@ -7,6 +7,10 @@ import CopyableCode from '@site/src/components/CopyableCode';
 
 ## Overview
 
+:::danger[Trust functionality]
+This feature is available with [Conduktor Trust](https://conduktor.io/trust) only.
+:::
+
 Bad data breaks customer experiences, drives churn and slows growth.
 [Conduktor Trust](https://conduktor.io/trust) helps teams catch and fix data quality issues *before* they impact your business. You define the Rules and we'll enforce them at the streaming layer.
 
@@ -306,6 +310,24 @@ When multiple Policies target the same topic, there are two scenarios that can o
   <summary>How do I handle headers with dashes?</summary>
   <p>
   Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
+  </p>
+</details>
+<details>
+  <summary>Why can't <code>type()</code> figure out the right numeric types?</summary>
+  <p>
+    Whether your data is sent as <strong>JSON</strong> or <strong>Avro</strong>, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between <code>int</code> and <code>double</code>. As a result, expressions like <code>type(value.age) == int</code> may <strong>fail unexpectedly</strong>, even if:
+    <ul>
+      <li>the original value is a valid integer (e.g., 12)</li>
+      <li>you're using an Avro schema where age is explicitly entered as an integer</li>
+    </ul>
+    This is because the Avro type information is lost during the conversion to JSON.
+
+    <strong>Recommended workaround:</strong>
+    Use logic-based expressions like: <CopyableCode language="bash">value.age > 0 && value.age < 130</CopyableCode> This implicitly checks that the field is numeric and falls within a valid range, avoiding type inference.
+
+    <strong>Note:</strong> CEL currently can't evaluate against Avro schemas directly — it only sees the JSON-converted payload.
+
+    We recommend enabling Gateway debug logs to inspect how data is interpreted during rule evaluation and to understand why it may have failed.
   </p>
 </details>
 

@@ -23,3 +23,7 @@ Here is the list of policies applied in this case.
 ![List of policies](assets/data-policies.png)
 
 You can go to the [Create a Policy](/platform/navigation/settings/data-masking/create-a-policy/) section in order to know more, and create your own policies.
+
+:::warning[Limitation for non-structured keys/values]
+When the message key or value can't be transformed into a JSON-like structure, the whole message won't be displayed.
+:::
