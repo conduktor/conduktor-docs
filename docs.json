@@ -76,9 +76,11 @@
                     ]
                   },   
                   {
-                    "group": "Manage licenses",
+                    "group": "Admin actions",
                     "pages": [
-                      "guide/conduktor-in-production/manage-licenses/index"      
+                      "guide/conduktor-in-production/admin/index",
+                      "guide/conduktor-in-production/admin/configure-clusters",
+                      "guide/conduktor-in-production/admin/user-access/index"          
                     ]
                   }                                                     
                 ]

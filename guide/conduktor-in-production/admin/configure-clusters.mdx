@@ -26,9 +26,9 @@ sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username='<username>' password='<password>';
 ```
 
-:::info
+<Info>
 If your configuration references keystore or truststore path, check the [Client Certificate Authentication](https://docs.conduktor.io/platform/configuration/ssl-tls-configuration/#client-certificate-authentication) documentation.
-:::
+</Info>
 
 ## Connect to a Confluent cluster
 
@@ -115,9 +115,9 @@ The configuration should look like this in the Console:
 
 ## Connect to a Cloudera cluster
 
-:::info
+<Info>
 These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
-:::
+</Info>
 
 1. To administer the Cloudera Kafka Cluster, you have to have a workload user with **ownership of the Data Hub cluster** configured. Make sure to note the username and password information of this user:
 
@@ -128,7 +128,7 @@ These instructions are for a setup with **SASL_SSL** and **PLAIN** mechanisms.
 
 1. Cloudera Certificates are CRT formatted files and need to be converted to a JKS file for console to connect. To convert the file please use the java keytool, command below is an example based on the screenshots above.
 
-```
+```bash
 keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file zeke-test2-cdp-env.crt
 ```
 

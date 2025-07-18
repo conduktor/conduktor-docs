@@ -47,9 +47,9 @@ CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 </TabItem>
 </Tabs>
 
-:::note
+<Note>
 If your LDAP server is **Active Directory** and you get an "invalid user" error when trying to log in, try setting your `search-filter` to `'(sAMAccountName={0})'`.
-:::
+</Note>
 
 #### User mapping
 
@@ -117,9 +117,9 @@ On Auth0 side, you'll have to create a new application:
 
 ![](/images/auth0-callback.png)
 
-:::warning[Define connection]
+<Warning>
 Remember to specify how you want to connect using the **Connections** tab of your Auth0 application.
-:::
+</Warning>
 
 #### Configure Console
 
@@ -174,9 +174,9 @@ Make sure that a client secret will be generated - select `Confidential client`.
   ![](/images/cognito-user-pool-id.png)
   ![](/images/cognito-client-id-secret.png)
 
-:::note
+<Note>
 You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<user pool ID>/.well-known/openid-configuration`.
-:::
+</Note>
 
 #### Configure Console
 
@@ -248,7 +248,6 @@ Now that your configuration is finished, you can [setup the mapping](/platform/g
 
 The value you need to put as an external group is the `Object ID` of the Amazon Cognito group.
 
-
 ## Configure Entra ID as SSO
 
 On the Entra ID (formerly Azure Active Directory) side, you'll have to create a new application:
@@ -267,17 +266,17 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](/images/azure-client-secret.png)
 
-:::warning
+<Warning>
 You need to keep the `Value` somewhere safe, as you will not have access to it again.
-:::
+</Warning>
 
 - **Step 3**: Find the `client ID` and `tenant ID` in the **Overview** tab
 
 ![](/images/azure-client-id.png)
 
-:::note
+<Note>
 You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
-:::
+</Note>
 
 #### Configure Console
 
@@ -316,9 +315,9 @@ If you want to use the `external groups mapping` to map groups between your Cond
 
 ![](/images/azure-add-groups-claim.png)
 
-:::warning
+<Warning>
 If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
-:::
+</Warning>
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
@@ -364,8 +363,7 @@ On Google side:
 
 - **Step 1**: Create an application on the **OAuth consent screen** tab
 
-The scopes needed are `email`, `profile`, and `openid`.
-Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
+The scopes needed are `email`, `profile`, and `openid`. Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
 
 import GoogleScopes from '/images/google-scopes.png';
 
@@ -397,18 +395,15 @@ import GoogleClientIdSecret from '/images/google-client-id-secret.png';
 
 <img src={GoogleClientIdSecret} alt="Google Client ID Secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-:::note
+<Info>
 You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
-:::
 
-:::info
 If you need to add an **authorized domain** to your Google account, you can follow [this guide](https://support.google.com/cloud/answer/6158849?hl=en-GB#authorized-domains&zippy=%2Cauthorized-domains).
-:::
+</Info>
 
 #### Configure Console
 
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret with what you got during the step 4.
-
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML file">
@@ -472,10 +467,11 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 
 ##### Map to external groups
 
-Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
+Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. 
+
+That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
 
 The value you need to put as an external group is the `email` address of the Google Group.
-
 
 ## Configure JumpCloud as SSO
 
@@ -509,7 +505,6 @@ Enter the Login URL, which is the URL users need to log into this application. I
 
 ![](/images/jumpcloud-figure-5.png)
 
-
 - **Step 4**: Find the `Client ID` and `Client Secret`.
 
 After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
@@ -518,17 +513,17 @@ import JumpCloudClientIdSecret from '/images/jumpcloud-figure-6.png';
 
 <img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
 
-:::warning
+<Warning>
 You need to keep the `Client Secret` somewhere safe, as you will not have access to it again.
-:::
+</Warning>
 
 #### Configure Console
 
 On the Conduktor Console side, you can add the snippet below to your configuration file. You will have to replace the Client ID and Client Secret, as shown in steps 3 and 4. 
 
-:::note
+<Note>
 You can find the opendid issuer at: `https://oauth.id.jumpcloud.com/` as shown [`here`](https://jumpcloud.com/support/sso-with-oidc)
-:::
+</Note>
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -622,9 +617,9 @@ For more details on Console redirect URI for OAuth2, you can check the [document
 
 ![](/images/keycloak-client-secret.png)
 
-:::note
+<Note>
 You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
-:::
+</Note>
 
 #### Configure Console
 
@@ -709,9 +704,9 @@ Now that your configuration is finished, you can [setup the mapping](/platform/g
 
 The value you need to put as an external group is the name of the Keycloak group.
 
-:::warning
+<Warning>
 If you've selected `Full group path` in the mapper details of the scope, you will need to use the full path instead of the name of the group.
-:::
+</Warning
 
 ## Configure Okta as SSO
 
@@ -753,9 +748,9 @@ import OktaIssuer from '/images/okta-issuer.png';
 
 <img src={OktaIssuer} alt="Okta issuer" style={{ width: 500, display: 'block', margin: 'auto' }} />
 
-:::note
+<Note>
 You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-configuration`.
-:::
+</Note>
 
 #### Configure Console
 
@@ -774,9 +769,9 @@ sso:
         issuer: "https://<domain>.okta.com"
 ```
 
-:::note
+<Note>
 Please note that if you are using a custom auth server in Okta, the OPENID_ISSUER should be in the form `https://<yourOktaDomain>/oauth2/<authorizationServerId>/` rather than `https://<domain>.okta.com`. [Find out more about token customization](https://developer.okta.com/docs/guide/customize-tokens-returned-from-okta/main/).
-:::
+</Note>
 
 </TabItem>
 <TabItem value="Environment Variables" label="Environment variables">
@@ -843,10 +838,10 @@ It uses the `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-Port` heade
 3. Use the `Host` header. Used if you access to Console directly, without a reverse proxy.
 In this case, the `Host` header (generally set by the browser) will be used to determine the external URL.
 
-:::note
+<Note>
 **Port** will be guessed depending on the content of the `Host` header and fallback to Console configured port using environment variable `CDK_LISTENING_PORT` (default to `8080`).   
 **Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details. (default to `http`).
-:::
+</Note>
 
 4. Get the client ID and secret from application settings
 

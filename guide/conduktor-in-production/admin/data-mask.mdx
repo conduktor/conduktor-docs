@@ -8,9 +8,9 @@ In order to meet **compliance regulations**, Conduktor Console provides a Data M
 
 As a Console administrator, you can **secure and govern** such data by creating Data Masking policies, so that users can't see them.
 
-:::info
+<Info>
 Data Masking **does not impact how the underlying data is stored**. The data will only be masked **within the Console**. For masking, or encrypting, the underlying Kafka data, you can use the [Conduktor Gateway](/gateway/).
-:::
+</Info>
 
 Policies will be applied when **consuming Kafka messages in the Console**, as shown below. We can see that the phone number, the IBAN, and the card number, have been masked with some *****.
 
@@ -58,4 +58,6 @@ Once you have created a policy, you should validate it through the Conduktor Con
 
 We can see that the name and the credit_card are completely hidden, as we defined in the masking rules.
 
-<Warning>When the message key or value can't be transformed into a JSON-like structure, the whole message won't be displayed.</Warning>
+<Warning>
+When the message key or value can't be transformed into a JSON-like structure, the whole message won't be displayed.
+</Warning>
