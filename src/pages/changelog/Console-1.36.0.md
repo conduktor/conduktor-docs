@@ -77,12 +77,11 @@ This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 
 - Users will now be redirected to the page they were on when they logged in again after session expiry
 - Improved navigation between Partner Zones in the list view using keyboard
-- Improved configurability of circuit breaker behaviour for indexed tasks. See more at [/platform/get-started/configuration/env-variables/#indexer-properties]
+- Improved configurability of circuit breaker behaviour for indexed tasks. See more in the [reference documentation](/platform/get-started/configuration/env-variables/#indexer-properties)
 
 ### Fixes
 
 - Partner Zones are now created instantly, instead of waiting for the next reconciliation loop to pass. Other updates will continue to sync in line with the reconciliation loop.
-- Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop.
 - Fixed an error that occurred when no partitions were selected in the topic consume view. You will now see a warning that no messages will be shown if partitions filter is set to none.
 - The JSON view of a message in a topic now displays negative numbers and numbers in scientific notation correctly.
 - Kafka Connect clusters are no longer visible to users who do not have permission on any of their connectors.
