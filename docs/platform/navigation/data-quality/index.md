@@ -31,7 +31,7 @@ You can create Rules with the Common Expression Language (CEL) expressions which
 Rules do nothing on their own - you **have to** to attach them to a Policy.
 :::
 
-The Rules page lists your Rules, with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
+The Rules page lists your Rules and shows a preview of their CEL expressions. The details page shows the selected Rule's description, full CEL expression, attached Policies and allows you to create a new Policy with this Rule pre-selected.
 
 ### Create a Rule
 
@@ -77,6 +77,12 @@ You can also use the [Conduktor CLI](/gateway/reference/cli-reference/) to creat
 </TabItem>
 </Tabs>
 
+### Edit a Rule
+
+You can only edit Rules that aren't used in any Policies and you can't edit [built-in Rules](#built-in-rules).
+
+When editing a Rule from its details page, you can update its name, description and CEL expression.
+
 ### Built-in Rules
 
 We provide built-in validation Rules that can't be achieved with CEL.
@@ -85,13 +91,19 @@ We provide built-in validation Rules that can't be achieved with CEL.
 We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
 :::
 
-#### EnforceAvro
+#### Enforce Avro
 
-`EnforceAvro` ensures that:
+This Rule ensures that:
 
-- Your messages have a schema ID prepended to the message content.
-- The schema ID exists within your schema registry.
-- The schema it references is of type `avro`.
+- your messages have a schema ID prepended to the message content,
+- the schema ID exists within your schema registry and
+- the schema it references is of type `avro`.
+
+#### Enforce schema ID
+
+This Rule ensures that your messages have a schema ID prepended to the message content.
+
+It doesn't check your schema registry.
 
 ### Sample Rules
 
@@ -128,9 +140,9 @@ A Policy is made up of Rules that are applied to topics/prefixes.
 
 Once created, Policies can be assigned [actions](#actions) to take effect when certain criteria is met (e.g., a Rule in the Policy is violated).
 
-The Policy's detail page shows its description, linked Rules, targets, the number of messages evaluated and the number of violations since the Policy was created. You can also enable (and disable) actions for the Policy from this page.
+The Policy's detail page shows its description, linked Rules, targets, the number of messages evaluated and the number of violations over time. You can also enable (and disable) actions for the Policy from this page and see the status of its deployment on target clusters.
 
-The Policies page lists your Policies with their actions and targets.
+The Policies page lists your Policies with their actions and targets, as well as the number of violations that occurred for each policy within the selected timeframe.
 
 ### Actions
 
@@ -205,11 +217,13 @@ You can also use the [Conduktor CLI (Command Line Interface)](/gateway/reference
 
 ### Manage a Policy
 
-Once a Policy is created, you are able to view the linked Rule(s), the target(s) of the Policy and change the [actions](#actions) of the Policy. You can also view the violations as they have occurred if you have reporting enabled, otherwise you will only have the counts available.
+Once a Policy is created, you can view the linked Rule(s), the target(s) and change the [actions](#actions) of the Policy. If **Report** is enabled, you can also view the violations as they've occurred, otherwise only the violation count will be shown.
 
 :::info[Enabling block action]
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
+
+When editing a Policy from its details page, you can update its name, description and targets. You can't edit the linked Rules of a Policy.
 
 ### Assign permissions
 

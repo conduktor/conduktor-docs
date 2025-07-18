@@ -4,8 +4,8 @@ title: Applications Catalog
 description: Kafka Self-service Overview
 ---
 
-:::tip 
-Self-service UI is almost entirely Read-only for now.  Use the CLI to interact with the product.
+:::info[UI]
+Self-service UI is currently almost entirely read-only. Use Conduktor CLI to interact with the product.
 :::
 
 ## Applications Catalog
@@ -45,27 +45,27 @@ For teams managing infrastructure as code, subscription requests can also be app
 
 The application details page summarizes all the information related to the application:
 
-- Application General information
-- Application Instances & Ownership
-- Subscribed topics
-- Shared topics
-- Application Groups
-- Access Requests
+- general information,
+- list of instances,
+- application groups and
+- access requests.
 
-For better categorization and organization of applications labels.
-
-If you're the owner of an application group, you can generate application **instance API keys** to use with the CLI to create resources.
+For better categorization and organization of applications, you can add and remove labels on this page.
 
 import AppDetails from './assets/app-details.png';
 
-<img src={AppDetails} alt="Application details" style={{ width: 400, display: 'block', margin: 'auto' }} />
+<img src={AppDetails} alt="Application details" style={{ width: '100%', display: 'block', margin: 'auto' }} />
 
-### Groups Tab
+## Application instance details
 
-To see a list of application groups that belong to an application, open on the **Groups** tab.
+We've introduced a dedicated **Application instance details** page that consolidates all the instance-specific operational information.
 
-![Application Groups](assets/app-groups.png)
+This new page provides a comprehensive view of individual application instances and can be accessed by clicking on the required instance from the **Application details** page.
 
-To see the details of the group, click on it in the table. A side panel showing the same YAML will be shown. You can also retrieve this via the CLI.
+The application instance details page includes:
 
-![Application Group Details](assets/app-group-details.png)
+- instance configuration: cluster assignment, incoming/outgoing subscriptions and public topics,
+- resource ownership: topics, consumer groups and subjects owned by this specific instance,
+- granted permissions: a detailed view of permissions granted to/from this instance,
+- API key management: ability to generate and manage API keys for CLI operations,
+- resource policies: list of instance-specific policies and restrictions.
