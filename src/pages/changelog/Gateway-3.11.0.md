@@ -40,3 +40,9 @@ We'll continue to support setting ACLs directly using the Kafka admin API as a s
   - **Security**: Ensures proper access control while maintaining flexibility for different permission models
 
 [Find out more about environment variables](/gateway/configuration/env-variables#connect-from-clients-to-gateway) and [auto-create topics authorization](/gateway/how-to/manage-service-accounts-and-acls#auto-create-topics-authorization). 
+
+#### `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
+
+This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable, which controls the types of event types recorded in the audit log.
+This provides flexibility to enable or disable specific event types, such as `CONNECTION`. The full list and explanation of the event types can be found in 
+the [Audit Log configuration documentation](/gateway/configuration/env-variables/#audit).
