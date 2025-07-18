@@ -12,9 +12,9 @@ tags: features,fixes
   - [Use REST to set Virtual Cluster ACLs](#set-virtual-cluster-acls-directly-using-rest)
   -  [Auto-Create Topics Feature](#auto-create-topics-feature)
 
-## New features
+### New features
 
-### Set Virtual Cluster ACLs directly using REST
+#### Set Virtual Cluster ACLs directly using REST
 
 Gateway now supports managing the ACLs for Virtual Clusters directly using the REST API. (This is a backwards compatible change.)
 
@@ -29,7 +29,7 @@ We'll continue to support setting ACLs directly using the Kafka admin API as a s
 
 [Find out more about the new ACLs features in the Virtual Cluster resource reference](/gateway/reference/resources-reference/#virtual-cluster-acls).
 
-### Auto-Create Topics Feature
+#### Auto-Create Topics Feature
 
 - **New auto-create topics configuration**: Added support for automatically creating topics when producing or consuming through the Gateway
 - **Environment variable control**: New `GATEWAY_AUTO_CREATE_TOPICS_ENABLED` environment variable (default: `false`) to enable/disable the feature
