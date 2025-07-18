@@ -223,7 +223,7 @@ Once a Policy is created, you can view the linked Rule(s), the target(s) and cha
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
 :::
 
-When editing a Policy from its details page, you can update its name, description and targets. You can't edit the linked Rules of a Policy.
+When editing a Policy from its details page, you can update its name, description and targets. You can't edit the linked Rules of a Policy from this view.
 
 ### Assign permissions
 
