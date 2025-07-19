@@ -16,7 +16,6 @@
       },
       {
         "tab": "Guide",
-
         "groups": [
           {
             "group": "Conduktor",
@@ -25,78 +24,78 @@
           {
             "group": "Conduktor in production",
             "pages": [
-              "guide/conduktor-in-production/index",
-              "guide/conduktor-in-production/requirements",
-              {
-                "group": "Deploy Conduktor artifacts",
-                "pages": [
-                  "guide/conduktor-in-production/deploy-artifacts/index",
-                  {
-                    "group": "Deploy Gateway",
-                    "pages": [
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"                      
-                    ]
-                  },
-                  {
-                    "group": "Deploy Console",
-                    "pages": [
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"                         
-                    ]
-                  },
-                  {
-                    "group": "Deploy Cortex",
-                    "pages": [
-                      "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"      
-                    ]
-                  },
-                  {
-                    "group": "Monitor",
-                    "pages": [
-                      "guide/conduktor-in-production/monitor/index"      
-                    ]
-                  }, 
-                  {
-                    "group": "Manage licenses",
-                    "pages": [
-                      "guide/conduktor-in-production/manage-licenses/index"      
-                    ]
-                  }, 
-                  {
-                    "group": "Automate",
-                    "pages": [
-                      "guide/conduktor-in-production/automate/index",
-                      "guide/conduktor-in-production/automate/api-automation",
-                      "guide/conduktor-in-production/automate/cli-automation",
-                      "guide/conduktor-in-production/automate/terraform-automation"                                                  
-                    ]
-                  },   
-                  {
-                    "group": "Admin actions",
-                    "pages": [
-                      "guide/conduktor-in-production/admin/index",
-                      "guide/conduktor-in-production/admin/configure-clusters"       
-                    ]
-                  },
-                  {
-                    "group": "Define user access",
-                    "pages": [
-                      "guide/conduktor-in-production/admin/user-access/index",   
-                      "guide/conduktor-in-production/admin/user-access/configure-sso",   
-                      "guide/conduktor-in-production/admin/user-access/map-external-groups", 
-                      "guide/conduktor-in-production/admin/user-access/local-admin-users",   
-                      "guide/conduktor-in-production/admin/user-access/session-lifetime",       
-                      "guide/conduktor-in-production/admin/user-access/delegated-jwt-auth"                      
-                      
-                    ]
-                  }
-
-                ]
-              }
+              "guide/conduktor-in-production/index", 
+              "guide/conduktor-in-production/requirements", 
+              "guide/conduktor-in-production/deploy-artifacts/index"
+            ]
+          },    
+            {
+             "group": "Deploy Gateway",
+             "pages": [
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
+            ]
+          },
+            {
+              "group": "Deploy Console",
+              "pages": [
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"
+              ]
+            },
+            {   
+             "group": "Deploy Cortex",
+             "pages": [
+                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+                  ]
+                },
+          {
+            "group": "Monitor",
+            "pages": [
+              "guide/conduktor-in-production/monitor/index"
+            ]
+          },
+          {
+            "group": "Manage licenses",
+            "pages": [
+              "guide/conduktor-in-production/manage-licenses/index"
+            ]
+          },
+          {
+            "group": "Automate",
+            "pages": [
+              "guide/conduktor-in-production/automate/index",
+              "guide/conduktor-in-production/automate/api-automation",
+              "guide/conduktor-in-production/automate/cli-automation",
+              "guide/conduktor-in-production/automate/terraform-automation"
+            ]
+          },
+          {
+            "group": "Admin actions",
+            "pages": [
+              "guide/conduktor-in-production/admin/index",
+              "guide/conduktor-in-production/admin/configure-clusters"
+            ]
+          },
+          {
+            "group": "Define user access",
+            "pages": [
+              "guide/conduktor-in-production/admin/user-access/index",
+              "guide/conduktor-in-production/admin/user-access/configure-sso",
+              "guide/conduktor-in-production/admin/user-access/map-external-groups",
+              "guide/conduktor-in-production/admin/user-access/local-admin-users",
+              "guide/conduktor-in-production/admin/user-access/session-lifetime",
+              "guide/conduktor-in-production/admin/user-access/delegated-jwt-auth"
+            ]
+          },
+          {
+            "group": "Use cases",
+            "pages": [
+              "guide/use-cases/index",
+              "guide/use-cases/chargeback"
             ]
           }
         ]
@@ -110,14 +109,14 @@
               "guide/conduktor-concepts/index",
               "guide/conduktor-concepts/chargeback",
               "guide/conduktor-concepts/gw-authen-author",
-              "guide/conduktor-concepts/gw-service-accounts",   
+              "guide/conduktor-concepts/gw-service-accounts",
               "guide/conduktor-concepts/indexing",
-              "guide/conduktor-concepts/interceptors",   
+              "guide/conduktor-concepts/interceptors",
               "guide/conduktor-concepts/logical-topics",
-              "guide/conduktor-concepts/partner-zones",  
+              "guide/conduktor-concepts/partner-zones",
               "guide/conduktor-concepts/self-service",
               "guide/conduktor-concepts/traffic-control-policies",
-              "guide/conduktor-concepts/virtual-clusters"               
+              "guide/conduktor-concepts/virtual-clusters"
             ]
           }
         ]
@@ -126,17 +125,11 @@
         "tab": "Tutorials",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
+            "group": "Conduktor tutorials",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+              "guide/tutorials/index",
+               "guide/tutorials/custom-log"
+          ]
           }
         ]
       },
@@ -144,34 +137,11 @@
         "tab": "Reference",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
+            "group": "Resource reference",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "guide/reference/index",
+              "guide/reference/console-reference"              
+            
             ]
           }
         ]
@@ -180,17 +150,8 @@
         "tab": "Release notes",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "group": "Conduktor releases",
+            "pages": ["src/pages/changelog"]
           }
         ]
       },
@@ -198,17 +159,8 @@
         "tab": "Support",
         "groups": [
           {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "group": "Support options",
+            "pages": ["guide/support/index"]
           }
         ]
       }
@@ -227,7 +179,7 @@
   },
   "footer": {
     "socials": {
-      "slack": "https://conduktor.io/slack",      
+      "slack": "https://conduktor.io/slack",
       "github": "https://github.com/conduktor/",
       "linkedin": "https://www.linkedin.com/company/conduktor",
       "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
