@@ -227,10 +227,10 @@
   },
   "footer": {
     "socials": {
-      "linkedin": "https://www.linkedin.com/company/conduktor",
+      "slack": "https://conduktor.io/slack",      
       "github": "https://github.com/conduktor/",
-      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ",
-      "slack": "https://conduktor.io/slack"
+      "linkedin": "https://www.linkedin.com/company/conduktor",
+      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
     }
   }
 }
