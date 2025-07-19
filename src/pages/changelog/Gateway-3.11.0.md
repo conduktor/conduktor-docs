@@ -1,5 +1,5 @@
 ---
-date: 2025-07-16
+date: 2025-07-18
 title: Gateway 3.11.0
 description: docker pull conduktor/conduktor-gateway:3.11.0
 solutions: gateway
@@ -10,7 +10,7 @@ tags: features,fixes
 
 - [New features](#new-features)
   - [Use REST to set Virtual Cluster ACLs](#set-virtual-cluster-acls-directly-using-rest)
-  -  [Auto-Create Topics Feature](#auto-create-topics-feature)
+  - [Auto-create topics](#auto-create-topics)
 
 ### New features
 
@@ -29,14 +29,14 @@ We'll continue to support setting ACLs directly using the Kafka admin API as a s
 
 [Find out more about the new ACLs features in the Virtual Cluster resource reference](/gateway/reference/resources-reference/#virtual-cluster-acls).
 
-#### Auto-Create Topics Feature
+#### Auto-create topics
 
-- **New auto-create topics configuration**: Added support for automatically creating topics when producing or consuming through the Gateway
-- **Environment variable control**: New `GATEWAY_AUTO_CREATE_TOPICS_ENABLED` environment variable (default: `false`) to enable/disable the feature
-- **Kafka property integration**: Leverages the Kafka property `auto.create.topics.enable` when the feature is enabled
-- **Concentrated topics limitation**: When auto-create topics is enabled, topics that would normally be concentrated will be created as physical topics instead
-- **ACL authorization**: Implements proper access control for auto-create topics:
-  - **Permission requirements**: Requires either `CREATE` permission on the topic or `CREATE` permission on the cluster
-  - **Security**: Ensures proper access control while maintaining flexibility for different permission models
+You can now create topics automatically when producing or consuming through Gateway. To enable/disable this, we've added a new `GATEWAY_AUTO_CREATE_TOPICS_ENABLED` environment variable (default: `false`).
 
-[Find out more about environment variables](/gateway/configuration/env-variables#connect-from-clients-to-gateway) and [auto-create topics authorization](/gateway/how-to/manage-service-accounts-and-acls#auto-create-topics-authorization). 
+- **Kafka property integration**: leverages the Kafka property `auto.create.topics.enable` when the feature is enabled.
+- **Concentrated topics limitation**: when this feature is enabled, topics that would normally be concentrated will be created as physical topics instead.
+- **ACL authorization**: implements proper access control for auto-create topics:
+  - **permission requirements**: requires `CREATE` permission on either the topic or the cluster.
+  - **security**: ensures access control while maintaining flexibility for different permission models.
+
+[Find out more about environment variables](/gateway/configuration/env-variables#connect-from-clients-to-gateway) and [auto-create topics authorization](/gateway/how-to/manage-service-accounts-and-acls#auto-create-topics-authorization).
