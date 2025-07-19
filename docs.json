@@ -86,12 +86,11 @@
                     "group": "Define user access",
                     "pages": [
                       "guide/conduktor-in-production/admin/user-access/index",   
-                      "guide/conduktor-in-production/admin/user-access/index",   
-                      "guide/conduktor-in-production/admin/user-access/index", 
-                      "guide/conduktor-in-production/admin/user-access/index",   
-                      "guide/conduktor-in-production/admin/user-access/index",      
-                      "guide/conduktor-in-production/admin/user-access/index",   
-                      "guide/conduktor-in-production/admin/user-access/index"                      
+                      "guide/conduktor-in-production/admin/user-access/configure-sso",   
+                      "guide/conduktor-in-production/admin/user-access/map-external-groups", 
+                      "guide/conduktor-in-production/admin/user-access/local-admin-users",   
+                      "guide/conduktor-in-production/admin/user-access/session-lifetime",       
+                      "guide/conduktor-in-production/admin/user-access/delegated-jwt-auth"                      
                       
                     ]
                   }
@@ -115,7 +114,7 @@
               "guide/conduktor-concepts/indexing",
               "guide/conduktor-concepts/interceptors",   
               "guide/conduktor-concepts/logical-topics",
-              "guide/conduktor-concepts/partner-zones",   
+              "guide/conduktor-concepts/partner-zones",  
               "guide/conduktor-concepts/self-service",
               "guide/conduktor-concepts/traffic-control-policies",
               "guide/conduktor-concepts/virtual-clusters"               
@@ -213,26 +212,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Community",
-          "href": "https://conduktor.io/slack",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Kafkademy",
-          "href": "https://learn.conduktor.io/kafka/",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://conduktor.io/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -249,7 +229,8 @@
     "socials": {
       "linkedin": "https://www.linkedin.com/company/conduktor",
       "github": "https://github.com/conduktor/",
-      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
+      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ",
+      "slack": "https://conduktor.io/slack"
     }
   }
 }
