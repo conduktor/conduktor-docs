@@ -4,7 +4,7 @@ description: Get started with Conduktor
 keywords: ['deploy', 'start', 'get started']
 ---
 
-<Info> Pre-requisite [Docker Compose](https://docs.docker.com/compose/install)</Info>
+<Info>Pre-requisite [Docker Compose](https://docs.docker.com/compose/install)</Info>
 
 [Get started with Conduktor](https://www.conduktor.io/get-started) in just a few minutes.
 
@@ -29,13 +29,13 @@ Once deployed, you’ll have access to a fully functional Kafka stack integrated
 
 The data policies configured in this get-started stack are:
 
-| **Policy**                    | **Description**                                                                                                                                      |
-|------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ProducePolicyPlugin          | Ensures produced messages adhere to configuration requirements. Parameters configure **Block** acks `-1` and audit compression (GZIP, ZSTD, etc).    |
+| **Policy**                   | **Description**                                                                                                                                     |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| ProducePolicyPlugin          | Ensures produced messages adhere to configuration requirements. Parameters configure **Block** acks `-1` and audit compression (GZIP, ZSTD, etc).   |
 | EncryptPlugin                | Encrypts full payloads for topics matching pattern: `.*_encrypted$`. Check the `customers_encrypted` topic in the `local-kafka` cluster.            |
-| DecryptPlugin                | Decrypts payloads on consume for topics matching `.*_encrypted$`. Shows plaintext in `cdk-gateway`.                                                  |
-| FieldLevelDataMaskingPlugin | Masks `profile.creditCardNumber`, `contact.email` and `contact.phone` in topics matching pattern: `^[A-Za-z]*_masked$`.                              |
-| CreateTopicPolicyPlugin      | Validates topic config: partitions must be 1–3 or creation is **Blocked**.                                                                           |
+| DecryptPlugin                | Decrypts payloads on consume for topics matching `.*_encrypted$`. Shows plaintext in `cdk-gateway`.                                                 |
+| FieldLevelDataMaskingPlugin  | Masks `profile.creditCardNumber`, `contact.email` and `contact.phone` in topics matching pattern: `^[A-Za-z]*_masked$`.                             |
+| CreateTopicPolicyPlugin      | Validates topic config: partitions have to be 1–3 or creation is **Blocked**.                                                                       |
 
 ## Run Conduktor
 

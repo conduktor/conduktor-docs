@@ -115,7 +115,7 @@ On Auth0 side, you'll have to create a new application:
 
 1. Configure the callback URI.nThe redirect URI can be something like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`.
 
-![](/images/auth0-callback.png)
+![callback](/images/auth0-callback.png)
 
 <Warning>
 Remember to specify how you want to connect using the **Connections** tab of your Auth0 application.
@@ -157,22 +157,22 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 On Amazon Cognito side, you'll have to create a user pool with an application:
 
 1. Create a new user pool
-  ![](/images/cognito-user-pool.png)
+  ![user pool](/images/cognito-user-pool.png)
 
 2. Configure the application client. You can select the name you want, shown here as `Conduktor Console` and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. For example, if you deployed Console locally using the name `cognito` in your configuration file, you can use `http://localhost:8080/oauth/callback/cognito`.
 
 Make sure that a client secret will be generated - select `Confidential client`.
 
-  ![](/images/cognito-app-client.png)
+  ![app client](/images/cognito-app-client.png)
 
 3. Set the scopes `profile`, `email` and `openid` in the **Advanced app settings**:
 
-  ![](/images/cognito-scopes.png)
+  ![cognito scopes](/images/cognito-scopes.png)
 
 4. Get the `user pool ID`, `client ID`, and `client secret`, that you'll use in the configuration file of Console
 
-  ![](/images/cognito-user-pool-id.png)
-  ![](/images/cognito-client-id-secret.png)
+  ![user pool id](/images/cognito-user-pool-id.png)
+  ![id secret](/images/cognito-client-id-secret.png)
 
 <Note>
 You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<user pool ID>/.well-known/openid-configuration`.
@@ -258,13 +258,11 @@ You can select the name you want, shown here as `Conduktor Console`, and enter t
 
 For example, if you deployed Console locally using the name `azure` in your configuration file, you can use `http://localhost:8080/oauth/callback/azure`, like on the screenshot below.
 
-For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
-
-![](/images/azure-new-app.png)
+![new app](/images/azure-new-app.png)
 
 - **Step 2**: Create a new client secret from the **Certificates and secrets** tab
 
-![](/images/azure-client-secret.png)
+![client secret](/images/azure-client-secret.png)
 
 <Warning>
 You need to keep the `Value` somewhere safe, as you will not have access to it again.
@@ -272,7 +270,7 @@ You need to keep the `Value` somewhere safe, as you will not have access to it a
 
 - **Step 3**: Find the `client ID` and `tenant ID` in the **Overview** tab
 
-![](/images/azure-client-id.png)
+![azure client id](/images/azure-client-id.png)
 
 <Note>
 You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/v2.0/.well-known/openid-configuration`.
@@ -313,10 +311,10 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Azure, you must add this claim to your Azure application in the **Token configuration** tab:
 
-![](/images/azure-add-groups-claim.png)
+![groups claim](/images/azure-add-groups-claim.png)
 
 <Warning>
-If you have a **large number of groups** within your enterprise, you might need to [`assign some groups to the application`](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application), and check the `Groups assigned to the application` box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
+If you have a **large number of groups** within your enterprise, you might need to [assign some groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application) and check the **Groups assigned to the application** box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
 </Warning>
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
@@ -352,7 +350,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2
 
 ##### Map to external groups
 
-Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
+Now that your configuration is finished, you can set up the mapping between Azure AD and Console groups. That way, when a user will log in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Azure AD.
 
 The value you need to put as an external group is the `Object ID` of the Azure AD group.
 
@@ -363,7 +361,7 @@ On Google side:
 
 - **Step 1**: Create an application on the **OAuth consent screen** tab
 
-The scopes needed are `email`, `profile`, and `openid`. Optionally, you need `https://www.googleapis.com/auth/cloud-identity.groups.readonly` for External Group Mapping.
+The scopes needed are `email`, `profile`, and `openid`. Optionally, you need [read only](`https://www.googleapis.com/auth/cloud-identity.groups.readonly`) for external group mapping.
 
 import GoogleScopes from '/images/google-scopes.png';
 
@@ -377,7 +375,7 @@ import GoogleUserTypeInternal from '/images/google-user-type-internal.png';
 
 - **Step 3**: Create a new `OAuth client ID`
 
-You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI as the following: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
+You can select the name you want, shown here as `Conduktor Console`, and enter the redirect URI like this: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `google` in your configuration file, you can use `http://localhost:8080/oauth/callback/google`, like on the screenshot below.
 
@@ -478,17 +476,17 @@ The value you need to put as an external group is the `email` address of the Goo
 On the JumpCloud side, you'll have to create a new application:
 
 - **Step 1**: Create a new application in `SSO Applications`.
-![](/images/jumpcloud-figure-1.png)
+![jumpcloud new app](/images/jumpcloud-figure-1.png)
 
 - **Step 2**: Select a `Custom Application` as shown below.
-![](/images/jumpcloud-figure-2.png)
+![jumpcloud custom app](/images/jumpcloud-figure-2.png)
 
 Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in the screenshot below.
-![](/images/jumpcloud-figure-3.png)
+![jumpcloud sso](/images/jumpcloud-figure-3.png)
 
 Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in the screenshot below and configure this application.
 
-![](/images/jumpcloud-figure-4.png)
+![jumpcloud label](/images/jumpcloud-figure-4.png)
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
 
@@ -558,7 +556,7 @@ From the JumpCloud side, ensure you have:
 
 See the example screenshot shown below.
 
-![](/images/jumpcloud-figure-7.png)
+![jumpcloud final](/images/jumpcloud-figure-7.png)
 
 From the Conduktor Console side, you must set the property `groups-claim` to `"groups"` in the Console configuration file. 
 Below is the full snippet for your configuration file:
@@ -597,11 +595,11 @@ On Keycloak side, you'll have to create a new application:
 
 - **Step 1**: create a new OpenID Connect client, and set the `client ID`
 
-![](/images/keycloak-create-client.png)
+![keycloak create client](/images/keycloak-create-client.png)
 
 - **Step 2**: Select the **Client authentication**
 
-![](/images/keycloak-client-config.png)
+![keycloak config](/images/keycloak-client-config.png)
 
 - **Step 3**: Configure the redirect URI 
 
@@ -611,11 +609,11 @@ For example, if you deployed Console locally using the name `keycloak` in your c
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-![](/images/keycloak-callback.png)
+![keycloak callback](/images/keycloak-callback.png)
 
 - **Step 4**: Get the `client secret` in the **Credentials** tab
 
-![](/images/keycloak-client-secret.png)
+![keycloak client secret](/images/keycloak-client-secret.png)
 
 <Note>
 You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/<realm name>/.well-known/openid-configuration`.
@@ -658,14 +656,14 @@ If you want to use the `external groups mapping` to map groups between your Cond
 
 - **Step 1**: Create the scope and configure the mapper to **Group Membership**
 
-![](/images/keycloak-scope.png)
-![](/images/keycloak-scope-mapper.png)
+![keycloak scope](/images/keycloak-scope.png)
+![keycloak scope mngr](/images/keycloak-scope-mapper.png)
 
 You can add the claim to the token you want. In this example, the **UserInfo**.
 
 - **Step 2**: Add the scope to the application
 
-![](/images/keycloak-add-scope-app.png)
+![keycloak add scope](/images/keycloak-add-scope-app.png)
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
@@ -706,9 +704,9 @@ The value you need to put as an external group is the name of the Keycloak group
 
 <Warning>
 If you've selected `Full group path` in the mapper details of the scope, you will need to use the full path instead of the name of the group.
-</Warning
+</Warning>
 
-## Configure Okta as SSO
+### Configure Okta as SSO
 
 On Okta side, create a new application:
 

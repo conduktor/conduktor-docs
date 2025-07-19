@@ -51,7 +51,8 @@ In the statement, the list of selected fields is actually ignored - the importan
 
 Only one topic can be specified in the FROM clause (joins will be ignored), and the topic name is matched explicitly (no regexp support). If a record does not match the WHERE clause, it will be rejected. There are a variety of options for this described in the actions below. Fields are assumed to be from the value of the record. The Interceptor currently supports values in JSON, AVRO and Protobuf formats.
 
-<Note> Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
+<Note>
+Topic names with dash `-` characters in them must be double quoted, as the dash is not a valid character for a SQL name. E.g. for a topic `our-orders` you would need to use:
 
 `SELECT * FROM "our-orders" WHERE ...`
 
@@ -171,7 +172,6 @@ If you don't supply a `basicCredentials` section for the AWS Glue schema registr
 }
 ```
 
-
 ## Validate schema payload
 
 To enable your Kafka consumers to confidently and independently access data, ensure that all records sent through your Kafka system conform to an agreed structure. Records with missing or invalid schemas can cause application outages, as consumers may be unable to process the unexpected record format.
@@ -247,9 +247,9 @@ The full configuration topics for the policy are as below.
 |:---------------------|:-----------------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------------|
 | topic                | String                                   | `.*`    | Topics that match this regex will have the Interceptor applied                                                                          |
 | schemaIdRequired     | Boolean                                  | `false` | Records must/must not have schemaId                                                                                                     |
-| validateSchema       | Boolean                                  | `false` | If true, deserialize the record, validate the record structure and fields within the data itself.|
+| validateSchema       | Boolean                                  | `false` | If true, deserialize the record, validate the record structure and fields within the data itself.                                       |
 | action               | `BLOCK`, `INFO`, `THROTTLE`              | `BLOCK` | Action to take if the value is outside the specified range.                                                                             |
-| schemaRegistryConfig | Schema registry                 | N/A     | Schema registry Config                                                                                                                  | 
+| schemaRegistryConfig | Schema registry                 | N/A     | Schema registry Config                                                                                                                           | 
 | celCacheSize         | int                                      | 100     | In memory cache size for cel expressions, balancing speed and resource use, optimize performance.                                       |
 | deadLetterTopic      | String                                   |         | Dead letter topic. Not used if this parameter is not set.                                                                               |
 | addErrorHeader       | Boolean                                  | `true`  | Add or not add the error information headers into dead letter topic                                                                     |
@@ -259,8 +259,8 @@ The full configuration topics for the policy are as below.
 
 | Key                   | Type   | Default     | Description                                                                                                                                                                                                         |
 |-----------------------|--------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                      |
-| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using environment variables as secrets.​ |
+| `type`                | string | `CONFLUENT` | The type of schema registry to use: choose `CONFLUENT` (for Confluent-like schema registries including OSS Kafka) or `AWS` for AWS Glue schema registries.                                                          |
+| `additionalConfigs`   | map    |             | Additional properties maps to specific security-related parameters. For enhanced security, you can hide the sensitive values using environment variables as secrets.​                                                |
 | **Confluent Like**    |        |             | **Configuration for Confluent-like schema registries**                                                                                                                                                              |
 | `host`                | string |             | URL of your schema registry.                                                                                                                                                                                        |
 | `cacheSize`           | string | `50`        | Number of schemas that can be cached locally by this Interceptor so that it doesn't have to query the schema registry every time.                                                                                   |
