@@ -14,10 +14,11 @@ _Release date: {frontMatter.date.toISOString().slice(0, 10)}_
   - [Redesigned Application Catalog and Application Details](#redesigned-application-catalog-and-application-details-pages-in-console)
   - [Labels on Consumer Groups](#labels-on-consumer-groups)
 - [Conduktor Exchange](#conduktor-exchange)
-    - [Breaking change](#breaking-change)
-    - [mTLS support for Partner Zones added](#partner-zones-support-for-mtls)
+  - [Breaking change](#breaking-change)
+  - [mTLS support for Partner Zones added](#partner-zones-support-for-mtls)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
+- [Known Issues](#known-issues)
 
 
 ### Conduktor Scale
@@ -72,22 +73,21 @@ This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 
 [Find out more about supported authentication modes](/platform/reference/resource-reference/console/#partner-zone) and [prerequisites for creating Partner Zones](/platform/navigation/partner-zones/#prerequisites).
 
-## Quality of life improvements
+#### Quality of life improvements
 
 - Users will now be redirected to the page they were on when they logged in again after session expiry
 - Improved navigation between Partner Zones in the list view using keyboard
-- Improved configurability of circuit breaker behaviour for indexed tasks. See more at [/platform/get-started/configuration/env-variables/#indexer-properties]
+- Improved configurability of circuit breaker behaviour for indexed tasks. See more in the [reference documentation](/platform/get-started/configuration/env-variables/#indexer-properties)
 
-## Fixes
+### Fixes
 
 - Partner Zones are now created instantly, instead of waiting for the next reconciliation loop to pass. Other updates will continue to sync in line with the reconciliation loop.
-- Upon creation Partner Zones create instantly, rather than waiting for the next reconciliation loop to pass. Other updates will continue to sync in line via reconciliation loop.
 - Fixed an error that occurred when no partitions were selected in the topic consume view. You will now see a warning that no messages will be shown if partitions filter is set to none.
 - The JSON view of a message in a topic now displays negative numbers and numbers in scientific notation correctly.
 - Kafka Connect clusters are no longer visible to users who do not have permission on any of their connectors.
 - Error messages are now more informative when attempting to create a service account on a resource for which the caller lacks permission.
 - Resolve case sensitivity issue with email addresses in the application group payload that causes mismatches in RBAC configuration.
 
-## Known Issues
+### Known Issues
 
-If a resource policy is attached to an application instance, the self-service Application Instance page may display a validation error in the frontend.
+If a self-service resource policy is attached to a self-service application instance, the self-service Application Instance page may display a validation error in console.
