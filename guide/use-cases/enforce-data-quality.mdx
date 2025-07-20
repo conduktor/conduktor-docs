@@ -1,12 +1,6 @@
 ---
-sidebar_position: 380
 title: Enforce data quality
-description: Ensure data quality using Conduktor
 ---
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-import CopyableCode from '@site/src/components/CopyableCode';
-import ProductTrust from '@site/src/components/shared/product-trust.md';
 
 <ProductTrust />
 
@@ -20,22 +14,21 @@ Before creating data quality Rules and Policies, you have to:
 
 - use **Conduktor Console 1.34** or later,
 - use **Conduktor Gateway 3.9** or later,
-- be logged in as an admin to Console UI or use an admin token for the Conduktor <GlossaryTerm>CLI</GlossaryTerm>,
+- be logged in as an admin to Console UI or use an admin token for the Conduktor CLI,
 - [configure your Gateway cluster in Console](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials.
 
 ## Rules
 
-You can create Rules with the <GlossaryTerm>CEL</GlossaryTerm> expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+You can create Rules with the CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
-:::info[Rules require Policies]
+<Info>
 Rules do nothing on their own - you **have to** to attach them to a Policy.
-:::
-
+</Info>
 The Rules page lists your Rules with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
 ### Create a Rule
 
-You can create a data quality Rule using the <GlossaryTerm>Console</GlossaryTerm> UI or the Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
+You can create a data quality Rule using the Console UI or the Conduktor CLI.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -83,9 +76,9 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
 
 We provide built-in validation Rules that can't be achieved with CEL.
 
-:::info[Supported schema registries]
+<Info>
 We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
-:::
+</Info>
 
 #### EnforceAvro
 
@@ -99,9 +92,9 @@ We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) s
 
 Here are some examples of data quality rules.
 
-:::info[Adjust values]
+<Note>
 Make sure you amend these examples to use your values.
-:::
+</Note>
 
 <details>
   <summary>Email RegEx validation</summary>
@@ -145,7 +138,7 @@ By default, Policies created using the Console UI don't have any actions enabled
 
 ### Create a Policy
 
-You can create a data quality Policy using the <GlossaryTerm>Console</GlossaryTerm> UI or the Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
+You can create a data quality Policy using the Console UI or the Conduktor CLI.
 
 <Tabs>
 <TabItem value="ui" label="Console UI">
@@ -211,9 +204,9 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
 
 Once a Policy is created, you are able to view the linked Rule(s), the target(s) of the Policy and change the [actions](#actions) of the Policy. You can also view the violations as they have occurred if you have reporting enabled, otherwise you will only have the counts available.
 
-:::info[Enabling block action]
+<Info>
 Since the **block** action has the ability to **stop data from being sent** to the requested topic, you have to confirm this by entering 'BLOCK' when prompted. Conversely, to disable the blocking, enter 'UNBLOCK' when prompted.
-:::
+</Info>
 
 ### Assign permissions
 
@@ -221,9 +214,9 @@ Policies are **owned by user groups** and can be created by admin users or group
 
 To apply this permission to a group, go to **Settings** > **Groups** and in the **Resource access** tab tick the `Manage data quality` checkbox for the relevant resources, as required.
 
-:::info[Applying permissions]
+<Info>
 Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. Modifying group permissions won't affect any Policies associated with the group.
-:::
+</Info>
 
 ![The 'manage data quality' permission](/images/topic-dq-manage-permission.png)
 

@@ -1,12 +1,6 @@
 ---
-sidebar_position: 12
 title: Configure encryption and decryption
-displayed: false
-description: Configure encryption for your data
 ---
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-import ProductShield from '@site/src/components/shared/product-shield.md';
 
 <ProductShield /> 
 
@@ -111,9 +105,9 @@ If your field meets one of these three conditions, then it will be encrypted:
 
 In all the encryption plugins, you can use mustache templates for the `keySecretId`. That way, your secret keys will be dynamic.
 
-:::warning
+<Warning>
 The value of a field will be replaced with the encrypted value. So it is not allowed to use the encryption field as the keyId.
-:::
+</Warning>
 
 | Pattern                                       | Replaced by                                                                                                                                                                                                                  |
 |-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -159,9 +153,9 @@ If you want to make sure the key is well created in your KMS, you have to (1) [m
 
 Note that In-memory mode is present for testing and development purposes only - keys stored in this manner do not persist between Gateway restarts.
 
-:::warning[Format]
+<Warning>
 Keys are strings that start with a letter followed by a combination of letters, underscores (_), hyphens (-), and numbers. Special characters are not allowed. They also works with the upper [mustache pattern](#mustache-template).
-:::
+</Warning>
 
 #### Supported algorithms
 
@@ -246,9 +240,9 @@ Find out how to configure the different KMS within your encrypt and decrypt Inte
 
 ### In-memory KMS
 
-:::warning[Demo-only use]
+<Warning>
 This should not be used on production data.
-:::
+</Warning>
 
 Keys in in-memory KMS are not persisted, this means that if you do one of the following, you won't be able to decrypt old records, loosing the data.
 

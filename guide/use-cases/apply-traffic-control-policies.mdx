@@ -1,15 +1,13 @@
 ---
-sidebar_position: 360
 title: Apply Traffic Control Policies
-description: Implement policies using Conduktor
+
 ---
-import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
 
 <ProductScalePlus /> 
 
 ## Overview
 
-Conduktor <GlossaryTerm>Gateway</GlossaryTerm> offers a number of <GlossaryTerm>Interceptors</GlossaryTerm> that apply <GlossaryTerm>Traffic Control Policies</GlossaryTerm> to data.
+Conduktor Gateway offers a number of Interceptors that apply Traffic Control Policies to data.
 
 ## Alter broker config
 
@@ -23,7 +21,7 @@ The full list of Kafka configurations that this Interceptor protects is:
 
 #### What happens when sending an invalid request
 
-Any request that doesn't match the Interceptor's configuration will be blocked and return the corresponding error  message.
+Any request that doesn't match the Interceptor's configuration will be blocked and return the corresponding error message.
 
 For example: you want to change the configuration log.retention.ms = 10000, but the Interceptor is being configured minLogRetentionMs=60000. When you send that request to the cluster, the following error is returned:
 

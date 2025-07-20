@@ -1,7 +1,5 @@
 ---
-sidebar_position: 72
 title: Define Console environment variables
-description: Define Console environment variables
 ---
 
 ## Docker image environment variables
@@ -53,11 +51,11 @@ The logs will confirm, `Sourcing environment variables from $CDK_ENV_FILE`, or w
 Warning: CDK_ENV_FILE is set but the file does not exist or is not readable.
 ```
 
-:::note[Syntax and precedence]
+<Note>
 Lists start at index 0 and are provided using the `_idx_` syntax.
 
 If you set *both* the environment variable and a YAML value for a specific field, **the environment variable will take precedence**.
-:::
+</Note>
 
 ## YAML property cases
 
@@ -92,9 +90,9 @@ sso:
         issuer: "..."
 ```
 
-:::note[Conversion syntax]
+<Note>
 When converting environment variables to YAML configuration, environment variables in `UPPER-KEBAB-CASE` will be converted to `kebab-case` in the YAML configuration.
-:::
+</Note>
 
 #### Conversion edge cases
 
@@ -167,9 +165,9 @@ When an environment variable ending with `_FILE` is set to a file path, its corr
 
 For instance, if you set `CDK_LICENSE_FILE=/run/secrets/license`, the value of `CDK_LICENSE` will be overridden by the content of the file located at `/run/secrets/license`.
 
-:::info[Exception]
+<Info>
 The `CDK_IN_CONF_FILE` is not supported.
-:::
+</Info>
 
 ## Global properties
 
@@ -216,7 +214,7 @@ Optional local accounts list, used to log into Console.
 
 ## Monitoring properties
 
-<GlossaryTerm>Cortex</GlossaryTerm> is pre-configured to run with Console. It's a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
+Cortex is pre-configured to run with Console. It's a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
 You can choose to not deploy the Cortex image (`conduktor/conduktor-console-cortex`). Hoewever, you will then not be able to see the monitoring graphs or configure alerts.
 
@@ -235,7 +233,7 @@ First, we need to configure Console to connect to Cortex services. By default th
 | `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
 | `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
 
-:::info[Temp flags]
+<Info>
 `monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.
 
 Swap their default value if you experience performance issues when Console is connected with large Kafka clusters:
@@ -244,8 +242,7 @@ Swap their default value if you experience performance issues when Console is co
 CDK_MONITORING_USEAGGREGATEDMETRICS: true
 CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 ```
-
-:::
+</Info>
 
 ## SSO properties
 
@@ -400,7 +397,7 @@ Note that you only need to set the [Kafka cluster properties](#kafka-cluster-pro
 
 ## Indexing properties
 
-<GlossaryTerm>Indexing</GlossaryTerm> fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects). 
+Indexing fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
 
 You should only modify these parameters if you see an issue with the performance.
 

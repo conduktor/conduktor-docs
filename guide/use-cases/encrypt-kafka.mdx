@@ -1,15 +1,12 @@
 ---
-sidebar_position: 330
 title: Encrypt Kafka data
-description: Encrypt Kafka data using Conduktor
 ---
-import ProductShield from '@site/src/components/shared/product-shield.md';
 
 <ProductShield /> 
 
-<GlossaryTerm>Gateway</GlossaryTerm> can encrypt your data on produce or on consume:
+Gateway can encrypt your data on produce or on consume:
 
-- **On Produce** - data will be encrypted before it gets to the broker, i.e. **encrypted before it enters Kafka**. Gateway will _intercept_ the records, encrypt them following your definition within the <GlossaryTerm>Interceptor</GlossaryTerm> configuration and then pass it to Kafka.
+- **On Produce** - data will be encrypted before it gets to the broker, i.e. **encrypted before it enters Kafka**. Gateway will _intercept_ the records, encrypt them following your definition within the Interceptor configuration and then pass it to Kafka.
 - **On Consume** - the **original data is already in Kafka**. The Gateway will encrypt the original data as the consumer consumes it.
 
 ## Encryption modes

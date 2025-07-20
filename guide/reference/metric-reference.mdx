@@ -1,7 +1,5 @@
 ---
 title: Metrics reference
-displayed: false
-description: Prometheus metrics available for Console
 ---
 
 Console exposes metrics using the Prometheus format for your Kafka resources and Console health that you can scrape and send to your external log management system.
@@ -15,7 +13,7 @@ The metrics endpoint is located on `/monitoring/metrics` of your deployed Consol
 | **Consumer group metrics** |  |  |  |
 | `kafka_consumergroup_group_lag` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Absolute Lag of the consumer group on this topic-partition |
 | `kafka_consumergroup_group_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Lag in seconds of the consumer group on this topic-partition |
-| `kafka_consumergroup_group_offset` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Last commited offset of the consumer group on this topic-partition |
+| `kafka_consumergroup_group_offset` | gauge | `cluster_id`, `cluster_name`, `group`, `topic`, `partition` | Last committed offset of the consumer group on this topic-partition |
 | **Consumer group metrics (aggregated)** |  |  |  |
 | `kafka_consumergroup_group_max_lag` | gauge | `cluster_id`, `cluster_name`, `group` | Max group offset lag |
 | `kafka_consumergroup_group_max_lag_seconds` | gauge | `cluster_id`, `cluster_name`, `group` | Lag in seconds of the consumer group (all topics) |
@@ -44,9 +42,9 @@ The metrics endpoint is located on `/monitoring/metrics` of your deployed Consol
 | `kafka_controller_controllerstats_uncleanleaderelectionspersec_total` | counter | `cluster_name`, `cluster_id` | Counter for kafka_controller_controllerstats_uncleanleaderelectionspersec metric |
 | `kafka_log_log_size` | gauge | `broker_host`, `partition`, `broker_id`, `topic`, `cluster_name`, `cluster_id` | Size in bytes of the current topic-partition |
 
-:::info
+<Info>
 Note that the label `cluster_name` is obsolete and will be removed soon. You should use `cluster_id` instead.
-:::
+</Info>
 
 ## Console reference
 

@@ -1,16 +1,8 @@
 ---
-title: Kafka resources
-displayed: false
-description: Conduktor Console provides complete visibility of your Kafka ecosystem, allowing you to manage and monitor your data streaming applications
+title: Conduktor's Kafka resources
 ---
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-import Admonition from '@theme/Admonition';
-import Label from '@site/src/components/Labels';
-
-## Kafka resources
-
-### Topic
+## Topic
 
 Creates a topic in Kafka.
 
@@ -63,7 +55,7 @@ All the properties are validated against the topic policies attached to the appl
   - Topic is created / updated.
   - In dry-run mode, topic creation is validated against the Kafka cluster using AdminClient's [CreateTopicOption.validateOnly(true)](https://kafka.apache.org/37/javadoc/org/apache/kafka/clients/admin/CreateTopicsOptions.html) flag.
 
-### Subject
+## Subject
 
 Creates a subject in the schema registry.
 
@@ -142,7 +134,7 @@ spec:
 - `metadata.name` has to belong to the application instance.
 - Mandatory `spec.schema` or `spec.schemaFile`should be set:
   - `schema` requires an inline schema.
-  - `schemaFile` requires a path to a file that contains the schema relative to the <GlossaryTerm>CLI</GlossaryTerm> (version >=0.2.5) execution path.
+  - `schemaFile` requires a path to a file that contains the schema relative to the CLI (version >=0.2.5) execution path.
 - `spec.format` is mandatory. Defines the schema format: AVRO, PROTOBUF or JSON.
 - `spec.compatibility` (optional), defines the subject compatibility mode: `BACKWARD`, `BACKWARD_TRANSITIVE`, `FORWARD`, `FORWARD_TRANSITIVE`, `FULL`, `FULL_TRANSITIVE` or `NONE`. If undefined, the compatibility mode will be the one defined at the schema registry global level.
 - `spec.references` (optional), specifies the names of referenced schemas.
@@ -153,7 +145,7 @@ spec:
   - subject is created/updated.
   - in dry-run mode, subject will be checked against the schema registry's [compatibility API](https://docs.confluent.io/platform/current/schema-registry/develop/api.html#sr-api-compatibility).
 
-### Connector
+## Connector
 
 Creates a connector on a Kafka Connect cluster.
 
@@ -193,9 +185,9 @@ spec:
 - `metadata.autoRestart.enabled` (optional), default is `"false"`. Defines whether Console's automatic restart feature is enabled for this connector.
 - `metadata.autoRestart.frequencySeconds` (optional), default is `600`, meaning 10 minutes. Defines the delay between consecutive restart attempts.
 
-### Service account
+## Service account
 
-Manages the <GlossaryTerm>ACLs</GlossaryTerm> of a service account in Kafka. This **does not create the service account**, only assigns the ACLs.
+Manages the ACLs of a service account in Kafka. This **does not create the service account**, only assigns the ACLs.
 
 - **API key(s):** <Label type="AdminToken" /> 
 - **Managed with:** <Label type="CLI" /> <Label type="API" /> <Label type="UI" />

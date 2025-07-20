@@ -1,36 +1,33 @@
 ---
-sidebar_position: 8
 title: Deploy Conduktor on AWS
-displayed: false
-description: Deploy Conduktor on AWS CloudAWS CloudFormation
 ---
 
 
 ## Overview
 
-This guide will show how to deploy <GlossaryTerm>Console</GlossaryTerm> in your AWS environment with all the mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
+This guide will show how to deploy Console in your AWS environment with all the mandatory dependencies. It will demonstrate how to deploy Conduktor as a Docker container on ECS with Fargate and configure it alongside a PostgreSQL database via RDS.
 
 Our recommendation is to [deploy with Kubernetes](/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes).
 
 You can follow this guide or [view the instructions for Marktetplace listing (AWS CloudFormation)](#deploy-on-aws-cloudformation).
 
-:::info[Not production-ready]
+<Info>
 While this guide will help you get started, you may need to make additional configurations to ensure your deployment is [production-ready](/guide/conduktor-in-production/index).
-:::
+</Info>
 
 The process should take no more than 30 minutes.
 
-:::info[Security]
+<Note>
 Before you proceed, it is important to make sure that you have either already created a new Virtual Private Cloud (VPC) or are planning to use an existing one. This is important to ensure that your environment is secure and isolated. We also **strongly recommend** avoiding the use of the default VPC, as it can pose a security risk due to its common configuration.
-:::
+</Note>
 
 ![AWS Deployment](/guide/conduktor.ecs.drawio.svg)
 
 ##### Step 1: Create a PostgreSQL database via Amazon RDS
 
-:::info[RDS database]
+<Info>
 You can skip this step if you already have an RDS database running you want to use.
-:::
+</Info>
 
 Let's start by deploying a database on RDS that Conduktor will use to store its state.
 
@@ -102,9 +99,9 @@ In the **Environment Variables** section, add the essential environment variable
 
 ![AWS Guide Env Var](/images/aws-guide-4.png)
 
-:::info[Kafka resources]
+<Info>
 You can also add your Kafka cluster, schema registry, Kafka Connect and ksqlDB configurations as environment variables. If you're just getting started, we recommend you use the wizard inside the Console UI instead. The wizard provides support for uploading certificates, and help on debugging your connections.
-:::
+</Info>
 
 ##### Step 2.2: Add the Conduktor Cortex monitoring image
 
@@ -197,15 +194,15 @@ You can deploy Console using [AWS CloudFormation](https://aws.amazon.com/cloudfo
 
 This guide contains a brief overview of the marketplace listing architecture followed by the steps on how to deploy Console in your AWS environment with all the mandatory dependencies. It will deploy Conduktor as a Docker container on an ECS service with Fargate and configure it alongside a PostgreSQL database via RDS.
 
-:::info[Community version]
+<Info>
 This Conduktor marketplace offering is the Community version and this guide is intended to help you get started. Additional configurations might be required to ensure your deployment is production ready.
-:::
+</Info>
 
 You can [download a template](https://conduktor-marketplace.s3.us-east-1.amazonaws.com/templates/full_template/conduktor-console_full-template-latest.yaml) to use, just update it with your own values. This template is designed to be deployed in only a few clicks. You may, however, need to wait a few minutes for AWS to spin up the resources.
 
-:::info[Security]
+<Note>
 In this configuration, all the resources are on a public subnet. However, the DB instance is available on both private and public subnets. Keep this in mind as part of any security concerns for the database.
-:::
+</Note>
 
 ![AWS Deployment](/images/conduktor.ecs.png)
 
@@ -239,9 +236,9 @@ In this configuration, all the resources are on a public subnet. However, the DB
 
 8. You will then be given the option to change the stack name or any of the other default values from our template. You will need to provide values for the missing CIDR properties towards the bottom of the page. Once you are happy with the parameters, press `Next`.
 
-    :::warning[Default region]
+    <Warning>
     The default value for the region is specified in the template as `eu-west-1a` (public subnet) and `eu-west-1b`(private subnet). If you're deploying in a different region, you have to update these values.
-    :::
+    </Warning>
 
     ![AWS Marketplace](/images/aws-marketplace-7.png)
 

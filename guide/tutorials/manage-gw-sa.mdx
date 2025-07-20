@@ -1,9 +1,6 @@
 ---
-sidebar_position: 11
 title: Manage service accounts using Gateway
-description: A guide for managing Gateway service accounts and ACLs
 ---
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ## Manage a local service account
 
@@ -16,9 +13,9 @@ In this tutorial, you'll learn how to manage service accounts on Gateway. We'll 
 
 In this guide we'll use the [Gateway API](https://developers.conduktor.io/?product=gateway) to create and manage service accounts but these instructions will also work with [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation).
 
-:::info[API endpoints]
+<Info>
 For local deployments, the Gateway API documentation is available at [`http://localhost:8888`](http://localhost:8888). In this guide, we'll use the `service-account` and the `token` endpoints.
-:::
+</Info>
 
 In the `service-account` section of the Gateway API documentation, you'll notice that to create a service account on Gateway, you have to chose between a `local` or `external` service account.
 

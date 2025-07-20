@@ -2,8 +2,6 @@
 title: Sample Console configurations
 ---
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
 There are different options for configuring Conduktor Console. You can use:
 
 - a YAML configuration file
@@ -205,10 +203,9 @@ Cluster with Kafka Connect configured with Basic Auth.
 
 Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secret.
 
-:::warning[Potential costs]
+<Warning>
 Deploying this **CloudFormation** template to your environment might result in billable resources being consumed. [See Amazon MSK pricing for details](https://aws.amazon.com/msk/pricing/).
-:::
-
+</Warning>
 
 <Tabs>
 <TabItem value="YAML  File" label="YAML file">
@@ -758,9 +755,9 @@ To configure Conduktor Console logs globally, you can use the following environm
 | `CDK_ROOT_LOG_FORMAT` | `TEXT`        | Log format, one of `TEXT` or `JSON` (sice 1.26.0)                        |
 | `CDK_ROOT_LOG_COLOR`  | `true`        | Enable color in logs when possible                                       |
 
-:::info[Compatibility]
+<Info>
 For backward compatibility, `CDK_DEBUG: true` is still supported and is equivalent to `CDK_ROOT_LOG_LEVEL: DEBUG`.
-:::
+</Info>
 
 #### Per module log configuration
 
@@ -835,9 +832,9 @@ To enable structured logging, simply set `CONSOLE_ROOT_LOG_LEVEL=JSON`. The logs
 }
 ```
 
-:::note[Log encoding]
+<Warning>
 The log `timestamp` is encoded in [ISO-8601 format](https://en.wikipedia.org/wiki/ISO_8601). When structured logging is enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
-:::
+</Warning>
 
 ## Runtime logger configuration API
 
@@ -911,9 +908,9 @@ That will output :
 ]
 ```
 
-:::note[Logger name filter]
+<Note>
 The `loggerName` filter uses a **contains** so you can either use the fully qualified cardinal name or just a part of it, meaning that the filter `authenticator` will match `io.conduktor.authenticator` and `io.conduktor.authenticator.ConduktorUserProfile` loggers.
-:::
+</Note>
 
 ### Set a specific logger log level
 
@@ -934,9 +931,9 @@ That will output the list of loggers impacted by the update:
 ]
 ```
 
-:::note[Logger name log level]
+<Note>
 Like the `GET` endpoint, the `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it. The `logLevel` is **case-insensitive** and can be: `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `OFF`.
-:::
+</Note>
 
 ### Set multiple loggers log level
 

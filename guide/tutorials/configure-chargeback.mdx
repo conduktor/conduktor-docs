@@ -1,17 +1,12 @@
 ---
-sidebar_position: 3
 title: Configure Chargeback
-displayed: false
-description: Configure Chargeback
 ---
 
 ## Overview
 
-import ProductScalePlus from '@site/src/components/shared/product-scale-plus.md';
-
 <ProductScalePlus /> 
 
-<GlossaryTerm>Chargeback</GlossaryTerm> allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
+Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
 ## Prerequisites
 
@@ -19,14 +14,14 @@ Chargeback requires **both** Console (v1.29.0 and above) and Gateway (v3.4.0 and
 
 ## Enable Chargenack in Console
 
-To enable the Chargeback in <GlossaryTerm>Console</GlossaryTerm>:
+To enable the Chargeback in Console:
 
 1. Go to **Settings** > **Clusters** and select your cluster.
 1. In the **Provider** tab, Select **Gateway** and enter the API details with the default Virtual Cluster value of *passthrough*.
 
     ![Gateway provider](/images/gateway-provider.png)
 
-1. Deploy the [Chargeback Interceptor](#chargeback-interceptor) on <GlossaryTerm>Gateway</GlossaryTerm>. This can be done using:
+1. Deploy the [Chargeback Interceptor](#chargeback-interceptor) on Gateway. This can be done using:
 
 - [Gateway API](https://developers.conduktor.io/?product=gateway) or
 - [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation)

@@ -1,12 +1,8 @@
 ---
-sidebar_position: 340
 title: Share data externally
-description: Share data securely with external partners using Conduktor
 ---
 
 Third-party data sharing can be done securely and selectively using Conduktor.
-
-import ProductExchange from '@site/src/components/shared/product-exchange.md';
 
 <ProductExchange />
 
@@ -32,18 +28,16 @@ Before creating a Partner Zone, you have to:
 - be logged in as an admin to Console UI, or using an admin token for the CLI
 - in Console, [configure your Gateway cluster](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials
 
-:::warning Current limitations
+<Warning>
 As of v1.32, Partner Zones have the following limitations:
 
 - Partners will only be able to connect to your zone using **Local Gateway Service Accounts**.
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
-:::
+</Warning>
 
 ## Create a Partner Zone
 
 You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
-
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value="First Tab" label="Console UI">
@@ -208,15 +202,15 @@ This will open the Partner Zone details window in edit mode, allowing you to:
 - Add new topics (follow the steps from [creating a Partner Zone](#create-a-partner-zone))
 - Change shared topic alias
 
-:::warning[Changing existing topic alias]
+<Warning>
 If you change a topic alias **after it's been shared** with a partner, they won't be able to find the topic anymore and get an error. Only change shared topic names if you're sure that your partners are not using this topic.
-:::
+</Warning>
 
 - Remove existing topics from the Partner Zone (click the **trash can** button next to the relevant topic under the **Topics** section).
 
-:::info
+<Info>
  At least one topic has to exist in a Partner Zone, so you won't be able to delete the last topic via the UI. If you have to, [delete that Partner Zone](#delete-a-partner-zone).
-:::
+</Info>
 
 Click **Continue** when done.
 

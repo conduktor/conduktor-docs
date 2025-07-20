@@ -1,13 +1,11 @@
 ---
-sidebar_position: 350
 title: Perform chaos testing
-description: Chaos testing with Conduktor
 ---
-import ProductShield from '@site/src/components/shared/product-shield.md';
+
 
 <ProductShield />
 
-Chaos testing <GlossaryTerm>Interceptors</GlossaryTerm> in Conduktor are like stress tests for your data systems.
+Chaos testing Interceptors in Conduktor are like stress tests for your data systems.
 
 Performing chaos testing allows you to see how well your applications can handle problems like slow data delivery, corrupted messages or unexpected duplicates. This helps ensure that your systems are strong and can keep running smoothly even when things go wrong.
 
@@ -83,13 +81,13 @@ Duplicate Messages will duplicate records when the client produces/consumes the 
 
 This interceptor is useful for testing applications to ensure that they behave appropriately when there are duplicate records received from Kafka.
 
-*Note: By default, duplicate messages causes chaos on **fetch**, therefore this plugin only duplicates the records returned to the client, the records on the broker are not duplicated*
+<Note> 
+By default, duplicate messages causes chaos on **fetch**, therefore this plugin only duplicates the records returned to the client, the records on the broker are not duplicated.
 
 For example, you could have a message that says "Add £10 to a bank account, Unique Message Id is 12345".
 
-That message is duplicated. The unique id is the same in both.
-
-The client application needs to be validated to ensure that it only receives £10 once.
+That message is duplicated. The unique Id is the same in both. The client application needs to be validated to ensure that it only receives £10 once.
+</Note>
 
 #### Configuration
 
@@ -170,7 +168,6 @@ See more about schema registry and schema-id [here](https://www.conduktor.io/blo
 }
 ```
 
-
 ## Simulate latency on all interactions
 
 This interceptor adds latency to a percentage of requests and responses flowing between your Kafka applications and your Kafka cluster.
@@ -197,7 +194,6 @@ This interceptor is useful for testing applications to ensure that they behave a
   }
 }
 ```
-
 
 ## Simulate leader election errors
 
@@ -247,8 +243,8 @@ This interceptor adds a random bytes to the end of the data in records produced 
 
 You can simulate corruption when:
 
-* *sending* data: `io.conduktor.gateway.interceptor.chaos.ProduceSimulateMessageCorruptionPlugin`
-* *reading data:`io.conduktor.gateway.interceptor.chaos.FetchSimulateMessageCorruptionPlugin`
+- *sending* data: `io.conduktor.gateway.interceptor.chaos.ProduceSimulateMessageCorruptionPlugin`
+- *reading data:`io.conduktor.gateway.interceptor.chaos.FetchSimulateMessageCorruptionPlugin`
 
 ##### Example
 
@@ -264,7 +260,6 @@ You can simulate corruption when:
   }
 }
 ```
-
 
 ## Simulate slow brokers
 
@@ -292,7 +287,6 @@ This Interceptor slows responses from the brokers. This only works on Produce an
   }
 }
 ```
-
 
 ## Simulate slow producers and consumers
 

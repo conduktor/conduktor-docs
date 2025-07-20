@@ -132,9 +132,9 @@ Error while executing topic command : Value '704800000' for configuration 'reten
 
 This behavior can be altered with the flag `spec.autoManaged`.
 
-:::warning
+<Warning>
 With concentrated topics, the enforced retention policy is the physical topic's retention policy, and not the policy requested at the concentrated topic creation time. The `retention.ms` and `retention.bytes` are not cleanup but retention guarantees.
-:::
+</Warning>
 
 #### Auto-managed backing topics
 
@@ -191,9 +191,9 @@ Configs for topic 'physical.topic' are:
 
 As we can see, the retention has been updated.
 
-:::warning
+<Warning>
 If one user requests a topic with infinite retention (`retention.ms = -1`), **all the topics** with the same cleanup policy associated with the rule **will also inherit** this extended configuration and have infinite retention.
-:::
+</Warning>
 
 #### Message count, lag and offset (in)correctness
 
@@ -241,9 +241,9 @@ Gateway consumes about ~250MB of heap memory per million records it's read in co
 
 ##### Very slow consumer group edge case
 
-:::warning
+<Warning>
 Do not enable offset correctness when your topic has extended periods of inactivity.
-:::
+</Warning>
 
 When using topic concentration with `offsetCorrectness` enabled, there's currently a limitation for consumer groups where the data in the topics is slow moving, and/or the consumer groups are not committing their offsets frequently.
 
@@ -274,7 +274,9 @@ This supports `FetchResponse` only (i.e., resulting topic is read-only):
 
 `SELECT [list of fields] FROM [topic name] WHERE [field filter criteria]`
 
-Note that topic names with dash `-` characters have to be double quoted, as the dash is not a valid character for a SQL name. For example, if you have a topic `our-orders`, use `SELECT * FROM "our-orders" WHERE ...`
+<Note> 
+Topic names with dash `-` characters have to be double quoted, as the dash is not a valid character for a SQL name. For example, if you have a topic `our-orders`, use `SELECT * FROM "our-orders" WHERE ...` 
+</Note>
 
 Other limitations:
 

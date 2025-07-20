@@ -1,13 +1,6 @@
 ---
 title: Console resources
-displayed: false
-description: Console resources
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Admonition from '@theme/Admonition';
-import Label from '@site/src/components/Labels';
 
 ## ConsoleGroup
 
@@ -162,9 +155,9 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 </TabItem>
 </Tabs>
 
-:::warning[Mandatory permissions]
+<Warning>
 Make sure you set permissions for this user, otherwise it won't have access to Console functionality (such as **Application Catalog** or Kafka resources.
-:::
+</Warning>
 
 **User checks:**
 
@@ -261,9 +254,9 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 </TabItem>
 </Tabs>
 
-:::info[Cluster identity]
+<Info>
 `metadata.name`, `spec.displayName`, `spec.icon` and `spec.color` are combined to create the visual identity of the KafkaCluster within Console.
-:::
+</Info>
 
 **KafkaCluster checks:**
 
@@ -275,9 +268,9 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 - `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
-:::warning[Validate configuration]
+<Warning>
 Conduktor CLI does not verify that your Kafka configuration (`spec.bootstrapServers`, `spec.properties`, etc.) is valid. You need to check that in Console directly.
-:::
+</Warning>
 
 ### Schema registry
 

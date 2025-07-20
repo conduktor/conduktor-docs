@@ -1,9 +1,8 @@
 ---
 title: Kafka connect
-description: Manage Kafka resources in Conduktor
 ---
 
-In <GlossaryTerm>Console</GlossaryTerm>, the **Kafka Connect** page lets you stream data between Apache Kafka and other data systems in a reliable and scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place.
+In Console, the **Kafka Connect** page lets you stream data between Apache Kafka and other data systems in a reliable and scalable way. Conduktor provides a simple interface for managing all of your source and sink connectors in one place.
 
 ## Kafka Connect cluster list
 
@@ -25,9 +24,9 @@ The list is warning you that some tasks have failed and gives you a high level o
 
 The Connector list page lets you search for any Connector on your currently selected Kafka Connect cluster.
 
-:::warning
+<Warning>
 Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics. [Check the settings](https://docs.conduktor.io/platform/admin/rbac/) for details.
-:::
+</Warning>
 
 Multiple search capabilities can be combined to help you find the Connector you want faster.
 
@@ -84,7 +83,7 @@ This will highlight the parts of the configuration that are invalid, and give yo
 
 ![Invalid Connector form](/images/connector-add-form-invalid.png)
 
-:::warning
+<Warning>
 While Kafka Connect Validate API generally checks for most configuration inconsistencies, there are some limits:
 
 - It usually doesn't check for external configuration such as URL and user / passwords.
@@ -95,7 +94,7 @@ When errors happen outside the nominal scope of Kafka Connect Validate API, you 
 import InvalidToast from '/images/connector-add-invalid-toast.png';
 
 <img src={InvalidToast} alt="Invalid toast" style={{ width: 400, display: 'block', margin: 'auto' }} />
-:::
+</Warning>
 
 At any point in time, you can switch to JSON view and edit the JSON payload directly.  
 You can switch back and forth between JSON and Form view at your convenience.
@@ -166,13 +165,12 @@ The task list displays all the information related to the tasks associated to th
 - The current task state
 - An option to **Restart task**
 
-:::warning
+<Warning>
 For Confluent Cloud Managed Connectors, the Restart task functionality will hit Confluent Cloud's [restart connector API](https://docs.confluent.io/cloud/current/api.html#tag/Lifecycle-(connectv1)/operation/restartConnectv1Connector). This will restart the entire connector and all its associated tasks. This is the only publicly documented API that Confluent has exposed to achieve task restarts.
-:::
+</Warning>
 
 If a task is in a Failed state, you can see the detailed logs about the failed task.  
 ![Connector task failed details](/images/connector-details-tasks.png)
-
 
 ## Connector configuration
 
@@ -190,7 +188,6 @@ The same configuration as a JSON:
 
 ![Connector configuration as a JSON](/images/connector-details-config-json.png)
 
-
 ## Connector auto-restart
 
 Sometimes, Kafka Connect tasks experience failures due to transient issues, database which isn't available for a few minutes or a networking issue, etc. When this happens, Kafka Connect tasks shut down and you need to manually start the tasks again.
@@ -199,9 +196,9 @@ Sometimes, Kafka Connect tasks experience failures due to transient issues, data
 
 Conduktor lets you enable **Auto-restart** on any connector instance. Once enabled, you can additionally configure the **delay** (default 10 minutes) between 2 consecutive restart attempts.
 
-:::warning
+<Warning>
 For Confluent Cloud Managed Connectors, the auto-restart functionality will hit Confluent Cloud's [restart connector API](https://docs.confluent.io/cloud/current/api.html#tag/Lifecycle-(connectv1)/operation/restartConnectv1Connector). This will restart the entire connector and all its associated tasks. This is the only publicly documented API that Confluent has exposed to achieve task restarts.
-:::
+</Warning>
 
 ### How Auto-restart works
 
@@ -222,7 +219,6 @@ You can review all the occurrences when Auto-restart triggered and the error mes
 The Connector Alert tab lets you visualize all active alerts associated to this Connector. You can edit them or, toggle them on or off.
 
 ![Connectors Alerts](/images/connector-details-alerts.png)
-
 
 ## Enable Confluent Cloud managed connectors
 

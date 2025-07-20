@@ -1,7 +1,5 @@
 ---
 title: Interceptor resources
-displayed: false
-description: Gateway Interceptor resources
 ---
 
 export const Highlight = ({children, color, text}) => (
@@ -26,7 +24,7 @@ export const DEK = () => (
 <Highlight color="#FEEFF6" text="#CB1D63">DEK</Highlight>
 );
 
-Here's a list of all the <GlossaryTerm>Interceptors</GlossaryTerm>:
+Here's a list of all the Interceptors:
 
 - [Audit](#audit-interceptor)
 - [Data masking](#data-masking-interceptor)
@@ -37,7 +35,7 @@ Here's a list of all the <GlossaryTerm>Interceptors</GlossaryTerm>:
 
 ## Audit Interceptor
 
-This <GlossaryTerm>Interceptor</GlossaryTerm> logs information from API key requests. To use it, inject it and implement `ApiKeyAuditLog` interface for audit.
+This Interceptor logs information from API key requests. To use it, inject it and implement `ApiKeyAuditLog` interface for audit.
 
 The currently supported Kafka API requests are:
 
@@ -305,7 +303,7 @@ X-USER_IP:172.19.0.3 testing   inject_header
 
 ## Encryption Interceptor
 
-This <GlossaryTerm>Interceptor</GlossaryTerm> is a robust and versatile solution for securing data within Kafka records. Its primary function is to safeguard sensitive information from unauthorized access, thereby enhancing data security both in transit and at rest. The key features are:
+This Interceptor is a robust and versatile solution for securing data within Kafka records. Its primary function is to safeguard sensitive information from unauthorized access, thereby enhancing data security both in transit and at rest. The key features are:
 
 - **Field-Level encryption**: encrypts specific fields within Kafka records, e.g. passwords or PII (Personally Identifiable Information). This is very useful when only certain parts of a message contain sensitive data.
 

@@ -1,21 +1,15 @@
 ---
 title: Gateway resources
-displayed: false
-description: Gateway resources
 ---
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-import Admonition from '@theme/Admonition';
-import Label from '@site/src/components/Labels';
-
-These are high-level Gateway object specifications for Conduktor <GlossaryTerm>CLI</GlossaryTerm>.
+These are high-level Gateway object specifications for Conduktor CLI.
 
 ## Deploy Interceptor
 
 **API key(s):** <Label type="AdminToken" />
 **Managed with:** <Label type="API" /> <Label type="CLI" /> <Label type="UI" />
 
-Deploys an <GlossaryTerm>Interceptor</GlossaryTerm> on <GlossaryTerm>Gateway</GlossaryTerm>.
+Deploys an Interceptor on Gateway.
 
 ````yaml
 ---
@@ -63,15 +57,14 @@ You can activate your Interceptor only in specific scenarios. Use the table belo
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
-:::info[Order of priority]
+<Info>
 The order of precedence from highest (overrides all others) to lowest (most easily overridden) is:
 
 - ServiceAccount
 - Group
 - VirtualCluster
 - Global
-
-:::
+</Info>
 
 #### Examples
 

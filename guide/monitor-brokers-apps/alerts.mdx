@@ -1,7 +1,5 @@
 ---
-sidebar_position: 290
 title: Set up alerts
-description: Set up alerts and monitor Kafka using Conduktor
 ---
 
 ## Overview
@@ -28,9 +26,9 @@ In the **New Alert** pane enter the required details. Each alert has to have:
 - a metric you want to measure (e.g. messageCount)
 - an operator and value for the threshold
 - an owner. This can be a group, an application instance or an individual user. The ownership will determine who can edit the alert.
-    :::warning
+    <Warning>
     If the owner of an alert is deleted, the associated alerts will also be deleted.
-    :::
+    </Warning>
 - (optional) a description explaining what the alert does or why you created it. This is useful if you're creating an external alert.
 - a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
 
@@ -58,9 +56,9 @@ Enabling the **Slack** integration requires creating a Slack application, instal
 
 After enabling the **MS Teams** integration you will need a Teams webhook URL to create alerts with this destination.
 
-:::info[Removing integrations]
+<Info>
 Disabling an integration used by existing alerts will not delete the alerts, but will prevent them from sending notifications externally.
-:::
+</Info>
 
 ### Slack integration
 

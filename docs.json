@@ -151,7 +151,7 @@
         "groups": [
           {
             "group": "Conduktor releases",
-            "pages": ["src/pages/changelog"]
+            "pages": ["guide/release-notes/index"]
           }
         ]
       },
@@ -160,7 +160,12 @@
         "groups": [
           {
             "group": "Support options",
-            "pages": ["guide/support/index"]
+            "pages": [
+              "guide/support/index",
+              "guide/support/upgrade",
+              "guide/support/supported-version-policy"
+            
+            ]
           }
         ]
       }

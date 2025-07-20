@@ -1,14 +1,9 @@
 ---
-sidebar_position: 2
 title: SNI routing
-displayed: false
-description: Make the most out of the ports you have
 ---
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
 ## Overview
 
-<GlossaryTerm>SNI</GlossaryTerm> routing reduces the number of Gateway ports exposed to clients.
+SNI routing reduces the number of Gateway ports exposed to clients.
 
 Unlike port mapping, which differentiates brokers based on the port a client connects to, **SNI routing distinguishes brokers by the hostname the client wants to connect to**. This allows Gateway to expose a single port while directing traffic to the appropriate broker based on the client's requested hostname.
 
@@ -33,9 +28,9 @@ This means that we will have to:
 - [Add the same entries to the DNS server](#4-configure-dns) to allow the clients to be properly routed to the Gateway advertised host and Kafka brokers through Gateway.
 - [Configure Gateway to use the SNI routing](#5-configure-gateway) mechanism.
 
-:::note
+<Note>
 In order to keep Gateway as **stateless** as possible, **we do not store the metadata internally**. We simply pass it on to the client. This means that the metadata will be refreshed every time a client asks for it (e.g. when a new client connects or when the connection refreshes).
-:::
+</Note>
 
 ## Set up SNI routing
 
@@ -116,9 +111,11 @@ brokermain3-gateway.conduktor.sni-demo.local
 
 Here's the minimum configurations required, depending on the security protocol you want to use for your clients to connect to Gateway.
 
-Note that this is in addition to the `KAFKA_` properties required for Gateway to connect to the Kafka cluster.
+<Note> 
+This is in addition to the `KAFKA_` properties required for Gateway to connect to the Kafka cluster.
 
-Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing)
+Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing).
+</Note>
 
 <Tabs>
 <TabItem value="SASL_SSL" label="SASL_SSL">

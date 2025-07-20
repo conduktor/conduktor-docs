@@ -1,15 +1,15 @@
 ---
 title: Kafka topics
-description: Manage Kafka resources in Conduktor
 ---
 
 ## Topic list
 
 The Topic page lets you search for any topic on your currently selected Kafka cluster.
 
-:::warning
+<Warning>
 Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics. Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
-:::
+</Warning>
+
 Multiple search capabilities can be combined to help you find to the topic you want faster.
 
 **Filtering** is possible on:
@@ -24,9 +24,9 @@ Multiple search capabilities can be combined to help you find to the topic you w
 
 **Active columns** can be picked from a list of Available columns from the side button « ⚙️ Edit columns »
 
-:::info
+<Info>
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
-:::
+</Info>
 
 ![Topics](/images/topic-list.png)
 
@@ -38,11 +38,11 @@ Several actions are also available from the Topic List: Create topic, Add partit
 
 On the Create Topic screen, you are asked to provide all the necessary information to create a topic.
 
-:::info
+<Info>
 The default choices made by Console are generally safe for most typical Kafka Production deployments. If you want to understand more deeply what those parameters are about, here's some recommended reads:  
 [Choosing the Replication Factor and Partition Count](https://www.conduktor.io/kafka/kafka-topics-choosing-the-replication-factor-and-partitions-count/)  
 [Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
-:::
+</Info>
 
 import CreateTopic from '/images/topic-create.png';
 
@@ -76,9 +76,9 @@ Use labels to organize your topics and facilitate searching them in Console. Eac
 
 Upon toggling the Advanced configuration, you will be shown all the available topic configurations.
 
-:::info
+<Info>
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
-:::
+</Info>
 
 import CreateTopicAdvanced from '/images/topic-create-advanced.png';
 
@@ -88,9 +88,9 @@ import CreateTopicAdvanced from '/images/topic-create-advanced.png';
 
 Increase the number of partitions for your topic. Number of partitions cannot be decreased.
 
-:::warning
+<Warning>
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
-:::
+</Warning>
 
 import AddPartitions from '/images/topic-add-partitions.png';
 
@@ -130,7 +130,6 @@ import LabelNew from '/images/label-new.png';
 
 <img src={LabelNew} alt="Add new labels" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
-
 # Topic produce overview
 
 - [Configure Producer](#configure-producer)
@@ -157,9 +156,9 @@ import ProduceSerializers from '/images/produce-serializers.png';
 
 The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
-:::warning
+<Warning>
 If using a schema registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
-:::
+</Warning>
 
 #### Random data generator
 
@@ -339,7 +338,6 @@ import ProduceTemplates from '/images/produce-templates.png';
 
 In this list, you're free to apply templates, but also to rename, duplicate and delete them.
 
-
 ## Topic partitions
 
 The Topic Partitions tab displays all the partition information associated to the topic. You can switch from the default "Per partition" view to the "Per broker" view.  
@@ -362,9 +360,9 @@ The **Per broker** view pivots the data to show for each broker:
 ### Empty Partition
 On the Per partition view, you can click on the bin icon to remove the Kafka records from this specific partition.
 
-:::note
+<Note>
 If you need to delete all records from all partitions, click on the `...` icon above the Per partition / Per broker switch, and select **Empty Topic**.
-:::
+</Note>
 
 ## Topic linked resources
 
@@ -387,10 +385,10 @@ The Schema tab displays the Key subject and Value subject associated to your top
 The ACL tab displays the list of Kafka permissions associated to the current Topic.
 ![Capture](/images/topic-acls.png)
 
-:::warning 
+<Warning>
 Only the permissions from the default Kafka authorizer implementation, AclAuthorizer available using AdminClient are listed currently.  
 If you are using one of Console's other supported ACL (Aiven, Confluent Cloud), use the dedicated Service Account page instead.
-:::
+</Warning>
 
 ## Topic graphs
 
@@ -415,12 +413,11 @@ You can edit them or toggle them on or off.
 
 ![List Topic alerts](/images/alerts-tab.png)
 
-
 ## Topic consume
 
-:::info
+<Info>
 Check out the video that presents the most important features of topic consume: [filter and sort techniques for exploration and troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
-:::
+</Info>
 
 ## Configure the Kafka consumer
 
@@ -554,10 +551,10 @@ Global Search is the most simple type of filter you can use.
 2. Pick an operator (contains, not contains, equals, not equals)
 3. Type your search term
 
-:::info
+<Info>
 Internally, this will treat the record Key or Value as text to apply the operation (contains, equals, ...).  
 This might not be the preferred approach if your record is JSON-ish
-:::
+</Info>
 
 ![Global search](/images/topic-global-filter.png)
 
@@ -566,21 +563,22 @@ This might not be the preferred approach if your record is JSON-ish
 You can make your search more fine-grained by activating "Search in a specific field".
 ![Search in a specific field](/images/topic-search-infield.png)
 
-:::info
+<Info>
 Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
 Examples:  
 `data.event.name`  
 `data.event["correlation-id"]`  
 `data.clientAddress[0].ip`  
-:::
+</Info>
 
 ### JS search
 
 If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.  
 Check this article on [JS Filters syntax](../js-filter-syntax/) to get examples and syntax around this filter.
-:::warning
+
+<Warning>
 While it is the option that can potentially address the most complex use-cases, it is not the recommended or the fastest one.
-:::
+</Warning>
 
 ### Statistics pop-up
 
@@ -598,17 +596,17 @@ Here's how to read it:
 
 Once the search starts, you will see messages appearing in the main table. The table has 3 columns: Timestamp, Key and Value.  
 
-:::info
+<Info>
 Note that the Timestamp column takes the **local timezone** of the user. For example, if you are producing a message from Dublin, Ireland (UTC+1) at `14:57:38 local time`, and you then consume this message from your browser (in Dublin), you will see `14:57:38`. However, if another user consumes the same message in Console but from Paris, France (UTC+2), they will see `15:57:38`. Please be aware that this isn't a mistake from Kafka itself, you are simply seeing messages displayed in your local timezone.  
-:::
+</Info>
 
 ### Individual records
 
 Upon clicking on a record from the list, a side bar will open on the right to display the entire record.
 
-:::info
+<Info>
 Use the arrow keys to navigate between messages: ⬆️ ⬇️
-:::
+</Info>
 
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
 
@@ -673,10 +671,10 @@ The headers tab show you all the headers of your Kafka record, and lets you find
 The resulting filter will be created:
 ![Filter on headers](/images/topic-header-filter.png)
 
-:::warning
+<Warning>
 While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
 If your producer doesn't write header values as UTF8 String, this tab might not render properly, and header filter might not work as expected.
-:::
+</Warning>
 
 ### Metadata tab
 
@@ -742,7 +740,6 @@ import SharedViews from '/images/list-shared-views.png';
 
 <img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
 
-
 ## Most recent 500 messages - overview
 
 When you first land on a topic consume page, the default search is configured with **Most Recent 500 messages.** 
@@ -759,18 +756,17 @@ import MostRecent500 from '/images/most-recent-500.png'
 
 <img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
 
-:::warning
+<Warning>
 Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters
-:::
-
+</Warning>
 
 ## JS Filters syntax reference overview
 
 JS filter is used to filter Kafka records. The filter is evaluated on each record on the server. It's powerful and can handle complex filters, but requires writing JavaScript code.
 
-:::warning
+<Warning>
 We recommend that you use the simpler and more performant filters: [Global search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
-:::
+</Warning>
 
 The code has to return a boolean.
 

@@ -1,14 +1,12 @@
 ---
-sidebar_position: 7
 title: Configure SQL
-displayed: false
-description: How to configure Conduktor SQL
 ---
 ## Overview
 
-:::info[Preview functionality]
+<Info>
+**Preview functionality**
 This is currently a Preview feature and is subject to change as we continue working on it.
-:::
+</Info>
 
 Index data from Kafka topics in a database to enable users to query data from the **UI**, **API** or **CLI** using **SQL**.
 
@@ -29,11 +27,11 @@ For a fully integrated Docker Compose, run our [get started](https://conduktor.i
 
 By default, the SQL feature is disabled. You will need to add additional configuration about the database for storing the data.
 
-:::warning
+<Warning>
 You should provision a second database for storing SQL data that is different from the existing one used by Console's backend. This ensures separation of concerns and continued operation of the core Console experience if the SQL database becomes unavailable.
 
-See [database requirements](/platform/get-started/configuration/database) and [about database isolation](#database-isolation) for more guidance.
-:::
+[See database requirements](/platform/get-started/configuration/database) and [find out more about database isolation](#database-isolation).
+</Warning>
 
 Configure the second database through environment variables:
 
@@ -83,9 +81,7 @@ The process gives insight into the:
  - **Time lag**: The delay between the timestamp of the latest message in the Kafka topic and the time when the message was indexed, reflecting processing latency
  - **Indexed count**: The total number of messages successfully indexed into the database table from the Kafka topic
 
-
 ![Conduktor SQL Index Status](/images/conduktor-sql-index-status.png)
-
 
 ### Index Topics in the CLI
 
@@ -163,6 +159,7 @@ The content of each record is flattened. Given the following record:
 ```
 
 Then, you'll have the following table structure:
+
 | __timestamp | __partition | __offset | __checksum                           | __headers | __schema_id | __key     | a.b.c                       | userId |
 |-------------|-------------|----------|--------------------------------------|-----------|-------------|-----------|-----------------------------|-------------|
 | 123456789   | 0           | 42       |8d4fd66a16a84da2ddc709ddc5657c17      | conduktor | 1           | something | Hello World                 | 109210921092|

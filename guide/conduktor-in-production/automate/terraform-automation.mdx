@@ -2,8 +2,6 @@
 title: Automate with Terraform
 ---
 
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
 ## Conduktor Terraform overview
 
 The Conduktor Terraform provider gives you the ability to perform some operations on Conduktor Console state directly from existing [Terraform](https://developer.hashicorp.com/terraform/intro) Infrastructure-as-Code environment. [Find out more](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs).
@@ -132,14 +130,13 @@ The provider configuration also supports environment variables for all attribute
 | `CDK_CONSOLE_CACERT`   | `cacert`         | Root CA certificate in PEM format to verify the Conduktor Console certificate     |
 | `CDK_CONSOLE_KEY`      | `key`            | Key in PEM format to authenticate using client certificates                       |
 
-:::info
+<Info>
 The configuration resolution is (in order of priority):
 
 1. HCL values
 1. Environment variables
 1. Default values (if applicable)
-
-:::
+</Info>
 
 ## Provider usage
 

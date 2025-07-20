@@ -766,9 +766,9 @@ This allows you to create multiple virtual clusters while maintaining a single p
 
 ![virtual clusters](/images/vclusters.png)
 
-:::info[Optional feature]
+<Info>
 Virtual Clusters are entirely optional. If you choose to not configure any, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This is the default mode and all topics/resources will be visible and accessible as usual, without any additional configuration.  
-:::
+</Info>
 
 #### Virtual cluster benefits
 
@@ -940,9 +940,9 @@ To set up Gateway to support multi-clusters, you should:
 
 This can be achieved through a **configuration file**, or **environment variables**.
 
-:::warning
+<Warning>
 If you're using Partner virtual clusters to share data with external third parties, be aware that cluster IDs (e.g., `clusterA`, `clusterB`) may appear in the bootstrap server address or client logs. To prevent unintended exposure, **avoid using sensitive names or information in cluster IDs**.
-:::
+</Warning>
 
 <Tabs>
 <TabItem value="Using a configuration file" label="Using a configuration file">
@@ -1007,9 +1007,9 @@ KAFKA_CLUSTERB_GATEWAY_ROLES: 'upstream' # Note: may be omitted as upstream is t
 
 First, create a new partner virtual cluster.
 
-:::info
+<Info>
 For partner virtual clusters, `aclEnabled` must be `true` and `superUsers` must not be empty.
-:::
+</Info>
 
 <Tabs>
 <TabItem value="CLI" label="CLI">

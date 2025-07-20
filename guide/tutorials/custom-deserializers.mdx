@@ -1,10 +1,6 @@
 ---
-sidebar_position: 6
 title: Configure custom deserializers
-displayed: false
-description: Reference Documentation for Topic related pages
 ---
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 ### Overview
 
@@ -44,9 +40,9 @@ Her's a possible implementation which should be amended based on your infrastruc
 
 You can use a custom `InitContainer` that will be responsible for downloading a JAR from a trusted source (S3, SFTP, HTTP).
 
-:::info[Embed dependencies]
+<Info>
 If your custom deserializers have dependencies, they have be embedded within the same JAR file (Fat JAR / Uber JAR).
-:::
+</Info>
 
 Just provide your init container configuration to the Console helm chart:
 
@@ -120,9 +116,9 @@ kubectl cp ./my_custom_deserializers_2.13-2.0.0.jar <console-pod>:/opt/conduktor
 </TabItem>
 <TabItem value="Extend Console Image" label="Extend Console image">
 
-:::info[Embed dependencies]
+<Info>
 If your custom deserializers have dependencies, they have be embedded within the same JAR file (Fat JAR / Uber JAR).
-:::
+</Info>
 
 1. Write a Dockerfile:
 
