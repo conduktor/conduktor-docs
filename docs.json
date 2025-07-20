@@ -95,7 +95,22 @@
             "group": "Use cases",
             "pages": [
               "guide/use-cases/index",
-              "guide/use-cases/chargeback"
+              "guide/use-cases/chargeback",
+              "guide/use-cases/self-service",
+              "guide/use-cases/encrypt-kafka",
+              "guide/use-cases/third-party-data",
+              "guide/use-cases/enforce-data-quality", 
+              "guide/use-cases/chaos-testing",
+              "guide/use-cases/apply-traffic-control-policies",
+              "guide/use-cases/manage-large-messages",
+              "guide/use-cases/cache-data"
+            ]
+            },      
+            {
+            "group": "Monitor brokers and apps",
+            "pages": [
+              "guide/use-cases/monitor-brokers-apps/index",
+              "guide/use-cases/monitor-brokers-apps/alerts"
             ]
           }
         ]
@@ -128,7 +143,17 @@
             "group": "Conduktor tutorials",
             "pages": [
               "guide/tutorials/index",
-               "guide/tutorials/custom-log"
+               "guide/tutorials/configure-audit-log-topic",
+              "guide/tutorials/configure-chargeback",
+               "guide/tutorials/configure-sql",   
+              "guide/tutorials/custom-deserializers",
+               "guide/tutorials/reprocess",
+              "guide/tutorials/self-service-start",
+               "guide/tutorials/sni-routing",    
+              "guide/tutorials/deploy-aws",
+               "guide/tutorials/migrate-gw-security",
+              "guide/tutorials/configure-encryption",
+               "guide/tutorials/custom-log"                                             
           ]
           }
         ]
@@ -140,8 +165,13 @@
             "group": "Resource reference",
             "pages": [
               "guide/reference/index",
-              "guide/reference/console-reference"              
-            
+              "guide/reference/api-reference",          
+              "guide/reference/console-reference",
+              "guide/reference/gateway-reference",
+              "guide/reference/interceptor-reference",
+              "guide/reference/kafka-reference",               
+              "guide/reference/metric-reference",
+              "guide/reference/self-service-reference"
             ]
           }
         ]

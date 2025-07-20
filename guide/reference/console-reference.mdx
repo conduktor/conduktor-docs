@@ -4,9 +4,9 @@ title: Console resources
 
 ## ConsoleGroup
 
-- **API key(s):** <Label type="AdminToken" />
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
-- **Labels support:** <Label type="MissingLabelSupport" />
+- **API key(s):** AdminToken
+- **Managed with:** UI, CLI, API, TF
+- **Labels support:** "MissingLabelSupport"
 
 Creates a group with members and permissions in Console.
 
@@ -84,9 +84,9 @@ resource "conduktor_group_v2" "developers-a" {
 
 ## ConsoleUser
 
-- **API key(s):** <Label type="AdminToken" /> 
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
-- **Labels support:** <Label type="MissingLabelSupport" />
+- **API key(s):** AdminToken
+- **Managed with:** UI, CLI, API, TF
+- **Labels support:** "MissingLabelSupport"
 
 Creates a user with Console permissions.
 
@@ -174,9 +174,9 @@ Make sure you set permissions for this user, otherwise it won't have access to C
 
 Creates a Kafka cluster definition in Console.
 
-- **API key(s):** <Label type="AdminToken" /> 
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
-- **Labels support:** <Label type="PartialLabelSupport" />
+- **API key(s):** ="AdminToken"
+- **Managed with:** UI, CLI, API, TF
+- **Labels support:** "PartialLabelSupport"
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -609,9 +609,9 @@ spec {
 
 Creates a Kafka Connect cluster definition in Console.
 
-- **API key(s):** <Label type="AdminToken" />
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" /> <Label type="TF" />
-- **Labels support:** <Label type="PartialLabelSupport" />
+- **API key(s):** "AdminToken"
+- **Managed with:** API, CLI, UI, TF
+- **Labels support:** "PartialLabelSupport" 
 
 <Tabs>
 <TabItem  value="CLI" label="CLI">
@@ -673,9 +673,9 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 
-- **API key(s):** <Label type="AdminToken" />
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
-- **Labels support:** <Label type="MissingLabelSupport" />
+- **API key(s):** "AdminToken"
+- **Managed with:** UI, CLI, API
+- **Labels support:** "MissingLabelSupport" 
 
 Creates a ksqlDB cluster definition in Console.
 
@@ -706,9 +706,9 @@ spec:
 
 ## Alerts
 
-- **API key(s):** <Label type="AdminToken" /> 
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
-- **Labels support:** <Label type="MissingLabelSupport" />
+- **API key(s):** AdminToken" 
+- **Managed with:** UI, CLI, API
+- **Labels support: "MissingLabelSupport" 
 
 Creates an alert in Console.
 
@@ -757,9 +757,9 @@ spec:
 
 ## Partner Zones
 
-- **API key(s):** <Label type="AdminToken" /> 
-- **Managed with:** <Label type="UI" /> <Label type="CLI" /> <Label type="API" />
-- **Labels support:**<Label type="PartialLabelSupport" />
+- **API key(s):** "AdminToken" 
+- **Managed with:** UI, CLI, API
+- **Labels support:** "PartialLabelSupport" 
 
 Create or update a [Partner Zone](/guide/conduktor-concepts/partner-zones).
 
