@@ -94,7 +94,6 @@
           {
             "group": "Use cases",
             "pages": [
-              "guide/use-cases/index",
               "guide/use-cases/chargeback",
               "guide/use-cases/self-service",
               "guide/use-cases/encrypt-kafka",
@@ -109,8 +108,20 @@
             {
             "group": "Monitor brokers and apps",
             "pages": [
-              "guide/use-cases/monitor-brokers-apps/index",
-              "guide/use-cases/monitor-brokers-apps/alerts"
+              "guide/monitor-brokers-apps/index",
+              "guide/monitor-brokers-apps/alerts"
+            ]
+          },
+            {
+            "group": "Manage Kafka",
+            "pages": [
+              "guide/manage-kafka/index",
+              "guide/manage-kafka/kafka-resources/brokers",
+              "guide/manage-kafka/kafka-resources/kafka-connect",
+              "guide/manage-kafka/kafka-resources/ksql-db",
+              "guide/manage-kafka/kafka-resources/schema-registry",
+              "guide/manage-kafka/kafka-resources/service-accounts-acls",
+              "guide/manage-kafka/kafka-resources/topics"            
             ]
           }
         ]
@@ -143,15 +154,15 @@
             "group": "Conduktor tutorials",
             "pages": [
               "guide/tutorials/index",
-               "guide/tutorials/configure-audit-log-topic",
+              "guide/tutorials/configure-audit-log-topic",
               "guide/tutorials/configure-chargeback",
-               "guide/tutorials/configure-sql",   
+              "guide/tutorials/configure-sql",   
               "guide/tutorials/custom-deserializers",
-               "guide/tutorials/reprocess",
+              "guide/tutorials/reprocess",
               "guide/tutorials/self-service-start",
-               "guide/tutorials/sni-routing",    
+              "guide/tutorials/sni-routing",    
               "guide/tutorials/deploy-aws",
-               "guide/tutorials/migrate-gw-security",
+              "guide/tutorials/migrate-gw-security",
               "guide/tutorials/configure-encryption",
                "guide/tutorials/custom-log"                                             
           ]
@@ -164,8 +175,7 @@
           {
             "group": "Resource reference",
             "pages": [
-              "guide/reference/index",
-              "guide/reference/api-reference",          
+              "guide/reference/index",     
               "guide/reference/console-reference",
               "guide/reference/gateway-reference",
               "guide/reference/interceptor-reference",

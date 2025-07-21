@@ -108,14 +108,14 @@ sso:
 On Auth0 side, you'll have to create a new application:
 
 1. Create a regular web application:
-    <img src="/images/auth0-create-app.png" alt="Auth01"/>
+    ![Auth0 create app](/images/auth0-create-app.png)
 
 1. Get the `client ID`, `client secret` and `domain`:
-    <img src="/images/auth0-client-id-secret-domain.png" alt="Auth02" />
+    ![Auth0 client Id secret domain](images/auth0-client-id-secret-domain)
 
 1. Configure the callback URI.nThe redirect URI can be something like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. For example, if you deployed Console locally using the name `auth0` in your configuration file, you can use `http://localhost:8080/oauth/callback/auth0`.
 
-![callback](/images/auth0-callback.png)
+![Auth0 callback](/images/auth0-callback.png)
 
 <Warning>
 Remember to specify how you want to connect using the **Connections** tab of your Auth0 application.
@@ -363,15 +363,11 @@ On Google side:
 
 The scopes needed are `email`, `profile`, and `openid`. Optionally, you need [read only](`https://www.googleapis.com/auth/cloud-identity.groups.readonly`) for external group mapping.
 
-import GoogleScopes from '/images/google-scopes.png';
-
-<img src={GoogleScopes} alt="Google Scopes" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Google scopes](/images/google-scopes.png)
 
 - **Step 2**: Restrict access to your internal workspace by checking the `Internal` user type in the **OAuth consent screen**.
 
-import GoogleUserTypeInternal from '/images/google-user-type-internal.png';
-
-<img src={GoogleUserTypeInternal} alt="Google Users type internal" style={{ width: 300, display: 'block', margin: 'auto' }} />
+![Google user type](/images/google-user-type-internal.png)
 
 - **Step 3**: Create a new `OAuth client ID`
 
@@ -381,17 +377,13 @@ For example, if you deployed Console locally using the name `google` in your con
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
 
-import GoogleCreateClient from '/images/google-create-client.png';
-
-<img src={GoogleCreateClient} alt="Google Create Client" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Google create client](/images/google-create-client.png)
 
 - **Step 4**: Get the `client ID` and the `secret ID`
 
 After the creation, the pop-up below appears. You can save the client ID and secret as JSON if you want.
 
-import GoogleClientIdSecret from '/images/google-client-id-secret.png';
-
-<img src={GoogleClientIdSecret} alt="Google Client ID Secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Google client Id secret](/images/google-client-id-secret)
 
 <Info>
 You can find the .well-known at: [`https://accounts.google.com/.well-known/openid-configuration`](https://accounts.google.com/.well-known/openid-configuration).
@@ -476,17 +468,17 @@ The value you need to put as an external group is the `email` address of the Goo
 On the JumpCloud side, you'll have to create a new application:
 
 - **Step 1**: Create a new application in `SSO Applications`.
-![jumpcloud new app](/images/jumpcloud-figure-1.png)
+![Jumpcloud new app](/images/jumpcloud-figure-1.png)
 
 - **Step 2**: Select a `Custom Application` as shown below.
-![jumpcloud custom app](/images/jumpcloud-figure-2.png)
+![Jumpcloud custom app](/images/jumpcloud-figure-2.png)
 
 Then ensure to select `Manage Single Sign-On (SSO)`, then `Configure SSO with OIDC` and `Export users to this app (Identity Management)` as seen in the screenshot below.
-![jumpcloud sso](/images/jumpcloud-figure-3.png)
+![Jumpcloud SSO](/images/jumpcloud-figure-3.png)
 
 Following this, enter general information for your custom application, including the display label, such as `conduktor` as seen in the screenshot below and configure this application.
 
-![jumpcloud label](/images/jumpcloud-figure-4.png)
+![Jumpcloud example 4](/images/jumpcloud-figure-4.png)
 
 - **Step 3**: Add `Redirect URI(s)` and `Login URL`.
 
@@ -501,15 +493,13 @@ For example, if you deployed Console locally using the name `jumpcloud` in your 
 
 Enter the Login URL, which is the URL users need to log into this application. In the example below, this is `https://localhost:8080` .
 
-![](/images/jumpcloud-figure-5.png)
+![Jumpcloud ecample 5](/images/jumpcloud-figure-5.png)
 
 - **Step 4**: Find the `Client ID` and `Client Secret`.
 
 After clicking activate during Step 3 you will be shown configurations for `Client ID` and `Client Secret`, be sure to save these somewhere safe.
  
-import JumpCloudClientIdSecret from '/images/jumpcloud-figure-6.png';
-
-<img src={JumpCloudClientIdSecret} alt="JumpCloud client ID secret" style={{ width: 300, display: 'block', margin: 'auto' }} />
+![Jumpcloud example 6](/images/jumpcloud-figure-6.png)
 
 <Warning>
 You need to keep the `Client Secret` somewhere safe, as you will not have access to it again.
@@ -712,9 +702,7 @@ On Okta side, create a new application:
 
 - **Step 1**: Create an **OpenID Connect web application**
 
-import OktaCreateApp from '/images/okta-create-app.png';
-
-<img src={OktaCreateApp} alt="Okta create app" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Okta create app](/images/okta-create-app.png)
 
 - **Step 2**: Configure the callback URI
 
@@ -724,27 +712,19 @@ For example, if you deployed Console locally using the name `okta` in your confi
 
 For more details on Console redirect URI for OAuth2, you can check the [documentation](/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/#more-details-on-console-external-url).
 
-import OktaCallbackUri from '/images/okta-callback-uri.png';
-
-<img src={OktaCallbackUri} alt="Okta callback URI" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Okta callback URI](/images/okta-callback-uri.png)
 
 - **Step 3**: Configure **app assignments**, and save changes 
 
-import OktaAssignments from '/images/okta-assignments.png';
-
-<img src={OktaAssignments} alt="Okta assignments" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Okta assignments](/images/okta-assignments.png)
 
 - **Step 4**: Get `client ID` and `client secret`, that you'll use in the configuration file of Console
 
-import OktaClientIdSecret from '/images/okta-client-id-secret.png';
-
-<img src={OktaClientIdSecret} alt="Okta client ID secret" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Okta client ID secret](/images/okta-client-id-secret.png)
 
 - **Step 5**: Find the `issuer URL` in the **Sign On** tab of your application. It's made like `https://<domain>.okta.com`
 
-import OktaIssuer from '/images/okta-issuer.png';
-
-<img src={OktaIssuer} alt="Okta issuer" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Okta issuer](/images/okta-issuer.png)
 
 <Note>
 You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-configuration`.

@@ -63,30 +63,6 @@ All images are stored in `/images`. Embed all images like this:
 
 Note that all images will have a defined styling applied but you can override this when required.
 
-To resize an image:
-
-```md
-Make it smaller
-<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
-
-Make it larger
-<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '90%'}} />
-
-Set a specific pixel width
-<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '400px'}} />
-
-Make it full width:
-<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '100%'}} />
-```
-
-You can also make an image clickable (and open in another tab) - useful for detailed diagrams:
-
-```md
-<a href="/images/internal-lb.png" target="_blank" rel="noopener">
-  <img src="/images/internal-lb.png" alt="Internal load balancing diagram" />
-</a>
-```
-
 ### Links
 
 Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hardware/*.

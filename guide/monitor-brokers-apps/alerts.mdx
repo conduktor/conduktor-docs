@@ -66,7 +66,7 @@ As part of configuring the Slack integration in Conduktor, you will find steps f
 
 Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack.
 
-<img src="/images/slack-invite.png" alt="Slack" style={{maxWidth: '30%'}} />
+![Slack](/images/slack-invite.png)
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to [send alerts](/platform/navigation/settings/alerts) to that Slack channel.
 
@@ -80,37 +80,37 @@ You can send notifications to different rooms for different alerts. However, thi
 
 1. Open the Workflows app within the chat or channel by right-clicking on the conversation or by clicking **...** then selecting **Workflows**.
 
-<img src="/images/workflows-1.png" alt="Teams step one" style={{maxWidth: '30%'}} />
+![Workflow step 1](/images/workflows-1.png)
 
 2. In the Workflow app, click **+ New flow** or select the Create tab and choose **Post to a channel when a webhook request is received** template.
 
-![Teams workflow step two](/images/workflows-2.png)
+![Teams workflow step 2](/images/workflows-2.png)
 
 3. Choose a name for this flow (or use the default **Post to a channel when a webhook request is received**) and choose who will own this workflow. It should default to the user logged into Teams. Click **Next**.
 
-![Teams workflow step three](/images/workflows-3.png)
+![Teams workflow step 3](/images/workflows-3.png)
 
 4. Pick the team and channel you want to post to, then click **Create flow**. This page may take some time to load.
 
-![Teams workflow step four](/images/workflows-4.png)
+![Teams workflow step 4](/images/workflows-4.png)
 
 5. Once you click on **Create flow** in the previous step, the next page should show you the URL for the webhook associated with the workflow you just created. *Copy and paste this somewhere* as it will be used in a later step and click **Done**.
 
 6. Go back to the Home tab in Workflows and edit the newly created workflow by clicking **...** then **Edit**.
 
-![Teams workflow step five](/images/workflows-5.png)
+![Teams workflow step 5](/images/workflows-5.png)
 
 7. On this page:
     1. Expand **When a Teams webhook request is received** to see the URL endpoint again, if you've not saved it from the previous step. You can also change *who can trigger the flow*. In this example we'll use *Anyone*.
     1. Expand the second step and for **Select an output from previous steps**, pick **Attachments**. For **Adoptive Card** select **content**. The rest of the form should be filled in but you can change the channel and team here.
 
-  ![Teams workflow step six](/images/workflows-6.png)
+  ![Teams workflow step 6](/images/workflows-6.png)
 
 8. Open Console and [create a new alert](#create-alerts) or go to an existing one. In the **Alert destination** page select **Teams**. Paste the webhook URL and click **Save**. You can test your connection by clicking **Send test**.
 
 9. Fire some alerts and you should now see alert messages being posted in Microsoft Teams under the specified channel:
 
- ![Teams workflow step eight](/images/workflows-8.png)
+ ![Teams workflow step 8](/images/workflows-8.png)
 
 ### Webhook integration
 

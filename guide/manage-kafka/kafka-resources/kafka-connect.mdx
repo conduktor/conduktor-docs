@@ -89,11 +89,9 @@ While Kafka Connect Validate API generally checks for most configuration inconsi
 - It usually doesn't check for external configuration such as URL and user / passwords.
 - Some Kafka Connect Plugins classes are notoriously badly implemented and don't take full advantage of Kafka Connect Validate API
 
-When errors happen outside the nominal scope of Kafka Connect Validate API, you will see the errors as Toasts
+When errors happen outside the nominal scope of Kafka Connect Validate API, you will see the errors as toasts:
 
-import InvalidToast from '/images/connector-add-invalid-toast.png';
-
-<img src={InvalidToast} alt="Invalid toast" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![invalid toast](/images/connector-add-invalid-toast.png)
 </Warning>
 
 At any point in time, you can switch to JSON view and edit the JSON payload directly.  
@@ -148,11 +146,9 @@ The Graph section lets you visualize the number of Failed Tasks of your Connecto
 
 #### Create an alert
 
-To create an Alert, click on the "+" button inside the graph to open the "Create Alert" page. There, define the threshold for your alert as well as a name, and click Save.
+To create an Alert, click on the **+** button inside the graph to open the **Create Alert** page. There, define the threshold for your alert as well as a name, and click **Save**.
 
-import CreateConnectorAlert from '/images/connector-details-alert.png'
-
-<img src={CreateConnectorAlert} alt="Create a Connector alert" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![connector details alert](/images/connector-details-alert.png)
 
 You can get a summary of all alerts associated to this Connector in the dedicated [Alerts tab](/platform/navigation/console/kafka-connect/connector-alerts/).
 
@@ -170,6 +166,7 @@ For Confluent Cloud Managed Connectors, the Restart task functionality will hit 
 </Warning>
 
 If a task is in a Failed state, you can see the detailed logs about the failed task.  
+
 ![Connector task failed details](/images/connector-details-tasks.png)
 
 ## Connector configuration
@@ -203,6 +200,7 @@ For Confluent Cloud Managed Connectors, the auto-restart functionality will hit 
 ### How Auto-restart works
 
 **Every minute**, Console will check for failed tasks for this Connector. For failed tasks:
+
 - If the Auto-restart process hasn't tried to restart the task in the past **10 minutes** (configurable):
   - Capture the task error message
   - Restart the failed task
@@ -253,7 +251,7 @@ Now we need to obtain the identifiers of the environment and cluster.
 
 - Retrieving the ID of your environment can be achieved through the `ccloud environment list` command.
 
-```
+```text
 $ ccloud environment list                                                                     
       Id      |    Name
 +-------------+------------+
@@ -265,7 +263,7 @@ In this scenario, the environment ID for the production cluster would be `env-67
 
 - Retrieving the ID of your Kafka cluster can be achieved from the `ccloud kafka cluster list` command.
 
-```
+```text
  ccloud environment use env-6789
  ccloud kafka cluster list                                                                    16:21:10
       Id      |         Name         | Type  | Provider |    Region    | Availability | Status

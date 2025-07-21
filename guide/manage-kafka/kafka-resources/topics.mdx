@@ -44,9 +44,7 @@ The default choices made by Console are generally safe for most typical Kafka Pr
 [Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
 </Info>
 
-import CreateTopic from '/images/topic-create.png';
-
-<img src={CreateTopic} alt="Create a topic" style={{ width: 600, display: 'block', margin: 'auto' }} />
+[Create topic]](/images/topic-create.png)
 
 **Topic name**
 
@@ -80,9 +78,7 @@ Upon toggling the Advanced configuration, you will be shown all the available to
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 </Info>
 
-import CreateTopicAdvanced from '/images/topic-create-advanced.png';
-
-<img src={CreateTopicAdvanced} alt="Topic advanced properties" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Advanced create topic](/images/topic-create-advanced.png)
 
 ### Add partitions
 
@@ -92,9 +88,7 @@ Increase the number of partitions for your topic. Number of partitions cannot be
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 </Warning>
 
-import AddPartitions from '/images/topic-add-partitions.png';
-
-<img src={AddPartitions} alt="Add partitions" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Add partitions](/images/topic-add-partitions.png)
 
 ### Empty topic
 
@@ -102,17 +96,13 @@ This lets you delete all records from a topic. This operation is permanent and i
 
 If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
 
-import EmptyTopic from '/images/topic-empty.png';
-
-<img src={EmptyTopic} alt="Empty a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Empty topic](/images/topic-empty.png)
 
 ### Delete topic
 
 This lets you delete the topic from Kafka. This operation is permanent and irreversible.
 
-import DeleteTopic from '/images/topic-delete.png';
-
-<img src={DeleteTopic} alt="Delete a topic" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Delete topic](/images/topic-delete.png)
 
 ### Manage topic labels
 
@@ -120,15 +110,11 @@ You can help categorize your Topics further using key-value pairs called labels.
 
 To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
 
-import EditLabel from '/images/label-edit.png';
-
-<img src={EditLabel} alt="Edit labels" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Label edit](/images/label-edit.png)
 
 A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
 
-import LabelNew from '/images/label-new.png';
-
-<img src={LabelNew} alt="Add new labels" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Label new](/images/label-new.png)
 
 # Topic produce overview
 
@@ -150,9 +136,7 @@ Each section from the accordion menu will allow you to configure the Kafka produ
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
-import ProduceSerializers from '/images/produce-serializers.png';
-
-<img src={ProduceSerializers} alt="Produce serializers" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Produce serializers](/images/produce-serializers.png)
 
 The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
@@ -173,9 +157,7 @@ The Headers section lets you add headers to your message.
 
 Header Key and Header Value both expect valid UTF8 String.
 
-import ProduceHeaders from '/images/produce-headers.png';
-
-<img src={ProduceHeaders} alt="Produce headers" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Produce headers](/images/produce-headers.png)
 
 ### Flow
 
@@ -224,9 +206,7 @@ The next screenshot is an example of a produce flow, that will generate:
 - A batch of 10 records, every second for a minute
 - With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
-import ProduceFlowMode from '/images/produce-flow-mode.png';
-
-<img src={ProduceFlowMode} alt="Produce flow mode" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Produce flow mode](/images/produce-flow-mode.png)
 
 ### Additional options
 
@@ -257,7 +237,7 @@ Default: all
 
 ### Sensible Defaults
 
-The following items are preconfigured by default:
+The following items are pre-configured by default:
 
 - If you have connected a Schema Registry and there exist a subject named `<topic-name>-key` and `<topic-name>-value` , the serializers will be populated automatically to the right type (Avro / Protobuf / JsonSchema)
 - otherwise, the `StringSerializer` will be picked.
@@ -271,23 +251,19 @@ Kafka records produced through this screen will be available from the Produced m
 
 By clicking on one of the records that you just produced, you can see its content and metadata.
 
-import ProduceMessagesPanelSingle from '/images/produce-messages-panel-single.png';
-
-<img src={ProduceMessagesPanelSingle} alt="Produce messages panel single" style={{ width: 700, display: 'block', margin: 'auto' }} />
+![Messages panel](/images/produce-messages-panel-single.png)
 
 ## Operations
 
 ### Import CSV
 
-![Import as CSV button](/images/produce-import-csv-button.png)
+![Produce import CSV](/images/produce-import-csv-button.png)
 
 This feature lets you produce a batch of Kafka Records based on a CSV file.
 
 The 3 required inputs are the Key and Value Serializer, and the input file itself.
 
-import ImportCSV from '/images/produce-import-csv.png';
-
-<img src={ImportCSV} alt="Import CSV" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Produce import](/images/produce-import-csv.png)
 
 As of today, the file must respect the following structure:
 
@@ -316,15 +292,13 @@ key;value
 order-123;"{""item1"": ""value1"", ""item2"":""value2""}"
 ```
 
-Click "Import" to start the process.
+Click **Import** to start the process.
 
 While in progress, you'll see a loading state.
 
 Once the import is finished, you'll get a summary message.
 
-import ImportCSVSuccess from '/images/produce-import-csv-success.png';
-
-<img src={ImportCSVSuccess} alt="Import CSV Success" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![Produce import CSV](/images/produce-import-csv-success.png)
 
 ### Save and load producer templates
 
@@ -332,9 +306,7 @@ If you are regularly using the same set of Producer configuration, you can save 
 
 At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
 
-import ProduceTemplates from '/images/produce-templates.png';
-
-<img src={ProduceTemplates} alt="Produce templates" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Produce templates](/images/produce-templates.png)
 
 In this list, you're free to apply templates, but also to rename, duplicate and delete them.
 
@@ -372,18 +344,18 @@ If you need to find related resources, your can use one of the following tabs to
 
 The Topic Consumer Groups tab displays the consumer groups associated to the current Topic.
 
-![Capture](/images/topic-consumers.png)
+![Topic consumers](/images/topic-consumers.png)
 
 ### Linked Schema Registry Subjects
 
 The Schema tab displays the Key subject and Value subject associated to your topic, assuming your have defined them using [TopicNameStrategy](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/index.html#how-the-naming-strategies-work).
 
-![Capture](/images/topic-subjects.png)
+![Topic subjects](/images/topic-subjects.png)
 
 ### Linked ACLs
 
 The ACL tab displays the list of Kafka permissions associated to the current Topic.
-![Capture](/images/topic-acls.png)
+![Topic ACLs](/images/topic-acls.png)
 
 <Warning>
 Only the permissions from the default Kafka authorizer implementation, AclAuthorizer available using AdminClient are listed currently.  
@@ -400,18 +372,18 @@ When you browse any Topic Details page, you will see the associated Graphs assoc
 
 Graphs can be visualized over 24h, 7 days or 30 days periods.
 
-![Topic Graphs](/images/topic-graphs.png)
+![Topic graphs](/images/topic-graphs.png)
 
 On each metric you have the option to create an Alert. This will open a side panel requesting you to set the parameters to triggers your Alert.
 
-![Create a Topic alert](/images/topic-create-alert.png)
+![Create a topic alert](/images/topic-create-alert.png)
 
 ## Alerts tab
 
 The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
 You can edit them or toggle them on or off.
 
-![List Topic alerts](/images/alerts-tab.png)
+![List topic alerts](/images/alerts-tab.png)
 
 ## Topic consume
 
@@ -428,28 +400,27 @@ When you access a Topic from the Topic List page for the first time, a consumer 
 -   Partitions: `All`
 
 This default setup lets you quickly browse through the 500 most recent messages produced in the topic.
+
 ![Default topic consumer](/images/topic-default.png)
 
 There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
 
 ### Show from
 
-`Show From` defines the starting point for the Kafka Consumer in your topic.
+`Show From` defines the starting point for the Kafka consumer in your topic.
 
-import ShowFromOptions from '/images/topic-show-from-choices.png';
+![Show from topic](/images/topic-show-from-choices.png)
 
-<img src={ShowFromOptions} alt="Show from options" style={{ width: 600, display: 'block', margin: 'auto' }} />
+Possible values:
 
-The possible values are as follow:
-
--   `Most Recent` option works differently depending on the **Limit** that you select
+-   `Most recent` option works differently depending on the **Limit** that you select
     -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
         -   [How Most Recent 500 works?](/platform/navigation/console/topics/topic-consume/most-recent/)
     -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
 -   `Latest hour`, `Today`, `Yesterday` to start the consumer respectively
     -   60 minute ago,
-    -   At the beginning of the day at 00:00:00 (Local Timezone based on your browser)
-    -   At the beginning of the day before at 00:00:00 (Local Timezone)
+    -   At the beginning of the day at 00:00:00 (Local timezone based on your browser)
+    -   At the beginning of the day before at 00:00:00 (Local timezone)
 -   `Beginning` to start the consumer from the very beginning of the topic.
 -   `Date` and `Timestamp` to start from a specific point in time datetime or an epoch
     -   Date: ISO 8601 DateTime format with offset `2024-12-21T00:00:00+00:00`
@@ -461,35 +432,26 @@ The possible values are as follow:
 
 `Limit` defines when your consumer must stop.
 
-import LimitOptions from '/images/topic-limit-choices.png';
+![Topic limit](/images/topic-limit-choices.png)
 
-<img src={LimitOptions} alt="Limit options" style={{ width: 600, display: 'block', margin: 'auto' }} />
+Available options:
 
-Possible choices are:
-
--   `Latest Offset` stop the consumer upon reaching the end of the topic.
-    -   ⚠️ The end offsets are calculated when you trigger the search. Records produced after that point **will not appear** in the search results.
--   `None (live consume)` to start a Live Consumer that will look for messages indefinitely
--   `Number of records` stop the consumer after having sent a certain number of records to the browser.
-    -   💡 When you have active filters, non-matching records will not count toward this limit.
--   `Date` stop the consumer after reaching the configured date
-    -   ISO 8601 DateTime format with offset `2023-12-21T00:00:00+00:00`
+-   `Latest offset` - stop the consumer upon reaching the end of the topic. The end offsets are calculated when you trigger the search. Records produced after that point **will not appear** in the search results.
+-   `None (live consume)` - start a live consumer that will look for messages indefinitely.
+-   `Number of records` - stop the consumer after having sent a certain number of records to the browser. When you have active filters, non-matching records will not count toward this limit.
+-   `Date` - stop the consumer after reaching the configured date. The ISO 8601 DateTime format with offset `2023-12-21T00:00:00+00:00`.
 
 ### Partitions
 
 `Partitions` lets you restrict the consumer to only consume from certain partitions of your topic. By default, records from **all partitions** are consumed.
 
-import PartitionsOptions from '/images/topic-partitions-choices.png';
-
-<img src={PartitionsOptions} alt="Partitions options" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Partitions choices](/images/topic-partitions-choices.png)
 
 ### Key and value format
 
 `Key format` and `Value format` lets you force the deserializer for your topic.
 
-import TopicKeyFormatOptions from '/images/topic-key-format-choices.png';
-
-<img src={TopicKeyFormatOptions} alt="Key format choices" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Format choices](/images/topic-key-format-choices.png)
 
 #### Automatic deserializer
 
@@ -507,6 +469,7 @@ Automatic deserializer applies to all the records within a topic, based on the o
 If you have installed them, your Custom Deserializers will appear here. Optionally, configure them using the `Properties` text and your messages will show as expected.  
 
 Check our guide on how to [Install and configure custom deserializers](/platform/guide/custom-deserializers/) in Console.
+
 ![Consume with a custom deserializer](/images/topic-custom-deserializer.png)
 
 #### JSON deserializer
@@ -610,15 +573,11 @@ Use the arrow keys to navigate between messages: ⬆️ ⬇️
 
 There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
 
-import RecordDetails from '/images/topic-browse.png';
-
-<img src={RecordDetails} alt="Record details" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Topic browse](/images/topic-browse.png)
 
 The **Share** button will lead you to a page dedicated to this record, allowing you to share it with your colleagues, and to get more details about it.
 
-import ShareRecord from '/images/record-details.png';
-
-<img src={ShareRecord} alt="Share a record" style={{ width: 700, display: 'block', margin: 'auto' }} />
+![Record details](/images/record-details.png)
 
 ### Data tab
 
@@ -626,9 +585,7 @@ The Data tab lets you visualize your record's Key and Value.
 
 If your record Value is serialized with JSON or using a Schema Registry it is presented by default using the Table view. You can also switch to the JSON view if necessary.
 
-import DataTabs from '/images/topic-browse-json-table.png';
-
-<img src={DataTabs} alt="Data tabs" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![JSON table](/images/topic-browse-json-table.png)
 
 The 2 views have different features associated.
 
@@ -688,9 +645,7 @@ The metadata tab gives you all the other information regarding your record that 
 - Compression type
 - Schema ID if any
 
-import MetadataTab from '/images/topic-metadata.png';
-
-<img src={MetadataTab} alt="Metadata tab" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Topic metadata](/images/topic-metadata.png)
 
 ## Operations
 
@@ -736,9 +691,7 @@ To list the existing views, click on the folder icon:
 
 From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
 
-import SharedViews from '/images/list-shared-views.png';
-
-<img src={SharedViews} alt="List existing views" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Create topic](/images/list-shared-views.png)
 
 ## Most recent 500 messages - overview
 
@@ -752,9 +705,7 @@ In most cases, it will give you `500 / num_partitions` messages, per partition. 
 
 Edge cases might occur and the algorithm will account for it seamlessly.
 
-import MostRecent500 from '/images/most-recent-500.png'
-
-<img src={MostRecent500} alt="Most recent 500 explained" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Create topic](/images/most-recent-500.png)
 
 <Warning>
 Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters
@@ -905,9 +856,7 @@ When clicking on the edit button from the table rows, a new screen will appear w
 - The Kafka default value
 - The current value
 
-import EditTopicConfiguration from '/images/topic-config-item.png';
-
-<img src={EditTopicConfiguration} alt="Edit Topic configuration" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Create topic](/images/topic-config-item.png)
 
 You can choose to either Update the value to something new or revert to the Kafka default, which will apply the change directly on the Kafka cluster, similarly to the `kafka-configs` commands below.
 

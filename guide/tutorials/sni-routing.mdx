@@ -42,9 +42,7 @@ However, depending on your infrastructure, you may want to differentiate between
 
 This could be the case if you're using a load balancer:
 
-import Ports from '/images/ports-sni.png';
-
-<img src={Ports} alt="Ports with SNI routing" style={{ width: 500, display: 'block', margin: 'auto' }} />
+![SNI ports](/images/ports-sni.png)
 
 By default, Gateway listens on port 6969. This port can be configured using the `GATEWAY_PORT_START` [environment variable](/gateway/configuration/env-variables/#port--sni-routing).
 
@@ -67,9 +65,7 @@ Alternatively, **wildcards** `*` can be used in the SAN, if supported by your is
 
 If you need to detail all the advertised brokers in the Gateway keystore, here is the format returned by Gateway for each broker:
 
-import AdvertisedBrokersStructure from '/images/advertised-brokers.png';
-
-<img src={AdvertisedBrokersStructure} alt="Advertised brokers structure" style={{ width: 600, display: 'block', margin: 'auto' }} />
+![Advertised brokers](/images/advertised-brokers.png)
 
 We can find:
 
