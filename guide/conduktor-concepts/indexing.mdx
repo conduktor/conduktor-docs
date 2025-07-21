@@ -31,9 +31,12 @@ These are just some examples of how Indexing can help you:
 
 ## Troubleshoot
 
-<details>
-<summary>I've just created a topic, but get 'Indexing in progress'/can't see the metadata</summary>
-<div>
-Topics created 'now' would not be indexed until the next Indexing cycle. This means they wouldn't appear in Console for up to 30 seconds. To mitigate this, we've come up with a counter-measure: any user request to the topic list will ALWAYS make one *AdminClient* call to Kafka: `listTopics`. It’s cheap, simple and will only return the topic names. So, when topics are listed in Console, 99% of the time Indexing will serve all the topics with all the columns (name, partitions, count, size, etc.) and 1% of the time Indexing will serve most topics except for one or two **not-indexed yet** where only the name will be available.
-</div>
-</details>
+<Accordion title="I've just created a topic, but get 'Indexing in progress'/can't see the metadata">
+Topics created 'now' would not be indexed until the next Indexing cycle. 
+
+This means they wouldn't appear in Console for up to 30 seconds. 
+
+To mitigate this, we've come up with a counter-measure: any user request to the topic list will ALWAYS make one *AdminClient* call to Kafka: `listTopics`. 
+
+It’s cheap, simple and will only return the topic names. So, when topics are listed in Console, 99% of the time Indexing will serve all the topics with all the columns (name, partitions, count, size, etc.) and 1% of the time Indexing will serve most topics except for one or two **not-indexed yet** where only the name will be available.
+</Accordion>

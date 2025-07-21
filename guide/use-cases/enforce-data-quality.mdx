@@ -96,26 +96,24 @@ Here are some examples of data quality rules.
 Make sure you amend these examples to use your values.
 </Note>
 
-<details>
-  <summary>Email RegEx validation</summary>
+<AccordionGroup>
+  <Accordion title="Email RegEx validation">
   <p>
     Your requirements may be different from this RegEx, as email validation via RegEx is complex.
-    <CopyableCode language="bash">{`value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`}</CopyableCode>
+    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
   </p>
-</details>
-<details>
-  <summary>UUID RegEx validation</summary>
+  </Accordion>
+  <Accordion title="UUID RegEx validation">
   <p>
-    <CopyableCode language="bash">{`value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`}</CopyableCode>
+    `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
   </p>
-</details>
-
-<details>
-  <summary>Ensure Header is JSON</summary>
+  </Accordion>
+  <Accordion title="Ensure Header is JSON">
   <p>
-    <CopyableCode language="bash">{`headers['Content-Type'] == 'application/json'`}</CopyableCode>
+    `headers['Content-Type'] == 'application/json'`
   </p>
-</details>
+  </Accordion>
+</AccordionGroup>
 
 ## Policies
 
@@ -280,25 +278,19 @@ When multiple Policies target the same topic, there are two scenarios that can o
 
 ## Troubleshoot
 
-<details>
-  <summary>What does Policy status mean?</summary>
-  <p>
+<AccordionGroup>
+  <Accordion title="What does Policy status mean?">
   This is the status of a data quality Policy:
     - **Pending**: the configuration isn't deployed or refreshed yet
     - **Ready**: the configuration is up-to-date on Gateway
     - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active.
-  </p>
-</details>
-<details>
-  <summary>How do I handle headers with dashes?</summary>
+  </Accordion>
+  <Accordion title="How do I handle headers with dashes?">
+  Use bracket notation instead of dot notation. For example: `headers['Content-Type']`
+  </Accordion>
+  <Accordion title="Why can't `ype()` figure out the right numeric types?">
   <p>
-  Use bracket notation instead of dot notation. For example: <CopyableCode language="bash">{`headers['Content-Type']`}</CopyableCode>
-  </p>
-</details>
-<details>
-  <summary>Why can't <code>type()</code> figure out the right numeric types?</summary>
-  <p>
-    Whether your data is sent as <strong>JSON</strong> or <strong>Avro</strong>, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between <code>int</code> and <code>double</code>. As a result, expressions like <code>type(value.age) == int</code> may <strong>fail unexpectedly</strong>, even if:
+    Whether your data is sent as **JSON** or **Avro**, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between `int` and `double`. As a result, expressions like `type(value.age) == int` may **fail unexpectedly**, even if:
     <ul>
       <li>the original value is a valid integer (e.g., 12)</li>
       <li>you're using an Avro schema where age is explicitly entered as an integer</li>
@@ -306,13 +298,14 @@ When multiple Policies target the same topic, there are two scenarios that can o
     This is because the Avro type information is lost during the conversion to JSON.
 
     <strong>Recommended workaround:</strong>
-    Use logic-based expressions like: <CopyableCode language="bash">value.age > 0 && value.age < 130</CopyableCode> This implicitly checks that the field is numeric and falls within a valid range, avoiding type inference.
+    Use logic-based expressions like: `value.age > 0 && value.age < 130` This implicitly checks that the field is numeric and falls within a valid range, avoiding type inference.
 
     <strong>Note:</strong> CEL currently can't evaluate against Avro schemas directly — it only sees the JSON-converted payload.
 
     We recommend enabling Gateway debug logs to inspect how data is interpreted during rule evaluation and to understand why it may have failed.
   </p>
-</details>
+  </Accordion>
+</AccordionGroup>
 
 ## Related resources
 

@@ -183,10 +183,11 @@ Now that you have an up-and-running deployment of Console, it's time to invite y
 
 ### Troubleshoot
 
-<details>
-  <summary>Can't access database or Console</summary>
-  <p>You may need to add inbound rules. For example, in the **security group** attached to the console service, ensure there is an inbound rule (TCP) for port **8080**. In the **security group** attached to the RDS instance, ensure an inbound rule (Type = PostgreSQL) for port **5432**.</p>
-</details>
+<Accordion title="Can't access database or Console">
+  You may need to add inbound rules. <br></br>
+  For example, in the **security group** attached to the console service, ensure there is an inbound rule (TCP) for port **8080**. 
+  In the **security group** attached to the RDS instance, ensure an inbound rule (Type = PostgreSQL) for port **5432**.
+</Accordion>
 
 ## Deploy on AWS CloudFormation
 

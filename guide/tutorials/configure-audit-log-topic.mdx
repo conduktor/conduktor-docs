@@ -44,7 +44,11 @@ You can then import that file in your SIEM or log management system.
 
 ## Troubleshoot
 
-<details>
-  <summary>I don't see the `_conduktor_console_audit_log` topic in your Kafka cluster</summary>
-  <div> Check whether **internal topics are hidden**, if not, check the Console logs for errors. Otherwise, the issue could be a misconfigured name of the Kafka cluster. In that's the case, you'll see this message in the logs: *Failed to publish audit log event: Not found. Could not find cluster my-kafka-cluster*. Make sure that the Kafka **cluster name matches the ID you can see** in the clusters dropdown in Console.</div>
-</details>
+<Accordion title="I don't see the `_conduktor_console_audit_log` topic in your Kafka cluster">
+  Check whether **internal topics are hidden**, if not, check the Console logs for errors. 
+  
+  Otherwise, the issue could be a misconfigured name of the Kafka cluster. 
+  In that's the case, you'll see this message in the logs: *Failed to publish audit log event: Not found. Could not find cluster my-kafka-cluster*. 
+  
+  Make sure that the Kafka **cluster name matches the ID you can see** in the clusters dropdown in Console.
+</Accordion>
