@@ -157,7 +157,7 @@ We rely on container *CGroups limits* and use *up to 80%* of the container memor
 You only need to care about the limits that you set on your container.
 
 <Tabs>
-<TabItem value="Console Helm" label="Console helm">
+<Tab title="Console helm">
 
 ```yaml
 # Values.yaml
@@ -169,8 +169,8 @@ platform:
 ...
 ```
 
-</TabItem>
-<TabItem value="Kubernetes" label="Kubernetes">
+</Tab>
+<Tab title="Kubernetes">
 
 ```yaml
 # deployment.yaml
@@ -188,8 +188,8 @@ template:
 ...
 ```
 
-</TabItem>
-<TabItem value="Docker Compose" label="Docker Compose">
+</Tab>
+<Tab title="Docker Compose">
 
 ```yaml
 # docker-compose.yaml
@@ -203,7 +203,7 @@ template:
 ...
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Configure SSL/TLS
@@ -348,6 +348,7 @@ Your Kafka Admin or your Kafka Provider gave you 2 files for authentication.
 - An Access certificate (`.pem` or `.crt` file)
 
 Here's an example with Aiven:
+
 ![Aiven certs](/images/aiven-certificates.png)
 
 You can paste the contents of the two files into Conduktor or [import from keystore](#use-the-ui-keystore-method).
@@ -502,7 +503,7 @@ To troubleshoot Console:
 ### 1. Verify that Conduktor is up and running
 
 <Tabs>
-<TabItem  value="Docker" label="From Docker">
+<Tab title="From Docker">
 
 First, verify that all the components are running.
 
@@ -531,9 +532,8 @@ You can save these logs in a file:
 docker logs conduktor-console >& docker-logs-output.txt
 ```
 
-</TabItem>
-
-<TabItem  value="Kubernetes" label="Kubernetes">
+</Tab>
+<Tab title="Kubernetes">
 
 To get the status of the Conduktor Console pod in Kubernetes, you can run the following command (with the correct namespace, if any):
 
@@ -549,7 +549,7 @@ console-instance-747d5ffc7b-gcpkx          1/1     Running   0          2m4s
 
 The pod status is available in the **STATUS** column.
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### 2. Manually debug Conduktor Console
@@ -559,20 +559,20 @@ The pod status is available in the **STATUS** column.
 First, we will need to invoke a shell within the conduktor-console container. For that, you can use the following commands:
 
 <Tabs>
-<TabItem value="Based on container name" label="Based on container name">
+<Tab title="Based on container name">
 
 ```sh
 docker exec -it conduktor-console bash
 ```
 
-</TabItem>
-<TabItem value="Based on container ID" label="Based on container ID">
+</Tab>
+<Tab title="Based on container ID">
 
 ```sh
 docker exec -it fe4a5d1be98f bash
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 From within the container, you can verify that all expected services are started. Conduktor Console uses supervisord inside of the container to ensure various services are started:

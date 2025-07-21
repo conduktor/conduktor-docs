@@ -28,7 +28,7 @@ You can later to add users from an IAC approach using the [ConsoleGroup](/platfo
 Here's an example of adding an administrator `admin@conduktor.io` with two local users `alice@conduktor.io` and `bob@conduktor.io`:
 
 <Tabs>
-<TabItem  value="config file" label="Configuration file">
+<Tab title="Configuration file">
 
 
 ```yaml title="platform-config.yaml"
@@ -44,9 +44,8 @@ auth:
       password: bob-secret
 ```
 
-</TabItem>
-
-<TabItem  value="env variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 
 ```json
@@ -58,7 +57,7 @@ CDK_AUTH_LOCAL-USERS_1_EMAIL="bob@conduktor.io"
 CDK_AUTH_LOCAL-USERS_1_PASSWORD="bob-secret"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Configure SSO

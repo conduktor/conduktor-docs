@@ -30,14 +30,14 @@ A `local` service account is managed by Gateway itself, while an `external` serv
 Here's the `docker-compose` file to start a local Gateway with the above configuration.
 
 <Tabs>
-<TabItem value="Start the environment" label="Start the environment">
+<Tab title="Start the environment">
 
 ```bash
 docker compose -f docker-compose.yaml up -d
 ```
 
-</TabItem>
-<TabItem value="docker-compose.yaml" label="docker-compose.yaml">
+</Tab>
+<Tab title="docker-compose.yaml">
 
 ```yaml title="docker-compose.yml"
 services:
@@ -162,7 +162,7 @@ services:
       zookeeper: { condition: service_healthy }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### 2. Export Java security manager config (optional)
@@ -265,7 +265,7 @@ In our example, we've called it `local-acl-admin`.
 Repeat the steps as before, using the name `local-acl-admin`. Create the service account, get its credentials and save them to file.
 
 <Tabs>
-<TabItem value="Create the service account" label="Create the service account">
+<Tab title="Create the service account">
 
 ```bash
 curl \
@@ -284,8 +284,8 @@ curl \
   }'
 ```
 
-</TabItem>
-<TabItem value="Get its credentials" label="Get its credentials">
+</Tab>
+<Tab title="Get its credentials">
 
 ```bash
 curl \
@@ -300,7 +300,7 @@ curl \
   }'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 Store the generated credentials in a new file, `local-acl-admin.properties`.

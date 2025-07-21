@@ -945,7 +945,7 @@ If you're using Partner virtual clusters to share data with external third parti
 </Warning>
 
 <Tabs>
-<TabItem value="Using a configuration file" label="Using a configuration file">
+<Tab title="Using a configuration file">
 
 Specify your main and upstream cluster configurations, along with a `gateway.roles` entry to mark the upstream clusters.
 
@@ -976,8 +976,8 @@ Then, mount the cluster config file in the Gateway container using the configura
 GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /cluster-config.yaml}'
 ```
 
-</TabItem>
-<TabItem value="Using environment variables" label="Using environment variables">
+</Tab>
+<Tab title="Using environment variables">
 
 Configure your main and upstream clusters through environment variables, defined in the Gateway container:
 
@@ -1000,7 +1000,7 @@ KAFKA_CLUSTERB_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLo
 KAFKA_CLUSTERB_GATEWAY_ROLES: 'upstream' # Note: may be omitted as upstream is the default (used to differentiate from failover clusters)
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### 2. Create a partner virtual cluster
@@ -1012,7 +1012,7 @@ For partner virtual clusters, `aclEnabled` must be `true` and `superUsers` must 
 </Info>
 
 <Tabs>
-<TabItem value="CLI" label="CLI">
+<Tab title="CLI">
 
 Create this YAML file:
 
@@ -1035,8 +1035,8 @@ Then, apply it:
 conduktor apply -f mypartner.yaml
 ```
 
-</TabItem>
-<TabItem value="API" label="API">
+</Tab>
+<Tab title="API">
 
 ```sh
 curl \
@@ -1059,19 +1059,19 @@ curl \
 
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### 3. Alias your topics
 
 Finally, create aliases for existing topics in the partner virtual cluster.
 
-:::warning
+<Warning>
 Alias topics within a partner virtual cluster **can only point to topics from the same physical cluster**.
-:::
+</Warning>
 
 <Tabs>
-<TabItem value="CLI" label="CLI">
+<Tab title="CLI">
 
 Create this YAML file:
 
@@ -1102,8 +1102,8 @@ Then, apply it:
 conduktor apply -f alias-topics.yaml
 ```
 
-</TabItem>
-<TabItem value="API" label="API">
+</Tab>
+<Tab title="API">
 
 ```sh
 curl \
@@ -1143,7 +1143,7 @@ curl \
   }'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### 4. Create service accounts
@@ -1155,7 +1155,7 @@ Create two service accounts for the partner virtual cluster: **one super user an
 The super user will manage ACLs and grant permissions to the partner user, who will use their account to access the exposed topics.
 
 <Tabs>
-<TabItem value="CLI" label="CLI">
+<Tab title="CLI">
 
 ```yaml title="service-accounts.yaml"
 ---
@@ -1196,8 +1196,8 @@ conduktor run generateServiceAccountToken \
   --life-time-seconds 100000000
 ```
 
-</TabItem>
-<TabItem value="API" label="API">
+</Tab>
+<Tab title="API">
 
 ```sh
 curl \
@@ -1261,7 +1261,7 @@ curl \
   }'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 Put the admin credentials in a file called `mypartner-super-user.properties`:

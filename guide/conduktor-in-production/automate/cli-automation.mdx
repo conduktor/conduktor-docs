@@ -220,7 +220,7 @@ $ conduktor get app-instance clickstream-app-dev
 By using the flag `--output` or `-o`, you can select the output format of the command.
 
 <Tabs>
-  <TabItem value="YAML" label="YAML">
+  <Tab title="YAML">
 
     ```yaml title="conduktor get user -o yaml"
     ---
@@ -259,8 +259,8 @@ By using the flag `--output` or `-o`, you can select the output format of the co
     spec: {}
     ```
 
-  </TabItem>
-  <TabItem value="JSON" label="JSON">
+  </Tab>
+  <Tab title="JSON">
 
     ```json title="conduktor get user -o json"
     [
@@ -317,8 +317,8 @@ By using the flag `--output` or `-o`, you can select the output format of the co
     ]
     ```
 
-  </TabItem>
-  <TabItem value="List of names" label="List of names">
+  </Tab>
+  <Tab title="List of names">
 
     ```txt title="Conduktor get user -o name"
     User/alice@demo.dev
@@ -326,7 +326,7 @@ By using the flag `--output` or `-o`, you can select the output format of the co
     User/admin@demo.dev
     ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 #### Token
@@ -376,7 +376,7 @@ Consider the following folder structure:
 ````
 
 <Tabs>
-<TabItem value="github" label="Github actions">
+<Tab title="Github actions">
 
 ```yaml title=".github/workflows/on-pr.yml"
 
@@ -414,8 +414,8 @@ jobs:
           CDK_API_KEY: ${{ secrets.CONDUKTOR_TOKEN }}
 ```
 
-</TabItem>
-<TabItem value="gitlab" label="Gitlab CI/CD">
+</Tab>
+<Tab title="Gitlab CI/CD">
 
 ```yaml title=".gitlab-ci.yml"
 conduktor-pr:
@@ -446,7 +446,7 @@ conduktor-main:
     - /bin/conduktor apply -f resources/
 ```
   
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use environment variables for secrets

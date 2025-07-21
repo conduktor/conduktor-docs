@@ -11,7 +11,7 @@ title: Console resources
 Creates a group with members and permissions in Console.
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -38,8 +38,8 @@ spec:
         - topicProduce
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 resource "conduktor_group_v2" "developers-a" {
@@ -62,7 +62,7 @@ resource "conduktor_group_v2" "developers-a" {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Groups checks:**
@@ -91,7 +91,7 @@ resource "conduktor_group_v2" "developers-a" {
 Creates a user with Console permissions.
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -117,8 +117,8 @@ spec:
         - topicProduce
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 resource "conduktor_group_v2" "john.doe@company.org" {
@@ -152,7 +152,7 @@ resource "conduktor_group_v2" "john.doe@company.org" {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 <Warning>
@@ -179,7 +179,7 @@ Creates a Kafka cluster definition in Console.
 - **Labels support:** "PartialLabelSupport"
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -213,8 +213,8 @@ spec:
     confluentClusterId: "string"
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
@@ -251,7 +251,7 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 <Info>
@@ -279,7 +279,7 @@ This section lets you associate a schema registry to your KafkaCluster.
 #### Confluent or Confluent-like Registry
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 spec:
@@ -293,8 +293,8 @@ spec:
       password: some_password
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 spec {
@@ -311,7 +311,7 @@ spec {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 Confluent schema registry checks:
@@ -326,7 +326,7 @@ Confluent schema registry checks:
 #### AWS Glue registry
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 spec:
@@ -340,8 +340,8 @@ spec:
       secretKey: secretKey
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 spec {
@@ -358,7 +358,7 @@ spec {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **AWS Glue registry checks:**
@@ -371,7 +371,7 @@ spec {
 Use AWS API Key/Secret to connect to the Glue registry.
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
     security:
@@ -380,8 +380,8 @@ Use AWS API Key/Secret to connect to the Glue registry.
       secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
     security = {
@@ -391,13 +391,13 @@ Use AWS API Key/Secret to connect to the Glue registry.
     }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **FromContext**
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
     security:
@@ -405,8 +405,8 @@ Use AWS API Key/Secret to connect to the Glue registry.
       profile: default
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
     security = {
@@ -415,13 +415,13 @@ Use AWS API Key/Secret to connect to the Glue registry.
     }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **FromRole**
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
     security:
@@ -429,8 +429,8 @@ Use AWS API Key/Secret to connect to the Glue registry.
       role: arn:aws:iam::123456789012:role/example-role
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
     security = {
@@ -439,7 +439,7 @@ Use AWS API Key/Secret to connect to the Glue registry.
     }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Kafka provider
@@ -454,7 +454,7 @@ Provide your Confluent Cloud details to get additional features in Console:
 - Confluent Cloud API key support
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 spec:
@@ -466,8 +466,8 @@ spec:
     confluentClusterId: "lkc-67890"
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 spec {
@@ -481,7 +481,7 @@ spec {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Aiven**
@@ -492,7 +492,7 @@ Provide your Aiven Cloud details to get additional features in Console:
 - Aiven ACLs support
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 spec:
@@ -503,8 +503,8 @@ spec:
     serviceName: "my-kafka-service"
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 spec {
@@ -517,7 +517,7 @@ spec {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Gateway**  
@@ -526,7 +526,7 @@ Provide your Gateway details to get additional features in Console:
 - Interceptor support
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 spec:
@@ -538,8 +538,8 @@ spec:
     virtualCluster: passthrough
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 spec {
@@ -554,7 +554,7 @@ spec {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Icon sets
@@ -614,7 +614,7 @@ Creates a Kafka Connect cluster definition in Console.
 - **Labels support:** "PartialLabelSupport" 
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -636,8 +636,8 @@ spec:
     password: "my-secret"
 ````
 
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+</Tab>
+<Tab title="Terraform">
 
 ````hcl
 resource "conduktor_kafka_connect_v2" "connect-1" {
@@ -660,7 +660,7 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **KafkaConnectCluster checks:**

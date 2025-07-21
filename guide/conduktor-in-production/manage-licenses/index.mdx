@@ -13,24 +13,21 @@ The unlicensed Conduktor Gateway version has a 14-day trial and will stop workin
 We recommend applying your license to the environment variables. Alternatively, you can add it to your YAML config file.
 
 <Tabs>
-<TabItem value="First Tab" label="Use Console">
+<Tab title="Use Console">
 
 <Tabs>
-<TabItem value="Environment Variables" label="Environment variables">
+<Tab title="Environment variables">
 
 ```js title=".env"
 CDK_LICENSE='YOUR_LICENSE_HERE'
 ```
-
-</TabItem>
-
-<TabItem value="YAML  File" label="YAML file">
+</Tab>
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 license: 'YOUR_LICENSE_HERE'
 ```
-
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Verify your license
@@ -57,9 +54,9 @@ License is valid ! Remaining days : 365
 
 To renew an existing or apply a new license, change the `CDK_LICENSE` value in the environment variables (or the `license` value in the YAML file, depending on your setup) and re-deploy the Conduktor Console container.
 
-</TabItem>
+</Tab>
 
-<TabItem value="Second Tab" label="Use Gateway">
+<Tab title="Use Gateway">
 
 The license we provide to you has to be set as an environment variable in your Gateway configuration:
 
@@ -79,7 +76,7 @@ The default name of this topic is `_conduktor_gateway_license`, but it might be 
 In this topic, you'll find the license expiration date.
 
 <Tabs>
-<TabItem value="Enterprise plan" label="Enterprise plan">
+<Tab title="Enterprise plan">
 
 ```json
 {
@@ -89,9 +86,9 @@ In this topic, you'll find the license expiration date.
 }
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="Free plan" label="Free plan">
+<Tab title="Free plan">
 
 ```json
 {
@@ -101,7 +98,7 @@ In this topic, you'll find the license expiration date.
 }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 And you can find the details of the license in the Gateway logs:
@@ -114,5 +111,5 @@ And you can find the details of the license in the Gateway logs:
 
 To change your license, change the `GATEWAY_LICENSE_KEY` environment variable and deploy the Conduktor Gateway container again.
 
-</TabItem>
+</Tab>
 </Tabs>

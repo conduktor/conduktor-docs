@@ -14,7 +14,7 @@ Conduktor Gateway offers a number of powerful Interceptors that enhance your Kaf
 To deploy an Interceptor, you need to prepare its configuration. Here's an example for an interceptor that will **block the creation of topics with more than six partitions**:
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
+<Tab title="CLI">
 
   ````json
   curl \
@@ -43,8 +43,8 @@ To deploy an Interceptor, you need to prepare its configuration. Here's an examp
   }'
   ````
 
-</TabItem>
-<TabItem  value="API" label="API">
+</Tab>
+<Tab title="API">
 
 ````json
 POST /admin/interceptors/v1/interceptor/enforce-partition-limit
@@ -62,7 +62,7 @@ POST /admin/interceptors/v1/interceptor/enforce-partition-limit
 }
 ````
 
-</TabItem>
+</Tab>
 </Tabs>
 
 Interceptors also combine with each other to create very powerful interactions and solve many interesting use-cases in different ways.

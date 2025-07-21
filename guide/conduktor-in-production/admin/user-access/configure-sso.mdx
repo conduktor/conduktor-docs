@@ -9,7 +9,7 @@ We offer several options when configuring SSO (Single Sign-On).
 [View the list of LDAP properties](#ldap-config-properties). Here's a sample snippet containing server, users and groups to put in your configuration file.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -27,8 +27,8 @@ sso:
       groups-attribute: "cn"                       # Group name entry (default: "cn")
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_LDAP_0_NAME="LDAP"
@@ -44,7 +44,7 @@ CDK_SSO_LDAP_0_GROUPS-FILTER="(member={0})"
 CDK_SSO_LDAP_0_GROUPS-ATTRIBUTE="cn"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 <Note>
@@ -126,7 +126,7 @@ Remember to specify how you want to connect using the **Connections** tab of you
 On the Console side, you can add the snippet below to your configuration file. Replace the `client ID`, `client secret` and `domain` with values from step 2 above.
 
 <Tabs>
-<TabItem value="YAML  File" label="Configuration file">
+<Tab title="Configuration file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -138,8 +138,8 @@ sso:
         issuer: "https://<domain>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="auth0"
@@ -149,7 +149,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Configure Amazon Cognito as SSO
@@ -183,7 +183,7 @@ You can find the .well-known at: `https://cognito-idp.<region>.amazonaws.com/<us
 On Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret`, `region`, and `pool ID`, with what you got during step 4.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -195,8 +195,8 @@ sso:
         issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="cognito"
@@ -206,7 +206,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Configure groups
@@ -214,7 +214,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user
 If you want to use the `external groups mapping` to map groups between your Conduktor Console instance and Amazon Cognito, you must set the property `groups-claim` to `"cognito:groups"` in Console configuration file. Below is the full snippet for your configuration file:
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -227,8 +227,8 @@ sso:
         issuer: "https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="cognito"
@@ -239,7 +239,7 @@ CDK_SSO_OAUTH2_0_GROUPS-CLAIM="cognito:groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user pool ID>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ##### Map to external groups
@@ -281,7 +281,7 @@ You can find the .well-known at: `https://login.microsoftonline.com/<tenant ID>/
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during steps 2 and 3.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -293,8 +293,8 @@ sso:
         issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="azure"
@@ -304,7 +304,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Configure groups
@@ -320,7 +320,7 @@ If you have a **large number of groups** within your enterprise, you might need 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -333,8 +333,8 @@ sso:
         issuer: "https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="azure"
@@ -345,7 +345,7 @@ CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://login.microsoftonline.com/<tenant ID>/v2.0"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ##### Map to external groups
@@ -396,7 +396,7 @@ If you need to add an **authorized domain** to your Google account, you can foll
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID and secret with what you got during the step 4.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -409,8 +409,8 @@ sso:
         issuer: "https://accounts.google.com"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="google"
@@ -420,7 +420,7 @@ CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Configure groups
@@ -428,7 +428,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 An additional scope `https://www.googleapis.com/auth/cloud-identity.groups.readonly` is required if you want to sync Google Group with Conduktor Groups.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -441,8 +441,8 @@ sso:
         issuer: "https://accounts.google.com"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="google"
@@ -452,7 +452,7 @@ CDK_SSO_OAUTH2_0_SCOPES="openid,email,profile,https://www.googleapis.com/auth/cl
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ##### Map to external groups
@@ -614,7 +614,7 @@ You can find the .well-known at: `http://<Keycloak host>:<Keycloak port>/realms/
 On Console side, you can add the snippet below to your configuration file. You have to replace the client ID, client secret, and tenant ID, with what you got during the previous steps.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -626,8 +626,8 @@ sso:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="keycloak"
@@ -637,7 +637,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Configure groups
@@ -658,7 +658,7 @@ You can add the claim to the token you want. In this example, the **UserInfo**.
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -671,8 +671,8 @@ sso:
         issuer: "http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="keycloak"
@@ -683,7 +683,7 @@ CDK_SSO_OAUTH2_0_GROUPS-CLAIM="groups"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<realm name>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ##### Map to external groups
@@ -735,7 +735,7 @@ You can find the .well-known at: `https://<domain>.okta.com/.well-known/openid-c
 On the Console side, you can add the snippet below to your configuration file. You have to replace the `client ID`, `client secret` and `domain`, with what you got during steps 4 and 5.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -751,8 +751,8 @@ sso:
 Please note that if you are using a custom auth server in Okta, the OPENID_ISSUER should be in the form `https://<yourOktaDomain>/oauth2/<authorizationServerId>/` rather than `https://<domain>.okta.com`. [Find out more about token customization](https://developer.okta.com/docs/guide/customize-tokens-returned-from-okta/main/).
 </Note>
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="okta"
@@ -762,7 +762,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<domain>.okta.com"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Configure an OIDC/OAuth2 provider as SSO
@@ -842,7 +842,7 @@ Optionally, you can configure the following properties:
 The provider exposes its configuration using the well-known endpoint: `https://<oidc domain>/.well-known/openid-configuration`. Here's an example of a configuration file for a generic OIDC provider.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml title="platform-config.yaml"
 sso:
@@ -854,8 +854,8 @@ sso:
         issuer: "https://<oidc domain>/"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```json title=".env"
 CDK_SSO_OAUTH2_0_NAME="oidc-provider"
@@ -865,7 +865,7 @@ CDK_SSO_OAUTH2_0_CLIENT-SECRET="<client secret>"
 CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://<oidc domain>/"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 

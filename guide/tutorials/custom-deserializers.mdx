@@ -17,7 +17,7 @@ Your custom deserializer is available and you know how to configure it.
 Console looks for jars present in folder `/opt/conduktor/plugins` during startup. There are different ways of making your custom deserializers available in Console.
 
 <Tabs>
-<TabItem value="Docker Compose" label="Docker Compose">
+<Tab title="Docker Compose">
 
 ```yml
 conduktor-console:
@@ -28,15 +28,15 @@ conduktor-console:
     - /local/my_custom_deserializers_2.13-2.0.0.jar:/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
 ```
 
-</TabItem>
-<TabItem value="Kubernetes" label="Kubernetes">
+</Tab>
+<Tab title="Kubernetes">
 
 There are various way to add custom deserializers JAR to Console inside a Kubernetes environment.
 
 Her's a possible implementation which should be amended based on your infrastructure and policies.
 
 <Tabs>
-<TabItem value="init" label="InitContainer">
+<Tab title="InitContainer">
 
 You can use a custom `InitContainer` that will be responsible for downloading a JAR from a trusted source (S3, SFTP, HTTP).
 
@@ -67,8 +67,8 @@ platform:
       mountPath: /opt/conduktor/plugins # Mount for Console container
 ```
 
-</TabItem>
-<TabItem value="PVC" label="PersistentVolumeClaim">
+</Tab>
+<Tab title="PersistentVolumeClaim">
 
 First, create a [PersitentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) with read/write capabilities.
 
@@ -110,11 +110,11 @@ When Console pod is up with volume mounted, you can copy your JAR using `kubectl
 kubectl cp ./my_custom_deserializers_2.13-2.0.0.jar <console-pod>:/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar -n console-namespace
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
-</TabItem>
-<TabItem value="Extend Console Image" label="Extend Console image">
+</Tab>
+<Tab title="Extend Console image">
 
 <Info>
 If your custom deserializers have dependencies, they have be embedded within the same JAR file (Fat JAR / Uber JAR).
@@ -135,7 +135,7 @@ docker build . -t custom-console:<version>
 
 1. Replace the image in your Docker Compose or helm files:
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Check installation status

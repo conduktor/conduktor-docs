@@ -24,7 +24,7 @@ This demonstrates a complete configuration for Conduktor Enterprise consisting o
 For identity provider specific guide see [configuring SSO](/platform/category/configure-sso/). Note that if you don't have an Enterprise license, you should omit the SSO configuration and use [local users](/platform/get-started/configuration/user-authentication/local-admin-and-users/) instead.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 organization:
@@ -75,8 +75,8 @@ clusters:
 license: "" # license key if Enterprise
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -103,7 +103,7 @@ license: "" # license key if Enterprise
       CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: 'password'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Plain auth example
@@ -111,7 +111,7 @@ license: "" # license key if Enterprise
 Connect to a local cluster with no auth/encryption. For example, a local dev Kafka.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 clusters:
@@ -119,8 +119,8 @@ clusters:
     name: 'Local Kafka Cluster'
     bootstrapServers: 'localhost:9092'
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -128,7 +128,7 @@ clusters:
       CDK_CLUSTERS_0_NAME: 'Local Kafka Cluster'
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'localhost:9092'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Plain auth with schema registry
@@ -136,7 +136,7 @@ clusters:
 Connect to a local cluster with schema registry.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 clusters:
@@ -147,8 +147,8 @@ clusters:
       id: 'local-sr'
       url: 'http://localhost:8081'
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -158,7 +158,7 @@ clusters:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_ID: 'local-sr'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: 'http://localhost:8081'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Kafka Connect
@@ -166,7 +166,7 @@ clusters:
 Cluster with Kafka Connect configured with Basic Auth.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'kafka'
@@ -181,8 +181,8 @@ Cluster with Kafka Connect configured with Basic Auth.
         password: '<password>'
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -196,7 +196,7 @@ Cluster with Kafka Connect configured with Basic Auth.
       CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD: '<password>'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Amazon MSK with IAM authentication example
@@ -208,7 +208,7 @@ Deploying this **CloudFormation** template to your environment might result in b
 </Warning>
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 clusters:
@@ -223,8 +223,8 @@ clusters:
       aws_access_key_id=<access-key-id>
       aws_secret_access_key=<secret-access-key>
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -233,13 +233,13 @@ clusters:
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 Connect to an MSK cluster with IAM credentials inherited from environment.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 clusters:
@@ -252,8 +252,8 @@ clusters:
       sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
       sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -262,24 +262,24 @@ clusters:
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler"
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 You can also override either the `default` profile or role.
 
 <Tabs>
-<TabItem value="Override Profile" label="Override profile">
+<Tab title="Override profile">
 
 ```
 sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsProfileName="other-profile";
 ```
-</TabItem>
-<TabItem value="Override Role" label="Override role">
+</Tab>
+<Tab title="Override role">
 
 ```
 sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleArn="arn:aws:iam::123456789012:role/msk_client_role";
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Amazon MSK with Glue schema registry
@@ -287,7 +287,7 @@ sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleA
 Connect to an MSK cluster with schema registry using credentials.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 clusters:
@@ -308,8 +308,8 @@ clusters:
         accessKeyId: '<access-key-id>'
         secretKey: '<secret-key>'
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -323,13 +323,13 @@ clusters:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID: '<access-key-id>'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY: '<secret-key>'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 Connect to an MSK cluster with schema registry using the default chain of credentials providers.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 clusters:
@@ -349,8 +349,8 @@ clusters:
         type: 'FromContext'
         profile: '<profile>' # optional to use the default profile
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -363,13 +363,13 @@ clusters:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromContext'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE: '<profile>'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 Connect to an MSK cluster with schema registry using a specific role.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 clusters:
@@ -390,8 +390,8 @@ clusters:
         type: 'FromRole'
         role: '<role>'
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -404,13 +404,13 @@ clusters:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromRole'
       CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE: '<role>'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 To use a specific registry for this cluster, you can add a `registryName` to the `schemaRegistry` section.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 schemaRegistry:
@@ -422,8 +422,8 @@ schemaRegistry:
   registryName: '<registry-name>'
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -434,7 +434,7 @@ schemaRegistry:
       CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME: '<registry-name>'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Confluent Cloud example
@@ -442,7 +442,7 @@ schemaRegistry:
 Connect to a Confluent cloud cluster using API keys.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<TabItem title="YAML file">
 
 ```yaml
 clusters:
@@ -456,7 +456,7 @@ clusters:
 ```
 
 </TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -466,7 +466,7 @@ clusters:
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<username>\" password=\"<password>\";"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Confluent Cloud with schema registry
@@ -474,7 +474,7 @@ clusters:
 Connect to a Confluent cloud cluster with schema registry using basic auth.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'confluent-pkc'
@@ -492,8 +492,8 @@ Connect to a Confluent cloud cluster with schema registry using basic auth.
       password: '<password>'
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -507,7 +507,7 @@ Connect to a Confluent cloud cluster with schema registry using basic auth.
       CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: '<password>'
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Confluent Cloud with service account management
@@ -515,7 +515,7 @@ Connect to a Confluent cloud cluster with schema registry using basic auth.
 Connect to a Confluent Cloud cluster and configure additional properties to manage service accounts, API keys and ACLs.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'confluent-pkc'
@@ -533,8 +533,8 @@ Connect to a Confluent Cloud cluster and configure additional properties to mana
     confluentClusterId: "<cluster_id>"
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -550,7 +550,7 @@ Connect to a Confluent Cloud cluster and configure additional properties to mana
       CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID: "<cluster_id>"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### SSL certificate example - Aiven (truststore)
@@ -558,7 +558,7 @@ Connect to a Confluent Cloud cluster and configure additional properties to mana
 You can use the PEM formatted files (.pem or .cer) directly by providing the CA certificate inline. Make sure the certificate is **on one single line**.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: aiven
@@ -572,8 +572,8 @@ You can use the PEM formatted files (.pem or .cer) directly by providing the CA 
     ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -583,7 +583,7 @@ You can use the PEM formatted files (.pem or .cer) directly by providing the CA 
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=SCRAM-SHA-512\nsasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username=\"<username>\" password=\"<password>\";\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Two-way SSL (keystore and truststore)
@@ -597,7 +597,7 @@ You should have three files:
 Ensure the content is on **a single line**.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'aiven-ssl'
@@ -612,8 +612,8 @@ Ensure the content is on **a single line**.
     ssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -623,7 +623,7 @@ Ensure the content is on **a single line**.
       CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SSL\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----\nssl.keystore.type=PEM\nssl.keystore.key=-----BEGIN PRIVATE KEY----- <YOUR ACCES KEY> -----END PRIVATE KEY-----\nssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### Aiven with service account management
@@ -631,7 +631,7 @@ Ensure the content is on **a single line**.
 Connect to an Aiven cluster and configure additional properties to manage Service Accounts and ACLs.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'aiven-09ba'
@@ -650,8 +650,8 @@ Connect to an Aiven cluster and configure additional properties to manage Servic
     serviceName: "kafka-18350d67" # kafka cluster id (service name)
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -666,7 +666,7 @@ Connect to an Aiven cluster and configure additional properties to manage Servic
       CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME: "kafka-18350d67"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Conduktor Gateway Virtual Clusters
@@ -674,7 +674,7 @@ Connect to an Aiven cluster and configure additional properties to manage Servic
 Configure Virtual Clusters with your Gateway deployment to manage Interceptors within Console.
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yaml
 - id: 'kafka'
@@ -688,8 +688,8 @@ Configure Virtual Clusters with your Gateway deployment to manage Interceptors w
     virtualCluster: "passthrough" 
 ```
 
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -703,7 +703,7 @@ Configure Virtual Clusters with your Gateway deployment to manage Interceptors w
       CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 #### SASL/OAUTHBEARER and OIDC Kafka cluster example
@@ -711,7 +711,7 @@ Configure Virtual Clusters with your Gateway deployment to manage Interceptors w
 OAUTHBEARER with OIDC Authentication is possible since Kafka 3.1 and [KIP-768](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=186877575). To demonstrate OIDC authentication, NASA has a Kafka Cluster from which you can connect to after you [sign up](https://gcn.nasa.gov/quickstart). Here's a config example that works for their cluster (adapt the values to your needs for your cluster).
 
 <Tabs>
-<TabItem value="YAML  File" label="YAML file">
+<Tab title="YAML file">
 
 ```yml
 clusters:
@@ -727,8 +727,8 @@ clusters:
       sasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token
       sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
 ```
-</TabItem>
-<TabItem value="Environment Variables" label="Environment variables">
+</Tab>
+<Tab title="Environment variables">
 
 ```bash
     environment:
@@ -737,13 +737,13 @@ clusters:
       CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka.gcn.nasa.gov:9092'
       CDK_CLUSTERS_0_PROPERTIES: 'security.protocol=SASL_SSL\nsasl.mechanism=OAUTHBEARER\nsasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="<YOUR_CLIENT_ID>" clientSecret="<YOUR_CLIENT_SECRET>";\nsasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token\nsasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler'
 ```
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Configure Console logs
 
 <Tabs>
-<TabItem  value="Env variables" label="Environment variables">
+<Tab title="Environment variables">
 
 #### Console-wide log configuration
 
@@ -790,9 +790,9 @@ CONSOLE_ROOT_LOG_LEVEL: DEBUG
 
 Then, `CONSOLE_ROOT_LOG_LEVEL` will still be set to `DEBUG`, and isn't overridden.
 
-</TabItem>
+</Tab>
 
-<TabItem  value="Config file" label="Config file">
+<Tab title="Config file">
 
 If you want to further customize your logging at an individual logger-level, you can use a per-module logback configuration file.
 
@@ -811,7 +811,7 @@ All logback configuration files declare some expected appenders:
 | `ASYNC_STDOUT`       | Appender that writes logs to stdout asynchronously            |
 | `ASYNC_STDOUT_COLOR` | Appender that writes logs to stdout asynchronously with color |
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Structured logging (JSON)

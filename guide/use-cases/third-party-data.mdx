@@ -40,7 +40,7 @@ As of v1.32, Partner Zones have the following limitations:
 You can create a Partner Zone from the **Console UI**, or the **Conduktor CLI**.
 
 <Tabs>
-<TabItem value="First Tab" label="Console UI">
+<Tab title="Console UI">
 Use the Console UI to create a Partner Zone in just a few steps.
 
 1. In Conduktor Console, go to **Settings** > **Partner Zones** and click **+New zone**.
@@ -77,8 +77,8 @@ To view and manage all the zones you have access to, go to **Settings** > **Part
 
 Click on a Partner Zone to view its details.
 
-</TabItem>
-<TabItem value="Second Tab" label="Conduktor CLI">
+</Tab>
+<Tab title="Conduktor CLI">
 You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-in-production/automate/cli-automation) to create Partner Zones.
 
 1. Save this example to file, e.g. `pz.yaml`:
@@ -173,13 +173,13 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     topic-b
     ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Edit a Partner Zone
 
 <Tabs>
-<TabItem value="First Tab" label="Console UI">
+<Tab title="Console UI">
 To edit a Partner Zone you can either:
 - go to the Partner Zone page list view, and click the **three dots** on the right-hand side then select **Edit**
 - or go to a specific Partner Zone's details view, click the **Edit** button in the top right corner.
@@ -220,8 +220,8 @@ Expand the **Traffic control policies** section by clicking on it. You can toggl
 
 Click **Save** in the top right corner when done.
 
-</TabItem>
-<TabItem value="Second Tab" label="Conduktor CLI">
+</Tab>
+<Tab title="Conduktor CLI">
 
 1. Open the previously  created YAML file (e.g. `pz.yaml`) and make the required changes.
 
@@ -231,13 +231,13 @@ Click **Save** in the top right corner when done.
     conduktor apply -f pz.yaml
     ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Delete a Partner Zone
 
 <Tabs>
-<TabItem value="First Tab" label="Console UI">
+<Tab title="Console UI">
 
 To delete a Partner Zone you can either:
 
@@ -247,9 +247,9 @@ To delete a Partner Zone you can either:
 Deleting a Partner Zone cannot be undone and will remove a partner's access.
 
 A confirmation window will pop up. Enter `DELETE` to confirm the deletion. *This cannot be undone.*
-</TabItem>
+</Tab>
 
-<TabItem value="Second Tab" label="Conduktor CLI">
+<Tab title="Conduktor CLI">
 
 Deleting a Partner Zone will remove a partner's access to it. *This can't be undone.*
 
@@ -257,7 +257,7 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
      conduktor delete PartnerZone {name}
   ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Troubleshoot

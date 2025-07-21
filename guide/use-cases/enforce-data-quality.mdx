@@ -31,7 +31,7 @@ The Rules page lists your Rules with a preview of their CEL expressions. Open Ru
 You can create a data quality Rule using the Console UI or the Conduktor CLI.
 
 <Tabs>
-<TabItem value="ui" label="Console UI">
+<Tab title="Console UI">
 
 To create a Rule using the Console UI:
 
@@ -43,9 +43,9 @@ To create a Rule using the Console UI:
 1. Define the CEL expression for your Rule:
    - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for more details.
 1. Click **Create**.
-</TabItem>
+</Tab>
 
-<TabItem value="cli" label="Conduktor CLI">
+<Tab title="Conduktor CLI">
 
 You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
 
@@ -69,7 +69,7 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
     conduktor apply -f rule.yaml
     ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Built-in Rules
@@ -98,20 +98,14 @@ Make sure you amend these examples to use your values.
 
 <AccordionGroup>
   <Accordion title="Email RegEx validation">
-  <p>
     Your requirements may be different from this RegEx, as email validation via RegEx is complex.
     `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
-  </p>
   </Accordion>
   <Accordion title="UUID RegEx validation">
-  <p>
     `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
-  </p>
   </Accordion>
   <Accordion title="Ensure Header is JSON">
-  <p>
     `headers['Content-Type'] == 'application/json'`
-  </p>
   </Accordion>
 </AccordionGroup>
 
@@ -139,7 +133,7 @@ By default, Policies created using the Console UI don't have any actions enabled
 You can create a data quality Policy using the Console UI or the Conduktor CLI.
 
 <Tabs>
-<TabItem value="ui" label="Console UI">
+<Tab title="Console UI">
 To can create a Policy using the Console UI:
 
 1. Under the *Trust* section of the main menu, go to **Policies** and click **+New Policy**.
@@ -159,9 +153,8 @@ To can create a Policy using the Console UI:
    - Click **Continue** to move to the next step.
 1. Review the Policy, and if you are happy, confirm by clicking **Create**.
 
-</TabItem>
-
-<TabItem value="cli" label="Conduktor CLI">
+</Tab>
+<Tab title="Conduktor CLI">
 
 You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Policy:
 
@@ -195,7 +188,7 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
     conduktor apply -f policy.yaml
     ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Manage a Policy
@@ -223,7 +216,7 @@ Make sure to enable this on the Gateway (and not the underlying Kafka) cluster. 
 You can create alerts that are triggered when a Policy violation happens. Data quality alerts can be owned by groups or individual users.
 
 <Tabs>
-<TabItem value="ui" label="Console UI">
+<Tab title="Console UI">
 
 To create a data quality policy alert via the UI, go to the details page of a Policy (click on the button next to the violations graph) or from the alert tab on the Policies list page.
 
@@ -231,9 +224,9 @@ A data quality policy alert needs to specify a Policy and a threshold: trigger a
 
 [Find out more about alerts](/images/monitor-brokers-apps/alerts).
 
-</TabItem>
+</Tab>
 
-<TabItem value="cli" label="Conduktor CLI">
+<Tab title="Conduktor CLI">
 
 You can use the [Conduktor CLI](/images/conduktor-in-production/automate/cli-automation) to create a data quality policy alert:
 
@@ -258,7 +251,7 @@ You can use the [Conduktor CLI](/images/conduktor-in-production/automate/cli-aut
     conduktor apply -f alert.yaml
     ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Using multiple Policies

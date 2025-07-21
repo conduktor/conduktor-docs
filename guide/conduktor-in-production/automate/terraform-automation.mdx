@@ -49,12 +49,12 @@ provider "conduktor" {
 There are two types of API Keys: **admin** and **Self-service application**.
 
 <Tabs>
-<TabItem  value="admin-api-key" label="Admin API Key">
+<Tab title="Admin API Key">
 
 Admin API Keys grant the maximum permissions on Console.
 
-  <Tabs>
-  <TabItem  value="CLI" label="CLI">
+<Tabs>
+  <Tab title="CLI">
 
 ````bash
 # Generate a key named my-admin-key
@@ -62,35 +62,35 @@ $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-  </TabItem>
-  <TabItem value="GUI" label="UI">
+  </Tab>
+  <Tab title="UI">
 Go to **Settings** > **API Keys** and select **New API Key**:
 ![Create API Key](/images/admin-keys.png)
-  </TabItem>
-  </Tabs>
+  </Tab>
+</Tabs>
 
-</TabItem>
-<TabItem value="self-service-application-api-key" label="Self-service Application API Key">
+</Tab>
+<Tab title="Self-service Application API Key">
 
 Self-service Application API Key permissions are **limited to the scope of the ApplicationInstance** for which they have been generated. [Find out more about Self-service](/guide/use-cases/self-service).
 
   <Tabs>
-  <TabItem  value="CLI" label="CLI">
+  <Tab title="CLI">
 
 ````bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
 ````
 
-  </TabItem>
-  <TabItem value="GUI" label="UI">
+  </Tab>
+  <Tab title="UI">
 
 Go to **Applications**, pick your **Application** and under the **Application Instances** tab click **New API Key**:
 ![Cluster identity](/images/create-app-api-key.png)
 
-  </TabItem>
+  </Tab>
   </Tabs>
-</TabItem>
+</Tab>
 </Tabs>
 <hr />
 
@@ -100,9 +100,9 @@ This type of API Key will have the permissions of the user who created it. It on
 
 Short-lived user API Keys will be valid for the same duration as the configured [session timeout](/guide/conduktor-in-production/admin/user-access/session-lifetime).
 
-:::info[Limitation]
+<Info>
 OIDC users can't be used.
-:::
+</Info>
 
 ````hcl
 # configure provider

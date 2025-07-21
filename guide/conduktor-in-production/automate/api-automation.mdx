@@ -7,7 +7,7 @@ title: Automate with API
 You can automate some of your tasks using our REST API. Conduktor offers the Console API and Gateway API, each used for managing different resources.
 
 <Tabs>
-<TabItem  value="Console" label="Console API">
+<Tab item="Console API">
 
 The Conduktor HTTP API can be used to manage your organizations users, groups and their associated permissions. You can also use it to interact with Kafka resources such as clusters and certificates.
 
@@ -56,8 +56,8 @@ curl -X GET http://localhost:8080/public/v1/groups/project-a/permissions -H "Aut
 ]
 ```
 
-</TabItem>
-<TabItem  value="Gateway" label="Gateway API">
+</Tab>
+<Tab item="Gateway API">
 
 The Conduktor Gateway HTTP API can be used to manage your organizations Interceptors and other resources such as alias topics or topic concentration rules.
 
@@ -65,5 +65,5 @@ The Conduktor Gateway HTTP API can be used to manage your organizations Intercep
 
 Use the API portal to download the OpenAPI specification. You can then import it to tools such as [Postman](https://www.postman.com/).
 
-</TabItem>
+</Tab>
 </Tabs>
