@@ -5,7 +5,12 @@
   margin: 0 auto;
 }
 
-#topbar-cta-button {
+#topbar-cta-button > a > span {
   background-color: #09343C !important;
   color: white !important;
+}
+
+[data-theme='dark'] #topbar-cta-button > a > span {
+  background-color: #bcfe68 !important;
+  color: #09343C !important;
 }
