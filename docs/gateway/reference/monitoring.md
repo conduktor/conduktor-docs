@@ -16,6 +16,29 @@ curl -s http://localhost:8888/health/live
 
 Could be used to set up probes on Kubernetes.
 
+### Kubernetes startup probe
+
+```yaml title="Port configuration"
+
+ports:
+  - containerPort: 8888
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+startupProbe:
+    httpGet:
+        path: /health/live
+        port: httpprobe
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 5
+    successThreshold: 1
+```
+
 ### Kubernetes liveness probe
 
 ```yaml title="Port configuration"
@@ -30,12 +53,15 @@ livenessProbe:
   httpGet:
     path: /health/live
     port: httpprobe
-  initialDelaySeconds: 5
-  periodSeconds: 10
-  timeoutSeconds: 5
+  enabled: true
+  initialDelaySeconds: 0
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
 ```
 
-## Readiness/Startup Endpoint
+## Readiness Endpoint
 
 `/health/ready`
 
@@ -70,8 +96,7 @@ healthcheck:
   retries: 25
 ```
 
-
-### Kubernetes startup probe
+### Kubernetes readiness probe
 
 ```yaml title="Port configuration"
 
@@ -82,16 +107,17 @@ ports:
 ```
 
 ```yaml title="Probe configuration"
-startupProbe:
+readinessProbe:
     httpGet:
         path: /health/ready
         port: httpprobe
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 30
+    enabled: true
+    initialDelaySeconds: 0
+    periodSeconds: 5
+    timeoutSeconds: 1
+    failureThreshold: 3
+    successThreshold: 1
 ```
-
 
 ## Console Versions
 
