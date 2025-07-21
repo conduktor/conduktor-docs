@@ -289,21 +289,20 @@ When multiple Policies target the same topic, there are two scenarios that can o
   Use bracket notation instead of dot notation. For example: `headers['Content-Type']`
   </Accordion>
   <Accordion title="Why can't `ype()` figure out the right numeric types?">
-  <p>
+
     Whether your data is sent as **JSON** or **Avro**, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between `int` and `double`. As a result, expressions like `type(value.age) == int` may **fail unexpectedly**, even if:
-    <ul>
-      <li>the original value is a valid integer (e.g., 12)</li>
-      <li>you're using an Avro schema where age is explicitly entered as an integer</li>
-    </ul>
+      - the original value is a valid integer (e.g., 12)
+      - you're using an Avro schema where age is explicitly entered as an integer
+
     This is because the Avro type information is lost during the conversion to JSON.
 
-    <strong>Recommended workaround:</strong>
+    **Recommended workaround:**
     Use logic-based expressions like: `value.age > 0 && value.age < 130` This implicitly checks that the field is numeric and falls within a valid range, avoiding type inference.
 
-    <strong>Note:</strong> CEL currently can't evaluate against Avro schemas directly — it only sees the JSON-converted payload.
+    **Note**: CEL currently can't evaluate against Avro schemas directly — it only sees the JSON-converted payload.
 
     We recommend enabling Gateway debug logs to inspect how data is interpreted during rule evaluation and to understand why it may have failed.
-  </p>
+
   </Accordion>
 </AccordionGroup>
 
