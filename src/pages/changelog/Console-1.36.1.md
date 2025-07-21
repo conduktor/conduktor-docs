@@ -10,5 +10,5 @@ tags: fixes
 
 ### Fixes
 
-- Fixed an issue where policies without labels were not properly displayed in the application catalog 
+- Fixed an issue where Policies without labels were not properly displayed in the Application Catalog in Console
 - Fixed an issue where the default produce header used a problematic naming format (app.name) that could cause compatibility issues with certain connectors
