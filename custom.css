@@ -6,5 +6,6 @@
 }
 
 #topbar-cta-button {
-  background: #f00f00;
+  background-color: #09343C !important;
+  color: white !important;
 }
