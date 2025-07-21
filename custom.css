@@ -4,3 +4,7 @@
   min-width: 800px;
   margin: 0 auto;
 }
+
+#topbar-cta-button {
+  background: #f00f00;
+}
