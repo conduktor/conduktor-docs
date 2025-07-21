@@ -6,11 +6,11 @@
 }
 
 #topbar-cta-button > a > span {
-  background-color: #09343C !important;
+  background-color: #bcfe68 !important;
   color: white !important;
 }
 
-[data-theme='dark'] #topbar-cta-button > a > span {
+body.dark #topbar-cta-button > a > span {
   background-color: #bcfe68 !important;
   color: #09343C !important;
 }
