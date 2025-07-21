@@ -149,6 +149,14 @@
       },
       {
         "tab": "Tutorials",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Kafkademy",
+              "href": "https://learn.conduktor.io/kafka/"
+            }
+          ]
+        },
         "groups": [
           {
             "group": "Conduktor tutorials",
@@ -187,7 +195,7 @@
         ]
       },
       {
-        "tab": "Release notes",
+        "tab": "Release notes",     
         "groups": [
           {
             "group": "Conduktor releases",
@@ -197,6 +205,15 @@
       },
       {
         "tab": "Support",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Support portal",
+              "href": "https://learn.conduktor.io/kafka/",
+              "icon": "newspaper"
+            }
+          ]
+        },           
         "groups": [
           {
             "group": "Support options",
