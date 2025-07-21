@@ -8,10 +8,10 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Upcoming Breaking changes](#upcoming-breaking-changes)
+- [Breaking changes](#breaking-changes)
 - [New features](#new-features)
 
-### Upcoming Breaking changes
+### Breaking changes
 
 #### New Health and Version APIs
 
@@ -21,7 +21,9 @@ These changes align our service with Kubernetes health checks standards and will
 
 Please check [Monitoring reference](/docs/gateway/reference/monitoring.md) page to learn more about the new API endpoints.
 
-**Note**: The old */health* API is now deprecated and it will be completely removed within the next two realeases. 
+:::warning
+The old */health* API is now deprecated and it will be completely removed within the next two releases. 
+:::
 
 ### New features
 

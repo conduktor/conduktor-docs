@@ -82,8 +82,9 @@ Could be used to set up probes on docker-compose or Kubernetes.
 
 ### docker-compose probe setup
 
-**NOTE:**
+:::info
 The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
+:::
 
 ```yaml
 healthcheck:
