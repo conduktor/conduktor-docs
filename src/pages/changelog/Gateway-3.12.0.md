@@ -8,10 +8,20 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
-- [Breaking changes](#breaking-changes)
+- [Upcoming Breaking changes](#upcoming-breaking-changes)
 - [New features](#new-features)
 
-### Breaking changes
+### Upcoming Breaking changes
+
+#### New Health and Version APIs
+
+To improve the reliability and monitoring of the Gateway service, we have introduced new API endpoints for health checks and version information.
+
+These changes align our service with Kubernetes health checks standards and will provide a more robust way to monitor the Gateway's status.
+
+Please check [Monitoring reference](/docs/gateway/reference/monitoring.md) page to learn more about the new API endpoints.
+
+**Note**: The old */health* API is now deprecated and it will be completely removed within the next two realeases. 
 
 ### New features
 

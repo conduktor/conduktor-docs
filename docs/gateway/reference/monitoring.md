@@ -119,11 +119,11 @@ readinessProbe:
     successThreshold: 1
 ```
 
-## Console Versions
+## Gateway Versions
 
 `/versions`
 
-This endpoint return the Gateway version.
+Returns the Gateway version.
 
 ```shell title="cURL example"
 curl -s  http://localhost:8888/versions | jq .
