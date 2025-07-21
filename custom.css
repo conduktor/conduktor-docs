@@ -1,0 +1,16 @@
+.mdx-content,
+[data-mode="custom"] .container {
+  max-width: 1200px !important;
+  min-width: 800px;
+  margin: 0 auto;
+}
+
+#topbar-cta-button > a > span {
+  background-color: #09343C !important;
+  color: white !important;
+}
+
+body.dark #topbar-cta-button > a > span {
+  background-color: #bcfe68 !important;
+  color: #09343C !important;
+}
