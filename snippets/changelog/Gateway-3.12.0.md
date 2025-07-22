@@ -18,5 +18,8 @@ tags: features,fixes
 #### `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
 
 This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable, which controls the types of event types recorded in the audit log.
+
 This provides flexibility to enable or disable specific event types, such as `CONNECTION`. The full list and explanation of the event types can be found in
 the [Audit Log configuration documentation](/gateway/configuration/env-variables/#audit).
+
+This change is backwards compatible, as the default value is `ALL`, which means all event types are logged by default.
