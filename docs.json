@@ -133,7 +133,6 @@
           {
             "group": "Conduktor concepts",
             "pages": [
-              "guide/conduktor-concepts/index",
               "guide/conduktor-concepts/chargeback",
               "guide/conduktor-concepts/gw-authen-author",
               "guide/conduktor-concepts/gw-service-accounts",
