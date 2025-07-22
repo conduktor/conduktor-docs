@@ -383,7 +383,6 @@ The exception to this is the audit log topic which can have a lot of events writ
 `GATEWAY_AUDIT_LOG_EVENT_TYPES` valid value is `ALL` (default) or a comma-separated list of the following:
 - `CONNECTION` for initial connection event, i.e. receiving Kafka's `API_VERSIONS` request
 - `AUTHENTICATION` for authentication success or failure event
-- `AUTHORIZATION` for authorization success or failure event
 - `REST_API` for all REST v1 admin requests and all REST v2 requests (see [API Reference](/gateway/reference/api-reference/))
 - `ACL_ADMIN` for ACL management events done via Kafka Admin API, i.e. `CREATE_ACLS` and `DELETE_ACLS` requests
 
