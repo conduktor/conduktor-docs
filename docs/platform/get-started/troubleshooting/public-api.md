@@ -82,7 +82,7 @@ curl -s  http://localhost:8080/api/health/ready
 # READY
 ```
 
-Could be used to set up probe or docker-compose or Kubernetes.
+Could be used to set up probes on docker-compose or Kubernetes.
 
 #### docker-compose probe setup
 

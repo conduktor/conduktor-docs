@@ -22,7 +22,7 @@ These changes align our service with Kubernetes health checks standards and will
 Please check [Monitoring reference](/docs/gateway/reference/monitoring.md) page to learn more about the new API endpoints.
 
 :::warning
-The old */health* API is now deprecated and it will be completely removed within the next two releases. 
+The old */health* API is now deprecated but it will continue to function. Please update your configuration to use the new liveness and readiness probe endpoints.
 :::
 
 ### New features
