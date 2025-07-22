@@ -30,9 +30,9 @@ The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in S
 
 If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
 
-:::warning[Migrate to v2 APIs]
+<Warning>
 **We plan to remove the V1 APIs from Gateway in two releases (Gateway 3.10.0).** If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
-:::
+</Warning>
 
 ### Conduktor Shield
 
@@ -40,9 +40,10 @@ If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find
 
 This release includes general availability of the Gateway native Crypto Shredding feature for Conduktor Shield customers. The 'gateway' KMS type on encryption/decryption interceptors allows you to manage granular encryption keys for individual users/records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
 
-:::warning[Breaking changes for v3.7.0 Crypto Shredding users]
+<Warning>
+**Breaking changes for v3.7.0 Crypto Shredding users**
 Any messages encrypted with 'gateway' KMS type in [Gateway v3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms) **will not be de-cryptable in v3.8.0**. [Find out how to re-configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
-:::
+</Warning>
 
 Changes since [v3.7.0](/changelog/#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms):
 

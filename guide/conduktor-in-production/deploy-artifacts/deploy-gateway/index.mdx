@@ -79,9 +79,9 @@ For example, you have a Gateway cluster composed of two Gateway nodes, connected
 
 This mapping will be made again for every client asking for metadata, and will be made again as soon as a Gateway node is added or removed from the Gateway cluster.
 
-:::note
+<Note>
 If you have specified a `GATEWAY_RACK_ID`, then the mapping will take this into consideration and a Gateway node in the same rack as the Kafka broker will be assigned.
-:::
+</Note>
 
 Here's the same example but with multiple clients:
 
@@ -107,9 +107,9 @@ Here's an example where:
 
 ![External Load Balancing](/images/external-lb.png)
 
-:::warning
+<Warning>
 When using an external load balancer, you **must** configure the `GATEWAY_ADVERTISED_LISTENER` of the Gateway nodes to the Load Balancer's hostname. If this isn't done, applications will attempt to connect directly to Gateway, bypassing the Load Balancer.
-:::
+</Warning>
 
 #### External load balancing limitations
 

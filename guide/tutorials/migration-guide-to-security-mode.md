@@ -1,7 +1,5 @@
 ---
-sidebar_position: 7
 title: Migration Guide to Gateway security mode
-description: How to migrate to Gateway security mode
 ---
 
 ## Overview
@@ -14,9 +12,9 @@ As part of this, we're deprecating (but will still support) `DELEGATED_XXX` inpu
 
 We're also changing the default behavior of `GATEWAY_ACL_ENABLED`. Previously, when left undefined, it defaulted to `false`. It will now be determined by the security mode.
 
-:::warning[Using anonymous identity]
+<Warning>
 If you're using a security protocol that has an ANONYMOUS identity (`PLAINTEXT` or `SSL` without mTLS), you will face authorization errors because ACLs are now enabled by default for Gateway managed security. To remove authorization from your setup, set `GATEWAY_ACL_ENABLED: false`.
-:::
+</Warning>
 
 ## Benefits
 

@@ -1,23 +1,19 @@
 ---
-date: 2024-09-05
 title: Gateway 3.3.0
-description: docker pull conduktor/conduktor-gateway:3.3.0
-solutions: gateway
-tags: features,fix
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+*Release date: 2024-09-05*
 
-### Upcoming Breaking change
+### Upcoming breaking change
 
-:::info
+<Info>
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 
 - `POST /admin/username/{username}`
 - `POST /admin/vclusters/v1/vcluster/{vcluster}/username/{username}`
 
 If you are not using Local Gateway services accounts (OIDC, mTLS, Delegated Kafka), you are **not** impacted.
-:::
+</Info>
 
 Today, the token as the password for local Gateway service accounts contains all the necessary information. As a result, the SASL username is not used during the authentication phase.
 
@@ -30,16 +26,16 @@ For this release 3.3.0, and next product release 3.4.0, we'll only raise the fol
 2024-08-27T18:15:29 [WARN] - Inconsistency detected for plain authentication. Username applicationA is not consistent with validated token created for application-A. SASL configuration should be changed accordingly.
 ```
 
-- [Upcoming Breaking change](#upcoming-breaking-change)
+- [Upcoming breaking change](#upcoming-breaking-change)
   - [New V2 APIs and CLI support](#new-v2-apis-and-cli-support)
   - [Support for HTTPS APIs](#support-for-https-apis)
   - [Better UX for ACLs and superUsers](#better-ux-for-acls-and-superusers)
   - [Enable ACLs for Gateway (excl. Virtual Clusters)](#enable-acls-for-gateway-excl-virtual-clusters)
   - [Enable ACLs for Virtual Clusters](#enable-acls-for-virtual-clusters)
-  - [Encryption Enhancements and Support Clarification](#encryption-enhancements-and-support-clarification)
-  - [Field-Level Encryption: Preserving Message Format to Enhance Usability](#field-level-encryption-preserving-message-format-to-enhance-usability)
+  - [Encryption enhancements and support clarification](#encryption-enhancements-and-support-clarification)
+  - [Field-Level encryption: preserving message format to enhance usability](#field-level-encryption-preserving-message-format-to-enhance-usability)
   - [Attempt to apply encryption to a message more than once will now fail](#attempt-to-apply-encryption-to-a-message-more-than-once-will-now-fail)
-  - [Deprecated support for Schema Based (tag) encryption with Protobuf](#deprecated-support-for-schema-based-tag-encryption-with-protobuf)
+  - [Deprecated support for schema based (tag) encryption with Protobuf](#deprecated-support-for-schema-based-tag-encryption-with-protobuf)
 - [General fixes](#general-fixes)
 - [Known issues](#known-issues)
 
@@ -118,13 +114,12 @@ If `GATEWAY_SUPER_USERS` is not set, it will default to `GATEWAY_ADMIN_API_USERS
 
 #### Enable ACLs for Virtual Clusters
 
-:::warning
+<Warning>
 Note that if you are migrating from an older version of Gateway, the migration will automatically generate existing Virtual Clusters as configuration.
 
 - The automation will derive the boolean value `aclEnabled` from the previously used `GATEWAY_ACL_STORE_ENABLED` variable.
 - The migration will not populate the `superUsers` list automatically, so this must be addressed as part of your migration.
-
-:::
+</Warning>
 
 Example configuration:
 

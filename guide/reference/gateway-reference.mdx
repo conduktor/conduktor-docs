@@ -68,51 +68,51 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 
 #### Examples
 
+<Tabs>
+<Tab title="CLI">
 ````yaml
----
-# This interceptor targets everyone (Including Virtual Clusters)
-apiVersion: gateway/v2
-kind: Interceptor
-metadata:
-  name: enforce-partition-limit
-  scope:
-    vCluster: null
-    group: null
-    username: null
-spec:
+  ---
+  # This interceptor targets everyone (Including Virtual Clusters)
+  apiVersion: gateway/v2
+  kind: Interceptor
+  metadata:
+    name: enforce-partition-limit
+    scope:
+      vCluster: null
+      group: null
+      username: null
+  spec:
 
----
-# This interceptor targets everyone (Excluding Virtual Clusters)
-apiVersion: gateway/v2
-kind: Interceptor
-metadata:
-  name: enforce-partition-limit
-spec:
+  ---
+  # This interceptor targets everyone (Excluding Virtual Clusters)
+  apiVersion: gateway/v2
+  kind: Interceptor
+  metadata:
+    name: enforce-partition-limit
+  spec:
 
----
-# This interceptor targets only `admin` service account
-apiVersion: gateway/v2
-kind: Interceptor
-metadata:
-  name: enforce-partition-limit
-  scope:
-    username: admin
-spec:
+  ---
+  # This interceptor targets only `admin` service account
+  apiVersion: gateway/v2
+  kind: Interceptor
+  metadata:
+    name: enforce-partition-limit
+    scope:
+      username: admin
+  spec:
 
----
-# This interceptor targets only `read-only` virtual cluster
-apiVersion: gateway/v2
-kind: Interceptor
-metadata:
-  name: enforce-partition-limit
-  scope:
-    vCluster: read-only
-spec:
-
-```
-
-</TabItem>
-<TabItem value="Terraform" label="Terraform">
+  ---
+  # This interceptor targets only `read-only` virtual cluster
+  apiVersion: gateway/v2
+  kind: Interceptor
+  metadata:
+    name: enforce-partition-limit
+    scope:
+      vCluster: read-only
+  spec:
+  ````
+</Tab>
+<Tab title="Terraform">
 
 ```hcl
 # This Interceptor targets everyone (including virtual clusters)
@@ -159,34 +159,34 @@ resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
   }
 }
 ```
-
-</TabItem>
+</Tab>
 </Tabs>
 
 ## GatewayServiceAccount
 
  When using **Oauth**, **mTLS** or delegated backing Kafka authentication, `GatewayServiceAccount` is generally optional.
 
-GatewayServiceAccount resource is enabled/disabled depending on your Gateway configuration. This is to prevent you from declaring a resource that's incompatible with your current configuration:
+GatewayServiceAccount resource is enabled/disabled depending on your Gateway configuration. 
 
-| GATEWAY_SECURITY         | LOCAL GatewayServiceAccount | EXTERNAL GatewayServiceAccount        |
-|--------------------------|--|--------------------------|
+This is to prevent you from declaring a resource that's incompatible with your current configuration:
+
+| GATEWAY_SECURITY         | LOCAL GatewayServiceAccount | EXTERNAL GatewayServiceAccount    |
+| -------------------------|----|--------------------------|
 | PLAINTEXT                | 🚫 | 🚫                       |
 | SSL                      | 🚫 | only if mTls             |
 | SASL_PLAINTEXT           | ✅ | only if OAuth configured |
 | SASL_SSL                 | ✅ | only if OAuth configured |
-| DELEGATED_SASL_PLAINTEXT | 🚫 | ✅                        |
-| DELEGATED_SASL_SSL       | 🚫 | ✅                        |
+| DELEGATED_SASL_PLAINTEXT | 🚫 | ✅                       |
+| DELEGATED_SASL_SSL       | 🚫 | ✅                       |
 
 Here are a few cases where **you have to** declare GatewayServiceAccount objects:
 
 - creating local service accounts
 - renaming service accounts for easier clarity when using Interceptors
-- attaching service accounts to virtual clusters
+- attaching service accounts to Virtual Clusters
 
 <Tabs>
-<TabItem  value="CLI" label="CLI">
-
+<Tab title="CLI">
 ```yaml
 ---
 # External user renamed
@@ -207,7 +207,41 @@ metadata:
   name: admin
 spec:
   type: LOCAL
-````
+```
+</Tab>
+<Tab title="Terraform">
+```
+  resource "conduktor_gateway_service_account_v2" "application1-sa" {
+    name = "application1"
+    spec = {
+      type = "EXTERNAL"
+      external_names = [ "00u9vme99nxudvxZA0h7" ]
+    }
+  }
+
+  resource "conduktor_gateway_service_account_v2" "admin-sa" {
+    name = "admin"
+    vcluster = "vc-B"
+    spec = {
+      type = "LOCAL"
+    }
+  }
+
+  # Generate local service account token
+  resource "conduktor_gateway_token_v2" "admin-sa-token" {
+    vcluster         = "vc-B"
+    username         = "user10"
+    lifetime_seconds = 3600
+  }
+
+  # Define output to use generated local service account token
+  output "admin_sa_token" {
+    value     = conduktor_gateway_token_v2.admin-sa-token.token
+    sensitive = true
+  }
+  ```
+</Tab>
+</Tabs>
 
 **GatewayServiceAccount checks:**
 
@@ -244,13 +278,11 @@ spec:
 
 **GatewayGroup checks:**
 
-
 - `spec.members[].name` is mandatory.
   - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
-- `spec.members[].vCluster` is optional. It has to refer to an existing virtual cluster. When not using virtual clusters, don't set this attribute.
+- `spec.members[].vCluster` is optional. It has to refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
-
 
 - All members of the group will be affected by Interceptors deployed with this group's scope.
 
@@ -277,7 +309,7 @@ spec:
 
 **ConcentrationRule checks:**
 
-- `metadata.vCluster` is optional. Must refer to an existing virtual cluster. When not using virtual clusters, don't set this attribute.
+- `metadata.vCluster` is optional. Must refer to an existing Virtual Cluster. When not using Virtual Clusters, don't set this attribute.
 - `spec.physicalTopics.delete` is mandatory. Has to be a valid topic name with a `cleanup.policy` set to `delete`.
 - `spec.physicalTopics.compact` is optional. Has ti be a valid topic name with a `cleanup.policy` set to `compact`.
 - `spec.physicalTopics.deleteCompact` is optional. Has to be a valid topic name with a `cleanup.policy` set to `delete,compact`.
@@ -296,13 +328,13 @@ spec:
   - There are some limitation. Read more about [Offset Correctness here](/gateway/concepts/logical-topics/concentrated-topics/#known-issues-and-limitations-with-offset-correctness)
 - If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
 
-:::warning[Spec changes]
+<Warning>
 If a *ConcentrationRule* spec changes, it will not affect previously created concentrated topics, it will only affect the topics created after the change.
-:::
+</Warning>
 
 ## VirtualCluster
 
-A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual cluster will be accessible only to that specific Virtual Cluster.
+A Virtual Cluster allows you to isolate one or more service accounts within a logical cluster. Any topic or consumer group created within a Virtual Cluster will be accessible only to that specific Virtual Cluster.
 
 ```yaml
 ---

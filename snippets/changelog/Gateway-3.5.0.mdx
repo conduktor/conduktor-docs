@@ -1,23 +1,20 @@
 ---
-date: 2024-12-16
 title: Gateway 3.5.0
-description: docker pull conduktor/conduktor-gateway:3.5.0
-solutions: gateway
-tags: features,fix
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+*Release date: 2024-12-16*
 
 ### Breaking changes
 
-#### Breaking change: Local Users 💣
-:::info
+#### Breaking change: local users
+
+<Info>
 This breaking change only impacts Local Gateway service accounts generated through our token endpoints:
 - `POST /admin/username/{username}`
 - `POST /admin/vclusters/v1/vcluster/{vcluster}/username/{username}`
 
 If you are using Gateway services accounts from OIDC, mTLS, Delegated Kafka, you are **not** impacted.
-:::
+</Info>
 
 From this release, we will now strictly enforce that the username and the token matches in requests made to the Gateway where local service accounts are used. This will help reduce inconsistencies and avoid unexpected behaviors. If they do not match, requests will fail to authenticate.
 

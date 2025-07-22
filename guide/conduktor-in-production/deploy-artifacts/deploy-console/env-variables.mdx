@@ -157,9 +157,9 @@ database:
   url: "jdbc:postgresql://usr:pwd@some_host:5432/cdk"
 ```
 
-:::note[Alternative syntax]
+<Note>
 If you want to escape the shell expansion, you can use the following syntax: `$$`. For example, if you want `admin.password` to be `secret$123`, set `admin.password: "secret$$123"`.
-:::
+</Note>
 
 ## Support for *_FILE environment variables
 

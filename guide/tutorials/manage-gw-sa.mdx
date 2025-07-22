@@ -519,9 +519,8 @@ kafka-acls --bootstrap-server localhost:6969 \
   --resource-pattern-type prefixed
 ```
 
-:::warning[Concentrated topics limitation]
-
+<Warning>
 When auto-create topics is enabled, concentrated topics are not supported. Topics that would normally be concentrated will be created as physical topics instead.
 
 Auto-create topics is disabled by default (`GATEWAY_AUTO_CREATE_TOPICS_ENABLED=false`).
-:::
+</Warning>
