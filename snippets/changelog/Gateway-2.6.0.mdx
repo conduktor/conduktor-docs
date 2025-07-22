@@ -1,12 +1,8 @@
 ---
-date: 2024-02-12
-title: Schema based encryption, KMS managed identity and Key Caching 
-description: docker pull conduktor/conduktor-gateway:2.6.0
-solutions: gateway
-tags: features,fix
+title: Gateway 2.6.0
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+*Release date: 2024-02-12*
 
 ### Schema based encryption
 
@@ -55,10 +51,9 @@ The encryption configuration now supports defaults to simplify your setups
 
 To prevent setting up manual connectivity, KMS are now using cloud managed identity by default
 
-* [AWS](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default)
-* [AZURE](https://learn.microsoft.com/en-us/java/api/com.azure.identity.defaultazurecredential?view=azure-java-stable)
-* [GCP](https://github.com/googleapis/google-auth-library-java/blob/main/README.md#application-default-credentials)
-
+- [AWS](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default)
+- [AZURE](https://learn.microsoft.com/en-us/java/api/com.azure.identity.defaultazurecredential?view=azure-java-stable)
+- [GCP](https://github.com/googleapis/google-auth-library-java/blob/main/README.md#application-default-credentials)
 
 ### Cache KMS Time to Live
 
@@ -79,6 +74,6 @@ The SSL principal extraction is now configurable with `GATEWAY_SSL_PRINCIPAL_MAP
 
 ### General Fixes 🔨
 
-* Quieter responses to Prometheus by not publishing HTTP quantiles in the response
+* Quieter responses to Prometheus by not publishing HTTP quantifiers in the response
 * Topic configuration is now returned in all Gateway modes
 * Additional tools have been added to the base image to help with setup and debug: lsof, iotop, htop, iftop

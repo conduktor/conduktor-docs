@@ -8,7 +8,7 @@ This guide is for migrating authentication and authorization to the new configur
 
 We have introduced a new environment variable: `GATEWAY_SECURITY_MODE` which determines where authentication takes place.
 
-As part of this, we're deprecating (but will still support) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`. The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`. [Find out more about the client to Gateway connection](../configuration/env-variables.md#connect-from-clients-to-gateway).
+As part of this, we're deprecating (but will still support) `DELEGATED_XXX` inputs for `GATEWAY_SECURITY_PROTOCOL`. The valid inputs for `GATEWAY_SECURITY_MODE` are: `KAFKA_MANAGED` and `GATEWAY_MANAGED`.
 
 We're also changing the default behavior of `GATEWAY_ACL_ENABLED`. Previously, when left undefined, it defaulted to `false`. It will now be determined by the security mode.
 

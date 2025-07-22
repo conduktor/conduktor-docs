@@ -375,8 +375,6 @@ You can select the name you want, shown here as `Conduktor Console`, and enter t
 
 For example, if you deployed Console locally using the name `google` in your configuration file, you can use `http://localhost:8080/oauth/callback/google`, like on the screenshot below.
 
-For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
-
 ![Google create client](/images/google-create-client.png)
 
 - **Step 4**: Get the `client ID` and the `secret ID`
@@ -457,7 +455,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://accounts.google.com"
 
 ##### Map to external groups
 
-Now that your configuration is finished, you can [set up the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Google Groups and Console groups. 
+Now that your configuration is finished, you can set up the mapping between Google groups and Console groups. 
 
 That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Google.
 
@@ -597,8 +595,6 @@ You can configure it as the following: `http(s)://<Console host>(:<Console port>
 
 For example, if you deployed Console locally using the name `keycloak` in your configuration file, you can use `http://localhost:8080/oauth/callback/keycloak`, like in the screenshot below.
 
-For more details on Console redirect URI for OAuth2, you can check the [documentation](generic-oauth2.md#more-details-on-console-external-url).
-
 ![keycloak callback](/images/keycloak-callback.png)
 
 - **Step 4**: Get the `client secret` in the **Credentials** tab
@@ -709,8 +705,6 @@ On Okta side, create a new application:
 The redirect URI can be like: `http(s)://<Console host>(:<Console port>)/oauth/callback/<OAuth2 config name>`. 
 
 For example, if you deployed Console locally using the name `okta` in your configuration file, you can use `http://localhost:8080/oauth/callback/okta`, like in the screenshot below.
-
-For more details on Console redirect URI for OAuth2, you can check the [documentation](/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/#more-details-on-console-external-url).
 
 ![Okta callback URI](/images/okta-callback-uri.png)
 
