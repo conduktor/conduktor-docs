@@ -1,19 +1,15 @@
 ---
-date: 2025-05-14
 title: Gateway 3.9.0
-description: docker pull conduktor/conduktor-gateway:3.9.0
-solutions: gateway
-tags: features,fixes
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+*Release date: 2025-05-14*
 
 - [Breaking changes](#breaking-changes)
-  - [Gateway Service Accounts are now always required when using PLAIN tokens](#1-gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
+  - [Gateway service accounts are now always required when using PLAIN tokens](#1-gateway-service-accounts-are-now-always-required-when-using-plain-tokens)
   - [Local service account token signing key is now mandatory](#2-local-service-account-token-signing-key-is-now-mandatory)
 - [New features](#new-features)
-  - [Enhanced Confluent Cloud authentication with Service Account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping)
-  - [Dynamic Header Injection from Record Payloads](#dynamic-header-injection-from-record-payloads)
+  - [Enhanced Confluent Cloud authentication with service account mapping](#enhanced-confluent-cloud-authentication-with-service-account-mapping)
+  - [Dynamic header injection from record payloads](#dynamic-header-injection-from-record-payloads)
 - [Fixes](#fixes)
   - [HashiCorp Vault token refresh resilience](#hashicorp-vault-token-refresh-resilience)
 
@@ -47,7 +43,7 @@ Previously, PLAIN tokens could be issued to connect to Gateway without having to
 
 This change improves **security and consistency** by enforcing that all PLAIN tokens must correspond to a pre-existing local service account. The `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` variable **is now deprecated** and will behave as if it was set to `true`.
 
-This enforces best practises that were previously only encouraged, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
+This enforces best practices that were previously only encouraged, meaning all tokens must have their service account already created on Gateway before they're allowed to connect.
 
 We expect most customers to be unaffected as this setup is actively discouraged in the onboarding experience, as we recommend creating the service account before creating tokens.
 
