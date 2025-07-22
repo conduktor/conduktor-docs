@@ -96,7 +96,7 @@ tags: features,fix
 1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
 
 ```md
-import Console1310 from './changelog/Console-1.31.0.md';
+import Console1310 from '/snippets/changelog/Console-1.31.0.md';
 ```
 
 1. Finally, add an entry at the top of the page, linking to your file. E.g.:
