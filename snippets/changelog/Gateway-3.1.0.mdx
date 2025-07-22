@@ -22,7 +22,7 @@ To enable ACLs set the environment variable `GATEWAY_ACL_STORE_ENABLED=true`.
 - Added more context relative to interceptors in Audit logs
 - Added the client & version (kafka-client, librdkafka, ...) of the client in the Audit logs on CONNECTED event
 
-### General fixes 🔨
+### General fixes
 
 - Added Schema Registry validation on encryption plugins
 - Fixed an issue where the KMS Key would not be created if it didn't exist

@@ -13,7 +13,7 @@ Creates a group with members and permissions in Console.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: iam/v2
 kind: Group
@@ -22,7 +22,7 @@ metadata:
 spec:
   displayName: "Developers Team A"
   description: "Members of the Team A - Developers"
-  externalGroups: 
+  externalGroups:
     - "LDAP-GRP-A-DEV"
   members:
     - member1@company.org
@@ -36,15 +36,15 @@ spec:
         - topicViewConfig
         - topicConsume
         - topicProduce
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-resource "conduktor_group_v2" "developers-a" {
+```hcl
+resource "conduktor_console_group_v2" "developers-a" {
   name = "developers-a"
-  spec {
+  spec = {
     display_name    = "Developers Team A"
     description     = "Members of the Team A - Developers"
     external_groups = [ "LDAP-GRP-A-DEV" ]
@@ -60,12 +60,13 @@ resource "conduktor_group_v2" "developers-a" {
     ]
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
 
 **Groups checks:**
+
 
 - `spec.description` is **optional**
 - `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
@@ -93,7 +94,7 @@ Creates a user with Console permissions.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: iam/v2
 kind: User
@@ -115,19 +116,19 @@ spec:
         - topicViewConfig
         - topicConsume
         - topicProduce
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-resource "conduktor_group_v2" "john.doe@company.org" {
+```hcl
+resource "conduktor_console_user_v2" "john.doe@company.org" {
   name = "john.doe@company.org"
-  
-  spec {
+
+  spec = {
     firstname = "John"
     lastname  = "Doe"
-    
+
     permissions = [
       {
         resource_type = "TOPIC"
@@ -150,7 +151,7 @@ resource "conduktor_group_v2" "john.doe@company.org" {
     ]
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -181,7 +182,7 @@ Creates a Kafka cluster definition in Console.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: KafkaCluster
@@ -211,15 +212,15 @@ spec:
     secret: "string"
     confluentEnvironmentId: "string"
     confluentClusterId: "string"
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
+```hcl
+resource "conduktor_console_kafka_cluster_v2" "my-dev-cluster" {
   name = "my-dev-cluster"
-  spec {
+  spec = {
     display_name                 = "My Dev Cluster"
     icon                         = "kafka"
     color                        = "#000000"
@@ -249,7 +250,7 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
     }
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -260,12 +261,13 @@ resource "conduktor_kafka_cluster_v2" "my-dev-cluster" {
 
 **KafkaCluster checks:**
 
+
 - `spec.icon` (optional, default `kafka`) is a valid entry from our [Icon Sets](#icon-sets)
 - `spec.color` (optional, default `#000000`) is a HEX color for `spec.icon`
 - `spec.ignoreUntrustedCertificate` (optional, default `false`) must be one of [`true`, `false`]
-- `spec.schemaRegistry.type` (optional) must be one of [`ConfluentLike`, `Glue`] 
+- `spec.schemaRegistry.type` (optional) must be one of [`ConfluentLike`, `Glue`]
   - See [Schema Registry Properties](#schema-registry) for the detailed list of options
-- `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`] 
+- `spec.kafkaFlavor.type` (optional) must be one of [`Confluent`, `Aiven`, `Gateway`]
   - See [Kafka Provider Properties](#kafka-provider) for the detailed list of options
 
 <Warning>
@@ -281,7 +283,7 @@ This section lets you associate a schema registry to your KafkaCluster.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 spec:
   schemaRegistry:
     type: "ConfluentLike"
@@ -291,13 +293,13 @@ spec:
       type: BasicAuth
       username: some_user
       password: some_password
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-spec {
+```hcl
+spec = {
   schema_registry = {
     type = "ConfluentLike"
     url = "http://localhost:8080
@@ -309,7 +311,7 @@ spec {
     }
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -328,7 +330,7 @@ Confluent schema registry checks:
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 spec:
   schemaRegistry:
     type: "Glue"
@@ -338,13 +340,13 @@ spec:
       type: Credentials
       accessKeyId: accessKey
       secretKey: secretKey
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-spec {
+```hcl
+spec = {
   schema_registry = {
     type          = "Glue"
     region        = "eu-west-1"
@@ -356,7 +358,7 @@ spec {
     }
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -373,23 +375,23 @@ Use AWS API Key/Secret to connect to the Glue registry.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
     security:
       type: Credentials
       accessKeyId: AKIAIOSFODNN7EXAMPLE
       secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
+```hcl
     security = {
       type          = "Credentials"
       access_key_id = "AKIAIOSFODNN7EXAMPLE"
       secret_key    = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
     }
-````
+```
 
 </Tab>
 </Tabs>
@@ -399,21 +401,21 @@ Use AWS API Key/Secret to connect to the Glue registry.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
     security:
       type: FromContext
       profile: default
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
+```hcl
     security = {
       type    = "FromContext"
       profile = "default"
     }
-````
+```
 
 </Tab>
 </Tabs>
@@ -423,21 +425,21 @@ Use AWS API Key/Secret to connect to the Glue registry.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
     security:
       type: FromRole
       role: arn:aws:iam::123456789012:role/example-role
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
+```hcl
     security = {
       type    = "FromRole"
       profile = "arn:aws:iam::123456789012:role/example-role"
     }
-````
+```
 
 </Tab>
 </Tabs>
@@ -456,7 +458,7 @@ Provide your Confluent Cloud details to get additional features in Console:
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
     type: "Confluent"
@@ -464,13 +466,13 @@ spec:
     secret: "yourApiSecret123456"
     confluentEnvironmentId: "env-12345"
     confluentClusterId: "lkc-67890"
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-spec {
+```hcl
+spec = {
   kafka_flavor = {
     type                     = "Confluent"
     key                      = "yourApiKey123456"
@@ -479,7 +481,7 @@ spec {
     confluent_cluster_id     = "lkc-67890"
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -494,20 +496,20 @@ Provide your Aiven Cloud details to get additional features in Console:
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
     type: "Aiven"
     apiToken: "a1b2c3d4e5f6g7h8i9j0"
     project: "my-kafka-project"
     serviceName: "my-kafka-service"
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-spec {
+```hcl
+spec = {
   kafka_flavor = {
     type         = "Aiven"
     api_token    = "a1b2c3d4e5f6g7h8i9j0"
@@ -515,12 +517,12 @@ spec {
     service_name = "my-kafka-service"
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
 
-**Gateway**  
+**Gateway**
 Provide your Gateway details to get additional features in Console:
 
 - Interceptor support
@@ -528,7 +530,7 @@ Provide your Gateway details to get additional features in Console:
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 spec:
   kafkaFlavor:
     type: "Gateway"
@@ -541,8 +543,8 @@ spec:
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-spec {
+```hcl
+spec = {
   kafka_flavor = {
     type            = "Gateway"
     url             = "http://gateway:8888"
@@ -552,7 +554,7 @@ spec {
     ignore_untrusted_certificate = false
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -616,7 +618,7 @@ Creates a Kafka Connect cluster definition in Console.
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: KafkaConnectCluster
@@ -634,16 +636,16 @@ spec:
     type: "BasicAuth"
     username: "toto"
     password: "my-secret"
-````
+```
 
 </Tab>
 <Tab title="Terraform">
 
-````hcl
-resource "conduktor_kafka_connect_v2" "connect-1" {
+```hcl
+resource "conduktor_console_kafka_connect_v2" "connect-1" {
   name    = "connect-1"
   cluster = "my-dev-kafka-cluster"
-  spec {
+  spec = {
     display_name = "Connect 1"
     urls         = "http://localhost:8083"
     headers = {
@@ -658,7 +660,7 @@ resource "conduktor_kafka_connect_v2" "connect-1" {
     }
   }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -712,7 +714,7 @@ spec:
 
 Creates an alert in Console.
 
-````yaml
+```yaml
 ---
 apiVersion: console/v3
 kind: Alert
@@ -731,7 +733,7 @@ spec:
   destination:
     type: Slack
     channel: "alerts-p1"
-````
+```
 
 **Alert checks:**
 
@@ -779,7 +781,9 @@ spec:
     email: johndoe@partner.io
     phone: 07827 837 177
   cluster: cdk-gateway
-  serviceAccount: partner-external-partner
+  authenticationMode:
+    serviceAccount: partner-external-partner
+    type: PLAIN
   topics:
     - name: topic-a
       backingTopic: kafka-topic-a
@@ -791,6 +795,22 @@ spec:
     maxProduceRate: 1e+06
     maxConsumeRate: 1e+06
     limitCommitOffset: 30
+  headers:
+    addOnProduce:
+        - key: partner-name
+          value: external-analytics-partner
+          overrideIfExists: false
+        - key: client-info
+          value: "Client:{{clientId}}, from IP:{{userIp}}"
+          overrideIfExists: true
+        - key: kafka-api
+          value: "Kafka API Key:{{apiKey}}, version {{apiKeyVersion}}"
+          overrideIfExists: true
+        - key: produce-metadata
+          value: "User:{{user}}, via Gateay:{{gatewayHost}}, at timestampMillis:{{timestampMillis}}"
+          overrideIfExists: true
+    removeOnConsume:
+        - keyRegex: my_team_prefix.*
 ```
 
 **Partner Zone checks:**
@@ -884,7 +904,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
     - topicViewConfig
     - topicConsume
     - topicProduce
-````
+```
 
 - `resourceType`: `TOPIC`
 - `cluster` is a valid Kafka cluster
@@ -914,7 +934,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
   permissions:
     - subjectView
     - subjectEditCompatibility
-````
+```
 
 - `resourceType`: `SUBJECT`
 - `cluster` is a valid Kafka cluster
@@ -940,7 +960,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
   permissions:
     - consumerGroupView
     - consumerGroupReset
-````
+```
 
 - `resourceType`: `CONSUMER_GROUP`
 - `cluster` is a valid Kafka cluster

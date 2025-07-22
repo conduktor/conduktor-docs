@@ -36,7 +36,7 @@ spec:
 
 - `metadata.scope` is optional (default empty). 
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
-  - Check the dedicated [Interceptor Targeting](#interceptor-targeting) section
+  - Check the dedicated [Interceptor targeting](#interceptor-targeting) section
 - `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptor-catalog/)
 - `spec.priority` is **mandatory**
 - `spec.config` is a valid config for the `pluginClass`
@@ -49,11 +49,11 @@ You can activate your Interceptor only in specific scenarios. Use the table belo
 |-----------------------------------------------------|---------------------------|------------------------|---------------------------|
 | Global Interceptor (Including Virtual Clusters)     | Set to `null`             | Set to `null`          | Set to `null`             |
 | Global Interceptor (**Excluding** Virtual Clusters) | Empty                     | Empty                  | Empty                     |
-| Username Targeting                                  | Empty                     | Empty                  | Set                       |
-| Group Targeting                                     | Empty                     | Set                    | Empty                     |
-| Virtual Cluster Targeting                           | Set                       | Empty                  | Empty                     |
-| Virtual Cluster + Username Targeting                | Set                       | Empty                  | Set                       |
-| Virtual Cluster + Group Targeting                   | Set                       | Set                    | Empty                     |
+| Username targeting                                  | Empty                     | Empty                  | Set                       |
+| Group targeting                                     | Empty                     | Set                    | Empty                     |
+| Virtual Cluster targeting                           | Set                       | Empty                  | Empty                     |
+| Virtual Cluster + Username targeting                | Set                       | Empty                  | Set                       |
+| Virtual Cluster + Group targeting                   | Set                       | Set                    | Empty                     |
 
 You can deploy multiple interceptors with the same name using a different targeting scope. This will effectively [override](../concepts/interceptors.md#overriding) the configuration for the scope.
 
@@ -98,7 +98,7 @@ metadata:
   scope:
     username: admin
 spec:
-  
+
 ---
 # This interceptor targets only `read-only` virtual cluster
 apiVersion: gateway/v2
@@ -108,9 +108,60 @@ metadata:
   scope:
     vCluster: read-only
 spec:
-  
 
-````
+```
+
+</TabItem>
+<TabItem value="Terraform" label="Terraform">
+
+```hcl
+# This Interceptor targets everyone (including virtual clusters)
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    vcluster = null
+    group    = null
+    username = null
+  }
+  spec = {
+
+  }
+}
+
+# This Interceptor targets everyone (excluding virtual clusters)
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  spec = {
+
+  }
+}
+
+# This Interceptor only targets the `admin` service account
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    username = "admin"
+  }
+  spec = {
+
+  }
+}
+
+
+# This Interceptor only targets the `read-only` virtual cluster
+resource "conduktor_gateway_interceptor_v2" "enforce-partition-limit" {
+  name = "enforce-partition-limit"
+  scope = {
+    vcluster = "read-only"
+  }
+  spec = {
+
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## GatewayServiceAccount
 
@@ -133,16 +184,19 @@ Here are a few cases where **you have to** declare GatewayServiceAccount objects
 - renaming service accounts for easier clarity when using Interceptors
 - attaching service accounts to virtual clusters
 
-````yaml
+<Tabs>
+<TabItem  value="CLI" label="CLI">
+
+```yaml
 ---
-# External User renamed
+# External user renamed
 apiVersion: gateway/v2
 kind: GatewayServiceAccount
 metadata:
   name: application1
 spec:
   type: EXTERNAL
-  externalNames: 
+  externalNames:
   - 00u9vme99nxudvxZA0h7
 ---
 # Local User on Virtual Cluster vc-B
@@ -163,6 +217,7 @@ spec:
 
 **GatewayServiceAccount side effects:**
 
+
 - When `spec.type` is `EXTERNAL`:
   - During Client connection, the authenticated user will be checked against the list of `externalNames` to decide which GatewayServiceAccount it is.
 - When `spec.type` is `LOCAL`:
@@ -173,7 +228,7 @@ spec:
 
 Gateway group lets you add multiple users in the same GatewayGroup for easier Interceptor targeting capabilities.
 
-````yaml
+```yaml
 ---
 # Users added to the group manually
 apiVersion: gateway/v2
@@ -189,11 +244,13 @@ spec:
 
 **GatewayGroup checks:**
 
+
 - `spec.members[].name` is mandatory.
   - Currently, the username needs to refer to an existing GatewayServiceAccount otherwise it will fail. This is a known issue that we'll address in a further release.
 - `spec.members[].vCluster` is optional. It has to refer to an existing virtual cluster. When not using virtual clusters, don't set this attribute.
 
 **GatewayGroup side effects:**
+
 
 - All members of the group will be affected by Interceptors deployed with this group's scope.
 
@@ -201,7 +258,7 @@ spec:
 
 Concentration Rules allow you to define patterns where topic creation won't generate a physical topic, but will instead use our topic concentration feature.
 
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: ConcentrationRule
@@ -254,8 +311,9 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclEnabled: true # defaults to false
- superUsers:
+ aclEnabled: true # (uses aclMode to determine how the acls are enabled or defaults to KAFKA_API if it is not set)
+ aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent 
+ superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
  - username1
  - username2
 ```

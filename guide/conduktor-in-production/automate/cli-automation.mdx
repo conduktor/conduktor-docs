@@ -21,25 +21,26 @@ In the **Assets** list, download the build that corresponds to your machine (for
 
 ````
 brew install conduktor/brew/conduktor-cli
-````
+```
+
 
 ## Docker
 
-````
+
+```bash
 docker pull conduktor/conduktor-ctl
 ````
 
-## Configure Console CLI
+### Configure
 
-To use Conduktor CLI, you have to define these two environment variables:
 
 - The URL of Conduktor Console
 - Your API Key
 
-````bash
+```bash
 export CDK_BASE_URL=http://localhost:8080
 export CDK_API_KEY=<your-api-key>
-````
+```
 
 There are three types of API keys:
 
@@ -55,11 +56,11 @@ Use a short-lived user API key to bootstrap the first admin key.
 
 Admin API Keys grant the maximum permissions on Console. They are generated either from the UI or using the CLI.
 
-````bash
+```bash
 # Generate a key named my-admin-key
 $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
 #### Self-service application API key
 
@@ -67,10 +68,10 @@ Self-service Application API Key permissions are limited to the scope of the [Ap
 
 Check the [Self-service documentation]for details. They can be obtained either from the UI or using the CLI.
 
-````bash
+```bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
 #### Short-lived user API keys
 
@@ -80,12 +81,12 @@ Short-lived User API Keys will be valid for the same duration as the [Session Li
 
 **OIDC users can't generate this type of API Key.**  
 
-````bash
+```bash
 export CDK_USER=admin@conduktor.io
 export CDK_PASSWORD=admin
 $ conduktor login
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
 ### Console CLI commands
 
@@ -102,7 +103,7 @@ Available commands:
   help               Help about any command
   login              Login user using username password to get a JWT token
   run                run an action
-  sql                
+  sql
   template           Get a .yaml example for a given kind
   token              Manage Admin and Application Instance tokens
   version            Display the version of Conduktor
@@ -113,13 +114,13 @@ Flags:
   -v, --verbose      show more information for debugging
 
 Use "conduktor [command] --help" for more information about a command.
-````
+```
 
 #### Apply
 
 The `apply` command allows you to deploy any resource.
 
-````
+```
 Usage:
    conduktor apply [flags]
 
@@ -130,20 +131,20 @@ Flags:
 
 Global Flags:
   -v, --verbose   Show more information for debugging
-````
+```
 
 Example:
-````
+```
 $ conduktor apply -f .
 application/clickstream-app: NotChanged
 app-instance/clickstream-app-dev: NotChanged
-````
+```
 
 #### Template
 
 The `template` command allows you to get an example of a resource definition:
 ```
-$ conduktor template topic                                                                                                                                                       
+$ conduktor template topic
 ---
 apiVersion: v2
 kind: Topic
@@ -186,7 +187,7 @@ Example(s):
 $ conduktor delete -f ./directoryOfResources
 $ conduktor delete -f resource.yml
 $ conduktor delete topic myTopic
-````
+```
 
 #### Get
 
@@ -355,11 +356,11 @@ $ conduktor token list application-instance -i=my_instance
 #### Version
 
 Check the current version of your CLI using this command
-````
+```
 $ conduktor version
 Version: v0.3.0
 Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
-````
+```
 
 ### CI/CD pipeline integration example
 
@@ -369,11 +370,11 @@ Conduktor CLI can be easily integrated to a CI/CD pipeline. This example present
 - The second one triggers on a push to the `main` branch, making the changes live.
 
 Consider the following folder structure:
-````
+```
 ├── resources/
 │   ├── topics.yml          # Your topics are there
 |   ├── permissions.yml     # Your permissions to other Apps are there
-````
+```
 
 <Tabs>
 <Tab title="Github actions">
@@ -424,7 +425,7 @@ conduktor-pr:
   stage: deploy
   image:
     name: conduktor/conduktor-ctl
-    entrypoint: [""] 
+    entrypoint: [""]
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_API_KEY=${CONDUKTOR_TOKEN}
@@ -438,7 +439,7 @@ conduktor-main:
   stage: deploy
   image:
     name: conduktor/conduktor-ctl
-    entrypoint: [""] 
+    entrypoint: [""]
   variables:
     - export CDK_BASE_URL=https://conduktor.domain.com
     - export CDK_API_KEY=${CONDUKTOR_TOKEN}

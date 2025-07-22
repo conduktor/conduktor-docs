@@ -75,33 +75,32 @@ Every new version of Gateway and Console has to have release notes.
 
 To update release notes:
 
-1. Go to **src/pages/changelog**.
-1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
-1. Make sure your file has the following header:
+1. Go to **/snippets/changelog**.
+2. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
+3. Make sure your file has the following header:
 
-```md
----
-date: 2025-11-25
-title: Chargeback
-description: docker pull conduktor/conduktor-console:1.31.0
-solutions: console
-tags: features,fix
----
+    ```mdx
+    ---
+    title: Product and version
+    ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+    *Release date: {date}*
+    ```
+
+4. Document all the changes in the release. If it's a:
+
+- **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
+- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
+
+5. Open `release-notes/index.mdx` and import your new file, e.g.:
+
+```
+import Console1310 from './changelog/Console-1.31.0.mdx';
 ```
 
-1. Document all the changes in the release. If it's a major release, consider adding an index/table of contents to make it easier to read.
+6. Finally, add an entry at the top of the page, linking to your file. E.g.:
 
-1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
-
-```md
-import Console1310 from '/snippets/changelog/Console-1.31.0.md';
 ```
-
-1. Finally, add an entry at the top of the page, linking to your file. E.g.:
-
-```md
 ## Console 1.131.0
 <Console1310 />
 ---

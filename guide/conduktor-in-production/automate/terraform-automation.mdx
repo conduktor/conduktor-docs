@@ -13,6 +13,7 @@ Conduktor Terraform Provider is currently in **Alpha** and doesn't support all t
 ## Install
 
 The provider should be installed automatically with `terraform init`, however we recommend to pin a specific version or range of versions using the [required_providers](https://developer.hashicorp.com/terraform/language/providers/configuration) configuration:
+The provider should be installed automatically with `terraform init`, however we recommend to pin a specific version or range of versions using the [required_providers](https://developer.hashicorp.com/terraform/language/providers/configuration) configuration:
 
 ```hcl
 terraform {
@@ -37,14 +38,14 @@ To use the Conduktor Terraform Provider, you need to configure:
 
 ### Authenticate using API Keys
 
-````hcl
+```hcl
 # configure provider
 provider "conduktor" {
     mode      = "console"
     base_url  = "http://localhost:8080"
     api_token = "your-api-key"
 }
-````
+```
 
 There are two types of API Keys: **admin** and **Self-service application**.
 
@@ -56,11 +57,11 @@ Admin API Keys grant the maximum permissions on Console.
 <Tabs>
   <Tab title="CLI">
 
-````bash
+```bash
 # Generate a key named my-admin-key
 $ conduktor token create admin my-admin-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
   </Tab>
   <Tab title="UI">
@@ -77,10 +78,10 @@ Self-service Application API Key permissions are **limited to the scope of the A
   <Tabs>
   <Tab title="CLI">
 
-````bash
+```bash
 $ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
 AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-````
+```
 
   </Tab>
   <Tab title="UI">
@@ -104,7 +105,7 @@ Short-lived user API Keys will be valid for the same duration as the configured 
 OIDC users can't be used.
 </Info>
 
-````hcl
+```hcl
 # configure provider
 provider "conduktor" {
     mode           = "console"
@@ -112,7 +113,7 @@ provider "conduktor" {
     admin_user     = "console-admin@mycompany.io"
     admin_password = "console-admin-password"
 }
-````
+```
 
 ### Environment variables
 

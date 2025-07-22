@@ -9,12 +9,14 @@ Unlike port mapping, which differentiates brokers based on the port a client con
 
 This is particularly useful if you are:
 
+
 - Experiencing a high administrative overhead for managing multiple ports.
 - Restricted by your security department in the number of ports you can expose.
 
 ## Context about client connection
 
 To understand the different steps required to set up SNI routing, let's break it down into the connection steps each client would take:
+
 
 1. Connect to Gateway advertised host
 2. Retrieve how to reach the right broker for each topic partition in the metadata returned by Gateway
@@ -121,6 +123,7 @@ GATEWAY_ROUTING_MECHANISM: host
 GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+GATEWAY_SECURITY_MODE: GATEWAY_MANAGED
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
@@ -133,7 +136,8 @@ GATEWAY_SSL_KEY_PASSWORD: conduktor
 GATEWAY_ROUTING_MECHANISM: host
 GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
-GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
+GATEWAY_SECURITY_PROTOCOL: SASL_SSL
+GATEWAY_SECURITY_MODE: KAFKA_MANAGED
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
@@ -147,6 +151,7 @@ GATEWAY_ROUTING_MECHANISM: host
 GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SECURITY_MODE: GATEWAY_MANAGED
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor
@@ -160,6 +165,7 @@ GATEWAY_ROUTING_MECHANISM: host
 GATEWAY_ADVERTISED_HOST: gateway.conduktor.sni-demo.local
 GATEWAY_ADVERTISED_HOST_PREFIX: broker
 GATEWAY_SECURITY_PROTOCOL: SSL
+GATEWAY_SECURITY_MODE: GATEWAY_MANAGED
 GATEWAY_SSL_KEY_STORE_PATH: /security/kafka.gateway.conduktor.sni-demo.local.keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: conduktor
 GATEWAY_SSL_KEY_PASSWORD: conduktor

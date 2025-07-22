@@ -53,9 +53,9 @@ platform:
     image: curlimages/curl:latest  # Using curl image
     args: [ "-L", "https://github.com/conduktor/my_custom_deserializers/releases/download/2.0.0/my_custom_deserializers_2.13-2.0.0.jar", "-o", "/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar" ]    
     securityContext: # avoid permission issues and curl image not having numeral UID error
-      fsGroup: 0 # same GID as Console
+      fsGroup: 0 # same default GID as Console
       runAsNonRoot: true
-      runAsUser: 10001 # same UID as Console
+      runAsUser: 10001 # same default UID as Console
     volumeMounts:
     - name: plugins
       mountPath: /opt/conduktor/plugins  # Mounting to the desired directory
