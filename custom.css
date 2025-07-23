@@ -23,6 +23,11 @@
 .link-list a:hover {
   color: #09343C;
   transform: translateX(4px);
+  text-transform: underline;
+}
+
+.dark .link-list a:hover {
+  color: #BCFE68;
 }
 
 .link-list a:after {
