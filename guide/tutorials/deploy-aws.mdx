@@ -31,7 +31,8 @@ You can skip this step if you already have an RDS database running you want to u
 
 Let's start by deploying a database on RDS that Conduktor will use to store its state.
 
-As per the [system requirements](/platform/get-started/installation/hardware/#production-requirements), the PostgreSQL DB needs to be version **13 or higher**. 
+As per the system requirements, the PostgreSQL DB needs to be version **13 or higher**. 
+
 Please be aware that Console is compatible only with PostgreSQL engines of version 14.8 or 15.3 and above **within RDS**; other versions may not be fully supported.
 
 Go to the RDS menu and create a new database.
@@ -70,7 +71,7 @@ Go to Amazon Elastic Container Service:
 In the **Infrastructure Requirements** section:
 
 - Define the ECS family name as `conduktor`, this will be useful to update our deployment with newer versions of Conduktor.
-- Specify the infrastructure requirements relevant to your deployment. Per the [system requirements](/platform/get-started/installation/hardware/#production-requirements), we recommend a minimum of **2x CPU cores** and **4GB of RAM**.
+- Specify the infrastructure requirements relevant to your deployment. As per system requirements, we recommend a minimum of **2x CPU cores** and **4GB of RAM**.
 
 ##### Step 2.1: Add the core console container
 
@@ -178,8 +179,8 @@ Select the **Configure clusters** option and start adding your Kafka cluster con
 
 Now that you have an up-and-running deployment of Console, it's time to invite your team!
 
-- [Configure SSO](/platform/category/configure-sso/) to easily onboard users
-- Configure [local users](/platform/get-started/configuration/user-authentication/local-admin-and-users/) if you are not using SSO
+- Configure SSO to easily onboard users
+- Configure local users, if you are not using SSO
 
 ### Troubleshoot
 

@@ -6,7 +6,7 @@ title: Delegated JWT authentication
 
 Console allows you to delegate authentication to an external identity provider.
 
-A common use case is to protect Console by putting an API gateway between Console and its clients. The authentication flow of the client is performed by the API gateway and the token from the identity provider is sent directly to Console. In this case, no authentication is performed by Console, it only checks that the token is valid and issued by the trusted identity provider.
+A common use case is to protect Console by putting an API between Console and its clients. The authentication flow of the client is performed by the API and the token from the identity provider is sent directly to Console. In this case, no authentication is performed by Console, it only checks that the token is valid and issued by the trusted identity provider.
 
 ![architecture diagram API auth](/images/jwt-auth-api-gateway.png)
 
@@ -43,7 +43,7 @@ export CDK_AUTH_MODE="external"
 export CDK_API_KEY=<bearer token>
 ```
 
-If you use an API gateway in front of Console, you can also send the client ID and secret as basic auth in the authentication header, like this:
+If you use an API in front of Console, you can also send the client ID and secret as basic auth in the authentication header, like this:
 
 ```shell
 # Basic auth

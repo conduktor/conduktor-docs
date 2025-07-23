@@ -21,7 +21,7 @@ Enter user's email address and click **Add**.
 
 ![Add users](/images/add-users.png)
 
-You can later to add users from an IAC approach using the [ConsoleGroup](/platform/reference/resource-reference/console/#consolegroup) component.
+You can later to add users from an IAC approach using the [ConsoleGroup](/guide/conduktor-reference/console-reference#consolegroup) component.
 
 #### Configuration example
 
@@ -65,7 +65,7 @@ CDK_AUTH_LOCAL-USERS_1_PASSWORD="bob-secret"
 In addition to these local admin and users, you can set up **Single Sign-On (SSO)** so your users can log in using your company **LDAP** or **OIDC** identity provider.
 
 <Info>
-This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please [select your identity provider](/platform/category/configure-sso/).
+This feature only works after setting up Console to use your identity provider as SSO. To be guided through the steps, please select your identity provider.
 </Info>
 
 ### Manage user permissions before first login
@@ -78,7 +78,7 @@ For the user to appear in the users list in Console, they have to log in first. 
 
 ### Local account config properties
 
-| Property                      | Description   | Environment variable             | Mandatory | Type   | Default Value          |
+| Property                      | Description   | Environment variable             | Mandatory | Type   | Default value          |
 |-------------------------------|---------------|----------------------------------|-----------|--------|------------------------|
 | `auth.local-users[].email`    | User login    | `CDK_AUTH_LOCALUSERS_0_EMAIL`    | true      | string | `"admin@conduktor.io"` |
 | `auth.local-users[].password` | User password | `CDK_AUTH_LOCALUSERS_0_PASSWORD` | true      | string | `"admin"`              |

@@ -14,7 +14,7 @@ You can read the full announcement [here](https://conduktor.io/desktop).
 
 Rest assured, we have you covered with Conduktor Scale - a centralized, web-based platform built for modern data streaming, delivering the security, speed, and performance your team needs to stay ahead.
 
-![Console Home page](../platform/assets/home.png)
+![Console Home page](/images/home.png)
 
 With the new Conduktor, you'll enjoy:
  - **Modern Web-Based Interface**
@@ -40,8 +40,6 @@ Unlike the Desktop version, the new Conduktor platform is deployed centrally on 
  - Improved governance with visibility over user activities and data access
  - Enhanced collaboration features such as shareable URLs and shareable consumer filters
 
-![desktop-scale-comparison](./assets/desktop-console-comparison.png)
-
 ### High-Level Architecture
 
 Conduktor consists of two core Docker images:
@@ -50,8 +48,6 @@ Conduktor consists of two core Docker images:
     - Provides the UI and core features for managing Kafka resources
  - **conduktor-console-cortex**
     - Supports monitoring, alerting, and integrations with observability platforms
-
-![scale-architecture-overview](./assets/scale-architecture-overview.png)
 
 #### Key Dependencies
 
@@ -62,27 +58,21 @@ Conduktor consists of two core Docker images:
  - Storage for Metrics
     - Local or object storage (AWS S3, Azure Blob) for historical time-series data
 
-[System Requirements](../../platform/get-started/installation/hardware)
-
 ### Deployment Options
 
 Deploying Conduktor in a server environment is simplified using:
 
- - [Helm charts](../../platform/get-started/installation/get-started/kubernetes)
- - [Docker Compose](../../platform/get-started/installation/get-started/docker)
- - [AWS Marketplace / CloudFormation templates](../../platform/get-started/installation/get-started/aws-marketplace-and-cloudformation)
-
-[Deployment Options](../../platform/category/deployment-options)
+ - Helm charts
+ - Docker Compose
+ - AWS Marketplace / CloudFormation templates
 
 ### Licensing
 
 If you are migrating to the Community edition of Scale, a license key is not required to start Conduktor. However, please note that Enterprise capabilities will not be available.
 
-On the other hand, if you are migrating to Scale Standard or Scale Plus, you will receive a license key that should be configured as an [environment variable](../platform/get-started/configuration/env-variables/#global-properties).
+On the other hand, if you are migrating to Scale Standard or Scale Plus, you will receive a license key that should be configured as an environment variable.
 
 ### Re-Integrating Your Kafka Clusters
-
-![desktop-scale-clusters](./assets/desktop-scale-clusters.png)
 
 Once your deployment is running, configure your Kafka clusters:
 
@@ -92,8 +82,8 @@ Once your deployment is running, configure your Kafka clusters:
 
 For an Infrastructure-as-Code approach, cluster configurations can also be managed via CLI or environment variables:
 
- - [CLI: Kafka Cluster Reference](../../platform/reference/resource-reference/console/#kafkacluster)
- - [Environment Variable Reference](../../platform/get-started/configuration/env-variables/#kafka-clusters-properties)
+ - CLI: Kafka Cluster Reference
+ - Environment Variable Reference
 
 ### Inviting Your Team
 
@@ -104,12 +94,10 @@ You can invite users in two ways:
 
 For SSO configuration, set the required environment variables and refer to our documentation for popular identity providers:
 
- - [Local Users](../../platform/get-started/configuration/user-authentication/local-admin-and-users/)
- - [SSO Configuration](../../platform/category/configure-sso)
+ - Local Users
+ - SSO Configuration
 
 ### Assigning Permissions
-
-![scale-team-permissions](./assets/scale-team-permissions.png)
 
 Leverage the RBAC model to assign permissions:
 

@@ -23,7 +23,7 @@ By allowing nearly any Kafka ACL setup to be configured using a single call to t
 
 We'll continue to support setting ACLs directly using the Kafka admin API as a super user, since this change won't be useful in all scenarios and use cases.
 
-[Find out more about the new ACLs features in the Virtual Cluster resource reference](/gateway/reference/resources-reference/#virtual-cluster-acls).
+[Find out more about the new ACLs features in the Virtual Cluster resource reference](/guide/reference/gateway-reference#virtualcluster).
 
 #### Auto-create topics
 
@@ -35,4 +35,4 @@ You can now create topics automatically when producing or consuming through Gate
   - **permission requirements**: requires `CREATE` permission on either the topic or the cluster.
   - **security**: ensures access control while maintaining flexibility for different permission models.
 
-[Find out more about environment variables](/gateway/configuration/env-variables#connect-from-clients-to-gateway) and [auto-create topics authorization](/gateway/how-to/manage-service-accounts-and-acls#auto-create-topics-authorization).
+[Find out more about environment variables](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway#4-configure-gateway-to-accept-client-connections) and [auto-create topics authorization](/guide/tutorials/manage-gw-sa#auto-create-topic-authorization).

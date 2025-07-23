@@ -244,7 +244,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="https://cognito-idp.<region>.amazonaws.com/<user
 
 ##### Map to external groups
 
-Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
+Now that your configuration is finished, you can set up the mapping between Amazon Cognito and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Amazon Cognito.
 
 The value you need to put as an external group is the `Object ID` of the Amazon Cognito group.
 
@@ -684,7 +684,7 @@ CDK_SSO_OAUTH2_0_OPENID_ISSUER="http://<Keycloak host>:<Keycloak port>/realms/<r
 
 ##### Map to external groups
 
-Now that your configuration is finished, you can [setup the mapping](/platform/get-started/configuration/user-authentication/external-group-sync/#create-an-external-group-mapping) between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
+Now that your configuration is finished, you can setup the mapping between Keycloak and Console groups. That way, when a user logs in, they will be automatically added to the corresponding Console groups, based on the groups they belong to in Keycloak.
 
 The value you need to put as an external group is the name of the Keycloak group.
 
@@ -812,7 +812,7 @@ In this case, the `Host` header (generally set by the browser) will be used to d
 
 <Note>
 **Port** will be guessed depending on the content of the `Host` header and fallback to Console configured port using environment variable `CDK_LISTENING_PORT` (default to `8080`).   
-**Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. See [TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details. (default to `http`).
+**Scheme** (http/https) will be guessed depending on the current TLS configuration of Console. (default to `http`).
 </Note>
 
 4. Get the client ID and secret from application settings

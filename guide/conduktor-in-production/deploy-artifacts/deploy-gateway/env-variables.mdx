@@ -78,9 +78,9 @@ You'll get a confirmation in the logs: `Sourcing environment variables from $GAT
 | `GATEWAY_PORT_START`                                                            | The first port the Gateway listens on.                                                                                                                                                                                           | `6969`                                                                                                                                               |
 | `GATEWAY_MIN_BROKERID`                                                          | The broker ID associated with the first port (`GATEWAY_PORT_START`). Should match the lowest `broker.id` (or `node.id`) in the Kafka cluster.                                                                                    | `0`                                                                                                                                                  |
 | `GATEWAY_BIND_HOST`                                                             | The network interface the Gateway binds to.                                                                                                                                                                                      | `0.0.0.0`                                                                                                                                            |
-| [**Port routing specific**](/gateway/configuration/network/#port-based-routing) |                                                                                                                                                                                                                                  |                                                                                                                                                      |
+| **Port routing specific** |                                                                                                                                                                                                                                  |                                                                                                                                                      |
 | `GATEWAY_PORT_COUNT`                                                            | The total number of ports used by Gateway.                                                                                                                                                                                       | `(maxBrokerId - minBrokerId) + 3`                                                                                                                    |
-| [**SNI routing specific**](/gateway/how-to/sni-routing)                         |                                                                                                                                                                                                                                  |                                                                                                                                                      |
+| **SNI routing specific**                       |                                                                                                                                                                                                                                  |                                                                                                                                                      |
 | `GATEWAY_ADVERTISED_SNI_PORT`                                                   | The port returned in the Gateway’s metadata for clients to connect to when using SNI routing.                                                                                                                                    | `GATEWAY_PORT_START`                                                                                                                                 |
 | `GATEWAY_ADVERTISED_HOST_PREFIX`                                                | Configures the advertised broker names.                                                                                                                                                                                          | `broker`                                                                                                                                             |
 | `GATEWAY_SECURITY_MODE`                                                         | Defines where authentication takes place, Gateway or Kafka. Valid values are: `GATEWAY_MANAGED`, `KAFKA_MANAGED`.                                                                                                                | The default value depends on combination of `GATEWAY_SECURITY_PROTOCOL` and `KAFKA_SECURITY_PROTOCOL`. [See security defaults](#security-defaults)   |
@@ -92,7 +92,7 @@ As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_XXX` security 
 
 The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Security Mode Migration Guide](/guide/tutorials/migrate-gw-security) before proceeding.
 </Warning>
 
 ### Load balancing
@@ -148,20 +148,20 @@ When defining Gateway's Kafka property `bootstrap.servers`, declare it as the en
 | `GATEWAY_AUTO_CREATE_TOPICS_ENABLED`              | Enable auto-create topics feature. When enabled, topics can be automatically created when producing or consuming through Gateway, leveraging the Kafka property *auto.create.topics.enable*. **Authorization**: When enabled, users require either `CLUSTER` resource with `CREATE` permission (allows creating any topic) or `TOPIC` resource with `CREATE` permission for specific topics. **Warning:** this feature **doesn't support concentrated topics**. When auto-create topics is enabled, topics that would normally be concentrated not be, they'll simply be created as regular physical topics instead. Take caution when enabling this setting.| `false`                                                                                                                                             |
 | `GATEWAY_ACL_ENABLED`                             | Enable/disable ACL support on the Gateway transparent virtual cluster (`passthrough`) only.                                                                                                                                 | When `GATEWAY SECURITY MODE` is set to <br/> - `GATEWAY_MANAGED` : `true`. <br/>- `KAFKA_MANAGED`: `false`. <br/>- Unset and undetermined: `false`. |
 | `GATEWAY_SUPER_USERS`                             | Semicolon-separated (`;`) list of service accounts that will be super users on Gateway (**excluding virtual clusters**).<br/> Example: `alice;bob`.                                                                         | Usernames from GATEWAY_ADMIN_API_USERS                                                                                                              |
-| `GATEWAY_ACL_STORE_ENABLED`                       | **Obsolete, use [VirtualCluster](/gateway/reference/resources-reference/#virtualcluster) resource now** <br/>Enable/disable ACLs support for Virtual Clusters only.                                                         | `false`                                                                                                                                             |
+| `GATEWAY_ACL_STORE_ENABLED`                       | **Obsolete**, use the *VirtualCluster* resource. Enable/disable ACLs support for Virtual Clusters only.                                                         | `false`                                                                                                                                             |
 | `GATEWAY_AUTHENTICATION_CONNECTION_MAX_REAUTH_MS` | Force the client re-authentication after this amount of time. If set to 0, we never force the client to re-authenticate until the next connection                                                                           | `0`                                                                                                                                                 |
 | `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS`       | The pause between disconnection of broker clients during shutdown process. Set to `1000` or higher for librdkafka clients.                                                                                                  | `0`                                                                                                                                                |
 
 During shutdown, Gateway closes client connections in controlled manner to simulate rolling Kafka broker restart, with `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS` pause between brokers. For librdkafka clients, set `GATEWAY_SHUTDOWN_DELAY_BETWEEN_BROKERS_MS` to `1000` or higher to prevent them from crashing during shutdown because of `ALL_BROKERS_DOWN` error.
 
 <Warning>
-As of [Gateway 3.10.0](/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
+As of [Gateway 3.10.0](/snippets/changelog/Gateway-3.10.0), the `DELEGATED_SASL_SSL` security protocol have been deprecated in favour of an additional environment variable,  `GATEWAY_SECURITY_MODE`.
 
 The default behaviour of environment variable `GATEWAY_ACL_ENABLED` has changed, instead derived from security mode when left unset.
 
 The `DELEGATED` values remain supported for backward compatibility but are no longer recommended for new configurations.
 
-If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/gateway/how-to/migration-guide-to-security-mode) before proceeding.
+If you are using `DELEGATED` security protocols review the [Migration Guide to Security Mode](/guide/tutorials/migrate-gw-security) before proceeding.
 </Warning>
 
 ### Security defaults
@@ -205,8 +205,6 @@ This decision tree explains how Gateway determines default values for `GATEWAY_S
 
 #### SSL authentication
 
-[See client authentication for details](/gateway/configuration/client-authentication/#ssl).
-
 | **Environment variable**                      | **Description**                                                                                                                                                                                                                                                                                                                                                                                       | **Default value**    |
 |-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
 | **Keystore**                                  |                                                                                                                                                                                                                                                                                                                                                                                                       |                      |
@@ -240,8 +238,6 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 
 ### Plain authentication
 
-[See client authentication for details](/gateway/configuration/client-authentication/#plain).
-
 | **Environment variable**                     | **Description**                                                                                                                                                                                                                                                                                                                                                                  | **Default value**                                                                 |
 |----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
 | `GATEWAY_USER_POOL_SECRET_KEY`               | Base64 encoded value of 256bits long (e.g. `openssl rand -base64 32`). If using SASL_PLAIN or SASL_SSL, you have the ability to create local service accounts on Gateway. These service accounts will have credentials generated by Gateway based on the `GATEWAY_USER_POOL_SECRET_KEY`. | No default value is provided. **You must provide this value for all deployments** |
@@ -255,9 +251,9 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 
 ### Cluster switching / failover
 
-Setting up your Kafka clusters for [failover](/gateway/how-to/configuring-failover) is similar to the standard setup, but you need to provide two sets of properties: one for your main cluster and one for your failover cluster.
+Setting up your Kafka clusters for failover is similar to the standard setup, but you need to provide two sets of properties: one for your main cluster and one for your failover cluster.
 
-You can define these properties as environment variables or load a [cluster configuration file](/gateway/how-to/configuring-failover/#configuring-through-a-cluster-config-file).
+You can define these properties as environment variables or load a cluster configuration file.
 
 | **Environment variable**           | **Description**                                                                                                  |
 |------------------------------------|------------------------------------------------------------------------------------------------------------------|

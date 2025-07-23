@@ -1013,12 +1013,8 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 ### Kafka cluster properties
 
 <Warning>
-The new recommended way to configure clusters is through the CLI and YAML manifests. [Check KafkaCluster documentation for details](/platform/reference/resource-reference/console/#kafkacluster).
+The new recommended way to configure clusters is through the CLI and YAML manifests.
 </Warning>
-
-For more information on configuring your Kafka clusters using GitOps processes, see [GitOps: Managing Cluster configurations](/platform/get-started/configuration/configuration-snippets/#gitops-managing-cluster-configurations).
-
-You can find sample configurations on the [Configuration snippets](/platform/get-started/configuration/configuration-snippets/) page.
 
 | Property                                | Description                                                    | Environment variable                        | Mandatory | Type                                     | Default |
 |-----------------------------------------|----------------------------------------------------------------|---------------------------------------------|-----------|------------------------------------------|---------|
@@ -1123,7 +1119,7 @@ We support ksqlDB integration as of Conduktor Console v1.21.0.
 
 ### Indexer properties
 
-The [indexer](/platform/navigation/console/about-indexing/) is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
+[Indexing](/guide/conduktor-concepts/indexing) is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
 You should modify these parameters only if you see an issue with the performance of the indexer.
 
 | Property                                             | Description                                                                                                                                   | Environment variable                               | Mandatory | Type | Default           |

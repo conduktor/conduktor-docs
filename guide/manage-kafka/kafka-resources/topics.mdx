@@ -7,7 +7,7 @@ title: Kafka topics
 The Topic page lets you search for any topic on your currently selected Kafka cluster.
 
 <Warning>
-Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics. Check the [Settings](https://docs.conduktor.io/platform/admin/rbac/) for more info.
+Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.
 </Warning>
 
 Multiple search capabilities can be combined to help you find to the topic you want faster.
@@ -22,7 +22,7 @@ Multiple search capabilities can be combined to help you find to the topic you w
 
 **Sorting** is possible on all columns.
 
-**Active columns** can be picked from a list of Available columns from the side button « ⚙️ Edit columns »
+**Active columns** can be picked from a list of available columns from the **Edit columns** option.
 
 <Info>
 Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
@@ -415,7 +415,6 @@ Possible values:
 
 -   `Most recent` option works differently depending on the **Limit** that you select
     -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
-        -   [How Most Recent 500 works?](/platform/navigation/console/topics/topic-consume/most-recent/)
     -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
 -   `Latest hour`, `Today`, `Yesterday` to start the consumer respectively
     -   60 minute ago,
@@ -468,7 +467,7 @@ Automatic deserializer applies to all the records within a topic, based on the o
 
 If you have installed them, your Custom Deserializers will appear here. Optionally, configure them using the `Properties` text and your messages will show as expected.  
 
-Check our guide on how to [Install and configure custom deserializers](/platform/guide/custom-deserializers/) in Console.
+Check our guide on how to [Install and configure custom deserializers in Console.
 
 ![Consume with a custom deserializer](/images/topic-custom-deserializer.png)
 
@@ -668,8 +667,6 @@ Upon click the Reprocess message **(1)**, you will be asked to pick a destinatio
 
 ![Reprocess a record](/images/topic-reprocess.png)
 
-Know more about [How to reprocess records](/platform/guide/reprocess/).
-
 ### Save and load views
 
 If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, or if you'd like to share them with your colleagues, you can save your current view as a template for reuse.
@@ -716,7 +713,7 @@ Most Recent N messages doesn't work well with filters. This is because the filte
 JS filter is used to filter Kafka records. The filter is evaluated on each record on the server. It's powerful and can handle complex filters, but requires writing JavaScript code.
 
 <Warning>
-We recommend that you use the simpler and more performant filters: [Global search](/platform/navigation/console/topics/topic-consume/consume/#global-search) and [Search in a specific field](/platform/navigation/console/topics/topic-consume/consume/#search-in-a-specific-field).
+We recommend that you use the simpler and more performant filters: global search and search in a specific field.
 </Warning>
 
 The code has to return a boolean.
@@ -846,7 +843,7 @@ Default: `true`
 This button shows all the Topic Configurations as key value pairs  
 
 **More Button `...`**  
-This lets you do the same 3 operations that are available on the [Topic List Page](/platform/navigation/console/topics/#add-partitions) : Add partitions, Empty Topic and Delete Topic.
+This lets you do the same 3 operations that are available on the topic list page: Add partitions, Empty Topic and Delete Topic.
 
 ### Edit configurations
 

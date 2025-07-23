@@ -26,10 +26,6 @@ sasl.mechanism=SCRAM-SHA-512
 sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username='<username>' password='<password>';
 ```
 
-<Info>
-If your configuration references keystore or truststore path, check the [Client Certificate Authentication](https://docs.conduktor.io/platform/configuration/ssl-tls-configuration/#client-certificate-authentication) documentation.
-</Info>
-
 ## Connect to a Confluent cluster
 
 Via your Confluent cluster dashboard, select the **Clients** tab within **Data integration.**
@@ -134,7 +130,7 @@ keytool -import -keystore zeke-test2-cdp-env.jks -alias zeke-test2-cdp-env -file
 
 1. In the Cloudera platform, **open the firewalls** for the Kafka brokers and schema registry.
 
-1. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and [add the certs to your environment](/platform/get-started/configuration/ssl-tls-configuration/#configure-custom-truststore-on-conduktor-console) or click **Upload certificate** to manually upload them.
+1. In Conduktor Console, go to **Clusters**, select the newly created Cloudera one and add the certs to your environment or click **Upload certificate** to manually upload them.
 
 1. Once you've added your certs to Console, configure the cluster in the below screenshot. Use the **workload user and password** from the first step.
 
