@@ -12,7 +12,7 @@
 
 .dark #topbar-cta-button > a > span {
   background-color: #BCFE68 !important;
-  color: #09343C;
+  color: #09343C !important;
 }
 
 .img.nav-logo {
