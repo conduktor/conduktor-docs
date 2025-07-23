@@ -69,7 +69,7 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 
 Every new version of Gateway and Console has to have release notes.
 
-{COMING SOON}
+**COMING SOON**
 
 To update release notes:
 
