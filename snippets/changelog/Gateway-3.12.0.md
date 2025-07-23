@@ -13,6 +13,18 @@ tags: features,fixes
 
 ### Breaking changes
 
+#### New Health and Version APIs
+
+To improve the reliability and monitoring of the Gateway service, we have introduced new API endpoints for health checks and version information.
+
+These changes align our service with Kubernetes health checks standards and will provide a more robust way to monitor the Gateway's status.
+
+Please check [Monitoring reference](/docs/gateway/reference/monitoring.md) page to learn more about the new API endpoints.
+
+:::warning
+The old */health* API is now deprecated but it will continue to function. Please update your configuration to use the new liveness and readiness probe endpoints.
+:::
+
 ### New features
 
 #### `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
