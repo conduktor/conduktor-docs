@@ -18,21 +18,29 @@ Returns a status HTTP 200 when Console is up.
 curl -s  http://localhost:8080/api/health/live
 ```
 
-Could be used to set up probes on Kubernetes or docker-compose.
+Could be used to set up probes on Kubernetes.
 
-#### docker-compose probe setup
+#### Kubernetes startup probe
 
-```yaml
-healthcheck:
-  test:
-    [
-      'CMD-SHELL',
-      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/live',
-    ]
-  interval: 10s
-  start_period: 120s # Leave time for the psql init scripts to run
-  timeout: 5s
-  retries: 3
+```yaml title="Port configuration"
+
+ports:
+  - containerPort: 8080
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+startupProbe:
+    httpGet:
+        path: /api/health/live
+        port: httpprobe
+    enabled: false
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 10
+    successThreshold: 1
 ```
 
 #### Kubernetes liveness probe
@@ -49,9 +57,12 @@ livenessProbe:
   httpGet:
     path: /api/health/live
     port: httpprobe
-  initialDelaySeconds: 5
+  enabled: true
+  initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
 ```
 
 ### Readiness/startup Endpoint
@@ -71,10 +82,30 @@ curl -s  http://localhost:8080/api/health/ready
 # READY
 ```
 
-#### Kubernetes startup probe
+Could be used to set up probes on docker-compose or Kubernetes.
+
+#### docker-compose probe setup
+
+:::info
+The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
+:::
+
+```yaml
+healthcheck:
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/ready',
+    ]
+  interval: 10s
+  start_period: 120s # Leave time for the psql init scripts to run
+  timeout: 5s
+  retries: 3
+```
+
+#### Kubernetes readiness probe
 
 ```yaml title="Port configuration"
-
 ports:
   - containerPort: 8080
     protocol: TCP
@@ -82,15 +113,18 @@ ports:
 ```
 
 ```yaml title="Probe configuration"
-startupProbe:
-    httpGet:
-        path: /api/health/ready
-        port: httpprobe
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 30
+readinessProbe:
+  httpGet:
+    path: /api/health/ready
+    port: httpprobe
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
 ```
+
 
 
 
