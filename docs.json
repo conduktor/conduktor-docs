@@ -176,7 +176,9 @@
               "guide/tutorials/deploy-aws",
               "guide/tutorials/migrate-gw-security",
               "guide/tutorials/configure-encryption",
-               "guide/tutorials/custom-log"                                             
+              "guide/tutorials/custom-log",
+              "guide/tutorials/manage-gw-sa"
+
           ]
           }
         ]
@@ -213,7 +215,7 @@
           "anchors": [
             {
               "anchor": "Support portal",
-              "href": "https://learn.conduktor.io/kafka/",
+              "href": "https://support.conduktor.io",
               "icon": "newspaper"
             }
           ]
