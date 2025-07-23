@@ -8,9 +8,25 @@ tags: features,fixes
 
 *Release date: {frontMatter.date.toISOString().slice(0, 10)}*
 
+- [Breaking changes](#breaking-changes)
+  - [Deprecated v1 APIs](#deprecated-v1-apis)
 - [New features](#new-features)
   - [Use REST to set Virtual Cluster ACLs](#set-virtual-cluster-acls-directly-using-rest)
   - [Auto-create topics](#auto-create-topics)
+
+### Breaking changes
+
+#### Deprecated v1 APIs
+
+The v2 APIs were introduced with Gateway v3.3.0 in September 2024.  
+
+The v1 APIs were deprecated with Gateway v3.8.0 in April 2025.
+
+If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+
+:::warning[Migrate to v2 APIs]
+**We plan to remove the V1 APIs from the Gateway in two releases (Gateway 3.13.0).** If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+:::
 
 ### New features
 
