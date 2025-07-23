@@ -10,7 +10,6 @@
   color: white !important;
 }
 
-body.dark #topbar-cta-button > a > span {
-  background-color: #bcfe68 !important;
-  color: #09343C !important;
+.nav-logo > img {
+  height: 32px;
 }
