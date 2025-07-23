@@ -26,7 +26,7 @@
 }
 
 .link-list a:after {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 6";
   font-weight: 900;
   content: "\f061"; /* fa-arrow-right */
   position: absolute;
@@ -38,3 +38,16 @@
 .link-list a:hover:after {
   opacity: 1;
 }
+
+.spacing-sm { margin: 10px 0; }
+.spacing-md { margin: 20px 0; }
+.spacing-lg { margin: 40px 0; }
+.spacing-xl { margin: 60px 0; }
+
+.mt-sm { margin-top: 10px; }
+.mt-md { margin-top: 20px; }
+.mt-lg { margin-top: 40px; }
+
+.mb-sm { margin-bottom: 10px; }
+.mb-md { margin-bottom: 20px; }
+.mb-lg { margin-bottom: 40px; }
