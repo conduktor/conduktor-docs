@@ -7,12 +7,12 @@
 
 #topbar-cta-button > a > span {
   background-color: #09343C !important;
-  color: white !important;
+  color: white;
 }
 
 .dark #topbar-cta-button > a > span {
   background-color: #BCFE68 !important;
-  color: #09343C !important;
+  color: #09343C;
 }
 
 .img.nav-logo {
