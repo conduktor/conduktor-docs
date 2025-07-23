@@ -27,7 +27,8 @@ Before creating a Partner Zone, you have to:
   - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN`, `SASL_SSL`, or `SSL`
   - `GATEWAY_SECURITY_MODE` set to `GATEWAY_MANAGED`
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
-  - `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` set to `true`. Find out more about this [environment variable](https://docs.conduktor.io/gateway/configuration/env-variables/#connect-from-clients-to-gateway) and what [Gateway Service Account](https://docs.conduktor.io/gateway/concepts/service-accounts-authentication-authorization/#client-authentication-methods) to have setup. 
+  - `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` set to `true`
+    - Find out more about this [environment variable](https://docs.conduktor.io/gateway/configuration/env-variables/#connect-from-clients-to-gateway) and what [service account](https://docs.conduktor.io/gateway/concepts/service-accounts-authentication-authorization/#client-authentication-methods) needs to be setup. 
 - use a service account to connect to Gateway, that can access the topics you want to share
 - be logged in as an admin to Console UI, or using an admin token for the CLI
 - in Console, [configure your Gateway cluster](/platform/navigation/settings/managing-clusters/) and fill in the **Provider** tab with Gateway API credentials
