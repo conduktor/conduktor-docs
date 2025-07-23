@@ -54,14 +54,13 @@ This external Service Account will be the one used in Gateway to apply **ACLs** 
 
 ## Client authentication methods
 
-Gateway supports different client authentication methods, depending on both the type of service account (local or external), and the [security mode](/gateway/configuration/client-authentication/) (Gateway managed or Kafka managed).
-
+Gateway supports different client authentication methods, depending on both the type of service account (local or external), and the [security mode](/gateway/configuration/client-authentication/) (Gateway managed or Kafka managed). See the table below as a guide for which service account will need to be provided.
 | **Mode**          | **Protocol**                                                            | [Local SA](#local-service-accounts) | [External SA](#external-service-accounts) |
 | ----------------- | ----------------------------------------------------------------------- | :---------------------------------: | :---------------------------------------: |
 |                   | [**Anonymous**](#anonymous-authentication)                              |                                     |                                           |
 | `GATEWAY_MANAGED` | PLAINTEXT                                                               |                  ❌                 |                     ❌                    |
 |                   | SSL                                                                     |                  ❌                 |                     ❌                    |
-|                   | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                                     |                                           |
+|                   | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                  ❌                 |                     ✅                    |
 |                   | SSL                                                                     |                  ❌                 |                     ✅                    |
 |                   | [**SASL**](#sasl-authentication)                                        |                                     |                                           |
 |                   | SASL\_PLAINTEXT                                                         |                  ✅                 |           only if `OAUTHBEARER`           |
