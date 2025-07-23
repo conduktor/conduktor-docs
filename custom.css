@@ -23,7 +23,7 @@
 .link-list a:hover {
   color: #09343C;
   transform: translateX(4px);
-  text-transform: underline;
+  text-decoration: underline;
 }
 
 .dark .link-list a:hover {
@@ -67,5 +67,5 @@ h1, h2, h3 {
 }
 
 .dark h1, h2, h3 {
-  color: #BCFE68;
+  color: white;
 }
