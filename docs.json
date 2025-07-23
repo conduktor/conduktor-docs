@@ -78,7 +78,11 @@
             "group": "Admin actions",
             "pages": [
               "guide/conduktor-in-production/admin/index",
-              "guide/conduktor-in-production/admin/configure-clusters"
+              "guide/conduktor-in-production/admin/configure-clusters",
+              "guide/conduktor-in-production/admin/set-up-rbac",  
+              "guide/conduktor-in-production/admin/audit-logs",  
+              "guide/conduktor-in-production/admin/gw-policies", 
+              "guide/conduktor-in-production/admin/data-mask"             
             ]
           },
           {
