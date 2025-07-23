@@ -51,3 +51,7 @@
 .mb-sm { margin-bottom: 10px; }
 .mb-md { margin-bottom: 20px; }
 .mb-lg { margin-bottom: 40px; }
+
+h1, h2, h3 {
+  color: #09343C;
+}
