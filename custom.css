@@ -1,6 +1,6 @@
 .mdx-content,
 [data-mode="custom"] .container {
-  max-width: 92rem !important;
+  max-width: 1024px !important;
   min-width: 800px;
   margin: 0 auto;
 }
@@ -26,7 +26,9 @@
 }
 
 .link-list a:after {
-  content: "→";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f061"; /* fa-arrow-right */
   position: absolute;
   right: 0;
   opacity: 0;
