@@ -15,14 +15,24 @@ Once deployed, you’ll have access to a fully functional Kafka stack integrated
 
 ![Get started](/images/get-start-overview.png)
 
-1. The **data generation service** publishes a continuous stream of synthetic events that *simulate an e-commerce business*.
-2. Conduktor **Gateway intercepts Kafka traffic** to apply real-time operational controls — including *encryption*, *decryption*, *data masking*, and *Traffic Control Policies* — without requiring changes to producers or consumers.
-3. The intercepted **data flows through the Conduktor Gateway proxy and lands in a Redpanda Kafka cluster** with a *schema registry* enforcing structure and compatibility across topics.
-4. Conduktor Console provides a **centralized UI-based control plane** to manage both the Redpanda Kafka cluster and Conduktor Gateway, allowing you to:
-   - monitor topics, schemas, consumer groups and connectors
-   - define and apply Gateway policies
-   - trace message flows
-   - audit activity across the entire stack
+<Steps>
+   <Step> 
+    The **data generation service** publishes a continuous stream of synthetic events that *simulate an e-commerce business*.
+   </Step>
+   <Step>
+    Conduktor **Gateway intercepts Kafka traffic** to apply real-time operational controls — including *encryption*, *decryption*, *data masking*, and *Traffic Control Policies* — without requiring changes to producers or consumers.
+   </Step>
+   <Step>
+   The intercepted **data flows through the Conduktor Gateway proxy and lands in a Redpanda Kafka cluster** with a *schema registry* enforcing structure and compatibility across topics.
+   </Step>
+   <Step>
+   Conduktor Console provides a **centralized UI-based control plane** to manage both the Redpanda Kafka cluster and Conduktor Gateway, allowing you to:
+      - monitor topics, schemas, consumer groups and connectors
+      - define and apply Gateway policies
+      - trace message flows
+      - audit activity across the entire stack
+   </Step>
+</Steps>
 
 ## Data policies
 
