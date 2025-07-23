@@ -14,17 +14,13 @@
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
+We're now using Mintlify! `npm i -g mint` or `npx mint dev` if you don't want to install the CLI globally.
+
+[Here's more about the Mintlify installation](https://mintlify.com/docs/installation).
+
 In most cases, you'll be editing Markdown files in the **guide** directory.
 
-For a local preview (on *localhost:3000*), run `yarn start`.
-
-If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
-
-```bash
-yarn
-yarn build
-yarn start
-```
+For a local preview (on *localhost:3000*), run `mint dev`.
 
 ## Best practice guidelines
 
@@ -72,6 +68,8 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 ## Update release notes
 
 Every new version of Gateway and Console has to have release notes.
+
+{COMING SOON}
 
 To update release notes:
 
