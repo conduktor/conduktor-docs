@@ -70,6 +70,38 @@ Once configured you'll need to add the application to the Slack channels you wis
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to send alerts to that Slack channel.
 
+## Email integration
+
+Email integration allows you to receive notifications directly to your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
+
+![email integration](/images/email-integration.png)
+
+To set up email alerts, you have to configure:
+
+1. **Server settings**: configure your SMTP server details to enable email delivery
+   - SMTP server: enter your email server address with a port (e.g., `mail.company.com:587`)
+   - TLS encryption: (recommended) enable TLS encryption for secure email transmission
+   - SSL configuration: you can skip SSL checks or upload custom certificates for enhanced security
+
+1. **Authentication**: provide credentials for authenticating with your email server
+   - Sender email: the email address that will appear as the sender for all alerts (e.g., `conduktor-alerts@company.com`)
+   - Username and password: your email server authentication credentials
+   - Test configuration: click **Test configuration** to validate your configuration before saving changes
+
+Once your email integration is configured, you can create email alerts with customizable destination addresses, subjects and content. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically in the body of the email.
+
+### Email alerts used for Teams
+
+We directly integrate with Microsoft Teams using Workflows. If you're not allowed to use this feature, you can use the email integration to send alerts to Microsoft Teams channels.
+
+For this, first set up the [email integration](#email-integration) and get the channel's email address. You can find this in the channel settings under **Get email address**.
+
+![get first Teams email](/images/teams-get-email-1.png)
+
+From there, you can select which email addresses is authorized to send emails to this channel and copy it to use in your Conduktor alert.
+
+![get second Teams email](/images/teams-get-email-2.png)
+
 ### Microsoft Teams integration using Workflows
 
 This guide focusses on the Workflows integration, rather than webhooks which are used with Microsoft teams to handle alerting from Conduktor's monitoring.
