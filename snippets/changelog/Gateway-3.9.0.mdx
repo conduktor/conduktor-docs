@@ -35,7 +35,7 @@ curl -X PUT -u admin:conduktor http://localhost:8888/gateway/v2/service-account 
         -d '{"kind": "GatewayServiceAccount", "apiVersion": "gateway/v2", "metadata": { "name": "admin", "vCluster": "passthrough"  }, "spec": { "type": "LOCAL" }}' 
 ```
 
-[Find out about creating service accounts and ACLs](/gateway/how-to/manage-service-accounts-and-acls/).
+[Find out about creating service accounts and ACLs](/guide/tutorials/manage-gw-sa/).
 
 ##### Why did we make this change?
 
@@ -66,7 +66,7 @@ openssl rand -base64 32
 
 Previously, when we signed the tokens for the local service accounts, we used a key that's set to a default value. The issue with that is that anybody who knows that default value is able to create their own tokens and connect to Gateway, if you've not changed the key.
 
-To prevent this, we now ask you to set the key and store it safely, so that nobody unauthorized could create identities. [Find out more about managing service accounts](/gateway/how-to/manage-service-accounts-and-acls/#manage-a-local-service-account).
+To prevent this, we now ask you to set the key and store it safely, so that nobody unauthorized could create identities.
 
 ### New features
 
@@ -78,8 +78,6 @@ API keys to their associated service account. This feature addresses key limitat
 - **Improved Interceptor targeting**: Interceptors can now target service accounts directly
 - **Enhanced Chargeback capabilities**: Usage tracking by service account instead of API key
 - **Elimination of manual mappings**: Removes the need for administrators to maintain user mappings
-
-[Find out more about Gateway principal resolver for Confluent Cloud](/gateway/configuration/client-authentication/#principal-resolver)
 
 #### Dynamic header Injection from record payloads
 

@@ -718,7 +718,7 @@ curl -s  http://localhost:8080/api/versions | jq .
 
 | Environment variable                                                                                                   | Description                                                                                                                                                 | Default Value                                                                       | Since Version |
 |------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|---------------|
-| **[Logs](/platform/get-started/troubleshooting/logs-configuration/)**                                                  |                                                                                                                                                             |                                                                                     |               |
+| **Logs**                                                                                                               |                                                                                                                                                             |                                                                                     |               |
 | `CDK_DEBUG`                                                                                                            | Enable Console debug logs (equivalent to `CDK_ROOT_LOG_LEVEL=DEBUG`)                                                                                        | `false`                                                                             | 1.0.0         |
 | `CDK_ROOT_LOG_LEVEL`                                                                                                   | Set the Console global log level (one of `DEBUG`, `INFO`, `WARN`, `ERROR`)                                                                                  | `INFO`                                                                              | 1.11.0        |
 | `CDK_ROOT_LOG_FORMAT`                                                                                                  | Set logs format (one of `TEXT`, `JSON`)                                                                                                                     | `TEXT`                                                                              | 1.26.0        |
@@ -922,7 +922,7 @@ Optional local account list used to log into Console.
 
 ### Monitoring properties
 
-To see monitoring graphs and use alerts, you have to ensure that [Cortex](/guide/conduktor-in-production/deploy-artifacts/cortex) is also deployed.
+To see monitoring graphs and use alerts, you have to ensure that [Cortex](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex) is also deployed.
 
 #### Monitoring Configuration for Console
 
@@ -957,8 +957,6 @@ CDK_MONITORING_ENABLENONAGGREGATEDMETRICS: false
 [See Cortex configuration for details](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex/).
 
 ### SSO properties
-
-[See authentication guide for snippets](/guide/admin/configure-sso/).
 
 | Property                         | Description                                                              | Environment variable                 | Mandatory | Type    | Default |
 |----------------------------------|--------------------------------------------------------------------------|--------------------------------------|-----------|---------|---------|

@@ -50,8 +50,6 @@ We’re excited to introduce our new Gateway API, designed for seamless integrat
 - AliasTopic
 - VirtualCluster
 
-Check the [CLI reference](/gateway/reference/cli-reference) to get started, and the [resources reference for more information on each concept](/gateway/reference/resources-reference/).
-
 ```yaml
 ---
 apiVersion: gateway/v2
@@ -92,7 +90,7 @@ We will announce a deprecation plan in the coming weeks and notify you in advanc
 
 #### Support for HTTPS APIs
 
-It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs. Check the [HTTP section of the Environment Variables page](/gateway/configuration/env-variables/#http) for more details.
+It is now possible to configure HTTPS and mTLS authentication on the Gateway HTTP APIs.
 
 #### Better UX for ACLs and superUsers
 
@@ -143,8 +141,6 @@ spec:
 When applying field-level encryption prior to `3.3.0`, the encryption plugin would convert the message to JSON, and re-apply the schema format when the message was read back through the decryption plugin.
 
 In Gateway `3.3.0`, we now preserve the schema format for Avro messages - meaning the same schema is used in the backing topic, and the data can be read directly from Kafka or without the decryption plugin at all.
-
-[Read more](/gateway/interceptors/data-security/encryption/encryption-faq/#starting-from-330-avro-only) about this change to the default behaviour, and how to configure it.
 
 Fields which cannot be encrypted in-place (effectively any non-string field) have their encrypted value placed in the headers, and the field itself is given a default masking value. The default values are clarified below:
 

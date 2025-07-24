@@ -20,7 +20,7 @@ The token of the identity provider has to contain claims with either an API key 
 
 ## Configuration example
 
-In this example we configure Console to accept any token issued by `https://example.org/keycloak/realms/conduktor`. If a valid API key is defined in the `apikey` claim, it will be used. Otherwise, the email contained in the `email` claim will be mapped to a Console user. If the user doesn't exist, it will be created. The `groups` claim is optional and used for [external group mapping](/guide/conduktor-in-production/admin/user-access/external-groups-map).
+In this example we configure Console to accept any token issued by `https://example.org/keycloak/realms/conduktor`. If a valid API key is defined in the `apikey` claim, it will be used. Otherwise, the email contained in the `email` claim will be mapped to a Console user. If the user doesn't exist, it will be created. The `groups` claim is optional and used for [external group mapping](/guide/conduktor-in-production/admin/user-access/map-external-groups).
 
 ```yaml title="platform-config.yaml"
 sso:

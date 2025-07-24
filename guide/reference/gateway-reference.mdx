@@ -37,7 +37,7 @@ spec:
 - `metadata.scope` is optional (default empty). 
 - `metadata.scope.[vCluster | group | username]` combine with each other to define the targeting
   - Check the dedicated [Interceptor targeting](#interceptor-targeting) section
-- `spec.pluginClass` is **mandatory**. Must be a valid Interceptor class name from our [available Interceptors](/gateway/category/interceptor-catalog/)
+- `spec.pluginClass` is **mandatory**. Has to be a valid Interceptor class name.
 - `spec.priority` is **mandatory**
 - `spec.config` is a valid config for the `pluginClass`
 
@@ -325,7 +325,7 @@ spec:
 - If `spec.autoManaged` is set to `true`, the underlying physical topics and configurations will be automatically created and/or extended to honour the topics configurations.
 - If `spec.offsetCorrectness` is set to `true`, Gateway will maintain a list of offsets for each of the concentrated topic records.
   - This allows for a proper calculation of message count and consumer group lag.
-  - There are some limitation. Read more about [Offset Correctness here](/gateway/concepts/logical-topics/concentrated-topics/#known-issues-and-limitations-with-offset-correctness)
+  - There are some limitations with offset correctness.
 - If `spec.offsetCorrectness` is set to `false`, Gateway will report the offsets of the backing topic records.
 
 <Warning>

@@ -8,7 +8,7 @@ title: Gateway 3.7.0
 
 #### New backing topic required for Gateway
 
-The [Gateway KMS feature](#preview-feature-introducing-cost-effective-crypto-shredding-with-gateway-kms) introduced in this release requires a new backing topic to store the keys.
+The **Gateway KMS** feature introduced in this release requires a new backing topic to store the keys.
 
 When you upgrade to Gateway 3.7.0, a new topic `_conduktor_gateway_encryption_keys` will be created.
 
@@ -53,9 +53,6 @@ This approach is particularly valuable for organizations that need to implement 
 ![crypto-shredding-concept](/images/changelog/gateway/v3.7.0/crypto-shredding-concept.png)
 
 The keys stored by Gateway are all encrypted themselves via a configured master key externally held in your KMS - ensuring they remain secure and useless without access to the external KMS.
-
-
-[Find out how to configure the Gateway KMS](/gateway/interceptors/data-security/encryption/encryption-configuration#gateway-kms).
 
 ### Support for AWS Glue Schema Registry
 

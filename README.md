@@ -8,8 +8,6 @@
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
-[![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
-
 ## Deployment and structure
 
 Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
@@ -21,6 +19,8 @@ We're now using Mintlify! `npm i -g mint` or `npx mint dev` if you don't want to
 In most cases, you'll be editing Markdown files in the **guide** directory.
 
 For a local preview (on *localhost:3000*), run `mint dev`.
+
+You can check for broken links with `mint broken-links`.
 
 ## Best practice guidelines
 
@@ -68,8 +68,6 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 ## Update release notes
 
 Every new version of Gateway and Console has to have release notes.
-
-**COMING SOON**
 
 To update release notes:
 

@@ -88,7 +88,7 @@ After the user logged in, we can see they've been added to the group, without an
 
 #### Configure LDAPS certificate
 
-For LDAPs (LDAP over SSL) connection, you have to provide a trusted certificate using Java JKS TrustStore file. See [SSL/TLS configuration](/platform/get-started/configuration/ssl-tls-configuration/) for more details.
+For LDAPs (LDAP over SSL) connection, you have to provide a trusted certificate using Java JKS TrustStore file.
 
 LDAPS SSL certificate can also be passed as PEM encoded string using the property `sso.trustedCertificates`.
 
@@ -361,7 +361,7 @@ On Google side:
 
 - **Step 1**: Create an application on the **OAuth consent screen** tab
 
-The scopes needed are `email`, `profile`, and `openid`. Optionally, you need [read only](`https://www.googleapis.com/auth/cloud-identity.groups.readonly`) for external group mapping.
+The scopes needed are `email`, `profile`, and `openid`. Optionally, you need `read only` for external group mapping.
 
 ![Google scopes](/images/google-scopes.png)
 

@@ -91,14 +91,12 @@ Local Users previously created with the UI are not impacted. Update the password
 #### Conduktor Chargeback: Track and Allocate Costs and Resource Consumption
 
 <Info>
-This is a [preview feature](/platform/guide/configure-chargeback/) and is subject to change as we continue working on it.
+This is a **preview feature** and is subject to change as we continue working on it.
 </Info>
 
 Conduktor Chargeback allows organizations to track and allocate costs & usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
 
 ![Kafka Connect Wizard](/images/changelog/platform/v29/chargeback.png)
-
-Check the dedicated [Quickstart](/platform/guides/configure-chargeback/) to get started with Chargeback.
 
 #### Console Homepage
 
@@ -140,7 +138,6 @@ spec:
 ```
 
 It is also possible to change the default Topic Catalog visibility of all Topics of an Application Instance directly
-Check the associated [documentation](/platform/reference/resource-reference/self-service/#application-instance).
 
 #### Self-Service New Topic Policy Allowed Keys
 
@@ -162,7 +159,7 @@ spec:
         - cleanup.policy
 ```
 
-This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team. Read more about our [Topic Policy constraints](/platform/reference/resource-reference/self-service/#policy-constraints).
+This works in conjunction with existing constraints and ensures your Application Teams will only define properties that are allowed by the Central Team.
 
 #### More Audit Log CloudEvents into Kafka
 
@@ -173,8 +170,6 @@ We have made more events available for the Audit Log Publisher:
 - Kafka.ConsumerGroup.Duplicate
 - Kafka.ConsumerGroup.Delete
 - Kafka.ConsumerGroup.Update ( when we reset the offset of the consumer group )
-
-A full list of all the exported audit log event types is published on the [Audit Log](/platform/navigation/settings/audit-log/#exportable-audit-log-events) page.
 
 #### Expanded Terraform Provider: Kafka Cluster, Schema Registry, Kafka Connect
 

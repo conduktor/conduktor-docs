@@ -25,8 +25,6 @@ You can now set emails as alert destinations. Set up your SMTP server with TLS e
 
 Create customized email alerts with custom subjects and body content per alert. Dynamic variables like `{{clusterName}}` and `{{threshold}}` can be embedded using handlebars syntax for context-aware notifications that provide meaningful alert details.
 
-[Find out how to configure email integration](/platform/navigation/settings/integrations/#email-integration).
-
 #### Configurable Webhook body
 
 Webhook alert destinations now support full payload customization. In addition to existing header customizations, you can now secure your webhooks with **basic auth** or **bearer token** authentication and customize the body of the webhook payload to be sent when an alert is triggered.
@@ -74,13 +72,13 @@ Partners can now connect their clients to your Partner Zone using mTLS.
 
 This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
 
-[Find out more about supported authentication modes](/platform/reference/resource-reference/console/#partner-zone) and [prerequisites for creating Partner Zones](/platform/navigation/partner-zones/#prerequisites).
+[Find out more about prerequisites for creating Partner Zones](/guide/conduktor-concepts/partner-zones#prerequisites).
 
 #### Quality of life improvements
 
 - Users will now be redirected to the page they were on when they logged in again after session expiry.
 - Improved navigation between Partner Zones in the list view when using keyboard.
-- Improved configurability of circuit breaker behavior for indexed tasks. See more in the [Find out more](/platform/get-started/configuration/env-variables/#indexer-properties).
+- Improved configurability of circuit breaker behavior for indexed tasks.
 
 ### Fixes
 

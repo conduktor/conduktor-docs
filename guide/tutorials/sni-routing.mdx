@@ -46,7 +46,7 @@ This could be the case if you're using a load balancer:
 
 ![SNI ports](/images/ports-sni.png)
 
-By default, Gateway listens on port 6969. This port can be configured using the `GATEWAY_PORT_START` [environment variable](/gateway/configuration/env-variables/#port--sni-routing).
+By default, Gateway listens on port 6969. This port can be configured using the `GATEWAY_PORT_START` [environment variable](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#port-and-sni-routing).
 
 To configure the port that is returned in the metadata, you can use the `GATEWAY_ADVERTISED_SNI_PORT`. By default, this port will be the same as the `GATEWAY_PORT_START`.
 
@@ -112,7 +112,7 @@ Here's the minimum configurations required, depending on the security protocol y
 <Note> 
 This is in addition to the `KAFKA_` properties required for Gateway to connect to the Kafka cluster.
 
-Please check the list of environment variables for [Gateway SSL configuration](/gateway/configuration/env-variables/#SSL) and [Gateway SNI routing configuration](/gateway/configuration/env-variables/#port--sni-routing).
+Please check the list of environment variables for [Gateway SSL configuration](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#SSL) and [Gateway SNI routing configuration](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#port-and-sni-routing).
 </Note>
 
 <Tabs>

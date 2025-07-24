@@ -199,7 +199,7 @@ If one user requests a topic with infinite retention (`retention.ms = -1`), **al
 
 By default, concentrated topic reports the offsets of their backing topics. This impacts the calculations of **Lag** and **Message Count** that relies on partition **EndOffset** and group **CommitedOffset**.
 
-![Offset Incorrectness](/inages/offset-correct.png)
+![Offset Incorrectness](/images/offset-correct.png)
 
 Any tooling will currently display the message count, and the lag relative to the `EndOffset` of the physical topic. This can create confusion for customers and applications that will see incorrect metrics.
 
