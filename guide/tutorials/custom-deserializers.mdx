@@ -1,0 +1,163 @@
+---
+title: Configure custom deserializers
+---
+
+### Overview
+
+This guide will help you install, configure and use your [custom Kafka deserializer](https://kafka.apache.org/37/javadoc/org/apache/kafka/common/serialization/Deserializer.html) with Console  which will present serialized messages in a human readable way.
+
+## Prerequisites
+
+Your custom deserializer is available and you know how to configure it.
+
+[Check out some examples of Kafka deserializer implementations](https://github.com/conduktor/my_custom_deserializers).
+
+## Install custom deserializer
+
+Console looks for jars present in folder `/opt/conduktor/plugins` during startup. There are different ways of making your custom deserializers available in Console.
+
+<Tabs>
+<Tab title="Docker Compose">
+
+```yml
+conduktor-console:
+  image: conduktor/conduktor-console
+  ports:
+    - '8080:8080'
+  volumes:
+    - /local/my_custom_deserializers_2.13-2.0.0.jar:/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
+```
+
+</Tab>
+<Tab title="Kubernetes">
+
+There are various way to add custom deserializers JAR to Console inside a Kubernetes environment.
+
+Her's a possible implementation which should be amended based on your infrastructure and policies.
+
+<Tabs>
+<Tab title="InitContainer">
+
+You can use a custom `InitContainer` that will be responsible for downloading a JAR from a trusted source (S3, SFTP, HTTP).
+
+<Info>
+If your custom deserializers have dependencies, they have be embedded within the same JAR file (Fat JAR / Uber JAR).
+</Info>
+
+Just provide your init container configuration to the Console helm chart:
+
+```yaml title="console-values.yaml"
+platform:
+  initContainers:
+    - name: init-plugins
+    image: curlimages/curl:latest  # Using curl image
+    args: [ "-L", "https://github.com/conduktor/my_custom_deserializers/releases/download/2.0.0/my_custom_deserializers_2.13-2.0.0.jar", "-o", "/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar" ]    
+    securityContext: # avoid permission issues and curl image not having numeral UID error
+      fsGroup: 0 # same default GID as Console
+      runAsNonRoot: true
+      runAsUser: 10001 # same default UID as Console
+    volumeMounts:
+    - name: plugins
+      mountPath: /opt/conduktor/plugins  # Mounting to the desired directory
+  extraVolumes:
+    - name: plugins
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: plugins
+      mountPath: /opt/conduktor/plugins # Mount for Console container
+```
+
+</Tab>
+<Tab title="PersistentVolumeClaim">
+
+First, create a [PersitentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) with read/write capabilities.
+
+```yaml title="PVC.yaml"
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: console-plugins-pvc
+  namespace: console-namespace
+spec:
+  accessModes:
+    - ReadWriteMany # or ReadWriteOnce but limited to a single node
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard # change for one that support requested accessModes
+```
+
+Then use Console's helm chart, created PVC as extra volume like:
+
+```yaml title="console-values.yaml"
+platform:
+  extraVolumes:
+    - name: plugins
+      persistentVolumeClaim:
+        claimName: console-plugins-pvc
+  extraVolumeMounts:
+    - name: plugins
+      mountPath: /opt/conduktor/plugins
+  podSecurityContext:
+    runAsNonRoot: true # default
+    fsGroup: 0 # enable write to the root group to allow our container user to write on plugin volume
+```
+
+When Console pod is up with volume mounted, you can copy your JAR using `kubectl` command:
+
+```sh
+kubectl cp ./my_custom_deserializers_2.13-2.0.0.jar <console-pod>:/opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar -n console-namespace
+```
+
+</Tab>
+</Tabs>
+
+</Tab>
+<Tab title="Extend Console image">
+
+<Info>
+If your custom deserializers have dependencies, they have be embedded within the same JAR file (Fat JAR / Uber JAR).
+</Info>
+
+1. Write a Dockerfile:
+
+```Dockerfile
+FROM conduktor/conduktor-console::<version>
+COPY ./my_custom_deserializers_2.13-2.0.0.jar /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
+```
+
+1. Build the Dockerfile:
+
+```yaml
+docker build . -t custom-console:<version>
+```
+
+1. Replace the image in your Docker Compose or helm files:
+
+</Tab>
+</Tabs>
+
+### Check installation status
+
+If everything went well, you should see this on the Console startup:
+
+```
+Loading plugin my_custom_deserializers_2.13-2.0.0 from jar: /opt/conduktor/plugins/my_custom_deserializers_2.13-2.0.0.jar
+Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomDeserializer
+Register custom Kafka Deserializer: class io.example.conduktor.custom.deserializers.MyCustomProtobufDeserializer
+...
+```
+
+## Configure custom deserializer and consume data
+
+From the Consume page, open the **Value Format** filter and pick your Custom Deserializer from the list.
+
+- a dropdown allowing you to select your custom deserializer implementation class
+- a textarea field allowing you to pass some properties to configure your custom deserializer instance (We'll call the [`org.apache.kafka.common.serialization.Deserializer<T>::configure`](<https://kafka.apache.org/37/javadoc/org/apache/kafka/common/serialization/Deserializer.html#configure(java.util.Map,boolean)>) method with these properties)
+
+```properties title="Properties example"
+apicurio.registry.url=https://test.serviceregistry.rhcloud.com/t/d4d411af-xxxx-4184-xxxx-342e6cd03580/apis/registry/v2
+apicurio.auth.username=srvc-acct-a95c41e8-xxxx-4e99-xxxx-217755ad7046
+apicurio.auth.password=7d94b05a-xxxx-4f70-xxxx-1e6aba25a8b4
+```

@@ -3546,7 +3546,7 @@ components:
       type: http
       scheme: basic
 x-tagGroups:
-  - name: 🐺 Conduktor Gateway API
+  - name: Conduktor Gateway API
     tags:
       - Introduction
       - Authentication
@@ -3554,7 +3554,7 @@ x-tagGroups:
       - Api Groups
       - Versioning
       - Conventions
-  - name: 🌉 gateway/v2
+  - name: gateway/v2
     tags:
       - cli_virtual-cluster_gateway_v2_7
       - cli_alias-topic_gateway_v2_8

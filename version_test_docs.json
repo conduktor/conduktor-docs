@@ -1,0 +1,152 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "almond",
+  "name": "Conduktor docs",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guide",
+        "versions": [
+          {
+            "version": "2.0.0",
+            "groups": [
+              {
+                "group": "Get started with v2",
+                "pages": ["v2/essentials/code", "v2/development",  "v2/essentials/settings",
+                "v2/essentials/reusable-snippets"]
+              },
+              {
+                "group": "Tutorials",
+                "pages": [
+                  "v2/essentials/navigation",
+                  "v2/essentials/images"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "1.0.0",
+            "groups": [
+              {
+                "group": "Get started with v1",
+                "pages": ["v1/settings", "v1/development", "quickstart"]
+              },
+              {
+                "group": "Conduktor concepts",
+                "pages": [
+                  "concepts/introduction",
+                  "concepts/chargeback",
+                  "concepts/self-service"
+                ]
+              },
+              {
+                "group": "Use cases",
+                "pages": [
+                  "use-case1",
+                  "use-case2"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Concepts",
+        "groups": [
+          {
+            "group": "Conduktor concepts",
+            "pages": [
+              "concepts/introduction"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tutorials",
+        "groups": [
+          {
+            "group": "Conduktor tutorials",
+            "pages": [
+              "essentials/navigation"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Conduktor reference",
+            "pages": [
+              "quickstart2"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "groups": [
+          {
+            "group": "API docs",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Endpoint examples",
+            "pages": [
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Release notes",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog/changelog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "global": {
+    "anchors": [
+      {
+        "anchor": "Kafkademy",
+        "href": "https://learn.conduktor.io/kafka",
+        "icon": "book-open-cover"
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [],
+    "primary": {
+      "type": "button",
+      "label": "Get started",
+      "href": "https://www.conduktor.io/get-started"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/conduktor",
+      "slack": "https://www.conduktor.io/slack"
+    }
+  }
+}

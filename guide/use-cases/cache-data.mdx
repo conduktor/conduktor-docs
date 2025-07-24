@@ -1,0 +1,71 @@
+---
+title: Cache data
+---
+
+<Check>This feature is available with [Conduktor Scale Plus](https://conduktor.io/scale) and [Conduktor Exchange](https://conduktor.io/exchange) only.</Check> 
+
+## Overview
+
+The cache Interceptor is designed to improve the performance of record retrieval in a Kafka cluster by caching records. It intercepts produce and fetch requests, caching produced records and serving fetched records from the cache, if available.
+
+## Benefits
+
+Benefits include:
+
+- **Improved performance**. By serving fetched records from the cache, subsequent fetch requests can be served faster, reducing the overall
+  latency and improving the response time for clients.
+
+- **Reduced load on Kafka cluster**. With the cache interceptor in place, the Kafka cluster experiences reduced load during fetch requests since a portion
+  of the requests can be satisfied from the cache directly, reducing the number of requests hitting the cluster.
+
+- **Enhanced scalability**.The cache interceptor provides an additional layer of scalability by distributing the workload between the cache and
+  the Kafka cluster. It can handle a higher volume of fetch requests without overwhelming the Kafka cluster.
+
+## Configuration options
+
+| Config      | Type                         | Default | Description                                                                                                                       |
+|:------------|------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------------------|
+| topic       | String                       | `.*`    | Topic regex, topic that match this regex will have the interceptor applied. If no value is set, it will be applied to all topics. |
+| cacheConfig | [Cache config](#cacheConfig) |         | Configuration for cache.                                                                                                          |
+
+### CacheConfig
+
+| Config        | Type                             | Description                        |
+|:--------------|----------------------------------|:-----------------------------------|
+| type          | enum (IN_MEMORY, ROCKSDB)        | Default: IN_MEMORY.                |
+| rocksdbConfig | [Rocksdb config](#rocksdbConfig) | Configuration for rocksdb cache.   |
+| inMemConfig   | [InMem config](#inMemConfig)     | Configuration for im-memory cache. |
+
+### RocksdbConfig
+
+| Config    | Type   | Description                                 |
+|:----------|--------|:--------------------------------------------|
+| dbPath    | String | Path to RocksDB database                    |
+| cacheSize | int    | RocksDB cache size in bytes, default: 100MB |
+
+### InMemConfig
+
+| Config       | Type | Description                                      |
+|:-------------|------|:-------------------------------------------------|
+| cacheSize    | int  | In-memory cache size.                            |
+| expireTimeMs | long | In-memory cache expiration time in milliseconds. |
+
+## Example
+
+```json
+{
+  "name": "myCacheInterceptor",
+  "pluginClass": "io.conduktor.gateway.interceptor.CacheInterceptorPlugin",
+  "priority": 100,
+  "config": {
+    "topic": ".*",
+    "cacheConfig": {
+      "type": "ROCKSDB",
+      "rocksdbConfig": {
+        "dbPath": "/caching_storage",
+        "cacheSize": 104857600
+      }
+    }
+  }
+}
+```

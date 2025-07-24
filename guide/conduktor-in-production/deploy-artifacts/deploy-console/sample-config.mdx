@@ -1,0 +1,967 @@
+---
+title: Sample Console configurations
+---
+
+There are different options for configuring Conduktor Console. You can use:
+
+- a YAML configuration file
+- environment variables
+- our API for some configurations (such as Kafka cluster configuration)
+- the UI (e.g. to configure clusters, go to **Settings** > **CLusters** page)
+
+### GitOps: Manage clusters
+
+If you want to configure clusters with a GitOps approach, we recommend using [Console API](https://developers.conduktor.io/?product=console).
+
+Note that **from Console v1.19**, if you're configuring clusters through the YAML file, this will act as the source of truth for cluster definition. This means that if you make changes to the cluster via the UI, they will be overridden on the next restart containing a reference to your configuration file.
+
+However, if you've created your cluster configurations using the Console UI, they will not be impacted by a restart. Removing the YAML block entirely will not remove existing clusters from the UI.
+
+### Complete configuration example
+
+This demonstrates a complete configuration for Conduktor Enterprise consisting of one Kafka cluster with Schema Registry, SSO and license key.
+
+For identity provider specific guide see configuring SSO. Note that if you don't have an Enterprise license, you should omit the SSO configuration and use local users instead.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+organization:
+  name: "conduktor"
+
+database:
+  hosts: 
+   - host: 'postgresql'
+     port: 5432
+  name: 'conduktor'
+  username: 'conduktor'
+  password: 'change_me'
+  connection_timeout: 30 # in seconds
+
+monitoring:
+  cortex-url: 'http://conduktor-monitoring:9009/'
+  alert-manager-url: 'http://conduktor-monitoring:9010/'
+  callback-url: 'http://conduktor-console:8080/monitoring/api/'
+  notifications-callback-url: 'http://localhost:8080'
+
+admin:
+  email: 'name@your_company.io'
+  password: "admin"
+
+sso:
+  oauth2:
+    - name: 'auth0'
+      client-id: '<client ID>'
+      client-secret: '<client secret>'
+      openid:
+        issuer: 'https://<domain>'
+
+clusters:
+  - id: 'confluent-pkc'
+    name: 'Confluent Prod'
+    bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=PLAIN
+      sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
+    schemaRegistry:
+      id: 'confluent-sr'
+      url: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
+      security:
+        username: 'user'
+        password: 'password'
+
+license: "" # license key if Enterprise
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_ORGANIZATION_NAME: 'conduktor'
+      CDK_LICENSE: '' # license key if Enterprise 
+      CDK_DATABASE_URL: 'postgresql://conduktor:change_me@postgresql:5432/conduktor'
+      CDK_MONITORING_CORTEX-URL: 'http://conduktor-monitoring:9009/'
+      CDK_MONITORING_ALERT-MANAGER-URL: 'http://conduktor-monitoring:9010/'
+      CDK_MONITORING_CALLBACK-URL: 'http://conduktor-console:8080/monitoring/api/'
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: 'http://localhost:8080'
+      CDK_ADMIN_EMAIL: 'name@your_company.io'
+      CDK_ADMIN_PASSWORD: 'admin'
+      CDK_SSO_OAUTH2_0_NAME: 'auth0'
+      CDK_SSO_OAUTH2_0_CLIENT-ID: '<client ID>'
+      CDK_SSO_OAUTH2_0_CLIENT-SECRET: '<client secret>'
+      CDK_SSO_OAUTH2_0_OPENID_ISSUER: 'https://<domain>'
+      CDK_CLUSTERS_0_ID: 'confluent-pkc'
+      CDK_CLUSTERS_0_NAME: 'Confluent Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"FY5NJX2SRXKTUBAD\" password=\"pqyHt7r+2oxIvmNCeagcpQieypHKUfvttCfNTf9Z8+sMF+cv6ai5b2KC/qmapOvC\";"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_ID: 'confluent-sr'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME: 'user'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: 'password'
+```
+
+</Tab>
+</Tabs>
+
+### Plain auth example
+
+Connect to a local cluster with no auth/encryption. For example, a local dev Kafka.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+clusters:
+  - id: 'local'
+    name: 'Local Kafka Cluster'
+    bootstrapServers: 'localhost:9092'
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'local'
+      CDK_CLUSTERS_0_NAME: 'Local Kafka Cluster'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'localhost:9092'
+```
+</Tab>
+</Tabs>
+
+### Plain auth with schema registry
+
+Connect to a local cluster with schema registry.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+clusters:
+  - id: 'local'
+    name: 'Local Kafka Cluster'
+    bootstrapServers: 'localhost:9092'
+    schemaRegistry:
+      id: 'local-sr'
+      url: 'http://localhost:8081'
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'local'
+      CDK_CLUSTERS_0_NAME: 'Local Kafka Cluster'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'localhost:9092'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_ID: 'local-sr'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: 'http://localhost:8081'
+```
+</Tab>
+</Tabs>
+
+### Kafka Connect
+
+Cluster with Kafka Connect configured with Basic Auth.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'kafka'
+  name: 'Kafka'
+  bootstrapServers: 'localhost:9092'
+  kafkaConnects:
+    - id: 'kafka-connect'
+      name: 'My Kafka Connect'
+      url: 'http://localhost:8083'
+      security:
+        username: '<username>'
+        password: '<password>'
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'kafka'
+      CDK_CLUSTERS_0_NAME: 'Kafka'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'localhost:9092'
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_ID: 'kafka-connect'
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_NAME: 'My Kafka Connect'
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_URL: 'http://localhost:8083'
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_USERNAME: '<username>'
+      CDK_CLUSTERS_0_KAFKACONNECTS_0_SECURITY_PASSWORD: '<password>'
+```
+
+</Tab>
+</Tabs>
+
+### Amazon MSK with IAM authentication example
+
+Connect to an MSK cluster with IAM Authentication using AWS Access Key and Secret.
+
+<Warning>
+Deploying this **CloudFormation** template to your environment might result in billable resources being consumed. [See Amazon MSK pricing for details](https://aws.amazon.com/msk/pricing/).
+</Warning>
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+clusters:
+  - id: 'amazon-msk-iam'
+    name: 'Amazon MSK IAM'
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
+      CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
+```
+</Tab>
+</Tabs>
+
+Connect to an MSK cluster with IAM credentials inherited from environment.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+clusters:
+  - id: 'amazon-msk-iam'
+    name: 'Amazon MSK IAM'
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
+      CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\nsasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+```
+</Tab>
+</Tabs>
+
+You can also override either the `default` profile or role.
+
+<Tabs>
+<Tab title="Override profile">
+
+```
+sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsProfileName="other-profile";
+```
+</Tab>
+<Tab title="Override role">
+
+```
+sasl.jaas.config = software.amazon.msk.auth.iam.IAMLoginModule required awsRoleArn="arn:aws:iam::123456789012:role/msk_client_role";
+```
+</Tab>
+</Tabs>
+
+### Amazon MSK with Glue schema registry
+
+Connect to an MSK cluster with schema registry using credentials.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+clusters:
+  - id: 'amazon-msk-iam'
+    name: 'Amazon MSK IAM'
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: '<aws-region>'
+      security:
+        type: 'Credentials'
+        accessKeyId: '<access-key-id>'
+        secretKey: '<secret-key>'
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
+      CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'Credentials'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID: '<access-key-id>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY: '<secret-key>'
+```
+</Tab>
+</Tabs>
+
+Connect to an MSK cluster with schema registry using the default chain of credentials providers.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+clusters:
+  - id: 'amazon-msk-iam'
+    name: 'Amazon MSK IAM'
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: '<aws-region>'
+      security:
+        type: 'FromContext'
+        profile: '<profile>' # optional to use the default profile
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
+      CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromContext'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_PROFILE: '<profile>'
+```
+</Tab>
+</Tabs>
+
+Connect to an MSK cluster with schema registry using a specific role.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+clusters:
+  - id: amazon-msk-iam
+    name: Amazon MSK IAM
+    color: #FF9900
+    bootstrapServers: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=AWS_MSK_IAM
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;
+      sasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler
+      aws_access_key_id=<access-key-id>
+      aws_secret_access_key=<secret-access-key>
+    schemaRegistry:
+      region: '<aws-region>'
+      security:
+        type: 'FromRole'
+        role: '<role>'
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'amazon-msk-iam'
+      CDK_CLUSTERS_0_NAME: 'Amazon MSK IAM'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'b-3-public.****.kafka.eu-west-1.amazonaws.com:9198'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=AWS_MSK_IAM\n
+      sasl.jaas.config=software.amazon.msk.auth.iam.IAMLoginModule required;\nsasl.client.callback.handler.class=io.conduktor.aws.IAMClientCallbackHandler\naws_access_key_id=<access-key-id>\naws_secret_access_key=<secret-access-key>"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'FromRole'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ROLE: '<role>'
+```
+</Tab>
+</Tabs>
+
+To use a specific registry for this cluster, you can add a `registryName` to the `schemaRegistry` section.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+schemaRegistry:
+  region: '<aws-region>'
+  security:
+    type: 'Credentials'
+    accessKeyId: '<access-key-id>'
+    secretKey: '<secret-key>'
+  registryName: '<registry-name>'
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_REGION: '<aws-region>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_TYPE: 'Credentials'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_ACCESSKEYID: '<access-key-id>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_AMAZONSECURITY_SECRETKEY: '<secret-key>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_REGISTRYNAME: '<registry-name>'
+```
+
+</Tab>
+</Tabs>
+
+### Confluent Cloud example
+
+Connect to a Confluent cloud cluster using API keys.
+
+<Tabs>
+<TabItem title="YAML file">
+
+```yaml
+clusters:
+  - id: 'confluent-pkc'
+    name: 'Confluent Prod'
+    bootstrapServers: 'pkc-lzoyy.eu-central-1.aws.confluent.cloud:9092'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=PLAIN
+      sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
+```
+
+</TabItem>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'confluent-pkc'
+      CDK_CLUSTERS_0_NAME: 'Confluent Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lzoyy.eu-central-1.aws.confluent.cloud:9092'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<username>\" password=\"<password>\";"
+```
+
+</Tab>
+</Tabs>
+
+#### Confluent Cloud with schema registry
+
+Connect to a Confluent cloud cluster with schema registry using basic auth.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'confluent-pkc'
+  name: 'Confluent Prod'
+  bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<usernam>" password="<password>";
+  schemaRegistry:
+    id: 'confluent-sr'
+    url: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
+    security:
+      username: '<username>'
+      password: '<password>'
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'confluent-pkc'
+      CDK_CLUSTERS_0_NAME: 'Confluent Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<username>\" password=\"<password>\";"
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_ID: 'confluent-sr'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_URL: 'https://psrc-o268o.eu-central-1.aws.confluent.cloud'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_USERNAME: '<username>'
+      CDK_CLUSTERS_0_SCHEMAREGISTRY_SECURITY_PASSWORD: '<password>'
+```
+
+</Tab>
+</Tabs>
+
+#### Confluent Cloud with service account management
+
+Connect to a Confluent Cloud cluster and configure additional properties to manage service accounts, API keys and ACLs.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'confluent-pkc'
+  name: 'Confluent Prod'
+  bootstrapServers: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
+  kafkaFlavor:
+    type: "Confluent"
+    key: "<api_key>" # Confluent Cloud API Key, NOT cluster API Key
+    secret: "<api_secret>" # Confluent Cloud API Secret, NOT cluster API Secret
+    confluentEnvironmentId: "<env_id>"
+    confluentClusterId: "<cluster_id>"
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+    environment:
+      CDK_CLUSTERS_0_ID: 'confluent-pkc'
+      CDK_CLUSTERS_0_NAME: 'Confluent Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'pkc-lq8v7.eu-central-1.aws.confluent.cloud:9092'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=PLAIN\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<username>\" password=\"<password>\";"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Confluent"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_KEY: "<api_key>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_SECRET: "<api_secret>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTENVIRONMENTID: "<env_id>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_CONFLUENTCLUSTERID: "<cluster_id>"
+```
+
+</Tab>
+</Tabs>
+
+#### SSL certificate example - Aiven (truststore)
+
+You can use the PEM formatted files (.pem or .cer) directly by providing the CA certificate inline. Make sure the certificate is **on one single line**.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: aiven
+  name: My Aiven Cluster
+  bootstrapServers: 'kafka-09ba.aivencloud.com:21661'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=SCRAM-SHA-512
+    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="<username>" password="<password>";
+    ssl.truststore.type=PEM
+    ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven'
+      CDK_CLUSTERS_0_NAME: 'My Aiven Cluster'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21661'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SASL_SSL\nsasl.mechanism=SCRAM-SHA-512\nsasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username=\"<username>\" password=\"<password>\";\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----"
+```
+
+</Tab>
+</Tabs>
+
+#### Two-way SSL (keystore and truststore)
+
+You should have three files:
+
+1. Your access key (in the **keystore.jks** file)
+1. Your access certificate (in the **keystore.jks** file)
+1. Your CA certificate (in the **truststore.jks** file)
+
+Ensure the content is on **a single line**.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'aiven-ssl'
+  name: 'Aiven SSL'
+  bootstrapServers: 'kafka-09ba.aivencloud.com:21650'
+  properties: |
+    security.protocol=SSL
+    ssl.truststore.type=PEM
+    ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
+    ssl.keystore.type=PEM
+    ssl.keystore.key=-----BEGIN PRIVATE KEY----- <YOUR ACCES KEY> -----END PRIVATE KEY-----
+    ssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven-ssl'
+      CDK_CLUSTERS_0_NAME: 'Aiven SSL'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21650'
+      CDK_CLUSTERS_0_PROPERTIES: "security.protocol=SSL\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----\nssl.keystore.type=PEM\nssl.keystore.key=-----BEGIN PRIVATE KEY----- <YOUR ACCES KEY> -----END PRIVATE KEY-----\nssl.keystore.certificate.chain=-----BEGIN CERTIFICATE----- <YOUR ACCESS CERTIFICATE> -----END CERTIFICATE-----"
+```
+
+</Tab>
+</Tabs>
+
+#### Aiven with service account management
+
+Connect to an Aiven cluster and configure additional properties to manage Service Accounts and ACLs.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'aiven-09ba'
+  name: 'Aiven Prod'
+  bootstrapServers: 'kafka-09ba.aivencloud.com:21661'
+  properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=SCRAM-SHA-512
+    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="<username>" password="<password>";
+    ssl.truststore.type=PEM
+    ssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----
+  kafkaFlavor:
+    type: "Aiven"
+    apiToken: "<api_token>" 
+    project: "<project>" 
+    serviceName: "kafka-18350d67" # kafka cluster id (service name)
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven-09ba'
+      CDK_CLUSTERS_0_NAME: 'Aiven Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka-09ba.aivencloud.com:21661'
+      CDK_CLUSTERS_0_PROPERTIES: "    security.protocol=SASL_SSL\n
+    sasl.mechanism=SCRAM-SHA-512\nsasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="username" password="password";\nssl.truststore.type=PEM\nssl.truststore.certificates=-----BEGIN CERTIFICATE----- <YOUR CA CERTIFICATE> -----END CERTIFICATE-----"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Aiven"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_APITOKEN: "<api_key>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_PROJECT: "<api_secret>"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_SERVICENAME: "kafka-18350d67"
+```
+
+</Tab>
+</Tabs>
+
+### Conduktor Gateway Virtual Clusters
+
+Configure Virtual Clusters with your Gateway deployment to manage Interceptors within Console.
+
+<Tabs>
+<Tab title="YAML file">
+
+```yaml
+- id: 'kafka'
+  name: 'Kafka'
+  bootstrapServers: 'http://conduktor-proxy-internal:8888'
+  kafkaFlavor:
+    type: "Gateway"
+    url: "http://conduktor-proxy-internal:8888" 
+    user: "admin" 
+    password: "conduktor" 
+    virtualCluster: "passthrough" 
+```
+
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'aiven-09ba'
+      CDK_CLUSTERS_0_NAME: 'Aiven Prod'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'conduktor-proxy-internal:9092'
+      CDK_CLUSTERS_0_KAFKAFLAVOR_TYPE: "Gateway"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_URL: "http://conduktor-proxy-internal:8888"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_USER: "admin"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_PASSWORD: "conduktor"
+      CDK_CLUSTERS_0_KAFKAFLAVOR_VIRTUALCLUSTER: "passthrough"
+```
+
+</Tab>
+</Tabs>
+
+#### SASL/OAUTHBEARER and OIDC Kafka cluster example
+
+OAUTHBEARER with OIDC Authentication is possible since Kafka 3.1 and [KIP-768](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=186877575). To demonstrate OIDC authentication, NASA has a Kafka Cluster from which you can connect to after you [sign up](https://gcn.nasa.gov/quickstart). Here's a config example that works for their cluster (adapt the values to your needs for your cluster).
+
+<Tabs>
+<Tab title="YAML file">
+
+```yml
+clusters:
+  - id: 'nasa'
+    name: 'GCN NASA Kafka'
+    bootstrapServers: 'kafka.gcn.nasa.gov:9092'
+    properties: |
+      security.protocol=SASL_SSL
+      sasl.mechanism=OAUTHBEARER
+      sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<YOUR_CLIENT_ID>" \
+      clientSecret="<YOUR_CLIENT_SECRET>";
+      sasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token
+      sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+```
+</Tab>
+<Tab title="Environment variables">
+
+```bash
+    environment:
+      CDK_CLUSTERS_0_ID: 'nasa'
+      CDK_CLUSTERS_0_NAME: 'GCN NASA Kafka'
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka.gcn.nasa.gov:9092'
+      CDK_CLUSTERS_0_PROPERTIES: 'security.protocol=SASL_SSL\nsasl.mechanism=OAUTHBEARER\nsasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="<YOUR_CLIENT_ID>" clientSecret="<YOUR_CLIENT_SECRET>";\nsasl.oauthbearer.token.endpoint.url=https://auth.gcn.nasa.gov/oauth2/token\nsasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler'
+```
+</Tab>
+</Tabs>
+
+## Configure Console logs
+
+<Tabs>
+<Tab title="Environment variables">
+
+#### Console-wide log configuration
+
+To configure Conduktor Console logs globally, you can use the following environment variables:
+
+| Environment variable  | Default value |                                                                          |
+| --------------------  | ------------- | ------------------------------------------------------------------------ |
+| `CDK_ROOT_LOG_LEVEL`  | `INFO`        | Global Console log level, one of `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG` |
+| `CDK_ROOT_LOG_FORMAT` | `TEXT`        | Log format, one of `TEXT` or `JSON` (sice 1.26.0)                        |
+| `CDK_ROOT_LOG_COLOR`  | `true`        | Enable color in logs when possible                                       |
+
+<Info>
+For backward compatibility, `CDK_DEBUG: true` is still supported and is equivalent to `CDK_ROOT_LOG_LEVEL: DEBUG`.
+</Info>
+
+#### Per module log configuration
+
+To configure Conduktor Console logs on a per-module basis, you can use the environment variables detailed below.
+
+Possible values for all of them are: `OFF`, `ERROR`, `WARN`, `INFO`, `DEBUG`, and `TRACE`.
+
+| Environment variable          | Default value        | Description                                                                                                                             |
+| ----------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLATFORM_STARTUP_LOG_LEVEL`  | `INFO`               | Set the setup/configuration process logs level. By default, it is set to `INFO`, but switches to `DEBUG` if `CDK_ROOT_LOG_LEVEL: DEBUG`. |
+| `CONSOLE_ROOT_LOG_LEVEL`      | `CDK_ROOT_LOG_LEVEL` | Logs related to any actions done in the Console UI                                                                                      |
+| `PLATFORM_API_ROOT_LOG_LEVEL` | `CDK_ROOT_LOG_LEVEL` | Internal platform API logs (health endpoints)                                                                                           |                                                                                       |
+
+#### Log level inheritance
+
+If you don't explicitly set the log level for a module, it will inherit the `CDK_ROOT_LOG_LEVEL`.
+
+For instance, if you only set
+```yaml
+CDK_ROOT_LOG_LEVEL: DEBUG
+# CONSOLE_ROOT_LOG_LEVEL isn't set
+```
+Then, `CONSOLE_ROOT_LOG_LEVEL` will be automatically set to `DEBUG`.
+
+Similarly, if you set:
+```yaml
+CDK_ROOT_LOG_LEVEL: INFO
+CONSOLE_ROOT_LOG_LEVEL: DEBUG
+```
+
+Then, `CONSOLE_ROOT_LOG_LEVEL` will still be set to `DEBUG`, and isn't overridden.
+
+</Tab>
+
+<Tab title="Config file">
+
+If you want to further customize your logging at an individual logger-level, you can use a per-module logback configuration file.
+
+By default, all logback configuration files are in **/opt/conduktor/loggers/** with `READ-ONLY` permissions.
+
+At startup, Console will copy all (missing) logback configuration files from `/opt/conduktor/loggers/` to `/var/conduktor/configs/loggers/` directory with `READ-WRITE` permissions.
+
+Because all logback configuration files are set to reload themselves every 15 seconds, you can then edit them inside the container volume in **/var/conduktor/configs/loggers/** to tune log level per logger.
+
+All logback configuration files declare some expected appenders:
+
+| Appender name        | Description                                                   |
+| -------------------- | ------------------------------------------------------------- |
+| `STDOUT`             | Appender that writes logs to stdout                           |
+| `STDOUT_COLOR`       | Appender that writes logs to stdout with color                |
+| `ASYNC_STDOUT`       | Appender that writes logs to stdout asynchronously            |
+| `ASYNC_STDOUT_COLOR` | Appender that writes logs to stdout asynchronously with color |
+
+</Tab>
+</Tabs>
+
+## Structured logging (JSON)
+
+To enable structured logging, simply set `CONSOLE_ROOT_LOG_LEVEL=JSON`. The logs will be structured using following format:
+
+```json
+{
+ "timestamp": "2024-06-14T10:09:25.802542476+00:00",
+ "level": "<log level>",
+ "message": "<log message>",
+ "logger": "<logger name>",
+ "thread": "<logger thread>",
+ "stack_trace": "<throwable>",
+ "mdc": {
+   "key": "value"
+ }
+}
+```
+
+<Warning>
+The log `timestamp` is encoded in [ISO-8601 format](https://en.wikipedia.org/wiki/ISO_8601). When structured logging is enabled, `CDK_ROOT_LOG_COLOR` is always ignored.
+</Warning>
+
+## Runtime logger configuration API
+
+From version 1.28.0, Conduktor Console exposes an API to change the log level of a logger at runtime. This API **requires admin privileges** and is available on `/api/public/debug/v1/loggers`.
+
+### Get all loggers and their log level
+
+`GET /api/public/debug/v1/loggers` :
+
+```bash
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+That will output :
+
+```json
+[
+  {
+    "name": "io",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator.ConduktorUserProfile",
+    "level": "INFO"
+  },
+  {
+    "name": "org",
+    "level": "INFO"
+  },
+  {
+    "name": "org.apache",
+    "level": "INFO"
+  },
+  {
+    "name": "org.apache.avro",
+    "level": "INFO"
+  },
+  ...
+]
+```
+
+### Get a specific logger and its log level
+
+`GET /api/public/debug/v1/loggers/{loggerName}` :
+
+```bash
+curl -X GET 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+That will output :
+
+```json
+[
+  {
+    "name": "io.conduktor.authenticator",
+    "level": "INFO"
+  },
+  {
+    "name": "io.conduktor.authenticator.ConduktorUserProfile",
+    "level": "INFO"
+  }
+  ...
+]
+```
+
+<Note>
+The `loggerName` filter uses a **contains** so you can either use the fully qualified cardinal name or just a part of it, meaning that the filter `authenticator` will match `io.conduktor.authenticator` and `io.conduktor.authenticator.ConduktorUserProfile` loggers.
+</Note>
+
+### Set a specific logger log level
+
+`PUT /api/public/debug/v1/loggers/{loggerName}/{logLevel}` :
+
+```bash
+curl -X PUT 'http://localhost:8080/api/public/debug/v1/loggers/io.conduktor.authenticator/DEBUG' \
+  -H "Authorization: Bearer $API_KEY" | jq .
+```
+
+That will output the list of loggers impacted by the update:
+
+```json
+[
+  "io.conduktor.authenticator",
+  "io.conduktor.authenticator.ConduktorUserProfile"
+  ...
+]
+```
+
+<Note>
+Like the `GET` endpoint, the `loggerName` filter use a **contains** so you can either use the fully qualified cardinal name or just a part of it. The `logLevel` is **case-insensitive** and can be: `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `OFF`.
+</Note>
+
+### Set multiple loggers log level
+
+`PUT /api/public/debug/v1/loggers` :
+
+```bash
+curl -X PUT 'http://localhost:8080/public/debug/v1/loggers' \
+   -H "Authorization: Bearer $API_KEY" \
+  --data '[
+      {
+          "name": "io.conduktor.authenticator.ConduktorUserProfile",
+          "level": "TRACE"
+      },
+      {
+          "name": "io.conduktor.authenticator.adapter",
+          "level": "DEBUG"
+      }
+  ]' | jq .
+```
+
+That will output the list of loggers impacted by the update:
+
+```json
+[
+  "io.conduktor.authenticator.ConduktorUserProfile",
+  "io.conduktor.authenticator.ConduktorUserProfile$LocalUserProfile",
+  "io.conduktor.authenticator.adapter",
+  "io.conduktor.authenticator.adapter.Http4sCacheSessionStore",
+  ...
+]
+```
