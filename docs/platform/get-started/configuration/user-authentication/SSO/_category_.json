@@ -1,8 +1,0 @@
-{
-  "label": "Configure SSO",
-  "position": 1,
-  "link": {
-    "type": "generated-index",
-    "description": "Configure your favorite identity provider as SSO"
-  }
-}

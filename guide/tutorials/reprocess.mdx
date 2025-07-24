@@ -1,0 +1,29 @@
+---
+title: Reprocess messages
+---
+
+## Overview
+
+Conduktor Console can help you reprocess messages within a topic.
+
+This could be used for reprocessing messages from an existing DLQ or for pushing messages into another topic.
+
+## Select a message to reprocess and a new target topic
+
+In Console, go to **Topics** and click on the the message. In the drawer window, click **Reprocess message** at the bottom. 
+
+In the next page, select the **target topic** that you want to publish the message to.
+
+Here, we want to reprocess the message in the `customers` topic.
+
+![Select target topic](/images/select-target-topic.png)
+
+## Edit and process the message
+
+The previous step leads us to the **Produce** page of the target topic, with an auto-populated form containing our record. From there, we can easily modify its key, value and headers.
+
+![Reprocess the record](/images/reprocess-record.png)
+
+When you're ready, you can press the **Produce** button and you will see your record being produced. Go to the **Consume** page of this topic in order to retrieve your reprocessed record.
+
+![Consume the reprocessed record](/images/consume-reprocess-record.png)

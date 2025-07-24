@@ -1,0 +1,65 @@
+---
+title: Map external groups
+---
+
+## Overview
+
+External groups mapping allows you to integrate **Conduktor's RBAC system with your LDAP or OIDC** source of truth.
+
+When you map an external group, the **user is added to the Conduktor Console group at login**. This ensures that users inherit necessary group permissions and that they are removed from Conduktor groups if their external membership changes.
+
+## Prerequisites
+
+You have to configure SSO to an LDAP or OAuth2.0 identity provider. In addition to the properties required for the default configuration, you have to also add the relevant group properties and create the scope in your IdP.
+
+### LDAP
+
+For LDAP, populate the `groups-base` and `groups-filter` attributes.
+
+```yaml title="platform-config.yaml"
+sso:
+  ldap:
+    - name: "default"
+      server: "ldap://ldap.test.io:1389"
+      managerDn: "cn=admin,dc=conduktor,dc=io"
+      managerPassword: "pass"
+      search-base: "dc=conduktor,dc=io"
+      groups-base: "dc=conduktor,dc=io"
+      groups-filter: "member={0}"
+```
+
+### OIDC
+
+For OIDC, populate the `groups-claim` attribute. You can find some examples by selecting your identity providers.
+
+```yaml title="platform-config.yaml"
+sso:
+  oauth2:
+    - name: "<IdP>"
+      client-id: "<client ID>"
+      client-secret: "<client secret>"
+      groups-claim: "<groups claim>"
+      openid:
+        issuer: "<issuer>"
+```
+
+## Create an external group mapping
+
+Once LDAP or OIDC are configured, you can create the mapping between external and Conduktor groups. You have two options, map an existing or a new Conduktor group to an external one.
+
+### Map an existing group to an external one
+
+In Console, go to **Groups** page and click **...** at the top-right and select **Map external groups**. The **External groups** tab will be open allowing you to manage this list.
+
+The value set depends on the IdP you use. For example, for Azure, you have put the `Object ID` of your groups. For Keycloak, this is the name of the group.
+
+Once you've mapped the external groups, use Conduktor's RBAC to enforce permissions.
+
+### Create a new group with an external group mapped
+
+In Console, go to **Groups** page and click **Create group** at the top-right. Provide a name and description.
+
+To enable LDAP or OIDC users (who are members of certain teams/groups) to be automatically added, tick **Activate external groups mapping**.
+
+Once you've mapped the external groups, use Conduktor's RBAC to enforce permissions.
+
