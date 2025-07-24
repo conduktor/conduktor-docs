@@ -1,0 +1,42 @@
+---
+title: Indexing
+---
+
+In Console, many of the list pages (e.g. Topics, Consumer Groups, Schema Registry, Kafka Connect) are served from an **internal table** instead of making *AdminClient* calls to Kafka.
+
+Theses tables are updated by a background process we call Indexing. The Indexing process collects changes to your Kafka every 30 seconds and stores that metadata in internal tables.
+
+![Indexing explained](/images/indexing-explained.png)
+
+<Info>
+Detail pages are not using Indexing. As soon as you're on a page for a specific topic or consumer group, the data is fetched directly from the Kafka cluster.
+</Info>
+
+## Benefits
+
+Indexing improves user experience and provides functionality that's not available with out-of-the-box Kafka resources, such as:
+
+- smart tables with **sorting and filtering** capabilities, allowing you to get message count, size and much more
+- **search** and **labelling** that allows you to organize and find required resources
+
+## Examples
+
+These are just some examples of how Indexing can help you:
+
+- identify **idle topics**: which topics (that have no active consumers and producers) haven't published data for more than a week?
+- are there any **over-partitioned topics** - topics that have a large number of partitions while the biggest consumer group only has a few members consuming in parallel?
+- prioritize **data at risk topics**: which topics are at risk of losing data, because of the replication factor or the min ISR being incorrect?
+- find **outliers topics**: which topics contain bad or overridden configurations that they shouldn't have?
+- remove **over-replicated applications**: which consumer groups have idle members? Typically, this is because the number of consumers exceeded the number of total partitions.
+
+## Troubleshoot
+
+<Accordion title="I've just created a topic, but get 'Indexing in progress'/can't see the metadata">
+Topics created 'now' would not be indexed until the next Indexing cycle. 
+
+This means they wouldn't appear in Console for up to 30 seconds. 
+
+To mitigate this, we've come up with a counter-measure: any user request to the topic list will ALWAYS make one *AdminClient* call to Kafka: `listTopics`. 
+
+It’s cheap, simple and will only return the topic names. So, when topics are listed in Console, 99% of the time Indexing will serve all the topics with all the columns (name, partitions, count, size, etc.) and 1% of the time Indexing will serve most topics except for one or two **not-indexed yet** where only the name will be available.
+</Accordion>

@@ -1,0 +1,72 @@
+---
+title: Conduktor resource reference
+---
+
+## Overview
+
+| Console component | Reference |
+|----------|----------|
+| Console   | [Console API reference](https://developers.conduktor.io/?product=console)  |
+| Console   | [Console config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables) |
+| Console   | [Console CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-console-cli) |
+| Console   | [Terraform reference](/guide/conduktor-in-production/automate/terraform-automation)|
+| Console   | [Console resource reference](/guide/reference/console-reference) |
+
+| Gateway Component | Reference |
+|----------|----------|
+| Gateway   | [Gateway API reference](https://developers.conduktor.io/?product=gateway)  |
+| Gateway   | [Gateway config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables) |
+| Gateway   | [Gateway CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-gateway-cli)  |
+| Interceptors  | [Gateway Interceptor reference](/guide/reference/interceptor-reference) |
+| Gateway   | [Gateway resource reference](/guide/reference/gateway-reference) |
+ 
+The resources reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
+
+There are two kinds of API keys that you can use with the Conduktor CLI, the API and Terraform:
+
+- **AdminToken** - have all the permissions over all the resources in Console. In general, *AdminToken* can bypass application owners.
+- **AppToken** - permissions are limited to application instances and ownership is defined via Self-service
+
+## Resource categories
+
+Our resources can be managed via the CLI, the API, Terraform (using the API keys), or Console UI (which relies on RBAC).
+
+There are three categories:
+
+- [Console resources](/guide/reference/console-reference) exist only in Console. For example, users, groups, permissions, cluster configurations, alerts. data masking policies.
+- [Kafka resources](/guide/reference/kafka-reference) get created in the Kafka ecosystem, e.g.: topics, subjects, connectors.
+- [Self-service resources](/guide/reference/self-service-reference) such as application groups and topic policies.
+
+## Conduktor labels
+
+Conduktor Console labels allow you to add metadata, filter, categorize and organize your resources. Check the following table for the list of currently supported resources.
+
+- "FullLabelSupport"
+- "PartialLabelSupport"
+- "MissingLabelSupport"
+
+## Supported resources
+
+| Resource                     | API/CLI  | Terraform     | Label   |
+|------------------------------|-----------------|----------------------|----------------|
+| **Console resources**        |                 |                      |                |
+| ConsoleGroup                 | ✅               | ✅                    | 🚫             |
+| ConsoleUser                  | ✅               | ✅                    | 🚫             |
+| KafkaCluster                 | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KafkaConnectCluster          | ✅               | ✅                    | ⚠️ (Not in UI) |
+| KsqlDBCluster                | ✅               | ⚠️(Generic Resource) | 🚫             |
+| Alert                        | ✅               | ⚠️(Generic Resource) | 🚫             |
+| DataMaskingPolicy            | 🚫              | 🚫                   | 🚫             |
+| Certificate                  | 🚫(V1 API only) | 🚫                   | 🚫             |
+| PartnerZone                  | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| **Kafka resources**          |                 |                      |                |
+| Topic                        | ✅               | ✅                    | ✅              |
+| Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| ServiceAccount               | ✅               |                      | ✅              |
+| **Self-service resources**   |                 |                      |                |
+| Application                  | ✅               | ✅                    | 🚫             |
+| ApplicationInstance          | ✅               | ✅                    | 🚫             |
+| ApplicationInstancePermission | ✅               | ⚠️(Generic Resource) | 🚫             |
+| ApplicationGroup             | ✅               | ⚠️(Generic Resource) | 🚫             |
+| TopicPolicy                  | ✅               | ✅                    | 🚫             |

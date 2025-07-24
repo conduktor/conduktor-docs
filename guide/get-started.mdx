@@ -1,0 +1,52 @@
+---
+title: Get started
+keywords: ['deploy', 'start', 'get started']
+---
+
+<Info>Pre-requisite [Docker Compose](https://docs.docker.com/compose/install)</Info>
+
+[Get started with Conduktor](https://www.conduktor.io/get-started) in just a few minutes.
+
+This example builds a **complete Conduktor deployment** that consists of all Conduktor **artifacts**, Redpanda Kafka, schema registry and supporting services for data generation.
+
+## Overview
+
+Once deployed, you’ll have access to a fully functional Kafka stack integrated with Conduktor’s UI and backend services. This environment is ideal for trying out Conduktor’s features before deploying to a production environment.
+
+![Get started](/images/get-start-overview.png)
+
+<Steps>
+   <Step> 
+    The **data generation service** publishes a continuous stream of synthetic events that *simulate an e-commerce business*.
+   </Step>
+   <Step>
+    Conduktor **Gateway intercepts Kafka traffic** to apply real-time operational controls — including *encryption*, *decryption*, *data masking*, and *Traffic Control Policies* — without requiring changes to producers or consumers.
+   </Step>
+   <Step>
+   The intercepted **data flows through the Conduktor Gateway proxy and lands in a Redpanda Kafka cluster** with a *schema registry* enforcing structure and compatibility across topics.
+   </Step>
+   <Step>
+   Conduktor Console provides a **centralized UI-based control plane** to manage both the Redpanda Kafka cluster and Conduktor Gateway, allowing you to:
+      - monitor topics, schemas, consumer groups and connectors
+      - define and apply Gateway policies
+      - trace message flows
+      - audit activity across the entire stack
+   </Step>
+</Steps>
+
+## Data policies
+
+The data policies configured in this get-started stack are:
+
+| **Policy**                   | **Description**                                                                                                                                     |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| ProducePolicyPlugin          | Ensures produced messages adhere to configuration requirements. Parameters configure **Block** acks `-1` and audit compression (GZIP, ZSTD, etc).   |
+| EncryptPlugin                | Encrypts full payloads for topics matching pattern: `.*_encrypted$`. Check the `customers_encrypted` topic in the `local-kafka` cluster.            |
+| DecryptPlugin                | Decrypts payloads on consume for topics matching `.*_encrypted$`. Shows plaintext in `cdk-gateway`.                                                 |
+| FieldLevelDataMaskingPlugin  | Masks `profile.creditCardNumber`, `contact.email` and `contact.phone` in topics matching pattern: `^[A-Za-z]*_masked$`.                             |
+| CreateTopicPolicyPlugin      | Validates topic config: partitions have to be 1–3 or creation is **Blocked**.                                                                       |
+
+## Run Conduktor
+
+```bash
+curl -L https://releases.conduktor.io/quick-start -o docker-compose.yml && docker compose up -d --wait && echo "Conduktor started on http://localhost:8080"
