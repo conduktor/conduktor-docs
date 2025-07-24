@@ -9,6 +9,7 @@ _Release date: 2025-07-18_
   - [Configurable Webhook body](#configurable-webhook-body)
   - [Redesigned Application Catalog and Application details pages](#redesigned-application-catalog-and-application-details-pages-in-console)
   - [Labels for Consumer groups](#labels-for-consumer-groups)
+  - [More information on tasks with errors](#more-information-on-tasks-with-errors)
 - [Conduktor Exchange](#conduktor-exchange)
   - [Breaking change](#breaking-change)
   - [mTLS support for Partner Zones added](#partner-zones-support-for-mtls)
@@ -53,6 +54,13 @@ Labels are now shown across various consumer groups views, along with new filter
 - The consumer groups list now shows labels and allows filtering by them.
 - Topic lists within both the consumer groups and member details pages now support label-based filtering.
 - In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
+
+#### More information on tasks with errors
+
+A connector that's in the `RUNNING` state can also return errors that are only visible within the Confluent Cloud UI. When a connector is in this state:
+
+- a warning icon will be shown next to the item in the list view and
+- an error returned from the Confluent Cloud API will be displayed.
 
 ### Conduktor Exchange
 
