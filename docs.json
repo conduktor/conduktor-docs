@@ -252,5 +252,227 @@
       "linkedin": "https://www.linkedin.com/company/conduktor",
       "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
     }
-  }
+  },
+"redirects": [
+  {
+    "source": "/desktop/:slug*",
+    "destination": "/guide/:slug*"
+  },
+  {
+    "source": "/platform/guides/configure-sql/",
+    "destination": "/guide/tutorials/configure-sql/"
+  },
+  {
+    "source": "/gateway",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/"
+  },
+  {
+    "source": "/gateway/configuration/env-variables",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables/"
+  },
+  {
+    "source": "/gateway/category/interceptor-catalog/",
+    "destination": "/guide/conduktor-concepts/interceptors/"
+  },
+  {
+    "source": "/platform/navigation/settings/managing-clusters",
+    "destination": "/guide/conduktor-concepts/managing-clusters/"
+  },
+  {
+    "source": "/platform/category/configuration/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/category/installation/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/"
+  },
+  {
+    "source": "/platform/get-started/configuration/introduction",
+    "destination": "/guide/conduktor-in-production/"
+  },
+  {
+    "source": "/platform/get-started/configuration/env-variables/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables/"
+  },
+  {
+    "source": "/platform/get-started/configuration/configuration-snippets/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config/"
+  },
+  {
+    "source": "/platform/get-started/configuration/cortex/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex/"
+  },
+  {
+    "source": "/platform/get-started/configuration/database/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/get-started/configuration/http-proxy-configuration/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/get-started/configuration/https-configuration/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/get-started/configuration/ssl-tls-configuration/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/get-started/configuration/memory-configuration/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/category/configure-sso/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/local-admin-and-users/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/local-admin-users/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/external-group-sync/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/map-external-groups/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/session-lifetime/",
+    "destination": "/guide/conduktor-concepts/configuration/user-authentication/session-lifetime/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/ldap/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/ldaps",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/generic-oauth2/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/azure/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/google/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/amazon-cognito/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/keycloak/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/okta/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/get-started/configuration/user-authentication/SSO/auth0/",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+  },
+  {
+    "source": "/platform/reference/api-reference/",
+    "destination": "/guide/reference/"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/docker/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/kubernetes/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/AWS/",
+    "destination": "/guide/tutorials/deploy-aws/"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/aws-marketplace-and-cloudformation/",
+    "destination": "/guide/tutorials/deploy-aws/"
+  },
+  {
+    "source": "/platform/get-started/installation/license-management/",
+    "destination": "/guide/conduktor-in-production/manage-licenses/"
+  },
+  {
+    "source": "/platform/get-started/installation/hardware/",
+    "destination": "/guide/conduktor-in-production/requirements/"
+  },
+  {
+    "source": "/platform/get-started/installation/upgrading/",
+    "destination": "/guide/support/upgrade/"
+  },
+  {
+    "source": "/platform/navigation/settings/rbac/",
+    "destination": "/guide/conduktor-in-production/admin/set-up-rbac/"
+  },
+  {
+    "source": "/platform/category/get-started/",
+    "destination": "/guide/get-started/"
+  },  
+  {
+    "source": "/gateway/get-started/docker/",
+    "destination": "/guide/get-started/"
+  },    
+  {
+    "source": "/platform/navigation/self-serve/",
+    "destination": "/guide/conduktor-concepts/self-service/"
+  },
+  {
+    "source": "/platform/get-started/support/data-privacy/",
+    "destination":  "/guide/get-started/"
+  },
+  {
+    "source": "/gateway/category/demos/",
+    "destination": "/guide/tutorials/"
+  },
+  {
+    "source": "/gateway/category/how-to-guides/",
+    "destination": "/guide/tutorials/"
+  },
+  {
+    "source": "/gateway/category/reference/",
+    "destination": "/guide/reference/"
+  }, 
+  {
+    "source": "/platform/category/how-to--guides/",
+    "destination": "/guide/tutorials/"
+  },
+  {
+    "source": "/gateway/concepts/",
+    "destination": "/guide/conduktor-concepts/"
+  },
+    {
+    "source": "/platform/navigation/",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/navigation/:slug*",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+  },
+  {
+    "source": "/platform/category/reference/",
+    "destination": "/guide/reference/"
+  },
+  {
+    "source": "/support/",
+    "destination": "/guide/support/supported-version-policy/"
+  },
+  {
+    "source": "/changelog/",
+    "destination": "/guide/release-notes/"
+  },
+  {
+    "source": "/platform/",
+    "destination": "/guide/index/"
+  },
+  {
+    "source": "/gateway/",
+    "destination": "/guide/index/"
+  }                            
+]
 }
