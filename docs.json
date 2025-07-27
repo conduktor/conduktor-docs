@@ -3,6 +3,8 @@
   "theme": "mint",
   "customCSS" : "/custom.css",
   "name": "Conduktor Documentation",
+  "includes": ["guide/**"],
+  "excludes": ["desktop", "desktop/*", "desktop/**/*", "desktop/**/*.mdx"],
   "colors": {
     "primary": "#09343C",
     "light": "#BCFE68",
@@ -254,10 +256,7 @@
     }
   },
 "redirects": [
-  {
-    "source": "/desktop/:slug*",
-    "destination": "/guide/:slug*"
-  },
+
   {
     "source": "/platform/guides/configure-sql/",
     "destination": "/guide/tutorials/configure-sql/"
