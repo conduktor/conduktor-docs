@@ -256,7 +256,7 @@
 "redirects": [
   {
     "source": "/gateway/get-started/docker/",
-    "destination": "/guide/get-started/"
+    "destination": "/conduktor-in-production/deploy-artifacts/deploy-gateway/"
   },    
   {
     "source": "/platform/navigation/self-serve/",
@@ -314,10 +314,6 @@
     "source": "/gateway/",
     "destination": "/guide/index/"
   },
-  
-  
-
-
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert/",
     "destination": "/guide/monitor-brokers-apps/alerts#create-alerts/"
@@ -425,6 +421,22 @@
   {
     "source": "/platform/navigation/settings/integrations/#webhook-integration/",
     "destination": "/guide/monitor-brokers-apps/alerts#webhook-integration/"
+  },  
+  {
+    "source": "/platform/navigation/settings/integrations/#microsoft-teams-integration-using-workflows/",
+    "destination": "/guide/monitor-brokers-apps/alerts#microsoft-teams-integration-using-workflows/"
+  },   
+  {
+    "source": "/platform/reference/resource-reference/self-service/#self-service-resources",
+    "destination": "/guide/reference/self-service-reference/"
+  },
+  {
+    "source": "/platform/navigation/console/about-indexing/",
+    "destination": "/guide/conduktor-concepts/indexing/"
   }  
+
+ 
+  
+
 ]
 }
