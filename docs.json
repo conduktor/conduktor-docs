@@ -3,7 +3,7 @@
   "theme": "mint",
   "customCSS" : "/custom.css",
   "name": "Conduktor documentation",
-  "banner": {"content": "Welcome to our new site! We’ve restructured the docs to make information easier to find. [Get in touch](mailto:docs@conduktor.io) if you have any feedback.",
+  "banner": {"content": "Welcome to our new site! We’ve restructured the docs to make information easier to find. Get in touch at [docs@conduktor.io](mailto:docs@conduktor.io) if you have any feedback.",
              "dismissible": true },
   "colors": {
     "primary": "#09343C",
