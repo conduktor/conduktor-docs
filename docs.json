@@ -226,7 +226,8 @@
             "pages": [
               "guide/support/index",
               "guide/support/upgrade",
-              "guide/support/supported-version-policy"
+              "guide/support/supported-version-policy",
+              "guide/support/third-party-dependencies"
             
             ]
           }
