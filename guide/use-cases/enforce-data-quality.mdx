@@ -126,10 +126,30 @@ The available actions to enable for a Policy are:
 
 - **Report**: when violations occur, log these as events in the Policy's history
 - **Block**: when a violation occurs, prevent data from being processed or transmitted
+- **Mark**: when a violation occurs, add a special header to the message so it can be identified and handled downstream (see [How Mark Works](#how-mark-works)).
 
 By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
-### Create a Policy
+> Important:
+If both **Mark** and **Block** are enabled for a policy, only blocking will occur. Messages violating policies will be blocked entirely with no marking.
+
+#### How Mark Works
+
+When the **Mark** action is enabled, messages that violate data quality rules are tagged with a special header.
+
+- **Header Name:** `conduktor.dataquality.violations`
+- **Header Value:** JSON object mapping policy names to arrays of failed rule names
+
+Example header value:
+
+```json
+{
+  "policy-name": ["rule-1", "rule-2"],
+  "another-policy": ["rule-3"]
+}
+```
+
+## Create a Policy
 
 You can create a data quality Policy using the Console UI or the Conduktor CLI.
 
