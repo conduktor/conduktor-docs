@@ -407,11 +407,11 @@
   },
   {
     "source": "/platform/",
-    "destination": "/guide/index/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
   },
   {
     "source": "/gateway/",
-    "destination": "/guide/index/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/"
   },
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert/",
