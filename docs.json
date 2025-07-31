@@ -239,6 +239,26 @@
         "tab": " ",     
         "groups": [
           {
+            "group": "Conduktor",
+            "pages": [
+              "/gateway"]
+          }
+        ]
+      },  
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/platform"]
+          }
+        ]
+      },          
+      {
+        "tab": " ",     
+        "groups": [
+          {
             "group": "Conduktor Desktop",
             "pages": [
               "/desktop/index",
@@ -331,7 +351,7 @@
           }
         ]
       }      
-    ]
+    ]      
   },
   "logo": {
     "light": "/logo/light.svg",
