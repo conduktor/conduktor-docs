@@ -239,6 +239,26 @@
         "tab": " ",     
         "groups": [
           {
+            "group": "Conduktor",
+            "pages": [
+              "/gateway"]
+          }
+        ]
+      },  
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/platform"]
+          }
+        ]
+      },          
+      {
+        "tab": " ",     
+        "groups": [
+          {
             "group": "Conduktor Desktop",
             "pages": [
               "/desktop/index",
@@ -331,7 +351,7 @@
           }
         ]
       }      
-    ]
+    ]      
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -407,11 +427,11 @@
   },
   {
     "source": "/platform/",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/index/"
   },
   {
     "source": "/gateway/",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index/"
   },
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert/",
