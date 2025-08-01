@@ -104,15 +104,4 @@ import Console1310 from './changelog/Console-1.31.0.mdx';
 
 ## Update public API docs
 
-API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
-
-To update the public docs:
-
-1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
-
-- [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
-- [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
-- [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
-
-1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
-1. Add the new version to `static/developers/openapi/manifest.json`.
+[API docs are now in a separate repo](https://github.com/conduktor/developers.conduktor.io).
