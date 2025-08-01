@@ -11,7 +11,6 @@ The only required property is `CDK_CONSOLE-URL`, everything else is related to s
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image. You can mount a volume on this folder to keep metrics data between updates. Alternatively, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`.
 
 | Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
-| Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
 | `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
@@ -72,8 +71,6 @@ services:
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ```
-
-## Overriding configuration
 
 ## Overriding configuration
 
