@@ -423,7 +423,7 @@
   },
   {
     "source": "/changelog/",
-    "destination": "/guide/release-notes/"
+    "destination": "/guide/release-notes/index/"
   },
   {
     "source": "/platform/",
@@ -439,7 +439,7 @@
   },
   {
     "source": "/platform/navigation/settings/audit-log/",
-    "destination": "/guide//conduktor-in-production/admin/audit-logs/"
+    "destination": "/guide/conduktor-in-production/admin/audit-logs/"
   },
   {
     "source": "/platform/guides/configure-audit-log-topic/",
@@ -511,7 +511,7 @@
   },
   {
     "source": "/platform/navigation/data-quality/#rules/",
-    "destination": "/guide//use-cases/enforce-data-quality#rules/"
+    "destination": "/guide/use-cases/enforce-data-quality#rules/"
   },
   {
     "source": "/platform/navigation/data-quality/#policies/",
@@ -799,7 +799,7 @@
   },
   {
     "source": "/platform/proxy",
-    "destination": "/guide/"
+    "destination": "/gateway/"
   },
   {
     "source": "/platform/proxy/configuration/env-variables",
@@ -859,7 +859,7 @@
   },
   {
     "source": "/platform/configuration/user-authentication/configure-sso",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-sso-in-console/",
   },
   {
     "source": "/platform/configuration/user-authentication/local-admin-and-users",

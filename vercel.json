@@ -19,6 +19,11 @@
       "source": "/gateway/",
       "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway",
       "permanent": true
-    }
+    },
+  {
+    "source": "/changelog/",
+    "destination": "/guide/release-notes/index/",
+    "permanent": true
+  }  
   ]
 }
