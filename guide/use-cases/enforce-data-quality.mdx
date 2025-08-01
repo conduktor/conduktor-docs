@@ -42,7 +42,8 @@ To create a Rule using the Console UI:
    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
    - (Optional) Enter a **Description** to explain your Rule.
 1. Define the CEL expression for your Rule:
-   - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for details.
+   - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. Use `matches()` to test regex patterns. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for details. 
+   - (Optional) Click **Show regex library** to access pre-built regex examples. You can click on the required one(s) to copy them and paste into your Rule expression to customize further, as necessary.
 1. Click **Create**.
 </Tab>
 

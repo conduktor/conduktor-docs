@@ -1,37 +1,36 @@
 ---
-date: 2025-08-20
 title: Gateway 3.12.0
-description: docker pull conduktor/conduktor-gateway:3.12.0
-solutions: gateway
-tags: features,fixes
 ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
+# Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
 - [New features](#new-features)
 
 ### Breaking changes
 
-#### New Health and Version APIs
+#### New APIs for health and versions
 
-To improve the reliability and monitoring of the Gateway service, we have introduced new API endpoints for health checks and version information.
+To improve the reliability and monitoring of the Gateway service, we've introduced new API endpoints for health checks and version information.
 
-These changes align our service with Kubernetes health checks standards and will provide a more robust way to monitor the Gateway's status.
+These changes align our service with Kubernetes health check standards and will provide a more robust way to monitor Gateway's status.
 
-Please check [Monitoring reference](/docs/gateway/reference/monitoring.md) page to learn more about the new API endpoints.
+[Find out more from the monitoring reference](/guide/conduktor-in-production/monitor/index#liveness-endpoint).
 
-:::warning
-The old */health* API is now deprecated but it will continue to function. Please update your configuration to use the new liveness and readiness probe endpoints.
-:::
+<Warning>
+The old */health* API is now deprecated but it will continue to function. 
+
+Please update your configuration to use the new liveness and readiness probe endpoints.
+</Warning>
 
 ### New features
 
-#### `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
+#### New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
 
-This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable, which controls the types of event types recorded in the audit log.
+This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable which controls the types of event types recorded in the audit log.
 
-This provides flexibility to enable or disable specific event types, such as `CONNECTION`. The full list and explanation of the event types can be found in
-the [Audit Log configuration documentation](/gateway/configuration/env-variables/#audit).
+It provides flexibility to enable or disable specific event types, such as `CONNECTION`. 
 
-This change is backwards compatible, as the default value is `ALL`, which means all event types are logged by default.
+[See the full list and explanations of the event types](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#audit).
+
+This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
