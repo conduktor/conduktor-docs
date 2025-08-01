@@ -67,40 +67,44 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 
 ## Update release notes
 
-Every new version of Gateway and Console has to have release notes.
+Every new version of Gateway, Console and CLI has to have release notes.
 
 To update release notes:
 
 1. Go to **/snippets/changelog**.
-2. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
+2. Create a new .mdx file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
 3. Make sure your file has the following header:
 
     ```mdx
     ---
-    title: Product and version
+    title: Product version
     ---
 
-    *Release date: {date}*
+    # Product version
+
     ```
 
-4. Document all the changes in the release. If it's a:
+4. Document the changes and fixes for the release. If it's a:
 
 - **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
-- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
+- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted, as a customer. Remember to explain what to change or do next, if anything.
 
-5. Open `release-notes/index.mdx` and import your new file, e.g.:
+5. Go to **guide/release-notes** and open **index.mdx**. Add to the import list a line like this:
 
 ```
 import Console1310 from './changelog/Console-1.31.0.mdx';
 ```
 
-6. Finally, add an entry at the top of the page, linking to your file. E.g.:
+6. Add an entry under the`<Note>`, linking to your file. E.g.:
 
 ```
-## Console 1.131.0
-<Console1310 />
+<Update label="Console 1.36.1" description="2025-07-21">
+<Console1361 />
+</Update>
 ---
 ```
+
+This is the format that Mintlify uses: `label` is the H1 heading used in your .mdx file and `description` is the date of the release.
 
 ## Update public API docs
 
