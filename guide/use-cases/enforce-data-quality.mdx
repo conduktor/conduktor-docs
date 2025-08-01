@@ -19,39 +19,45 @@ Before creating data quality Rules and Policies, you have to:
 
 ## Rules
 
-You can create Rules with the CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+Data quality rules define the logic for validating your Kafka messages. There are several types of rules you can use:
+
+- [CEL Expression Rules](#cel-expression-rules)
+- [Built-in Rules](#built-in-rules)
+- [JSON Schema Rule](#json-schema-rule)
 
 <Info>
-Rules do nothing on their own - you **have to** to attach them to a Policy.
+Rules do nothing on their own - you **have to** attach them to a Policy.
 </Info>
 
-The Rules page lists your Rules with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
 ### Create a Rule
 
-You can create a data quality Rule using the Console UI or the Conduktor CLI.
+You can create a data quality Rule (CEL or JSON Schema) using the Console UI or the Conduktor CLI.
 
 <Tabs>
-<Tab title="Console UI">
+  <Tab title="Console UI">
 
-To create a Rule using the Console UI:
+    To create a Rule using the Console UI:
 
-1. In the Trust section of the sidebar of Conduktor Console go to **Rules** and click **+New Rule**.
-1. Define the Rule details:
-   - Add a descriptive **name** for the Rule.
-   - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
-   - (Optional) Enter a **Description** to explain your Rule.
-1. Define the CEL expression for your Rule:
-   - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. Use `matches()` to test regex patterns. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for details. 
-   - (Optional) Click **Show regex library** to access pre-built regex examples. You can click on the required one(s) to copy them and paste into your Rule expression to customize further, as necessary.
-1. Click **Create**.
-</Tab>
+    1. In the Trust section of the sidebar of Conduktor Console go to **Rules** and click **+New Rule**.
+    1. Define the Rule details:
+    - Add a descriptive **name** for the Rule.
+    - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
+    - (Optional) Enter a **Description** to explain your Rule.
+    1. Select the Rule type (**CEL Expression** or **JSON Schema**) and provide the required logic:
+    - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. Use `matches()` to test regex patterns. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for details.
+    - (Optional) Click **Show regex library** to access pre-built regex examples. You can click on the required one(s) to copy them and paste into your Rule expression to customize further, as necessary.
+    - For JSON Schema, enter your schema definition. See [the JSON Schema Specification](https://json-schema.org/specification) for details.
+    1. Click **Create**.
+  </Tab>
 
-<Tab title="Conduktor CLI">
+  <Tab title="Conduktor CLI">
 
-You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
+    You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
 
-1. Save this example to file, e.g. `rule.yaml`:
+    1. Save your rule configuration to a file, e.g. `rule.yaml`.
+
+    Example for CEL:
 
     ```yaml
     apiVersion: v1
@@ -65,14 +71,66 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
         type: Cel
     ```
 
-2. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
+    Example for JSON Schema:
+
+    ```yaml
+    apiVersion: v1
+    kind: DataQualityRule
+    metadata:
+        name: valid-user
+    spec:
+        schema: >
+          {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": ["name", "age"],
+            "properties": {
+              "name": { "type": "string" },
+              "age": { "type": "integer", "minimum": 0 },
+              "isActive": { "type": "boolean", "default": true }
+            }
+          }
+        displayName: valid user
+        description: check that the user is valid
+        type: JsonSchema
+    ```
+
+    2. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f rule.yaml
     ```
 
-</Tab>
+  </Tab>
 </Tabs>
+
+### CEL Expression Rules
+
+You can create Rules with CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+
+The Rules page lists your Rules with a preview of their CEL expressions. Open a Rule's detail page to see its description, full CEL expression, and attached Policies.
+
+#### Sample CEL Rules
+
+Here are some examples of data quality rules using CEL expressions.
+
+<Note>
+  Make sure you amend these examples to use your values.
+</Note>
+
+<AccordionGroup>
+  <Accordion title="Email RegEx validation">
+    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
+    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
+  </Accordion>
+  <Accordion title="UUID RegEx validation">
+    `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
+  </Accordion>
+  <Accordion title="Ensure Header is JSON">
+    `headers['Content-Type'] == 'application/json'`
+  </Accordion>
+</AccordionGroup>
+
 
 ### Built-in Rules
 
@@ -90,24 +148,82 @@ We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) s
 - The schema ID exists within your schema registry.
 - The schema it references is of type `avro`.
 
-### Sample Rules
+### JSON Schema Rule
 
-Here are some examples of data quality rules.
+Enforce JSON Schema validation on Kafka messages to ensure data consistency and structure compliance.
 
-<Note>
-Make sure you amend these examples to use your values.
-</Note>
+#### Configuration
+
+Add a JSON Schema rule using the CLI:
+
+```yaml
+apiVersion: v1
+kind: DataQualityRule
+metadata:
+    name: json
+spec:
+    schema: >
+        {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": ["name", "age"],
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "integer", "minimum": 0 },
+            "isActive": { "type": "boolean", "default": true }
+          }
+        }
+    displayName: valid user
+    description: check that the user is valid
+    type: JsonSchema
+```
+
+#### Schema Requirements
+
+- Must follow the [JSON Schema Specification](https://json-schema.org/specification)
+- If no `$schema` is specified, defaults to [Draft 2020-12](https://json-schema.org/draft/2020-12)
+
+#### Examples
 
 <AccordionGroup>
-  <Accordion title="Email RegEx validation">
-    Your requirements may be different from this RegEx, as email validation via RegEx is complex.
-    `value.customer.email.matches(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")`
+  <Accordion title="Basic User Validation">
+    ```json
+    {
+      "type": "object",
+      "required": ["id", "name", "age"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "age": { "type": "integer", "minimum": 0 }
+      }
+    }
+    ```
   </Accordion>
-  <Accordion title="UUID RegEx validation">
-    `value.customer.id.matches(r"^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$")`
+  <Accordion title="Schema with Version">
+    ```json
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    }
+    ```
   </Accordion>
-  <Accordion title="Ensure Header is JSON">
-    `headers['Content-Type'] == 'application/json'`
+  <Accordion title="No Additional Fields Allowed">
+    ```json
+    {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+    ```
   </Accordion>
 </AccordionGroup>
 
@@ -131,9 +247,9 @@ The available actions to enable for a Policy are:
 
 By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
-> Important:
+<Info>
 If both **Mark** and **Block** are enabled for a policy, only blocking will occur. Messages violating policies will be blocked entirely with no marking.
-
+</Info>
 #### How Mark Works
 
 When the **Mark** action is enabled, messages that violate data quality rules are tagged with a special header.
