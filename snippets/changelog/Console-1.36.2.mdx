@@ -1,0 +1,9 @@
+---
+title: Console 1.36.2
+---
+# Console 1.36.2
+
+### Fixes
+
+- Fixed an issue where the Console UI would prevent Debezium connector creation when required metadata was missing, even though the CLI would allow creation successfully.
+- Fixed a permissions bug where users who were members of multiple ApplicationGroups would only inherit permissions from one group instead of receiving the combined permissions from all their groups. This was causing users to have incomplete access rights.
