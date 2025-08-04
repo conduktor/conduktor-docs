@@ -326,6 +326,42 @@ conduktor token list application-instance -i=my_instance
 conduktor token delete 1233ff18-0e95-4638-b3fc-f55e20088b8d
 ```
 
+### Run
+
+The `run` command allows you to run a few actions:
+
+```
+Usage:
+  conduktor run [flags]
+  conduktor run [command]
+
+Available Commands:
+  generateServiceAccountToken    Generate a token for a service account on a virtual cluster
+  partnerZoneGenerateCredentials generate a token for a partner zone service account
+  whoami                         Return information about the credentials configured in the CLI
+
+Flags:
+  -h, --help   help for run
+
+Global Flags:
+      --permissive   Permissive mode, allow undefined environment variables
+  -v, --verbose      Show more information for debugging
+```
+
+Examples:
+
+```bash title="Generate a service account password for a virtual cluster"
+conduktor run generateServiceAccountToken --v-cluster my-vcluster --username my-service-account
+``` 
+
+```bash title="Generate a Partner Zone service account password"
+conduktor run partnerZoneGenerateCredentials --partner-zone-name my-partner-zone
+```
+
+```bash title="Get information about the credentials configured in the CLI"
+conduktor run whoami
+```
+
 ### Version
 
 Check the current version of your CLI:
@@ -344,7 +380,7 @@ Consider the following folder structure:
 ```
 ├── resources/
 │   ├── topics.yml          # Your topics are there
-|   ├── permissions.yml     # Your permissions to other Apps are there
+|   ├── permissions.yml     # Your permissions to other apps are there
 ```
 
 <Tabs>
