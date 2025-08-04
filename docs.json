@@ -210,7 +210,7 @@
             "pages": ["guide/release-notes/index"]
           }
         ]
-      },
+      },  
       {
         "tab": "Support",
         "global": {
@@ -228,13 +228,130 @@
             "pages": [
               "guide/support/index",
               "guide/support/upgrade",
-              "guide/support/supported-version-policy"
-
+              "guide/support/supported-version-policy",
+              "guide/support/third-party-dependencies"
+            
             ]
           }
         ]
-      }
-    ]
+      },
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/gateway"]
+          }
+        ]
+      },  
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/platform"]
+          }
+        ]
+      },          
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor Desktop",
+            "pages": [
+              "/desktop/index",
+              "/desktop/migrating-to-conduktor-scale",
+              "/desktop/learn-apache-kafka-with-conduktor",
+
+              "/desktop/conduktor-first-steps/install/index",
+              "/desktop/conduktor-first-steps/install/linux",
+              "/desktop/conduktor-first-steps/install/mac",
+              "/desktop/conduktor-first-steps/install/windows",
+              "/desktop/conduktor-first-steps/install/update",
+        
+              "/desktop/conduktor-first-steps/sign-in/index",
+              "/desktop/conduktor-first-steps/sign-in/single-sign-on",
+
+              "/desktop/conduktor-first-steps/licenses-and-activations/index",
+              "/desktop/conduktor-first-steps/licenses-and-activations/offline-licenses",
+
+              "/desktop/account-management/index",
+              "/desktop/account-management/managing-permissions-rbac",
+
+              "/desktop/conduktor-first-steps/login-troubleshooting/index",
+              "/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq",
+              "/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy",
+
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/index",
+              "/desktop/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds",
+
+              "/desktop/kafka-cluster-connection/import-export/index",
+              "/desktop/kafka-cluster-connection/import-export/github-enterprise",
+
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-on-windows-wsl-2",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-under-docker",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups",
+
+              "/desktop/features/producing-data/index",
+              "/desktop/features/producing-data/produce-random-data",
+
+              "/desktop/features/brokers-management",
+
+              "/desktop/features/topics-management/index",
+              "/desktop/features/topics-management/how-to",
+              "/desktop/features/topics-management/smart-groups",
+              "/desktop/features/topics-management/topic-details",
+              
+              "/desktop/features/consuming-data/index",
+              "/desktop/features/consuming-data/pick-your-format-wisely",
+              "/desktop/features/consuming-data/filtering-and-projecting-data",
+              "/desktop/features/consuming-data/advanced-consumer",
+
+              "/desktop/features/consuming-data/custom-deserializers/index",
+              "/desktop/features/consuming-data/custom-deserializers/aws-glue-schema-registry",
+              "/desktop/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry",
+
+              "/desktop/features/consumer-groups-management",
+
+              "/desktop/features/schema-registry-management/index",
+              "/desktop/features/schema-registry-management/avro-tools",
+              "/desktop/features/schema-registry-management/schema-compatibilities",
+
+              "/desktop/features/kafka-connect/index",
+              "/desktop/features/kafka-connect/features",
+              "/desktop/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect",
+              "/desktop/features/kafka-connect/security",
+
+              "/desktop/features/kafka-streams",
+
+              "/desktop/features/ksqldb/index",
+              "/desktop/features/ksqldb/connect-conduktor-to-ksqldb-clusters",
+              "/desktop/features/ksqldb/how-to-query-with-ksqldb",
+              "/desktop/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb",
+              "/desktop/features/ksqldb/what-to-do-with-ksqldb",
+              "/desktop/features/ksqldb/ksqldb-faq",
+
+              "/desktop/features/kafka-access-control-list-acl/index",
+              "/desktop/features/kafka-access-control-list-acl/acls-advanced-insights",
+
+              "/desktop/features/monitoring",             
+
+              "/desktop/miscellaneous/configuring-conduktor",
+              "/desktop/miscellaneous/data-security",
+              "/desktop/miscellaneous/faq",
+              "/desktop/miscellaneous/internet-troubleshooting",
+
+              "/desktop/changelog/changelog"
+          ]
+          }
+        ]
+      }      
+    ]      
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -310,11 +427,11 @@
   },
   {
     "source": "/platform/",
-    "destination": "/guide/index/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/index/"
   },
   {
     "source": "/gateway/",
-    "destination": "/guide/index/"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index/"
   },
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert/",
