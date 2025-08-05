@@ -108,4 +108,5 @@ This is the format that Mintlify uses: `label` is the H1 heading used in your .m
 
 ## Update public API docs
 
+<!-- markdown-link-check-disable-next-line -->
 [API docs are now in a separate repo](https://github.com/conduktor/developers.conduktor.io).
