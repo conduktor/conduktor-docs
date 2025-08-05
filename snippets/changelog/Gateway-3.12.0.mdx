@@ -23,6 +23,12 @@ The old */health* API is now deprecated but it will continue to function.
 Please update your configuration to use the new liveness and readiness probe endpoints.
 </Warning>
 
+#### Configuration key change for Vault KUBERNETES authentication type
+
+[Vault KUBERNETES authentication type](https://developer.hashicorp.com/vault/docs/agent-and-proxy/autoauth/methods/kubernetes#token_path) has been corrected to read the token from a file in the running pod.
+
+Because of this, KUBERNETES authentication's configuration key `jwt` (`VAULT_KUBERNETES_JWT`) is changed to `path` (`VAULT_KUBERNETES_PATH`). This optional configuration contains the path of the file containing the token. It defaults to `/var/run/secrets/kubernetes.io/serviceaccount/token` following the Vault documentation.
+
 ### New features
 
 #### New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
