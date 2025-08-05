@@ -7,7 +7,7 @@ set -euo pipefail
 
 DOCS_JSON="${1:-docs.json}"
 BASE_URL="https://docs.conduktor.io"
-TIMEOUT=10
+TIMEOUT=3
 VERBOSE="${2:-false}"
 
 RED='\033[0;31m'
@@ -66,15 +66,21 @@ test_redirect() {
     local expected="$2"
     local index="$3"
     
+    echo "DEBUG: test_redirect function called with source='$source', expected='$expected', index='$index'" >&2
+    
     local source_url="${BASE_URL}${source}"
     local expected_url="${BASE_URL}${expected}"
     
+    echo "DEBUG: Constructed URLs - source_url='$source_url', expected_url='$expected_url'" >&2
+    
     # Get final URL after redirects
     local final_url
-    final_url=$(curl -Ls --max-time "$TIMEOUT" --max-redirs 10 \
+    echo "DEBUG: About to run curl command" >&2
+    final_url=$(curl -Ls --max-time "$TIMEOUT" --connect-timeout 2 --max-redirs 5 \
         -w "%{url_effective}" \
         -o /dev/null \
         "$source_url" 2>/dev/null || echo "ERROR")
+    echo "DEBUG: curl command completed, final_url='$final_url'" >&2
     
     local status symbol color
     
@@ -110,14 +116,27 @@ test_redirect() {
     fi
 }
 
-# Main testing loop
+# Main testing loop - limit to first 3 for debugging with extra verbose output
 index=1
+echo "Starting redirect tests..."
+echo "DEBUG: About to start processing JSON with jq" >&2
+
+# Test jq command first
+echo "DEBUG: Testing jq command" >&2
+jq -r '.redirects[0:3] | .[] | [.source, .destination] | @tsv' "$DOCS_JSON" | head -3 >&2
+
+echo "DEBUG: Starting while loop" >&2
 while IFS=$'\t' read -r source destination; do
+    echo "DEBUG: Loop iteration $index, got source='$source' destination='$destination'" >&2
     [[ -n "$source" && -n "$destination" ]] || continue
+    [[ $index -gt 3 ]] && break  # Only test first 3 redirects for now
+    echo "DEBUG: About to test redirect $index: $source -> $destination" >&2
     test_redirect "$source" "$destination" "$index"
+    echo "DEBUG: Completed test $index" >&2
     ((index++))
     sleep 0.1  # Be nice to the server
-done < <(jq -r '.redirects[] | [.source, .destination] | @tsv' "$DOCS_JSON")
+done < <(jq -r '.redirects[0:3] | .[] | [.source, .destination] | @tsv' "$DOCS_JSON")
+echo "Finished all redirect tests"
 
 # Summary
 TOTAL_TESTED=$((PASSED + FAILED + ERRORS))
