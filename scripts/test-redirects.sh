@@ -88,32 +88,42 @@ test_redirect() {
         status="ERROR"
         symbol="⚠️"
         color="$YELLOW"
-        ((ERRORS++))
+        ERRORS=$((ERRORS + 1))
+        echo "DEBUG: Status=ERROR, ERRORS=$ERRORS" >&2
     elif [[ "$final_url" == "$BASE_URL/" ]] || [[ "$final_url" == "$BASE_URL" ]]; then
         status="BROKEN"
         symbol="💥"
         color="$RED"
-        ((FAILED++))
+        FAILED=$((FAILED + 1))
+        echo "DEBUG: Status=BROKEN, FAILED=$FAILED" >&2
     elif [[ "${final_url%/}" == "${expected_url%/}" ]]; then
         status="PASS"
         symbol="✅"
         color="$GREEN" 
-        ((PASSED++))
+        PASSED=$((PASSED + 1))
+        echo "DEBUG: Status=PASS, PASSED=$PASSED" >&2
     else
         status="FAIL"
         symbol="❌"
         color="$RED"
-        ((FAILED++))
+        FAILED=$((FAILED + 1))
+        echo "DEBUG: Status=FAIL, FAILED=$FAILED" >&2
     fi
     
+    echo "DEBUG: About to print formatted result" >&2
+    
     printf "[%3d/%d] %b%s%b %s -> %s\n" "$index" "$TOTAL" "$color" "$symbol" "$NC" "$source" "$expected"
+    echo "DEBUG: Formatted result printed successfully" >&2
     
     if [[ "$VERBOSE" == "verbose" && "$status" != "PASS" ]]; then
         echo "      Expected: $expected_url"
         if [[ "$final_url" != "ERROR" ]]; then
             echo "      Got:      $final_url"
         fi
+        echo "DEBUG: Verbose output completed" >&2
     fi
+    
+    echo "DEBUG: test_redirect function completed for index $index" >&2
 }
 
 # Main testing loop - limit to first 3 for debugging with extra verbose output
@@ -133,7 +143,9 @@ while IFS=$'\t' read -r source destination; do
     echo "DEBUG: About to test redirect $index: $source -> $destination" >&2
     test_redirect "$source" "$destination" "$index"
     echo "DEBUG: Completed test $index" >&2
-    ((index++))
+    echo "DEBUG: About to increment index from $index" >&2
+    index=$((index + 1))
+    echo "DEBUG: Index incremented to $index" >&2
     sleep 0.1  # Be nice to the server
 done < <(jq -r '.redirects[0:3] | .[] | [.source, .destination] | @tsv' "$DOCS_JSON")
 echo "Finished all redirect tests"
