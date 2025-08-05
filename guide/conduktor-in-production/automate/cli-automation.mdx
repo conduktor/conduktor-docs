@@ -4,7 +4,7 @@ title: Automate with CLI
 
 ## Conduktor CLI overview
 
-Conduktor CLI (Command Line Interface) allows you to perform some operations directly from your command line or a CI/CD pipeline.
+Conduktor CLI (Command Line Interface) helps you managing your [Conduktor Console and Gateway resources](/guide/reference) via commands or CI/CD pipelines.
 
 ## Installation
 
@@ -111,6 +111,23 @@ export CDK_PASSWORD=adminP4ss!
 conduktor login
 ```
 
+### Authenticate to Console using external authentication
+
+By default, the Conduktor CLI authenticates with Console using a Console API key, or generates one based on the given credentials. This is the `console` authentication mode (`CDK_AUTH_MODE` is `console` or empty).
+
+On the other hand, you can use the external authentication mode to allow you to bypass token generation and use credentials from your identity provider or API proxy instead. For that, set the `CDK_AUTH_MODE` environment variable to `external`:
+
+```bash title="Set up external authentication with a bearer token"
+export CDK_AUTH_MODE="external"
+export CDK_API_KEY=<bearer_token>
+```
+
+```bash title="Set up external authentication with client credentials"
+export CDK_AUTH_MODE="external"
+export CDK_USER=<client_id>
+export CDK_PASSWORD=<client_secret>
+```
+
 ### Authenticate to Gateway using API credentials
 
 To use the CLI to manage Gateway objects, you need to set the URL of the Gateway API and the API credentials.
@@ -132,6 +149,7 @@ This is the list of the supported environment variables:
 | `CDK_API_KEY`          | Console API key (admin or application key)                               |
 | `CDK_USER`             | Console local or LDAP user username                                      |
 | `CDK_PASSWORD`         | Console local or LDAP user password                                      |
+| `CDK_AUTH_MODE`        | Authentication mode (`external`, `console` or empty (default))           |
 | **Gateway**            |                                                                          |
 | `CDK_GATEWAY_BASE_URL` | Gateway base URL, e.g. `http://localhost:8888`                           |
 | `CDK_GATEWAY_USER`     | Gateway user login email                                                 |
