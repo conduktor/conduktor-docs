@@ -21,8 +21,8 @@
       "permanent": true
     },
   {
-    "source": "/changelog/",
-    "destination": "/guide/release-notes/index/",
+    "source": "/changelog",
+    "destination": "/guide/release-notes/",
     "permanent": true
   }  
   ]

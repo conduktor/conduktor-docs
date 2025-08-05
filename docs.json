@@ -459,7 +459,7 @@
   },
   {
     "source": "/platform/category/configure-sso/",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso/"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-sso-in-console/"
   },
   {
     "source": "/platform/guides/configure-sql/",
