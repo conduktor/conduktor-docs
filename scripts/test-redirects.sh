@@ -8,7 +8,7 @@ set -euo pipefail
 # Default configuration
 DOCS_JSON="docs.json"
 BASE_URL="https://docs.conduktor.io"
-TIMEOUT=3
+TIMEOUT=5
 VERBOSE=false
 SHOW_HELP=false
 
@@ -187,10 +187,15 @@ test_redirect() {
     
     # Get final URL after redirects
     local final_url
-    final_url=$(curl -Ls --max-time "$TIMEOUT" --connect-timeout 2 --max-redirs 5 \
+    if final_url=$(curl -Ls --max-time "$TIMEOUT" --connect-timeout 5 --max-redirs 5 \
         -w "%{url_effective}" \
         -o /dev/null \
-        "$source_url" 2>/dev/null || echo "ERROR")
+        "$source_url" 2>/dev/null); then
+        # curl succeeded, clean up any trailing characters
+        final_url=$(echo "$final_url" | tr -d '\n\r%')
+    else
+        final_url="ERROR"
+    fi
     
     local status symbol color
     
