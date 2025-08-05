@@ -530,12 +530,12 @@
     "destination": "/guide/conduktor-concepts"
   },
   {
-    "source": "/gateway/configuration/client-authentication/#oauthbearer",
+    "source": "/gateway/configuration/client-authentication#oauthbearer",
     "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#oauthbearer"
   },
   {
     "source": "/gateway/get-started/docker",
-    "destination": "/conduktor-in-production/deploy-artifacts/deploy-gateway"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway"
   },
   {
     "source": "/gateway/interceptors/observability/chargeback",
@@ -822,15 +822,15 @@
     "destination": "/guide/manage-kafka/kafka-resources/schema-registry"
   },
   {
-    "source": "/platform/navigation/data-quality/#policies",
+    "source": "/platform/navigation/data-quality#policies",
     "destination": "/guide/use-cases/enforce-data-quality#policies"
   },
   {
-    "source": "/platform/navigation/data-quality/#prerequisites",
+    "source": "/platform/navigation/data-quality#prerequisites",
     "destination": "/guide/use-cases/enforce-data-quality#prerequisites"
   },
   {
-    "source": "/platform/navigation/data-quality/#rules",
+    "source": "/platform/navigation/data-quality#rules",
     "destination": "/guide//use-cases/enforce-data-quality#rules"
   },
   {
@@ -851,7 +851,7 @@
   },
   {
     "source": "/platform/navigation/settings/audit-log",
-    "destination": "/guide//conduktor-in-production/admin/audit-logs"
+    "destination": "/guide/conduktor-in-production/admin/audit-logs"
   },
   {
     "source": "/platform/navigation/settings/data-masking",
@@ -862,15 +862,15 @@
     "destination": "/guide/conduktor-in-production/admin/data-mask"
   },
   {
-    "source": "/platform/navigation/settings/integrations/#microsoft-teams-integration-using-workflows",
+    "source": "/platform/navigation/settings/integrations#microsoft-teams-integration-using-workflows",
     "destination": "/guide/monitor-brokers-apps/alerts#microsoft-teams-integration-using-workflows"
   },
   {
-    "source": "/platform/navigation/settings/integrations/#slack-integration",
+    "source": "/platform/navigation/settings/integrations#slack-integration",
     "destination": "/guide/monitor-brokers-apps/alerts#slack-integration"
   },
   {
-    "source": "/platform/navigation/settings/integrations/#webhook-integration",
+    "source": "/platform/navigation/settings/integrations#webhook-integration",
     "destination": "/guide/monitor-brokers-apps/alerts#webhook-integration"
   },
   {
@@ -886,7 +886,7 @@
     "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
   },
   {
-    "source": "/platform/reference/resource-reference/self-service/#self-service-resources",
+    "source": "/platform/reference/resource-reference/self-service#self-service-resources",
     "destination": "/guide/reference/self-service-reference"
   },
   {
