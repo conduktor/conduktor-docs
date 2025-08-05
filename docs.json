@@ -606,14 +606,6 @@
     "destination": "/guide/conduktor-in-production/admin/configure-clusters"
   },
   {
-    "source": "/platform/admin/managing-clusters",
-    "destination": "/guide/conduktor-in-production/admin/configure-clusters"
-  },
-  {
-    "source": "/platform/admin/rbac",
-    "destination": "/guide/conduktor-in-production/admin/set-up-rbac"
-  },
-  {
     "source": "/platform/admin/rbac",
     "destination": "/guide/conduktor-in-production/admin/set-up-rbac"
   },
@@ -851,10 +843,6 @@
   },
   {
     "source": "/platform/navigation/self-serve",
-    "destination": "/guide/conduktor-concepts/self-service"
-  },
-  {
-    "source": "/platform/navigation/self-serve/getting-started",
     "destination": "/guide/conduktor-concepts/self-service"
   },
   {
