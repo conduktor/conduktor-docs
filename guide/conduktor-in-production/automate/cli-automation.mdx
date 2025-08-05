@@ -97,7 +97,7 @@ Go to **Applications**, pick your **Application** and **Application Instance**, 
 
 ### Authenticate to Console using user credentials
 
-You can simply set the username and password of the **local** or **LDAP** user and use the CLI, or create an associate short-live API key. This type of API key will have the permissions of the user who created it.
+You can simply set the username and password of the **local** or **LDAP** user and use the CLI, or create an associated short-lived API key. This type of API key will have the permissions of the user who created it.
 
 This kind of authentication will be valid for the same duration as the configured [session timeout](/guide/conduktor-in-production/admin/user-access/session-lifetime).
 
@@ -248,7 +248,7 @@ conduktor apply -f definition.yml
 
 ### Delete
 
-The `delete` command allows you to delete a resource. It works the same way as the apply.
+The `delete` command allows you to delete a resource. It works the same way as the `apply`.
 
 Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
 
