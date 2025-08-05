@@ -95,27 +95,97 @@ jobs:
       - name: Generate test summary for PR
         if: github.event_name == 'pull_request'
         run: |
-          # Create a simple PR comment from the log output
+          # Create detailed PR comment from the test results
           if [[ -f redirect-test-output.log ]]; then
             echo "📋 **Redirect Validation Results**" > pr-comment.md
             echo "" >> pr-comment.md
             
-            # Extract summary from log
+            # Extract key stats from summary
             if grep -q "SUMMARY" redirect-test-output.log; then
-              echo "\`\`\`" >> pr-comment.md
-              sed -n '/SUMMARY/,/^$/p' redirect-test-output.log | head -10 >> pr-comment.md
-              echo "\`\`\`" >> pr-comment.md
+              TOTAL=$(grep "Total tested:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              PASSED=$(grep "✅ Passed:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              FAILED=$(grep "❌ Failed:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              ERRORS=$(grep "⚠️  Errors:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              SUCCESS_RATE=$(grep "Success rate:" redirect-test-output.log | grep -o '[0-9]\+\.*[0-9]*%' | head -1)
+              
+              # Status indicator
+              if [[ "$FAILED" -gt 0 ]] || [[ "$ERRORS" -gt 0 ]]; then
+                echo "## ❌ **Validation Failed**" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "Some redirects are not working correctly and need attention." >> pr-comment.md
+              else
+                echo "## ✅ **All Redirects Working**" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "Great job! All redirect rules are working correctly." >> pr-comment.md
+              fi
+              
+              echo "" >> pr-comment.md
+              echo "### Summary" >> pr-comment.md
+              echo "| Metric | Count |" >> pr-comment.md
+              echo "|--------|-------|" >> pr-comment.md
+              echo "| Total Tested | $TOTAL |" >> pr-comment.md
+              echo "| ✅ Passed | $PASSED |" >> pr-comment.md
+              echo "| ❌ Failed | $FAILED |" >> pr-comment.md
+              echo "| ⚠️ Errors | $ERRORS |" >> pr-comment.md
+              echo "| Success Rate | $SUCCESS_RATE |" >> pr-comment.md
+              echo "" >> pr-comment.md
+              
+              # Show failed redirects if any
+              if [[ "$FAILED" -gt 0 ]] || [[ "$ERRORS" -gt 0 ]]; then
+                echo "### ❌ Failed Redirects" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "The following redirects need to be fixed:" >> pr-comment.md
+                echo "" >> pr-comment.md
+                
+                # Extract failed redirect lines (those with ❌ or 💥 or ⚠️)
+                grep -E "\[.*\] (❌|💥|⚠️)" redirect-test-output.log | while read -r line; do
+                  # Extract source and destination from the line
+                  source=$(echo "$line" | sed -E 's/.*\] [^[:space:]]+ ([^[:space:]]+) -> .*/\1/')
+                  destination=$(echo "$line" | sed -E 's/.*-> ([^[:space:]]+).*/\1/')
+                  status_emoji=$(echo "$line" | sed -E 's/.*\] ([^[:space:]]+) .*/\1/')
+                  
+                  echo "- **\`$source\`** → \`$destination\` $status_emoji" >> pr-comment.md
+                  
+                  # Look for the expected/actual URLs in the following lines
+                  line_num=$(grep -n "$line" redirect-test-output.log | cut -d: -f1)
+                  if [[ -n "$line_num" ]]; then
+                    expected=$(sed -n "$((line_num + 1))p" redirect-test-output.log | grep "Expected:" | sed 's/.*Expected: //')
+                    actual=$(sed -n "$((line_num + 2))p" redirect-test-output.log | grep "Got:" | sed 's/.*Got: //')
+                    
+                    if [[ -n "$expected" && -n "$actual" ]]; then
+                      echo "  - Expected: \`$expected\`" >> pr-comment.md
+                      echo "  - Actual: \`$actual\`" >> pr-comment.md
+                    elif [[ -n "$expected" ]]; then
+                      echo "  - Expected: \`$expected\`" >> pr-comment.md
+                    fi
+                  fi
+                  echo "" >> pr-comment.md
+                done
+                
+                echo "### 🔧 How to Fix" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "1. Check that the destination paths exist in the current site structure" >> pr-comment.md
+                echo "2. Verify the redirect syntax in \`docs.json\`" >> pr-comment.md
+                echo "3. Test redirects locally before pushing changes" >> pr-comment.md
+                echo "4. Run \`./scripts/test-redirects.sh docs.json verbose\` to test locally" >> pr-comment.md
+                echo "" >> pr-comment.md
+              fi
+              
             else
-              echo "Test output:" >> pr-comment.md
+              echo "⚠️ Tests did not complete successfully. Check the workflow logs for details." >> pr-comment.md
+              echo "" >> pr-comment.md
               echo "\`\`\`" >> pr-comment.md
               tail -20 redirect-test-output.log >> pr-comment.md
               echo "\`\`\`" >> pr-comment.md
             fi
             
             echo "" >> pr-comment.md
-            echo "*Generated by redirect validation workflow*" >> pr-comment.md
+            echo "---" >> pr-comment.md
+            echo "*Generated by redirect validation workflow • [View full logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})*" >> pr-comment.md
           else
-            echo "⚠️ Redirect validation tests failed to complete. Please check the logs." > pr-comment.md
+            echo "⚠️ **Redirect validation tests failed to complete**" > pr-comment.md
+            echo "" >> pr-comment.md
+            echo "Please check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details." >> pr-comment.md
           fi
 
       - name: Comment on PR with results
