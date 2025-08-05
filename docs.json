@@ -506,12 +506,12 @@
     "destination": "/desktop/features/topics-management/topic-details"
   },
   {
-    "source": "/gateway/",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index/"
+    "source": "/gateway",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index"
   },
   {
-    "source": "/gateway/category/demos/",
-    "destination": "/guide/tutorials/"
+    "source": "/gateway/category/demos",
+    "destination": "/guide/tutorials"
   },
   {
     "source": "/gateway/category/how-to-guides/",
