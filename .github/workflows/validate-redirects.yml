@@ -57,21 +57,27 @@ jobs:
           echo "Testing redirects against production site..."
           echo "Starting script with timeout wrapper..."
           
-          # Use timeout to prevent hanging (5 minutes max)
-          timeout 300 ./scripts/test-redirects.sh docs.json verbose > redirect-test-output.log 2>&1 || {
-            echo "Script execution result: $?"
-            echo "Script may have timed out or failed"
-          }
+          # Use timeout to prevent hanging (5 minutes max) and capture exit code
+          timeout 300 ./scripts/test-redirects.sh docs.json verbose > redirect-test-output.log 2>&1
+          SCRIPT_EXIT_CODE=$?
           
           # Always show the output for debugging
           echo "=== Test Results ==="
           cat redirect-test-output.log || echo "No output file found"
           echo "==================="
           
-          # Check if tests passed (but don't exit here - let continue-on-error handle it)
+          echo "Script exit code: $SCRIPT_EXIT_CODE"
+          
+          # Check if tests completed and pass through the script's exit code
           if grep -q "SUMMARY" redirect-test-output.log; then
-            echo "✅ Tests completed (check results above)"
-            exit 0
+            echo "✅ Tests completed successfully"
+            if [[ $SCRIPT_EXIT_CODE -eq 0 ]]; then
+              echo "✅ All redirects are working correctly"
+              exit 0
+            else
+              echo "❌ Some redirects are broken (exit code: $SCRIPT_EXIT_CODE)"
+              exit $SCRIPT_EXIT_CODE
+            fi
           else
             echo "❌ Tests may not have completed properly"
             exit 1

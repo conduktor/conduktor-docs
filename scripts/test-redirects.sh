@@ -10,11 +10,20 @@ BASE_URL="https://docs.conduktor.io"
 TIMEOUT=3
 VERBOSE="${2:-false}"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+# Disable colors in CI or when output is not a terminal
+if [[ -n "${CI:-}" ]] || [[ ! -t 1 ]]; then
+    RED=''
+    GREEN=''
+    YELLOW=''
+    BLUE=''
+    NC=''
+else
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m'
+fi
 
 # Counters
 PASSED=0
