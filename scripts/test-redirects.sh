@@ -75,21 +75,15 @@ test_redirect() {
     local expected="$2"
     local index="$3"
     
-    echo "DEBUG: test_redirect function called with source='$source', expected='$expected', index='$index'" >&2
-    
     local source_url="${BASE_URL}${source}"
     local expected_url="${BASE_URL}${expected}"
     
-    echo "DEBUG: Constructed URLs - source_url='$source_url', expected_url='$expected_url'" >&2
-    
     # Get final URL after redirects
     local final_url
-    echo "DEBUG: About to run curl command" >&2
     final_url=$(curl -Ls --max-time "$TIMEOUT" --connect-timeout 2 --max-redirs 5 \
         -w "%{url_effective}" \
         -o /dev/null \
         "$source_url" 2>/dev/null || echo "ERROR")
-    echo "DEBUG: curl command completed, final_url='$final_url'" >&2
     
     local status symbol color
     
@@ -98,66 +92,41 @@ test_redirect() {
         symbol="⚠️"
         color="$YELLOW"
         ERRORS=$((ERRORS + 1))
-        echo "DEBUG: Status=ERROR, ERRORS=$ERRORS" >&2
     elif [[ "$final_url" == "$BASE_URL/" ]] || [[ "$final_url" == "$BASE_URL" ]]; then
         status="BROKEN"
         symbol="💥"
         color="$RED"
         FAILED=$((FAILED + 1))
-        echo "DEBUG: Status=BROKEN, FAILED=$FAILED" >&2
     elif [[ "${final_url%/}" == "${expected_url%/}" ]]; then
         status="PASS"
         symbol="✅"
         color="$GREEN" 
         PASSED=$((PASSED + 1))
-        echo "DEBUG: Status=PASS, PASSED=$PASSED" >&2
     else
         status="FAIL"
         symbol="❌"
         color="$RED"
         FAILED=$((FAILED + 1))
-        echo "DEBUG: Status=FAIL, FAILED=$FAILED" >&2
     fi
     
-    echo "DEBUG: About to print formatted result" >&2
-    
     printf "[%3d/%d] %b%s%b %s -> %s\n" "$index" "$TOTAL" "$color" "$symbol" "$NC" "$source" "$expected"
-    echo "DEBUG: Formatted result printed successfully" >&2
     
     if [[ "$VERBOSE" == "verbose" && "$status" != "PASS" ]]; then
         echo "      Expected: $expected_url"
         if [[ "$final_url" != "ERROR" ]]; then
             echo "      Got:      $final_url"
         fi
-        echo "DEBUG: Verbose output completed" >&2
     fi
-    
-    echo "DEBUG: test_redirect function completed for index $index" >&2
 }
 
-# Main testing loop - limit to first 3 for debugging with extra verbose output
+# Main testing loop
 index=1
-echo "Starting redirect tests..."
-echo "DEBUG: About to start processing JSON with jq" >&2
-
-# Test jq command first
-echo "DEBUG: Testing jq command" >&2
-jq -r '.redirects[0:3] | .[] | [.source, .destination] | @tsv' "$DOCS_JSON" | head -3 >&2
-
-echo "DEBUG: Starting while loop" >&2
 while IFS=$'\t' read -r source destination; do
-    echo "DEBUG: Loop iteration $index, got source='$source' destination='$destination'" >&2
     [[ -n "$source" && -n "$destination" ]] || continue
-    [[ $index -gt 3 ]] && break  # Only test first 3 redirects for now
-    echo "DEBUG: About to test redirect $index: $source -> $destination" >&2
     test_redirect "$source" "$destination" "$index"
-    echo "DEBUG: Completed test $index" >&2
-    echo "DEBUG: About to increment index from $index" >&2
     index=$((index + 1))
-    echo "DEBUG: Index incremented to $index" >&2
     sleep 0.1  # Be nice to the server
-done < <(jq -r '.redirects[0:3] | .[] | [.source, .destination] | @tsv' "$DOCS_JSON")
-echo "Finished all redirect tests"
+done < <(jq -r '.redirects[] | [.source, .destination] | @tsv' "$DOCS_JSON")
 
 # Summary
 TOTAL_TESTED=$((PASSED + FAILED + ERRORS))

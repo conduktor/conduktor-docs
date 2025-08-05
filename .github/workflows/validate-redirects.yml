@@ -28,7 +28,6 @@ jobs:
         run: |
           chmod +x scripts/test-redirects.sh
           chmod +x scripts/generate-pr-comment.sh
-          chmod +x scripts/test-network.sh
 
       - name: Validate docs.json syntax
         run: |
@@ -38,11 +37,6 @@ jobs:
             exit 1
           }
           echo "✅ docs.json syntax is valid"
-
-      - name: Test network connectivity
-        run: |
-          echo "Testing network connectivity and basic functionality..."
-          ./scripts/test-network.sh
 
       - name: Count redirect rules
         id: count_redirects
