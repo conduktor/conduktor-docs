@@ -883,7 +883,7 @@
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/generic-oauth2",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-an-oidc%2Foauth2-provider-as-sso/"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-an-oidc-provider-as-sso/"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/azure",
