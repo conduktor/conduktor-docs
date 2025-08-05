@@ -56,7 +56,7 @@ jobs:
           echo "Starting script with timeout wrapper..."
           
           # Use timeout to prevent hanging (5 minutes max) and capture exit code
-          timeout 300 ./scripts/test-redirects.sh docs.json verbose > redirect-test-output.log 2>&1
+          timeout 300 ./scripts/test-redirects.sh --verbose docs.json > redirect-test-output.log 2>&1
           SCRIPT_EXIT_CODE=$?
           
           # Always show the output for debugging
@@ -165,7 +165,7 @@ jobs:
                 echo "1. Check that the destination paths exist in the current site structure" >> pr-comment.md
                 echo "2. Verify the redirect syntax in \`docs.json\`" >> pr-comment.md
                 echo "3. Test redirects locally before pushing changes" >> pr-comment.md
-                echo "4. Run \`./scripts/test-redirects.sh docs.json verbose\` to test locally" >> pr-comment.md
+                echo "4. Run \`./scripts/test-redirects.sh --verbose\` to test locally" >> pr-comment.md
                 echo "" >> pr-comment.md
               fi
               

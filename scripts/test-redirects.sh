@@ -1,14 +1,121 @@
 #!/bin/bash
 
-# Simple redirect tester for quick validation
+# Conduktor Documentation Redirect Validator
 # Works with bash 3.2+ (macOS compatible)
 
 set -euo pipefail
 
-DOCS_JSON="${1:-docs.json}"
+# Default configuration
+DOCS_JSON="docs.json"
 BASE_URL="https://docs.conduktor.io"
 TIMEOUT=3
-VERBOSE="${2:-false}"
+VERBOSE=false
+SHOW_HELP=false
+
+# Function to show help
+show_help() {
+    cat << 'EOF'
+Conduktor Documentation Redirect Validator
+
+USAGE:
+  ./scripts/test-redirects.sh [OPTIONS] [DOCS_JSON_FILE]
+
+ARGUMENTS:
+  DOCS_JSON_FILE          Path to docs.json file (default: docs.json)
+
+OPTIONS:
+  --base-url <url>        Base URL for testing redirects (default: https://docs.conduktor.io)
+                          Can be localhost, IP address, or full URL with protocol
+  --timeout <seconds>     Request timeout in seconds (default: 3)
+  --verbose, -v           Show detailed output for failed redirects
+  --help, -h              Show this help message
+
+EXAMPLES:
+  # Test using default settings
+  ./scripts/test-redirects.sh
+
+  # Test specific file with verbose output
+  ./scripts/test-redirects.sh --verbose docs.json
+
+  # Test against staging environment
+  ./scripts/test-redirects.sh --base-url https://staging.docs.conduktor.io
+
+  # Test against local development server
+  ./scripts/test-redirects.sh --base-url localhost:3000
+
+  # Test with custom timeout and verbose output  
+  ./scripts/test-redirects.sh --timeout 10 --verbose docs.json
+
+REQUIREMENTS:
+  - curl: For HTTP requests
+  - jq: For JSON parsing
+  - bc: For calculations (usually pre-installed)
+
+EOF
+}
+
+# Parse command line arguments
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --base-url)
+                BASE_URL="$2"
+                shift 2
+                ;;
+            --timeout)
+                TIMEOUT="$2"
+                shift 2
+                ;;
+            --verbose|-v)
+                VERBOSE=true
+                shift
+                ;;
+            --help|-h)
+                SHOW_HELP=true
+                shift
+                ;;
+            --*)
+                echo "Error: Unknown option $1" >&2
+                echo "Use --help for usage information" >&2
+                exit 1
+                ;;
+            *)
+                # Positional argument - assume it's the docs.json file
+                DOCS_JSON="$1"
+                shift
+                ;;
+        esac
+    done
+}
+
+# Validate arguments
+validate_args() {
+    # Validate timeout
+    if ! [[ "$TIMEOUT" =~ ^[0-9]+$ ]] || [[ "$TIMEOUT" -le 0 ]]; then
+        echo "Error: Invalid timeout value '$TIMEOUT'. Must be a positive integer." >&2
+        exit 1
+    fi
+    
+    # Add http:// prefix if no protocol specified (for localhost, IP addresses, etc.)
+    if ! [[ "$BASE_URL" =~ ^https?:// ]]; then
+        BASE_URL="http://$BASE_URL"
+    fi
+    
+    # Remove trailing slash from base URL if present
+    BASE_URL="${BASE_URL%/}"
+}
+
+# Parse arguments
+parse_args "$@"
+
+# Show help if requested
+if [[ "$SHOW_HELP" == true ]]; then
+    show_help
+    exit 0
+fi
+
+# Validate arguments
+validate_args
 
 # Disable colors in CI or when output is not a terminal
 if [[ -n "${CI:-}" ]] || [[ ! -t 1 ]]; then
@@ -111,7 +218,7 @@ test_redirect() {
     
     printf "[%3d/%d] %b%s%b %s -> %s\n" "$index" "$TOTAL" "$color" "$symbol" "$NC" "$source" "$expected"
     
-    if [[ "$VERBOSE" == "verbose" && "$status" != "PASS" ]]; then
+    if [[ "$VERBOSE" == true && "$status" != "PASS" ]]; then
         echo "      Expected: $expected_url"
         if [[ "$final_url" != "ERROR" ]]; then
             echo "      Got:      $final_url"
@@ -147,8 +254,8 @@ log "Success rate: ${SUCCESS_RATE}%"
 
 if [[ $FAILED -gt 0 || $ERRORS -gt 0 ]]; then
     log ""
-    log "${YELLOW}Some redirects need attention. Run with 'verbose' for details:${NC}"
-    log "./scripts/test-redirects.sh docs.json verbose"
+    log "${YELLOW}Some redirects need attention. Run with --verbose for details:${NC}"
+    log "./scripts/test-redirects.sh --verbose"
     exit 1
 else
     log ""
