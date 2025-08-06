@@ -721,6 +721,10 @@
     "source": "/platform/configuration/user-authentication/session-lifetime",
     "destination": "/guide/conduktor-in-production/admin/user-access/session-lifetime"
   },
+    {
+    "source": "/platform/get-started/configuration/cortex",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+  },
   {
     "source": "/platform/get-started/configuration/env-variables",
     "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"
@@ -824,6 +828,10 @@
   {
     "source": "/platform/navigation/data-quality",
     "destination": "/guide/use-cases/enforce-data-quality"
+  },
+   {
+    "source": "/platform/navigation/monitoring",
+    "destination": "/guide/monitor-brokers-apps"
   },
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert",
@@ -932,6 +940,10 @@
   {
     "source": "/support",
     "destination": "/guide/support/supported-version-policy"
+  },
+  {
+    "source": "/trust",
+    "destination": "/guide/use-cases/enforce-data-quality"
   }
 ]
 }
