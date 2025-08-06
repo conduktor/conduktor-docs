@@ -886,7 +886,7 @@
     "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
   },
   {
-    "source": "/platform/reference/resource-reference/self-service#self-service-resources",
+    "source": "/platform/reference/resource-reference/self-service",
     "destination": "/guide/reference/self-service-reference"
   },
   {
