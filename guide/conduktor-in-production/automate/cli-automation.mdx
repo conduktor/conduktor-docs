@@ -4,9 +4,9 @@ title: Automate with CLI
 
 ## Conduktor CLI overview
 
-Conduktor CLI (Command Line Interface) helps you managing your [Conduktor Console and Gateway resources](/guide/reference) via commands or CI/CD pipelines.
+Conduktor CLI (Command Line Interface) helps you to manage your [Console and Gateway resources](/guide/reference) via commands or CI/CD pipelines.
 
-## Installation
+## Install
 
 You have three options to install Conduktor CLI:
 
@@ -36,11 +36,11 @@ Pull the [latest Dockerhub version](https://hub.docker.com/r/conduktor/conduktor
 docker pull conduktor/conduktor-ctl
 ```
 
-## Configuration
+## Configure
 
 To use the Conduktor CLI, you need to set:
 - the URL of your Conduktor Console and/or Gateway API
-- the authentication mechanism: either using an API key, or some user credentials
+- the authentication mechanism: either by using an API key, or user credentials
 
 ### Authenticate to Console using API keys
 
@@ -56,7 +56,7 @@ There are two types of API keys: **admin** and **Self-service application**.
 <Tabs>
 <Tab title="Admin API key">
 
-Admin API keys grant the maximum permissions on Console.
+Admin API keys grant the maximum permissions in Console.
 
 <Tabs>
   <Tab title="CLI">
@@ -115,7 +115,7 @@ conduktor login
 
 By default, the Conduktor CLI authenticates with Console using a Console API key, or generates one based on the given credentials. This is the `console` authentication mode (`CDK_AUTH_MODE` is `console` or empty).
 
-On the other hand, you can use the external authentication mode to allow you to bypass token generation and use credentials from your identity provider or API proxy instead. For that, set the `CDK_AUTH_MODE` environment variable to `external`:
+Alternatively, you can use the external authentication mode to bypass token generation and use credentials from your identity provider or the API proxy instead. For that, set the `CDK_AUTH_MODE` environment variable to `external`:
 
 ```bash title="Set up external authentication with a bearer token"
 export CDK_AUTH_MODE="external"
@@ -161,7 +161,7 @@ This is the list of the supported environment variables:
 | `CDK_KEY`              | Key to authenticate the CLI (.pem)                                       |
 
 
-## Usage
+## CLI commands
 
 The CLI offers a set of commands to manage Conduktor resources. You can use it to create, update, delete and get resources.
 
@@ -211,7 +211,9 @@ Global Flags:
   -v, --verbose      Show more information for debugging
 ```
 
-Note that you can parallelize the apply command using the `--parallelism` flag, which allows you to run multiple applies at the same time. This is useful when applying a large number of resources, but be careful not to set it too high, as it may overload the Conduktor Console or Gateway API.
+<Note>
+The `--parallelism` flag allows you to run multiple applies at the same time, in parallel. This is useful when applying a large number of resources. Be careful not to set it too high, as it may overload the Console/Gateway API.
+ </Note>
 
 Examples:
 ```bash title="Apply all resources in multiple directories"
@@ -268,8 +270,9 @@ conduktor apply -f definition.yml
 
 The `delete` command allows you to delete a resource. It works the same way as the `apply`.
 
-Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
-
+<Warning>
+Resources are deleted instantly and can't be recovered. Any data or access associated with the resource is permanently lost.
+</Warning>
 Examples:
 ```bash title="Delete all resources in multiple directories"
 conduktor delete -f ./directory1 -f ./directory2
