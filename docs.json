@@ -530,8 +530,8 @@
     "destination": "/guide/conduktor-concepts"
   },
   {
-    "source": "/gateway/configuration/client-authentication#oauthbearer",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#oauthbearer"
+    "source": "/gateway/configuration/client-authentication",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
   },
   {
     "source": "/gateway/get-started/docker",
@@ -631,7 +631,7 @@
   },
   {
     "source": "/platform/configuration/api-overview",
-    "destination": "/guide/reference#overview"
+    "destination": "/guide/reference"
   },
   {
     "source": "/platform/configuration/configuration-snippets",
@@ -643,7 +643,7 @@
   },
   {
     "source": "/platform/configuration/database",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console#configure-postgres-database"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
   },
   {
     "source": "/platform/configuration/env-variables",
@@ -651,11 +651,11 @@
   },
   {
     "source": "/platform/configuration/http-proxy-configuration",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console#configure-http-proxy"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
   },
   {
     "source": "/platform/configuration/https-configuration",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console#configure-http-proxy"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
   },
   {
     "source": "/platform/configuration/introduction",
@@ -663,47 +663,47 @@
   },
   {
     "source": "/platform/configuration/memory-configuration",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console#configure-memory-usage"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
   },
   {
     "source": "/platform/configuration/ssl-tls-configuration",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console#configure-ssl-or-tls"
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/amazon-cognito",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-amazon-cognito-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/auth0",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-auth0-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/azure",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-entra-id-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/generic-oauth2",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-an-oidc-provider-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/google",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-google-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/keycloak",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-keycloak-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/ldap",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-ldap-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/ldaps",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-ldaps-certificate"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/SSO/okta",
-    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso#configure-okta-as-sso"
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
   },
   {
     "source": "/platform/configuration/user-authentication/configure-sso",
@@ -731,11 +731,11 @@
   },
   {
     "source": "/platform/get-started/installation/get-started/AWS_Marketplace",
-    "destination": "/guide/tutorials/deploy-aws#deploy-on-aws-cloudformation"
+    "destination": "/guide/tutorials/deploy-aws"
   },
   {
     "source": "/platform/get-started/installation/get-started/CloudFormation",
-    "destination": "/guide/tutorials/deploy-aws#deploy-on-aws-cloudformation"
+    "destination": "/guide/tutorials/deploy-aws"
   },
   {
     "source": "/platform/get-started/installation/get-started/docker",
@@ -751,7 +751,7 @@
   },
   {
     "source": "/platform/get-started/support/data-security",
-    "destination": "/guide/support#data-privacy-using-conduktor"
+    "destination": "/guide/support"
   },
   {
     "source": "/platform/guides/configure-audit-log-topic",
@@ -822,20 +822,12 @@
     "destination": "/guide/manage-kafka/kafka-resources/schema-registry"
   },
   {
-    "source": "/platform/navigation/data-quality#policies",
-    "destination": "/guide/use-cases/enforce-data-quality#policies"
-  },
-  {
-    "source": "/platform/navigation/data-quality#prerequisites",
-    "destination": "/guide/use-cases/enforce-data-quality#prerequisites"
-  },
-  {
-    "source": "/platform/navigation/data-quality#rules",
-    "destination": "/guide//use-cases/enforce-data-quality#rules"
+    "source": "/platform/navigation/data-quality",
+    "destination": "/guide/use-cases/enforce-data-quality"
   },
   {
     "source": "/platform/navigation/monitoring/getting-started/create-alert",
-    "destination": "/guide/monitor-brokers-apps/alerts#create-alerts"
+    "destination": "/guide/monitor-brokers-apps/alerts"
   },
   {
     "source": "/platform/navigation/partner-zones",
@@ -862,16 +854,8 @@
     "destination": "/guide/conduktor-in-production/admin/data-mask"
   },
   {
-    "source": "/platform/navigation/settings/integrations#microsoft-teams-integration-using-workflows",
-    "destination": "/guide/monitor-brokers-apps/alerts#microsoft-teams-integration-using-workflows"
-  },
-  {
     "source": "/platform/navigation/settings/integrations",
     "destination": "/guide/monitor-brokers-apps/alerts"
-  },
-  {
-    "source": "/platform/navigation/settings/integrations#webhook-integration",
-    "destination": "/guide/monitor-brokers-apps/alerts#webhook-integration"
   },
   {
     "source": "/platform/navigation/settings/rbac",
