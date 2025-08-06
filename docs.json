@@ -866,8 +866,8 @@
     "destination": "/guide/monitor-brokers-apps/alerts#microsoft-teams-integration-using-workflows"
   },
   {
-    "source": "/platform/navigation/settings/integrations#slack-integration",
-    "destination": "/guide/monitor-brokers-apps/alerts#slack-integration"
+    "source": "/platform/navigation/settings/integrations",
+    "destination": "/guide/monitor-brokers-apps/alerts"
   },
   {
     "source": "/platform/navigation/settings/integrations#webhook-integration",
