@@ -47,14 +47,14 @@ The `eventData` field contains different messages depending on the Gateway secur
 
 **Failed Authentication - Gateway Managed - PLAIN:**
 - `"Authentication failed: credentials for user could not be verified. Cause: Invalid username or password"` - Wrong credentials provided
-- `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid but it is not associated with <username>"` - Valid token but incorrect username
+- `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid but username <username> is invalid"` - Valid token but incorrect username
 - `"Authentication failed: credentials for user could not be verified. Cause: Token has expired. Claims: {username=<username>, vcluster=<vcluster>, exp=<timestamp>}"` - Expired authentication token
 - `"Authentication failed: username not specified"` or `"Authentication failed: password not specified"` - Missing required authentication fields
-- `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username <username> but it isn't associated with an existing local user."` - No local service account defined
+- `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username, but username <username> is not an existing local user."` - No local service account defined
 
 **Failed Authentication - Gateway Managed - OAUTHBEARER:**
-- `"{"status":"invalid_token"}"` - Gateway is unable to decode the OAUTHBEARER token. Can be caused by a Gateway misconfiguration (e.g. wrong issuer URL, client ID, or secret)
-Note: Authentication failure can happen when the kafka client fails to fetch the OAUTHBEARER token from the configured OAUTHBEARER provider. This is not a Gateway issue, but rather a misconfiguration of the OAUTH2 provider or the client. The OAUTH2 provider may have specific error messages that can help diagnose the issue.
+- `"{"status":"invalid_token"}"` - Invalid JWT token
+Note: Authentication may also fail if the Kafka client is unable to fetch the token from the configured OAUTH provider. This occurs before reaching the Gateway, so no audit log event would be generated.
 
 **Failed Authentication - Kafka Managed:**
 - `"SASL Authentication failed."` - Authentication failed on the underlying Kafka cluster
