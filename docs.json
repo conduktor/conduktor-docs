@@ -18,6 +18,33 @@
         "pages": ["index"]
       },
       {
+        "tab": "Deploy",
+        "groups": [
+          {
+            "group": "Get started with deployment",
+            "pages": [
+              "deploy/getting-started",
+              "deploy/docker"
+            ]
+          },
+          {
+            "group": "Production deployment",
+            "pages": [
+              "deploy/kubernetes",
+              "deploy/component-configuration",
+              "deploy/advanced-scenarios"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "deploy/environment-variables",
+              "deploy/troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Guide",
         "groups": [
           {
@@ -28,33 +55,9 @@
             "group": "Conduktor in production",
             "pages": [
               "guide/conduktor-in-production/index", 
-              "guide/conduktor-in-production/requirements", 
-              "guide/conduktor-in-production/deploy-artifacts/index"
-            ]
-          },    
-            {
-             "group": "Deploy Gateway",
-             "pages": [
-              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
-              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
-              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
+              "guide/conduktor-in-production/requirements"
             ]
           },
-            {
-              "group": "Deploy Console",
-              "pages": [
-              "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
-              "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
-              "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
-              "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"
-              ]
-            },
-            {   
-             "group": "Deploy Cortex",
-             "pages": [
-                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
-                  ]
-                },
           {
             "group": "Monitor",
             "pages": [
@@ -84,7 +87,8 @@
               "guide/conduktor-in-production/admin/set-up-rbac",  
               "guide/conduktor-in-production/admin/audit-logs",  
               "guide/conduktor-in-production/admin/gw-policies", 
-              "guide/conduktor-in-production/admin/data-mask"             
+              "guide/conduktor-in-production/admin/data-mask",
+              "guide/conduktor-in-production/admin/application-tokens"             
             ]
           },
           {
@@ -106,6 +110,7 @@
               "guide/use-cases/encrypt-kafka",
               "guide/use-cases/third-party-data",
               "guide/use-cases/enforce-data-quality", 
+              "guide/use-cases/enforce-data-quality-trust",
               "guide/use-cases/chaos-testing",
               "guide/use-cases/apply-traffic-control-policies",
               "guide/use-cases/manage-large-messages",
@@ -123,6 +128,7 @@
             "group": "Manage Kafka",
             "pages": [
               "guide/manage-kafka/index",
+              "guide/manage-kafka/topic-catalog",
               "guide/manage-kafka/kafka-resources/brokers",
               "guide/manage-kafka/kafka-resources/kafka-connect",
               "guide/manage-kafka/kafka-resources/ksql-db",
@@ -506,10 +512,6 @@
     "destination": "/desktop/features/topics-management/topic-details"
   },
   {
-    "source": "/gateway",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index"
-  },
-  {
     "source": "/gateway/category/demos",
     "destination": "/guide/tutorials"
   },
@@ -598,10 +600,6 @@
     "destination": "/desktop/miscellaneous/internet-troubleshooting"
   },
   {
-    "source": "/platform",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/index"
-  },
-  {
     "source": "/platform/admin/managing-clusters",
     "destination": "/guide/conduktor-in-production/admin/configure-clusters"
   },
@@ -627,7 +625,7 @@
   },
   {
     "source": "/platform/configuration",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+    "destination": "/deploy/component-configuration"
   },
   {
     "source": "/platform/configuration/api-overview",
@@ -639,15 +637,15 @@
   },
   {
     "source": "/platform/configuration/cortex",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+    "destination": "/deploy/component-configuration"
   },
   {
     "source": "/platform/configuration/database",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+    "destination": "/deploy/component-configuration"
   },
   {
     "source": "/platform/configuration/env-variables",
-    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"
+    "destination": "/deploy/environment-variables"
   },
   {
     "source": "/platform/configuration/http-proxy-configuration",
@@ -944,6 +942,62 @@
   {
     "source": "/trust",
     "destination": "/guide/use-cases/enforce-data-quality"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts",
+    "destination": "/deploy/getting-started"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/index",
+    "destination": "/deploy/getting-started"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
+    "destination": "/deploy/kubernetes"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables",
+    "destination": "/deploy/environment-variables"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-console",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
+    "destination": "/deploy/kubernetes"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
+    "destination": "/deploy/environment-variables"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/gateway",
+    "destination": "/deploy/component-configuration"
+  },
+  {
+    "source": "/platform",
+    "destination": "/deploy/component-configuration"
   }
 ]
 }

@@ -1,36 +1,71 @@
 ---
-title: Set up alerts
+title: Enhanced Alerting System
 ---
 
 ## Overview
 
-Alerts allow you to be notified and react to Kafka infrastructure or application changes as soon as they happen.
+Conduktor's enhanced alerting system provides comprehensive monitoring and notification capabilities for your Kafka infrastructure and applications. Get real-time notifications when issues occur, with team-based ownership and customizable delivery channels.
 
-You can integrate alerts with **Slack** and **MS Teams** to receive real-time notifications. Alternatively, set up arbitrary **webhook** destinations with any URL and custom headers. [See how to configure integrations](#configure-integrations).
+**Key Features:**
+- **Team-based Alert Ownership**: Assign alerts to specific users, teams, or applications
+- **Multi-channel Notifications**: Slack, Microsoft Teams, email, and webhook integrations
+- **Event-driven Alerts**: React to consumer group state changes, topic updates, and audit events
+- **Customizable Per Team**: Different notification preferences for different teams
+- **Advanced Filtering**: Target specific conditions and thresholds with precision
 
-Alerts are periodically checked for **every minute**.
+You can integrate alerts with **Slack**, **MS Teams**, **email**, and **webhooks** to receive real-time notifications. Each team can have their own notification preferences and channels. [See how to configure integrations](#configure-integrations).
+
+Alerts are checked **every minute** for threshold-based conditions and trigger **immediately** for event-driven scenarios.
 
 ## Create alerts
 
-Alerts can be created for most resources (e.g. brokers or topics) in Conduktor Console.
+Alerts can be created for various resources including brokers, topics, consumer groups, and applications in Conduktor Console.
 
-To create an alert:
+### Threshold-based Alerts
 
-1. Navigate to the required resource.
+To create a threshold-based alert:
+
+1. Navigate to the required resource (broker, topic, consumer group).
 1. Click on the **Alerts** tab.
 1. Click **Create an alert**.
 
 In the **New Alert** pane enter the required details. Each alert has to have:
 
-- a unique name
-- a metric you want to measure (e.g. messageCount)
-- an operator and value for the threshold
-- an owner. This can be a group, an application instance or an individual user. The ownership will determine who can edit the alert.
+- **Unique name**: Descriptive name for easy identification
+- **Metric**: Choose from available metrics (e.g. messageCount, consumerLag, diskUsage)
+- **Threshold**: Operator (GreaterThan, LessThan, Equals) and value for triggering
+- **Owner**: Can be a user, team, or application instance. Ownership determines edit permissions and notification routing.
     <Warning>
     If the owner of an alert is deleted, the associated alerts will also be deleted.
     </Warning>
-- (optional) a description explaining what the alert does or why you created it. This is useful if you're creating an external alert.
-- a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
+- **Description** (optional): Explain the alert purpose and resolution steps
+- **Destination**: Internal (Console) or external channels. Each alert supports **multiple external destinations per team**.
+
+### Event-driven Alerts
+
+Create alerts that trigger on specific Kafka events:
+
+**Consumer Group Events:**
+- Consumer group state changes (rebalancing, lag spikes)
+- New consumers joining or leaving groups
+- Partition assignment changes
+
+**Topic Events:**
+- Topic creation, deletion, or configuration changes
+- Partition count modifications
+- Topic access pattern changes
+
+**Audit Events:**
+- Security policy violations
+- Configuration changes by users
+- Authentication failures
+
+To create event-driven alerts:
+
+1. Go to **Settings > Alerts** 
+2. Click **Create Event Alert**
+3. Select event type and conditions
+4. Configure team-specific routing rules
 
 ## Manage alerts
 
@@ -46,7 +81,13 @@ Each alert will keep a history of when it was triggered and the status over time
 
 ### Alert list
 
-Go to **Settings > Alerts** to see all the alerts, grouped by owner. You can sort the view by name, status or destination and activate/deactivate as required. You can also customize this view to show/hide columns relevant to you.
+Go to **Settings > Alerts** to see all the alerts, grouped by owner (teams, applications, or users). You can sort the view by name, status, destination, or owner and activate/deactivate as required. You can also customize this view to show/hide columns relevant to you.
+
+**Team-based Management:**
+- **Filter by Team**: View alerts owned by specific teams
+- **Bulk Operations**: Enable/disable multiple alerts for a team
+- **Ownership Transfer**: Transfer alert ownership between teams
+- **Team Templates**: Create alert templates for consistent team standards
 
 ## Configure integrations
 

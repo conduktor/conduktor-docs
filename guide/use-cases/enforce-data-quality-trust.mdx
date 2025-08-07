@@ -1,0 +1,189 @@
+---
+title: Enforce Data Quality with Conduktor Trust
+---
+
+<Check>This feature is available with [Conduktor Trust](https://conduktor.io/trust) only.</Check>
+
+## Overview
+
+Conduktor Trust enforces data quality at the source—before data hits your pipelines. This proactive approach detects and stops issues early, saving time and resources by preventing bad data from propagating through your streaming infrastructure.
+
+**Key Benefits:**
+- **Prevent Data Issues Early**: Catch and address data quality problems before they affect downstream systems
+- **Enhance Compliance**: Apply consistent data quality policies across teams, helping with regulatory compliance
+- **Reduce Operational Overhead**: Minimize the need for reactive fixes, saving time and resources
+- **Real-time Enforcement**: Block or log data quality violations instantly as they occur
+
+## Prerequisites
+
+- Conduktor Gateway deployed and configured
+- Conduktor Trust license activated
+- Access to Conduktor Console with Trust permissions
+
+## Define Quality Rules
+
+Quality Rules use CEL (Common Expression Language) to validate message structure, data types, and business logic.
+
+Basic structure validation to ensure required fields are present:
+
+```cel
+has(record.value.customerId) && has(record.value.timestamp) && has(record.value.eventType)
+```
+
+Data type validation to check customer ID format:
+
+```cel
+string(record.value.customerId).matches('^[0-9]+$') && 
+size(string(record.value.customerId)) >= 6
+```
+
+Business logic validation for order amounts:
+
+```cel
+record.value.orderAmount > 0 && 
+record.value.orderAmount <= 100000 &&
+record.value.currency in ['USD', 'EUR', 'GBP']
+```
+
+Complex nested validation for item arrays:
+
+```cel
+has(record.value.items) && 
+size(record.value.items) > 0 &&
+record.value.items.all(item, has(item.sku) && has(item.quantity) && item.quantity > 0)
+```
+
+## Apply Policies to Topics
+
+Configure a complete data quality policy for order validation:
+
+```yaml
+apiVersion: gateway.conduktor.io/v1beta1
+kind: Plugin
+metadata:
+  name: data-quality-orders
+spec:
+  plugin: "io.conduktor.gateway.interceptor.DataQualityPlugin"
+  priority: 100
+  config:
+    topic: "orders"
+    rules:
+      - name: "required-fields"
+        expression: "has(record.value.customerId) && has(record.value.orderAmount)"
+        action: "BLOCK"
+        errorMessage: "Missing required fields: customerId and orderAmount"
+      
+      - name: "positive-amount"
+        expression: "record.value.orderAmount > 0"
+        action: "BLOCK" 
+        errorMessage: "Order amount must be positive"
+        
+      - name: "customer-format"
+        expression: "string(record.value.customerId).matches('^[0-9]+$')"
+        action: "LOG"
+        errorMessage: "Customer ID should be numeric"
+```
+
+Target specific applications with client ID patterns:
+
+```yaml
+config:
+  topic: "orders"
+  clientIdPattern: "order-service-.*"
+  rules:
+    - name: "production-validation"
+      expression: "has(record.value.environment) && record.value.environment == 'production'"
+      action: "BLOCK"
+```
+
+## Configure Actions and Monitoring
+
+Block action configuration that returns immediate error to producer:
+
+```yaml
+rules:
+  - name: "critical-validation"
+    expression: "record.value.amount <= 0"
+    action: "BLOCK"
+    errorMessage: "Amount must be greater than zero"
+    responseCode: "INVALID_REQUEST"
+```
+
+Log action configuration that records violations for monitoring:
+
+```yaml
+rules:
+  - name: "format-warning"
+    expression: "!string(record.value.email).contains('@')"
+    action: "LOG"
+    logLevel: "WARN"
+    tags:
+      - "data-quality"
+      - "email-format"
+```
+
+Alert configuration for monitoring violation rates:
+
+```yaml
+alert:
+  name: "high-data-quality-violations"
+  condition: "data_quality_violations_per_minute > 10"
+  channels: ["slack://data-engineering", "email://team@company.com"]
+```
+
+## CI/CD Integration
+
+Validate rules before deployment in your pipeline:
+
+```bash
+# Validate rules before deployment
+conduktor-cli trust validate-rules --file rules.yaml --dry-run
+
+# Deploy rules to production
+conduktor-cli trust deploy-rules --file rules.yaml --environment production
+```
+
+Test rules against sample data before production:
+
+```yaml
+test_cases:
+  - name: "valid_order"
+    input:
+      customerId: "123456"
+      orderAmount: 99.99
+      currency: "USD"
+    expected: "PASS"
+  
+  - name: "missing_customer"
+    input:
+      orderAmount: 99.99
+      currency: "USD" 
+    expected: "BLOCK"
+```
+
+## Troubleshoot Common Issues
+
+Incorrect rule that doesn't handle missing fields vs correct version:
+
+```cel
+// Incorrect - doesn't handle missing fields
+record.value.amount > 0
+
+// Correct - checks existence first  
+has(record.value.amount) && record.value.amount > 0
+```
+
+Avoid expensive operations in high-throughput scenarios:
+
+```cel
+// Use simple field checks before complex validation
+has(record.value.type) && record.value.type == 'order' && 
+  /* then do complex validation */
+```
+
+## Related Resources
+
+- [Traffic Control Policies](/guide/use-cases/apply-traffic-control-policies)
+- [Chaos Testing](/guide/use-cases/chaos-testing) 
+- [Monitor Brokers and Apps](/guide/monitor-brokers-apps)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

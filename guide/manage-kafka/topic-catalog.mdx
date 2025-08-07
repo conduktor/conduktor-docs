@@ -1,0 +1,163 @@
+---
+title: Topic Catalog
+---
+
+## Overview
+
+The Topic Catalog provides organization-wide topic discovery with ownership visibility and business metadata management. Teams can quickly find Kafka topics within your organization, understand ownership, and access relevant business context through searchable metadata.
+
+**Key Benefits:**
+- **Centralized Discovery**: Find all topics across clusters from a single interface
+- **Ownership Transparency**: Clear visibility on who owns and manages each topic
+- **Business Context**: Add and search by custom business metadata and labels
+- **Team Organization**: Organize topics by applications and teams for better governance
+
+## Prerequisites
+
+- Conduktor Console with appropriate permissions
+- Topics configured across one or more Kafka clusters
+- Application and team structure defined in Console
+
+## Add Topics to Applications
+
+Navigate to **Applications** in Console to organize topics by associating them with specific applications.
+
+Example application topic configuration:
+
+```yaml
+application: "order-processing-service"
+topics:
+  - name: "orders.created"
+    cluster: "prod-kafka"
+    labels:
+      - "customer-data"
+      - "high-volume"
+      - "pii-containing"
+  - name: "orders.cancelled"
+    cluster: "prod-kafka" 
+    labels:
+      - "customer-data"
+      - "audit-required"
+```
+
+Multi-cluster topic management for the same application:
+
+```yaml
+application: "user-analytics"
+topics:
+  - name: "user.events"
+    cluster: "analytics-kafka-us"
+    labels: ["analytics", "gdpr-sensitive"]
+  - name: "user.events" 
+    cluster: "analytics-kafka-eu"
+    labels: ["analytics", "gdpr-sensitive", "eu-region"]
+```
+
+## Business Metadata and Labels
+
+Add business-relevant labels to topics for better discovery and governance:
+
+**Data Classification Labels:**
+- `pii-containing`: Personal information present
+- `financial-data`: Financial or payment information
+- `audit-required`: Subject to audit requirements
+- `gdpr-sensitive`: GDPR compliance required
+
+**Business Domain Labels:**
+- `customer-journey`: Customer experience data
+- `inventory-management`: Product and stock data
+- `order-processing`: Order lifecycle events
+- `analytics`: Data used for analytics/ML
+
+**Operational Labels:**
+- `high-volume`: >10K messages/minute
+- `critical-path`: Business-critical data flow
+- `experimental`: Testing or experimental data
+- `deprecated`: Scheduled for removal
+
+## Search and Discovery
+
+The Topic Catalog supports powerful search capabilities across names, labels, and metadata.
+
+Search by topic name patterns:
+
+```
+orders.created
+user.events
+payment.*
+```
+
+Search by labels with filtering:
+
+```
+label:pii-containing
+label:high-volume
+label:gdpr-sensitive AND label:customer-data
+```
+
+Search by metadata fields:
+
+```
+owner:payments-team
+cluster:prod-kafka
+application:user-service
+```
+
+Combined search across multiple criteria:
+
+```
+payment label:audit-required owner:finance-team
+```
+
+## Topic Ownership and Governance
+
+Assign clear ownership for governance and incident response by selecting topics in the catalog and setting primary owners and secondary contacts.
+
+Team-based discovery example showing organized topic structure:
+
+```yaml
+Team: "payments-engineering"
+Applications:
+  - payment-processor
+    Topics: ["payments.authorized", "payments.settled", "payments.failed"]
+  - fraud-detection  
+    Topics: ["transactions.suspicious", "fraud.alerts"]
+    
+Related Topics: ["orders.payment-required", "users.payment-methods"]
+```
+
+## Best Practices
+
+Establish consistent naming patterns for better discovery:
+
+```bash
+# Domain-based naming
+payments.transactions.created
+payments.transactions.failed
+users.profiles.updated
+users.sessions.started
+
+# Event-sourcing pattern  
+order-service.domain-events.OrderCreated
+order-service.domain-events.OrderCancelled
+payment-service.domain-events.PaymentProcessed
+```
+
+## Troubleshoot Common Issues
+
+**Topics Not Appearing:**
+- Verify cluster connectivity in Console
+- Check topic permissions and access rights
+- Ensure applications are properly configured
+
+**Search Not Working:**
+- Verify indexing is complete for new topics
+- Check search syntax and filter combinations
+- Ensure proper permissions to view search results
+
+## Related Resources
+
+- [Self-Service](/guide/conduktor-concepts/self-service)
+- [Set up RBAC](/guide/conduktor-in-production/admin/set-up-rbac)
+- [Manage Kafka Topics](/guide/manage-kafka/kafka-resources/topics)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

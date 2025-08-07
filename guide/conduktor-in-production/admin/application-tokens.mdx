@@ -1,0 +1,267 @@
+---
+title: Application Tokens
+---
+
+## Overview
+
+Application Tokens provide secure, programmatic access to Conduktor Console APIs for automated workflows, CI/CD pipelines, and service-to-service authentication. Unlike user-based authentication, application tokens are designed for system-to-system communication and don't require interactive login.
+
+**Key Benefits:**
+- **Automated Workflows**: Enable CI/CD pipelines and automated deployments
+- **Service Authentication**: Secure API access for applications and services
+- **Granular Permissions**: Scope tokens to specific operations and resources
+- **Audit Trail**: Track all API usage by token for compliance and monitoring
+
+## Prerequisites
+
+- Conduktor Console with administrator permissions
+- Understanding of your automation and integration requirements
+- Defined security policies for token management
+
+## Create Application Tokens
+
+Navigate to **Settings > API Keys** in Conduktor Console to create new tokens.
+
+Token configuration example for CI/CD deployments:
+
+```yaml
+name: "ci-cd-deployment-token"
+description: "Token for automated topic and schema deployments"
+scopes:
+  - "topics:create"
+  - "topics:update"
+  - "schemas:create" 
+  - "schemas:update"
+expires_at: "2025-12-31T23:59:59Z"
+clusters: ["prod-kafka", "staging-kafka"]
+applications: ["order-service", "user-service"]
+```
+
+Production-only token with restricted access:
+
+```yaml
+token_config:
+  name: "prod-monitoring-token"
+  scopes: ["metrics:read", "alerts:read"]
+  clusters: ["prod-kafka-us", "prod-kafka-eu"]
+  applications: ["*"]  # All applications
+```
+
+Application-specific token configuration:
+
+```yaml
+token_config:
+  name: "payment-service-token"
+  scopes: ["topics:create", "topics:update", "schemas:create"]
+  clusters: ["*"]  # All clusters
+  applications: ["payment-service", "fraud-detection"]
+```
+
+## Use Application Tokens
+
+Include the token in API requests using Bearer authentication:
+
+```bash
+# Using curl to access topics API
+curl -H "Authorization: Bearer cdt_app_1234567890abcdef" \
+     -H "Content-Type: application/json" \
+     https://console.conduktor.io/api/v1/topics
+```
+
+Python requests example for API integration:
+
+```python
+import requests
+
+headers = {
+    'Authorization': 'Bearer cdt_app_1234567890abcdef',
+    'Content-Type': 'application/json'
+}
+
+response = requests.get(
+    'https://console.conduktor.io/api/v1/topics',
+    headers=headers
+)
+```
+
+## CI/CD Pipeline Integration
+
+GitHub Actions workflow for deploying Kafka resources:
+
+```yaml
+name: Deploy Kafka Resources
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy Topics
+        env:
+          CONDUKTOR_TOKEN: ${{ secrets.CONDUKTOR_APP_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $CONDUKTOR_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @topics.json \
+            https://console.conduktor.io/api/v1/topics
+```
+
+Jenkins pipeline configuration for schema deployment:
+
+```groovy
+pipeline {
+    agent any
+    
+    environment {
+        CONDUKTOR_TOKEN = credentials('conduktor-app-token')
+    }
+    
+    stages {
+        stage('Deploy Schemas') {
+            steps {
+                script {
+                    sh '''
+                        curl -X POST \
+                          -H "Authorization: Bearer $CONDUKTOR_TOKEN" \
+                          -H "Content-Type: application/json" \
+                          -d @schemas.json \
+                          https://console.conduktor.io/api/v1/schemas
+                    '''
+                }
+            }
+        }
+    }
+}
+```
+
+Terraform provider configuration with application token:
+
+```hcl
+terraform {
+  required_providers {
+    conduktor = {
+      source = "conduktor/conduktor"
+      version = "~> 1.0"
+    }
+  }
+}
+
+provider "conduktor" {
+  console_url = "https://console.conduktor.io"
+  api_token   = var.conduktor_app_token
+}
+
+# Create topics using the token
+resource "conduktor_topic" "user_events" {
+  name       = "user.events"
+  cluster_id = "prod-kafka"
+  
+  partitions         = 12
+  replication_factor = 3
+  
+  config = {
+    "retention.ms" = "604800000"  # 7 days
+    "cleanup.policy" = "delete"
+  }
+}
+```
+
+## Token Management and Security
+
+Script for automated token rotation:
+
+```bash
+#!/bin/bash
+
+# Generate new token with same permissions
+NEW_TOKEN=$(curl -X POST \
+  -H "Authorization: Bearer $ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"'$SERVICE_NAME'-token-'$(date +%Y%m%d)'","scopes":['$SCOPES']}' \
+  https://console.conduktor.io/api/v1/tokens | jq -r '.token')
+
+# Update Kubernetes secret with new token
+kubectl create secret generic $SERVICE_NAME-token \
+  --from-literal=token=$NEW_TOKEN \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+# Restart service to pick up new token
+kubectl rollout restart deployment $SERVICE_NAME
+
+# Wait for successful deployment
+kubectl rollout status deployment $SERVICE_NAME
+```
+
+Monitor token usage for security and debugging:
+
+```bash
+# List all tokens and their usage
+curl -H "Authorization: Bearer $ADMIN_TOKEN" \
+     https://console.conduktor.io/api/v1/tokens
+
+# Get specific token usage statistics
+curl -H "Authorization: Bearer $ADMIN_TOKEN" \
+     https://console.conduktor.io/api/v1/tokens/$TOKEN_ID/usage
+```
+
+## Environment-Specific Tokens
+
+Development environment token with broader access:
+
+```yaml
+dev_token_config:
+  name: "dev-playground-token"
+  scopes: ["*"]  # All operations allowed in dev
+  clusters: ["dev-kafka", "test-kafka"]
+  expires_at: "2025-03-31T23:59:59Z"  # Shorter lifespan
+```
+
+Highly restricted production token:
+
+```yaml
+prod_token_config:
+  name: "prod-deployment-token"
+  scopes: ["topics:update", "schemas:create", "schemas:update"]
+  clusters: ["prod-kafka-primary"]
+  applications: ["approved-services-only"]
+  expires_at: "2025-12-31T23:59:59Z"
+  ip_restrictions: ["10.0.0.0/8", "192.168.1.0/24"]
+```
+
+## Troubleshoot Common Issues
+
+**401 Unauthorized errors:**
+- Verify token is correctly formatted and not expired
+- Check token scopes include required permissions
+- Ensure token is active and not revoked
+
+**403 Forbidden errors:**
+- Token lacks necessary scopes for the operation
+- Resource not included in token's cluster/application restrictions
+- IP restrictions blocking requests (if configured)
+
+Debug token validity and permissions:
+
+```bash
+# Test token validity
+curl -H "Authorization: Bearer $TOKEN" \
+     https://console.conduktor.io/api/v1/auth/validate
+
+# Check token permissions
+curl -H "Authorization: Bearer $TOKEN" \
+     https://console.conduktor.io/api/v1/auth/permissions
+```
+
+## Related Resources
+
+- [API Automation](/guide/conduktor-in-production/automate/api-automation)
+- [CLI Automation](/guide/conduktor-in-production/automate/cli-automation) 
+- [Terraform Automation](/guide/conduktor-in-production/automate/terraform-automation)
+- [Set up RBAC](/guide/conduktor-in-production/admin/set-up-rbac)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
