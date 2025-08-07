@@ -4,7 +4,8 @@ title: Monitor deployment
 
 ## Gateway health and monitoring
 
-### Liveness Endpoint
+### Liveness endpoint
+
 `/health/live`
 
 Returns a status HTTP 200 when Gateway is up.
@@ -64,8 +65,7 @@ livenessProbe:
 
 `/health/ready`
 
-Returns readiness of the Gateway.
-Modules status :
+Returns readiness of the Gateway. Modules status:
 
 - `NOTREADY` (initial state)
 - `READY`
@@ -77,13 +77,13 @@ curl -s  http://localhost:8888/health/ready
 # READY
 ```
 
-Could be used to set up probes on docker-compose or Kubernetes.
+Could be used to set up probes on [docker-compose](#docker-compose-probe-setup) or [Kubernetes](#kubernetes-readiness-probe).
 
-#### docker-compose probe setup
+#### Docker-compose probe setup
 
-:::info
+<Info>
 The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
-:::
+</Info>
 
 ```yaml
 healthcheck:
@@ -119,7 +119,7 @@ readinessProbe:
     successThreshold: 1
 ```
 
-### Gateway Versions
+### Gateway versions
 
 `/versions`
 
@@ -132,9 +132,9 @@ curl -s  http://localhost:8888/versions | jq .
 # }
 ```
 
-### Health [Deprecated]
+### Health (deprecated)
 
-To check the health of your Gateway, you can use the endpoint `/health` on the Gateway API (by default, on port `8888`):
+To check the health of Gateway, you can use the endpoint `/health` on the Gateway API (by default, on port `8888`):
 
 ```sh title='cURL Example'
 curl -s  http://localhost:8888/health | jq .

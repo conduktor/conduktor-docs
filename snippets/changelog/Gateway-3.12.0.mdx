@@ -25,17 +25,19 @@ Please update your configuration to use the new liveness and readiness probe end
 
 #### Configuration key change for Vault KUBERNETES authentication type
 
-[Vault KUBERNETES authentication type](https://developer.hashicorp.com/vault/docs/agent-and-proxy/autoauth/methods/kubernetes#token_path) has been corrected to read the token from a file in the running pod.
+The [Vault KUBERNETES authentication type](https://developer.hashicorp.com/vault/docs/agent-and-proxy/autoauth/methods/kubernetes#token_path) has been corrected to read the token from a file in the running pod.
 
-Because of this, KUBERNETES authentication's configuration key `jwt` (`VAULT_KUBERNETES_JWT`) is changed to `path` (`VAULT_KUBERNETES_PATH`). This optional configuration contains the path of the file containing the token. It defaults to `/var/run/secrets/kubernetes.io/serviceaccount/token` following the Vault documentation.
+Because of this, Kubernetes authentication's configuration key `jwt` (`VAULT_KUBERNETES_JWT`) was changed to `path` (`VAULT_KUBERNETES_PATH`). 
+
+This *optional* configuration contains the path of the file containing the token. It defaults to `/var/run/secrets/kubernetes.io/serviceaccount/token` following the Vault documentation.
 
 ### New features
 
 #### New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
 
-This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable which controls the types of event types recorded in the audit log.
+This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable which controls the types of events recorded in the audit log.
 
-It provides flexibility to enable or disable specific event types, such as `CONNECTION`. 
+It provides flexibility to enable/disable specific event types, such as `CONNECTION`. 
 
 [See the full list and explanations of the event types](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#audit).
 
