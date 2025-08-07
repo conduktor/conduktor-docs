@@ -25,14 +25,14 @@ Before creating a Partner Zone, you have to:
   - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN`, `SASL_SSL`, or `SSL`
   - `GATEWAY_SECURITY_MODE` set to `GATEWAY_MANAGED`
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
+  - `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` set to `true`. [Find out more about this environment variable](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#connect-from-clients-to-gateway) and what [service account](/guide/conduktor-concepts/gw-service-accounts#local-and-external-service-accounts) has to be setup. 
 - use a service account to connect to Gateway, that can access the topics you want to share
 - be logged in as an admin to Console UI, or using an admin token for the CLI
 - in Console, [configure your Gateway cluster](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials
 
 <Warning>
-As of v1.32, Partner Zones have the following limitations:
+As of v1.36.0, Partner Zones have the following limitations:
 
-- Partners will only be able to connect to your zone using **Local Gateway Service Accounts**.
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
 </Warning>
 
