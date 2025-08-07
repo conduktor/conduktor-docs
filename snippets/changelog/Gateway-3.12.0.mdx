@@ -5,7 +5,7 @@ title: Gateway 3.12.0
 # Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
-  - [Virtual Cluster Id Rename](virtual-cluster-id-rename)
+  - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
 
 ### Breaking changes
@@ -30,13 +30,13 @@ Please update your configuration to use the new liveness and readiness probe end
 
 Because of this, KUBERNETES authentication's configuration key `jwt` (`VAULT_KUBERNETES_JWT`) is changed to `path` (`VAULT_KUBERNETES_PATH`). This optional configuration contains the path of the file containing the token. It defaults to `/var/run/secrets/kubernetes.io/serviceaccount/token` following the Vault documentation.
 
-#### Virtual Cluster Id Rename
+#### Rename of Virtual Cluster Id
 
-When a Kafka Client requests for the cluster Id of a virtual cluster through the Gateway, the Cluster Id returned will be different. 
+When a Kafka client requests the cluster Id of a Virtual Cluster through Gateway, the returned cluster Id will be different - it will be renamed.
 
-This is due to the Cluster Id being renamed. Previously, the Cluster Id returned will be the native kafka Cluster Id of the virtual cluster's physical cluster.
+Previously, the returned cluster Id was the native Kafka cluster Id of the Virtual Cluster's physical cluster.
 
-The new Cluster Id that will be returned be in the format of `{virtual-cluster-name}@{physical-cluster-id}`.
+The new cluster Id that's returned will be be in the form of: `{virtual-cluster-name}@{physical-cluster-id}`.
 
 ### New features
 
