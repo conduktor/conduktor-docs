@@ -53,7 +53,8 @@ The `eventData` field contains different messages depending on the Gateway secur
 - `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username <username> but it isn't associated with an existing local user."` - No local service account defined
 
 **Failed Authentication - Gateway Managed - OAUTHBEARER:**
-- `"{"status":"invalid_token"}"` - Invalid token provided
+- `"{"status":"invalid_token"}"` - Gateway is unable to decode the OAUTHBEARER token. Can be caused by a Gateway misconfiguration (e.g. wrong issuer URL, client ID, or secret)
+Note: Authentication failure can happen when the kafka client fails to fetch the OAUTHBEARER token from the configured OAUTHBEARER provider. This is not a Gateway issue, but rather a misconfiguration of the OAUTH2 provider or the client. The OAUTH2 provider may have specific error messages that can help diagnose the issue.
 
 **Failed Authentication - Kafka Managed:**
 - `"SASL Authentication failed."` - Authentication failed on the underlying Kafka cluster
