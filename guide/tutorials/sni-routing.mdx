@@ -58,6 +58,10 @@ If Gateway is supposed to act as an SNI router, it must terminate (i.e., decrypt
 
 2. **Kafka protocol inspection requires decryption**: Even though SNI information is available in the unencrypted portion of the TLS handshake, Gateway must decrypt the traffic to apply its functionality, which operates on the Kafka protocol layer. Since Gateway needs to inspect, modify, or route based on Kafka protocol messages (API keys, topics, etc.), TLS passthrough is not possible.
 
+Gateway must therefore
+- handle the TLS handshake with the client and
+- have a valid keystore certificate for the advertised host (and all the brokers in the cluster)
+
 ### 3. Prepare Gateway's keystore certificate
 
 The keystore certificate for Gateway with SNI routing needs to include **the Gateway advertised host, as well as a SAN for each advertised broker in the cluster**.
