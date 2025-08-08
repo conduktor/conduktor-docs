@@ -7,6 +7,7 @@ title: Gateway 3.12.0
 - [Breaking changes](#breaking-changes)
   - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
+  - [Enhanced Crypto Shredding behavior for Decryption](#enhanced-crypto-shredding-behavior-for-decryption)
 
 ### Breaking changes
 
@@ -51,3 +52,8 @@ It provides flexibility to enable/disable specific event types, such as `CONNECT
 [See the full list and explanations of the event types](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#audit).
 
 This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
+
+#### Enhanced Crypto Shredding behavior for Decryption
+The Decryption Interceptor now includes improved error handling behavior specifically for Crypto Shredding scenarios.
+
+When using KMS types that support crypto shredding (Vault, AWS, GCP, Azure, Gateway), the plugin automatically overrides the configured `errorPolicy` when encryption keys are missing. In these cases, the plugin will always return encrypted data regardless of the configured policy, ensuring consumers don't become permanently blocked by deliberately un-decryptable messages.
