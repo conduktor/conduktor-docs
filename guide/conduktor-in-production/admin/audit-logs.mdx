@@ -6,7 +6,10 @@ title: Audit logs
 
 As you and your team interact with Conduktor, audit events are captured that give a detailed log of actions, providing a centralized visibility of user-related and resource-related events.
 
-The audit log **events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
+<Tabs>
+<Tab title="Console">
+
+The Console audit log **events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
 
 ![Admin Audit](/images/admin-audit.png)
 
@@ -291,6 +294,66 @@ Once configured with the correct [environment variables](/guide/conduktor-in-pro
   - user.permission.Added
   - user.permission.Deleted
   - user.platform_role.Updated
+</Tab>
+</Tabs>
+
+</Tab>
+<Tab title="Gateway">
+
+The Gateway audit log events are stored in an internal topic. The topic name is configured via `GATEWAY_AUDIT_LOG_TOPIC` and the feature can be enabled/disabled using `GATEWAY_FEATURE_FLAGS_AUDIT`. These events can be **browsed, filtered and searched** directly within Conduktor's UI or used to create custom alerts and notifications.
+
+![Gateway Audit](/images/gateway-audit-log.png)
+
+### Authentication event structure
+
+Here is an example of a Gateway audit log event in JSON format. This event represents a successful authentication attempt to Gateway:
+
+```json
+{
+  "id": "a3b7355b-dbe6-4db4-90a8-f41e0111710e",
+  "source": null,
+  "type": "AUTHENTICATION",
+  "authenticationPrincipal": "<principal>",
+  "userName": "<username>",
+  "connection": {
+    "localAddress": "/<gateway-ip>:<port>",
+    "remoteAddress": "/<client-ip>:<port>"
+  },
+  "specVersion": "0.1.0",
+  "time": "2025-07-18T16:07:06.570723674Z",
+  "eventData": "SUCCESS"
+}
+```
+
+#### Field details
+
+**Key fields and their values:**
+
+- `authenticationPrincipal`: The tenant name, or `null` on some authentication failures.
+- `userName`: The attempted user name, or `null` on some authentication failures.
+- `source`: Event source, always `null` for authentication events.
+- `eventData`: Contains success/failure messages and error details.
+
+#### Authentication event outcomes
+
+The `eventData` field contains different messages depending on the Gateway security mode, Gateway security protocol, and the authentication outcome. The following are common examples:
+
+| **Security Mode** | **SASL Mechanism** | **Outcome** | **Event Data** | **Description** |
+| :---------------- | :-------------- | :---------- | :------------- | :-------------- |
+| Gateway Managed | PLAIN | Success | `"SUCCESS"` | Authentication completed successfully |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Invalid username or password"` | Wrong credentials provided |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid but username <username> is invalid"` | Valid token but incorrect username |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Token has expired. Claims: {username=<username>, vcluster=<vcluster>, exp=<timestamp>}"` | Expired authentication token |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: username not specified"` or `"Authentication failed: password not specified"` | Missing required authentication fields |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username, but username <username> is not an existing local user."` | No local service account defined |
+| Gateway Managed | OAUTHBEARER | Failure | `"{"status":"invalid_token"}"` | Invalid JWT token |
+| Kafka Managed | Any | Failure | `"SASL Authentication failed."` | Authentication failed on the underlying Kafka cluster |
+| Kafka Managed | Any | Failure | `"Gateway can't detect principal from your authorization exchange. Please contact your administrator"` | Principal extraction failed on Gateway before delegating authentication to Kafka |
+
+<Note>
+For the Gateway Managed with OAUTHBEARER, authentication may also fail if the Kafka client is unable to fetch the token from the configured OAUTH provider. This occurs before reaching the Gateway, so no audit log event would be generated.
+</Note>
+
 </Tab>
 </Tabs>
 
