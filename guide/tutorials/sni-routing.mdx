@@ -52,15 +52,15 @@ To configure the port that is returned in the metadata, you can use the `GATEWAY
 
 ### 2. TLS termination
 
-If Gateway is supposed to act as an SNI router, it must terminate (i.e., decrypt) the incoming TLS connections. Reasons:
+When Gateway is set up to act as the SNI router, it has to terminate (i.e., decrypt) the incoming TLS connections because:
 
-1. **SNI information requires TLS handling**: The SNI information is transmitted in the TLS ClientHello handshake. To forward network requests based on TLS SNI, Gateway must participate in the TLS handshake to extract the server name indication. If TLS is terminated upstream of Gateway, the SNI information is no longer available.
+1. **SNI information requires TLS handling**: this information is transmitted in the TLS `ClientHello` handshake. To forward network requests based on TLS SNI, Gateway has to participate in the TLS handshake to extract the server name indication. If TLS is terminated upstream of Gateway, the SNI information is no longer available.
 
-2. **Kafka protocol inspection requires decryption**: Even though SNI information is available in the unencrypted portion of the TLS handshake, Gateway must decrypt the traffic to apply its functionality, which operates on the Kafka protocol layer. Since Gateway needs to inspect, modify, or route based on Kafka protocol messages (API keys, topics, etc.), TLS passthrough is not possible.
+2. **Kafka protocol inspection requires decryption**: even though SNI information is available in the un-encrypted portion of the TLS handshake, Gateway has to decrypt the traffic to apply its functionality, which operates on the Kafka protocol layer. Since Gateway needs to inspect, modify or route based on Kafka protocol messages (API keys, topics, etc.), TLS passthrough is not possible.
 
-Gateway must therefore
-- handle the TLS handshake with the client and
-- have a valid keystore certificate for the advertised host (and all the brokers in the cluster)
+Therefore, Gateway has to both:
+- handle the TLS handshake with the client and 
+- have a valid keystore certificate for the advertised host (and all the brokers in the cluster).
 
 ### 3. Prepare Gateway's keystore certificate
 
