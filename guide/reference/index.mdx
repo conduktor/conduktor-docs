@@ -39,34 +39,46 @@ There are three categories:
 
 ## Conduktor labels
 
-Conduktor Console labels allow you to add metadata, filter, categorize and organize your resources. Check the following table for the list of currently supported resources.
+Conduktor labels let you add functional context to your resources. 
 
-- "FullLabelSupport"
-- "PartialLabelSupport"
-- "MissingLabelSupport"
+They allow you to sort, filter, categorize and organize your resources, providing the flexibility and freedom to flag data that's important or relevant to you.
 
-## Supported resources
+We're continuously working towards full label support for all Conduktor resources in Console UI.
+ 
+In the meantime, here's what's currently covered.
 
-| Resource                     | API/CLI  | Terraform     | Label   |
-|------------------------------|-----------------|----------------------|----------------|
-| **Console resources**        |                 |                      |                |
+- FullLabelSupport: ✅  
+- PartialLabelSupport: ⚠️
+- MissingLabelSupport: 🚫 
+
+### Supported resources
+
+| Resource                     | API/CLI          | Terraform            | UI label       |
+|------------------------------|:----------------: |:----------------------:|:----------------:|
+|[Console resources](/guide/reference/console-reference)   |            |            |              |
 | ConsoleGroup                 | ✅               | ✅                    | 🚫             |
 | ConsoleUser                  | ✅               | ✅                    | 🚫             |
-| KafkaCluster                 | ✅               | ✅                    | ⚠️ (Not in UI) |
-| KafkaConnectCluster          | ✅               | ✅                    | ⚠️ (Not in UI) |
-| KsqlDBCluster                | ✅               | ⚠️(Generic Resource) | 🚫             |
-| Alert                        | ✅               | ⚠️(Generic Resource) | 🚫             |
-| DataMaskingPolicy            | 🚫              | 🚫                   | 🚫             |
-| Certificate                  | 🚫(V1 API only) | 🚫                   | 🚫             |
-| PartnerZone                  | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| **Kafka resources**          |                 |                      |                |
-| Topic                        | ✅               | ✅                    | ✅              |
-| Subject                      | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
-| Connector                    | ✅               | ⚠️(Generic Resource) | ⚠️ (Not in UI) |
+| KafkaCluster                 | ✅               | ✅                    | ⚠️             |
+| KafkaConnectCluster          | ✅               | ✅                    | ⚠️             |
+| KsqlDBCluster                | ✅               | ⚠️ (generic resource) | 🚫              |
+| Alerts                       | ✅               | ⚠️ (generic resource) | 🚫              |
+| DataMaskingPolicy            | 🚫               | 🚫                    | 🚫               |
+| Certificate                  | 🚫 (v1 API only)  | 🚫                   | 🚫              |
+| PartnerZone                  | ✅               | ⚠️ (generic resource) | ⚠️              |
+|[Kafka resources](/guide/reference/kafka-reference)   |            |            |              |
+| Topic                        | ✅               | ✅                   | ✅              |
+| Subject                      | ✅               | ⚠️ (generic resource) | ⚠️              |
+| Connector                    | ✅               | ⚠️ (generic resource) | ⚠️              |
 | ServiceAccount               | ✅               |                      | ✅              |
-| **Self-service resources**   |                 |                      |                |
-| Application                  | ✅               | ✅                    | 🚫             |
-| ApplicationInstance          | ✅               | ✅                    | 🚫             |
-| ApplicationInstancePermission | ✅               | ⚠️(Generic Resource) | 🚫             |
-| ApplicationGroup             | ✅               | ⚠️(Generic Resource) | 🚫             |
-| TopicPolicy                  | ✅               | ✅                    | 🚫             |
+|[Self-service resources](/guide/reference/self-service-reference)   |            |            |              |
+| Application                  | ✅               | ✅                   | 🚫              |
+| ApplicationInstance          | ✅               | ✅                   | 🚫              |
+| ApplicationInstancePermission| ✅               | ⚠️ (generic resource) | 🚫              |
+| ApplicationGroup             | ✅               | ⚠️ (generic resource) | 🚫              |
+| ResourcePolicy                          | TBC            | TBC                  | TBC             |
+| TopicPolicy                  | ✅               | ✅                   | 🚫              |
+
+## Related links
+
+- [Automation overview](/guide/conduktor-in-production/automate)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
