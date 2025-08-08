@@ -1,0 +1,53 @@
+---
+title: What is Conduktor Gateway? A Kafka Proxy
+---
+
+Conduktor Gateway is a network proxy for Apache Kafka, complete with an extensible and dynamic plugin mechanism that can be used to add technical and business logic on top of your existing Kafka deployment.
+
+## Gateway benefits
+
+This can be used to provide functionality that is not available in Kafka natively, such as:
+
+- **Centrally configure encryption** at the field-level or full payload.
+- **Mask sensitive data** and define access control.
+- **Set granular RBAC controls**.
+- **Leverage multi-tenancy**.
+- **Empower development teams** with self-service governance.
+
+Supports all Kafka providers (Confluent, AWS MSK, Redpanda, Aiven, Apache Kafka).
+
+Gateway is one of the main [Conduktor artifacts](/guide/conduktor-in-production/deploy-artifacts/index) and together with [Console](/guide/conduktor-in-production/deploy-artifacts/deploy-console/index) make up the Conduktor platform:
+
+<a href="https://framerusercontent.com/images/meFtLvvuqKtvLTZJuKgIV8xMI.png" target="_blank" rel="noopener">
+  <img src="https://framerusercontent.com/images/meFtLvvuqKtvLTZJuKgIV8xMI.png" alt="Main diagram" style={{maxWidth: '100%', paddingTop: '10px'}} />
+</a>
+
+## How it works
+
+Gateway acts as a Kafka-compliant middle layer between clients and Kafka clusters.
+
+![Conduktor Gateway](/images/gateway-integration.png)
+
+### Authentication
+
+Supports multiple security protocols:
+- PLAINTEXT
+- SSL
+- SASL SSL
+- mTLS
+
+### Interceptors
+
+Use Interceptors to add logic like encryption or filtering. [Find out about Interceptors](/guide/conduktor-concepts/interceptors).
+
+## Related resources
+
+- [Deploy Gateway](guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index)
+- [Gateway resource reference](/guide/reference/gateway-reference)
+- [Gateway API](https://developers.conduktor.io/?product=gateway)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
+- [Arrange a technical demo](https://www.conduktor.io/contact/demo)
+
+
+
+
