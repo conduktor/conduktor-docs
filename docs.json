@@ -944,6 +944,18 @@
   {
     "source": "/trust",
     "destination": "/guide/use-cases/enforce-data-quality"
+  },
+  {
+    "source": "/platform/reference/resource-reference/console/#manifests",
+    "destination": "/guide/reference/console-reference"
+  },
+  {
+    "source": "/gateway/reference/resources-reference/#interceptor-targeting",
+    "destination": "/guide/reference/gateway-reference#interceptor-targeting"
+  },
+  {
+    "source": "/platform/reference/api-reference/#generate-an-api-key",
+    "destination": "/guide/conduktor-in-production/automate/api-automation#manage-api-keys"
   }
 ]
 }
