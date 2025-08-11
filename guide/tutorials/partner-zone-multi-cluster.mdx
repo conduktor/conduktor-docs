@@ -55,6 +55,20 @@ In our case we have `clusterA` as the underlying Kafka cluster. You can configur
         - **SASL Mechanism**: `PLAIN`
         - **SASL JAAS Config**: `org.apache.kafka.common.security.plain.PlainLoginModule required username="<clusterA_api_key>" password="<clusterA_api_secret>";`
 </Tab>
+<Tab title="Using Conduktor Configuration File">
+For the `console-config.yaml` file that is provided to the Console docker container, you can add the following configuration for `clusterA` with the necessary security settings:
+
+```yaml title="console-config.yaml"
+clusters:
+  - id: clusterA
+    name: Secondary Kafka
+    bootstrapServers: '<clusterA_kafka_bootstrap_server>:9092'
+    properties: |
+      sasl.mechanism=PLAIN
+      security.protocol=SASL_PLAINTEXT
+      sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="admin-secret";
+```
+</Tab>
 </Tabs>
 
 ### Create a Partner Zone
