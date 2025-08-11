@@ -354,6 +354,21 @@ spec:
 
 - `metadata.name` must be a valid topic prefix.
 - `spec.aclEnabled` is optional, default `false`.
+- `spec.aclMode` must be either `KAFKA_API` or `REST_API`
+  - Different `aclMode` values control how ACLs will be managed on the virtual cluster
+    - `KAFKA_API` : ACLs must be managed by the Kafka API as if the virtual cluster is a standard Kafka cluster. Forbids `acls` field from being set.
+    - `REST_API` : ACLs must be managed by this resource on the REST API using the acls field. Requires `acls` list to be non-empty and `superUsers` must not be set.
+  - If `aclMode` is left unset the behaviour is different depending on the value of the `aclEnabled` field
+    - `aclEnabled: true` : The system will assume a default `aclMode` of `KAFKA_API`
+    - `aclEnabled: false` : The `aclMode` is left unset and can be set in the future by the user or the system. Forbids `acls` and `superUsers` from being set.
+  - Once `aclMode` is set (either by the user or the system) changing it is forbidden.
+- `spec.superUsers` it's the list of usernames for which the associated service accounts in this virtual cluster can bypass ACLs.
+  - Must be set if `aclMode` is set to `KAFKA_API`.
+  - Cannot be set if `aclMode` is set to `REST_API`.
+- `spec.type` must be eithe `Standard` or `Partner`
+- `spec.acls` is the list of ACL bindings for the virtual cluster.
+  - Must be set if `aclMode` is set to `REST_API`.
+  - Cannot be set if `aclMode` is set to `KAFKA_API`.
 
 **VirtualCluster side effects:**
 
