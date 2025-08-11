@@ -22,3 +22,4 @@ Added an option to **Show regex library** when creating a new Rule in Console. T
 ### Quality of life improvements
 
 ### Fixes
+ - Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns
