@@ -1,0 +1,118 @@
+---
+title: Partner Zone creation with Gateway multi-cluster setup
+---
+## Overview
+
+This guide is for users who want to create a Partner Zone using the Gateway in a multi-cluster setup.
+
+## Prerequisites
+* Create the multiple underlying Kafka clusters that you want to use with the Gateway.
+
+## Configuration Steps
+
+### Setup up your Gateway with multi-cluster support
+
+To have Gateway setup with multi-cluster support, you will first need to create multiple underlying kafka clusters. Once you have the bootstrap servers for each of the kafka clusters, you can then provide to configure Gateway to point to them.
+
+Then, follow the steps to configure the Gateway to use those kafka clusters in this [guide](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
+
+Let's say that you have one main Gateway cluster `gateway-main` and one underlying Kafka cluster `clusterA`.
+
+Once you have configured the Gateway to use multiple clusters, you can then proceed to create a Partner Zone. You can specify the cluster configuration for Gateway something like this:
+
+```yaml title="cluster-config.yaml"
+config:
+  main:
+    bootstrap.servers: '<main_bootstrap_servers>:9092'
+    security.protocol: 'SASL_SSL'
+    sasl.mechanism: 'PLAIN'
+    sasl.jaas.config: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<main_api_key>" password="<main_api_secret>";'
+  clusterA:
+    bootstrap.servers: '<clusterA_bootstrap_servers>:9092'
+    security.protocol: 'SASL_SSL'
+    sasl.mechanism: 'PLAIN'
+    sasl.jaas.config: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<clusterA_api_key>" password="<clusterA_api_secret>";'
+    gateway.roles: 'upstream'
+```
+
+This configuration will be mounted onto the Gateway docker container which can be seen in the [setup guide](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
+
+### Configure the underlying Kafka clusters in Console
+
+Once you have the Gateway configured with multiple clusters, you can then configure the underlying Kafka clusters in Console. This step is necessary to ensure that the kafka clusters are recognized by Console to be available when creating a Partner Zone.
+
+You can do this by following the guide for [Configure Kafka Clusters guide in Console](guide/conduktor-in-production/admin/configure-clusters#connect-to-a-secure-kafka-cluster).
+
+<Tabs>
+<Tab title="Using Console UI">
+In our case we have `clusterA` as the underlying Kafka cluster. You can configure it in Console:
+1. Go to the **Clusters** page in Console, and click on **Add Cluster**.
+2. Fill in the details for `clusterA` e.g.:
+    - **Technical Id**: `clusterA`
+    - **Bootstrap Servers**: `<clusterA_kafka_bootstrap_server>:9092`
+    - Additionally, provide the security settings if required, such as:
+        - **Security Protocol**: `SASL_SSL`
+        - **SASL Mechanism**: `PLAIN`
+        - **SASL JAAS Config**: `org.apache.kafka.common.security.plain.PlainLoginModule required username="<clusterA_api_key>" password="<clusterA_api_secret>";`
+</Tab>
+</Tabs>
+
+### Create a Partner Zone
+
+Assuming that we have a `gateway-main` Gateway cluster and a `clusterA` Kafka cluster, we can create a Partner Zone that connects to the `clusterA` Kafka cluster as the backing cluster.
+
+More details on creating a Partner Zone can be found in the [Create a Partner Zone guide](/guide/use-cases/third-party-data#create-a-partner-zone). 
+
+<Tabs>
+<Tab title="Using Console UI">
+1. Go to the **Partner Zones** page in Console.
+2. Click on **Create Partner Zone**.
+3. Select the **Gateway Cluster** as `gateway-main`.
+4. Select the **Source Cluster** as `clusterA`.
+5. Fill in the remaining details for the Partner Zone.
+6. Click on **Create** to create the Partner Zone.
+</Tab>
+<Tab title="Using Conduktor CLI">
+The following steps are for creating a Partner Zone through the [Conduktor CLI (Command Line Interface)](/guide/conduktor-in-production/automate/cli-automation).
+
+1. Save this example to file, e.g. `pz.yaml`:
+
+    ```yaml
+    apiVersion: v2
+    kind: PartnerZone
+    metadata:
+        name: external-partner-zone
+    spec:
+        gatewayClusterId: gateway-main
+        sourceClusterId: clusterA
+        displayName: External Partner Zone
+        url: https://partner1.com
+        authenticationMode:
+            serviceAccount: external-partner-service-account
+            type: PLAIN
+        topics:
+        - name: topic-a
+          backingTopic: kafka-topic-a
+          permission: WRITE
+        - name: topic-b
+          backingTopic: kafka-topic-a
+          permission: READ
+        partner:
+          name: John Doe
+          role: Data analyst
+          email: johndoe@company.io
+          phone: 07827 837 177
+    ```
+
+    Note that when creating the Partner Zone, the `spec.sourceClusterId` is set to `clusterA`, which is the Kafka cluster that the Partner Zone will connect to. The `spec.gatewayClusterId` is set to `gateway-main`, which is the Gateway cluster that will manage the Partner Zone.
+
+1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
+
+    ```bash
+    conduktor apply -f pz.yaml
+    ```
+
+To check the status or list the topics of the Partner Zone, follow the additional steps in the [Create a Partner Zone guide](/guide/use-cases/third-party-data#create-a-partner-zone).
+</Tab>
+</Tabs>
+
