@@ -17,10 +17,13 @@ title: Console 1.37
 ### Conduktor Trust
 
 #### Regex library
+
 Added an option to **Show regex library** when creating a new Rule in Console. This provides a list of pre-built regex examples that can be used to speed up Rule creation.
 
 ### Quality of life improvements
-Updated `conduktor-cortex` artifact data retention configuration to reduce disk usage and added environment variables shortcut to fine tune Cortex and Prometheus retention. More details on [Deploying Cortex](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex#deploy-and-configure-cortex) documentation.
-Change `conduktor-cortex` Prometheus configuration override strategy to use **patch** YAML instead of **replace**. 
+
+You can now fine-tune Cortex and Prometheus retention with the new environment variables. We've also updated the default values to reduce disk usage.
+
+You can **patch** (instead of replacing) the YAML configuration. [Find out more about overriding the configuration with YAML](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex#overriding-with-yaml).
 
 ### Fixes
