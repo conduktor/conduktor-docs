@@ -179,8 +179,8 @@
               "guide/tutorials/migrate-gw-security",
               "guide/tutorials/configure-encryption",
               "guide/tutorials/custom-log",
-              "guide/tutorials/manage-gw-sa"
-
+              "guide/tutorials/manage-gw-sa",
+              "guide/tutorials/partner-zone-multi-cluster"
           ]
           }
         ]
