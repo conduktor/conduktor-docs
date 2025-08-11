@@ -338,17 +338,17 @@ Here is an example of a Gateway audit log event in JSON format. This event repre
 
 The `eventData` field contains different messages depending on the Gateway security mode, Gateway security protocol, and the authentication outcome. The following are common examples:
 
-| **Security Mode** | **SASL Mechanism** | **Outcome** | **Event Data** | **Description** |
-| :---------------- | :-------------- | :---------- | :------------- | :-------------- |
-| Gateway Managed | PLAIN | Success | `"SUCCESS"` | Authentication completed successfully |
-| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Invalid username or password"` | Wrong credentials provided |
-| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid but username <username> is invalid"` | Valid token but incorrect username |
-| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Token has expired. Claims: {username=<username>, vcluster=<vcluster>, exp=<timestamp>}"` | Expired authentication token |
-| Gateway Managed | PLAIN | Failure | `"Authentication failed: username not specified"` or `"Authentication failed: password not specified"` | Missing required authentication fields |
-| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username, but username <username> is not an existing local user."` | No local service account defined |
-| Gateway Managed | OAUTHBEARER | Failure | `"{"status":"invalid_token"}"` | Invalid JWT token |
-| Kafka Managed | Any | Failure | `"SASL Authentication failed."` | Authentication failed on the underlying Kafka cluster |
-| Kafka Managed | Any | Failure | `"Gateway can't detect principal from your authorization exchange. Please contact your administrator"` | Principal extraction failed on Gateway before delegating authentication to Kafka |
+| **Security Mode** | **SASL Mechanism** | **Outcome** | **Event Data** |
+| :---------------- | :-------------- | :---------- | :------------- |
+| Gateway Managed | PLAIN | Success | `"SUCCESS"` |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Invalid username or password"` |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid but username <username> is invalid"` |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Token has expired. Claims: {username=<username>, vcluster=<vcluster>, exp=<timestamp>}"` |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: username not specified"` or `"Authentication failed: password not specified"` |
+| Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Password token is valid for username, but username <username> is not an existing local user."` |
+| Gateway Managed | OAUTHBEARER | Failure | `"{\"status\":\"invalid_token\"}"` |
+| Kafka Managed | Any | Failure | `"SASL Authentication failed."` |
+| Kafka Managed | Any | Failure | `"Gateway can't detect principal from your authorization exchange. Please contact your administrator"` |
 
 <Note>
 For the Gateway Managed with OAUTHBEARER, authentication may also fail if the Kafka client is unable to fetch the token from the configured OAUTH provider. This occurs before reaching the Gateway, so no audit log event would be generated.
