@@ -3,10 +3,11 @@ title: Create Partner Zones using multi-cluster Gateway
 ---
 ## Overview
 
-This guide is for users who want to create a Partner Zone using the Gateway in a multi-cluster setup.
+Gateway supports the ability to connect to multiple underlying Kafka clusters. This allows you to create Partner Zones that can connect to different Kafka clusters, beyond just the main Gateway cluster.
 
-## Prerequisites
-* Create the multiple underlying Kafka clusters that you want to use with the Gateway.
+Once the underlying Kafka clusters have been created, you'll want to configure Gateway to use those clusters and to also configure them directly in Console.
+
+This guide will walk you through the steps to set that up and to create a Partner Zone that connects to one of those clusters.
 
 ## Configuration Steps
 
@@ -83,8 +84,9 @@ More details on creating a Partner Zone can be found in the [Create a Partner Zo
 2. Click on **Create Partner Zone**.
 3. Select the **Gateway Cluster** as `gateway-main`.
 4. Select the **Source Cluster** as `clusterA`.
-5. Fill in the remaining details for the Partner Zone.
-6. Click on **Create** to create the Partner Zone.
+5. Select the topics you want to include in the Partner Zone, and optionally create any topic aliases.
+5. Fill in and complete the remaining steps to create the Partner Zone.
+6. Finaly click **Create** to create the Partner Zone.
 </Tab>
 <Tab title="Using Conduktor CLI">
 The following steps are for creating a Partner Zone through the [Conduktor CLI (Command Line Interface)](/guide/conduktor-in-production/automate/cli-automation).
