@@ -23,3 +23,5 @@ static/css/stitches.css
 .vercel
 src/styles/dist/*
 tags
+
+CLAUDE.md
