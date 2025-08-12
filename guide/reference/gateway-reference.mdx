@@ -415,9 +415,7 @@ spec:
   - `spec.superUsers` cannot be set
 - `spec.acls` is the complete list of ACL bindings for the vcluster and allows (nearly) any valid Kafka API ACL binding (inc `*` wildcards) to be set. For a complete list of valid ACL bindings checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
 
-:::info
-We do not allow the `aclMode` to be changed once it is set because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` mode changes are cumulative whereas `REST_API` mode changes are idempotent). 
-:::
+<Info>We do not allow the `aclMode` to be changed once it is set because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` mode changes are cumulative whereas `REST_API` mode changes are idempotent).</Info>
 
 ## AliasTopic
 
