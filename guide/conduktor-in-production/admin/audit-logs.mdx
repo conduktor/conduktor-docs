@@ -304,8 +304,6 @@ Once configured with the correct [environment variables](/guide/conduktor-in-pro
 
 The Gateway audit log events are stored in an internal topic. The topic name is configured via `GATEWAY_AUDIT_LOG_TOPIC` and the feature can be enabled/disabled using `GATEWAY_FEATURE_FLAGS_AUDIT`. These events can be **browsed, filtered and searched** directly within Conduktor's UI or used to create custom alerts and notifications.
 
-![Gateway Audit](/images/gateway-audit-log.png)
-
 Here is an example of a Gateway audit log event in JSON format. This event represents a successful authentication attempt to Gateway:
 
 ```json
@@ -348,7 +346,7 @@ The authentication event records the authentication attempts made by clients to 
 
 The `eventData` field contains different messages depending on the Gateway security mode, Gateway security protocol, and the authentication outcome. The following are common examples:
 
-| **Security Mode** | **SASL Mechanism** | **Outcome** | **Event Data** |
+| **Security mode** | **SASL mechanism** | **Outcome** | **Event data** |
 | :---------------- | :-------------- | :---------- | :------------- |
 | Gateway Managed | PLAIN | Success | `"SUCCESS"` |
 | Gateway Managed | PLAIN | Failure | `"Authentication failed: credentials for user could not be verified. Cause: Invalid username or password"` |
