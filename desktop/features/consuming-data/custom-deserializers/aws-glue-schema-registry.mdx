@@ -6,10 +6,10 @@ description: Using Glue Schema with Conduktor Desktop
 
 # AWS Glue Schema Registry
 
-:::info
+<Info>
 This method is temporary as we plan to integrate with the AWS Glue Registry Serdes directly in
 Conduktor soon.
-:::
+</Info>
 
 In order to successfully consume messages serialized with AWS Glue Registry, you first need to repackage the Glue deserializers into a single jar with all its dependencies. Here we'll use <a href="https://get-coursier.io/docs/cli-bootstrap#assemblies" target="_blank">Coursier</a> but feel free to use maven plugins if you prefer.
 
@@ -26,14 +26,14 @@ region=us-west-2
 avroRecordType=GENERIC_RECORD
 ```
 
-:::tip
+<Tip>
 You can further configure your deserializer as described in the Glue documentation:
 
 - [https://docs.aws.amazon.com/glue/latest/dg/schema-registry-gs.html#schema-registry-gs-serde])https://docs.aws.amazon.com/glue/latest/dg/schema-registry-gs.html#schema-registry-gs-serde
 - [https://github.com/awslabs/aws-glue-schema-registry](https://github.com/awslabs/aws-glue-schema-registry)
   :::
 
-:::caution
+</Tip>caution
 The Glue library doesn't pick the AWS profile from the Kafka config
 **sasl.jaas.config**. If you need to use a different profile than the
 **default**, you must set the following environment variable:

@@ -97,8 +97,8 @@ There are two ways to remove members from a consumer group:
 - Remove all members at once with the `Remove All Members And Rebalance` button.
 - Remove a selection of members : select the members and use the `ACTIONS` menu. This is only available for member of type static.
 
-:::tip
+<Tip>
 Designed to be used with the **static group membership feature**, an Apache Kafka Consumer feature. It delays rebalancing operations when a member is temporary gone (pod restart, rolling upgrade..) to prevent useless rebalancing.
 
 BUT now, the consumer group coordinator can take time to realize a static member is gone, so forcing a kick here will help trigger rebalancing as soon as possible, to reassign partitions to other members.
-:::
+</Tip>

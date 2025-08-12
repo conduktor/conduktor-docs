@@ -85,10 +85,10 @@ If you are using Windows and Mac, and your organization has pushed certificates 
 
 This means that you don't need to define the trust store for each individual component anymore.&#x20;
 
-:::warning
+<Warning>
 Unfortunately, we were not able to integrate **ksqlDB** in our new certificate model
 yet.
-:::
+</Warning>
 
 We remain fully compatible with the previous methods so if you have configured your Kafka clusters with .jks files, or if you still want to use this mechanism, everything will work as usual.
 
@@ -117,9 +117,9 @@ ssl.key.password=test1234
 
 #### Inline Access Key and Access Certificate
 
-:::caution
+<Warning>
 Please note the trailing `\` at the end of each line which signals a multiline content
-:::
+</Warning>
 
 ```
 ssl.keystore.type=PEM
