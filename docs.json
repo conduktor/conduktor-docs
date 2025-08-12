@@ -944,6 +944,18 @@
   {
     "source": "/trust",
     "destination": "/guide/use-cases/enforce-data-quality"
+  },
+  {
+    "source": "/platform/reference/resource-reference/console",
+    "destination": "/guide/reference/console-reference"
+  },
+  {
+    "source": "/gateway/reference/resources-reference",
+    "destination": "/guide/reference/gateway-reference"
+  },
+  {
+    "source": "/platform/reference/api-reference",
+    "destination": "/guide/conduktor-in-production/automate/api-automation"
   }
 ]
 }
