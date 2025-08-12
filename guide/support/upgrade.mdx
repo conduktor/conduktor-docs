@@ -86,20 +86,6 @@ New resources may require newer Console API versions. Compatibility details are:
 - in each [Terraform resource's documentation](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/console_application_instance_v1)
 - as inline warnings/errors when running `terraform apply`.
 
-## Upgrade Console in production
-
-To upgrade to the next version using Docker:
-
-1. Back up your database, in case a roll-back is required.
-2. Pull the latest image from the Docker hub:
-
-  ```bash
-  docker pull conduktor/conduktor-console
-  ```
-
-3. Change the version of your container (either in your docker-compose, or helm chart) and deploy it again.
-4. Check the logs and the UI to ensure the upgrade was successful.
-
 ## Migrate Gateway API from v1 to v2
 
 Gateway v3.3.0 introduces API v2 to enhance user experience when interacting with Gateway resources. 
