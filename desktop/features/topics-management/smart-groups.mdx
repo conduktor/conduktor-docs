@@ -8,10 +8,10 @@ description: Smart Groups is a feature to remove the strain due to long names of
 
 # Smart Groups
 
-:::caution
+<Warning>
 This is an advanced feature due to the usage of regular expressions. This provides a poor
 readability and non-technical people should be assisted in order to use it.
-:::
+</Warning>
 
 ## Simplify topics or subjects name
 
@@ -28,10 +28,10 @@ This will open a configuration dialog where the magic will be configured, throug
 - We setup regular expressions \(as many as we want\)
 - We pick one group to be the name of the entity in the listing \(instead of the long name\)
 
-:::info
+<Info>
 To create columns from parts, we must use **Named Capturing Groups**.
 [https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
-:::
+</Info>
 
 The following is a capturing group named "environment" matching multiple characters.
 
@@ -61,7 +61,7 @@ The result is a screen way more readable, by removing useless information and di
 
 ![](../../assets/screenshot-2020-05-01-at-01.43.05.png)
 
-:::info
+<Info>
 The usage of regular expressions is necessary but we may provide a wizard later to simplify this
 step. Don't hesitate to [contact us](https://www.conduktor.io/contact) if that matters to you.
-:::
+</Info>

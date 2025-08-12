@@ -38,10 +38,10 @@ other.configs=values...
 
 What Conduktor needs to connect to a secure Kafka cluster is all the values from your `config.properties` file.
 
-:::info
+<Info>
 In case you don't know what should be the values in the **config.properties** file, please contact your Kafka administrator.
 **Note:** these are the same properties you would use in your Kafka Java clients or applications.
-:::
+</Info>
 
 ## SSL Configuration
 
@@ -72,10 +72,10 @@ Other configuration settings that may also be needed depending on our requiremen
 4. ssl.truststore.type=JKS
 5. ssl.keystore.type=JKS
 
-:::caution
+<Warning>
 Please make sure to put the **full paths** to your SSL certificates in your
 properties file\ Relative paths may not work for Conduktor.
-:::
+</Warning>
 
 ## SASL Configuration
 
@@ -125,10 +125,10 @@ Would be converted to the following `sasl.jaas.config` property:
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required  username="alice" password="alice-secret";
 ```
 
-:::caution
+<Warning>
 Please make sure to put the **full paths** to your SASL key files in your properties
 file\ Relative paths may not work for Conduktor.
-:::
+</Warning>
 
 ### Example using Kerberos
 
