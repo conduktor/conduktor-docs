@@ -343,23 +343,79 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclEnabled: true # (uses aclMode to determine how the acls are enabled or defaults to KAFKA_API if it is not set)
- aclMode: KAFKA_API # Means ACLs can be edited by the superUsers using kafka-acls command or equivalent 
- superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
+ aclEnabled: false
+```
+
+- `metadata.name` must be a valid topic prefix as all vcluster topics and consumer groups will be created on the physical kafka cluster with this as the prefix (they will appear on the vcluster without the prefix).
+- `spec.aclEnabled` is optional (default `false`). When unset or `false`,
+  - there are no authorization checks for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
+  - The fields `acls` and `superUsers` cannot be set
+- `spec.type` must be either `Standard` or `Partner` (default if not set is `Standard`)
+
+The next two sections describe the behaviour of `spec.aclEnabled` when it is set to `true`
+
+### ACLs configurable via Kafka
+
+When a vcluster is configured to have ACLs set via Kafka (`aclMode: KAFKA_API`) an administrator can connect to the vcluster as any service account named in the `superUsers` list and fully manage the ACLs of other service accounts within the vcluster using the Kafka Admin API. This is the same way you would manage a real Kafka Cluster.
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ aclEnabled: true
+ aclMode: KAFKA_API
+ superUsers:
  - username1
  - username2
 ```
 
-**VirtualCluster checks:**
+- when `spec.aclMode` is set to `KAFKA_API` (default if `aclEnabled: true`)
+  - it cannot be changed
+  - `acls` cannot be set
+  - `spec.superUsers` must be set
+- `spec.superUsers` is the list of usernames for which the associated service accounts in this virtual cluster can bypass ACLs.
+  - Specified usernames are not created automatically. You still need to create the associated gateway service accounts on the vcluster for them to work.
 
-- `metadata.name` must be a valid topic prefix.
-- `spec.aclEnabled` is optional, default `false`.
+### ACLs configurable via REST
 
-**VirtualCluster side effects:**
+Managing ACLs with the Kafka Admin API is extremely powerful, but can also be cumbersome. For some use-cases it is desirable to configure everything using the REST api instead.
 
-- All topics and consumer groups will be created on the physical Kafka with a prefix `metadata.name`. But, they will appear on the VirtualCluster without the prefix.
-- Users can be associated to the VirtualCluster through the GatewayServiceAccount resource.
-- When `spec.aclEnabled` is set to `true`, you can configure the superUsers using the `spec.superUsers` list. You will have to manage the ACLs of other service accounts as you would with any other Kafka.
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+ name: "mon-app-A"
+spec:
+ aclEnabled: true
+ aclMode: REST_API
+ acls:
+  - resourcePattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    principal: User:username1
+    operation: READ
+    permissionType: ALLOW
+  - resourcePattern:
+      resourceType: TOPIC
+      name: customers
+      patternType: LITERAL
+    principal: User:username1
+    operation: WRITE
+    permissionType: ALLOW
+```
+
+- when `spec.aclMode` is set to `REST_API`
+  - it cannot be changed
+  - `spec.acls` must be set
+  - `spec.superUsers` cannot be set
+- `spec.acls` is the complete list of ACL bindings for the vcluster and allows (nearly) any valid Kafka API ACL binding (inc `*` wildcards) to be set. For a complete list of valid ACL bindings checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
+
+<Info>We do not allow the `aclMode` to be changed once it is set because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` mode changes are cumulative whereas `REST_API` mode changes are idempotent).</Info>
 
 ## AliasTopic
 

@@ -10,10 +10,10 @@ description: How to configure Conduktor Desktop
 
 Conduktor comes with many options (and growing) to customize its behaviour. This is important when it comes to large clusters: you don't need everything, so better remove some useless overhead.
 
-:::caution
+<Warning>
 Also, unfortunately, sometimes the clusters are just too big for Conduktor to handle properly,
 making it crash after some time ☹ (improving!)
-:::
+</Warning>
 
 It's also there to configure:
 
@@ -46,9 +46,9 @@ By default, Conduktor is limited to 2GB of memory heap. It's possible to increas
 - Windows: `C:\Program Files\Conduktor\app\Conduktor.cfg`
 - Linux: `/opt/conduktor/lib/app/Conduktor.cfg`
 
-:::warning
+<Warning>
 We do **NOT** recommend to alter this file, **all changes will be lost** when upgrading Conduktor
-:::
+</Warning>
 
 The default options are:
 
@@ -121,7 +121,7 @@ Starting Conduktor 2.7.0, we log everything into a `conduktor.log` file. This ma
 - macOS: `/var/folders/wy/xxx/T/conduktor.log`
   - the path is random. The best way to find it is to look for the kafka.log path (above). conduktor.log sits at the same place
 
-:::tip
+<Tip>
 On Linux and macOS, you can directly start Conduktor from the console to display the logs on
 stdout. (this does not work on Windows, except using alternative unix-ish shells like gitbash)
-:::
+</Tip>
