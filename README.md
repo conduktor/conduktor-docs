@@ -5,6 +5,7 @@
   - [Structure](#structure)
   - [Images](#images)
   - [Links](#links)
+  - [Alerts](#alerts)
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
@@ -64,6 +65,16 @@ Note that all images will have a defined styling applied but you can override th
 Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hardware/*.
 
 You can also link to a specific section on a page, e.g. */guide/get-started/hardware/#hardware-requirements*.
+
+## Alerts
+
+Mintlify uses different syntax for alerts (and calls them callouts). Choose from:
+
+- <Note> This will show the text in blue and in blue background.</Note>
+- <Warning> This will be orange/red.</Warning>
+- <Info> This is a subtle info box with grey text.</Info>
+
+Try to use only one of these only (Mintlify offer a couple of others).
 
 ## Update release notes
 
