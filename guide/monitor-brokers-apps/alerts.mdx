@@ -6,7 +6,7 @@ title: Set up alerts
 
 Alerts allow you to be notified and react to Kafka infrastructure or application changes as soon as they happen.
 
-You can integrate alerts with **Slack** and **MS Teams** to receive real-time notifications. Alternatively, set up arbitrary **webhook** destinations with any URL and custom headers. [See how to configure integrations](#configure-integrations).
+You can integrate alerts with **Slack**, **MS Teams** and **email** to receive real-time notifications. Alternatively, set up arbitrary **webhook** destinations with any URL and custom headers. [See how to configure integrations](#configure-integrations).
 
 Alerts are periodically checked for **every minute**.
 
@@ -30,7 +30,37 @@ In the **New Alert** pane enter the required details. Each alert has to have:
     If the owner of an alert is deleted, the associated alerts will also be deleted.
     </Warning>
 - (optional) a description explaining what the alert does or why you created it. This is useful if you're creating an external alert.
-- a destination: internal (Conduktor Console) or external (Slack, Teams or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
+- a destination: internal (Conduktor Console) or external (Slack, Teams, email or Webhook). Each alert can have **only one external destination**. To verify that it works, click **Send test**.
+
+## Alert destinations
+
+Once you've configured your integrations, you can choose from several alert destinations:
+
+### Slack
+
+- **Destination channel**: select from available Slack channels (your Slack app has to be invited to the channel first).
+
+### Microsoft Teams
+
+- **Webhook URL**: use the channel webhook URL from your Teams workflow configuration.
+
+### Email
+
+- **Destination email**: specify the recipient's email - this is where the notifications will be sent.
+- **Subject**: customize the email subject line to make them easily identifiable.
+- **Body**: the body of the email. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`, for url because the template engine can escape the whole url, you will have to use `{{{url}}}` to not escape the url) to embed alert variables dynamically.
+
+Email alerts will be sent from the sender address configured in your email integration settings.
+
+### Webhook
+
+- **Method**: select the HTTP method to use for the webhook request (POST, PUT).
+- **URL**: any webhook endpoint that accepts POST requests.
+- **Custom Headers**: add custom headers, as needed.
+- **Body**: receives structured JSON payload with alert details and metadata. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`, for url because the template engine can escape the whole url, you will have to use `{{{url}}}` to not escape the url) to embed alert variables dynamically.
+- **Authentication**: configure authentication, if required by your webhook endpoint (basic auth or bearer token).
+
+Click **Send test** for any external destinations to verify your configuration before saving the alert.
 
 ## Manage alerts
 
@@ -70,7 +100,7 @@ Once configured you'll need to add the application to the Slack channels you wis
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to send alerts to that Slack channel.
 
-## Email integration
+### Email integration
 
 Email integration allows you to receive notifications directly to your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
 
@@ -90,7 +120,7 @@ To set up email alerts, you have to configure:
 
 Once your email integration is configured, you can create email alerts with customizable destination addresses, subjects and content. You can use handlebars syntax (e.g., `{{clusterName}}`, `{{threshold}}`) to embed alert variables dynamically in the body of the email.
 
-### Email alerts used for Teams
+#### Email alerts used for Teams
 
 We directly integrate with Microsoft Teams using Workflows. If you're not allowed to use this feature, you can use the email integration to send alerts to Microsoft Teams channels.
 
