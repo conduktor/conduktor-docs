@@ -70,9 +70,9 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 
 Mintlify uses different syntax for alerts (and calls them callouts). Choose from:
 
-- <Note> This will show the text in blue and in blue background.</Note>
-- <Warning> This will be orange/red.</Warning>
-- <Info> This is a subtle info box with grey text.</Info>
+- `<Note>` This will show the text in blue and in blue background.`</Note>`
+- `<Warning>` This will be orange/red.`</Warning>`
+- `<Info>` This is a subtle info box with grey text.`</Info>`
 
 Try to use only one of these only (Mintlify offer a couple of others).
 
