@@ -52,12 +52,15 @@ To configure the port that is returned in the metadata, you can use the `GATEWAY
 
 ### 2. TLS termination
 
-The concept of SNI routing isn't specific to Gateway. It relies on information inside the TLS connection for the SNI router to determine how to forward network requests. To be able to access this information, the SNI router must terminate the TLS connection.
+When Gateway is set up to act as the SNI router, it has to terminate (i.e., decrypt) the incoming TLS connections because:
 
-In our case, as Gateway acts as SNI router, it has to:
+1. **SNI information requires TLS handling**: this information is transmitted in the TLS `ClientHello` handshake. To forward network requests based on TLS SNI, Gateway has to participate in the TLS handshake to extract the server name indication. If TLS is terminated upstream of Gateway, the SNI information is no longer available.
 
-- handle the TLS handshake with the client and
-- have a valid keystore certificate for the advertised host (and all the brokers in the cluster)
+2. **Kafka protocol inspection requires decryption**: even though SNI information is available in the un-encrypted portion of the TLS handshake, Gateway has to decrypt the traffic to apply its functionality, which operates on the Kafka protocol layer. Since Gateway needs to inspect, modify or route based on Kafka protocol messages (API keys, topics, etc.), TLS passthrough is not possible.
+
+Therefore, Gateway has to both:
+- handle the TLS handshake with the client and 
+- have a valid keystore certificate for the advertised host (and all the brokers in the cluster).
 
 ### 3. Prepare Gateway's keystore certificate
 
