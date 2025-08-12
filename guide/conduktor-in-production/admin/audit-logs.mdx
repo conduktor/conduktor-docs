@@ -2,12 +2,12 @@
 title: Audit logs
 ---
 
-## Audit log event overview
-
 As you and your team interact with Conduktor, audit events are captured that give a detailed log of actions, providing a centralized visibility of user-related and resource-related events.
 
 <Tabs>
 <Tab title="Console">
+
+## Console Overview
 
 The Console audit log **events can be browsed, filtered and searched** directly within Conduktor's UI or **exported from a Kafka topic** for any further use, such as maintaining your own audit trail in other systems.
 
@@ -300,6 +300,8 @@ Once configured with the correct [environment variables](/guide/conduktor-in-pro
 </Tab>
 <Tab title="Gateway">
 
+## Gateway Overview
+
 The Gateway audit log events are stored in an internal topic. The topic name is configured via `GATEWAY_AUDIT_LOG_TOPIC` and the feature can be enabled/disabled using `GATEWAY_FEATURE_FLAGS_AUDIT`. These events can be **browsed, filtered and searched** directly within Conduktor's UI or used to create custom alerts and notifications.
 
 ![Gateway Audit](/images/gateway-audit-log.png)
@@ -323,7 +325,7 @@ Here is an example of a Gateway audit log event in JSON format. This event repre
 }
 ```
 
-#### Field details
+### Field details
 
 **Key fields and their values:**
 
@@ -332,6 +334,10 @@ Here is an example of a Gateway audit log event in JSON format. This event repre
 - `source`: Event source, always `null` for authentication events.
 - `eventData`: Contains success/failure messages and error details.
 
+## Gateway audit event types
+
+The Gateway supports the following audit event types:
+
 ### Connection event
 
 The connection event tracks client connections established to the Gateway. It captures client information like remote address, helping monitor who is connecting to your Gateway.
@@ -339,8 +345,6 @@ The connection event tracks client connections established to the Gateway. It ca
 ### Authentication event
 
 The authentication event records the authentication attempts made by clients to the Gateway. It records both successful and failed authentication attempts, providing insights into who accessed the Gateway.
-
-#### Authentication event outcomes
 
 The `eventData` field contains different messages depending on the Gateway security mode, Gateway security protocol, and the authentication outcome. The following are common examples:
 
