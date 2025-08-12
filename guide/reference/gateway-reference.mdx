@@ -341,14 +341,22 @@ A Virtual Cluster allows you to isolate one or more service accounts within a lo
 apiVersion: gateway/v2
 kind: VirtualCluster
 metadata:
- name: "mon-app-A" # All topics and consumer groups will be created on the physical Kafka cluster with this as a prefix. They will appear on the VirtualCluster without the prefix.
+ name: "mon-app-A"
 spec:
- aclEnabled: false # No authorization for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster (default if not set).
+ aclEnabled: false
 ```
+
+- `metadata.name` must be a valid topic prefix as all vcluster topics and consumer groups will be created on the physical kafka cluster with this as the prefix (they will appear on the vcluster without the prefix).
+- `spec.aclEnabled` is optional (default `false`). When unset or `false`,
+  - there are no authorization checks for clients connecting to the vcluster. Clients are free to perform any operation on resources within the vcluster
+  - The fields `acls` and `superUsers` cannot be set
+- `spec.type` must be either `Standard` or `Partner` (default if not set is `Standard`)
+
+The next two sections describe the behaviour of `spec.aclEnabled` when it is set to `true`
 
 ### ACLs configurable via Kafka
 
-Connecting to Gateway as one of the service accounts named in the `superUsers` list allows you to manage ACLs for other service accounts within the vcluster using the Kafka Admin API. This is the same way you would manage a real Kafka Cluster.
+When a vcluster is configured to have ACLs set via Kafka (`aclMode: KAFKA_API`) an administrator can connect to the vcluster as any service account named in the `superUsers` list and fully manage the ACLs of other service accounts within the vcluster using the Kafka Admin API. This is the same way you would manage a real Kafka Cluster.
 
 ```yaml
 ---
@@ -357,12 +365,19 @@ kind: VirtualCluster
 metadata:
  name: "mon-app-A"
 spec:
- aclEnabled: true # Uses aclMode to determine how ACLs are managed
- aclMode: KAFKA_API # Means ACLs can be edited by superUsers using kafka-acls command or equivalent (default if not set)
- superUsers: # This doesn't create users within the Virtual Cluster. You still need to create the gateway service account.
+ aclEnabled: true
+ aclMode: KAFKA_API
+ superUsers:
  - username1
  - username2
 ```
+
+- when `spec.aclMode` is set to `KAFKA_API` (default if `aclEnabled: true`)
+  - it cannot be changed
+  - `acls` cannot be set
+  - `spec.superUsers` must be set
+- `spec.superUsers` is the list of usernames for which the associated service accounts in this virtual cluster can bypass ACLs.
+  - Specified usernames are not created automatically. You still need to create the associated gateway service accounts on the vcluster for them to work.
 
 ### ACLs configurable via REST
 
@@ -376,7 +391,7 @@ metadata:
  name: "mon-app-A"
 spec:
  aclEnabled: true
- aclMode: REST_API # Means ACLs must be set in this resource using the following acls field
+ aclMode: REST_API
  acls:
   - resourcePattern:
       resourceType: TOPIC
@@ -394,10 +409,14 @@ spec:
     permissionType: ALLOW
 ```
 
-This example demonstrates two basic ACLs, but any valid Kafka API ACL can also be set via REST (inc `*` wildcards). For a complete list of the ACL combinations available checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
+- when `spec.aclMode` is set to `REST_API`
+  - it cannot be changed
+  - `spec.acls` must be set
+  - `spec.superUsers` cannot be set
+- `spec.acls` is the complete list of ACL bindings for the vcluster and allows (nearly) any valid Kafka API ACL binding (inc `*` wildcards) to be set. For a complete list of valid ACL bindings checkout the [Open API schema](https://developers.conduktor.io/?product=gateway&version=3.11.0&gatewayApiVersion=v2#tag/cli_virtual-cluster_gateway_v2_7/operation/List%20the%20virtual%20clusters).
 
 :::info
-We do not allow the `aclMode` to be changed once it is set. When `aclEnabled` is set to `true` without specifiying the `aclMode` the system sets it to its default value of `KAFKA_API`. This means that if you set the `aclEnabled` flag to true but do not set the `aclMode` you cannot later change it to `REST_API`. We enforce this limitation because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` mode changes are cumulative whereas `REST_API` mode changes are idempotent)
+We do not allow the `aclMode` to be changed once it is set because `KAFKA_API` and `REST_API` have incompatible mutation processes (`KAFKA_API` mode changes are cumulative whereas `REST_API` mode changes are idempotent). 
 :::
 
 ## AliasTopic
