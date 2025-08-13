@@ -478,7 +478,7 @@ Following this, enter general information for your custom application, including
 
 ![Jumpcloud example 4](/images/jumpcloud-figure-4.png)
 
-- **Step 3**: Add `Redirect URI(s)` and `Login URL`.
+- **Step 3**: Configure OAuth settings including `Redirect URI(s)`, `Login URL` and the client authentication type.
 
 The Redirect URI is where JumpCloud sends the authentication response and ID token for the user's sign-in request to. The Login URL is the URL users need to log into this application. 
 
@@ -490,6 +490,8 @@ For example, if you deployed Console locally using the name `jumpcloud` in your 
 `https://localhost:8080/oauth/callback/jumpcloud`, as seen in the screenshot below.
 
 Enter the Login URL, which is the URL users need to log into this application. In the example below, this is `https://localhost:8080` .
+
+For the **Client Authentication Type** make sure to select the **Client Secret Basic** option.
 
 ![Jumpcloud ecample 5](/images/jumpcloud-figure-5.png)
 
