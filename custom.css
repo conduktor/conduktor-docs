@@ -79,22 +79,32 @@ h1, h2, h3 {
   color: white;
 }
 
-table {
+/* table {
   border: 1px solid #eeedef;
   border-radius: 8px;
-}
+} */
 
 table td {
   padding: 16px !important;
-  border-right: 1px solid #eeedef;
+  border-left: 1px solid #eeedef;
 }
 
 table td:last-child {
-  border-right: none;
+  border-right: 1px solid #eeedef;
+}
+
+table tr {
+  border-left: 1px solid #eeedef;
+  border-radius: 20px
+}
+
+table tr:first-child {
+  border-top: 1px solid #eeedef;
 }
 
 table tr:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid #eeedef;
+  border-right: 1px solid #eeedef;
 }
 
 table th {
