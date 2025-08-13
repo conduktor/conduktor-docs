@@ -78,3 +78,42 @@ h1, h2, h3 {
 .dark h1, .dark h2, .dark h3 {
   color: white;
 }
+
+table {
+  border: 1px solid #eeedef;
+  border-radius: 8px;
+}
+
+table td {
+  padding: 16px !important;
+  border-right: 1px solid #eeedef;
+}
+
+table td:last-child {
+  border-right: none;
+}
+
+table tr:last-child {
+  border-bottom: none;
+}
+
+table th {
+  min-width: auto !important;
+  border-right: 1px solid #eeedef;
+}
+
+table th:last-child {
+    border-right: none;
+}
+
+.prose :where(thead th):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  padding: 8px 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
