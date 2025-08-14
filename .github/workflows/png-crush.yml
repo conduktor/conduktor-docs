@@ -1,0 +1,131 @@
+name: PNG Optimization
+
+on:
+  push:
+    paths:
+      - '**/*.png'
+      - '**/*.PNG'
+  pull_request:
+    paths:
+      - '**/*.png'
+      - '**/*.PNG'
+
+jobs:
+  optimize-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Install pngcrush
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pngcrush
+
+      - name: Get changed PNG files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.png
+            **/*.PNG
+
+      - name: Optimize PNG files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Optimizing PNG files..."
+          optimized_count=0
+          total_saved=0
+          
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ -f "$file" ]]; then
+              echo "Processing: $file"
+              original_size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file")
+              
+              # Create temporary file for optimization
+              temp_file="${file}.tmp"
+              
+              # Run pngcrush with optimal settings
+              if pngcrush -rem alla -brute -reduce "$file" "$temp_file" >/dev/null 2>&1; then
+                new_size=$(stat -f%z "$temp_file" 2>/dev/null || stat -c%s "$temp_file")
+                
+                if [[ $new_size -lt $original_size ]]; then
+                  mv "$temp_file" "$file"
+                  saved=$((original_size - new_size))
+                  total_saved=$((total_saved + saved))
+                  optimized_count=$((optimized_count + 1))
+                  echo "✓ Optimized $file: $original_size → $new_size bytes (saved $saved bytes)"
+                else
+                  rm -f "$temp_file"
+                  echo "• No optimization possible for $file"
+                fi
+              else
+                rm -f "$temp_file"
+                echo "⚠ Failed to optimize $file"
+              fi
+            fi
+          done
+          
+          echo "OPTIMIZED_COUNT=$optimized_count" >> $GITHUB_ENV
+          echo "TOTAL_SAVED=$total_saved" >> $GITHUB_ENV
+          
+          if [[ $optimized_count -gt 0 ]]; then
+            echo "📊 Summary: Optimized $optimized_count PNG files, saved $total_saved bytes total"
+          else
+            echo "📊 Summary: No PNG files were optimized (already optimal or no PNG changes)"
+          fi
+
+      - name: Commit optimized images
+        if: steps.changed-files.outputs.any_changed == 'true' && env.OPTIMIZED_COUNT != '0'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add **/*.png **/*.PNG
+          git commit -m "🤖 Optimize PNG images with pngcrush
+
+          - Optimized ${{ env.OPTIMIZED_COUNT }} PNG files
+          - Total bytes saved: ${{ env.TOTAL_SAVED }}
+          - Automated by PNG optimization workflow" || exit 0
+
+      - name: Push changes
+        if: steps.changed-files.outputs.any_changed == 'true' && env.OPTIMIZED_COUNT != '0' && github.event_name == 'push'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Add PR comment with optimization results
+        if: steps.changed-files.outputs.any_changed == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const optimizedCount = process.env.OPTIMIZED_COUNT;
+            const totalSaved = process.env.TOTAL_SAVED;
+            
+            let commentBody;
+            if (optimizedCount > 0) {
+              commentBody = `🤖 **PNG Optimization Results**
+              
+              ✅ Optimized **${optimizedCount}** PNG files
+              💾 Total bytes saved: **${totalSaved}** bytes
+              
+              The PNG files in this PR have been automatically optimized with pngcrush to reduce file sizes without quality loss.`;
+            } else {
+              commentBody = `🤖 **PNG Optimization Results**
+              
+              ℹ️ No PNG optimizations were possible - all PNG files are already optimally compressed.`;
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });
