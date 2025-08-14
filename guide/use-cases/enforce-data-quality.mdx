@@ -262,6 +262,23 @@ When the **Mark** action is enabled, messages that violate the Rule(s) are tagge
 }
 ```
 
+### Violations Metrics
+
+Monitor Rule violations to a Policy over the selected time range 30 minutes, 1 hour, 1 day or 7 days.
+
+#### Metrics Displayed
+
+The page displays four types of metrics: **Messages Evaluated Count** shows total messages checked against this policy. **Violations Count** shows total violations detected. **Violations Graph** is a bar chart showing past violations to help identify patterns and spikes. **Violations History** lists individual violation events showing when and where violations occurred.
+
+#### Data Freshness
+
+**Important**: There's a timing difference between the metrics:
+
+- **Violations History**: Updated almost immediately
+- **Messages Evaluated Count, Violations Count & Violations Graph**: May be delayed up to 1 minute
+
+This delay exists because these metrics are collected through our monitoring system (Prometheus), which processes data in batches for performance. The violations history comes directly from the backend database. Due to this, the violations history can show recent violations that do not yet show up in the graph or counts.
+
 ## Create a Policy
 
 You can create a data quality Policy using the Console UI or the Conduktor CLI.
