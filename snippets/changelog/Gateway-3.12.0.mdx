@@ -56,4 +56,4 @@ This change is backwards compatible, as the default value is `ALL` (which means 
 #### Enhanced Crypto Shredding behavior for Decryption
 The Decryption Interceptor now includes improved error handling behavior specifically for Crypto Shredding scenarios.
 
-When using KMS types that support crypto shredding (Vault, AWS, GCP, Azure, Gateway), the plugin automatically overrides the configured `errorPolicy` when encryption keys are missing. In these cases, the plugin will always return encrypted data regardless of the configured policy, ensuring consumers don't become permanently blocked by deliberately un-decryptable messages.
+A new `crypto_shred_safe_fail_fetch` error policy has been introduced. It returns encrypted data when decryption fails due to missing encryption keys, but throws exceptions for other types of decryption failures (e.g., authentication errors). This ensures that crypto-shredded data remains protected while still failing fast for other issues that require attention.
