@@ -25,45 +25,39 @@
           {
             "group": "Conduktor in production",
             "pages": [
-              "guide/conduktor-in-production/index", 
-              "guide/conduktor-in-production/requirements", 
+              "guide/conduktor-in-production/index",
+              "guide/conduktor-in-production/requirements",
               "guide/conduktor-in-production/deploy-artifacts/index"
             ]
-          },    
-            {
-             "group": "Deploy Gateway",
-             "pages": [
+          },
+          {
+            "group": "Deploy Gateway",
+            "pages": [
               "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
               "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
               "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
             ]
           },
-            {
-              "group": "Deploy Console",
-              "pages": [
+          {
+            "group": "Deploy Console",
+            "pages": [
               "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
               "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
               "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
               "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"
-              ]
-            },
-            {   
-             "group": "Deploy Cortex",
-             "pages": [
-                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
-                  ]
-                },
-          {
-            "group": "Monitor",
-            "pages": [
-              "guide/conduktor-in-production/monitor/index"
             ]
           },
           {
+            "group": "Deploy Cortex",
+            "pages": ["guide/conduktor-in-production/deploy-artifacts/deploy-cortex"]
+          },
+          {
+            "group": "Monitor",
+            "pages": ["guide/conduktor-in-production/monitor/index"]
+          },
+          {
             "group": "Manage licenses",
-            "pages": [
-              "guide/conduktor-in-production/manage-licenses/index"
-            ]
+            "pages": ["guide/conduktor-in-production/manage-licenses/index"]
           },
           {
             "group": "Automate",
@@ -79,10 +73,10 @@
             "pages": [
               "guide/conduktor-in-production/admin/index",
               "guide/conduktor-in-production/admin/configure-clusters",
-              "guide/conduktor-in-production/admin/set-up-rbac",  
-              "guide/conduktor-in-production/admin/audit-logs",  
-              "guide/conduktor-in-production/admin/gw-policies", 
-              "guide/conduktor-in-production/admin/data-mask"             
+              "guide/conduktor-in-production/admin/set-up-rbac",
+              "guide/conduktor-in-production/admin/audit-logs",
+              "guide/conduktor-in-production/admin/gw-policies",
+              "guide/conduktor-in-production/admin/data-mask"
             ]
           },
           {
@@ -103,21 +97,18 @@
               "guide/use-cases/self-service",
               "guide/use-cases/encrypt-kafka",
               "guide/use-cases/third-party-data",
-              "guide/use-cases/enforce-data-quality", 
+              "guide/use-cases/enforce-data-quality",
               "guide/use-cases/chaos-testing",
               "guide/use-cases/apply-traffic-control-policies",
               "guide/use-cases/manage-large-messages",
               "guide/use-cases/cache-data"
             ]
-            },      
-            {
-            "group": "Monitor brokers and apps",
-            "pages": [
-              "guide/monitor-brokers-apps/index",
-              "guide/monitor-brokers-apps/alerts"
-            ]
           },
-            {
+          {
+            "group": "Monitor brokers and apps",
+            "pages": ["guide/monitor-brokers-apps/index", "guide/monitor-brokers-apps/alerts"]
+          },
+          {
             "group": "Manage Kafka",
             "pages": [
               "guide/manage-kafka/index",
@@ -126,7 +117,7 @@
               "guide/manage-kafka/kafka-resources/ksql-db",
               "guide/manage-kafka/kafka-resources/schema-registry",
               "guide/manage-kafka/kafka-resources/service-accounts-acls",
-              "guide/manage-kafka/kafka-resources/topics"            
+              "guide/manage-kafka/kafka-resources/topics"
             ]
           }
         ]
@@ -168,18 +159,17 @@
               "guide/tutorials/index",
               "guide/tutorials/configure-audit-log-topic",
               "guide/tutorials/configure-chargeback",
-              "guide/tutorials/configure-sql",   
+              "guide/tutorials/configure-sql",
               "guide/tutorials/custom-deserializers",
               "guide/tutorials/reprocess",
               "guide/tutorials/self-service-start",
-              "guide/tutorials/sni-routing",    
+              "guide/tutorials/sni-routing",
               "guide/tutorials/deploy-aws",
               "guide/tutorials/migrate-gw-security",
               "guide/tutorials/configure-encryption",
               "guide/tutorials/custom-log",
               "guide/tutorials/manage-gw-sa"
-
-          ]
+            ]
           }
         ]
       },
@@ -189,11 +179,11 @@
           {
             "group": "Resource reference",
             "pages": [
-              "guide/reference/index",     
+              "guide/reference/index",
               "guide/reference/console-reference",
               "guide/reference/gateway-reference",
               "guide/reference/interceptor-reference",
-              "guide/reference/kafka-reference",               
+              "guide/reference/kafka-reference",
               "guide/reference/metric-reference",
               "guide/reference/self-service-reference"
             ]
@@ -201,14 +191,18 @@
         ]
       },
       {
-        "tab": "Release notes",     
+        "tab": "API",
+        "href": "https://developers.conduktor.io/"
+      },
+      {
+        "tab": "Release notes",
         "groups": [
           {
             "group": "Conduktor releases",
             "pages": ["guide/release-notes/index"]
           }
         ]
-      },  
+      },
       {
         "tab": "Support",
         "global": {
@@ -219,7 +213,7 @@
               "icon": "newspaper"
             }
           ]
-        },           
+        },
         "groups": [
           {
             "group": "Support options",
@@ -228,33 +222,30 @@
               "guide/support/upgrade",
               "guide/support/supported-version-policy",
               "guide/support/third-party-dependencies"
-            
             ]
           }
         ]
       },
       {
-        "tab": " ",     
+        "tab": " ",
         "groups": [
           {
             "group": "Conduktor",
-            "pages": [
-              "/gateway"]
+            "pages": ["/gateway"]
           }
         ]
-      },  
+      },
       {
-        "tab": " ",     
+        "tab": " ",
         "groups": [
           {
             "group": "Conduktor",
-            "pages": [
-              "/platform"]
+            "pages": ["/platform"]
           }
         ]
-      },          
+      },
       {
-        "tab": " ",     
+        "tab": " ",
         "groups": [
           {
             "group": "Conduktor Desktop",
@@ -268,7 +259,7 @@
               "/desktop/conduktor-first-steps/install/mac",
               "/desktop/conduktor-first-steps/install/windows",
               "/desktop/conduktor-first-steps/install/update",
-        
+
               "/desktop/conduktor-first-steps/sign-in/index",
               "/desktop/conduktor-first-steps/sign-in/single-sign-on",
 
@@ -304,7 +295,7 @@
               "/desktop/features/topics-management/how-to",
               "/desktop/features/topics-management/smart-groups",
               "/desktop/features/topics-management/topic-details",
-              
+
               "/desktop/features/consuming-data/index",
               "/desktop/features/consuming-data/pick-your-format-wisely",
               "/desktop/features/consuming-data/filtering-and-projecting-data",
@@ -337,7 +328,7 @@
               "/desktop/features/kafka-access-control-list-acl/index",
               "/desktop/features/kafka-access-control-list-acl/acls-advanced-insights",
 
-              "/desktop/features/monitoring",             
+              "/desktop/features/monitoring",
 
               "/desktop/miscellaneous/configuring-conduktor",
               "/desktop/miscellaneous/data-security",
@@ -345,10 +336,10 @@
               "/desktop/miscellaneous/internet-troubleshooting",
 
               "/desktop/changelog/changelog"
-          ]
+            ]
           }
         ]
-      }      
+      }
     ]      
   },
   "logo": {
