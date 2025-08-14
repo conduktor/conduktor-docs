@@ -6,7 +6,7 @@ title: Console resources
 
 - **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
 Creates a group with members and permissions in Console.
 
@@ -87,7 +87,7 @@ resource "conduktor_console_group_v2" "developers-a" {
 
 - **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
 Creates a user with Console permissions.
 
@@ -175,9 +175,9 @@ Make sure you set permissions for this user, otherwise it won't have access to C
 
 Creates a Kafka cluster definition in Console.
 
-- **API key(s):** ="AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "PartialLabelSupport"
+- **Labels support:** Partial
 
 <Tabs>
 <Tab title="CLI">
@@ -611,9 +611,9 @@ spec = {
 
 Creates a Kafka Connect cluster definition in Console.
 
-- **API key(s):** "AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** API, CLI, UI, TF
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 <Tabs>
 <Tab title="CLI">
@@ -675,9 +675,9 @@ resource "conduktor_console_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 
-- **API key(s):** "AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API
-- **Labels support:** "MissingLabelSupport" 
+- **Labels support:** Missing
 
 Creates a ksqlDB cluster definition in Console.
 
@@ -708,9 +708,9 @@ spec:
 
 ## Alerts
 
-- **API key(s):** AdminToken" 
+- **API key(s):** AdminToken, AppToken
 - **Managed with:** UI, CLI, API
-- **Labels support: "MissingLabelSupport" 
+- **Labels support: Missing
 
 Creates an alert in Console.
 
@@ -759,9 +759,9 @@ spec:
 
 ## Partner Zones
 
-- **API key(s):** "AdminToken" 
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 Create or update a [Partner Zone](/guide/conduktor-concepts/partner-zones).
 
