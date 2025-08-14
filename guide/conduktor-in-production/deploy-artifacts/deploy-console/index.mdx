@@ -242,7 +242,11 @@ If the response indicates the certificate is not issued by a valid authority, yo
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
 - **Upload Certificate**: This option will enable you to upload the certificate (`.crt`, `.pem`, `.jks` or `.p12` files), or paste the certificate as text
 
-![Cluster cert](/images/cluster-certificate.png)
+<img 
+  src="/images/cluster-certificate.png" 
+  alt="Cluster certificate"
+  width="300"
+/>
 
 Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
 
@@ -331,11 +335,19 @@ This mechanism uses TLS protocol to authenticate the client. Also known as:
 Use the keystore file from your Kafka admin or provider (in **.jks** or **.p12** format).
 
 Click the "Import from keystore" button to select a keystore file from your filesystem.
-![Cluster keystore](/images/cluster-keystore.png)
+<img 
+  src="/images/cluster-keystore.png" 
+  alt="Cluster keystore"
+  width="350"
+/>
 
 Fill in the required keystore password and key password and click "Import".
 
-![Import keystore](/images/import-from-keystore.png)
+<img 
+  src="/images/import-from-keystore.png" 
+  alt="Import keystore"
+  width="300"
+/>
 
 You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
 ![Cluster keystore import](/images/cluster-keystore-imported.png)

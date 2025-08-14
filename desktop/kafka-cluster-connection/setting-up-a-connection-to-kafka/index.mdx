@@ -2,6 +2,8 @@
 title: Setting up a connection to Kafka
 description: Conduktor allows you to easily add, manage and save cluster connection
   configuration.
+search: false
+index: false
 ---
 
 # Setting up a connection to Kafka
@@ -109,16 +111,16 @@ We current support Jolokia and JMX to extract metrics.
 - **Jolokia:** please provide the protocol as well as the Jolokia port. The [Jolokia agent](https://jolokia.org/agent.html) should be installed on all your Kafka brokers.
 - **JMX:** if you have started the JMX utility on your Kafka brokers, please provide the JMX port for Conduktor to connect to.
 
-:::info
+<Info>
 Please contact us in case you need other metrics mechanisms.
-:::
+</Info>
 
 ### SSH (note: not a connection setting)
 
-:::caution
+<Warning>
 The SSH configuration is quite powerful and should only be allowed to be set-up for your Kafka
 administrators. Average Kafka users should not need to fill up the details of that tab.
-:::
+</Warning>
 
 The SSH configuration enables Conduktor to directly access your brokers machines, enabling features like the rolling restart feature.
 
@@ -184,10 +186,10 @@ To edit the configuration of a cluster, hover your mouse over a cluster, and the
 
 ![the config button appears next to the cluster name](<../../assets/image (17).png>)
 
-:::info
+<Info>
 The ability to export, backup and share Kafka cluster configurations is an upcoming feature of the
 Enterprise License.
-:::
+</Info>
 
 ## Secure Kafka Clusters
 
