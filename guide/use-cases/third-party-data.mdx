@@ -22,7 +22,7 @@ Before creating a Partner Zone, you have to:
 
 - use **Conduktor Console 1.36.0** or later
 - use **Conduktor Gateway 3.11.0** or later with the following configurations:
-  - `GATEWAY_SECURITY_PROTOCOL` set to `SASL_PLAIN`, `SASL_SSL`, or `SSL`
+  - `GATEWAY_SECURITY_PROTOCOL` set to `SSL`, `SASL_SSL`, or `SASL_PLAINTEXT`
   - `GATEWAY_SECURITY_MODE` set to `GATEWAY_MANAGED`
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
   - `GATEWAY_FEATURE_FLAGS_MANDATORY_VCLUSTER` set to `true`. [Find out more about this environment variable](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#connect-from-clients-to-gateway) and what [service account](/guide/conduktor-concepts/gw-service-accounts#local-and-external-service-accounts) has to be setup. 
