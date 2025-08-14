@@ -89,8 +89,16 @@ table td {
   border-left: 1px solid #eeedef;
 }
 
+.dark table td {
+  border-left: 1px solid rgb(255, 255, 255, 0.05);
+}
+
 table td:last-child {
   border-right: 1px solid #eeedef;
+}
+
+.dark table td:last-child {
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
 }
 
 table tr {
@@ -98,8 +106,16 @@ table tr {
   border-radius: 20px
 }
 
+.dark table tr {
+  border-left: 1px solid rgb(255, 255, 255, 0.05);
+}
+
 table tr:first-child {
   border-top: 1px solid #eeedef;
+}
+
+.dark table tr:first-child {
+  border-top: 1px solid rgb(255, 255, 255, 0.05);
 }
 
 table tr:last-child {
@@ -107,9 +123,18 @@ table tr:last-child {
   border-right: 1px solid #eeedef;
 }
 
+.dark table tr:last-child {
+  border-bottom: 1px solid rgb(255, 255, 255, 0.05);
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
+}
+
 table th {
   min-width: auto !important;
   border-right: 1px solid #eeedef;
+}
+
+.dark table th {
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
 }
 
 table th:last-child {
