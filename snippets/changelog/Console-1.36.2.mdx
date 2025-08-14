@@ -1,0 +1,13 @@
+---
+title: Console 1.36.2
+---
+
+### Improvements
+
+- Added support for SMTPS servers in email alerting to allow TLS-enabled SMTP servers, as well as the previously available option for StartTLS.
+
+### Fixes
+
+- Fixed an issue where the Console UI would prevent Debezium connector creation when required metadata was missing, even though the CLI would allow creation successfully.
+- Fixed a permissions bug where users who were members of multiple ApplicationGroups would only inherit permissions from one group instead of receiving the combined permissions from all their groups. This was causing users to have incomplete access rights.
+- Updated the base image to include upstream patches for CVE-2025-30749, CVE-2025-50059, and CVE-2025-50106 affecting Oracle Java SE and GraalVM.

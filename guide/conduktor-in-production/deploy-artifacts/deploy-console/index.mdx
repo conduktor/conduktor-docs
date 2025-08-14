@@ -206,7 +206,7 @@ template:
 </Tab>
 </Tabs>
 
-## Configure SSL/TLS
+## Configure SSL or TLS
 
 Depending on the environment, Conduktor might need to access external services (such as Kafka clusters, SSO servers, databases or object storage) that require a custom certificate for SSL/TLS communication.
 
@@ -242,7 +242,11 @@ If the response indicates the certificate is not issued by a valid authority, yo
 - **Skip SSL Check**: This will skip validation of the SSL certificate on your server. This is an easy option for development environments with self-signed certificates
 - **Upload Certificate**: This option will enable you to upload the certificate (`.crt`, `.pem`, `.jks` or `.p12` files), or paste the certificate as text
 
-![Cluster cert](/images/cluster-certificate.png)
+<img 
+  src="/images/cluster-certificate.png" 
+  alt="Cluster certificate"
+  width="300"
+/>
 
 Upon uploading the certificate, you should then see the green icon indicating the **connection is secure**.
 
@@ -331,11 +335,19 @@ This mechanism uses TLS protocol to authenticate the client. Also known as:
 Use the keystore file from your Kafka admin or provider (in **.jks** or **.p12** format).
 
 Click the "Import from keystore" button to select a keystore file from your filesystem.
-![Cluster keystore](/images/cluster-keystore.png)
+<img 
+  src="/images/cluster-keystore.png" 
+  alt="Cluster keystore"
+  width="350"
+/>
 
 Fill in the required keystore password and key password and click "Import".
 
-![Import keystore](/images/import-from-keystore.png)
+<img 
+  src="/images/import-from-keystore.png" 
+  alt="Import keystore"
+  width="300"
+/>
 
 You'll get back to the cluster screen with the content of your keystore extracted into Access key and Access certificate.
 ![Cluster keystore import](/images/cluster-keystore-imported.png)
@@ -1114,38 +1126,6 @@ We support ksqlDB integration as of Conduktor Console v1.21.0.
 | **mTLS Authentication**                           |                                                      |                                                       |           |         |         |
 | `clusters[].ksqlDBs[].security.key`               | Access key                                           | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_KEY`               | false     | string  | ∅       |
 | `clusters[].ksqlDBs[].security.certificateChain`  | Access certificate                                   | `CDK_CLUSTERS_0_KSQLDBS_0_SECURITY_CERTIFICATECHAIN`  | false     | string  | ∅       |
-
-### Indexer properties
-
-[Indexing](/guide/conduktor-concepts/indexing) is the internal process of Conduktor Console that fetches metadata from your Kafka cluster (e.g. topics, consumer groups, subjects).
-You should modify these parameters only if you see an issue with the performance of the indexer.
-
-| Property                                             | Description                                                                                                                                   | Environment variable                               | Mandatory | Type | Default           |
-|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------|-------------------|
-| **Lag exporter**                                     |                                                                                                                                               |                                                    |           |      |                   |
-| `lagexporter.frequency`                              | Frequency in seconds of the execution of the lag exporter                                                                                     | `CDK_LAGEXPORTER_FREQUENCY`                        | false     | int  | `30`              |
-| `lagexporter.clusterparallelism`                     | Number of clusters indexed in parallel for the lag exporter                                                                                   | `CDK_LAGEXPORTER_CLUSTERPARALLELISM`               | false     | int  | `1`               |
-| `lagexporter.indexertimeout`                         | Lag exporter timeout in seconds                                                                                                               | `CDK_LAGEXPORTER_INDEXERTIMEOUT`                   | false     | int  | `300` (5 minutes) |
-| **Metadata indexer**                                 |                                                                                                                                               |                                                    |           |      |                   |
-| `metadataindexer.frequency`                          | Frequency in seconds of the execution of the metadata indexer                                                                                 | `CDK_METADATAINDEXER_FREQUENCY`                    | false     | int  | `30`              |
-| `metadataindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the metadata indexer                                                                               | `CDK_METADATAINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
-| `metadataindexer.indexertimeout`                     | Metadata indexer timeout in seconds                                                                                                           | `CDK_METADATAINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
-| **Monitoring indexer**                               |                                                                                                                                               |                                                    |           |      |                   |
-| `monitoringconfig.frequency`                         | Frequency in seconds of the execution of the monitoring indexer                                                                               | `CDK_MONITORINGCONFIG_FREQUENCY`                   | false     | int  | `30`              |
-| `monitoringconfig.clusterparallelism`                | Number of clusters indexed in parallel for the monitoring indexer                                                                             | `CDK_MONITORINGCONFIG_CLUSTERPARALLELISM`          | false     | int  | `1`               |
-| `monitoringconfig.indexertimeout`                    | Monitoring indexer timeout in seconds                                                                                                         | `CDK_MONITORINGCONFIG_INDEXERTIMEOUT`              | false     | int  | `300` (5 minutes) |
-| **Schema registry indexer**                          |                                                                                                                                               |                                                    |           |      |                   |
-| `registryindexer.frequency`                          | Frequency in seconds of the execution of the schema registry indexer                                                                          | `CDK_REGISTRYINDEXER_FREQUENCY`                    | false     | int  | `30`              |
-| `registryindexer.clusterparallelism`                 | Number of clusters indexed in parallel for the schema registry indexer                                                                        | `CDK_REGISTRYINDEXER_CLUSTERPARALLELISM`           | false     | int  | `1`               |
-| `registryindexer.indexertimeout`                     | Schema registry indexer timeout in seconds                                                                                                    | `CDK_REGISTRYINDEXER_INDEXERTIMEOUT`               | false     | int  | `300` (5 minutes) |
-| **Kafka connect indexer**                            |                                                                                                                                               |                                                    |           |      |                   |
-| `connectindexer.frequency`                           | Frequency in seconds of the execution of the kafka connect indexer                                                                            | `CDK_CONNECTINDEXER_FREQUENCY`                     | false     | int  | `30`              |
-| `connectindexer.clusterparallelism`                  | Number of clusters indexed in parallel for the kafka connect indexer                                                                          | `CDK_CONNECTINDEXER_CLUSTERPARALLELISM`            | false     | int  | `1`               |
-| `connectindexer.indexertimeout`                      | Kafka connect indexer timeout in seconds                                                                                                      | `CDK_CONNECTINDEXER_INDEXERTIMEOUT`                | false     | int  | `300` (5 minutes) |
-| **Kafka admin client configuration**                 |                                                                                                                                               |                                                    |           |      |                   |
-| `kafka_admin.list_consumer_group_offsets_batch_size` | How many consumer groups offset to fetch in a single query. Old versions of Kafka may time out when fetching too many offsets at once.        | `CDK_KAFKAADMIN_LISTCONSUMERGROUPOFFSETSBATCHSIZE` | false     | int  | `100`             |
-| `kafka_admin.batch_parallel_size`                    | Maximum of batched requests that can be sent in parallel                                                                                      | `CDK_KAFKAADMIN_BATCHPARALLELSIZE`                 | false     | int  | `5`               |
-| `kafka_admin.record_size_limit`                      | Maximum size in bytes of a single message to display in the consume page. For larger messages, you'll get a link to open in a dedicated page. | `CDK_KAFKAADMIN_RECORDSIZELIMIT`                   | false     | int  | `102400` (bytes)  |
 
 ### AuditLog export properties
 

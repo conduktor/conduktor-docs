@@ -4,93 +4,168 @@ title: Automate with CLI
 
 ## Conduktor CLI overview
 
-Conduktor CLI (Command Line Interface) allows you to perform some operations directly from your command line or a CI/CD pipeline.
+Conduktor CLI (Command Line Interface) helps you to manage your [Console and Gateway resources](/guide/reference) via commands or CI/CD pipelines.
 
-You have two options to install Conduktor CLI:
+## Install
 
-- [Native binary](#native-binary) - for individual use and testing or
+You have three options to install Conduktor CLI:
+
+- [Native binary](#native-binary) - for individual use and testing
+- [Homebrew](#homebrew) - for individual use and testing on MacOS
 - [Docker](#docker) - for integration in CI/CD pipelines
 
-## Native binary
+### Native binary
 
 [Download the latest binary from GitHub](https://github.com/conduktor/ctl/releases) on Windows, Linux or MacOS.
 
 In the **Assets** list, download the build that corresponds to your machine (for Apple Silicon use `darwin-arm64`).  
   
-**Brew (MacOS)**
+### Homebrew
 
-````
+Use the [Homebrew package manager](https://brew.sh/) to install our CLI:
+
+```bash
 brew install conduktor/brew/conduktor-cli
 ```
 
+### Docker
 
-## Docker
-
+Pull the [latest Dockerhub version](https://hub.docker.com/r/conduktor/conduktor-ctl) of the CLI using the following command line:
 
 ```bash
 docker pull conduktor/conduktor-ctl
-````
+```
 
-### Configure
+## Configure
 
+To use the Conduktor CLI, you need to set:
+- the URL of your Conduktor Console and/or Gateway API
+- the authentication mechanism: either by using an API key, or user credentials
 
-- The URL of Conduktor Console
-- Your API Key
+### Authenticate to Console using API keys
+
+These are the necessary environment variables for this authentication method::
 
 ```bash
 export CDK_BASE_URL=http://localhost:8080
-export CDK_API_KEY=<your-api-key>
+export CDK_API_KEY=<your-API-key>
 ```
 
-There are three types of API keys:
+There are two types of API keys: **admin** and **Self-service application**.
 
-- [Admin API Keys](#admin-api-key)
-- [Self-Service Application API Keys](#self-service-application-api-key)
-- [Short-lived User API Keys](#short-lived-user-api-keys)
+<Tabs>
+<Tab title="Admin API key">
 
-<Info>
-Use a short-lived user API key to bootstrap the first admin key.
-</Info>
+Admin API keys grant the maximum permissions in Console.
 
-#### Admin API key
+<Tabs>
+  <Tab title="CLI">
 
-Admin API Keys grant the maximum permissions on Console. They are generated either from the UI or using the CLI.
+```bash title="Generate an admin key named 'my-admin-key'"
+conduktor token create admin my-admin-key
+```
+
+  </Tab>
+  <Tab title="UI">
+Go to **Settings** > **API Keys** and select **New API Key**:
+![Create API Key](/images/admin-keys.png)
+  </Tab>
+</Tabs>
+
+</Tab>
+<Tab title="Self-service Application API key">
+
+Self-service Application API key permissions are **limited to the scope of the ApplicationInstance** for which they have been generated. [Find out more about Self-service](/guide/use-cases/self-service).
+
+  <Tabs>
+  <Tab title="CLI">
+
+```bash title="Generate an application API key named 'my-admin-key' for the application 'my-app-instance'"
+conduktor token create application-instance -i=my-app-instance my-app-instance-key
+```
+
+  </Tab>
+  <Tab title="UI">
+
+Go to **Applications**, pick your **Application** and **Application Instance**, then go to the **API Keys** tab and click **New API Key**:
+![Cluster identity](/images/create-app-api-key.png)
+
+  </Tab>
+  </Tabs>
+</Tab>
+</Tabs>
+
+### Authenticate to Console using user credentials
+
+You can simply set the username and password of the **local** or **LDAP** user and use the CLI, or create an associated short-lived API key. This type of API key will have the permissions of the user who created it.
+
+This kind of authentication will be valid for the same duration as the configured [session timeout](/guide/conduktor-in-production/admin/user-access/session-lifetime).
 
 ```bash
-# Generate a key named my-admin-key
-$ conduktor token create admin my-admin-key
-AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+export CDK_BASE_URL=http://localhost:8080
+export CDK_USER=admin@company.io
+export CDK_PASSWORD=adminP4ss!
 ```
 
-#### Self-service application API key
+```bash title="Generate a short-lived API key"
+conduktor login
+```
 
-Self-service Application API Key permissions are limited to the scope of the [ApplicationInstance] for which they have been generated.
+### Authenticate to Console using external authentication
 
-Check the [Self-service documentation]for details. They can be obtained either from the UI or using the CLI.
+By default, the Conduktor CLI authenticates with Console using a Console API key, or generates one based on the given credentials. This is the `console` authentication mode (`CDK_AUTH_MODE` is `console` or empty).
+
+Alternatively, you can use the external authentication mode to bypass token generation and use credentials from your identity provider or the API proxy instead. For that, set the `CDK_AUTH_MODE` environment variable to `external`:
+
+```bash title="Set up external authentication with a bearer token"
+export CDK_AUTH_MODE="external"
+export CDK_API_KEY=<bearer_token>
+```
+
+```bash title="Set up external authentication with client credentials"
+export CDK_AUTH_MODE="external"
+export CDK_USER=<client_id>
+export CDK_PASSWORD=<client_secret>
+```
+
+### Authenticate to Gateway using API credentials
+
+To use the CLI to manage Gateway objects, you need to set the URL of the Gateway API and the API credentials.
 
 ```bash
-$ conduktor token create application-instance -i=<my-app-instance> my-app-instance-key
-AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+export CDK_GATEWAY_BASE_URL=http://localhost:8888
+export CDK_GATEWAY_USER=admin
+export CDK_GATEWAY_PASSWORD=conduktor
 ```
 
-#### Short-lived user API keys
+### Environment variables
 
-This type of API Key have the permissions of the user who created it. It can only be generated from the CLI, and it only works for Local Users or LDAP users.  
+This is the list of the supported environment variables:
 
-Short-lived User API Keys will be valid for the same duration as the [Session Lifetime].  
+| Environment variables  | Description                                                              |
+|------------------------|--------------------------------------------------------------------------|
+| **Console**            |                                                                          |
+| `CDK_BASE_URL`         | Console base URL, e.g. `http://localhost:8080`                           |
+| `CDK_API_KEY`          | Console API key (admin or application key)                               |
+| `CDK_USER`             | Console local or LDAP user username                                      |
+| `CDK_PASSWORD`         | Console local or LDAP user password                                      |
+| `CDK_AUTH_MODE`        | Authentication mode (`external`, `console` or empty (default))           |
+| **Gateway**            |                                                                          |
+| `CDK_GATEWAY_BASE_URL` | Gateway base URL, e.g. `http://localhost:8888`                           |
+| `CDK_GATEWAY_USER`     | Gateway user login email                                                 |
+| `CDK_GATEWAY_PASSWORD` | Gateway user login password                                              |
+| **TLS & mTLS**         |                                                                          |
+| `CDK_CACERT`           | Root CA certificate to verify the Conduktor Console certificate (.pem)   |
+| `CDK_INSECURE`         | Skip the TLS verification of the Conduktor Console. Defaults to `false`. |
+| `CDK_CERT`             | Certificate to authenticate the CLI (.pem)                               |
+| `CDK_KEY`              | Key to authenticate the CLI (.pem)                                       |
 
-**OIDC users can't generate this type of API Key.**  
 
-```bash
-export CDK_USER=admin@conduktor.io
-export CDK_PASSWORD=admin
-$ conduktor login
-AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
+## CLI commands
+
+The CLI offers a set of commands to manage Conduktor resources. You can use it to create, update, delete and get resources.
+
 ```
-
-### Console CLI commands
-
-````
 Usage:
   conduktor [flags]
   conduktor [command]
@@ -116,35 +191,49 @@ Flags:
 Use "conduktor [command] --help" for more information about a command.
 ```
 
-#### Apply
+### Apply
 
 The `apply` command allows you to deploy any resource.
 
 ```
 Usage:
-   conduktor apply [flags]
+  conduktor apply [flags]
 
 Flags:
-      --dry-run            Don't really apply change but check on backend the effect if applied
-  -f, --file stringArray   Specify the files to apply
+      --dry-run            Test potential changes without the effects being applied
+  -f, --file stringArray   Specify the files or folders to apply. For folders, all .yaml or .yml files within the folder will be applied, while files in subfolders will be ignored.
   -h, --help               help for apply
+      --parallelism int    Run each apply in parallel, useful when applying a large number of resources. Must be less than 100. (default 1)
+  -r, --recursive          Apply all .yaml or .yml files in the specified folder and its subfolders. If not set, only files in the specified folder will be applied.
 
 Global Flags:
-  -v, --verbose   Show more information for debugging
+      --permissive   Permissive mode, allow undefined environment variables
+  -v, --verbose      Show more information for debugging
 ```
 
-Example:
-```
-$ conduktor apply -f .
-application/clickstream-app: NotChanged
-app-instance/clickstream-app-dev: NotChanged
+<Note>
+The `--parallelism` flag allows you to run multiple applies at the same time, in parallel. This is useful when applying a large number of resources. Be careful not to set it too high, as it may overload the Console/Gateway API.
+ </Note>
+
+Examples:
+```bash title="Apply all resources in multiple directories"
+conduktor apply -f ./directory1 -f ./directory2
 ```
 
-#### Template
+```bash title="Apply a specific file"
+conduktor apply -f file.yaml
+```
+
+```bash title="Apply all resources in the current directory and its subfolders"
+conduktor apply -f . -r
+```
+
+### Template
 
 The `template` command allows you to get an example of a resource definition:
-```
-$ conduktor template topic
+
+```bash
+conduktor template topic
 ---
 apiVersion: v2
 kind: Topic
@@ -152,6 +241,8 @@ metadata:
     name: my-topic
     cluster: my-cluster
     labels:
+        conduktor.io/application: application-a
+        conduktor.io/application-instance: staging
         user-labels: I am a user label
     catalogVisibility: PUBLIC
     descriptionIsEditable: true
@@ -168,197 +259,135 @@ spec:
 
 You can also save the output in a file, in order to edit it before applying it:
 
-```
+```bash
 conduktor template KafkaCluster -o definition.yml
-conduktor template Topic >> definition.yml   #Appending to a already existing files
-vim definition.yml # (or any other text editor you like)
-conduktor apply -f
+conduktor template Topic >> definition.yml   #Appending to an existing file
+vim definition.yml
+conduktor apply -f definition.yml
 ```
 
-#### Delete
+### Delete
 
-The `delete` command allows you to delete a resource.
+The `delete` command allows you to delete a resource. It works the same way as the `apply`.
 
-Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
-
-Example(s):
-
-````
-$ conduktor delete -f ./directoryOfResources
-$ conduktor delete -f resource.yml
-$ conduktor delete topic myTopic
+<Warning>
+Resources are deleted instantly and can't be recovered. Any data or access associated with the resource is permanently lost.
+</Warning>
+Examples:
+```bash title="Delete all resources in multiple directories"
+conduktor delete -f ./directory1 -f ./directory2
 ```
 
-#### Get
+```bash title="Delete a specific file"
+conduktor delete -f file.yaml
+```
+
+```bash title="Delete all resources in the current directory and its subfolders"
+conduktor delete -f . -r
+```
+
+### Get
+
+The `get` command allows you to retrieve resources. You can specify a kind, a name, or list all the resources.
 
 ```
-$ conduktor get user --help
+conduktor get user --help
 If name not provided it will list all resource
 
 Usage:
-  conduktor get user [name] [flags]
+  conduktor get User [name] [flags]
 
 Aliases:
   User, user
 
 Flags:
-  -h, --help            help for User
-  -o, --output output   Output format. One of: json|yaml|name (default yaml)
+  -h, --help   help for User
 
 Global Flags:
-  -v, --verbose   show more information for debugging
+  -o, --output output   Output format. One of: json|yaml|name (default yaml)
+      --permissive      Permissive mode, allow undefined environment variables
+  -v, --verbose         Show more information for debugging
 ```
 
 Examples:
 
-```
-$ conduktor get app-instance
-$ conduktor get app-instance clickstream-app-dev
-```
-
-##### Select output format
-
-By using the flag `--output` or `-o`, you can select the output format of the command.
-
-<Tabs>
-  <Tab title="YAML">
-
-    ```yaml title="conduktor get user -o yaml"
-    ---
-    apiVersion: v2
-    kind: User
-    metadata:
-      name: alice@demo.dev
-    spec:
-      permissions:
-        - resourceType: TOPIC
-          cluster: underlying-kafka
-          name: alice-
-          patternType: PREFIXED
-          permissions:
-            - topicViewConfig
-            - topicConsume
-    ---
-    apiVersion: v2
-    kind: User
-    metadata:
-      name: bob@demo.dev
-    spec:
-      permissions:
-        - resourceType: TOPIC
-          cluster: underlying-kafka
-          name: bob-
-          patternType: PREFIXED
-          permissions:
-            - topicViewConfig
-            - topicConsume
-    ---
-    apiVersion: v2
-    kind: User
-    metadata:
-      name: admin@demo.dev
-    spec: {}
-    ```  
-  <Tabs>
-  <Tab title="JSON">
-
-    ```json title="conduktor get user -o json"
-    [
-      {
-        "apiVersion": "v2",
-        "kind": "User",
-        "metadata": {
-          "name": "alice@demo.dev"
-        },
-        "spec": {
-          "permissions": [
-            {
-              "resourceType": "TOPIC",
-              "cluster": "underlying-kafka",
-              "name": "alice-",
-              "patternType": "PREFIXED",
-              "permissions": [
-                "topicViewConfig",
-                "topicConsume"
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "v2",
-        "kind": "User",
-        "metadata": {
-          "name": "bob@demo.dev"
-        },
-        "spec": {
-          "permissions": [
-            {
-              "resourceType": "TOPIC",
-              "cluster": "underlying-kafka",
-              "name": "bob-",
-              "patternType": "PREFIXED",
-              "permissions": [
-                "topicViewConfig",
-                "topicConsume"
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "v2",
-        "kind": "User",
-        "metadata": {
-          "name": "admin@demo.dev"
-        },
-        "spec": {}
-      }
-    ]
-    ```
-
-  </Tab>
-  <Tab title="List of names">
-
-    ```txt title="Conduktor get user -o name"
-    User/alice@demo.dev
-    User/bob@demo.dev
-    User/admin@demo.dev
-    ```
-
-  </Tab>
-</Tabs>
-
-#### Token
-
-```bash
-# To create an Admin API Key, you need to set either `CDK_API_KEY` or `CDK_USER`/`CDK_PASSWORD`:
-$ conduktor token create admin my_first_admin_token
-AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-
-# List admin API Keys
-$ conduktor token list admin
-my_first_admin_token    1233ff18-0e95-4638-b3fc-f55e20088b8d
-other_admin_token       86cefd40-4d61-4290-8aa7-28c4f4d26079
-
-# Delete an API Key
-$ conduktor token delete 1233ff18-0e95-4638-b3fc-f55e20088b8d
-
-# Create a Self-service API Key
-$ conduktor token create application-instance -i=my_instance my_token_for_my_instance
-AWpw1sZZC20=.29Qb9KbyeQTrewMtnVDYAprxmYo7MUQats2KHzVhx+B/kGOBuIoH8CMsjOcvolUjLKFqbQNSvY0/98wb8mqxU4NwQTSgbSSAlLxau3caByHR6/X9EeqQdj3Lhf0xCzh87/GxYK5JG2DI1VWj55A6xcH++ottyG909PwuGe/GIwgfxX3FKaopg8hxgUmPJNRSWqX+75a8eQi014J4YxuTD7w+723kOQBTXOysfGUaYnfwCCjPPmSWXEEqy5wkH2NS+jXi3S6+fH0ts8CoqvV6Z8YLmBupdMgCtJ9MVBYeDarIzQw6XY7yNuypUqer0dcd9B3KyVR8ecNpFiF7ybvP4g==
-
-# List Self-service API Keys
-$ conduktor token list application-instance -i=my_instance
+```bash title="Get all users"
+conduktor get user
 ```
 
-#### Version
-
-Check the current version of your CLI using this command
+```bash title="Get a specific Kafka connect cluster"
+conduktor get KafkaConnectCluster --cluster my-kafka-cluster
 ```
-$ conduktor version
-Version: v0.3.0
-Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
+
+```bash title="Get all the Console resources with a 'name' output format"
+conduktor get all --console -o name
+```
+
+### Token
+
+To run your CI/CD pipelines, you can use the `token` command to manage your API keys.
+
+```bash title="Create an admin API keys"
+conduktor token create admin my_first_admin_token
+```
+
+```bash title="List Console admin API keys"
+conduktor token list admin
+```
+
+```bash title="Create an application instance API key"
+conduktor token create application-instance -i=my_instance my_token_for_my_instance
+```
+
+```bash title="List API keys of an application instance"
+conduktor token list application-instance -i=my_instance
+```
+
+```bash title="Delete an API key"
+conduktor token delete 1233ff18-0e95-4638-b3fc-f55e20088b8d
+```
+
+### Run
+
+The `run` command allows you to run a few actions:
+
+```
+Usage:
+  conduktor run [flags]
+  conduktor run [command]
+
+Available Commands:
+  generateServiceAccountToken    Generate a token for a service account on a virtual cluster
+  partnerZoneGenerateCredentials generate a token for a partner zone service account
+  whoami                         Return information about the credentials configured in the CLI
+
+Flags:
+  -h, --help   help for run
+
+Global Flags:
+      --permissive   Permissive mode, allow undefined environment variables
+  -v, --verbose      Show more information for debugging
+```
+
+Examples:
+
+```bash title="Generate a service account password for a virtual cluster"
+conduktor run generateServiceAccountToken --v-cluster my-vcluster --username my-service-account
+``` 
+
+```bash title="Generate a Partner Zone service account password"
+conduktor run partnerZoneGenerateCredentials --partner-zone-name my-partner-zone
+```
+
+```bash title="Get information about the credentials configured in the CLI"
+conduktor run whoami
+```
+
+### Version
+
+Check the current version of your CLI:
+```bash title="Check CLI version"
+conduktor version
 ```
 
 ### CI/CD pipeline integration example
@@ -372,7 +401,7 @@ Consider the following folder structure:
 ```
 ├── resources/
 │   ├── topics.yml          # Your topics are there
-|   ├── permissions.yml     # Your permissions to other Apps are there
+|   ├── permissions.yml     # Your permissions to other apps are there
 ```
 
 <Tabs>
@@ -449,16 +478,19 @@ conduktor-main:
 </Tab>
 </Tabs>
 
-### Use environment variables for secrets
+### Environment variables for secrets
 
-When reading YAML manifests, the Conduktor CLI searches for `${ENV}` patterns and replaces them using environment variables matching the `ENV` name.
-It also supports default values as fallback using POSIX notation `${ENV:-default}`.
+The Conduktor CLI automatically substitutes environment variables in YAML manifests using `${ENV_VAR}` patterns. This keeps sensitive data like credentials out of configuration files.
 
-It will fail if an environment variable is not found or set to empty, unless the `--permissive` flag is set e.g. `conduktor apply -f clusters.yaml --permissive`. In which case when an env var is blank or is missing, then it will be replaced with an empty string.
+You can set a default value using POSIX notation `${ENV:-default}`.
 
-See below example for a Conduktor cluster configuration, where the credentials to the cluster are hidden.
+By default, the CLI fails if an environment variable is undefined or empty, ensuring all required variables are properly configured.
+Use the `--permissive` flag to replace missing or empty variables with empty strings instead of failing.
+
+The example below shows a Conduktor cluster configuration with credentials secured using environment variables:
 
 ```yaml
+---
 apiVersion: console/v2
 kind: KafkaCluster
 metadata:
@@ -488,102 +520,3 @@ spec:
     confluentEnvironmentId: "${ENV_VAR_CONFLUENT_ENV_ID:-dev}"
     confluentClusterId: "${ENV_VAR_CONFLUENT_CLUSTER_ID:-main}"
 ```
-
-## Configure Gateway CLI
-
-To use Conduktor CLI, you need to define these environment variables:
-
-- The URL of Conduktor Gateway API
-- The username and password for the API
-
-````yaml
-export CDK_GATEWAY_BASE_URL=http://localhost:8888
-export CDK_GATEWAY_USER=admin
-export CDK_GATEWAY_PASSWORD=conduktor
-````
-
-### Gateway CLI commands
-
-````
-Usage:
-  conduktor [command]
-
-Available Commands:
-  apply       upsert a resource on Conduktor
-  completion  Generate the autocompletion script for the specified shell
-  delete      delete resource of a given kind and name
-  get         get resource of a given kind
-  help        Help about any command
-  version     display the version of conduktor
-
-Flags:
-  -h, --help      help for conduktor
-  -v, --verbose   Show more information for debugging
-````
-
-#### Apply
-
-The `apply` command allows you to deploy any resource.
-
-````
-Usage:
-  conduktor apply [flags]
-
-Flags:
-      --dry-run            Don't really apply change but check on backend the effect if applied
-  -f, --file stringArray   Specify the files to apply
-  -h, --help               help for apply
-
-Global Flags:
-  -v, --verbose   Show more information for debugging
-````
-
-Example:
-````
-$ conduktor apply -f .
-Interceptor/mask-sensitive-fields: NOT_CHANGED
-Interceptor/encrypt-topic-customers: NOT_CHANGED
-Interceptor/safeguard-all-topics: UPDATED
-````
-
-#### Delete
-
-The `delete` command allows you to delete a resource.
-
-Please note that the resources are deleted instantly and cannot be recovered once deleted. Any data or access associated with the resource is permanently lost.
-
-Example(s):
-````
-$ conduktor delete -f ./directoryOfResources
-$ conduktor delete -f resource.yml
-$ conduktor delete Interceptor guard-produce-policy --vcluster=passthrough
-````
-
-#### Get
-
-````
-get resource of a given kind
-
-Usage:
-  conduktor get kind [name] [flags]
-
-Flags:
-  -h, --help   help for get
-
-Global Flags:
-  -v, --verbose   Show more information for debugging
-````
-Examples:
-````
-$ conduktor get Interceptor
-````
-
-#### Version
-
-Check the current version of your CLI using this command:
-
-````
-$ conduktor version
-Version: v0.3.0
-Hash: 9911cbe9b956095ea29394fb1f7da95d39d0625f
-````

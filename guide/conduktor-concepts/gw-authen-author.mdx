@@ -13,14 +13,16 @@ Find out how Conduktor Gateway manages service accounts, client authentication a
 
 ## Client authentication methods
 
-Gateway supports different client authentication methods, depending on both the type of [service account](/guide/conduktor-concepts/gw-service-accounts)(local or external) and the security mode ([Gateway managed](#in-gateway-managed-mode) or [Kafka managed](#in-kafka-managed-mode)).
+Gateway supports different client authentication methods, depending on both the type of [service account](/guide/conduktor-concepts/gw-service-accounts)(local or external) and the security mode ([Gateway managed](#in-gateway-managed-mode) or [Kafka managed](#in-kafka-managed-mode)). 
+
+This table shows which service account will need to be provided:
 
 | **Mode**          | **Protocol**                                                            | [Local service account](/guide/conduktor-concepts/gw-service-accounts/#local-service-accounts)               | [External service account](/guide/conduktor-concepts/gw-service-accounts/#external-service-accounts)                  |
 | ----------------- | ----------------------------------------------------------------------- | :---------------------------------: | :---------------------------------------: |
 |                   | [**Anonymous**](#anonymous-authentication)                              |                                     |                                           |
 | `GATEWAY_MANAGED` | PLAINTEXT                                                               |                  ❌                 |                     ❌                    |
 |                   | SSL                                                                     |                  ❌                 |                     ❌                    |
-|                   | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                                     |                                           |
+|                   | [**SSL with client auth (mTLS)**](#ssl-with-client-authentication-mtls) |                  ❌                 |                     ✅                    |
 |                   | SSL                                                                     |                  ❌                 |                     ✅                    |
 |                   | [**SASL**](#sasl-authentication)                                        |                                     |                                           |
 |                   | SASL\_PLAINTEXT                                                         |                  ✅                 |           only if `OAUTHBEARER`           |

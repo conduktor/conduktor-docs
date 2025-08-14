@@ -1,0 +1,241 @@
+name: Validate Documentation Redirects
+
+on:
+  pull_request:
+    paths:
+      - 'docs.json'
+      - '.github/workflows/validate-redirects.yml'
+      - 'scripts/test-redirects.sh'
+      - 'scripts/generate-pr-comment.sh'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs.json'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  validate-redirects:
+    name: Validate Redirect Rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/test-redirects.sh
+          chmod +x scripts/generate-pr-comment.sh
+
+      - name: Validate docs.json syntax
+        run: |
+          echo "Validating docs.json syntax..."
+          jq empty docs.json || {
+            echo "❌ docs.json has invalid JSON syntax"
+            exit 1
+          }
+          echo "✅ docs.json syntax is valid"
+
+      - name: Count redirect rules
+        id: count_redirects
+        run: |
+          REDIRECT_COUNT=$(jq '.redirects | length' docs.json)
+          echo "redirect_count=$REDIRECT_COUNT" >> $GITHUB_OUTPUT
+          echo "Found $REDIRECT_COUNT redirect rules to test"
+
+      - name: Run redirect validation tests
+        id: redirect_tests
+        run: |
+          echo "Testing redirects against production site..."
+          echo "Starting script with timeout wrapper..."
+          
+          # Use timeout to prevent hanging (5 minutes max) and capture exit code
+          timeout 300 ./scripts/test-redirects.sh --verbose docs.json > redirect-test-output.log 2>&1
+          SCRIPT_EXIT_CODE=$?
+          
+          # Always show the output for debugging
+          echo "=== Test Results ==="
+          cat redirect-test-output.log || echo "No output file found"
+          echo "==================="
+          
+          echo "Script exit code: $SCRIPT_EXIT_CODE"
+          
+          # Check if tests completed and pass through the script's exit code
+          if grep -q "SUMMARY" redirect-test-output.log; then
+            echo "✅ Tests completed successfully"
+            if [[ $SCRIPT_EXIT_CODE -eq 0 ]]; then
+              echo "✅ All redirects are working correctly"
+              exit 0
+            else
+              echo "❌ Some redirects are broken (exit code: $SCRIPT_EXIT_CODE)"
+              exit $SCRIPT_EXIT_CODE
+            fi
+          else
+            echo "❌ Tests may not have completed properly"
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: redirect-test-results
+          path: redirect-test-output.log
+          retention-days: 30
+
+      - name: Generate test summary for PR
+        if: github.event_name == 'pull_request'
+        run: |
+          # Create detailed PR comment from the test results
+          if [[ -f redirect-test-output.log ]]; then
+            echo "📋 **Redirect Validation Results**" > pr-comment.md
+            echo "" >> pr-comment.md
+            
+            # Extract key stats from summary
+            if grep -q "SUMMARY" redirect-test-output.log; then
+              TOTAL=$(grep "Total tested:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              PASSED=$(grep "✅ Passed:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              FAILED=$(grep "❌ Failed:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              ERRORS=$(grep "⚠️  Errors:" redirect-test-output.log | grep -o '[0-9]\+' | head -1)
+              SUCCESS_RATE=$(grep "Success rate:" redirect-test-output.log | grep -o '[0-9]\+\.*[0-9]*%' | head -1)
+              
+              # Status indicator
+              if [[ "$FAILED" -gt 0 ]] || [[ "$ERRORS" -gt 0 ]]; then
+                echo "## ❌ **Validation Failed**" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "Some redirects are not working correctly and need attention." >> pr-comment.md
+              else
+                echo "## ✅ **All Redirects Working**" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "Great job! All redirect rules are working correctly." >> pr-comment.md
+              fi
+              
+              echo "" >> pr-comment.md
+              echo "### Summary" >> pr-comment.md
+              echo "| Metric | Count |" >> pr-comment.md
+              echo "|--------|-------|" >> pr-comment.md
+              echo "| Total Tested | $TOTAL |" >> pr-comment.md
+              echo "| ✅ Passed | $PASSED |" >> pr-comment.md
+              echo "| ❌ Failed | $FAILED |" >> pr-comment.md
+              echo "| ⚠️ Errors | $ERRORS |" >> pr-comment.md
+              echo "| Success Rate | $SUCCESS_RATE |" >> pr-comment.md
+              echo "" >> pr-comment.md
+              
+              # Show failed redirects if any
+              if [[ "$FAILED" -gt 0 ]] || [[ "$ERRORS" -gt 0 ]]; then
+                echo "### ❌ Failed Redirects" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "The following redirects need to be fixed:" >> pr-comment.md
+                echo "" >> pr-comment.md
+                
+                # Extract failed redirect lines (those with ❌ or 💥 or ⚠️)
+                grep -E "\[.*\] (❌|💥|⚠️)" redirect-test-output.log | while read -r line; do
+                  # Extract source and destination from the line
+                  source=$(echo "$line" | sed -E 's/.*\] [^[:space:]]+ ([^[:space:]]+) -> .*/\1/')
+                  destination=$(echo "$line" | sed -E 's/.*-> ([^[:space:]]+).*/\1/')
+                  status_emoji=$(echo "$line" | sed -E 's/.*\] ([^[:space:]]+) .*/\1/')
+                  
+                  echo "- **\`$source\`** → \`$destination\` $status_emoji" >> pr-comment.md
+                  
+                  # Look for the expected/actual URLs in the following lines
+                  line_num=$(grep -n "$line" redirect-test-output.log | cut -d: -f1)
+                  if [[ -n "$line_num" ]]; then
+                    expected=$(sed -n "$((line_num + 1))p" redirect-test-output.log | grep "Expected:" | sed 's/.*Expected: //')
+                    actual=$(sed -n "$((line_num + 2))p" redirect-test-output.log | grep "Got:" | sed 's/.*Got: //')
+                    
+                    if [[ -n "$expected" && -n "$actual" ]]; then
+                      echo "  - Expected: \`$expected\`" >> pr-comment.md
+                      echo "  - Actual: \`$actual\`" >> pr-comment.md
+                    elif [[ -n "$expected" ]]; then
+                      echo "  - Expected: \`$expected\`" >> pr-comment.md
+                    fi
+                  fi
+                  echo "" >> pr-comment.md
+                done
+                
+                echo "### 🔧 How to Fix" >> pr-comment.md
+                echo "" >> pr-comment.md
+                echo "1. Check that the destination paths exist in the current site structure" >> pr-comment.md
+                echo "2. Verify the redirect syntax in \`docs.json\`" >> pr-comment.md
+                echo "3. Test redirects locally before pushing changes" >> pr-comment.md
+                echo "4. Run \`./scripts/test-redirects.sh --verbose\` to test locally" >> pr-comment.md
+                echo "" >> pr-comment.md
+              fi
+              
+            else
+              echo "⚠️ Tests did not complete successfully. Check the workflow logs for details." >> pr-comment.md
+              echo "" >> pr-comment.md
+              echo "\`\`\`" >> pr-comment.md
+              tail -20 redirect-test-output.log >> pr-comment.md
+              echo "\`\`\`" >> pr-comment.md
+            fi
+            
+            echo "" >> pr-comment.md
+            echo "---" >> pr-comment.md
+            echo "*Generated by redirect validation workflow • [View full logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})*" >> pr-comment.md
+          else
+            echo "⚠️ **Redirect validation tests failed to complete**" > pr-comment.md
+            echo "" >> pr-comment.md
+            echo "Please check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details." >> pr-comment.md
+          fi
+
+      - name: Comment on PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            
+            if (fs.existsSync('pr-comment.md')) {
+              const comment = fs.readFileSync('pr-comment.md', 'utf8');
+              
+              // Find existing comment to update
+              const { data: comments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+              });
+              
+              const botComment = comments.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('📋 **Redirect Validation Results**')
+              );
+              
+              if (botComment) {
+                // Update existing comment
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body: comment
+                });
+                console.log('Updated existing PR comment');
+              } else {
+                // Create new comment
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: comment
+                });
+                console.log('Created new PR comment');
+              }
+            } else {
+              console.log('No pr-comment.md file found');
+            }
+
+      - name: Check test results and fail if necessary
+        run: |
+          if [[ "${{ steps.redirect_tests.outcome }}" == "failure" ]]; then
+            echo "❌ Redirect validation tests failed"
+            exit 1
+          else
+            echo "✅ Redirect validation completed successfully"
+          fi
