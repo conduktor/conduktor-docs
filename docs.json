@@ -75,7 +75,7 @@
             ]
           },
           {
-            "group": "Admin actions",
+            "group": "Manage",
             "pages": [
               "guide/conduktor-in-production/admin/index",
               "guide/conduktor-in-production/admin/configure-clusters",
