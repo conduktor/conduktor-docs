@@ -334,7 +334,7 @@ If you want to use the `external groups mapping` to map groups between your Cond
 ![groups claim](/images/azure-add-groups-claim.png)
 
 <Warning>
-If you have a **large number of groups** within your enterprise, you might need to [assign some groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application) and check the **Groups assigned to the application** box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
+The external groups mapping will not work for users who belong to [more than 200 groups](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims). In this case, you will need to [assign some groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal#assign-users-and-groups-to-an-application) and check the **Groups assigned to the application** box when creating the groups claim on Azure AD. This is to avoid exceeding the limit on the number of groups a token can contain.
 </Warning>
 
 Then, you must set the property `groups-claim` to `"groups"` in the Console configuration file. Below is the full snippet for your configuration file:
