@@ -9,8 +9,11 @@ An application represents a streaming app or data pipeline that's responsible fo
 In Self-service, it's used as a method to organize and re-group multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under one umbrella.
 
 - **API key(s):** AdminToken  
-- **Managed with:** API, CLI, UI
+- **Managed with:** API, CLI, UI, TF
 - **Labels support:** Full
+
+<Tabs>
+<Tab title="CLI">
 
 ````yaml
 # Application
@@ -22,8 +25,25 @@ metadata:
 spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
-  owner: "groupA" # technical-id of the Conduktor Console Group
+  owner: "group-a" # technical-id of the Conduktor Console Group
 ````
+
+</Tab>
+<Tab title="Terraform">
+
+```hcl
+resource "conduktor_console_application_v1" "clickstream-app" {
+  name = "clickstream-app"
+  spec = {
+    title       = "Clickstream App"
+    description = "FreeForm text, probably multiline markdown"
+    owner       = "group-a" # technical-id of the Conduktor Console Group
+  }
+}
+```
+
+</Tab>
+</Tabs>
 
 **Application checks:**
 
@@ -43,6 +63,9 @@ This is the core concept of Self-service, as it **ties everything together**: Ka
 - **API key(s):** AdminToken 
 - **Managed with:** API, CLI, TF
 - **Labels support:** Full
+
+<Tabs>
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -77,6 +100,55 @@ spec:
       ownershipMode: LIMITED # Topics are still maintained by central team
       name: "legacy-click."
 ````
+
+</Tab>
+<Tab title="Terraform">
+
+```hcl
+resource "conduktor_console_application_instance_v1" "clickstream-dev" {
+  name        = "clickstream-dev"
+  application = "clickstream-app"
+  spec = {
+    cluster                = "shadow-it"
+    service_account        = "sa-clicko"
+    topic_policy_ref       = ["generic-dev-topic", "clickstream-naming-rule"]
+    default_catalog_visibility = "PUBLIC"
+    resources = [
+      {
+        type         = "TOPIC"
+        pattern_type = "PREFIXED"
+        name         = "click."
+      },
+      {
+        type         = "CONSUMER_GROUP"
+        pattern_type = "PREFIXED"
+        name         = "click."
+      },
+      {
+        type         = "SUBJECT"
+        pattern_type = "PREFIXED"
+        name         = "click."
+      },
+      {
+        type            = "CONNECTOR"
+        connect_cluster = "shadow-connect"
+        pattern_type    = "PREFIXED"
+        name            = "click."
+      },
+      {
+        type           = "TOPIC"
+        pattern_type   = "PREFIXED"
+        ownership_mode = "LIMITED"
+        name           = "legacy-click."
+      }
+    ]
+    application_managed_service_account = false
+  }
+}
+```
+
+</Tab>
+</Tabs>
 
 **AppInstance checks:**
 
@@ -116,8 +188,11 @@ spec:
 Define permissions for the application instance to enable collaboration between teams.
 
 - **API key(s):** AdminToken, AppToken 
-- **Managed with:** API, CLI
+- **Managed with:** API, CLI, TF
 - **Labels support:** Missing
+
+<Tabs>
+<Tab title="CLI">
 
 ````yaml
 # Permission granted to other applications
@@ -137,6 +212,30 @@ spec:
   serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
 ````
+
+</Tab>
+<Tab title="Terraform">
+
+```hcl
+resource "conduktor_console_application_instance_permission_v1" "clickstream-app-dev-to-another" {
+  name         = "clickstream-app-dev-to-another"
+  application  = "clickstream-app"
+  app_instance = "clickstream-app-dev"
+  spec = {
+    resource = {
+      type         = "TOPIC"
+      name         = "click.event-stream.avro"
+      pattern_type = "LITERAL"
+    }
+    user_permission            = "NONE"
+    service_account_permission = "READ"
+    granted_to                 = "another-appinstance-dev"
+  }
+}
+```
+
+</Tab>
+</Tabs>
 
 **Application instance permission checks:**
 
@@ -174,10 +273,11 @@ Creates an application group to directly reflect how your application operates. 
 - the engineering team is granted higher permissions in dev environment only.
 
 - **API key(s):** AdminToken, AppToken 
-- **Managed with:** API, CLI
+- **Managed with:** API, CLI, TF
 - **Labels support:** Missing
 
-#### Example
+<Tabs>
+<Tab title="CLI">
 
 ````yaml
 # Permissions granted to Console users in the application
@@ -218,6 +318,57 @@ spec:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 ````
 
+</Tab>
+<Tab title="Terraform">
+
+```hcl
+resource "conduktor_console_application_group_v1" "clickstream-support" {
+  name        = "clickstream-support"
+  application = "clickstream-app"
+  spec = {
+    display_name = "Support Clickstream"
+    description  = <<EOF
+Members of the Support Group are allowed:
+  Read access on all the resources
+  Can restart owned connectors
+  Can reset offsets
+EOF
+    permissions = [
+      {
+        app_instance  = "clickstream-app-dev"
+        resource_type = "TOPIC"
+        pattern_type  = "LITERAL"
+        name          = "*" # All owned and subscribed topics
+        permissions   = ["topicViewConfig", "topicConsume"]
+      },
+      {
+        app_instance  = "clickstream-app-dev"
+        resource_type = "CONSUMER_GROUP"
+        pattern_type  = "LITERAL"
+        name          = "*" # All owned consumer groups
+        permissions   = ["consumerGroupCreate", "consumerGroupReset", "consumerGroupDelete", "consumerGroupView"]
+      },
+      {
+        app_instance    = "clickstream-app-dev"
+        connect_cluster = "local-connect"
+        resource_type   = "CONNECTOR"
+        pattern_type    = "LITERAL"
+        name            = "*" # All owned connectors
+        permissions     = ["kafkaConnectViewConfig", "kafkaConnectStatus", "kafkaConnectRestart"]
+      }
+    ]
+    members = [
+      "user1@company.org",
+      "user2@company.org"
+    ]
+    external_groups = ["GP-COMPANY-CLICKSTREAM-SUPPORT"]
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
 **Application instance permission checks:**
 
 - `spec.permissions[].appInstance` has to be an application instance associated with this application (`metadata.application`).
@@ -241,8 +392,11 @@ The Self-service service account is not configured by the central team at the `A
 Instead, the central platform team decides to delegate this responsibility to the application team, which needs to declare their own service account(s) and associated ACLs within the limits of what the `ApplicationInstance` is allowed to do.
 
 - **API key(s):** AppToken
-- **Managed with:** API, CLI
+- **Managed with:** API, CLI, TF
 - **Labels support:** Missing
+
+<Tabs>
+<Tab title="CLI">
 
 ````yaml
 ---
@@ -273,6 +427,46 @@ spec:
         operations:
           - Read
 ````
+
+</Tab>
+<Tab title="Terraform">
+
+```hcl
+resource "conduktor_console_service_account_v1" "clickstream-sa" {
+  name         = "clickstream-sa"
+  cluster      = "shadow-it"
+  app_instance = "clickstream-app-dev"
+  spec = {
+    authorization = {
+      kafka = {
+        acls = [
+          {
+            type         = "TOPIC"
+            name         = "click.event-stream.avro"
+            pattern_type = "PREFIXED"
+            operations   = ["Write", "Read"]
+          },
+          {
+            type         = "CLUSTER"
+            name         = "kafka-cluster"
+            pattern_type = "LITERAL"
+            operations   = ["DescribeConfigs"]
+          },
+          {
+            type         = "CONSUMER_GROUP"
+            name         = "cg-name"
+            pattern_type = "LITERAL"
+            operations   = ["Read"]
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
 
 **Service account checks:**
 The checks are the same as the [service account](/guide/reference/kafka-reference/#service-account) resource with additional **limitations**:
