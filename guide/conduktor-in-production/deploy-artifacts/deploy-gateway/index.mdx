@@ -932,6 +932,8 @@ Gateway can be configured to communicate with multiple Kafka clusters and expose
 - provide them with **access to topics in multiple Kafka clusters**
 - expose topics using **aliases** that can be different from topic names
 
+### 1. Configure Gateway
+
 To set up Gateway to support multi-clusters, you should:
 - configure one main cluster which will be used by Gateway to store its internal state
 - set up any number of upstream physical Kafka clusters that you want to expose through Gateway
@@ -997,6 +999,10 @@ KAFKA_CLUSTERB_SASL_MECHANISM: 'PLAIN'
 KAFKA_CLUSTERB_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="<clusterB_api_key>" password="<clusterB_api_secret>";'
 KAFKA_CLUSTERB_GATEWAY_ROLES: 'upstream' # Note: may be omitted as upstream is the default (used to differentiate from failover clusters)
 ```
+
+</Tab>
+</Tabs>
+
 ### 2. Create a partner virtual cluster
 
 First, create a new partner virtual cluster.
