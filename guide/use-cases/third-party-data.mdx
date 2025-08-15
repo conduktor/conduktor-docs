@@ -265,19 +265,112 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 </Tab>
 </Tabs>
 
+## Partner Zone statuses
+
+Each Partner Zone can have one of these statuses:
+
+- **Pending**: the zone is being set up (this usually takes a few moments).
+- **Ready**: the zone is ready and partners can connect and access it.
+- **Failed**: something went wrong, [check out troubleshoot](#troubleshoot).
+- **To delete**: the zone is being removed and shouldn't be used/shared.
+- **Deleted**: the zone has been completely removed.
+
+### Check Partner Zone status
+
+<Tabs>
+<Tab title="In Console">
+
+1. Go to **Settings** > **Partner Zones**.
+2. Look at the status column for each Partner Zone.
+3. Click on a Partner Zone to see the status.
+
+</Tab>
+<Tab title="Using CLI">
+
+```bash
+# See all Partner Zones and their status
+conduktor get PartnerZone
+
+# Check a specific Partner Zone
+conduktor get PartnerZone my-partner-zone
+```
+
+You'll see output like this:
+```yaml
+apiVersion: v2
+kind: PartnerZone
+metadata:
+  name: my-partner-zone
+  status: READY
+  updatedAt: "2025-01-27T12:55:05.387368Z"
+```
+</Tab>
+</Tabs>
+
+
+### Set up monitoring
+
+Stay informed when Partner Zones fail:
+
+1. In Console, go to **Monitoring** > **Alerts**.
+2. Click **Create Alert**.
+3. Choose:
+   - **Type**: Partner Zone
+   - **Condition**: status equals Failed
+   - **Notification**: email, Slack, or Teams (as required)
+
+<Note>
+To ensure your partners don't lose access, we recommend checking Partner Zone status before sharing the credentials and each time you make changes to Gateway or shared topics.
+</Note>
+
 ## Troubleshoot
 
 <AccordionGroup>
-<Accordion title="What does the Partner Zone status mean?">
-  <p>
-  The status of a Partner Zone may be one of the following:
-    - **Pending**: the configuration isn't deployed or refreshed yet
-    - **Ready**: the configuration is up-to-date on Gateway
-    - **Failed**: something unexpected happened during the deployment. Check that the connected Gateway is active
-  </p>
+<Accordion title="I'm getting 'Failed' status, what could be the issue?">
+    <p>
+    If you get **Failed to connect to Gateway cluster**:
+    1. Check your Gateway is running.
+    2. In Console, go to **Settings** > **Clusters**. 
+    3. Find your Gateway cluster and click the **Provider** tab.
+    4. Make sure the Gateway API credentials are correct.
+    5. Test the connection by clicking **Test Connection**.
+  
+    If you get **Failed to create service account**:
+    1. Make sure your Gateway has service accounts enabled.
+    2. Check the service account name isn't already taken.
+    3. Verify that your Gateway configuration includes:
+      - `GATEWAY_SECURITY_MODE: GATEWAY_MANAGED`
+      - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED: true`
+  
+    If you get **Failed to map topic**:
+    1. Check that the backing topics exist in your Kafka cluster.
+    2. Make sure your Gateway can access those topics.
+    3. Verify topic names don't have special characters that Gateway can't handle.
+   </p>
   </Accordion>
   <Accordion title="My Partner Zone creation failed, how do I find out what the issue is?">
-  <p>To check the status, [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) to GET the state of the Partner Zone, or check the Gateway and Console logs.</p>
+  <p> 
+  To check the status, you can:
+  - [use the API](https://developers.conduktor.io/?product=console&version=1.31.2#tag/cli_partner-zone_console_v2_16/operation/get-partner-zone-by-name) to GET the state of the Partner Zone.
+  - Check Gateway logs:
+      If you're running Gateway in Docker:
+      ```bash
+      docker logs gateway-container-name | grep ERROR
+      ```
+      If you're using Kubernetes:
+      ```bash
+      kubectl logs deployment/gateway | grep ERROR
+      ```
+  - Check Console logs:
+      Look for Partner Zone errors in Console:
+      ```bash
+      kubectl logs deployment/console | grep -i partnerzone
+      ```
+  - Test Gateway connection manually to see if Gateway is responding:
+      ```bash
+      curl -u admin:conduktor http://your-gateway:8888/health
+    ```
+  </p>
   </Accordion>
   <Accordion title="Does **Generate password** invalidate the previously issued credentials of a service account?">
   <p>No, you can't invalidate issued credentials - they instead have a set time to live. 
