@@ -5,11 +5,25 @@ title: Gateway 3.12.0
 # Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
+  - [Deprecating v1 APIs](#deprecating-v1-apis)
+  - [New APIs for health and versions](#new-apis-for-health-and-versions)
+  - [Configuration key change for Vault KUBERNETES authentication type](#configuration-key-change-for-vault-kubernetes-authentication-type)
   - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
+  - [New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable](#new-gateway_audit_log_event_types-environment-variable)
   - [Enhanced Crypto Shredding behavior for Decryption](#enhanced-crypto-shredding-behavior-for-decryption)
 
 ### Breaking changes
+
+#### Deprecating v1 APIs
+
+The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in September 2024.  
+
+If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+
+<Warning>
+If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+</Warning>
 
 #### New APIs for health and versions
 
