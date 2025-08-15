@@ -2,7 +2,6 @@
 title: Gateway 3.12.0
 ---
 
-# Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
   - [Deprecating v1 APIs](#deprecating-v1-apis)
@@ -11,7 +10,7 @@ title: Gateway 3.12.0
   - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
   - [New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable](#new-gateway_audit_log_event_types-environment-variable)
-  - [Enhanced Crypto Shredding behavior for Decryption](#enhanced-crypto-shredding-behavior-for-decryption)
+  - [Enhanced crypto shredding behavior for decryption](#enhanced-crypto-shredding-behavior-for-decryption)
 
 ### Breaking changes
 
@@ -67,7 +66,7 @@ It provides flexibility to enable/disable specific event types, such as `CONNECT
 
 This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
 
-#### Enhanced Crypto Shredding behavior for Decryption
-The Decryption Interceptor now includes improved error handling behavior specifically for Crypto Shredding scenarios.
+#### Enhanced crypto shredding behavior for decryption
+The decryption Interceptor now includes improved error handling behavior specifically for crypto shredding scenarios.
 
-When using KMS types that support crypto shredding (Vault, AWS, GCP, Azure, Gateway), the plugin automatically overrides the configured `errorPolicy` when encryption keys are missing. In these cases, the plugin will always return encrypted data regardless of the configured policy, ensuring consumers don't become permanently blocked by deliberately un-decryptable messages.
+A new `crypto_shred_safe_fail_fetch` error policy has been introduced. It returns encrypted data when decryption fails due to missing encryption keys, but throws exceptions for other types of decryption failures (e.g., authentication errors). This ensures that crypto-shredded data remains protected while still failing fast for other issues that require attention.

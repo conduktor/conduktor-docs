@@ -61,11 +61,11 @@ livenessProbe:
   successThreshold: 1
 ```
 
-### Readiness Endpoint
+### Readiness endpoint
 
 `/health/ready`
 
-Returns readiness of the Gateway. Modules status:
+Returns readiness of Gateway. Modules status:
 
 - `NOTREADY` (initial state)
 - `READY`
@@ -319,11 +319,11 @@ curl -s  http://localhost:8080/api/health/ready
 
 Could be used to set up probes on docker-compose or Kubernetes.
 
-#### docker-compose probe setup
+#### Docker-compose probe setup
 
-:::info
+<Info>
 The `healthcheck` configuration below is optional, as it's already backed into the Conduktor image and not required unless you're experiencing issues.
-:::
+</Info>
 
 ```yaml
 healthcheck:
