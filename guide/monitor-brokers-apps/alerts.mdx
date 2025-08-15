@@ -96,7 +96,11 @@ As part of configuring the Slack integration in Conduktor, you will find steps f
 
 Once configured you'll need to add the application to the Slack channels you wish to send alerts too. You can do this by typing `/invite` in the channel and choose the application you have just created., or through managing the app within Slack.
 
-![Slack](/images/slack-invite.png)
+<img 
+  src="/images/slack-invite.png" 
+  alt="Slack"
+  width="300"
+/>
 
 Channels that have not had the application invited cannot be set as destinations for alerts. You'll get a `not_in_channel` error. Once the applications is invited to the channel, you'll be able to send alerts to that Slack channel.
 
@@ -104,7 +108,11 @@ Channels that have not had the application invited cannot be set as destinations
 
 Email integration allows you to receive notifications directly to your inbox. Setting up email alerts requires configuring your SMTP server details and authentication credentials.
 
-![email integration](/images/email-integration.png)
+<img 
+  src="/images/email-integration.png" 
+  alt="Email integration"
+  width="300"
+/>
 
 To set up email alerts, you have to configure:
 
@@ -126,11 +134,19 @@ We directly integrate with Microsoft Teams using Workflows. If you're not allowe
 
 For this, first set up the [email integration](#email-integration) and get the channel's email address. You can find this in the channel settings under **Get email address**.
 
-![get first Teams email](/images/teams-get-email-1.png)
+<img 
+  src="/images/teams-get-email-1.png" 
+  alt="Get first Teams email"
+  width="300"
+/>
 
 From there, you can select which email addresses is authorized to send emails to this channel and copy it to use in your Conduktor alert.
 
-![get second Teams email](/images/teams-get-email-2.png)
+<img 
+  src="/images/teams-get-email-2.png" 
+  alt="Get second Teams email"
+  width="300"
+/>
 
 ### Microsoft Teams integration using Workflows
 
@@ -142,11 +158,19 @@ You can send notifications to different rooms for different alerts. However, thi
 
 1. Open the Workflows app within the chat or channel by right-clicking on the conversation or by clicking **...** then selecting **Workflows**.
 
-![Workflow step 1](/images/workflows-1.png)
+<img 
+  src="/images/workflows-1.png" 
+  alt="Workflow step 1"
+  width="300"
+/>
 
 2. In the Workflow app, click **+ New flow** or select the Create tab and choose **Post to a channel when a webhook request is received** template.
 
-![Teams workflow step 2](/images/workflows-2.png)
+<img 
+  src="/images/workflows-2.png" 
+  alt="Teams workflow step 2"
+  width="300"
+/>
 
 3. Choose a name for this flow (or use the default **Post to a channel when a webhook request is received**) and choose who will own this workflow. It should default to the user logged into Teams. Click **Next**.
 

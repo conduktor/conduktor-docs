@@ -8,7 +8,11 @@ Console allows you to delegate authentication to an external identity provider.
 
 A common use case is to protect Console by putting an API between Console and its clients. The authentication flow of the client is performed by the API and the token from the identity provider is sent directly to Console. In this case, no authentication is performed by Console, it only checks that the token is valid and issued by the trusted identity provider.
 
-![architecture diagram API auth](/images/jwt-auth-api-gateway.png)
+<img 
+  src="/images/jwt-auth-api-gateway.png" 
+  alt="Architecture diagram API auth"
+  width="350"
+/>
 
 When enabling the delegated authentication mode, tokens issued directly by Console are still accepted.
 

@@ -3,8 +3,6 @@
   "theme": "mint",
   "customCSS" : "/custom.css",
   "name": "Conduktor documentation",
-  "banner": {"content": "Welcome to our new site! We’ve restructured the docs to make information easier to find. Get in touch at [docs@conduktor.io](mailto:docs@conduktor.io) if you have any feedback.",
-             "dismissible": true },
   "colors": {
     "primary": "#09343C",
     "light": "#BCFE68",
@@ -77,7 +75,7 @@
             ]
           },
           {
-            "group": "Admin actions",
+            "group": "Manage",
             "pages": [
               "guide/conduktor-in-production/admin/index",
               "guide/conduktor-in-production/admin/configure-clusters",
@@ -88,7 +86,7 @@
             ]
           },
           {
-            "group": "Define user access",
+            "group": "Access and permissions",
             "pages": [
               "guide/conduktor-in-production/admin/user-access/index",
               "guide/conduktor-in-production/admin/user-access/configure-sso",
@@ -99,7 +97,7 @@
             ]
           },
           {
-            "group": "Use cases",
+            "group": "Conduktor use cases",
             "pages": [
               "guide/use-cases/chargeback",
               "guide/use-cases/self-service",
@@ -113,7 +111,7 @@
             ]
             },      
             {
-            "group": "Monitor brokers and apps",
+            "group": "Monitor Conduktor usage",
             "pages": [
               "guide/monitor-brokers-apps/index",
               "guide/monitor-brokers-apps/alerts"
@@ -165,7 +163,7 @@
         },
         "groups": [
           {
-            "group": "Conduktor tutorials",
+            "group": "Tutorials",
             "pages": [
               "guide/tutorials/index",
               "guide/tutorials/configure-audit-log-topic",
@@ -189,7 +187,7 @@
         "tab": "Reference",
         "groups": [
           {
-            "group": "Resource reference",
+            "group": "Reference",
             "pages": [
               "guide/reference/index",     
               "guide/reference/console-reference",
@@ -217,7 +215,7 @@
         "tab": "Release notes",     
         "groups": [
           {
-            "group": "Conduktor releases",
+            "group": "Release notes",
             "pages": ["guide/release-notes/index"]
           }
         ]
@@ -235,7 +233,7 @@
         },           
         "groups": [
           {
-            "group": "Support options",
+            "group": "Support",
             "pages": [
               "guide/support/index",
               "guide/support/upgrade",
