@@ -61,11 +61,10 @@ When using KMS types that support crypto shredding (Vault, AWS, GCP, Azure, Gate
 
 #### Client Throttling for Encryption/Decryption
 
-- **New throttleTimeMs configuration**: Added support for client throttling when encryption or decryption fails
-- **Configurable throttling behavior**: Set `throttleTimeMs` to control the duration of client throttling in milliseconds (default: 0)
-- **Smart exception handling**:
-  - For `RetryableException`: Returns `NetworkException` with throttle time
-  - For other exceptions (like `FatalException`): Returns `PolicyViolationException` without throttling
-- **System protection**: Helps prevent overwhelming the system during encryption failures by automatically throttling clients
+The Gateway now supports client throttling when encryption or decryption operations fail, helping to protect your system from being overwhelmed during error conditions.
+
+- **New throttleTimeMs configuration**: Set `throttleTimeMs` to control how long clients will be throttled when encryption/decryption fails (in milliseconds, default: 0)
+- **Automatic system protection**: When encryption or decryption fails, Gateway can automatically throttle the problematic client for the specified duration, preventing system overload
+- **Configurable behavior**: You can enable and adjust throttling based on your system's needs and error tolerance
 
 [Find out more about encryption and decryption configurations](/gateway/interceptors/data-security/encryption/).
