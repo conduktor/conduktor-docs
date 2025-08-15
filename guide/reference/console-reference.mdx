@@ -780,8 +780,8 @@ spec:
     role: Data analyst
     email: johndoe@partner.io
     phone: 07827 837 177
-  gatewayClusterId: cdk-gateway
-  sourceClusterId: cluster1
+  cluster: cdk-gateway
+  underlyingCluster: cluster1
   authenticationMode:
     serviceAccount: partner-external-partner
     type: PLAIN
@@ -818,8 +818,8 @@ spec:
 
 - `spec.displayName` is mandatory.
 - `spec.description`, `spec.url` and `spec.partner` (optional), useful for context information.
-- `spec.gatewayClusterId` has to be a valid Console cluster technical ID with the **Provider configured as *Gateway***.
-- `spec.sourceClusterId` has to be a valid Console cluster technical ID where the cluster has to be defined under the Gateway defined by the `spec.gatewayClusterId`.
+- `spec.cluster` has to be a valid Console cluster technical ID with the **Provider configured as *Gateway***.
+- `spec.underlyingCluster` has to be a valid Console cluster technical ID where the cluster has to be defined under the Gateway defined by the `spec.gatewayClusterId`.
   - When not specified, the value is inferred to be equal to the `spec.gatewayClusterId` field, hence selecting the main cluster behind Gateway by default.
 - `spec.serviceAccount` has to be a local Gateway service account. It doesn't need to exist before creating the Partner Zone, the service account will be created automatically.
 - `topics[].name` is the name of the topic as it should appear to your external partner. This can be different from `backingTopic`.

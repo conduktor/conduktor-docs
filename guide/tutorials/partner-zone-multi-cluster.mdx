@@ -83,7 +83,7 @@ More details on creating a Partner Zone can be found in the [Create a Partner Zo
 1. Go to the **Partner Zones** page in Console.
 2. Click on **Create Partner Zone**.
 3. Select the **Gateway Cluster** as `gateway-main`.
-4. Select the **Source Cluster** as `clusterA`.
+4. Select the **Underlying Cluster** as `clusterA`.
 5. Select the topics you want to include in the Partner Zone, and optionally create any topic aliases.
 5. Fill in and complete the remaining steps to create the Partner Zone.
 6. Finaly click **Create** to create the Partner Zone.
@@ -99,8 +99,8 @@ The following steps are for creating a Partner Zone through the [Conduktor CLI (
     metadata:
         name: external-partner-zone
     spec:
-        gatewayClusterId: gateway-main
-        sourceClusterId: clusterA
+        cluster: gateway-main
+        underlyingCluster: clusterA
         displayName: External Partner Zone
         url: https://partner1.com
         authenticationMode:
@@ -120,7 +120,7 @@ The following steps are for creating a Partner Zone through the [Conduktor CLI (
           phone: 07827 837 177
     ```
 
-    Note that when creating the Partner Zone, the `spec.sourceClusterId` is set to `clusterA`, which is the Kafka cluster that the Partner Zone will connect to. The `spec.gatewayClusterId` is set to `gateway-main`, which is the Gateway cluster that will manage the Partner Zone.
+    Note that when creating the Partner Zone, the `spec.underlyingCluster` is set to `clusterA`, which is the Kafka cluster that the Partner Zone will connect to. The `spec.cluster` is set to `gateway-main`, which is the Gateway cluster that will manage the Partner Zone.
 
 1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 

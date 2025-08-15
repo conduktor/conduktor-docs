@@ -92,7 +92,8 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     metadata:
         name: external-partner-zone
     spec:
-        gatewayClusterId: partner1
+        cluster: partner1
+        underlyingCluster: partner1
         displayName: External Partner Zone
         url: https://partner1.com
         authenticationMode:
@@ -111,12 +112,11 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
           email: johndoe@company.io
           phone: 07827 837 177
     ```
+    * If your Gateway is [setup with multi-clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters), `cluster` will be the technical cluster Id of the Gateway as before, and `underlyingCluster` will be the cluster Id of the underlying cluster configured under the Gateway.
 
-    <Warning>
-    As of Console 1.37.0, the field `cluster` has been replaced with `gatewayClusterId`. 
-    </Warning>
-
-    * If your Gateway is [setup with multi-clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters), `gatewayClusterId` will be the technical cluster Id of the Gateway as before, and `sourceClusterId` will be the cluster Id of the underlying cluster configured under the Gateway.
+     <Info>
+         If underlyingCluster is unset, it will default to the value of `cluster`
+     </Info>
 
 1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
@@ -137,8 +137,8 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
         updatedAt: "2025-01-27T12:55:05.387368Z"
         status: PENDING
     spec:
-        gatewayClusterId: partner1
-        sourceClusterId: partner1
+        cluster: partner1
+        underlyingCluster: partner1
         displayName: External Partner Zone
         url: https://partner1.com
         serviceAccount: external-partner-service-account
