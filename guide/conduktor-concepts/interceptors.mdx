@@ -16,7 +16,7 @@ To deploy an Interceptor, you need to prepare its configuration. Here's an examp
 <Tabs>
 <Tab title="CLI">
 
-  ````json
+  ```json
   curl \
     --request PUT \
     --url 'http://localhost:8888/gateway/v2/interceptor' \
@@ -41,12 +41,12 @@ To deploy an Interceptor, you need to prepare its configuration. Here's an examp
       }
     }
   }'
-  ````
+  ```
 
 </Tab>
 <Tab title="API">
 
-````json
+```json
 POST /admin/interceptors/v1/interceptor/enforce-partition-limit
 {
   "pluginClass": "io.conduktor.gateway.interceptor.safeguard.CreateTopicPolicyPlugin",
@@ -60,7 +60,7 @@ POST /admin/interceptors/v1/interceptor/enforce-partition-limit
     }
 }
 }
-````
+```
 
 </Tab>
 </Tabs>
@@ -129,7 +129,7 @@ There are four targeting scopes:
 
 Example:
 
-````json
+```json
 // This interceptor only applies to service account 'sa-clickstream'
 curl \
   --request PUT \
@@ -158,7 +158,7 @@ curl \
     }
   }
 }'
-````
+```
 
 ### Overriding
 

@@ -15,7 +15,7 @@ In Self-service, it's used as a method to organize and re-group multiple deploym
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 # Application
 ---
 apiVersion: self-service/v1
@@ -26,7 +26,7 @@ spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
   owner: "group-a" # technical-id of the Conduktor Console Group
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -67,7 +67,7 @@ This is the core concept of Self-service, as it **ties everything together**: Ka
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: self-service/v1
 kind: ApplicationInstance
@@ -99,7 +99,7 @@ spec:
       patternType: PREFIXED
       ownershipMode: LIMITED # Topics are still maintained by central team
       name: "legacy-click."
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -194,7 +194,7 @@ Define permissions for the application instance to enable collaboration between 
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 # Permission granted to other applications
 ---
 apiVersion: self-service/v1
@@ -211,7 +211,7 @@ spec:
   userPermission: NONE
   serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -279,7 +279,7 @@ Creates an application group to directly reflect how your application operates. 
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 # Permissions granted to Console users in the application
 ---
 apiVersion: self-service/v1
@@ -316,7 +316,7 @@ spec:
     - user2@company.org
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -398,7 +398,7 @@ Instead, the central platform team decides to delegate this responsibility to th
 <Tabs>
 <Tab title="CLI">
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -426,7 +426,7 @@ spec:
         patternType: LITERAL
         operations:
           - Read
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -537,7 +537,7 @@ spec:
 
 With the two topic policies declared above, the following topic resource would succeed validation:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -552,7 +552,7 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
-````
+```
 
 ### Topic policy constraints
 
@@ -686,7 +686,7 @@ spec.configs.min.insync.replicas:
 
 This object will pass the validation:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -699,11 +699,11 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 This object will fail the validation due to a new incorrect definition of `insync.replicas`:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -717,7 +717,7 @@ spec:
     min.insync.replicas: 3
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 ## ResourcePolicy
 

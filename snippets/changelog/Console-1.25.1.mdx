@@ -8,9 +8,9 @@ title: Console 1.25.1
 #### New Docker image name
 We have renamed the Console docker image to `conduktor/conduktor-console` to clarify our product naming.  
 Please modify your installation to reflect this change as we will now stop publishing a `conduktor/conduktor-platform` image.
-````shell
+```shell
 docker pull conduktor/conduktor-console:1.25.1
-````
+```
 
 ### Features
 
@@ -33,7 +33,7 @@ Manage your Console resource lifecycle with the addition of the **KafkaCluster**
 
 Checkout the example below and find the full definition at [Console Resources Reference](https://docs.conduktor.io/platform/reference/resource-reference/console/) documentation.
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: KafkaCluster
@@ -54,7 +54,7 @@ spec:
       type: BasicAuth
       username: some_user
       password: some_user
-````
+```
 
 #### Short lived token generation on startup
 

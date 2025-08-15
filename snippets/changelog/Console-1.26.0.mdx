@@ -21,7 +21,7 @@ Regardless, as soon as the prometheus team fix this issue, it will be patched im
 
 Continuing with the Infra-as-code approach, we are happy to introduce [CLI support](https://docs.conduktor.io/platform/reference/cli-reference/) for [Connectors](https://docs.conduktor.io/platform/reference/resource-reference/kafka/#connector), providing an efficient and automated way to manage your Kafka Connect resources.
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Connector
@@ -36,13 +36,13 @@ spec:
     connector.class: 'org.apache.kafka.connect.tools.MockSourceConnector'
     tasks.max: '1'
     topic: click.pageviews
-````
+```
 
 #### Self-service support for Connectors
 
 Application Teams can now manage their Connectors with Self-service.  
 From now on, you can grant ownership to connectors on Self-service [application instance](https://docs.conduktor.io/platform/reference/resource-reference/self-service/#application-instance).
-````yaml
+```yaml
 ---
 apiVersion: self-service/v1
 kind: ApplicationInstance
@@ -57,7 +57,7 @@ spec:
       connectCluster: shadow-connect
       patternType: PREFIXED
       name: "click."
-````
+```
 
 #### Enhanced UI and graphs for Kafka Connect
 
@@ -95,12 +95,12 @@ Tags written with the naming convention `<key>/<value>` will automatically be ad
 - `<key>: <value>`  
 
 If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created as follows:
-````yaml
+```yaml
 tag-<value>: true
-````
+```
 
 Here's an example of how tags will be migrated into labels:
-````yaml
+```yaml
 # Tags:
 - format/avro
 - project/supplychain
@@ -119,4 +119,4 @@ labels:
   tag-color/red: true # Because conflict on "color"
   tag-wikipedia: true
   tag-non-prod: true
-````
+```

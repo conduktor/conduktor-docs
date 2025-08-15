@@ -11,7 +11,7 @@ These are high-level Gateway object specifications for Conduktor CLI.
 
 Deploys an Interceptor on Gateway.
 
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: Interceptor
@@ -30,7 +30,7 @@ spec:
       min: 5
       max: 5
       action: "INFO"
-````
+```
 
 **Interceptor checks:**
 
@@ -70,7 +70,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
 
 <Tabs>
 <Tab title="CLI">
-````yaml
+```yaml
   ---
   # This interceptor targets everyone (Including Virtual Clusters)
   apiVersion: gateway/v2
@@ -110,7 +110,7 @@ The order of precedence from highest (overrides all others) to lowest (most easi
     scope:
       vCluster: read-only
   spec:
-  ````
+  ```
 </Tab>
 <Tab title="Terraform">
 
@@ -274,7 +274,7 @@ spec:
     - name: admin
     - vCluster: vc-B
       name: "0000-AAAA-BBBB-CCCC"
-````
+```
 
 **GatewayGroup checks:**
 
@@ -305,7 +305,7 @@ spec:
     deleteCompact: titi-cd
   autoManaged: false
   offsetCorrectness: false
-````
+```
 
 **ConcentrationRule checks:**
 

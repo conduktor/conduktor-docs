@@ -44,7 +44,7 @@ They are completely transparent to consumers and producers and allow you to emul
 
 To create concentrated topics, first deploy `ConcentrationRule`:
 
-````yaml
+```yaml
 ---
 kind: ConcentrationRule
 metadata:
@@ -53,11 +53,11 @@ spec:
   pattern: concentrated.*
   physicalTopics:
     delete: physical.topic
-````
+```
 
 Then topics that match the *ConcentrationRule* `spec.pattern`:
 
-````bash
+```bash
 kafka-topics \
   --bootstrap-server conduktor-gateway:6969 \
   --topic concentrated.topicA \
@@ -67,7 +67,7 @@ kafka-topics \
   --bootstrap-server conduktor-gateway:6969 \
   --topic concentrated.topicB \
   --partitions 4
-````
+```
 
 ![Topic Concentration](/images/concentrated-topic.png)
 
@@ -81,7 +81,7 @@ To ensure that consumers don't consume messages from other partitions or from ot
 
 You can create concentrated topics with any *cleanup.policy*, but your `ConcentrationRule` has to have a backing topic for each of them, otherwise it won't let you create the topic.
 
-````yaml
+```yaml
 ---
 kind: ConcentrationRule
 metadata:
@@ -92,18 +92,18 @@ spec:
     delete: physical.topic-delete
     compact: physical.topic-compact
     # deleteCompact: physical.topic-deletecompact
-````
+```
 
 In this example, since the config for `spec.deleteCompact` is commented out, trying to create this topic will fail:
 
-````bash
+```bash
 kafka-topics --create 
     --bootstrap-server conduktor-gateway:6969 \
     --topic <your-topic-name> \
     --partitions 3 \
     --config cleanup.policy=compact,delete
 Error while executing topic command : Cleanup Policy is invalid
-````
+```
 
 Backing topic cleanup policies are checked when you deploy a new `ConcentrationRule`. This prevents you from declaring a backing topic with a *cleanup.policy* of delete on the *ConcentrationRule* `spec.physicalTopic.compact` field.
 
@@ -143,7 +143,7 @@ When `autoManaged` is enabled:
 - backing topics are automatically created with the default cluster configuration and partition count.
 - concentrated topics created with higher `retention.ms` and `retention.bytes` are allowed. This automatically extends the configuration of the backing topic.
 
-````yaml
+```yaml
 ---
 kind: ConcentrationRule
 metadata:
@@ -153,11 +153,11 @@ spec:
   physicalTopics:
     delete: physical.topic
   autoManaged: true
-````
+```
 
 Let's check the backing topic retention on the physical cluster:
 
-````bash
+```bash
 kafka-configs --bootstrap-server kafka:9092 \
     --entity-type topics --entity-name physical.topic \
     --describe
@@ -165,21 +165,21 @@ Configs for topic 'physical.topic' are:
   cleanup.policy=delete
   retention.ms=604800000
   retention.bytes=-1
-````
+```
 
 Let's try to create a concentrated topic with a higher retention on Gateway:
 
-````bash
+```bash
 kafka-topics --create 
     --bootstrap-server conduktor-gateway:6969 \
     --topic <your-topic-name> \
     --partitions 3 \
     --config retention.ms=704800000
-````
+```
 
 Let's review the backing topic again:
 
-````bash
+```bash
 kafka-configs --bootstrap-server kafka:9092 \
     --entity-type topics --entity-name physical.topic \
     --describe
@@ -187,7 +187,7 @@ Configs for topic 'physical.topic' are:
   cleanup.policy=delete
   retention.ms=704800000
   retention.bytes=-1
-````
+```
 
 As we can see, the retention has been updated.
 
@@ -205,7 +205,7 @@ Any tooling will currently display the message count, and the lag relative to th
 
 To counter this, we've implemented a dedicated offset management capability for `ConcentrationRules`. To enable virtual offsets, add the following line to the `ConcentrationRule`:
 
-````yaml
+```yaml
 ---
 kind: ConcentrationRule
 metadata:
@@ -215,7 +215,7 @@ spec:
   physicalTopics:
     delete: physical.topic
   offsetCorrectness: true
-````
+```
 
 Note that:
 
