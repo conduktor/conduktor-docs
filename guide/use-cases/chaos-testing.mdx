@@ -6,7 +6,21 @@ title: Perform chaos testing
 
 Chaos testing Interceptors in Conduktor are like stress tests for your data systems.
 
-Performing chaos testing allows you to see how well your applications can handle problems like slow data delivery, corrupted messages or unexpected duplicates. This helps ensure that your systems are strong and can keep running smoothly even when things go wrong.
+Performing chaos testing allows you to see how well your applications can handle problems like slow data delivery, corrupted messages or unexpected duplicates. 
+
+This helps ensure that your systems are strong and can keep running smoothly even when things go wrong.
+
+You can simulate:
+
+- [broken brokers](#simulate-broken-brokers)
+- [duplicate messages](#simulate-duplicate-messages)
+- [slow brokers](#simulate-slow-brokers)
+- [message corruption](#simulate-message-corruption) on produce or fetch requests
+- [invalid schema ID](#simulate-invalid-schema-id)
+- [slow producers and consumers](#simulate-slow-producers-and-consumers)
+- [latency on all interactions](#simulate-latency-on-all-interactions)
+- [leader election errors](#simulate-leader-election-errors)
+
 
 ## Simulate broken brokers
 
@@ -242,8 +256,8 @@ This interceptor adds a random bytes to the end of the data in records produced 
 
 You can simulate corruption when:
 
-- *sending* data: `io.conduktor.gateway.interceptor.chaos.ProduceSimulateMessageCorruptionPlugin`
-- *reading data:`io.conduktor.gateway.interceptor.chaos.FetchSimulateMessageCorruptionPlugin`
+- **sending** data: `io.conduktor.gateway.interceptor.chaos.ProduceSimulateMessageCorruptionPlugin`
+- **reading** data:`io.conduktor.gateway.interceptor.chaos.FetchSimulateMessageCorruptionPlugin`
 
 ##### Example
 
@@ -316,3 +330,8 @@ This Interceptor only works on Produce and Fetch requests.
   }
 }
 ```
+
+## Related resources
+
+- [View all Interceptor resources](/guide/reference/interceptor-reference)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
