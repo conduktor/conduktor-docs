@@ -10,7 +10,7 @@ Creates a topic in Kafka.
 - **Managed with:** API, CLI, UI, TF
 - **Labels support:** Full
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -32,7 +32,7 @@ spec:
     min.insync.replicas: '2'
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 **Topic checks:**
 
@@ -195,7 +195,7 @@ Manages the ACLs of a service account in Kafka. This **does not create the servi
 
 Kafka service account example:
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -234,11 +234,11 @@ spec:
         patternType: PREFIXED
         operations:
           - Read
-````
+```
 
 Aiven service account example:
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -264,7 +264,7 @@ spec:
       - type: SCHEMA
         name: 'Subject:click.event-stream.avro'
         permission: schema_registry_write
-````
+```
 
 **Service account checks:**
 
