@@ -71,8 +71,9 @@ resource "conduktor_console_group_v2" "developers-a" {
 - `spec.description` is **optional**
 - `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
   - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
+- `spec.externalGroupRegex` is a list of regex patterns for an LDAP or OIDC groups to sync with this Console Group
   - Supports regex patterns for dynamic group matching (e.g., `^TEAM-.*` to match all groups starting with "TEAM-")
-- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
+- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups` or `spec.externalGroupRegex`
 - `spec.members` must be email addresses of members you wish to add to this group
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
