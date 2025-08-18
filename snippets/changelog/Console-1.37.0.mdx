@@ -7,7 +7,7 @@ _Release date: 2025-08-20_
 - [Conduktor Scale](#conduktor-scale)
   - [Application Groups management](#application-groups-management)
   - [Application Instance resources](#application-instance-resources)
-  - [Self-Service terminology updates](#self-service-terminology-updates)
+  - [Self-service terminology updates](#self-service-terminology-updates)
   - [Subject strategies support](#subject-strategies-support)
   - [User and Group management improvements](#user-and-group-management-improvements)
 - [Conduktor Exchange](#conduktor-exchange)
@@ -20,11 +20,13 @@ _Release date: 2025-08-20_
 
 #### Application groups management
 
-New application group management in Self-Service provides full lifecycle management through improved UI workflows. The **Members tab** offers an enhanced interface for managing group membership, making it easier for teams to control access and visibility. The **Resource access tab** enables granular control over topic, consumer group, subject, and connector permissions for precise access management. Application groups can also map to external groups like console user groups for streamlined access management. 
+New application group management in Self-service provides full lifecycle management through improved UI workflows.
+
+The **Members** tab offers an enhanced interface for managing group membership, making it easier for teams to control access and visibility. The **Resource access** tab enables granular control over topic, consumer group, subject, and connector permissions for precise access management. Application groups can also map to external groups like console user groups for streamlined access management. 
 
 #### Application Instance resources
 
-Application instances now feature comprehensive resource management capabilities. The **new Resources tab** provides a detailed view of all resources associated with application instances, giving teams better visibility into their resource usage and dependencies.
+Application instances now feature comprehensive resource management capabilities. The new **Resources** tab provides a detailed view of all the resources associated with application instances, giving teams better visibility into their resource usage and dependencies.
 
 
 #### Subject strategies support
@@ -36,7 +38,7 @@ Support for **Confluent subject strategies** has been added to the produce page 
 
 The **External groups UI** has been enhanced for mapping external authentication groups, making it easier for administrators to configure and maintain user access patterns.
 
-Both the console user groups and Application Groups now support **external group regex functionality**, enabling dynamic group assignment based on external authentication patterns. This allows organizations to automatically map users from identity providers to appropriate application groups based on configurable regex patterns.
+Both the Console user groups and application groups now support **external group regex** functionality, enabling dynamic group assignment based on external authentication patterns. This allows organizations to automatically map users from identity providers to appropriate application groups, based on configurable regex patterns.
 
 ### Conduktor Exchange
 
@@ -52,7 +54,9 @@ You can now fine-tune Cortex and Prometheus retention with the new environment v
 
 You can **patch** (instead of replacing) the YAML configuration. [Find out more about overriding the configuration with YAML](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex#overriding-with-yaml).
 
-The self-service experience has been improved with **updated terminology** for managing access requests. Ambiguous and inconsistent references to various terminology such as 'subscriptions', 'subscribing', 'access requests', 'sharing', 'requests', have been standardized throughout the application, placing emphasis on a single unified concept known as **access request**.
+The Self-service experience has been improved with **updated terminology** for managing access requests. 
+
+Ambiguous and inconsistent references to various terminology such as 'subscriptions', 'subscribing', 'access requests', 'sharing', 'requests', have been standardized throughout the application, placing emphasis on a single unified concept of **access request**.
 
 You can now view the Resource Policies in the Application details page, and the Consumer Group ownerships in the Application instance details page.
 
