@@ -112,7 +112,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
           email: johndoe@company.io
           phone: 07827 837 177
     ```
-    * If your Gateway is [setup with multi-clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters), `cluster` will be the technical cluster Id of the Gateway as before, and `underlyingCluster` will be the cluster Id of the underlying cluster configured under the Gateway.
+    * If your Gateway is [setup with multi-clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters), `cluster` will be the technical cluster Id of the Gateway as before, and `underlyingCluster` will be the cluster Id of the underlying cluster configured under the Gateway. The `underlyingCluster` is used as the Console cluster Id.
 
      <Info>
          If underlyingCluster is unset, it will default to the value of `cluster`

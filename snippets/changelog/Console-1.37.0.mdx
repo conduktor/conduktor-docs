@@ -6,7 +6,10 @@ title: Console 1.37
 
 - [Conduktor Scale](#conduktor-scale)
 - [Conduktor Exchange](#conduktor-exchange)
+  - [Breaking change](#breaking-change)
+  - [Partner Zone multi-cluster](#partner-zone-multi-cluster)
 - [Conduktor Trust](#conduktor-trust)
+  - [Regex library](#regex-library)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
@@ -19,9 +22,9 @@ title: Console 1.37
 With support for Partner Zones on multi cluster Gateway configurations, Partner Zones now have a breaking change: all **existing Partner Zones have to be re-created** to take advantage of this capability.
 We recommend doing this now, whilst Partner Zone configurations are not in production.
 
-#### Partner Zone Multi Cluster
+#### Partner Zone multi-cluster
 
-Console now supports creating Partner Zones against a multi clustered Gateway configuration. This allows for a Partner Zone against any of the configured Kafka clusters behind the Gateway.
+Console now supports creating Partner Zones against a multi-clustered Gateway configuration. This allows for a Partner Zone against any of the configured Kafka clusters behind the Gateway.
 Previously, a Gateway was required per Kafka cluster for a Partner Zone.
 
 To see how to set this up, please see our [partner zone multi-cluster guide](/guide/tutorials/partner-zone-multi-cluster)   

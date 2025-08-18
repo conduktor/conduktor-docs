@@ -3,13 +3,9 @@ title: Create Partner Zones using multi-cluster Gateway
 ---
 ## Overview
 
-Conduktor supports creating Partner Zones against multiple clusters.
+Conduktor supports creating Partner Zones against a Gateway configured with multiple clusters.
 
-This guide will walk you through the process including the steps required to setup Gateway and Console .
-
-Once the underlying Kafka clusters have been created, you'll want to configure Gateway to use those clusters and to also configure them directly in Console.
-
-This guide will walk you through the steps to set that up and to create a Partner Zone that connects to one of those clusters.
+This guide will walk you through the process including the steps required to setup Gateway and Console.
 
 ## Configuration Steps
 
@@ -21,7 +17,7 @@ Then, follow the steps to configure the Gateway to use those kafka clusters in t
 
 Let's say that you have one main Gateway cluster `gateway-main` and one underlying Kafka cluster `clusterA`.
 
-Once you have configured the Gateway to use multiple clusters, you can then proceed to create a Partner Zone. You can specify the cluster configuration for Gateway something like this:
+Once you have configured the Gateway to use multiple clusters, update your `cluster-config.yml` file in Console with configuration for the clusters you have created, like so:
 
 ```yaml title="cluster-config.yaml"
 config:
@@ -43,8 +39,6 @@ This configuration will be mounted onto the Gateway docker container which can b
 ### Configure the underlying Kafka clusters in Console
 
 Once you have the Gateway configured with multiple clusters, you can then configure the underlying Kafka clusters in Console. This step is necessary to ensure that the kafka clusters are recognized by Console to be available when creating a Partner Zone.
-
-You can do this by following the guide for [Configure Kafka Clusters guide in Console](guide/conduktor-in-production/admin/configure-clusters#connect-to-a-secure-kafka-cluster).
 
 <Tabs>
 <Tab title="Using Console UI">
@@ -74,11 +68,11 @@ clusters:
 </Tab>
 </Tabs>
 
+See the following for more information on how to [Configure Kafka Clusters](guide/conduktor-in-production/admin/configure-clusters#connect-to-a-secure-kafka-cluster) in Console.
+
 ### Create a Partner Zone
 
 Assuming that we have a `gateway-main` Gateway cluster and a `clusterA` Kafka cluster, we can create a Partner Zone that connects to the `clusterA` Kafka cluster as the backing cluster.
-
-More details on creating a Partner Zone can be found in the [Create a Partner Zone guide](/guide/use-cases/third-party-data#create-a-partner-zone). 
 
 <Tabs>
 <Tab title="Using Console UI">
@@ -122,15 +116,33 @@ The following steps are for creating a Partner Zone through the [Conduktor CLI (
           phone: 07827 837 177
     ```
 
-    Note that when creating the Partner Zone, the `spec.underlyingCluster` is set to `clusterA`, which is the Kafka cluster that the Partner Zone will connect to. The `spec.cluster` is set to `gateway-main`, which is the Gateway cluster that will manage the Partner Zone.
+    <Note>
+    When creating the Partner Zone, the `spec.underlyingCluster` is set to `clusterA`, which is the Kafka cluster that the Partner Zone will connect to. The `spec.cluster` is set to `gateway-main`, which is the Gateway cluster that will manage the Partner Zone.
+    </Note>
 
 1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f pz.yaml
     ```
-
-To check the status or list the topics of the Partner Zone, follow the additional steps in the [Create a Partner Zone guide](/guide/use-cases/third-party-data#create-a-partner-zone).
 </Tab>
 </Tabs>
 
+More details on creating a Partner Zone can be found in the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
+
+### Check Partner Zone Status
+
+Once the Partner Zone is created, you can check its status and manage it through the Console UI or the Conduktor CLI.
+
+With the Conduktor CLI, you can use the following command to check the status of the Partner Zone:
+
+```bash
+conduktor get PartnerZone
+```
+
+The `metadata status` can have one of these values:
+  - **Pending**: the configuration isn't deployed or refreshed yet
+  - **Ready**: the configuration is up to date on Gateway
+  - **Failed**: something unexpected happened during the creation
+
+To list the topics of the Partner Zone, follow the additional steps in the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
