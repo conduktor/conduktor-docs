@@ -140,7 +140,7 @@ This section is similar for both Key and Value. The dropdown menu lets you choos
 
 The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
-### Confluent Subject Strategies
+### Confluent subject strategies
 
 When producing messages with schema registry, Conduktor supports Confluent subject strategies, providing control over how schemas are referenced. This gives users flexibility in schema organization and naming conventions, enabling support for different strategies based on your use case (TopicName, RecordName, TopicRecordName strategies).
 
