@@ -2,7 +2,6 @@
 title: Gateway 3.12.0
 ---
 
-# Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
   - [New APIs for health and versions](#new-apis-for-health-and-versions)
@@ -10,7 +9,8 @@ title: Gateway 3.12.0
   - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
   - [New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable](#new-gateway_audit_log_event_types-environment-variable)
-  - [Enhanced Crypto Shredding behavior for Decryption](#enhanced-crypto-shredding-behavior-for-decryption)
+  - [Enhanced crypto shredding behavior for decryption](#enhanced-crypto-shredding-behavior-for-decryption)
+  - [Client Throttling for Encryption/Decryption](#client-throttling-for-encryptiondecryption)
 
 ### Breaking changes
 
@@ -56,7 +56,17 @@ It provides flexibility to enable/disable specific event types, such as `CONNECT
 
 This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
 
-#### Enhanced Crypto Shredding behavior for Decryption
-The Decryption Interceptor now includes improved error handling behavior specifically for Crypto Shredding scenarios.
+#### Enhanced crypto shredding behavior for decryption
+The decryption Interceptor now includes improved error handling behavior specifically for crypto shredding scenarios.
 
-When using KMS types that support crypto shredding (Vault, AWS, GCP, Azure, Gateway), the plugin automatically overrides the configured `errorPolicy` when encryption keys are missing. In these cases, the plugin will always return encrypted data regardless of the configured policy, ensuring consumers don't become permanently blocked by deliberately un-decryptable messages.
+A new `crypto_shred_safe_fail_fetch` error policy has been introduced. It returns encrypted data when decryption fails due to missing encryption keys, but throws exceptions for other types of decryption failures (e.g., authentication errors). This ensures that crypto-shredded data remains protected while still failing fast for other issues that require attention.
+
+#### Client Throttling for Encryption/Decryption
+
+The Gateway now supports client throttling when encryption or decryption operations fail, helping to protect your system from being overwhelmed during error conditions.
+
+- **New throttleTimeMs configuration**: Set `throttleTimeMs` to control how long clients will be throttled when encryption/decryption fails (in milliseconds, default: 0)
+- **Automatic system protection**: When encryption or decryption fails, Gateway can automatically throttle the problematic client for the specified duration, preventing system overload
+- **Configurable behavior**: You can enable and adjust throttling based on your system's needs and error tolerance
+
+[Find out more about encryption and decryption configurations](/gateway/interceptors/data-security/encryption/).
