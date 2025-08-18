@@ -5,19 +5,17 @@ title: Create Partner Zones using multi-cluster Gateway
 
 Conduktor supports creating Partner Zones against a Gateway configured with multiple clusters.
 
-This guide will walk you through the process including the steps required to setup Gateway and Console.
+This guide will walk you through the process including the steps required to set up Gateway and Console.
 
 ## Configuration Steps
 
-### Setup up your Gateway with multi-cluster support
+To have Gateway set up with multi-cluster support, you will first need to create multiple underlying Kafka clusters. Once you have the bootstrap servers for each of the kafka clusters, you can then configure Gateway to point to them.
 
-To have Gateway setup with multi-cluster support, you will first need to create multiple underlying kafka clusters. Once you have the bootstrap servers for each of the kafka clusters, you can then provide to configure Gateway to point to them.
-
-Then, follow the steps to configure the Gateway to use those kafka clusters in this [guide](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
+### Set up your Gateway with multi-cluster support
 
 Let's say that you have one main Gateway cluster `gateway-main` and one underlying Kafka cluster `clusterA`.
 
-Once you have configured the Gateway to use multiple clusters, update your `cluster-config.yml` file in Console with configuration for the clusters you have created, like so:
+You'll first need to configure the Gateway to use the multiple clusters. Create a file `cluster-config.yml` with the configuration for the clusters you have created, like so:
 
 ```yaml title="cluster-config.yaml"
 config:
@@ -34,17 +32,22 @@ config:
     gateway.roles: 'upstream'
 ```
 
-This configuration will be mounted onto the Gateway docker container which can be seen in the [setup guide](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
+Then, mount the `cluster-config.yaml` file in the Gateway container using the configuration `GATEWAY_BACKEND_KAFKA_SELECTOR`:
+```
+GATEWAY_BACKEND_KAFKA_SELECTOR: 'file : { path: /cluster-config.yaml}'
+```
+
+Check out the following guide for additional information about [Configuring Gateway with multi-clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
 
 ### Configure the underlying Kafka clusters in Console
 
-Once you have the Gateway configured with multiple clusters, you can then configure the underlying Kafka clusters in Console. This step is necessary to ensure that the kafka clusters are recognized by Console to be available when creating a Partner Zone.
+Once you have the Gateway configured with multiple clusters, you can then configure the underlying Kafka clusters in Console. This step is necessary to ensure that the Kafka clusters are recognized by Console to be available when creating a Partner Zone.
 
 <Tabs>
 <Tab title="Using Console UI">
-In our case we have `clusterA` as the underlying Kafka cluster. You can configure it in Console:
+In our case, we have `clusterA` as the underlying Kafka cluster. You can configure it in Console:
 1. Go to the **Clusters** page in Console, and click on **Add Cluster**.
-2. Fill in the details for `clusterA` e.g.:
+2. Fill in the details for `clusterA`, e.g.:
     - **Technical Id**: `clusterA`
     - **Bootstrap Servers**: `<clusterA_kafka_bootstrap_server>:9092`
     - Additionally, provide the security settings if required, such as:
@@ -53,7 +56,7 @@ In our case we have `clusterA` as the underlying Kafka cluster. You can configur
         - **SASL JAAS Config**: `org.apache.kafka.common.security.plain.PlainLoginModule required username="<clusterA_api_key>" password="<clusterA_api_secret>";`
 </Tab>
 <Tab title="Using Conduktor Configuration File">
-For the `console-config.yaml` file that is provided to the Console docker container, you can add the following configuration for `clusterA` with the necessary security settings:
+For the `console-config.yaml` file that is provided to the Console Docker container, you can add the following configuration for `clusterA` with the necessary security settings:
 
 ```yaml title="console-config.yaml"
 clusters:
@@ -81,13 +84,13 @@ Assuming that we have a `gateway-main` Gateway cluster and a `clusterA` Kafka cl
 3. Select the **Gateway Cluster** as `gateway-main`.
 4. Select the **Underlying Cluster** as `clusterA`.
 5. Select the topics you want to include in the Partner Zone, and optionally create any topic aliases.
-5. Fill in and complete the remaining steps to create the Partner Zone.
-6. Finaly click **Create** to create the Partner Zone.
+6. Fill in and complete the remaining steps to create the Partner Zone.
+7. Finally click **Create** to create the Partner Zone.
 </Tab>
 <Tab title="Using Conduktor CLI">
 The following steps are for creating a Partner Zone through the [Conduktor CLI (Command Line Interface)](/guide/conduktor-in-production/automate/cli-automation).
 
-1. Save this example to file, e.g. `pz.yaml`:
+1. Save this example to a file, e.g. `pz.yaml`:
 
     ```yaml
     apiVersion: v2
@@ -145,4 +148,4 @@ The `metadata status` can have one of these values:
   - **Ready**: the configuration is up to date on Gateway
   - **Failed**: something unexpected happened during the creation
 
-To list the topics of the Partner Zone, follow the additional steps in the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
+For a more in-depth look at creating a Partner Zone, check out the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
