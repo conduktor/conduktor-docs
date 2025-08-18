@@ -936,7 +936,7 @@ Gateway can be configured to communicate with multiple Kafka clusters and expose
 - provide them with **access to topics in multiple Kafka clusters**
 - expose topics using **aliases** that can be different from topic names
 
-### 1. Configure Gateway
+### Configure Gateway
 
 To set up Gateway to support multi-clusters, you should:
 - configure one main cluster which will be used by Gateway to store its internal state
@@ -1007,7 +1007,13 @@ KAFKA_CLUSTERB_GATEWAY_ROLES: 'upstream' # Note: may be omitted as upstream is t
 </Tab>
 </Tabs>
 
-### 2. Create a partner virtual cluster
+### Partner Virtual Clusters
+
+The following steps are for setting up a partner virtual cluster manually. You can instead create a Partner Zone which supports multi-clusters that simplifies this process. Please see the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
+
+The [Create Partner Zones using multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster.mdx) tutorial page may additionally be helpful.
+
+#### 1. Create a partner virtual cluster
 
 First, create a new partner virtual cluster.
 
@@ -1066,7 +1072,7 @@ curl \
 </Tab>
 </Tabs>
 
-### 3. Alias your topics
+#### 2. Alias your topics
 
 Finally, create aliases for existing topics in the partner virtual cluster.
 
@@ -1150,7 +1156,7 @@ curl \
 </Tab>
 </Tabs>
 
-### 4. Create service accounts
+#### 3. Create service accounts
 
 Once the virtual cluster is created and contains the topics to expose to your partners, you'll need to create service accounts and configure ACLs (Access Control Lists).
 
@@ -1284,7 +1290,7 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="partner-user" password="$PARTNER-USER-PASSWORD";
 ```
 
-### 5. Create ACLs for the service accounts
+#### 4. Create ACLs for the service accounts
 
 Before creating ACLs, you need to know how to reach this partner virtual cluster.
 
@@ -1341,7 +1347,7 @@ kafka-acls --bootstrap-server <partner_virtual_cluster_bootstrap_address> \
   --topic topic1
 ```
 
-### 6. Test partner virtual cluster access
+#### 5. Test partner virtual cluster access
 
 Now that the partner user has the correct ACLs, you can use their credentials to interact with the alias topics and verify that the permissions are correctly set.
 
