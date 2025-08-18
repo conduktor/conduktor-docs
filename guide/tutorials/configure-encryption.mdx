@@ -1176,7 +1176,7 @@ In Protobuf, since we are using the Confluent schema registry, we use the `(conf
 }
 ```
 
-## Client Throttling
+## Client throttling
 
 When encryption or decryption operations fail, you can configure client throttling to help protect your system from being overwhelmed during error conditions.
 
@@ -1187,15 +1187,15 @@ Set the `throttleTimeMs` parameter in your encryption or decryption interceptor 
 - **`throttleTimeMs = 0`** (default): No throttling - clients receive immediate error responses
 - **`throttleTimeMs > 0`**: Clients will be throttled for the specified time in milliseconds when operations fail
 
-### How It Works
+### How it works
 
 When `throttleTimeMs` is configured with a value greater than 0:
 
-- **System protection**: Automatically throttles problematic clients for the specified duration
-- **Automatic handling**: Kafka clients automatically respect the throttle time in responses
-- **Gradual recovery**: Helps prevent cascading failures by spacing out retry attempts
+- **Protects cluster stability**: Gateway automatically throttles clients to prevent system overload
+- **Built-in client compliance**: Kafka clients automatically pause for the specified throttle time between requests
+- **Prevents failure cascades**: Throttling reduces retry pressure, allowing brokers to recover
 
-### Configuration Example
+### Configuration example
 
 ```json
 {
