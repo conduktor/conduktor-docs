@@ -191,7 +191,7 @@ Now that your fields or payload are encrypted, you can decrypt them using the In
 | `recordHeaderFields`     | List[String]                                     |                     | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.                                                                                                                |
 | `enableAuditLogOnError`  | Boolean                                          | true                | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                  |
 | `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client), `fail_fetch` (the client will receive an error for the fetch and no data), or `crypto_shred_safe_fail_fetch` (returns encrypted data when decryption fails due to missing keys, but throws exceptions for other types of decryption failures). |
-| `throttleTimeMs`         | Integer                                                           | 0                   | When decryption fails, apply client throttling for the specified time in milliseconds. This helps prevent overwhelming the system during decryption failures. See more [details](#client-throttling)                                                                                                                                                                                                                                                                          |
+| `throttleTimeMs`         | Integer                                                           | 0                   | When decryption fails, apply client throttling for the specified time in milliseconds. This helps prevent the overwhelming of the system during decryption failures. [Find out more about client throttling](#client-throttling)                                                                                                                                                                                                                                                                          |
 
 ## Configure schema registry
 
@@ -1180,9 +1180,9 @@ In Protobuf, since we are using the Confluent schema registry, we use the `(conf
 
 When encryption or decryption operations fail, you can configure client throttling to help protect your system from being overwhelmed during error conditions.
 
-### How to Enable Client Throttling
+### Enable client throttling
 
-Set the `throttleTimeMs` parameter in your encryption or decryption interceptor configuration:
+Set the `throttleTimeMs` parameter in your encryption/decryption Interceptor configuration:
 
 - **`throttleTimeMs = 0`** (default): No throttling - clients receive immediate error responses
 - **`throttleTimeMs > 0`**: Clients will be throttled for the specified time in milliseconds when operations fail
