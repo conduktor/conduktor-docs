@@ -1,0 +1,96 @@
+---
+title: Conduktor resource reference
+---
+
+## Overview
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem'}}>
+
+<div>
+
+### Console resources
+
+- [Console API reference](https://developers.conduktor.io/?product=console)
+- [Console config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables)
+- [Console CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-console-cli)
+- [Terraform reference](/guide/conduktor-in-production/automate/terraform-automation)
+- [Console resource reference](/guide/reference/console-reference)
+
+</div>
+
+<div>
+
+### Gateway resources
+
+- [Gateway API reference](https://developers.conduktor.io/?product=gateway)
+- [Gateway config reference](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables)
+- [Gateway CLI reference](/guide/conduktor-in-production/automate/cli-automation/#configure-gateway-cli)
+- [Interceptor reference](/guide/reference/interceptor-reference)
+- [Gateway resource reference](/guide/reference/gateway-reference)
+
+</div>
+
+</div>
+ 
+The resources reference page lists all the concepts that can be manipulated in Console, as well as how to manage them using an Infra as Code (IaC) approach.
+
+There are two kinds of API keys that you can use with the Conduktor CLI, the API and Terraform:
+
+- **AdminToken** - have all the permissions over all the resources in Console. In general, *AdminToken* can bypass application owners.
+- **AppToken** - permissions are limited to application instances and ownership is defined via Self-service
+
+## Resource categories
+
+Our resources can be managed via the CLI, the API, Terraform (using the API keys), or Console UI (which relies on RBAC).
+
+There are three categories:
+
+- [Console resources](/guide/reference/console-reference) exist only in Console. For example, users, groups, permissions, cluster configurations, alerts. data masking policies.
+- [Kafka resources](/guide/reference/kafka-reference) get created in the Kafka ecosystem, e.g.: topics, subjects, connectors.
+- [Self-service resources](/guide/reference/self-service-reference) such as application groups and topic policies.
+
+## Conduktor labels
+
+Conduktor labels let you add functional context to your resources. 
+
+They allow you to sort, filter, categorize and organize your resources, providing the flexibility and freedom to flag data that's important or relevant to you.
+
+We're continuously working towards full label support for all Conduktor resources in Console UI.
+ 
+In the meantime, here's what's currently covered.
+
+- Full (labels supported fully): ✅  
+- Partial (labels are supported by the API/CLI but not Console UI): ⚠️
+- Missing (labels aren't supported): 🚫 
+
+### Supported resources
+
+| Resource                     | API/CLI          | Terraform            | UI       |
+|------------------------------|:----------------: |:----------------------:|:----------------:|
+|[Console resources](/guide/reference/console-reference)   |            |            |              |
+| ConsoleGroup                 | 🚫               | 🚫                    | 🚫             |
+| ConsoleUser                  | 🚫              | 🚫                    | 🚫             |
+| KafkaCluster                 | ✅               | ✅                    | ⚠️             |
+| KafkaConnectCluster          | ✅               | ✅                    | ⚠️             |
+| KsqlDBCluster                | 🚫               | 🚫  | 🚫              |
+| Alerts                       | 🚫               | 🚫 | 🚫              |
+| DataMaskingPolicy            | 🚫               | 🚫                    | 🚫               |
+| Certificate                  | 🚫   | 🚫                   | 🚫              |
+| PartnerZone                  | ✅               | ⚠️ (generic resource) | ⚠️              |
+|[Kafka resources](/guide/reference/kafka-reference)   |            |            |              |
+| Topic                        | ✅               | ✅                   | ✅              |
+| Subject                      | ✅               | ⚠️ (generic resource) | ⚠️              |
+| Connector                    | ✅               | ⚠️ (generic resource) | ⚠️              |
+| ServiceAccount               | ✅               | N/A                   | ✅              |
+|[Self-service resources](/guide/reference/self-service-reference)   |      |         |        |
+| Application                  | ✅               | ✅                    | 🚫              |
+| ApplicationInstance          | ✅               | ✅                    | ✅            |
+| ApplicationInstancePermission| 🚫               | 🚫 | 🚫              |
+| ApplicationGroup             | 🚫               | 🚫 | 🚫              |
+| ResourcePolicy               | ✅               | ✅                    | ⚠️             |
+| TopicPolicy                  | 🚫               | 🚫                  | 🚫              |
+
+## Related links
+
+- [Automation overview](/guide/conduktor-in-production/automate)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)

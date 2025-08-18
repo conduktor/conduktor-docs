@@ -1,0 +1,131 @@
+---
+title: Upgrade or migrate
+---
+
+Upgrade to the latest Conduktor version.
+
+## Release cadence
+
+Conduktor provides a new release roughly every month. We suggest that you upgrade **no more than two versions apart** at a time. 
+
+To get notified when a new release comes out click **Follow** from the [Conduktor Console](https://support.conduktor.io/hc/en-gb/sections/16400553827473-Conduktor-Console) and [Conduktor Gateway](https://support.conduktor.io/hc/en-gb/sections/16400521075217-Conduktor-Gateway) pages.
+
+## Overview
+
+Each Conduktor component follows an independent release cycle, so versioning is separate for Helm charts, Console/Gateway (the Docker image which includes the related API) and the Terraform provider.
+
+All the components follow the semantic versioning of: `major`.`minor`.`patch`.
+
+<Info>
+Before any upgrade we strongly recommend reviewing [Conduktor release notes](/guide/release-notes/index) to ensure that there are no breaking changes that might impact your deployment.
+</Info>
+
+### Upgrade Console
+
+<Tabs>
+<Tab title="Docker">
+For Docker deployments, we recommend to:
+
+1. Back up your database, in case a roll-back is required.
+2. Upgrade the Docker image version to the most recent one.
+3. [Re-deploy Console](/guide/conduktor-in-production/deploy-artifacts/deploy-console) with the updated image version.
+
+</Tab>
+<Tab title="Kubernetes">
+
+For Kubernetes deployments, we recommend to:
+
+1. Back up your database, in case a roll-back is required.
+2. Update your Helm repo (`helm repo update`) to get the latest charts or download the required chart version manually.
+3. Run a Helm upgrade (`helm upgrade ...`).
+ 
+This ensures that the Docker image version is compatible with the Helm chart version (which includes the improvements of the chart itself).
+
+To see which Console versions are supported, [check out the Helm chart compatibility matrix](/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes#compatibility-matrix).
+
+You can also view the [repo for Conduktor Helm charts](https://github.com/conduktor/conduktor-public-charts?tab=readme-ov-file#----official-repository-for-conduktor-helm-charts). 
+
+</Tab>
+</Tabs>
+
+During startup, Console will automatically apply any necessary database migrations (structure or data changes).
+
+These migrations are version-aware and tracked to support version jumps safely.
+
+### Upgrade Gateway
+
+<Tabs>
+<Tab title="Docker">
+For Docker deployments, we recommend to:
+
+1. Upgrade the Docker image version to the most recent one.
+2. [Re-deploy Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway) with the updated image version.
+</Tab>
+
+<Tab title="Kubernetes">
+For Kubernetes deployments, we recommend to:
+
+1. Update your Helm repo (`helm repo update`) to get the latest charts or download the required chart version manually.
+2. Run a Helm upgrade (`helm upgrade ...`).
+
+To see which Gateway versions are supported, [check out the Helm chart compatibility matrix](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes#compatibility-matrix).
+
+You can also view the [repo for Conduktor Helm charts](https://github.com/conduktor/conduktor-public-charts?tab=readme-ov-file#----official-repository-for-conduktor-helm-charts). 
+
+</Tab>
+</Tabs>
+
+To minimize the disruption to your service, perform the upgrade as a rolling update. 
+
+### Terraform compatibility 
+
+The Terraform provider compatibility is managed at the **resource level**, not the overall provider or Console version. 
+
+New resources may require newer Console API versions. Compatibility details are:
+
+- in each [Terraform resource's documentation](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/console_application_instance_v1)
+- as inline warnings/errors when running `terraform apply`.
+
+## Migrate Gateway API from v1 to v2
+
+Gateway v3.3.0 introduces API v2 to enhance user experience when interacting with Gateway resources. 
+
+When migrating from API v1 to v2, your Gateway resources will be preserved (you can interact with old resources via the v2 API) and only minimal attention is required for two resources: **Virtual Clusters** and **Gateway service account**.
+
+### Virtual Clusters
+
+When migrating to v2:
+
+- the boolean value for `aclEnabled` will be automatically derived from the previously used `GATEWAY_ACL_STORE_ENABLED` variable but
+- you have to populate the `superUsers` list, as it won't be done automatically when migrating.
+
+Sample configuration:
+
+```yaml
+---
+apiVersion: gateway/v2
+kind: VirtualCluster
+metadata:
+  name: "mon-app-A"
+spec:
+  aclEnabled: true # Defaults to false
+  superUsers:
+  - username1
+  - username2
+```
+
+### Gateway service account
+
+When migrating to v2, **user mappings** become *GatewayServiceAccount*. Every existing user mapping is migrated to v2 as `EXTERNAL GatewayServiceAccount`.  
+
+If you were using LOCAL users (and generating tokens) with the v1 API, you have to:
+
+1. Declare LOCAL users in the v2 API.
+2. Generate tokens.
+
+## Related resources
+
+- [View our version policy](/guide/support/supported-version-policy)
+- [Contact support](https://support.conduktor.io/hc/en-gb/requests/new)
+- [**Already a customer?** Check the status of an open issue or raise a new ticket](https://support.conduktor.io/hc/en-gb/signin?return_to=https%3A%2F%2Fsupport.conduktor.io%2Fhc%2Fen-gb%2Frequests%2Fnew%3Fticket_form_id%3D17438312520209)
+- [Join Conduktor on Slack](https://www.conduktor.io/slack)

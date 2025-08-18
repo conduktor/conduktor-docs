@@ -1,0 +1,933 @@
+---
+title: Kafka topics
+---
+
+## Topic list
+
+The Topic page lets you search for any topic on your currently selected Kafka cluster.
+
+<Warning>
+Configure **RBAC** to restrict your users to View, Browse, or perform any operation only to certain topics.
+</Warning>
+
+Multiple search capabilities can be combined to help you find to the topic you want faster.
+
+**Filtering** is possible on:
+
+- Topic name
+- Show/Hide Internal topics (starts with `_`)
+- Show/Hide Kafka Stream topics (ends with `-repartition` or `-changelog`)
+- Cleanup policy
+- Labels (click on a label to add/remove it from the filters, [See Add Topic Label](#manage-topic-labels))
+
+**Sorting** is possible on all columns.
+
+**Active columns** can be picked from a list of available columns from the **Edit columns** option.
+
+<Info>
+Your current **filters**, active **sort**, and **visible columns** are stored in your browser's local storage for each Kafka Cluster and persist across sessions
+</Info>
+
+![Topics](/images/topic-list.png)
+
+## Operations
+
+Several actions are also available from the Topic List: Create topic, Add partitions, Empty topic and Delete topic.
+
+### Create Topic
+
+On the Create Topic screen, you are asked to provide all the necessary information to create a topic.
+
+<Info>
+The default choices made by Console are generally safe for most typical Kafka Production deployments. If you want to understand more deeply what those parameters are about, here's some recommended reads:  
+[Choosing the Replication Factor and Partition Count](https://www.conduktor.io/kafka/kafka-topics-choosing-the-replication-factor-and-partitions-count/)  
+[Kafka Cleanup Policies Explained](https://www.conduktor.io/kafka/kafka-topic-configuration-log-compaction/)
+</Info>
+
+[Create topic]](/images/topic-create.png)
+
+**Topic name**
+
+As per [Kafka specification](https://github.com/apache/kafka/blob/08c437d25e74d63f11ae3f184dfb3889d4639ece/clients/src/main/java/org/apache/kafka/common/internals/Topic.java#L49-L62), topic name must only contain the following characters `[a-zA-Z0-9._-]` and not exceed 249 characters.
+
+**Partitions**
+
+This lets you define how scalable your topic will be for your consumers. In general you want a multiple of your number of brokers.
+
+Default: `3`
+
+**Replication factor**
+
+This configuration helps prevent data loss by writing the same data to more than one broker.
+
+Default: `min(3, number of brokers)`
+
+**Cleanup Policy**
+
+The Cleanup policy (along with its associated advanced configurations) controls how the retention of your messages is done.
+
+**Labels**
+
+Use labels to organize your topics and facilitate searching them in Console. Each label is a key-value pair.
+
+**Advanced configuration**
+
+Upon toggling the Advanced configuration, you will be shown all the available topic configurations.
+
+<Info>
+Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
+</Info>
+
+<img 
+  src="/images/topic-create-advanced.png" 
+  alt="Advanced create topic"
+  width="300"
+/>
+
+### Add partitions
+
+Increase the number of partitions for your topic. Number of partitions cannot be decreased.
+
+<Warning>
+Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
+</Warning>
+
+<img 
+  src="/images/topic-add-partitions.png" 
+  alt="Add partitions"
+  width="300"
+/>
+
+### Empty topic
+
+This lets you delete all records from a topic. This operation is permanent and irreversible.
+
+If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
+
+<img 
+  src="/images/topic-empty.png" 
+  alt="Empty topic"
+  width="300"
+/>
+
+### Delete topic
+
+This lets you delete the topic from Kafka. This operation is permanent and irreversible.
+
+<img 
+  src="/images/topic-delete.png" 
+  alt="Delete topic"
+  width="300"
+/>
+
+### Manage topic labels
+
+You can help categorize your Topics further using key-value pairs called labels.
+
+To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
+
+<img 
+  src="/images/label-edit.png" 
+  alt="Label edit"
+  width="300"
+/>
+
+A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
+
+<img 
+  src="/images/label-new.png" 
+  alt="Label new"
+  width="300"
+/>
+
+# Topic produce overview
+
+- [Configure Producer](#configure-producer)
+- [Produced messages panel](#produced-messages-panel)
+- [Operations](#operations)
+
+The Produce page lets you configure all the details necessary to produce a record in your current Kafka topic.
+
+It is already configured with [sensible defaults](#sensible-defaults) that you can customize if necessary.
+
+## Configure producer
+
+Each section from the accordion menu will allow you to configure the Kafka producer further: Key, Value, Headers, Flow and Additional options.
+
+![Produce accordion](/images/produce-accordion.png)
+
+### Key and value
+
+This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
+
+<img 
+  src="/images/produce-serializers.png" 
+  alt="Produce serializers"
+  width="300"
+/>
+
+The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
+
+<Warning>
+If using a schema registry, please note that Conduktor currently only supports producing messages with the **TopicNameStrategy**. That is, subjects with names `<topic>-key` and `<topic>-value`
+</Warning>
+
+#### Random data generator
+
+The "Generate once" button will generate a message that conforms to the picked Serializer.
+
+This works with schema registry serializers as well:
+<img 
+  src="/images/produce-random-data-gen.png" 
+  alt="Produce random data"
+  width="300"
+/>
+
+### Headers
+
+The Headers section lets you add headers to your message.
+
+Header Key and Header Value both expect valid UTF8 String.
+
+<img 
+  src="/images/produce-headers.png" 
+  alt="Produce headers"
+  width="300"
+/>
+
+### Flow
+
+Using the Flow mode, you can produce multiple records in one go or configure a Live producer that will produce records at a configurable rate.
+
+**Send N records at a time**
+
+This option lets you define how many message should be produced every time you click the "Produce" button.
+
+Default: 1
+
+Range: [1, 10]
+
+**Generate Random Key/Value**
+
+In order to generate a different message each time you click "Produce", you can enable this option.
+
+When enabled, it will override the Key or Value configured above and always rely on the Random Data Generator to produce messages, same as if you clicked "Generate once" prior to producing a record.
+
+When disabled, the producer will use the Key/Value configured above
+
+Default: disabled
+
+**Producer Mode**
+
+Manual Mode starts a single Kafka Produce each time you click the "Produce" button.
+
+Automatic Mode starts a long running process that batches several Kafka Produce.
+
+**Interval (ms):**
+
+- Interval between each produce batch in milliseconds
+- Range: [1000, 60000]
+
+**Stop conditions : The first met condition stops the producer**
+
+-   **Number of records produced**
+    -   Stops the producer after that many records have been produced.
+    -   Range: [0, 1000000]
+-   **Elapsed time (ms)**
+    -   Stops the producer after a set period of time.
+    -   Range: [0, 60000]
+
+The next screenshot is an example of a produce flow, that will generate:
+
+- A batch of 10 records, every second for a minute
+- With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
+
+<img 
+  src="/images/produce-flow-mode.png" 
+  alt="Produce flow mode"
+  width="300"
+/>
+
+### Additional options
+
+**Force Partition**
+
+This option lets you choose the partition where to produce your record.
+
+If set to **all**, it will use the [DefaultPartitioner](https://github.com/apache/kafka/blob/3.7/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java) from KafkaClient 3.6+
+
+- StickyPartitioner when Key is null
+- `Utils.murmur2(serializedKey) % numPartitions` otherwise.
+
+Default: all
+
+**Compression Type**
+
+This option lets you compress your record(s) using any of the available [CompressionType](https://github.com/apache/kafka/blob/3.7/clients/src/main/java/org/apache/kafka/common/record/CompressionType.java) from the KafkaClient
+
+Default: none
+
+**Acks**
+
+This lets you change the `acks` property of the Producer.
+
+Check this article: [Kafka Producer Acks Deep Dive](https://www.conduktor.io/kafka/kafka-producer-acks-deep-dive/)
+
+Default: all
+
+### Sensible Defaults
+
+The following items are pre-configured by default:
+
+- If you have connected a Schema Registry and there exist a subject named `<topic-name>-key` and `<topic-name>-value` , the serializers will be populated automatically to the right type (Avro / Protobuf / JsonSchema)
+- otherwise, the `StringSerializer` will be picked.
+- A single header `app.name=Conduktor` will be added
+
+## Produced messages panel
+
+Kafka records produced through this screen will be available from the Produced message panel, which acts similarly as the Consume page, allowing you to review your produced record and check the Key, Value, Headers and Metadata
+
+![Produced messages](/images/produce-messages-panel.png)
+
+By clicking on one of the records that you just produced, you can see its content and metadata.
+
+![Messages panel](/images/produce-messages-panel-single.png)
+
+## Operations
+
+### Import CSV
+
+![Produce import CSV](/images/produce-import-csv-button.png)
+
+This feature lets you produce a batch of Kafka Records based on a CSV file.
+
+The 3 required inputs are the Key and Value Serializer, and the input file itself.
+
+<img 
+  src="/images/produce-import-csv.png" 
+  alt="Produce import"
+  width="300"
+/>
+
+As of today, the file must respect the following structure:
+
+- Named headers `key` and `value` must be present. Additional columns will be ignored.
+- The separator must be `;`
+- Double-quoting a field `"` is optional unless it contains either `"` or `;`, then it's mandatory
+- Escape double-quotes by doubling them `""`
+
+Examples
+
+```undefined
+# Null key (empty)
+key;value
+;value without key
+
+# Unused headers
+topic;partition;key;value
+test;0;my-key;my-value
+
+# Mandatory Double quoting
+key;value
+order-123;"item1;item2"
+
+# Json data
+key;value
+order-123;"{""item1"": ""value1"", ""item2"":""value2""}"
+```
+
+Click **Import** to start the process.
+
+While in progress, you'll see a loading state.
+
+Once the import is finished, you'll get a summary message.
+
+<img 
+  src="/images/produce-import-csv-success.png" 
+  alt="Produce import CSV success"
+  width="300"
+/>
+
+### Save and load producer templates
+
+If you are regularly using the same set of Producer configuration, you can save your current settings as a template for reuse.
+
+At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
+
+<img 
+  src="/images/produce-templates.png" 
+  alt="Produce templates"
+  width="300"
+/>
+
+In this list, you're free to apply templates, but also to rename, duplicate and delete them.
+
+## Topic partitions
+
+The Topic Partitions tab displays all the partition information associated to the topic. You can switch from the default "Per partition" view to the "Per broker" view.  
+
+The **Per partition** view presents the data available for each partition:  
+
+- Total number of records (estimated using EndOffset - BeginOffset)
+- Partition Size
+- Begin and End Offsets
+- Broker Ids of the Partition Leader (green) and Followers (grey)
+
+![Per partition](/images/per-partition.png)
+
+The **Per broker** view pivots the data to show for each broker:  
+- Partitions where the broker is Leader
+- Partitions where the broker is Follower
+
+![Per broker](/images/per-broker.png)
+
+### Empty Partition
+On the Per partition view, you can click on the bin icon to remove the Kafka records from this specific partition.
+
+<Note>
+If you need to delete all records from all partitions, click on the `...` icon above the Per partition / Per broker switch, and select **Empty Topic**.
+</Note>
+
+## Topic linked resources
+
+If you need to find related resources, your can use one of the following tabs to display all the Kafka resources associated to this specific topic.
+
+### Linked Consumer Groups
+
+The Topic Consumer Groups tab displays the consumer groups associated to the current Topic.
+
+![Topic consumers](/images/topic-consumers.png)
+
+### Linked Schema Registry Subjects
+
+The Schema tab displays the Key subject and Value subject associated to your topic, assuming your have defined them using [TopicNameStrategy](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/index.html#how-the-naming-strategies-work).
+
+![Topic subjects](/images/topic-subjects.png)
+
+### Linked ACLs
+
+The ACL tab displays the list of Kafka permissions associated to the current Topic.
+![Topic ACLs](/images/topic-acls.png)
+
+<Warning>
+Only the permissions from the default Kafka authorizer implementation, AclAuthorizer available using AdminClient are listed currently.  
+If you are using one of Console's other supported ACL (Aiven, Confluent Cloud), use the dedicated Service Account page instead.
+</Warning>
+
+## Topic graphs
+
+When you browse any Topic Details page, you will see the associated Graphs associated to this topic:
+
+- Produce and Consume rate
+- Number of Records
+- Disk Usage
+
+Graphs can be visualized over 24h, 7 days or 30 days periods.
+
+![Topic graphs](/images/topic-graphs.png)
+
+On each metric you have the option to create an Alert. This will open a side panel requesting you to set the parameters to triggers your Alert.
+
+![Create a topic alert](/images/topic-create-alert.png)
+
+## Alerts tab
+
+The topic Alert tab lets you visualize all active alerts associated to this Kafka Cluster.  
+You can edit them or toggle them on or off.
+
+![List topic alerts](/images/alerts-tab.png)
+
+## Topic consume
+
+<Info>
+Check out the video that presents the most important features of topic consume: [filter and sort techniques for exploration and troubleshooting with Console](https://www.youtube.com/watch?v=8fg0VJ3jSFc)
+</Info>
+
+## Configure the Kafka consumer
+
+When you access a Topic from the Topic List page for the first time, a consumer is automatically triggered with default settings:
+
+-   Show From: `Most recent`
+-   Limit: `500 records`
+-   Partitions: `All`
+
+This default setup lets you quickly browse through the 500 most recent messages produced in the topic.
+
+![Default topic consumer](/images/topic-default.png)
+
+There's a good chance this will not correspond to your requirements, so let's explore how you can configure you consumer to give you the records you need.
+
+### Show from
+
+`Show From` defines the starting point for the Kafka consumer in your topic.
+
+![Show from topic](/images/topic-show-from-choices.png)
+
+Possible values:
+
+-   `Most recent` option works differently depending on the **Limit** that you select
+    -   With **Number of records** limit (let's say 500), it sets the starting point in your topic backward relative to **Now**, in order to get your the 500 _most recent_ records.
+    -   With **None (live consume)**, it simply set the starting point to **Now**. This lets you consume only the messages produced **after** the consumer was started.
+-   `Latest hour`, `Today`, `Yesterday` to start the consumer respectively
+    -   60 minute ago,
+    -   At the beginning of the day at 00:00:00 (Local timezone based on your browser)
+    -   At the beginning of the day before at 00:00:00 (Local timezone)
+-   `Beginning` to start the consumer from the very beginning of the topic.
+-   `Date` and `Timestamp` to start from a specific point in time datetime or an epoch
+    -   Date: ISO 8601 DateTime format with offset `2024-12-21T00:00:00+00:00`
+    -   Timestamp: Unix timestamp in **milliseconds** `1734949697000`
+-   `Offset` to start the consumer at a specific offset, ideal for use with a single **Partition** setting.
+-   `Consumer Group` to start the consumer from the last offsets committed by a consumer group on this topic.
+
+### Limit
+
+`Limit` defines when your consumer must stop.
+
+![Topic limit](/images/topic-limit-choices.png)
+
+Available options:
+
+-   `Latest offset` - stop the consumer upon reaching the end of the topic. The end offsets are calculated when you trigger the search. Records produced after that point **will not appear** in the search results.
+-   `None (live consume)` - start a live consumer that will look for messages indefinitely.
+-   `Number of records` - stop the consumer after having sent a certain number of records to the browser. When you have active filters, non-matching records will not count toward this limit.
+-   `Date` - stop the consumer after reaching the configured date. The ISO 8601 DateTime format with offset `2023-12-21T00:00:00+00:00`.
+
+### Partitions
+
+`Partitions` lets you restrict the consumer to only consume from certain partitions of your topic. By default, records from **all partitions** are consumed.
+
+![Partitions choices](/images/topic-partitions-choices.png)
+
+### Key and value format
+
+`Key format` and `Value format` lets you force the deserializer for your topic.
+
+![Format choices](/images/topic-key-format-choices.png)
+
+#### Automatic deserializer
+
+This is the default deserializer. **Automatic** infers the correct deserializer in the following order:
+
+- Schema Registry Deserializers (Avro, Protobuf, Json Schema)
+- JsonDeserializer
+- StringDeserializer
+- ByteDeserializer (fallback)
+
+Automatic deserializer applies to all the records within a topic, based on the one that matches the first record it encounters.
+
+#### Custom deserializer
+
+If you have installed them, your Custom Deserializers will appear here. Optionally, configure them using the `Properties` text and your messages will show as expected.  
+
+Check our guide on how to [Install and configure custom deserializers in Console.
+
+![Consume with a custom deserializer](/images/topic-custom-deserializer.png)
+
+#### JSON deserializer
+
+JSON Deserializer will explicitly fail on records that doesn't match a JSON type.
+
+![Consume with JSON deserializer](/images/topic-json-deser-fail.png)
+
+#### Bytes deserializer
+
+Bytes Deserializer helps you visualize your records by printing the non-ASCII characters as hexadecimal escape sequences. For instance, the following sequence of bytes:
+
+```undefined
+00 00 00 00 07 10 49 27 6D 20 41 56 52 4F
+```
+
+corresponding to the [wire format of a Schema Registry AVRO message](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/index.html#wire-format):
+
+```undefined
+00                            0   Magic Byte (0)
+00 00 00 07                   1-4 Schema ID (7)
+10 49 27 6D 20 41 56 52 4F    5+  serialized AVRO data
+```
+
+will be represented like this:
+
+```undefined
+\x00\x00\x00\x00\x07\x10I'm AVRO
+```
+
+![Deserializer with bytes](/images/topic-bytes-deserializer.png)
+
+## Filter records
+
+Console give you 3 methods to define filters that will be executed on the server and will only return the records that matches. This is a very powerful feature that lets you quickly see the records that matter to you in large topics.
+
+### Global search
+
+Global Search is the most simple type of filter you can use.
+
+1. Specify whether to look in the Key or in the Value,
+2. Pick an operator (contains, not contains, equals, not equals)
+3. Type your search term
+
+<Info>
+Internally, this will treat the record Key or Value as text to apply the operation (contains, equals, ...).  
+This might not be the preferred approach if your record is JSON-ish
+</Info>
+
+![Global search](/images/topic-global-filter.png)
+
+### Search in a specific field
+
+You can make your search more fine-grained by activating "Search in a specific field".
+![Search in a specific field](/images/topic-search-infield.png)
+
+<Info>
+Console will generate an autocomplete list by looking at the most recent 50 messages in the topic. If the key you're looking for is not here, you can type it manually.  
+Examples:  
+`data.event.name`  
+`data.event["correlation-id"]`  
+`data.clientAddress[0].ip`  
+</Info>
+
+### JS search
+
+If you need to construct more advanced filters, you can switch to the advanced view and use plain Javascript to build your filter.
+
+<Warning>
+While it is the option that can potentially address the most complex use-cases, it is not the recommended or the fastest one.
+</Warning>
+
+### Statistics pop-up
+
+While the consumer is processing, you will see the following statistics window.
+
+This little window present the necessary information to let you decide wether it's worth pursuing the current search or if you should rather refine it further.
+
+Here's how to read it:
+
+![Statistics](/images/topic-stats-info.png)
+
+## Browse records
+
+### From the main table
+
+Once the search starts, you will see messages appearing in the main table. The table has 3 columns: Timestamp, Key and Value.  
+
+<Info>
+Note that the Timestamp column takes the **local timezone** of the user. For example, if you are producing a message from Dublin, Ireland (UTC+1) at `14:57:38 local time`, and you then consume this message from your browser (in Dublin), you will see `14:57:38`. However, if another user consumes the same message in Console but from Paris, France (UTC+2), they will see `15:57:38`. Please be aware that this isn't a mistake from Kafka itself, you are simply seeing messages displayed in your local timezone.  
+</Info>
+
+### Individual records
+
+Upon clicking on a record from the list, a side bar will open on the right to display the entire record.
+
+<Info>
+Use the arrow keys to navigate between messages: ⬆️ ⬇️
+</Info>
+
+There are 3 tabs at the top to display different elements of your record: Data, Headers and Metadata.
+
+![Topic browse](/images/topic-browse.png)
+
+The **Share** button will lead you to a page dedicated to this record, allowing you to share it with your colleagues, and to get more details about it.
+
+![Record details](/images/record-details.png)
+
+### Data tab
+
+The Data tab lets you visualize your record's Key and Value.
+
+If your record Value is serialized with JSON or using a Schema Registry it is presented by default using the Table view. You can also switch to the JSON view if necessary.
+
+![JSON table](/images/topic-browse-json-table.png)
+
+The 2 views have different features associated.
+
+#### Table View
+
+The table view lets you visualize your message field by field and also gives you the possibility to restrict your search further by applying more filters on individual fields. Filter types are Include and Exclude.
+
+Filters are available for:
+
+- **string** fields
+- **number** fields
+- **bool** fields
+
+but disabled for:
+
+- **null** fields
+- fields contained within **lists**
+
+#### JSON View
+
+The JSON view lets you visualize your message , the "Enable JQ" toggle lets you create a different projection your record value.
+
+The basic syntax lets you focus on sub-elements of your record, as shown in the screenshot below.
+
+```undefined
+{ foo: .bar }  // Renders {"foo": "value of .bar"}
+.meta.domain // Renders a single String
+{ id, meta } // Renders a new JSON with both elements
+```
+
+![See JQ filter](/images/topic-browse-json.png)
+
+Check the [JQ Syntax Reference](https://jqlang.github.io/jq/manual/#object-construction) for more advanced use-cases.
+
+### Headers tab
+
+The headers tab show you all the headers of your Kafka record, and lets you find more messages with the same header value, using the funnel icon.
+
+![Headers tab](/images/topic-header-funnel.png)
+The resulting filter will be created:
+![Filter on headers](/images/topic-header-filter.png)
+
+<Warning>
+While Kafka header values are internally stored as `byte[]`, Console uses StringDeserializer to display and filter them.  
+If your producer doesn't write header values as UTF8 String, this tab might not render properly, and header filter might not work as expected.
+</Warning>
+
+### Metadata tab
+
+The metadata tab gives you all the other information regarding your record that could be useful under certain circumstances. The information presented are as follow:
+
+- Record Partition
+- Record Offset
+- Record Timestamp
+- The Key and Value Serializer inferred by the [Automatic Deserializer](#automatic-deserializer)
+- Key Size and Value Size (how it's serialized on the broker)
+- Compression type
+- Schema ID if any
+
+![Topic metadata](/images/topic-metadata.png)
+
+## Operations
+
+### Export records in CSV and JSON
+
+You have the ability to export the records in either JSON or CSV format.
+
+CSV particularly useful in particular because you can use Console to re-import them either in a new topic or in the same topic after having modified them (or not)
+
+![Export records from a topic](/images/topic-export.png)
+
+The resulting files will look like this:
+![Export results](/images/topic-export-result.png)
+
+### Reprocess record
+
+This feature lets you pick a record from the list and reprocess it either in the same or in a different topic, while letting you change its content beforehand.
+
+Upon click the Reprocess message **(1)**, you will be asked to pick a destination topic **(2)**, and then you will end up on the produce tab with your message pre-filled. From there you can either Produce the message directly or make adjustments before **(3)**.
+
+![Reprocess a record](/images/topic-reprocess.png)
+
+### Save and load views
+
+If you are regularly using the same set of Consume Configuration (Show From, Limit, ...) and Filters, or if you'd like to share them with your colleagues, you can save your current view as a template for reuse.
+
+**Create a new view**
+
+Click on the Save icon button to save your current view as a template:
+![Save a new view](/images/save-new-view.png)
+
+From there, you can name your view, add a description, and select whether this view is private, or if you want everyone in your organization to be able to see it and use it.
+
+![Fill the view details](/images/create-shared-view.png)
+
+**List the existing views**
+
+To list the existing views, click on the folder icon:
+
+![List existing views](/images/shared-views.png)
+
+From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
+
+<img 
+  src="/images/list-shared-views.png" 
+  alt="List shared views"
+  width="300"
+/>
+
+## Most recent 500 messages - overview
+
+When you first land on a topic consume page, the default search is configured with **Most Recent 500 messages.** 
+
+The intention is to show you the most relevant messages, split across the partitions. This algorithm guarantees to return some messages irrespective of **when** the records were produced, which we believe is a good starting point when browsing a topic for the first time.
+
+In most cases, it will give you `500 / num_partitions` messages, per partition. If your topic has:  
+**10** partitions, Most Recent **500** will give you **50** messages per partition.  
+**2** partitions, Most Recent **500** will give you **250** messages per partition.  
+
+Edge cases might occur and the algorithm will account for it seamlessly.
+
+<img 
+  src="/images/most-recent-500.png" 
+  alt="Most recent 500"
+  width="300"
+/>
+
+<Warning>
+Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters
+</Warning>
+
+## JS Filters syntax reference overview
+
+JS filter is used to filter Kafka records. The filter is evaluated on each record on the server. It's powerful and can handle complex filters, but requires writing JavaScript code.
+
+<Warning>
+We recommend that you use the simpler and more performant filters: global search and search in a specific field.
+</Warning>
+
+The code has to return a boolean.
+
+If your code returns `true`, the record will be included in the results.
+
+Otherwise the record will be skipped.
+
+    return value.totalPrice >= 30;
+    // Selects all the orders having a total price superior to or equal to 30
+
+### Record attributes
+
+When creating JavaScript filters, you may want to access message data or the metadata. See the parameters in the table below for accessing different message attributes.
+
+| Attribute           | Types  |
+| ------------------- | ------ |
+| key                 | Object |
+| value               | Object |
+| headers             | Object |
+| serializedKeySize   | Number |
+| serializedValueSize | Number |
+| keySchemaId         | Number |
+| valueSchemaId       | Number |
+| offset              | Number |
+| partition           | Number |
+
+### Example filters
+
+Let's imagine we have the following 2 Records in our topic:
+
+```
+Record 1:
+
+{
+  "key": "order",
+  "value": {
+    "orderId": 12345,
+    "paid": true,
+    "totalPrice": 50,
+    "items": [
+      {
+        "id": "9cb5cb81-b678-4f96-84dc-70096038eca9",
+        "name": "beers pack"
+      },
+      {
+        "id": "507b5045-eafd-41a6-afb5-1890f08cfd8e",
+        "name": "baby diapers pack"
+      }
+    ]
+  },
+  "headers": {
+    "app": "orders-microservice",
+    "trace-id": "9f0f004a-70c5-4301-9d28-bf5d7ebf238d"
+  }
+}
+
+Record 2:
+
+{
+  "key": "order",
+  "value": {
+    "orderId": 12346,
+    "paid": false,
+    "totalPrice": 10,
+    "items": [
+      {
+        "id": "7f55662e-5ba2-4ab4-9546-45fdd1ca60ca",
+        "name": "shampoo bottle"
+      }
+    ]
+  },
+  "headers": {
+    "app": "orders-microservice",
+    "trace-id": "1076c6dc-bd6c-4d5e-8a11-933b10bd77f5"
+  }
+}
+
+```
+
+Here are some examples of filters related to these records:
+
+```
+return value.totalPrice >= 30;
+// Selects all the orders having a total price superior to or equal to 30
+
+return value.items.length > 1;
+// Selects all the orders containing more than one 1 item
+
+return value.orderId == 12345;
+// Finds a specific order based in its ID
+
+return !value.paid;
+// Selects all the orders that aren't paid
+
+return !headers.includesKey("trace-id");
+// Selects all the records not having a trace-id header
+
+const isHighPrice = value.totalPrice >= 30
+const moreThanOneItem = value.items.length > 1
+return isHighPrice && moreThanOneItem
+// Selects all the orders having a total price superior to or equal to 30 and having more than one 1 item
+
+```
+
+## Topic list configuration tab
+
+The Topic Configuration tab lets you visualize and edit your topic configuration.
+
+![Topic configuration](/images/topic-config-list.png)
+
+On top of the table you have different fields to help you:
+
+**Search input**  
+filters out the configurations by name. In the example below, we display only configuration with the term `retention`.
+
+**Raw** / **Friendly**  
+Formats the information either in its original form or in a more human readable way.  
+For instance, `retention.ms` can be represented as Raw(`43200000`) or Friendly(`12h`)  
+Default: `Friendly`
+
+**Show Overrides only**
+Displays only the configurations that are set at topic level, as opposed to the configurations set at the broker level.  
+Default: `true`  
+
+**Raw view button**  
+This button shows all the Topic Configurations as key value pairs  
+
+**More Button `...`**  
+This lets you do the same 3 operations that are available on the topic list page: Add partitions, Empty Topic and Delete Topic.
+
+### Edit configurations
+
+When clicking on the edit button from the table rows, a new screen will appear with the following details:
+
+- The name and description of the topic configuration
+- The Kafka default value
+- The current value
+
+<img 
+  src="/images/topic-config-item.png" 
+  alt="Topic config item"
+  width="200"
+/>
+
+You can choose to either Update the value to something new or revert to the Kafka default, which will apply the change directly on the Kafka cluster, similarly to the `kafka-configs` commands below.
+
+```shell-session
+# Update value
+$ kafka-configs --bootstrap-server broker_host:port \
+  --entity-type topics --entity-name my_topic_name  \
+  --alter --add-config cleanup.policy=<new-value>
+
+# Reset to default
+$ kafka-configs --bootstrap-server broker_host:port \
+  --entity-type topics --entity-name my_topic_name  \
+  --alter --delete-config cleanup.policy
+```

@@ -1,8 +1,0 @@
-{
-  "label": "Deployment Options",
-  "position": 1,
-  "link": {
-    "type": "generated-index",
-    "description": "Get started with Conduktor. Installation and Configuration in minutes. Our recommended deployment is with Kubernetes."
-  }
-}

@@ -1,0 +1,37 @@
+---
+title: Conduktor 1.16.3
+---
+
+
+#### Features
+
+#### Config ID maps to technicalID
+
+When configuring initial setup using a .YAML, the `id` value will now map to the `technicalID` of the cluster setup.
+
+```
+
+clusters:
+  - id: eastern-horizon
+    name: My Local Kafka Cluster
+    color: '#0013E7'
+    bootstrapServers: kafka:9093
+
+```
+
+![IdMapping image](/images/changelog/platform/v16.3/IdMapping.png)
+
+#### Set idle session timeout
+
+Configurable maximum session lifetime for authentication was introduced in 1.16.1. You can now additionally set a value for idle session timeout. This will log your users out of Conduktor if they are inactive for a user-defined period of time. Read about how to use these new configurations in the [docs](https://docs.conduktor.io/platform/get-started/configuration/user-authentication/session-lifetime/).
+
+#### Fixes 
+
+- Large topic list handling. Some of our latest and greatest work wasn't playing nicely when the number of topics was high, we've fixed that
+- Improved offline environments. Some customers were experiencing issues when using completely offline environments, we've made some improvements to error handling, the error messages displayed and how we work with timeouts
+- Connector restart history. One of our latest features for automatic connector restarts gave you all the lovely history so you can see what's going on, perhaps too much ;). We've refined this so that each connector only displays it's own history
+- Connect first cluster improvements. When connecting your first cluster there were a few too many buttons available to click, which didn't take you where you wanted to go. We have disabled more of those to make it even clearer on how to get connected
+- App version label restored. Some of you have noticed the app version label in the UI was removed and want it back, we hear you. You'll now find the current version of Console back where it was before, in the bottom left corner of the UI
+- Squashed a bug with trailing slashes getting stuck on blank pages
+- Improved error handling for tokens expiring
+- Fixed a bug that prevented you to browse consumer groups with an empty name

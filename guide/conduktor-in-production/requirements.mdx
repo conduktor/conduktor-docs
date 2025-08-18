@@ -1,0 +1,96 @@
+---
+title: Technical requirements
+---
+
+## Min hardware spec
+
+|  | Gateway | Console |
+| :------ | :--- |:--- |
+| RAM | 4 GB  | 3 GB |
+| CPU cores | 2 | 2 |
+| Disk space | N/A | 5 GB |
+
+## Gateway requirements
+
+Conduktor **Gateway** is provided as a [Docker image](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway) and a [Helm chart](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes).
+
+### Minimum setup
+
+For light usage per Gateway node:
+
+- 2 CPU cores
+- 4 GB of RAM
+
+> Each Gateway instance should support around *20–30 MB/s* of sustained throughput with minimal latency impact.
+
+### Recommended starting setup
+
+For medium to high usage per Gateway node:
+
+- 4 CPU cores
+- 8 GB of RAM
+
+> This setup supports ~40–50 MB/s throughput.
+> For production, run **at least 3 Gateway instances**. Scale horizontally as needed.
+
+### Local storage requirements
+
+While Gateway doesn't use local storage directly, some interceptors like [large message handling](/guide/use-cases/manage-large-messages) might.
+
+### Scaling Gateway
+
+Gateway is designed to **scale horizontally or vertically**. It's mostly CPU-bound unless caching is enabled. Monitor metrics to scale effectively.
+
+### Interceptor impact
+
+Interceptors add **CPU load**. Interceptors doing heavy inspection (e.g. encryption) require:
+
+- More CPU
+- More memory (recommend **4 GB RAM per CPU**)
+
+### Kafka requirements
+
+- Kafka version **2.5.0 or higher** (but lower than 4.0.0)
+- Gateway must connect as an **admin user** with rights to:
+  - Manage topics, groups, and cluster info
+  - Commit offsets
+
+## Console requirements
+
+Conduktor **Console** is provided as a single Docker container.
+
+### Production requirements
+
+For **production deployments**, ensure:
+
+- An external [PostgreSQL (13+)](/guide/conduktor-in-production/deploy-artifacts/deploy-console/#configure-postgres-database) with backups and [high availability](#database-connection-fail-over)
+- [Block storage](/guide/conduktor-in-production/deploy-artifacts/deploy-console/#monitoring-properties) (S3, GCS, Azure) for monitoring
+- Proper hardware allocation (see below)
+- Kafka version **2.5.0+** (less than 4.0.0)
+
+If deploying via [Helm](/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes), check the install guide for detailed requirements.
+
+### Hardware requirements
+
+Use container CGroup limits for resource control.
+
+#### Minimum
+
+- 2 CPU cores
+- 3 GB RAM
+- 5 GB disk
+
+#### Recommended
+
+- 4+ CPU cores
+- 4+ GB RAM
+- 10+ GB disk
+
+[Configure env variables](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables) or [get started with Docker](/guide/get-started).
+
+### Memory configuration
+
+> **Note**: `RUN_MODE` is deprecated. JVM now respects container limits (up to 80%).
+
+```bash
+-XX:+UseContainerSupport -XX:MaxRAMPercentage=80

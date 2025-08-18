@@ -1,0 +1,50 @@
+---
+title: Conduktor 1.12.1
+---
+
+Conduktor version 1.12.1 is now available, introducing RBAC support for Kafka Connect and providing mTLS support for Schema Registry. This release also includes improvements and fixes for the Console, Monitoring, Platform, and Admin solutions. Notable enhancements include the removal of default configurations, support for SSL truststore in Schema Registry, and the transition to agent-less monitoring. Upgrade to Conduktor 1.12.1 for these new features and bug fixes.
+
+![changelog-1-12-0](https://user-images.githubusercontent.com/2573301/220999882-1a1dc81a-4063-4656-bdcc-b1ff0f0d5096.png)
+
+### Important changes
+
+- This version will delete existing user-defined alerts as the data in Cortex changed significantly with the switch towards agent-less monitoring
+
+### Features
+
+Give us feedback [here](https://conduktor.io/roadmap)
+
+- **Platform**
+
+  - Remove the default 'localhost:9092' cluster from Admin when starting Platform
+  - Remove extra local user user@conduktor.io from default platform configuration
+  - Print configuration resolution at platform startup if `CDK_ROOT_LOG_LEVEL` or `PLATFORM_STARTUP_LOG_LEVEL` are set to `DEBUG`. See [configuration properties and environment variables](https://docs.conduktor.io/platform/get-started/configuration/env-variables/)
+  - Added missing EXPOSE directive with default platform port 8080 to the Dockerfile
+
+- **Console**
+
+  - RBAC: Support for Kafka Connect. See [docs](https://docs.conduktor.io/platform/navigation/settings/rbac/)
+  - Schema registry: Support mTLS connection for Confluent schema registry. See [docs](https://docs.conduktor.io/platform/get-started/configuration/ssl-tls-configuration/)
+  - Schema registry: Support SSL truststore configured via advanced properties
+  - Indicate if configuration entries of brokers are read-only
+
+- **Monitoring**
+
+  - Monitoring is now moving to agent-less. Once you add a cluster in Admin, it will be monitored without any additional configuration. 
+
+- **Admin**
+
+  - RBAC: Support specifying permissions for Kafka Connect
+  - Cluster: Add mTLS configuration for confluent schema registry
+  - Cluster: Configure the SSL auth by importing JKS
+
+### Fixes
+
+- **Console**
+
+  - Fix plain text connection with RedPanda clusters and Conduktor proxy
+  - Fix interaction between uploaded certificates and clusters configured with JKS truststore
+  - AWS Glue: Warn when schema creation fails due to incompatibly with previous version
+  - If the last used cluster no longer exists, we fallback to the first cluster in the list
+  - When creating a topic, we now validate the topic name directly in the UI
+  - Consumer: Fix blank screen when trying to open an Avro message

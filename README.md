@@ -1,37 +1,31 @@
 # Conduktor technical docs
 
-- [Conduktor technical docs](#conduktor-technical-docs)
-  - [Deployment and structure](#deployment-and-structure)
-  - [Docs best practice](#docs-best-practice)
-    - [Structure](#structure)
-    - [Images](#images)
-    - [Links](#links)
-  - [Tabs](#tabs)
-  - [Update release notes](#update-release-notes)
-  - [Update public API docs](#update-public-api-docs)
-
-[![Check Markdown links](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml/badge.svg)](https://github.com/conduktor/conduktor-docs/actions/workflows/markdown-links-check.yaml)
-
-Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
+- [Deployment and structure](#deployment-and-structure)
+- [Docs guidelines](#best-practice-guidelines)
+  - [Structure](#structure)
+  - [Images](#images)
+  - [Links](#links)
+  - [Alerts](#alerts)
+- [Update release notes](#update-release-notes)
+- [Update public API docs](#update-public-api-docs)
 
 ## Deployment and structure
 
-In most cases, you'll be editing Markdown files in the **docs** directory, for either Console (**docs/platform**) or Gateway (**docs/gateway**).
+Production is on `main`: [https://docs.conduktor.io](https://docs.conduktor.io).
 
-For a local preview (on *localhost:3000*), run `yarn start`.
+We're now using Mintlify! `npm i -g mint` or `npx mint dev` if you don't want to install the CLI globally.
 
-If you're editing many files or making significant changes, run `yarn build` to check for any failures before merging:
+[Here's more about the Mintlify installation](https://mintlify.com/docs/installation).
 
-```bash
-yarn
-yarn build
-yarn start
+In most cases, you'll be editing Markdown files in the **guide** directory.
 
-```
+For a local preview (on *localhost:3000*), run `mint dev`.
 
-We're using [Vercel](https://vercel.com/) for hosting and the build will try to deploy to this platform.
+You can check for broken links with `mint broken-links`.
 
-## Docs best practice
+## Best practice guidelines
+
+[Check out Conduktor terminology, writing and ToV guidelines](https://conduktor.slite.com/api/s/APsVcreNLD8oT9/Technical-content).
 
 ### Structure
 
@@ -43,9 +37,9 @@ When creating a new page, use this layout:
 - Configure {feature}. List available customization options.
 - Troubleshoot. Add a question/answer list of potential issues/solutions related to {feature}.
 - Related resources. Include links to topics related to the feature. Add this link at the end:
-  [Give us feedback/request a feature](https://conduktor.io/roadmap)
+  - [Give us feedback/request a feature](https://conduktor.io/roadmap)
 
-When adding a tutorial, use this layout:
+When adding a tutorial (step-by-step guide), use this layout:
 
 - Overview/goal. Introduce the concept and the purpose/goal.
 - Context or requirements. Set the scene/list pre-requisites.
@@ -58,127 +52,72 @@ When adding a tutorial, use this layout:
 
 ### Images
 
-Add images to the **assets** folder under the same directory as the Markdown file you're editing. Use `![Image description](assets/image.png)`.
-
-All images will be auto-sized to fit the width of the content pane.
-
-To resize an image:
+All images are stored in `/images`. Embed all images like this:
 
 ```md
-import MyImage from './assets/my-image.png';
-
-<img src={MyImage} alt="My Image" style={{ width: 400, display: 'block', margin: 'auto' }} />
+![Internal load balancing diagram](/images/internal-lb.png)
 ```
+
+Note that all images will have a defined styling applied but you can override this when required.
 
 ### Links
 
-Use absolute links when linking to Conduktor docs, e.g. */platform/get-started/installation/hardware/*.
+Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hardware/*.
 
-You can also link to a specific section on a page, e.g. */platform/get-started/installation/hardware/#hardware-requirements*.
+You can also link to a specific section on a page, e.g. */guide/get-started/hardware/#hardware-requirements*.
 
-## Tabs
+## Alerts
 
-Use tabs to break-up long paragraphs or provide options, [like this](https://docs.conduktor.io/platform/navigation/partner-zones/#create-a-partner-zone).
+Mintlify uses different syntax for alerts (and calls them callouts). Choose from:
 
-To add tabs:
+- `<Note>` This will show the text in blue and in blue background.`</Note>`
+- `<Warning>` This will be orange/red.`</Warning>`
+- `<Info>` This is a subtle info box with grey text.`</Info>`
 
-```md
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
-
-<Tabs>
-<TabItem value="First Tab" label="First Tab">
-
-My first tab content:
-
-```yaml title="first-tab.yaml"
-myFirstTab: "content"
-```
-
-</TabItem>
-<TabItem value="Second Tab" label="Second Tab">
-
-My second tab content:
-
-```yaml title="second-tab.yaml"
-mySecondTab: "content"
-```
-
-</TabItem>
-</Tabs>
-```
-
-## Tags
-
-Use tags to visualize available options, [like this](https://docs.conduktor.io/platform/reference/resource-reference/kafka/).
-
-To add tags:
-
-```md
-import Admonition from '@theme/Admonition';
-
-export const Highlight = ({children, color, text}) => (
-<span style={{ backgroundColor: color, borderRadius: '4px', color: text, padding: '0.2rem 0.5rem', fontWeight: '500' }}> {children} </span>
-);
-
-export const Tag1 = () => (
-<Highlight color="#F8F1EE" text="#7D5E54">Tag 1</Highlight>
-);
-
-<Tag1/>
-```
+Try to use only one of these only (Mintlify offer a couple of others).
 
 ## Update release notes
 
-Every new version of Gateway and Console has to have release notes.
+Every new version of Gateway, Console and CLI has to have release notes.
 
 To update release notes:
 
-1. Go to **src/pages/changelog**.
-1. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.md`.
-1. Make sure your file has the following header:
+1. Go to **/snippets/changelog**.
+2. Create a new .mdx file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
+3. Make sure your file has the following header:
 
-```md
----
-date: 2025-11-25
-title: Chargeback
-description: docker pull conduktor/conduktor-console:1.31.0
-solutions: console
-tags: features,fix
----
+    ```mdx
+    ---
+    title: Product version
+    ---
 
-*Release date: {frontMatter.date.toISOString().slice(0, 10)}*
-```
+    # Product version
 
-1. Document all the changes in the release. If it's a:
+    ```
+
+4. Document the changes and fixes for the release. If it's a:
 
 - **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
-- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
+- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted, as a customer. Remember to explain what to change or do next, if anything.
 
-1. Open `src/pages/changelog.mdx` and import your new file, e.g.:
+5. Go to **guide/release-notes** and open **index.mdx**. Add to the import list a line like this:
 
-```md
-import Console1310 from './changelog/Console-1.31.0.md';
+```
+import Console1310 from './changelog/Console-1.31.0.mdx';
 ```
 
-1. Finally, add an entry at the top of the page, linking to your file. E.g.:
+6. Add an entry under the`<Note>`, linking to your file. E.g.:
 
-```md
-## Console 1.131.0
-<Console1310 />
+```
+<Update label="Console 1.36.1" description="2025-07-21">
+<Console1361 />
+</Update>
 ---
 ```
+
+This is the format that Mintlify uses: `label` is the H1 heading used in your .mdx file and `description` is the date of the release.
 
 ## Update public API docs
 
-API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
-
-To update the public docs:
-
-1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
-
-- [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
-- [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
-- [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
-
-1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
-1. Add the new version to `static/developers/openapi/manifest.json`.
+<!-- markdown-link-check-disable-next-line -->
+[API docs are now in a separate repo](https://github.com/conduktor/developers.conduktor.io).

@@ -1,0 +1,67 @@
+---
+title: Delegated JWT authentication 
+---
+
+## Overview
+
+Console allows you to delegate authentication to an external identity provider.
+
+A common use case is to protect Console by putting an API between Console and its clients. The authentication flow of the client is performed by the API and the token from the identity provider is sent directly to Console. In this case, no authentication is performed by Console, it only checks that the token is valid and issued by the trusted identity provider.
+
+<img 
+  src="/images/jwt-auth-api-gateway.png" 
+  alt="Architecture diagram API auth"
+  width="350"
+/>
+
+When enabling the delegated authentication mode, tokens issued directly by Console are still accepted.
+
+## Prerequisites
+
+To validate a token, Console will retrieve the issuer configuration and public keys. The issuer has to expose an OIDC discovery endpoint, such as `.well-know/openid-configuration`, to provide this information.
+
+The token of the identity provider has to contain claims with either an API key or an email. These claims allow Console to map the token to a user or an API key and apply its permissions.
+
+## Configuration example
+
+In this example we configure Console to accept any token issued by `https://example.org/keycloak/realms/conduktor`. If a valid API key is defined in the `apikey` claim, it will be used. Otherwise, the email contained in the `email` claim will be mapped to a Console user. If the user doesn't exist, it will be created. The `groups` claim is optional and used for [external group mapping](/guide/conduktor-in-production/admin/user-access/map-external-groups).
+
+```yaml title="platform-config.yaml"
+sso:
+   jwt-auth:
+      issuer: "https://example.org/keycloak/realms/conduktor"
+      username-claim: "email"
+      groups-claim: "groups"
+      api-key-claim: "apikey"
+```
+
+## Conduktor CLI
+
+By default, the Conduktor CLI will try to log in to Console and generate a Conduktor token. With delegated authentication, we want to avoid the generation of a Conduktor token and directly use the one provided by the identity provider. To configure the CLI for this mode, set the `CDK_AUTH_MODE` environment variable to `external`.
+
+If you already have a token from your identity provider, you can configure the CLI like this:
+
+```shell
+# Bearer token (issued by the identity provider)
+export CDK_AUTH_MODE="external"
+export CDK_API_KEY=<bearer token>
+```
+
+If you use an API in front of Console, you can also send the client ID and secret as basic auth in the authentication header, like this:
+
+```shell
+# Basic auth
+export CDK_AUTH_MODE="external"
+export CDK_USER=<client id>
+export CDK_PASSWORD=<client secret>
+```
+
+## Config properties
+
+| Property                      | Description                                   | Environment variable            | Mandatory | Type   | Default  |
+|-------------------------------|-----------------------------------------------|---------------------------------|-----------|--------|----------|
+| `sso.jwt-auth.issuer`         | Issuer of your identity provider              | `CDK_SSO_JWTAUTH_ISSUER`        | true      | string | ∅        |
+| `sso.jwt-auth.username-claim` | Email attribute from your identity provider   | `CDK_SSO_JWTAUTH_USERNAMECLAIM` | false     | string | `email`  |
+| `sso.jwt-auth.groups-claim`   | Group attribute from your identity provider   | `CDK_SSO_JWTAUTH_GROUPSCLAIM`   | false     | string | `groups` |
+| `sso.jwt-auth.api-key-claim`  | API key attribute from your identity provider | `CDK_SSO_JWTAUTH_APIKEYCLAIM`   | false     | string | `apikey` |
+

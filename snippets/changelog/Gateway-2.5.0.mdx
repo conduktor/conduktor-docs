@@ -1,0 +1,89 @@
+---
+title: Gateway 2.5.0
+---
+
+### Schema-based data contract validation
+
+Check and enforce data quality at the schema level, preventing outages from missing or badly formatted records.
+
+Gateway can now validate payloads against specific constraints for AvroSchema and Protobuf using the same validations provided by JsonSchema, such as:
+
+- **Number**: `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, `multipleOf`
+- **String**: `minLength`, `maxLength`, `pattern`, `format`
+- **Collections**: `maxItems`, `minItems`
+
+If criteria are not met then informative feedback is provided such as, `name is too short (1 < 3)`, `hobbies has too few items (3 < 5)` as well as the topic and field level information.
+
+Example: Without validation
+
+```json
+{
+  "namespace": "schema.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "age", "type": "int"},
+    {"name": "email", "type": "string"}
+}
+```
+
+Example: With validation
+
+```json
+{
+  "namespace": "schema.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string", "minLength": 3, "maxLength": 50},
+    {"name": "age", "type": "int", "minimum": 18},
+    {"name": "email", "type": "string", "format": "email"}
+}
+```
+
+Sounds interesting, try it out for yourself with [this demo](https://github.com/conduktor/conduktor-gateway-demos/blob/main/safeguard-validate-schema-payload-json/Readme.md?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24) or come [chat to us](https://www.conduktor.io/contact/sales/?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24) for proper evaluation.
+
+This can be combined with the SQL data quality producer plugin described below, or standalone.
+
+### SQL data quality checks on produce
+
+Check data quality with a SQL statement before it hits the cluster, ensure the data produced is valid.
+
+If we want our `cars` topic only to allow messages where the cars are red AND younger than 2020, we can write this out as a SQL statement in the plugin's config, and post it to the Gateway, e.g.
+
+```json
+{
+  "statement": "SELECT * FROM cars WHERE color = 'red' and record.key.year > 2020",
+  "action": "BLOCK_WHOLE_BATCH",
+  "deadLetterTopic": "dead-letter-topic"
+}
+```
+
+Messages not meeting this criteria should have the whole batch blocked, however, we also have the option to block only the bad messages, or allow them in and log the action in the audit log.
+
+Rejected messages will throw up informative feedback on why the data quality is insufficient such as `record is not produced because year is not > 2020`, or `because color is not red`. These error messages will also added to the message header.
+
+We also have a [demo](https://github.com/conduktor/conduktor-gateway-demos/tree/main/sql-data-quality-producer?utm_source=changelog&utm_medium=webpage&utm_campaign=data_quality_24) for you to try yourself.
+
+### Set config fields using environment variables
+
+Be able to alias all interceptor config fields using environment variables.
+
+### Set client ID on action
+
+ClientId is an optional field that helps identify applications within your Kafka. Requiring this is set presents opportunities such as speedier debugging by narrowing down which applications affect which messages, or quota management.
+
+Rather than simply block messages that don't have it set, you can instead choose to override the message metadata to set one. This can be done on all Kafka verbs i.e. produce, consume, admin actions and more.
+
+### ARM build
+
+Conduktor Gateway is now available in an ARM build, not just AMD, to provide more flexibility to your deployment machine choices.
+
+### Interceptor API Upsert Support
+
+The interceptor API will now upsert (create if doesn't exist, update if exists) when making `PUT` calls.
+
+### General fixes 🔨
+
+- Fixed support for additional Kafka topic configuration properties such as `retention.ms = -1`

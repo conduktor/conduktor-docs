@@ -1,0 +1,17 @@
+---
+title: Conduktor 1.13.1
+---
+
+
+Conduktor version 1.13.1 is now available, addressing bugs and improving HTTP proxy support. The Platform now correctly uses the configured external URL for SSO callback URL resolution, and OIDC SSO requests now utilize the `CDK_HTTP_PROXY_*` configurations. Additionally, improvements have been made to HTTP certificate migration and various test scenarios. Upgrade to Conduktor 1.13.1 for these bug fixes and enhancements.
+
+### Fixes
+
+- **Platform**
+
+  - Fix an issue whereby platform does not take hostname from `platform.external.url`. Now the configured external url is always used for SSO callback url resolution.
+  - Fix an issue whereby `CDK_HTTP_PROXY_*` configurations were not being used for OIDC SSO requests. Also set `CDK_HTTP_NON_PROXY_HOSTS` default value to `localhost|127.*` when HTTP proxy is configured. See our [Http Proxy configuration](https://docs.conduktor.io/platform/get-started/configuration/http-proxy-configuration/) documentation for more details.
+
+- **Testing**
+
+  - Fix migration for HTTP certs and some test scenarios

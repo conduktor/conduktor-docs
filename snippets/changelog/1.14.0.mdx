@@ -1,0 +1,62 @@
+---
+title: Conduktor 1.14.0
+---
+
+
+Conduktor version 1.14.0 is now available, introducing various new features and enhancements. This release includes performance improvements in the Console for loading Kafka data, support for MS Teams integration, the ability to add SSO users to your organization before their first login, and a simple onboarding wizard for easy setup. Important changes in this version include the requirement to update the configuration to define a root administrator. Check out the full list of changes below and update to Conduktor 1.14.0 to enjoy these new features and improvements.
+
+![admin-integrations](https://user-images.githubusercontent.com/2573301/232781884-8ee1fea7-cc6a-450c-9851-c0e49cbed59c.jpeg)
+
+### Important changes
+
+- This version requires a configuration update to ensure you have root administrator defined. This is mandatory for initialization of the platform, therefore you **MUST** update your configuration prior to upgrading.
+
+### Features
+
+Give us feedback [here](https://conduktor.io/roadmap)
+
+- **Platform**
+
+  - See important changes above. You must ensure you have a root administrator defined in your platform configuration.
+  - New onboarding wizard to help setup your environment for a new installation. This can be used to configure license, organization, database and SSO (Oauth2/LDAP) from inside the Conduktor UI. See [docs](https://docs.conduktor.io/platform/get-started/installation/get-started/docker/).
+  - Added a memory available check at startup to prevent platform running in cases whereby the memory available is less than the memory required by the `RUN_MODE` being used.
+
+- **Console**
+
+  - Long resource names are now wrapped to ensure the full string is always visible in the table.
+  - We have improved the performance of loading topic names and associated metadata in the topic list screen.
+  - We have improved the performance for loading subjects from schema registry.
+
+- **Admin**
+  
+  - It's now possible to add an SSO user to your organization before their first login. This allows you to allocate appropriate permissions prior to their first login. 
+  - Notifications screen is now 'Integrations', with support added for Microsoft Teams. 
+  
+- **Monitoring**
+
+  - Request confirmation from users when deleting alerts.
+  - Reduced verbosity of logs from the topic scanner.
+  - Integration of Microsoft Teams notifications for alerting.
+
+### Fixes
+
+- **Platform**
+
+  - Clean some embedded PostgreSQL temporary files on container restart to prevent database startup error in some edge cases.
+  - Remove `Content-Length` header on web-socket requests, mitigating web-socket issues with some reverse proxy like Envoy.
+
+- **Console**
+
+  - Fix dropdown selectors in dark mode theme.
+  - Consumer: pretty print Protobuf records
+
+- **Testing**
+
+  - Fix variable definition export.
+  - Fix deletion of linked tasks.
+
+- **Admin**
+
+  - Every admin of the platform is now able to delete a user.
+  - Initialize organization during platform startup.
+  - For users in Trial, the upgrade license button is no longer crashing the UI.

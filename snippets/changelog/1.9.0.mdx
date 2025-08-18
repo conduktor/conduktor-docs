@@ -1,0 +1,31 @@
+---
+title: Conduktor 1.9.0
+---
+
+
+Conduktor version 1.9.0 brings exciting new features, including support for running in an Openshift environment. This release also includes important changes and fixes for improved functionality. Explore the latest updates in Conduktor now!
+
+### Important changes
+
+- Conduktor container now runs as a non-root user `conduktor-platform` with UID `10001` and GID `0`
+
+### Features
+
+- **Platform**
+
+  - Openshift support
+  - Add CDK_SSL_DEBUG flag to enable SSL debug logs
+
+- **Topic as a Service**
+  - Adds the capability to delete applications
+  - Adds the capability to delete an environment
+
+### Fixes
+
+- **Platform**
+
+  - Fix modules dependencies. Data masking is now enabled even if governance is disabled
+
+- **Topic as a service**
+  - Select owner after creation in the application form
+  - Improve service accounts fields in the application form

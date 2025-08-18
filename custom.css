@@ -1,0 +1,154 @@
+.mdx-content,
+[data-mode="custom"] .container {
+  max-width: 1024px !important;
+  min-width: 800px;
+  margin: 0 auto;
+}
+
+#topbar-cta-button > a > span {
+  background-color: #09343C !important;
+  color: white;
+}
+
+.dark #topbar-cta-button > a > span {
+  background-color: #496E78 !important;
+}
+
+.img.nav-logo {
+  height: 32px;
+}
+
+.link-list a {
+  position: relative;
+  transition: all 0.2s ease;
+  padding-right: 20px;
+}
+
+.link-list a:hover {
+  color: #09343C;
+  transform: translateX(4px);
+  text-decoration: underline;
+}
+
+.dark .link-list a:hover {
+  color: #BCFE68;
+}
+
+.link-list a:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transition: all 0.2s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.link-list a:hover:after {
+  opacity: 1;
+}
+
+/* Dark mode arrow */
+.dark .link-list a:after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");
+}
+
+.spacing-sm { margin: 10px 0; }
+.spacing-md { margin: 20px 0; }
+.spacing-lg { margin: 40px 0; }
+.spacing-xl { margin: 60px 0; }
+.mt-sm { margin-top: 10px; }
+.mt-md { margin-top: 20px; }
+.mt-lg { margin-top: 40px; }
+.mb-sm { margin-bottom: 10px; }
+.mb-md { margin-bottom: 20px; }
+.mb-lg { margin-bottom: 40px; }
+
+/* Light mode headings */
+h1, h2, h3 {
+  color: #09343C;
+}
+
+/* Dark mode headings */
+.dark h1, .dark h2, .dark h3 {
+  color: white;
+}
+
+/* table {
+  border: 1px solid #eeedef;
+  border-radius: 8px;
+} */
+
+table td {
+  padding: 16px !important;
+  border-left: 1px solid #eeedef;
+}
+
+.dark table td {
+  border-left: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table td:last-child {
+  border-right: 1px solid #eeedef;
+}
+
+.dark table td:last-child {
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table tr {
+  border-left: 1px solid #eeedef;
+  border-radius: 20px
+}
+
+.dark table tr {
+  border-left: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table tr:first-child {
+  border-top: 1px solid #eeedef;
+}
+
+.dark table tr:first-child {
+  border-top: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table tr:last-child {
+  border-bottom: 1px solid #eeedef;
+  border-right: 1px solid #eeedef;
+}
+
+.dark table tr:last-child {
+  border-bottom: 1px solid rgb(255, 255, 255, 0.05);
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table th {
+  min-width: auto !important;
+  border-right: 1px solid #eeedef;
+}
+
+.dark table th {
+  border-right: 1px solid rgb(255, 255, 255, 0.05);
+}
+
+table th:last-child {
+    border-right: none;
+}
+
+.prose :where(thead th):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  padding: 8px 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}

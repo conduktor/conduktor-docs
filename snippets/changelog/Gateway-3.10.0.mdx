@@ -1,0 +1,21 @@
+---
+title: Gateway 3.10.0
+---
+
+- [New features](#new-features)
+  - [`GATEWAY_SECURITY_MODE` environment variable](#gateway_security_mode-environment-variable)
+
+### New features
+
+#### `GATEWAY_SECURITY_MODE` environment variable
+
+This release introduces the `GATEWAY_SECURITY_MODE` environment variable,
+which simplifies the security configuration by splitting out **what** manages authentication/authorization (valid values: `KAFKA_MANAGED` or `GATEWAY_MANAGED`) from **how** it should be managed (still set in the `GATEWAY_SECURITY_PROTOCOL` environment variable).
+
+This change:
+
+- deprecates the `DELEGATED_SASL_PLAINTEXT` and `DELEGATED_SASL_SSL` security protocols (though they remain supported for backward compatibility)
+- enables ACLs by default when managing security on the Gateway, by changing the default behaviour of the `GATEWAY_ACL_ENABLED` environment variable. ACL behavior is now derived from the security mode
+- is backwards compatible, supporting existing configurations while encouraging the new approach
+
+[Check out the tutorial on migrating to the new security mode](/guide/tutorials/migrate-gw-security).

@@ -1,0 +1,41 @@
+---
+title: Conduktor 1.2.0
+---
+
+
+Discover the latest version of Conduktor in 1.2.0, packed with exciting new features, testing improvements, and essential bug fixes. This release introduces the ability to override platform configurations through environment variables, offering enhanced flexibility and customization. The Testing module receives significant upgrades, including the option to load CSVs from S3-compatible storage, simplification of source selection in checks, and a new node for comparing data across multiple Kafka topics. Alongside these advancements, various bug fixes have been implemented, addressing issues in the Platform, Console, Testing, Monitoring, and Data Masking modules. Stay updated and leverage the full potential of Conduktor 1.2.0!
+
+### Load CSVs from S3 Compatible Storage
+
+Previously it was only possible to load a file from a location that was local to your testing Agent. This new option for loading data from S3 into a test scenario brings much more flexibility. Specifically, it unlocks a more appropriate method for loading external files in automated tests that run in your CI/CD pipeline.
+
+![image](/images/changelog/platform/testing-s3.png)
+
+### Features
+
+- **Platform**
+  - Platform configurations can be overridden from environment variables.
+- **Testing**
+  - Simplify source selection in checks. Rather than remember the full jq prefix, we now provide a helper for the different data attributes you might want to test (message key, value, headers etc.)
+  - Add support of S3 in LoadCSV task
+  - Add a comparison data node that allows you to compare data across records consumed from 2 or more distinct topics.
+
+### Fix 🔨
+
+- **Platform**
+  - Fix links in the help menu
+  - Enable solutions in the solution switcher to open in new tab
+  - Use the intercom widget on feedback tab
+- **Console**
+  - Accept certificate chains in Kafka properties
+  - Quick search in data tables is now case insensitive
+  - Produce - partition selection dropdown was not working
+  - Kafka Connect - Improve connector definition validation
+- **Testing**
+  - Accept certificate chains in Kafka properties
+- **Monitoring**
+  - Lag metrics now work with TLS
+  - Clusters are now displayed as within other apps
+- **Data masking**
+  - Fix masking delete policy
+  - Align policies table with Platform UI standards

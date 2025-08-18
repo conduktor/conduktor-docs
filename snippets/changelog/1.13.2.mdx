@@ -1,0 +1,22 @@
+---
+title: Conduktor 1.13.2 
+---
+
+
+Conduktor version 1.13.2 is now available, bringing bug fixes and improvements for the Platform, Console, and Admin solutions. The Platform fixes include addressing a regression related to the platform database connection default schema and fetching OIDC user information during login. The Console now supports references in schemas and fixes the color of the cluster name in dark mode. The Admin solution has reduced verbosity in logs and eliminated cluster configuration leakage. Update to Conduktor 1.13.2 to benefit from these bug fixes and enhancements.
+
+### Fixes
+
+- **Platform**
+
+  - Fix regression on platform database connection default schema used if changed from PostgreSQL default
+  - Now fetch OIDC user infos endpoint for user `email` claim if not present in ID Token during login.
+
+- **Console**
+
+  - Support references in Schemas
+  - Dark mode: fix color of cluster name in cluster dropdown
+
+- **Admin**
+
+  - Logs: reduce verbosity and avoid cluster configuration leakage

@@ -1,0 +1,66 @@
+---
+title: Conduktor version support policy
+keywords: ['version support', 'versioning policy']
+---
+
+We support releases of our software for one calendar year after their release date (the release date being the date the version was first published). For the purposes of support, the specific software artifacts in scope for this policy are:
+
+- Console (also covering cortex)
+- Gateway
+
+The end of support date applies to minor versions and any maintenance versions that come after the minor version. This means that maintenance versions follow the same one year lifecycle of the minor version. For example, Conduktor Console version `1.21.x` ends support on 26<sup>th</sup> Feb 2024, and this will include ending support for its maintenance versions `1.21.1`, `1.21.2` and `1.21.3`.
+
+The end of support date is the last day that the version is supported.
+
+For supported versions, our support team will work with you to address issues you may have through the most appropriate means - typically, but not limited to, an upgrade to a more recent version where a fix already exists, or a maintenance patch where necessary.
+
+# Supported versions and end of support dates
+
+## Console
+
+Conduktor Console covers the UI, API and the cortex monitoring.
+
+Helm charts providing in-support versions for these artifacts are also covered by support.
+
+| **Version**            | **Release date** | **End of support date**        |
+| :--------------------- | :--------------- | :----------------------------- |
+| 1.36.x                 | 18 Jul 2025      | 18 Jul 2026                    |
+| 1.35.x                 | 18 Jun 2025      | 18 Jun 2026                    |
+| 1.34.x                 | 14 May 2025      | 14 May 2026                    |
+| 1.33.x                 | 9 Apr 2025       | 9 Apr 2026                     |
+| 1.32.x                 | 12 Mar 2025      | 12 Mar 2026                    |
+| 1.31.x                 | 5 Feb 2025       | 5 Feb 2026                     |
+| 1.30.x                 | 16 Dec 2024      | 16 Dec 2025                    |
+| 1.29.x                 | 25 Nov 2024      | 25 Nov 2025                    |
+| 1.28.x                 | 14 Oct 2024      | 14 Oct 2025                    |
+| 1.27.x                 | 11 Sept 2024     | 11 Sept 2025                   |
+| 1.26.x                 | 14 Aug 2024      | 14 Aug 2025                    |
+| *1.25.x*               | *22 Jul 2024*    | *22 Jul 2025 : Out of Support* |
+| *1.24.x*               | *19 Jun 2024*    | *19 Jun 2025 : Out of Support* |
+| *1.23.x*               | *3 May 2024*     | *3 May 2025 : Out of Support*  |
+| *1.22.x*               | *3 Apr 2024*     | *3 Apr 2025 : Out of Support*  |
+| *1.21.x*               | *26 Feb 2024*    | *26 Feb 2025 : Out of Support* |
+| *1.20.x (and earlier)* | *12 Dec 2023*    | *12 Dec 2024 : Out of Support* |
+
+## Gateway
+
+For Conduktor Gateway, the one year support policy only applies from version `3.0.0` onwards. Version `2.X.x` releases of Conduktor Gateway are no longer supported and are superseded by version `3.X.x` of Gateway.
+
+Helm charts providing in-support versions for these artifacts are also covered by support.
+
+| **Version** | **Release date**  | **End of support date**           |
+| :---------- | :---------------- | :-------------------------------- |
+| 3.11.x      | 18 Jul 2025       | 18 Jul 2026                       |
+| 3.10.x      | 18 Jun 2025       | 18 Jun 2026                       |
+| 3.9.x       | 14 May 2025       | 14 May 2026                       |
+| 3.8.x       | 9 Apr 2025        | 9 Apr 2026                        |
+| 3.7.x       | 21 Mar 2025       | 21 Mar 2026                       |
+| 3.6.x       | 12 Feb 2025       | 12 Feb 2026                       |
+| 3.5.x       | 16 Dec 2024       | 16 Dec 2025                       |
+| 3.4.x       | 15 Nov 2024       | 15 Nov 2025                       |
+| 3.3.x       | 4 Sep 2024        | 4 Sep 2025                        |
+| *3.2.x*     | *19 Jul 2024*     | *19 Jul 2025 : Out of Support*    |
+| *3.1.x*     | *3 Jun 2024*      | *3 Jun 2025 : Out of Support*     |
+| *3.0.x*     | *20 Mar 2024*     | *20 Mar 2025 : Out of Support*    |
+| *2.X.x*     | *12 Feb 2024*     | *EoL since v 3.0, Out of Support* |
+

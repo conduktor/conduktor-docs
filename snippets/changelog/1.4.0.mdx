@@ -1,0 +1,35 @@
+---
+title: Conduktor in 1.4.0
+---
+
+
+Explore the latest version of Conduktor in 1.4.0, packed with exciting new features and essential bug fixes. The Console now offers advanced configuration options for topic creation, empowering users to customize all settings of the topic. The Platform introduces notifications for new Platform versions and enhances configuration by generating environment variables from the configuration file. In Data Masking, data masking rules are now applied before filters in the Console and Testing modules. The Admin section receives improvements with the introduction of technical IDs for clusters, enhancing URL shareability. Additionally, several bug fixes address issues across the Platform, Console, Testing, Data Masking, and Admin modules, ensuring a smoother user experience.
+
+![image](/images/changelog/platform/console-1.4.0.png)
+
+### Features
+
+- **Platform**
+  - Notify when a new Platform version is available
+  - Environment variable generation from configuration file https://conduktor.github.io/yaml-to-env/
+- **Console**
+  - Create Topic form - Advanced configuration: The user can now configure all the settings of the topic
+- **Data Masking**
+  - Apply data masking rules before filters are applied in Console and Testing
+- **Admin**
+  - Clusters now have technical id. You can observe this on the cluster configuration screen inside `admin/clusters`. Soon, URLs inside the Platform solutions will use this technical id, enhancing shareability of URLs.
+
+### Fix 🔨
+
+- **Platform**
+  - Fix authentication with SSO when no local user definition is provided
+  - Fix clusters[].schemaRegistry parsing from env
+- **Console**
+  - Producer was producing too many messages when it was configured in automatic produce mode with an elapsed time stop condition
+- **Testing**
+  - Prevent connecting two nodes at once
+  - Quota error on some executions
+- **Data Masking**
+  - Add scroll to Policy form panel
+- **Admin**
+  - Fix the cluster creation capacity for enterprise license

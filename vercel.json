@@ -1,12 +1,24 @@
 {
-  "trailingSlash": true,
   "redirects": [
-    { 
-      "source": "/desktop/conduktor-first-steps/install",
-      "destination": "/platform/category/get-started/", 
+    {
+      "source": "/platform",
+      "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console",
+      "permanent": true
+    },
+    {
+      "source": "/platform/",
+      "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console",
+      "permanent": true
+    },
+    {
+      "source": "/gateway",
+      "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway",
+      "permanent": true
+    },
+    {
+      "source": "/gateway/",
+      "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway",
       "permanent": true
     }
   ]
 }
-
- 

@@ -1,0 +1,64 @@
+---
+title: Gateway 3.8.0
+---
+
+- [Breaking changes](#breaking-changes)
+   - [New backing topic for Gateway](#new-backing-topic-required-for-gateway)
+   - [Deprecating v1 APIs](#deprecating-v1-apis)
+- [Conduktor Shield](#conduktor-shield)
+   - [General availability: a cost-effective Crypto Shredding with Gateway KMS](#general-availability-cost-effective-crypto-shredding-with-gateway-kms)
+- [New features](#new-features)
+   - [Support for delegated authentication using OAUTHBEARER](#support-for-delegated-authentication-using-oauthbearer)
+   - [Support for Confluent Cloud Identity Pool](#support-for-confluent-cloud-identity-pool)
+   - [Support for delegated authentication using AWS_MSK_IAM](#support-for-delegated-authentication-using-aws_msk_iam)
+
+### Breaking changes
+
+#### New backing topic required for Gateway
+
+An upcoming data quality feature requires a new backing topic in Gateway.
+
+When you upgrade to Gateway 3.8.0, a new topic `_conduktor_gateway_data_quality_violation` will be created.
+
+To change this default topic name, use the `GATEWAY_DATA_QUALITY_TOPIC` variable. [Find out more about environment variables](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names).
+
+#### Deprecating v1 APIs
+
+The v1 APIs are now deprecated in favor of v2, introduced in Gateway v3.3.0 in September 2024.  
+
+If you're using the Conduktor CLI to operate Gateway, you're not impacted. [Find out which Gateway APIs are affected](https://developers.conduktor.io/?product=gateway&version=3.6.1&gatewayApiVersion=v1).
+
+<Warning>
+**We plan to remove the V1 APIs from Gateway in two releases (Gateway 3.10.0).** If you're using the v1 APIs, migrate to v2 APIs as soon as possible. [Get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438363566609) for support with the migration.
+</Warning>
+
+### Conduktor Shield
+
+#### General availability: cost-effective Crypto Shredding with Gateway KMS
+
+This release includes general availability of the Gateway native Crypto Shredding feature for Conduktor Shield customers. The 'gateway' KMS type on encryption/decryption interceptors allows you to manage granular encryption keys for individual users/records without the prohibitive costs of storing each key in AWS KMS (which costs approximately $1 per key).
+
+<Warning>
+**Breaking changes for v3.7.0 Crypto Shredding users**
+Any messages encrypted with 'gateway' KMS type in Gateway v3.7.0 **will not be de-cryptable in v3.8.0**.
+</Warning>
+
+Changes since v3.7.0:
+
+- when multiple Gateway nodes are simultaneously processing data with the same secret Id for the first time, it's now possible for multiple Gateway keys to be stored per secret Id. Crypto Shredding requires every one of these keys to be deleted. To do so, the key store topic needs to be fully consumed and all of the keys associated with the required secret Id determined. Each will have a separate `UUID`.
+- to efficiently re-use Gateway KMS keys for secret Ids, a new configuration option `maxKeys` has been added to `config/kmsConfig/gateway/`. It should be set to a number larger than the expected number of secret Ids.
+- the `masterKeyId` in **config/kmsConfig/gateway/** is now validated and can't use template variables.
+
+### New features
+
+#### Support for delegated authentication using OAUTHBEARER
+
+When using the **OAUTHBEARER** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the `sub` claim as the principal name. You can override this by setting the `GATEWAY_OAUTH_SUB_CLAIM_NAME` environment variable to the claim you want to use as the principal name. 
+
+#### Support for Confluent Cloud Identity Pool
+
+If you're using OAuth support on Confluent Cloud, you can also set `GATEWAY_OAUTH_USE_CC_POOL_ID` environment variable to `true` to use the identity pool ID as the principal name.
+
+#### Support for delegated authentication using AWS_MSK_IAM
+
+When using the **AWS_MSK_IAM** authentication mechanism, you can now use `GATEWAY_SECURITY_PROTOCOL=DELEGATED_SASL_xxx`. By default, Gateway will use the AWS access key ID as the principal name.

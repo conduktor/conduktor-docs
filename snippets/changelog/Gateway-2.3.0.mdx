@@ -1,0 +1,72 @@
+---
+title: Gateway 2.3.0
+---
+
+### Features
+
+#### Passthrough enhanced API UX
+
+New API paths have been added to the API for when GW is in the default `Passthrough` mode. This simplifies some of the interceptor paths by removing the need to include `/vcluster/passthrough/`. ![api-doc-udpated](/images/changelog/gateway/v2.3.0/api-doc-online.png)
+
+#### Simple secret management
+
+Previously secrets had to be defined in the configuration of interceptors. Now, secrets can be stored on the client side setup in an environment variable which can be used by the interceptor.
+
+Before
+
+```json
+{
+...
+    "additionalConfigs": {
+      "schema.registry.url": "yourUrl",
+      "basic.auth.credentials.source": "some_source",
+      "keySecretId": "password-secret"
+    }
+...
+}
+```
+
+New option
+
+```json
+{
+...
+    "additionalConfigs": {
+      "schema.registry.url": "${SR_URL}",
+      "basic.auth.credentials.source": "${SR_BASIC_AUTH_CRED_SRC}",
+      "basic.auth.user.info": "${SR_BASIC_AUTH_USER_INFO}"
+    }
+...
+}
+```
+
+
+### Enhancements
+
+#### Encryption
+
+You now have the option of storing encryption configuration within a topic, rather than in the headers of the messages. This is a design option to be considered. Storing in the topic requires less storage, but now messages are no longer self-sufficient and will depend on this topic data. Set the environment variable for the name of the topic to be used and you're good to go. See [the docs](https://docs.conduktor.io/gateway/configuration/env-variables/#topics-names) for more.
+
+### Audit log filtering
+
+Finding an issue or a specific event in your Kafka isn't always straightforward, especially on many physical, or virtual, clusters. With enriched properties of the audit log we can now filter on;
+
+- Topic names
+- APIKeys
+- VCluster names
+- Usernames
+- Consumer Group Ids
+- topicPartitions
+
+### General fixes 🔨
+
+- Changed behaviour for field level actions to be more lenient. Gateway will ignore fields that don't match the encryption or masking interceptor configuration, rather than throwing an exception
+- Changed behaviour for Oauth authorisation to be more secure. Gateway will prioritise Conduktor user-mappings when looking for which vcluster to connect to, if no user-mapping exists it fallback on claims, if no claim exist, the authorisation fails.
+- Fixed some typos in logs
+- Bumped some internal versions to reduce CVE risk
+- Fixed an issue that prevented the use of large message support on MSK
+- Reduced image size through some optimisations
+- Product analytics startup event restored, minimal Gateway start data is collected on launch to enhance product development. This can be deactivated with the [environemnt variable](https://docs.conduktor.io/gateway/configuration/env-variables/#product-analytics)
+- Removed stack trace dumps on Safeguard catches
+- Fixed SQL topics in single-tenant Gateway mode
+- Further fixes for our Helm chart deployment options

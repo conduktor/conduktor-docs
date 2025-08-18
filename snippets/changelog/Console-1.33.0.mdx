@@ -1,0 +1,139 @@
+---
+title: Console 1.33
+---
+
+
+- [Conduktor Scale](#conduktor-scale)
+  - [Kafka Chargeback: group by labels](#kafka-chargeback-group-by-labels)
+  - [Self-service: improved cross-team access control](#self-service-improved-cross-team-access-control)
+  - [Support for Aiven service accounts](#support-for-aiven-service-accounts)
+  - [Service account labels](#service-account-labels)
+- [Conduktor Exchange](#conduktor-exchange)
+  - [Improvements to Partner Zones](#improvements-to-partner-zones)
+- [Quality of life improvements](#quality-of-life-improvements)
+- [Fixes](#fixes)
+- [Known issues](#known-issues)
+
+### Conduktor Scale
+
+#### Kafka Chargeback: group by labels
+
+Introducing labels for Chargeback - you can now filter and group Kafka usage by team, environment, project or business unit.
+
+Go to the **Chargeback** page, select the required service account and add relevant label(s). You can then use these labels to filter your view or usage reports and action as necessary. 
+
+![Manage Chargeback labels in the service account details page](/images/changelog/platform/v33/chargeback.png)
+
+#### Self-service: improved cross-team access control
+
+We've enhanced permission management for cross-team access. You can now assign different permissions to users in the UI from the Kafka service accounts, allowing for more precise access control.
+
+Here's an example granting READ access to the service account and denying access to members of the application through Console:
+
+```yaml
+# Permission granted to other applications
+---
+apiVersion: self-service/v1
+kind: ApplicationInstancePermission
+metadata:
+  application: "clickstream-app"
+  appInstance: "clickstream-app-dev"
+  name: "clickstream-app-dev-to-another"
+spec:
+  resource:
+    type: TOPIC
+    name: "click.event-stream.avro"
+    patternType: LITERAL
+  userPermission: NONE
+  serviceAccountPermission: READ
+  grantedTo: "another-appinstance-dev"
+```
+
+#### Support for Aiven service accounts
+
+We've added the support for Aiven service accounts in our API and CLI.
+
+Here's an example granting READ and WRITE access to the `click.event-stream.avro` topic and its schema.
+
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  cluster: aiven
+  name: clickstream-sa
+spec:
+  authorization:
+    type: AIVEN_ACL
+    acls:
+      - resourceType: TOPIC
+        name: 'click.event-stream.avro'
+        permission: readwrite
+      - type: SCHEMA
+        name: 'Subject:click.event-stream.avro'
+        permission: schema_registry_write
+```
+
+#### Service account labels
+
+You can now annotate all service accounts with Conduktor labels:
+
+- Any Kafka cluster
+- Conduktor Gateway
+- Confluent Cloud
+- Aiven Cloud (currently using API/CLI only)
+
+To can add/edit labels, click **Edit** next to the labels, shown under the service account name:
+![Service account label details](/images/changelog/platform/v32/edit-service-account-labels.png)
+
+<Info>
+We're working to add support for labels on all Conduktor resources.
+</Info>
+
+### Conduktor Exchange
+
+#### Improvements to Partner Zones
+
+##### Rename shared topics
+
+You can now add aliases to the topics shared via Partner Zones. This prevents the sharing of any internal naming conventions or sensitive information, without replication.
+
+![Rename shared topics in the UI](/images/changelog/platform/v33/topic-renaming.png)
+
+##### Modify Partner Zone details
+
+Partner Zones can now be easily edited using the UI. You can edit the following:
+
+- name
+- URL
+- description
+- contact information
+- traffic control policy details
+- topics (add new or rename existing)
+
+![editing a partner zone](/images/changelog/platform/v33/edit-pz.png)
+
+Find out more about [Partner Zones](/guide/conduktor-concepts/partner-zones) or [Conduktor Exchange](https://www.conduktor.io).
+
+### Quality of life improvements
+
+- Add selectors for key and value formats on the single Kafka message page, enabling the use of customer deserializers.
+- Creating resources owned by an Application Instance using an Admin API Key now bypasses Self-service topic policies.
+
+### Fixes
+
+- Glue: improve deserialization of Avro schemas containing a nullable union
+- Fixed an issue preventing the use of protobuf schemas with references
+- Added a fallback mechanism to use the standard Kafka Connect API call when encountering an error on Confluent Cloud. If all attempts fail, the Confluent Cloud error message is now displayed to provide better clarity and troubleshooting information.
+- Improved performance of API for applying users and groups with many permissions
+- Errors thrown while producing to a topic are now properly displayed in the UI
+- Fixed the computation of the controller of a KRaft cluster in the Brokers page
+- Fixed an issue that prevented the storage of the NUL character in Kafka Connect error messages
+- Failure to create the topic for audit log is now recorded in the logs
+- Prevent Application Instance Token to be able to overwrite the Service Account permissions
+- Update the database schema to not use 'partition' as a column name due to conflicts with SQL keywords on EnterpriseDB
+- Align LDAP user retrieval behavior with binding/connection requests to resolve issues with federated Active Directory/LDAP where users aren't found.
+
+### Known issues
+
+In the Topic Consume view, equality filters (`==`) on JSON number fields aren't working correctly when the number exceeds JavaScript's safe integer limit of `2^53-1`. Note that while range operators (`>`, `<`, `>=`, `<=`) still work with large numbers, there's currently no workaround for exact equality filtering. We'll address this in a future release.

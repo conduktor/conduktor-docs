@@ -1,0 +1,73 @@
+---
+title: Automate with API
+---
+
+## Conduktor API overview
+
+You can automate some of your tasks using our REST API. Conduktor offers the Console API and Gateway API, each used for managing different resources.
+
+<Tabs>
+<Tab title="Console API">
+
+The Conduktor HTTP API can be used to manage your organizations users, groups and their associated permissions. You can also use it to interact with Kafka resources such as clusters and certificates.
+
+[Go to the API portal](https://developers.conduktor.io/?product=console) or `/docs` in your deployment host (e.g., `http://localhost:8080/docs`).
+
+Use the API portal to download the OpenAPI specification. You can then import it to tools such as [Postman](https://www.postman.com/).
+
+#### Manage API keys
+
+In Console, go to **Settings** > **API Keys** to manage and create new keys. Only members of the admin group can generate API keys and access the API.
+
+Give it a unique name and click **Generate Key**. You can then copy it and use as required.
+
+<img 
+  src="/images/api-save-key.png" 
+  alt="Save API key"
+  width="300"
+/>
+
+Make sure to copy the key as it won't be accessible when this window is closed.
+
+#### Revoke API keys
+
+To revoke a key, select it from the list and click the **trash can** icon. You'll be prompted to confirm as this can't be undone.
+
+#### Example
+
+Here's a sample request listing the permissions associated with group 'project-a':
+
+```bash
+curl -X GET http://localhost:8080/public/v1/groups/project-a/permissions -H "Authorization: Bearer {token}"
+[
+    {
+        "clusterId": "local",
+        "topicPattern": "projectA-*",
+        "permissions": [
+            "topicConsume",
+            "topicViewConfig"
+        ],
+        "resourceType": "Topic"
+    },
+    {
+        "clusterId": "local",
+        "consumerGroupPattern": "projectA-*",
+        "permissions": [
+            "consumerGroupView"
+        ],
+        "resourceType": "ConsumerGroup"
+    }
+]
+```
+
+</Tab>
+<Tab title="Gateway API">
+
+The Conduktor Gateway HTTP API can be used to manage your organizations Interceptors and other resources such as alias topics or topic concentration rules.
+
+[Go to the API portal](https://developers.conduktor.io/?product=gateway) or the HTTP root page of your deployment host (e.g., `http://localhost:8888/`).
+
+Use the API portal to download the OpenAPI specification. You can then import it to tools such as [Postman](https://www.postman.com/).
+
+</Tab>
+</Tabs>

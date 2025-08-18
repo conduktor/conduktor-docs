@@ -1,0 +1,959 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "customCSS" : "/custom.css",
+  "name": "Conduktor documentation",
+  "colors": {
+    "primary": "#09343C",
+    "light": "#BCFE68",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Home",
+        "pages": ["index"]
+      },
+      {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": ["guide/index", "guide/get-started"]
+          },
+          {
+            "group": "Conduktor in production",
+            "pages": [
+              "guide/conduktor-in-production/index", 
+              "guide/conduktor-in-production/requirements", 
+              "guide/conduktor-in-production/deploy-artifacts/index"
+            ]
+          },    
+            {
+             "group": "Deploy Gateway",
+             "pages": [
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/kubernetes",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
+            ]
+          },
+            {
+              "group": "Deploy Console",
+              "pages": [
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/index",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables",
+              "guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"
+              ]
+            },
+            {   
+             "group": "Deploy Cortex",
+             "pages": [
+                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+                  ]
+                },
+          {
+            "group": "Monitor",
+            "pages": [
+              "guide/conduktor-in-production/monitor/index"
+            ]
+          },
+          {
+            "group": "Manage licenses",
+            "pages": [
+              "guide/conduktor-in-production/manage-licenses/index"
+            ]
+          },
+          {
+            "group": "Automate",
+            "pages": [
+              "guide/conduktor-in-production/automate/index",
+              "guide/conduktor-in-production/automate/api-automation",
+              "guide/conduktor-in-production/automate/cli-automation",
+              "guide/conduktor-in-production/automate/terraform-automation"
+            ]
+          },
+          {
+            "group": "Manage",
+            "pages": [
+              "guide/conduktor-in-production/admin/index",
+              "guide/conduktor-in-production/admin/configure-clusters",
+              "guide/conduktor-in-production/admin/set-up-rbac",  
+              "guide/conduktor-in-production/admin/audit-logs",  
+              "guide/conduktor-in-production/admin/gw-policies", 
+              "guide/conduktor-in-production/admin/data-mask"             
+            ]
+          },
+          {
+            "group": "Access and permissions",
+            "pages": [
+              "guide/conduktor-in-production/admin/user-access/index",
+              "guide/conduktor-in-production/admin/user-access/configure-sso",
+              "guide/conduktor-in-production/admin/user-access/map-external-groups",
+              "guide/conduktor-in-production/admin/user-access/local-admin-users",
+              "guide/conduktor-in-production/admin/user-access/session-lifetime",
+              "guide/conduktor-in-production/admin/user-access/delegated-jwt-auth"
+            ]
+          },
+          {
+            "group": "Conduktor use cases",
+            "pages": [
+              "guide/use-cases/chargeback",
+              "guide/use-cases/self-service",
+              "guide/use-cases/encrypt-kafka",
+              "guide/use-cases/third-party-data",
+              "guide/use-cases/enforce-data-quality", 
+              "guide/use-cases/chaos-testing",
+              "guide/use-cases/apply-traffic-control-policies",
+              "guide/use-cases/manage-large-messages",
+              "guide/use-cases/cache-data"
+            ]
+            },      
+            {
+            "group": "Monitor Conduktor usage",
+            "pages": [
+              "guide/monitor-brokers-apps/index",
+              "guide/monitor-brokers-apps/alerts"
+            ]
+          },
+            {
+            "group": "Manage Kafka",
+            "pages": [
+              "guide/manage-kafka/index",
+              "guide/manage-kafka/kafka-resources/brokers",
+              "guide/manage-kafka/kafka-resources/kafka-connect",
+              "guide/manage-kafka/kafka-resources/ksql-db",
+              "guide/manage-kafka/kafka-resources/schema-registry",
+              "guide/manage-kafka/kafka-resources/service-accounts-acls",
+              "guide/manage-kafka/kafka-resources/topics"            
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Concepts",
+        "groups": [
+          {
+            "group": "Conduktor concepts",
+            "pages": [
+              "guide/conduktor-concepts/chargeback",
+              "guide/conduktor-concepts/gw-authen-author",
+              "guide/conduktor-concepts/gw-service-accounts",
+              "guide/conduktor-concepts/indexing",
+              "guide/conduktor-concepts/interceptors",
+              "guide/conduktor-concepts/logical-topics",
+              "guide/conduktor-concepts/partner-zones",
+              "guide/conduktor-concepts/self-service",
+              "guide/conduktor-concepts/traffic-control-policies",
+              "guide/conduktor-concepts/virtual-clusters"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tutorials",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Kafkademy",
+              "href": "https://learn.conduktor.io/kafka/"
+            }
+          ]
+        },
+        "groups": [
+          {
+            "group": "Tutorials",
+            "pages": [
+              "guide/tutorials/index",
+              "guide/tutorials/configure-audit-log-topic",
+              "guide/tutorials/configure-chargeback",
+              "guide/tutorials/configure-sql",   
+              "guide/tutorials/custom-deserializers",
+              "guide/tutorials/reprocess",
+              "guide/tutorials/self-service-start",
+              "guide/tutorials/sni-routing",    
+              "guide/tutorials/deploy-aws",
+              "guide/tutorials/migrate-gw-security",
+              "guide/tutorials/configure-encryption",
+              "guide/tutorials/custom-log",
+              "guide/tutorials/manage-gw-sa"
+
+          ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Reference",
+            "pages": [
+              "guide/reference/index",     
+              "guide/reference/console-reference",
+              "guide/reference/gateway-reference",
+              "guide/reference/interceptor-reference",
+              "guide/reference/kafka-reference",               
+              "guide/reference/metric-reference",
+              "guide/reference/self-service-reference"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Release notes",     
+        "groups": [
+          {
+            "group": "Release notes",
+            "pages": ["guide/release-notes/index"]
+          }
+        ]
+      },  
+      {
+        "tab": "Support",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Support portal",
+              "href": "https://support.conduktor.io",
+              "icon": "newspaper"
+            }
+          ]
+        },           
+        "groups": [
+          {
+            "group": "Support",
+            "pages": [
+              "guide/support/index",
+              "guide/support/upgrade",
+              "guide/support/supported-version-policy",
+              "guide/support/third-party-dependencies"
+            
+            ]
+          }
+        ]
+      },
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/gateway"]
+          }
+        ]
+      },  
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor",
+            "pages": [
+              "/platform"]
+          }
+        ]
+      },          
+      {
+        "tab": " ",     
+        "groups": [
+          {
+            "group": "Conduktor Desktop",
+            "pages": [
+              "/desktop/index",
+              "/desktop/migrating-to-conduktor-scale",
+              "/desktop/learn-apache-kafka-with-conduktor",
+
+              "/desktop/conduktor-first-steps/install/index",
+              "/desktop/conduktor-first-steps/install/linux",
+              "/desktop/conduktor-first-steps/install/mac",
+              "/desktop/conduktor-first-steps/install/windows",
+              "/desktop/conduktor-first-steps/install/update",
+        
+              "/desktop/conduktor-first-steps/sign-in/index",
+              "/desktop/conduktor-first-steps/sign-in/single-sign-on",
+
+              "/desktop/conduktor-first-steps/licenses-and-activations/index",
+              "/desktop/conduktor-first-steps/licenses-and-activations/offline-licenses",
+
+              "/desktop/account-management/index",
+              "/desktop/account-management/managing-permissions-rbac",
+
+              "/desktop/conduktor-first-steps/login-troubleshooting/index",
+              "/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq",
+              "/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy",
+
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/index",
+              "/desktop/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds",
+
+              "/desktop/kafka-cluster-connection/import-export/index",
+              "/desktop/kafka-cluster-connection/import-export/github-enterprise",
+
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-on-windows-wsl-2",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-under-docker",
+              "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups",
+
+              "/desktop/features/producing-data/index",
+              "/desktop/features/producing-data/produce-random-data",
+
+              "/desktop/features/brokers-management",
+
+              "/desktop/features/topics-management/index",
+              "/desktop/features/topics-management/how-to",
+              "/desktop/features/topics-management/smart-groups",
+              "/desktop/features/topics-management/topic-details",
+              
+              "/desktop/features/consuming-data/index",
+              "/desktop/features/consuming-data/pick-your-format-wisely",
+              "/desktop/features/consuming-data/filtering-and-projecting-data",
+              "/desktop/features/consuming-data/advanced-consumer",
+
+              "/desktop/features/consuming-data/custom-deserializers/index",
+              "/desktop/features/consuming-data/custom-deserializers/aws-glue-schema-registry",
+              "/desktop/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry",
+
+              "/desktop/features/consumer-groups-management",
+
+              "/desktop/features/schema-registry-management/index",
+              "/desktop/features/schema-registry-management/avro-tools",
+              "/desktop/features/schema-registry-management/schema-compatibilities",
+
+              "/desktop/features/kafka-connect/index",
+              "/desktop/features/kafka-connect/features",
+              "/desktop/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect",
+              "/desktop/features/kafka-connect/security",
+
+              "/desktop/features/kafka-streams",
+
+              "/desktop/features/ksqldb/index",
+              "/desktop/features/ksqldb/connect-conduktor-to-ksqldb-clusters",
+              "/desktop/features/ksqldb/how-to-query-with-ksqldb",
+              "/desktop/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb",
+              "/desktop/features/ksqldb/what-to-do-with-ksqldb",
+              "/desktop/features/ksqldb/ksqldb-faq",
+
+              "/desktop/features/kafka-access-control-list-acl/index",
+              "/desktop/features/kafka-access-control-list-acl/acls-advanced-insights",
+
+              "/desktop/features/monitoring",             
+
+              "/desktop/miscellaneous/configuring-conduktor",
+              "/desktop/miscellaneous/data-security",
+              "/desktop/miscellaneous/faq",
+              "/desktop/miscellaneous/internet-troubleshooting",
+
+              "/desktop/changelog/changelog"
+          ]
+          }
+        ]
+      }      
+    ]      
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Get started",
+      "href": "https://conduktor.io/get-started"
+    }
+  },
+  "footer": {
+    "socials": {
+      "slack": "https://conduktor.io/slack",
+      "github": "https://github.com/conduktor/",
+      "linkedin": "https://www.linkedin.com/company/conduktor",
+      "youtube": "https://www.youtube.com/channel/UCTr4J1unmW5QKJ14M6aPYdQ"
+    }
+  },
+"redirects": [
+  {
+    "source": "/changelog",
+    "destination": "/guide/release-notes"
+  },
+  {
+    "source": "/features/brokers-management",
+    "destination": "/desktop/features/brokers-management"
+  },
+  {
+    "source": "/features/consumer-groups-management",
+    "destination": "/desktop/features/consumer-groups-management"
+  },
+  {
+    "source": "/features/consuming-data",
+    "destination": "/desktop/features/consuming-data"
+  },
+  {
+    "source": "/features/consuming-data/advanced-consumer",
+    "destination": "/desktop/features/consuming-data/advanced-consumer"
+  },
+  {
+    "source": "/features/consuming-data/custom-deserializers",
+    "destination": "/desktop/features/consuming-data/custom-deserializers"
+  },
+  {
+    "source": "/features/consuming-data/custom-deserializers/aws-glue-schema-registry",
+    "destination": "/desktop/features/consuming-data/custom-deserializers/aws-glue-schema-registry"
+  },
+  {
+    "source": "/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry",
+    "destination": "/desktop/features/consuming-data/custom-deserializers/redhat-apicurio-schema-registry"
+  },
+  {
+    "source": "/features/consuming-data/filtering-and-projecting-data",
+    "destination": "/desktop/features/consuming-data/filtering-and-projecting-data"
+  },
+  {
+    "source": "/features/consuming-data/pick-your-format-wisely",
+    "destination": "/desktop/features/consuming-data/pick-your-format-wisely"
+  },
+  {
+    "source": "/features/kafka-access-control-list-acl",
+    "destination": "/desktop/features/kafka-access-control-list-acl"
+  },
+  {
+    "source": "/features/kafka-access-control-list-acl/acls-advanced-insights",
+    "destination": "/desktop/features/kafka-access-control-list-acl/acls-advanced-insights"
+  },
+  {
+    "source": "/features/kafka-connect",
+    "destination": "/desktop/features/kafka-connect"
+  },
+  {
+    "source": "/features/kafka-connect/features",
+    "destination": "/desktop/features/kafka-connect/features"
+  },
+  {
+    "source": "/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect",
+    "destination": "/desktop/features/kafka-connect/how-to-start-with-confluent-cloud-kafka-connect"
+  },
+  {
+    "source": "/features/kafka-connect/security",
+    "destination": "/desktop/features/kafka-connect/security"
+  },
+  {
+    "source": "/features/kafka-streams",
+    "destination": "/desktop/features/kafka-streams"
+  },
+  {
+    "source": "/features/ksqldb",
+    "destination": "/desktop/features/ksqldb"
+  },
+  {
+    "source": "/features/ksqldb/connect-conduktor-to-ksqldb-clusters",
+    "destination": "/desktop/features/ksqldb/connect-conduktor-to-ksqldb-clusters"
+  },
+  {
+    "source": "/features/ksqldb/how-to-query-with-ksqldb",
+    "destination": "/desktop/features/ksqldb/how-to-query-with-ksqldb"
+  },
+  {
+    "source": "/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb",
+    "destination": "/desktop/features/ksqldb/how-to-start-with-confluent-cloud-ksqldb"
+  },
+  {
+    "source": "/features/ksqldb/ksqldb-faq",
+    "destination": "/desktop/features/ksqldb/ksqldb-faq"
+  },
+  {
+    "source": "/features/ksqldb/what-to-do-with-ksqldb",
+    "destination": "/desktop/features/ksqldb/what-to-do-with-ksqldb"
+  },
+  {
+    "source": "/features/monitoring",
+    "destination": "/desktop/features/monitoring" 
+  },
+  {
+    "source": "/features/producing-data",
+    "destination": "/desktop/features/producing-data"
+  },
+  {
+    "source": "/features/producing-data/produce-random-data",
+    "destination": "/desktop/features/producing-data/produce-random-data"
+  },
+  {
+    "source": "/features/schema-registry-management",
+    "destination": "/desktop/features/schema-registry-management"
+  },
+  {
+    "source": "/features/schema-registry-management/avro-tools",
+    "destination": "/desktop/features/schema-registry-management/avro-tools"
+  },
+  {
+    "source": "/features/schema-registry-management/schema-compatibilities",
+    "destination": "/desktop/features/schema-registry-management/schema-compatibilities"
+  },
+  {
+    "source": "/features/topics-management",
+    "destination": "/desktop/features/topics-management"
+  },
+  {
+    "source": "/features/topics-management/how-to",
+    "destination": "/desktop/features/topics-management/how-to"
+  },
+  {
+    "source": "/features/topics-management/smart-groups",
+    "destination": "/desktop/features/topics-management/smart-groups"
+  },
+  {
+    "source": "/features/topics-management/topic-details",
+    "destination": "/desktop/features/topics-management/topic-details"
+  },
+  {
+    "source": "/gateway",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index"
+  },
+  {
+    "source": "/gateway/category/demos",
+    "destination": "/guide/tutorials"
+  },
+  {
+    "source": "/gateway/category/how-to-guides",
+    "destination": "/guide/tutorials"
+  },
+  {
+    "source": "/gateway/category/interceptors-catalog",
+    "destination": "/guide/reference/interceptor-reference"
+  },
+  {
+    "source": "/gateway/category/reference",
+    "destination": "/guide/reference"
+  },
+  {
+    "source": "/gateway/concepts",
+    "destination": "/guide/conduktor-concepts"
+  },
+  {
+    "source": "/gateway/configuration/client-authentication",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
+  },
+  {
+    "source": "/gateway/get-started/docker",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway"
+  },
+  {
+    "source": "/gateway/interceptors/observability/chargeback",
+    "destination": "/guide/conduktor-concepts/chargeback"
+  },
+  {
+    "source": "/kafka-cluster-connection/import-export-configurations",
+    "destination": "/desktop/kafka-cluster-connection/import-export"
+  },
+  {
+    "source": "/kafka-cluster-connection/import-export-configurations/github-enterprise",
+    "destination": "/desktop/kafka-cluster-connection/import-export/github-enterprise"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/apache-kafka-wire-compatible-solutions"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connect-to-amazon-msk"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-a-secure-kafka"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-on-windows-wsl-2",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-on-windows-wsl-2"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-under-docker",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/connecting-to-kafka-running-under-docker"
+  },
+  {
+    "source": "/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups",
+    "destination": "/desktop/kafka-cluster-connection/setting-up-a-connection-to-kafka/impossible-connection-setups"
+  },
+  {
+    "source": "/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds",
+    "destination": "/desktop/kafka-cluster-connection/starting-a-local-kafka-cluster-in-seconds"
+  },
+  {
+    "source": "/learn-apache-kafka-with-conduktor",
+    "destination": "/desktop/learn-apache-kafka-with-conduktor"
+  },
+  {
+    "source": "/misc/configuring-conduktor",
+    "destination": "/desktop/miscellaneous/configuring-conduktor"
+  },
+  {
+    "source": "/misc/faq",
+    "destination": "/desktop/miscellaneous/faq"
+  },
+  {
+    "source": "/misc/internet-troubleshooting",
+    "destination": "/desktop/miscellaneous/internet-troubleshooting"
+  },
+  {
+    "source": "/platform",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/index"
+  },
+  {
+    "source": "/platform/admin/managing-clusters",
+    "destination": "/guide/conduktor-in-production/admin/configure-clusters"
+  },
+  {
+    "source": "/platform/admin/rbac",
+    "destination": "/guide/conduktor-in-production/admin/set-up-rbac"
+  },
+  {
+    "source": "/platform/category/configure-sso",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/category/get-started",
+    "destination": "/guide/get-started"
+  },
+  {
+    "source": "/platform/category/how-to--guides",
+    "destination": "/guide/tutorials"
+  },
+  {
+    "source": "/platform/category/reference",
+    "destination": "/guide/reference"
+  },
+  {
+    "source": "/platform/configuration",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/api-overview",
+    "destination": "/guide/reference"
+  },
+  {
+    "source": "/platform/configuration/configuration-snippets",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/sample-config"
+  },
+  {
+    "source": "/platform/configuration/cortex",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+  },
+  {
+    "source": "/platform/configuration/database",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/env-variables",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"
+  },
+  {
+    "source": "/platform/configuration/http-proxy-configuration",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/https-configuration",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/introduction",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/memory-configuration",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/ssl-tls-configuration",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/amazon-cognito",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/auth0",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/azure",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/generic-oauth2",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/google",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/keycloak",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/ldap",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/ldaps",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/SSO/okta",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/configure-sso",
+    "destination": "/guide/conduktor-in-production/admin/user-access/configure-sso"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/external-group-sync",
+    "destination": "/guide/conduktor-in-production/admin/user-access/map-external-groups"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/local-admin-and-users",
+    "destination": "/guide/conduktor-in-production/admin/user-access/local-admin-users"
+  },
+  {
+    "source": "/platform/configuration/user-authentication/session-lifetime",
+    "destination": "/guide/conduktor-in-production/admin/user-access/session-lifetime"
+  },
+    {
+    "source": "/platform/get-started/configuration/cortex",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+  },
+  {
+    "source": "/platform/get-started/configuration/env-variables",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/AWS",
+    "destination": "/guide/tutorials/deploy-aws"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/AWS_Marketplace",
+    "destination": "/guide/tutorials/deploy-aws"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/CloudFormation",
+    "destination": "/guide/tutorials/deploy-aws"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/docker",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/get-started/installation/get-started/kubernetes",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes"
+  },
+  {
+    "source": "/platform/get-started/support/data-privacy",
+    "destination":  "/guide/get-started"
+  },
+  {
+    "source": "/platform/get-started/support/data-security",
+    "destination": "/guide/support"
+  },
+  {
+    "source": "/platform/guides/configure-audit-log-topic",
+    "destination": "/guide/conduktor-in-production/admin/audit-logs"
+  },
+  {
+    "source": "/platform/guides/configure-chargeback",
+    "destination": "/guide/tutorials/configure-chargeback"
+  },
+  {
+    "source": "/platform/guides/configure-sql",
+    "destination": "/guide/tutorials/configure-sql"
+  },
+  {
+    "source": "/platform/installation",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/installation/Upgrades",
+    "destination": "/guide/support/upgrade"
+  },
+  {
+    "source": "/platform/installation/get-started/aws",
+    "destination": "/guide/tutorials/deploy-aws"
+  },
+  {
+    "source": "/platform/installation/get-started/docker",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/installation/get-started/docker-compose",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/installation/get-started/kubernetes",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console/kubernetes"
+  },
+  {
+    "source": "/platform/installation/hardware",
+    "destination": "/guide/conduktor-in-production/requirements"
+  },
+  {
+    "source": "/platform/installation/license-management",
+    "destination": "/guide/conduktor-in-production/manage-licenses"
+  },
+  {
+    "source": "/platform/navigation",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/navigation/:slug*",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-console"
+  },
+  {
+    "source": "/platform/navigation/console/about-indexing",
+    "destination": "/guide/conduktor-concepts/indexing"
+  },
+  {
+    "source": "/platform/navigation/console/conduktor-sql",
+    "destination": "/guide/tutorials/configure-sql"
+  },
+  {
+    "source": "/platform/navigation/console/kafka-connect",
+    "destination": "/guide/manage-kafka/kafka-resources/kafka-connect"
+  },
+  {
+    "source": "/platform/navigation/console/schema-registry",
+    "destination": "/guide/manage-kafka/kafka-resources/schema-registry"
+  },
+  {
+    "source": "/platform/navigation/data-quality",
+    "destination": "/guide/use-cases/enforce-data-quality"
+  },
+   {
+    "source": "/platform/navigation/monitoring",
+    "destination": "/guide/monitor-brokers-apps"
+  },
+  {
+    "source": "/platform/navigation/monitoring/getting-started/create-alert",
+    "destination": "/guide/monitor-brokers-apps/alerts"
+  },
+  {
+    "source": "/platform/navigation/partner-zones",
+    "destination": "/guide/conduktor-concepts/partner-zones"
+  },
+  {
+    "source": "/platform/navigation/self-serve",
+    "destination": "/guide/conduktor-concepts/self-service"
+  },
+  {
+    "source": "/platform/navigation/self-serve/getting-started",
+    "destination": "/guide/conduktor-concepts/self-service"
+  },
+  {
+    "source": "/platform/navigation/settings/audit-log",
+    "destination": "/guide/conduktor-in-production/admin/audit-logs"
+  },
+  {
+    "source": "/platform/navigation/settings/data-masking",
+    "destination": "/guide/conduktor-in-production/admin/data-mask"
+  },
+  {
+    "source": "/platform/navigation/settings/data-masking/create-a-policy",
+    "destination": "/guide/conduktor-in-production/admin/data-mask"
+  },
+  {
+    "source": "/platform/navigation/settings/integrations",
+    "destination": "/guide/monitor-brokers-apps/alerts"
+  },
+  {
+    "source": "/platform/navigation/settings/rbac",
+    "destination": "/guide/conduktor-in-production/admin/set-up-rbac"
+  },
+  {
+    "source": "/platform/proxy",
+    "destination": "/guide"
+  },
+  {
+    "source": "/platform/proxy/configuration/env-variables",
+    "destination": "/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables"
+  },
+  {
+    "source": "/platform/reference/resource-reference/self-service",
+    "destination": "/guide/reference/self-service-reference"
+  },
+  {
+    "source": "/portal/account-management",
+    "destination": "/desktop/account-management"
+  },
+  {
+    "source": "/portal/account-management/managing-permissions-rbac",
+    "destination": "/desktop/account-management/managing-permissions-rbac"
+  },
+  {
+    "source": "/sign-in-section/install",
+    "destination": "/desktop/conduktor-first-steps/install"
+  },
+  {
+    "source": "/sign-in-section/install/linux",
+    "destination": "/desktop/conduktor-first-steps/install/linux"
+  },
+  {
+    "source": "/sign-in-section/install/mac",
+    "destination": "/desktop/conduktor-first-steps/install/mac"
+  },
+  {
+    "source": "/sign-in-section/install/update",
+    "destination": "/desktop/conduktor-first-steps/install/update"
+  },
+  {
+    "source": "/sign-in-section/install/windows",
+    "destination": "/desktop/conduktor-first-steps/install/windows"
+  },
+  {
+    "source": "/sign-in-section/licenses-and-activations",
+    "destination": "/desktop/conduktor-first-steps/licenses-and-activations"
+  },
+  {
+    "source": "/sign-in-section/licenses-and-activations/offline-licenses",
+    "destination": "/desktop/conduktor-first-steps/licenses-and-activations/offline-licenses"
+  },
+  {
+    "source": "/sign-in-section/login-troubleshooting",
+    "destination": "/desktop/conduktor-first-steps/login-troubleshooting"
+  },
+  {
+    "source": "/sign-in-section/login-troubleshooting/certificates-faq",
+    "destination": "/desktop/conduktor-first-steps/login-troubleshooting/certificates-faq"
+  },
+  {
+    "source": "/sign-in-section/login-troubleshooting/internet-proxy",
+    "destination": "/desktop/conduktor-first-steps/login-troubleshooting/internet-proxy"
+  },
+  {
+    "source": "/sign-in-section/sign-in",
+    "destination": "/desktop/conduktor-first-steps/sign-in"
+  },
+  {
+    "source": "/sign-in-section/sign-in/single-sign-on",
+    "destination": "/desktop/conduktor-first-steps/sign-in/single-sign-on"
+  },
+  {
+    "source": "/support",
+    "destination": "/guide/support/supported-version-policy"
+  },
+  {
+    "source": "/trust",
+    "destination": "/guide/use-cases/enforce-data-quality"
+  },
+  {
+    "source": "/platform/reference/resource-reference/console",
+    "destination": "/guide/reference/console-reference"
+  },
+  {
+    "source": "/gateway/reference/resources-reference",
+    "destination": "/guide/reference/gateway-reference"
+  },
+  {
+    "source": "/platform/reference/api-reference",
+    "destination": "/guide/conduktor-in-production/automate/api-automation"
+  }
+]
+}

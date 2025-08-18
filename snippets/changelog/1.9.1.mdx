@@ -1,0 +1,27 @@
+---
+title: Conduktor 1.9.1
+---
+
+
+Conduktor version 1.9.1 is now available, addressing issues with consumer lag graph rendering in Monitoring. This release also brings improved error support for TLS checks, preventing admin removal, and resolving agent errors on Java 11. Upgrade to the latest version for a smoother Conduktor experience!
+
+### Features
+
+- **Platform**
+  - File based environment variable
+    - An environment variable with the \*\_FILE suffix will be replace by the file content
+
+### Fix 🔨
+
+- **Platform**
+
+  - Use business name for relevant service in audit log listing
+  - Improve error support for TLS checks on Schema Registry and Kafka Connect
+  - Prevent the last admin in an organization from removing themselves
+  - Fix a rolling update issue due to DB pool size
+
+- **Monitoring**
+  - Fix the consumer lag graphs from the Apps Monitoring dashboard
+- **Testing**
+  - Fix agent error when running on Java 11
+  - Fix cryptographic error preventing access from insecure origins

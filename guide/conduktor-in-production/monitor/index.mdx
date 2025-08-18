@@ -1,0 +1,246 @@
+---
+title: Monitor deployment
+---
+
+## Gateway health and monitoring
+
+To check the health of your Gateway, you can use the endpoint `/health` on the Gateway API (by default, on port `8888`):
+
+```sh title='cURL Example'
+curl -s  http://localhost:8888/health | jq .
+```
+
+```json title='Output Example'
+{
+  "status": "UP",
+  "checks": [
+    {
+      "id": "buildInfo",
+      "status": "UP",
+      "data": {
+        "version": "3.1.0",
+        "time": "2024-06-03T20:32:32+0000",
+        "commit": "41967691f4c54b5d76a3f1fa8aee3701903b89d9"
+      }
+    },
+    {
+      "id": "live",
+      "status": "UP"
+    }
+  ],
+  "outcome": "UP"
+}
+```
+
+### Access Prometheus metrics from Gateway
+
+The Prometheus endpoint is `<gateway_host>:<gateway_port>/metrics`. For example:
+
+```bash
+localhost:8888/metrics
+```
+
+Please be aware that if `GATEWAY_SECURED_METRICS` is enabled (which is the default setting), you will need to use the credentials specified in `GATEWAY_ADMIN_API_USERS` to access it. 
+
+For example, using the default credentials, you can access the metrics with the following command:
+
+```bash title='Retrieve Gateway Metrics'
+curl conduktor-gateway:8888/metrics --user "admin:conduktor"
+```
+
+### Available metrics for Prometheus
+
+| Metric description                                                                               | Metric value                                      |
+|--------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| The number of connections closed per second                                                      | `gateway_upstream_connection_close_rate`          |
+| The total number of connections closed                                                           | `gateway_upstream_connection_close_total`         |
+| The number of new connections established per second                                             | `gateway_upstream_connection_creation_rate`       |
+| The total number of new connections established                                                  | `gateway_upstream_connection_creation_total`      |
+| The number of times the I/O layer checked for new I/O to perform per second                      | `gateway_upstream_select_rate`                    |
+| The total number of times the I/O layer checked for new I/O to perform                           | `gateway_upstream_select_total`                   |
+| The number of time the I/O thread spent waiting                                                  | `gateway_upstream_io_wait_rate`                   |
+| The total time the I/O thread spent waiting                                                      | `gateway_upstream_io_wait_total`                  |
+| The number of active broker connections of the connection pool                                   | `gateway_brokered_active_connections`             |
+| The number of active connections per vcluster                                                    | `gateway_active_connections_vcluster`             |
+| The latency to process a request and generate a response                                         | `gateway_latency_request_response`                |
+| The latency to process a request and generate a response for each ApiKey                         | `gateway_apiKeys_latency_request_response`        |
+| The total number of bytes exchanged through Gateway                                          | `gateway_bytes_exchanged`                         |
+| The total bytes exchanged within the context of the specified Virtual Cluster                    | `gateway_bytes_exchanged_vcluster`                |
+| A counter on number of rebuilding kafka request                                                  | `gateway_thread_request_rebuild`                  |
+| The number of pending tasks on our Gateway thread (where all rebuilding request/response happen) | `gateway_thread_tasks`                            |
+| The number of connections from Gateway to the backing Kafka cluster                              | `gateway_upstream_connections_upstream_connected` |
+| The number of connections from clients to Gateway                                                | `gateway_upstream_connections_downstream`         |
+| The number of Kafka nodes                                                                        | `gateway_upstream_io_nodes`                       |
+| The size of the kcache (equal to the number of key-value pairs we have in the cache)             | `gateway_kcache_size`                             |
+| The number of active backend brokers                                                             | `gateway_backend_brokered_active_connections`     |
+| The number of authentication attempts that failed for each user                                  | `gateway_failed_authentications`                  |
+| The log end offset of client topics                                                              | `gateway_topic_log_end_offset`                    |
+| The current offset of consumer group on client topic                                             | `gateway_topic_current_offset`                    |
+| The total bytes exchanged within the context of the specified topic                              | `gateway_bytes_exchanged_topic_total`             |
+| The total errors per API key for the specified virtual cluster and username                      | `gateway_error_per_apiKeys`                       |
+| The current inflight API keys of the specified virtual cluster and username                      | `gateway_current_inflight_apiKeys`                |
+
+### Audit log events
+
+  | **Event type**                               | **Description**                                             |
+  | -------------------------------------------- | ----------------------------------------------------------- |
+  | **Admin.KafkaConnect.Create**                | A Kafka Connect instance is created.                        |
+  | **Admin.KafkaConnect.Update**                | A Kafka Connect instance is updated                         |
+  | **Admin.KafkaConnect.Delete**                | A Kafka Connect instance is deleted.                        |
+  | **Admin.KsqlDB.Create**                      | A ksqlDB instance is created.                               |
+  | **Admin.KsqlDB.Update**                      | A ksqlDB instance is updated.                               |
+  | **Admin.KsqlDB.Delete**                      | A ksqlDB instance is deleted.                               |
+  | **Admin.KafkaCluster.Create**                | A Kafka cluster is created.                                 |
+  | **Admin.KafkaCluster.Update**                | A Kafka cluster is updated.                                 |
+  | **Admin.KafkaCluster.Delete**                | A Kafka cluster is deleted.                                 |
+  | **Admin.SchemaRegistry.ChangeCompatibility** | The global compatibility of the schema registry is updated. |
+  | **Admin.Integration.Update**                 | The alert integration (Slack, MS Teams, Webhook) is updated.|
+  | **Admin.AdminApiKey.Create**                 | A new admin API key is created.                             |
+  | **Admin.AdminApiKey.Delete**                 | An admin API key is deleted.                                |
+  | **Admin.DataMaskingPolicy.Create**           | A data masking policy is created.                           |
+  | **Admin.DataMaskingPolicy.Update**           | A data masking policy is updated.                           |
+  | **Admin.DataMaskingPolicy.Delete**           | A data masking policy is deleted.                           |
+  | **Admin.Certificate.Create**                 | A certificate is created.                                   |
+  | **Admin.Certificate.Delete**                 | A certificate is deleted.                                   |
+  | **Iam.User.Create**                          | IAM user is created.  |
+  | **Iam.User.Update**                          | IAM user is updated.  |
+  | **Iam.User.Delete**                          | IAM user is deleted.  |
+  | **Iam.User.Login**                           | IAM user logs in.     |
+  | **Iam.User.Logout**                          | IAM user logs out.    |
+  | **Iam.Group.Create**                         | IAM group is created. |
+  | **Iam.Group.Update**                         | IAM group is updated. |
+  | **Iam.Group.Delete**                         | IAM group is deleted. |
+
+## Console endpoints
+
+### Liveness endpoint
+
+`/api/health/live`
+
+Returns a status HTTP 200 when Console is up.
+
+```shell title="cURL example"
+curl -s  http://localhost:8080/api/health/live
+```
+
+Could be used to set up probes on Kubernetes or docker-compose.
+
+#### docker-compose probe setup
+
+```yaml
+healthcheck:
+  test:
+    [
+      'CMD-SHELL',
+      'curl --fail http://localhost:${CDK_LISTENING_PORT:-8080}/api/health/live',
+    ]
+  interval: 10s
+  start_period: 120s # Leave time for the psql init scripts to run
+  timeout: 5s
+  retries: 3
+```
+
+#### Kubernetes liveness probe
+
+```yaml title="Port configuration"
+ports:
+  - containerPort: 8080
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+livenessProbe:
+  httpGet:
+    path: /api/health/live
+    port: httpprobe
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+```
+
+### Readiness/startup endpoint
+
+`/api/health/ready`
+
+Returns readiness of the Console.
+Modules status :
+
+- `NOTREADY` (initial state)
+- `READY`
+
+This endpoint returns a 200 status code if Console is in a `READY` state. Otherwise, it returns a 503 status code if Console fails to start.
+
+```shell title="cURL example"
+curl -s  http://localhost:8080/api/health/ready
+# READY
+```
+
+#### Kubernetes startup probe
+
+```yaml title="Port configuration"
+
+ports:
+  - containerPort: 8080
+    protocol: TCP
+    name: httpprobe
+```
+
+```yaml title="Probe configuration"
+startupProbe:
+    httpGet:
+        path: /api/health/ready
+        port: httpprobe
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
+```
+
+### Console versions
+
+`/api/versions`
+
+This endpoint exposes module versions used to build the Console along with the overall Console version.
+
+```shell title="cURL example"
+curl -s  http://localhost:8080/api/versions | jq .
+# {
+#  "platform": "1.27.0",
+#  "platformCommit": "ed849cbd545bb4711985ce0d0c93ca8588a6b31f",
+#  "console": "f97704187a7122f78ddc9110c09abdd1a9f9d470",
+#  "console_web": "05dea2124c01dfd9479bc0eb22d9f7d8aed6911b"
+# }
+```
+
+## Cortex monitoring endpoints
+
+### Cortex endpoint
+
+`/ready` on port `9009`
+
+Returns a status 200 with response `ready` if Cortex is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9009/ready"
+```
+
+### Alertmanager endpoint
+
+`/ready` on port `9010`
+
+Returns a status 200 with response `ready` if Alertmanager is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9010/ready"
+```
+
+### Prometheus endpoint
+
+`/-/healthy` on port `9090`
+
+Returns a status 200 with response `Prometheus Server is Healthy.` if Prometheus is running
+
+```shell title="cURL example"
+curl -s "http://localhost:9090/-/healthy"
+```

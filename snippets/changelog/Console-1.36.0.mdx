@@ -1,0 +1,95 @@
+---
+title: Console 1.36
+---
+
+
+- [Conduktor Scale](#conduktor-scale)
+  - [New alert destination: email](#new-alert-destination-email)
+  - [Configurable Webhook body](#configurable-webhook-body)
+  - [Redesigned Application Catalog and Application details pages](#redesigned-application-catalog-and-application-details-pages-in-console)
+  - [Labels for Consumer groups](#labels-for-consumer-groups)
+  - [More information on tasks with errors](#more-information-on-tasks-with-errors)
+- [Conduktor Exchange](#conduktor-exchange)
+  - [Breaking change](#breaking-change)
+  - [mTLS support for Partner Zones added](#partner-zones-support-for-mtls)
+- [Quality of life improvements](#quality-of-life-improvements)
+- [Fixes](#fixes)
+- [Known issues](#known-issues)
+
+### Conduktor Scale
+
+#### New alert destination: email
+
+You can now set emails as alert destinations. Set up your SMTP server with TLS encryption and authentication to enable secure email delivery directly to your inbox.
+
+Create customized email alerts with custom subjects and body content per alert. Dynamic variables like `{{clusterName}}` and `{{threshold}}` can be embedded using handlebars syntax for context-aware notifications that provide meaningful alert details.
+
+[Find out how to configure email integration](/guide/monitor-brokers-apps/alerts#email-integration).
+
+#### Configurable Webhook body
+
+Webhook alert destinations now support full payload customization. In addition to existing header customizations, you can now secure your webhooks with **basic auth** or **bearer token** authentication and customize the body of the webhook payload to be sent when an alert is triggered.
+
+Like email alerts, webhook bodies support dynamic variable insertion using handlebars syntax, allowing you to create context-aware webhook payloads tailored to your specific monitoring needs.
+
+#### Redesigned Application Catalog and Application details pages in Console
+
+Application details page:
+
+- displays a list of the application instances with labels and stats.
+- includes an editor for modifying the application description.
+- shows the application groups list with the owner group pinned.
+
+Application instance page:
+
+- header section displays stats and labels, with the ability to manage labels.
+- contains multiple tabs: Details, External access, Alerts, and API keys.
+- within the Details tab, information is divided into two sections: ownership and resource policies.
+
+#### Labels for Consumer groups
+
+Labels are now shown across various consumer groups views, along with new filtering capabilities:
+
+- The consumer groups list now shows labels and allows filtering by them.
+- Topic lists within both the consumer groups and member details pages now support label-based filtering.
+- In the topic details view for consumer groups, labels are visible and can be added, edited, or deleted.
+
+#### More information on tasks with errors
+
+A connector that's in the `RUNNING` state can also return errors that are only visible within the Confluent Cloud UI. When a connector is in this state:
+
+- a warning icon will be shown next to the item in the list view and
+- an error returned from the Confluent Cloud API will be displayed.
+
+### Conduktor Exchange
+
+#### Breaking change
+
+With support for mTLS connections, Partner Zones now have a breaking change: all **existing Partner Zones have to be re-created** (even if not using mTLS).
+
+#### Partner Zones: support for mTLS
+
+Partners can now connect their clients to your Partner Zone using mTLS.
+
+This is an additional option of `MTLS` for the `spec.authenticationMode.type`.
+
+[Find out more about prerequisites for creating Partner Zones](/guide/conduktor-concepts/partner-zones#prerequisites).
+
+#### Quality of life improvements
+
+- Users will now be redirected to the page they were on when they logged in again after session expiry.
+- Improved navigation between Partner Zones in the list view when using keyboard.
+- Improved configurability of circuit breaker behavior for indexed tasks.
+
+### Fixes
+
+- Partner Zones are now created instantly, instead of waiting for the next reconciliation loop to pass. Other updates will continue to sync in line with the reconciliation loop.
+- Fixed an error that occurred when no partitions were selected in the topic consume view. You will now see a warning that no messages will be shown, if partitions filter is set to none.
+- The JSON view of a message in a topic now correctly displays negative numbers and numbers in scientific notation.
+- Kafka Connect clusters are no longer visible to users who don't have the permission on any of their connectors.
+- Error messages are now more informative when attempting to create a service account on a resource for which the caller lacks permission.
+- Resolved a case sensitivity issue with email addresses in the application group payload that caused mismatch in the RBAC configuration.
+
+### Known issues
+
+If a Self-service resource policy is attached to a Self-service application instance, the details page for it may display a validation error in Console.

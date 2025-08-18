@@ -1,0 +1,76 @@
+---
+title: Configure Chargeback
+---
+
+## Overview
+
+<Check>This feature is available with [Conduktor Scale Plus](https://conduktor.io/scale) only.</Check> 
+
+Chargeback allows organizations to track and allocate costs/usage associated with Kafka resources to different teams or departments based on their data consumption and processing, facilitating cost accountability and management.
+
+## Prerequisites
+
+Chargeback requires **both** Console (v1.29.0 and above) and Gateway (v3.4.0 and above).
+
+## Enable Chargenack in Console
+
+To enable the Chargeback in Console:
+
+1. Go to **Settings** > **Clusters** and select your cluster.
+1. In the **Provider** tab, Select **Gateway** and enter the API details with the default Virtual Cluster value of *passthrough*.
+
+    ![Gateway provider](/images/gateway-provider.png)
+
+1. Deploy the [Chargeback Interceptor](#chargeback-interceptor) on Gateway. This can be done using:
+
+- [Gateway API](https://developers.conduktor.io/?product=gateway) or
+- [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation)
+
+  ```yaml
+  apiVersion: gateway/v2
+  kind: Interceptor
+  metadata:
+    name: observability-interceptor
+  spec:
+    pluginClass: "io.conduktor.gateway.interceptor.observability.ObservabilityPlugin"
+    priority: 100
+    config:
+      topicName: observability # name of the Topic where the Chargeback data will be stored
+      replicationFactor: 3
+      flushIntervalInSecond: 300
+  ```
+
+After a few minutes, you should see your active service accounts appear on the **Chargeback** page in Console.
+
+## Chargeback Interceptor
+
+This Interceptor will watch produce and consume to store metrics about incoming and outgoing traffic (bytes) in a topic.
+
+The topic is then utilized by the Console to display Chargeback metrics.
+
+### Configure Chargeback Interceptor
+
+| Name              | Type   | Default | Description                                                                      |
+|:------------------|:-------|:--------|:---------------------------------------------------------------------------------|
+| topicName         | String |         | Topics used to store observability metrics. If this topic already exists in your cluster, it has to have **only one partition**. If the topic doesn't exist, Gateway will create it when you deploy the plugin. |
+| replicationFactor | Int    |         | The replication factor to set if Gateway needs to create the topic.               |
+| flushIntervalInSecond | Int    |    300     | The periodic interval for flushing metrics to the specified topic.               |
+
+#### Example
+
+```json
+{
+  "name": "myObservabilityInterceptorPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.observability.ObservabilityPlugin",
+  "priority": 100,
+  "config": {
+    "topicName": "observability",
+    "replicationFactor": 3
+  }
+}
+```
+
+## Related resources
+
+- [Apply Chargeback](/guide/use-cases/chargeback)
+- [Give us feedback/request a feature](https://conduktor.io/roadmap)
