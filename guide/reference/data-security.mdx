@@ -2,15 +2,17 @@
 title: Data security Interceptors
 ---
 
-- [Audit](#audit-interceptor)
-- [Data masking](#data-masking-interceptor)
-- [Encryption](#encryption-interceptors) on:
-    - consume specific record fields or the entire payload
-    - consume payload fields configured in specified schema
-    - produce specific record fields or the entire payload
-    - produce payload fields configured in specified schema
-- Decrypt on consume any record fields encrypted by Gateway or the entire payload
-- [Dynamic header injection](#dynamic-header-injection-interceptor)
+You can:
+
+- [audit API key requests for compliance tracking](#audit-interceptor) 
+- [mask sensitive data](#data-masking-interceptor) in messages during consumption
+- [encrypt data](#encryption-interceptors) when producing or consuming. For example, encrypt:
+    - specific record fields or entire payloads on consume
+    - payload fields configured in specified schemas on consume
+    - specific record fields or entire payloads on produce
+    - payload fields configured in specified schemas on produce
+- [decrypt](#decryption-configuration) any record fields encrypted by Gateway or entire payloads on consume
+- [inject dynamic headers](#dynamic-header-injection-interceptor) into messages during production
 
 
 ## Audit Interceptor
