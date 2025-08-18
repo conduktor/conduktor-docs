@@ -192,7 +192,15 @@
               "guide/reference/index",     
               "guide/reference/console-reference",
               "guide/reference/gateway-reference",
-              "guide/reference/interceptor-reference",
+              {
+                "group": "Interceptor resources",
+                "pages": [
+                  "guide/reference/interceptor-reference",
+                  "guide/reference/advanced-pattern-support",
+                  "guide/reference/data-quality",
+                  "guide/reference/data-security"
+                ]
+              },
               "guide/reference/kafka-reference",               
               "guide/reference/metric-reference",
               "guide/reference/self-service-reference"
