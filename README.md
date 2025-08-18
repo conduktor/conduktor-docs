@@ -68,14 +68,15 @@ You can also link to a specific section on a page, e.g. */guide/get-started/hard
 
 ## Alerts
 
-Mintlify uses different syntax for alerts (and calls them callouts). Choose from:
+Mintlify [uses different syntax for alerts and refers to them as callouts](https://mintlify.com/docs/components/callouts).
+
+Please use one of these only:
 
 - `<Note>` This will show the text in blue and in blue background.`</Note>`
 - `<Warning>` This will be orange/red.`</Warning>`
+- `<Danger>` Use this sparingly! Shows text in red with an exclamation icon. `</Danger>`
 - `<Info>` This is a subtle info box with grey text.`</Info>`
-
-Try to use only one of these only (Mintlify offer a couple of others).
-
+  
 ## Update release notes
 
 Every new version of Gateway, Console and CLI has to have release notes.
