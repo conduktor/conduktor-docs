@@ -11,7 +11,6 @@ The only required property is `CDK_CONSOLE-URL`, everything else is related to s
 By default, data will be stored in `/var/conduktor/monitoring` inside the running image. You can mount a volume on this folder to keep metrics data between updates. Alternatively, you can use the storage parameters described below to store the data using either `s3`, `gcs`, `azure` or `swift`.
 
 | Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
-| Environment variable                          | Description                                                                                              | Mandatory | Type   | Default                 | Since    |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------|--------|-------------------------|----------|
 | `CDK_CONSOLEURL`                              | Console URL and port (example: `"http://conduktor-console:8080"`).                                        | true      | string | ∅                       | `1.18.0` |
 | `CDK_SCRAPER_SKIPSSLCHECK`                    | Disable TLS check when scraping metrics from Console.                                                     | false     | bool   | `false`                 | `1.18.2` |
@@ -47,11 +46,33 @@ By default, data will be stored in `/var/conduktor/monitoring` inside the runnin
 | `CORTEX_ROOT_LOG_LEVEL`                       | Cortex log level.                                                                                         | false     | string | `info`                  | `1.18.0` |
 | `CORTEX_ALERT_ROOT_LOG_LEVEL`                 | Alert manager log level.                                                                                  | false     | string | `info`                  | `1.18.0` |
 | `PROMETHEUS_ROOT_LOG_LEVEL`                   | Prometheus log level.                                                                                     | false     | string | `info`                  | `1.18.0` |
+| **Retention configuration**                                      |                                                                                        |           |        |                         |          |
+| `PROMETHEUS_RETENTION_SIZE`                   | Prometheus `storage.tsdb.retention.size` startup argument that defines retention size.                     | false     | string | `5MB`                  | `1.37.0` |
+| `PROMETHEUS_RETENTION_TIME`                   | Prometheus `storage.tsdb.retention.time` startup argument that defines retention time.                     | false     | string | `30m`                  | `1.37.0` |
+| `PROMETHEUS_BLOCK_DURATION`                   | Prometheus `storage.tsdb.min-block-duration` and `storage.tsdb.max-block-duration` startup argument format "min,max".    | false     | string | `5m,30m`               | `1.37.0` |
+| `PROMETHEUS_SCRAPE_INTERVAL`                  | Prometheus `global.scrape_interval` in configuration.                                                     | false     | string | `15s`                  | `1.37.0` |
+| `PROMETHEUS_EVAL_INTERVAL`                    | Prometheus `global.evaluation_interval` in configuration.                                                 | false     | string | `15s`                  | `1.37.0` |
+| `CORTEX_BLOCKS_RANGES`                        | Cortex block ranges configuration (`blocks_storage.tsdb.block_ranges_period`).                            | false     | string | `1h`                  | `1.37.0` |
+| `CORTEX_RETENTION_PERIOD`                     | Cortex block local retention configuration (`blocks_storage.tsdb.retention_period`).                      | false     | string | `3h`                  | `1.37.0` |
+| `CORTEX_COMPACTOR_BLOCKS_RANGES`              | Cortex compactor blocks sizes configuration (`compactor.block_ranges`).                                   | false     | string | `2h,12h,24h`             | `1.37.0` |
+| `CORTEX_COMPACTOR_INTERVAL`                   | Cortex compactor run interval configuration (`compactor.compaction_interval`).                            | false     | string | `30m`                   | `1.37.0` |
+| `CORTEX_COMPACTOR_DELETION_DELAY`             | Cortex compactor block deletion delay configuration (`compactor.deletion_delay`).                         | false     | string | `1h`                   | `1.37.0` |
+| `CORTEX_CLEANER_INTERVAL`                     | Configure how often cleanup task is running (only use when no external object storage is configured).        | false     | string | `6h`                   | `1.37.0` |
+| `CORTEX_CLEANER_RETENTION`                    | Configure the retention duration in the "file system bucket" (`/var/conduktor/monitoring/data/cortex/tsdb-backend/`).  | false     | string | `30d`                   | `1.37.0` |
+| **Override configuration**                                      |                                                                                        |           |        |                         |          |
+| `PROMETHEUS_OVERRIDE_CONFIG_FILE`             | Location to yaml config file to **patch** Prometheus configuration with.                                 | false     | string | `/opt/override-configs/prometheus.yaml`     | `1.19.0` |
+| `CORTEX_OVERRIDE_CONFIG_FILE`                 | Location to yaml config file to **patch** Cortex configuration with.                                     | false     | string | `/opt/override-configs/cortex.yaml`        | `1.19.0` |
+| `ALERTMANAGER_OVERRIDE_CONFIG_FILE`           | Location to yaml config file to **patch** Cortex alert manager configuration with.                       | false     | string | `/opt/override-configs/alertmanager.yaml`     | `1.37.0` |
+| `PROMETHEUS_EXTRA_RUN_ARGS`                   | Extra run arguments for Prometheus.                                                                           | false     | string | `""`     | `1.37.0` |
+| `CORTEX_EXTRA_RUN_ARGS`                       | Extra run arguments for Cortex.                                                                               | false     | string | `""`     | `1.37.0` |
+| `CORTEX_ALERT_EXTRA_RUN_ARGS`                 | Extra run arguments for Cortex alert manager.                                                                 | false     | string | `""`     | `1.37.0` |
+
 
 ## Sample configuration
 
-In a docker compose it may look like the following:
-````yaml
+In Docker Compose it may look like the following:
+
+```yaml
 version: '3.8'
 services:
   conduktor-console:
@@ -73,14 +94,15 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ```
 
-## Overriding configuration
-
-## Overriding configuration
+## Override configuration
 
 ### Overriding with YAML
 
-**Cortex**  
-Cortex [configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file into path `/opt/override-configs/cortex.yaml`. For an alternative path set the location using the environment variable `CORTEX_OVERRIDE_CONFIG_FILE`. This is not currently available for Alert Manager.
+#### Cortex
+
+[Cortex configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file to path `/opt/override-configs/cortex.yaml`. To set an alternative path, use the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.
+
+Cortex alert manager configuration can also be **patched** by mounting a YAML file to path `/opt/override-configs/alertmanager.yaml`. To set an alternative path, use the `ALERTMANAGER_OVERRIDE_CONFIG_FILE` environment variable. 
 
 For example, create a file `cortex.yaml` add in only your overrides:
 
@@ -100,8 +122,13 @@ You should see a similar entry to the below in the opening logs:
 INFO monitoring_entrypoint - Patch "/var/conduktor/configs/monitoring-cortex.yaml" configuration with "/opt/override-configs/cortex.yaml" fragment
 ```
 
-**Prometheus**
-Prometheus configuration can be overridden with replace, by mounting a YAML file into path `/opt/override-configs/prometheus.yaml`. For an alternative path set the location using an environment variable `PROMETHEUS_OVERRIDE_CONFIG_FILE`.
+#### Prometheus
+
+<Note>
+Before Console v1.37.0, Prometheus configuration was overridden using the **replace** strategy. Since **v1.37.0** it's changed to the **patch** (YAML merging) strategy.
+</Note>
+
+Prometheus configuration can be also **patched** by mounting a YAML file to path `/opt/override-configs/prometheus.yaml`. To set an alternative path, use the `PROMETHEUS_OVERRIDE_CONFIG_FILE` environment variable.
 
 You should see a similar entry to the below in the opening logs:
 

@@ -2,12 +2,11 @@
 title: Gateway 3.12.0
 ---
 
-# Gateway 3.12.0
 
 - [Breaking changes](#breaking-changes)
   - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
 - [New features](#new-features)
-  - [Enhanced Crypto Shredding behavior for Decryption](#enhanced-crypto-shredding-behavior-for-decryption)
+  - [Enhanced crypto shredding behavior for decryption](#enhanced-crypto-shredding-behavior-for-decryption)
   - [Client Throttling for Encryption/Decryption](#client-throttling-for-encryptiondecryption)
 
 ### Breaking changes
@@ -54,8 +53,8 @@ It provides flexibility to enable/disable specific event types, such as `CONNECT
 
 This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
 
-#### Enhanced Crypto Shredding behavior for Decryption
-The Decryption Interceptor now includes improved error handling behavior specifically for Crypto Shredding scenarios.
+#### Enhanced crypto shredding behavior for decryption
+The decryption Interceptor now includes improved error handling behavior specifically for crypto shredding scenarios.
 
 A new `crypto_shred_safe_fail_fetch` error policy has been introduced. It returns encrypted data when decryption fails due to missing encryption keys, but throws exceptions for other types of decryption failures (e.g., authentication errors). This ensures that crypto-shredded data remains protected while still failing fast for other issues that require attention.
 
