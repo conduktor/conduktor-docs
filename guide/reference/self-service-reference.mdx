@@ -229,7 +229,7 @@ spec:
 - `spec.permissions[].permissions` are valid permissions.
 - `spec.members` has to be an email addresses of members that you want to add to this group.
 - `spec.externalGroups` a list of LDAP or OIDC groups to sync with this Console group. Members added this way will not appear in `spec.members` list.
-- `spec.externalGroups` a list of regex patterns that can match to a series of LDAP or OIDC groups to sync with this Console group. Members added this way will not appear in `spec.members` list.
+- `spec.externalGroupRegex` a list of regex patterns that can match to a series of LDAP or OIDC groups to sync with this Console group. Members added this way will not appear in `spec.members` list.
 
 **Side effects:**
 
