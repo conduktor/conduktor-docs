@@ -152,7 +152,7 @@ A full example of user and group creation using Conduktor Console locally is ava
 terraform {
   required_providers {
     conduktor = {
-      source = "conduktor/conduktor"
+      source  = "conduktor/conduktor"
       version = ">= 0.5.0"
     }
   }
@@ -170,13 +170,13 @@ provider "conduktor" {
 resource "conduktor_console_user_v2" "bob" {
   name = "bob@mycompany.io"
   spec = {
-    firstname   = "Bob"
-    lastname    = "Smith"
+    firstname = "Bob"
+    lastname  = "Smith"
     permissions = [
-        {
-          resource_type = "PLATFORM"
-          permissions   = ["userView", "datamaskingView", "auditLogView"]
-        }
+      {
+        resource_type = "PLATFORM"
+        permissions   = ["userView", "datamaskingView", "auditLogView"]
+      }
     ]
   }
 }
@@ -187,7 +187,7 @@ resource "conduktor_console_group_v2" "example_group" {
   spec = {
     display_name = "team-a"
     description  = "The group of team-a"
-    members      = [ conduktor_console_user_v2.bob.name ]
+    members      = [conduktor_console_user_v2.bob.name]
     permissions  = []
   }
 }
