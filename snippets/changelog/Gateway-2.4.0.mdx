@@ -2,17 +2,15 @@
 title: Gateway 2.4.0
 ---
 
-*Release date: 2024-01-15*
-
 ### User management unification
 
-We refactored all authentication process to unify some concern accross all authentication mechanism in Gateway.
+We refactored all authentication process to unify some concern across all authentication mechanism in Gateway.
 
 Previously, the gateway user was defined differently depending of your authentication choice (mTls, SASL plain, SASK Oauthbearer, Delegated). This made user management and interceptor targeting complex.
 
 Today we've uncoupled the authentication process from the user identification to leverage the `UserMapping` added in Gateway `2.2.0`, for all authentication processes.
 
-All sucessfull authentication process will result in a `Principal` based on exhanged credentials (See information below to know how principal is detected based on your choice). This principal will be used to search in `UserMapping` the associated gateway user and it's information.
+All successful authentication process will result in a `Principal` based on exchanged credentials (See information below to know how principal is detected based on your choice). This principal will be used to search in `UserMapping` the associated gateway user and it's information.
 
 You can now easily create and manage Gateway users, associate them to your authentication provider and define gateway information in the same fashion.
 
@@ -64,7 +62,7 @@ Virtual clusters are currently under rework and this release introduces some dep
 - We removed some string interpolation in the real topic concentration that were unused
 - We deprecated some fields in the response of the internal APIs (these APIs will probably go away in the next release)
 
-### General fixes 🔨
+### General fixes
 
 - Concentration: Fix transaction support (but the support is still a bit experimental)
 - Concentration: Fix retention not emulated on `policy=compacted,deleted`

@@ -1,5 +1,5 @@
 ---
-title: Deploying Cortex
+title: Deploying Cortex overview
 ---
 
 To enable monitoring via Console, you have to deploy and configure the `console-cortex` artifact.
@@ -70,8 +70,7 @@ By default, data will be stored in `/var/conduktor/monitoring` inside the runnin
 
 ## Sample configuration
 
-In Docker Compose it may look like the following:
-
+In a docker compose it may look like the following:
 ```yaml
 version: '3.8'
 services:
@@ -94,7 +93,7 @@ services:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
 ```
 
-## Override configuration
+## Overriding configuration
 
 ### Overriding with YAML
 
@@ -102,7 +101,7 @@ services:
 
 [Cortex configuration](https://cortexmetrics.io/docs/configuration/configuration-file/) can be **patched** by mounting a YAML file to path `/opt/override-configs/cortex.yaml`. To set an alternative path, use the `CORTEX_OVERRIDE_CONFIG_FILE` environment variable.
 
-Cortex alert manager configuration can also be **patched** by mounting a YAML file to path `/opt/override-configs/alertmanager.yaml`. To set an alternative path, use the `ALERTMANAGER_OVERRIDE_CONFIG_FILE` environment variable. 
+Cortex alert manager configuration can also be **patched** by mounting a YAML file to path `/opt/override-configs/alertmanager.yaml`. To set an alternative path, use the `ALERTMANAGER_OVERRIDE_CONFIG_FILE` environment variable.
 
 For example, create a file `cortex.yaml` add in only your overrides:
 

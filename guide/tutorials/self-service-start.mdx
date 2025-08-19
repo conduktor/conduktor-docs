@@ -24,9 +24,9 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 
 To follow-along this demo you'll need to clone our repository (repo):
 
-````shell
+```shell
 git clone https://github.com/conduktor/self-service-getting-started
-````
+```
 
 This demo repo contains two directories with each representing a mock repo: `central-team-repo` and `application-team-repo`.
 
@@ -89,34 +89,34 @@ Docker is required to run this demo.
 
 1. Spin up local resources: Conduktor and Kafka. A Docker compose file is provided - simply start it by navigating with your shell to the cloned repo and running the command below (you may need to download the images, if you've not run them before):
 
-    ````bash
+    ```bash
     docker compose up -d
-    ````
+    ```
 
 1. Log into Console at [http://localhost:8080](http://localhost:8080), with the credentials provided in the docker-compose, `admin@conduktor.io` : `adminP4ss!`
 
 1. Generate an admin API key for the Conduktor CLI. Go to **Settings** > **API Keys** > **New API Key** then **copy this value**.
    - Note: This can be done from the CLI by setting the following variables and running the command below, but for this demo we'll be using the UI.
 
-     ````bash
+     ```bash
      # not part of today's demo, shown as an example
      export CDK_USER=admin@conduktor.io 
      export CDK_PASSWORD=adminP4ss!
      conduktor login
      eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
-     ````
+     ```
 
 1. Open the `docker-compose.yml` file and assign the value you just copied to the `CDK_API_KEY` environment variable for the `conduktor-ctl` service. Save the file and re-run `docker compose up -d` to create the Conduktor CLI container:
 
-    ````bash
+    ```bash
     docker compose up -d
-    ````
+    ```
 
 1. Open a Conduktor CLI by executing into the container:
 
-    ````bash
+    ```bash
     docker compose exec -it conduktor-ctl /bin/sh
-    ````
+    ```
 
 *Conduktor CLI is run as a container for convenience, you can also install it to your local machine.*
 
@@ -184,31 +184,31 @@ Let's swap in the correct key now and assume the role of the website analytics p
 
 You could also run this from the CLI:
 
-````bash 
+```bash 
 conduktor token create application-instance -i=website-analytics-prod my-new-key-name
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiIsImtp...
-````
+```
 
 ![Create Application Instance API key](/images/create-app-api-key.png)
 
 1. Leave the CLI container:
 
-````bash
+```bash
 # You are in the CLI container
 / $ exit
-````
+```
 
 1. Open the `docker-compose.yml` again to swap in the **new value for `CDK_API_KEY`** and restart docker compose again
 
-````bash
+```bash
 docker compose up -d
-````
+```
 
 1. When the container is restarted, step back in the CLI container
 
-````bash
+```bash
 docker compose exec -it conduktor-ctl /bin/sh
-````
+```
 
 With the CLI running using the **application instance API key**, we can properly do the test. Now back to the example.
 

@@ -2,9 +2,7 @@
 title: Gateway 3.2.0
 ---
 
-*Release date: 2024-07-19*
-
-### Breaking Changes 💣
+### Breaking Changes
 #### Two new backing topics are required for Gateway
 In the next release (3.3), we'll bring a new API as well as support in the Conduktor [CLI](https://docs.conduktor.io/platform/reference/cli-reference/) to manage Gateway concepts using infra-as-code approach.  
 
@@ -41,13 +39,13 @@ In the next release, we will enhance ACLs to restore and expand the full set of 
 
 #### Enable ACLs for Gateway (excl. Virtual Clusters)
 Configure both environment variables:
-````shell
+```shell
 GATEWAY_ACL_ENABLED=true
 GATEWAY_SUPER_USERS=alice,bob
-````
+```
 
 #### Enable ACLs for Virtual Clusters
-````yaml
+```yaml
 ---
 apiVersion: gateway/v2
 kind: VirtualCluster
@@ -58,7 +56,7 @@ spec:
   superUsers:
   - username1
   - username2
-````
+```
 This will effectively render `GATEWAY_ACL_STORE_ENABLED` obsolete.
 
 

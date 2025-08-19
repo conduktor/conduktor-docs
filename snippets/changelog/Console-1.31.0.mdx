@@ -2,7 +2,6 @@
 title: Console 1.31
 ---
 
-*Release date: 2025-02-05*
 
 - [Breaking changes](#breaking-changes)
   - [Removed V1 Alerts](#removed-v1-alerts)
@@ -49,7 +48,7 @@ Here are some of the changes:
 - Destinations are now configurable per-alert
 - API / CLI support for Alerts is now available
 
-````yaml
+```yaml
 apiVersion: console/v3
 kind: Alert
 metadata:
@@ -65,7 +64,7 @@ spec:
   destination:
     type: Slack
     channel: "alerts-p1"
-````
+```
 Alert creation workflow has been updated to allow you to configure the alert destination and ownership in the UI.
 
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/alerts.png)
@@ -74,7 +73,7 @@ Alert creation workflow has been updated to allow you to configure the alert des
 We have added support for Service Accounts in the API and CLI.  
 Declaring ServiceAccount resource lets you manage the ACLs of a service account in Kafka.  
 At the moment we only support Kafka ACLs (calls to Kafka APIs) but we plan to add support for Aiven ACLs in ServiceAccount resource in the future. 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -100,12 +99,12 @@ spec:
         patternType: LITERAL
         operations:
           - Read
-````
+```
 
 #### Labels support for Service Accounts
 We have added support for labels in the ServiceAccount resource.  
 For now you can only edit labels through ServiceAccount resource in the API and CLI.
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -118,7 +117,7 @@ metadata:
     application: clickstream
 spec:
   ...
-````
+```
 The labels are used to filter the Service Accounts in the UI. Editing labels in the UI will be available in the next release.
 ![Application permissions on RBAC screen](/images/changelog/platform/v31/service-account.png)
 
@@ -127,7 +126,7 @@ We have added a new mode for ApplicationInstance that allows Application Teams t
 This mode can be enabled in the ApplicationInstance with the following flag `spec.applicationManagedServiceAccount` set to `true`.  
 When enabled, Self-service will not synchronize the Service Account with the ApplicationInstance and will let the Application Team manage the Service Account directly.
 Application Managed Service Accounts can be declared in the API and CLI using the Application API Key.
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -140,7 +139,7 @@ spec:
     type: KAFKA_ACL
     acls:
 ...
-````
+```
 
 ####  Application Group permissions now available on Users Permissions page
 

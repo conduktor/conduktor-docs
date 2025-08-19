@@ -2,7 +2,6 @@
 title: Console 1.33
 ---
 
-*Release date: 2025-04-09*
 
 - [Conduktor Scale](#conduktor-scale)
   - [Kafka Chargeback: group by labels](#kafka-chargeback-group-by-labels)
@@ -31,7 +30,7 @@ We've enhanced permission management for cross-team access. You can now assign d
 
 Here's an example granting READ access to the service account and denying access to members of the application through Console:
 
-````yaml
+```yaml
 # Permission granted to other applications
 ---
 apiVersion: self-service/v1
@@ -48,7 +47,7 @@ spec:
   userPermission: NONE
   serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
-````
+```
 
 #### Support for Aiven service accounts
 
@@ -56,7 +55,7 @@ We've added the support for Aiven service accounts in our API and CLI.
 
 Here's an example granting READ and WRITE access to the `click.event-stream.avro` topic and its schema.
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -73,7 +72,7 @@ spec:
       - type: SCHEMA
         name: 'Subject:click.event-stream.avro'
         permission: schema_registry_write
-````
+```
 
 #### Service account labels
 

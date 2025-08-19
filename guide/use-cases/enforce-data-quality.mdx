@@ -437,7 +437,7 @@ When multiple Policies target the same topic, there are two scenarios that can o
   <Accordion title="How do I handle headers with dashes?">
   Use bracket notation instead of dot notation. For example: `headers['Content-Type']`
   </Accordion>
-  <Accordion title="Why can't `ype()` figure out the right numeric types?">
+  <Accordion title="Why can't `type()` figure out the right numeric types?">
 
     Whether your data is sent as **JSON** or **Avro**, Conduktor Gateway internally converts the payload to JSON before applying CEL rules. In JSON, all numeric values are treated as a generic `number` — there's no distinction between `int` and `double`. As a result, expressions like `type(value.age) == int` may **fail unexpectedly**, even if:
       - the original value is a valid integer (e.g., 12)

@@ -32,7 +32,11 @@ Self-service relies on a central concept, the **Application**, which dictates **
 
 Below outlines the relationships between Self-service resources.
 
-![Self-service Concepts](/images/self-service-concepts.png)
+<img 
+  src="/images/self-service-concepts.png" 
+  alt="Self-service Concepts"
+  width="450"
+/>
 
 ## Central platform team resources
 
@@ -42,7 +46,7 @@ An application represents a streaming app or data pipeline that is responsible f
 
 **Example**
 
-````yaml
+```yaml
 ---
 apiVersion: "self-service/v1"
 kind: "Application"
@@ -52,7 +56,7 @@ spec:
   title: "Clickstream App"
   description: "Clickstream records user’s clicks through their journey on our website"
   owner: "clickstream-group"            # technical-id of the Console Group
-````
+```
 
 ### Application instance
 
@@ -68,7 +72,7 @@ Each Application Instance:
 
 **Example**
 
-````yaml
+```yaml
 # Application Instance (dev environment)
 ---
 apiVersion: "self-service/v1"
@@ -86,7 +90,7 @@ spec:
     - type: CONSUMER_GROUP
       name: "click."
       patternType: PREFIXED
-````
+```
 
 ### Application instance policies
 
@@ -94,7 +98,7 @@ Application Instance Policies restrict the Application Teams to create their res
 
 **Example**
 
-````yaml
+```yaml
 # Policies that restrict the Application to a certain range of configurations
 # on topic configs, but also on topic metadata
 ---
@@ -111,7 +115,7 @@ spec:
       constraint: "Range"
       max: 42
       min: 3
-````
+```
 
 ## Application team resources
 
@@ -124,7 +128,7 @@ Once an Application and Application Instance are defined, Application Teams can 
 
 This is how Application Teams can create the Kafka resources they need for their applications.
 
-````yaml
+```yaml
 # Topic example
 ---
 apiVersion: kafka/v2
@@ -140,7 +144,7 @@ spec:
     cleanup.policy: "delete"
     retention.ms: "60000"
 
-````
+```
 
 ### Application instance permissions
 
@@ -152,7 +156,7 @@ Deploying this object will grant permission to the `grantedTo` Application Insta
 
 **Example**
 
-````yaml
+```yaml
 # Read permission granted to the Heatmap Application on click.screen-events topic
 ---
 apiVersion: self-service/v1
@@ -168,7 +172,7 @@ spec:
     patternType: LITERAL
   permission: READ
   grantedTo: heatmap-app-dev
-````
+```
 
 ### Application group
 
@@ -180,7 +184,7 @@ Create an Application Group to directly reflect how your Application operates. Y
 
 **Example**
 
-````yaml
+```yaml
 # Permissions granted to Console users in the group, CP-COMPANY-CLICKSTREAM-SUPPORT, for the clickstream-app Application
 ---
 apiVersion: self-service/v1
@@ -217,7 +221,7 @@ spec:
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
 
-````
+```
 
 ### Resource labels
 
@@ -242,7 +246,7 @@ We plan to bring label support to the following resources in the future:
 
 **Example**
 
-````yaml
+```yaml
 # Topic annotated with useful metadata
 ---
 apiVersion: kafka/v2
@@ -263,7 +267,7 @@ spec:
     min.insync.replicas: "2"
     cleanup.policy: "delete"
     retention.ms: "60000"
-````
+```
 
 ## Limited ownership mode
 

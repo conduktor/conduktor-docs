@@ -2,16 +2,15 @@
 title: Console 1.27.0
 ---
 
-*Release date: 2024-09-14*
 
-- [Features ✨](#features-)
+- [Features](#features)
   - [Kafka Connect Configuration Wizard](#kafka-connect-configuration-wizard)
   - [Alerts for Kafka Connect](#alerts-for-kafka-connect)
   - [Self-service: Limited Ownership mode](#self-service-limited-ownership-mode)
   - [Quality of Life improvements](#quality-of-life-improvements)
-- [Fixes 🔨](#fixes-)
+- [Fixes](#fixes)
 - [Deprecation Warning: Upcoming migration from Tags to Labels](#deprecation-warning-upcoming-migration-from-tags-to-labels-)
-### Features ✨
+### Features
 
 #### Kafka Connect Configuration Wizard
 
@@ -41,7 +40,7 @@ This is especially useful if you already have a centralized repository and exist
 - Self-service: External Group Mapping is now available for `ApplicationGroup`
 - The Login page now steers users towards their OIDC provider rather than basic auth when OIDC is enabled
 
-### Fixes 🔨
+### Fixes
 - Fixed an issue on Consumer group reset offset with the ToDatetime strategy
 - Fixed an issue with Console indexing that could occur when deleting and recreating subject
 - Fixed a recent regression with default replication factor when creating a topic
@@ -61,12 +60,12 @@ Tags written with the naming convention `<key>/<value>` will automatically be ad
 - `<key>: <value>`  
 
 If there is a conflict such as; a topic containing tags with the same key, that already has the target label, or is not written with this naming convention, then they will be created as follows:
-````yaml
+```yaml
 tag-<value>: true
-````
+```
 
 Here's an example of how tags will be migrated into labels:
-````yaml
+```yaml
 # Tags:
 - format/avro
 - project/supplychain
@@ -85,7 +84,7 @@ labels:
   tag-color/red: true # Because conflict on "color"
   tag-wikipedia: true
   tag-non-prod: true
-````
+```
 
 **Conduktor can help you rename tags through Customer Support**  
 Between now and the migration, we can help you rename your tags for a smooth transition to labels.  

@@ -6,11 +6,11 @@ title: Conduktor's Kafka resources
 
 Creates a topic in Kafka.
 
-- **API key(s):** "AdminToken", "AppToken" 
+- **API key(s):** AdminToken, AppToken 
 - **Managed with:** API, CLI, UI, TF
-- **Labels support:** "FullLabelSupport"
+- **Labels support:** Full
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -32,7 +32,7 @@ spec:
     min.insync.replicas: '2'
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 **Topic checks:**
 
@@ -59,9 +59,9 @@ All the properties are validated against the topic policies attached to the appl
 
 Creates a subject in the schema registry.
 
-- **API key(s):** "AdminToken","AppToken"
+- **API key(s):** AdminToken, AppToken
 - **Managed with:** API, CLI, UI
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 **Local file**
 
@@ -149,9 +149,9 @@ spec:
 
 Creates a connector on a Kafka Connect cluster.
 
-- **API key(s):** AdminToken" ,"AppToken"
+- **API key(s):** AdminToken, AppToken
 - **Managed with:** API, CLI, UI
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 ```yaml
 ---
@@ -189,13 +189,13 @@ spec:
 
 Manages the ACLs of a service account in Kafka. This **does not create the service account**, only assigns the ACLs.
 
-- **API key(s):** "AdminToken" 
+- **API key(s):** AdminToken
 - **Managed with:** API, CLI, UI
-- **Labels support:** "FullLabelSupport" 
+- **Labels support:** Full
 
 Kafka service account example:
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -234,11 +234,11 @@ spec:
         patternType: PREFIXED
         operations:
           - Read
-````
+```
 
 Aiven service account example:
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -264,7 +264,7 @@ spec:
       - type: SCHEMA
         name: 'Subject:click.event-stream.avro'
         permission: schema_registry_write
-````
+```
 
 **Service account checks:**
 

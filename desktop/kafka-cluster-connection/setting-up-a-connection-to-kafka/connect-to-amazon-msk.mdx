@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: Connect to Amazon MSK
 description: Using Conduktor Desktop with Amazon MSK
+search: false
+index: false
 ---
 
 # Connect to Amazon MSK
@@ -12,10 +14,10 @@ Amazon MSK is a self-managed service that makes it easy to build and run applica
 
 It lacks several important Apache Kafka features like Kafka Connect, Kafka Streams, ksqlDB, and is not cloud-native (serverless, like S3 or Kinesis) but is just a provisioned infrastructure
 
-:::info
+<Info>
 AWS MSK supports also Kafka Connect clusters.
 [Read more about it](https://aws.amazon.com/blogs/aws/introducing-amazon-msk-connect-stream-data-to-and-from-your-apache-kafka-clusters-using-managed-connectors).
-:::
+</Info>
 
 ## Conduktor & MSK
 
@@ -52,11 +54,11 @@ The networking layer looks like this (not public):
 
 ### Alternative: Another Proxy
 
-:::warning
+<Warning>
 If you get some errors such as "Exception in upstream channel.:
 java.lang.IllegalArgumentException: Invalid version for API key METADATA: 11", your proxy may be
 incompatible with your version of Apache Kafka.
-:::
+</Warning>
 
 You can try running another proxy: [https://github.com/grepplabs/kafka-proxy](https://github.com/grepplabs/kafka-proxy) It's a bit more complicated to setup but is more configurable.
 
