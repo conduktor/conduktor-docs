@@ -731,6 +731,76 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="yourKafkaUser" password="yourKafkaPassword";
 ```
 
+### Principal Resolver
+
+When using Confluent Cloud authentication with delegated authentication, Gateway supports automatically resolving API keys to their associated Service Account. This feature enhances security and improves usability by working with Service Account principals instead of raw API keys.
+
+For configuration details, see the [Principal Resolver environment variables](/gateway/configuration/env-variables#principal-resolver).
+
+Gateway configuration:
+Using environment variables:
+
+```yaml
+GATEWAY_PRINCIPAL_RESOLVER: CONFLUENT
+GATEWAY_CONFLUENT_CLOUD_API_KEY: your-api-key
+GATEWAY_CONFLUENT_CLOUD_API_SECRET: your-api-secret
+GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE: 1000 # default
+GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS: 86400000 # 1 day default
+```
+
+Or using a configuration file
+
+```yaml
+authenticationConfig:
+  principalResolver: CONFLUENT_CLOUD
+  confluentCloud:
+    apiKey: ${GATEWAY_CONFLUENT_CLOUD_API_KEY}
+    apiSecret: ${GATEWAY_CONFLUENT_CLOUD_API_SECRET}
+    cacheConfig:
+      maxSize: ${GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE|1000}
+      ttlMs: ${GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS|86400000} # 1 day
+```
+
+When enabled, Gateway will automatically resolve API keys (like XIGMNERQXOUKXDQU) to their associated Service Accounts (like sa-72839j).
+
+#### Authentication flow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant A as Application
+  box "Gateway cluster"
+    participant GW as Gateway
+    participant GPR as Gateway Principal Resolver
+  end
+  participant K as Backing Kafka Cluster
+  participant CC as Confluent Cloud
+
+  Note over A,GW: Application uses credentials `apiKey:apiSecret`
+  A  ->> GW: Connect to Gateway using application credentials
+  GW ->> K : Gateway forward authentication to Kafka
+
+  alt Authentication failed
+    K  -->> GW: AUTH_FAILED
+    GW -->> A : AUTH_FAILED
+  else Authentication successful (principalToken)
+    K  -->> GW: AUTH_OK(principalToken)
+    GW ->> GW: extractPrincipal(principalToken)
+    GW ->> GPR: isConfluentCloudResolverEnabled()
+
+    alt Opt‑in=true
+      GW ->> CC: GET /iam/v2/api-keys/{apiKeyId}
+      CC -->> GW: { service_account: "sa-72839j", ... }
+      GW ->> GW: cacheMapping(apiKeyId -> serviceAccount)
+      Note over GW,K: Principal resolved to Service Account sa‑72839j
+    else Opt‑in = false
+      Note over GW,K: Principal remains apiKeyId
+    end
+
+    GW -->> A : CONNECTED
+  end
+```
+
 ### Automatic security protocol detection (default behavior)
 
 On startup Gateway will attempt to detect the security protocol to use based on the Kafka configuration if you don't specify any security protocol. If there's also no security protocol on the backing Kafka cluster, then we set the security protocol to `PLAINTEXT` by default.

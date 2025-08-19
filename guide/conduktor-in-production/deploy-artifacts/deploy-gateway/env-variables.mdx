@@ -236,6 +236,16 @@ Some of these definitions (e.g. `SASL_OAUTHBEARER_JWKS_ENDPOINT_REFRESH`) are ta
 | `GATEWAY_OAUTH_SUB_CLAIM_NAME`     | The OAuth claim for the subject is often named `sub`, but this (optional) setting can provide a different name to use for the subject included in the JWT payload's claims, if the OAuth/OIDC provider uses a different name for that claim.                                                                                                                                                                                                                           |
 | `GATEWAY_OAUTH_USE_CC_POOL_ID`     | Set to `true` to use the Confluent Cloud pool ID as the principal name. This is useful for Confluent Cloud users in Delegated mode who want to use the pool ID as the principal name instead of the `sub` claim.                                                                                                                                                                                                                                                      |
 
+### Principal Resolver
+
+| **Environment variable**                  | **Description**                                                               | **Default value**  |
+|-------------------------------------------|-------------------------------------------------------------------------------|--------------------|
+| `GATEWAY_PRINCIPAL_RESOLVER`              | The principal resolver to use. Currently only supported is `CONFLUENT_CLOUD`. |                    |
+| `GATEWAY_CONFLUENT_CLOUD_API_KEY`         | The Confluent Cloud API key.                                                  |                    |
+| `GATEWAY_CONFLUENT_CLOUD_API_SECRET`      | The Confluent Cloud API secret.                                               |                    |
+| `GATEWAY_CONFLUENT_CLOUD_CACHE_SIZE`      | The number of principals to cache.                                            | `1000`             |
+| `GATEWAY_CONFLUENT_CLOUD_CACHE_EXPIRY_MS` | The cache expiry time in milliseconds.                                        | `86400000` (1 day) |
+
 ### Plain authentication
 
 | **Environment variable**                     | **Description**                                                                                                                                                                                                                                                                                                                                                                  | **Default value**                                                                 |
