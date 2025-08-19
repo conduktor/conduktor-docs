@@ -117,7 +117,7 @@ This requires you to handle load balancing manually, as you won't have the advan
 
 ## 3. Connect Gateway to Kafka
 
-<img
+<img 
   src="/images/gateway-to-kafka-security.png"
   alt="Gateway to Kafka security"
   width="200"
@@ -790,7 +790,7 @@ This prefixing ensures that there's no overlap or conflict between resources bel
 
 In the example below, we assume a topic `order` has been created on Virtual Cluster `vc-alice`. Let's see how other Virtual Clusters and Backing cluster perceive this:
 
-````shell
+```shell
 # Listing topics on Virtual Cluster vc-alice
 $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-alice.properties --list
 orders
@@ -812,7 +812,7 @@ $ kafka-topics.sh --bootstrap-server=backing-kafka:9092  --list
 vc-alice.orders
 vc-bob.orders
 
-````
+```
 
 ## Configure Gateway for failover
 

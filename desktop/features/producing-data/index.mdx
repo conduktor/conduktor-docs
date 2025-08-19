@@ -2,6 +2,8 @@
 title: How to Produce data?
 description: Conduktor can help you to send messages into your topic. It's useful to test
   something without having to write a complete application.
+search: false
+index: false
 ---
 
 # How to Produce data?
@@ -59,10 +61,10 @@ Apache Avro has special types that does not exist in plain JSON, such as "bytes"
 
 Conduktor Desktop supports Apache Avro 1.9.0 specification: [https://avro.apache.org/docs/1.9.0/spec.html#Logical+Types](https://avro.apache.org/docs/1.9.0/spec.html#Logical+Types)
 
-:::tip
+<Tip>
 Conduktor Desktop is made for **humans**, therefore we handle human-friendly
 representations of such complex types when consuming and when producing data to Avro topics.
-:::
+</Tip>
 
 When producing data from Conduktor Desktop, the format must be in JSON. When sending the data, Conduktor translates the JSON payload to an Apache Avro format. Most types are simple and exist in JSON and Apache Avro (like integers, strings) but some needs a special handling by Conduktor to be "understood" and properly converted.
 
@@ -132,10 +134,10 @@ Conduktor has a notion of "template" to save & reuse what you're producing to yo
 
 You can create as many template as you want, and duplicate them to easily create them from existing ones. It's also possible to create a template from a consumed message!
 
-:::warning
+<Warning>
 Do not forget to click "SAVE" on the bottom right of the dialog to save your modification,
 otherwise you'll lose them.
-:::
+</Warning>
 
 ![a copy was created](../../assets/screenshot-2020-07-24-at-11.40.05.png)
 

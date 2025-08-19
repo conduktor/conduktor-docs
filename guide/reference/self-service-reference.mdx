@@ -8,11 +8,11 @@ An application represents a streaming app or data pipeline that's responsible fo
 
 In Self-service, it's used as a method to organize and re-group multiple deployments of the same application (dev, prod) or different microservices that belong to the same team under one umbrella.
 
-- **API key(s):** "AdminToken"  
+- **API key(s):** AdminToken  
 - **Managed with:** API, CLI, UI
-- **Labels support:** "FullLabelSupport"
+- **Labels support:** Full
 
-````yaml
+```yaml
 # Application
 ---
 apiVersion: self-service/v1
@@ -23,7 +23,7 @@ spec:
   title: "Clickstream App"
   description: "FreeForm text, probably multiline markdown"
   owner: "groupA" # technical-id of the Conduktor Console Group
-````
+```
 
 **Application checks:**
 
@@ -40,11 +40,11 @@ Application instance represents an actual deployment of an application on a Kafk
 
 This is the core concept of Self-service, as it **ties everything together**: Kafka cluster, service account, ownership of resources and policies.
 
-- **API key(s):** "AdminToken" 
+- **API key(s):** AdminToken 
 - **Managed with:** API, CLI, TF
-- **Labels support:** "MissingLabelSupport" 
+- **Labels support:** Full
 
-````yaml
+```yaml
 ---
 apiVersion: self-service/v1
 kind: ApplicationInstance
@@ -76,7 +76,7 @@ spec:
       patternType: PREFIXED
       ownershipMode: LIMITED # Topics are still maintained by central team
       name: "legacy-click."
-````
+```
 
 **AppInstance checks:**
 
@@ -115,11 +115,11 @@ spec:
 
 Define permissions for the application instance to enable collaboration between teams.
 
-- **API key(s):** "AdminToken" , "AppToken" 
+- **API key(s):** AdminToken, AppToken 
 - **Managed with:** API, CLI
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
-````yaml
+```yaml
 # Permission granted to other applications
 ---
 apiVersion: self-service/v1
@@ -136,7 +136,7 @@ spec:
   userPermission: NONE
   serviceAccountPermission: READ
   grantedTo: "another-appinstance-dev"
-````
+```
 
 **Application instance permission checks:**
 
@@ -173,13 +173,13 @@ Creates an application group to directly reflect how your application operates. 
 - the devOps team has extended access across all environments,
 - the engineering team is granted higher permissions in dev environment only.
 
-- **API key(s):** "AdminToken", "AppToken" 
+- **API key(s):** AdminToken, AppToken 
 - **Managed with:** API, CLI
-- **Labels support:** "MissingLabelSupport" 
+- **Labels support:** Missing
 
 #### Example
 
-````yaml
+```yaml
 # Permissions granted to Console users in the application
 ---
 apiVersion: self-service/v1
@@ -216,7 +216,7 @@ spec:
     - user2@company.org
   externalGroups:
     - GP-COMPANY-CLICKSTREAM-SUPPORT
-````
+```
 
 **Application instance permission checks:**
 
@@ -240,11 +240,11 @@ The Self-service service account is not configured by the central team at the `A
 
 Instead, the central platform team decides to delegate this responsibility to the application team, which needs to declare their own service account(s) and associated ACLs within the limits of what the `ApplicationInstance` is allowed to do.
 
-- **API key(s):** ="AppToken" 
+- **API key(s):** AppToken
 - **Managed with:** API, CLI
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
-````yaml
+```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -272,7 +272,7 @@ spec:
         patternType: LITERAL
         operations:
           - Read
-````
+```
 
 **Service account checks:**
 The checks are the same as the [service account](/guide/reference/kafka-reference/#service-account) resource with additional **limitations**:
@@ -297,9 +297,9 @@ Topic policies force application teams to conform to topic rules, set at their `
 Topic policies are not applied automatically. You have to explicitly link them to an [ApplicationInstance](#applicationinstance) with `spec.topicPolicyRef`.
 </Warning>
 
-- **API key(s):** "AdminToken" 
+- **API key(s):** AdminToken
 - **Managed with:** API, CLI, TF
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Partial
 
 ```yaml
 ---
@@ -343,7 +343,7 @@ spec:
 
 With the two topic policies declared above, the following topic resource would succeed validation:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -358,7 +358,7 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'        # Checked by Range(60000, 3600000) on `spec.configs.retention.ms`
-````
+```
 
 ### Topic policy constraints
 
@@ -492,7 +492,7 @@ spec.configs.min.insync.replicas:
 
 This object will pass the validation:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -505,11 +505,11 @@ spec:
   configs:
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 This object will fail the validation due to a new incorrect definition of `insync.replicas`:
 
-````yaml
+```yaml
 ---
 apiVersion: kafka/v2
 kind: Topic
@@ -523,7 +523,7 @@ spec:
     min.insync.replicas: 3
     cleanup.policy: delete
     retention.ms: '60000'
-````
+```
 
 ## ResourcePolicy
 
@@ -537,9 +537,9 @@ Resource policies enforce rules on the `ApplicationInstance` level. Typical use 
 Resource policies are not applied automatically. You have to explicitly link them to an [ApplicationInstance](#applicationinstance) or [Application](#application) with `spec.policyRef`.
 </Warning>
 
-- **API key(s):** "AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** API, CLI, TF
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial 
 
 ```yaml
 ---

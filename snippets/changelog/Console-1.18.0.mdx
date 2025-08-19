@@ -2,11 +2,10 @@
 description: Console 1.18
 ---
 
-*Release date: 2023-09-11*
 
 This release contains several **breaking changes** so please read the entire release note prior to installation.
 
-### Important changes to our internal architecture ❗
+### Important changes to our internal architecture
 
 We are cleaning up our Docker image to bring you a simpler, lighter, and generally more operable product.
 
@@ -16,7 +15,7 @@ We are cleaning up our Docker image to bring you a simpler, lighter, and general
 - We have removed Testing from the base image
 - We have rewritten our authentication module. If you have any issue with authentication using LDAP or OIDC with this new release [Contact Conduktor Support](https://support.conduktor.io/hc/en-gb)
 
-### Features ✨
+### Features
 
 #### User Friendly Filters
 
@@ -46,7 +45,7 @@ If you are currently deployed in prod using `RUN_MODE=nano` or `RUN_MODE=small`,
 If you are using higher `RUN_MODE`, you can free up some memory and save on infrastructure costs.  
 Visit our [System Requirements](https://docs.conduktor.io/platform/get-started/installation/hardware/#hardware-requirements) page to see the changes.
 
-### Fixes 🔨
+### Fixes
 
 - Fixed a UI issue where Add Partitions wasn't possible when using Firefox
 - Fixed some UI issues with Kafka Connect and RBAC
