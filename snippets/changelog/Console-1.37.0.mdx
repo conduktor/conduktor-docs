@@ -20,6 +20,14 @@ _Release date: 2025-08-20_
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
+### Breaking change: email address storage
+In this release, we have made a change to how we store the email addresses of users in Console.
+All emails are now stored in lowercase to ensure consistency and prevent issues with SSO or RBAC.
+We highly recommend that you back up your Console database before upgrading to this version.
+If two users have the same email address but with different cases, the migration will fail.
+In this case, we recommend that you resolve the conflict by either deleting one of the users or changing their email address before upgrading.
+
+
 ### Conduktor Scale
 
 #### Application groups management
