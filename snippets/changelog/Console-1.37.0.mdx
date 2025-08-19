@@ -2,7 +2,6 @@
 title: Console 1.37
 ---
 
-
 - [Conduktor Scale](#conduktor-scale)
 - [Conduktor Exchange](#conduktor-exchange)
   - [Breaking change](#breaking-change)
@@ -26,7 +25,7 @@ We strongly recommend doing this now, whilst Partner Zone configurations are not
 
 Console now supports creating Partner Zones against a multi-clustered Gateway configuration. This allows for a Partner Zone to be created against any of the configured Kafka clusters behind Gateway (previously, a Gateway was required per Kafka cluster for a Partner Zone).
 
-[Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster).  
+[Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster).
 
 ### Conduktor Trust
 
@@ -41,7 +40,8 @@ You can now fine-tune Cortex and Prometheus retention with the new environment v
 You can **patch** (instead of replacing) the YAML configuration. [Find out more about overriding the configuration with YAML](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex#overriding-with-yaml).
 
 ### Fixes
- - Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns
- - Errors preventing users from logging in are now prominently displayed on the login page
- - The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license
- - Kafka Cluster configuration for SSL passwords no longer displays length unless editing the field, and AWS Glue secrets are no longer clear text.
+
+- Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns
+- Errors preventing users from logging in are now prominently displayed on the login page
+- The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license
+- Kafka Cluster configuration for SSL passwords no longer displays length unless editing the field, and AWS Glue secrets are no longer clear text.
