@@ -15,6 +15,8 @@ _Release date: 2025-08-20_
   - [Partner Zone multi-cluster](#partner-zone-multi-cluster)
 - [Conduktor Trust](#conduktor-trust)
   - [Regex library](#regex-library)
+  - [Mark action](#mark-action)
+  - [JSON schema Rule type](#json-schema-rule-type)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
@@ -60,7 +62,19 @@ Console now supports creating Partner Zones against a multi-clustered Gateway co
 
 #### Regex library
 
-Added an option to **Show regex library** when creating a new Rule in Console. This provides a list of pre-built regex examples that can be used to speed up Rule creation.
+Added an option to **Show regex library** when creating a new rule in Console. This provides a list of pre-built regex examples that can be used to speed up rule creation.
+
+#### Mark action
+
+You can now toggle the **Mark action** on data quality Policies. When enabled, messages that violate the rule(s) are tagged with a special header.
+
+[Check out the Mark action use case.](/guide/use-cases/enforce-data-quality#mark-action)
+
+#### JSON schema rule type
+
+You can now create JSON schema rules to validate message structure and content.
+
+[Check out the JSON schema use case.](/guide/use-cases/enforce-data-quality#json-schema-rule)
 
 ### Quality of life improvements
 
