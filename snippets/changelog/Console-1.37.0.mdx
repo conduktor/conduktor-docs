@@ -5,8 +5,8 @@ title: Console 1.37
 - [Conduktor Scale](#conduktor-scale)
 - [Conduktor Exchange](#conduktor-exchange)
   - [Partner Zone out of preview](#partner-zone-out-of-preview)
-  - [Partner Zone multi-cluster](#partner-zone-multi-cluster)
-  - [Breaking change](#breaking-change)
+  - [Partner Zone multi-cluster support](#partner-zone-multi-cluster-support)
+  - [Partner Zone breaking change](#partner-zone-breaking-change)
 - [Conduktor Trust](#conduktor-trust)
   - [Regex library](#regex-library)
 - [Quality of life improvements](#quality-of-life-improvements)
@@ -20,17 +20,21 @@ title: Console 1.37
 
 Partner Zones are now generally available and out of preview. This means that all features are fully supported, production-ready, and can be used in production environments.
 
-#### Partner Zone multi-cluster
+#### Partner Zone multi-cluster support
 
 Console now supports creating Partner Zones against a multi-clustered Gateway configuration. This allows for a Partner Zone to be created against any of the configured Kafka clusters behind Gateway (previously, a Gateway was required per Kafka cluster for a Partner Zone).
 
 [Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster).
 
-#### Breaking change
+#### Partner Zone breaking change
 
-With support for Partner Zones on multi-cluster Gateway configurations, Partner Zones now have a breaking change: all **existing Partner Zones must be re-created** to take advantage of this capability.
+With the support for multi-cluster Gateway, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Existing Partner Zones will stop functioning after the upgrade if not recreated.
 
-We strongly recommend doing this now, as Partner Zones are out of preview, to ensure your Partner Zones are properly configured for the new multi-cluster support.
+**Action required:**
+
+- Delete all existing Partner Zones before upgrading
+- Upgrade to the latest version
+- Recreate your Partner Zones with the new configuration
 
 ### Conduktor Trust
 
