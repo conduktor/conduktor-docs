@@ -78,7 +78,11 @@ Upon toggling the Advanced configuration, you will be shown all the available to
 Read more about Apache Kafka topic configuration [here](https://kafka.apache.org/documentation/#topicconfigs)
 </Info>
 
-![Advanced create topic](/images/topic-create-advanced.png)
+<img 
+  src="/images/topic-create-advanced.png" 
+  alt="Advanced create topic"
+  width="300"
+/>
 
 ### Add partitions
 
@@ -88,7 +92,11 @@ Increase the number of partitions for your topic. Number of partitions cannot be
 Adding partitions reshuffles the target partition of messages with a given key. Existing data will stay on the previous partition. Consumers that rely on partition ordering could be impacted.
 </Warning>
 
-![Add partitions](/images/topic-add-partitions.png)
+<img 
+  src="/images/topic-add-partitions.png" 
+  alt="Add partitions"
+  width="300"
+/>
 
 ### Empty topic
 
@@ -96,13 +104,21 @@ This lets you delete all records from a topic. This operation is permanent and i
 
 If you want to only delete all records from given partition, there's a dedicated operation on the Partitions tab of the topic detail.
 
-![Empty topic](/images/topic-empty.png)
+<img 
+  src="/images/topic-empty.png" 
+  alt="Empty topic"
+  width="300"
+/>
 
 ### Delete topic
 
 This lets you delete the topic from Kafka. This operation is permanent and irreversible.
 
-![Delete topic](/images/topic-delete.png)
+<img 
+  src="/images/topic-delete.png" 
+  alt="Delete topic"
+  width="300"
+/>
 
 ### Manage topic labels
 
@@ -110,11 +126,19 @@ You can help categorize your Topics further using key-value pairs called labels.
 
 To manage your topic's labels via the UI, click on the topic and on the "Edit" button from the topic details view.
 
-![Label edit](/images/label-edit.png)
+<img 
+  src="/images/label-edit.png" 
+  alt="Label edit"
+  width="300"
+/>
 
 A side bar will appear with the current tags associated with the topic, and a button to add more. You can also click on the trash icon to remove a label.
 
-![Label new](/images/label-new.png)
+<img 
+  src="/images/label-new.png" 
+  alt="Label new"
+  width="300"
+/>
 
 # Topic produce overview
 
@@ -136,7 +160,11 @@ Each section from the accordion menu will allow you to configure the Kafka produ
 
 This section is similar for both Key and Value. The dropdown menu lets you choose your serializer to encode your message properly in Kafka.
 
-![Produce serializers](/images/produce-serializers.png)
+<img 
+  src="/images/produce-serializers.png" 
+  alt="Produce serializers"
+  width="300"
+/>
 
 The default serializer is **String**, unless you have a matching subject name in your schema registry (with the **TopicNameStrategy**). In this case, the Serializer will be set automatically to the proper Registry type (Avro, Proto, Json Schema), with the subject name set to `<topic-name>-key` for the key, or `<topic-name>-value` for the value.
 
@@ -151,7 +179,11 @@ You can configure these strategies directly from the produce page when working w
 The "Generate once" button will generate a message that conforms to the picked Serializer.
 
 This works with schema registry serializers as well:
-![Produce random data](/images/produce-random-data-gen.png)
+<img 
+  src="/images/produce-random-data-gen.png" 
+  alt="Produce random data"
+  width="300"
+/>
 
 ### Headers
 
@@ -159,7 +191,11 @@ The Headers section lets you add headers to your message.
 
 Header Key and Header Value both expect valid UTF8 String.
 
-![Produce headers](/images/produce-headers.png)
+<img 
+  src="/images/produce-headers.png" 
+  alt="Produce headers"
+  width="300"
+/>
 
 ### Flow
 
@@ -208,7 +244,11 @@ The next screenshot is an example of a produce flow, that will generate:
 - A batch of 10 records, every second for a minute
 - With the same Key, but a random Value (based on the Avro schema linked to the topic) for every record
 
-![Produce flow mode](/images/produce-flow-mode.png)
+<img 
+  src="/images/produce-flow-mode.png" 
+  alt="Produce flow mode"
+  width="300"
+/>
 
 ### Additional options
 
@@ -265,7 +305,11 @@ This feature lets you produce a batch of Kafka Records based on a CSV file.
 
 The 3 required inputs are the Key and Value Serializer, and the input file itself.
 
-![Produce import](/images/produce-import-csv.png)
+<img 
+  src="/images/produce-import-csv.png" 
+  alt="Produce import"
+  width="300"
+/>
 
 As of today, the file must respect the following structure:
 
@@ -300,7 +344,11 @@ While in progress, you'll see a loading state.
 
 Once the import is finished, you'll get a summary message.
 
-![Produce import CSV](/images/produce-import-csv-success.png)
+<img 
+  src="/images/produce-import-csv-success.png" 
+  alt="Produce import CSV success"
+  width="300"
+/>
 
 ### Save and load producer templates
 
@@ -308,7 +356,11 @@ If you are regularly using the same set of Producer configuration, you can save 
 
 At the bottom of the Produce page, the **Save** icon button will prompt your the name you want to give to this template. On its side, the **Load** icon button will show you the available templates you can choose to produce.
 
-![Produce templates](/images/produce-templates.png)
+<img 
+  src="/images/produce-templates.png" 
+  alt="Produce templates"
+  width="300"
+/>
 
 In this list, you're free to apply templates, but also to rename, duplicate and delete them.
 
@@ -689,7 +741,11 @@ To list the existing views, click on the folder icon:
 
 From here, you will see your private views, and the organization views that you created, or that were created by your colleagues.
 
-![Create topic](/images/list-shared-views.png)
+<img 
+  src="/images/list-shared-views.png" 
+  alt="List shared views"
+  width="300"
+/>
 
 ## Most recent 500 messages - overview
 
@@ -703,7 +759,11 @@ In most cases, it will give you `500 / num_partitions` messages, per partition. 
 
 Edge cases might occur and the algorithm will account for it seamlessly.
 
-![Create topic](/images/most-recent-500.png)
+<img 
+  src="/images/most-recent-500.png" 
+  alt="Most recent 500"
+  width="300"
+/>
 
 <Warning>
 Most Recent N messages doesn't work well with filters. This is because the filters will only be applied to those 500 messages instead of a large number of records. Prefer switching to a time-based ShowFrom when using filters
@@ -854,7 +914,11 @@ When clicking on the edit button from the table rows, a new screen will appear w
 - The Kafka default value
 - The current value
 
-![Create topic](/images/topic-config-item.png)
+<img 
+  src="/images/topic-config-item.png" 
+  alt="Topic config item"
+  width="200"
+/>
 
 You can choose to either Update the value to something new or revert to the Kafka default, which will apply the change directly on the Kafka cluster, similarly to the `kafka-configs` commands below.
 

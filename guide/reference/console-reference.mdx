@@ -6,7 +6,7 @@ title: Console resources
 
 - **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
 Creates a group with members and permissions in Console.
 
@@ -91,7 +91,7 @@ resource "conduktor_console_group_v2" "developers-a" {
 
 - **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "MissingLabelSupport"
+- **Labels support:** Missing
 
 Creates a user with Console permissions.
 
@@ -179,9 +179,9 @@ Make sure you set permissions for this user, otherwise it won't have access to C
 
 Creates a Kafka cluster definition in Console.
 
-- **API key(s):** ="AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API, TF
-- **Labels support:** "PartialLabelSupport"
+- **Labels support:** Partial
 
 <Tabs>
 <Tab title="CLI">
@@ -542,7 +542,7 @@ spec:
     user: "admin"
     password: "admin"
     virtualCluster: passthrough
-````
+```
 
 </Tab>
 <Tab title="Terraform">
@@ -615,9 +615,9 @@ spec = {
 
 Creates a Kafka Connect cluster definition in Console.
 
-- **API key(s):** "AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** API, CLI, UI, TF
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 <Tabs>
 <Tab title="CLI">
@@ -679,13 +679,13 @@ resource "conduktor_console_kafka_connect_v2" "connect-1" {
 
 ## KsqlDBCluster
 
-- **API key(s):** "AdminToken"
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API
-- **Labels support:** "MissingLabelSupport" 
+- **Labels support:** Missing
 
 Creates a ksqlDB cluster definition in Console.
 
-````yaml
+```yaml
 ---
 apiVersion: console/v2
 kind: KsqlDBCluster
@@ -700,7 +700,7 @@ spec:
     type: "BasicAuth"
     username: "toto"
     password: "my-secret"
-````
+```
 
 **KafkaConnectCluster checks:**
 
@@ -712,9 +712,9 @@ spec:
 
 ## Alerts
 
-- **API key(s):** AdminToken" 
+- **API key(s):** AdminToken, AppToken
 - **Managed with:** UI, CLI, API
-- **Labels support: "MissingLabelSupport" 
+- **Labels support: Missing
 
 Creates an alert in Console.
 
@@ -763,9 +763,9 @@ spec:
 
 ## Partner Zones
 
-- **API key(s):** "AdminToken" 
+- **API key(s):** AdminToken
 - **Managed with:** UI, CLI, API
-- **Labels support:** "PartialLabelSupport" 
+- **Labels support:** Partial
 
 Create or update a [Partner Zone](/guide/conduktor-concepts/partner-zones).
 
@@ -785,6 +785,7 @@ spec:
     email: johndoe@partner.io
     phone: 07827 837 177
   cluster: cdk-gateway
+  underlyingCluster: cluster1
   authenticationMode:
     serviceAccount: partner-external-partner
     type: PLAIN
@@ -822,6 +823,8 @@ spec:
 - `spec.displayName` is mandatory.
 - `spec.description`, `spec.url` and `spec.partner` (optional), useful for context information.
 - `spec.cluster` has to be a valid Console cluster technical ID with the **Provider configured as *Gateway***.
+- `spec.underlyingCluster` has to be a valid Console cluster technical ID where the cluster has to be defined under the Gateway defined by the `spec.gatewayClusterId`.
+  - When not specified, the value is inferred to be equal to the `spec.gatewayClusterId` field, hence selecting the main cluster behind Gateway by default.
 - `spec.serviceAccount` has to be a local Gateway service account. It doesn't need to exist before creating the Partner Zone, the service account will be created automatically.
 - `topics[].name` is the name of the topic as it should appear to your external partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share.
@@ -846,24 +849,24 @@ HTTP security properties are used in KafkaCluster ([schema registry](#confluent-
 
 ### Basic authentication
 
-````yaml
+```yaml
   security:
     type: "BasicAuth"
     username: "toto"
     password: "my-secret"
-````
+```
 
 ### Bearer token
 
-````yaml
+```yaml
   security:
     type: "BearerToken"
     token: "toto"
-````
+```
 
 ### mTLS/client certificate
 
-````yaml
+```yaml
   security:
     type: "SSLAuth"
     key: |
@@ -880,7 +883,7 @@ HTTP security properties are used in KafkaCluster ([schema registry](#confluent-
       8/s+YDKveNdoeQoAmGQpUmxhvJ9rbNYj+4jiaujkfxT/6WtFN8N95r+k3W/1K4hs
       IFyCs+xkcgvHFtBjjel4pnIET0agtbGJbGDEQBNxX+i4MDA=
       -----END CERTIFICATE-----
-````
+```
 
 ## Permissions
 
@@ -898,7 +901,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
 
 ### Topic permissions
 
-````yaml
+```yaml
 # Grants consume, produce and view config to all topics toto-* on shadow-it cluster
 - resourceType: TOPIC
   cluster: shadow-it
@@ -929,7 +932,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
 
 ### Subject permissions
 
-````yaml
+```yaml
 # Grants view and edit compatibility to all subjects starting with sub-* on shadow-it cluster
 - resourceType: SUBJECT
   cluster: shadow-it
@@ -955,7 +958,7 @@ A permission applies to a certain `resourceType` which affects the required fiel
 
 ### ConsumerGroup permissions
 
-````yaml
+```yaml
 # Grants view and reset on all consumer groups starting with group-* on shadow-it cluster
 - resourceType: CONSUMER_GROUP
   cluster: shadow-it

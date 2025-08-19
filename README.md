@@ -5,6 +5,7 @@
   - [Structure](#structure)
   - [Images](#images)
   - [Links](#links)
+  - [Alerts](#alerts)
 - [Update release notes](#update-release-notes)
 - [Update public API docs](#update-public-api-docs)
 
@@ -65,54 +66,59 @@ Use absolute links when linking to Conduktor docs, e.g. */guide/get-started/hard
 
 You can also link to a specific section on a page, e.g. */guide/get-started/hardware/#hardware-requirements*.
 
+## Alerts
+
+Mintlify [uses different syntax for alerts and refers to them as callouts](https://mintlify.com/docs/components/callouts).
+
+Please use one of these only:
+
+- `<Note>` This will show the text in blue and in blue background.`</Note>`
+- `<Warning>` This will be orange/red.`</Warning>`
+- `<Danger>` Use this sparingly! Shows text in red with an exclamation icon. `</Danger>`
+- `<Info>` This is a subtle info box with grey text.`</Info>`
+  
 ## Update release notes
 
-Every new version of Gateway and Console has to have release notes.
+Every new version of Gateway, Console and CLI has to have release notes.
 
 To update release notes:
 
 1. Go to **/snippets/changelog**.
-2. Create a new file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
+2. Create a new .mdx file or copy an existing one and rename it. The name has to be in this format: `<productName>-<versionNumber>.mdx`.
 3. Make sure your file has the following header:
 
     ```mdx
     ---
-    title: Product and version
+    title: Product version
     ---
 
-    *Release date: {date}*
+    # Product version
+
     ```
 
-4. Document all the changes in the release. If it's a:
+4. Document the changes and fixes for the release. If it's a:
 
 - **major release** with lots of changes, consider adding a table of contents at the top to make it easier to read.
-- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted ("put yourself in customer's shoes"). Remember to explain what to change or do next, if anything.
+- release containing **breaking changes**: add a meaningful title and explain why the change was made. Most importantly, explain how to know (or check) whether you're impacted, as a customer. Remember to explain what to change or do next, if anything.
 
-5. Open `release-notes/index.mdx` and import your new file, e.g.:
+5. Go to **guide/release-notes** and open **index.mdx**. Add to the import list a line like this:
 
 ```
 import Console1310 from './changelog/Console-1.31.0.mdx';
 ```
 
-6. Finally, add an entry at the top of the page, linking to your file. E.g.:
+6. Add an entry under the`<Note>`, linking to your file. E.g.:
 
 ```
-## Console 1.131.0
-<Console1310 />
+<Update label="Console 1.36.1" description="2025-07-21">
+<Console1361 />
+</Update>
 ---
 ```
 
+This is the format that Mintlify uses: `label` is the H1 heading used in your .mdx file and `description` is the date of the release.
+
 ## Update public API docs
 
-API docs live on *host:8888* of the deployed Gateway/Console and are also published to: [Gateway API docs](https://developers.conduktor.io/?product=gateway) and [Console API docs](https://developers.conduktor.io/?product=console).
-
-To update the public docs:
-
-1. Copy the latest open API yaml files from the `conduktor-proxy` repo based on the version:
-
-- [Gateway v1](https://github.com/conduktor/conduktor-proxy/blob/main/proxy/src/main/resources/gateway-API.yaml)
-- [Gateway v2](https://github.com/conduktor/conduktor-proxy/blob/main/api-definition/src/main/resources/openapi.yaml)
-- [Console](https://github.com/conduktor/console-plus/blob/main/modules/consoleplus/app/src/main/resources/public-api-doc.yaml)
-
-1. Paste the yaml files to [/static/developers](./static/developers/openapi/gateway) and rename as required.
-1. Add the new version to `static/developers/openapi/manifest.json`.
+<!-- markdown-link-check-disable-next-line -->
+[API docs are now in a separate repo](https://github.com/conduktor/developers.conduktor.io).

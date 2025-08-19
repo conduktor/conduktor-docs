@@ -4,6 +4,8 @@ description: >-
   Conduktor offers many options when it's about consuming your data. Take a peek
   at your topic, find a specific key, look for certain patterns, keep only the
   recent values, ... many things are possible.
+search: false
+index: false
 ---
 
 # How to Consume data?
@@ -20,9 +22,9 @@ description: >-
 
 ## _How_ Conduktor consumes data
 
-:::tip
+<Tip>
 Conduktor always displays data **chronologically**.
-:::
+</Tip>
 
 Kafka only provides ordering within a single partition, not across partitions. Because it does not make sense to consume data non-chronologically in Conduktor, we've added our own optimization to always render the data in a deterministic way (chronologically) while preserving memory and CPU. This also works for multi-topics consumption (see below).
 
@@ -42,10 +44,10 @@ We provide 2 views when consuming data: simple list and a tabular view. It's pos
 
 You can double-click on a record to open a new dialog with all its info, its schema if it's Avro and so on. You can also open several of them at once to compare records.
 
-:::tip
+<Tip>
 Pick "JSON" as your Value deserializer to see the **formatted JSON** in the details
 dialog. If you pick just "string", it won't be formatted otherwise.
-:::
+</Tip>
 
 ![The payload of a record](../../assets/screenshot-2020-06-25-at-15.15.11.png)
 
@@ -80,9 +82,9 @@ This will open a panel updated in real-time displaying the progress for all part
 
 ![](<../../assets/screenshot-2020-06-25-at-16.48.45 (1).png>)
 
-:::caution
+<Warning>
 It's possible to identify if a partition has issues if it's not moving on or barely (probably that
 the leader broker of this partitions is in trouble)
-:::
+</Warning>
 
 You know when a partition is totally consumed when it goes green. If some applications produces at the same-time, Conduktor automatically updates itself (the end offsets) and you may see partitions blinking between blue and green (Conduktor consuming at the same rate than the producers).

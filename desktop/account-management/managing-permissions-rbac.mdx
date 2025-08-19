@@ -3,13 +3,15 @@ sidebar_position: 1
 title: Managing Permissions / RBAC
 description: Allow/Deny access to specific features of Conduktor Desktop for sensitive
   production clusters.
+search: false
+index: false
 ---
 
 # Managing Permissions / RBAC
 
-:::info
+<Info>
 This feature is available only for Enterprises.
-:::
+</Info>
 
 To be in control of what features your users can use on your clusters when using Conduktor Desktop, considering limiting their permissions. This is available on your account at [https://account.conduktor.io](https://account.conduktor.io).
 
@@ -35,10 +37,10 @@ You want to ensure that all your users cannot write into your production cluster
 
 ![](../assets/cdk-add-cluster.png)
 
-:::tip
+<Tip>
 A cluster ID uniquely identifies your clusters. It is a unique identifier assigned automatically
 to an Apache Kafka cluster.
-:::
+</Tip>
 
 ## How to setup the permissions of a cluster?
 
@@ -48,11 +50,11 @@ By default, there is any restriction on what your users can do on your clusters.
 
 ![](../assets/cdk-default-rbac.png)
 
-:::tip
+<Tip>
 You can enable access control and choose the base role _Viewer_ to set predefined permissions to
 prevent any modifications to your cluster by your users (eg: disallowing producing to topics,
 broker config modifications, topic creation/deletion, altering schemas in schema registry, ...)
-:::
+</Tip>
 
 ### How to set a role for specific groups or users?
 
@@ -60,11 +62,11 @@ You can provide different permissions set for your users by assigning them diffe
 
 ![](../assets/cdk-cluster-rbac.png)
 
-:::caution
+<Warning>
 The effective permissions of a user is the total of his permissions and all permissions of groups he belongs to.
 
 The base role will give its permissions access to every users of the subscription. You can't give less access right for a single user. We advise you to not give a too powerful base role on your cluster.
-:::
+</Warning>
 
 ### Could I define my own role?
 
@@ -90,11 +92,11 @@ Then click on **Add permission group** to select the members and the permissions
 
 ![](../assets/cdk-topic-rbac.png)
 
-:::info
+<Info>
 The permissions assigned to an user are loaded when he connects to the cluster with Conduktor
 Desktop. Already connected users won't have their permissions changed until they disconnect then
 reconnect to the cluster.
-:::
+</Info>
 
 ## How does this affect Conduktor Desktop?
 
@@ -106,10 +108,10 @@ For instance, if we disabled "Produce Into Topics" on a cluster, users connected
 
 ![Same view with all permissions enabled](../assets/capture-decran-du-2021-08-26-17-42-03.png)
 
-:::info
+<Info>
 Removing the specific permission **_Allow Users to Connect_** will entirely prevent
 the connection to the cluster.
-:::
+</Info>
 
 ## Additional Remarks
 
