@@ -89,7 +89,7 @@ docker compose -f docker-compose.yaml up -d
 ```yaml title="docker-compose.yml"
 services:
   zookeeper:
-    image: "confluentinc/cp-zookeeper:latest"
+    image: "confluentinc/cp-zookeeper:7.9.2"
     container_name: crypto-shredding-howto-zookeeper
     restart: always
     ports:
@@ -101,7 +101,7 @@ services:
       retries: 20
       interval: 10s
   kafka-1:
-    image: "confluentinc/cp-kafka:latest"
+    image: "confluentinc/cp-kafka:7.9.2"
     container_name: crypto-shredding-howto-kafka-1
     restart: always
     ports:
@@ -122,7 +122,7 @@ services:
       zookeeper:
         condition: service_healthy
   kafka-2:
-    image: confluentinc/cp-kafka
+    image: "confluentinc/cp-kafka:7.9.2"
     container_name: crypto-shredding-howto-kafka-2
     hostname: kafka-2
     ports:
@@ -143,7 +143,7 @@ services:
       zookeeper:
         condition: service_healthy
   kafka-3:
-    image: confluentinc/cp-kafka
+    image: "confluentinc/cp-kafka:7.9.2"
     container_name: crypto-shredding-howto-kafka-3
     hostname: kafka-3
     ports:
@@ -184,14 +184,16 @@ services:
       vault secrets enable -version=1 kv; vault secrets enable totp ) & vault server
       -dev -dev-listen-address=0.0.0.0:8200
   conduktor-gateway:
-    image: conduktor/conduktor-gateway:3.8.1
+    # image: harbor.cdkt.dev/conduktor/conduktor-gateway:3.12.0-rc1
+    image: conduktor/conduktor-gateway:3.11.0
     hostname: conduktor-gateway
     container_name: crypto-shredding-howto-conduktor-gateway
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9093,kafka-3:9094
-      JAVA_OPTS: "-XX:UseSVE=0"
       VAULT_TOKEN: vault-plaintext-root-token
       GATEWAY_ADMIN_API_USERS: "[{username: admin, password: conduktor, admin: true}]"
+      GATEWAY_ACL_ENABLED: false
+      GATEWAY_MIN_BROKERID: 1
     ports:
       - "8888:8888"
       - "6969:6969"
@@ -209,12 +211,12 @@ services:
       kafka-3:
         condition: service_healthy
   kafka-client:
-      image: confluentinc/cp-kafka:latest
+      image: "confluentinc/cp-kafka:7.9.2"
       hostname: kafka-client
       container_name: crypto-shredding-howto-kafka-client
       command: sleep infinity
   conduktor-console:
-    image: conduktor/conduktor-console:1.33.0
+    image: conduktor/conduktor-console:1.36.2
     container_name: crypto-shredding-howto-conduktor-console
     ports:
       - "8080:8080"
@@ -243,7 +245,6 @@ services:
       CDK_MONITORING_ALERT-MANAGER-URL: http://conduktor-monitoring:9010/
       CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
       CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://localhost:8080
-      CONSOLE_JAVA_OPTS: "-XX:UseSVE=0"
       CDK_ADMIN_EMAIL: "admin@demo.dev"
       CDK_ADMIN_PASSWORD: "adminP4ss!"
     depends_on:
@@ -254,7 +255,7 @@ services:
       postgresql-2:
         condition: service_healthy
   conduktor-ctl:
-    image: conduktor/conduktor-ctl:v0.5.0
+    image: conduktor/conduktor-ctl:v0.6.1
     container_name: crypto-shredding-howto-conduktor-ctl
     entrypoint: sleep infinity # override entry point to keep container up
     volumes:
@@ -280,7 +281,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U conduktor -d conduktor-console"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -301,7 +302,7 @@ services:
       POSTGRES_PASSWORD: "change_me"
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U conduktor -d conduktor-sql"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -309,7 +310,7 @@ services:
   # It is optional. 
   # https://docs.conduktor.io/platform/get-started/configuration/cortex/
   conduktor-monitoring:
-    image: conduktor/conduktor-console-cortex:1.33.0
+    image: conduktor/conduktor-console-cortex:1.36.2
     container_name: crypto-shredding-howto-conduktor-monitoring
     environment:
       CDK_CONSOLE-URL: "http://conduktor-console:8080"
@@ -441,7 +442,7 @@ With encryption configured we can now produce records via Gateway that will be e
 <Tab title="Produce and check via CLI">
 
 ```bash
-# 1. Create a 'customers' topic to match the topic 'sensitive customer data encryption' is configured to encrypt records produced to
+# 1. Create a 'customers' topic to which we will produce records with sensitive data
 docker compose exec kafka-client kafka-topics --create \
   --bootstrap-server kafka-1:9092 \
   --replication-factor 1 \
@@ -454,7 +455,8 @@ docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
   --topic customers
 
-# 3. Produce a record with '10000002' to topic 'customers' (we'll compare this to our crypto shredded record later)
+# 3. Produce a record with '10000002' to topic 'customers' 
+#    (we'll compare this to our crypto shredded record later)
 echo '{ "userId" : 10000002, "name" : "Mary Brown", "password" : "abc123", "visa" : 4111111111111111 }' | \
 docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
@@ -688,7 +690,8 @@ For this HOWTO we only published two records and both had a different `keyId` so
 <Tab title="Crypto shred and check via CLI">
 
 ```bash
-# 1. Produce a record that tombstones the EDEK associated with 'keyId': 'gateway-kms://secret-for-10000001'
+# 1. Produce a record that tombstones the EDEK associated with 
+#    'keyId': 'gateway-kms://secret-for-10000001'
 echo '{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uuid":"<UUID_FOR_10000001_FROM_STEP_4>"}|NULL' | \
   docker compose exec -T kafka-client \
   kafka-console-producer --bootstrap-server conduktor-gateway:6969 \
@@ -697,7 +700,8 @@ echo '{"algorithm":"AES128_GCM","keyId":"gateway-kms://secret-for-10000001","uui
   --property "key.separator=|" \
   --property "null.marker=NULL"
 
-# 2. Consume all the records in the 'Encryption Keys Store' topic (use command 'ctrl-c' to exit)
+# 2. Consume all the records in the 'Encryption Keys Store' topic 
+#    (use command 'ctrl-c' to exit)
 docker compose exec kafka-client kafka-console-consumer \
   --bootstrap-server conduktor-gateway:6969 --topic _conduktor_gateway_encryption_keys \
   --from-beginning --property print.key=true --property key.separator="|"
