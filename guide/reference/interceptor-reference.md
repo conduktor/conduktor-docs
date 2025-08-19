@@ -308,6 +308,7 @@ Both schema-based and list-based encryption plugins have their configuration, bu
 | `kmsConfig`                                                                    | [KMS](#configure-kms)                            |                 | Configuration of one or multiple KMS.                                                                                                                                                                                                                                                                                                                   |
 | `enableAuditLogOnError`                                                        | Boolean                                          | true            | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                                                                                                                                         |
 | `compressionType`                                                              | Enum                                             | none            | The data is compressed before encryption (only for data configured with full payload encryption). Available values are: `none`, `gzip`, `snappy`, `lz4` or `zstd`.|
+| `throttleTimeMs`                                                               | Integer                                          | 0               | When encryption fails, apply client throttling for the specified time in milliseconds. This helps prevent overwhelming the system during encryption failures. [Find out more about client throttling](#client-throttling)                                                                                                                               |
 | [**List-based properties**](#list-based-encryption)                            |                                                  |                 |                                                                                                                                                                                                                                                                                                                                                         |
 | `recordValue`                                                                  | Value and key encryption |                 | Configuration to encrypt the record value.                                                                                                                                                                                                                                                                                                              |
 | `recordKey`                                                                    | Value and key encryption |                 | Configuration to encrypt the record key.                                                                                                                                                                                                                                                                                                                |
@@ -472,7 +473,8 @@ Now that your fields or payload are encrypted, you can decrypt them using the In
 | `recordKeyFields`        | List[String]                                     |                     | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.                                                                                                       |
 | `recordHeaderFields`     | List[String]                                     |                     | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.                                                                                                                |
 | `enableAuditLogOnError`  | Boolean                                          | true                | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                  |
-| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client) or `fail_fetch` (the client will receive an error for the fetch and no data). **For Crypto Shredding, the policy should always be `return_encrypted`**, otherwise the consumer will become permanently blocked by messages that have been deliberately been made un-decryptable. |
+| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client), `fail_fetch` (the client will receive an error for the fetch and no data), or `crypto_shred_safe_fail_fetch` (returns encrypted data when decryption fails due to missing keys, but throws exceptions for other types of decryption failures). |
+| `throttleTimeMs`         | Integer                                          | 0                   | When decryption fails, apply client throttling for the specified time in milliseconds. This helps prevent the overwhelming of the system during decryption failures. [Find out more about client throttling](#client-throttling) |
 
 ### Schema registry configuration
 
@@ -859,3 +861,34 @@ For enhanced security, you can hide the sensitive values using [environment vari
 - [Use and configure Interceptors](/guide/conduktor-concepts/interceptors)
 - [View Gateway resource reference](/guide/reference/gateway-reference)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
+
+## Client throttling
+
+When encryption or decryption operations fail, you can configure client throttling to help protect your system from being overwhelmed during error conditions.
+
+### Enable client throttling
+
+Set the `throttleTimeMs` parameter in your encryption/decryption Interceptor configuration:
+
+- **`throttleTimeMs = 0`** (default): No throttling - clients receive immediate error responses
+- **`throttleTimeMs > 0`**: Clients will be throttled for the specified time in milliseconds when operations fail
+
+### How it works
+
+When `throttleTimeMs` is configured with a value greater than 0:
+
+- **Protects cluster stability**: Gateway automatically throttles clients to prevent system overload
+- **Built-in client compliance**: Kafka clients automatically pause for the specified throttle time between requests
+- **Prevents failure cascades**: Throttling reduces retry pressure, allowing brokers to recover
+
+### Configuration example
+
+```json
+{
+  "name": "myEncryptPlugin",
+  "pluginClass": "io.conduktor.gateway.interceptor.EncryptPlugin",
+  "config": {
+    "throttleTimeMs": 5000,
+    // ... other configuration
+  }
+}
