@@ -70,7 +70,7 @@ Gateway now supports client throttling when encryption or decryption operations 
 
 - Fixed `KUBERNETES` authentication for Vault to automatically read the JWT token from the default service account path at `/var/run/secrets/kubernetes.io/serviceaccount/token`, eliminating the need for manual JWT configuration. Configuration key changed from `jwt` (`VAULT_KUBERNETES_JWT`) to `path` (`VAULT_KUBERNETES_PATH`).
 
-- Enhanced Gateway audit logging to include request body content for token creation operations, improving security auditing capabilities.
+- Enhanced Gateway audit logging to include request body content for API requests, improving auditing capabilities.
 
 - Resolved `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR` configuration to properly default to the Kafka cluster's default replication factor settings.
 
