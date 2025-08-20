@@ -76,12 +76,12 @@ Gateway now supports client throttling when encryption or decryption operations 
 
 ### Fixes
 
-- Fixed KUBERNETES authentication for Vault to automatically read the JWT token from the default service account path, eliminating the need for manual JWT configuration. [CUS-734](https://linear.app/conduktor/issue/CUS-734/lloyds-banking-group-kubernetes-auth-support-for-vault)
+- Fixed `KUBERNETES` authentication for Vault to automatically read the JWT token from the default service account path, eliminating the need for manual JWT configuration.
 
-- Enhanced Gateway audit logging to include request body content for token creation operations, improving security auditing capabilities. [CUS-685](https://linear.app/conduktor/issue/CUS-685/sainsburys-gateway-audit-log-doesnt-show-request-body)
+- Enhanced Gateway audit logging to include request body content for token creation operations, improving security auditing capabilities.
 
-- Resolved GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR configuration to properly default to the Kafka cluster's default replication factor settings. [CUS-563](https://linear.app/conduktor/issue/CUS-563/six-gateway-topic-store-kcache-replication-factor-doesnt-default-to)
+- Resolved `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR` configuration to properly default to the Kafka cluster's default replication factor settings.
 
-- Added support for Protobuf schema validation in the schema payload validation interceptor, enabling comprehensive schema governance for Protobuf-based applications. [CUS-727](https://linear.app/conduktor/issue/CUS-727/lloyds-banking-group-protobuf-schema-is-not-supported-for-schema)
+- Added support for Protobuf schema validation in the schema payload validation interceptor, enabling comprehensive schema governance for Protobuf-based applications.
 
-- Improved SSL handshake failure logging to include client IP addresses, enhancing troubleshooting capabilities for mTLS configurations. [CUS-713](https://linear.app/conduktor/issue/CUS-713/lufthansa-capture-the-ip-address-of-the-client-in-case-of-ssl)
+- Improved SSL handshake failure logging to include client IP addresses, enhancing troubleshooting capabilities for `mTLS` configurations.
