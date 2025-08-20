@@ -95,9 +95,16 @@ Ambiguous and inconsistent references to various terminology such as 'subscripti
 
 You can now view the Resource Policies in the Application details page, and the Consumer Group ownerships in the Application instance details page.
 
+The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license.
+
 ### Fixes
 
 - Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns.
 - Errors preventing users from logging in are now prominently displayed on the login page.
-- The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license.
-- Kafka Cluster configuration for SSL passwords no longer displays length unless editing the field, and AWS Glue secrets are no longer clear text.
+- Kafka Cluster configuration for SSL passwords no longer displays length unless editing the field.
+- AWS Glue secrets are no longer clear text.
+- SQL-related error messages appearing in logs and UI even when SQL features are not being used or configured.
+- Fixed inconsitent checkbox behavior in onboarding flow.
+- Schema Registry naming strategies now includes namespace in generated subject names.
+- Fixed issue where topics navigation tab was missing from main menu for certain user roles despite having proper permissions.
+- Self-service configuration now correctly handles multiple Kafka Connect clusters to a single application instance.
