@@ -11,6 +11,8 @@ title: Gateway 3.12.0
   - [New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable](#new-gateway_audit_log_event_types-environment-variable)
   - [Enhanced crypto shredding behavior for decryption](#enhanced-crypto-shredding-behavior-for-decryption)
   - [Client throttling for encryption and decryption](#client-throttling-for-encryption-and-decryption)
+- [Fixes](#fixes)
+  
 
 ### Breaking changes
 
@@ -70,3 +72,16 @@ Gateway now supports client throttling when encryption or decryption operations 
 - **Configurable behavior**: You can enable and adjust throttling based on your system's needs and error tolerance
 
 [Find out more about encryption and decryption configurations](/gateway/interceptors/data-security/encryption/).
+
+
+### Fixes
+
+- Fixed KUBERNETES authentication for Vault to automatically read the JWT token from the default service account path, eliminating the need for manual JWT configuration. [CUS-734](https://linear.app/conduktor/issue/CUS-734/lloyds-banking-group-kubernetes-auth-support-for-vault)
+
+- Enhanced Gateway audit logging to include request body content for token creation operations, improving security auditing capabilities. [CUS-685](https://linear.app/conduktor/issue/CUS-685/sainsburys-gateway-audit-log-doesnt-show-request-body)
+
+- Resolved GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR configuration to properly default to the Kafka cluster's default replication factor settings. [CUS-563](https://linear.app/conduktor/issue/CUS-563/six-gateway-topic-store-kcache-replication-factor-doesnt-default-to)
+
+- Added support for Protobuf schema validation in the schema payload validation interceptor, enabling comprehensive schema governance for Protobuf-based applications. [CUS-727](https://linear.app/conduktor/issue/CUS-727/lloyds-banking-group-protobuf-schema-is-not-supported-for-schema)
+
+- Improved SSL handshake failure logging to include client IP addresses, enhancing troubleshooting capabilities for mTLS configurations. [CUS-713](https://linear.app/conduktor/issue/CUS-713/lufthansa-capture-the-ip-address-of-the-client-in-case-of-ssl)
