@@ -473,8 +473,18 @@ Now that your fields or payload are encrypted, you can decrypt them using the In
 | `recordKeyFields`        | List[String]                                     |                     | **Only for field-level encryption** - List of fields to decrypt in the key. If empty, we decrypt all the encrypted fields.                                                                                                       |
 | `recordHeaderFields`     | List[String]                                     |                     | **Only for field-level encryption** - List of headers to decrypt. If empty, we decrypt all the encrypted headers.                                                                                                                |
 | `enableAuditLogOnError`  | Boolean                                          | true                | The audit log will be enabled when an error occurs during encryption/decryption                                                                                                                                                  |
-| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted` (the encrypted payload is returned to the client), `fail_fetch` (the client will receive an error for the fetch and no data), or `crypto_shred_safe_fail_fetch` (returns encrypted data when decryption fails due to missing keys, but throws exceptions for other types of decryption failures). |
+| `errorPolicy`            | String                                           | `return_encrypted`  | Determines the action if there is an error during decryption. The options are `return_encrypted`, `fail_fetch` and `crypto_shred_safe_fail_fetch` See [Decryption Error Policy](#decryption-error-policy) section for more details. |
 | `throttleTimeMs`         | Integer                                          | 0                   | When decryption fails, apply client throttling for the specified time in milliseconds. This helps prevent the overwhelming of the system during decryption failures. [Find out more about client throttling](#client-throttling) |
+
+#### Decryption Error Policy
+
+This policy determines the action if there is an error during decryption. 
+
+| **Error Policy**                        | **Description**                                                                                                           |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `return_encrypted`                      | The encrypted data is returned to the client.  |
+| `fail_fetch`                            | The client will receive an error for the fetch and no data. When using the [Gateway KMS](#gateway-kms), data that fails to decrypt because no key was found will use the policy `return_encrypted` instead (supports crypto shredding for just this KMS system).               |
+| `crypto_shred_safe_fail_fetch`          | The client will receive an error for the fetch and no data. Data that fails to decrypt because no key was found will use the policy `return_encrypted` instead (supports crypto shredding for all KMS systems).  |
 
 ### Schema registry configuration
 

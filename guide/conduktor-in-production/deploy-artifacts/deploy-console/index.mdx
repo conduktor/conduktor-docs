@@ -509,7 +509,6 @@ Conduktor Console Docker image runs on Ubuntu Linux. It runs multiple services i
 To troubleshoot Console:
 
 1. Verify that Console is up and running.  
-1. Manually debug Conduktor Console.
 1. Check the logs and send them to our support team if necessary.
 
 ### 1. Verify that Conduktor is up and running
@@ -564,44 +563,7 @@ The pod status is available in the **STATUS** column.
 </Tab>
 </Tabs>
 
-### 2. Manually debug Conduktor Console
-
-#### Check services within the conduktor-console container
-
-First, we will need to invoke a shell within the conduktor-console container. For that, you can use the following commands:
-
-<Tabs>
-<Tab title="Based on container name">
-
-```sh
-docker exec -it conduktor-console bash
-```
-
-</Tab>
-<Tab title="Based on container ID">
-
-```sh
-docker exec -it fe4a5d1be98f bash
-```
-
-</Tab>
-</Tabs>
-
-From within the container, you can verify that all expected services are started. Conduktor Console uses supervisord inside of the container to ensure various services are started:
-
-```sh title="Check services status"
-supervisorctl status
-```
-
-```txt title="Output"
-console                          FATAL     Exited too quickly (process log may have details)
-platform_api                     RUNNING   pid 39, uptime 0:49:39
-proxy                            RUNNING   pid 33, uptime 0:49:39
-```
-
-In the example mentioned above, the console did not start successfully. This indicates that we need to look at the log files to investigate the issue further.
-
-### 3. Get the logs and send them to support
+### 2. Get the logs and send them to support
 
 Logs are kept in `/var/conduktor/log`. You can see them using:
 
