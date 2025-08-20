@@ -31,7 +31,7 @@ Before creating a Partner Zone, you have to:
 - in Console, [configure your Gateway cluster](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials
 
 <Warning>
-As of v1.36.0, Partner Zones have the following limitations:
+Partner Zones currently have the following limitations:
 
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
 </Warning>
@@ -52,7 +52,8 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - (Optional) Enter a relevant **URL** for your partner.
    - (Optional) Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone.
-   - **Select Gateway** to choose the one you want to use and click **Continue**.
+   - **Select Gateway** to choose the one you want to use, then select an available cluster under the Gateway and click **Continue**.
+     - [Find out how to configure multi-cluster configured Gateway](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
 1. Choose what and how to share:
    - **Select the Kafka topics** to include in this Partner Zone, you can filter topics by custom labels you've defined or search for topic name.
    - **Select Read/Write**. By default, any topics that are shared, will be shared with **Read**-only access, but you can additionally allow **Write** access.
@@ -92,7 +93,8 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     metadata:
         name: external-partner-zone
     spec:
-        cluster: partner1
+        cluster: gateway-1
+        underlyingCluster: kafka-cluster-1
         displayName: External Partner Zone
         url: https://partner1.com
         authenticationMode:
@@ -138,8 +140,8 @@ For [multi-cluster configured](/guide/conduktor-in-production/deploy-artifacts/d
         updatedAt: "2025-01-27T12:55:05.387368Z"
         status: PENDING
     spec:
-        cluster: partner1
-        underlyingCluster: partner1
+        cluster: gateway-1
+        underlyingCluster: kafka-cluster-1
         displayName: External Partner Zone
         url: https://partner1.com
         serviceAccount: external-partner-service-account
