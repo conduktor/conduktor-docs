@@ -114,7 +114,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
           phone: 07827 837 177
     ```
 
-For [multi-cluster configured](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters) Gateways, targeting an upstream Kafka cluster requires supplying its technical cluster ID. The `cluster` field corresponds to the technical ID of the Gateway you plan to target. `underlyingCluster` corresponds to the technical ID of the chosen Kafka cluster to target.
+Use `underlyingCluster` to target an upstream physical cluster in a [multi-cluster configured](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters) Gateway. The cluster also needs to be configured in the Console and you will need to use the technical id from that configuration to populate this field.
 
 <Info>
 `underlyingCluster` is optional. When not set the main physical cluster on the Gateway is used.
