@@ -105,16 +105,16 @@ The Trust Rules and Policies pages are now hidden for users without [Trust](http
 
 - Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns.
 - Errors preventing users from logging in are now prominently displayed on the login page.
-- Fixed password field length disclosure in configuration forms, now showing consistent obfuscation regardless of actual password length.
-- Fixed secrets being displayed in clear text in AWS Glue and other cluster configuration forms.
+- To prevent disclosure of password length in configuration forms, password fields are now consistently obfuscated regardless of the length of the actual password.
+- Secrets in AWS Glue and other cluster configuration forms are no longer shown in clear text.
 - Fixed error logs appearing when SQL features are not enabled, reducing unnecessary log noise.
 - Fixed onboarding page checkbox labels not being clickable, improving user experience during account setup.
-- Schema Registry naming strategies now includes namespace in generated subject names.
-- Fixed issue where topics navigation tab was missing from main menu for certain user roles despite having proper permissions.
-- Self-service configuration now correctly handles multiple Kafka Connect clusters to a single application instance.
+- Schema Registry naming strategies now include namespace in generated subject names.
+- Fixed issue where topic navigation tab was missing from main menu for certain user roles despite having proper permissions.
+- Self-service configuration now correctly handles multiple Kafka Connect clusters connected to a single application instance.
 - Duplicate users can no longer be created using the same email username but in different casing.
-- Fixed schema name truncation in the reprocessing topic messages flow, now displaying complete schema names even for long names.
-- Fixed connector error messages not being displayed when connectors fail before task creation, improving visibility into connector failures.
+- In the reprocessing topic messages flow schema names are no longer truncated.  We now display complete schema names even for long names.
+- Connectors which failed before task creation will now show an error message, giving increased visibility into connector failures.
 - Fixed topic policies not being visible in application instances after upgrading from version 1.35 to 1.36.
 - Fixed error incorrectly showing up when upgrading Conduktor Console from 1.35.0 to version 1.36.
 - Deleting the Kafka Connect cluster no longer causes permission errors on user and group GET operations.
