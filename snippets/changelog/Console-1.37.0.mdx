@@ -109,10 +109,10 @@ The Trust Rules and Policies pages are now hidden for users without [Trust](http
 - Fixed issue where topics navigation tab was missing from main menu for certain user roles despite having proper permissions.
 - Self-service configuration now correctly handles multiple Kafka Connect clusters to a single application instance.
 - Duplicate users can no longer be created using the same email username but in different casing.
-- Display the whole schema name, where a schema exists with multiple names.
+- Fixed schema name truncation in the UI, now displaying complete schema names even for long names.
 - Display connector failure reasons when it fails during initialisation, not only when tasks fail.
-- Display the old topic policies configured in previous versions.
-- Upgrading Conduktor Console from 1.35.0 to version 1.36 showed an error. now it is not showing it.
+- Fixed user and group API endpoints returning errors when referenced clusters are deleted, now handling deleted cluster references gracefully.
+- Fixed error incorrectly showing up when upgrading Conduktor Console from 1.35.0 to version 1.36.
 - Deleting the Kafka Connect cluster no longer causes permission errors on user and group GET operations.
 - REST API calls for group creation no longer time out when creating large numbers of groups in bulk operations.
 - Fixed console UI experiencing slow response times and high latency when loading large topic lists or consumer groups.
