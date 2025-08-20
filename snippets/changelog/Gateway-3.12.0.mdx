@@ -70,10 +70,10 @@ Gateway now supports client throttling when encryption or decryption operations 
 
 - Fixed `KUBERNETES` authentication for Vault to automatically read the JWT token from the default service account path at `/var/run/secrets/kubernetes.io/serviceaccount/token`, eliminating the need for manual JWT configuration. Configuration key changed from `jwt` (`VAULT_KUBERNETES_JWT`) to `path` (`VAULT_KUBERNETES_PATH`).
 
-- Enhanced Gateway audit logging to include request body content for API requests, improving auditing capabilities.
+- Fixed Gateway audit logging to properly capture request body content in `REST_API` audit events, which was previously showing as `null` for operations like token creation.
 
 - Resolved `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR` configuration to properly default to the Kafka cluster's default replication factor settings.
 
-- Added support for Protobuf schema validation in the schema payload validation interceptor, enabling comprehensive schema governance for Protobuf-based applications.
+- Fixed schema payload validation interceptor to support Protobuf schemas, which were previously rejected with "protobuf schema is not supported" errors when applied to messages.
 
-- Improved SSL handshake failure logging to include client IP addresses, enhancing troubleshooting capabilities for `mTLS` configurations.
+- Updated SSL handshake failure logging to include client IP addresses, which were previously missing from error logs, helping identify which applications are affected by certificate issues.
