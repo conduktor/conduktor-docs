@@ -108,3 +108,13 @@ The Trust Rules and Policies pages are now hidden for users without [Trust](http
 - Schema Registry naming strategies now includes namespace in generated subject names.
 - Fixed issue where topics navigation tab was missing from main menu for certain user roles despite having proper permissions.
 - Self-service configuration now correctly handles multiple Kafka Connect clusters to a single application instance.
+- Duplicate users can no longer be created using the same email username but in different casing.
+- Display the whole schema name, where a schema exists with multiple names.
+- Display connector failure reasons when it fails during initialisation, not only when tasks fail.
+- Display the old topic policies configured in previous versions.
+- Upgrading Conduktor Console from 1.35.0 to version 1.36 showed an error. now it is not showing it.
+- Deleting the Kafka Connect cluster no longer causes permission errors on user and group GET operations.
+- REST API calls for group creation no longer time out when creating large numbers of groups in bulk operations.
+- Fixed console UI experiencing slow response times and high latency when loading large topic lists or consumer groups.
+- The metrics dashboard now displays the right values for throughput and lag calculations in monitoring views.
+- Console Grafana packaged with Console Helm chart now correctly uses new JVM metrics naming.
