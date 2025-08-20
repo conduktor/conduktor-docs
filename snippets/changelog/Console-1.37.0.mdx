@@ -21,7 +21,9 @@ _Release date: 2025-08-20_
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
-### Breaking change: email address storage
+### Breaking changes
+
+#### Email address storage
 
 In this release, we have made a change to how we store the email addresses of users in Console. All emails are now stored in lowercase to ensure consistency and prevent issues with SSO or RBAC. We highly recommend that you back up your Console database before upgrading to this version. If two users have the same email address but with different cases, the migration will fail. In this case, we recommend that you resolve the conflict by either deleting one of the users or changing their email address before upgrading.
 
@@ -113,12 +115,11 @@ The Trust Rules and Policies pages are now hidden for users without [Trust](http
 - Fixed issue where topic navigation tab was missing from main menu for certain user roles despite having proper permissions.
 - Self-service configuration now correctly handles multiple Kafka Connect clusters connected to a single application instance.
 - Duplicate users can no longer be created using the same email username but in different casing.
-- In the reprocessing topic messages flow schema names are no longer truncated.  We now display complete schema names even for long names.
+- In the reprocessing topic messages flow schema names are no longer truncated. We now display complete schema names even for long names.
 - Connectors which failed before task creation will now show an error message, giving increased visibility into connector failures.
 - Fixed topic policies not being visible in application instances after upgrading from version 1.35 to 1.36.
 - Fixed error incorrectly showing up when upgrading Conduktor Console from 1.35.0 to version 1.36.
 - Deleting the Kafka Connect cluster no longer causes permission errors on user and group GET operations.
 - Fixed group creation timeouts when using REST APIs with large user and group counts, improving API performance for organizations with thousands of users.
 - Improved Console performance for large-scale deployments, addressing timeout issues with consumer group indexing and topic details.
-- Fixed metrics displaying incorrect values on the home page overview after upgrade from 1.31.0 to 1.31.1.
 - Console Grafana packaged with Console Helm chart now correctly uses new JVM metrics naming.
