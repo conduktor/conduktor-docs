@@ -4,6 +4,9 @@ title: Console 1.37
 
 _Release date: 2025-08-20_
 
+- [Breaking changes](#breaking-changes)
+  - [Gateway 3.12 dependency](gateway-3.12-dependency)
+  - [Email address storage](email-address-storage)
 - [Conduktor Scale](#conduktor-scale)
   - [Application Groups management](#application-groups-management)
   - [Application Instance resources](#application-instance-resources)
@@ -17,6 +20,7 @@ _Release date: 2025-08-20_
 - [Conduktor Trust](#conduktor-trust)
   - [Regex library](#regex-library)
   - [Mark action](#mark-action)
+  - [Data quality rule breaking change](#data-quality-rule-breaking-change)
   - [JSON schema Rule type](#json-schema-rule-type)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
@@ -25,7 +29,7 @@ _Release date: 2025-08-20_
 
 #### Gateway 3.12 dependency
 
-Starting from Console 1.37, Trust and Partner Zone functionality will require Gateway 3.12 or later.
+Starting from Console 1.37, Conduktor Trust [Mark action](#mark-action) and Conduktor Exchange [Partner Zone](#partner-zone-breaking-change) functionality will require Gateway 3.12 or later.
 
 #### Email address storage
 
@@ -67,7 +71,7 @@ Console now supports creating Partner Zones against a multi-clustered Gateway co
 
 #### Partner Zone breaking change
 
-With the support for multi-cluster Gateway, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Hence, existing Partner Zones will stop functioning after the upgrade if not recreated.
+With the support for multi-cluster Gateway in 3.12, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Hence, existing Partner Zones will stop functioning after the upgrade if not recreated.
 
 **Action required:**
 
@@ -86,6 +90,10 @@ Added an option to **Show regex library** when creating a new rule in Console. T
 You can now toggle the **Mark action** on data quality Policies. When enabled, messages that violate the rule(s) are tagged with a special header.
 
 [Check out the Mark action use case.](/guide/use-cases/enforce-data-quality#mark-action)
+
+#### Data quality rule breaking change
+
+With the introduction of **Mark action** the `/public/data-quality/v1/data-quality-rule` has a breaking change on `PUT` where it now needs `mark` data passed in the payload. See [API documentation](https://developers.conduktor.io/?product=console&version=1.37.0#tag/cli_data-quality-rule_data-quality_v1_17/operation/list-data-quality-rule-resources) for details.
 
 #### JSON schema rule type
 
