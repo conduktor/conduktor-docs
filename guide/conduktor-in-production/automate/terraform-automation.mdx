@@ -145,49 +145,49 @@ Once the provider is configured, all the [currently available resources](https:/
 
 ### Usage example
 
-A full example of user and group creation using Conduktor Console locally is available on port `8080` with default admin account credentials `admin@mycompany.io` / `admin_password`.
+A full example of user and group creation using Conduktor Console locally is available on port `8080` with default admin account credentials `admin@mycompany.io` / `adminP4ss!`.
 
 ```hcl title="conduktor-iac.tf"
 # Provider installation configuration
 terraform {
   required_providers {
     conduktor = {
-        source = "conduktor/conduktor"
-        version = ">= 0.4.0"
+      source  = "conduktor/conduktor"
+      version = ">= 0.5.0"
     }
   }
 }
 
 # Provider configuration
 provider "conduktor" {
-    mode           = "console"
-    base_url       = "http://localhost:8080"
-    admin_user     = "admin@mycompany.io"
-    admin_password = "admin_password"
+  mode           = "console"
+  base_url       = "http://localhost:8080"
+  admin_user     = "admin@mycompany.io"
+  admin_password = "adminP4ss!"
 }
 
 # Create example_user, Bob
-resource "conduktor_user_v2" "bob" {
+resource "conduktor_console_user_v2" "bob" {
   name = "bob@mycompany.io"
   spec = {
-    firstname   = "Bob"
-    lastname    = "Smith"
+    firstname = "Bob"
+    lastname  = "Smith"
     permissions = [
-        {
-            resource_type = "PLATFORM"
-            permissions   = ["userView", "datamaskingView", "auditLogView"]
-        }
+      {
+        resource_type = "PLATFORM"
+        permissions   = ["userView", "datamaskingView", "auditLogView"]
+      }
     ]
   }
 }
 
 # Create a group with Bob as a member
-resource "conduktor_group_v2" "example_group" {
+resource "conduktor_console_group_v2" "example_group" {
   name = "team-a"
   spec = {
     display_name = "team-a"
     description  = "The group of team-a"
-    members      = [ conduktor_user_v2.bob.name ]
+    members      = [conduktor_console_user_v2.bob.name]
     permissions  = []
   }
 }
@@ -196,7 +196,6 @@ resource "conduktor_group_v2" "example_group" {
 Then on a terminal with Terraform installed and in a directory containing `conduktor-iac.tf` file:
 
 ```shell
-
 # Initialize terraform project
 terraform init
 
@@ -213,7 +212,7 @@ To revert the Conduktor state, you can destroy the created resources using `terr
 
 #### Case of the `generic` resource
 
-The `generic` resource leverage the YAML format used by the CLI to be used as resource definition in Terraform.
+The `generic` resource leverages the YAML format used by the CLI to be used as resource definition in Terraform.
 
 This is an experimental resource that has several [limitations](https://registry.terraform.io/providers/conduktor/conduktor/latest/docs/resources/generic#limitations) and is subject to breaking changes in future releases.
 

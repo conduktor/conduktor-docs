@@ -122,7 +122,7 @@ spec:
 <Tab title="Terraform">
 
 ```hcl
-resource "conduktor_console_user_v2" "john.doe@company.org" {
+resource "conduktor_console_user_v2" "john_doe" {
   name = "john.doe@company.org"
 
   spec = {
@@ -133,12 +133,12 @@ resource "conduktor_console_user_v2" "john.doe@company.org" {
       {
         resource_type = "TOPIC"
         cluster       = "shadow-it"
-        patternType   = "PREFIXED"
+        pattern_type   = "PREFIXED"
         name          = "toto-"
         permissions   = [
           "topicViewConfig",
-          "datamaskingView",
-          "auditLogView"
+          "topicConsume",
+          "topicProduce"
         ]
       },
       {
@@ -232,21 +232,23 @@ resource "conduktor_console_kafka_cluster_v2" "my-dev-cluster" {
       "sasl.mechanism"    = "PLAIN"
     }
     schema_registry = {
-      type     = "ConfluentLike"
-      url      = "http://localhost:8080"
-      security = {
-        type     = "BasicAuth"
-        username = "some_user"
-        password = "some_password"
+      confluent_like = {
+        url = "http://localhost:8081"
+        security = {
+          type     = "BasicAuth"
+          username = "some_user"
+          password = "some_password"
+        }
+        ignore_untrusted_certificate = false
       }
-      ignore_untrusted_certificate = false
     }
     kafka_flavor = {
-      type   = "Confluent"
-      key    = "string"
-      secret = "string"
-      confluent_environment_id = "string"
-      confluent_cluster_id     = "string"
+      confluent = {
+        key                      = "yourApiKey123456"
+        secret                   = "yourApiSecret123456"
+        confluent_environment_id = "env-12345"
+        confluent_cluster_id     = "lkc-67890"
+      }
     }
   }
 }
