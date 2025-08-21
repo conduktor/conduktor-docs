@@ -68,7 +68,7 @@ Gateway now supports client throttling when encryption or decryption operations 
 
 ### Fixes
 
-- `KUBERNETES` Vault authentication now gets the JWT from the default Vault location (`/var/run/secrets/kubernetes.io/serviceaccount/token`). You can configure this location using `path` (`VAULT_KUBERNETES_PATH`). The `jwt` configuration key is no longer needed.
+- `KUBERNETES` Vault authentication now gets the JWT from the default Vault location (`/var/run/secrets/kubernetes.io/serviceaccount/token`). You can configure this location using `path` (`VAULT_KUBERNETES_PATH`). The `jwt` configuration key is no longer needed. See **Kubernetes authentication** under [Vault authentication types](/guide/reference/interceptor-reference#vault-kms).
 
 - Enriched the `REST_API` audit log events with the request body, which was previously not captured.
 
